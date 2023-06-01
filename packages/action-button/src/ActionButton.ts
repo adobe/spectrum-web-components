@@ -210,7 +210,13 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         const isButton = this.role === 'button';
-        const canBePressed = isButton && (this.selected || this.toggles);
+        const canBePressed =
+            isButton &&
+            (this.selected || this.toggles) &&
+            !(
+                this.hasAttribute('aria-haspopup') &&
+                this.hasAttribute('aria-expanded')
+            );
         if (changes.has('selected') || changes.has('role')) {
             // When role !== 'button' then the Action Button is within
             // an Action Group that manages selects which means the

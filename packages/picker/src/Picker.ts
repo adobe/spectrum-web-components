@@ -20,7 +20,10 @@ import {
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { classMap } from '@spectrum-web-components/base/src/directives.js';
+import {
+    classMap,
+    ifDefined,
+} from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
@@ -417,6 +420,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             ></span>
             <button
                 aria-haspopup="true"
+                aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-labelledby="button icon label"
                 id="button"
@@ -498,7 +502,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             return html`
                 <sp-tray
                     id="popover"
-                    role="dialog"
+                    role="presentation"
                     @sp-menu-item-added-or-updated=${this.updateMenuItems}
                     .overlayOpenCallback=${this.overlayOpenCallback}
                     .overlayCloseCallback=${this.overlayCloseCallback}
@@ -510,7 +514,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         return html`
             <sp-popover
                 id="popover"
-                role="dialog"
+                role="presentation"
                 @sp-menu-item-added-or-updated=${this.updateMenuItems}
                 .overlayOpenCallback=${this.overlayOpenCallback}
                 .overlayCloseCallback=${this.overlayCloseCallback}
