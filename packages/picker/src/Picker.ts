@@ -524,6 +524,12 @@ export class PickerBase extends SizedMixin(Focusable) {
         );
         let selectedItem: MenuItem | undefined;
         await this.optionsMenu.updateComplete;
+        if (this.recentlyConnected) {
+            // Work around for attach timing differences in Safari and Firefox.
+            // Remove when refactoring to Menu passthrough wrapper.
+            await new Promise((res) => requestAnimationFrame(() => res(true)));
+            this.recentlyConnected = false;
+        }
         this.menuItems.forEach((item) => {
             if (this.value === item.value && !item.disabled) {
                 selectedItem = item;
@@ -553,6 +559,13 @@ export class PickerBase extends SizedMixin(Focusable) {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.selectionPromise;
         return complete;
+    }
+
+    private recentlyConnected = false;
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        this.recentlyConnected = this.hasUpdated;
     }
 
     public override disconnectedCallback(): void {

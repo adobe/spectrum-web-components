@@ -115,6 +115,7 @@ describe('Reparented Picker', () => {
         before.append(picker);
         await closed;
 
+        expect(picker.optionsMenu.value).to.equal('3');
         expect(picker.value).to.equal('3');
     });
 });

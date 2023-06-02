@@ -180,13 +180,9 @@ export function runPickerTests(): void {
             );
 
             const items = el.querySelectorAll('sp-menu-item');
-            const removals: Promise<unknown>[] = [];
             items.forEach((item) => {
-                const removal = oneEvent(el, 'sp-menu-item-removed');
                 item.remove();
-                removals.push(removal);
             });
-            await Promise.all(removals);
             await elementUpdated(el);
             await nextFrame();
             await aTimeout(150);

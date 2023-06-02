@@ -23,10 +23,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import { MenuItem } from './MenuItem.js';
-import type {
-    MenuItemAddedOrUpdatedEvent,
-    MenuItemRemovedEvent,
-} from './MenuItem.js';
+import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
 import { OverlayBase } from '@spectrum-web-components/overlay/src/OverlayBase.js';
 import menuStyles from './menu.css.js';
 
@@ -165,7 +162,7 @@ export class Menu extends SpectrumElement {
 
     /**
      * When a descendant `<sp-menu-item>` element is added or updated it will dispatch
-     * this event to announce its presence in the DOM. During the capture phase the first
+     * this event to announce its presence in the DOM. During the CAPTURE phase the first
      * Menu based element that the event encounters will manage the focus state of the
      * dispatching `<sp-menu-item>` element.
      * @param event
@@ -180,12 +177,12 @@ export class Menu extends SpectrumElement {
         if (this.selects) {
             event.currentAncestorWithSelects = this;
         }
-        event.focusRoot = this;
+        event.item.menuData.focusRoot = event.item.menuData.focusRoot || this;
     }
 
     /**
      * When a descendant `<sp-menu-item>` element is added or updated it will dispatch
-     * this event to announce its presence in the DOM. During the bubble phase the first
+     * this event to announce its presence in the DOM. During the BUBBLE phase the first
      * Menu based element that the event encounters that does not inherit selection will
      * manage the selection state of the dispatching `<sp-menu-item>` element.
      * @param event
@@ -196,7 +193,7 @@ export class Menu extends SpectrumElement {
         const cascadeData = event.menuCascade.get(this);
         if (!cascadeData) return;
 
-        event.parentMenu = this;
+        event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
         if (cascadeData.hadFocusRoot) {
             // Only have one tab stop per Menu tree
             this.tabIndex = -1;
@@ -227,12 +224,22 @@ export class Menu extends SpectrumElement {
         const selects =
             this.resolvedSelects === 'single' ||
             this.resolvedSelects === 'multiple';
+        event.item.menuData.cleanupSteps.push((item: MenuItem) =>
+            this.removeChildItem(item)
+        );
         if (
             (selects || (!this.selects && this.resolvedSelects !== 'ignore')) &&
             !event.item.menuData.selectionRoot
         ) {
             event.item.setRole(this.childRole);
-            event.selectionRoot = this;
+            event.item.menuData.selectionRoot =
+                event.item.menuData.selectionRoot || this;
+            if (event.item.selected) {
+                this.selectedItemsMap.set(event.item, true);
+                this.selectedItems = [...this.selectedItems, event.item];
+                this.selected = [...this.selected, event.item.value];
+                this.value = this.selected.join(this.valueSeparator);
+            }
         }
     }
 
@@ -241,17 +248,15 @@ export class Menu extends SpectrumElement {
         this.handleItemsChanged();
     }
 
-    private removeChildItem = async (
-        event: MenuItemRemovedEvent
-    ): Promise<void> => {
-        this.childItemSet.delete(event.item);
+    private async removeChildItem(item: MenuItem): Promise<void> {
+        this.childItemSet.delete(item);
         this.cachedChildItems = undefined;
-        if (event.item.focused) {
+        if (item.focused) {
             this.handleItemsChanged();
             await this.updateComplete;
             this.focus();
         }
-    };
+    }
 
     public constructor() {
         super();
@@ -268,8 +273,7 @@ export class Menu extends SpectrumElement {
             }
         );
 
-        this.addEventListener('sp-menu-item-removed', this.removeChildItem);
-        this.addEventListener('click', this.onClick);
+        this.addEventListener('click', this.handleClick);
         this.addEventListener('focusin', this.handleFocusin);
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
@@ -298,7 +302,7 @@ export class Menu extends SpectrumElement {
         }
     }
 
-    private onClick(event: Event): void {
+    private handleClick(event: Event): void {
         if (event.defaultPrevented) {
             return;
         }
@@ -649,30 +653,23 @@ export class Menu extends SpectrumElement {
         this.focusInItemIndex = firstOrFirstSelectedIndex;
     }
 
-    private _willUpdateItems?: number;
+    private _willUpdateItems = false;
 
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
         if (!this._willUpdateItems) {
-            // collect ONE proise for all of the item updates in a batch
-            this.cacheUpdated = new Promise(
-                (res) =>
-                    (this.resolveCacheUpdated = (): void => {
-                        res();
-                        this._willUpdateItems = undefined;
-                    })
-            );
-        } else {
-            // reset the animation frame when subsequent updates are received for the same batch
-            cancelAnimationFrame(this._willUpdateItems);
+            this._willUpdateItems = true;
+            this.cacheUpdated = this.updateCache();
         }
-        this._willUpdateItems = requestAnimationFrame(() => {
-            if (this._willUpdateItems || this.cachedChildItems === undefined) {
-                this.updateSelectedItemIndex();
-                this.updateItemFocus();
-            }
-            this.resolveCacheUpdated();
-        });
+    }
+
+    private async updateCache(): Promise<void> {
+        await new Promise((res) => requestAnimationFrame(() => res(true)));
+        if (this.cachedChildItems === undefined) {
+            this.updateSelectedItemIndex();
+            this.updateItemFocus();
+        }
+        this._willUpdateItems = false;
     }
 
     private updateItemFocus(): void {
@@ -743,8 +740,6 @@ export class Menu extends SpectrumElement {
         return this.renderMenuItemSlot();
     }
 
-    private _notFirstUpdated = false;
-
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex') && !this.ignore) {
@@ -768,17 +763,19 @@ export class Menu extends SpectrumElement {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (changes.has('selects') && this._notFirstUpdated) {
+        if (changes.has('selects') && this.hasUpdated) {
             this.selectsChanged();
         }
-        if (changes.has('label')) {
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);
             } else {
                 this.removeAttribute('aria-label');
             }
         }
-        this._notFirstUpdated = true;
     }
 
     protected selectsChanged(): void {
