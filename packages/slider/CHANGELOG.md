@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Bug Fixes
+
+-   **base:** ensure streaming listener "streams" on the animation frame ([1478db1](https://github.com/adobe/spectrum-web-components/commit/1478db115cfe3aa9278bcfafb57b1d8b77d25b32))
+
+### Features
+
+-   **popover:** use core tokens ([68328cc](https://github.com/adobe/spectrum-web-components/commit/68328ccd01f44758caf987e02a17d88488f9046c))
+-   **slider:** use spectrum-tokens ([8b1e72c](https://github.com/adobe/spectrum-web-components/commit/8b1e72c2876a6480421490509eb3b4def00a7a5f))
+
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Bug Fixes
+
+-   **overlay:** ensure CSS calcs resolve to the expected measurement value ([51a3feb](https://github.com/adobe/spectrum-web-components/commit/51a3feb2a42300de369aba06d7ec1eea92ffbd19))
+
+### Features
+
+-   **popover:** use core tokens ([68328cc](https://github.com/adobe/spectrum-web-components/commit/68328ccd01f44758caf987e02a17d88488f9046c))
+
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
 ### Bug Fixes

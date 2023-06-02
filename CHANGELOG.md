@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Bug Fixes
+
+-   **action-group:** update application/management of "role" on group and buttons ([533873b](https://github.com/adobe/spectrum-web-components/commit/533873be83da30e032fbb89a993f5c4e0c1c8086)), closes [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221)
+-   **base:** ensure streaming listener "streams" on the animation frame ([1478db1](https://github.com/adobe/spectrum-web-components/commit/1478db115cfe3aa9278bcfafb57b1d8b77d25b32))
+-   **color-handle,color-loupe:** accept updated CSS token names ([8c28f6d](https://github.com/adobe/spectrum-web-components/commit/8c28f6d002973bf7398f134ca4e73be8fee967dd))
+-   **overlay:** ensure CSS calcs resolve to the expected measurement value ([51a3feb](https://github.com/adobe/spectrum-web-components/commit/51a3feb2a42300de369aba06d7ec1eea92ffbd19))
+-   **picker:** correct attribute spelling of "aria-label" in dismiss button ([5fc9b30](https://github.com/adobe/spectrum-web-components/commit/5fc9b30260f7d6df4d6e3cb6a3e49a149ece5458))
+-   process "defineElement()" to CEM files ([cd8c99f](https://github.com/adobe/spectrum-web-components/commit/cd8c99f3451ad8cde4d561c14d911b4060c2bca9))
+
+### Features
+
+-   **dropzone:** use core tokens ([11f7560](https://github.com/adobe/spectrum-web-components/commit/11f7560fcc83c28e84d05bf23699dd6e9cc90fa1))
+-   initial impl of next.js wrapper for the swc ([af911e0](https://github.com/adobe/spectrum-web-components/commit/af911e0fc4ba55f6f4f01825ea619f366828252b))
+-   **number-field:** use core tokens ([23a924e](https://github.com/adobe/spectrum-web-components/commit/23a924ef24ea5adfa0472e8e424bfeec1d184603))
+-   **popover:** use core tokens ([68328cc](https://github.com/adobe/spectrum-web-components/commit/68328ccd01f44758caf987e02a17d88488f9046c))
+-   **search,textfield:** use core tokens ([2ed5135](https://github.com/adobe/spectrum-web-components/commit/2ed51355c2787ac06274e763ea1eee7bfd0c9c72))
+-   **slider:** use spectrum-tokens ([8b1e72c](https://github.com/adobe/spectrum-web-components/commit/8b1e72c2876a6480421490509eb3b4def00a7a5f))
+-   **thumbnail:** use core tokens ([e298035](https://github.com/adobe/spectrum-web-components/commit/e2980354e04ab375bdaa8a6fc31141abc31dc802))
+
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
 ### Bug Fixes
