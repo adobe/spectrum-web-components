@@ -27,7 +27,11 @@ import { NumberField } from '@spectrum-web-components/number-field';
 ## Example
 
 ```html
-<sp-number-field value="1024" style="width: 200px"></sp-number-field>
+<sp-number-field
+    label="Size"
+    value="1024"
+    style="width: 200px"
+></sp-number-field>
 ```
 
 ## Number formatting
@@ -79,6 +83,7 @@ If you need to allow the user to change the currency, you should include a separ
 ```html
 <sp-field-label for="currency">Transaction amount</sp-field-label>
 <sp-number-field
+    id="currency"
     style="width: 200px"
     value="45"
     format-options='{
