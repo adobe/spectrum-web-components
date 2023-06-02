@@ -105,6 +105,11 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
         return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
     }
 
+    public override handleChange(): void {
+        this.indeterminate = false;
+        super.handleChange();
+    }
+
     protected override render(): TemplateResult {
         return html`
             ${super.render()}
@@ -126,11 +131,7 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
             }
         }
         if (changes.has('indeterminate')) {
-            if (this.indeterminate) {
-                this.inputElement.setAttribute('aria-checked', 'mixed');
-            } else {
-                this.inputElement.removeAttribute('aria-checked');
-            }
+            this.inputElement.indeterminate = this.indeterminate;
         }
     }
 }
