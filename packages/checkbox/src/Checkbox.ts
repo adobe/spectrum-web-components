@@ -112,7 +112,7 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
                 ${checkmarkIcon[this.size as DefaultElementSize]}
                 ${dashIcon[this.size as DefaultElementSize]}
             </span>
-            <label id="label"><slot></slot></label>
+            <label id="label" for="input"><slot></slot></label>
         `;
     }
 
@@ -125,11 +125,12 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
                 this.inputElement.removeAttribute('aria-invalid');
             }
         }
-        if (changes.has('indeterminate')) {
+        if (changes.has('indeterminate') || this.indeterminate) {
+            this.inputElement.indeterminate = this.indeterminate;
             if (this.indeterminate) {
-                this.inputElement.setAttribute('aria-checked', 'mixed');
+                this.checked = false;
             } else {
-                this.inputElement.removeAttribute('aria-checked');
+                this.inputElement.checked = this.checked;
             }
         }
     }

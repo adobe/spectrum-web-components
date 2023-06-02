@@ -28,6 +28,11 @@ function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
 }
 
+function labelForCheckbox(checkbox: Checkbox): HTMLLabelElement {
+    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    return checkbox.shadowRoot.querySelector('#label') as HTMLLabelElement;
+}
+
 function labelNodeForCheckbox(checkbox: Checkbox): Node {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
     const slotEl = checkbox.shadowRoot.querySelector('slot');
@@ -94,6 +99,13 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForCheckbox(el);
+        const inputEl = inputForCheckbox(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.false;
     });
 
     it('loads `checked` checkbox accessibly', async () => {
@@ -106,6 +118,13 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForCheckbox(el);
+        const inputEl = inputForCheckbox(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+        expect(inputEl.checked).to.be.true;
+        expect(inputEl.indeterminate).to.be.false;
     });
 
     it('is `invalid` checkbox accessibly', async () => {
@@ -118,6 +137,67 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForCheckbox(el);
+        const inputEl = inputForCheckbox(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+        expect(inputEl).to.have.attribute('aria-invalid', 'true');
+    });
+
+    it.only('is `indeterminate` checkbox accessibly', async () => {
+        const el = await fixture<Checkbox>(
+            html`
+                <sp-checkbox indeterminate>Indeterminate Checked</sp-checkbox>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+
+        const labelEl = labelForCheckbox(el);
+        const inputEl = inputForCheckbox(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.true;
+
+        inputEl.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.true;
+        expect(inputEl.indeterminate).to.be.true;
+
+        el.indeterminate = false;
+        await elementUpdated(el);
+
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.false;
+
+        inputEl.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+        expect(el.indeterminate).to.be.false;
+        expect(inputEl.indeterminate).to.be.false;
+        expect(inputEl.checked).to.be.true;
+
+        el.indeterminate = true;
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.true;
+        expect(inputEl.indeterminate).to.be.true;
+        expect(inputEl.checked).to.be.false;
+
+        el.checked = true;
+        await elementUpdated(el);
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.true;
+        expect(inputEl.indeterminate).to.be.true;
+        expect(inputEl.checked).to.be.false;
     });
 
     it('autofocuses', async () => {
