@@ -22,7 +22,7 @@ import {
 
 import { Menu } from './Menu.js';
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
-import "@spectrum-web-components/menu/sp-menu.js"
+import '@spectrum-web-components/menu/sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
 /**
@@ -89,14 +89,10 @@ export class MenuGroup extends Menu {
 
     public override render(): TemplateResult {
         return html`
-            <span
-                class="header"
-                aria-hidden="true"
-                ?hidden=${!this.headerElement}
-            >
+            <span class="header" ?hidden=${!this.headerElement}>
                 <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
-            <sp-menu role="none">
+            <sp-menu ignore>
                 <slot></slot>
             </sp-menu>
         `;
