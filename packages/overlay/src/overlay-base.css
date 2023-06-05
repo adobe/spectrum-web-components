@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 
 :host {
+    display: contents;
+    pointer-events: none;
+
     /**
      * duplicate --spectrum-overlay-animation-distance, which is out of scope
      * rather than over write so we continue to get new values from Spectrum CSS
@@ -35,13 +38,20 @@ governing permissions and limitations under the License.
     max-height: calc(100vh - 16px);
     max-height: calc(100dvh - 16px);
     max-width: calc(100vw - 16px);
+
+    --sp-overlay-open: true;
 }
 
 :host(:not([open])) .dialog {
     top: 0;
     left: 0;
     transform: translate(-999em, -999em);
-    pointer-events: none;
+
+    --sp-overlay-open: false;
+}
+
+.dialog:focus {
+    outline: none;
 }
 
 .dialog::backdrop {
@@ -50,6 +60,10 @@ governing permissions and limitations under the License.
 
 .dialog > div {
     width: 100%;
+}
+
+::slotted(*) {
+    pointer-events: auto;
 }
 
 ::slotted(sp-popover) {

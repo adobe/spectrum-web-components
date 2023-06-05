@@ -538,6 +538,7 @@ describe('Overlay - type="modal"', () => {
             });
             await opened;
             firstMenu = document.querySelector('sp-popover') as Popover;
+            expect(firstMenu.textContent).to.include('Menu source: end');
             firstRect = firstMenu.getBoundingClientRect();
             expect(firstMenu).to.not.be.null;
         });
@@ -555,10 +556,15 @@ describe('Overlay - type="modal"', () => {
             const trigger = document.querySelector(
                 'start-end-contextmenu'
             ) as HTMLElement;
-            trigger.dispatchEvent(new Event('contextmenu'));
+            trigger.shadowRoot?.querySelector('#start')?.dispatchEvent(
+                new Event('contextmenu', {
+                    composed: true,
+                })
+            );
             await closed;
             await opened;
             secondMenu = document.querySelector('sp-popover') as Popover;
+            expect(secondMenu.textContent).to.include('Menu source: start');
             secondRect = secondMenu.getBoundingClientRect();
             expect(secondMenu).to.not.be.null;
         });

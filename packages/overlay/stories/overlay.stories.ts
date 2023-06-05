@@ -236,9 +236,7 @@ export const accordion = (): TemplateResult => {
                 style="overflow-y: scroll;position: static;"
             >
                 <sp-dialog size="s" no-divder>
-                    <sp-accordion
-                        allow-multiple
-                    >
+                    <sp-accordion allow-multiple>
                         <sp-accordion-item label="Some things">
                             <p>
                                 Thing
@@ -979,7 +977,7 @@ export const modalWithinNonModal = (): TemplateResult => {
                             </sp-dialog>
                         </sp-popover>
                     </overlay-trigger>
-                </sp-dialog> 
+                </sp-dialog>
             </sp-popover>
         </overlay-trigger>
     `;
@@ -1247,19 +1245,6 @@ export const virtualElement = (args: Properties): TemplateResult => {
             </sp-menu>
         </sp-popover>
     `;
-    const handlePointerdown = (event: PointerEvent): void => {
-        if (event.button === 2) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    };
-    const handlePointerup = (event: PointerEvent): void => {
-        if (event.button === 2) {
-            event.preventDefault();
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-        }
-    };
     const handleContextmenu = async (event: PointerEvent): Promise<void> => {
         event.preventDefault();
         event.stopPropagation();
@@ -1276,7 +1261,7 @@ export const virtualElement = (args: Properties): TemplateResult => {
             placement: args.placement,
             receivesFocus: 'auto',
             virtualTrigger,
-            offset: 0,
+            offset: -10,
             notImmediatelyClosable: true,
         });
     };
@@ -1289,14 +1274,6 @@ export const virtualElement = (args: Properties): TemplateResult => {
         </style>
         <start-end-contextmenu
             class="app-root"
-            @pointerdown=${{
-                capture: true,
-                handleEvent: handlePointerdown,
-            }}
-            @pointerup=${{
-                capture: true,
-                handleEvent: handlePointerup,
-            }}
             @contextmenu=${{
                 capture: true,
                 handleEvent: handleContextmenu,

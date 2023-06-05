@@ -202,7 +202,7 @@ export class PlacementController implements ReactiveController {
         Object.assign(target.style, {
             top: '0px',
             left: '0px',
-            transform: `translate(${roundByDPR(x)}px, ${roundByDPR(y)}px)`,
+            translate: `${roundByDPR(x)}px ${roundByDPR(y)}px`,
         });
 
         target.setAttribute('actual-placement', placement);
@@ -228,9 +228,7 @@ export class PlacementController implements ReactiveController {
                     placement.startsWith('top')
                         ? '0px'
                         : '',
-                transform: `translate(${roundByDPR(arrowX)}px, ${roundByDPR(
-                    arrowY
-                )}px)`,
+                translate: `${roundByDPR(arrowX)}px ${roundByDPR(arrowY)}px`,
             });
         }
     }

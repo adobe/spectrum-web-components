@@ -196,7 +196,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         });
     }
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true })
     public open = false;
 
     public override click(): void {
@@ -406,18 +406,18 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
 
+    protected cleanup(): void {
+        this.open = false;
+        this.active = false;
+    }
+
     public async openOverlay(): Promise<void> {
         if (!this.hasSubmenu || this.open || this.disabled) {
             return;
         }
         this.open = true;
         this.active = true;
-        const cleanup = (event: Event): void => {
-            event.stopPropagation();
-            this.open = false;
-            this.active = false;
-        };
-        this.addEventListener('sp-closed', cleanup as EventListener, {
+        this.addEventListener('sp-closed', this.cleanup, {
             once: true,
         });
     }

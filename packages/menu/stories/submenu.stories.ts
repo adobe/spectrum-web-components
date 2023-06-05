@@ -300,6 +300,7 @@ export const contextMenu = (): TemplateResult => {
             placement: 'right-start',
             receivesFocus: 'auto',
             virtualTrigger,
+            notImmediatelyClosable: true,
         });
     };
     const getValueEls = (): { root: HTMLElement; first: HTMLElement } => {

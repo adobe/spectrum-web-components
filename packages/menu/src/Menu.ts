@@ -277,6 +277,7 @@ export class Menu extends SpectrumElement {
         this.addEventListener('focusin', this.handleFocusin);
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
+        this.addEventListener('sp-closed', this.handleSubmenuClosed);
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
@@ -401,6 +402,23 @@ export class Menu extends SpectrumElement {
             target.overlayElement
         );
     }
+
+    protected handleDescendentOverlayClosed(event: Event): void {
+        const target = event.composedPath()[0] as MenuItem;
+        if (!target.overlayElement) return;
+        this.descendentOverlays.delete(target.overlayElement);
+    }
+
+    public handleSubmenuClosed = (event: Event): void => {
+        event.stopPropagation();
+        const target = event.composedPath()[0] as OverlayBase;
+        target.dispatchEvent(
+            new Event('sp-menu-submenu-closed', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    };
 
     public handleSubmenuOpened = (event: Event): void => {
         event.stopPropagation();
@@ -731,6 +749,7 @@ export class Menu extends SpectrumElement {
         return html`
             <slot
                 @sp-menu-submenu-opened=${this.handleDescendentOverlayOpened}
+                @sp-menu-submenu-closed=${this.handleDescendentOverlayClosed}
                 @slotchange=${this.handleSlotchange}
             ></slot>
         `;
