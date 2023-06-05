@@ -145,61 +145,6 @@ describe('Checkbox', () => {
         expect(inputEl).to.have.attribute('aria-invalid', 'true');
     });
 
-    it.only('is `indeterminate` checkbox accessibly', async () => {
-        const el = await fixture<Checkbox>(
-            html`
-                <sp-checkbox indeterminate>Indeterminate Checked</sp-checkbox>
-            `
-        );
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-
-        const labelEl = labelForCheckbox(el);
-        const inputEl = inputForCheckbox(el);
-
-        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
-        expect(inputEl.checked).to.be.false;
-        expect(inputEl.indeterminate).to.be.true;
-
-        inputEl.click();
-        await elementUpdated(el);
-
-        expect(el.checked).to.be.false;
-        expect(el.indeterminate).to.be.true;
-        expect(inputEl.indeterminate).to.be.true;
-
-        el.indeterminate = false;
-        await elementUpdated(el);
-
-        expect(inputEl.checked).to.be.false;
-        expect(inputEl.indeterminate).to.be.false;
-
-        inputEl.click();
-        await elementUpdated(el);
-
-        expect(el.checked).to.be.true;
-        expect(el.indeterminate).to.be.false;
-        expect(inputEl.indeterminate).to.be.false;
-        expect(inputEl.checked).to.be.true;
-
-        el.indeterminate = true;
-        await elementUpdated(el);
-
-        expect(el.checked).to.be.false;
-        expect(el.indeterminate).to.be.true;
-        expect(inputEl.indeterminate).to.be.true;
-        expect(inputEl.checked).to.be.false;
-
-        el.checked = true;
-        await elementUpdated(el);
-        expect(el.checked).to.be.false;
-        expect(el.indeterminate).to.be.true;
-        expect(inputEl.indeterminate).to.be.true;
-        expect(inputEl.checked).to.be.false;
-    });
-
     it('autofocuses', async () => {
         const autoElement = testFixture.querySelector(
             'sp-checkbox[autofocus]'
@@ -283,5 +228,37 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;
+    });
+
+    it('`indeterminate, checked` becomes `not checked` on click', async () => {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox checked .indeterminate=${true}>
+                indeterminate, checked
+            </sp-checkbox>
+        `);
+        expect(el.checked).to.be.true;
+        expect(el.indeterminate).to.be.true;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.false;
+    });
+
+    it('`indeterminate, not checked` becomes `checked` on click', async () => {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox .indeterminate=${true}>
+                indeterminate, checked
+            </sp-checkbox>
+        `);
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.true;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+        expect(el.indeterminate).to.be.false;
     });
 });
