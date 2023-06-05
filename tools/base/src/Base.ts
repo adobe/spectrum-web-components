@@ -85,25 +85,28 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 return false;
             }
 
-            const shadowRootActiveElement = activeElement.shadowRoot
-                ?.activeElement as HTMLElement;
-
             // Browsers without support for the `:focus-visible`
             // selector will throw on the following test (Safari, older things).
             // Some won't throw, but will be focusing item rather than the menu and
             // will rely on the polyfill to know whether focus is "visible" or not.
             try {
-                return (
+                return !!(
                     activeElement.matches(':focus-visible') ||
                     activeElement.matches('.focus-visible') ||
-                    shadowRootActiveElement?.matches(':focus-visible') ||
-                    shadowRootActiveElement?.matches('.focus-visible')
+                    activeElement.shadowRoot?.activeElement?.matches(
+                        ':focus-visible'
+                    ) ||
+                    activeElement.shadowRoot?.activeElement?.matches(
+                        '.focus-visible'
+                    )
                 );
                 /* c8 ignore next 3 */
             } catch (error) {
-                return (
+                return !!(
                     activeElement.matches('.focus-visible') ||
-                    shadowRootActiveElement?.matches('.focus-visible')
+                    activeElement.shadowRoot?.activeElement?.matches(
+                        '.focus-visible'
+                    )
                 );
             }
         }
