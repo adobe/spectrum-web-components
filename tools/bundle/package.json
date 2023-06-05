@@ -72,6 +72,7 @@
         "@spectrum-web-components/base": "^0.34.0",
         "@spectrum-web-components/button": "^0.34.0",
         "@spectrum-web-components/button-group": "^0.34.0",
+        "@spectrum-web-components/calendar": "^0.0.1",
         "@spectrum-web-components/card": "^0.34.0",
         "@spectrum-web-components/checkbox": "^0.34.0",
         "@spectrum-web-components/clear-button": "^0.34.0",
