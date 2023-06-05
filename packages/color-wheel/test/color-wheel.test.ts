@@ -121,6 +121,18 @@ describe('ColorWheel', () => {
 
         await elementUpdated(el);
 
+        expect(el.focused).to.be.false;
+
+        await sendKeys({ press: 'Tab' });
+        await elementUpdated(el);
+
+        expect(el.focused).to.be.true;
+
+        el.blur();
+        await elementUpdated(el);
+
+        expect(el.focused).to.be.false;
+
         el.dispatchEvent(new FocusEvent('focusin'));
         await elementUpdated(el);
 
