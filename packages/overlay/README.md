@@ -55,7 +55,7 @@ While the [`<dialog>` element](https://developer.mozilla.org/en-US/docs/Web/HTML
 
 ### Complex layered
 
-When an overlay is places within a page with complex layering, it is possible for the content therein to fall behind other content in the `z-index` stack. The following example is somewhat contrived, but image a toolbar next to properties panel. If the toolbar has a lower `z-index` and the properties panel, any overlaid content (tooltips, etc.) within that toolbar will display underneath any content in the properties panel with which it may share pixels.
+When an overlay is placed within a page with complex layering, the content therein can fall behind other content in the `z-index` stack. The following example is somewhat contrived but, imagine a toolbar next to a properties panel. If the toolbar has a lower `z-index` and the properties panel, any overlaid content (tooltips, etc.) within that toolbar will display underneath any content in the properties panel with which it may share pixels.
 
 ```html
 <div class="complex-layered-demo">
@@ -87,11 +87,11 @@ When an overlay is places within a page with complex layering, it is possible fo
 </style>
 ```
 
-Properly managed `z-index` values will support working around this issue while browsers work to adopt the `popover` attribute. In this demo, you can easily achieve the same output but sharing one `z-index` between the various pieces of content, removing `z-index` values all together, or raising the `.complex-layered-holder` element to a higher `z-index` than the `.complex-layered-blocker` element.
+Properly managed `z-index` values will support working around this issue while browsers work to adopt the `popover` attribute. In this demo, you can easily achieve the same output but sharing one `z-index` between the various pieces of content, removing `z-index` values altogether, or raising the `.complex-layered-holder` element to a higher `z-index` than the `.complex-layered-blocker` element.
 
 ### Contained
 
-[CSS Containment](https://developer.mozilla.org/en-US/docs/Web/CSS/contain) allows a developer direct control on how the internals of one element effect the paint and layout of the internals of other elements on the same page. While leveraging some of its values can offer performance gains, they can interupt the delivery of your overlaid content.
+[CSS Containment](https://developer.mozilla.org/en-US/docs/Web/CSS/contain) allows a developer direct control over how the internals of one element affects the paint and layout of the internals of other elements on the same page. While leveraging some of its values can offer performance gains, they can interrupt the delivery of your overlaid content.
 
 ```html
 <div class="contained-demo">
@@ -109,7 +109,7 @@ Properly managed `z-index` values will support working around this issue while b
 </style>
 ```
 
-This situation is a little more complex to handle, if you are not OK with simply removing the `contain` value. In the case that you would like to continue to leverage `contain` is to place "contained" content separately from your overlaid content, like so:
+You could just _remove_ the `contain` rule. But, if you are not OK with simply removing the `contain` value, you still have options. In the case that you would like to continue to leverage `contain` is to place "contained" content separately from your overlaid content, like so:
 
 ```html
 <div class="contained-demo">
@@ -125,7 +125,7 @@ This situation is a little more complex to handle, if you are not OK with simply
 </style>
 ```
 
-`<sp-overlay>` accepts an ID reference via the `trigger` attribute in order to relate it to interactions and positioning in the DOM. To fulfill this reference the two elements need to be in the same DOM tree. However, `<sp-overlay>` alternatively accepts a `triggerElement` _property_ that opens even more flexibility in addressing this situation.
+`<sp-overlay>` accepts an ID reference via the `trigger` attribute to relate it to interactions and positioning in the DOM. To fulfill this reference the two elements need to be in the same DOM tree. However, `<sp-overlay>` alternatively accepts a `triggerElement` _property_ that opens even more flexibility in addressing this situation.
 
 ### Clip pathed
 
@@ -147,7 +147,7 @@ While not offering the same performance opportunities as `contain`, `clip-path` 
 </style>
 ```
 
-Here, again, working with your content needs (whether you actually want to leverage `clip-path`) or DOM structure (not colocating clipped and non-clipped content) will allow you to avoid this issue:
+Here, again, working with your content needs (whether or not you want to leverage `clip-path`) or DOM structure (not colocating clipped and non-clipped content) will allow you to avoid this issue:
 
 ```html
 <div class="clip-pathed-demo">
