@@ -164,7 +164,7 @@ const template = ({
                 placement="${placement}"
                 tip
             >
-                <sp-dialog no-divder>
+                <sp-dialog no-divider>
                     <sp-slider
                         value="5"
                         step="0.5"
