@@ -96,8 +96,29 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
 
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
 
-const addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
-const removeEvent = new MenuItemRemovedEvent();
+let addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
+let removeEvent = new MenuItemRemovedEvent();
+/**
+ * Code to cleanup these global events async in batches
+ */
+let addOrUpdateEventRafId = 0;
+function resetAddOrUpdateEvent(): void {
+    if (addOrUpdateEventRafId === 0) {
+        addOrUpdateEventRafId = requestAnimationFrame(() => {
+            addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
+            addOrUpdateEventRafId = 0;
+        });
+    }
+}
+let removeEventEventtRafId = 0;
+function resetRemoveEvent(): void {
+    if (removeEventEventtRafId === 0) {
+        removeEventEventtRafId = requestAnimationFrame(() => {
+            removeEvent = new MenuItemRemovedEvent();
+            removeEventEventtRafId = 0;
+        });
+    }
+}
 
 /**
  * @element sp-menu-item
@@ -515,17 +536,20 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
         addOrUpdateEvent.reset(this);
         this.dispatchEvent(addOrUpdateEvent);
+        resetAddOrUpdateEvent();
         this._parentElement = this.parentElement as HTMLElement;
     }
 
     _parentElement!: HTMLElement;
 
     public override disconnectedCallback(): void {
-        removeEvent.reset(this);
-        if (!this.isInSubmenu) {
-            this._parentElement?.dispatchEvent(removeEvent);
+        if (!this.isInSubmenu && this._parentElement) {
+            removeEvent.reset(this);
+            this._parentElement.dispatchEvent(removeEvent);
+            resetRemoveEvent();
         }
         this.isInSubmenu = false;
+        this._itemChildren = undefined;
         super.disconnectedCallback();
     }
 
@@ -536,6 +560,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         await new Promise((ready) => requestAnimationFrame(ready));
         addOrUpdateEvent.reset(this);
         this.dispatchEvent(addOrUpdateEvent);
+        resetAddOrUpdateEvent();
     }
 
     public menuData: {
