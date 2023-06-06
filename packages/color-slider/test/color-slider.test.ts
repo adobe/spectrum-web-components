@@ -131,12 +131,12 @@ describe('ColorSlider', () => {
 
         expect(el.focused).to.be.false;
 
-        el.dispatchEvent(new FocusEvent('focusin'));
+        el.dispatchEvent(new FocusEvent('focus'));
         await elementUpdated(el);
 
         expect(el.focused).to.be.true;
 
-        el.dispatchEvent(new FocusEvent('focusout'));
+        el.dispatchEvent(new FocusEvent('blur'));
         await elementUpdated(el);
 
         expect(el.focused).to.be.false;

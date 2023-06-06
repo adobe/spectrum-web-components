@@ -90,24 +90,13 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             // Some won't throw, but will be focusing item rather than the menu and
             // will rely on the polyfill to know whether focus is "visible" or not.
             try {
-                return !!(
+                return (
                     activeElement.matches(':focus-visible') ||
-                    activeElement.matches('.focus-visible') ||
-                    activeElement.shadowRoot?.activeElement?.matches(
-                        ':focus-visible'
-                    ) ||
-                    activeElement.shadowRoot?.activeElement?.matches(
-                        '.focus-visible'
-                    )
+                    activeElement.matches('.focus-visible')
                 );
                 /* c8 ignore next 3 */
             } catch (error) {
-                return !!(
-                    activeElement.matches('.focus-visible') ||
-                    activeElement.shadowRoot?.activeElement?.matches(
-                        '.focus-visible'
-                    )
-                );
+                return activeElement.matches('.focus-visible');
             }
         }
 
