@@ -119,12 +119,24 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        el.dispatchEvent(new FocusEvent('focusin'));
+        expect(el.focused).to.be.false;
+
+        await sendKeys({ press: 'Tab' });
         await elementUpdated(el);
 
         expect(el.focused).to.be.true;
 
-        el.dispatchEvent(new FocusEvent('focusout'));
+        el.blur();
+        await elementUpdated(el);
+
+        expect(el.focused).to.be.false;
+
+        el.dispatchEvent(new FocusEvent('focus'));
+        await elementUpdated(el);
+
+        expect(el.focused).to.be.true;
+
+        el.dispatchEvent(new FocusEvent('blur'));
         await elementUpdated(el);
 
         expect(el.focused).to.be.false;

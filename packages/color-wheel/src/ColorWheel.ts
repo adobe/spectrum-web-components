@@ -180,11 +180,11 @@ export class ColorWheel extends Focusable {
         this.input.focus();
     }
 
-    private handleFocusin(): void {
+    private handleFocus(): void {
         this.focused = true;
     }
 
-    private handleFocusout(): void {
+    private handleBlur(): void {
         if (this._pointerDown) {
             return;
         }
@@ -384,8 +384,8 @@ export class ColorWheel extends Focusable {
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
-        this.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('focus', this.handleFocus);
+        this.addEventListener('blur', this.handleBlur);
     }
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];
