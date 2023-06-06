@@ -700,6 +700,10 @@ export class Menu extends SpectrumElement {
         }
         this.updateComplete.then(() => this.updateItemFocus());
     }
+    public override disconnectedCallback(): void {
+        this.cachedChildItems = undefined;
+        super.disconnectedCallback();
+    }
 
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
