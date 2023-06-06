@@ -30,7 +30,11 @@ function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
 
 function labelForCheckbox(checkbox: Checkbox): HTMLLabelElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
-    return checkbox.shadowRoot.querySelector('#label') as HTMLLabelElement;
+    const labelEl = checkbox.shadowRoot.querySelector('label');
+    if (!labelEl) {
+        throw new Error('Failed to find label in shadowRoot');
+    }
+    return labelEl;
 }
 
 function labelNodeForCheckbox(checkbox: Checkbox): Node {
