@@ -564,7 +564,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(47.91666666666667);
+        expect(el.sliderHandlePosition).to.equal(100 - 47.91666666666667);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -589,7 +589,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(53.125);
+        expect(el.sliderHandlePosition).to.equal(100 - 53.125);
     });
     it('accepts pointer events in dir="rtl"', async () => {
         document.documentElement.dir = 'rtl';

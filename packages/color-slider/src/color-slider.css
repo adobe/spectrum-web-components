@@ -20,6 +20,11 @@ governing permissions and limitations under the License.
     touch-action: none;
 }
 
+:host([vertical]) .handle {
+    top: unset;
+    bottom: 0;
+}
+
 :host(:focus) {
     outline: none;
 }
