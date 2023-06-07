@@ -204,4 +204,36 @@ describe('Checkbox', () => {
 
         expect(el.checked).to.be.true;
     });
+
+    it('`indeterminate, checked` becomes `not checked` on click', async () => {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox checked .indeterminate=${true}>
+                indeterminate, checked
+            </sp-checkbox>
+        `);
+        expect(el.checked).to.be.true;
+        expect(el.indeterminate).to.be.true;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.false;
+    });
+
+    it('`indeterminate, not checked` becomes `checked` on click', async () => {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox .indeterminate=${true}>
+                indeterminate, checked
+            </sp-checkbox>
+        `);
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.true;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+        expect(el.indeterminate).to.be.false;
+    });
 });

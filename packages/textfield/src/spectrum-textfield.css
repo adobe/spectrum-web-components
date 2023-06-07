@@ -428,69 +428,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-#textfield .icon-workflow {
-    bottom: 0;
-    color: var(
-        --highcontrast-textfield-text-color-default,
-        var(
-            --mod-textfield-text-color-default,
-            var(--spectrum-textfield-text-color-default)
-        )
-    );
-    display: block;
-    margin-block: auto;
-    position: absolute;
-    top: 0;
-}
-#textfield .icon-workflow.icon-search {
-    right: auto;
-}
-:host([disabled]) #textfield #textfield .icon-workflow {
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
-}
-:host([quiet]) #textfield .icon-workflow {
-    color: var(
-        --highcontrast-textfield-text-color-default,
-        var(
-            --mod-textfield-text-color-default,
-            var(--spectrum-textfield-text-color-default)
-        )
-    );
-}
-:host([quiet][disabled]) #textfield .icon-workflow {
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
-}
-:host([readonly]) #textfield #textfield .icon-workflow {
-    color: var(
-        --highcontrast-textfield-text-color-readonly,
-        var(
-            --mod-textfield-text-color-readonly,
-            var(--spectrum-textfield-text-color-readonly)
-        )
-    );
-}
-:host([disabled]) #textfield .icon.icon-search,
-:host([readonly]) #textfield .icon.icon-search {
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
-}
 :host([invalid]) #textfield .icon,
 :host([valid]) #textfield .icon {
     grid-area: 2/2;
@@ -904,7 +841,7 @@ governing permissions and limitations under the License.
     color: var(
         --highcontrast-textfield-text-color-keyboard-focus,
         var(
-            --mod-textfield-text-color-focus,
+            --mod-textfield-text-color-keyboard-focus,
             var(--spectrum-textfield-text-color-keyboard-focus)
         )
     );
@@ -937,7 +874,7 @@ governing permissions and limitations under the License.
     color: var(
         --highcontrast-textfield-text-color-keyboard-focus,
         var(
-            --mod-textfield-text-color-focus,
+            --mod-textfield-text-color-keyboard-focus,
             var(--spectrum-textfield-text-color-keyboard-focus)
         )
     );

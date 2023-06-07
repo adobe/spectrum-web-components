@@ -192,6 +192,10 @@ export class SplitView extends SpectrumElement {
                           class=${classMap(splitterClasses)}
                           role="separator"
                           aria-label=${ifDefined(this.label || undefined)}
+                          aria-valuenow=${Math.round(
+                              (parseFloat(this.firstPaneSize) / this.viewSize) *
+                                  100
+                          )}
                           tabindex=${ifDefined(
                               this.resizable ? '0' : undefined
                           )}

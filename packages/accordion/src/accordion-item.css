@@ -16,20 +16,6 @@ governing permissions and limitations under the License.
     --spectrum-accordion-item-header-height: 46px;
 }
 
-/**
- * What follows are styles working around: https://github.com/adobe/spectrum-css/issues/1033
- */
-#indicator {
-    /* .spectrum-Accordion-itemIndicator */
-    top: calc(
-        50% -
-            var(
-                --spectrum-accordion-icon-height,
-                var(--spectrum-global-dimension-size-125)
-            ) / 2
-    );
-}
-
 #heading {
     /* .spectrum-Accordion-itemHeading */
     height: auto;
