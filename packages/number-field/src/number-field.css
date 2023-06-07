@@ -12,13 +12,12 @@ governing permissions and limitations under the License.
 
 @import './spectrum-number-field.css';
 
-:host([quiet]) {
-    width: var(--spectrum-stepper-quiet-width);
+:host {
+    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
 }
 
-#textfield,
-:host([quiet]) #textfield {
-    width: 100%;
+#textfield {
+    inline-size: 100%;
 }
 
 sp-field-button {

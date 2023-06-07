@@ -15,10 +15,7 @@ governing permissions and limitations under the License.
 :host {
     display: inline-flex;
     flex-direction: column;
-    width: var(
-        --spectrum-alias-single-line-width,
-        var(--spectrum-global-dimension-size-2400)
-    );
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
 }
 
 :host([multiline]) {
@@ -30,7 +27,7 @@ governing permissions and limitations under the License.
 }
 
 #textfield {
-    width: 100%;
+    inline-size: 100%;
 }
 
 #textfield,
@@ -39,7 +36,7 @@ textarea {
 }
 
 .input {
-    min-width: var(--spectrum-textfield-texticon-min-width);
+    min-inline-size: var(--spectrum-textfield-min-width);
 }
 
 :host([focused]) .input {
@@ -112,7 +109,7 @@ textarea {
             )
     );
     text-indent: 0;
-    width: 100%;
+    inline-size: 100%;
     vertical-align: top;
     margin: 0;
     overflow: visible;

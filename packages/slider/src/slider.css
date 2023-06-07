@@ -47,14 +47,14 @@ sp-field-label {
 :host([editable]) sp-number-field {
     grid-area: number;
 
-    --spectrum-stepper-width: var(
+    --mod-stepper-width: var(
         --spectrum-slider-editable-number-field-width,
         var(--spectrum-global-dimension-size-1000)
     );
 }
 
 :host([hide-stepper]) sp-number-field {
-    --spectrum-stepper-width: var(
+    --mod-stepper-width: var(
         --spectrum-slider-editable-number-field-width,
         var(--spectrum-global-dimension-size-900)
     );
