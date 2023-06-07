@@ -171,8 +171,12 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     }
 
     private handleClick(event: Event): void {
-        const target = event.target as ActionButton;
-        if (typeof target.value === 'undefined') {
+        const target = event.composedPath().find((el) => {
+            const btnTarget = el as ActionButton;
+            return this.buttons.includes(btnTarget);
+        }) as ActionButton;
+
+        if (typeof target?.value === 'undefined') {
             return;
         }
         switch (this.selects) {
