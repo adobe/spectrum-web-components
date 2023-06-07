@@ -1614,9 +1614,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-clearbutton-border-radius: var(
         --spectrum-global-dimension-size-150
     );
-    --spectrum-alias-search-border-radius: var(
-        --spectrum-global-dimension-size-300
-    );
     --spectrum-alias-combobox-quiet-button-offset-x: var(
         --spectrum-global-dimension-size-50
     );
@@ -1629,19 +1626,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-input-border-size: var(
         --spectrum-global-dimension-static-size-25
     );
-    --spectrum-alias-search-padding-left-s: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-search-padding-left-m: var(
-        --spectrum-global-dimension-size-175
-    );
-    --spectrum-alias-search-padding-left-l: var(
-        --spectrum-global-dimension-size-200
-    );
-    --spectrum-alias-search-padding-left-xl: var(
-        --spectrum-global-dimension-size-225
-    );
-    --spectrum-alias-search-border-radius-quiet: 0;
     --spectrum-alias-percent-50: 50%;
     --spectrum-alias-percent-70: 70%;
     --spectrum-alias-percent-100: 100%;

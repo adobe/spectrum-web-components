@@ -70,6 +70,9 @@ export class Menu extends SpectrumElement {
     @property({ type: String, reflect: true })
     public label = '';
 
+    @property({ type: Boolean, reflect: true })
+    public ignore = false;
+
     @property({ type: String, reflect: true })
     public selects: undefined | 'inherit' | 'single' | 'multiple';
 
@@ -167,7 +170,7 @@ export class Menu extends SpectrumElement {
     private onFocusableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
     ): void {
-        if (event.item.menuData.focusRoot) {
+        if (event.item.menuData.focusRoot && !this.ignore) {
             // Only have one tab stop per Menu tree
             this.tabIndex = -1;
         }
@@ -176,19 +179,22 @@ export class Menu extends SpectrumElement {
 
         if (this.selects === 'inherit') {
             this.resolvedSelects = 'inherit';
-            this.resolvedRole = (event.currentAncestorWithSelects?.getAttribute(
-                'role'
-            ) ||
-                this.getAttribute('role') ||
-                undefined) as RoleType;
+            const ignoreMenu = event.currentAncestorWithSelects?.ignore;
+            this.resolvedRole = ignoreMenu
+                ? 'none'
+                : ((event.currentAncestorWithSelects?.getAttribute('role') ||
+                      this.getAttribute('role') ||
+                      undefined) as RoleType);
         } else if (this.selects) {
-            this.resolvedRole = (this.getAttribute('role') ||
-                undefined) as RoleType;
+            this.resolvedRole = this.ignore
+                ? 'none'
+                : ((this.getAttribute('role') || undefined) as RoleType);
             this.resolvedSelects = this.selects;
             event.currentAncestorWithSelects = this;
         } else {
-            this.resolvedRole = (this.getAttribute('role') ||
-                undefined) as RoleType;
+            this.resolvedRole = this.ignore
+                ? 'none'
+                : ((this.getAttribute('role') || undefined) as RoleType);
             this.resolvedSelects =
                 this.resolvedRole === 'none' ? 'ignore' : 'none';
         }
@@ -643,11 +649,11 @@ export class Menu extends SpectrumElement {
 
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
-        if (!this.hasAttribute('tabindex')) {
+        if (!this.hasAttribute('tabindex') && !this.ignore) {
             const role = this.getAttribute('role');
             if (role === 'group') {
                 this.tabIndex = -1;
-            } else if (role !== 'none') {
+            } else {
                 this.tabIndex = 0;
             }
         }
@@ -689,7 +695,7 @@ export class Menu extends SpectrumElement {
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        if (!this.hasAttribute('role')) {
+        if (!this.hasAttribute('role') && !this.ignore) {
             this.setAttribute('role', this.ownRole);
         }
         this.updateComplete.then(() => this.updateItemFocus());

@@ -283,7 +283,6 @@ describe('Checkbox', () => {
                 indeterminate, checked
             </sp-checkbox>
         `);
-
         expect(el.checked).to.be.true;
         expect(el.indeterminate).to.be.true;
 
@@ -298,6 +297,7 @@ describe('Checkbox', () => {
         expect(el.indeterminate).to.be.false;
         expect(inputEl.checked).to.be.false;
         expect(inputEl.indeterminate).to.be.false;
+
     });
 
     it('`indeterminate, not checked` becomes `checked` on click', async () => {
@@ -318,7 +318,6 @@ describe('Checkbox', () => {
 
         expect(el.checked).to.be.true;
         expect(el.indeterminate).to.be.false;
-
         expect(inputEl.checked).to.be.true;
         expect(inputEl.indeterminate).to.be.false;
     });

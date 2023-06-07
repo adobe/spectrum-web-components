@@ -1365,3 +1365,39 @@ governing permissions and limitations under the License.
     );
     --system-spectrum-textfield-border-width: var(--spectrum-border-width-100);
 }
+:host,
+:root {
+    --system-spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --system-spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-100
+    );
+    --system-spectrum-search-border-color-default: var(--spectrum-gray-500);
+    --system-spectrum-search-border-color-hover: var(--spectrum-gray-600);
+    --system-spectrum-search-border-color-focus: var(--spectrum-gray-800);
+    --system-spectrum-search-border-color-focus-hover: var(--spectrum-gray-900);
+    --system-spectrum-search-border-color-key-focus: var(--spectrum-gray-900);
+    --system-spectrum-search-sizes-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizes-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-75
+    );
+    --system-spectrum-search-sizem-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizem-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-100
+    );
+    --system-spectrum-search-sizel-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizel-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-200
+    );
+    --system-spectrum-search-sizexl-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizexl-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-300
+    );
+}
