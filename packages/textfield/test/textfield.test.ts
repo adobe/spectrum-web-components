@@ -127,13 +127,15 @@ describe('Textfield', () => {
                 ></sp-textfield>
             `
         );
-        const startBounds = el.getBoundingClientRect();
-
+        // Resizing only effects the block size of the host rect, so measure the `focusElement` when resizing.
+        const sizedElement = (el as HTMLElement & { focusElement: HTMLElement })
+            .focusElement;
+        const startBounds = sizedElement.getBoundingClientRect();
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: [startBounds.right - 2, startBounds.bottom - 2],
+                    position: [startBounds.right - 6, startBounds.bottom - 6],
                 },
                 {
                     type: 'down',
@@ -148,9 +150,9 @@ describe('Textfield', () => {
             ],
         });
 
-        const endBounds = el.getBoundingClientRect();
-        expect(endBounds.width).to.be.greaterThan(startBounds.width);
+        const endBounds = sizedElement.getBoundingClientRect();
         expect(endBounds.height).to.be.greaterThan(startBounds.height);
+        expect(endBounds.width).to.be.greaterThan(startBounds.width);
     });
     it('accepts resize styling', async () => {
         const el = await litFixture<Textfield>(
