@@ -270,7 +270,9 @@ export class ColorSlider extends Focusable {
         const size = this.vertical ? rect.height : rect.width;
 
         const percent = Math.max(0, Math.min(1, (offset - minOffset) / size));
-        const sliderHandlePosition = 100 * percent;
+        const sliderHandlePosition = this.vertical
+            ? 100 - 100 * percent
+            : 100 * percent;
 
         return sliderHandlePosition;
     }
@@ -286,7 +288,7 @@ export class ColorSlider extends Focusable {
     }
 
     private get handlePositionStyles(): string {
-        return `${this.vertical ? 'top' : 'left'}: ${
+        return `${this.vertical ? 'bottom' : 'left'}: ${
             this.sliderHandlePosition
         }%`;
     }
@@ -302,7 +304,7 @@ export class ColorSlider extends Focusable {
                     class="gradient"
                     role="presentation"
                     style="background: linear-gradient(to ${this.vertical
-                        ? 'bottom'
+                        ? 'top'
                         : 'right'}, var(--sp-color-slider-gradient, var(--sp-color-slider-gradient-fallback)));"
                 >
                     <slot name="gradient"></slot>
