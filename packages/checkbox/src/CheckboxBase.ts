@@ -55,7 +55,6 @@ export class CheckboxBase extends Focusable {
         return html`
             <input
                 id="input"
-                aria-labelledby="label"
                 type="checkbox"
                 .checked=${this.checked}
                 @change=${this.handleChange}

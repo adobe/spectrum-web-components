@@ -117,7 +117,7 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
                 ${checkmarkIcon[this.size as DefaultElementSize]}
                 ${dashIcon[this.size as DefaultElementSize]}
             </span>
-            <label id="label"><slot></slot></label>
+            <label id="label" for="input"><slot></slot></label>
         `;
     }
 
