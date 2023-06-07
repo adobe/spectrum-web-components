@@ -22,6 +22,7 @@ import {
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
@@ -110,6 +111,27 @@ describe('Checkbox', () => {
         expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
         expect(inputEl.checked).to.be.false;
         expect(inputEl.indeterminate).to.be.false;
+
+        type NamedRoledAndCheckedNode = {
+            name: string;
+            role: string;
+            checked: boolean;
+        };
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as NamedRoledAndCheckedNode & {
+            children: NamedRoledAndCheckedNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedRoledAndCheckedNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'checkbox' &&
+                    !node.checked &&
+                    node.name === 'Not Checked'
+            ),
+            'Has a named and not checked "checkbox" element'
+        ).to.not.be.null;
     });
 
     it('loads `checked` checkbox accessibly', async () => {
@@ -129,12 +151,33 @@ describe('Checkbox', () => {
         expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
         expect(inputEl.checked).to.be.true;
         expect(inputEl.indeterminate).to.be.false;
+
+        type NamedRoledAndCheckedNode = {
+            name: string;
+            role: string;
+            checked: boolean;
+        };
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as NamedRoledAndCheckedNode & {
+            children: NamedRoledAndCheckedNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedRoledAndCheckedNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'checkbox' &&
+                    node.checked &&
+                    node.name === 'Checked'
+            ),
+            'Has a named and checked "checkbox" element'
+        ).to.not.be.null;
     });
 
     it('is `invalid` checkbox accessibly', async () => {
         const el = await fixture<Checkbox>(
             html`
-                <sp-checkbox invalid>Invalid Checked</sp-checkbox>
+                <sp-checkbox invalid>Invalid Not Checked</sp-checkbox>
             `
         );
 
@@ -240,14 +283,21 @@ describe('Checkbox', () => {
                 indeterminate, checked
             </sp-checkbox>
         `);
+
         expect(el.checked).to.be.true;
         expect(el.indeterminate).to.be.true;
+
+        const inputEl = inputForCheckbox(el);
+        expect(inputEl.checked).to.be.true;
+        expect(inputEl.indeterminate).to.be.true;
 
         el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.false;
         expect(el.indeterminate).to.be.false;
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.false;
     });
 
     it('`indeterminate, not checked` becomes `checked` on click', async () => {
@@ -259,10 +309,17 @@ describe('Checkbox', () => {
         expect(el.checked).to.be.false;
         expect(el.indeterminate).to.be.true;
 
+        const inputEl = inputForCheckbox(el);
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.true;
+
         el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;
         expect(el.indeterminate).to.be.false;
+
+        expect(inputEl.checked).to.be.true;
+        expect(inputEl.indeterminate).to.be.false;
     });
 });
