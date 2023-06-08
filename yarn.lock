@@ -4391,10 +4391,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@spectrum-css/accordion@^3.0.44":
-  version "3.0.44"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-3.0.44.tgz#79b8665be354b72dca710a9ba866e79a86ce07c1"
-  integrity sha512-YnoZstfo+5PrKK+rf1QMib2yx0NEFhkkYoVahfUJC/vTEGTnQ+9XzOYYVylG0CC5PAJEEqZ3AMptLyNRbUDKUg==
+"@spectrum-css/accordion@4.0.0-beta.1":
+  version "4.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-4.0.0-beta.1.tgz#4b3e1bb16bd98c0c60d53b3083faa92500260c1a"
+  integrity sha512-JnV2kLibdY5JwSOW/wwVSDDHjRJ5V4TMO4DNDK7tVsS3faHKicb6JHl3Ftryw5efAUumHN98N89Gy3/0li0cgg==
 
 "@spectrum-css/actionbar@^4.0.1":
   version "4.0.1"

@@ -51,6 +51,7 @@ governing permissions and limitations under the License.
         --spectrum-bold-font-weight
     );
 }
+
 :host,
 :root {
     --system-spectrum-actionbutton-background-color-default: var(
