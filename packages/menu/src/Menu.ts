@@ -194,7 +194,7 @@ export class Menu extends SpectrumElement {
         if (!cascadeData) return;
 
         event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
-        if (cascadeData.hadFocusRoot) {
+        if (cascadeData.hadFocusRoot && !this.ignore) {
             // Only have one tab stop per Menu tree
             this.tabIndex = -1;
         }
