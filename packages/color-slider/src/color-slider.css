@@ -21,8 +21,8 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) .handle {
-    top: unset;
-    bottom: 0;
+    inset-block-start: unset;
+    inset-block-end: 0;
 }
 
 :host(:focus) {
@@ -31,6 +31,10 @@ governing permissions and limitations under the License.
 
 .gradient {
     overflow: hidden;
+}
+
+:host([dir='rtl']) .gradient {
+    transform: scaleX(-1);
 }
 
 ::slotted(*) {
