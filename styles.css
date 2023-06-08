@@ -668,16 +668,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-225
     );--spectrum-alias-clearbutton-border-radius:var(
         --spectrum-global-dimension-size-50
-    );--spectrum-alias-search-border-radius:var(
-        --spectrum-global-dimension-size-50
-    );--spectrum-alias-search-border-radius-quiet:0;--spectrum-alias-combobox-quiet-button-offset-x:var(
+    );--spectrum-alias-combobox-quiet-button-offset-x:var(
         --spectrum-global-dimension-size-100
-    );--spectrum-alias-search-padding-left-s:var(
-        --spectrum-global-dimension-size-85
-    );--spectrum-alias-search-padding-left-l:var(
-        --spectrum-global-dimension-size-160
-    );--spectrum-alias-search-padding-left-xl:var(
-        --spectrum-global-dimension-size-185
     );--spectrum-alias-percent-50:50%;--spectrum-alias-percent-70:70%;--spectrum-alias-percent-100:100%;--spectrum-alias-breakpoint-xsmall:304px;--spectrum-alias-breakpoint-small:768px;--spectrum-alias-breakpoint-medium:1280px;--spectrum-alias-breakpoint-large:1768px;--spectrum-alias-breakpoint-xlarge:2160px;--spectrum-alias-grid-columns:12;--spectrum-alias-grid-fluid-width:100%;--spectrum-alias-grid-fixed-max-width:1280px;--spectrum-alias-border-size-thin:var(
         --spectrum-global-dimension-static-size-10
     );--spectrum-alias-border-size-thick:var(
@@ -2345,7 +2337,25 @@ governing permissions and limitations under the License.
         --spectrum-gray-900
     );--system-spectrum-textfield-border-color-keyboard-focus:var(
         --spectrum-gray-900
-    );--system-spectrum-textfield-border-width:var(--spectrum-border-width-100)}
+    );--system-spectrum-textfield-border-width:var(--spectrum-border-width-100)}:root{--system-spectrum-search-border-radius:var(--spectrum-corner-radius-100);--system-spectrum-search-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-100
+    );--system-spectrum-search-border-color-default:var(--spectrum-gray-500);--system-spectrum-search-border-color-hover:var(--spectrum-gray-600);--system-spectrum-search-border-color-focus:var(--spectrum-gray-800);--system-spectrum-search-border-color-focus-hover:var(--spectrum-gray-900);--system-spectrum-search-border-color-key-focus:var(--spectrum-gray-900);--system-spectrum-search-sizes-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizes-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-75
+    );--system-spectrum-search-sizem-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizem-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-100
+    );--system-spectrum-search-sizel-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizel-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-200
+    );--system-spectrum-search-sizexl-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizexl-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-300
+    )}
 
 /*
 Copyright 2023 Adobe. All rights reserved.
@@ -2581,9 +2591,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-150
     );--spectrum-alias-control-three-width-s:23px;--spectrum-alias-control-three-width-m:var(
         --spectrum-global-dimension-static-size-325
-    );--spectrum-alias-control-three-width-l:29px;--spectrum-alias-control-three-width-xl:33px;--spectrum-alias-search-padding-left-m:var(
-        --spectrum-global-dimension-size-125
-    );--spectrum-alias-focus-ring-border-radius-regular:var(
+    );--spectrum-alias-control-three-width-l:29px;--spectrum-alias-control-three-width-xl:33px;--spectrum-alias-focus-ring-border-radius-regular:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-alias-focus-ring-radius-default:var(
         --spectrum-global-dimension-static-size-100
@@ -2780,9 +2788,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-325
     );--spectrum-alias-control-three-width-m:var(
         --spectrum-global-dimension-static-size-450
-    );--spectrum-alias-control-three-width-l:41px;--spectrum-alias-control-three-width-xl:46px;--spectrum-alias-search-padding-left-m:var(
-        --spectrum-global-dimension-static-size-150
-    );--spectrum-alias-focus-ring-border-radius-regular:var(
+    );--spectrum-alias-control-three-width-l:41px;--spectrum-alias-control-three-width-xl:46px;--spectrum-alias-focus-ring-border-radius-regular:var(
         --spectrum-global-dimension-static-size-115
     );--spectrum-alias-focus-ring-radius-default:var(
         --spectrum-global-dimension-static-size-115
