@@ -143,11 +143,17 @@ Leveraging the `trigger` attribut to pass an ID reference to another element wit
 ## API
 
 ```html
-open delayed offset="Number | [Number, Number]" placement=${placement}
-received-focus=${‘true’ | ‘false’ | ‘auto’ (default)} trigger=${idOfTrigger AND
-${string}@${string}} .triggerElement(s)=${trigger Element by reference} // match
-naming to aria element reference spec .triggerInteraction=${ ‘click’ |
-‘longpress’ | ‘hover’ } type=${type}
+<sp-overlay
+    ?open=${boolean}
+    ?delayed=${boolean}
+    offset=${Number | [Number, Number]}
+    placement=${Placement}
+    receives-focus=${'true' | 'false' | 'auto' (default)
+    trigger=${string | ${string}@${string}}
+    .triggerElement=${HTMLElement}
+    .triggerInteraction=${'click' | 'longpress' | 'hover'}
+    type=${'auto' | 'hint' | 'manual' | 'modal' | 'page'}
+></sp-overlay>
 ```
 
 ## Styling
