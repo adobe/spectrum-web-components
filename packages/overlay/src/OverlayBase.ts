@@ -163,9 +163,13 @@ export class OverlayBase extends SpectrumElement {
     set disabled(disabled: boolean) {
         this._disabled = disabled;
         if (disabled) {
+            if (this.hasNonVirtualTrigger) {
+                this.unbindEvents(this.triggerElement as HTMLElement);
+            }
             this.wasOpen = this.open;
             this.open = false;
         } else {
+            this.bindEvents();
             this.open = this.open || this.wasOpen;
             this.wasOpen = false;
         }
@@ -390,9 +394,10 @@ export class OverlayBase extends SpectrumElement {
 
     protected bindEvents(): void {
         const nextTriggerElement = this.triggerElement as HTMLElement;
+        if (!nextTriggerElement) return;
         switch (this.triggerInteraction) {
             case 'click':
-                this.bundClickEvents(nextTriggerElement);
+                this.bindClickEvents(nextTriggerElement);
                 return;
             case 'longpress':
                 this.bindLongpressEvents(nextTriggerElement);
@@ -403,7 +408,7 @@ export class OverlayBase extends SpectrumElement {
         }
     }
 
-    protected bundClickEvents(triggerElement: HTMLElement): void {
+    protected bindClickEvents(triggerElement: HTMLElement): void {
         triggerElement.addEventListener('click', this.handleClick);
         triggerElement.addEventListener(
             'pointerdown',
@@ -633,6 +638,7 @@ export class OverlayBase extends SpectrumElement {
     private pointerentered = false;
 
     protected handlePointerenter = (): void => {
+        if (this.disabled) return;
         this.open = true;
         this.pointerentered = true;
     };

@@ -27,6 +27,8 @@ import {
 
 ## Example
 
+Leveraging the `trigger` attribut to pass an ID reference to another element with in the same DOM tree that will be the element from which the overlay is positioned when open. Add an interaction type `click`, `hover`, or `longpress` to the `trigger` attribute, separated from the ID reference by an `@` symbol and the overlay will bind itself to the referenced element via the DOM events associated with that interaction. The `<sp-button>` below has an id of `trigger`, so when the `<sp-overlay>` is provided the `trigger` attribute with the value `trigger@click` it associated itself to the `<sp-button>` and toggles its open state when that button is clicked.
+
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
 <sp-overlay trigger="trigger@click">
@@ -35,6 +37,105 @@ import {
             <h2 slot="heading">Clicking opens this popover...</h2>
             <p>But, it really could be anything. Really.</p>
         </sp-dialog>
+    </sp-popover>
+</sp-overlay>
+```
+
+### Action bar
+
+```html
+<style>
+    .overlay-demo-popover sp-action-group {
+        padding: var(--spectrum-actiongroup-vertical-spacing-regular);
+    }
+    #overlay-demo {
+        position: static;
+    }
+    #overlay-demo:not(:defined),
+    #overlay-demo *:not(:defined) {
+        display: none;
+    }
+</style>
+<sp-popover id="overlay-demo" class="overlay-demo-popover" open>
+    <sp-action-group vertical quiet emphasized selects="single">
+        <sp-action-button id="trigger-1" hold-affordance>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-2" hold-affordance>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-3" hold-affordance>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+        </sp-action-button>
+    </sp-action-group>
+</sp-popover>
+<sp-overlay ?delayed="${delayed}" trigger="trigger-1@hover">
+    <sp-tooltip>Hover</sp-tooltip>
+</sp-overlay>
+<sp-overlay
+    trigger="trigger-1@longpress"
+    type="auto"
+    placement="right-start"
+    .offset="${popoverOffset}"
+>
+    <sp-popover class="overlay-demo-popover" tip>
+        <sp-action-group vertical quiet>
+            <sp-action-button>
+                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+            </sp-action-button>
+        </sp-action-group>
+    </sp-popover>
+</sp-overlay>
+<sp-overlay ?delayed="${delayed}" trigger="trigger-2@hover">
+    <sp-tooltip>Hover</sp-tooltip>
+</sp-overlay>
+<sp-overlay
+    trigger="trigger-2@longpress"
+    type="auto"
+    placement="right-start"
+    .offset="${popoverOffset}"
+>
+    <sp-popover class="overlay-demo-popover" tip>
+        <sp-action-group vertical quiet>
+            <sp-action-button>
+                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+            </sp-action-button>
+        </sp-action-group>
+    </sp-popover>
+</sp-overlay>
+<sp-overlay ?delayed="${delayed}" trigger="trigger-3@hover">
+    <sp-tooltip>Hover</sp-tooltip>
+</sp-overlay>
+<sp-overlay
+    trigger="trigger-3@longpress"
+    type="auto"
+    placement="right-start"
+    .offset="${popoverOffset}"
+>
+    <sp-popover class="overlay-demo-popover" tip>
+        <sp-action-group vertical quiet>
+            <sp-action-button>
+                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+            </sp-action-button>
+        </sp-action-group>
     </sp-popover>
 </sp-overlay>
 ```
@@ -48,6 +149,10 @@ ${string}@${string}} .triggerElement(s)=${trigger Element by reference} // match
 naming to aria element reference spec .triggerInteraction=${ ‘click’ |
 ‘longpress’ | ‘hover’ } type=${type}
 ```
+
+## Styling
+
+`<sp-overlay>` element will use the `<dialog>` element or `popover` attribute to project your content onto the top-layer of the browser, but that content will still exist right where you placed it to start. That means that you can style your overlay content with whatever techniques you are already leveraging to style the content in said interaction that does not get overlaid. This means standard CSS selectors, CSS Custom Properties, and CSS Parts applied in your parent context will always apply to your overlaid content.
 
 ## Fallback support
 
