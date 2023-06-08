@@ -631,7 +631,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(52.083333333333336);
+        expect(el.sliderHandlePosition).to.equal(100 - 52.083333333333336);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -656,7 +656,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(46.875);
+        expect(el.sliderHandlePosition).to.equal(100 - 46.875);
     });
     const colorFormats: {
         name: string;

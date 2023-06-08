@@ -270,9 +270,8 @@ export class ColorSlider extends Focusable {
         const size = this.vertical ? rect.height : rect.width;
 
         const percent = Math.max(0, Math.min(1, (offset - minOffset) / size));
-        const sliderHandlePosition = this.vertical
-            ? 100 - 100 * percent
-            : 100 * percent;
+        const sliderHandlePosition =
+            this.vertical || !this.isLTR ? 100 - 100 * percent : 100 * percent;
 
         return sliderHandlePosition;
     }
@@ -288,7 +287,7 @@ export class ColorSlider extends Focusable {
     }
 
     private get handlePositionStyles(): string {
-        return `${this.vertical ? 'bottom' : 'left'}: ${
+        return `${this.vertical ? 'inset-block-end' : 'inset-inline-start'}: ${
             this.sliderHandlePosition
         }%`;
     }
