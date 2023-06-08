@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
+
+### Bug Fixes
+
+-   **color-slider:** vertical variant orientation is upside down [#3291](https://github.com/adobe/spectrum-web-components/issues/3291) ([67c7e0a](https://github.com/adobe/spectrum-web-components/commit/67c7e0a426b74aec9e74ca50d0e4f77bb76a0064))
+-   **number-field:** simplify width management ([ef4765a](https://github.com/adobe/spectrum-web-components/commit/ef4765a33f81d19229d13ea418aa625f5e1e693a))
+-   removed usage of id in accordion ([c26c81f](https://github.com/adobe/spectrum-web-components/commit/c26c81f7dfb8a29e7c3019adda5d0faee9fffe11))
+
+### Features
+
+-   **search:** use core tokens ([c62a7cd](https://github.com/adobe/spectrum-web-components/commit/c62a7cddae81b9767b0ce83117b790d9a7639547))
+
 # [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
 
 ### Bug Fixes

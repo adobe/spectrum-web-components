@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icon",
-    "version": "0.32.0",
+    "version": "0.33.0",
     "publishConfig": {
         "access": "public"
     },
@@ -71,8 +71,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.32.0",
-        "@spectrum-web-components/iconset": "^0.32.0"
+        "@spectrum-web-components/base": "^0.33.0",
+        "@spectrum-web-components/iconset": "^0.33.0"
     },
     "devDependencies": {
         "@spectrum-css/icon": "^3.0.43"
