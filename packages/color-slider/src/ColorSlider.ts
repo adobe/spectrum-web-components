@@ -138,9 +138,11 @@ export class ColorSlider extends Focusable {
         }
         event.preventDefault();
 
+        const range = 360;
+        const mult = 100 / range;
         this.sliderHandlePosition = Math.min(
             100,
-            Math.max(0, this.sliderHandlePosition + delta)
+            Math.max(0, this.sliderHandlePosition + delta * mult)
         );
         this.value = 360 * (this.sliderHandlePosition / 100);
         this.colorController.applyColorFromState();
@@ -334,6 +336,7 @@ export class ColorSlider extends Focusable {
                 step=${this.step}
                 aria-label=${this.label}
                 .value=${String(this.value)}
+                aria-valuetext=${`${Math.round(this.value)}°`}
                 @input=${this.handleInput}
                 @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
