@@ -41,6 +41,12 @@ export class Accordion extends SpectrumElement {
     @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
     public allowMultiple = false;
 
+    @property({ type: String, reflect: true })
+    public density?: 'compact' | 'regular' | 'spacious' = 'regular';
+
+    @property({ type: String, reflect: true })
+    public size?: 's' | 'm' | 'l' | 'xl' = 'm';
+
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
 
@@ -87,11 +93,20 @@ export class Accordion extends SpectrumElement {
         this.focusGroupController.clearElementCache();
     }
 
+    private setAccordionProperties(): void {
+        this.items.forEach((item) => {
+            item.size = this.size;
+            item.density = this.density;
+        });
+    }
+
     protected override render(): TemplateResult {
+        this.setAccordionProperties();
         return html`
             <slot
                 @slotchange=${this.handleSlotchange}
                 @sp-accordion-item-toggle=${this.onToggle}
+                @sp-accordion-item-added=${this.setAccordionProperties}
             ></slot>
         `;
     }

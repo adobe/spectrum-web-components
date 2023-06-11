@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
+    DefaultElementSize,
     html,
     PropertyValues,
     TemplateResult,
@@ -22,6 +23,13 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
+
+const chevronClass = {
+    s: 'spectrum-UIIcon-ChevronRight75',
+    m: 'spectrum-UIIcon-ChevronRight100',
+    l: 'spectrum-UIIcon-ChevronRight200',
+    xl: 'spectrum-UIIcon-ChevronRight300',
+};
 
 /**
  * @element sp-accordion-item
@@ -41,6 +49,12 @@ export class AccordionItem extends Focusable {
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
+
+    @property({ type: String, reflect: true })
+    public size?: 's' | 'm' | 'l' | 'xl' | undefined = 'm';
+
+    @property({ type: String, reflect: true })
+    public density?: 'compact' | 'regular' | 'spacious' | undefined = 'regular';
 
     public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
@@ -80,8 +94,10 @@ export class AccordionItem extends Focusable {
                 >
                     ${this.label}
                 </button>
-                <sp-icon-chevron100
-                    class="indicator spectrum-UIIcon-ChevronRight100"
+                <span class="iconContainer">
+                    <sp-icon-chevron100 class="indicator ${
+                        chevronClass[this.size as DefaultElementSize]
+                    }"
                 ></sp-icon-chevron100>
             </h3>
             <div id="content" role="region" aria-labelledby="header">
@@ -92,6 +108,13 @@ export class AccordionItem extends Focusable {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+        this.dispatchEvent(
+            new CustomEvent('sp-accordion-item-added', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

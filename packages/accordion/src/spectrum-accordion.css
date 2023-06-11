@@ -147,7 +147,7 @@ governing permissions and limitations under the License.
         --spectrum-cjk-line-height-100
     );
 }
-.spectrum-Accordion--compact {
+:host([density='compact']) {
     --spectrum-accordion-item-height: var(--spectrum-component-height-100);
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-top-to-text-compact-medium
@@ -156,7 +156,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-compact-medium
     );
 }
-.spectrum-Accordion--compact.spectrum-Accordion--sizeS {
+:host([density='compact'][size='s']) {
     --spectrum-accordion-item-height: var(--spectrum-component-height-75);
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-top-to-text-compact-small
@@ -165,7 +165,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-compact-small
     );
 }
-.spectrum-Accordion--compact.spectrum-Accordion--sizeL {
+:host([density='compact'][size='l']) {
     --spectrum-accordion-item-height: var(--spectrum-component-height-200);
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-top-to-text-compact-large
@@ -174,7 +174,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-compact-large
     );
 }
-.spectrum-Accordion--compact.spectrum-Accordion--sizeXL {
+:host([density='compact'][size='xl']) {
     --spectrum-accordion-item-height: var(--spectrum-component-height-300);
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-top-to-text-compact-extra-large
@@ -183,7 +183,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-compact-extra-large
     );
 }
-.spectrum-Accordion--spacious {
+:host([density='spacious']) {
     --spectrum-accordion-item-header-line-height: 1.278;
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-top-to-text-spacious-medium
@@ -192,7 +192,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-spacious-medium
     );
 }
-.spectrum-Accordion--spacious.spectrum-Accordion--sizeS {
+:host([density='spacious'][size='s']) {
     --spectrum-accordion-item-header-line-height: 1.25;
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-small-top-to-text-spacious
@@ -201,7 +201,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-spacious-small
     );
 }
-.spectrum-Accordion--spacious.spectrum-Accordion--sizeL {
+:host([density='spacious'][size='l']) {
     --spectrum-accordion-item-header-line-height: 1.273;
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-top-to-text-spacious-large
@@ -210,7 +210,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-spacious-large
     );
 }
-.spectrum-Accordion--spacious.spectrum-Accordion--sizeXL {
+:host([density='spacious'][size='xl']) {
     --spectrum-accordion-item-header-line-height: 1.25;
     --spectrum-accordion-item-header-top-to-text-space: var(
         --spectrum-accordion-top-to-text-spacious-extra-large
@@ -219,7 +219,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-spacious-extra-large
     );
 }
-.spectrum-Accordion--sizeS {
+:host([size='s']) {
     --spectrum-accordion-item-height: var(--spectrum-component-height-100);
     --spectrum-accordion-disclosure-indicator-height: var(
         --spectrum-component-height-75
@@ -236,7 +236,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-regular-small
     );
 }
-.spectrum-Accordion--sizeL {
+:host([size='l']) {
     --spectrum-accordion-item-height: var(--spectrum-component-height-300);
     --spectrum-accordion-disclosure-indicator-height: var(
         --spectrum-component-height-200
@@ -253,7 +253,7 @@ governing permissions and limitations under the License.
         --spectrum-accordion-bottom-to-text-regular-large
     );
 }
-.spectrum-Accordion--sizeXL {
+:host([size='xl']) {
     --spectrum-accordion-item-height: var(--spectrum-component-height-400);
     --spectrum-accordion-disclosure-indicator-height: var(
         --spectrum-component-height-300
@@ -275,43 +275,4 @@ governing permissions and limitations under the License.
     list-style: none;
     margin: 0;
     padding: 0;
-}
-.spectrum-Accordion-item-iconContainer {
-    align-items: center;
-    block-size: var(
-        --mod-accordion-disclosure-indicator-height,
-        var(--spectrum-accordion-disclosure-indicator-height)
-    );
-    color: var(
-        --mod-accordion-item-header-color-default,
-        var(--spectrum-accordion-item-header-color-default)
-    );
-    display: flex;
-    inline-size: var(
-        --mod-accordion-disclosure-indicator-height,
-        var(--spectrum-accordion-disclosure-indicator-height)
-    );
-    inset-block-start: max(
-        0px,
-        calc(
-            (
-                    var(
-                            --mod-accordion-min-block-size,
-                            var(--spectrum-accordion-min-block-size)
-                        ) -
-                        var(
-                            --mod-accordion-disclosure-indicator-height,
-                            var(
-                                --spectrum-accordion-disclosure-indicator-height
-                            )
-                        )
-                ) / 2
-        )
-    );
-    justify-content: center;
-    padding-inline-start: var(
-        --mod-accordion-edge-to-disclosure-indicator-space,
-        var(--spectrum-accordion-edge-to-disclosure-indicator-space)
-    );
-    position: absolute;
 }
