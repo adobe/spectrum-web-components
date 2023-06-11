@@ -31,6 +31,7 @@ const config = {
             excludeByComponents: [
                 builder.class('spectrum-Accordion-item'),
                 builder.class('spectrum-Accordion-itemIndicator'),
+                builder.class('spectrum-Accordion-item-iconContainer'),
                 builder.class('spectrum-Accordion-itemHeading'),
                 builder.class('spectrum-Accordion-itemHeader'),
                 builder.class('spectrum-Accordion-itemContent'),
@@ -39,6 +40,21 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('is-disabled', 'disabled'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Accordion--compact', 'compact'],
+                        ['spectrum-Accordion--spacious', 'spacious'],
+                    ],
+                    'density'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Accordion--sizeS', 's'],
+                        ['spectrum-Accordion--sizeL', 'l'],
+                        ['spectrum-Accordion--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
             ],
         },
         {
@@ -65,8 +81,27 @@ const config = {
                     'content'
                 ),
                 converter.classToClass(
+                    'spectrum-Accordion-item-iconContainer',
+                    'iconContainer'
+                ),
+                converter.classToClass(
                     'spectrum-Accordion-itemIndicator',
                     'indicator'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Accordion--compact', 'compact'],
+                        ['spectrum-Accordion--spacious', 'spacious'],
+                    ],
+                    'density'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Accordion--sizeS', 's'],
+                        ['spectrum-Accordion--sizeL', 'l'],
+                        ['spectrum-Accordion--sizeXL', 'xl'],
+                    ],
+                    'size'
                 ),
                 {
                     find: builder.pseudoClass('first-of-type'),
