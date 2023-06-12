@@ -96,7 +96,6 @@ export class Accordion extends SpectrumElement {
     private setAccordionProperties(): void {
         this.items.forEach((item) => {
             item.size = this.size;
-            item.density = this.density;
         });
     }
 

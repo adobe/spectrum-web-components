@@ -62,10 +62,12 @@ const config = {
             outPackage: 'accordion',
             fileName: 'accordion-item',
             excludeByComponents: [
-                {
-                    type: 'class',
-                    name: 'spectrum-Accordion',
-                },
+                builder.class('spectrum-Accordion'),
+                builder.class('spectrum-Accordion--compact'),
+                builder.class('spectrum-Accordion--spacious'),
+                builder.class('spectrum-Accordion--sizeS'),
+                builder.class('spectrum-Accordion--sizeL'),
+                builder.class('spectrum-Accordion--sizeXL'),
             ],
             components: [
                 converterItem.classToHost(),
@@ -88,24 +90,14 @@ const config = {
                     'spectrum-Accordion-itemIndicator',
                     'indicator'
                 ),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Accordion--compact', 'compact'],
-                        ['spectrum-Accordion--spacious', 'spacious'],
-                    ],
-                    'density'
-                ),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Accordion--sizeS', 's'],
-                        ['spectrum-Accordion--sizeL', 'l'],
-                        ['spectrum-Accordion--sizeXL', 'xl'],
-                    ],
-                    'size'
-                ),
                 {
                     find: builder.pseudoClass('first-of-type'),
                     replace: builder.pseudoClass('first-of-type'),
+                    hoist: true,
+                },
+                {
+                    find: builder.pseudoClass('first-child'),
+                    replace: builder.pseudoClass('first-child'),
                     hoist: true,
                 },
                 {
@@ -133,20 +125,6 @@ const config = {
                         },
                         {
                             replace: builder.pseudoClass('focus'),
-                        },
-                    ],
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Accordion-itemHeader'),
-                        builder.class('focus-ring'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.id('header'),
-                        },
-                        {
-                            replace: builder.pseudoClass('focus-visible'),
                         },
                     ],
                 },

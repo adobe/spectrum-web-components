@@ -46,7 +46,7 @@ export default {
                 defaultValue: { summary: 'regular' },
             },
             control: {
-                options: ['regular', 'compact', 'spacious'],
+                options: ['compact', 'regular', 'spacious'],
                 type: 'select',
             },
         },
