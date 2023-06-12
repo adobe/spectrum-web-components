@@ -31,7 +31,7 @@ const config = {
             excludeByComponents: [
                 builder.class('spectrum-Accordion-item'),
                 builder.class('spectrum-Accordion-itemIndicator'),
-                builder.class('spectrum-Accordion-item-iconContainer'),
+                builder.class('spectrum-Accordion-itemIconContainer'),
                 builder.class('spectrum-Accordion-itemHeading'),
                 builder.class('spectrum-Accordion-itemHeader'),
                 builder.class('spectrum-Accordion-itemContent'),
@@ -83,7 +83,7 @@ const config = {
                     'content'
                 ),
                 converter.classToClass(
-                    'spectrum-Accordion-item-iconContainer',
+                    'spectrum-Accordion-itemIconContainer',
                     'iconContainer'
                 ),
                 converter.classToClass(
