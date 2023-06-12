@@ -51,7 +51,7 @@ export class AccordionItem extends Focusable {
     public override disabled = false;
 
     @property({ type: String, reflect: true })
-    public size?: 's' | 'm' | 'l' | 'xl' | undefined = 'm';
+    public size?: 's' | 'm' | 'l' | 'xl' = 'm';
 
     public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;

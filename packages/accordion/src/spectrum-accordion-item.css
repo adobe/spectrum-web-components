@@ -89,6 +89,9 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
+:host([dir='rtl']) .iconContainer {
+    transform: scaleX(-1);
+}
 #content {
     color: var(
         --mod-accordion-item-content-color,
