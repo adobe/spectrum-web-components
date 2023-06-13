@@ -15,7 +15,7 @@ import fsExtra from 'fs-extra';
 import { basename, dirname, resolve } from 'path';
 import prettier from 'prettier';
 import Case from 'case';
-import glob from 'glob';
+import { glob } from 'glob';
 import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
 
@@ -444,70 +444,58 @@ export const Icon${displayName}: ComponentType<Partial<Icon${displayName}Type> |
  * Core entry function
  */
 export async function generateIconWrapper(iconType) {
-    glob(
-        resolve(__dirname, '..', `packages/${iconType}/src/elements/**.d.ts`),
-        async (_, icons) => {
-            for (let icon of icons) {
-                const id = basename(icon)
-                    .split('.')[0]
-                    .substring('Icon'.length);
-                const componentName =
-                    id === 'github' ? 'GitHub' : Case.pascal(id);
-                const iconElementName = `sp-icon-${Case.kebab(componentName)}`;
-                await outputFile(
-                    resolve(
-                        __dirname,
-                        '..',
-                        `react/${iconType}/${componentName}.ts`
-                    ),
-                    prettier.format(
-                        genIconReactComponent(
-                            `Icon${componentName}`,
-                            `Icon${id}`,
-                            iconElementName,
-                            `${iconType}`
-                        ),
-                        {
-                            parser: 'typescript',
-                            ...prettierConfig,
-                        }
-                    )
-                );
-                await outputFile(
-                    resolve(
-                        __dirname,
-                        '..',
-                        `react/${iconType}/next/${componentName}.ts`
-                    ),
-                    prettier.format(genIconNextComponent(Case.pascal(id)), {
-                        parser: 'typescript',
-                        ...prettierConfig,
-                    })
-                );
-            }
-
-            const { name: pkgName, version: pkgVersion } = await readJSON(
-                resolve(__dirname, '..', `packages/${iconType}/package.json`)
-            );
-
-            await outputFile(
-                resolve(__dirname, '..', `react/${iconType}/package.json`),
-                prettier.format(
-                    genPackageJson(iconType, pkgName, pkgVersion, true),
-                    {
-                        parser: 'json',
-                        ...prettierConfig,
-                    }
-                )
-            );
-
-            await outputFile(
-                resolve(__dirname, '..', `react/${iconType}/tsconfig.json`),
-                prettier.format(genTsconfigJson(), {
-                    parser: 'json',
+    const icons = await glob(
+        resolve(__dirname, '..', `packages/${iconType}/src/elements/**.d.ts`)
+    );
+    for (let icon of icons) {
+        const id = basename(icon).split('.')[0].substring('Icon'.length);
+        const componentName = id === 'github' ? 'GitHub' : Case.pascal(id);
+        const iconElementName = `sp-icon-${Case.kebab(componentName)}`;
+        await outputFile(
+            resolve(__dirname, '..', `react/${iconType}/${componentName}.ts`),
+            prettier.format(
+                genIconReactComponent(
+                    `Icon${componentName}`,
+                    `Icon${id}`,
+                    iconElementName,
+                    `${iconType}`
+                ),
+                {
+                    parser: 'typescript',
                     ...prettierConfig,
-                })
-            );
-        }
+                }
+            )
+        );
+        await outputFile(
+            resolve(
+                __dirname,
+                '..',
+                `react/${iconType}/next/${componentName}.ts`
+            ),
+            prettier.format(genIconNextComponent(Case.pascal(id)), {
+                parser: 'typescript',
+                ...prettierConfig,
+            })
+        );
+    }
+
+    const { name: pkgName, version: pkgVersion } = await readJSON(
+        resolve(__dirname, '..', `packages/${iconType}/package.json`)
+    );
+
+    await outputFile(
+        resolve(__dirname, '..', `react/${iconType}/package.json`),
+        prettier.format(genPackageJson(iconType, pkgName, pkgVersion, true), {
+            parser: 'json',
+            ...prettierConfig,
+        })
+    );
+
+    await outputFile(
+        resolve(__dirname, '..', `react/${iconType}/tsconfig.json`),
+        prettier.format(genTsconfigJson(), {
+            parser: 'json',
+            ...prettierConfig,
+        })
     );
 }
