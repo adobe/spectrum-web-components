@@ -25,6 +25,10 @@ governing permissions and limitations under the License.
     inset-block-end: 0;
 }
 
+:host([vertical]) .slider {
+    appearance: slider-vertical;
+}
+
 :host(:focus) {
     outline: none;
 }

@@ -30,6 +30,11 @@ import {
     ColorController,
     ColorValue,
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import {
+    isAndroid,
+    isIOS,
+} from '@spectrum-web-components/shared/src/platform.js';
 
 import styles from './color-area.css.js';
 
@@ -43,6 +48,9 @@ export class ColorArea extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
+
+    @property({ type: String, reflect: true })
+    public override dir!: 'ltr' | 'rtl';
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
@@ -62,15 +70,17 @@ export class ColorArea extends SpectrumElement {
     @query('.handle')
     private handle!: ColorHandle;
 
+    private languageResolver = new LanguageResolutionController(this);
+
     private colorController = new ColorController(this, {
         extractColorFromState: () => ({
             h: this.hue,
             s: this.x,
-            v: 1 - this.y,
+            v: this.y,
         }),
         applyColorToState: ({ s, v }) => {
             this.x = s;
-            this.y = 1 - v;
+            this.y = v;
         },
     });
 
@@ -142,7 +152,7 @@ export class ColorArea extends SpectrumElement {
         this.requestUpdate('y', oldValue);
     }
 
-    private _y = 0;
+    private _y = 1;
 
     @property({ type: Number })
     public step = 0.01;
@@ -156,6 +166,8 @@ export class ColorArea extends SpectrumElement {
     private altered = 0;
 
     private activeKeys = new Set();
+
+    private _valueChanged = false;
 
     public override focus(focusOptions: FocusOptions = {}): void {
         super.focus(focusOptions);
@@ -171,15 +183,18 @@ export class ColorArea extends SpectrumElement {
         }
     }
 
-    private handleFocusin(): void {
+    private handleFocus(): void {
         this.focused = true;
+        this._valueChanged = false;
     }
 
-    private handleFocusout(): void {
+    private handleBlur(): void {
         if (this._pointerDown) {
             return;
         }
+        this.altered = 0;
         this.focused = false;
+        this._valueChanged = false;
     }
 
     private handleKeydown(event: KeyboardEvent): void {
@@ -188,7 +203,11 @@ export class ColorArea extends SpectrumElement {
         this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
             (key) => !!key
         ).length;
-        const isArrowKey = code.search('Arrow') === 0;
+        const isArrowKey =
+            code.search('Arrow') === 0 ||
+            code.search('Page') === 0 ||
+            code.search('Home') === 0 ||
+            code.search('End') === 0;
         if (isArrowKey) {
             event.preventDefault();
             this.activeKeys.add(code);
@@ -203,16 +222,28 @@ export class ColorArea extends SpectrumElement {
         this.activeKeys.forEach((code) => {
             switch (code) {
                 case 'ArrowUp':
-                    deltaY = step * -1;
+                    deltaY = step;
                     break;
                 case 'ArrowDown':
-                    deltaY = step * 1;
+                    deltaY = step * -1;
                     break;
                 case 'ArrowLeft':
-                    deltaX = step * -1;
+                    deltaX = this.step * (this.isLTR ? -1 : 1);
                     break;
                 case 'ArrowRight':
-                    deltaX = step * 1;
+                    deltaX = this.step * (this.isLTR ? 1 : -1);
+                    break;
+                case 'PageUp':
+                    deltaY = step * 10;
+                    break;
+                case 'PageDown':
+                    deltaY = step * -10;
+                    break;
+                case 'Home':
+                    deltaX = step * (this.isLTR ? -10 : 10);
+                    break;
+                case 'End':
+                    deltaX = step * (this.isLTR ? 10 : -10);
                     break;
                 /* c8 ignore next 2 */
                 default:
@@ -233,6 +264,7 @@ export class ColorArea extends SpectrumElement {
         this.colorController.applyColorFromState();
 
         if (deltaX != 0 || deltaY != 0) {
+            this._valueChanged = true;
             this.dispatchEvent(
                 new Event('input', {
                     bubbles: true,
@@ -296,8 +328,10 @@ export class ColorArea extends SpectrumElement {
     private handlePointermove(event: PointerEvent): void {
         const [x, y] = this.calculateHandlePosition(event);
 
+        this._valueChanged = false;
+
         this.x = x;
-        this.y = y;
+        this.y = 1 - y;
         this.colorController.applyColorFromState();
         this.dispatchEvent(
             new Event('input', {
@@ -355,7 +389,7 @@ export class ColorArea extends SpectrumElement {
             Math.min(1, (offsetY - minOffsetY) / height)
         );
 
-        return [percentX, percentY];
+        return [this.isLTR ? percentX : 1 - percentX, percentY];
     }
 
     private handleAreaPointerdown(event: PointerEvent): void {
@@ -382,6 +416,32 @@ export class ColorArea extends SpectrumElement {
             }
         }
 
+        const isMobile = isAndroid() || isIOS();
+        const defaultAriaLabel = 'Color Picker';
+        const ariaLabel = this.label
+            ? `${this.label} ${defaultAriaLabel}`
+            : defaultAriaLabel;
+        const ariaRoleDescription = ifDefined(
+            isMobile ? undefined : '2d slider'
+        );
+
+        const ariaLabelX = this.labelX;
+        const ariaLabelY = this.labelY;
+        const ariaValueX = new Intl.NumberFormat(
+            this.languageResolver.language,
+            {
+                style: 'percent',
+                unitDisplay: 'narrow',
+            }
+        ).format(this.x);
+        const ariaValueY = new Intl.NumberFormat(
+            this.languageResolver.language,
+            {
+                style: 'percent',
+                unitDisplay: 'narrow',
+            }
+        ).format(this.y);
+
         return html`
             <div
                 @pointerdown=${this.handleAreaPointerdown}
@@ -402,8 +462,9 @@ export class ColorArea extends SpectrumElement {
                 class="handle"
                 color=${this.colorController.getHslString()}
                 ?disabled=${this.disabled}
-                style="transform: translate(${this.x * width}px, ${this.y *
-                height}px);"
+                style=${`transform: translate(${
+                    (this.isLTR ? this.x : 1 - this.x) * width
+                }px, ${height - this.y * height}px);`}
                 ${streamingListener({
                     start: ['pointerdown', this.handlePointerdown],
                     streamInside: ['pointermove', this.handlePointermove],
@@ -414,36 +475,60 @@ export class ColorArea extends SpectrumElement {
                 })}
             ></sp-color-handle>
 
-            <div>
-                <input
-                    type="range"
-                    class="slider"
-                    name="x"
-                    aria-label=${this.label ?? this.labelX}
-                    min="0"
-                    max="1"
-                    step=${this.step}
-                    tabindex="-1"
-                    .value=${String(this.x)}
-                    @input=${this.handleInput}
-                    @change=${this.handleChange}
-                />
-            </div>
-            <div>
-                <input
-                    type="range"
-                    class="slider"
-                    name="y"
-                    aria-label=${this.label ?? this.labelY}
-                    min="0"
-                    max="1"
-                    step=${this.step}
-                    tabindex="-1"
-                    .value=${String(this.y)}
-                    @input=${this.handleInput}
-                    @change=${this.handleChange}
-                />
-            </div>
+            <fieldset
+                class="fieldset"
+                aria-label=${ifDefined(isMobile ? ariaLabel : undefined)}
+            >
+                <div role="presentation">
+                    <input
+                        type="range"
+                        class="slider"
+                        name="x"
+                        aria-label=${isMobile ? ariaLabelX : ariaLabel}
+                        aria-roledescription=${ariaRoleDescription}
+                        aria-orientation="horizontal"
+                        aria-valuetext=${isMobile
+                            ? ariaValueX
+                            : `${ariaValueX}, ${ariaLabelX}${
+                                  this._valueChanged
+                                      ? ''
+                                      : `, ${ariaValueY}, ${ariaLabelY}`
+                              }`}
+                        min="0"
+                        max="1"
+                        step=${this.step}
+                        tabindex="-1"
+                        .value=${String(this.x)}
+                        @input=${this.handleInput}
+                        @change=${this.handleChange}
+                    />
+                </div>
+                <div role="presentation">
+                    <input
+                        type="range"
+                        class="slider"
+                        name="y"
+                        aria-label=${isMobile ? ariaLabelY : ariaLabel}
+                        aria-roledescription=${ariaRoleDescription}
+                        aria-orientation="vertical"
+                        aria-valuetext=${isMobile
+                            ? ariaValueY
+                            : `${ariaValueY}, ${ariaLabelY}${
+                                  this._valueChanged
+                                      ? ''
+                                      : `, ${ariaValueX}, ${ariaLabelX}`
+                              }`}
+                        orient="vertical"
+                        min="0"
+                        max="1"
+                        step=${this.step}
+                        tabindex="-1"
+                        .value=${String(this.y)}
+                        @input=${this.handleInput}
+                        @change=${this.handleChange}
+                    />
+                </div>
+            </fieldset>
         `;
     }
 
@@ -451,8 +536,8 @@ export class ColorArea extends SpectrumElement {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
 
-        this.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('focus', this.handleFocus);
+        this.addEventListener('blur', this.handleBlur);
         this.addEventListener('keyup', this.handleKeyup);
         this.addEventListener('keydown', this.handleKeydown);
     }

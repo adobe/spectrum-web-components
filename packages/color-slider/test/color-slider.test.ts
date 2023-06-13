@@ -227,7 +227,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.equal(0.5555555555555556);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -236,7 +236,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(4);
+        expect(el.sliderHandlePosition).to.equal(1.1111111111111112);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -245,7 +245,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.equal(0.5555555555555556);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -276,7 +276,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.equal(0.5555555555555556);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -294,7 +294,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.equal(0.5555555555555556);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -328,7 +328,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(20);
+        expect(el.sliderHandlePosition).to.equal(5.555555555555555);
 
         await sendKeys({
             press: 'ArrowRight',
@@ -339,7 +339,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(40);
+        expect(el.sliderHandlePosition).to.equal(11.11111111111111);
 
         await sendKeys({
             press: 'ArrowDown',
@@ -350,7 +350,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(20);
+        expect(el.sliderHandlePosition).to.equal(5.5555555555555545);
 
         await sendKeys({
             press: 'ArrowLeft',
