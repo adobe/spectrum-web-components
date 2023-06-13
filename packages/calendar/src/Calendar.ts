@@ -50,6 +50,9 @@ export class Calendar extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     padded = false;
 
+    @property({ type: Boolean, reflect: true })
+    disabled = false;
+
     @property({ reflect: true })
     selectedDate!: Date | undefined;
 
@@ -95,7 +98,7 @@ export class Calendar extends SpectrumElement {
                     role="grid"
                     tabindex="0"
                     aria-readonly="true"
-                    aria-disabled="false"
+                    aria-disabled=${this.disabled}
                 >
                     <table role="presentation" class="spectrum-Calendar-table">
                         <thead role="presentation">
@@ -121,7 +124,17 @@ export class Calendar extends SpectrumElement {
 
         return html`
             <div class="spectrum-Calendar-header">
-                <div class="spectrum-Calendar-title">${monthAndYear}</div>
+                <!-- TODO: Attribute 'role="heading"' removed -->
+                <!-- TODO: The "heading" role requires the attribute "aria-level" -->
+                <div
+                    class="spectrum-Calendar-title"
+                    aria-live="assertive"
+                    aria-atomic="true"
+                >
+                    ${monthAndYear}
+                </div>
+
+                <!-- TODO: Styles applied to "disabled" buttons are overridden by spectrum-calendar.css -->
 
                 <!-- TODO: Translate "Previous" -->
                 <sp-action-button
@@ -129,7 +142,8 @@ export class Calendar extends SpectrumElement {
                     size="s"
                     aria-label="Previous"
                     title="Previous"
-                    class="spectrum-Calendar-prevMonth"
+                    class="spectrum-ActionButton spectrum-Calendar-prevMonth"
+                    ?disabled=${this.disabled}
                 >
                     <sp-icon-chevron-left slot="icon"></sp-icon-chevron-left>
                 </sp-action-button>
@@ -140,7 +154,8 @@ export class Calendar extends SpectrumElement {
                     size="s"
                     aria-label="Next"
                     title="Next"
-                    class="spectrum-Calendar-nextMonth"
+                    class="spectrum-ActionButton spectrum-Calendar-nextMonth"
+                    ?disabled=${this.disabled}
                 >
                     <sp-icon-chevron-right slot="icon"></sp-icon-chevron-right>
                 </sp-action-button>
@@ -193,6 +208,7 @@ export class Calendar extends SpectrumElement {
             'is-outsideMonth': isOutsideMonth,
             'is-selected': isSelected,
             'is-today': isToday,
+            'is-disabled': this.disabled,
         };
 
         const currentDayTitle = this._formatDate(calendarDate, {
@@ -216,8 +232,8 @@ export class Calendar extends SpectrumElement {
                 class="spectrum-Calendar-tableCell"
                 title=${title}
                 tabindex=${ifDefined(!isOutsideMonth ? '-1' : undefined)}
-                aria-disabled=${ifDefined(isOutsideMonth ? 'true' : undefined)}
-                aria-selected=${ifDefined(isSelected ? 'true' : undefined)}
+                aria-disabled=${isOutsideMonth || this.disabled}
+                aria-selected=${isSelected}
             >
                 <span
                     role="presentation"

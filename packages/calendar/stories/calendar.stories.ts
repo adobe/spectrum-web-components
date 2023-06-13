@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import { spreadProps } from '../../../test/lit-helpers.js';
+
 import '../sp-calendar.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 const locales = [
     'cs-CZ',
@@ -58,6 +59,9 @@ export default {
         padded: {
             control: 'boolean',
         },
+        disabled: {
+            control: 'boolean',
+        },
 
         _languageResolver: { ...hiddenProperty },
         _locale: { ...hiddenProperty },
@@ -72,7 +76,8 @@ export default {
     },
 
     args: {
-        padded: true,
+        padded: false,
+        disabled: false,
     },
 
     // Hide "This story is not configured to handle controls" warning
@@ -83,32 +88,31 @@ export default {
 
 interface StoryArgs {
     padded?: boolean;
+    disabled?: boolean;
     locale?: Locale;
+
+    [prop: string]: unknown;
 }
 
-export const Default = (args: StoryArgs): TemplateResult => {
+export const Default = (args: StoryArgs = {}): TemplateResult => {
     return html`
-        <sp-calendar
-            ?padded=${ifDefined(args.padded || undefined)}
-        ></sp-calendar>
+        <sp-calendar ...=${spreadProps(args)}></sp-calendar>
     `;
 };
 
-export const withDate = (args: StoryArgs): TemplateResult => {
+export const withSelectedDate = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-calendar
-            ?padded=${ifDefined(args.padded || undefined)}
+            ...=${spreadProps(args)}
             .selectedDate=${new Date(2019, 9, 7)}
         ></sp-calendar>
     `;
 };
 
-export const otherLocales = (args: StoryArgs): TemplateResult => {
+export const otherLocales = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-theme lang=${args.locale}>
-            <sp-calendar
-                ?padded=${ifDefined(args.padded || undefined)}
-            ></sp-calendar>
+            <sp-calendar ...=${spreadProps(args)}></sp-calendar>
         </sp-theme>
     `;
 };
