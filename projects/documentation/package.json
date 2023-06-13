@@ -30,7 +30,7 @@
         "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
         "@fullhuman/postcss-purgecss": "^5.0.0",
         "@open-wc/building-rollup": "^2.2.1",
-        "@playwright/test": "1.35.0",
+        "@playwright/test": "1.30.0",
         "@rollup/plugin-alias": "^4.0.3",
         "@rollup/plugin-commonjs": "^24.0.1",
         "@rollup/plugin-json": "^6.0.0",
