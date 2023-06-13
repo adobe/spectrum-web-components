@@ -34,6 +34,10 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
         "./sp-calendar.js": {
             "development": "./sp-calendar.dev.js",
             "default": "./sp-calendar.js"
@@ -57,9 +61,11 @@
         "lit-html"
     ],
     "dependencies": {
+        "@internationalized/date": "^3.2.0",
         "@spectrum-web-components/action-button": "^0.32.0",
         "@spectrum-web-components/base": "^0.32.0",
-        "@spectrum-web-components/icons-workflow": "^0.32.0"
+        "@spectrum-web-components/icons-workflow": "^0.32.0",
+        "@spectrum-web-components/reactive-controllers": "^0.32.0"
     },
     "devDependencies": {
         "@spectrum-css/calendar": "^3.1.23"

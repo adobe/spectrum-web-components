@@ -12,20 +12,118 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-calendar.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+
+const locales = [
+    'cs-CZ',
+    'cy-GB',
+    'da-DK',
+    'de-DE',
+    'en-GB',
+    'en-US',
+    'es-ES',
+    'fi-FI',
+    'fr-FR',
+    'hu-HU',
+    'it-IT',
+    'ja-JP',
+    'ko-KR',
+    'nb-NO',
+    'nl-NL',
+    'pl-PL',
+    'pt-BR',
+    'ru-RU',
+    'sv-SE',
+    'tr-TR',
+    'uk-UA',
+    'zh-Hans-CN',
+    'zh-Hant-TW',
+    'zz-ZY',
+    'zz-ZZ',
+] as const;
+type Locale = typeof locales;
+
+// Don't render private properties and getters in Storybook UI
+const hiddenProperty = {
+    table: {
+        disable: true,
+    },
+};
 
 export default {
     title: 'Calendar',
     component: 'sp-calendar',
+
+    argTypes: {
+        padded: {
+            control: 'boolean',
+        },
+
+        _languageResolver: { ...hiddenProperty },
+        _locale: { ...hiddenProperty },
+        _timeZone: { ...hiddenProperty },
+        _currentDate: { ...hiddenProperty },
+        today: { ...hiddenProperty },
+
+        shadowRoot: { ...hiddenProperty },
+        _dirParent: { ...hiddenProperty },
+        dir: { ...hiddenProperty },
+        isLTR: { ...hiddenProperty },
+    },
+
+    args: {
+        padded: true,
+    },
+
+    // Hide "This story is not configured to handle controls" warning
+    parameters: {
+        controls: { hideNoControlsWarning: true },
+    },
 };
 
-export const Default = (): TemplateResult => {
+interface StoryArgs {
+    padded?: boolean;
+    locale?: Locale;
+}
+
+export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-calendar></sp-calendar>
+        <sp-calendar
+            ?padded=${ifDefined(args.padded || undefined)}
+        ></sp-calendar>
     `;
 };
 
-export const paddedCalendar = (): TemplateResult => {
+export const withDate = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-calendar padded></sp-calendar>
+        <sp-calendar
+            ?padded=${ifDefined(args.padded || undefined)}
+            .selectedDate=${new Date(2019, 9, 7)}
+        ></sp-calendar>
     `;
+};
+
+export const otherLocales = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-theme lang=${args.locale}>
+            <sp-calendar
+                ?padded=${ifDefined(args.padded || undefined)}
+            ></sp-calendar>
+        </sp-theme>
+    `;
+};
+
+otherLocales.args = {
+    locale: 'en-US',
+};
+otherLocales.argTypes = {
+    locale: {
+        name: 'locale',
+        description: 'Locale',
+        type: { name: 'string', required: true },
+        control: {
+            type: 'select',
+            options: locales,
+        },
+    },
 };
