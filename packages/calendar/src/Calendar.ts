@@ -108,25 +108,7 @@ export class Calendar extends SpectrumElement {
         return when(
             this._currentDate,
             () => html`
-                ${this.renderCalendarHeader()}
-
-                <div
-                    class="spectrum-Calendar-body"
-                    role="grid"
-                    tabindex=${ifDefined(!this.disabled ? '0' : undefined)}
-                    aria-readonly="true"
-                    aria-disabled=${this.disabled}
-                >
-                    <table role="presentation" class="spectrum-Calendar-table">
-                        <thead role="presentation">
-                            <tr role="row">${this.renderWeekDays()}</tr>
-                        </thead>
-
-                        <tbody role="presentation">
-                            ${this.renderWeekRows()}
-                        </tbody>
-                    </table>
-                </div>
+                ${this.renderCalendarHeader()}${this.renderCalendarGrid()}
             `
         );
     }
@@ -182,38 +164,70 @@ export class Calendar extends SpectrumElement {
         `;
     }
 
-    public renderWeekDays(): TemplateResult[] {
-        return this._getWeekdays().map(
-            (weekDay) => html`
-                <th
-                    role="columnheader"
-                    scope="col"
-                    class="spectrum-Calendar-tableCell"
-                >
-                    <abbr
-                        class="spectrum-Calendar-dayOfWeek"
-                        title=${weekDay.long}
-                    >
-                        ${weekDay.narrow}
-                    </abbr>
-                </th>
-            `
-        );
+    public renderCalendarGrid(): TemplateResult {
+        return html`
+            <div
+                class="spectrum-Calendar-body"
+                role="grid"
+                tabindex=${ifDefined(!this.disabled ? '0' : undefined)}
+                aria-readonly="true"
+                aria-disabled=${this.disabled}
+            >
+                <table role="presentation" class="spectrum-Calendar-table">
+                    ${this.renderCalendarTableHead()}
+                    ${this.renderCalendarTableBody()}
+                </table>
+            </div>
+        `;
     }
 
-    public renderWeekRows(): TemplateResult[] {
-        return [...new Array(this._getWeeksInCurrentMonth()).keys()].map(
-            (weekIndex) => html`
+    public renderCalendarTableHead(): TemplateResult {
+        return html`
+            <thead role="presentation">
                 <tr role="row">
-                    ${this._getDatesInWeek(weekIndex).map((calendarDate) =>
-                        this.renderDay(calendarDate)
+                    ${this._getWeekdays().map((weekday) =>
+                        this.renderWeekdayColumn(weekday)
                     )}
                 </tr>
-            `
-        );
+            </thead>
+        `;
     }
 
-    public renderDay(calendarDate: CalendarDate): TemplateResult {
+    public renderWeekdayColumn(weekday: CalendarWeekday): TemplateResult {
+        return html`
+            <th
+                role="columnheader"
+                scope="col"
+                class="spectrum-Calendar-tableCell"
+            >
+                <abbr class="spectrum-Calendar-dayOfWeek" title=${weekday.long}>
+                    ${weekday.narrow}
+                </abbr>
+            </th>
+        `;
+    }
+
+    public renderCalendarTableBody(): TemplateResult {
+        return html`
+            <tbody role="presentation">
+                ${[...new Array(this._getWeeksInCurrentMonth()).keys()].map(
+                    (weekIndex) => this.renderCalendarTableRow(weekIndex)
+                )}
+            </tbody>
+        `;
+    }
+
+    public renderCalendarTableRow(weekIndex: number): TemplateResult {
+        return html`
+            <tr role="row">
+                ${this._getDatesInWeek(weekIndex).map((calendarDate) =>
+                    this.renderCalendarTableCell(calendarDate)
+                )}
+            </tr>
+        `;
+    }
+
+    public renderCalendarTableCell(calendarDate: CalendarDate): TemplateResult {
         const isOutsideMonth = calendarDate.month !== this._currentDate.month;
 
         const isSelected = Boolean(
