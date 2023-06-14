@@ -47,7 +47,6 @@ type Locale = typeof locales;
 
 const defaultLocale = 'en-US';
 
-// Don't render private properties and getters in Storybook UI
 const hiddenProperty = {
     table: {
         disable: true,
@@ -59,13 +58,19 @@ export default {
     component: 'sp-calendar',
 
     argTypes: {
-        padded: {
-            control: 'boolean',
-        },
-        disabled: {
-            control: 'boolean',
+        locale: {
+            options: locales,
+            control: {
+                type: 'select',
+            },
+            table: {
+                defaultValue: {
+                    summary: defaultLocale,
+                },
+            },
         },
 
+        // Don't render private properties and getters in Storybook UI
         _languageResolver: { ...hiddenProperty },
         _locale: { ...hiddenProperty },
         _timeZone: { ...hiddenProperty },
@@ -79,8 +84,7 @@ export default {
     },
 
     args: {
-        padded: false,
-        disabled: false,
+        locale: defaultLocale,
     },
 
     // Hide "This story is not configured to handle controls" warning
@@ -99,55 +103,76 @@ interface StoryArgs {
     [prop: string]: unknown;
 }
 
-export const Default = (args: StoryArgs = {}): TemplateResult => {
-    return html`
-        <sp-calendar ...=${spreadProps(args)}></sp-calendar>
-    `;
-};
-
-export const withSelectedDate = (args: StoryArgs = {}): TemplateResult => {
-    const selectedDate = new Date(2019, 0, 30);
-    const formattedDate = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    }).format(selectedDate);
-
-    return html`
-        <h1>Selected Date: ${formattedDate}</h1>
-
-        <sp-calendar
-            ...=${spreadProps(args)}
-            .selectedDate=${selectedDate}
-        ></sp-calendar>
-    `;
-};
-
-export const otherLocales = (args: StoryArgs = {}): TemplateResult => {
+const renderCalendar = (
+    title: string,
+    args: StoryArgs = {}
+): TemplateResult => {
     return html`
         <sp-theme lang=${args.locale}>
-            <h1>Locale: ${args.locale}</h1>
+            <h1>${title}</h1>
+            <h2>
+                Locale:
+                <code>${args.locale}</code>
+            </h2>
+
+            <hr />
 
             <sp-calendar ...=${spreadProps(args)}></sp-calendar>
         </sp-theme>
     `;
 };
 
-otherLocales.args = {
-    locale: defaultLocale,
+export const Default = (args: StoryArgs = {}): TemplateResult => {
+    return renderCalendar('Default', args);
 };
-otherLocales.argTypes = {
-    locale: {
-        name: 'locale',
-        description: 'Locale',
-        options: locales,
-        control: {
-            type: 'select',
-        },
+
+export const padded = (args: StoryArgs = {}): TemplateResult => {
+    return renderCalendar(`Padded? ${args.padded}`, args);
+};
+
+padded.argTypes = {
+    padded: {
+        control: 'boolean',
         table: {
             defaultValue: {
-                summary: defaultLocale,
+                summary: true,
             },
         },
     },
+};
+
+padded.args = {
+    padded: true,
+};
+
+export const selectedDate = (args: StoryArgs = {}): TemplateResult => {
+    const date = new Date(2019, 0, 30);
+    const formatted = Intl.DateTimeFormat(defaultLocale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(date);
+
+    args = { ...args, selectedDate: date };
+
+    return renderCalendar(`Selected Date: ${formatted}`, args);
+};
+
+export const disabled = (args: StoryArgs = {}): TemplateResult => {
+    return renderCalendar(`Disabled? ${args.disabled}`, args);
+};
+
+disabled.argTypes = {
+    disabled: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: true,
+            },
+        },
+    },
+};
+
+disabled.args = {
+    disabled: true,
 };
