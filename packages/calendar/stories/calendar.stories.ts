@@ -42,7 +42,10 @@ const locales = [
     'zz-ZY',
     'zz-ZZ',
 ] as const;
+
 type Locale = typeof locales;
+
+const defaultLocale = 'en-US';
 
 // Don't render private properties and getters in Storybook UI
 const hiddenProperty = {
@@ -82,7 +85,9 @@ export default {
 
     // Hide "This story is not configured to handle controls" warning
     parameters: {
-        controls: { hideNoControlsWarning: true },
+        controls: {
+            hideNoControlsWarning: true,
+        },
     },
 };
 
@@ -101,10 +106,19 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
 };
 
 export const withSelectedDate = (args: StoryArgs = {}): TemplateResult => {
+    const selectedDate = new Date(2019, 0, 30);
+    const formattedDate = Intl.DateTimeFormat(defaultLocale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(selectedDate);
+
     return html`
+        <h1>Selected Date: ${formattedDate}</h1>
+
         <sp-calendar
             ...=${spreadProps(args)}
-            .selectedDate=${new Date(2019, 9, 7)}
+            .selectedDate=${selectedDate}
         ></sp-calendar>
     `;
 };
@@ -112,22 +126,28 @@ export const withSelectedDate = (args: StoryArgs = {}): TemplateResult => {
 export const otherLocales = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-theme lang=${args.locale}>
+            <h1>Locale: ${args.locale}</h1>
+
             <sp-calendar ...=${spreadProps(args)}></sp-calendar>
         </sp-theme>
     `;
 };
 
 otherLocales.args = {
-    locale: 'en-US',
+    locale: defaultLocale,
 };
 otherLocales.argTypes = {
     locale: {
         name: 'locale',
         description: 'Locale',
-        type: { name: 'string', required: true },
+        options: locales,
         control: {
             type: 'select',
-            options: locales,
+        },
+        table: {
+            defaultValue: {
+                summary: defaultLocale,
+            },
         },
     },
 };

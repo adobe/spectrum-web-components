@@ -27,7 +27,7 @@ import {
 } from '@spectrum-web-components/base';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
@@ -56,20 +56,28 @@ export class Calendar extends SpectrumElement {
     @property({ reflect: true })
     selectedDate!: Date | undefined;
 
+    @state()
+    private _currentDate!: CalendarDate;
+
     private _languageResolver = new LanguageResolutionController(this);
     private _locale!: string;
     private _timeZone: string = getLocalTimeZone();
-    private _currentDate!: CalendarDate;
 
     public get today(): CalendarDate {
         return today(this._timeZone);
+    }
+
+    constructor() {
+        super();
+
+        this._setLocale();
+        this._setDefaultCalendarDate();
     }
 
     protected override willUpdate(
         changedProperties: PropertyValueMap<this>
     ): void {
         this._setLocale();
-        this._setDefaultCalendarDate();
 
         if (changedProperties.has('selectedDate')) {
             if (this.selectedDate) {
@@ -83,8 +91,6 @@ export class Calendar extends SpectrumElement {
                 }
             }
         }
-
-        super.updated(changedProperties);
     }
 
     protected override render(): TemplateResult {
@@ -144,6 +150,7 @@ export class Calendar extends SpectrumElement {
                     title="Previous"
                     class="spectrum-ActionButton spectrum-Calendar-prevMonth"
                     ?disabled=${this.disabled}
+                    @click=${this.handlePreviousMonth}
                 >
                     <sp-icon-chevron-left slot="icon"></sp-icon-chevron-left>
                 </sp-action-button>
@@ -156,6 +163,7 @@ export class Calendar extends SpectrumElement {
                     title="Next"
                     class="spectrum-ActionButton spectrum-Calendar-nextMonth"
                     ?disabled=${this.disabled}
+                    @click=${this.handleNextMonth}
                 >
                     <sp-icon-chevron-right slot="icon"></sp-icon-chevron-right>
                 </sp-action-button>
@@ -245,6 +253,16 @@ export class Calendar extends SpectrumElement {
         `;
     }
 
+    public handlePreviousMonth(): void {
+        this._currentDate = startOfMonth(this._currentDate).subtract({
+            months: 1,
+        });
+    }
+
+    public handleNextMonth(): void {
+        this._currentDate = startOfMonth(this._currentDate).add({ months: 1 });
+    }
+
     private _getWeeksInCurrentMonth(): number {
         return getWeeksInMonth(this._currentDate, this._locale);
     }
@@ -288,11 +306,10 @@ export class Calendar extends SpectrumElement {
     private _getDatesInWeek(weekIndex: number): CalendarDate[] {
         const dates: CalendarDate[] = [];
 
-        let date = startOfMonth(this._currentDate).add({
-            weeks: weekIndex,
-        });
-
-        date = startOfWeek(date, this._locale);
+        let date = startOfWeek(
+            startOfMonth(this._currentDate).add({ weeks: weekIndex }),
+            this._locale
+        );
 
         while (dates.length < daysInWeek) {
             dates.push(date);
