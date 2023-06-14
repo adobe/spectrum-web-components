@@ -46,7 +46,7 @@
         "lunr": "^2.3.9",
         "markdown-it-anchor": "^8.4.1",
         "markdown-it-for-inline": "^0.1.1",
-        "playwright": "1.30.0",
+        "playwright": "1.35.0",
         "postcss-cli": "^10.0.0",
         "posthtml": "^0.16.6",
         "posthtml-attrs-parser": "^0.1.1",
