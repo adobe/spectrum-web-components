@@ -37,6 +37,7 @@ export class ColorLoupe extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <svg
+                aria-hidden="true"
                 class="spectrum-ColorLoupe is-open"
                 overflow="visible"
                 style="--spectrum-picked-color: ${this
