@@ -37,3 +37,7 @@ governing permissions and limitations under the License.
     inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
     z-index: 0;
 }
+
+:host([dir='rtl']) .wheel {
+    transform: scaleX(-1);
+}
