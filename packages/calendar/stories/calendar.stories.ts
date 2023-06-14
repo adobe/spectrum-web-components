@@ -43,8 +43,6 @@ const locales = [
     'zz-ZZ',
 ] as const;
 
-type Locale = typeof locales;
-
 const defaultLocale = 'en-US';
 
 const hiddenProperty = {
@@ -75,6 +73,8 @@ export default {
         _locale: { ...hiddenProperty },
         _timeZone: { ...hiddenProperty },
         _currentDate: { ...hiddenProperty },
+        _minDate: { ...hiddenProperty },
+        _maxDate: { ...hiddenProperty },
         today: { ...hiddenProperty },
 
         shadowRoot: { ...hiddenProperty },
@@ -96,10 +96,6 @@ export default {
 };
 
 interface StoryArgs {
-    padded?: boolean;
-    disabled?: boolean;
-    locale?: Locale;
-
     [prop: string]: unknown;
 }
 
@@ -145,19 +141,6 @@ padded.args = {
     padded: true,
 };
 
-export const selectedDate = (args: StoryArgs = {}): TemplateResult => {
-    const date = new Date(2019, 0, 30);
-    const formatted = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    }).format(date);
-
-    args = { ...args, selectedDate: date };
-
-    return renderCalendar(`Selected Date: ${formatted}`, args);
-};
-
 export const disabled = (args: StoryArgs = {}): TemplateResult => {
     return renderCalendar(`Disabled? ${args.disabled}`, args);
 };
@@ -175,4 +158,64 @@ disabled.argTypes = {
 
 disabled.args = {
     disabled: true,
+};
+
+export const selectedDate = (args: StoryArgs = {}): TemplateResult => {
+    const date = new Date(2019, 0, 30);
+    const formatted = Intl.DateTimeFormat(defaultLocale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(date);
+
+    args = {
+        ...args,
+        selectedDate: date,
+    };
+
+    return renderCalendar(`Selected Date: ${formatted}`, args);
+};
+
+export const minimumDate = (args: StoryArgs = {}): TemplateResult => {
+    const today = new Date();
+    const lastMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() - 1,
+        today.getDate()
+    );
+
+    const formatted = Intl.DateTimeFormat(defaultLocale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(lastMonth);
+
+    args = {
+        ...args,
+        min: lastMonth,
+    };
+
+    return renderCalendar(`Minimum Date: ${formatted}`, args);
+};
+
+export const maximumDate = (args: StoryArgs = {}): TemplateResult => {
+    const today = new Date();
+    const nextMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate()
+    );
+
+    const formatted = Intl.DateTimeFormat(defaultLocale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(nextMonth);
+
+    args = {
+        ...args,
+        max: nextMonth,
+    };
+
+    return renderCalendar(`Maximum Date: ${formatted}`, args);
 };
