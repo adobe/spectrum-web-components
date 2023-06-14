@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.33.1](https://github.com/adobe/spectrum-web-components/compare/v0.33.0...v0.33.1) (2023-06-14)
+
+### Bug Fixes
+
+-   **menu:** [#3164](https://github.com/adobe/spectrum-web-components/issues/3164) plug memory leak with gobal events ([ff589d4](https://github.com/adobe/spectrum-web-components/commit/ff589d4ec86f8dcda15c386907d27c7b3cc8c325))
+
 # [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

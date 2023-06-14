@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/story-decorator",
-    "version": "0.33.0",
+    "version": "0.33.1",
     "publishConfig": {
         "access": "public"
     },
@@ -67,9 +67,9 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.33.0",
         "@spectrum-web-components/field-label": "^0.33.0",
-        "@spectrum-web-components/menu": "^0.33.0",
+        "@spectrum-web-components/menu": "^0.33.1",
         "@spectrum-web-components/overlay": "^0.33.0",
-        "@spectrum-web-components/picker": "^0.33.0",
+        "@spectrum-web-components/picker": "^0.33.1",
         "@spectrum-web-components/reactive-controllers": "^0.33.0",
         "@spectrum-web-components/switch": "^0.33.0",
         "@spectrum-web-components/theme": "^0.33.0"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.33.1](https://github.com/adobe/spectrum-web-components/compare/v0.33.0...v0.33.1) (2023-06-14)
+
+### Bug Fixes
+
+-   **color-slider:** use inset-block-_ and inset-inline-_ and fix RTL orientation and behavior [#3301](https://github.com/adobe/spectrum-web-components/issues/3301) ([52aa328](https://github.com/adobe/spectrum-web-components/commit/52aa328ea7e4c2e40c7688ce9daa233cc9936be0))
+
 # [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
 
 ### Bug Fixes
