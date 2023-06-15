@@ -83,7 +83,7 @@ export class Calendar extends SpectrumElement {
         super();
 
         this._setLocale();
-        this._setDefaultCalendarDate();
+        this._setInitialCalendarDate();
     }
 
     protected override willUpdate(
@@ -278,7 +278,7 @@ export class Calendar extends SpectrumElement {
                     role="presentation"
                     class="spectrum-Calendar-date ${classMap(dayClasses)}"
                 >
-                    ${calendarDate.day}
+                    ${this._formatNumber(calendarDate.day)}
                 </span>
             </td>
         `;
@@ -303,10 +303,9 @@ export class Calendar extends SpectrumElement {
      * (Sunday, Monday, etc.)
      */
     private _getWeekdays(): CalendarWeekday[] {
-        const weekStart = startOfWeek(this._currentDate, this._locale);
-
-        return [...new Array(daysInWeek).keys()].map((index) => {
-            const date = weekStart.add({ days: index });
+        return [...new Array(daysInWeek).keys()].map((dayIndex) => {
+            const weekStart = startOfWeek(this._currentDate, this._locale);
+            const date = weekStart.add({ days: dayIndex });
 
             return {
                 narrow: this._formatDate(date, { weekday: 'narrow' }),
@@ -317,24 +316,11 @@ export class Calendar extends SpectrumElement {
         });
     }
 
-    private _formatDate(
-        calendarDate: CalendarDate,
-        options: Intl.DateTimeFormatOptions
-    ): string {
-        return new Intl.DateTimeFormat(this._locale, options).format(
-            calendarDate.toDate(this._timeZone)
-        );
-    }
-
-    private _capitalFirstLetter(string: string): string {
-        return `${string.charAt(0).toUpperCase()}${string.substring(1)}`;
-    }
-
     private _setLocale(): void {
         this._locale = this._languageResolver.language;
     }
 
-    private _setDefaultCalendarDate(): void {
+    private _setInitialCalendarDate(): void {
         this._currentDate = this.today;
     }
 
@@ -413,5 +399,22 @@ export class Calendar extends SpectrumElement {
      */
     private _isValidDate(date: Date): boolean {
         return !isNaN(date.getTime());
+    }
+
+    private _formatDate(
+        calendarDate: CalendarDate,
+        options: Intl.DateTimeFormatOptions
+    ): string {
+        return new Intl.DateTimeFormat(this._locale, options).format(
+            calendarDate.toDate(this._timeZone)
+        );
+    }
+
+    private _formatNumber(number: number): string {
+        return new Intl.NumberFormat(this._locale).format(number);
+    }
+
+    private _capitalFirstLetter(string: string): string {
+        return `${string.charAt(0).toUpperCase()}${string.substring(1)}`;
     }
 }

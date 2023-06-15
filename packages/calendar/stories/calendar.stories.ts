@@ -38,6 +38,7 @@ const locales = [
     'tr-TR',
     'uk-UA',
     'zh-Hans-CN',
+    'zh-Hans-CN-u-nu-hanidec',
     'zh-Hant-TW',
     'zz-ZY',
     'zz-ZZ',
