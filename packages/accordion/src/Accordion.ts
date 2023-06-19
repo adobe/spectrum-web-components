@@ -30,7 +30,12 @@ import styles from './accordion.css.js';
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
  */
-export class Accordion extends SpectrumElement {
+
+import { SizedMixin } from '@spectrum-web-components/base';
+
+export class Accordion extends SizedMixin(SpectrumElement, {
+    validSizes: ['s', 'm', 'l', 'xl'],
+}) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -43,9 +48,6 @@ export class Accordion extends SpectrumElement {
 
     @property({ type: String, reflect: true })
     public density?: 'compact' | 'regular' | 'spacious' = 'regular';
-
-    @property({ type: String, reflect: true })
-    public size?: 's' | 'm' | 'l' | 'xl' = 'm';
 
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
