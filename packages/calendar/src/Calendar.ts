@@ -53,13 +53,13 @@ export class Calendar extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     disabled = false;
 
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: false })
     selectedDate!: Date | undefined;
 
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: false })
     min!: Date | undefined;
 
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: false })
     max!: Date | undefined;
 
     @state()
