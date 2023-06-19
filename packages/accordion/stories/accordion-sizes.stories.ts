@@ -11,9 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
 import { AccordionMarkup } from './';
 
 export default {
