@@ -229,6 +229,11 @@ export class Swatch extends SizedMixin(Focusable, {
                 this.removeAttribute('aria-label');
             }
         }
+        if (changes.has('mixedValue')) {
+            if (this.mixedValue) {
+                this.setAttribute('aria-checked', 'mixed');
+            }
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {
