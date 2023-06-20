@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import { ifDefined } from 'lit/directives/if-defined.js';
+
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '../sp-calendar.js';
@@ -97,6 +99,12 @@ export default {
 };
 
 interface StoryArgs {
+    locale?: string;
+    padded?: boolean;
+    disabled?: boolean;
+    selectedDate?: Date;
+    min?: Date;
+    max?: Date;
     [prop: string]: unknown;
 }
 
@@ -105,7 +113,7 @@ const renderCalendar = (
     args: StoryArgs = {}
 ): TemplateResult => {
     return html`
-        <sp-theme lang=${args.locale}>
+        <sp-theme lang=${ifDefined(args.locale || undefined)}>
             <h1>${title}</h1>
             <h2>
                 Locale:
