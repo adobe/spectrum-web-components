@@ -155,6 +155,7 @@ textarea {
 
 :host([multiline][rows]) .input {
     block-size: auto;
+    resize: none;
 }
 
 /* restore specificity from the original Spectrum CSS */
