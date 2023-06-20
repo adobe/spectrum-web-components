@@ -4572,9 +4572,9 @@
   integrity sha512-GUKSb5NnOmLe1r1V8oV28E+sZh98EDrtkzDnWrr5vHYgzeu6/W0HYFe/4d4FyyZsTyD3yh3tMRXOY9KgJ3rdzQ==
 
 "@spectrum-css/popover@^6.0.46":
-  version "6.0.46"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.46.tgz#cce0613adf732c51853bc5df5c67fe18716bd73c"
-  integrity sha512-M+WaHsb3H1kgasrl3/hJqsvVxC43AA9lS5EJM/j+/AC7SDKkPOc6yfuKReiC6Wu6QpVeUVW3zLDNDtDkoEvALA==
+  version "6.0.54"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.54.tgz#7bbdc7aeef9615163f223053424546da9a279909"
+  integrity sha512-6CkPiYLhaj9vnv6Cqjj3eNXm9aYNOkvCn0x1xghs/BXmsVjNlfoLicg5nfPAp8rnD2ZJ8uX5neMiH6oUIZdKzw==
 
 "@spectrum-css/progressbar@^3.0.39":
   version "3.0.47"
