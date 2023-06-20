@@ -1402,3 +1402,7 @@ governing permissions and limitations under the License.
         --spectrum-component-edge-to-visual-300
     );
 }
+:host,
+:root {
+    --system-spectrum-tabs-font-weight: var(--spectrum-default-font-weight);
+}

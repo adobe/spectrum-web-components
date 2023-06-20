@@ -91,6 +91,29 @@ const config = {
                     ],
                 },
                 {
+                    expandSelector: true,
+                    find: [builder.class('spectrum-Tabs--vertical-right')],
+                    replace: [
+                        {
+                            replace: builder.attribute(
+                                'direction',
+                                'vertical-right',
+                                'prefix'
+                            ),
+                            hoist: true,
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('list'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                    ],
+                },
+                {
                     collapseSelector: true,
                     find: [
                         builder.class('spectrum-Tabs-item'),
@@ -258,6 +281,7 @@ const config = {
                     ],
                     'size'
                 ),
+                converter.classToId('spectrum-Tabs', 'list'),
             ],
             requireComponentPresence: [
                 {

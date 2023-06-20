@@ -4663,10 +4663,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.56.tgz#b74303a869e271df38844380aae782fe2128a8a9"
   integrity sha512-YRM8B3Hk0w6ZPG14lzJp3vIaemlThq8cjWVNEesosJC1mUIiUOwG5OMCrzKABc3b6g5g8w02N6QKpOrzUislPg==
 
-"@spectrum-css/tabs@^3.2.60":
-  version "3.2.61"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-3.2.61.tgz#200a38566d1d2cca1a80686849d66e671f39a655"
-  integrity sha512-klOrpovOqGa/tUoefdoThTnIIfsy2rBUnVaFeo/KhibXimQ1QGCD1ucVdxunZT+H5ZaEVZlSvMOTsofuDL7lFQ==
+"@spectrum-css/tabs@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-4.0.0.tgz#278c5ab404f213fc6fafa8be86b379b41f088fd6"
+  integrity sha512-LDl3mcnTwhgKWb/oAOfiQ+kTNF3GZZbUphTO8UaAXYUzfmzS+BqDJSQ4BHMCc34NnMow+Qxfz+y5xner3ZhOCw==
 
 "@spectrum-css/tag@^5.0.37":
   version "5.0.37"
