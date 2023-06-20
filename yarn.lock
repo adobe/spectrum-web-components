@@ -4647,9 +4647,9 @@
   integrity sha512-CnN6W0mg8/vMhD4pwz5xruIsskPwa6CJeXffpUnT78J/MymVv2rGrcq2QMZLcVpUF+8wnfF8UPsEF1SByILzQQ==
 
 "@spectrum-css/table@^4.0.50":
-  version "4.0.50"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.50.tgz#e35dd6a8db904dcb35593a5e70421b9be29206bf"
-  integrity sha512-dr9gYb4kb3BqR4Yb3IVr6G6uWPsBWpPoAtrZmeLT/CXLzRImLULUWnzsYeHA6noaDdWxiAGi+9+LtfkiCwxFLw==
+  version "4.0.56"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.56.tgz#b74303a869e271df38844380aae782fe2128a8a9"
+  integrity sha512-YRM8B3Hk0w6ZPG14lzJp3vIaemlThq8cjWVNEesosJC1mUIiUOwG5OMCrzKABc3b6g5g8w02N6QKpOrzUislPg==
 
 "@spectrum-css/tabs@^3.2.52":
   version "3.2.52"
