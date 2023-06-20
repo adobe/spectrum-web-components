@@ -97,6 +97,9 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
+    @property({ type: Number })
+    public rows = -1;
+
     @property({ type: Boolean, reflect: true })
     public valid = false;
 
@@ -244,6 +247,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
                 ?disabled=${this.disabled}
                 ?required=${this.required}
                 ?readonly=${this.readonly}
+                rows=${ifDefined(this.rows > -1 ? this.rows : undefined)}
                 autocomplete=${ifDefined(this.autocomplete)}
             ></textarea>
         `;
