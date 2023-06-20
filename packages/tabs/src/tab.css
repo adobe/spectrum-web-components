@@ -16,72 +16,6 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
-:host([vertical]) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: auto !important;
-
-    --sp-tab-vertial-margin-y: calc(
-        (
-                var(
-                        --spectrum-tabs-vertical-item-height,
-                        var(--spectrum-global-dimension-size-550)
-                    ) -
-                    var(
-                        --spectrum-tabs-focus-ring-height,
-                        var(--spectrum-alias-single-line-height)
-                    )
-            ) / 2
-    );
-}
-
-:host([vertical]):before {
-    /* .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
-    left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
-    );
-    right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
-    );
-
-    /* Custom */
-    height: auto;
-    margin-top: 0 !important;
-    top: 0;
-    bottom: 0;
-}
-
-:host([vertical]) ::slotted([slot='icon']) {
-    margin-top: var(--sp-tab-vertial-margin-y);
-    flex-shrink: 0;
-    height: var(
-        --spectrum-icon-tshirt-size-height,
-        var(
-            --spectrum-alias-workflow-icon-size,
-            var(--spectrum-global-dimension-size-225)
-        )
-    );
-}
-
-:host(:not([vertical])) ::slotted([slot='icon']) {
-    height: 100%;
-}
-
-:host([dir][vertical]) slot[name='icon'] + #item-label {
-    font-size: var(
-        --spectrum-tabs-text-size,
-        var(--spectrum-alias-font-size-default)
-    );
-    font-weight: var(
-        --spectrum-tabs-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
-    );
-    line-height: 1;
-    margin: var(--sp-tab-vertial-margin-y) 0;
-}
-
 #item-label[hidden] {
     display: none;
 }
@@ -110,12 +44,31 @@ governing permissions and limitations under the License.
         color: HighlightText;
     }
 
-    :host([selected]):before {
-        background-color: Highlight;
-        color: HighlightText;
-    }
-
     :host([selected]) #item-label {
         color: HighlightText;
     }
+}
+
+:host([vertical]) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+:host([dir][vertical]) slot[name='icon'] + #item-label {
+    margin-inline-start: 0;
+    margin-block-start: calc(
+        var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
+    );
+    margin-block-end: calc(
+        var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2
+    );
+}
+
+:host([vertical]) ::slotted([slot='icon']) {
+    margin-block-start: calc(
+        var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon)) / 2
+    );
 }

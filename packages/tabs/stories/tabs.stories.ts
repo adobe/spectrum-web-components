@@ -178,6 +178,12 @@ export const emphasized = (args: Properties): TemplateResult => {
 
 export const emphasizedQuiet = (args: Properties): TemplateResult => {
     return html`
+        <style>
+            sp-tabs {
+                display: grid;
+                grid-template-columns: 100%;
+            }
+        </style>
         <sp-tabs
             selected="1"
             emphasized
@@ -304,6 +310,7 @@ export const VerticalSized = (args: Properties): TemplateResult => {
     return html`
         <style>
             sp-tabs {
+                display: grid;
                 height: 75vh;
                 --swc-tabs-list-justify-content: center;
             }
@@ -488,6 +495,12 @@ iconsIii.storyName = 'Icons III';
 
 export const Quiet = ({ direction, auto }: Properties): TemplateResult => {
     return html`
+        <style>
+            sp-tabs {
+                display: grid;
+                grid-template-columns: 100%;
+            }
+        </style>
         <sp-tabs selected="1" quiet direction=${direction} ?auto=${auto}>
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
@@ -515,6 +528,12 @@ export const quietCompact = ({
     auto,
 }: Properties): TemplateResult => {
     return html`
+        <style>
+            sp-tabs {
+                display: grid;
+                grid-template-columns: 100%;
+            }
+        </style>
         <sp-tabs
             selected="1"
             quiet
