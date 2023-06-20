@@ -4040,10 +4040,10 @@
     "@web/dev-server-hmr" "^0.1.6"
     picomatch "^2.2.2"
 
-"@open-wc/eslint-config@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@open-wc/eslint-config/-/eslint-config-10.0.0.tgz#1b72cc025526d4d48029a1b584b1f57e81530dd8"
-  integrity sha512-/TzYPzyVvFaxIE4C0k/NiDS+xHeZvHcUtZBT8xfAQ2g+i8ey3sPo073HVgvJ2LFDZsZytRn+fML+j9xZ0Lexzw==
+"@open-wc/eslint-config@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@open-wc/eslint-config/-/eslint-config-11.0.0.tgz#470cd19205fc7dd74bbc3133cb57d3f3b13e5859"
+  integrity sha512-AvAdQrAKBfa5pVHxPVncekRYHe5IfCU8wKej7cHHd9xMCiW+h9fvgz+Xv9ZKKbZmmBCAo11k8FK4+IJ+X7gMLw==
   dependencies:
     "@babel/eslint-parser" "^7.19.1"
     "@babel/plugin-syntax-import-assertions" "^7.20.0"
@@ -4052,7 +4052,7 @@
     eslint-plugin-import "^2.26.0"
     eslint-plugin-import-exports-imports-resolver "^1.0.1"
     eslint-plugin-lit "^1.8.0"
-    eslint-plugin-lit-a11y "^2.4.0"
+    eslint-plugin-lit-a11y "^3.0.0"
     eslint-plugin-no-only-tests "^3.1.0"
     eslint-plugin-wc "^1.2.0"
 
@@ -4412,9 +4412,9 @@
   integrity sha512-EFjDf+HRfVRX2fymBYcNCMzPQ5hR7nh/w1W0cZD8YvggSqErQdsergAtFRiAUq7+5nigoCrtCIicWqUcYPoJnw==
 
 "@spectrum-css/actionmenu@^4.0.31":
-  version "4.0.31"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-4.0.31.tgz#2909a263f9bebe9a701a0ee7022515c51186d2ab"
-  integrity sha512-S6evjvHoRxEL4QNsP/jGBrjMGv9L6AOlyxe3cCGeBg02eWs+VI1Ogl5/XiEBRSaWvVVMmvPoZHwsEa6kc9sBQA==
+  version "4.0.39"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-4.0.39.tgz#d308384d7f34d7ec77f63e5a46176c191525c2ed"
+  integrity sha512-csT3lHLItbZQs8+OMTs5lX63E5HSleRos2N6fVIVpluFSusfmUl3vp+ZvWTalXC/8ZGkHDT0rsqPLBGIUmmhRA==
 
 "@spectrum-css/asset@^3.0.40":
   version "3.0.40"
@@ -4507,9 +4507,9 @@
   integrity sha512-Dx2noHpx4ir7ldJuA6RPpbwarz8fh4ZMd5dptcBLNsMlzAT8kSphEd+DSOj7AL9SsZ3iIY7Z88Tkx0usY5KB0g==
 
 "@spectrum-css/divider@^2.0.42":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.3.tgz#96946817172928edc32fd395bbd6b6c56b67a520"
-  integrity sha512-hcputlZ6sZPbryIZwzZC4Z/9iqKxyZsYCmPao3qKVT0RY64JUd+pfigGVMqJryiA3d5qLTNqSVRuTH/T5X4+SA==
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.7.tgz#6001c478b992fdfa6f632314de3dfa0d2f4b4c61"
+  integrity sha512-M7Is1WCjXf6d8l1Im6Zu5LXgFCLDLgypaxeFqrKe4uREaxjytIGl6SA2fCeuPG3RWrY4jbaRgsOjSrb4vdX7Fw==
 
 "@spectrum-css/dropzone@^5.0.0":
   version "5.0.0"
@@ -4572,9 +4572,9 @@
   integrity sha512-GUKSb5NnOmLe1r1V8oV28E+sZh98EDrtkzDnWrr5vHYgzeu6/W0HYFe/4d4FyyZsTyD3yh3tMRXOY9KgJ3rdzQ==
 
 "@spectrum-css/popover@^6.0.46":
-  version "6.0.46"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.46.tgz#cce0613adf732c51853bc5df5c67fe18716bd73c"
-  integrity sha512-M+WaHsb3H1kgasrl3/hJqsvVxC43AA9lS5EJM/j+/AC7SDKkPOc6yfuKReiC6Wu6QpVeUVW3zLDNDtDkoEvALA==
+  version "6.0.54"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.54.tgz#7bbdc7aeef9615163f223053424546da9a279909"
+  integrity sha512-6CkPiYLhaj9vnv6Cqjj3eNXm9aYNOkvCn0x1xghs/BXmsVjNlfoLicg5nfPAp8rnD2ZJ8uX5neMiH6oUIZdKzw==
 
 "@spectrum-css/progressbar@^3.0.39":
   version "3.0.47"
@@ -4647,9 +4647,9 @@
   integrity sha512-CnN6W0mg8/vMhD4pwz5xruIsskPwa6CJeXffpUnT78J/MymVv2rGrcq2QMZLcVpUF+8wnfF8UPsEF1SByILzQQ==
 
 "@spectrum-css/table@^4.0.50":
-  version "4.0.50"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.50.tgz#e35dd6a8db904dcb35593a5e70421b9be29206bf"
-  integrity sha512-dr9gYb4kb3BqR4Yb3IVr6G6uWPsBWpPoAtrZmeLT/CXLzRImLULUWnzsYeHA6noaDdWxiAGi+9+LtfkiCwxFLw==
+  version "4.0.56"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.56.tgz#b74303a869e271df38844380aae782fe2128a8a9"
+  integrity sha512-YRM8B3Hk0w6ZPG14lzJp3vIaemlThq8cjWVNEesosJC1mUIiUOwG5OMCrzKABc3b6g5g8w02N6QKpOrzUislPg==
 
 "@spectrum-css/tabs@^3.2.52":
   version "3.2.52"
@@ -7060,10 +7060,10 @@ axios@^1.0.0:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
-axios@^1.2.1:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.3.tgz#31a3d824c0ebf754a004b585e5f04a5f87e6c4ff"
-  integrity sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==
+axios@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.4.0.tgz#38a7bf1224cd308de271146038b551d725f0be1f"
+  integrity sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -8079,14 +8079,14 @@ chrome-trace-event@^1.0.2:
   dependencies:
     tslib "^1.9.0"
 
-chromedriver@^112.0.1:
-  version "112.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-112.0.1.tgz#b1d23720613d7afa17cde6d5057e765109e07e69"
-  integrity sha512-ieQzvellbtPY4MUrFzzayC1bZa/HoBsGXejUQJhAPWcYALxtkjUZNUYWbojMjIzf8iIhVda9VvdXiRKqdlN7ow==
+chromedriver@^114.0.2:
+  version "114.0.2"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-114.0.2.tgz#1ddaa6738f2b60e6b832a39f791c8c54bf840837"
+  integrity sha512-v0qrXRBknbxqmtklG7RWOe3TJ/dLaHhtB0jVxE7BAdYERxUjEaNRyqBwoGgVfQDibHCB0swzvzsj158nnfPgZw==
   dependencies:
     "@testim/chrome-version" "^1.1.3"
-    axios "^1.2.1"
-    compare-versions "^5.0.1"
+    axios "^1.4.0"
+    compare-versions "^5.0.3"
     extract-zip "^2.0.1"
     https-proxy-agent "^5.0.1"
     proxy-from-env "^1.1.0"
@@ -8587,10 +8587,10 @@ compare-func@^2.0.0:
     array-ify "^1.0.0"
     dot-prop "^5.1.0"
 
-compare-versions@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-5.0.1.tgz#14c6008436d994c3787aba38d4087fabe858555e"
-  integrity sha512-v8Au3l0b+Nwkp4G142JcgJFh1/TUhdxut7wzD1Nq1dyp5oa3tXaqb03EXOAB6jS4gMlalkjAUPZBMiAfKUixHQ==
+compare-versions@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-5.0.3.tgz#a9b34fea217472650ef4a2651d905f42c28ebfd7"
+  integrity sha512-4UZlZP8Z99MGEY+Ovg/uJxJuvoXuN4M6B3hKaiackiHrgzQFEe3diJi1mf1PNHbFujM7FvLrK2bpgIaImbtZ1A==
 
 component-emitter@^1.2.1:
   version "1.3.0"
@@ -10457,10 +10457,27 @@ eslint-plugin-import@^2.26.0:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-lit-a11y@^2.2.2, eslint-plugin-lit-a11y@^2.4.0:
+eslint-plugin-lit-a11y@^2.2.2:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-2.4.1.tgz#cdae1761322a675427eff82c8c0e8f8aa4fdf3ba"
   integrity sha512-UljRja/2cVrNtgnCDj5sCT3Larxda4mGqbsPhlksvECo0+KCD8EuUori/P6wFeFqk+pHlkIC3W200E5q85E3VQ==
+  dependencies:
+    aria-query "^5.1.3"
+    axe-core "^4.3.3"
+    axobject-query "^2.2.0"
+    dom5 "^3.0.1"
+    emoji-regex "^10.2.1"
+    eslint-plugin-lit "^1.6.0"
+    eslint-rule-extender "0.0.1"
+    language-tags "^1.0.5"
+    parse5 "^7.1.2"
+    parse5-htmlparser2-tree-adapter "^6.0.1"
+    requireindex "~1.2.0"
+
+eslint-plugin-lit-a11y@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-3.0.0.tgz#5af8dc46c0aa253be0f9eb31a6fa7b079ea5d6fd"
+  integrity sha512-+HMLB0XVDh6hX9rJZqmfkSfOuTSXzjab/gmDSbhIr/i60aUV+xLm1WdLAPAqLE5YsyxWd1CcycON4OO37ro0xA==
   dependencies:
     aria-query "^5.1.3"
     axe-core "^4.3.3"
