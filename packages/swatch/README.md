@@ -52,6 +52,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
+        aria-checked="mixed"
         size="xs"
     ></sp-swatch>
 </div>
@@ -84,6 +85,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
+        aria-checked="mixed"
         size="s"
     ></sp-swatch>
 </div>
@@ -116,6 +118,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
+        aria-checked="mixed"
         size="m"
     ></sp-swatch>
 </div>
@@ -148,6 +151,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
+        aria-checked="mixed"
         size="l"
     ></sp-swatch>
 </div>
@@ -202,9 +206,9 @@ The `mixed-value` attribute and `mixedValue` property outline when an `<sp-swatc
 
 ```html
 <sp-swatch-group>
-    <sp-swatch mixed-value></sp-swatch>
-    <sp-swatch mixed-value rounding="full"></sp-swatch>
-    <sp-swatch mixed-value shape="rectangle"></sp-swatch>
+    <sp-swatch mixed-value aria-checked="mixed"></sp-swatch>
+    <sp-swatch mixed-value aria-checked="mixed" rounding="full"></sp-swatch>
+    <sp-swatch mixed-value aria-checked="mixed" shape="rectangle"></sp-swatch>
 </sp-swatch-group>
 ```
 
