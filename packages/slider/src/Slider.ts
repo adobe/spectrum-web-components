@@ -123,7 +123,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     ) => {
         const valueArray = [...values.values()];
         if (valueArray.length === 2)
-            return `${valueArray[0]} – ${valueArray[1]}`;
+            return `${valueArray[0]} - ${valueArray[1]}`;
         return valueArray.join(', ');
     };
 
