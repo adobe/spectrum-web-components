@@ -54,13 +54,13 @@ export class Calendar extends SpectrumElement {
     disabled = false;
 
     @property({ reflect: true, attribute: false })
-    selectedDate!: Date | undefined;
+    selectedDate?: Date;
 
     @property({ reflect: true, attribute: false })
-    min!: Date | undefined;
+    min?: Date;
 
     @property({ reflect: true, attribute: false })
-    max!: Date | undefined;
+    max?: Date;
 
     @state()
     private _currentDate!: CalendarDate;
@@ -123,8 +123,10 @@ export class Calendar extends SpectrumElement {
 
         return html`
             <div class="spectrum-Calendar-header">
-                <!-- TODO: Attribute 'role="heading"' removed -->
-                <!-- TODO: The "heading" role requires the attribute "aria-level" -->
+                <!--
+                 * TODO: Attribute 'role="heading"' removed, due to error 'The "heading" role requires the attribute
+                 * "aria-level"'
+                -->
                 <div
                     class="spectrum-Calendar-title"
                     aria-live="assertive"
@@ -132,8 +134,6 @@ export class Calendar extends SpectrumElement {
                 >
                     ${monthAndYear}
                 </div>
-
-                <!-- TODO: Styles applied to "disabled" buttons are overridden by spectrum-calendar.css -->
 
                 <!-- TODO: Translate "Previous" -->
                 <sp-action-button
@@ -166,6 +166,7 @@ export class Calendar extends SpectrumElement {
 
     public renderCalendarGrid(): TemplateResult {
         return html`
+            <!-- TODO: Implement keyboard navigation -->
             <div
                 class="spectrum-Calendar-body"
                 role="grid"

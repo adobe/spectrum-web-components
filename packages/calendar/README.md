@@ -26,3 +26,10 @@ import { Calendar } from '@spectrum-web-components/calendar';
 ```html
 <sp-calendar></sp-calendar>
 ```
+
+## To-do list
+
+-   Attribute `role="heading"` removed from `.spectrum-Calendar-title`, due to error _'The "heading" role requires the attribute "aria-level"'_
+-   Translate _"Previous"_ and _"Next"_ used in the `title` and `aria-label` of buttons displayed in the header of the calendar
+-   Translate _"Today"_ and _"selected"_ used in the `title` of the day when it is today
+-   Implement keyboard navigation
