@@ -145,7 +145,13 @@ export class HandleController implements Controller {
     public formattedValueForHandle(model: ModelValue): string {
         const { handle } = model;
         const numberFormat = handle.numberFormat ?? this.host.numberFormat;
-        return handle.getAriaHandleText(model.value, numberFormat);
+        const _forcedUnit =
+            handle._forcedUnit === ''
+                ? this.host._forcedUnit
+                : handle._forcedUnit;
+        return (
+            handle.getAriaHandleText(model.value, numberFormat) + _forcedUnit
+        );
     }
 
     public get formattedValues(): Map<string, string> {
