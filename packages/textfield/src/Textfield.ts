@@ -220,7 +220,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
 
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows && !this.quiet
+            ${this.grows && !this.quiet && this.rows === -1
                 ? html`
                       <div id="sizer">${this.value}&#8203;</div>
                   `
