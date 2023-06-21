@@ -15,6 +15,7 @@ import {
     DefaultElementSize,
     html,
     PropertyValues,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -36,7 +37,7 @@ const chevronClass = {
  * @slot - The content of the item that is hidden when the item is not open
  * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
  */
-export class AccordionItem extends Focusable {
+export class AccordionItem extends SizedMixin(Focusable) {
     public static override get styles(): CSSResultArray {
         return [styles, chevronIconStyles];
     }
@@ -49,9 +50,6 @@ export class AccordionItem extends Focusable {
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
-
-    @property({ type: String, reflect: true })
-    public size = 'm';
 
     public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
@@ -92,10 +90,13 @@ export class AccordionItem extends Focusable {
                     ${this.label}
                 </button>
                 <span class="iconContainer">
-                    <sp-icon-chevron100 class="indicator ${
-                        chevronClass[this.size as DefaultElementSize]
-                    }"
-                ></sp-icon-chevron100>
+                    <sp-icon-chevron100
+                        class="indicator ${chevronClass[
+                            this.size as DefaultElementSize
+                        ]}"
+                        slot="icon"
+                    ></sp-icon-chevron100>
+                </span>
             </h3>
             <div id="content" role="region" aria-labelledby="header">
                 <slot></slot>
