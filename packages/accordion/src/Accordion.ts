@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -30,12 +31,7 @@ import styles from './accordion.css.js';
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
  */
-
-import { SizedMixin } from '@spectrum-web-components/base';
-
-export class Accordion extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l', 'xl'],
-}) {
+export class Accordion extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -91,23 +87,22 @@ export class Accordion extends SizedMixin(SpectrumElement, {
         });
     }
 
-    private handleSlotchange(): void {
+    private handleSlotchange({
+        target: slot,
+    }: Event & { target: HTMLSlotElement }): void {
         this.focusGroupController.clearElementCache();
-    }
 
-    private setAccordionProperties(): void {
-        this.items.forEach((item) => {
+        const assignedElements = slot.assignedElements() as AccordionItem[];
+        assignedElements.forEach((item) => {
             item.size = this.size;
         });
     }
 
     protected override render(): TemplateResult {
-        this.setAccordionProperties();
         return html`
             <slot
                 @slotchange=${this.handleSlotchange}
                 @sp-accordion-item-toggle=${this.onToggle}
-                @sp-accordion-item-added=${this.setAccordionProperties}
             ></slot>
         `;
     }
