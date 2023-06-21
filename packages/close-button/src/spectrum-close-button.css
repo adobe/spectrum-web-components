@@ -260,6 +260,7 @@ governing permissions and limitations under the License.
 }
 :host {
     align-items: center;
+    align-self: var(--mod-closebutton-align-self);
     border-color: #0000;
     border-radius: var(
         --mod-closebutton-border-radius,
@@ -271,6 +272,8 @@ governing permissions and limitations under the License.
     flex-direction: row;
     height: var(--mod-closebutton-height, var(--spectrum-closebutton-height));
     justify-content: center;
+    margin-block-start: var(--mod-closebutton-margin-top);
+    margin-inline: var(--mod-closebutton-margin-inline);
     padding: 0;
     position: relative;
     transition: border-color

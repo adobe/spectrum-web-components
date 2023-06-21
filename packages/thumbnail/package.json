@@ -60,7 +60,7 @@
         "@spectrum-web-components/base": "^0.33.2"
     },
     "devDependencies": {
-        "@spectrum-css/thumbnail": "^3.0.5"
+        "@spectrum-css/thumbnail": "^3.0.12"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

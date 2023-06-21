@@ -17,6 +17,12 @@ governing permissions and limitations under the License.
     --spectrum-static-black-focus-indicator-color: var(--spectrum-black);
     --spectrum-overlay-color: var(--spectrum-black);
     --spectrum-opacity-disabled: 0.3;
+    --spectrum-neutral-subdued-content-color-selected: var(
+        --spectrum-neutral-subdued-content-color-down
+    );
+    --spectrum-accent-content-color-selected: var(
+        --spectrum-accent-content-color-down
+    );
     --spectrum-disabled-background-color: var(--spectrum-gray-200);
     --spectrum-disabled-static-white-background-color: var(
         --spectrum-transparent-white-200
@@ -117,8 +123,11 @@ governing permissions and limitations under the License.
     --spectrum-color-handle-outer-border-opacity: var(
         --spectrum-color-handle-inner-border-opacity
     );
-    --spectrum-floating-action-button-shadow-color: var(
+    --spectrum-floating-action-button-drop-shadow-color: var(
         --spectrum-transparent-black-300
+    );
+    --spectrum-floating-action-button-shadow-color: var(
+        --spectrum-floating-action-button-drop-shadow-color
     );
     --spectrum-white-rgb: 255, 255, 255;
     --spectrum-white: rgba(var(--spectrum-white-rgb));
@@ -249,7 +258,10 @@ governing permissions and limitations under the License.
     --spectrum-popover-tip-height: 8px;
     --spectrum-menu-item-label-to-description: 1px;
     --spectrum-picker-minimum-width-multiplier: 2;
-    --spectrum-picker-end-edge-to-disclousure-icon-quiet: 0px;
+    --spectrum-picker-end-edge-to-disclousure-icon-quiet: var(
+        --spectrum-picker-end-edge-to-disclosure-icon-quiet
+    );
+    --spectrum-picker-end-edge-to-disclosure-icon-quiet: 0px;
     --spectrum-text-field-minimum-width-multiplier: 1.5;
     --spectrum-combo-box-minimum-width-multiplier: 2.5;
     --spectrum-combo-box-quiet-minimum-width-multiplier: 2;
@@ -310,6 +322,25 @@ governing permissions and limitations under the License.
     --spectrum-color-handle-drop-shadow-x: 0;
     --spectrum-color-handle-drop-shadow-y: 0;
     --spectrum-color-handle-drop-shadow-blur: 0;
+    --spectrum-tab-item-height-small: var(--spectrum-component-height-200);
+    --spectrum-tab-item-height-medium: var(--spectrum-component-height-300);
+    --spectrum-tab-item-height-large: var(--spectrum-component-height-400);
+    --spectrum-tab-item-height-extra-large: var(
+        --spectrum-component-height-500
+    );
+    --spectrum-tab-item-compact-height-small: var(
+        --spectrum-component-height-75
+    );
+    --spectrum-tab-item-compact-height-medium: var(
+        --spectrum-component-height-100
+    );
+    --spectrum-tab-item-compact-height-large: var(
+        --spectrum-component-height-200
+    );
+    --spectrum-tab-item-compact-height-extra-large: var(
+        --spectrum-component-height-300
+    );
+    --spectrum-tab-item-start-to-edge-quiet: 0px;
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;
