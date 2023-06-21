@@ -104,6 +104,21 @@ governing permissions and limitations under the License.
     }
 }
 :host {
+    --spectrum-popover-filter: drop-shadow(
+        var(
+                --mod-popover-shadow-horizontal,
+                var(--spectrum-popover-shadow-horizontal)
+            )
+            var(
+                --mod-popover-shadow-vertical,
+                var(--spectrum-popover-shadow-vertical)
+            )
+            var(--mod-popover-shadow-blur, var(--spectrum-popover-shadow-blur))
+            var(
+                --mod-popover-shadow-color,
+                var(--spectrum-popover-shadow-color)
+            )
+    );
     background-color: var(
         --mod-popover-background-color,
         var(--spectrum-popover-background-color)
@@ -123,21 +138,7 @@ governing permissions and limitations under the License.
     );
     box-sizing: border-box;
     display: inline-flex;
-    filter: drop-shadow(
-        var(
-                --mod-popover-shadow-horizontal,
-                var(--spectrum-popover-shadow-horizontal)
-            )
-            var(
-                --mod-popover-shadow-vertical,
-                var(--spectrum-popover-shadow-vertical)
-            )
-            var(--mod-popover-shadow-blur, var(--spectrum-popover-shadow-blur))
-            var(
-                --mod-popover-shadow-color,
-                var(--spectrum-popover-shadow-color)
-            )
-    );
+    filter: var(--mod-popover-filter, var(--spectrum-popover-filter));
     flex-direction: column;
     outline: none;
     padding: var(
@@ -162,6 +163,9 @@ governing permissions and limitations under the License.
         --mod-popover-border-width,
         var(--spectrum-popover-border-width)
     );
+}
+* {
+    --mod-popover-filter: none;
 }
 .spectrum-Popover--top-end,
 .spectrum-Popover--top-left,
