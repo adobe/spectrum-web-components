@@ -125,6 +125,7 @@
         "@spectrum-web-components/textfield": "^0.33.2",
         "@spectrum-web-components/theme": "^0.33.2",
         "@spectrum-web-components/thumbnail": "^0.33.2",
+        "@spectrum-web-components/time-field": "^0.0.1",
         "@spectrum-web-components/toast": "^0.33.2",
         "@spectrum-web-components/tooltip": "^0.33.2",
         "@spectrum-web-components/top-nav": "^0.33.2",
