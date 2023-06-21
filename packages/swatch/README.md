@@ -52,7 +52,6 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
-        aria-checked="mixed"
         size="xs"
     ></sp-swatch>
 </div>
@@ -85,7 +84,6 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
-        aria-checked="mixed"
         size="s"
     ></sp-swatch>
 </div>
@@ -118,7 +116,6 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
-        aria-checked="mixed"
         size="m"
     ></sp-swatch>
 </div>
@@ -151,7 +148,6 @@ import { Swatch } from '@spectrum-web-components/swatch';
         rounding="full"
         shape="rectangle"
         mixed-value
-        aria-checked="mixed"
         size="l"
     ></sp-swatch>
 </div>
