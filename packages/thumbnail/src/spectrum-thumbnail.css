@@ -15,9 +15,9 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-500);
     --spectrum-thumbnail-border-radius: var(--spectrum-corner-radius-75);
     --spectrum-thumbnail-border-width: var(--spectrum-border-width-100);
-    --spectrum-thumbnail-border-color-rgb: var(--spectrum-gray-800-rgb);
-    --spectrum-thumbnail-border-color-opacity: var(
-        --spectrum-thumbnail-border-opacity
+    --spectrum-thumbnail-border-color-rgba: rgba(
+        var(--spectrum-gray-800-rgb),
+        var(--spectrum-thumbnail-border-opacity)
     );
     --spectrum-thumbnail-layer-border-width-inner: var(
         --spectrum-border-width-400
@@ -142,14 +142,11 @@ governing permissions and limitations under the License.
             --mod-thumbnail-border-width,
             var(--spectrum-thumbnail-border-width)
         )
-        rgba(
+        var(
+            --highcontrast-thumbnail-border-color,
             var(
-                --mod-thumbnail-border-color-rgb,
-                var(--spectrum-thumbnail-border-color-rgb)
-            ),
-            var(
-                --mod-thumbnail-border-color-opacity,
-                var(--spectrum-thumbnail-border-color-opacity)
+                --mod-thumbnail-border-color,
+                var(--spectrum-thumbnail-border-color-rgba)
             )
         );
     content: '';
@@ -344,7 +341,6 @@ governing permissions and limitations under the License.
     content: none;
 }
 :host([layer][selected]) {
-    outline: solid;
     outline-color: var(
         --highcontrast-thumbnail-border-color-selected,
         var(
@@ -362,6 +358,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-thumbnail-layer-border-width-inner)
             )
     );
+    outline-style: solid;
     outline-width: var(
         --mod-thumbnail-border-width-selected,
         var(--spectrum-thumbnail-border-width-selected)
@@ -382,11 +379,11 @@ governing permissions and limitations under the License.
                 var(--spectrum-thumbnail-layer-border-width-inner)
             ) * 2
     );
-    outline: solid;
     outline-color: var(
         --mod-thumbnail-layer-border-color-inner,
         var(--spectrum-thumbnail-layer-border-color-inner)
     );
+    outline-style: solid;
     outline-width: calc(
         var(
                 --mod-thumbnail-layer-border-width-inner,
@@ -435,10 +432,12 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 @media (forced-colors: active) {
-    :host([selected]) {
+    :host {
         --highcontrast-thumbnail-border-color-selected: SelectedItem;
-    }
-    :host([focused]) {
         --highcontrast-thumbnail-focus-indicator-color: Highlight;
+        --highcontrast-thumbnail-border-color: CanvasText;
+        background-color: Canvas;
+        color: CanvasText;
+        forced-color-adjust: none;
     }
 }

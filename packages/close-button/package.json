@@ -45,7 +45,7 @@
         "@spectrum-web-components/base": "^0.33.2"
     },
     "devDependencies": {
-        "@spectrum-css/closebutton": "^3.0.43"
+        "@spectrum-css/closebutton": "^3.1.5"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
