@@ -31,7 +31,7 @@ type OverlayOptionsV2 = {
     delayed?: boolean;
     offset?: number | [number, number]; // supporting multi-axis
     placement?: Placement;
-    receivesFocus: 'auto' | 'true' | 'false';
+    receivesFocus?: 'auto' | 'true' | 'false';
     trigger?: HTMLElement | VirtualTrigger;
     type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
 };
@@ -60,44 +60,60 @@ export class Overlay extends OverlayFeatures {
     ): Promise<() => void>;
     public static async open(
         content: HTMLElement,
-        options: OverlayOptionsV2
+        options?: OverlayOptionsV2
     ): Promise<Overlay>;
     public static async open(
         targetOrContent: HTMLElement,
-        interactionOrOptions: TriggerInteractionsV1 | OverlayOptionsV2,
+        interactionOrOptions:
+            | TriggerInteractionsV1
+            | OverlayOptionsV2
+            | undefined,
         content?: HTMLElement,
         options?: OverlayOptions
     ): Promise<Overlay | (() => void)> {
         const v2 = arguments.length === 2;
+        const overlayContent = content || targetOrContent;
         const overlay = new Overlay();
+        overlay.dispose = () => {
+            overlay.addEventListener('sp-closed', () => {
+                if (!restored) {
+                    restoreContent();
+                    restored = true;
+                }
+                requestAnimationFrame(() => {
+                    overlay.remove();
+                });
+            });
+            overlay.open = false;
+            overlay.dispose = noop;
+        };
+        let restored = false;
+        const restoreContent = reparentChildren([overlayContent], overlay, {
+            position: 'beforeend',
+            prepareCallback: (el) => {
+                const slot = el.slot;
+                el.removeAttribute('slot');
+                return () => {
+                    el.slot = slot;
+                };
+            },
+        });
         if (v2) {
-            const content = targetOrContent;
             const options = interactionOrOptions as OverlayOptionsV2;
-            overlay.append(content);
+            overlay.append(overlayContent);
+            overlay.receivesFocus = options.receivesFocus ?? 'auto';
             overlay.triggerElement = options.trigger || null;
             overlay.type = options.type || 'modal';
             overlay.offset = options.offset || 6;
             overlay.placement = options.placement;
-            await new Promise<void>((res) =>
-                requestAnimationFrame(() => res())
-            );
-            // Do we want to "open" this path, or leave that to the consumer?
-            overlay.open = true;
+            requestAnimationFrame(() => {
+                // Do we want to "open" this path, or leave that to the consumer?
+                overlay.open = true;
+            });
             return overlay;
-        } else if (content && options) {
+        } else if (overlayContent && options) {
             const target = targetOrContent;
             const interaction = interactionOrOptions;
-            let restored = false;
-            const restoreContent = reparentChildren([content], overlay, {
-                position: 'beforeend',
-                prepareCallback: (el) => {
-                    const slot = el.slot;
-                    el.removeAttribute('slot');
-                    return () => {
-                        el.slot = slot;
-                    };
-                },
-            });
             overlay.receivesFocus = options.receivesFocus ?? 'auto';
             overlay.triggerElement = options.virtualTrigger || target;
             overlay.type =
@@ -125,19 +141,6 @@ export class Overlay extends OverlayFeatures {
                 requestAnimationFrame(() => requestAnimationFrame(() => res()))
             );
             overlay.open = true;
-            overlay.dispose = () => {
-                overlay.addEventListener('sp-closed', () => {
-                    if (!restored) {
-                        restoreContent();
-                        restored = true;
-                    }
-                    requestAnimationFrame(() => {
-                        overlay.remove();
-                    });
-                });
-                overlay.open = false;
-                overlay.dispose = noop;
-            };
             return overlay.dispose;
         }
         /* c8 ignore next 1 */

@@ -12,6 +12,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     openOverlay,
+    Overlay,
     OverlayContentTypes,
     OverlayTrigger,
     Placement,
@@ -722,19 +723,19 @@ export const definedOverlayElement = (): TemplateResult => {
 definedOverlayElement.decorators = [definedOverlayDecorator];
 
 export const detachedElement = (): TemplateResult => {
-    let closeOverlay: (() => void) | undefined;
-    const openDetachedOverlayContent = async (): // {
-    //     target,
-    // }: {
-    //     target: HTMLElement;
-    // }
-    Promise<void> => {
-        if (closeOverlay) {
-            closeOverlay();
-            closeOverlay = undefined;
+    let overlay: Overlay | undefined;
+    const openDetachedOverlayContent = async ({
+        target,
+    }: {
+        target: HTMLElement;
+    }): Promise<void> => {
+        if (overlay) {
+            overlay.open = false;
+            overlay = undefined;
             return;
         }
         const div = document.createElement('div');
+        (div as HTMLDivElement & { open: boolean }).open = false;
         div.textContent = 'This div is overlaid';
         div.setAttribute(
             'style',
@@ -745,23 +746,34 @@ export const detachedElement = (): TemplateResult => {
             padding: 2em;
         `
         );
-        // closeOverlay = await Overlay.open(target, 'click', div, {
-        //     offset: 0,
-        //     placement: 'bottom',
-        // });
+        overlay = await Overlay.open(div, {
+            type: 'auto',
+            trigger: target,
+            receivesFocus: 'auto',
+            placement: 'bottom',
+            offset: 0,
+        });
+        overlay.addEventListener('sp-closed', () => {
+            overlay = undefined;
+        });
+        target.insertAdjacentElement('afterend', overlay);
     };
     requestAnimationFrame(() => {
-        // openDetachedOverlayContent({
-        //     target: document.querySelector(
-        //         '#detached-content-trigger'
-        //     ) as HTMLElement,
-        // });
+        openDetachedOverlayContent({
+            target: document.querySelector(
+                '#detached-content-trigger'
+            ) as HTMLElement,
+        });
     });
     return html`
+        <style>
+            sp-overlay div:not([placement]) {
+                visibility: hidden;
+            }
+        </style>
         <sp-action-button
             id="detached-content-trigger"
             @click=${openDetachedOverlayContent}
-            @sp-closed=${() => (closeOverlay = undefined)}
         >
             <sp-icon-open-in
                 slot="icon"
@@ -1171,7 +1183,6 @@ export const updating = (): TemplateResult => {
         button.style.left = `${Math.floor(Math.random() * 200)}px`;
         button.style.top = `${Math.floor(Math.random() * 200)}px`;
         button.style.position = 'fixed';
-        // Overlay.update();
     };
     return html`
         <overlay-trigger type="click">
