@@ -52,4 +52,11 @@ governing permissions and limitations under the License.
     --spectrum-button-bottom-to-text-large: 10px;
     --spectrum-button-top-to-text-extra-large: 13px;
     --spectrum-button-bottom-to-text-extra-large: 13px;
+
+    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-text-to-button-vertical: var(
+        --spectrum-spacing-100
+    );
 }
