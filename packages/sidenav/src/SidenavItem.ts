@@ -44,6 +44,9 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     @property({ type: Boolean, reflect: true })
     public expanded = false;
 
+    @property({ reflect: true })
+    public role = 'listitem';
+
     protected get parentSideNav(): SideNav | undefined {
         if (!this._parentSidenav) {
             this._parentSidenav = this.closest('sp-sidenav') as
@@ -129,6 +132,12 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 aria-current=${ifDefined(
                     this.selected && this.href ? 'page' : undefined
                 )}
+                aria-expanded=${ifDefined(
+                    this.hasChildren ? this.expanded : undefined
+                )}
+                aria-controls=${ifDefined(
+                    this.hasChildren && this.expanded ? 'list' : undefined
+                )}
             >
                 <slot name="icon"></slot>
                 ${this.label}
@@ -136,7 +145,9 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             </a>
             ${this.expanded
                 ? html`
-                      <slot name="descendant"></slot>
+                      <div id="list" aria-labelledby="item-link" role="list">
+                          <slot name="descendant"></slot>
+                      </div>
                   `
                 : html``}
         `;
@@ -144,7 +155,9 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     protected override updated(changes: PropertyValues): void {
         if (this.hasChildren && this.expanded && !this.selected) {
-            this.focusElement.tabIndex = -1;
+            this.focusElement.tabIndex = 0;
+        } else {
+            this.focusElement.removeAttribute('tabindex');
         }
         super.updated(changes);
     }

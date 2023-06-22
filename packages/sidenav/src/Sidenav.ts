@@ -23,6 +23,7 @@ import sidenavStyles from './sidenav.css.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 export interface SidenavSelectDetail {
     value: string;
@@ -80,6 +81,24 @@ export class SideNav extends Focusable {
      */
     @property({ reflect: true })
     public variant?: 'multilevel' = undefined;
+
+    /**
+     * An accessible label that describes the component,
+     * so that the side navigation can be distinguished
+     * from other navigation by screen reader users.
+     * It will be applied to aria-label, but not visually rendered.
+     */
+    @property({ reflect: true })
+    public label?: string | undefined = undefined;
+
+    /**
+     * Identifies the element (or elements) that labels the component,
+     * so that the side navigation can be distinguished
+     * from other navigation by screen reader users.
+     * It will be applied to aria-labelledby, but not visually rendered.
+     */
+    @property({ reflect: true })
+    public labelledby?: string | undefined = undefined;
 
     private handleSelect(
         event: CustomEvent<SidenavSelectDetail> & { target: SideNavItem }
@@ -162,11 +181,17 @@ export class SideNav extends Focusable {
 
     protected override render(): TemplateResult {
         return html`
-            <nav @sidenav-select=${this.handleSelect}>
-                <slot
-                    name="descendant"
-                    @slotchange=${this.handleSlotchange}
-                ></slot>
+            <nav
+                @sidenav-select=${this.handleSelect}
+                aria-label=${ifDefined(this.label)}
+                aria-labelledby=${ifDefined(this.labelledby)}
+            >
+                <div role="list">
+                    <slot
+                        name="descendant"
+                        @slotchange=${this.handleSlotchange}
+                    ></slot>
+                </div>
             </nav>
         `;
     }

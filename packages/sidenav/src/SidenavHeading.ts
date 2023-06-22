@@ -31,6 +31,9 @@ export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })
     public label = '';
 
+    @property({ reflect: true })
+    public role = 'listitem';
+
     public static override get styles(): CSSResultArray {
         return [sidenavItemStyles, sidenavHeadingStyles];
     }
@@ -45,7 +48,7 @@ export class SideNavHeading extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <h2 id="heading">${this.label}</h2>
-            <div id="list" aria-labelledby="heading">
+            <div id="list" aria-labelledby="heading" role="list">
                 <slot name="descendant"></slot>
             </div>
         `;
