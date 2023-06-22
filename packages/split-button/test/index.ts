@@ -14,6 +14,7 @@ import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { spy } from 'sinon';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 import fieldDefaults, {
     m as field,
@@ -97,6 +98,73 @@ export function runSplitButtonTests(
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
     });
+    it('loads splitbutton accessibly and checks labels', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-split-button>${deprecatedMenu()}</sp-split-button>
+                <sp-split-button label="Test" left>
+                    ${deprecatedMenu()}
+                </sp-split-button>
+            </div>
+        `);
+        const el1 = test.querySelector('sp-split-button') as SplitButton;
+        const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
+
+        await elementUpdated(el1);
+        await elementUpdated(el2);
+
+        type NamedRoledPopupNode = {
+            name: string;
+            role: string;
+            haspopup: boolean;
+        };
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as NamedRoledPopupNode & {
+            children: NamedRoledPopupNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedRoledPopupNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'button' &&
+                    node.name === 'Option 1' &&
+                    node.haspopup
+            ),
+            'Has a named "button" element with haspopup="true" and name="Option 1"'
+        ).to.not.be.null;
+        expect(
+            findAccessibilityNode<NamedRoledPopupNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'button' &&
+                    node.name === 'Option 1' &&
+                    !node.haspopup
+            ),
+            'Has a named "button" element with haspopup="false" and name="Option 1"'
+        ).to.not.be.null;
+        expect(
+            findAccessibilityNode<NamedRoledPopupNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'button' &&
+                    node.name === 'Test' &&
+                    node.haspopup
+            ),
+            'Has a named "button" element with haspopup="true" and name="Test"'
+        ).to.not.be.null;
+        expect(
+            findAccessibilityNode<NamedRoledPopupNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'button' &&
+                    node.name === 'Test' &&
+                    !node.haspopup
+            ),
+            'Has a named "button" element with haspopup="false" and name="Test"'
+        ).to.not.be.null;
+    });
+
     it('[type="field"] toggles open/close multiple time', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(
