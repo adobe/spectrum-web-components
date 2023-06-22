@@ -190,7 +190,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
     private manageAnchor(): void {
         if (this.href && this.href.length > 0) {
-            if (this.getAttribute('role') === 'button') {
+            if (
+                !this.hasAttribute('role') ||
+                this.getAttribute('role') === 'button'
+            ) {
                 this.setAttribute('role', 'link');
             }
             this.removeEventListener('click', this.shouldProxyClick);
