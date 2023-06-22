@@ -37,7 +37,7 @@ import {
 <sp-tab-panel value="s">
 
 ```html
-<sp-radio-group selected="first" name="example">
+<sp-radio-group label="Small" selected="first" name="example">
     <sp-radio value="first" size="s">Option 1</sp-radio>
     <sp-radio value="second" size="s">Option 2</sp-radio>
     <sp-radio value="third" size="s">Option 3</sp-radio>
@@ -50,7 +50,7 @@ import {
 <sp-tab-panel value="m">
 
 ```html
-<sp-radio-group selected="first" name="example">
+<sp-radio-group label="Medium" selected="first" name="example">
     <sp-radio value="first" size="m">Option 1</sp-radio>
     <sp-radio value="second" size="m">Option 2</sp-radio>
     <sp-radio value="third" size="m">Option 3</sp-radio>
@@ -63,7 +63,7 @@ import {
 <sp-tab-panel value="l">
 
 ```html
-<sp-radio-group selected="first" name="example">
+<sp-radio-group label="Large" selected="first" name="example">
     <sp-radio value="first" size="l">Option 1</sp-radio>
     <sp-radio value="second" size="l">Option 2</sp-radio>
     <sp-radio value="third" size="l">Option 3</sp-radio>
@@ -76,7 +76,7 @@ import {
 <sp-tab-panel value="xl">
 
 ```html
-<sp-radio-group selected="first" name="example">
+<sp-radio-group label="Extra large" selected="first" name="example">
     <sp-radio value="first" size="xl">Option 1</sp-radio>
     <sp-radio value="second" size="xl">Option 2</sp-radio>
     <sp-radio value="third" size="xl">Option 3</sp-radio>
@@ -94,24 +94,30 @@ Standard radio buttons are the default style for radio buttons. They are optimal
 ```html-live
 <div style="display: flex; justify-content: space-between;">
     <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Default</h4>
-        <sp-radio-group name="example" vertical>
+        <sp-field-label for="example-1" size="l">
+            <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        </sp-field-label>
+        <sp-radio-group id="example-1" name="example" vertical>
             <sp-radio value="kittens">Kittens</sp-radio>
             <sp-radio value="puppies" checked>Puppies</sp-radio>
         </sp-radio-group>
     </div>
 
     <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
-        <sp-radio-group name="example" vertical>
+        <sp-field-label for="example-2" size="l">
+            <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+        </sp-field-label>
+        <sp-radio-group id="example-2" name="example" vertical>
             <sp-radio invalid value="kittens">Kittens</sp-radio>
             <sp-radio invalid value="puppies" checked>Puppies</sp-radio>
         </sp-radio-group>
     </div>
 
     <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
-        <sp-radio-group name="example" vertical>
+        <sp-field-label for="example-3" size="l">
+            <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        </sp-fieldlabel>
+        <sp-radio-group id="example-3" name="example" vertical>
             <sp-radio disabled value="kittens">Kittens</sp-radio>
             <sp-radio disabled value="puppies" checked>Puppies</sp-radio>
         </sp-radio-group>
@@ -126,24 +132,30 @@ Emphasized radio buttons are a secondary style for radio buttons. The blue color
 ```html-live
 <div style="display: flex; justify-content: space-between;">
     <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Default</h4>
-        <sp-radio-group name="example" vertical>
+        <sp-field-label for="example-a" size="l">
+            <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        </sp-field-label>
+        <sp-radio-group id="example-a" name="example" vertical>
             <sp-radio emphasized value="kittens">Kittens</sp-radio>
             <sp-radio emphasized value="puppies" checked>Puppies</sp-radio>
         </sp-radio-group>
     </div>
 
     <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
-        <sp-radio-group name="example" vertical>
+        <sp-field-label for="example-b" size="l">
+            <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+        </sp-field-label>
+        <sp-radio-group id="example-b" name="example" vertical>
             <sp-radio emphasized invalid value="kittens">Kittens</sp-radio>
             <sp-radio emphasized invalid value="puppies" checked>Puppies</sp-radio>
         </sp-radio-group>
     </div>
 
     <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
-        <sp-radio-group name="example" vertical>
+        <sp-field-label for="example-c" size="l">
+            <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        </sp-fieldlabel>
+        <sp-radio-group id="example-c" name="example" vertical>
             <sp-radio emphasized disabled value="kittens">Kittens</sp-radio>
             <sp-radio emphasized disabled value="puppies" checked>Puppies</sp-radio>
         </sp-radio-group>
@@ -174,7 +186,7 @@ Help text can be accessibly associated with an `<sp-radio-group>` element by usi
     What is your favorite ice cream flavor?
 </sp-field-label>
 <sp-radio-group
-    is="self"
+    id="self"
     onchange="
         this.invalid = this.selected === 'fourth';
     "
@@ -199,7 +211,7 @@ Help text can be accessibly associated with an `<sp-radio-group>` element by usi
     What is your favorite ice cream flavor?
 </sp-field-label>
 <sp-radio-group
-    is="managed"
+    id="managed"
     onchange="
         const helpText = this.querySelector(`[slot='help-text']`);
         const isInvalid = this.selected === 'fourth';
