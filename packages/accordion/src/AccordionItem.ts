@@ -106,13 +106,6 @@ export class AccordionItem extends SizedMixin(Focusable) {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        this.dispatchEvent(
-            new CustomEvent('sp-accordion-item-added', {
-                bubbles: true,
-                composed: true,
-                cancelable: true,
-            })
-        );
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

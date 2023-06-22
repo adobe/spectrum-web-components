@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -96,6 +97,16 @@ export class Accordion extends SizedMixin(SpectrumElement) {
         assignedElements.forEach((item) => {
             item.size = this.size;
         });
+    }
+
+    protected override updated(changed: PropertyValues<this>): void {
+        super.updated(changed);
+        if (changed.has('size')) {
+            const assignedElements = [...this.items] as AccordionItem[];
+            assignedElements.forEach((item) => {
+                item.size = this.size;
+            });
+        }
     }
 
     protected override render(): TemplateResult {
