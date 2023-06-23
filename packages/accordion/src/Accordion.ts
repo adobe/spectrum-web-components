@@ -45,8 +45,11 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
     public allowMultiple = false;
 
+    /**
+     * Sets the spacing between the content to borders of an accordion item
+     */
     @property({ type: String, reflect: true })
-    public density: 'compact' | 'regular' | 'spacious' = 'regular';
+    public density: 'compact' | 'spacious' | undefined;
 
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
