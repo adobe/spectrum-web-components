@@ -21,7 +21,6 @@ governing permissions and limitations under the License.
         --mod-accordion-divider-thickness,
         var(--spectrum-divider-thickness-small)
     );
-    display: list-item;
     margin: 0;
     min-block-size: var(
         --mod-accordion-item-height,
