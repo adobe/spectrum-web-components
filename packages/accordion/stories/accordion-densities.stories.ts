@@ -20,7 +20,5 @@ export default {
 
 export const compact = (): TemplateResult =>
     AccordionMarkup({ density: 'compact' });
-export const regular = (): TemplateResult =>
-    AccordionMarkup({ density: 'regular' });
 export const spacious = (): TemplateResult =>
     AccordionMarkup({ density: 'spacious' });
