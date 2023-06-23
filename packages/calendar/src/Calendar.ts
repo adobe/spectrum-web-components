@@ -41,6 +41,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 
 /**
  * @element sp-calendar
+ *
+ * @slot prev-icon - The icon used in the _"Previous Month"_ button
+ * @slot next-icon - The icon used in the _"Next Month"_ button
+ *
+ * @event change - Announces when a day is selected by emitting a `Date` object
  */
 export class Calendar extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -145,7 +150,11 @@ export class Calendar extends SpectrumElement {
                     ?disabled=${this.disabled}
                     @click=${this.handlePreviousMonth}
                 >
-                    <sp-icon-chevron-left slot="icon"></sp-icon-chevron-left>
+                    <div slot="icon">
+                        <slot name="prev-icon">
+                            <sp-icon-chevron-left></sp-icon-chevron-left>
+                        </slot>
+                    </div>
                 </sp-action-button>
 
                 <!-- TODO: Translate "Next" -->
@@ -158,7 +167,11 @@ export class Calendar extends SpectrumElement {
                     ?disabled=${this.disabled}
                     @click=${this.handleNextMonth}
                 >
-                    <sp-icon-chevron-right slot="icon"></sp-icon-chevron-right>
+                    <div slot="icon">
+                        <slot name="prev-icon">
+                            <sp-icon-chevron-right></sp-icon-chevron-right>
+                        </slot>
+                    </div>
                 </sp-action-button>
             </div>
         `;
@@ -278,6 +291,7 @@ export class Calendar extends SpectrumElement {
                 <span
                     role="presentation"
                     class="spectrum-Calendar-date ${classMap(dayClasses)}"
+                    @click=${() => this.handleDayClick(calendarDate)}
                 >
                     ${this._formatNumber(calendarDate.day)}
                 </span>
@@ -293,6 +307,20 @@ export class Calendar extends SpectrumElement {
 
     public handleNextMonth(): void {
         this._currentDate = startOfMonth(this._currentDate).add({ months: 1 });
+    }
+
+    public handleDayClick(calendarDate: CalendarDate): void {
+        this.selectedDate = calendarDate.toDate(this._timeZone);
+        this._setCurrentCalendarDate();
+
+        this.dispatchEvent(
+            new CustomEvent('change', {
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+                detail: this.selectedDate,
+            })
+        );
     }
 
     private _getWeeksInCurrentMonth(): number {

@@ -17,6 +17,9 @@ import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '../sp-calendar.js';
 
+import '@spectrum-web-components/calendar/sp-calendar.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+
 const locales = [
     'cs-CZ',
     'cy-GB',
@@ -71,7 +74,7 @@ export default {
             },
         },
 
-        // Don't render private properties and getters in Storybook UI
+        // Don't render private properties and getters in the Storybook UI
         _languageResolver: { ...hiddenProperty },
         _locale: { ...hiddenProperty },
         _timeZone: { ...hiddenProperty },
@@ -80,8 +83,9 @@ export default {
         _maxDate: { ...hiddenProperty },
         today: { ...hiddenProperty },
 
-        shadowRoot: { ...hiddenProperty },
+        // Inherited
         _dirParent: { ...hiddenProperty },
+        shadowRoot: { ...hiddenProperty },
         dir: { ...hiddenProperty },
         isLTR: { ...hiddenProperty },
     },
@@ -90,21 +94,28 @@ export default {
         locale: defaultLocale,
     },
 
-    // Hide "This story is not configured to handle controls" warning
     parameters: {
         controls: {
+            // Hide "This story is not configured to handle controls" warning
             hideNoControlsWarning: true,
+        },
+        actions: {
+            handles: ['onChange'],
         },
     },
 };
 
 interface StoryArgs {
     locale?: string;
+
     padded?: boolean;
     disabled?: boolean;
     selectedDate?: Date;
     min?: Date;
     max?: Date;
+
+    onChange?: (date: Date) => void;
+
     [prop: string]: unknown;
 }
 
@@ -122,7 +133,10 @@ const renderCalendar = (
 
             <hr />
 
-            <sp-calendar ...=${spreadProps(args)}></sp-calendar>
+            <sp-calendar
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+            ></sp-calendar>
         </sp-theme>
     `;
 };
