@@ -32,7 +32,9 @@ import styles from './accordion.css.js';
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
  */
-export class Accordion extends SizedMixin(SpectrumElement) {
+export class Accordion extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -44,7 +46,7 @@ export class Accordion extends SizedMixin(SpectrumElement) {
     public allowMultiple = false;
 
     @property({ type: String, reflect: true })
-    public density?: 'compact' | 'regular' | 'spacious' = 'regular';
+    public density: 'compact' | 'regular' | 'spacious' = 'regular';
 
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
@@ -88,13 +90,9 @@ export class Accordion extends SizedMixin(SpectrumElement) {
         });
     }
 
-    private handleSlotchange({
-        target: slot,
-    }: Event & { target: HTMLSlotElement }): void {
+    private handleSlotchange({}: Event & { target: HTMLSlotElement }): void {
         this.focusGroupController.clearElementCache();
-
-        const assignedElements = slot.assignedElements() as AccordionItem[];
-        assignedElements.forEach((item) => {
+        this.items.forEach((item) => {
             item.size = this.size;
         });
     }
@@ -102,8 +100,7 @@ export class Accordion extends SizedMixin(SpectrumElement) {
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
         if (changed.has('size')) {
-            const assignedElements = [...this.items] as AccordionItem[];
-            assignedElements.forEach((item) => {
+            this.items.forEach((item) => {
                 item.size = this.size;
             });
         }

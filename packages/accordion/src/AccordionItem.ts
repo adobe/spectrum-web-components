@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    DefaultElementSize,
     html,
     PropertyValues,
     SizedMixin,
@@ -20,16 +19,45 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
 
-const chevronClass = {
-    s: 'spectrum-UIIcon-ChevronRight75',
-    m: 'spectrum-UIIcon-ChevronRight100',
-    l: 'spectrum-UIIcon-ChevronRight200',
-    xl: 'spectrum-UIIcon-ChevronRight300',
+const chevronIcon: Record<string, () => TemplateResult> = {
+    s: () => html`
+        <span class="iconContainer">
+            <sp-icon-chevron100
+                class="indicator spectrum-UIIcon-ChevronRight75"
+                slot="icon"
+            ></sp-icon-chevron100>
+        </span>
+    `,
+    m: () => html`
+        <span class="iconContainer">
+            <sp-icon-chevron100
+                class="indicator spectrum-UIIcon-ChevronRight100"
+                slot="icon"
+            ></sp-icon-chevron100>
+        </span>
+    `,
+    l: () => html`
+        <span class="iconContainer">
+            <sp-icon-chevron100
+                class="indicator spectrum-UIIcon-ChevronRight200"
+                slot="icon"
+            ></sp-icon-chevron100>
+        </span>
+    `,
+    xl: () => html`
+        <span class="iconContainer">
+            <sp-icon-chevron100
+                class="indicator spectrum-UIIcon-ChevronRight300"
+                slot="icon"
+            ></sp-icon-chevron100>
+        </span>
+    `,
 };
 
 /**
@@ -37,7 +65,9 @@ const chevronClass = {
  * @slot - The content of the item that is hidden when the item is not open
  * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
  */
-export class AccordionItem extends SizedMixin(Focusable) {
+export class AccordionItem extends SizedMixin(Focusable, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles, chevronIconStyles];
     }
@@ -77,6 +107,10 @@ export class AccordionItem extends SizedMixin(Focusable) {
         }
     }
 
+    protected renderChevronIcon = (): TemplateResult => {
+        return chevronIcon[this.size]();
+    };
+
     protected override render(): TemplateResult {
         return html`
             <h3 id="heading">
@@ -89,14 +123,7 @@ export class AccordionItem extends SizedMixin(Focusable) {
                 >
                     ${this.label}
                 </button>
-                <span class="iconContainer">
-                    <sp-icon-chevron100
-                        class="indicator ${chevronClass[
-                            this.size as DefaultElementSize
-                        ]}"
-                        slot="icon"
-                    ></sp-icon-chevron100>
-                </span>
+                ${when(this.size, this.renderChevronIcon)}
             </h3>
             <div id="content" role="region" aria-labelledby="header">
                 <slot></slot>
