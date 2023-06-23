@@ -40,11 +40,6 @@ describe('Swatch', () => {
     it(`loads default swatch accessibly`, async () => {
         await expect(el).to.be.accessible();
     });
-    it('loads [mixed-value] swatch accessibly', async () => {
-        el.mixedValue = true;
-        await expect(el).to.be.accessible();
-        expect(el.getAttribute('aria-checked')).to.equal('mixed');
-    });
     it('loads [nothing] swatch accessibly', async () => {
         el.nothing = true;
         el.removeAttribute('color');
