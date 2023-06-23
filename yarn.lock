@@ -4408,7 +4408,7 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@spectrum-css/accordion@4.0.0":
+"@spectrum-css/accordion@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-4.0.0.tgz#ab4ae7fe39b581767ab02308f92e9e82f5941589"
   integrity sha512-NwB1bXLrQbMP41bGvA3KEQF7C78QNHixg/TCA2tbosE0jApA0jsioRy0RhcYBsRU6XE93E+44Ug8k8OBLxNz5A==
