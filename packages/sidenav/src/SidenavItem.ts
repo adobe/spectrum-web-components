@@ -44,9 +44,6 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     @property({ type: Boolean, reflect: true })
     public expanded = false;
 
-    @property({ reflect: true })
-    public role = 'listitem';
-
     protected get parentSideNav(): SideNav | undefined {
         if (!this._parentSidenav) {
             this._parentSidenav = this.closest('sp-sidenav') as
@@ -154,8 +151,13 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     protected override updated(changes: PropertyValues): void {
-        if (this.hasChildren && this.expanded && !this.selected) {
-            this.focusElement.tabIndex = 0;
+        if (
+            this.hasChildren &&
+            this.expanded &&
+            !this.selected &&
+            this.parentSideNav?.manageTabIndex
+        ) {
+            this.focusElement.tabIndex = -1;
         } else {
             this.focusElement.removeAttribute('tabindex');
         }
@@ -198,5 +200,10 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             parentSideNav.stopTrackingSelectionForItem(this);
         }
         this._parentSidenav = undefined;
+    }
+
+    protected override firstUpdated(changed: PropertyValues<this>): void {
+        super.firstUpdated(changed);
+        this.setAttribute('role', 'listitem');
     }
 }

@@ -31,9 +31,6 @@ export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })
     public label = '';
 
-    @property({ reflect: true })
-    public role = 'listitem';
-
     public static override get styles(): CSSResultArray {
         return [sidenavItemStyles, sidenavHeadingStyles];
     }
@@ -52,5 +49,10 @@ export class SideNavHeading extends SpectrumElement {
                 <slot name="descendant"></slot>
             </div>
         `;
+    }
+
+    protected override firstUpdated(changed: PropertyValues<this>): void {
+        super.firstUpdated(changed);
+        this.setAttribute('role', 'listitem');
     }
 }

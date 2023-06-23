@@ -55,13 +55,25 @@ export class SideNav extends Focusable {
 
     rovingTabindexController = new RovingTabindexController<SideNavItem>(this, {
         focusInIndex: (elements: SideNavItem[]) => {
-            return elements.findIndex((el) => {
+            let parentSideNavItem: SideNavItem | undefined;
+            let index = elements.findIndex((el) => {
+                // If the selected item's parent is collapsed, save it for later.
+                if (el.value === this.value && this.isDisabledChild(el)) {
+                    parentSideNavItem = el.closest(
+                        'sp-sidenav-item:not([expanded])'
+                    ) as SideNavItem;
+                }
                 return this.value
                     ? !el.disabled &&
                           !this.isDisabledChild(el) &&
                           el.value === this.value
                     : !el.disabled && !this.isDisabledChild(el);
             });
+            // If the selected item's parent is collapsed, focus the collapsed parent.
+            if (index === -1 && parentSideNavItem) {
+                index = elements.findIndex((el) => el === parentSideNavItem);
+            }
+            return index;
         },
         direction: 'vertical',
         elements: () =>
@@ -90,15 +102,6 @@ export class SideNav extends Focusable {
      */
     @property({ reflect: true })
     public label?: string | undefined = undefined;
-
-    /**
-     * Identifies the element (or elements) that labels the component,
-     * so that the side navigation can be distinguished
-     * from other navigation by screen reader users.
-     * It will be applied to aria-labelledby, but not visually rendered.
-     */
-    @property({ reflect: true })
-    public labelledby?: string | undefined = undefined;
 
     private handleSelect(
         event: CustomEvent<SidenavSelectDetail> & { target: SideNavItem }
@@ -184,7 +187,6 @@ export class SideNav extends Focusable {
             <nav
                 @sidenav-select=${this.handleSelect}
                 aria-label=${ifDefined(this.label)}
-                aria-labelledby=${ifDefined(this.labelledby)}
             >
                 <div role="list">
                     <slot
