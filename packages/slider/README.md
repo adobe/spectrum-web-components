@@ -1,6 +1,6 @@
 ## Description
 
-`<sp-slider>` allows users to quickly select a value within a range. They should be used when the upper and lower bounds to the range are invariable.
+`<sp-slider>` allows users to quickly select a value within a range. They should be used when the upper and lower bounds of the range are invariable.
 
 ### Usage
 
@@ -18,7 +18,7 @@ Import the side effectful registration of `<sp-slider>` via:
 import '@spectrum-web-components/slider/sp-slider.js';
 ```
 
-When leveraging the `editable` attribute, the `@spectrum-web-components/number-field/sp-number-field.js` dependency will be asynchronously loaded via a dynamic import to reduce JS payload for applications not leveraging this feature. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-slider>` as follows:
+When leveraging the `editable` attribute, the `@spectrum-web-components/number-field/sp-number-field.js` dependency will be asynchronously loaded via a dynamic import to reduce JS payload for applications not leveraging this feature. In the case that you would like to import those transverse dependencies statically, import the side effectful registration of `<sp-slider>` as follows:
 
 ```
 import '@spectrum-web-components/slider/sync/sp-slider.js';
@@ -122,8 +122,8 @@ An `<sp-slider>` element can be paired with an `<sp-number-field>` element via t
 #### Quiet
 
 ```html
-<sp-slider quiet editable></sp-slider>
-<sp-slider quiet disabled editable></sp-slider>
+<sp-slider quiet editable value="50"></sp-slider>
+<sp-slider quiet disabled editable value="50"></sp-slider>
 ```
 
 #### Indeterminate
@@ -131,8 +131,8 @@ An `<sp-slider>` element can be paired with an `<sp-number-field>` element via t
 The indeterminate attribute will be passed to the internal `<sp-number-field>` element and alter its visual delivery until a change has been made to the `<sp-slider>` element at which point the `change` event that is dispatched can be understood as always removing the indeterminate attribute from the `<sp-slider>`.
 
 ```html
-<sp-slider indeterminate editable></sp-slider>
-<sp-slider indeterminate disabled editable></sp-slider>
+<sp-slider indeterminate editable value="50"></sp-slider>
+<sp-slider indeterminate disabled editable value="50"></sp-slider>
 ```
 
 ## Advanced normalization
@@ -142,13 +142,13 @@ For advanced applications, it is sometimes necessary to specify a custom
 "normalization."
 
 Normalization is the process of converting a slider to a value between 0 and 1 where
-0 represents the minimum and 1 represents the maximum. See the <a href="storybook/index.html?path=/story/slider--three-handles-complex" target="_blank">"Three Handles Complex" example in the playground</a>.
+0 represents the minimum and 1 represents the maximum. See the <a href="../../storybook/index.html?path=/story/slider--three-handles-complex" target="_blank">"Three Handles Complex" example in the playground</a>.
 
 ## Labels and Formatting
 
 An `<sp-slider>` or `<sp-slider-handle>` element will process its numeric value with `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.value)` in order to prepare it for visual delivery in the input. In order to customize this processing supply your own `Intl.NumberFormatOptions` via the `formatOptions` property, or `format-options` attribute as seen below.
 
-`this.resolvedLanguage` represents the language in which the `<sp-slider>` or `<sp-slider-handle>` element is currently being delivered. By default, this value will represent the language established by the `lang` attribute on the root `<html>` element while falling back to `navigator.language` when that is not present. This value can be customized via a language context provided by a parent element that listens for the `sp-language-context` event and supplies update language settings to the `callback` function contained therein. Applications leveraging the [`<sp-theme>`](./components/theme) element to manage the visual delivery or text direcdirectiontion of their content will be also be provided a reactive context for supplying language information to its descendants.
+`this.resolvedLanguage` represents the language in which the `<sp-slider>` or `<sp-slider-handle>` element is currently being delivered. By default, this value will represent the language established by the `lang` attribute on the root `<html>` element while falling back to `navigator.language` when that is not present. This value can be customized via a language context provided by a parent element that listens for the `sp-language-context` event and supplies updated language settings to the `callback` function contained therein. Applications leveraging the [`<sp-theme>`](./components/theme) element to manage the visual delivery or text direction of their content will also be provided a reactive context for supplying language information to its descendants.
 
 ```html
 <sp-slider
@@ -163,7 +163,7 @@ An `<sp-slider>` or `<sp-slider-handle>` element will process its numeric value 
 ></sp-slider>
 ```
 
-More advanced formatting is avialable by specifying a formatting function to
+More advanced formatting is available by specifying a formatting function to
 the `getAriaHandleText` property on an `sp-slider` or `sp-slider-handle`. Or,
 for a multi-handle slider, you can format the combined value label for all
 handles by passing a formatting function to the `getAriaValueText` property
@@ -186,25 +186,29 @@ While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc
 </sp-slider>
 ```
 
-Note: the polyfilling done here is very simplistic and is triggered by supplying options that would otherwise cause the `Intl.NumberFormat()` call to throw an error. Once the unsupporting unit of `px` causes the construction of the object to throw, a back up formatter/parser pair will be created without the supplied unit data. When the `style` is set to `unit`, the `unit` value of will be adopted as the _static_ unit display. This means that neither pluralization or translation will be handled within the `<sp-number-field>` element itself. If pluralization or translation is important to the delivered interface, please be sure to handle passing those strings into to element via the `formatOptions` property reactively to the value of the element or locale of that page in question.
+Note: the polyfilling done here is very simplistic and is triggered by supplying options that would otherwise cause the `Intl.NumberFormat()` call to throw an error. Once the unsupporting unit of `px` causes the construction of the object to throw, a backup formatter/parser pair will be created without the supplied unit data. When the `style` is set to `unit`, the `unit` value will be adopted as the _static_ unit display. This means that neither pluralization nor translation will be handled within the `<sp-number-field>` element itself. If pluralization or translation is important to the delivered interface, please be sure to handle passing those strings into to element via the `formatOptions` property reactively to the value of the element or locale of that page in question.
 
 ### Label Visibility
 
-Be default an `<sp-slider>` element has both a "text" label and a "value" label. Either or both of these can be surpressed visually as needed by your application UI. This delivery is controlled by the `label-visibility` attribute (or `labelVisibility` property) which accepts `text`, `value`, or `none` as values.
+By default, an `<sp-slider>` element has both a "text" label and a "value" label. Either or both of these can be suppressed visually as needed by your application UI. This delivery is controlled by the `label-visibility` attribute (or `labelVisibility` property) which accepts `text`, `value`, or `none` as values.
 
-Use `label-visibility="text"` to supress the "value" label:
+Use `label-visibility="text"` to suppress the "value" label:
 
 ```html
-<sp-slider label="No visible value label" label-visibility="text"></sp-slider>
+<sp-slider
+    label="No visible value label"
+    label-visibility="text"
+    value="50"
+></sp-slider>
 ```
 
-Use `label-visibility="value"` to supress the "text" label:
+Use `label-visibility="value"` to suppress the "text" label:
 
 ```html
 <sp-slider label="No visible text label" label-visibility="value"></sp-slider>
 ```
 
-Use `label-visibility="none"` to supress the "text" label:
+Use `label-visibility="none"` to suppress the "text" label:
 
 ```html
 <sp-slider label="No visible labels" label-visibility="none"></sp-slider>
@@ -214,7 +218,7 @@ In each case outlined above the content for both labels will be made available t
 
 ## Events
 
-Like the `<input type="range">` element after which the `<sp-slider>` is fashioned it will dispatch `input` events in a stream culminating with a `change` event (representing the final comit of the `value` to the element) once the user has discontinued with the element. Both other these events can access the `value` of their dispatching target via `event.target.value`. In this way a steaming listener patters similar to the following can prove useful:
+Like the `<input type="range">` element after which the `<sp-slider>` is fashioned, it will dispatch `input` events in a stream culminating with a `change` event (representing the final commit of the `value` to the element) once the user has finished interacting with the element. Both other these events can access the `value` of their dispatching target via `event.target.value`. In this way, a steaming listener pattern similar to the following can prove useful:
 
 ```javascript
 const slider = document.querySelector('sp-slider');
