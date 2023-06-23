@@ -152,7 +152,7 @@
         "gh-pages": "^4.0.0",
         "glob": "^10.3.0",
         "gunzip-maybe": "^1.4.2",
-        "husky": "^8.0.1",
+        "husky": "^8.0.3",
         "latest-version": "^7.0.0",
         "lerna": "^6.0.1",
         "lightningcss": "^1.19.0",
