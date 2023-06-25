@@ -153,6 +153,15 @@ textarea {
     box-shadow: none;
 }
 
+:host([multiline][rows]) .input {
+    block-size: auto;
+    resize: none;
+}
+
+:host([multiline][rows='1']) .input {
+    min-block-size: auto;
+}
+
 /* restore specificity from the original Spectrum CSS */
 
 :host([disabled][quiet]) #textfield .input,
