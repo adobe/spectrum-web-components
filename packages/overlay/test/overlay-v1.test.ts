@@ -561,6 +561,13 @@ describe('Overlay - type="modal", v1', () => {
                     composed: true,
                 })
             );
+            await nextFrame();
+            trigger.shadowRoot?.querySelector('#start')?.dispatchEvent(
+                new Event('pointerup', {
+                    composed: true,
+                    bubbles: true,
+                })
+            );
             await closed;
             await opened;
             secondMenu = document.querySelector('sp-popover') as Popover;

@@ -29,6 +29,7 @@ if (supportsPopover) {
 
 type OverlayOptionsV2 = {
     delayed?: boolean;
+    notImmediatelyClosable?: boolean;
     offset?: number | [number, number]; // supporting multi-axis
     placement?: Placement;
     receivesFocus?: 'auto' | 'true' | 'false';
@@ -106,9 +107,12 @@ export class Overlay extends OverlayFeatures {
             overlay.type = options.type || 'modal';
             overlay.offset = options.offset || 6;
             overlay.placement = options.placement;
+            overlay.willPreventClose = !!options.notImmediatelyClosable;
             requestAnimationFrame(() => {
-                // Do we want to "open" this path, or leave that to the consumer?
-                overlay.open = true;
+                requestAnimationFrame(() => {
+                    // Do we want to "open" this path, or leave that to the consumer?
+                    overlay.open = true;
+                });
             });
             return overlay;
         } else if (overlayContent && options) {

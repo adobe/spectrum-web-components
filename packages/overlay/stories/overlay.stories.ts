@@ -1272,7 +1272,7 @@ export const virtualElement = (args: Properties): TemplateResult => {
             placement: args.placement,
             receivesFocus: 'auto',
             virtualTrigger,
-            offset: -10,
+            offset: 0,
             notImmediatelyClosable: true,
         });
     };
@@ -1294,5 +1294,74 @@ export const virtualElement = (args: Properties): TemplateResult => {
 };
 
 virtualElement.args = {
+    placement: 'right-start' as Placement,
+};
+
+export const virtualElementV2 = (args: Properties): TemplateResult => {
+    const contextMenuTemplate = (kind = ''): TemplateResult => html`
+        <sp-popover
+            style="width:300px;"
+            @click=${(event: PointerEvent) => {
+                if (
+                    (event.target as HTMLElement).localName === 'sp-menu-item'
+                ) {
+                    event.target?.dispatchEvent(
+                        new Event('close', { bubbles: true })
+                    );
+                }
+            }}
+        >
+            <sp-menu>
+                <sp-menu-group>
+                    <span slot="header">Menu source: ${kind}</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save selection</sp-menu-item>
+                    <sp-menu-item disabled>Make work path</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        </sp-popover>
+    `;
+    const handleContextmenu = async (event: PointerEvent): Promise<void> => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const source = event.composedPath()[0] as HTMLDivElement;
+        const { id } = source;
+        const trigger = event.target as HTMLElement;
+        const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
+        const fragment = document.createDocumentFragment();
+        render(contextMenuTemplate(id), fragment);
+        const popover = fragment.querySelector('sp-popover') as Popover;
+
+        const overlay = await openOverlay(popover, {
+            trigger: virtualTrigger,
+            placement: args.placement,
+            offset: 0,
+            notImmediatelyClosable: true,
+        });
+        trigger.insertAdjacentElement('afterend', overlay);
+    };
+    return html`
+        <style>
+            .app-root {
+                position: absolute;
+                inset: 0;
+            }
+        </style>
+        <start-end-contextmenu
+            class="app-root"
+            @contextmenu=${{
+                capture: true,
+                handleEvent: handleContextmenu,
+            }}
+        ></start-end-contextmenu>
+    `;
+};
+
+virtualElementV2.args = {
     placement: 'right-start' as Placement,
 };

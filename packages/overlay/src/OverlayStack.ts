@@ -63,33 +63,6 @@ class OverlayStack {
                 parentToClose = parentToClose.parentOverlayToForceClose;
             }
         });
-
-        // let reverseIndex = -1;
-        // let overlay = this.stack.at(reverseIndex);
-        // if (overlay?.shouldPreventClose()) return;
-
-        // let shouldClose;
-        // while (overlay && !shouldClose) {
-        //     shouldClose =
-        //         overlay.shouldPreventClose() ||
-        //         !composedPath.find(
-        //             (el) => el === overlay || el === overlay?.triggerElement
-        //         );
-        //     if (!shouldClose) {
-        //         reverseIndex -= 1;
-        //         overlay = this.stack.at(reverseIndex);
-        //     }
-        // }
-        // if (!shouldClose || !overlay) {
-        //     return;
-        // }
-
-        // this.closeOverlay(overlay);
-        // let parentToClose = overlay.parentOverlayToForceClose;
-        // while (parentToClose) {
-        //     this.closeOverlay(parentToClose);
-        //     parentToClose = parentToClose.parentOverlayToForceClose;
-        // }
     };
 
     handleBeforetoggle = (event: Event): void => {

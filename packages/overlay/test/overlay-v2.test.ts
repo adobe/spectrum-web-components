@@ -34,7 +34,7 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 import {
     definedOverlayElement,
-    virtualElement,
+    virtualElementV2,
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -566,8 +566,8 @@ describe('Overlay - type="modal", v2', () => {
             render(
                 html`
                     <sp-theme color="light" scale="large">
-                        ${virtualElement({
-                            ...virtualElement.args,
+                        ${virtualElementV2({
+                            ...virtualElementV2.args,
                             offset: 6,
                         })}
                     </sp-theme>
@@ -624,6 +624,13 @@ describe('Overlay - type="modal", v2', () => {
                     composed: true,
                 })
             );
+            await nextFrame();
+            trigger.shadowRoot?.querySelector('#start')?.dispatchEvent(
+                new Event('pointerup', {
+                    composed: true,
+                    bubbles: true,
+                })
+            );
             await closed;
             await opened;
             secondMenu = document.querySelector('sp-popover') as Popover;
@@ -660,8 +667,8 @@ describe('Overlay - type="modal", v2', () => {
         });
 
         await fixture<HTMLDivElement>(html`
-            ${virtualElement({
-                ...virtualElement.args,
+            ${virtualElementV2({
+                ...virtualElementV2.args,
                 offset: 6,
             })}
         `);

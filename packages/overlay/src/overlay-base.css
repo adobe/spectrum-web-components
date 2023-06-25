@@ -58,6 +58,17 @@ governing permissions and limitations under the License.
     display: none;
 }
 
+.dialog:before {
+    position: absolute;
+    inset: -999em;
+    content: '';
+    pointer-events: auto !important;
+}
+
+.dialog:not(.not-immediately-closable):before {
+    display: none;
+}
+
 .dialog > div {
     width: 100%;
 }

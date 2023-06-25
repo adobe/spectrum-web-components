@@ -314,6 +314,23 @@ export class OverlayBase extends SpectrumElement {
 
         if (this.open) {
             overlayStack.add(this);
+            if (this.willPreventClose) {
+                document.addEventListener(
+                    'pointerup',
+                    () => {
+                        this.dialogEl.classList.toggle(
+                            'not-immediately-closable',
+                            false
+                        );
+                        this.willPreventClose = false;
+                    },
+                    { once: true }
+                );
+                this.dialogEl.classList.toggle(
+                    'not-immediately-closable',
+                    true
+                );
+            }
         } else {
             if (oldOpen) {
                 this.dispose();
