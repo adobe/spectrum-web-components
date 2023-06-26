@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { OverlayTrigger } from '../src/OverlayTrigger.js';
-import { OverlayOptions, TriggerInteractions } from '../src/index.js';
+import { OverlayOptionsV1, TriggerInteractions } from '../src/index.js';
 import '../overlay-trigger.js';
 
 export { OverlayTrigger };
-export type { OverlayOptions, TriggerInteractions };
+export type { OverlayOptionsV1, TriggerInteractions };

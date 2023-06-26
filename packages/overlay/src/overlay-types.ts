@@ -70,7 +70,7 @@ export interface OverlayDisplayQueryDetail {
     overlayContentTipElement?: HTMLElement;
 }
 
-export type OverlayOptions = {
+export type OverlayOptionsV1 = {
     root?: HTMLElement;
     delayed?: boolean;
     placement?: Placement;

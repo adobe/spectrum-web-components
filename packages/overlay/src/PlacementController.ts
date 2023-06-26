@@ -25,7 +25,7 @@ import type { VirtualTrigger } from './VirtualTrigger.js';
 import { topLayerOverTransforms } from './topLayerOverTransforms.js';
 import type { OpenableElement, OverlayBase } from './OverlayBase.js';
 
-type OverlayOptions = {
+type OverlayOptionsV1 = {
     abortPromise?: Promise<boolean>;
     delayed?: boolean;
     offset?: number | [number, number]; // supporting multi-axis
@@ -77,7 +77,7 @@ export class PlacementController implements ReactiveController {
 
     private host!: ReactiveElement & { elements: OpenableElement[] };
 
-    private options!: OverlayOptions;
+    private options!: OverlayOptionsV1;
 
     private originalPlacements = new WeakMap<HTMLElement, Placement>();
 
@@ -92,7 +92,7 @@ export class PlacementController implements ReactiveController {
 
     public async placeOverlay(
         target: HTMLElement = this.target,
-        options: OverlayOptions = this.options
+        options: OverlayOptionsV1 = this.options
     ): Promise<void> {
         this.target = target;
         this.options = options;

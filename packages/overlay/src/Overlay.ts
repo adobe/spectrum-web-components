@@ -13,7 +13,10 @@ import { noop, OverlayBase } from './OverlayBase.js';
 import { OverlayDialog } from './OverlayDialog.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
-import type { OverlayOptions, TriggerInteractionsV1 } from './overlay-types.js';
+import type {
+    OverlayOptionsV1,
+    TriggerInteractionsV1,
+} from './overlay-types.js';
 import { Placement } from '@floating-ui/dom/src/types.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { reparentChildren } from '@spectrum-web-components/shared';
@@ -27,7 +30,7 @@ if (supportsPopover) {
     OverlayFeatures = OverlayNoPopover(OverlayFeatures);
 }
 
-type OverlayOptionsV2 = {
+type OverlayOptions = {
     delayed?: boolean;
     notImmediatelyClosable?: boolean;
     offset?: number | [number, number]; // supporting multi-axis
@@ -57,20 +60,20 @@ export class Overlay extends OverlayFeatures {
         target: HTMLElement,
         interaction: TriggerInteractionsV1,
         content: HTMLElement,
-        options: OverlayOptions
+        options: OverlayOptionsV1
     ): Promise<() => void>;
     public static async open(
         content: HTMLElement,
-        options?: OverlayOptionsV2
+        options?: OverlayOptions
     ): Promise<Overlay>;
     public static async open(
         targetOrContent: HTMLElement,
         interactionOrOptions:
             | TriggerInteractionsV1
-            | OverlayOptionsV2
+            | OverlayOptions
             | undefined,
         content?: HTMLElement,
-        options?: OverlayOptions
+        options?: OverlayOptionsV1
     ): Promise<Overlay | (() => void)> {
         const v2 = arguments.length === 2;
         const overlayContent = content || targetOrContent;
@@ -100,7 +103,7 @@ export class Overlay extends OverlayFeatures {
             },
         });
         if (v2) {
-            const options = interactionOrOptions as OverlayOptionsV2;
+            const options = interactionOrOptions as OverlayOptions;
             overlay.append(overlayContent);
             overlay.receivesFocus = options.receivesFocus ?? 'auto';
             overlay.triggerElement = options.trigger || null;
