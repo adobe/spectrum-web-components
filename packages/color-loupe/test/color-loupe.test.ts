@@ -37,7 +37,7 @@ describe('ColorLoupe', () => {
         await expect(el).to.be.accessible();
 
         // SVG should be hidden from screen readers.
-        expect(el.shadowRoot?.querySelector('svg')).to.have.attribute(
+        expect(el.shadowRoot.querySelector('svg')).to.have.attribute(
             'aria-hidden',
             'true'
         );
