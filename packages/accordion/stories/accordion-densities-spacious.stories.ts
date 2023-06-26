@@ -14,11 +14,15 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { AccordionMarkup } from './';
 
 export default {
-    title: 'Accordion/Densities',
+    title: 'Accordion/Densities/Spacious',
     component: 'sp-accordion',
 };
 
-export const compact = (): TemplateResult =>
-    AccordionMarkup({ density: 'compact' });
-export const spacious = (): TemplateResult =>
-    AccordionMarkup({ density: 'spacious' });
+export const s = (): TemplateResult =>
+    AccordionMarkup({ density: 'spacious', size: 's' });
+export const m = (): TemplateResult =>
+    AccordionMarkup({ density: 'spacious', size: 'm' });
+export const l = (): TemplateResult =>
+    AccordionMarkup({ density: 'spacious', size: 'l' });
+export const xl = (): TemplateResult =>
+    AccordionMarkup({ density: 'spacious', size: 'xl' });

@@ -49,7 +49,7 @@ export class Accordion extends SizedMixin(SpectrumElement, {
      * Sets the spacing between the content to borders of an accordion item
      */
     @property({ type: String, reflect: true })
-    public density: 'compact' | 'spacious' | undefined;
+    public density?: 'compact' | 'spacious';
 
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
@@ -93,7 +93,7 @@ export class Accordion extends SizedMixin(SpectrumElement, {
         });
     }
 
-    private handleSlotchange({}: Event & { target: HTMLSlotElement }): void {
+    private handleSlotchange(): void {
         this.focusGroupController.clearElementCache();
         this.items.forEach((item) => {
             item.size = this.size;
@@ -102,7 +102,10 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
-        if (changed.has('size')) {
+        if (
+            changed.has('size') &&
+            (!!changed.get('size') || this.size !== 'm')
+        ) {
             this.items.forEach((item) => {
                 item.size = this.size;
             });

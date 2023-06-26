@@ -108,7 +108,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
     }
 
     protected renderChevronIcon = (): TemplateResult => {
-        return chevronIcon[this.size]();
+        return chevronIcon[this.size || 'm']();
     };
 
     protected override render(): TemplateResult {
