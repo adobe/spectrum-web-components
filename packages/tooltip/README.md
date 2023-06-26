@@ -41,6 +41,24 @@ Tooltips can be top, bottom, left, or right.
 <sp-tooltip open placement="right">Label</sp-tooltip>
 ```
 
+### Self-managed overlays
+
+By default, Tooltip provides styling without behavior.
+You must combine it with an [Overlay Trigger](https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#%22hover%22-content-only) in order to manage its overlay behavior.
+
+You can instead apply the `self-managed` attribute for this common case,
+which automaticaly binds to the parent element's hover interaction:
+
+```html
+<sp-action-button>
+    Trigger
+    <sp-tooltip self-managed>Content</sp-tooltip>
+</sp-action-button>
+```
+
+This is especially useful when inserting an intermediate `<overlay-trigger>` would interfere with
+parent/child relationships, such as between `<sp-action-group>` and `<sp-action-button>`.
+
 ## Variants
 
 ### Informative
