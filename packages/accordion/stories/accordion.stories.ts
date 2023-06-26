@@ -23,7 +23,7 @@ export default {
     args: {
         open: false,
         size: 'm',
-        density: 'regular',
+        density: undefined,
     },
     argTypes: {
         open: {
@@ -43,10 +43,10 @@ export default {
             type: { name: 'string', required: false },
             description: 'The density at which to display accordion items.',
             table: {
-                defaultValue: { summary: 'regular' },
+                defaultValue: { summary: undefined },
             },
             control: {
-                options: ['compact', 'regular', 'spacious'],
+                options: ['compact', 'spacious', undefined],
                 type: 'select',
             },
         },
@@ -69,7 +69,7 @@ type Properties = {
     allowMultiple?: boolean;
     disabled?: boolean;
     open?: boolean;
-    density?: 'compact' | 'regular' | 'spacious';
+    density?: 'compact' | 'spacious' | undefined;
     size?: 's' | 'm' | 'l' | 'xl';
 };
 

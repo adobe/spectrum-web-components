@@ -166,7 +166,7 @@ import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 
 ## Density
 
-The `density` attribute/property is not required and when applied accepts the values of `compact` or `spacious`.
+The `density` property, when applied, accepts the values of `compact` or `spacious`.
 
 ### Compact
 
