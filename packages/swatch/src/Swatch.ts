@@ -223,10 +223,10 @@ export class Swatch extends SizedMixin(Focusable, {
             );
         }
         if (changes.has('label')) {
-            if (this.color !== '') {
-                this.setAttribute('aria-label', this.color);
-            } else if (this.label !== this.color && this.label?.length) {
+            if (this.label !== this.color && this.label?.length) {
                 this.setAttribute('aria-label', this.label);
+            } else if (this.color !== '') {
+                this.setAttribute('aria-label', this.color);
             } else {
                 this.removeAttribute('aria-label');
             }
