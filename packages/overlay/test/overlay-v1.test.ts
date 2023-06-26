@@ -34,7 +34,7 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 import {
     definedOverlayElement,
-    virtualElement,
+    virtualElementV1,
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -503,8 +503,8 @@ describe('Overlay - type="modal", v1', () => {
             render(
                 html`
                     <sp-theme color="light" scale="large">
-                        ${virtualElement({
-                            ...virtualElement.args,
+                        ${virtualElementV1({
+                            ...virtualElementV1.args,
                             offset: 6,
                         })}
                     </sp-theme>
@@ -604,8 +604,8 @@ describe('Overlay - type="modal", v1', () => {
         });
 
         await fixture<HTMLDivElement>(html`
-            ${virtualElement({
-                ...virtualElement.args,
+            ${virtualElementV1({
+                ...virtualElementV1.args,
                 offset: 6,
             })}
         `);

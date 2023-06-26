@@ -1228,7 +1228,7 @@ class StartEndContextmenu extends HTMLElement {
 
 customElements.define('start-end-contextmenu', StartEndContextmenu);
 
-export const virtualElement = (args: Properties): TemplateResult => {
+export const virtualElementV1 = (args: Properties): TemplateResult => {
     const contextMenuTemplate = (kind = ''): TemplateResult => html`
         <sp-popover
             style="width:300px;"
@@ -1293,11 +1293,11 @@ export const virtualElement = (args: Properties): TemplateResult => {
     `;
 };
 
-virtualElement.args = {
+virtualElementV1.args = {
     placement: 'right-start' as Placement,
 };
 
-export const virtualElementV2 = (args: Properties): TemplateResult => {
+export const virtualElement = (args: Properties): TemplateResult => {
     const contextMenuTemplate = (kind = ''): TemplateResult => html`
         <sp-popover
             style="width:300px;"
@@ -1362,6 +1362,6 @@ export const virtualElementV2 = (args: Properties): TemplateResult => {
     `;
 };
 
-virtualElementV2.args = {
+virtualElement.args = {
     placement: 'right-start' as Placement,
 };
