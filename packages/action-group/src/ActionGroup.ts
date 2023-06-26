@@ -172,7 +172,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     private handleClick(event: Event): void {
         const target = event.target as ActionButton;
-
         if (typeof target.value === 'undefined') {
             return;
         }
