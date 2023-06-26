@@ -45,9 +45,14 @@ export class SideNavHeading extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <h2 id="heading">${this.label}</h2>
-            <div id="list" aria-labelledby="heading">
+            <div id="list" aria-labelledby="heading" role="list">
                 <slot name="descendant"></slot>
             </div>
         `;
+    }
+
+    protected override firstUpdated(changed: PropertyValues<this>): void {
+        super.firstUpdated(changed);
+        this.setAttribute('role', 'listitem');
     }
 }
