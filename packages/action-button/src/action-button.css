@@ -19,6 +19,7 @@ governing permissions and limitations under the License.
 #label {
     flex-grow: var(--spectrum-actionbutton-label-flex-grow);
     text-align: var(--spectrum-actionbutton-label-text-align);
+    pointer-events: none !important;
 }
 
 :host([size='xs']) {

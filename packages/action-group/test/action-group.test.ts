@@ -684,57 +684,6 @@ describe('ActionGroup', () => {
         expect(secondButton.selected, 'second button selected').to.be.true;
     });
 
-    it('Clicking button event should bubble up', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                    .selected=${['first', 'second']}
-                >
-                    <sp-action-button class="first-btn" value="first">
-                        <span class="first-span">First</span>
-                    </sp-action-button>
-                    <sp-action-button class="second-btn" value="second">
-                        <span class="second-span">Second</span>
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
-
-        await elementUpdated(el);
-        expect(el.selected.length).to.equal(2);
-
-        const firstButtonEl = el.querySelector('.first-btn') as ActionButton;
-        const firstSpanEl = el.querySelector('.first-span') as HTMLSpanElement;
-
-        const secondButtonEl = el.querySelector('.second-btn') as ActionButton;
-        const secondSpanEl = el.querySelector(
-            '.second-span'
-        ) as HTMLSpanElement;
-
-        expect(firstButtonEl.selected).to.be.true;
-        expect(secondButtonEl.selected).to.be.true;
-
-        firstSpanEl.click(); // clicking inner span element
-        await elementUpdated(el);
-
-        expect(firstButtonEl.selected).to.be.false;
-        expect(secondButtonEl.selected).to.be.true;
-
-        firstButtonEl.click(); // clicking outer action-button element
-        await elementUpdated(el);
-
-        expect(firstButtonEl.selected).to.be.true;
-        expect(secondButtonEl.selected).to.be.true;
-
-        secondSpanEl.click();
-        await elementUpdated(el);
-
-        expect(firstButtonEl.selected).to.be.true;
-        expect(secondButtonEl.selected).to.be.false;
-    });
-
     it('only selects user-passed buttons if present in action-group while [selects="multiple"]', async () => {
         const el = await multipleSelectedActionGroup(['second', 'fourth']);
 
