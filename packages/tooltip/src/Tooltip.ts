@@ -57,6 +57,9 @@ export class Tooltip extends SpectrumElement {
 
     private _tooltipId = `sp-tooltip-describedby-helper-${Tooltip.instanceCount++}`;
 
+    /**
+     * Automatically bind to the parent element's hover interaction. Without this, you must provide your own `overlay-trigger`.
+     */
     @property({ type: Boolean, attribute: 'self-managed' })
     public selfManaged = false;
 
