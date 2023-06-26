@@ -40,8 +40,8 @@ export class SearchComponent extends LitElement {
     @query('sp-popover')
     private popoverEl!: Popover;
 
-    @query('sp-overlay')
-    private overlayEl!: OverlayBase;
+    @property({ type: Boolean })
+    private open = false;
 
     @query('sp-menu')
     private menuEl!: Menu;
@@ -102,12 +102,12 @@ export class SearchComponent extends LitElement {
         }
     }
 
-    private async openPopover() {
-        this.overlayEl.open = true;
+    private openPopover() {
+        this.open = true;
     }
 
     private closePopover() {
-        this.overlayEl.open = false;
+        this.open = false;
     }
 
     private handleClosed(): void {
@@ -134,7 +134,7 @@ export class SearchComponent extends LitElement {
         );
         this.results = await search(searchParam);
 
-        await this.openPopover();
+        this.openPopover();
 
         return this.results.length > 0;
     }
@@ -191,10 +191,11 @@ export class SearchComponent extends LitElement {
                     autocomplete="off"
                 ></sp-search>
                 <sp-overlay
-                    trigger="search"
+                    ?open=${this.open}
                     placement="bottom-start"
-                    type="auto"
                     receives-focus="false"
+                    trigger="search"
+                    type="auto"
                 >
                     <sp-popover
                         id="search-results-menu"
