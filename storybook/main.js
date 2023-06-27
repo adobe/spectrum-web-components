@@ -51,7 +51,7 @@ export default {
         storyStoreV7: true,
     },
     core: {
-        builder: '@storybook/builder-vite', // 👈 The builder enabled here.
+        builder: 'storybook-builder-wds', // 👈 The builder enabled here.
     },
     refs: {
         'design-system': {
