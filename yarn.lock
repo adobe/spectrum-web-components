@@ -18943,13 +18943,6 @@ postcss-custom-media@^9.1.4:
     "@csstools/css-tokenizer" "^2.1.1"
     "@csstools/media-query-list-parser" "^2.1.0"
 
-postcss-custom-properties@^12.1.11:
-  version "12.1.11"
-  resolved "https://registry.yarnpkg.com/postcss-custom-properties/-/postcss-custom-properties-12.1.11.tgz#d14bb9b3989ac4d40aaa0e110b43be67ac7845cf"
-  integrity sha512-0IDJYhgU8xDv1KY6+VgUwuQkVtmYzRwu+dMjnmdMafXYv86SWqfxkc7qdDvWS38vsjaEtv8e0vGOUQrAiMBLpQ==
-  dependencies:
-    postcss-value-parser "^4.2.0"
-
 postcss-custom-properties@^13.2.0:
   version "13.2.0"
   resolved "https://registry.yarnpkg.com/postcss-custom-properties/-/postcss-custom-properties-13.2.0.tgz#5afac4f38bcfe4cedb834fd6daf65e302940cb81"
