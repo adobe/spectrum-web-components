@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from '@spectrum-web-components/base';
+import { AccordionMarkup } from './';
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
@@ -21,6 +22,8 @@ export default {
     component: 'sp-accordion',
     args: {
         open: false,
+        size: 'm',
+        density: undefined,
     },
     argTypes: {
         open: {
@@ -35,6 +38,30 @@ export default {
                 type: 'boolean',
             },
         },
+        density: {
+            name: 'density',
+            type: { name: 'string', required: false },
+            description: 'The density at which to display accordion items.',
+            table: {
+                defaultValue: { summary: undefined },
+            },
+            control: {
+                options: ['compact', 'spacious', undefined],
+                type: 'select',
+            },
+        },
+        size: {
+            name: 'size',
+            type: { name: 'string', required: false },
+            description: 'The size at which to display accordion items.',
+            table: {
+                defaultValue: { summary: 'm' },
+            },
+            control: {
+                options: ['s', 'm', 'l', 'xl'],
+                type: 'select',
+            },
+        },
     },
 };
 
@@ -42,46 +69,15 @@ type Properties = {
     allowMultiple?: boolean;
     disabled?: boolean;
     open?: boolean;
+    density?: 'compact' | 'spacious' | undefined;
+    size?: 's' | 'm' | 'l' | 'xl';
 };
 
-const Template = (
-    { allowMultiple, disabled, open }: Properties = {
-        allowMultiple: false,
-        disabled: false,
-        open: false,
-    }
-): TemplateResult => {
-    return html`
-        <sp-accordion
-            ?allow-multiple=${allowMultiple}
-            style="color: var(--spectrum-global-color-gray-800)"
-        >
-            <sp-accordion-item label="Heading 1" ?disabled=${disabled}>
-                <div>Item 1</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 2" ?open=${open}>
-                Item 2
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                <p>
-                    This is content that has a
-                    <sp-link
-                        href="http://opensource.adobe.com/spectrum-web-components"
-                        target="_blank"
-                    >
-                        link back to Spectrum Web Components
-                    </sp-link>
-                    so that it is easy to test that "Space" and "Enter"
-                    interactions on focusable content does NOT toggle the
-                    Accordion Item.
-                </p>
-            </sp-accordion-item>
-        </sp-accordion>
-    `;
-};
-export const Default = (args?: Properties): TemplateResult => Template(args);
+export const Default = (args?: Properties): TemplateResult =>
+    AccordionMarkup(args);
 
-export const Open = (args?: Properties): TemplateResult => Template(args);
+export const Open = (args?: Properties): TemplateResult =>
+    AccordionMarkup(args);
 Open.args = {
     open: true,
     allowMultiple: false,
@@ -89,12 +85,13 @@ Open.args = {
 };
 
 export const AllowMultiple = (args?: Properties): TemplateResult =>
-    Template(args);
+    AccordionMarkup(args);
 AllowMultiple.args = {
     allowMultiple: true,
 };
 
-export const Disabled = (args?: Properties): TemplateResult => Template(args);
+export const Disabled = (args?: Properties): TemplateResult =>
+    AccordionMarkup(args);
 Disabled.args = {
     disabled: true,
 };

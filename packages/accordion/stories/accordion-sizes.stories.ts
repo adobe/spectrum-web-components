@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,21 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-accordion-item.css';
+import { TemplateResult } from '@spectrum-web-components/base';
+import { AccordionMarkup } from './';
 
-:host {
-    display: block;
-}
+export default {
+    title: 'Accordion/Sizes',
+    component: 'sp-accordion',
+};
 
-#heading {
-    /* .spectrum-Accordion-itemHeading */
-    height: auto;
-    position: relative;
-}
-
-:host([disabled]) #heading .indicator {
-    color: var(
-        --mod-accordion-item-header-disabled-color,
-        var(--spectrum-accordion-item-header-disabled-color)
-    );
-}
+export const s = (): TemplateResult => AccordionMarkup({ size: 's' });
+export const m = (): TemplateResult => AccordionMarkup({ size: 'm' });
+export const l = (): TemplateResult => AccordionMarkup({ size: 'l' });
+export const xl = (): TemplateResult => AccordionMarkup({ size: 'xl' });

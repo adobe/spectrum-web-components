@@ -73,7 +73,7 @@
         "@spectrum-web-components/shared": "^0.33.2"
     },
     "devDependencies": {
-        "@spectrum-css/accordion": "^3.0.49"
+        "@spectrum-css/accordion": "^4.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
