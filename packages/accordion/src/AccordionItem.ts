@@ -114,6 +114,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
     protected override render(): TemplateResult {
         return html`
             <h3 id="heading">
+                ${when(this.size, this.renderChevronIcon)}
                 <button
                     id="header"
                     @click=${this.onClick}
@@ -123,7 +124,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
                 >
                     ${this.label}
                 </button>
-                ${when(this.size, this.renderChevronIcon)}
             </h3>
             <div id="content" role="region" aria-labelledby="header">
                 <slot></slot>
