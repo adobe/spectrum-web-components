@@ -46,7 +46,7 @@ type OverlayOptions = {
  * @fires sp-opened - announces that an overlay has completed any entry animations
  * @fires sp-closed - announce that an overlay has compelted any exit animations
  */
-export class Overlay extends OverlayFeatures {
+export class Overlay extends OverlayFeatures implements OverlayBase {
     public static update(): void {
         const overlayUpdateEvent = new CustomEvent('sp-update-overlays', {
             bubbles: true,
