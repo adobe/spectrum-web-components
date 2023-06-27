@@ -187,7 +187,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             }
             case 'multiple': {
                 const selected = [...this.selected];
-                target.selected = !target.selected;
                 target.setAttribute(
                     'aria-checked',
                     target.selected ? 'true' : 'false'
