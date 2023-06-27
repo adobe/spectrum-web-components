@@ -136,7 +136,7 @@
         "custom-elements-manifest": "^2.0.0",
         "debounce": "^1.2.1",
         "deepmerge": "^4.2.2",
-        "esbuild": "^0.17.3",
+        "esbuild": "^0.17.19",
         "eslint": "^8.23.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-formatter-pretty": "^5.0.0",
