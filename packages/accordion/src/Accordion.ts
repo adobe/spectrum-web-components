@@ -13,6 +13,8 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
+    SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -30,7 +32,9 @@ import styles from './accordion.css.js';
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
  */
-export class Accordion extends SpectrumElement {
+export class Accordion extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -40,6 +44,12 @@ export class Accordion extends SpectrumElement {
      */
     @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
     public allowMultiple = false;
+
+    /**
+     * Sets the spacing between the content to borders of an accordion item
+     */
+    @property({ type: String, reflect: true })
+    public density?: 'compact' | 'spacious';
 
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
@@ -85,6 +95,21 @@ export class Accordion extends SpectrumElement {
 
     private handleSlotchange(): void {
         this.focusGroupController.clearElementCache();
+        this.items.forEach((item) => {
+            item.size = this.size;
+        });
+    }
+
+    protected override updated(changed: PropertyValues<this>): void {
+        super.updated(changed);
+        if (
+            changed.has('size') &&
+            (!!changed.get('size') || this.size !== 'm')
+        ) {
+            this.items.forEach((item) => {
+                item.size = this.size;
+            });
+        }
     }
 
     protected override render(): TemplateResult {

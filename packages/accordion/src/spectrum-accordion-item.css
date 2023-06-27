@@ -11,280 +11,301 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) .indicator {
-    left: var(
-        --spectrum-accordion-item-padding-x,
-        var(--spectrum-global-dimension-size-225)
-    );
-}
-:host([dir='rtl']) .indicator {
-    right: var(
-        --spectrum-accordion-item-padding-x,
-        var(--spectrum-global-dimension-size-225)
-    );
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-}
-.indicator {
-    display: block;
-    position: absolute;
-    top: calc(
-        50% -
-            var(
-                --spectrum-accordion-icon-height,
-                var(--spectrum-global-dimension-size-125)
-            ) / 2
-    );
-    transition: transform ease var(--spectrum-accordion-animation-duration);
-}
 :host {
-    border-bottom: var(
-            --spectrum-accordion-item-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
-    display: list-item;
+    border-block-end: 1px solid #0000;
+    border-color: var(
+        --mod-accordion-divider-color,
+        var(--spectrum-accordion-divider-color)
+    );
+    border-width: var(
+        --mod-accordion-divider-thickness,
+        var(--spectrum-divider-thickness-small)
+    );
     margin: 0;
+    min-block-size: var(
+        --mod-accordion-item-height,
+        var(--spectrum-accordion-item-height)
+    );
+    min-inline-size: var(
+        --mod-accordion-item-width,
+        var(--spectrum-accordion-item-width)
+    );
     position: relative;
     z-index: inherit;
 }
-:host(:first-of-type) {
-    border-top: var(
-            --spectrum-accordion-item-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
+:host(:first-child) {
+    border-block-start: 1px solid #0000;
+    border-color: var(
+        --mod-accordion-divider-color,
+        var(--spectrum-accordion-divider-color)
+    );
+    border-width: var(
+        --mod-accordion-divider-thickness,
+        var(--spectrum-divider-thickness-small)
+    );
 }
 #heading {
     box-sizing: border-box;
     margin: 0;
     position: relative;
 }
-:host([dir='ltr']) #header {
-    padding-left: calc(
+.iconContainer {
+    align-items: center;
+    block-size: var(
+        --mod-accordion-disclosure-indicator-height,
+        var(--spectrum-accordion-disclosure-indicator-height)
+    );
+    color: var(
+        --mod-accordion-item-header-color-default,
+        var(--spectrum-accordion-item-header-color-default)
+    );
+    display: flex;
+    inline-size: var(
+        --mod-accordion-disclosure-indicator-height,
+        var(--spectrum-accordion-disclosure-indicator-height)
+    );
+    inset-block-start: max(
+        0px,
+        calc(
+            (
+                    var(
+                            --mod-accordion-min-block-size,
+                            var(--spectrum-accordion-min-block-size)
+                        ) -
+                        var(
+                            --mod-accordion-disclosure-indicator-height,
+                            var(
+                                --spectrum-accordion-disclosure-indicator-height
+                            )
+                        )
+                ) / 2
+        )
+    );
+    justify-content: center;
+    padding-inline-start: var(
+        --mod-accordion-edge-to-disclosure-indicator-space,
+        var(--spectrum-accordion-edge-to-disclosure-indicator-space)
+    );
+    position: absolute;
+}
+:host([dir='rtl']) .iconContainer {
+    transform: scaleX(-1);
+}
+#content {
+    color: var(
+        --mod-accordion-item-content-color,
+        var(--spectrum-accordion-item-content-color)
+    );
+    display: none;
+    font-family: var(
+        --mod-accordion-item-content-font,
+        var(--spectrum-accordion-item-content-font)
+    );
+    font-size: var(
+        --mod-accordion-item-content-font-size,
+        var(--spectrum-accordion-item-content-font-size)
+    );
+    font-style: var(
+        --mod-accordion-item-content-font-style,
+        var(--spectrum-accordion-item-content-font-style)
+    );
+    font-weight: var(
+        --mod-accordion-item-content-font-weight,
+        var(--spectrum-accordion-item-content-font-weight)
+    );
+    line-height: var(
+        --mod-accordion-item-content-line-height,
+        var(--spectrum-accordion-item-content-line-height)
+    );
+    padding-block: var(
+            --mod-accordion-item-content-area-top-to-content,
+            var(--spectrum-accordion-item-content-area-top-to-content)
+        )
         var(
-                --spectrum-accordion-item-padding-x,
-                var(--spectrum-global-dimension-size-225)
-            ) +
-            var(
-                --spectrum-accordion-icon-height,
-                var(--spectrum-global-dimension-size-125)
-            ) +
-            var(
-                --spectrum-accordion-icon-gap,
-                var(--spectrum-global-dimension-size-100)
-            ) +
-            var(
-                --spectrum-accordion-item-border-left-size,
-                var(--spectrum-alias-border-size-thick)
-            )
-    );
-}
-:host([dir='rtl']) #header {
-    padding-right: calc(
+            --mod-accordion-item-content-area-bottom-to-content,
+            var(--spectrum-accordion-item-content-area-bottom-to-content)
+        );
+    padding-inline: var(
+            --mod-accordion-component-edge-to-text,
+            var(--spectrum-accordion-component-edge-to-text)
+        )
         var(
-                --spectrum-accordion-item-padding-x,
-                var(--spectrum-global-dimension-size-225)
-            ) +
-            var(
-                --spectrum-accordion-icon-height,
-                var(--spectrum-global-dimension-size-125)
-            ) +
-            var(
-                --spectrum-accordion-icon-gap,
-                var(--spectrum-global-dimension-size-100)
-            ) +
-            var(
-                --spectrum-accordion-item-border-left-size,
-                var(--spectrum-alias-border-size-thick)
-            )
-    );
-}
-:host([dir='ltr']) #header {
-    padding-right: var(
-        --spectrum-accordion-item-padding-x,
-        var(--spectrum-global-dimension-size-225)
-    );
-}
-:host([dir='rtl']) #header {
-    padding-left: var(
-        --spectrum-accordion-item-padding-x,
-        var(--spectrum-global-dimension-size-225)
-    );
-}
-:host([dir='ltr']) #header {
-    text-align: left;
-}
-:host([dir='rtl']) #header {
-    text-align: right;
+            --mod-accordion-component-edge-to-text,
+            var(--spectrum-accordion-component-edge-to-text)
+        );
 }
 #header {
     align-items: center;
     appearance: none;
-    background-color: inherit;
+    background-color: var(
+        --mod-accordion-background-color-default,
+        var(--spectrum-accordion-background-color-default)
+    );
     border: 0;
     box-sizing: border-box;
+    color: var(
+        --mod-accordion-item-header-color-default,
+        var(--spectrum-accordion-item-header-color-default)
+    );
     cursor: pointer;
     display: flex;
-    font-family: inherit;
+    font-family: var(
+        --mod-accordion-item-header-font,
+        var(--spectrum-accordion-item-header-font)
+    );
     font-size: var(
-        --spectrum-accordion-item-title-text-size,
-        var(--spectrum-global-dimension-font-size-50)
+        --mod-accordion-item-header-font-size,
+        var(--spectrum-accordion-item-header-font-size)
     );
-    font-weight: 500;
+    font-style: var(
+        --mod-accordion-item-header-font-style,
+        var(--spectrum-accordion-item-header-font-style)
+    );
+    font-weight: var(
+        --mod-accordion-item-header-font-weight,
+        var(--spectrum-accordion-item-header-font-weight)
+    );
+    inline-size: 100%;
     justify-content: flex-start;
-    letter-spacing: calc(
-        var(
-                --spectrum-accordion-item-title-tracking,
-                var(--spectrum-global-font-letter-spacing-medium)
-            ) / 100
-    );
     line-height: var(
-        --spectrum-accordion-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+        --mod-accordion-item-header-line-height,
+        var(--spectrum-accordion-item-header-line-height)
     );
-    margin: 0;
-    min-height: calc(
-        100% -
+    min-block-size: var(
+        --mod-accordion-min-block-size,
+        var(--spectrum-accordion-min-block-size)
+    );
+    padding-block: var(
+            --mod-accordion-item-header-top-to-text-space,
+            var(--spectrum-accordion-item-header-top-to-text-space)
+        )
+        var(
+            --mod-accordion-item-header-bottom-to-text-space,
+            var(--spectrum-accordion-item-header-bottom-to-text-space)
+        );
+    padding-inline-end: var(
+        --mod-accordion-edge-to-text-space,
+        var(--spectrum-accordion-edge-to-text-space)
+    );
+    padding-inline-start: calc(
+        var(
+                --mod-accordion-disclosure-indicator-to-text-space,
+                var(--spectrum-accordion-disclosure-indicator-to-text-space)
+            ) +
             var(
-                --spectrum-accordion-item-border-size,
-                var(--spectrum-alias-border-size-thin)
+                --mod-accordion-disclosure-indicator-height,
+                var(--spectrum-accordion-disclosure-indicator-height)
             )
     );
-    padding-bottom: var(--spectrum-accordion-item-title-padding-y);
-    padding-top: var(--spectrum-accordion-item-title-padding-y);
     position: relative;
+    text-align: start;
     text-overflow: ellipsis;
-    text-transform: uppercase;
-    width: 100%;
 }
 #header:focus {
     outline: none;
 }
-:host([dir='ltr']) #header:focus:after {
-    left: 0;
-}
-:host([dir='rtl']) #header:focus:after {
-    right: 0;
-}
 #header:focus:after {
-    bottom: calc(
-        var(
-                --spectrum-accordion-item-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1
-    );
     content: '';
+    inset-inline-start: 0;
     position: absolute;
-    top: calc(
-        var(
-                --spectrum-accordion-item-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1
-    );
-    width: var(
-        --spectrum-accordion-item-border-left-size,
-        var(--spectrum-alias-border-size-thick)
-    );
-}
-#content {
-    display: none;
-    padding-bottom: var(
-        --spectrum-accordion-item-content-padding,
-        var(--spectrum-global-dimension-size-200)
-    );
-    padding-left: var(
-        --spectrum-accordion-item-content-padding,
-        var(--spectrum-global-dimension-size-200)
-    );
-    padding-right: var(
-        --spectrum-accordion-item-content-padding,
-        var(--spectrum-global-dimension-size-200)
-    );
-    padding-top: 0;
-}
-:host([dir='ltr'][open]) > #heading > .indicator {
-    transform: rotate(90deg);
-}
-:host([dir='rtl'][open]) > #heading > .indicator {
-    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg);
-}
-:host([dir='ltr'][open]) > .indicator {
-    transform: rotate(90deg);
-}
-:host([dir='rtl'][open]) > .indicator {
-    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg);
-}
-:host([open]) > #header:after {
-    height: calc(
-        100% -
-            var(
-                --spectrum-accordion-item-border-size,
-                var(--spectrum-alias-border-size-thin)
-            )
-    );
-}
-:host([open]) > #content {
-    display: block;
-}
-:host([disabled]) #header {
-    cursor: default;
-}
-:host {
-    border-color: var(
-        --spectrum-accordion-border-color,
-        var(--spectrum-global-color-gray-300)
-    );
-}
-.indicator {
-    color: var(
-        --spectrum-accordion-icon-color,
-        var(--spectrum-global-color-gray-600)
-    );
-}
-#header {
-    color: var(
-        --spectrum-accordion-text-color,
-        var(--spectrum-global-color-gray-700)
-    );
 }
 #header:hover {
     background-color: var(
-        --spectrum-accordion-item-background-color-hover,
-        var(--spectrum-global-color-gray-200)
+        --mod-accordion-background-color-hover,
+        var(--spectrum-accordion-background-color-hover)
     );
     color: var(
-        --spectrum-accordion-text-color-hover,
-        var(--spectrum-global-color-gray-900)
+        --mod-accordion-item-header-color-hover,
+        var(--spectrum-accordion-item-header-color-hover)
     );
 }
-#header:hover + .indicator {
+#header:hover + .iconContainer {
     color: var(
-        --spectrum-accordion-icon-color-hover,
-        var(--spectrum-alias-icon-color-hover)
+        --mod-accordion-item-header-color-hover,
+        var(--spectrum-accordion-item-header-color-hover)
     );
 }
-#header.focus-visible:after {
+#header.focus-visible {
     background-color: var(
-        --spectrum-accordion-item-border-left-color-key-focus,
-        var(--spectrum-alias-border-color-key-focus)
+        --mod-accordion-background-color-key-focus,
+        var(--spectrum-accordion-background-color-key-focus)
+    );
+    border-radius: var(
+        --mod-accordion-corner-radius,
+        var(--spectrum-accordion-corner-radius)
+    );
+    color: var(
+        --mod-accordion-item-header-color-key-focus,
+        var(--spectrum-accordion-item-header-color-key-focus)
+    );
+    outline: var(
+            --mod-accordion-focus-indicator-thickness,
+            var(--spectrum-accordion-focus-indicator-thickness)
+        )
+        solid
+        var(
+            --mod-accordion-focus-indicator-color,
+            var(--spectrum-accordion-focus-indicator-color)
+        );
+    outline-offset: calc(
+        var(
+                --mod-accordion-focus-indicator-gap,
+                var(--spectrum-accordion-focus-indicator-gap)
+            ) * -1
     );
 }
-#header:focus-visible:after {
+#header:focus-visible {
     background-color: var(
-        --spectrum-accordion-item-border-left-color-key-focus,
-        var(--spectrum-alias-border-color-key-focus)
+        --mod-accordion-background-color-key-focus,
+        var(--spectrum-accordion-background-color-key-focus)
+    );
+    border-radius: var(
+        --mod-accordion-corner-radius,
+        var(--spectrum-accordion-corner-radius)
+    );
+    color: var(
+        --mod-accordion-item-header-color-key-focus,
+        var(--spectrum-accordion-item-header-color-key-focus)
+    );
+    outline: var(
+            --mod-accordion-focus-indicator-thickness,
+            var(--spectrum-accordion-focus-indicator-thickness)
+        )
+        solid
+        var(
+            --mod-accordion-focus-indicator-color,
+            var(--spectrum-accordion-focus-indicator-color)
+        );
+    outline-offset: calc(
+        var(
+                --mod-accordion-focus-indicator-gap,
+                var(--spectrum-accordion-focus-indicator-gap)
+            ) * -1
+    );
+}
+#header:active {
+    background-color: var(
+        --mod-accordion-background-color-down,
+        var(--spectrum-accordion-background-color-down)
+    );
+    color: var(
+        --mod-accordion-item-header-color-down,
+        var(--spectrum-accordion-item-header-color-down)
     );
 }
 :host([open]) #header:hover {
-    background-color: #0000;
+    background-color: var(
+        --mod-accordion-background-color-hover,
+        var(--spectrum-accordion-background-color-hover)
+    );
 }
 :host([disabled]) #header,
 :host([disabled]) #header.focus-visible,
 :host([disabled]) #header:hover {
     background-color: #0000;
     color: var(
-        --spectrum-accordion-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        --mod-accordion-item-header-disabled-color,
+        var(--spectrum-accordion-item-header-disabled-color)
     );
 }
 :host([disabled]) #header,
@@ -292,21 +313,45 @@ governing permissions and limitations under the License.
 :host([disabled]) #header:hover {
     background-color: #0000;
     color: var(
-        --spectrum-accordion-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        --mod-accordion-item-header-disabled-color,
+        var(--spectrum-accordion-item-header-disabled-color)
     );
 }
-:host([disabled]) #header + .indicator {
+:host([disabled]) #header + .iconContainer {
     color: var(
-        --spectrum-accordion-icon-color-disabled,
-        var(--spectrum-alias-icon-color-disabled)
+        --mod-accordion-item-header-disabled-color,
+        var(--spectrum-accordion-item-header-disabled-color)
+    );
+}
+:host([disabled]) #content {
+    color: var(
+        --mod-accordion-item-content-disabled-color,
+        var(--spectrum-accordion-item-content-disabled-color)
     );
 }
 @media (forced-colors: active) {
-    #header.focus-visible {
-        outline: 3px solid CanvasText;
+    #header:after {
+        content: '';
+        forced-color-adjust: none;
+        inset-inline-start: 0;
+        position: absolute;
     }
-    #header:focus-visible {
-        outline: 3px solid CanvasText;
-    }
+}
+:host([dir='ltr'][open]) > #heading > .iconContainer > .indicator {
+    transform: rotate(90deg);
+}
+:host([dir='rtl'][open]) > #heading > .iconContainer > .indicator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg);
+}
+:host([dir='ltr'][open]) > .iconContainer > .indicator {
+    transform: rotate(90deg);
+}
+:host([dir='rtl'][open]) > .iconContainer > .indicator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg);
+}
+:host([open]) > #content {
+    display: block;
+}
+:host([disabled]) #header {
+    cursor: default;
 }
