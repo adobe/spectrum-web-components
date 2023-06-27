@@ -684,6 +684,49 @@ describe('ActionGroup', () => {
         expect(secondButton.selected, 'second button selected').to.be.true;
     });
 
+    it('Clicking button event should bubble up from inner label to outer button element', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects Multiple Group"
+                    selects="multiple"
+                    .selected=${['first', 'second']}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(2);
+
+        const firstButtonEl = el.querySelector('.first') as ActionButton;
+        const firstSpanEl = firstButtonEl.shadowRoot.querySelector(
+            '#label'
+        ) as HTMLSpanElement;
+        const secondButtonEl = el.querySelector('.second') as ActionButton;
+
+        expect(firstButtonEl.selected, 'first button selected').to.be.true;
+        expect(secondButtonEl.selected, 'second button selected').to.be.true;
+
+        firstSpanEl.click(); // clicking inner span bubbles up and fires outer button click
+        await elementUpdated(el);
+
+        expect(firstButtonEl.selected, 'first button selected').to.be.false;
+        expect(secondButtonEl.selected, 'second button selected').to.be.true;
+
+        firstButtonEl.click(); // clicking outer action-button element fires own click event
+        await elementUpdated(el);
+
+        expect(firstButtonEl.selected, 'first button selected').to.be.true;
+        expect(secondButtonEl.selected, 'second button selected').to.be.true;
+    });
+
     it('only selects user-passed buttons if present in action-group while [selects="multiple"]', async () => {
         const el = await multipleSelectedActionGroup(['second', 'fourth']);
 
