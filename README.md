@@ -125,9 +125,18 @@ To create a local baseline for comparing your changes to later in the developmen
 yarn test:visual:clean # start with a clean slate
 # yarn test:visual:clean:baseline # removes only baseline images
 # yarn test:visual:clean:current # removes only images updated in the most recent test pass
-yarn test:visual vrt-light-medium-ltr # vrt-${color}-${scale}-${direction} to access all theme options
-# ...
-yarn test:visual vrt-light-medium-ltr # repeat the same as above for a clean comparison
+
+# To enable comparison, it is generally recommended to generate baselines on the main branch.
+yarn test:visual vrt-${component name} --update-visual-baseline
+eg: yarn test:visual vrt-accordion --update-visual-baseline
+
+# Running the tests on the local branch
+yarn test:visual vrt-${component name}
+eg: yarn test:visual vrt-accordion
+
+# Running the tests of light medium ltr
+yarn test:visual vrt-${component name}-single
+eg: yarn test:visual vrt-accordion-single
 ```
 
 #### Screenshot coverage
