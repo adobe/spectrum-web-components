@@ -227,7 +227,9 @@
                 "packages/**/*.ts",
                 "tools/**/*.ts",
                 "!packages/**/*.d.ts",
-                "!tools/**/*.d.ts"
+                "!tools/**/*.d.ts",
+                "packages/**/exports.json",
+                "tools/**/exports.json"
             ],
             "output": [
                 "packages/**/*.js",

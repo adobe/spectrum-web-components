@@ -26,7 +26,7 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import '../sp-combobox-item.js';
 import { ComboboxItem } from './ComboboxItem.js';
-import { openOverlay } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -55,10 +55,10 @@ export class Combobox extends Textfield {
      * The currently active ComboboxItem descendent, when available.
      */
     @property({ attribute: false })
-    protected activeDescendent?: ComboboxOption;
+    public activeDescendent?: MenuItem;
 
     @property({ attribute: false })
-    protected availableOptions: ComboboxOption[] = [];
+    public availableOptions: MenuItem[] = [];
 
     @property()
     public ariaAutocomplete: 'list' | 'none' = 'none';
@@ -72,7 +72,7 @@ export class Combobox extends Textfield {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    @query('[name="option"]')
+    @query('slot:not([name])')
     public optionSlot!: HTMLSlotElement;
 
     @query('#listbox')
@@ -87,7 +87,7 @@ export class Combobox extends Textfield {
      * The array of the children of the combobox, ie ComboboxItems.
      **/
     @property({ type: Array })
-    public options: ComboboxOption[] = [];
+    public options: MenuItem[] = [];
 
     // { value: "String thing", id: "string1" }
     public override focus(): void {
@@ -106,7 +106,7 @@ export class Combobox extends Textfield {
             event.preventDefault();
             this.open = true;
             this.activateNextDescendent();
-            const activeEl = this.overlay.querySelector(
+            const activeEl = this.querySelector(
                 `#${(this.activeDescendent as ComboboxOption).id}`
             ) as HTMLElement;
             if (activeEl) {
@@ -116,7 +116,7 @@ export class Combobox extends Textfield {
             event.preventDefault();
             this.open = true;
             this.activatePreviousDescendent();
-            const activeEl = this.overlay.querySelector(
+            const activeEl = this.querySelector(
                 `#${(this.activeDescendent as ComboboxOption).id}`
             ) as HTMLElement;
             if (activeEl) {
@@ -151,10 +151,10 @@ export class Combobox extends Textfield {
     public onSlotchange(): void {
         this.setOptionsFromSlottedItems();
         this.itemObserver.disconnect();
-        const comboboxItems = this.optionSlot.assignedElements({
-            flatten: true,
-        }) as ComboboxItem[];
-        comboboxItems.map((item) => {
+        // const comboboxItems = this.optionSlot.assignedElements({
+        //     flatten: true,
+        // }) as ComboboxItem[];
+        this.options.map((item) => {
             this.itemObserver.observe(item, {
                 attributes: true,
                 attributeFilter: ['id'],
@@ -166,11 +166,9 @@ export class Combobox extends Textfield {
     public setOptionsFromSlottedItems(): void {
         const elements = this.optionSlot.assignedElements({
             flatten: true,
-        }) as ComboboxItem[];
+        }) as MenuItem[];
         // Element data
-        this.options = elements.map((element) => {
-            return { id: element.id, value: element.value };
-        });
+        this.options = elements;
     }
 
     public activateNextDescendent(): void {
@@ -186,10 +184,11 @@ export class Combobox extends Textfield {
     public activatePreviousDescendent(): void {
         const activeIndex = !this.activeDescendent
             ? 0
-            : this.options.indexOf(this.activeDescendent);
+            : this.availableOptions.indexOf(this.activeDescendent);
         const previousActiveIndex =
-            (this.options.length + activeIndex - 1) % this.options.length;
-        this.activeDescendent = this.options[previousActiveIndex];
+            (this.availableOptions.length + activeIndex - 1) %
+            this.availableOptions.length;
+        this.activeDescendent = this.availableOptions[previousActiveIndex];
     }
 
     public selectDescendent(): void {
@@ -239,29 +238,29 @@ export class Combobox extends Textfield {
         this.focus();
     }
 
-    public onOverlayScroll = (): void => {
-        const overlayMenu = this.overlay.children[0] as HTMLElement;
-        const menu = this.listbox.children[0] as HTMLElement;
-        menu.scroll(overlayMenu.scrollLeft, overlayMenu.scrollTop);
-    };
+    // public onOverlayScroll = (): void => {
+    //     const overlayMenu = this.overlay.children[0] as HTMLElement;
+    //     const menu = this.listbox.children[0] as HTMLElement;
+    //     menu.scroll(overlayMenu.scrollLeft, overlayMenu.scrollTop);
+    // };
 
     public onOpened(): void {
-        this.overlayObserver.observe(
-            this.overlay.parentElement as HTMLElement,
-            {
-                attributes: true,
-                // attributeFilter: [ "style" ],
-            }
-        );
-        const menu = this.overlay.children[0] as HTMLElement;
-        menu.addEventListener('scroll', this.onOverlayScroll);
-        this.overlay.addEventListener(
-            'transitionend',
-            () => {
-                this.positionListbox();
-            },
-            { once: true }
-        );
+        // this.overlayObserver.observe(
+        //     this.overlay.parentElement as HTMLElement,
+        //     {
+        //         attributes: true,
+        //         // attributeFilter: [ "style" ],
+        //     }
+        // );
+        // const menu = this.overlay.children[0] as HTMLElement;
+        // menu.addEventListener('scroll', this.onOverlayScroll);
+        // this.overlay.addEventListener(
+        //     'transitionend',
+        //     () => {
+        //         this.positionListbox();
+        //     },
+        //     { once: true }
+        // );
     }
 
     public toggleOpen(): void {
@@ -278,17 +277,17 @@ export class Combobox extends Textfield {
         return super.shouldUpdate(changed);
     }
 
-    private positionListboxFromEntries(_entries: MutationRecord[]): void {
-        this.positionListbox();
-        this.overlay.addEventListener(
-            'transitionend',
-            () => {
-                if (!this.open) return;
-                this.positionListbox();
-            },
-            { once: true }
-        );
-    }
+    // private positionListboxFromEntries(_entries: MutationRecord[]): void {
+    //     this.positionListbox();
+    //     this.overlay.addEventListener(
+    //         'transitionend',
+    //         () => {
+    //             if (!this.open) return;
+    //             this.positionListbox();
+    //         },
+    //         { once: true }
+    //     );
+    // }
 
     private positionListbox(): void {
         const targetRect = this.overlay.getBoundingClientRect();
@@ -303,7 +302,7 @@ export class Combobox extends Textfield {
     protected override onBlur(event: FocusEvent): void {
         if (
             event.relatedTarget &&
-            this.overlay.contains(event.relatedTarget as HTMLElement)
+            this.contains(event.relatedTarget as HTMLElement)
         ) {
             return;
         }
@@ -316,11 +315,13 @@ export class Combobox extends Textfield {
             <input
                 aria-activedescendant=${ifDefined(
                     this.activeDescendent
-                        ? `${this.activeDescendent.id}-sr`
+                        ? `${this.activeDescendent.id}-slot`
                         : undefined
                 )}
                 aria-autocomplete=${this.ariaAutocomplete}
-                aria-controls="listbox-menu"
+                aria-controls=${ifDefined(
+                    this.open ? 'listbox-menu' : undefined
+                )}
                 aria-expanded="${this.open ? 'true' : 'false'}"
                 aria-labelledby="label"
                 autocomplete=${ifDefined(this.autocomplete as 'on')}
@@ -340,7 +341,7 @@ export class Combobox extends Textfield {
                 @sp-opened=${this.onOpened}
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label || this.placeholder}
+                aria-label=${ifDefined(this.label || this.placeholder)}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
@@ -349,7 +350,7 @@ export class Combobox extends Textfield {
                     this.minlength > -1 ? this.minlength : undefined
                 )}
                 pattern=${ifDefined(this.pattern)}
-                placeholder=${this.placeholder}
+                placeholder=${ifDefined(this.placeholder)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
                 @focus=${this.onFocus}
@@ -371,7 +372,7 @@ export class Combobox extends Textfield {
                     this.labelPosition ? 'start' : undefined
                 )}
             >
-                <slot>${this.label}</slot>
+                <slot name="label">${this.label}</slot>
             </sp-field-label>
             ${super.render()}
             <sp-picker-button
@@ -390,58 +391,47 @@ export class Combobox extends Textfield {
                     class="spectrum-UIIcon-ChevronDown100 icon"
                 ></sp-icon-chevron100>
             </sp-picker-button>
-            <sp-popover aria-labelledby="label" id="overlay">
-                <sp-menu
-                    @change=${this.handleMenuChange}
-                    style="width: ${width}px;"
-                    selects="single"
-                    role="listbox"
-                    @pointerenter=${this.handleListPointerenter}
-                    @pointerleave=${this.handleListPointerleave}
-                >
-                    ${this.availableOptions.map((option) => {
-                        return html`
-                            <sp-menu-item
-                                id=${option.id}
-                                ?selected=${this.activeDescendent?.id ===
-                                option.id}
-                                ?focused=${this.activeDescendent?.id ===
-                                option.id}
-                                .value=${option.value}
-                            >
-                                ${option.value}
-                            </sp-menu-item>
-                        `;
-                    })}
-                </sp-menu>
-            </sp-popover>
-            <sp-popover id="listbox" ?open=${this.open}>
-                <sp-menu
-                    tabindex="0"
-                    aria-labelledby="label"
-                    id="listbox-menu"
-                    role="listbox"
-                    style="width: ${width}px;"
-                    selects="single"
-                >
-                    ${this.availableOptions.map((option) => {
-                        return html`
-                            <sp-menu-item
-                                id="${option.id}-sr"
-                                ?selected=${this.activeDescendent?.id ===
-                                option.id}
-                                ?focused=${this.activeDescendent?.id ===
-                                option.id}
-                                selects="single"
-                                .value=${option.value}
-                            >
-                                ${option.value}
-                            </sp-menu-item>
-                        `;
-                    })}
-                </sp-menu>
-            </sp-popover>
-            <slot name="option" @slotchange=${this.onSlotchange} hidden></slot>
+            <sp-overlay
+                ?open=${this.open}
+                .triggerElement=${this.input}
+                offset="0"
+                placement="bottom-start"
+                .receivesFocus=${'false'}
+                role="presentation"
+            >
+                <sp-popover id="listbox" ?open=${this.open} role="presentation">
+                    <sp-menu
+                        @change=${this.handleMenuChange}
+                        tabindex="0"
+                        aria-labelledby="label"
+                        id="listbox-menu"
+                        role="listbox"
+                        selects="single"
+                        style="min-width: ${width}px;"
+                    >
+                        <!-- <sp-menu-item id="test-1">Test 1</sp-menu-item>
+                        <sp-menu-item id="test-2">Test 2</sp-menu-item>
+                        <slot id="o3-slot" name="o3-slot" @slotchange=${this
+                            .onSlotchange}></slot> -->
+                        <!-- ${this.availableOptions.map((option) => {
+                            return html`
+                                <sp-menu-item
+                                    id="${option.id}-sr"
+                                    ?selected=${this.activeDescendent?.id ===
+                                    option.id}
+                                    ?focused=${this.activeDescendent?.id ===
+                                    option.id}
+                                    selects="single"
+                                    .value=${option.value}
+                                >
+                                    ${option.value}
+                                </sp-menu-item>
+                            `;
+                        })} -->
+                        <slot @slotchange=${this.onSlotchange}></slot>
+                    </sp-menu>
+                </sp-popover>
+            </sp-overlay>
         `;
     }
 
@@ -453,7 +443,7 @@ export class Combobox extends Textfield {
         this.addEventListener('focusout', (event: FocusEvent) => {
             const isMenuItem =
                 event.relatedTarget &&
-                this.overlay.contains(event.relatedTarget as Node);
+                this.contains(event.relatedTarget as Node);
             if (event.target === this && !isMenuItem) {
                 this.focused = false;
             }
@@ -470,24 +460,24 @@ export class Combobox extends Textfield {
     protected async manageListOverlay(): Promise<void> {
         if (this.open) {
             this.focused = true;
-            this._returnItems = await openOverlay(
-                this.shadowRoot.querySelector('#input') as HTMLElement,
-                'click',
-                this.overlay,
-                {
-                    offset: 0,
-                    placement: 'bottom-start',
-                    receivesFocus: 'false',
-                }
-            );
+            // this._returnItems = await openOverlay(
+            //     this.shadowRoot.querySelector('#input') as HTMLElement,
+            //     'click',
+            //     this.overlay,
+            //     {
+            //         offset: 0,
+            //         placement: 'bottom-start',
+            //         receivesFocus: 'false',
+            //     }
+            // );
             this.focus();
         } else {
-            this._returnItems();
-            this._returnItems = () => {
-                return;
-            };
-            this.overlayObserver.disconnect();
-            this.overlay.removeEventListener('scroll', this.onOverlayScroll);
+            // this._returnItems();
+            // this._returnItems = () => {
+            //     return;
+            // };
+            // this.overlayObserver.disconnect();
+            // this.overlay.removeEventListener('scroll', this.onOverlayScroll);
         }
     }
 
@@ -500,6 +490,14 @@ export class Combobox extends Textfield {
         }
         if (changed.has('value')) {
             if (this.overlay && this.open) this.positionListbox();
+        }
+        if (changed.has('activeDescendent')) {
+            if (changed.get('activeDescendent')) {
+                (changed.get('activeDescendent') as MenuItem).focused = false;
+            }
+            if (this.activeDescendent) {
+                this.activeDescendent.focused = true;
+            }
         }
     }
 
@@ -519,11 +517,11 @@ export class Combobox extends Textfield {
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        if (!this.overlayObserver) {
-            this.overlayObserver = new MutationObserver(
-                this.positionListboxFromEntries.bind(this)
-            );
-        }
+        // if (!this.overlayObserver) {
+        //     this.overlayObserver = new MutationObserver(
+        //         this.positionListboxFromEntries.bind(this)
+        //     );
+        // }
         if (!this.itemObserver) {
             this.itemObserver = new MutationObserver(
                 this.setOptionsFromSlottedItems.bind(this)
@@ -532,13 +530,13 @@ export class Combobox extends Textfield {
     }
 
     public override disconnectedCallback(): void {
-        this.overlayObserver.disconnect();
+        // this.overlayObserver.disconnect();
         this.itemObserver.disconnect();
         this.open = false;
         super.disconnectedCallback();
     }
 
-    private overlayObserver!: MutationObserver;
+    // private overlayObserver!: MutationObserver;
     private itemObserver!: MutationObserver;
 }
 

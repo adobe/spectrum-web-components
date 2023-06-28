@@ -34,7 +34,7 @@ export const Default = (): TemplateResult => {
     ];
     return html`
         <sp-combobox .options=${options} style="margin: 100vh 0;">
-            Things
+            <span slot="label">Things</span>
         </sp-combobox>
     `;
 };
@@ -57,7 +57,7 @@ export const matches = (): TemplateResult => {
     ];
     return html`
         <sp-combobox .options=${options} autocomplete="list">
-            Things
+            <span slot="label">Things</span>
         </sp-combobox>
     `;
 };
@@ -107,7 +107,7 @@ export const kerning = (): TemplateResult => {
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
             label-position="inline-start"
         >
-            <span aria-label="Kerning">K</span>
+            <span slot="label" aria-label="Kerning">K</span>
         </sp-combobox>
         <sp-combobox
             .options=${optionsL}
@@ -115,7 +115,7 @@ export const kerning = (): TemplateResult => {
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
             label-position="inline-start"
         >
-            <span aria-label="Leading">L</span>
+            <span slot="label" aria-label="Leading">L</span>
         </sp-combobox>
     `;
 };
@@ -123,32 +123,30 @@ export const kerning = (): TemplateResult => {
 export const kerningLightDOM = (): TemplateResult => {
     return html`
         <sp-combobox
-            .options=${optionsK}
             .autocomplete=${'none'}
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
             label-position="inline-start"
         >
-            <span aria-label="Kerning">K</span>
+            <span slot="label" aria-label="Kerning">K</span>
             ${optionsK.map(
                 (option) => html`
-                    <sp-combobox-item id=${option.id} value=${option.value}>
+                    <sp-menu-item id=${option.id} value=${option.value}>
                         ${option.value}
-                    </sp-combobox-item>
+                    </sp-menu-item>
                 `
             )}
         </sp-combobox>
         <sp-combobox
-            .options=${optionsL}
             .autocomplete=${'none'}
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
             label-position="inline-start"
         >
-            <span aria-label="Leading">L</span>
+            <span slot="label" aria-label="Leading">L</span>
             ${optionsL.map(
                 (option) => html`
-                    <sp-combobox-item id=${option.id} value=${option.value}>
+                    <sp-menu-item id=${option.id} value=${option.value}>
                         ${option.value}
-                    </sp-combobox-item>
+                    </sp-menu-item>
                 `
             )}
         </sp-combobox>
