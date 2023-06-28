@@ -90,11 +90,22 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (this.readonly) {
             return;
         }
-        this.dispatchEvent(
-            new Event('delete', {
-                bubbles: true,
-            })
-        );
+        const deleteEvent = new Event('delete', {
+            bubbles: true,
+            composed: true, // Allow the event to propagate across the shadow boundary
+        });
+        this.dispatchEvent(deleteEvent);
+
+        if (deleteEvent.defaultPrevented) {
+            // The event handler canceled the deletion, so return
+            return;
+        }
+
+        // Remove the Tag element from its parent
+        const parent = this.parentNode;
+        if (parent) {
+            parent.removeChild(this);
+        }
     }
 
     protected override render(): TemplateResult {
