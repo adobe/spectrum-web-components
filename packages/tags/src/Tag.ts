@@ -71,16 +71,44 @@ export class Tag extends SizedMixin(SpectrumElement, {
     };
 
     private handleKeydown = (event: KeyboardEvent): void => {
-        if (!this.deletable) {
+        if (!this.deletable || this.disabled) {
             return;
         }
         const { code } = event;
+
+        const tags = Array.from(this.parentNode.querySelectorAll('sp-tag'));
+        const currentIndex = tags.indexOf(this);
+
         switch (code) {
             case 'Backspace':
-            case 'Space':
             case 'Delete':
                 this.delete();
-                return;
+
+                let focusIndex = currentIndex;
+                if (currentIndex < tags.length - 1) {
+                    for (let i = currentIndex + 1; i < tags.length; i++) {
+                        if (!tags[i].disabled) {
+                            focusIndex = i;
+                            break;
+                        }
+                    }
+                } else if (currentIndex > 0) {
+                    for (let i = currentIndex - 1; i >= 0; i--) {
+                        if (!tags[i].disabled) {
+                            focusIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                if (focusIndex !== currentIndex) {
+                    const focusTag = tags[focusIndex];
+                    focusTag.focus();
+                }
+                break;
+            case 'Space':
+            case 'Tab':
+                break;
             default:
                 return;
         }
