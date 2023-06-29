@@ -75,8 +75,8 @@ export class Tag extends SizedMixin(SpectrumElement, {
             return;
         }
         const { code } = event;
-
-        const tags = Array.from(this.parentNode.querySelectorAll('sp-tag'));
+        const parent = this.parentNode as HTMLElement | null;
+        const tags = Array.from(parent?.querySelectorAll('sp-tag') ?? []);
         const currentIndex = tags.indexOf(this);
 
         switch (code) {
