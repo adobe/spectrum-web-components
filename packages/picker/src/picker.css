@@ -93,10 +93,6 @@ sp-popover {
     white-space: nowrap;
 }
 
-:host([dir='ltr']) #label.visually-hidden + .picker {
-    margin-left: auto;
-}
-
-:host([dir='rtl']) #label.visually-hidden + .picker {
-    margin-right: auto;
+#label.visually-hidden ~ .picker {
+    margin-inline-start: auto;
 }
