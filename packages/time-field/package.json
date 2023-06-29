@@ -34,6 +34,10 @@
             "default": "./src/index.js"
         },
         "./src/time-field.css.js": "./src/time-field.css.js",
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
         "./sp-time-field.js": {
             "development": "./sp-time-field.dev.js",
             "default": "./sp-time-field.js"
@@ -57,7 +61,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.33.2"
+        "@internationalized/date": "^3.2.0",
+        "@spectrum-web-components/base": "^0.33.2",
+        "@spectrum-web-components/reactive-controllers": "^0.33.2",
+        "@spectrum-web-components/textfield": "^0.33.2"
     },
     "devDependencies": {
         "@spectrum-css/textfield": "^6.0.2"
