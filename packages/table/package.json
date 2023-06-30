@@ -115,6 +115,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@lit-labs/observers": "^2.0.0",
         "@lit-labs/virtualizer": "^2.0.2",
         "@spectrum-web-components/base": "^0.33.2",
         "@spectrum-web-components/checkbox": "^0.33.2",
