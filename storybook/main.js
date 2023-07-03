@@ -10,21 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import rollupJson from '@rollup/plugin-json';
-import { mergeConfig } from 'vite';
+import { mergeConfigs } from '@web/dev-server';
+import { fromRollup } from '@web/dev-server-rollup';
+import { watchSWC } from '../web-test-runner.utils.js';
 
-export default {
-    async viteFinal(config, { configType }) {
-        // return the customized config
-
-        const newConfig = mergeConfig(config, {
-            build: {
-                // customize the Vite config here
-                base: './',
-            },
-            base: './',
-        });
-        return newConfig;
-    },
+/** @type { import('storybook-builder-wds').StorybookConfigWds } */
+const config = {
     stories: [
         '../packages/*/stories/*.stories.js',
         '../tools/*/stories/*.stories.js',
@@ -35,22 +26,55 @@ export default {
         '@storybook/addon-a11y',
         // "@storybook/addon-storysource"
     ],
-    nodeResolve: {
-        exportConditions: ['browser', 'development'],
-    },
-
-    rollupConfig(config) {
-        // add a new plugin to the build
-        config.plugins.push(rollupJson());
-        return config;
-    },
     framework: {
         name: '@storybook/web-components-vite',
-    },
-    features: {
-        storyStoreV7: true,
     },
     core: {
         builder: 'storybook-builder-wds', // 👈 The builder enabled here.
     },
+    wdsFinal(config) {
+        const json = fromRollup(rollupJson);
+        return mergeConfigs(config, {
+            nodeResolve: {
+                exportConditions: ['browser', 'development'],
+                moduleDirectories: [
+                    'node_modules',
+                    'packages',
+                    'projects',
+                    'tools',
+                ],
+            },
+            clearTerminalOnReload: false,
+            watch: true,
+            mimeTypes: {
+                '**/*.json': 'js',
+            },
+            plugins: [json(), watchSWC()],
+            http2: true,
+            middleware: [
+                async (ctx, next) => {
+                    await next();
+                    if (
+                        // Icon packages
+                        ctx.url.search('/icons-') > -1 ||
+                        // Node modules
+                        (ctx.url.search('/node_modules/') > -1 &&
+                            ctx.url.search('/@spectrum-web-components') === -1)
+                    ) {
+                        ctx.set(
+                            'Cache-Control',
+                            'public, max-age=604800, stale-while-revalidate=86400'
+                        );
+                    }
+                },
+            ],
+        });
+    },
+    rollupFinal(config) {
+        // add a new plugin to the build
+        config.plugins.push(rollupJson());
+        return config;
+    },
 };
+
+export default config;
