@@ -1,0 +1,14 @@
+diff --git a/node_modules/@chialab/estransform/dist/index.js b/node_modules/@chialab/estransform/dist/index.js
+index 406e52e..43cd869 100644
+--- a/node_modules/@chialab/estransform/dist/index.js
++++ b/node_modules/@chialab/estransform/dist/index.js
+@@ -17045,8 +17045,7 @@ var import_TokenProcessor = __toESM(require_TokenProcessor(), 1);
+ // lib/sourcemaps.js
+ import { readFile } from "fs/promises";
+ import path from "path";
+-import sourceMapDefault from "@parcel/source-map";
+-var { default: SourceMapNode } = sourceMapDefault;
++import SourceMapNode from "@parcel/source-map";
+ var SOURCEMAP_REGEX = /(?:(\/\*+\s*?sourceMappingURL\s*=)([\s\S]*?)(\*\/))|(?:(\/\/#?\s*?sourceMappingURL\s*=)(.*?)([\r\n]|$))/;
+ function parseSourcemap(map) {
+   return JSON.parse(map);
