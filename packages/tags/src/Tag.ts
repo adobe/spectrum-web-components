@@ -108,12 +108,9 @@ export class Tag extends SizedMixin(SpectrumElement, {
 
         switch (code) {
             case 'Backspace':
+            case 'Space':
             case 'Delete':
                 this.delete();
-                break;
-            case 'Space':
-            case 'Tab':
-                break;
             default:
                 return;
         }
