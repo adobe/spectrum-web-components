@@ -180,7 +180,6 @@ describe('Tag', () => {
         el.dispatchEvent(new FocusEvent('focusout'));
         await elementUpdated(el);
 
-        expectedEventCount = 2;
         el.dispatchEvent(deleteEvent());
         expect(
             deleteSpy.callCount,
