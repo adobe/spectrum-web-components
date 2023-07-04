@@ -230,9 +230,9 @@ export class FocusGroupController<T extends HTMLElement>
         }
         switch (this.direction) {
             case 'horizontal':
-                return code === 'ArrowLeft' || code === 'ArrowRight';
+                return code.startsWith('Arrow');
             case 'vertical':
-                return code === 'ArrowUp' || code === 'ArrowDown';
+                return code.startsWith('Arrow');
             case 'both':
             case 'grid':
                 return code.startsWith('Arrow');

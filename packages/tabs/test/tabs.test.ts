@@ -549,6 +549,16 @@ describe('Tabs', () => {
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
+
+        firstTab.dispatchEvent(arrowRightEvent());
+
+        await elementUpdated(el);
+        expect(document.activeElement === secondTab, 'Focus second tab').to.be
+            .true;
+
+        secondTab.dispatchEvent(arrowLeftEvent());
+        expect(document.activeElement === firstTab, 'Focus first tab').to.be
+            .true;
     });
     it('selects through slotted DOM', async () => {
         const el = await fixture<Tabs>(
