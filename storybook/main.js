@@ -27,10 +27,7 @@ const config = {
         // "@storybook/addon-storysource"
     ],
     framework: {
-        name: '@storybook/web-components-vite',
-    },
-    core: {
-        builder: 'storybook-builder-wds', // 👈 The builder enabled here.
+        name: 'storybook-web-components-wds',
     },
     wdsFinal(config) {
         const json = fromRollup(rollupJson);

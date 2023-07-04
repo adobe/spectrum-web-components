@@ -7465,7 +7465,7 @@
     "@storybook/web-components" "7.0.25"
     magic-string "^0.27.0"
 
-"@storybook/web-components@7.0.25", "@storybook/web-components@^7.0.25":
+"@storybook/web-components@7.0.25", "@storybook/web-components@^7.0.0", "@storybook/web-components@^7.0.25":
   version "7.0.25"
   resolved "https://registry.yarnpkg.com/@storybook/web-components/-/web-components-7.0.25.tgz#624fbe98f81b330e25ec3e9c4541fe37c5d05cce"
   integrity sha512-Y2qPehxxmAFXiB5SZj10OIppgEHhNhs9NY1qUqgZtYBKY0/CIlfwT1iueu9WcvgMUY1ohpz3eGAC3pkzZImYfw==
@@ -26031,10 +26031,10 @@ storybook-addon-markdown-docs@^1.0.4:
     unist-builder "^2.0.3"
     unist-util-visit-parents "^3.1.1"
 
-storybook-builder-wds@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/storybook-builder-wds/-/storybook-builder-wds-0.0.2.tgz#aa96f757aa52bc2877250a9382228b2db7148ac2"
-  integrity sha512-wpDjU1XlDn5bpgKuqIzHSoPNPGQveSyKoF3W6cbWkduLVJqb32QK0cfHKUMVs2YRG5Y55kg5GsOzYGDrABhmgA==
+storybook-builder-wds@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/storybook-builder-wds/-/storybook-builder-wds-0.0.3.tgz#3321af0e725b3b2af93ee8918f404fd4f07b82b0"
+  integrity sha512-/2bjsoBQWSlbDFgESwsv/HKLg5HetmjsOhDiw3r+XavBTaLvsNVYw8zIpEbqnCsZYrK6191c9NkTt3jYxlHN0A==
   dependencies:
     "@chialab/esbuild-plugin-commonjs" "^0.17.2"
     "@rollup/plugin-node-resolve" "^15.1.0"
@@ -26060,6 +26060,14 @@ storybook-builder-wds@^0.0.2:
     rollup "^3.25.1"
     rollup-plugin-external-globals "^0.7.3"
     slash "^5.1.0"
+
+storybook-web-components-wds@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/storybook-web-components-wds/-/storybook-web-components-wds-0.0.1.tgz#cba02c9a6afb898008739ce1efa03c14f2713df9"
+  integrity sha512-R6eKU4BoZ77Hb7ocHZ8jcB4z+qB/w7FEX6gDQI4Nga5WTXERNS1X444aICSVJHHR0BXaFQbDz8xX9eMy3XJezw==
+  dependencies:
+    "@storybook/web-components" "^7.0.0"
+    storybook-builder-wds "^0.0.3"
 
 storybook@^7.0.25:
   version "7.0.25"
