@@ -38,6 +38,7 @@ import {
 
 import styles from './time-field.css.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 /**
  * @element sp-time-field
@@ -47,14 +48,11 @@ export class TimeField extends TextfieldBase {
         return [...super.styles, styles];
     }
 
-    /**
-     * Determines the smallest unit that is displayed in the time field
-     */
-    @property({ attribute: false })
-    granularity: Granularity = 'minute';
-
     @property({ reflect: true, attribute: false })
     selectedTime?: Date;
+
+    @property({ attribute: false })
+    granularity: Granularity = 'minute';
 
     @state()
     private _currentTime!: Time;
@@ -69,6 +67,10 @@ export class TimeField extends TextfieldBase {
 
     private get _now(): Time {
         return toTime(now(this._timeZone));
+    }
+
+    private get _is12HourClock(): boolean {
+        return Boolean(this._timeFormatter.resolvedOptions().hour12);
     }
 
     constructor() {
@@ -96,11 +98,11 @@ export class TimeField extends TextfieldBase {
         return html`
             <div class="input">
                 <div role="presentation" class="input-content">
-                    ${this._segments.map((part) =>
+                    ${this._segments.map((segment) =>
                         when(
-                            part.type === 'literal',
-                            () => this.renderLiteralSegment(part),
-                            () => this.renderEditableSegment(part)
+                            segment.type === 'literal',
+                            () => this.renderLiteralSegment(segment),
+                            () => this.renderEditableSegment(segment)
                         )
                     )}
                 </div>
@@ -121,9 +123,10 @@ export class TimeField extends TextfieldBase {
     }
 
     public renderEditableSegment(segment: TimeSegment): TemplateResult {
+        const isActive = !(this.disabled && this.readonly);
+
         const isPlaceholderVisible = Boolean(
-            !this.selectedTime ||
-                (this.selectedTime && segment.currentValue === undefined)
+            segment.currentValue === undefined
         );
 
         const segmentClasses = {
@@ -140,12 +143,15 @@ export class TimeField extends TextfieldBase {
         return html`
             <div
                 role="spinbutton"
-                contenteditable
+                contenteditable=${ifDefined(isActive ? true : undefined)}
+                tabindex=${ifDefined(isActive ? '0' : undefined)}
                 inputmode="numeric"
-                tabindex="0"
                 class="editable-segment ${classMap(segmentClasses)}"
                 style=${styleMap(segmentStyles)}
                 data-testid=${segment.type}
+                @focus=${this.onFocus}
+                @blur=${this.onBlur}
+                @keydown=${this.handleKeydown}
             >
                 ${when(
                     isPlaceholderVisible,
@@ -158,6 +164,27 @@ export class TimeField extends TextfieldBase {
                 )}
             </div>
         `;
+    }
+
+    public handleKeydown($event: KeyboardEvent): void {
+        switch ($event.code) {
+            case 'ArrowUp': {
+                this._incrementValue($event);
+                break;
+            }
+            case 'ArrowRight': {
+                this._focusNextSegment($event);
+                break;
+            }
+            case 'ArrowDown': {
+                this._decrementValue($event);
+                break;
+            }
+            case 'ArrowLeft': {
+                this._focusPreviousSegment($event);
+                break;
+            }
+        }
     }
 
     private _setLocale(): void {
@@ -211,8 +238,8 @@ export class TimeField extends TextfieldBase {
 
         return {
             type: part.type,
-            formattedText: part.value,
             placeholder: this._getPlaceholder(part.type, part.value),
+            formattedText: part.value,
             currentValue,
             minValue,
             maxValue,
@@ -232,13 +259,9 @@ export class TimeField extends TextfieldBase {
         return !isNaN(date.getTime());
     }
 
-    // private _formatNumber(number: number): string {
-    //     return new Intl.NumberFormat(this._locale).format(number);
-    // }
-
     /**
-     * Returns the placeholder that will be used. If it is the time of day field, use the actual value. For time fields
-     * (hour, minute, etc.), use two dashes as a placeholder
+     * Returns the placeholder that will be used. If it is day period field, use the actual value. For time fields
+     * (hour, minute, second), use two dashes as a placeholder
      *
      * @param type - Type of segment
      * @param value - The value of the segment
@@ -254,23 +277,27 @@ export class TimeField extends TextfieldBase {
         switch (type) {
             case 'dayPeriod':
                 return {
-                    currentValue: this._currentTime.hour >= 12 ? 12 : 0,
+                    currentValue:
+                        this.selectedTime &&
+                        (this._currentTime.hour >= 12 ? 12 : 0),
                     minValue: 0,
                     maxValue: 12,
                 };
 
             case 'hour':
-                if (this._timeFormatter.resolvedOptions().hour12) {
+                if (this._is12HourClock) {
                     const isPM = this._currentTime.hour >= 12;
 
                     return {
-                        currentValue: this._currentTime.hour,
+                        currentValue:
+                            this.selectedTime && this._currentTime.hour,
                         minValue: isPM ? 12 : 0,
                         maxValue: isPM ? 23 : 11,
                     };
                 } else {
                     return {
-                        currentValue: this._currentTime.hour,
+                        currentValue:
+                            this.selectedTime && this._currentTime.hour,
                         minValue: 0,
                         maxValue: 23,
                     };
@@ -278,20 +305,72 @@ export class TimeField extends TextfieldBase {
 
             case 'minute':
                 return {
-                    currentValue: this._currentTime.minute,
+                    currentValue: this.selectedTime && this._currentTime.minute,
                     minValue: 0,
                     maxValue: 59,
                 };
 
             case 'second':
                 return {
-                    currentValue: this._currentTime.second,
+                    currentValue: this.selectedTime && this._currentTime.second,
                     minValue: 0,
                     maxValue: 59,
                 };
 
             default:
                 return {};
+        }
+    }
+
+    private _incrementValue($event: KeyboardEvent): void {
+        this._valueChanged($event);
+    }
+
+    private _decrementValue($event: KeyboardEvent): void {
+        this._valueChanged($event);
+    }
+
+    private _valueChanged($event: KeyboardEvent): void {
+        $event.preventDefault();
+
+        this.dispatchEvent(
+            new Event('change', { bubbles: true, composed: true })
+        );
+    }
+
+    private _focusNextSegment($event: KeyboardEvent): void {
+        this._focusSegment($event.target as HTMLElement, 'next');
+    }
+
+    private _focusPreviousSegment($event: KeyboardEvent): void {
+        this._focusSegment($event.target as HTMLElement, 'previous');
+    }
+
+    private _focusSegment(
+        segment: HTMLElement,
+        elementToFocus: 'previous' | 'next'
+    ): void {
+        let segmentFound = false;
+        let currentSegment = segment;
+
+        while (!segmentFound) {
+            const siblingSegment = (
+                elementToFocus === 'previous'
+                    ? currentSegment.previousElementSibling
+                    : currentSegment.nextElementSibling
+            ) as HTMLElement;
+
+            // No more segments to focus on
+            if (!siblingSegment) {
+                break;
+            }
+
+            if (siblingSegment.getAttribute('contenteditable')) {
+                segmentFound = true;
+                siblingSegment.focus();
+            } else {
+                currentSegment = siblingSegment;
+            }
         }
     }
 }

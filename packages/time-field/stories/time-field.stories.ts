@@ -111,12 +111,16 @@ const renderTimeField = (
     args: StoryArgs = {}
 ): TemplateResult => {
     return html`
+        <style>
+            .demo-title,
+            .demo-subtitle {
+                line-height: 1.25;
+            }
+        </style>
+
         <sp-theme lang=${ifDefined(args.locale || undefined)}>
-            <h1>${title}</h1>
-            <h2>
-                Locale:
-                <code>${args.locale}</code>
-            </h2>
+            <h1 class="demo-title">${title}</h1>
+            <h2 class="demo-subtitle">Locale: ${args.locale}</h2>
             <hr />
             <sp-time-field ...=${spreadProps(args)}></sp-time-field>
         </sp-theme>
