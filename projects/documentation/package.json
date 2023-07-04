@@ -32,7 +32,7 @@
         "@open-wc/building-rollup": "^2.2.1",
         "@playwright/test": "1.30.0",
         "@rollup/plugin-alias": "^4.0.3",
-        "@rollup/plugin-commonjs": "^24.0.1",
+        "@rollup/plugin-commonjs": "^25.0.2",
         "@rollup/plugin-json": "^6.0.0",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@toycode/markdown-it-class": "^1.2.4",
