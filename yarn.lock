@@ -26031,9 +26031,10 @@ storybook-addon-markdown-docs@^1.0.4:
     unist-builder "^2.0.3"
     unist-util-visit-parents "^3.1.1"
 
-"storybook-builder-wds@https://github.com/bashmish/storybook-builder-wds.git#temp/build":
-  version "0.0.1"
-  resolved "https://github.com/bashmish/storybook-builder-wds.git#8f5278a6e183a49a4ed5913f7beca02842027cd4"
+storybook-builder-wds@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/storybook-builder-wds/-/storybook-builder-wds-0.0.2.tgz#aa96f757aa52bc2877250a9382228b2db7148ac2"
+  integrity sha512-wpDjU1XlDn5bpgKuqIzHSoPNPGQveSyKoF3W6cbWkduLVJqb32QK0cfHKUMVs2YRG5Y55kg5GsOzYGDrABhmgA==
   dependencies:
     "@chialab/esbuild-plugin-commonjs" "^0.17.2"
     "@rollup/plugin-node-resolve" "^15.1.0"
