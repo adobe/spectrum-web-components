@@ -39,3 +39,9 @@ export type TimeSegmentValueAndLimits = Pick<
     TimeSegment,
     'currentValue' | 'minValue' | 'maxValue'
 >;
+
+/** AM modifier: `0` hours */
+export const AM = 0;
+
+/** PM modifier: `12` hours */
+export const PM = 12;
