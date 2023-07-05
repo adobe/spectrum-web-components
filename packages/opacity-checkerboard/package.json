@@ -1,0 +1,69 @@
+{
+    "name": "@spectrum-web-components/opacity-checkerboard",
+    "version": "1.0.0-alpha.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/opacity-checkerboard"
+    },
+    "author": "",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/opacity-checkerboard",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/OpacityCheckerboard.js": {
+            "development": "./src/OpacityCheckerboard.dev.js",
+            "default": "./src/OpacityCheckerboard.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js",
+        "./sp-opacity-checkerboard.js": {
+            "development": "./sp-opacity-checkerboard.dev.js",
+            "default": "./sp-opacity-checkerboard.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "@spectrum-css/opacitycheckerboard": "^1.0.0-alpha.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}

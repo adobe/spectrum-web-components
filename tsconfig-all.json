@@ -54,6 +54,7 @@
         { "path": "packages/meter" },
         { "path": "packages/modal" },
         { "path": "packages/number-field" },
+        { "path": "packages/opacity-checkerboard" },
         { "path": "packages/overlay" },
         { "path": "packages/picker" },
         { "path": "packages/picker-button" },
