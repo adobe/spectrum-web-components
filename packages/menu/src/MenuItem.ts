@@ -332,7 +332,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.hasSubmenu = this.open || !!assignedElements.length;
         if (this.hasSubmenu) {
             this.setAttribute('aria-haspopup', 'true');
-            this.setAttribute('aria-controls', this.children[0].id);
+            //this.setAttribute('aria-controls', this.children[0].id);
         }
     }
 
