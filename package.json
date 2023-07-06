@@ -192,7 +192,7 @@
         "rollup": "^3.19.1",
         "sinon": "^14.0.0",
         "storybook": "^7.0.25",
-        "storybook-builder-wds": "^0.0.3",
+        "storybook-builder-wds": "^0.0.4",
         "storybook-web-components-wds": "^0.0.1",
         "stylelint": "^14.9.1",
         "stylelint-config-prettier": "^9.0.3",
