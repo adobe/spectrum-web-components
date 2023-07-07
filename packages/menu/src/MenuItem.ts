@@ -332,7 +332,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.hasSubmenu = this.open || !!assignedElements.length;
         if (this.hasSubmenu) {
             this.setAttribute('aria-haspopup', 'true');
-            //this.setAttribute('aria-controls', this.children[0].id);
         }
     }
 
@@ -419,8 +418,8 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
         this.open = true;
         this.active = true;
-
         this.setAttribute('aria-expanded', 'true');
+
         const submenu = (
             this.shadowRoot.querySelector(
                 'slot[name="submenu"]'
@@ -431,7 +430,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
             this.handleSubmenuPointerenter
         );
         submenu.addEventListener('change', this.handleSubmenuChange);
+        submenu.setAttribute('id', `${this.id}-submenu`);
+        this.setAttribute('aria-controls', submenu.id);
         const popover = document.createElement('sp-popover');
+
         const returnSubmenu = reparentChildren([submenu], popover, {
             position: 'beforeend',
             prepareCallback: (el) => {
@@ -446,6 +448,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 };
             },
         });
+
         const closeOverlay = openOverlay(this, 'click', popover, {
             placement: this.isLTR ? 'right-start' : 'left-start',
             receivesFocus: 'auto',

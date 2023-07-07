@@ -631,6 +631,7 @@ export class Menu extends SpectrumElement {
         }
         item.focused = this.hasVisibleFocusInTree();
         this.setAttribute('aria-activedescendant', item.id);
+
         if (
             item.menuData.selectionRoot &&
             item.menuData.selectionRoot !== this
