@@ -218,6 +218,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         const input = el.focusElement;
 
@@ -229,6 +230,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -238,6 +240,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal((4 * 100) / 360);
+        expect(el.value).to.equal(4);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -247,6 +250,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -256,6 +260,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses in dir="rtl"', async () => {
         const el = await fixture<ColorSlider>(
@@ -277,7 +282,8 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(0.5555555555555556);
+        expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -287,6 +293,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -295,7 +302,8 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(0.5555555555555556);
+        expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -305,6 +313,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorSlider>(
@@ -316,6 +325,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
         el.focus();
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         await sendKeys({
             down: 'Shift',
@@ -330,6 +340,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(20 / 3.6);
+        expect(el.value).to.equal(20);
 
         await sendKeys({
             press: 'ArrowRight',
@@ -341,6 +352,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(40 / 3.6);
+        expect(el.value).to.equal(40);
 
         await sendKeys({
             press: 'ArrowDown',
@@ -352,6 +364,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(5.5555555555555545);
+        expect(el.value).to.equal(20);
 
         await sendKeys({
             press: 'ArrowLeft',
@@ -366,6 +379,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts pointer events', async () => {
         const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
