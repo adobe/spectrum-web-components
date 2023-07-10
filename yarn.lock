@@ -8808,19 +8808,7 @@
   dependencies:
     "@web/dev-server-core" "^0.3.0"
 
-"@web/dev-server-rollup@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.5.0.tgz#dfe35808bd0aa258971fb193bf6793652581d21b"
-  integrity sha512-5bdMynXaNqY2+zDLk0FNQSqGpAazewTVZV8zUBnz790RxayYeITIWQLpBA6pnKZWEBQsh9ITbXoK2a4AVm9xSQ==
-  dependencies:
-    "@rollup/plugin-node-resolve" "^15.0.1"
-    "@web/dev-server-core" "^0.5.0"
-    nanocolors "^0.2.1"
-    parse5 "^6.0.1"
-    rollup "^3.15.0"
-    whatwg-url "^11.0.0"
-
-"@web/dev-server-rollup@^0.5.2":
+"@web/dev-server-rollup@^0.5.0", "@web/dev-server-rollup@^0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.5.2.tgz#5a6a9138cd57f32f7ae0e5caab69099c1428bd15"
   integrity sha512-R1heFIOmbExKJn2auDcOcF0EPoLQotZF1HE8Bpqq4TfLRkc7w+JClLdwkOMr/+Ip608cRw8VMkc7teYDFkvSXw==
