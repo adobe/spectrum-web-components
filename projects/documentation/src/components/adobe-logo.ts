@@ -40,6 +40,8 @@ export class SpectrumLogo extends LitElement {
                 viewBox="0 0 30 26"
                 width="${this.size}"
                 xml:space="preserve"
+                role="img"
+                aria-label="Adobe"
             >
                 <path
                     fill="#FA0F00"
