@@ -12,8 +12,6 @@ governing permissions and limitations under the License.
 import { Time } from '@internationalized/date';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import { ifDefined } from 'lit/directives/if-defined.js';
-
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { defaultLocale, Granularity } from '../src/types.js';
 
@@ -75,6 +73,7 @@ export default {
         },
 
         // Don't render private properties and getters in the Storybook UI
+        firstEditableSegment: { ...hiddenProperty },
         _locale: { ...hiddenProperty },
         _previousLocale: { ...hiddenProperty },
         _currentDateTime: { ...hiddenProperty },
@@ -103,7 +102,6 @@ export default {
         focusElement: { ...hiddenProperty },
         grows: { ...hiddenProperty },
         inputElement: { ...hiddenProperty },
-        invalid: { ...hiddenProperty },
         label: { ...hiddenProperty },
         maxlength: { ...hiddenProperty },
         minlength: { ...hiddenProperty },
@@ -116,6 +114,7 @@ export default {
         value: { ...hiddenProperty },
         _type: { ...hiddenProperty },
         _value: { ...hiddenProperty },
+        input: { ...hiddenProperty },
     },
 
     args: {
@@ -141,6 +140,8 @@ interface StoryArgs {
     quiet?: boolean;
     disabled?: boolean;
     readonly?: boolean;
+    valid?: boolean;
+    invalid?: boolean;
 
     onChange?: (time: Time) => void;
 
@@ -159,7 +160,7 @@ const renderTimeField = (
             }
         </style>
 
-        <sp-theme lang=${ifDefined(args.locale || undefined)}>
+        <sp-theme lang=${args.locale || defaultLocale}>
             <h1 class="demo-title">${title}</h1>
             <h2 class="demo-subtitle">Locale: ${args.locale}</h2>
             <hr />
@@ -233,6 +234,21 @@ export const disabled = (args: StoryArgs = {}): TemplateResult => {
     return renderTimeField(`Disabled? ${args.disabled}`, args);
 };
 
+disabled.argTypes = {
+    disabled: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: false,
+            },
+        },
+    },
+};
+
+disabled.args = {
+    disabled: true,
+};
+
 export const quiet = (args: StoryArgs = {}): TemplateResult => {
     return renderTimeField(`Quiet? ${args.quiet}`, args);
 };
@@ -242,7 +258,7 @@ quiet.argTypes = {
         control: 'boolean',
         table: {
             defaultValue: {
-                summary: true,
+                summary: false,
             },
         },
     },
@@ -250,21 +266,6 @@ quiet.argTypes = {
 
 quiet.args = {
     quiet: true,
-};
-
-disabled.argTypes = {
-    disabled: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: true,
-            },
-        },
-    },
-};
-
-disabled.args = {
-    disabled: true,
 };
 
 export const readonly = (args: StoryArgs = {}): TemplateResult => {
@@ -276,7 +277,7 @@ readonly.argTypes = {
         control: 'boolean',
         table: {
             defaultValue: {
-                summary: true,
+                summary: false,
             },
         },
     },
@@ -293,4 +294,50 @@ export const autoFocus = (args: StoryArgs = {}): TemplateResult => {
     };
 
     return renderTimeField('Auto focus', args);
+};
+
+export const valid = (args: StoryArgs = {}): TemplateResult => {
+    return renderTimeField(`Is valid? ${args.valid}`, args);
+};
+
+valid.story = {
+    name: 'Is valid?',
+};
+
+valid.argTypes = {
+    valid: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: false,
+            },
+        },
+    },
+};
+
+valid.args = {
+    valid: true,
+};
+
+export const invalid = (args: StoryArgs = {}): TemplateResult => {
+    return renderTimeField(`Is invalid? ${args.invalid}`, args);
+};
+
+invalid.story = {
+    name: 'Is invalid?',
+};
+
+invalid.argTypes = {
+    invalid: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: false,
+            },
+        },
+    },
+};
+
+invalid.args = {
+    invalid: true,
 };

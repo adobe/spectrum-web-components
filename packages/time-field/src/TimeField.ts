@@ -152,6 +152,8 @@ export class TimeField extends TextfieldBase {
 
     protected override renderField(): TemplateResult {
         return html`
+            ${this.renderStateIcons()}
+
             <div class="input">
                 <div
                     role="presentation"
