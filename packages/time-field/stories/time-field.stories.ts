@@ -9,11 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { Time } from '@internationalized/date';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
+import { defaultLocale, Granularity } from '../src/types.js';
 
 import '@spectrum-web-components/time-field/sp-time-field.js';
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -47,7 +49,7 @@ const locales = [
     'zz-ZZ',
 ] as const;
 
-const defaultLocale = 'en-US';
+const granularities: Granularity[] = ['hour', 'minute', 'second'];
 
 const hiddenProperty = {
     table: {
@@ -73,17 +75,47 @@ export default {
         },
 
         // Don't render private properties and getters in the Storybook UI
-        _languageResolver: { ...hiddenProperty },
         _locale: { ...hiddenProperty },
+        _previousLocale: { ...hiddenProperty },
+        _currentDateTime: { ...hiddenProperty },
+        _newDateTime: { ...hiddenProperty },
+        _segments: { ...hiddenProperty },
+        _createSegments: { ...hiddenProperty },
+        _languageResolver: { ...hiddenProperty },
         _timeZone: { ...hiddenProperty },
-        _currentTime: { ...hiddenProperty },
-        now: { ...hiddenProperty },
+        _timeFormatter: { ...hiddenProperty },
+        _is12HourClock: { ...hiddenProperty },
+        _hourSegment: { ...hiddenProperty },
+        _minuteSegment: { ...hiddenProperty },
+        _secondSegment: { ...hiddenProperty },
+        _dayPeriodSegment: { ...hiddenProperty },
 
         // Inherited
         _dirParent: { ...hiddenProperty },
         shadowRoot: { ...hiddenProperty },
         dir: { ...hiddenProperty },
         isLTR: { ...hiddenProperty },
+        'allowed-keys': { ...hiddenProperty },
+        allowedKeys: { ...hiddenProperty },
+        autocomplete: { ...hiddenProperty },
+        displayValue: { ...hiddenProperty },
+        focused: { ...hiddenProperty },
+        focusElement: { ...hiddenProperty },
+        grows: { ...hiddenProperty },
+        inputElement: { ...hiddenProperty },
+        invalid: { ...hiddenProperty },
+        label: { ...hiddenProperty },
+        maxlength: { ...hiddenProperty },
+        minlength: { ...hiddenProperty },
+        multiline: { ...hiddenProperty },
+        pattern: { ...hiddenProperty },
+        placeholder: { ...hiddenProperty },
+        renderInput: { ...hiddenProperty },
+        renderMultiline: { ...hiddenProperty },
+        type: { ...hiddenProperty },
+        value: { ...hiddenProperty },
+        _type: { ...hiddenProperty },
+        _value: { ...hiddenProperty },
     },
 
     args: {
@@ -95,13 +127,22 @@ export default {
             // Hide "This story is not configured to handle controls" warning
             hideNoControlsWarning: true,
         },
+        actions: {
+            handles: ['onChange'],
+        },
     },
 };
 
 interface StoryArgs {
     locale?: string;
 
-    selectedTime?: Date;
+    selectedDateTime?: Date;
+    granularity?: Granularity;
+    quiet?: boolean;
+    disabled?: boolean;
+    readonly?: boolean;
+
+    onChange?: (time: Time) => void;
 
     [prop: string]: unknown;
 }
@@ -122,7 +163,10 @@ const renderTimeField = (
             <h1 class="demo-title">${title}</h1>
             <h2 class="demo-subtitle">Locale: ${args.locale}</h2>
             <hr />
-            <sp-time-field ...=${spreadProps(args)}></sp-time-field>
+            <sp-time-field
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+            ></sp-time-field>
         </sp-theme>
     `;
 };
@@ -131,25 +175,122 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     return renderTimeField('Default', args);
 };
 
-export const selectedTime = (args: StoryArgs = {}): TemplateResult[] => {
+export const selectedDateTime = (args: StoryArgs = {}): TemplateResult[] => {
     const formatter = Intl.DateTimeFormat(args.locale || defaultLocale, {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
     });
 
     return [
-        { time: new Date(2015, 1, 28, 9, 31, 7), desc: 'morning' },
-        { time: new Date(2021, 10, 2, 16, 1, 54), desc: 'afternoon' },
-    ].map((info) => {
-        const formatted = formatter.format(info.time);
-        const title = `Selected Time (${info.desc}): ${formatted}`;
+        new Date(2015, 1, 28, 9, 31, 7),
+        new Date(2021, 10, 2, 16, 1, 54),
+        new Date(Date.UTC(1996, 5, 4, 3, 2, 1)),
+    ].map((dateTime) => {
+        const formatted = formatter.format(dateTime);
+        const title = `Selected Date/Time: ${formatted}`;
 
         args = {
             ...args,
-            selectedTime: info.time,
+            selectedDateTime: dateTime,
         };
 
         return renderTimeField(title, args);
     });
+};
+
+export const granularity = (args: StoryArgs = {}): TemplateResult => {
+    args = {
+        ...args,
+        granularity: args.granularity,
+    };
+
+    return renderTimeField(`Granularity: ${args.granularity}`, args);
+};
+
+granularity.argTypes = {
+    granularity: {
+        options: granularities,
+        control: {
+            type: 'select',
+        },
+        table: {
+            defaultValue: {
+                summary: 'minute',
+            },
+        },
+    },
+};
+
+granularity.args = {
+    granularity: 'second',
+};
+
+export const disabled = (args: StoryArgs = {}): TemplateResult => {
+    return renderTimeField(`Disabled? ${args.disabled}`, args);
+};
+
+export const quiet = (args: StoryArgs = {}): TemplateResult => {
+    return renderTimeField(`Quiet? ${args.quiet}`, args);
+};
+
+quiet.argTypes = {
+    quiet: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: true,
+            },
+        },
+    },
+};
+
+quiet.args = {
+    quiet: true,
+};
+
+disabled.argTypes = {
+    disabled: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: true,
+            },
+        },
+    },
+};
+
+disabled.args = {
+    disabled: true,
+};
+
+export const readonly = (args: StoryArgs = {}): TemplateResult => {
+    return renderTimeField(`Read only? ${args.readonly}`, args);
+};
+
+readonly.argTypes = {
+    readonly: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: true,
+            },
+        },
+    },
+};
+
+readonly.args = {
+    readonly: true,
+};
+
+export const autoFocus = (args: StoryArgs = {}): TemplateResult => {
+    args = {
+        ...args,
+        autofocus: true,
+    };
+
+    return renderTimeField('Auto focus', args);
 };
