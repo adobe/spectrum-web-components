@@ -110,9 +110,7 @@ export function runSplitButtonTests(
 
         await elementUpdated(el);
 
-        const trigger = el.shadowRoot?.querySelector(
-            '[aria-haspopup][aria-expanded]'
-        );
+        const trigger = el.shadowRoot?.querySelector('.trigger');
         expect(trigger).to.have.attribute('aria-expanded', 'false');
         expect(trigger).not.to.have.attribute('aria-controls');
 
@@ -167,9 +165,7 @@ export function runSplitButtonTests(
 
         await elementUpdated(el);
 
-        const trigger = el.shadowRoot?.querySelector(
-            '[aria-haspopup][aria-expanded]'
-        );
+        const trigger = el.shadowRoot?.querySelector('.trigger');
         expect(trigger).to.have.attribute('aria-expanded', 'false');
         expect(trigger).not.to.have.attribute('aria-controls');
 

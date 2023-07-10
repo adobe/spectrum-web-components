@@ -230,6 +230,16 @@ export class ActionButton extends SizedMixin(ButtonBase, {
             } else {
                 // When !this.toggles the lack of "aria-pressed" is inconsequential.
                 this.removeAttribute('aria-pressed');
+                if (
+                    isButton &&
+                    this.toggles &&
+                    this.hasAttribute('aria-expanded')
+                ) {
+                    this.setAttribute(
+                        'aria-expanded',
+                        this.selected ? 'true' : 'false'
+                    );
+                }
             }
         }
     }
