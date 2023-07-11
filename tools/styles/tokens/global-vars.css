@@ -270,6 +270,7 @@ governing permissions and limitations under the License.
     --spectrum-popover-tip-width: 16px;
     --spectrum-popover-tip-height: 8px;
     --spectrum-menu-item-label-to-description: 1px;
+    --spectrum-menu-item-section-divider-height: 8px;
     --spectrum-picker-minimum-width-multiplier: 2;
     --spectrum-picker-end-edge-to-disclousure-icon-quiet: var(
         --spectrum-picker-end-edge-to-disclosure-icon-quiet

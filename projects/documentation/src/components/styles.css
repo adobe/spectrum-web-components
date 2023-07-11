@@ -280,15 +280,6 @@ sp-sidenav:not(:defined) {
 sp-sidenav-item:not([tabindex]) {
     display: list-item;
     list-style-type: none;
-    margin: var(
-            --spectrum-sidenav-item-gap,
-            var(--spectrum-global-dimension-size-50)
-        )
-        0;
-}
-
-docs-page > sp-sidenav {
-    content-visibility: auto;
 }
 
 docs-page > sp-sidenav-item {
