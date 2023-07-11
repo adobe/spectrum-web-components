@@ -1,0 +1,2 @@
+import{e as t}from"./cd228091.js";function e(e){return t({...e,state:!0})}function r(t,e,r){const i=t.getAttribute(e);let n=i?i.split(/\s+/):[];n=n.filter((t=>!r.find((e=>t===e)))),n.length?t.setAttribute(e,n.join(" ")):t.removeAttribute(e)}function i(t,e,i){const n=Array.isArray(i)?i:[i],s=t.getAttribute(e),o=s?s.split(/\s+/):[];return n.every((t=>o.indexOf(t)>-1))?()=>{}:(o.push(...n),t.setAttribute(e,o.join(" ")),()=>r(t,e,n))}export{r as a,i as c,e as t};
+//# sourceMappingURL=9015aa90.js.map
