@@ -11,54 +11,39 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr'][drop-target]):before {
-    left: 0;
-}
-:host([dir='rtl'][drop-target]):before {
-    right: 0;
-}
-:host([dir='ltr'][drop-target]):before {
-    right: 0;
-}
-:host([dir='rtl'][drop-target]):before {
-    left: 0;
-}
-:host([drop-target]):before {
-    bottom: 0;
-    content: '';
-    position: absolute;
-    top: 0;
-    z-index: 1;
-}
-:host {
-    border-radius: var(--spectrum-table-regular-border-radius);
-    border-width: var(--spectrum-table-regular-border-size);
-    overflow: auto;
-    position: relative;
-    vertical-align: var(--spectrum-table-regular-cell-vertical-alignment);
-}
 :host {
     background-color: var(
-        --spectrum-table-m-regular-background-color,
-        var(--spectrum-global-color-gray-50)
+        --highcontrast-table-row-background-color,
+        var(
+            --mod-table-row-background-color,
+            var(--spectrum-table-row-background-color)
+        )
     );
-    border-color: var(
-        --spectrum-table-m-regular-border-color,
-        var(--spectrum-alias-border-color-mid)
+    border: none;
+    border-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
     );
-    border-style: solid;
+    overflow: auto;
+    position: relative;
 }
 :host([drop-target]) {
-    border-color: var(
-        --spectrum-alias-border-color-key-focus,
-        var(--spectrum-global-color-blue-400)
-    );
-    box-shadow: 0 0 0 1px
+    outline-color: var(
+        --highcontrast-table-focus-indicator-color,
         var(
-            --spectrum-alias-border-color-key-focus,
-            var(--spectrum-global-color-blue-400)
-        );
+            --mod-table-drop-zone-outline-color,
+            var(--spectrum-table-drop-zone-outline-color)
+        )
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
 }
-:host([drop-target]):before {
-    background-color: var(--spectrum-alias-highlight-selected);
+:host([drop-target]) {
+    --mod-table-border-color: transparent;
+}
+:host div {
+    display: table-row-group;
 }

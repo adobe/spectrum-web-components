@@ -11,148 +11,129 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@media (forced-colors: active) {
+    :host {
+        background-color: #0000;
+        forced-color-adjust: none;
+    }
+}
 :host([align='center']) {
     text-align: center;
 }
-:host([dir='ltr'][align='end']) {
-    text-align: right;
-}
-:host([dir='rtl'][align='end']) {
-    text-align: left;
-}
-:host([dir='ltr']) {
-    padding-left: var(--spectrum-table-regular-cell-padding-left);
-    padding-right: var(--spectrum-table-regular-cell-padding-right);
-}
-:host([dir='rtl']) {
-    padding-left: var(--spectrum-table-regular-cell-padding-right);
-    padding-right: var(--spectrum-table-regular-cell-padding-left);
+:host([align='end']) {
+    text-align: end;
 }
 :host {
-    box-sizing: border-box;
-    font-size: var(--spectrum-table-regular-cell-text-size);
-    font-weight: var(--spectrum-table-regular-cell-text-font-weight);
-    line-height: var(--spectrum-table-regular-cell-text-line-height);
-    min-height: calc(
-        var(--spectrum-table-regular-cell-min-height) -
-            var(--spectrum-table-regular-cell-padding-top) -
-            var(--spectrum-table-regular-cell-padding-bottom)
+    block-size: var(
+        --mod-table-min-row-height,
+        var(--spectrum-table-min-row-height)
     );
-    padding-bottom: var(--spectrum-table-regular-cell-padding-bottom);
-    padding-top: var(--spectrum-table-regular-cell-padding-top);
+    box-sizing: border-box;
+    color: var(
+        --highcontrast-table-row-text-color,
+        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
+    );
+    font-size: var(
+        --mod-table-row-font-size,
+        var(--spectrum-table-row-font-size)
+    );
+    font-weight: var(
+        --mod-table-row-font-weight,
+        var(--spectrum-table-row-font-weight)
+    );
+    line-height: var(
+        --mod-table-row-line-height,
+        var(--spectrum-table-row-line-height)
+    );
+    padding-block-end: var(
+        --mod-table-row-bottom-to-text,
+        var(--spectrum-table-row-bottom-to-text)
+    );
+    padding-block-start: calc(
+        var(--mod-table-row-top-to-text, var(--spectrum-table-row-top-to-text)) -
+            var(--mod-table-border-width, var(--spectrum-table-border-width))
+    );
+    padding-inline: calc(
+        var(--mod-table-edge-to-content, var(--spectrum-table-edge-to-content)) -
+            var(
+                --mod-table-outer-border-inline-width,
+                var(--spectrum-table-outer-border-inline-width)
+            )
+    );
+    vertical-align: var(
+        --mod-table-default-vertical-align,
+        var(--spectrum-table-default-vertical-align)
+    );
 }
 :host {
     position: relative;
 }
-:host(.focus-visible),
-:host([focused]) {
-    outline: none;
-}
-:host(:focus-visible),
-:host([focused]) {
-    outline: none;
-}
-:host([dir='ltr'].focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    right: 0;
-}
-:host([dir='ltr']:focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    right: 0;
-}
-:host([dir='rtl'].focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    left: 0;
-}
-:host([dir='rtl']:focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    left: 0;
-}
-:host([dir='ltr'].focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    left: 0;
-}
-:host([dir='ltr']:focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    left: 0;
-}
-:host([dir='rtl'].focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    right: 0;
-}
-:host([dir='rtl']:focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    right: 0;
-}
-:host(.focus-visible):before,
-:host([focused]):before {
-    border-radius: calc(
-        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
-    );
-    bottom: 0;
-    content: '';
-    position: absolute;
-    top: 0;
-    z-index: 1;
-}
-:host(:focus-visible):before,
-:host([focused]):before {
-    border-radius: calc(
-        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
-    );
-    bottom: 0;
-    content: '';
-    position: absolute;
-    top: 0;
-    z-index: 1;
-}
-:host([dir='ltr']) .divider {
-    border-right-width: var(--spectrum-table-regular-divider-border-size);
-}
-:host([dir='rtl']) .divider {
-    border-left-width: var(--spectrum-table-regular-divider-border-size);
-}
-:host(.focus-visible):before,
-:host([focused]):before {
-    box-shadow: inset 0 0 0 2px
+:host([focused]),
+:host.focus-visible {
+    outline-color: var(
+        --highcontrast-table-cell-focus-indicator-color,
         var(
-            --spectrum-table-m-regular-cell-border-color-key-focus,
-            var(--spectrum-alias-border-color-key-focus)
+            --highcontrast-table-focus-indicator-color,
+            var(
+                --mod-table-focus-indicator-color,
+                var(--spectrum-table-focus-indicator-color)
+            )
+        )
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+}
+:host([focused]),
+:host:focus-visible {
+    outline-color: var(
+        --highcontrast-table-cell-focus-indicator-color,
+        var(
+            --highcontrast-table-focus-indicator-color,
+            var(
+                --mod-table-focus-indicator-color,
+                var(--spectrum-table-focus-indicator-color)
+            )
+        )
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+}
+.divider {
+    border-inline-end: var(
+            --mod-table-border-width,
+            var(--spectrum-table-border-width)
+        )
+        solid
+        var(
+            --highcontrast-table-divider-color,
+            var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
 }
-:host(:focus-visible):before,
-:host([focused]):before {
-    box-shadow: inset 0 0 0 2px
-        var(
-            --spectrum-table-m-regular-cell-border-color-key-focus,
-            var(--spectrum-alias-border-color-key-focus)
-        );
+:host div {
+    display: table-cell;
 }
-:host {
-    background-color: var(
-        --spectrum-table-m-regular-cell-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    color: var(
-        --spectrum-table-m-regular-cell-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-:host([dir='ltr']) .divider {
-    border-right-style: solid;
-}
-:host([dir='rtl']) .divider {
-    border-left-style: solid;
-}
-:host([dir='ltr']) .divider {
-    border-right-color: var(
-        --spectrum-table-m-regular-divider-border-color,
-        var(--spectrum-alias-border-color-mid)
-    );
-}
-:host([dir='rtl']) .divider {
-    border-left-color: var(
-        --spectrum-table-m-regular-divider-border-color,
-        var(--spectrum-alias-border-color-mid)
+.spectrum-Table-cell--collapsible {
+    padding-block: 0;
+    padding-inline-start: calc(
+        var(--spectrum-table-row-tier, 0px) *
+            var(--spectrum-table-collapsible-tier-indent)
     );
 }

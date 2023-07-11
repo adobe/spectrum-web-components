@@ -11,3 +11,9 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host div {
+    display: table-header-group;
+}
+:host([role='row']) div div {
+    display: table-row;
+}

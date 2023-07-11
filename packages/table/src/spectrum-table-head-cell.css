@@ -11,55 +11,161 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) .sortedIcon {
-    margin-left: var(--spectrum-table-regular-header-sort-icon-gap);
-}
-:host([dir='rtl']) .sortedIcon {
-    margin-right: var(--spectrum-table-regular-header-sort-icon-gap);
-}
 .sortedIcon {
     display: none;
-    transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
+    margin-inline-end: var(
+        --mod-table-sort-icon-inline-end-spacing,
+        var(--mod-table-icon-to-text, var(--spectrum-table-icon-to-text))
+    );
+    margin-inline-start: var(--mod-table-sort-icon-inline-start-spacing, 0);
+    transition: transform
+        var(
+            --highcontrast-table-transition-duration,
+            var(
+                --mod-table-transition-duration,
+                var(--spectrum-table-transition-duration)
+            )
+        )
         ease-in-out;
-    vertical-align: middle;
-}
-:host([dir='ltr']) {
-    text-align: left;
-}
-:host([dir='rtl']) {
-    text-align: right;
-}
-:host([dir='ltr']) {
-    padding-left: var(--spectrum-table-regular-header-padding-left);
-    padding-right: var(--spectrum-table-regular-header-padding-right);
-}
-:host([dir='rtl']) {
-    padding-left: var(--spectrum-table-regular-header-padding-right);
-    padding-right: var(--spectrum-table-regular-header-padding-left);
+    vertical-align: baseline;
 }
 :host {
-    border-radius: var(--spectrum-table-regular-header-border-radius);
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color,
+        var(
+            --mod-table-icon-color-default,
+            var(--spectrum-table-icon-color-default)
+        )
+    );
+    background-color: var(
+        --mod-table-header-background-color,
+        var(--spectrum-table-header-background-color)
+    );
+    block-size: var(
+        --mod-table-min-header-height,
+        var(--spectrum-table-min-header-height)
+    );
+    border-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
+    );
     box-sizing: border-box;
-    cursor: default;
-    font-size: var(--spectrum-table-regular-header-text-size);
-    font-weight: var(--spectrum-table-regular-header-text-font-weight);
-    letter-spacing: var(--spectrum-table-regular-header-text-letter-spacing);
-    line-height: var(--spectrum-table-regular-header-text-line-height);
-    min-height: var(--spectrum-table-regular-header-min-height);
+    color: var(
+        --mod-table-header-text-color,
+        var(--spectrum-table-header-text-color)
+    );
+    cursor: var(--mod-table-cursor-header-default, initial);
+    font-family: var(
+        --mod-table-header-font-family,
+        var(--spectrum-table-row-font-family)
+    );
+    font-size: var(
+        --mod-table-header-font-size,
+        var(--spectrum-table-row-font-size)
+    );
+    font-weight: var(
+        --mod-table-header-font-weight,
+        var(--spectrum-table-header-font-weight)
+    );
+    line-height: var(
+        --mod-table-header-line-height,
+        var(--spectrum-table-row-line-height)
+    );
     outline: 0;
-    padding-bottom: var(--spectrum-table-regular-header-padding-bottom);
-    padding-top: var(--spectrum-table-regular-header-padding-top);
-    text-transform: uppercase;
-    transition: color var(--spectrum-global-animation-duration-100, 0.13s)
+    padding-block: var(
+            --mod-table-header-top-to-text,
+            var(--spectrum-table-header-top-to-text)
+        )
+        var(
+            --mod-table-header-bottom-to-text,
+            var(--spectrum-table-header-bottom-to-text)
+        );
+    padding-inline: var(
+        --mod-table-cell-inline-space,
+        var(--spectrum-table-cell-inline-space)
+    );
+    text-align: start;
+    text-transform: var(--mod-table-header-text-transform, none);
+    transition: color
+        var(
+            --highcontrast-table-transition-duration,
+            var(
+                --mod-table-transition-duration,
+                var(--spectrum-table-transition-duration)
+            )
+        )
         ease-in-out;
+    vertical-align: var(
+        --mod-table-header-vertical-align,
+        var(--spectrum-table-header-vertical-align)
+    );
+}
+.sortedIcon,
+.spectrum-Table-menuIcon {
+    color: var(--spectrum-table-icon-color);
 }
 :host([sortable]) {
-    cursor: pointer;
+    cursor: var(--mod-table-cursor-header-sortable, pointer);
+}
+:host([sortable]:hover) {
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color-focus,
+        var(
+            --mod-table-icon-color-hover,
+            var(--spectrum-table-icon-color-hover)
+        )
+    );
+}
+:host([sortable][active]) {
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color-focus,
+        var(
+            --mod-table-icon-color-active,
+            var(--spectrum-table-icon-color-active)
+        )
+    );
+}
+:host([sortable]:focus) {
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color-focus,
+        var(
+            --mod-table-icon-color-focus,
+            var(--spectrum-table-icon-color-focus)
+        )
+    );
+}
+:host([sortable]:focus):hover {
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color-focus,
+        var(
+            --mod-table-icon-color-focus-hover,
+            var(--spectrum-table-icon-color-focus-hover)
+        )
+    );
+}
+:host([sortable]) .is-keyboardFocused,
+:host([sortable]).focus-visible {
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color-focus,
+        var(
+            --mod-table-icon-color-key-focus,
+            var(--spectrum-table-icon-color-key-focus)
+        )
+    );
+}
+:host([sortable]) .is-keyboardFocused,
+:host([sortable]):focus-visible {
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color-focus,
+        var(
+            --mod-table-icon-color-key-focus,
+            var(--spectrum-table-icon-color-key-focus)
+        )
+    );
 }
 :host([sort-direction='asc']) .sortedIcon,
 :host([sort-direction='desc']) .sortedIcon {
     display: inline-block;
-    margin-top: calc(var(--spectrum-global-dimension-size-25) * -1);
 }
 :host([sort-direction='asc']) .sortedIcon {
     transform: rotate(-90deg);
@@ -67,191 +173,70 @@ governing permissions and limitations under the License.
 :host {
     position: relative;
 }
-:host(.focus-visible),
-:host([focused]) {
-    outline: none;
-}
-:host(:focus-visible),
-:host([focused]) {
-    outline: none;
-}
-:host([dir='ltr'].focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    right: 0;
-}
-:host([dir='ltr']:focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    right: 0;
-}
-:host([dir='rtl'].focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    left: 0;
-}
-:host([dir='rtl']:focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    left: 0;
-}
-:host([dir='ltr'].focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    left: 0;
-}
-:host([dir='ltr']:focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    left: 0;
-}
-:host([dir='rtl'].focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    right: 0;
-}
-:host([dir='rtl']:focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    right: 0;
-}
-:host(.focus-visible):before,
-:host([focused]):before {
-    border-radius: calc(
-        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
-    );
-    bottom: 0;
-    content: '';
-    position: absolute;
-    top: 0;
-    z-index: 1;
-}
-:host(:focus-visible):before,
-:host([focused]):before {
-    border-radius: calc(
-        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
-    );
-    bottom: 0;
-    content: '';
-    position: absolute;
-    top: 0;
-    z-index: 1;
-}
-:host([dir='ltr'].focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    right: var(--spectrum-table-regular-border-size);
-}
-:host([dir='ltr']:focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    right: var(--spectrum-table-regular-border-size);
-}
-:host([dir='rtl'].focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    left: var(--spectrum-table-regular-border-size);
-}
-:host([dir='rtl']:focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    left: var(--spectrum-table-regular-border-size);
-}
-:host([dir='ltr'].focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    left: var(--spectrum-table-regular-border-size);
-}
-:host([dir='ltr']:focus-visible):before,
-:host([dir='ltr'][focused]):before {
-    left: var(--spectrum-table-regular-border-size);
-}
-:host([dir='rtl'].focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    right: var(--spectrum-table-regular-border-size);
-}
-:host([dir='rtl']:focus-visible):before,
-:host([dir='rtl'][focused]):before {
-    right: var(--spectrum-table-regular-border-size);
-}
-:host(.focus-visible):before,
-:host([focused]):before {
-    bottom: var(--spectrum-table-regular-border-size);
-    top: var(--spectrum-table-regular-border-size);
-}
-:host(:focus-visible):before,
-:host([focused]):before {
-    bottom: var(--spectrum-table-regular-border-size);
-    top: var(--spectrum-table-regular-border-size);
-}
-:host {
-    background-color: var(
-        --spectrum-table-m-regular-header-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    color: var(
-        --spectrum-table-m-regular-header-text-color,
-        var(--spectrum-alias-label-text-color)
-    );
-}
-:host([sortable]) .sortedIcon {
-    color: var(
-        --spectrum-table-m-regular-header-sort-icon-color,
-        var(--spectrum-global-color-gray-600)
-    );
-}
-:host([sortable]:hover) {
-    color: var(
-        --spectrum-table-m-regular-header-text-color-hover,
-        var(--spectrum-alias-text-color-hover)
-    );
-}
-:host([sortable]:hover) .sortedIcon {
-    color: var(
-        --spectrum-table-m-regular-header-sort-icon-color-hover,
-        var(--spectrum-alias-icon-color-hover)
-    );
-}
-:host([sortable].focus-visible),
-:host([sortable][focused]) {
-    color: var(
-        --spectrum-table-m-regular-header-text-color-key-focus,
-        var(--spectrum-alias-text-color-hover)
-    );
-}
-:host([sortable]:focus-visible),
-:host([sortable][focused]) {
-    color: var(
-        --spectrum-table-m-regular-header-text-color-key-focus,
-        var(--spectrum-alias-text-color-hover)
-    );
-}
-:host([sortable].focus-visible) .sortedIcon,
-:host([sortable][focused]) .sortedIcon {
-    color: var(
-        --spectrum-table-m-regular-header-sort-icon-color-key-focus,
-        var(--spectrum-alias-icon-color-key-focus)
-    );
-}
-:host([sortable]:focus-visible) .sortedIcon,
-:host([sortable][focused]) .sortedIcon {
-    color: var(
-        --spectrum-table-m-regular-header-sort-icon-color-key-focus,
-        var(--spectrum-alias-icon-color-key-focus)
-    );
-}
-:host([sortable][active]) {
-    color: var(
-        --spectrum-table-m-regular-header-text-color-down,
-        var(--spectrum-alias-text-color-down)
-    );
-}
-:host([sortable][active]) .sortedIcon {
-    color: var(
-        --spectrum-table-m-regular-header-sort-icon-color-down,
-        var(--spectrum-alias-icon-color-down)
-    );
-}
-:host(.focus-visible):before,
-:host([focused]):before {
-    box-shadow: inset 0 0 0 2px
+:host([focused]),
+:host.focus-visible {
+    outline-color: var(
+        --highcontrast-table-cell-focus-indicator-color,
         var(
-            --spectrum-table-m-regular-cell-border-color-key-focus,
-            var(--spectrum-alias-border-color-key-focus)
-        );
-}
-:host(:focus-visible):before,
-:host([focused]):before {
-    box-shadow: inset 0 0 0 2px
+            --highcontrast-table-focus-indicator-color,
+            var(
+                --mod-table-focus-indicator-color,
+                var(--spectrum-table-focus-indicator-color)
+            )
+        )
+    );
+    outline-offset: calc(
         var(
-            --spectrum-table-m-regular-cell-border-color-key-focus,
-            var(--spectrum-alias-border-color-key-focus)
-        );
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+}
+:host([focused]),
+:host:focus-visible {
+    outline-color: var(
+        --highcontrast-table-cell-focus-indicator-color,
+        var(
+            --highcontrast-table-focus-indicator-color,
+            var(
+                --mod-table-focus-indicator-color,
+                var(--spectrum-table-focus-indicator-color)
+            )
+        )
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+}
+:host .spectrum-Table-checkboxCell {
+    padding-block: 0;
+}
+:host .spectrum-Table-checkboxCell .spectrum-Checkbox {
+    margin-block-end: var(
+        --mod-table-header-checkbox-block-spacing,
+        var(--spectrum-table-header-checkbox-block-spacing)
+    );
+    margin-block-start: calc(
+        var(
+                --mod-table-header-checkbox-block-spacing,
+                var(--spectrum-table-header-checkbox-block-spacing)
+            ) -
+            var(--mod-table-border-width, var(--spectrum-table-border-width))
+    );
+}
+:host div {
+    display: table-cell;
 }

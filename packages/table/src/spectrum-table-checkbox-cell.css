@@ -11,19 +11,21 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) {
-    padding-right: var(--spectrum-table-regular-cell-checkbox-padding-right);
-}
-:host([dir='rtl']) {
-    padding-left: var(--spectrum-table-regular-cell-checkbox-padding-right);
-}
 :host {
-    padding-bottom: 0;
-    padding-top: 0;
-    vertical-align: var(
-        --spectrum-table-regular-cell-checkbox-vertical-alignment
+    padding-inline-end: calc(
+        var(
+                --mod-table-checkbox-to-text,
+                var(--spectrum-table-checkbox-to-text)
+            ) -
+            var(
+                --mod-table-edge-to-content,
+                var(--spectrum-table-edge-to-content)
+            )
     );
 }
-.checkbox {
-    vertical-align: super;
+.spectrum-Checkbox {
+    min-block-size: 0;
+}
+.spectrum-Checkbox .spectrum-Checkbox-box {
+    margin: 0;
 }
