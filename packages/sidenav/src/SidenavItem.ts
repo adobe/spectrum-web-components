@@ -137,8 +137,8 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 )}
             >
                 <slot name="icon"></slot>
-                ${this.label}
-                <slot></slot>
+
+                <span id="link-text">${this.label}</span>
             </a>
             ${this.expanded
                 ? html`
