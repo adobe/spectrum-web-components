@@ -150,7 +150,7 @@ export class ColorSlider extends Focusable {
             100,
             Math.max(0, this.sliderHandlePosition + delta * mult)
         );
-        this.value = 360 * (this.sliderHandlePosition / 100);
+        this.value = Math.min(100, Math.max(0, this.value + delta));
         this.colorController.applyColorFromState();
 
         if (delta != 0) {

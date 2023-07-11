@@ -235,4 +235,48 @@ describe('ActionButton', () => {
         expect(el.selected).to.be.true;
         expect(button.getAttribute('aria-pressed')).to.equal('true');
     });
+    it('toggles [aria-haspopup][aria-expanded]', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button
+                    toggles
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    Button
+                </sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        const button = el.focusElement;
+
+        expect(el.toggles).to.be.true;
+        expect(el.selected).to.be.false;
+        expect(button).not.to.have.attribute('aria-pressed');
+        expect(button).to.have.attribute('aria-haspopup', 'true');
+        expect(button).to.have.attribute('aria-expanded', 'false');
+
+        el.focus();
+        await sendKeys({
+            press: 'Space',
+        });
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.true;
+        expect(el.selected).to.be.true;
+        expect(button).not.to.have.attribute('aria-pressed');
+        expect(button).to.have.attribute('aria-haspopup', 'true');
+        expect(button).to.have.attribute('aria-expanded', 'true');
+
+        el.addEventListener('change', (event: Event) => event.preventDefault());
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.true;
+        expect(el.selected).to.be.true;
+        expect(button).not.to.have.attribute('aria-pressed');
+        expect(button).to.have.attribute('aria-haspopup', 'true');
+        expect(button).to.have.attribute('aria-expanded', 'true');
+    });
 });
