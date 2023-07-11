@@ -229,7 +229,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
@@ -239,7 +242,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal((4 * 100) / 360);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (4 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(4);
 
         input.dispatchEvent(arrowDownEvent());
@@ -249,7 +255,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowLeftEvent());
@@ -282,7 +291,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
@@ -302,7 +314,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal((2 * 100) / 360);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowDownEvent());
@@ -339,7 +354,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(20 / 3.6);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (20 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(20);
 
         await sendKeys({
@@ -351,7 +369,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(40 / 3.6);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (40 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(40);
 
         await sendKeys({
@@ -363,7 +384,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(5.5555555555555545);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (20 * 100) / 360,
+            0.000001
+        );
         expect(el.value).to.equal(20);
 
         await sendKeys({
