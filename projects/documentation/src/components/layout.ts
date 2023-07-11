@@ -50,7 +50,7 @@ import {
     DARK_MODE,
     IS_MOBILE,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import { ActionButton } from '@spectrum-web-components/bundle';
+import type { ActionButton } from '@spectrum-web-components/bundle';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
@@ -204,23 +204,13 @@ export class LayoutElement extends LitElement {
             if (this.settings) {
                 this.toggleSettings();
             } else if (this.open) {
-                this.open = false;
-                (this.shadowRoot!.querySelector(
-                    '#toggle-nav-id'
-                ) as ActionButton)!.focus();
+                this.toggleNav();
             }
         }
     };
 
     toggleNav() {
         this.open = !this.open;
-        requestAnimationFrame(() => {
-            this.open
-                ? this.focus()
-                : (this.shadowRoot!.querySelector(
-                      '#toggle-nav-id'
-                  ) as ActionButton)!.focus();
-        });
     }
 
     toggleSettings() {
@@ -589,8 +579,12 @@ export class LayoutElement extends LitElement {
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
-        if (changes.has('open') && this.open) {
-            this.focus();
+        if (changes.has('open')) {
+            this.open
+                ? this.focus()
+                : (this.shadowRoot!.querySelector(
+                      '#toggle-nav-id'
+                  ) as ActionButton)!.focus();
         }
         if (loadStyleFragments) {
             lazyStyleFragment(this.color, this.theme);
