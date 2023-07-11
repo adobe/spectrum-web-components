@@ -7226,7 +7226,7 @@
     "@storybook/csf-tools" "7.0.26"
     unplugin "^0.10.2"
 
-"@storybook/csf-tools@7.0.26", "@storybook/csf-tools@^7.0.0":
+"@storybook/csf-tools@7.0.26":
   version "7.0.26"
   resolved "https://registry.yarnpkg.com/@storybook/csf-tools/-/csf-tools-7.0.26.tgz#f25b54d4aaad7da2f812212ef64043ba107c8f19"
   integrity sha512-O8WJNOkvgrGV6gS/5ERkgqiXOxoXMuHtzdJpIM9DHPhzkSxB1Inl3WrX/dRRDNtmiHf87hBUuzhgo7YR7z4tuQ==
@@ -8777,10 +8777,10 @@
     picomatch "^2.2.2"
     ws "^7.4.2"
 
-"@web/dev-server-core@^0.5.0", "@web/dev-server-core@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.5.1.tgz#80e5a059f2abf5d1d40bd123c2b539ae86640e2c"
-  integrity sha512-pXgb4bjDmPIaIQT9luixTSqTvRQxttUEzSKOZqLNl6pVgrl4n47ZtmZte936G2tM7nHmpT+oaMDDtCM0CgbQNQ==
+"@web/dev-server-core@^0.5.0", "@web/dev-server-core@^0.5.1", "@web/dev-server-core@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.5.2.tgz#27fe5448e587a87272b556b44ce84c6453655cdb"
+  integrity sha512-7YjWmwzM+K5fPvBCXldUIMTK4EnEufi1aWQWinQE81oW1CqzEwmyUNCtnWV9fcPA4kJC4qrpcjWNGF4YDWxuSg==
   dependencies:
     "@types/koa" "^2.11.6"
     "@types/ws" "^7.4.0"
@@ -12910,7 +12910,7 @@ detect-package-manager@^2.0.1:
   dependencies:
     execa "^5.1.1"
 
-detect-port@^1.3.0, detect-port@^1.5.1:
+detect-port@^1.3.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/detect-port/-/detect-port-1.5.1.tgz#451ca9b6eaf20451acb0799b8ab40dff7718727b"
   integrity sha512-aBzdj76lueB6uUst5iAs7+0H/oOjqI5D16XUWxlWMIMROhcM0rfsNVk93zTngq1dDNpoXRr++Sus7ETAExppAQ==
@@ -26031,40 +26031,10 @@ storybook-addon-markdown-docs@^1.0.4:
     unist-builder "^2.0.3"
     unist-util-visit-parents "^3.1.1"
 
-storybook-builder-wds@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/storybook-builder-wds/-/storybook-builder-wds-0.0.3.tgz#3321af0e725b3b2af93ee8918f404fd4f07b82b0"
-  integrity sha512-/2bjsoBQWSlbDFgESwsv/HKLg5HetmjsOhDiw3r+XavBTaLvsNVYw8zIpEbqnCsZYrK6191c9NkTt3jYxlHN0A==
-  dependencies:
-    "@chialab/esbuild-plugin-commonjs" "^0.17.2"
-    "@rollup/plugin-node-resolve" "^15.1.0"
-    "@rollup/pluginutils" "^5.0.2"
-    "@storybook/core-common" "^7.0.0"
-    "@storybook/csf-tools" "^7.0.0"
-    "@storybook/node-logger" "^7.0.0"
-    "@storybook/preview" "^7.0.0"
-    "@web/dev-server" "^0.2.1"
-    "@web/dev-server-core" "^0.5.1"
-    "@web/dev-server-rollup" "^0.5.0"
-    "@web/rollup-plugin-html" "^2.0.0"
-    browser-assert "^1.2.1"
-    detect-port "^1.5.1"
-    es-module-lexer "^1.2.1"
-    esbuild "^0.17.19"
-    express "^4.18.2"
-    fs-extra "^11.1.1"
-    koa-compose "^4.1.0"
-    lodash-es "^4.17.21"
-    path-browserify "^1.0.1"
-    process "^0.11.10"
-    rollup "^3.25.1"
-    rollup-plugin-external-globals "^0.7.3"
-    slash "^5.1.0"
-
-storybook-builder-wds@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/storybook-builder-wds/-/storybook-builder-wds-0.0.4.tgz#bf1640ce6f68ccf56ef7882c014872ef63fa4457"
-  integrity sha512-NFEeGhi3ixugI8RzdfB1eTcbhh244o46gfCdDWF6RGIaCAJbMAQtqHsncQw7LiSbUFb9dOw0BADIpKCDX2pb8Q==
+storybook-builder-wds@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/storybook-builder-wds/-/storybook-builder-wds-0.1.0.tgz#9817b72cdd231f8dcc7907eebca8e2249255c494"
+  integrity sha512-WLXeq7A6zRmzKzg6aB2Dkh10w2pfGgIo/sZ/bgrit8qZkU9AAGNQGnw6nIvz3+P97ZNZ7FhvWy+ToVNoFuwbeA==
   dependencies:
     "@chialab/esbuild-plugin-commonjs" "^0.17.2"
     "@rollup/plugin-node-resolve" "^15.1.0"
@@ -26073,11 +26043,10 @@ storybook-builder-wds@^0.0.4:
     "@storybook/node-logger" "^7.0.0"
     "@storybook/preview" "^7.0.0"
     "@web/dev-server" "^0.2.1"
-    "@web/dev-server-core" "^0.5.1"
+    "@web/dev-server-core" "^0.5.2"
     "@web/dev-server-rollup" "^0.5.2"
     "@web/rollup-plugin-html" "^2.0.0"
     browser-assert "^1.2.1"
-    detect-port "^1.5.1"
     es-module-lexer "^1.2.1"
     esbuild "^0.17.19"
     express "^4.18.2"
@@ -26088,13 +26057,13 @@ storybook-builder-wds@^0.0.4:
     rollup-plugin-external-globals "^0.7.3"
     slash "^5.1.0"
 
-storybook-web-components-wds@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/storybook-web-components-wds/-/storybook-web-components-wds-0.0.1.tgz#cba02c9a6afb898008739ce1efa03c14f2713df9"
-  integrity sha512-R6eKU4BoZ77Hb7ocHZ8jcB4z+qB/w7FEX6gDQI4Nga5WTXERNS1X444aICSVJHHR0BXaFQbDz8xX9eMy3XJezw==
+storybook-web-components-wds@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/storybook-web-components-wds/-/storybook-web-components-wds-0.1.0.tgz#de911f24ea5b9da44e2db97b6e36d09911dae4a4"
+  integrity sha512-+TPoDPX7rfUBQMG4nzgwDuu37mSyl5gj4Fb/2LGOwlP2A2mMwfUFVeeb9p5tGtQm5cM3gMXRmRQLdUWoy2qqsg==
   dependencies:
     "@storybook/web-components" "^7.0.0"
-    storybook-builder-wds "^0.0.3"
+    storybook-builder-wds "^0.1.0"
 
 storybook@^7.0.26:
   version "7.0.26"

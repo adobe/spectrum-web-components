@@ -42,7 +42,6 @@ const config = {
                 ],
             },
             clearTerminalOnReload: false,
-            watch: true,
             mimeTypes: {
                 '**/*.json': 'js',
             },
