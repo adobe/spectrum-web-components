@@ -86,6 +86,7 @@ describe('ColorSlider', () => {
         await sendKeys({
             press: 'ArrowRight',
         });
+        await elementUpdated(el);
         expect(el.value).to.not.equal(value);
         await sendKeys({
             press: 'Tab',
@@ -217,6 +218,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         const input = el.focusElement;
 
@@ -227,7 +229,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -236,7 +242,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(4);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (4 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(4);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -245,7 +255,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -255,6 +269,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses in dir="rtl"', async () => {
         const el = await fixture<ColorSlider>(
@@ -276,7 +291,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -286,6 +305,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -294,7 +314,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -304,6 +328,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorSlider>(
@@ -315,6 +340,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
         el.focus();
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         await sendKeys({
             down: 'Shift',
@@ -328,7 +354,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(20);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (20 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(20);
 
         await sendKeys({
             press: 'ArrowRight',
@@ -339,7 +369,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(40);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (40 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(40);
 
         await sendKeys({
             press: 'ArrowDown',
@@ -350,7 +384,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(20);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (20 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(20);
 
         await sendKeys({
             press: 'ArrowLeft',
@@ -365,6 +403,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts pointer events', async () => {
         const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
