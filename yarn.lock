@@ -9091,9 +9091,9 @@
     "@types/node" "*"
 
 "@types/cross-spawn@^6.0.2":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@types/cross-spawn/-/cross-spawn-6.0.3.tgz#c743cb2608f55860ee9776d8c99135d6032c763c"
-  integrity sha512-BDAkU7WHHRHnvBf5z89lcvACsvkz/n7Tv+HyD/uW76O29HoH1Tk/W6iQrepaZVbisvlEek4ygwT8IW7ow9XLAA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@types/cross-spawn/-/cross-spawn-6.0.2.tgz#168309de311cd30a2b8ae720de6475c2fbf33ac7"
+  integrity sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==
   dependencies:
     "@types/node" "*"
 
@@ -10051,31 +10051,7 @@
   dependencies:
     semver "^7.3.4"
 
-"@web/dev-server-core@^0.5.0", "@web/dev-server-core@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.5.1.tgz#80e5a059f2abf5d1d40bd123c2b539ae86640e2c"
-  integrity sha512-pXgb4bjDmPIaIQT9luixTSqTvRQxttUEzSKOZqLNl6pVgrl4n47ZtmZte936G2tM7nHmpT+oaMDDtCM0CgbQNQ==
-  dependencies:
-    "@types/koa" "^2.11.6"
-    "@types/ws" "^7.4.0"
-    "@web/parse5-utils" "^2.0.0"
-    chokidar "^3.4.3"
-    clone "^2.1.2"
-    es-module-lexer "^1.0.0"
-    get-stream "^6.0.0"
-    is-stream "^2.0.0"
-    isbinaryfile "^5.0.0"
-    koa "^2.13.0"
-    koa-etag "^4.0.0"
-    koa-send "^5.0.1"
-    koa-static "^5.0.0"
-    lru-cache "^8.0.4"
-    mime-types "^2.1.27"
-    parse5 "^6.0.1"
-    picomatch "^2.2.2"
-    ws "^7.4.2"
-
-"@web/dev-server-core@^0.5.2":
+"@web/dev-server-core@^0.5.0", "@web/dev-server-core@^0.5.1", "@web/dev-server-core@^0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.5.2.tgz#27fe5448e587a87272b556b44ce84c6453655cdb"
   integrity sha512-7YjWmwzM+K5fPvBCXldUIMTK4EnEufi1aWQWinQE81oW1CqzEwmyUNCtnWV9fcPA4kJC4qrpcjWNGF4YDWxuSg==
