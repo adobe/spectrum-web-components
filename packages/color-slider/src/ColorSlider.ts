@@ -30,6 +30,7 @@ import {
     ColorValue,
     HSL,
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
 import styles from './color-slider.css.js';
 
@@ -43,6 +44,9 @@ export class ColorSlider extends Focusable {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
+
+    @property({ type: String, reflect: true })
+    public override dir!: 'ltr' | 'rtl';
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
@@ -58,6 +62,8 @@ export class ColorSlider extends Focusable {
 
     @property({ type: Boolean, reflect: true })
     public vertical = false;
+
+    private languageResolver = new LanguageResolutionController(this);
 
     private colorController = new ColorController(this, {
         /* c8 ignore next 3 */
@@ -333,10 +339,23 @@ export class ColorSlider extends Focusable {
                 class="slider"
                 min="0"
                 max="360"
+                aria-orientation=${ifDefined(
+                    this.vertical ? 'vertical' : undefined
+                )}
+                orient=${ifDefined(this.vertical ? 'vertical' : undefined)}
                 step=${this.step}
                 aria-label=${this.label}
                 .value=${String(this.value)}
-                aria-valuetext=${`${Math.round(this.value)}°`}
+                aria-valuetext=${`${new Intl.NumberFormat(
+                    this.languageResolver.language,
+                    {
+                        maximumFractionDigits: 0,
+                        minimumIntegerDigits: 1,
+                        style: 'unit',
+                        unit: 'degree',
+                        unitDisplay: 'narrow',
+                    }
+                ).format(this.value)}`}
                 @input=${this.handleInput}
                 @change=${this.handleChange}
                 @keydown=${this.handleKeydown}

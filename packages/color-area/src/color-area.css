@@ -32,3 +32,21 @@ governing permissions and limitations under the License.
     width: 100%;
     height: 100%;
 }
+
+:host([dir='rtl']) .gradient {
+    transform: scaleX(-1);
+}
+
+.slider[orient='vertical'] {
+    appearance: slider-vertical;
+}
+
+.slider:focus {
+    z-index: 1;
+}
+
+.fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}

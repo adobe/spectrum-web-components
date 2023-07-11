@@ -116,8 +116,20 @@ describe('ColorArea', () => {
         const inputX = el.shadowRoot.querySelector('input[name="x"]');
         const inputY = el.shadowRoot.querySelector('input[name="y"]');
 
-        expect(inputX?.getAttribute('aria-label')).to.equal('saturation');
-        expect(inputY?.getAttribute('aria-label')).to.equal('luminosity');
+        expect(inputX?.getAttribute('aria-label')).to.equal('Color Picker');
+        expect(inputY?.getAttribute('aria-label')).to.equal('Color Picker');
+        expect(inputX?.getAttribute('aria-roledescription')).to.equal(
+            '2d slider'
+        );
+        expect(inputY?.getAttribute('aria-roledescription')).to.equal(
+            '2d slider'
+        );
+        expect(inputX?.getAttribute('aria-valuetext')).to.equal(
+            '67%, saturation, 75%, luminosity'
+        );
+        expect(inputY?.getAttribute('aria-valuetext')).to.equal(
+            '75%, luminosity, 67%, saturation'
+        );
     });
     it('overrides both X and Y labels with a provided "label" attribute', async () => {
         const el = await fixture<ColorArea>(
@@ -131,8 +143,12 @@ describe('ColorArea', () => {
         const inputX = el.shadowRoot.querySelector('input[name="x"]');
         const inputY = el.shadowRoot.querySelector('input[name="y"]');
 
-        expect(inputX?.getAttribute('aria-label')).to.equal('something custom');
-        expect(inputY?.getAttribute('aria-label')).to.equal('something custom');
+        expect(inputX?.getAttribute('aria-label')).to.equal(
+            'something custom Color Picker'
+        );
+        expect(inputY?.getAttribute('aria-label')).to.equal(
+            'something custom Color Picker'
+        );
     });
     it('accepts `hue` values', async () => {
         const el = await fixture<ColorArea>(
@@ -164,7 +180,7 @@ describe('ColorArea', () => {
 
         expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.67);
-        expect(el.y, 'y').to.equal(0.25);
+        expect(el.y, 'y').to.equal(0.75);
     });
     it('accepts "color" values as hsla', async () => {
         const el = await fixture<ColorArea>(
@@ -177,14 +193,14 @@ describe('ColorArea', () => {
 
         expect(el.hue, 'hugh').to.equal(100);
         expect(el.x, 'ex').to.equal(0.67);
-        expect(el.y, 'why').to.equal(0.25);
+        expect(el.y, 'why').to.equal(0.75);
 
         el.color = 'hsla(120, 100%, 0, 1)';
         await elementUpdated(el);
 
         expect(el.hue, 'hue 2').to.equal(120);
         expect(el.x, 'x 2').to.equal(0);
-        expect(el.y, 'y 2').to.equal(1);
+        expect(el.y, 'y 2').to.equal(0);
     });
     it('accepts "color" values as rgb', async () => {
         const el = await fixture<ColorArea>(
@@ -197,7 +213,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(120);
         expect(el.x).to.equal(1);
-        expect(el.y).to.equal(0);
+        expect(el.y).to.equal(1);
     });
     it('accepts "color" values as hex', async () => {
         const el = await fixture<ColorArea>(
@@ -210,7 +226,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(120);
         expect(el.x).to.equal(1);
-        expect(el.y).to.equal(0);
+        expect(el.y).to.equal(1);
     });
     it('accepts "Arrow*" keypresses', async () => {
         const el = await fixture<ColorArea>(
@@ -221,7 +237,7 @@ describe('ColorArea', () => {
 
         expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.67);
-        expect(el.y, 'y').to.equal(0.25);
+        expect(el.y, 'y').to.equal(0.75);
 
         el.inputX.focus();
         await nextFrame();
@@ -238,7 +254,7 @@ describe('ColorArea', () => {
         await changeEvent;
 
         expect(el.x).to.equal(0.67);
-        expect(el.y).to.equal(0.23);
+        expect(el.y).to.equal(0.77);
 
         changeEvent = oneEvent(el, 'change');
         await sendKeys({
@@ -252,7 +268,7 @@ describe('ColorArea', () => {
         await changeEvent;
 
         expect(el.x).to.equal(0.69);
-        expect(el.y).to.equal(0.23);
+        expect(el.y).to.equal(0.77);
 
         changeEvent = oneEvent(el, 'change');
         await sendKeys({
@@ -266,7 +282,7 @@ describe('ColorArea', () => {
         await changeEvent;
 
         expect(el.x).to.equal(0.69);
-        expect(el.y).to.equal(0.25);
+        expect(el.y).to.equal(0.75);
 
         changeEvent = oneEvent(el, 'change');
         await sendKeys({
@@ -280,7 +296,7 @@ describe('ColorArea', () => {
         await changeEvent;
 
         expect(el.x).to.equal(0.67);
-        expect(el.y).to.equal(0.25);
+        expect(el.y).to.equal(0.75);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorArea>(
@@ -293,7 +309,7 @@ describe('ColorArea', () => {
         el.focus();
         expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.67);
-        expect(el.y, 'y').to.equal(0.25);
+        expect(el.y, 'y').to.equal(0.75);
 
         await sendKeys({
             down: 'Shift',
@@ -312,7 +328,7 @@ describe('ColorArea', () => {
 
         expect(el.color).to.equal('hsl(100, 65%, 57%)');
         expect(el.x, 'first').to.equal(0.67);
-        expect(el.y).to.equal(0.15);
+        expect(el.y).to.equal(0.85);
 
         await sendKeys({
             press: 'ArrowRight',
@@ -323,9 +339,9 @@ describe('ColorArea', () => {
         });
         await elementUpdated(el);
 
-        expect(el.color).to.equal('hsl(100, 69%, 52%)');
-        expect(el.x).to.equal(0.77);
-        expect(el.y).to.equal(0.15);
+        expect(el.color).to.equal('hsl(100, 66%, 56%)');
+        expect(el.x).to.equal(0.69);
+        expect(el.y).to.equal(0.85);
 
         await sendKeys({
             press: 'ArrowDown',
@@ -337,9 +353,9 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.color).to.equal('hsl(100, 63%, 46%)');
-        expect(el.x).to.equal(0.77);
-        expect(el.y).to.equal(0.25);
+        expect(el.color).to.equal('hsl(100, 53%, 49%)');
+        expect(el.x).to.equal(0.69);
+        expect(el.y).to.equal(0.75);
 
         await sendKeys({
             press: 'ArrowLeft',
@@ -357,7 +373,7 @@ describe('ColorArea', () => {
 
         expect(el.color).to.equal('hsl(100, 50%, 50%)');
         expect(el.x, 'last').to.equal(0.67);
-        expect(el.y).to.equal(0.25);
+        expect(el.y).to.equal(0.75);
     });
     it('accepts pointer events', async () => {
         const el = await fixture<ColorArea>(
@@ -382,7 +398,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(0);
         expect(el.x).to.equal(1);
-        expect(el.y).to.equal(0);
+        expect(el.y).to.equal(1);
 
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -400,7 +416,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(0);
         expect(el.x).to.equal(1);
-        expect(el.y).to.equal(0);
+        expect(el.y).to.equal(1);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
@@ -420,7 +436,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(0);
         expect(el.x).to.equal(1);
-        expect(el.y).to.equal(0);
+        expect(el.y).to.equal(1);
 
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -437,7 +453,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(0);
         expect(el.x, 'pointerdown x').to.equal(0.48);
-        expect(el.y, 'pointerdown y').to.equal(0.48);
+        expect(el.y, 'pointerdown y').to.equal(0.52);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -464,7 +480,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(0);
         expect(el.x).to.equal(0.53);
-        expect(el.y).to.equal(0.53);
+        expect(el.y).to.equal(0.47);
     });
     it('responds to events on the internal input element', async () => {
         const inputSpy = spy();
@@ -586,7 +602,7 @@ describe('ColorArea', () => {
 
         expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.67);
-        expect(el.y, 'y').to.equal(0.25);
+        expect(el.y, 'y').to.equal(0.75);
         expect(el.color).to.equal('hsl(100, 50%, 50%)');
 
         el.color = 'hsl(100, 0%, 50%)';
@@ -613,7 +629,7 @@ describe('ColorArea', () => {
 
         expect(el.hue).to.equal(100);
         expect(el.x, 'x').to.equal(0.67);
-        expect(el.y, 'y').to.equal(0.25);
+        expect(el.y, 'y').to.equal(0.75);
 
         expect(Math.abs(outputColor.h - inputColor.h)).to.be.lessThan(variance);
         expect(Math.abs(outputColor.s - inputColor.s)).to.be.lessThan(variance);

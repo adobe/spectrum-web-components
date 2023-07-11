@@ -229,6 +229,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
+
         expect(el.sliderHandlePosition).to.be.approximately(
             (2 * 100) / 360,
             0.000001
