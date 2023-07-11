@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **swatch:** mixed-value state must be conveyed to screen readers using ARIA ([#3330](https://github.com/adobe/spectrum-web-components/issues/3330)) ([7711264](https://github.com/adobe/spectrum-web-components/commit/7711264850f54794fc2fcc343a81c5ff1f64c907))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/swatch

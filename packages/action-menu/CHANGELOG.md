@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **action-button,action-menu,picker,split-button:** expand and update application of aria-\* attributes ([52c0156](https://github.com/adobe/spectrum-web-components/commit/52c015636d42f2baf1524446a0db9d5e5cfeb689))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu
