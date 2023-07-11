@@ -38,6 +38,7 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 
-:host([dir='rtl']) .wheel {
+:host([dir='rtl']) .wheel,
+:host([dir='rtl']) ::slotted([slot='gradient']) {
     transform: scaleX(-1);
 }
