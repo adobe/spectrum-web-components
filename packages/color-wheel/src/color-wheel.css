@@ -37,3 +37,8 @@ governing permissions and limitations under the License.
     inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
     z-index: 0;
 }
+
+:host([dir='rtl']) .wheel,
+:host([dir='rtl']) ::slotted([slot='gradient']) {
+    transform: scaleX(-1);
+}
