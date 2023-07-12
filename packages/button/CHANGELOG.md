@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   added role for href button ([5a4ad98](https://github.com/adobe/spectrum-web-components/commit/5a4ad98afa69669a8a4fb2a88d82a837c0c40c55))
+-   text fixes ([0121fd6](https://github.com/adobe/spectrum-web-components/commit/0121fd6e25755881f5f00c8b7cd989fc47e201d8))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/button

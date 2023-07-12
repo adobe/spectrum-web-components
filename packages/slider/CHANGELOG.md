@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **slider:** [#3340](https://github.com/adobe/spectrum-web-components/issues/3340) fix visual regression ([88e0bda](https://github.com/adobe/spectrum-web-components/commit/88e0bda41df9f1ebb21debf97db05b0fd144deb7))
+-   **slider:** slider input aria-valuetext omits formatOptions for unit [#3340](https://github.com/adobe/spectrum-web-components/issues/3340) ([d5ff7e6](https://github.com/adobe/spectrum-web-components/commit/d5ff7e6e0196580f25941caa1a304557cb0f5088))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

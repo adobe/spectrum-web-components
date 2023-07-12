@@ -1991,12 +1991,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-disabled: transparent;
     --spectrum-alias-track-color-default: var(--spectrum-global-color-gray-300);
-    --spectrum-alias-tabs-divider-background-color-default: var(
-        --spectrum-global-color-gray-200
-    );
-    --spectrum-alias-tabs-divider-background-color-quiet: var(
-        --spectrum-alias-background-color-transparent
-    );
     --spectrum-alias-tabitem-text-color-default: var(
         --spectrum-global-color-gray-700
     );

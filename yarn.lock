@@ -4663,10 +4663,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.56.tgz#b74303a869e271df38844380aae782fe2128a8a9"
   integrity sha512-YRM8B3Hk0w6ZPG14lzJp3vIaemlThq8cjWVNEesosJC1mUIiUOwG5OMCrzKABc3b6g5g8w02N6QKpOrzUislPg==
 
-"@spectrum-css/tabs@^3.2.60":
-  version "3.2.61"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-3.2.61.tgz#200a38566d1d2cca1a80686849d66e671f39a655"
-  integrity sha512-klOrpovOqGa/tUoefdoThTnIIfsy2rBUnVaFeo/KhibXimQ1QGCD1ucVdxunZT+H5ZaEVZlSvMOTsofuDL7lFQ==
+"@spectrum-css/tabs@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-4.0.0.tgz#278c5ab404f213fc6fafa8be86b379b41f088fd6"
+  integrity sha512-LDl3mcnTwhgKWb/oAOfiQ+kTNF3GZZbUphTO8UaAXYUzfmzS+BqDJSQ4BHMCc34NnMow+Qxfz+y5xner3ZhOCw==
 
 "@spectrum-css/tag@^5.0.37":
   version "5.0.37"
@@ -5855,10 +5855,10 @@
   dependencies:
     "@web/dev-server-core" "^0.3.0"
 
-"@web/dev-server-rollup@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.5.0.tgz#dfe35808bd0aa258971fb193bf6793652581d21b"
-  integrity sha512-5bdMynXaNqY2+zDLk0FNQSqGpAazewTVZV8zUBnz790RxayYeITIWQLpBA6pnKZWEBQsh9ITbXoK2a4AVm9xSQ==
+"@web/dev-server-rollup@^0.5.0", "@web/dev-server-rollup@^0.5.1":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.5.2.tgz#5a6a9138cd57f32f7ae0e5caab69099c1428bd15"
+  integrity sha512-R1heFIOmbExKJn2auDcOcF0EPoLQotZF1HE8Bpqq4TfLRkc7w+JClLdwkOMr/+Ip608cRw8VMkc7teYDFkvSXw==
   dependencies:
     "@rollup/plugin-node-resolve" "^15.0.1"
     "@web/dev-server-core" "^0.5.0"
@@ -5892,15 +5892,15 @@
     storybook-addon-markdown-docs "^1.0.4"
 
 "@web/dev-server@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.1.tgz#b0d56c6cc2a3a13ab99edac8e4672d485c760b36"
-  integrity sha512-gIiED5tzMv+0fHFMfxzNTPGyrkYQbSpOlM7mfOUh7b1Qftw4rj8l/vfAIUHUNlqLUh4MqFhwcvtzj7dg05h9qA==
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.5.tgz#7f690db24b7966edd9530cf278bbf5053e6a1882"
+  integrity sha512-IQWzjnK9H861X5BN+R9uQk2L7knogegHQcKyGsSfjyFC3fDdLit5WG2vUVpxFAYfhS4zjJWGajXGbTMhF8clkQ==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/command-line-args" "^5.0.0"
     "@web/config-loader" "^0.2.1"
     "@web/dev-server-core" "^0.5.1"
-    "@web/dev-server-rollup" "^0.5.0"
+    "@web/dev-server-rollup" "^0.5.1"
     camelcase "^6.2.0"
     command-line-args "^5.1.1"
     command-line-usage "^7.0.1"

@@ -12,57 +12,218 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #list {
-    --spectrum-tabs-compact-item-height: calc(
-        var(--spectrum-tabs-compact-textonly-height) -
-            var(--spectrum-tabs-compact-textonly-divider-size)
+    --spectrum-tabs-item-height: var(--spectrum-tab-item-height-medium);
+    --spectrum-tabs-item-horizontal-spacing: var(
+        --spectrum-tab-item-to-tab-item-horizontal-medium
+    );
+    --spectrum-tabs-item-vertical-spacing: var(
+        --spectrum-tab-item-to-tab-item-vertical-medium
+    );
+    --spectrum-tabs-start-to-edge: var(
+        --spectrum-tab-item-start-to-edge-medium
+    );
+    --spectrum-tabs-top-to-text: var(--spectrum-tab-item-top-to-text-medium);
+    --spectrum-tabs-bottom-to-text: var(
+        --spectrum-tab-item-bottom-to-text-medium
+    );
+    --spectrum-tabs-icon-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-tabs-icon-to-text: var(--spectrum-text-to-visual-100);
+    --spectrum-tabs-top-to-icon: var(
+        --spectrum-tab-item-top-to-workflow-icon-medium
+    );
+    --spectrum-tabs-color: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
+    --spectrum-tabs-color-selected: var(
+        --spectrum-neutral-subdued-content-color-down
+    );
+    --spectrum-tabs-color-hover: var(
+        --spectrum-neutral-subdued-content-color-hover
+    );
+    --spectrum-tabs-color-key-focus: var(
+        --spectrum-neutral-subdued-content-color-key-focus
+    );
+    --spectrum-tabs-color-disabled: var(--spectrum-gray-500);
+    --spectrum-tabs-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-tabs-font-style: var(--spectrum-default-font-style);
+    --spectrum-tabs-font-size: var(--spectrum-font-size-100);
+    --spectrum-tabs-line-height: var(--spectrum-line-height-100);
+    --spectrum-tabs-focus-indicator-width: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --spectrum-tabs-focus-indicator-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --spectrum-tabs-focus-indicator-gap: var(
+        --spectrum-tab-item-focus-indicator-gap-medium
+    );
+    --spectrum-tabs-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
+    --spectrum-tabs-selection-indicator-color: var(
+        --spectrum-neutral-subdued-content-color-down
+    );
+    --spectrum-tabs-list-background-direction: top;
+    --spectrum-tabs-divider-background-color: var(--spectrum-gray-300);
+    --spectrum-tabs-divider-size: var(--spectrum-border-width-200);
+    --spectrum-tabs-divider-border-radius: 1px;
+    --spectrum-tabs-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-tabs-animation-ease: var(--spectrum-animation-ease-in-out);
+}
+:host([emphasized]) #list {
+    --mod-tabs-color-selected: var(
+        --mod-tabs-color-selected-emphasized,
+        var(--spectrum-accent-content-color-default)
+    );
+    --mod-tabs-color-hover: var(
+        --mod-tabs-color-hover-emphasized,
+        var(--spectrum-accent-content-color-hover)
+    );
+    --mod-tabs-color-key-focus: var(
+        --mod-tabs-color-key-focus-emphasized,
+        var(--spectrum-accent-content-color-key-focus)
+    );
+    --mod-tabs-selection-indicator-color: var(
+        --mod-tabs-selection-indicator-color-emphasized,
+        var(--spectrum-accent-content-color-default)
+    );
+}
+:host([direction^='vertical']) #list {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical,
+        right
+    );
+}
+:host([direction^='vertical-right']) #list {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical-right,
+        left
+    );
+}
+:host([dir='rtl'][direction^='vertical']) #list {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical,
+        left
+    );
+}
+:host([dir='rtl'][direction^='vertical-right']) #list {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical,
+        right
+    );
+}
+:host([compact]) #list {
+    --mod-tabs-item-height: var(
+        --mod-tabs-item-height-compact,
+        var(--spectrum-tab-item-compact-height-medium)
+    );
+    --mod-tabs-top-to-text: var(
+        --mod-tabs-top-to-text-compact,
+        var(--spectrum-tab-item-top-to-text-compact-medium)
+    );
+    --mod-tabs-bottom-to-text: var(
+        --mod-tabs-bottom-to-text-compact,
+        var(--spectrum-tab-item-top-to-text-compact-medium)
+    );
+    --mod-tabs-top-to-icon: var(
+        --mod-tabs-top-to-icon-compact,
+        var(--spectrum-tab-item-top-to-workflow-icon-compact-medium)
+    );
+}
+#list {
+    background: linear-gradient(
+        to
+            var(
+                --mod-tabs-list-background-direction,
+                var(--spectrum-tabs-list-background-direction)
+            ),
+        var(
+                --highcontrast-tabs-divider-background-color,
+                var(
+                    --mod-tabs-divider-background-color,
+                    var(--spectrum-tabs-divider-background-color)
+                )
+            )
+            0 var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)),
+        transparent
+            var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size))
     );
     display: flex;
     margin: 0;
-    padding-bottom: 0;
-    padding-top: 0;
+    padding-block: 0;
     position: relative;
     vertical-align: top;
     z-index: 0;
 }
+::slotted([selected]:not([slot])) {
+    color: var(
+        --highcontrast-tabs-color-selected,
+        var(--mod-tabs-color-selected, var(--spectrum-tabs-color-selected))
+    );
+}
 ::slotted(:not([slot])).is-disabled {
+    color: var(
+        --highcontrast-tabs-color-disabled,
+        var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled))
+    );
     cursor: default;
 }
-:host([dir='ltr']) ::slotted(:not([slot])):before {
-    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1);
-}
-:host([dir='rtl']) ::slotted(:not([slot])):before {
-    right: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
+::slotted(:not([slot])).focus-visible,
+::slotted(:not([slot])):focus {
+    color: var(
+        --highcontrast-tabs-color-key-focus,
+        var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
     );
 }
-:host([dir='ltr']) ::slotted(:not([slot])):before {
-    right: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
+::slotted(:not([slot])):focus,
+::slotted(:not([slot])):focus-visible {
+    color: var(
+        --highcontrast-tabs-color-key-focus,
+        var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
     );
 }
-:host([dir='rtl']) ::slotted(:not([slot])):before {
-    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1);
+::slotted(:not([slot])).focus-visible:before,
+::slotted(:not([slot])):focus:before {
+    border-color: var(
+        --highcontrast-tabs-focus-indicator-color,
+        var(
+            --mod-tabs-focus-indicator-color,
+            var(--spectrum-tabs-focus-indicator-color)
+        )
+    );
 }
-:host([dir='ltr']) #selection-indicator {
-    left: 0;
-}
-:host([dir='rtl']) #selection-indicator {
-    right: 0;
+::slotted(:not([slot])):focus-visible:before,
+::slotted(:not([slot])):focus:before {
+    border-color: var(
+        --highcontrast-tabs-focus-indicator-color,
+        var(
+            --mod-tabs-focus-indicator-color,
+            var(--spectrum-tabs-focus-indicator-color)
+        )
+    );
 }
 #selection-indicator {
-    border-radius: var(--spectrum-tabs-textonly-divider-border-radius);
+    background-color: var(
+        --highcontrast-tabs-selection-indicator-color,
+        var(
+            --mod-tabs-selection-indicator-color,
+            var(--spectrum-tabs-selection-indicator-color)
+        )
+    );
+    border-radius: var(
+        --mod-tabs-divider-border-radius,
+        var(--spectrum-tabs-divider-border-radius)
+    );
+    inset-inline-start: 0;
     position: absolute;
     transform-origin: 0 0;
     transition: transform
         var(
-            --spectrum-tabs-texticon-tabitem-selection-indicator-animation-duration
+            --mod-tabs-animation-duration,
+            var(--spectrum-tabs-animation-duration)
         )
-        var(--spectrum-tabs-texticon-tabitem-selection-indicator-animation-ease);
+        var(--mod-tabs-animation-ease, var(--spectrum-tabs-animation-ease));
     z-index: 0;
-}
-:host([compact]) ::slotted(:not([slot])) {
-    height: var(--spectrum-tabs-compact-item-height);
-    line-height: var(--spectrum-tabs-compact-item-height);
 }
 :host([direction^='horizontal']) #list {
     align-items: center;
@@ -70,196 +231,138 @@ governing permissions and limitations under the License.
 :host([direction^='horizontal']) #list ::slotted(:not([slot])) {
     vertical-align: top;
 }
-:host([dir='ltr'][direction^='horizontal'])
+:host([direction^='horizontal'])
     #list
     ::slotted(:not([slot]):not(:first-child)) {
-    margin-left: var(--spectrum-tabs-textonly-tabitem-margin-right);
-}
-:host([dir='rtl'][direction^='horizontal'])
-    #list
-    ::slotted(:not([slot]):not(:first-child)) {
-    margin-right: var(--spectrum-tabs-textonly-tabitem-margin-right);
+    margin-inline-start: var(
+        --mod-tabs-item-horizontal-spacing,
+        var(--spectrum-tabs-item-horizontal-spacing)
+    );
 }
 :host([direction^='horizontal']) #list #selection-indicator {
-    bottom: 0;
-    height: var(--spectrum-tabs-quiet-textonly-divider-size);
+    block-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
+    inset-block-end: 0;
     position: absolute;
 }
 :host([direction^='horizontal'][compact]) #list {
     align-items: end;
     box-sizing: content-box;
-    height: var(--spectrum-tabs-compact-item-height);
 }
 :host([quiet]) #list {
+    background: none;
+    border-color: #0000;
     display: inline-flex;
 }
+:host([quiet]) #selection-indicator {
+    padding-inline-start: var(
+        --mod-tabs-start-to-item-quiet,
+        var(--spectrum-tabs-start-to-item-quiet)
+    );
+}
+:host([direction^='vertical-right']) #list,
 :host([direction^='vertical']) #list {
     display: inline-flex;
     flex-direction: column;
     padding: 0;
 }
-:host([dir='ltr'][direction^='vertical']) #list ::slotted(:not([slot])) {
-    margin-left: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
+:host([direction^='vertical-right'][quiet]) #list,
+:host([direction^='vertical'][quiet]) #list {
+    border-color: #0000;
 }
-:host([dir='rtl'][direction^='vertical']) #list ::slotted(:not([slot])) {
-    margin-right: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
-}
+:host([direction^='vertical-right']) #list ::slotted(:not([slot])),
 :host([direction^='vertical']) #list ::slotted(:not([slot])) {
-    height: var(--spectrum-tabs-vertical-textonly-tabitem-height);
-    line-height: var(--spectrum-tabs-vertical-textonly-tabitem-height);
-    margin-bottom: var(--spectrum-tabs-vertical-textonly-tabitem-gap);
-    padding-bottom: 0;
-    padding-left: var(
-        --spectrum-tabs-quiet-textonly-tabitem-focus-ring-padding-x
+    block-size: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
+    line-height: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
+    margin-block-end: var(
+        --mod-tabs-item-vertical-spacing,
+        var(--spectrum-tabs-item-vertical-spacing)
     );
-    padding-right: var(
-        --spectrum-tabs-quiet-textonly-tabitem-focus-ring-padding-x
+    margin-inline-end: var(
+        --mod-tabs-start-to-edge,
+        var(--spectrum-tabs-start-to-edge)
     );
-    padding-top: 0;
+    margin-inline-start: var(
+        --mod-tabs-start-to-edge,
+        var(--spectrum-tabs-start-to-edge)
+    );
+    padding-block: 0;
 }
-:host([dir='ltr'][direction^='vertical']) #list ::slotted(:not([slot])):before {
-    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
+:host([direction^='vertical-right']) #list ::slotted(:not([slot])):before,
+:host([direction^='vertical']) #list ::slotted(:not([slot])):before {
+    inset-inline-start: calc(
+        var(
+                --mod-tabs-focus-indicator-gap,
+                var(--spectrum-tabs-focus-indicator-gap)
+            ) * -1
+    );
 }
-:host([dir='rtl'][direction^='vertical']) #list ::slotted(:not([slot])):before {
-    right: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
-}
-:host([dir='ltr'][direction^='vertical']) #list ::slotted(:not([slot])):before {
-    right: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
-}
-:host([dir='rtl'][direction^='vertical']) #list ::slotted(:not([slot])):before {
-    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
-}
-:host([direction^='vertical'][compact]) #list ::slotted(:not([slot])) {
-    height: var(--spectrum-tabs-compact-vertical-textonly-tabitem-height);
-    line-height: var(--spectrum-tabs-compact-vertical-textonly-tabitem-height);
-    margin-bottom: var(--spectrum-tabs-compact-vertical-textonly-tabitem-gap);
-}
-:host([dir='ltr'][direction^='vertical']) #list #selection-indicator {
-    left: 0;
-}
-:host([dir='rtl'][direction^='vertical']) #list #selection-indicator {
-    right: 0;
-}
+:host([direction^='vertical-right']) #list #selection-indicator,
 :host([direction^='vertical']) #list #selection-indicator {
+    inline-size: var(
+        --mod-tabs-divider-size,
+        var(--spectrum-tabs-divider-size)
+    );
+    inset-block-start: 0;
+    inset-inline-start: 0;
     position: absolute;
-    width: var(--spectrum-tabs-quiet-textonly-divider-size);
 }
-#list {
-    --spectrum-tabs-list-background-direction: top;
-    background: linear-gradient(
-        to var(--spectrum-tabs-list-background-direction),
-        var(--spectrum-tabs-textonly-divider-background-color) 0
-            var(--spectrum-tabs-quiet-textonly-divider-size),
-        transparent var(--spectrum-tabs-quiet-textonly-divider-size)
-    );
-}
-:host([direction^='vertical']) #list {
-    --spectrum-tabs-list-background-direction: right;
-}
-:host([direction^='vertical'][compact]) #list,
-:host([quiet]) #list,
-:host([quiet][compact]) {
-    --spectrum-tabs-textonly-divider-background-color: var(
-        --spectrum-tabs-quiet-textonly-divider-background-color
-    );
-}
-:host([direction^='vertical'][emphasized]) #list {
-    --spectrum-tabs-textonly-divider-background-color: var(
-        --spectrum-tabs-emphasized-textonly-divider-background-color
-    );
-}
-#selection-indicator {
-    background-color: var(
-        --spectrum-tabs-textonly-tabitem-selection-indicator-background-color-selected
-    );
-}
-:host([emphasized]) #selection-indicator {
-    background-color: var(
-        --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
-    );
-}
-::slotted([selected]:not([slot])) {
-    color: var(--spectrum-tabs-textonly-tabitem-text-color-selected);
-}
-:host(.focus-visible)::slotted(:not([slot])) {
-    color: var(--spectrum-tabs-textonly-tabitem-text-color-selected-key-focus);
-}
-:host(:focus-visible)::slotted(:not([slot])) {
-    color: var(--spectrum-tabs-textonly-tabitem-text-color-selected-key-focus);
-}
-::slotted(:not([slot])).is-disabled {
-    color: var(--spectrum-tabs-textonly-tabitem-text-color-disabled);
-}
-:host([emphasized]) ::slotted([selected]:not([slot])) {
-    color: var(--spectrum-tabs-emphasized-texticon-tabitem-text-color-selected);
-}
-:host([quiet]) #list {
-    border-bottom-color: var(
-        --spectrum-tabs-quiet-textonly-divider-background-color
-    );
-}
-:host([quiet]) #selection-indicator {
-    background-color: var(
-        --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected
-    );
-}
-:host([quiet][emphasized]) #selection-indicator {
-    background-color: var(
-        --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
-    );
-}
-:host([direction^='vertical'][compact]) #list #selection-indicator,
-:host([direction^='vertical'][quiet]) #list #selection-indicator {
-    background-color: var(
-        --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected
-    );
-}
-:host([direction^='vertical'][emphasized]) #list #selection-indicator {
-    background-color: var(
-        --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
-    );
+:host([direction^='vertical-right']) #list #selection-indicator {
+    inset-inline: auto 0;
 }
 @media (forced-colors: active) {
     #list {
-        --spectrum-tabs-emphasized-texticon-tabitem-icon-color-selected: HighlightText;
-        --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected: Highlight;
-        --spectrum-tabs-emphasized-texticon-tabitem-text-color-selected: HighlightText;
-        --spectrum-tabs-emphasized-textonly-divider-background-color: transparent;
-        --spectrum-tabs-quiet-textonly-divider-background-color: transparent;
-        --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected: Highlight;
-        --spectrum-tabs-textonly-divider-background-color: transparent;
-        --spectrum-tabs-textonly-tabitem-focus-ring-border-color-key-focus: ButtonText;
-        --spectrum-tabs-textonly-tabitem-icon-color-disabled: GrayText;
-        --spectrum-tabs-textonly-tabitem-icon-color-hover: ButtonText;
-        --spectrum-tabs-textonly-tabitem-icon-color-selected-key-focus: ButtonText;
-        --spectrum-tabs-textonly-tabitem-icon-color-selected: HighlightText;
-        --spectrum-tabs-textonly-tabitem-selection-indicator-background-color-selected: Highlight;
-        --spectrum-tabs-textonly-tabitem-text-color-disabled: GrayText;
-        --spectrum-tabs-textonly-tabitem-text-color-hover: ButtonText;
-        --spectrum-tabs-textonly-tabitem-text-color-selected-key-focus: ButtonText;
-        --spectrum-tabs-textonly-tabitem-text-color-selected: HighlightText;
-        --spectrum-tabs-textonly-tabitem-text-color: ButtonText;
-        --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected: Highlight;
+        --highcontrast-tabs-divider-background-color: var(--spectrum-gray-500);
+        --highcontrast-tabs-selection-indicator-color: Highlight;
+        --highcontrast-tabs-focus-indicator-color: CanvasText;
+        --highcontrast-tabs-focus-indicator-background-color: Highlight;
+        --highcontrast-tabs-color: ButtonText;
+        --highcontrast-tabs-color-hover: ButtonText;
+        --highcontrast-tabs-color-selected: HighlightText;
+        --highcontrast-tabs-color-key-focus: ButtonText;
+        --highcontrast-tabs-color-disabled: GrayText;
         forced-color-adjust: none;
     }
-    #list ::slotted(:not([slot])):before {
-        background-color: ButtonFace;
-    }
-    #list ::slotted([selected]:not([slot])) {
-        color: HighlightText;
-    }
     #list ::slotted([selected]:not([slot])):before {
-        background-color: Highlight;
-        color: HighlightText;
+        background-color: var(
+            --highcontrast-tabs-focus-indicator-background-color
+        );
     }
-    :host([emphasized]) #list ::slotted(:not([slot])):before {
-        background-color: ButtonFace;
+    #list ::slotted([selected]:not([slot])).focus-visible,
+    #list ::slotted([selected]:not([slot])):focus {
+        color: var(--highcontrast-tabs-color-selected);
     }
-    :host([emphasized]) #list ::slotted([selected]:not([slot])) {
-        color: HighlightText;
+    #list ::slotted([selected]:not([slot])):focus,
+    #list ::slotted([selected]:not([slot])):focus-visible {
+        color: var(--highcontrast-tabs-color-selected);
     }
-    :host([emphasized]) #list ::slotted([selected]:not([slot])):before {
-        background-color: Highlight;
-        color: HighlightText;
+    :host([direction^='vertical'][compact])
+        #list
+        #list
+        ::slotted(:not([slot])):before {
+        block-size: 100%;
+        inset-block-start: 0;
     }
+    :host([quiet]) #list {
+        background: linear-gradient(
+            to
+                var(
+                    --mod-tabs-list-background-direction,
+                    var(--spectrum-tabs-list-background-direction)
+                ),
+            var(
+                    --highcontrast-tabs-divider-background-color,
+                    var(
+                        --mod-tabs-divider-background-color,
+                        var(--spectrum-tabs-divider-background-color)
+                    )
+                )
+                0
+                var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)),
+            transparent
+                var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size))
+        );
+    }
+}
+#list {
+    --spectrum-tabs-font-weight: var(--system-spectrum-tabs-font-weight);
 }

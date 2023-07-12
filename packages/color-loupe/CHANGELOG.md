@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **color-loupe:** hide svg from screen readers ([#3318](https://github.com/adobe/spectrum-web-components/issues/3318)) ([01e75b7](https://github.com/adobe/spectrum-web-components/commit/01e75b7f0dbf1096976c290ad360534847781fee))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/color-loupe
