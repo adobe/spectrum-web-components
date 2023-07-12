@@ -260,9 +260,14 @@ governing permissions and limitations under the License.
     );
     position: relative;
 }
-:host(:hover),
 :host([active]) {
     box-shadow: none;
+}
+@media (hover: hover) {
+    :host(:hover),
+    :host([active]) {
+        box-shadow: none;
+    }
 }
 ::slotted([slot='icon']) {
     color: inherit;
@@ -433,28 +438,30 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover) {
-    background-color: var(
-        --highcontrast-button-background-color-hover,
-        var(
-            --mod-button-background-color-hover,
-            var(--spectrum-button-background-color-hover)
-        )
-    );
-    border-color: var(
-        --highcontrast-button-border-color-hover,
-        var(
-            --mod-button-border-color-hover,
-            var(--spectrum-button-border-color-hover)
-        )
-    );
-    color: var(
-        --highcontrast-button-content-color-hover,
-        var(
-            --mod-button-content-color-hover,
-            var(--spectrum-button-content-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:hover) {
+        background-color: var(
+            --highcontrast-button-background-color-hover,
+            var(
+                --mod-button-background-color-hover,
+                var(--spectrum-button-background-color-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-button-border-color-hover,
+            var(
+                --mod-button-border-color-hover,
+                var(--spectrum-button-border-color-hover)
+            )
+        );
+        color: var(
+            --highcontrast-button-content-color-hover,
+            var(
+                --mod-button-content-color-hover,
+                var(--spectrum-button-content-color-hover)
+            )
+        );
+    }
 }
 :host(.focus-visible) {
     background-color: var(
@@ -576,16 +583,28 @@ governing permissions and limitations under the License.
         color: GrayText;
     }
     :host([variant='accent'][treatment='fill'].focus-visible),
-    :host([variant='accent'][treatment='fill']:hover),
     :host([variant='accent'][treatment='fill'][active]),
     :host([variant='accent'][treatment='fill'][focused]) {
         background-color: Highlight;
     }
     :host([variant='accent'][treatment='fill']:focus-visible),
-    :host([variant='accent'][treatment='fill']:hover),
     :host([variant='accent'][treatment='fill'][active]),
     :host([variant='accent'][treatment='fill'][focused]) {
         background-color: Highlight;
+    }
+    @media (hover: hover) {
+        :host([variant='accent'][treatment='fill'].focus-visible),
+        :host([variant='accent'][treatment='fill']:hover),
+        :host([variant='accent'][treatment='fill'][active]),
+        :host([variant='accent'][treatment='fill'][focused]) {
+            background-color: Highlight;
+        }
+        :host([variant='accent'][treatment='fill']:focus-visible),
+        :host([variant='accent'][treatment='fill']:hover),
+        :host([variant='accent'][treatment='fill'][active]),
+        :host([variant='accent'][treatment='fill'][focused]) {
+            background-color: Highlight;
+        }
     }
     :host([variant='accent'][treatment='fill']) #label {
         forced-color-adjust: none;

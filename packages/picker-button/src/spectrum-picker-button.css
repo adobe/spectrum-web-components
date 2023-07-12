@@ -335,11 +335,15 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-component-background-color-default)
     );
 }
-:host(:not([disabled]):not([open])) .root:hover .spectrum-PickerButton-fill {
-    background-color: var(
-        --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-hover,
-        var(--spectrum-alias-component-background-color-hover)
-    );
+@media (hover: hover) {
+    :host(:not([disabled]):not([open]))
+        .root:hover
+        .spectrum-PickerButton-fill {
+        background-color: var(
+            --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-hover,
+            var(--spectrum-alias-component-background-color-hover)
+        );
+    }
 }
 :host(:not([disabled]):not([open])[active]) .root .spectrum-PickerButton-fill {
     background-color: var(
@@ -353,11 +357,13 @@ governing permissions and limitations under the License.
         var(--spectrum-semantic-negative-color-default)
     );
 }
-:host([invalid]:not([disabled])) .root:hover .spectrum-PickerButton-fill {
-    border-color: var(
-        --spectrum-alias-input-border-color-invalid-hover,
-        var(--spectrum-semantic-negative-color-hover)
-    );
+@media (hover: hover) {
+    :host([invalid]:not([disabled])) .root:hover .spectrum-PickerButton-fill {
+        border-color: var(
+            --spectrum-alias-input-border-color-invalid-hover,
+            var(--spectrum-semantic-negative-color-hover)
+        );
+    }
 }
 :host([invalid]:not([disabled])[active]) .root .spectrum-PickerButton-fill {
     border-color: var(
@@ -400,11 +406,15 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-input-border-color-default)
     );
 }
-:host(:not([invalid]):not([disabled])) .root:hover .spectrum-PickerButton-fill {
-    border-color: var(
-        --spectrum-alias-infieldbutton-fill-border-color-hover,
-        var(--spectrum-alias-input-border-color-hover)
-    );
+@media (hover: hover) {
+    :host(:not([invalid]):not([disabled]))
+        .root:hover
+        .spectrum-PickerButton-fill {
+        border-color: var(
+            --spectrum-alias-infieldbutton-fill-border-color-hover,
+            var(--spectrum-alias-input-border-color-hover)
+        );
+    }
 }
 :host(:not([invalid]):not([disabled])[active])
     .root
@@ -955,13 +965,15 @@ governing permissions and limitations under the License.
         transparent
     );
 }
-:host(:not([disabled]):not([open]))
-    .root.spectrum-PickerButton--quiet:hover
-    .spectrum-PickerButton-fill {
-    background-color: var(
-        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-hover,
-        transparent
-    );
+@media (hover: hover) {
+    :host(:not([disabled]):not([open]))
+        .root.spectrum-PickerButton--quiet:hover
+        .spectrum-PickerButton-fill {
+        background-color: var(
+            --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-hover,
+            transparent
+        );
+    }
 }
 :host(:not([disabled]):not([open])[active])
     .root.spectrum-PickerButton--quiet
@@ -974,6 +986,18 @@ governing permissions and limitations under the License.
 :host(:not([invalid]):not([disabled]))
     .root.spectrum-PickerButton--quiet
     .spectrum-PickerButton-fill,
+:host([invalid]:not([disabled]))
+    .root.spectrum-PickerButton--quiet
+    .spectrum-PickerButton-fill {
+    border-color: #0000;
+}
+@media (hover: hover) {
+    :host(:not([invalid]):not([disabled]))
+        .root.spectrum-PickerButton--quiet:hover
+        .spectrum-PickerButton-fill {
+        border-color: #0000;
+    }
+}
 :host(:not([invalid]):not([disabled]))
     .root.spectrum-PickerButton--quiet.focus-visible
     .spectrum-PickerButton-fill,
@@ -986,20 +1010,11 @@ governing permissions and limitations under the License.
 :host(:not([invalid]):not([disabled]))
     .root.spectrum-PickerButton--quiet:focus
     .spectrum-PickerButton-fill,
-:host(:not([invalid]):not([disabled]))
-    .root.spectrum-PickerButton--quiet:hover
-    .spectrum-PickerButton-fill,
 :host(:not([invalid]):not([disabled])[active])
-    .root.spectrum-PickerButton--quiet
-    .spectrum-PickerButton-fill,
-:host([invalid]:not([disabled]))
     .root.spectrum-PickerButton--quiet
     .spectrum-PickerButton-fill {
     border-color: #0000;
 }
-:host(:not([invalid]):not([disabled]))
-    .root.spectrum-PickerButton--quiet
-    .spectrum-PickerButton-fill,
 :host(:not([invalid]):not([disabled]))
     .root.spectrum-PickerButton--quiet.is-focused
     .spectrum-PickerButton-fill,
@@ -1012,13 +1027,7 @@ governing permissions and limitations under the License.
 :host(:not([invalid]):not([disabled]))
     .root.spectrum-PickerButton--quiet:focus-visible
     .spectrum-PickerButton-fill,
-:host(:not([invalid]):not([disabled]))
-    .root.spectrum-PickerButton--quiet:hover
-    .spectrum-PickerButton-fill,
 :host(:not([invalid]):not([disabled])[active])
-    .root.spectrum-PickerButton--quiet
-    .spectrum-PickerButton-fill,
-:host([invalid]:not([disabled]))
     .root.spectrum-PickerButton--quiet
     .spectrum-PickerButton-fill {
     border-color: #0000;
@@ -1074,18 +1083,26 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-gray-800)
     );
 }
-:host(:not([disabled]):not([open])) .root:hover .spectrum-PickerButton-label {
-    color: var(
-        --spectrum-alias-component-text-color-hover,
-        var(--spectrum-global-color-gray-900)
-    );
-}
-:host(:not([disabled]):not([open])) .root:hover .spectrum-PickerButton-UIIcon,
-:host(:not([disabled]):not([open])) .root:hover .spectrum-PickerButton-icon {
-    color: var(
-        --spectrum-alias-component-icon-color-hover,
-        var(--spectrum-alias-icon-color-hover)
-    );
+@media (hover: hover) {
+    :host(:not([disabled]):not([open]))
+        .root:hover
+        .spectrum-PickerButton-label {
+        color: var(
+            --spectrum-alias-component-text-color-hover,
+            var(--spectrum-global-color-gray-900)
+        );
+    }
+    :host(:not([disabled]):not([open]))
+        .root:hover
+        .spectrum-PickerButton-UIIcon,
+    :host(:not([disabled]):not([open]))
+        .root:hover
+        .spectrum-PickerButton-icon {
+        color: var(
+            --spectrum-alias-component-icon-color-hover,
+            var(--spectrum-alias-icon-color-hover)
+        );
+    }
 }
 :host(:not([disabled]):not([open])[active]) .root .spectrum-PickerButton-label {
     color: var(
@@ -1115,13 +1132,15 @@ governing permissions and limitations under the License.
         var(--spectrum-semantic-negative-text-color-small)
     );
 }
-:host(:not([disabled]):not([open]))
-    .root.spectrum-PickerButton--error:hover
-    .spectrum-PickerButton-label {
-    color: var(
-        --spectrum-alias-component-text-color-error-hover,
-        var(--spectrum-semantic-negative-text-color-small-hover)
-    );
+@media (hover: hover) {
+    :host(:not([disabled]):not([open]))
+        .root.spectrum-PickerButton--error:hover
+        .spectrum-PickerButton-label {
+        color: var(
+            --spectrum-alias-component-text-color-error-hover,
+            var(--spectrum-semantic-negative-text-color-small-hover)
+        );
+    }
 }
 :host(:not([disabled]):not([open])[active])
     .root.spectrum-PickerButton--error

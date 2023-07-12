@@ -291,8 +291,10 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-component-icon-color-default)
     );
 }
-:host(:hover) {
-    color: var(--spectrum-clearbutton-fill-uiicon-color);
+@media (hover: hover) {
+    :host(:hover) {
+        color: var(--spectrum-clearbutton-fill-uiicon-color);
+    }
 }
 :host([active]) {
     color: var(--spectrum-clearbutton-fill-uiicon-color-down);
@@ -306,8 +308,12 @@ governing permissions and limitations under the License.
 :host([disabled]) {
     color: var(--spectrum-clearbutton-fill-uiicon-color-disabled);
 }
-:host(:hover) .fill {
-    background-color: var(--spectrum-clearbutton-fill-background-color-hover);
+@media (hover: hover) {
+    :host(:hover) .fill {
+        background-color: var(
+            --spectrum-clearbutton-fill-background-color-hover
+        );
+    }
 }
 :host([active]) .fill {
     background-color: var(--spectrum-clearbutton-fill-background-color-down);
@@ -333,11 +339,13 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground']:hover) {
-    color: var(
-        --spectrum-alias-icon-color-overbackground,
-        var(--spectrum-global-color-static-white)
-    );
+@media (hover: hover) {
+    :host([variant='overBackground']:hover) {
+        color: var(
+            --spectrum-alias-icon-color-overbackground,
+            var(--spectrum-global-color-static-white)
+        );
+    }
 }
 :host([variant='overBackground'][active]) {
     color: var(
@@ -378,19 +386,21 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground']:hover) {
-    background-color: var(
-        --spectrum-button-m-primary-outline-white-texticon-background-color-hover,
-        var(--spectrum-global-color-static-transparent-white-300)
-    );
-    border-color: var(
-        --spectrum-button-m-primary-outline-white-texticon-border-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    color: var(
-        --spectrum-button-m-primary-outline-white-texticon-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
+@media (hover: hover) {
+    :host([variant='overBackground']:hover) {
+        background-color: var(
+            --spectrum-button-m-primary-outline-white-texticon-background-color-hover,
+            var(--spectrum-global-color-static-transparent-white-300)
+        );
+        border-color: var(
+            --spectrum-button-m-primary-outline-white-texticon-border-color-hover,
+            var(--spectrum-global-color-static-white)
+        );
+        color: var(
+            --spectrum-button-m-primary-outline-white-texticon-text-color-hover,
+            var(--spectrum-global-color-static-white)
+        );
+    }
 }
 :host([variant='overBackground'].focus-visible) {
     background-color: var(
@@ -505,8 +515,10 @@ governing permissions and limitations under the License.
         --spectrum-clearbutton-fill-uiicon-color-key-focus: Highlight;
         --spectrum-clearbutton-m-fill-uiicon-color: ButtonText;
     }
-    :host(:hover) {
-        color: var(--spectrum-clearbutton-fill-uiicon-color-key-focus);
+    @media (hover: hover) {
+        :host(:hover) {
+            color: var(--spectrum-clearbutton-fill-uiicon-color-key-focus);
+        }
     }
     :host([disabled]) {
         color: var(--spectrum-clearbutton-fill-uiicon-color-disabled);

@@ -96,3 +96,27 @@ sp-popover {
 #label.visually-hidden ~ .picker {
     margin-inline-start: auto;
 }
+
+#button:active {
+    background-color: var(
+        --highcontrast-picker-background-default-open,
+        var(
+            --mod-picker-background-color-default-open,
+            var(--spectrum-picker-background-color-default-open)
+        )
+    );
+    border-color: var(
+        --highcontrast-picker-border-color-default-open,
+        var(
+            --mod-picker-border-default-open,
+            var(--spectrum-picker-border-color-default-open)
+        )
+    );
+    color: var(
+        --highcontrast-picker-font-color-default-open,
+        var(
+            --mod-picker-font-color-default-open,
+            var(--spectrum-picker-font-color-default-open)
+        )
+    );
+}

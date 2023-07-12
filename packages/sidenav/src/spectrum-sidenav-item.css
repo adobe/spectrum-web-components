@@ -152,15 +152,17 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-text-color)
     );
 }
-#item-link:hover {
-    background-color: var(
-        --spectrum-sidenav-item-background-color-hover,
-        var(--spectrum-alias-highlight-hover)
-    );
-    color: var(
-        --spectrum-sidenav-item-text-color-hover,
-        var(--spectrum-alias-text-color-hover)
-    );
+@media (hover: hover) {
+    #item-link:hover {
+        background-color: var(
+            --spectrum-sidenav-item-background-color-hover,
+            var(--spectrum-alias-highlight-hover)
+        );
+        color: var(
+            --spectrum-sidenav-item-text-color-hover,
+            var(--spectrum-alias-text-color-hover)
+        );
+    }
 }
 #item-link:active {
     background-color: var(

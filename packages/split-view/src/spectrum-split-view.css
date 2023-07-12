@@ -244,26 +244,50 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-gray-300)
     );
 }
-:host([resizable]) #splitter.is-hovered,
-:host([resizable]) #splitter:hover {
+:host([resizable]) #splitter.is-hovered {
     background-color: var(
         --spectrum-dragbar-handle-background-color-hover,
         var(--spectrum-global-color-gray-400)
     );
 }
-:host([resizable]) #splitter.is-hovered #gripper,
-:host([resizable]) #splitter:hover #gripper {
+@media (hover: hover) {
+    :host([resizable]) #splitter.is-hovered,
+    :host([resizable]) #splitter:hover {
+        background-color: var(
+            --spectrum-dragbar-handle-background-color-hover,
+            var(--spectrum-global-color-gray-400)
+        );
+    }
+}
+:host([resizable]) #splitter.is-hovered #gripper {
     border-color: var(
         --spectrum-dragbar-handle-background-color-hover,
         var(--spectrum-global-color-gray-400)
     );
 }
-:host([resizable]) #splitter.is-hovered #gripper:before,
-:host([resizable]) #splitter:hover #gripper:before {
+@media (hover: hover) {
+    :host([resizable]) #splitter.is-hovered #gripper,
+    :host([resizable]) #splitter:hover #gripper {
+        border-color: var(
+            --spectrum-dragbar-handle-background-color-hover,
+            var(--spectrum-global-color-gray-400)
+        );
+    }
+}
+:host([resizable]) #splitter.is-hovered #gripper:before {
     background-color: var(
         --spectrum-dragbar-handle-background-color-hover,
         var(--spectrum-global-color-gray-400)
     );
+}
+@media (hover: hover) {
+    :host([resizable]) #splitter.is-hovered #gripper:before,
+    :host([resizable]) #splitter:hover #gripper:before {
+        background-color: var(
+            --spectrum-dragbar-handle-background-color-hover,
+            var(--spectrum-global-color-gray-400)
+        );
+    }
 }
 :host([resizable]) #splitter.is-active,
 :host([resizable]) #splitter:active {

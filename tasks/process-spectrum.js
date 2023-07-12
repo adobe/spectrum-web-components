@@ -579,6 +579,76 @@ async function processComponent(componentPath) {
                         };
                     }
                 },
+                RuleExit(rule) {
+                    if (rule.type !== 'style') return;
+                    const selectors = rule.value.selectors;
+                    const findHoverInComponent = (component) => {
+                        return (
+                            component &&
+                            ((component.type === 'pseudo-class' &&
+                                component.kind == 'hover') ||
+                                component.selectors?.find(findHoverInComponent))
+                        );
+                    };
+                    const hasHover = selectors?.find((selector) => {
+                        return selector.find(findHoverInComponent);
+                    });
+                    if (!hasHover) return;
+                    const wrappedRule = {
+                        type: 'media',
+                        value: {
+                            query: {
+                                mediaQueries: [
+                                    {
+                                        qualifier: null,
+                                        mediaType: 'all',
+                                        condition: {
+                                            type: 'feature',
+                                            value: {
+                                                type: 'plain',
+                                                name: 'hover',
+                                                value: {
+                                                    type: 'ident',
+                                                    value: 'hover',
+                                                },
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            rules: [
+                                {
+                                    type: 'style',
+                                    value: {
+                                        selectors: rule.value.selectors,
+                                        declarations: rule.value.declarations,
+                                        rules: [],
+                                        loc: {
+                                            source_index: 0,
+                                            line: rule.value.loc.line + 1,
+                                            column: rule.value.loc.column + 2,
+                                        },
+                                    },
+                                },
+                            ],
+                            loc: {
+                                ...rule.value.loc,
+                            },
+                        },
+                    };
+                    const allHaveHover = selectors?.every((selector) => {
+                        return selector.find(findHoverInComponent);
+                    });
+                    if (!allHaveHover) {
+                        rule.value.selectors = rule.value.selectors.filter(
+                            (selector) => {
+                                return !selector.find(findHoverInComponent);
+                            }
+                        );
+                        return [rule, wrappedRule];
+                    }
+                    return wrappedRule;
+                },
             },
         });
 

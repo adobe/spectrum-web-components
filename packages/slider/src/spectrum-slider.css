@@ -753,14 +753,16 @@ governing permissions and limitations under the License.
         )
     );
 }
-.handle:hover {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-hover,
-        var(
-            --mod-slider-handle-border-color-hover,
-            var(--spectrum-slider-handle-border-color-hover)
-        )
-    );
+@media (hover: hover) {
+    .handle:hover {
+        border-color: var(
+            --highcontrast-slider-handle-border-color-hover,
+            var(
+                --mod-slider-handle-border-color-hover,
+                var(--spectrum-slider-handle-border-color-hover)
+            )
+        );
+    }
 }
 .handle.handle-highlight {
     border-color: var(
@@ -875,8 +877,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([disabled]) .handle:active,
-:host([disabled]) .handle:hover {
+:host([disabled]) .handle:active {
     background: var(
         --highcontrast-slider-handle-background-color-disabled,
         var(
@@ -888,6 +889,25 @@ governing permissions and limitations under the License.
         --highcontrast-disabled-border-color,
         var(--mod-disabled-border-color, var(--spectrum-disabled-border-color))
     );
+}
+@media (hover: hover) {
+    :host([disabled]) .handle:active,
+    :host([disabled]) .handle:hover {
+        background: var(
+            --highcontrast-slider-handle-background-color-disabled,
+            var(
+                --mod-slider-handle-background-color-disabled,
+                var(--spectrum-slider-handle-background-color-disabled)
+            )
+        );
+        border-color: var(
+            --highcontrast-disabled-border-color,
+            var(
+                --mod-disabled-border-color,
+                var(--spectrum-disabled-border-color)
+            )
+        );
+    }
 }
 :host([disabled]) .track:before {
     background: var(

@@ -175,8 +175,7 @@ governing permissions and limitations under the License.
 }
 :host .is-highlighted,
 :host .is-open,
-:host(:focus),
-:host(:hover) {
+:host(:focus) {
     background-color: var(
         --spectrum-listitem-m-texticon-background-color-hover,
         var(--spectrum-alias-background-color-hover-overlay)
@@ -185,6 +184,21 @@ governing permissions and limitations under the License.
         --spectrum-listitem-m-texticon-text-color-hover,
         var(--spectrum-alias-component-text-color-hover)
     );
+}
+@media (hover: hover) {
+    :host .is-highlighted,
+    :host .is-open,
+    :host(:focus),
+    :host(:hover) {
+        background-color: var(
+            --spectrum-listitem-m-texticon-background-color-hover,
+            var(--spectrum-alias-background-color-hover-overlay)
+        );
+        color: var(
+            --spectrum-listitem-m-texticon-text-color-hover,
+            var(--spectrum-alias-component-text-color-hover)
+        );
+    }
 }
 :host([selected]) {
     color: var(
@@ -238,7 +252,6 @@ governing permissions and limitations under the License.
     :host(:not([disabled])) .is-open,
     :host(:not([disabled]).focus-visible),
     :host(:not([disabled]):focus),
-    :host(:not([disabled]):hover),
     :host(:not([disabled])[focused]) {
         background-color: var(
             --spectrum-listitem-m-texticon-background-color-key-focus,
@@ -253,7 +266,6 @@ governing permissions and limitations under the License.
     :host(:not([disabled])) .is-open,
     :host(:not([disabled]):focus),
     :host(:not([disabled]):focus-visible),
-    :host(:not([disabled]):hover),
     :host(:not([disabled])[focused]) {
         background-color: var(
             --spectrum-listitem-m-texticon-background-color-key-focus,
@@ -264,20 +276,68 @@ governing permissions and limitations under the License.
             var(--spectrum-alias-component-text-color-key-focus)
         );
     }
+    @media (hover: hover) {
+        :host(:not([disabled])) .is-highlighted,
+        :host(:not([disabled])) .is-open,
+        :host(:not([disabled]).focus-visible),
+        :host(:not([disabled]):focus),
+        :host(:not([disabled]):hover),
+        :host(:not([disabled])[focused]) {
+            background-color: var(
+                --spectrum-listitem-m-texticon-background-color-key-focus,
+                var(--spectrum-alias-background-color-hover-overlay)
+            );
+            color: var(
+                --spectrum-listitem-m-texticon-text-color-key-focus,
+                var(--spectrum-alias-component-text-color-key-focus)
+            );
+        }
+        :host(:not([disabled])) .is-highlighted,
+        :host(:not([disabled])) .is-open,
+        :host(:not([disabled]):focus),
+        :host(:not([disabled]):focus-visible),
+        :host(:not([disabled]):hover),
+        :host(:not([disabled])[focused]) {
+            background-color: var(
+                --spectrum-listitem-m-texticon-background-color-key-focus,
+                var(--spectrum-alias-background-color-hover-overlay)
+            );
+            color: var(
+                --spectrum-listitem-m-texticon-text-color-key-focus,
+                var(--spectrum-alias-component-text-color-key-focus)
+            );
+        }
+    }
     :host(:not([disabled]).focus-visible[selected]) .checkmark,
     :host(:not([disabled])[focused][selected]) .checkmark,
     :host(:not([disabled])[selected]) .is-highlighted .checkmark,
     :host(:not([disabled])[selected]) .is-open .checkmark,
-    :host(:not([disabled])[selected]:focus) .checkmark,
-    :host(:not([disabled])[selected]:hover) .checkmark {
+    :host(:not([disabled])[selected]:focus) .checkmark {
         color: HighlightText;
     }
     :host(:not([disabled]):focus-visible[selected]) .checkmark,
     :host(:not([disabled])[focused][selected]) .checkmark,
     :host(:not([disabled])[selected]) .is-highlighted .checkmark,
     :host(:not([disabled])[selected]) .is-open .checkmark,
-    :host(:not([disabled])[selected]:focus) .checkmark,
-    :host(:not([disabled])[selected]:hover) .checkmark {
+    :host(:not([disabled])[selected]:focus) .checkmark {
         color: HighlightText;
+    }
+    @media (hover: hover) {
+        :host(:not([disabled]).focus-visible[selected]) .checkmark,
+        :host(:not([disabled])[focused][selected]) .checkmark,
+        :host(:not([disabled])[selected]) .is-highlighted .checkmark,
+        :host(:not([disabled])[selected]) .is-open .checkmark,
+        :host(:not([disabled])[selected]:focus) .checkmark,
+        :host(:not([disabled])[selected]:hover) .checkmark {
+            color: HighlightText;
+        }
+        :host(:not([disabled]):focus-visible[selected]) .checkmark,
+        :host(:not([disabled])[focused][selected]) .checkmark,
+        :host(:not([disabled])[selected]) .is-highlighted .checkmark,
+        :host(:not([disabled])[selected]) .is-open .checkmark,
+        :host(:not([disabled])[selected]:focus) .checkmark,
+        :host(:not([disabled])[selected]:hover) .checkmark {
+            color: HighlightText;
+        }
     }
 }

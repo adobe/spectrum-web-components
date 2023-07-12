@@ -187,17 +187,19 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-gray-600)
     );
 }
-:host([sortable]:hover) {
-    color: var(
-        --spectrum-table-m-regular-header-text-color-hover,
-        var(--spectrum-alias-text-color-hover)
-    );
-}
-:host([sortable]:hover) .sortedIcon {
-    color: var(
-        --spectrum-table-m-regular-header-sort-icon-color-hover,
-        var(--spectrum-alias-icon-color-hover)
-    );
+@media (hover: hover) {
+    :host([sortable]:hover) {
+        color: var(
+            --spectrum-table-m-regular-header-text-color-hover,
+            var(--spectrum-alias-text-color-hover)
+        );
+    }
+    :host([sortable]:hover) .sortedIcon {
+        color: var(
+            --spectrum-table-m-regular-header-sort-icon-color-hover,
+            var(--spectrum-alias-icon-color-hover)
+        );
+    }
 }
 :host([sortable].focus-visible),
 :host([sortable][focused]) {

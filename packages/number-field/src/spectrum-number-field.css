@@ -112,25 +112,27 @@ governing permissions and limitations under the License.
     line-height: 0;
     position: relative;
 }
-:host(:hover:not([disabled]):not([invalid]):not([focused]))
-    #textfield:not(.is-keyboardFocused)
-    .buttons,
-:host(:hover:not([disabled]):not([invalid]):not([focused]))
-    #textfield:not(.is-keyboardFocused)
-    .input,
-:host(:hover:not([disabled]):not([invalid]):not([focused]))
-    #textfield:not(.is-keyboardFocused)
-    .step-down,
-:host(:hover:not([disabled]):not([invalid]):not([focused]))
-    #textfield:not(.is-keyboardFocused)
-    .step-up {
-    border-color: var(
-        --highcontrast-stepper-border-color-hover,
-        var(
-            --mod-stepper-border-color-hover,
-            var(--spectrum-stepper-border-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:hover:not([disabled]):not([invalid]):not([focused]))
+        #textfield:not(.is-keyboardFocused)
+        .buttons,
+    :host(:hover:not([disabled]):not([invalid]):not([focused]))
+        #textfield:not(.is-keyboardFocused)
+        .input,
+    :host(:hover:not([disabled]):not([invalid]):not([focused]))
+        #textfield:not(.is-keyboardFocused)
+        .step-down,
+    :host(:hover:not([disabled]):not([invalid]):not([focused]))
+        #textfield:not(.is-keyboardFocused)
+        .step-up {
+        border-color: var(
+            --highcontrast-stepper-border-color-hover,
+            var(
+                --mod-stepper-border-color-hover,
+                var(--spectrum-stepper-border-color-hover)
+            )
+        );
+    }
 }
 :host([focused]) #textfield .input {
     outline: none;
@@ -157,17 +159,19 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([focused]:hover) #textfield .buttons,
-:host([focused]:hover) #textfield .input,
-:host([focused]:hover) #textfield .step-down,
-:host([focused]:hover) #textfield .step-up {
-    border-color: var(
-        --highcontrast-stepper-border-color-focus-hover,
-        var(
-            --mod-stepper-border-color-focus-hover,
-            var(--spectrum-stepper-border-color-focus-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([focused]:hover) #textfield .buttons,
+    :host([focused]:hover) #textfield .input,
+    :host([focused]:hover) #textfield .step-down,
+    :host([focused]:hover) #textfield .step-up {
+        border-color: var(
+            --highcontrast-stepper-border-color-focus-hover,
+            var(
+                --mod-stepper-border-color-focus-hover,
+                var(--spectrum-stepper-border-color-focus-hover)
+            )
+        );
+    }
 }
 :host([focused][invalid]) #textfield .buttons,
 :host([focused][invalid]) #textfield .input,
@@ -327,17 +331,19 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid]:hover) #textfield .buttons,
-:host([invalid]:hover) #textfield .input,
-:host([invalid]:hover) #textfield .step-down,
-:host([invalid]:hover) #textfield .step-up {
-    border-color: var(
-        --highcontrast-stepper-border-color-invalid-hover,
-        var(
-            --mod-stepper-border-color-invalid-hover,
-            var(--spectrum-stepper-border-color-invalid-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([invalid]:hover) #textfield .buttons,
+    :host([invalid]:hover) #textfield .input,
+    :host([invalid]:hover) #textfield .step-down,
+    :host([invalid]:hover) #textfield .step-up {
+        border-color: var(
+            --highcontrast-stepper-border-color-invalid-hover,
+            var(
+                --mod-stepper-border-color-invalid-hover,
+                var(--spectrum-stepper-border-color-invalid-hover)
+            )
+        );
+    }
 }
 :host([invalid][focused]) #textfield .buttons,
 :host([invalid][focused]) #textfield .input,
@@ -351,17 +357,19 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid][focused]:hover) #textfield .buttons,
-:host([invalid][focused]:hover) #textfield .input,
-:host([invalid][focused]:hover) #textfield .step-down,
-:host([invalid][focused]:hover) #textfield .step-up {
-    border-color: var(
-        --highcontrast-stepper-border-color-invalid-focus-hover,
-        var(
-            --mod-stepper-border-color-invalid-focus-hover,
-            var(--spectrum-stepper-border-color-invalid-focus-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([invalid][focused]:hover) #textfield .buttons,
+    :host([invalid][focused]:hover) #textfield .input,
+    :host([invalid][focused]:hover) #textfield .step-down,
+    :host([invalid][focused]:hover) #textfield .step-up {
+        border-color: var(
+            --highcontrast-stepper-border-color-invalid-focus-hover,
+            var(
+                --mod-stepper-border-color-invalid-focus-hover,
+                var(--spectrum-stepper-border-color-invalid-focus-hover)
+            )
+        );
+    }
 }
 :host([invalid][keyboard-focused]) #textfield .buttons,
 :host([invalid][keyboard-focused]) #textfield .input,
@@ -461,11 +469,15 @@ governing permissions and limitations under the License.
 :host([quiet]) .buttons,
 :host([quiet]) .input,
 :host([quiet]) .step-down,
-:host([quiet]) .step-up,
-:host([quiet]:hover) .buttons,
-:host([quiet]:hover) .step-down,
-:host([quiet]:hover) .step-up {
+:host([quiet]) .step-up {
     background-color: #0000;
+}
+@media (hover: hover) {
+    :host([quiet]:hover) .buttons,
+    :host([quiet]:hover) .step-down,
+    :host([quiet]:hover) .step-up {
+        background-color: #0000;
+    }
 }
 :host([quiet][disabled]) #textfield .buttons,
 :host([quiet][disabled]) #textfield .input,
@@ -510,17 +522,19 @@ governing permissions and limitations under the License.
 :host([quiet][focused]) .step-up {
     background-color: #0000;
 }
-:host([quiet][focused]:hover) .buttons,
-:host([quiet][focused]:hover) .input,
-:host([quiet][focused]:hover) .step-down,
-:host([quiet][focused]:hover) .step-up {
-    border-color: var(
-        --highcontrast-stepper-border-color-focus-hover,
-        var(
-            --mod-stepper-border-color-focus-hover,
-            var(--spectrum-stepper-border-color-focus-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([quiet][focused]:hover) .buttons,
+    :host([quiet][focused]:hover) .input,
+    :host([quiet][focused]:hover) .step-down,
+    :host([quiet][focused]:hover) .step-up {
+        border-color: var(
+            --highcontrast-stepper-border-color-focus-hover,
+            var(
+                --mod-stepper-border-color-focus-hover,
+                var(--spectrum-stepper-border-color-focus-hover)
+            )
+        );
+    }
 }
 :host([quiet][focused][invalid]) .buttons,
 :host([quiet][focused][invalid]) .input,
@@ -670,15 +684,17 @@ governing permissions and limitations under the License.
     margin-inline-start: var(--spectrum-stepper-button-icon-nudge);
     opacity: 1;
 }
-:host(:hover) .step-down,
-:host(:hover) .step-up {
-    background-color: var(
-        --highcontrast-stepper-button-background-color-hover,
-        var(
-            --mod-stepper-button-background-color-hover,
-            var(--spectrum-stepper-button-background-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:hover) .step-down,
+    :host(:hover) .step-up {
+        background-color: var(
+            --highcontrast-stepper-button-background-color-hover,
+            var(
+                --mod-stepper-button-background-color-hover,
+                var(--spectrum-stepper-button-background-color-hover)
+            )
+        );
+    }
 }
 .step-down:disabled,
 .step-up:disabled {

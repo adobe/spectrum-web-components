@@ -50,11 +50,13 @@ governing permissions and limitations under the License.
             var(--spectrum-alias-border-color-mid)
         );
 }
-:host(:hover) {
-    background-color: var(
-        --spectrum-table-m-regular-row-background-color-hover,
-        var(--spectrum-alias-highlight-hover)
-    );
+@media (hover: hover) {
+    :host(:hover) {
+        background-color: var(
+            --spectrum-table-m-regular-row-background-color-hover,
+            var(--spectrum-alias-highlight-hover)
+        );
+    }
 }
 :host(.focus-visible),
 :host([focused]) {
@@ -82,11 +84,13 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-highlight-selected)
     );
 }
-:host([selected]:hover) {
-    background-color: var(
-        --spectrum-table-m-regular-row-background-color-selected-hover,
-        var(--spectrum-alias-highlight-selected-hover)
-    );
+@media (hover: hover) {
+    :host([selected]:hover) {
+        background-color: var(
+            --spectrum-table-m-regular-row-background-color-selected-hover,
+            var(--spectrum-alias-highlight-selected-hover)
+        );
+    }
 }
 :host([selected].focus-visible),
 :host([selected][focused]) {

@@ -441,37 +441,39 @@ governing permissions and limitations under the License.
     pointer-events: none;
     position: absolute;
 }
-#button:hover {
-    background-color: var(
-        --highcontrast-picker-background-color-default,
-        var(
-            --mod-picker-background-color-hover,
-            var(--spectrum-picker-background-color-hover)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-default,
-        var(
-            --mod-picker-border-color-hover,
-            var(--spectrum-picker-border-color-hover)
-        )
-    );
-    color: var(
-        --highcontrast-picker-font-color-default,
-        var(
-            --mod-picker-font-color-hover,
-            var(--spectrum-picker-font-color-hover)
-        )
-    );
-}
-#button:hover .picker {
-    color: var(
-        --highcontrast-picker-icon-color-hover,
-        var(
-            --mod-picker-icon-color-hover,
-            var(--spectrum-picker-icon-color-hover)
-        )
-    );
+@media (hover: hover) {
+    #button:hover {
+        background-color: var(
+            --highcontrast-picker-background-color-default,
+            var(
+                --mod-picker-background-color-hover,
+                var(--spectrum-picker-background-color-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-picker-border-color-default,
+            var(
+                --mod-picker-border-color-hover,
+                var(--spectrum-picker-border-color-hover)
+            )
+        );
+        color: var(
+            --highcontrast-picker-font-color-default,
+            var(
+                --mod-picker-font-color-hover,
+                var(--spectrum-picker-font-color-hover)
+            )
+        );
+    }
+    #button:hover .picker {
+        color: var(
+            --highcontrast-picker-icon-color-hover,
+            var(
+                --mod-picker-icon-color-hover,
+                var(--spectrum-picker-icon-color-hover)
+            )
+        );
+    }
 }
 #button:active {
     background-color: var(
@@ -642,37 +644,39 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([open]) #button:hover {
-    background-color: var(
-        --highcontrast-picker-background-color-hover-open,
-        var(
-            --mod-picker-background-color-hover-open,
-            var(--spectrum-picker-background-color-hover-open)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-hover-open,
-        var(
-            --mod-picker-border-color-hover-open,
-            var(--spectrum-picker-border-color-hover-open)
-        )
-    );
-    color: var(
-        --highcontrast-picker-font-color-default,
-        var(
-            --mod-picker-font-color-hover-open,
-            var(--spectrum-picker-font-color-hover-open)
-        )
-    );
-}
-:host([open]) #button:hover .picker {
-    color: var(
-        --highcontrast-picker-icon-color-hover-open,
-        var(
-            --mod-picker-icon-color-hover-open,
-            var(--spectrum-picker-icon-color-hover-open)
-        )
-    );
+@media (hover: hover) {
+    :host([open]) #button:hover {
+        background-color: var(
+            --highcontrast-picker-background-color-hover-open,
+            var(
+                --mod-picker-background-color-hover-open,
+                var(--spectrum-picker-background-color-hover-open)
+            )
+        );
+        border-color: var(
+            --highcontrast-picker-border-color-hover-open,
+            var(
+                --mod-picker-border-color-hover-open,
+                var(--spectrum-picker-border-color-hover-open)
+            )
+        );
+        color: var(
+            --highcontrast-picker-font-color-default,
+            var(
+                --mod-picker-font-color-hover-open,
+                var(--spectrum-picker-font-color-hover-open)
+            )
+        );
+    }
+    :host([open]) #button:hover .picker {
+        color: var(
+            --highcontrast-picker-icon-color-hover-open,
+            var(
+                --mod-picker-icon-color-hover-open,
+                var(--spectrum-picker-icon-color-hover-open)
+            )
+        );
+    }
 }
 :host([open]) #button .picker {
     color: var(
@@ -701,14 +705,16 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid]) #button:hover {
-    border-color: var(
-        --highcontrast-picker-border-color-error-hover,
-        var(
-            --mod-picker-border-color-error-hover,
-            var(--spectrum-picker-border-color-error-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([invalid]) #button:hover {
+        border-color: var(
+            --highcontrast-picker-border-color-error-hover,
+            var(
+                --mod-picker-border-color-error-hover,
+                var(--spectrum-picker-border-color-error-hover)
+            )
+        );
+    }
 }
 :host([invalid]) #button:active {
     border-color: var(
@@ -728,14 +734,16 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid][open]) #button:hover {
-    border-color: var(
-        --highcontrast-picker-border-color-error-hover-open,
-        var(
-            --mod-picker-border-color-error-hover-open,
-            var(--spectrum-picker-border-color-error-hover-open)
-        )
-    );
+@media (hover: hover) {
+    :host([invalid][open]) #button:hover {
+        border-color: var(
+            --highcontrast-picker-border-color-error-hover-open,
+            var(
+                --mod-picker-border-color-error-hover-open,
+                var(--spectrum-picker-border-color-error-hover-open)
+            )
+        );
+    }
 }
 :host([invalid]) #button.focus-visible,
 :host([invalid][focused]) #button {
@@ -872,14 +880,16 @@ governing permissions and limitations under the License.
         )
         ease-in-out;
 }
-#label.placeholder:hover {
-    color: var(
-        --highcontrast-picker-font-color-default,
-        var(
-            --mod-picker-font-color-hover,
-            var(--spectrum-picker-font-color-hover)
-        )
-    );
+@media (hover: hover) {
+    #label.placeholder:hover {
+        color: var(
+            --highcontrast-picker-font-color-default,
+            var(
+                --mod-picker-font-color-hover,
+                var(--spectrum-picker-font-color-hover)
+            )
+        );
+    }
 }
 #label.placeholder:active {
     color: var(
@@ -972,8 +982,10 @@ governing permissions and limitations under the License.
     border: none;
     inline-size: auto;
 }
-:host([quiet]) #button:hover {
-    background-color: #0000;
+@media (hover: hover) {
+    :host([quiet]) #button:hover {
+        background-color: #0000;
+    }
 }
 :host([quiet]) #button.focus-visible,
 :host([quiet][focused]) #button {

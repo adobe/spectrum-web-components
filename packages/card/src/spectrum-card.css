@@ -189,14 +189,16 @@ governing permissions and limitations under the License.
             )
     );
 }
-:host(:hover) {
-    border-color: var(
-        --highcontrast-card-border-color-hover,
-        var(
-            --mod-card-border-color-hover,
-            var(--spectrum-card-border-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:hover) {
+        border-color: var(
+            --highcontrast-card-border-color-hover,
+            var(
+                --mod-card-border-color-hover,
+                var(--spectrum-card-border-color-hover)
+            )
+        );
+    }
 }
 :host([selected]) {
     border-color: var(
@@ -246,8 +248,6 @@ governing permissions and limitations under the License.
 }
 :host(:focus) .actions,
 :host(:focus) .quick-actions,
-:host(:hover) .actions,
-:host(:hover) .quick-actions,
 :host([focused]) .actions,
 :host([focused]) .quick-actions,
 :host([selected]) .actions,
@@ -255,6 +255,20 @@ governing permissions and limitations under the License.
     opacity: 1;
     pointer-events: all;
     visibility: visible;
+}
+@media (hover: hover) {
+    :host(:focus) .actions,
+    :host(:focus) .quick-actions,
+    :host(:hover) .actions,
+    :host(:hover) .quick-actions,
+    :host([focused]) .actions,
+    :host([focused]) .quick-actions,
+    :host([selected]) .actions,
+    :host([selected]) .quick-actions {
+        opacity: 1;
+        pointer-events: all;
+        visibility: visible;
+    }
 }
 .quick-actions {
     background-color: rgba(
@@ -629,16 +643,18 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
-:host([variant='gallery']:hover),
-:host([variant='quiet']:hover) {
-    border-color: #0000;
-}
-:host([variant='gallery']:hover) #preview,
-:host([variant='quiet']:hover) #preview {
-    background-color: var(
-        --mod-card-background-color-hover,
-        var(--spectrum-card-background-color-hover)
-    );
+@media (hover: hover) {
+    :host([variant='gallery']:hover),
+    :host([variant='quiet']:hover) {
+        border-color: #0000;
+    }
+    :host([variant='gallery']:hover) #preview,
+    :host([variant='quiet']:hover) #preview {
+        background-color: var(
+            --mod-card-background-color-hover,
+            var(--spectrum-card-background-color-hover)
+        );
+    }
 }
 :host([variant='gallery'][drop-target]),
 :host([variant='quiet'][drop-target]) {
@@ -694,11 +710,13 @@ governing permissions and limitations under the License.
 :host([horizontal]) {
     flex-direction: row;
 }
-:host([horizontal]:hover) #preview {
-    border-color: var(
-        --mod-card-border-color-hover,
-        var(--spectrum-card-border-color-hover)
-    );
+@media (hover: hover) {
+    :host([horizontal]:hover) #preview {
+        border-color: var(
+            --mod-card-border-color-hover,
+            var(--spectrum-card-border-color-hover)
+        );
+    }
 }
 :host([horizontal]) #preview {
     align-items: center;

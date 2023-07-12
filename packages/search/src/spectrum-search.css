@@ -237,11 +237,13 @@ governing permissions and limitations under the License.
     margin-block: auto;
     position: absolute;
 }
-#textfield:hover .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-hover,
-        var(--mod-search-color-hover, var(--spectrum-search-color-hover))
-    );
+@media (hover: hover) {
+    #textfield:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-hover,
+            var(--mod-search-color-hover, var(--spectrum-search-color-hover))
+        );
+    }
 }
 #textfield.is-focused .icon-search {
     --spectrum-search-color: var(
@@ -249,14 +251,16 @@ governing permissions and limitations under the License.
         var(--mod-search-color-focus, var(--spectrum-search-color-focus))
     );
 }
-#textfield.is-focused:hover .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-focus,
-        var(
-            --mod-search-color-focus-hover,
-            var(--spectrum-search-color-focus-hover)
-        )
-    );
+@media (hover: hover) {
+    #textfield.is-focused:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-focus,
+            var(
+                --mod-search-color-focus-hover,
+                var(--spectrum-search-color-focus-hover)
+            )
+        );
+    }
 }
 #textfield.is-keyboardFocused .icon-search {
     --spectrum-search-color: var(
@@ -267,12 +271,23 @@ governing permissions and limitations under the License.
         )
     );
 }
-#textfield.is-disabled .icon-search,
-#textfield.is-disabled:hover .icon-search {
+#textfield.is-disabled .icon-search {
     --spectrum-search-color: var(
         --highcontrast-search-color-disabled,
         var(--mod-search-color-disabled, var(--spectrum-search-color-disabled))
     );
+}
+@media (hover: hover) {
+    #textfield.is-disabled .icon-search,
+    #textfield.is-disabled:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-disabled,
+            var(
+                --mod-search-color-disabled,
+                var(--spectrum-search-color-disabled)
+            )
+        );
+    }
 }
 .input {
     -webkit-appearance: none;
