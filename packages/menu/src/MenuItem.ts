@@ -436,7 +436,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
         this.setAttribute('aria-controls', submenu.id);
         const popover = document.createElement('sp-popover');
-
         const returnSubmenu = reparentChildren([submenu], popover, {
             position: 'beforeend',
             prepareCallback: (el) => {
@@ -451,11 +450,9 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 };
             },
         });
-
         const closeOverlay = openOverlay(this, 'click', popover, {
             placement: this.isLTR ? 'right-start' : 'left-start',
             receivesFocus: 'auto',
-
             root: this.menuData.focusRoot,
         });
         const closeSubmenu = async (): Promise<void> => {
