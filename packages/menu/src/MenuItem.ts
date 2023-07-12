@@ -329,7 +329,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         const assignedElements = event.target.assignedElements({
             flatten: true,
         });
-        this.hasSubmenu = this.open || !!assignedElements.length;
+        this.hasSubmenu = this.open || !!assignedElements;
         if (this.hasSubmenu) {
             this.setAttribute('aria-haspopup', 'true');
         }
@@ -430,7 +430,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
             this.handleSubmenuPointerenter
         );
         submenu.addEventListener('change', this.handleSubmenuChange);
-        submenu.setAttribute('id', `${this.id}-submenu`);
+        if (!submenu.id) {
+            // if the consumer has already applied an ID to this element then we won't explicitly aplly ID
+            submenu.setAttribute('id', `${this.id}-submenu`);
+        }
         this.setAttribute('aria-controls', submenu.id);
         const popover = document.createElement('sp-popover');
 
