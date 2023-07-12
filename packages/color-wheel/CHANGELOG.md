@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **color-area,color-slider:** color-area labeling, RTL support, vertical slider orientation([#3315](https://github.com/adobe/spectrum-web-components/issues/3315)) ([ca2acda](https://github.com/adobe/spectrum-web-components/commit/ca2acdafe004cb962c00ebb7f79c5b6061dc6843)), closes [#3313](https://github.com/adobe/spectrum-web-components/issues/3313)
+-   **color-slider,color-wheel:** fix focused state [#3278](https://github.com/adobe/spectrum-web-components/issues/3278) ([96b83f7](https://github.com/adobe/spectrum-web-components/commit/96b83f7eb6ead1de2b30f1483478a2e5d6195349))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/color-wheel

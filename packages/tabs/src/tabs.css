@@ -26,77 +26,29 @@ governing permissions and limitations under the License.
     grid-template-columns: auto 1fr;
 }
 
-:host([direction='vertical']) {
-    /* prevent WHCM backgrounds from possibly overlapping panel content */
-    gap: var(--spectrum-tabs-textonly-tabitem-focus-ring-size);
-}
-
-#selection-indicator {
-    border-radius: 0;
-    z-index: 1;
-}
-
 :host([dir='rtl']) #selection-indicator {
     left: 0;
     right: auto;
 }
 
-:host(:not([direction^='vertical'])) #selection-indicator {
-    bottom: 0;
-}
-
-:host([dir='ltr'][direction='vertical']) #list #selection-indicator,
-:host([dir='rtl'][direction='vertical-right']) #list #selection-indicator {
-    left: 0;
-}
-
-:host([dir='ltr'][direction='vertical-right']) #list #selection-indicator,
-:host([dir='rtl'][direction='vertical']) #list #selection-indicator {
-    left: auto;
-    right: 0;
-}
-
-:host([disabled]) #list #selection-indicator {
-    background-color: var(
-        --spectrum-tabs-m-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
-    );
-}
-
-:host([disabled]) ::slotted(sp-tab) {
-    color: var(
-        --spectrum-tabs-m-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
-    );
+:host([direction='vertical-right']) #list #selection-indicator {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
 }
 
 #list {
     justify-content: var(--swc-tabs-list-justify-content);
 }
 
-:host(:not([direction^='vertical'])) #list {
-    padding-bottom: var(--spectrum-tabs-quiet-textonly-divider-size);
+:host([disabled]) #list #selection-indicator {
+    background-color: var(
+        --mod-tabs-color-disabled,
+        var(--spectrum-tabs-color-disabled)
+    );
 }
 
-/*
- * The upstream feature request https://github.com/adobe/spectrum-css/issues/637
- * is marked as closed, but this is at least not available in the 5.x version,
- * so overriding --spectrum-tabs-list-background-direction for now.
- * TODO: remove
- */
-
-:host([dir='ltr'][direction='vertical']) #list,
-:host([dir='rtl'][direction='vertical-right']) #list {
-    padding-left: var(--spectrum-tabs-quiet-textonly-divider-size);
-
-    --spectrum-tabs-list-background-direction: right;
-}
-
-:host([dir='rtl'][direction='vertical']) #list,
-:host([dir='ltr'][direction='vertical-right']) #list {
-    padding-right: var(--spectrum-tabs-quiet-textonly-divider-size);
-
-    --spectrum-tabs-list-background-direction: left;
+:host([disabled]) ::slotted(sp-tab) {
+    color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
 }
 
 :host([disabled]) #list {
@@ -104,72 +56,17 @@ governing permissions and limitations under the License.
 }
 
 /*
+ * TODO remove after next tabs release
  * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
  * then we'll need to place this at `top: 0;` ourselves.
  */
 :host([direction='vertical-right']) #list #selection-indicator,
 :host([direction='vertical']) #list #selection-indicator {
-    top: 0;
-}
-
-/* 
- * Since #tab is the shadowSelector for tab-item, the default line-height
- * declaration in #tab overrides the compact line-height declared in
- * :host([direction='vertical'][compact]) ::slotted(*)
- */
-:host([compact]) {
-    --spectrum-tabs-height: var(--spectrum-tabs-quiet-compact-height);
-}
-
-/*
- * Workaround for https://github.com/adobe/spectrum-css/issues/1526
- * TODO: remove when fixed upstream
- */
-@media (forced-colors: none) {
-    :host([compact]:not([quiet])) #list {
-        --spectrum-tabs-textonly-divider-background-color: unset !important;
-    }
-}
-
-@media (forced-colors: active) {
-    :host {
-        --spectrum-tabs-textonly-divider-background-color: unset !important;
-    }
-}
-
-/* 
- * The shorthand border declaration in :host([direction='horizontal']) was overiding
- * the border-bottom-color declared in :host 
- */
-:host([direction='horizontal']:not([quiet])) #list {
-    border-bottom-color: var(
-        --spectrum-tabs-rule-color,
-        var(--spectrum-global-color-gray-200)
-    );
-}
-
-:host([dir='rtl'][direction='vertical-right']) #list #selection-indicator {
-    /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-    right: auto;
-    left: 0;
+    inset-block-start: 0;
 }
 
 #selection-indicator.first-position {
     transition: none;
-}
-
-:host([dir='ltr'][direction='vertical-right']) #list ::slotted(:not([slot])) {
-    margin-left: 0;
-    margin-right: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
-
-    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
-}
-
-:host([dir='rtl'][direction='vertical-right']) #list ::slotted(:not([slot])) {
-    margin-right: 0;
-    margin-left: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
-
-    /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item */
 }
 
 :host([dir][direction='horizontal']) #list.scroll {
@@ -179,10 +76,4 @@ governing permissions and limitations under the License.
 
 :host([dir][direction='horizontal']) #list.scroll::-webkit-scrollbar {
     display: none;
-}
-
-:host([quiet][emphasized][direction]) #list {
-    --spectrum-tabs-textonly-divider-background-color: var(
-        --spectrum-tabs-quiet-textonly-divider-background-color
-    );
 }

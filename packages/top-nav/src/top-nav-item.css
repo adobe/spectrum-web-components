@@ -20,21 +20,30 @@ a:focus {
 
 :host(:focus-within) {
     color: var(
-        --spectrum-tabs-m-text-color-key-focus,
-        var(--spectrum-alias-text-color-hover)
+        --mod-tabs-color-key-focus,
+        var(--spectrum-tabs-color-key-focus)
     ); /* .spectrum-Tabs-item.focus-ring */
 }
 
 :host(:focus-within):before {
     border-color: var(
-        --spectrum-tabs-m-focus-ring-color,
-        var(--spectrum-alias-border-color-key-focus)
+        --highcontrast-tabs-focus-indicator-color,
+        var(
+            --mod-tabs-focus-indicator-color,
+            var(--spectrum-tabs-focus-indicator-color)
+        )
     ); /* .spectrum-Tabs-item.focus-ring:before */
 }
 
 :host(:focus-within) ::slotted([slot='icon']) {
     color: var(
-        --spectrum-tabs-m-icon-color-key-focus,
-        var(--spectrum-alias-icon-color-key-focus)
+        --mod-tabs-color-key-focus,
+        var(--spectrum-tabs-color-key-focus)
     ); /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-tabs-focus-indicator-color: canvastext;
+    }
 }
