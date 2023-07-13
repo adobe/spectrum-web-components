@@ -127,7 +127,7 @@ export function runSplitButtonTests(
             findAccessibilityNode<NamedRoledPopupNode>(
                 snapshot,
                 (node) =>
-                    node.role === 'button' &&
+                    (node.role === 'button' || node.role === 'buttonmenu') &&
                     node.name === 'Option 1' &&
                     node.haspopup
             ),
@@ -147,7 +147,7 @@ export function runSplitButtonTests(
             findAccessibilityNode<NamedRoledPopupNode>(
                 snapshot,
                 (node) =>
-                    node.role === 'button' &&
+                    (node.role === 'button' || node.role === 'buttonmenu') &&
                     node.name === 'Test' &&
                     node.haspopup
             ),
