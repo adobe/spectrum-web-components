@@ -19,17 +19,14 @@ export const timeSegmentTypes: Intl.DateTimeFormatPartTypes[] = [
 ];
 
 export interface TimeSegment extends Omit<Intl.DateTimeFormatPart, 'value'> {
+    /** A placeholder string for the segment */
+    placeholder?: string;
+
     /** The formatted text for the segment */
     formatted?: string;
 
     /** The numeric value for the segment, if applicable */
-    currentValue?: number;
-
-    /** The formatted text saved as a number used by the "hour" segment when is a 12-hour clock */
-    formattedValue?: number;
-
-    /** A placeholder string for the segment */
-    placeholder?: string;
+    value?: number;
 
     /** The minimum numeric value for the segment, if applicable */
     minValue?: number;
@@ -40,7 +37,7 @@ export interface TimeSegment extends Omit<Intl.DateTimeFormatPart, 'value'> {
 
 export type TimeSegmentValueAndLimits = Pick<
     TimeSegment,
-    'currentValue' | 'minValue' | 'maxValue'
+    'value' | 'minValue' | 'maxValue'
 >;
 
 /** AM modifier: `0` hours */
@@ -49,4 +46,14 @@ export const AM = 0;
 /** PM modifier: `12` hours */
 export const PM = 12;
 
-export const defaultLocale = 'en-US';
+/** Minimum hour value if AM */
+export const minHourAM = AM;
+
+/** Maximum hour value if AM */
+export const maxHourAM = 11;
+
+/** Minimum hour value if PM */
+export const minHourPM = PM;
+
+/** Maximum hour value if PM */
+export const maxHourPM = 23;

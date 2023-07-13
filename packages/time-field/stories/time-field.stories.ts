@@ -9,11 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Time } from '@internationalized/date';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { defaultLocale, Granularity } from '../src/types.js';
+import { Granularity } from '../src/types.js';
 
 import '@spectrum-web-components/time-field/sp-time-field.js';
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -46,6 +45,8 @@ const locales = [
     'zz-ZY',
     'zz-ZZ',
 ] as const;
+
+const defaultLocale = 'en-US';
 
 const granularities: Granularity[] = ['hour', 'minute', 'second'];
 
@@ -143,7 +144,7 @@ interface StoryArgs {
     valid?: boolean;
     invalid?: boolean;
 
-    onChange?: (time: Time) => void;
+    onChange?: (dateTime: Date) => void;
 
     [prop: string]: unknown;
 }
@@ -187,9 +188,8 @@ export const selectedDateTime = (args: StoryArgs = {}): TemplateResult[] => {
     });
 
     return [
-        new Date(2015, 1, 28, 9, 31, 7),
+        new Date(1995, 1, 28, 9, 31, 7),
         new Date(2021, 10, 2, 16, 1, 54),
-        new Date(Date.UTC(1996, 5, 4, 3, 2, 1)),
     ].map((dateTime) => {
         const formatted = formatter.format(dateTime);
         const title = `Selected Date/Time: ${formatted}`;
@@ -300,9 +300,7 @@ export const valid = (args: StoryArgs = {}): TemplateResult => {
     return renderTimeField(`Is valid? ${args.valid}`, args);
 };
 
-valid.story = {
-    name: 'Is valid?',
-};
+valid.storyName = 'Is valid?';
 
 valid.argTypes = {
     valid: {
@@ -323,9 +321,7 @@ export const invalid = (args: StoryArgs = {}): TemplateResult => {
     return renderTimeField(`Is invalid? ${args.invalid}`, args);
 };
 
-invalid.story = {
-    name: 'Is invalid?',
-};
+valid.storyName = 'Is invalid?';
 
 invalid.argTypes = {
     invalid: {

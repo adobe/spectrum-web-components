@@ -33,8 +33,11 @@ import { when } from 'lit/directives/when.js';
 
 import {
     AM,
-    defaultLocale,
     Granularity,
+    maxHourAM,
+    maxHourPM,
+    minHourAM,
+    minHourPM,
     PM,
     TimeSegment,
     timeSegmentTypes,
@@ -188,9 +191,7 @@ export class TimeField extends TextfieldBase {
     public renderEditableSegment(segment: TimeSegment): TemplateResult {
         const isActive = !this.disabled && !this.readonly;
 
-        const isPlaceholderVisible = Boolean(
-            segment.currentValue === undefined
-        );
+        const isPlaceholderVisible = Boolean(segment.value === undefined);
 
         const segmentClasses = {
             'is-placeholder': isPlaceholderVisible,
@@ -288,36 +289,64 @@ export class TimeField extends TextfieldBase {
         const max = segment.maxValue;
 
         if (min !== undefined && max !== undefined) {
-            const typed = Number(event.key);
+            const typedValue = Number(event.key);
+            const isHourAmPm = this._is12HourClock && segment.type === 'hour';
+            const maxLength = String(max).length;
 
+            let previousValue = segment.value;
             let newValue: number;
 
-            if (this._is12HourClock && segment.type === 'hour') {
-                const formattedValue = segment.formattedValue;
+            if (
+                isHourAmPm &&
+                previousValue !== undefined &&
+                this._isPM(previousValue)
+            ) {
+                previousValue -= PM;
+            }
 
-                if (formattedValue !== undefined) {
-                    newValue = Number(`${formattedValue}${typed}`);
+            newValue =
+                previousValue !== undefined
+                    ? Number(`${previousValue}${typedValue}`)
+                    : typedValue;
 
-                    if (this._isPM(min)) {
-                        newValue += min;
-                    }
-                } else {
-                    newValue = this._isPM(min) ? typed + min : typed;
+            if (String(newValue).length > maxLength) {
+                newValue = isHourAmPm
+                    ? typedValue
+                    : Number(String(newValue).slice(1));
+            }
+
+            // Defines the value that should be used if the new defined value is less than the minimum allowed
+            const useTypedValueOrMin = typedValue >= min ? typedValue : min;
+
+            // Defines the value that should be used if the new defined value is greater than the maximum allowed
+            const useTypedValueOrMax = typedValue <= max ? typedValue : max;
+
+            if (isHourAmPm) {
+                const isPM = this._isPM(min);
+
+                if (isPM && newValue !== min && newValue > maxHourAM) {
+                    newValue = Number(String(newValue).slice(1));
+                } else if (newValue > max) {
+                    const useMinHourAM = !isPM && newValue === PM;
+                    newValue = useMinHourAM ? minHourAM : useTypedValueOrMax;
+                }
+
+                if (isPM && newValue !== min) {
+                    newValue += PM;
                 }
             } else {
-                const previousValue = segment.currentValue;
+                if (String(newValue).length > maxLength) {
+                    newValue = Number(String(newValue).slice(1));
+                }
 
-                newValue =
-                    previousValue !== undefined
-                        ? Number(`${previousValue}${typed}`)
-                        : typed;
+                if (newValue < min) {
+                    newValue = useTypedValueOrMin;
+                } else if (newValue > max) {
+                    newValue = useTypedValueOrMax;
+                }
             }
 
-            if (newValue < min || newValue > max) {
-                newValue = typed;
-            }
-
-            segment.currentValue = newValue;
+            segment.value = newValue;
 
             this._valueChanged(segment);
         }
@@ -325,16 +354,38 @@ export class TimeField extends TextfieldBase {
 
     public handleClear(segment: TimeSegment): void {
         if (segment) {
-            const previousValue =
-                this._is12HourClock && segment.type === 'hour'
-                    ? segment.formattedValue
-                    : segment.currentValue;
+            let previousValue = segment.value;
 
             if (previousValue !== undefined) {
-                const newValue = String(previousValue).slice(0, -1);
+                let newValue: string | undefined;
 
-                segment.currentValue =
-                    (newValue && Number(newValue)) || undefined;
+                if (this._is12HourClock && segment.type === 'hour') {
+                    const isPM =
+                        segment.minValue !== undefined &&
+                        this._isPM(segment.minValue);
+
+                    if (isPM) {
+                        previousValue -= PM;
+                    }
+
+                    newValue = String(previousValue).slice(0, -1);
+
+                    if (newValue === '' && previousValue === AM) {
+                        newValue = String(previousValue + (isPM ? PM : AM));
+                        newValue = newValue.slice(0, -1);
+                    }
+
+                    if (newValue !== '' && isPM) {
+                        newValue = String(Number(newValue) + PM);
+                    }
+                } else {
+                    newValue =
+                        segment.type === 'dayPeriod'
+                            ? undefined
+                            : String(previousValue).slice(0, -1);
+                }
+
+                segment.value = (newValue && Number(newValue)) || undefined;
 
                 this._valueChanged(segment);
             }
@@ -384,9 +435,9 @@ export class TimeField extends TextfieldBase {
     private _setNewTime(): void {
         this._newDateTime = undefined;
 
-        const hasHour = this._hourSegment?.currentValue !== undefined;
-        const hasMinute = this._minuteSegment?.currentValue !== undefined;
-        const hasSecond = this._secondSegment?.currentValue !== undefined;
+        const hasHour = this._hourSegment?.value !== undefined;
+        const hasMinute = this._minuteSegment?.value !== undefined;
+        const hasSecond = this._secondSegment?.value !== undefined;
 
         if (
             (this.granularity === 'hour' && hasHour) ||
@@ -398,9 +449,9 @@ export class TimeField extends TextfieldBase {
                 this._currentDateTime.month,
                 this._currentDateTime.day,
 
-                this._hourSegment?.currentValue,
-                this._minuteSegment?.currentValue,
-                this._secondSegment?.currentValue
+                this._hourSegment?.value,
+                this._minuteSegment?.value,
+                this._secondSegment?.value
             );
         }
     }
@@ -456,7 +507,7 @@ export class TimeField extends TextfieldBase {
      * @param part - Part/segment to be "translated" (mapped)
      */
     private _mapToTimeSegment(part: Intl.DateTimeFormatPart): TimeSegment {
-        const { minValue, maxValue, currentValue } = this._getSegmentDetails(
+        const { value, minValue, maxValue } = this._getSegmentDetails(
             part.type
         );
 
@@ -464,7 +515,7 @@ export class TimeField extends TextfieldBase {
             type: part.type,
             placeholder: this._getPlaceholder(part.type, part.value),
             formatted: part.value,
-            currentValue,
+            value,
             minValue,
             maxValue,
         };
@@ -480,7 +531,7 @@ export class TimeField extends TextfieldBase {
      * @param segment - Segment to be updated
      */
     private _formatValues(segment: TimeSegment): void {
-        if (segment.currentValue !== undefined) {
+        if (segment.value !== undefined) {
             const timeOptions: Intl.DateTimeFormatOptions = {};
 
             let hour = this._currentDateTime.hour;
@@ -494,25 +545,25 @@ export class TimeField extends TextfieldBase {
                         padMaxLength = 1;
                     }
 
-                    hour = segment.currentValue;
+                    hour = segment.value;
                     timeOptions.hour = 'numeric';
                     break;
                 }
 
                 case 'minute': {
-                    minute = segment.currentValue;
+                    minute = segment.value;
                     timeOptions.minute = '2-digit';
                     break;
                 }
 
                 case 'second': {
-                    second = segment.currentValue;
+                    second = segment.value;
                     timeOptions.second = '2-digit';
                     break;
                 }
 
                 case 'dayPeriod': {
-                    hour = (segment.currentValue || 0) + 1;
+                    hour = (segment.value || 0) + 1;
                     timeOptions.hour = 'numeric';
                     break;
                 }
@@ -526,24 +577,6 @@ export class TimeField extends TextfieldBase {
                 .find((part) => part.type === segment.type)?.value;
 
             segment.formatted = formatted?.padStart(padMaxLength, '0');
-
-            /**
-             * For 12-hour clocks, the property used to set the new time entered by the user is `formattedValue` instead
-             * of `currentValue`, which is used in all other cases. The value of the `formattedValue` property is
-             * obtained using the default locale, `en-US`, in this way we guarantee that the number that will be stored
-             * will have the correct type (some locales use numbers other than Arabic and they cannot be used in
-             * mathematical operations)
-             */
-            if (this._is12HourClock && segment.type === 'hour') {
-                const formattedValue = new DateFormatter(
-                    defaultLocale,
-                    timeOptions
-                )
-                    .formatToParts(date)
-                    .find((part) => part.type === segment.type)?.value;
-
-                segment.formattedValue = Number(formattedValue) || undefined;
-            }
         }
     }
 
@@ -594,7 +627,7 @@ export class TimeField extends TextfieldBase {
                 return {
                     minValue: AM,
                     maxValue: PM,
-                    currentValue:
+                    value:
                         (this._newDateTime?.hour &&
                             this._getAmPmModifier(this._newDateTime.hour)) ??
                         (this.selectedDateTime &&
@@ -613,14 +646,14 @@ export class TimeField extends TextfieldBase {
                         this._newDateTime?.hour ?? this._currentDateTime.hour
                     );
 
-                    min = isPM ? PM : AM;
-                    max = isPM ? 23 : 11;
+                    min = isPM ? minHourPM : minHourAM;
+                    max = isPM ? maxHourPM : maxHourAM;
                 }
 
                 return {
                     minValue: min,
                     maxValue: max,
-                    currentValue:
+                    value:
                         this._newDateTime?.hour ??
                         (this.selectedDateTime && this._currentDateTime.hour) ??
                         undefined,
@@ -641,7 +674,7 @@ export class TimeField extends TextfieldBase {
                 return {
                     minValue: 0,
                     maxValue: 59,
-                    currentValue: type === 'minute' ? minutes : seconds,
+                    value: type === 'minute' ? minutes : seconds,
                 };
 
             default:
@@ -654,15 +687,15 @@ export class TimeField extends TextfieldBase {
         const max = segment.maxValue;
 
         if (min !== undefined && max !== undefined) {
-            if (segment.currentValue === undefined) {
-                segment.currentValue = min;
+            if (segment.value === undefined) {
+                segment.value = min;
             } else if (segment.type === 'dayPeriod') {
-                segment.currentValue = segment.currentValue === AM ? PM : AM;
+                segment.value = segment.value === AM ? PM : AM;
             } else {
-                segment.currentValue++;
+                segment.value++;
 
-                if (segment.currentValue > max) {
-                    segment.currentValue = min;
+                if (segment.value > max) {
+                    segment.value = min;
                 }
             }
         }
@@ -675,15 +708,15 @@ export class TimeField extends TextfieldBase {
         const max = segment.maxValue;
 
         if (min !== undefined && max !== undefined) {
-            if (segment.currentValue === undefined) {
-                segment.currentValue = max;
+            if (segment.value === undefined) {
+                segment.value = max;
             } else if (segment.type === 'dayPeriod') {
-                segment.currentValue = segment.currentValue === AM ? PM : AM;
+                segment.value = segment.value === AM ? PM : AM;
             } else {
-                segment.currentValue--;
+                segment.value--;
 
-                if (segment.currentValue < min) {
-                    segment.currentValue = max;
+                if (segment.value < min) {
+                    segment.value = max;
                 }
             }
         }
@@ -705,26 +738,61 @@ export class TimeField extends TextfieldBase {
 
     /**
      * When the day period is changed, it automatically adjusts the hour if it has already been informed previously to
-     * match the new period (AM or PM)
+     * match the new period (AM or PM). In addition, the minimum and maximum values of the hour are also changed
      */
     private _updateHour(): void {
-        if (
-            this._hourSegment &&
-            this._dayPeriodSegment &&
-            this._hourSegment.currentValue !== undefined &&
-            this._dayPeriodSegment.currentValue !== undefined
-        ) {
-            if (
-                this._dayPeriodSegment.currentValue === AM &&
-                this._isPM(this._hourSegment.currentValue)
-            ) {
-                this._hourSegment.currentValue -= PM;
-            } else if (
-                this._dayPeriodSegment.currentValue === PM &&
-                !this._isPM(this._hourSegment.currentValue)
-            ) {
-                this._hourSegment.currentValue += PM;
+        if (this._hourSegment && this._dayPeriodSegment) {
+            if (this._dayPeriodSegment.value !== undefined) {
+                const isAM = this._dayPeriodSegment.value === AM;
+                const isPM = this._dayPeriodSegment.value === PM;
+
+                this._hourSegment.minValue = isPM ? minHourPM : minHourAM;
+                this._hourSegment.maxValue = isPM ? maxHourPM : maxHourAM;
+
+                if (this._hourSegment.value !== undefined) {
+                    if (isAM && this._isPM(this._hourSegment.value)) {
+                        this._hourSegment.value -= PM;
+                    } else if (isPM && !this._isPM(this._hourSegment.value)) {
+                        this._hourSegment.value += PM;
+                    }
+                }
+            } else {
+                this._resetHourAndDayPeriod();
             }
+        }
+    }
+
+    private _resetHourAndDayPeriod(): void {
+        const dayPeriod = this._getSegmentDetails('dayPeriod');
+
+        if (this._dayPeriodSegment) {
+            this._dayPeriodSegment.value = dayPeriod.value;
+            this._dayPeriodSegment.minValue = dayPeriod.minValue;
+            this._dayPeriodSegment.maxValue = dayPeriod.maxValue;
+
+            if (dayPeriod.value !== undefined) {
+                this._formatValues(this._dayPeriodSegment);
+            } else {
+                this._dayPeriodSegment.formatted =
+                    this._dayPeriodSegment.placeholder;
+            }
+        }
+
+        const hour = this._getSegmentDetails('hour');
+
+        if (this._hourSegment) {
+            this._hourSegment.minValue = hour.minValue;
+            this._hourSegment.maxValue = hour.maxValue;
+
+            if (this._hourSegment.value !== undefined) {
+                if (this._isPM(this._hourSegment.value)) {
+                    this._hourSegment.value = this._hourSegment.value -= PM;
+                }
+            } else {
+                this._hourSegment.value = hour.value;
+            }
+
+            this._formatValues(this._hourSegment);
         }
     }
 
@@ -735,29 +803,26 @@ export class TimeField extends TextfieldBase {
     private _updateDayPeriod(): void {
         if (this._hourSegment && this._dayPeriodSegment) {
             if (
-                this._hourSegment.currentValue !== undefined &&
-                this._dayPeriodSegment.currentValue === undefined
+                this._hourSegment.value !== undefined &&
+                this._dayPeriodSegment.value === undefined
             ) {
-                this._dayPeriodSegment.currentValue = this._getAmPmModifier(
-                    this._hourSegment.currentValue
+                this._dayPeriodSegment.value = this._getAmPmModifier(
+                    this._hourSegment.value
                 );
             } else if (
-                this._hourSegment.currentValue === undefined &&
-                this._dayPeriodSegment.currentValue !== undefined
+                this._hourSegment.value === undefined &&
+                this._dayPeriodSegment.value !== undefined
             ) {
-                this._dayPeriodSegment.currentValue = undefined;
+                this._dayPeriodSegment.value = undefined;
             }
         }
     }
 
     private _valueChanged(segment: TimeSegment): void {
         this._updateHourOrDayPeriod(segment);
-
-        if (segment) {
-            this._formatValues(segment);
-        }
-
+        this._formatValues(segment);
         this._setNewTime();
+
         this.requestUpdate();
 
         if (this._newDateTime) {
