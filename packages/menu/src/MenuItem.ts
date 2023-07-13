@@ -306,7 +306,7 @@ export class MenuItem extends LikeAnchor(
                           id="selected"
                           class="spectrum-UIIcon-Checkmark100 
                             icon 
-                            checkmark 
+                            checkmark
                             ${this.hasIcon
                               ? 'checkmark--withAdjacentIcon'
                               : 'checkmark--withAdjacentText'}"

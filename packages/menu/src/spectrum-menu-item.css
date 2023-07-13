@@ -13,7 +13,14 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ::slotted([slot='icon']) {
     fill: var(
-        --highcontrast-menu-item-label-icon-color-default,
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-item-label-icon-color-default,
+            var(--spectrum-menu-item-label-icon-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
         var(
             --mod-menu-item-label-icon-color-default,
             var(--spectrum-menu-item-label-icon-color-default)
@@ -29,6 +36,13 @@ governing permissions and limitations under the License.
         )
     );
     align-self: center;
+    color: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
     display: var(
         --mod-menu-checkmark-display,
         var(--spectrum-menu-checkmark-display)
@@ -38,8 +52,11 @@ governing permissions and limitations under the License.
 :host {
     align-items: center;
     background-color: var(
-        --mod-menu-item-background-color-default,
-        var(--spectrum-menu-item-background-color-default)
+        --highcontrast-menu-item-background-color-default,
+        var(
+            --mod-menu-item-background-color-default,
+            var(--spectrum-menu-item-background-color-default)
+        )
     );
     box-sizing: border-box;
     cursor: pointer;
@@ -79,19 +96,105 @@ governing permissions and limitations under the License.
     grid-area: submenuItemValueArea;
 }
 :host(:focus),
-:host([focused]),
+:host([focused]) {
+    background-color: var(
+        --highcontrast-menu-item-background-color-focus,
+        var(
+            --mod-menu-item-background-color-key-focus,
+            var(--spectrum-menu-item-background-color-key-focus)
+        )
+    );
+    outline: none;
+}
+:host(:focus) > #label,
+:host([focused]) > #label {
+    color: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-label-content-color-focus,
+            var(--spectrum-menu-item-label-content-color-focus)
+        )
+    );
+}
+:host(:focus) > .spectrum-Menu-itemDescription,
+:host([focused]) > .spectrum-Menu-itemDescription {
+    color: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-description-color-focus,
+            var(--spectrum-menu-item-description-color-focus)
+        )
+    );
+}
+:host(:focus) > ::slotted([slot='value']),
+:host([focused]) > ::slotted([slot='value']) {
+    color: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-value-color-focus,
+            var(--spectrum-menu-item-value-color-focus)
+        )
+    );
+}
+:host(:focus) > .icon:not(.chevron, .checkmark),
+:host([focused]) > .icon:not(.chevron, .checkmark) {
+    fill: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-focus,
+            var(--spectrum-menu-item-label-icon-color-focus)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-focus,
+            var(--spectrum-menu-item-label-icon-color-focus)
+        )
+    );
+}
+:host(:focus) > .chevron,
+:host([focused]) > .chevron {
+    fill: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+}
+:host(:focus) > .checkmark,
+:host([focused]) > .checkmark {
+    fill: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-checkmark-icon-color-focus,
+            var(--spectrum-menu-checkmark-icon-color-focus)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-checkmark-icon-color-focus,
+            var(--spectrum-menu-checkmark-icon-color-focus)
+        )
+    );
+}
 :host.focus-visible {
-    background-color: var(
-        --highcontrast-menu-item-background-color-key-focus,
-        var(
-            --mod-menu-item-background-color-key-focus,
-            var(--spectrum-menu-item-background-color-key-focus)
-        )
-    );
     box-shadow: inset
-        var(
-            --mod-menu-item-focus-indicator-width,
-            var(--spectrum-menu-item-focus-indicator-width)
+        calc(
+            var(
+                    --mod-menu-item-focus-indicator-width,
+                    var(--spectrum-menu-item-focus-indicator-width)
+                ) *
+                var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
         )
         0 0 0
         var(
@@ -101,22 +204,15 @@ governing permissions and limitations under the License.
                 var(--spectrum-menu-item-focus-indicator-color)
             )
         );
-    outline: none;
 }
-:host(:focus),
-:host([focused]),
 :host:focus-visible {
-    background-color: var(
-        --highcontrast-menu-item-background-color-key-focus,
-        var(
-            --mod-menu-item-background-color-key-focus,
-            var(--spectrum-menu-item-background-color-key-focus)
-        )
-    );
     box-shadow: inset
-        var(
-            --mod-menu-item-focus-indicator-width,
-            var(--spectrum-menu-item-focus-indicator-width)
+        calc(
+            var(
+                    --mod-menu-item-focus-indicator-width,
+                    var(--spectrum-menu-item-focus-indicator-width)
+                ) *
+                var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
         )
         0 0 0
         var(
@@ -126,235 +222,88 @@ governing permissions and limitations under the License.
                 var(--spectrum-menu-item-focus-indicator-color)
             )
         );
-    outline: none;
 }
-:host(:focus) #label,
-:host([focused]) #label,
-:host.focus-visible #label {
-    color: var(
-        --highcontrast-menu-item-label-content-color-focus,
-        var(
-            --mod-menu-item-label-content-color-focus,
-            var(--spectrum-menu-item-label-content-color-focus)
-        )
-    );
-}
-:host(:focus) #label,
-:host([focused]) #label,
-:host:focus-visible #label {
-    color: var(
-        --highcontrast-menu-item-label-content-color-focus,
-        var(
-            --mod-menu-item-label-content-color-focus,
-            var(--spectrum-menu-item-label-content-color-focus)
-        )
-    );
-}
-:host(:focus) .spectrum-Menu-itemDescription,
-:host([focused]) .spectrum-Menu-itemDescription,
-:host.focus-visible .spectrum-Menu-itemDescription {
-    color: var(
-        --highcontrast-menu-item-description-color-focus,
-        var(
-            --mod-menu-item-description-color-focus,
-            var(--spectrum-menu-item-description-color-focus)
-        )
-    );
-}
-:host(:focus) .spectrum-Menu-itemDescription,
-:host([focused]) .spectrum-Menu-itemDescription,
-:host:focus-visible .spectrum-Menu-itemDescription {
-    color: var(
-        --highcontrast-menu-item-description-color-focus,
-        var(
-            --mod-menu-item-description-color-focus,
-            var(--spectrum-menu-item-description-color-focus)
-        )
-    );
-}
-:host(:focus) ::slotted([slot='value']),
-:host([focused]) ::slotted([slot='value']),
-:host.focus-visible ::slotted([slot='value']) {
-    color: var(
-        --highcontrast-menu-item-value-color-focus,
-        var(
-            --mod-menu-item-value-color-focus,
-            var(--spectrum-menu-item-value-color-focus)
-        )
-    );
-}
-:host(:focus) ::slotted([slot='value']),
-:host([focused]) ::slotted([slot='value']),
-:host:focus-visible ::slotted([slot='value']) {
-    color: var(
-        --highcontrast-menu-item-value-color-focus,
-        var(
-            --mod-menu-item-value-color-focus,
-            var(--spectrum-menu-item-value-color-focus)
-        )
-    );
-}
-:host(:focus) .icon:not(.chevron, .checkmark),
-:host([focused]) .icon:not(.chevron, .checkmark),
-:host.focus-visible .icon:not(.chevron, .checkmark) {
-    fill: var(
-        --highcontrast-menu-item-label-icon-color-focus,
-        var(
-            --mod-menu-item-label-icon-color-focus,
-            var(--spectrum-menu-item-label-icon-color-focus)
-        )
-    );
-}
-:host(:focus) .icon:not(.chevron, .checkmark),
-:host([focused]) .icon:not(.chevron, .checkmark),
-:host:focus-visible .icon:not(.chevron, .checkmark) {
-    fill: var(
-        --highcontrast-menu-item-label-icon-color-focus,
-        var(
-            --mod-menu-item-label-icon-color-focus,
-            var(--spectrum-menu-item-label-icon-color-focus)
-        )
-    );
-}
-:host(:focus) .chevron,
-:host([focused]) .chevron,
-:host.focus-visible .chevron {
-    fill: var(
-        --highcontrast-menu-collapsible-icon-color,
-        var(
-            --mod-menu-collapsible-icon-color,
-            var(--spectrum-menu-collapsible-icon-color)
-        )
-    );
-}
-:host(:focus) .chevron,
-:host([focused]) .chevron,
-:host:focus-visible .chevron {
-    fill: var(
-        --highcontrast-menu-collapsible-icon-color,
-        var(
-            --mod-menu-collapsible-icon-color,
-            var(--spectrum-menu-collapsible-icon-color)
-        )
-    );
-}
-:host(:focus) .checkmark,
-:host([focused]) .checkmark,
-:host.focus-visible .checkmark {
-    fill: var(
-        --highcontrast-menu-checkmark-icon-color-focus,
-        var(
-            --mod-menu-checkmark-icon-color-focus,
-            var(--spectrum-menu-checkmark-icon-color-focus)
-        )
-    );
-}
-:host(:focus) .checkmark,
-:host([focused]) .checkmark,
-:host:focus-visible .checkmark {
-    fill: var(
-        --highcontrast-menu-checkmark-icon-color-focus,
-        var(
-            --mod-menu-checkmark-icon-color-focus,
-            var(--spectrum-menu-checkmark-icon-color-focus)
-        )
-    );
-}
-:host([dir='rtl']).focus-visible,
-:host([dir='rtl']):focus,
-:host([dir='rtl'][focused]) {
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) * -1
-        )
-        0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
-}
-:host([dir='rtl']):focus,
-:host([dir='rtl']):focus-visible,
-:host([dir='rtl'][focused]) {
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) * -1
-        )
-        0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
+:host([dir='rtl']) {
+    --spectrum-menu-item-focus-indicator-direction-scalar: -1;
 }
 :host(:hover) {
     background-color: var(
-        --highcontrast-menu-item-background-color-hover,
+        --highcontrast-menu-item-background-color-focus,
         var(
             --mod-menu-item-background-color-hover,
             var(--spectrum-menu-item-background-color-hover)
         )
     );
 }
-:host(:hover) #label {
+:host(:hover) > #label {
     color: var(
-        --highcontrast-menu-item-label-content-color-hover,
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-label-content-color-hover,
             var(--spectrum-menu-item-label-content-color-hover)
         )
     );
 }
-:host(:hover) .spectrum-Menu-itemDescription {
+:host(:hover) > .spectrum-Menu-itemDescription {
     color: var(
-        --highcontrast-menu-item-description-color-hover,
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-description-color-hover,
             var(--spectrum-menu-item-description-color-hover)
         )
     );
 }
-:host(:hover) ::slotted([slot='value']) {
+:host(:hover) > ::slotted([slot='value']) {
     color: var(
-        --highcontrast-menu-item-value-color-hover,
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-value-color-hover,
             var(--spectrum-menu-item-value-color-hover)
         )
     );
 }
-:host(:hover) .icon:not(.chevron, .checkmark) {
+:host(:hover) > .icon:not(.chevron, .checkmark) {
     fill: var(
-        --highcontrast-menu-item-label-icon-color-hover,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-hover,
+            var(--spectrum-menu-item-label-icon-color-hover)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-label-icon-color-hover,
             var(--spectrum-menu-item-label-icon-color-hover)
         )
     );
 }
-:host(:hover) .chevron {
+:host(:hover) > .chevron {
     fill: var(
-        --highcontrast-menu-collapsible-icon-color,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-collapsible-icon-color,
             var(--spectrum-menu-collapsible-icon-color)
         )
     );
 }
-:host(:hover) .checkmark {
+:host(:hover) > .checkmark {
     fill: var(
-        --highcontrast-menu-checkmark-icon-color-hover,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-checkmark-icon-color-hover,
+            var(--spectrum-menu-checkmark-icon-color-hover)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-checkmark-icon-color-hover,
             var(--spectrum-menu-checkmark-icon-color-hover)
@@ -363,61 +312,82 @@ governing permissions and limitations under the License.
 }
 :host:active {
     background-color: var(
-        --highcontrast-menu-item-background-color-down,
+        --highcontrast-menu-item-background-color-focus,
         var(
             --mod-menu-item-background-color-down,
             var(--spectrum-menu-item-background-color-down)
         )
     );
 }
-:host:active #label {
+:host:active > #label {
     color: var(
-        --highcontrast-menu-item-label-content-color-down,
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-label-content-color-down,
             var(--spectrum-menu-item-label-content-color-down)
         )
     );
 }
-:host:active .spectrum-Menu-itemDescription {
+:host:active > .spectrum-Menu-itemDescription {
     color: var(
-        --highcontrast-menu-item-description-color-down,
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-description-color-down,
             var(--spectrum-menu-item-description-color-down)
         )
     );
 }
-:host:active .icon:not(.chevron, .checkmark) {
-    fill: var(
-        --highcontrast-menu-item-label-icon-color-down,
-        var(
-            --mod-menu-item-label-icon-color-down,
-            var(--spectrum-menu-item-label-icon-color-down)
-        )
-    );
-}
-:host:active ::slotted([slot='value']) {
+:host:active > ::slotted([slot='value']) {
     color: var(
-        --highcontrast-menu-item-value-color-down,
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-value-color-down,
             var(--spectrum-menu-item-value-color-down)
         )
     );
 }
-:host:active .chevron {
+:host:active > .icon:not(.chevron, .checkmark) {
     fill: var(
-        --highcontrast-menu-collapsible-icon-color,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-down,
+            var(--spectrum-menu-item-label-icon-color-down)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-down,
+            var(--spectrum-menu-item-label-icon-color-down)
+        )
+    );
+}
+:host:active > .chevron {
+    fill: var(
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-collapsible-icon-color,
             var(--spectrum-menu-collapsible-icon-color)
         )
     );
 }
-:host:active .checkmark {
+:host:active > .checkmark {
     fill: var(
-        --highcontrast-menu-checkmark-icon-color-down,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-checkmark-icon-color-down,
+            var(--spectrum-menu-checkmark-icon-color-down)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-checkmark-icon-color-down,
             var(--spectrum-menu-checkmark-icon-color-down)
@@ -431,7 +401,7 @@ governing permissions and limitations under the License.
 :host([aria-disabled='true']) #label,
 :host([disabled]) #label {
     color: var(
-        --highcontrast-menu-item-label-content-color-disabled,
+        --highcontrast-menu-item-color-disabled,
         var(
             --mod-menu-item-label-content-color-disabled,
             var(--spectrum-menu-item-label-content-color-disabled)
@@ -441,7 +411,7 @@ governing permissions and limitations under the License.
 :host([aria-disabled='true']) .spectrum-Menu-itemDescription,
 :host([disabled]) .spectrum-Menu-itemDescription {
     color: var(
-        --highcontrast-menu-item-description-color-disabled,
+        --highcontrast-menu-item-color-disabled,
         var(
             --mod-menu-item-description-color-disabled,
             var(--spectrum-menu-item-description-color-disabled)
@@ -451,7 +421,14 @@ governing permissions and limitations under the License.
 :host([aria-disabled='true']) ::slotted([slot='icon']),
 :host([disabled]) ::slotted([slot='icon']) {
     fill: var(
-        --highcontrast-menu-item-label-icon-color-disabled,
+        --highcontrast-menu-item-color-disabled,
+        var(
+            --mod-menu-item-label-icon-color-disabled,
+            var(--spectrum-menu-item-label-icon-color-disabled)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-disabled,
         var(
             --mod-menu-item-label-icon-color-disabled,
             var(--spectrum-menu-item-label-icon-color-disabled)
@@ -465,7 +442,14 @@ governing permissions and limitations under the License.
 :host([aria-disabled='true']:hover) ::slotted([slot='icon']),
 :host([disabled]:hover) ::slotted([slot='icon']) {
     fill: var(
-        --highcontrast-menu-item-label-icon-color-disabled,
+        --highcontrast-menu-item-color-disabled,
+        var(
+            --mod-menu-item-label-icon-color-disabled,
+            var(--spectrum-menu-item-label-icon-color-disabled)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-disabled,
         var(
             --mod-menu-item-label-icon-color-disabled,
             var(--spectrum-menu-item-label-icon-color-disabled)
@@ -484,7 +468,7 @@ governing permissions and limitations under the License.
 }
 #label {
     color: var(
-        --highcontrast-menu-item-label-content-color-default,
+        --highcontrast-menu-item-color-default,
         var(
             --mod-menu-item-label-content-color-default,
             var(--spectrum-menu-item-label-content-color-default)
@@ -539,16 +523,21 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-checkmark-width)
     );
 }
-.checkmark--withAdjacentText,
-.icon--workflow-icon {
+.checkmark,
+.checkmark--withAdjacentIcon {
+    margin-inline-end: var(
+        --mod-menu-item-text-to-control,
+        var(--spectrum-menu-item-text-to-control)
+    );
+}
+::slotted([slot='icon']) {
     margin-inline-end: var(
         --mod-menu-item-label-text-to-visual,
         var(--spectrum-menu-item-label-text-to-visual)
     );
 }
-.checkmark--withAdjacentIcon,
-.chevron--withAdjacentIcon,
-.chevron--withAdjacentText {
+.chevron,
+.chevron--withAdjacentIcon {
     margin-inline-end: var(
         --mod-menu-item-text-to-control,
         var(--spectrum-menu-item-text-to-control)
@@ -556,7 +545,7 @@ governing permissions and limitations under the License.
 }
 .spectrum-Menu-itemDescription {
     color: var(
-        --highcontrast-menu-item-description-color-default,
+        --highcontrast-menu-item-color-default,
         var(
             --mod-menu-item-description-color-default,
             var(--spectrum-menu-item-description-color-default)
@@ -583,7 +572,7 @@ governing permissions and limitations under the License.
 }
 ::slotted([slot='value']) {
     color: var(
-        --highcontrast-menu-item-value-color-default,
+        --highcontrast-menu-item-color-default,
         var(
             --mod-menu-item-value-color-default,
             var(--spectrum-menu-item-value-color-default)
@@ -627,7 +616,14 @@ governing permissions and limitations under the License.
 }
 :host([has-submenu]) .chevron {
     fill: var(
-        --highcontrast-menu-drillin-icon-color-default,
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-drillin-icon-color-default,
+            var(--spectrum-menu-drillin-icon-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
         var(
             --mod-menu-drillin-icon-color-default,
             var(--spectrum-menu-drillin-icon-color-default)
@@ -639,8 +635,8 @@ governing permissions and limitations under the License.
     );
 }
 :host([has-submenu]) .is-open {
-    background-color: var(
-        --highcontrast-menu-item-background-color-hover,
+    --spectrum-menu-item-background-color-default: var(
+        --highcontrast-menu-item-selected-background-color,
         var(
             --mod-menu-item-background-color-hover,
             var(--spectrum-menu-item-background-color-hover)
@@ -649,7 +645,14 @@ governing permissions and limitations under the License.
 }
 :host([has-submenu]) .is-open .icon:not(.chevron, .checkmark) {
     fill: var(
-        --highcontrast-menu-item-label-icon-color-hover,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-hover,
+            var(--spectrum-menu-item-label-icon-color-hover)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-item-label-icon-color-hover,
             var(--spectrum-menu-item-label-icon-color-hover)
@@ -658,7 +661,14 @@ governing permissions and limitations under the License.
 }
 :host([has-submenu]) .is-open .chevron {
     fill: var(
-        --highcontrast-menu-drillin-icon-color-hover,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-drillin-icon-color-hover,
+            var(--spectrum-menu-drillin-icon-color-hover)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-drillin-icon-color-hover,
             var(--spectrum-menu-drillin-icon-color-hover)
@@ -667,7 +677,14 @@ governing permissions and limitations under the License.
 }
 :host([has-submenu]) .is-open .checkmark {
     fill: var(
-        --highcontrast-menu-checkmark-icon-color-hover,
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-hover,
+            var(--spectrum-menu-checkmark-icon-color-hover)
+        )
+    );
+    color: var(
+        --highcontrast-menu-checkmark-icon-color-default,
         var(
             --mod-menu-checkmark-icon-color-hover,
             var(--spectrum-menu-checkmark-icon-color-hover)
@@ -676,29 +693,31 @@ governing permissions and limitations under the License.
 }
 :host([has-submenu]:hover) .chevron {
     fill: var(
-        --highcontrast-menu-drillin-icon-color-hover,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-drillin-icon-color-hover,
+            var(--spectrum-menu-drillin-icon-color-hover)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-drillin-icon-color-hover,
             var(--spectrum-menu-drillin-icon-color-hover)
         )
     );
 }
-:host([has-submenu]).focus-visible .chevron,
 :host([has-submenu]:focus) .chevron,
 :host([has-submenu][focused]) .chevron {
     fill: var(
-        --highcontrast-menu-drillin-icon-color-focus,
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-drillin-icon-color-focus,
             var(--spectrum-menu-drillin-icon-color-focus)
         )
     );
-}
-:host([has-submenu]):focus-visible .chevron,
-:host([has-submenu]:focus) .chevron,
-:host([has-submenu][focused]) .chevron {
-    fill: var(
-        --highcontrast-menu-drillin-icon-color-focus,
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-drillin-icon-color-focus,
             var(--spectrum-menu-drillin-icon-color-focus)
@@ -707,7 +726,14 @@ governing permissions and limitations under the License.
 }
 :host([has-submenu]):active .chevron {
     fill: var(
-        --highcontrast-menu-drillin-icon-color-down,
+        --highcontrast-menu-item-color-focus,
+        var(
+            --mod-menu-drillin-icon-color-down,
+            var(--spectrum-menu-drillin-icon-color-down)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-focus,
         var(
             --mod-menu-drillin-icon-color-down,
             var(--spectrum-menu-drillin-icon-color-down)

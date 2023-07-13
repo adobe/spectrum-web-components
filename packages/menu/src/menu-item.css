@@ -36,7 +36,7 @@ governing permissions and limitations under the License.
     margin-left: auto;
 }
 
-.checkmark {
+/* .checkmark {
     color: var(
         --highcontrast-menu-checkmark-icon-color-default,
         var(
@@ -54,4 +54,4 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-drillin-icon-color-default)
         )
     );
-}
+} */

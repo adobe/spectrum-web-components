@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .header {
     color: var(
-        --highcontrast-menu-section-header-color,
+        --highcontrast-menu-item-color-default,
         var(
             --mod-menu-section-header-color,
             var(--spectrum-menu-section-header-color)
@@ -36,5 +36,19 @@ governing permissions and limitations under the License.
     min-inline-size: var(
         --mod-menu-section-header-min-width,
         var(--spectrum-menu-section-header-min-width)
+    );
+    padding-block-end: var(
+        --mod-menu-section-header-bottom-edge-to-text,
+        var(
+            --mod-menu-item-bottom-edge-to-text,
+            var(--spectrum-menu-item-bottom-edge-to-text)
+        )
+    );
+    padding-block-start: var(
+        --mod-menu-section-header-top-edge-to-text,
+        var(
+            --mod-menu-item-top-edge-to-text,
+            var(--spectrum-menu-item-top-edge-to-text)
+        )
     );
 }

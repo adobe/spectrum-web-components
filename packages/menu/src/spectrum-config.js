@@ -81,25 +81,13 @@ const config = {
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),
                 converter.classToClass('spectrum-Menu-chevron', 'chevron'),
                 converter.classToClass(
-                    'spectrum-Menu-chevron--withAdjacentText',
-                    'chevron--withAdjacentText'
-                ),
-                converter.classToClass(
                     'spectrum-Menu-chevron--withAdjacentIcon',
                     'chevron--withAdjacentIcon'
                 ),
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
                 converter.classToClass(
-                    'spectrum-Menu-checkmark--withAdjacentText',
-                    'checkmark--withAdjacentText'
-                ),
-                converter.classToClass(
                     'spectrum-Menu-checkmark--withAdjacentIcon',
                     'checkmark--withAdjacentIcon'
-                ),
-                converter.classToClass(
-                    'spectrum-Menu-itemIcon--workflowIcon',
-                    'icon--workflow-icon'
                 ),
                 converter.classToAttribute(
                     'spectrum-Menu-item--drillIn',
@@ -107,6 +95,10 @@ const config = {
                 ),
                 converter.classToSlotted('spectrum-Icon', 'icon'),
                 converter.classToSlotted('spectrum-Menu-itemIcon', 'icon'),
+                converter.classToSlotted(
+                    'spectrum-Menu-itemIcon--workflowIcon',
+                    'icon'
+                ),
                 converter.classToSlotted('spectrum-Menu-itemValue', 'value'),
                 converter.classToClass(
                     'spectrum-menu-itemSelection',
@@ -273,10 +265,6 @@ const config = {
             components: [
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
                 converter.classToClass(
-                    'spectrum-Menu-checkmark--withAdjacentText',
-                    'checkmark--withAdjacentText'
-                ),
-                converter.classToClass(
                     'spectrum-Menu-checkmark--withAdjacentIcon',
                     'checkmark--withAdjacentIcon'
                 ),
@@ -310,10 +298,6 @@ const config = {
             ],
             components: [
                 converter.classToClass('spectrum-Menu-chevron', 'chevron'),
-                converter.classToClass(
-                    'spectrum-Menu-chevron--withAdjacentText',
-                    'chevron--withAdjacentText'
-                ),
                 converter.classToClass(
                     'spectrum-Menu-chevron--withAdjacentIcon',
                     'chevron--withAdjacentIcon'
@@ -358,7 +342,8 @@ const config = {
                     builder.class('spectrum-Menu'),
                     builder.class('is-selectable'),
                     builder.combinator(' '),
-                    builder.class('spectrum-Menu-item--is-selected'),
+                    builder.class('spectrum-Menu-item'),
+                    builder.class('is-selected'),
                 ],
             ],
             components: [
@@ -387,7 +372,10 @@ const config = {
                 },
                 {
                     collapseSelector: true,
-                    find: [builder.class('spectrum-Menu-item--is-selected')],
+                    find: [
+                        builder.class('spectrum-Menu-item'),
+                        builder.class('is-selected'),
+                    ],
                     replace: [
                         {
                             replace: {

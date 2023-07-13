@@ -24,6 +24,13 @@ governing permissions and limitations under the License.
         --mod-menu-item-checkmark-height,
         var(--spectrum-menu-item-checkmark-height)
     );
+    color: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
     display: var(
         --mod-menu-checkmark-display,
         var(--spectrum-menu-checkmark-display)
@@ -35,12 +42,7 @@ governing permissions and limitations under the License.
     );
     opacity: 1;
 }
-.checkmark--withAdjacentText {
-    margin-inline-end: var(
-        --mod-menu-item-label-text-to-visual,
-        var(--spectrum-menu-item-label-text-to-visual)
-    );
-}
+.checkmark,
 .checkmark--withAdjacentIcon {
     margin-inline-end: var(
         --mod-menu-item-text-to-control,

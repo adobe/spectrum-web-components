@@ -19,6 +19,9 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-export.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 
 export default {
@@ -103,10 +106,32 @@ export const multipleSelect = (): TemplateResult => {
         </sp-popover>
     `;
 };
+
+export const selectsWithIcons = (): TemplateResult => {
+    return html`
+        <sp-popover open>
+            <sp-menu selects="single">
+                <sp-menu-item>
+                    <sp-icon-export slot="icon"></sp-icon-export>
+                    Quick export
+                </sp-menu-item>
+                <sp-menu-item>
+                    <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                    Open a copy
+                </sp-menu-item>
+                <sp-menu-item>
+                    <sp-icon-share slot="icon"></sp-icon-share>
+                    Share link
+                </sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
+};
+
 export const headersAndIcons = (): TemplateResult => {
     return html`
         <sp-popover open>
-            <sp-menu>
+            <sp-menu selects="single">
                 <sp-menu-group>
                     <span slot="header">Section Heading</span>
                     <sp-menu-item>Action 1</sp-menu-item>
