@@ -20,3 +20,6 @@ governing permissions and limitations under the License.
 :host(:last-of-type) {
     border-bottom: none;
 }
+
+/* @todo: When section header is supported, set selector equivalent of 
+   ".spectrum-Table-row--sectionHeader .spectrum-Table-cell" to "block-size: auto". */
