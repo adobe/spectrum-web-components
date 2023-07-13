@@ -64,7 +64,7 @@
         "@spectrum-web-components/base": "^0.34.0"
     },
     "devDependencies": {
-        "@spectrum-css/splitview": "^3.0.45"
+        "@spectrum-css/splitview": "^3.0.46"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
