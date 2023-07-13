@@ -84,8 +84,8 @@ governing permissions and limitations under the License.
     .fill {
         forced-color-adjust: none;
     }
-    :host([disabled]) .fill {
-        forced-color-adjust: auto;
+    :host([disabled]) {
+        --highcontrast-swatch-border-color: GrayText;
     }
 }
 :host {

@@ -46,7 +46,7 @@
         "@spectrum-web-components/base": "^0.34.0"
     },
     "devDependencies": {
-        "@spectrum-css/modal": "^3.0.46"
+        "@spectrum-css/modal": "^3.0.47"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
