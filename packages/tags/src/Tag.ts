@@ -132,7 +132,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
 
         const parent = this.parentNode as HTMLElement | null;
         if (parent) {
-            parent.removeChild(this);
+            this.remove();
             this.focusAfterDelete(parent);
         }
     }
