@@ -28,6 +28,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 :host([drop-target]) {
+    --mod-table-border-color: transparent;
     outline-color: var(
         --highcontrast-table-focus-indicator-color,
         var(
@@ -40,9 +41,6 @@ governing permissions and limitations under the License.
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)
     );
-}
-:host([drop-target]) {
-    --mod-table-border-color: transparent;
 }
 :host div {
     display: table-row-group;

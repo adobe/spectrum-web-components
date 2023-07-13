@@ -39,10 +39,10 @@ governing permissions and limitations under the License.
         outline: var(--highcontrast-table-selected-row-text-color) 1px solid;
     }
 }
-:host .spectrum-Table-body {
+:host {
     border-block-start: none;
 }
-:host .spectrum-Table-body:first-child .spectrum-Table-cell {
+:host:first-child .spectrum-Table-cell {
     border-block-start: var(
             --mod-table-border-width,
             var(--spectrum-table-border-width)
@@ -53,7 +53,18 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-:host .spectrum-Table-body .spectrum-Table-cell:first-child {
+:host:last-child .spectrum-Table-cell {
+    border-block-end: var(
+            --mod-table-border-width,
+            var(--spectrum-table-border-width)
+        )
+        solid
+        var(
+            --highcontrast-table-border-color,
+            var(--mod-table-border-color, var(--spectrum-table-border-color))
+        );
+}
+.spectrum-Table-cell:first-child {
     border-inline-start: var(
             --mod-table-outer-border-inline-width,
             var(--spectrum-table-outer-border-inline-width)
@@ -64,7 +75,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-:host .spectrum-Table-body .spectrum-Table-cell:last-child {
+.spectrum-Table-cell:last-child {
     border-inline-end: var(
             --mod-table-outer-border-inline-width,
             var(--spectrum-table-outer-border-inline-width)
@@ -75,16 +86,29 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-:host .spectrum-Table-body:last-child .spectrum-Table-cell {
-    border-block-end: var(
-            --mod-table-border-width,
-            var(--spectrum-table-border-width)
-        )
-        solid
-        var(
-            --highcontrast-table-border-color,
-            var(--mod-table-border-color, var(--spectrum-table-border-color))
-        );
+:host:first-child .spectrum-Table-cell:first-child {
+    border-start-start-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
+    );
+}
+:host:first-child .spectrum-Table-cell:last-child {
+    border-start-end-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
+    );
+}
+:host:last-child .spectrum-Table-cell:first-child {
+    border-end-start-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
+    );
+}
+:host:last-child .spectrum-Table-cell:last-child {
+    border-end-end-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
+    );
 }
 :host {
     background-color: var(
@@ -390,6 +414,10 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-table-section-header-line-height,
         var(--spectrum-table-row-line-height)
+    );
+    min-block-size: var(
+        --mod-table-section-header-min-height,
+        var(--spectrum-table-section-header-min-height)
     );
     padding-block-end: calc(
         var(

@@ -24,6 +24,17 @@ governing permissions and limitations under the License.
     text-align: end;
 }
 :host {
+    border-block-start: var(
+            --mod-table-border-width,
+            var(--spectrum-table-border-width)
+        )
+        solid
+        var(
+            --highcontrast-table-divider-color,
+            var(--mod-table-divider-color, var(--spectrum-table-divider-color))
+        );
+}
+:host {
     block-size: var(
         --mod-table-min-row-height,
         var(--spectrum-table-min-row-height)
@@ -44,6 +55,10 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-table-row-line-height,
         var(--spectrum-table-row-line-height)
+    );
+    min-block-size: var(
+        --mod-table-min-row-height,
+        var(--spectrum-table-min-row-height)
     );
     padding-block-end: var(
         --mod-table-row-bottom-to-text,

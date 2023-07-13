@@ -71,6 +71,10 @@ governing permissions and limitations under the License.
         --mod-table-header-line-height,
         var(--spectrum-table-row-line-height)
     );
+    min-block-size: var(
+        --mod-table-min-header-height,
+        var(--spectrum-table-min-header-height)
+    );
     outline: 0;
     padding-block: var(
             --mod-table-header-top-to-text,
