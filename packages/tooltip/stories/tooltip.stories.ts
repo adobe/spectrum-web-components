@@ -319,7 +319,8 @@ export const selfManaged = ({
             ?delayed=${delayed}
             open=${open}
         >
-            This is a tooltip.
+            Add paragraph text by dragging the Text tool on the canvas to use
+            this feature
         </sp-tooltip>
     </sp-action-button>
 `;
