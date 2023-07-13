@@ -215,24 +215,6 @@ export class LayoutElement extends LitElement {
 
     toggleSettings() {
         this.settings = !this.settings;
-        requestAnimationFrame(() =>
-            (this.shadowRoot?.querySelector(
-                this.settings ? '#close-settings-id' : '#toggle-settings-id'
-            ) as ActionButton)!.focus()
-        );
-        if (this.settings && this.isNarrow) {
-            this.ownerDocument!.addEventListener(
-                'keydown',
-                this.handleEscapeKey,
-                true
-            );
-        } else {
-            this.ownerDocument!.removeEventListener(
-                'keydown',
-                this.handleEscapeKey,
-                true
-            );
-        }
     }
 
     private updateColor(event: Event) {
@@ -586,6 +568,33 @@ export class LayoutElement extends LitElement {
                       '#toggle-nav-id'
                   ) as ActionButton)!.focus();
         }
+
+        if (changes.has('settings')) {
+            (this.shadowRoot!.querySelector(
+                this.settings ? '#close-settings-id' : '#toggle-settings-id'
+            ) as ActionButton)!.focus();
+            if (this.settings && this.isNarrow) {
+                this.ownerDocument!.addEventListener(
+                    'keydown',
+                    this.handleEscapeKey,
+                    true
+                );
+            } else {
+                this.ownerDocument!.removeEventListener(
+                    'keydown',
+                    this.handleEscapeKey,
+                    true
+                );
+            }
+        }
+
+        if (changes.has('isNarrow')) {
+            if (!this.isNarrow) {
+                this.open = false;
+                this.settings = false;
+            }
+        }
+
         if (loadStyleFragments) {
             lazyStyleFragment(this.color, this.theme);
             lazyStyleFragment(this.scale, this.theme);
