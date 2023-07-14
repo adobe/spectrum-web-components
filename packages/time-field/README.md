@@ -26,3 +26,7 @@ import { TimeField } from '@spectrum-web-components/time-field';
 ```html
 <sp-time-field></sp-time-field>
 ```
+
+## To-do list
+
+-   Use @input/@beforeinput events to handle data input/content cleanup

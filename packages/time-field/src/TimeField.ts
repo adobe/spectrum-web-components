@@ -263,6 +263,7 @@ export class TimeField extends TextfieldBase {
                 break;
             }
             default: {
+                // TODO: Use @input/@beforeinput events to handle data input/content cleanup
                 const key = event.key;
                 const numberKey = /^[0-9]+$/.test(key);
                 const clearKey = ['Backspace', 'Delete'].includes(key);
