@@ -42,7 +42,7 @@ governing permissions and limitations under the License.
 :host {
     border-block-start: none;
 }
-:host:first-child .spectrum-Table-cell {
+:host(:first-child) ::slotted(*) {
     border-block-start: var(
             --mod-table-border-width,
             var(--spectrum-table-border-width)
@@ -53,7 +53,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-:host:last-child .spectrum-Table-cell {
+:host(:last-child) ::slotted(*) {
     border-block-end: var(
             --mod-table-border-width,
             var(--spectrum-table-border-width)
@@ -64,7 +64,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-.spectrum-Table-cell:first-child {
+::slotted(:first-child) {
     border-inline-start: var(
             --mod-table-outer-border-inline-width,
             var(--spectrum-table-outer-border-inline-width)
@@ -75,7 +75,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-.spectrum-Table-cell:last-child {
+::slotted(:last-child) {
     border-inline-end: var(
             --mod-table-outer-border-inline-width,
             var(--spectrum-table-outer-border-inline-width)
@@ -86,25 +86,25 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-:host:first-child .spectrum-Table-cell:first-child {
+:host(:first-child) ::slotted(:first-child) {
     border-start-start-radius: var(
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
     );
 }
-:host:first-child .spectrum-Table-cell:last-child {
+:host(:first-child) ::slotted(:last-child) {
     border-start-end-radius: var(
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
     );
 }
-:host:last-child .spectrum-Table-cell:first-child {
+:host(:last-child) ::slotted(:first-child) {
     border-end-start-radius: var(
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
     );
 }
-:host:last-child .spectrum-Table-cell:last-child {
+:host(:last-child) ::slotted(:last-child) {
     border-end-end-radius: var(
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
@@ -130,7 +130,7 @@ governing permissions and limitations under the License.
         )
         ease-in-out;
 }
-:host:first-child {
+:host(:first-child) {
     border-start-end-radius: var(
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
@@ -140,7 +140,7 @@ governing permissions and limitations under the License.
         var(--spectrum-table-border-radius)
     );
 }
-:host:last-child {
+:host(:last-child) {
     border-end-end-radius: var(
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
@@ -326,7 +326,7 @@ governing permissions and limitations under the License.
         var(--spectrum-table-focus-indicator-thickness)
     );
 }
-:host([drop-target]) .spectrum-Table-cell {
+:host([drop-target]) ::slotted(*) {
     border-top-color: var(
         --highcontrast-table-focus-indicator-color,
         var(
@@ -344,7 +344,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Table-row--summary .spectrum-Table-cell {
+.spectrum-Table-row--summary ::slotted(*) {
     color: var(
         --highcontrast-table-row-text-color,
         var(
@@ -383,7 +383,7 @@ governing permissions and limitations under the License.
     );
     cursor: var(--mod-table-cursor-section-header, initial);
 }
-.spectrum-Table-row--sectionHeader .spectrum-Table-cell {
+.spectrum-Table-row--sectionHeader ::slotted(*) {
     block-size: var(
         --mod-table-section-header-min-height,
         var(--spectrum-table-section-header-min-height)
@@ -541,7 +541,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Table-row--thumbnail .spectrum-Table-cell {
+.spectrum-Table-row--thumbnail ::slotted(*) {
     padding-block: calc(
         var(--table-thumbnail-cell-block-spacing) +
             var(--table-thumbnail-inner-content-block-spacing)

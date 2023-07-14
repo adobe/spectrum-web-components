@@ -31,10 +31,13 @@ const config = {
             fileName: 'table',
             components: [
                 converter.classToHost(),
+                converter.classToAttribute('spectrum-Table--quiet'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Table--sizeS', 's'],
                         ['spectrum-Table--sizeM', 'm'],
+                        ['spectrum-Table--sizeL', 'l'],
+                        ['spectrum-Table--sizeXL', 'xl'],
                     ],
                     'size'
                 ),
@@ -168,9 +171,56 @@ const config = {
             fileName: 'table-row',
             components: [
                 converter.classToHost('spectrum-Table-row'),
+                {
+                    find: builder.pseudoClass('first-child'),
+                    replace: builder.pseudoClass('first-child'),
+                    hoist: true,
+                },
+                {
+                    find: builder.pseudoClass('last-child'),
+                    replace: builder.pseudoClass('last-child'),
+                    hoist: true,
+                },
                 converter.classToAttribute('is-drop-target', 'drop-target'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-focused', 'focused'),
+                converter.classToSlotted('spectrum-Table-cell'),
+                {
+                    find: [
+                        builder.class('spectrum-Table-cell'),
+                        builder.pseudoClass('first-child'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [builder.pseudoClass('first-child')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Table-cell'),
+                        builder.pseudoClass('last-child'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [builder.pseudoClass('last-child')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                    ],
+                },
             ],
             requireComponentPresence: [
                 {

@@ -191,7 +191,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-to-text: var(--spectrum-text-to-visual-100);
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-200);
 }
-.spectrum-Table--sizeL {
+:host([size='l']) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-200);
     --spectrum-table-header-top-to-text: var(
         --spectrum-table-column-header-row-top-to-text-large
@@ -232,7 +232,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-to-text: var(--spectrum-text-to-visual-200);
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-500);
 }
-.spectrum-Table--sizeXL {
+:host([size='xl']) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-300);
     --spectrum-table-header-top-to-text: var(
         --spectrum-table-column-header-row-top-to-text-extra-large
@@ -325,7 +325,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-50)
     );
 }
-:host([density='compact']) .spectrum-Table--sizeL {
+:host([density='compact'][size='l']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--compact,
         var(--spectrum-table-row-height-large-compact)
@@ -351,7 +351,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-300)
     );
 }
-:host([density='compact']) .spectrum-Table--sizeXL {
+:host([density='compact'][size='xl']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--compact,
         var(--spectrum-table-row-height-extra-large-compact)
@@ -429,7 +429,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-300)
     );
 }
-:host([density='spacious']) .spectrum-Table--sizeL {
+:host([density='spacious'][size='l']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--spacious,
         var(--spectrum-table-row-height-large-spacious)
@@ -455,7 +455,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-700)
     );
 }
-:host([density='spacious']) .spectrum-Table--sizeXL {
+:host([density='spacious'][size='xl']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--spacious,
         var(--spectrum-table-row-height-extra-large-spacious)
@@ -481,7 +481,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-800)
     );
 }
-.spectrum-Table--quiet {
+:host([quiet]) {
     --mod-table-border-radius: var(--mod-table-border-radius--quiet, 0px);
     --mod-table-outer-border-inline-width: var(
         --mod-table-outer-border-inline-width--quiet,

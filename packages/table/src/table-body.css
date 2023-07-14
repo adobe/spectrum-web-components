@@ -15,6 +15,31 @@ governing permissions and limitations under the License.
 :host {
     display: block;
     flex-grow: 1;
+
+    /* When made scrollable through non table element display properties, the
+       body needs an additional border around it. */
+    border-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
+    );
+    border-inline: var(
+            --mod-table-outer-border-inline-width,
+            var(--spectrum-table-outer-border-inline-width)
+        )
+        solid
+        var(
+            --highcontrast-table-border-color,
+            var(--mod-table-border-color, var(--spectrum-table-border-color))
+        );
+    border-block: var(
+            --mod-table-border-width,
+            var(--spectrum-table-border-width)
+        )
+        solid
+        var(
+            --highcontrast-table-border-color,
+            var(--mod-table-border-color, var(--spectrum-table-border-color))
+        );
 }
 
 :host(:not([tabindex])) {
