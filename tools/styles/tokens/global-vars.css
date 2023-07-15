@@ -391,6 +391,15 @@ governing permissions and limitations under the License.
         --spectrum-component-height-300
     );
     --spectrum-tab-item-start-to-edge-quiet: 0px;
+    --spectrum-in-field-button-width-stacked-small: 20px;
+    --spectrum-in-field-button-width-stacked-medium: 28px;
+    --spectrum-in-field-button-width-stacked-large: 36px;
+    --spectrum-in-field-button-width-stacked-extra-large: 44px;
+    --spectrum-in-field-button-edge-to-disclosure-icon-stacked-small: 7px;
+    --spectrum-in-field-button-edge-to-disclosure-icon-stacked-medium: 9px;
+    --spectrum-in-field-button-edge-to-disclosure-icon-stacked-large: 13px;
+    --spectrum-in-field-button-edge-to-disclosure-icon-stacked-extra-large: 16px;
+    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small: 3px;
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;

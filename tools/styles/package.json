@@ -109,8 +109,8 @@
     "devDependencies": {
         "@spectrum-css/commons": "^7.0.8",
         "@spectrum-css/expressvars": "^3.0.9",
-        "@spectrum-css/tokens": "^10.2.2",
-        "@spectrum-css/typography": "^5.0.26",
+        "@spectrum-css/tokens": "^11.0.1",
+        "@spectrum-css/typography": "^5.0.28",
         "@spectrum-css/vars": "^9.0.8"
     },
     "customElements": "custom-elements.json",

@@ -61,7 +61,7 @@
         "@spectrum-web-components/help-text": "^0.34.0"
     },
     "devDependencies": {
-        "@spectrum-css/fieldgroup": "^4.0.55"
+        "@spectrum-css/fieldgroup": "^4.0.57"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

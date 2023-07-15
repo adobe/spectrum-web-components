@@ -64,12 +64,6 @@ governing permissions and limitations under the License.
 :host([focused]) {
     z-index: 2;
 }
-:host([focused]) .handle {
-    block-size: calc(var(--spectrum-color-handle-size) * 2);
-    inline-size: calc(var(--spectrum-color-handle-size) * 2);
-    margin-block-start: calc(var(--spectrum-color-handle-size) * -1);
-    margin-inline-start: calc(var(--spectrum-color-handle-size) * -1);
-}
 :host([disabled]) {
     pointer-events: none;
 }
@@ -115,13 +109,8 @@ governing permissions and limitations under the License.
 }
 .handle {
     inset-block-start: 50%;
+    inset-inline: 50%;
     transform: translate(var(--spectrum-colorwheel-colorhandle-position));
-}
-:host([dir='ltr']) .handle {
-    inset-inline-start: 50%;
-}
-:host([dir='rtl']) .handle {
-    inset-inline-end: 50%;
 }
 .border {
     background-color: var(

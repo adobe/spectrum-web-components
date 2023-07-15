@@ -32,20 +32,21 @@ governing permissions and limitations under the License.
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
 
-    --spectrum-sans-serif-font: var(--spectrum-sans-serif-font-family);
-    --spectrum-sans-font-family-stack: var(--spectrum-sans-serif-font),
-        adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-sans-font-family-stack: adobe-clean,
+        var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
+        'Lucida Grande', sans-serif;
+    --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
 
-    --spectrum-serif-font: var(--spectrum-serif-font-family);
-    --spectrum-serif-font-family-stack: var(--spectrum-serif-font),
-        adobe-clean-serif, 'Source Serif Pro', Georgia, serif;
+    --spectrum-serif-font-family-stack: adobe-clean-serif,
+        var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
+    --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
 
     --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
 
-    --spectrum-cjk-font: var(--spectrum-cjk-font-family);
-    --spectrum-cjk-font-family-stack: var(--spectrum-cjk-font),
-        adobe-clean-han-japanese, sans-serif;
+    --spectrum-cjk-font-family-stack: adobe-clean-han-japanese,
+        var(--spectrum-cjk-font-family), sans-serif;
+    --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
 
     /* static white / black background color for docs containers */
     --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
