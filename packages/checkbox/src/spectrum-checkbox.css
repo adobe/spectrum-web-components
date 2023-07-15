@@ -296,8 +296,8 @@ governing permissions and limitations under the License.
 :host([indeterminate]) #input:checked + #box #checkmark {
     display: none;
 }
-:host([indeterminate]) #box #partialCheckmark,
-:host([indeterminate]) #input:checked + #box #partialCheckmark {
+:host([indeterminate]) #box .spectrum-Icon#partialCheckmark,
+:host([indeterminate]) #input:checked + #box .spectrum-Icon#partialCheckmark {
     display: block;
     opacity: 1;
     transform: scale(1);
@@ -493,7 +493,7 @@ governing permissions and limitations under the License.
         )
         ease-in-out;
 }
-#label:lang(js),
+#label:lang(ja),
 #label:lang(ko),
 #label:lang(zh) {
     line-height: var(

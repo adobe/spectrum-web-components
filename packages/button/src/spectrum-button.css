@@ -549,6 +549,10 @@ governing permissions and limitations under the License.
     );
 }
 @media (forced-colors: active) {
+    :host {
+        --highcontrast-button-content-color-disabled: GrayText;
+        --highcontrast-button-border-color-disabled: GrayText;
+    }
     :host(.focus-visible):after {
         box-shadow: 0 0 0
             var(
@@ -568,24 +572,15 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
     :host([variant='accent'][treatment='fill']) {
-        background-color: ButtonText;
-        color: ButtonFace;
-    }
-    :host([variant='accent'][treatment='fill'][disabled]) {
-        background-color: ButtonFace;
-        color: GrayText;
-    }
-    :host([variant='accent'][treatment='fill'].focus-visible),
-    :host([variant='accent'][treatment='fill']:hover),
-    :host([variant='accent'][treatment='fill'][active]),
-    :host([variant='accent'][treatment='fill'][focused]) {
-        background-color: Highlight;
-    }
-    :host([variant='accent'][treatment='fill']:focus-visible),
-    :host([variant='accent'][treatment='fill']:hover),
-    :host([variant='accent'][treatment='fill'][active]),
-    :host([variant='accent'][treatment='fill'][focused]) {
-        background-color: Highlight;
+        --highcontrast-button-background-color-default: ButtonText;
+        --highcontrast-button-content-color-default: ButtonFace;
+        --highcontrast-button-background-color-disabled: ButtonFace;
+        --highcontrast-button-background-color-hover: Highlight;
+        --highcontrast-button-background-color-down: Highlight;
+        --highcontrast-button-background-color-focus: Highlight;
+        --highcontrast-button-content-color-hover: ButtonFace;
+        --highcontrast-button-content-color-down: ButtonFace;
+        --highcontrast-button-content-color-focus: ButtonFace;
     }
     :host([variant='accent'][treatment='fill']) #label {
         forced-color-adjust: none;

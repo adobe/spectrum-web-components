@@ -26,6 +26,24 @@ governing permissions and limitations under the License.
     --spectrum-slider-track-thickness: 2px;
     --spectrum-slider-handle-gap: 4px;
     --spectrum-picker-border-width: var(--spectrum-border-width-100);
+    --spectrum-in-field-button-fill-stacked-inner-border-rounding: 0px;
+    --spectrum-in-field-button-edge-to-fill: 0px;
+    --spectrum-in-field-button-stacked-inner-edge-to-fill: 0px;
+    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium: 3px;
+    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large: 4px;
+    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large: 5px;
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small
+    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium
+    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large
+    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
+    );
     --spectrum-border-width-100: 1px;
     --spectrum-accent-color-100: var(--spectrum-blue-100);
     --spectrum-accent-color-200: var(--spectrum-blue-200);
@@ -72,18 +90,6 @@ governing permissions and limitations under the License.
     --system-spectrum-actionbutton-border-color-hover: var(--spectrum-gray-500);
     --system-spectrum-actionbutton-border-color-down: var(--spectrum-gray-600);
     --system-spectrum-actionbutton-border-color-focus: var(--spectrum-gray-500);
-    --system-spectrum-actionbutton-content-color-default: var(
-        --spectrum-neutral-content-color-default
-    );
-    --system-spectrum-actionbutton-content-color-hover: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --system-spectrum-actionbutton-content-color-down: var(
-        --spectrum-neutral-content-color-down
-    );
-    --system-spectrum-actionbutton-content-color-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
     --system-spectrum-actionbutton-background-color-disabled: transparent;
     --system-spectrum-actionbutton-border-color-disabled: var(
         --spectrum-disabled-border-color
@@ -107,50 +113,14 @@ governing permissions and limitations under the License.
     --system-spectrum-actionbutton-quiet-border-color-focus: transparent;
     --system-spectrum-actionbutton-quiet-background-color-disabled: transparent;
     --system-spectrum-actionbutton-quiet-border-color-disabled: transparent;
-    --system-spectrum-actionbutton-selected-background-color-default: var(
-        --spectrum-neutral-subdued-background-color-default
-    );
-    --system-spectrum-actionbutton-selected-background-color-hover: var(
-        --spectrum-neutral-subdued-background-color-hover
-    );
-    --system-spectrum-actionbutton-selected-background-color-down: var(
-        --spectrum-neutral-subdued-background-color-down
-    );
-    --system-spectrum-actionbutton-selected-background-color-focus: var(
-        --spectrum-neutral-subdued-background-color-key-focus
-    );
     --system-spectrum-actionbutton-selected-border-color-default: transparent;
     --system-spectrum-actionbutton-selected-border-color-hover: transparent;
     --system-spectrum-actionbutton-selected-border-color-down: transparent;
     --system-spectrum-actionbutton-selected-border-color-focus: transparent;
-    --system-spectrum-actionbutton-selected-content-color-default: var(
-        --spectrum-white
-    );
-    --system-spectrum-actionbutton-selected-content-color-hover: var(
-        --spectrum-white
-    );
-    --system-spectrum-actionbutton-selected-content-color-down: var(
-        --spectrum-white
-    );
-    --system-spectrum-actionbutton-selected-content-color-focus: var(
-        --spectrum-white
-    );
     --system-spectrum-actionbutton-selected-background-color-disabled: var(
         --spectrum-disabled-background-color
     );
     --system-spectrum-actionbutton-selected-border-color-disabled: transparent;
-    --system-spectrum-actionbutton-selected-emphasized-background-color-default: var(
-        --spectrum-accent-background-color-default
-    );
-    --system-spectrum-actionbutton-selected-emphasized-background-color-hover: var(
-        --spectrum-accent-background-color-hover
-    );
-    --system-spectrum-actionbutton-selected-emphasized-background-color-down: var(
-        --spectrum-accent-background-color-down
-    );
-    --system-spectrum-actionbutton-selected-emphasized-background-color-focus: var(
-        --spectrum-accent-background-color-key-focus
-    );
     --system-spectrum-actionbutton-staticblack-quiet-border-color-default: transparent;
     --system-spectrum-actionbutton-staticwhite-quiet-border-color-default: transparent;
     --system-spectrum-actionbutton-staticblack-quiet-border-color-hover: transparent;
@@ -205,34 +175,34 @@ governing permissions and limitations under the License.
     --system-spectrum-actionbutton-staticblack-content-color-disabled: var(
         --spectrum-disabled-static-black-content-color
     );
-    --system-spectrum-actionbutton-staticblack-selected-background-color-default: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-background-color-default: var(
         --spectrum-transparent-black-800
     );
-    --system-spectrum-actionbutton-staticblack-selected-background-color-hover: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-background-color-hover: var(
         --spectrum-transparent-black-900
     );
-    --system-spectrum-actionbutton-staticblack-selected-background-color-down: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-background-color-down: var(
         --spectrum-transparent-black-900
     );
-    --system-spectrum-actionbutton-staticblack-selected-background-color-focus: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-background-color-focus: var(
         --spectrum-transparent-black-900
     );
-    --system-spectrum-actionbutton-staticblack-selected-border-color-disabled: transparent;
-    --system-spectrum-actionbutton-staticblack-selected-content-color-default: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-content-color-default: var(
         --spectrum-white
     );
-    --system-spectrum-actionbutton-staticblack-selected-content-color-hover: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-content-color-hover: var(
         --spectrum-white
     );
-    --system-spectrum-actionbutton-staticblack-selected-content-color-down: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-content-color-down: var(
         --spectrum-white
     );
-    --system-spectrum-actionbutton-staticblack-selected-content-color-focus: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-content-color-focus: var(
         --spectrum-white
     );
-    --system-spectrum-actionbutton-staticblack-selected-background-color-disabled: var(
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-background-color-disabled: var(
         --spectrum-disabled-static-black-background-color
     );
+    --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-border-color-disabled: transparent;
     --system-spectrum-actionbutton-staticwhite-background-color-default: transparent;
     --system-spectrum-actionbutton-staticwhite-background-color-hover: var(
         --spectrum-transparent-white-300
@@ -277,34 +247,34 @@ governing permissions and limitations under the License.
     --system-spectrum-actionbutton-staticwhite-content-color-disabled: var(
         --spectrum-disabled-static-white-content-color
     );
-    --system-spectrum-actionbutton-staticwhite-selected-background-color-default: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-background-color-default: var(
         --spectrum-transparent-white-800
     );
-    --system-spectrum-actionbutton-staticwhite-selected-background-color-hover: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-background-color-hover: var(
         --spectrum-transparent-white-900
     );
-    --system-spectrum-actionbutton-staticwhite-selected-background-color-down: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-background-color-down: var(
         --spectrum-transparent-white-900
     );
-    --system-spectrum-actionbutton-staticwhite-selected-background-color-focus: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-background-color-focus: var(
         --spectrum-transparent-white-900
     );
-    --system-spectrum-actionbutton-staticwhite-selected-content-color-default: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-content-color-default: var(
         --spectrum-black
     );
-    --system-spectrum-actionbutton-staticwhite-selected-content-color-hover: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-content-color-hover: var(
         --spectrum-black
     );
-    --system-spectrum-actionbutton-staticwhite-selected-content-color-down: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-content-color-down: var(
         --spectrum-black
     );
-    --system-spectrum-actionbutton-staticwhite-selected-content-color-focus: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-content-color-focus: var(
         --spectrum-black
     );
-    --system-spectrum-actionbutton-staticwhite-selected-background-color-disabled: var(
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-background-color-disabled: var(
         --spectrum-disabled-static-white-background-color
     );
-    --system-spectrum-actionbutton-staticwhite-selected-border-color-disabled: transparent;
+    --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-border-color-disabled: transparent;
 }
 
 :host,
