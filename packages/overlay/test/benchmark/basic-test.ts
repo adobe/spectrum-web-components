@@ -20,7 +20,7 @@ measureFixtureCreation(
     html`
         <overlay-trigger>
             <sp-button slot="trigger">Trigger</sp-button>
-            <sp-popover slot="content">
+            <sp-popover slot="click-content">
                 <p>This is the content.</p>
             </sp-popover>
         </overlay-trigger>

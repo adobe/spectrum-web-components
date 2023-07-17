@@ -91,8 +91,8 @@ const elements = {
     'sp-menu': () => import('@spectrum-web-components/menu/sp-menu.js'),
     'overlay-trigger': () =>
         import('@spectrum-web-components/overlay/overlay-trigger.js'),
-    'active-overlay': () =>
-        import('@spectrum-web-components/overlay/active-overlay.js'),
+    'sp-overlay': () =>
+        import('@spectrum-web-components/overlay/sp-overlay.js'),
     'sp-picker': () => import('@spectrum-web-components/picker/sp-picker.js'),
     'sp-picker-button': () =>
         import('@spectrum-web-components/picker-button/sp-picker-button.js'),

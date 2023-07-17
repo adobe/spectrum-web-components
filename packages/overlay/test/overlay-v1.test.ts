@@ -11,41 +11,62 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { setViewport } from '@web/test-runner-commands';
 import {
-    ActiveOverlay,
     Overlay,
     OverlayTrigger,
     Placement,
 } from '@spectrum-web-components/overlay';
 
-import { isVisible } from '../../../test/testing-helpers.js';
 import {
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     oneEvent,
-    waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import {
     definedOverlayElement,
-    virtualElement,
+    virtualElementV1,
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { spy } from 'sinon';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import { Theme } from '@spectrum-web-components/theme';
+import { render, TemplateResult } from '@spectrum-web-components/base';
+import {
+    fixture,
+    isInteractive,
+    isOnTopLayer,
+} from '../../../test/testing-helpers.js';
+import { Menu } from '@spectrum-web-components/menu';
 
-describe('Overlays', () => {
+async function styledFixture<T extends Element>(
+    story: TemplateResult
+): Promise<T> {
+    const test = await fixture<Theme>(html`
+        <sp-theme theme="spectrum" scale="medium" color="dark">
+            ${story}
+        </sp-theme>
+    `);
+    return test.children[0] as T;
+}
+
+describe('Overlays, v1', () => {
     let testDiv!: HTMLDivElement;
     let openOverlays: (() => void)[] = [];
 
     beforeEach(async () => {
-        testDiv = await fixture<HTMLDivElement>(
+        testDiv = await styledFixture<HTMLDivElement>(
             html`
                 <div id="top">
                     <style>
@@ -67,31 +88,28 @@ describe('Overlays', () => {
                             display: none;
                         }
                     </style>
-                    <sp-button
-                        id="first-button"
-                        variant="primary"
-                        slot="trigger"
-                    >
+                    <sp-button id="first-button" variant="primary">
                         Show Popover
                     </sp-button>
                     <div id="overlay-content">
-                        <sp-popover
-                            id="outer-popover"
-                            slot="click-content"
-                            direction="bottom"
-                            tip
-                            open
-                        >
-                            <sp-dialog class="options-popover-content">
-                                A popover message
+                        <sp-popover id="outer-popover" direction="bottom" tip>
+                            <sp-dialog no-divider>
+                                <div class="options-popover-content">
+                                    A popover message
+                                </div>
+                                <sp-button id="outer-focus-target">
+                                    Test 1
+                                </sp-button>
+                                <sp-button>Test 2</sp-button>
+                                <sp-button>Test 3</sp-button>
                             </sp-dialog>
                         </sp-popover>
-                        <div id="hover-1" class="hover-content">
+                        <sp-tooltip id="hover-1" class="hover-content">
                             Hover message
-                        </div>
-                        <div id="hover-2" class="hover-content">
+                        </sp-tooltip>
+                        <sp-tooltip id="hover-2" class="hover-content">
                             Other hover message
-                        </div>
+                        </sp-tooltip>
                     </div>
                 </div>
             `
@@ -121,25 +139,21 @@ describe('Overlays', () => {
     ].map((direction) => {
         const placement = direction as Placement;
         it(`opens a popover - ${placement}`, async () => {
+            const clickSpy = spy();
             const button = testDiv.querySelector(
                 '#first-button'
             ) as HTMLElement;
             const outerPopover = testDiv.querySelector(
                 '#outer-popover'
             ) as Popover;
+            outerPopover.addEventListener('click', () => {
+                clickSpy();
+            });
 
-            expect(outerPopover.parentElement).to.exist;
-            if (outerPopover.parentElement) {
-                expect(outerPopover.parentElement.id).to.equal(
-                    'overlay-content'
-                );
-            }
-
-            expect(isVisible(outerPopover)).to.be.false;
-
+            expect(await isInteractive(outerPopover)).to.be.false;
             expect(button).to.exist;
 
-            const opened = oneEvent(button, 'sp-opened');
+            const opened = oneEvent(outerPopover, 'sp-opened');
             openOverlays.push(
                 await Overlay.open(button, 'click', outerPopover, {
                     delayed: false,
@@ -148,31 +162,76 @@ describe('Overlays', () => {
                 })
             );
             await opened;
-
-            expect(outerPopover.parentElement).to.exist;
-            if (outerPopover.parentElement) {
-                expect(outerPopover.parentElement.id).not.to.equal(
-                    'overlay-content'
-                );
-            }
-            expect(isVisible(outerPopover)).to.be.true;
+            expect(await isInteractive(outerPopover)).to.be.true;
         });
+    });
+
+    it(`opens a modal dialog`, async () => {
+        const button = testDiv.querySelector('#first-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+
+        expect(await isInteractive(outerPopover)).to.be.false;
+
+        expect(button).to.exist;
+
+        const opened = oneEvent(outerPopover, 'sp-opened');
+        openOverlays.push(
+            await Overlay.open(button, 'modal', outerPopover, {
+                delayed: false,
+            })
+        );
+        await opened;
+
+        const firstFocused = outerPopover.querySelector(
+            '#outer-focus-target'
+        ) as HTMLElement;
+        expect(document.activeElement === firstFocused).to.be.true;
+
+        /**
+         * Tab cycle is awkward in the headless browser, forward tab to just before the known end of the page
+         * and the backward tab past the known beginning of the page. Test that you never focused the button
+         * that triggered the dialog and is outside of the modal. A test that was able to cycle would be better.
+         */
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement === button).to.be.false;
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement === button).to.be.false;
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement === button).to.be.false;
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement === button).to.be.false;
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement === button).to.be.false;
     });
 
     it(`updates a popover`, async () => {
         const button = testDiv.querySelector('#first-button') as HTMLElement;
         const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
 
-        expect(outerPopover.parentElement).to.exist;
-        if (outerPopover.parentElement) {
-            expect(outerPopover.parentElement.id).to.equal('overlay-content');
-        }
-
-        expect(isVisible(outerPopover)).to.be.false;
+        expect(await isInteractive(outerPopover)).to.be.false;
 
         expect(button).to.exist;
 
-        const opened = oneEvent(button, 'sp-opened');
+        const opened = oneEvent(outerPopover, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'click', outerPopover, {
                 delayed: false,
@@ -181,27 +240,21 @@ describe('Overlays', () => {
         );
         await opened;
 
-        expect(isVisible(outerPopover)).to.be.true;
+        expect(await isInteractive(outerPopover)).to.be.true;
 
         Overlay.update();
 
-        expect(isVisible(outerPopover)).to.be.true;
+        expect(await isInteractive(outerPopover)).to.be.true;
     });
 
     it(`opens a popover w/ delay`, async () => {
         const button = testDiv.querySelector('#first-button') as HTMLElement;
         const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
 
-        expect(outerPopover.parentElement).to.exist;
-        if (outerPopover.parentElement) {
-            expect(outerPopover.parentElement.id).to.equal('overlay-content');
-        }
-
-        expect(isVisible(outerPopover)).to.be.false;
-
+        expect(await isInteractive(outerPopover)).to.be.false;
         expect(button).to.exist;
 
-        const opened = oneEvent(button, 'sp-opened');
+        const opened = oneEvent(outerPopover, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'click', outerPopover, {
                 delayed: true,
@@ -209,14 +262,7 @@ describe('Overlays', () => {
             })
         );
         await opened;
-
-        expect(outerPopover.parentElement).to.exist;
-        if (outerPopover.parentElement) {
-            expect(outerPopover.parentElement.id).not.to.equal(
-                'overlay-content'
-            );
-        }
-        expect(isVisible(outerPopover)).to.be.true;
+        expect(await isInteractive(outerPopover)).to.be.true;
     });
 
     it('opens hover overlay', async () => {
@@ -226,10 +272,10 @@ describe('Overlays', () => {
             '#outer-popover'
         ) as HTMLElement;
 
-        expect(isVisible(hoverOverlay)).to.be.false;
-        expect(isVisible(clickOverlay)).to.be.false;
+        expect(await isOnTopLayer(hoverOverlay)).to.be.false;
+        expect(await isOnTopLayer(clickOverlay)).to.be.false;
 
-        let opened = oneEvent(button, 'sp-opened');
+        let opened = oneEvent(hoverOverlay, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'hover', hoverOverlay, {
                 delayed: false,
@@ -238,16 +284,10 @@ describe('Overlays', () => {
             })
         );
         await opened;
+        expect(await isOnTopLayer(hoverOverlay)).to.be.true;
 
-        expect(hoverOverlay.parentElement).to.exist;
-        if (hoverOverlay.parentElement) {
-            expect(hoverOverlay.parentElement.id).not.to.equal(
-                'overlay-content'
-            );
-        }
-        expect(isVisible(hoverOverlay)).to.be.true;
-
-        opened = oneEvent(button, 'sp-opened');
+        opened = oneEvent(clickOverlay, 'sp-opened');
+        const closed = oneEvent(hoverOverlay, 'sp-closed');
         // Opening click overlay should close the hover overlay
         openOverlays.push(
             await Overlay.open(button, 'click', clickOverlay, {
@@ -257,12 +297,13 @@ describe('Overlays', () => {
             })
         );
         await opened;
-        if (hoverOverlay.parentElement) {
-            expect(hoverOverlay.parentElement.id).to.equal('overlay-content');
-        }
-
-        expect(isVisible(hoverOverlay)).to.be.false;
-        expect(isVisible(clickOverlay)).to.be.true;
+        await closed;
+        expect(
+            await isInteractive(clickOverlay),
+            'click overlay not interactive'
+        ).to.be.true;
+        expect(await isOnTopLayer(hoverOverlay), 'hover overlay interactive').to
+            .be.false;
     });
 
     it('opens custom overlay', async () => {
@@ -275,10 +316,10 @@ describe('Overlays', () => {
         expect(button).to.exist;
         expect(customOverlay).to.exist;
 
-        expect(isVisible(customOverlay)).to.be.false;
-        expect(isVisible(clickOverlay)).to.be.false;
+        expect(await isOnTopLayer(customOverlay)).to.be.false;
+        expect(await isOnTopLayer(clickOverlay)).to.be.false;
 
-        let opened = oneEvent(button, 'sp-opened');
+        let opened = oneEvent(customOverlay, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'custom', customOverlay, {
                 delayed: false,
@@ -287,17 +328,9 @@ describe('Overlays', () => {
             })
         );
         await opened;
+        expect(await isOnTopLayer(customOverlay)).to.be.true;
 
-        expect(customOverlay.parentElement).to.exist;
-        if (customOverlay.parentElement) {
-            expect(customOverlay.parentElement.id).not.to.equal(
-                'overlay-content'
-            );
-        }
-        expect(isVisible(customOverlay)).to.be.true;
-
-        opened = oneEvent(button, 'sp-opened');
-        // Opening click overlay should close the hover overlay
+        opened = oneEvent(clickOverlay, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'click', clickOverlay, {
                 delayed: false,
@@ -306,47 +339,48 @@ describe('Overlays', () => {
             })
         );
         await opened;
-
-        expect(isVisible(customOverlay)).to.be.true;
-        expect(isVisible(clickOverlay)).to.be.true;
+        expect(await isOnTopLayer(clickOverlay), 'click content open').to.be
+            .true;
     });
 
     it('closes via events', async () => {
-        const el = await fixture<HTMLDivElement>(html`
-            <div id="root">
-                <sp-dialog dismissable></sp-dialog>
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-popover id="root">
+                    <sp-dialog dismissable>
+                        Some Content for the Dialog.
+                    </sp-dialog>
+                </sp-popover>
             </div>
         `);
 
+        const el = test.querySelector('sp-popover') as Popover;
         const dialog = el.querySelector('sp-dialog') as Dialog;
 
         const opened = oneEvent(el, 'sp-opened');
         openOverlays.push(
-            await Overlay.open(el, 'click', dialog, {
+            await Overlay.open(test, 'click', el, {
                 delayed: false,
                 placement: 'bottom',
                 offset: 10,
             })
         );
         await opened;
+        expect(await isInteractive(el)).to.be.true;
 
+        const closed = oneEvent(el, 'sp-closed');
         dialog.close();
-
-        await waitUntil(
-            () =>
-                !!dialog.parentElement &&
-                dialog.parentElement.tagName !== 'ACTIVE-OVERLAY',
-            'content is returned'
-        );
+        await closed;
+        expect(await isInteractive(el)).to.be.false;
     });
 
     it('closes an inline overlay when tabbing past the content', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div>
                 <sp-button class="trigger">Trigger</sp-button>
-                <div class="content">
+                <sp-popover class="content">
                     <input />
-                </div>
+                </sp-popover>
                 <input value="After" id="after" />
             </div>
         `);
@@ -356,15 +390,16 @@ describe('Overlays', () => {
         const input = el.querySelector('input') as HTMLInputElement;
         const after = el.querySelector('#after') as HTMLAnchorElement;
 
-        openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
+        const opened = oneEvent(content, 'sp-opened');
+        openOverlays.push(
+            await Overlay.open(trigger, 'inline', content, {
+                receivesFocus: 'auto',
+            })
+        );
+        await opened;
 
-        trigger.focus();
-        await sendKeys({
-            press: 'Tab',
-        });
-
+        expect(await isInteractive(content)).to.be.true;
         expect(document.activeElement).to.equal(input);
-        expect(input.closest('active-overlay') !== null);
 
         await sendKeys({
             press: 'Shift+Tab',
@@ -378,14 +413,13 @@ describe('Overlays', () => {
 
         expect(document.activeElement).to.equal(input);
 
+        const closed = oneEvent(content, 'sp-closed');
         await sendKeys({
             press: 'Tab',
         });
-
         expect(document.activeElement).to.equal(after);
-        await waitUntil(
-            () => document.querySelector('active-overlay') === null
-        );
+        await closed;
+        expect(await isInteractive(content)).to.be.false;
     });
 
     it('closes an inline overlay when tabbing before the trigger', async () => {
@@ -415,7 +449,6 @@ describe('Overlays', () => {
         });
 
         expect(document.activeElement).to.equal(input);
-        expect(input.closest('active-overlay') !== null);
 
         await sendKeys({
             press: 'Shift+Tab',
@@ -428,9 +461,6 @@ describe('Overlays', () => {
         });
 
         expect(document.activeElement).to.equal(before);
-        await waitUntil(
-            () => document.querySelector('active-overlay') === null
-        );
     });
 
     it('opens detached content', async () => {
@@ -441,132 +471,144 @@ describe('Overlays', () => {
             `
         );
 
-        const content = document.createElement('div');
+        const content = document.createElement('sp-popover');
         content.textContent = textContent;
 
-        const opened = oneEvent(el, 'sp-opened');
+        const opened = oneEvent(content, 'sp-opened');
         const closeOverlay = await Overlay.open(el, 'click', content, {
             placement: 'bottom',
         });
         await opened;
 
-        let activeOverlay = document.querySelector('active-overlay');
+        expect(await isInteractive(content)).to.be.true;
 
-        if (activeOverlay) {
-            expect(activeOverlay.textContent).to.equal(textContent);
-        } else {
-            expect(activeOverlay).to.not.be.null;
-        }
-
-        const closed = oneEvent(el, 'sp-closed');
+        const closed = oneEvent(content, 'sp-closed');
         closeOverlay();
         await closed;
 
-        activeOverlay = document.querySelector('active-overlay');
-
-        expect(activeOverlay).to.be.null;
+        expect(await isInteractive(content)).to.be.false;
 
         content.remove();
     });
 });
-describe('Overlay - type="modal"', () => {
-    it('closes on `contextmenu` and passes that to the underlying page', async () => {
-        await fixture<HTMLDivElement>(html`
-            ${virtualElement({
-                ...virtualElement.args,
-                offset: 6,
-            })}
-        `);
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        let opened = oneEvent(document, 'sp-opened');
-        // Right click to open "context menu" overlay.
-        sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [width / 2 + 50, height / 2],
-                },
-                {
-                    type: 'click',
-                    options: {
-                        button: 'right',
+describe('Overlay - type="modal", v1', () => {
+    describe('handle multiple separate `contextmenu` events', async () => {
+        let width = 0;
+        let height = 0;
+        let firstMenu: Popover;
+        let firstRect: DOMRect;
+        let secondMenu: Popover;
+        let secondRect: DOMRect;
+        before(async () => {
+            render(
+                html`
+                    <sp-theme color="light" scale="large">
+                        ${virtualElementV1({
+                            ...virtualElementV1.args,
+                            offset: 6,
+                        })}
+                    </sp-theme>
+                `,
+                document.body
+            );
+
+            width = window.innerWidth;
+            height = window.innerHeight;
+        });
+        after(() => {
+            document.querySelector('sp-theme')?.remove();
+        });
+        it('opens the first "contextmenu" overlay', async () => {
+            const opened = oneEvent(document, 'sp-opened');
+            // Right click to open "context menu" overlay.
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [width / 2 + 50, height / 2],
                     },
-                    position: [width / 2 + 50, height / 2],
-                },
-            ],
-        });
-        await opened;
-        const firstOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-        const firstHeadline = firstOverlay.querySelector(
-            '[slot="header"]'
-        ) as HTMLSpanElement;
-        expect(firstOverlay, 'first overlay').to.not.be.null;
-        expect(firstOverlay.isConnected).to.be.true;
-        expect(firstHeadline.textContent).to.equal('Menu source: end');
-        let closed = oneEvent(document, 'sp-closed');
-        opened = oneEvent(document, 'sp-opened');
-        // Right click to out of the "context menu" overlay to both close
-        // the first overlay and have the event passed to the surfacing page
-        // in order to open a subsequent "context menu" overlay.
-        sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [width / 4, height / 4],
-                },
-                {
-                    type: 'click',
-                    options: {
-                        button: 'right',
+                    {
+                        type: 'click',
+                        options: {
+                            button: 'right',
+                        },
+                        position: [width / 2 + 50, height / 2],
                     },
-                    position: [width / 4, height / 4],
-                },
-            ],
+                ],
+            });
+            await opened;
+            firstMenu = document.querySelector('sp-popover') as Popover;
+            expect(firstMenu.textContent).to.include('Menu source: end');
+            firstRect = firstMenu.getBoundingClientRect();
+            expect(firstMenu).to.not.be.null;
         });
-        await closed;
-        await opened;
-        const secondOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-        const secondHeadline = secondOverlay.querySelector(
-            '[slot="header"]'
-        ) as HTMLSpanElement;
-        expect(secondOverlay, 'second overlay').to.not.be.null;
-        expect(secondOverlay).to.not.equal(firstOverlay);
-        expect(firstOverlay.isConnected).to.be.false;
-        expect(secondOverlay.isConnected).to.be.true;
-        expect(secondHeadline.textContent).to.equal('Menu source: start');
-        closed = oneEvent(document, 'sp-closed');
-        sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [width / 8, height / 8],
-                },
-                {
-                    type: 'click',
-                    position: [width / 8, height / 8],
-                },
-            ],
+        it('closes the first "contextmenu" when opening a second', async () => {
+            const closed = oneEvent(document, 'sp-closed');
+            const opened = oneEvent(document, 'sp-opened');
+            /**
+             * Right click out of the "context menu" overlay to both close
+             * the first overlay and have the event passed to the surfacing page
+             * in order to open a subsequent "context menu" overlay.
+             *
+             * Using `sendMouse` here triggers the light dismiss for some reason while
+             * manual interacting in this way does not...
+             */
+            const trigger = document.querySelector(
+                'start-end-contextmenu'
+            ) as HTMLElement;
+            trigger.shadowRoot?.querySelector('#start')?.dispatchEvent(
+                new Event('contextmenu', {
+                    composed: true,
+                })
+            );
+            await nextFrame();
+            trigger.shadowRoot?.querySelector('#start')?.dispatchEvent(
+                new Event('pointerup', {
+                    composed: true,
+                    bubbles: true,
+                })
+            );
+            await closed;
+            await opened;
+            secondMenu = document.querySelector('sp-popover') as Popover;
+            expect(secondMenu.textContent).to.include('Menu source: start');
+            secondRect = secondMenu.getBoundingClientRect();
+            expect(secondMenu).to.not.be.null;
         });
-        await closed;
-        await nextFrame();
+        it('closes the second "contextmenu" when clicking away', async () => {
+            const closed = oneEvent(document, 'sp-closed');
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [width - width / 8, height - height / 8],
+                    },
+                ],
+            });
+            await closed;
+            expect(firstRect.top).to.not.equal(secondRect.top);
+            expect(firstRect.left).to.not.equal(secondRect.left);
+        });
     });
 
     it('does not open content off of the viewport', async () => {
+        before(async () => {
+            await setViewport({ width: 360, height: 640 });
+            // Allow viewport update to propagate.
+            await nextFrame();
+        });
+        after(async () => {
+            await setViewport({ width: 800, height: 600 });
+            // Allow viewport update to propagate.
+            await nextFrame();
+        });
+
         await fixture<HTMLDivElement>(html`
-            ${virtualElement({
-                ...virtualElement.args,
+            ${virtualElementV1({
+                ...virtualElementV1.args,
                 offset: 6,
             })}
         `);
-
-        await setViewport({ width: 360, height: 640 });
-        // Allow viewport update to propagate.
-        await nextFrame();
 
         const opened = oneEvent(document, 'sp-opened');
         // Right click to open "context menu" overlay.
@@ -587,21 +629,17 @@ describe('Overlay - type="modal"', () => {
         });
         await opened;
 
-        const activeOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-
-        expect(activeOverlay.placement).to.equal('right-start');
-        expect(activeOverlay.getAttribute('actual-placement')).to.equal(
-            'bottom'
-        );
+        const firstMenu = document.querySelector('sp-menu') as Menu;
+        expect(firstMenu).to.not.be.null;
+        expect(await isInteractive(firstMenu)).to.be.true;
 
         const closed = oneEvent(document, 'sp-closed');
         sendKeys({
             press: 'Escape',
         });
         await closed;
-        await nextFrame();
+
+        expect(await isInteractive(firstMenu)).to.be.false;
     });
 
     it('opens children in the modal stack through shadow roots', async () => {
@@ -612,52 +650,48 @@ describe('Overlay - type="modal"', () => {
         let open = oneEvent(el, 'sp-opened');
         trigger.click();
         await open;
+        expect(el.open).to.equal('click');
         const content = document.querySelector(
             'popover-content'
         ) as PopoverContent;
         open = oneEvent(content, 'sp-opened');
         content.button.click();
         await open;
-        const activeOverlays = document.querySelectorAll('active-overlay');
-        activeOverlays.forEach((overlay) => {
-            expect(overlay.slot).to.equal('open');
-        });
+        expect(content.trigger.open).to.equal('click');
         let close = oneEvent(content, 'sp-closed');
         content.trigger.removeAttribute('open');
         await close;
+        expect(content.trigger.open).to.be.null;
         close = oneEvent(el, 'sp-closed');
         el.removeAttribute('open');
         await close;
+        expect(el.open).to.be.null;
     });
 });
-describe('Overlay - timing', () => {
+describe('Overlay - timing, v1', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
-                <overlay-trigger>
+                <overlay-trigger id="test-1" placement="right">
                     <sp-button slot="trigger">Trigger 1</sp-button>
                     <sp-popover slot="hover-content">
                         <p>Hover contentent for "Trigger 1".</p>
                     </sp-popover>
                 </overlay-trigger>
-                <overlay-trigger>
+                <overlay-trigger id="test-2" placement="right">
                     <sp-button slot="trigger">Trigger 2</sp-button>
-                    <sp-popover slot="hover-content">
-                        <p>Hover contentent for "Trigger 2".</p>
-                    </sp-popover>
                     <sp-popover slot="click-content">
                         <p>Click contentent for "Trigger 2".</p>
+                    </sp-popover>
+                    <sp-popover slot="hover-content">
+                        <p>Hover contentent for "Trigger 2".</p>
                     </sp-popover>
                 </overlay-trigger>
             </div>
         `);
 
-        const overlayTrigger1 = test.querySelector(
-            'overlay-trigger:first-child'
-        ) as OverlayTrigger;
-        const overlayTrigger2 = test.querySelector(
-            'overlay-trigger:last-child'
-        ) as OverlayTrigger;
+        const overlayTrigger1 = test.querySelector('#test-1') as OverlayTrigger;
+        const overlayTrigger2 = test.querySelector('#test-2') as OverlayTrigger;
         const trigger1 = overlayTrigger1.querySelector(
             '[slot="trigger"]'
         ) as HTMLButtonElement;
@@ -671,19 +705,16 @@ describe('Overlay - timing', () => {
             boundingRectTrigger1.left + boundingRectTrigger1.width / 2,
             boundingRectTrigger1.top + boundingRectTrigger1.height / 2,
         ];
-        const outsideTrigger1: [number, number] = [
-            boundingRectTrigger1.left + boundingRectTrigger1.width * 2,
-            boundingRectTrigger1.top + boundingRectTrigger1.height * 2,
+        const outsideTriggers: [number, number] = [
+            boundingRectTrigger1.left + boundingRectTrigger1.width / 2,
+            300,
         ];
         const trigger2Position: [number, number] = [
             boundingRectTrigger2.left + boundingRectTrigger2.width / 2,
-            boundingRectTrigger2.top + boundingRectTrigger2.height / 2,
-        ];
-        const outsideTrigger2: [number, number] = [
-            boundingRectTrigger2.left + boundingRectTrigger2.width * 2,
-            boundingRectTrigger2.top + boundingRectTrigger2.height / 2,
+            boundingRectTrigger2.top + boundingRectTrigger2.height / 4,
         ];
 
+        // Move poitner over "Trigger 1", should _start_ to open "hover" content.
         await sendMouse({
             steps: [
                 {
@@ -694,16 +725,18 @@ describe('Overlay - timing', () => {
         });
         await nextFrame();
         await nextFrame();
+        // Move pointer out of "Trigger 1", should _start_ to close "hover" content.
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: outsideTrigger1,
+                    position: outsideTriggers,
                 },
             ],
         });
         await nextFrame();
         await nextFrame();
+        // Move pointer over "Trigger 2", should _start_ to open "hover" content.
         await sendMouse({
             steps: [
                 {
@@ -715,7 +748,8 @@ describe('Overlay - timing', () => {
         await nextFrame();
         await nextFrame();
         const opened = oneEvent(trigger2, 'sp-opened');
-        sendMouse({
+        // Click "Trigger 2", should _start_ to open "click" content and _start_ to close "hover" content.
+        await sendMouse({
             steps: [
                 {
                     type: 'click',
@@ -724,27 +758,28 @@ describe('Overlay - timing', () => {
             ],
         });
         await opened;
+        await nextFrame();
+        await nextFrame();
 
+        // "click" content for "Trigger 2", _only_, open.
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
         expect(overlayTrigger2.hasAttribute('open')).to.be.true;
         expect(overlayTrigger2.getAttribute('open')).to.equal('click');
 
         const closed = oneEvent(overlayTrigger2, 'sp-closed');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'click',
-                    position: outsideTrigger2,
+                    position: outsideTriggers,
                 },
             ],
         });
         await closed;
 
-        // sometimes safari needs to wait a few frames for the open attribute to update
-        for (let i = 0; i < 3; i++) await nextFrame();
-
+        // Both overlays are closed.
+        // Neither trigger received "focus" because the pointer "clicked" away, redirecting focus to <body>
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
-        expect(overlayTrigger2.hasAttribute('open'), overlayTrigger2.open).to.be
-            .false;
+        expect(overlayTrigger2.hasAttribute('open')).to.be.false;
     });
 });
