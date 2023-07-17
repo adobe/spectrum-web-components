@@ -18,11 +18,11 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import type {
-    OverlayDisplayQueryDetail,
-    Placement,
-} from '@spectrum-web-components/overlay/src/overlay-types.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import popoverStyles from './popover.css.js';
 
 /**
@@ -53,10 +53,13 @@ export class Popover extends SpectrumElement {
      * @attr
      */
     @property({ reflect: true })
-    public placement: Placement = 'none';
+    public placement?: Placement;
 
     @property({ type: Boolean, reflect: true })
     public tip = false;
+
+    @query('#tip')
+    public tipElement!: HTMLSpanElement;
 
     protected renderTip(): TemplateResult {
         return html`
@@ -69,36 +72,6 @@ export class Popover extends SpectrumElement {
                 </svg>
             </div>
         `;
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.addEventListener(
-            'sp-overlay-query',
-            this.onOverlayQuery as EventListener
-        );
-    }
-
-    public override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.removeEventListener(
-            'sp-overlay-query',
-            this.onOverlayQuery as EventListener
-        );
-    }
-
-    public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
-        /* c8 ignore next */
-        if (!event.target) return;
-
-        const target = event.target as Node;
-        /* c8 ignore next */
-        if (target !== this) return;
-
-        const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;
-        if (tipElement) {
-            event.detail.overlayContentTipElement = tipElement;
-        }
     }
 
     protected override update(changes: PropertyValues): void {
