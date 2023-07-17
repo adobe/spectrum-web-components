@@ -56,7 +56,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     focusGroupController = new FocusGroupController<Tag>(this, {
         direction: 'vertical',
-        elements: () => this.tags
+        elements: () => this.tags,
     });
 
     constructor() {
@@ -122,16 +122,15 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
             // no deleting when there aren't items.
             return;
         }
-        this.focusGroupController.changeDefaultItemFocus()
+        this.focusGroupController.changeDefaultItemFocus();
     }
-
 
     protected override render(): TemplateResult {
         return html`
-            <slot 
+            <slot
                 @slotchange=${this.handleSlotchange}
                 @sp-tag-focus=${this.changeDefaultFocus}
-            </slot>
+            ></slot>
         `;
     }
 
