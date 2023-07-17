@@ -309,7 +309,7 @@ export class MenuItem extends LikeAnchor(
                             checkmark
                             ${this.hasIcon
                               ? 'checkmark--withAdjacentIcon'
-                              : 'checkmark--withAdjacentText'}"
+                              : ''}"
                       ></sp-icon-checkmark100>
                   `
                 : html``}
