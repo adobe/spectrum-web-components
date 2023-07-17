@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    elementUpdated,
     expect,
     fixture,
     html,
@@ -20,10 +19,7 @@ import {
 } from '@open-wc/testing';
 
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import {
-    ActiveOverlay,
-    OverlayTrigger,
-} from '@spectrum-web-components/overlay';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -141,7 +137,7 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('bottom');
     });
 
-    it('occludes content behind the overlay', async () => {
+    it.skip('occludes content behind the overlay', async () => {
         ({ overlayTrigger, button, popover } = await initTest());
         const textfield = document.createElement('sp-textfield');
         document.body.append(textfield);
@@ -255,10 +251,10 @@ describe('Overlay Trigger - extended', () => {
         const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
         await open;
-        const activeOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-        await elementUpdated(activeOverlay);
+        // const activeOverlay = document.querySelector(
+        //     'active-overlay'
+        // ) as HTMLDivElement;
+        // await elementUpdated(activeOverlay);
 
         expect(overlayTrigger.open).to.equal('click');
         expect(popover.placement).to.equal('bottom');

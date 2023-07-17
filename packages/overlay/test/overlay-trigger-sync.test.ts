@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
 import { runOverlayTriggerTests } from './index.js';
 
-runOverlayTriggerTests();
+runOverlayTriggerTests('sync');
