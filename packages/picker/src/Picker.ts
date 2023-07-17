@@ -290,6 +290,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     protected get containerStyles(): StyleInfo {
+        // @todo: test in mobile
+        /* c8 ignore next 5 */
         if (this.isMobile.matches) {
             return {
                 '--swc-menu-width': '100%',
@@ -506,6 +508,8 @@ export class PickerBase extends SizedMixin(Focusable) {
             </sp-menu>
             ${this.dismissHelper}
         `;
+        // @todo: test in mobile
+        /* c8 ignore next 11 */
         if (this.isMobile.matches) {
             return html`
                 <sp-tray

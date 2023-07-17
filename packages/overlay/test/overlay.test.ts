@@ -22,6 +22,7 @@ import {
     Overlay,
     OverlayTrigger,
     Placement,
+    VirtualTrigger,
 } from '@spectrum-web-components/overlay';
 
 import {
@@ -419,6 +420,47 @@ describe('Overlays, v2', () => {
         expect(await isInteractive(el)).to.be.false;
     });
 
+    it('positions with a VirtualTrigger', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-popover id="root" placement="right">
+                    <sp-dialog dismissable>
+                        Some Content for the Dialog.
+                    </sp-dialog>
+                </sp-popover>
+            </div>
+        `);
+
+        const el = test.querySelector('sp-popover') as Popover;
+        const trigger = new VirtualTrigger(100, 100);
+
+        const opened = oneEvent(el, 'sp-opened');
+        openOverlays.push(
+            await Overlay.open(el, {
+                trigger,
+                type: 'auto',
+                placement: 'right',
+                offset: 10,
+            })
+        );
+        test.insertAdjacentElement(
+            'afterend',
+            openOverlays.at(-1) as HTMLElement
+        );
+        await opened;
+        expect(await isInteractive(el)).to.be.true;
+
+        const initial = el.getBoundingClientRect();
+        trigger.updateBoundingClientRect(500, 500);
+        await nextFrame();
+        await nextFrame();
+        const final = el.getBoundingClientRect();
+        expect(initial.x).to.not.equal(8);
+        expect(initial.y).to.not.equal(8);
+        expect(initial.x).to.not.equal(final.x);
+        expect(initial.y).to.not.equal(final.y);
+    });
+
     it('closes an inline overlay when tabbing past the content', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div>
@@ -452,24 +494,18 @@ describe('Overlays, v2', () => {
         expect(await isInteractive(content)).to.be.true;
         expect(document.activeElement).to.equal(input);
 
+        const closed = oneEvent(content, 'sp-closed');
         await sendKeys({
             press: 'Shift+Tab',
         });
+        await closed;
 
         expect(document.activeElement).to.equal(trigger);
 
         await sendKeys({
             press: 'Tab',
         });
-
-        expect(document.activeElement).to.equal(input);
-
-        const closed = oneEvent(content, 'sp-closed');
-        await sendKeys({
-            press: 'Tab',
-        });
         expect(document.activeElement).to.equal(after);
-        await closed;
         expect(await isInteractive(content)).to.be.false;
     });
 
