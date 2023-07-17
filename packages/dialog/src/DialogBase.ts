@@ -23,7 +23,7 @@ import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
-import '@spectrum-web-components/dialog/sp-dialog.js'
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
@@ -89,7 +89,6 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     await firstFocusable.updateComplete;
                 }
                 firstFocusable.focus();
-                this.removeAttribute('tabindex');
             } else {
                 this.dialog.focus();
             }
@@ -131,19 +130,27 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         );
     }
 
+    private handleTransitionEvent(event: TransitionEvent): void {
+        this.dispatchEvent(
+            new TransitionEvent(event.type, {
+                bubbles: true,
+                composed: true,
+                propertyName: event.propertyName,
+            })
+        );
+    }
+
     protected handleUnderlayTransitionend(event: TransitionEvent): void {
         if (!this.open && event.propertyName === 'visibility') {
             this.resolveTransitionPromise();
-            this.dispatchClosed();
         }
+        this.handleTransitionEvent(event);
     }
 
-    protected handleModalTransitionend(): void {
+    protected handleModalTransitionend(event: TransitionEvent): void {
         if (this.open || !this.underlay) {
             this.resolveTransitionPromise();
-            if (!this.open) {
-                this.dispatchClosed();
-            }
+            this.handleTransitionEvent(event);
         }
     }
 
@@ -156,6 +163,9 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     res();
                 };
             });
+            if (!this.open) {
+                this.dispatchClosed();
+            }
         }
         super.update(changes);
     }
@@ -173,12 +183,14 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                       <sp-underlay
                           ?open=${this.open}
                           @click=${this.dismiss}
+                          @transitionrun=${this.handleTransitionEvent}
                           @transitionend=${this.handleUnderlayTransitionend}
                       ></sp-underlay>
                   `
                 : html``}
             <div
                 class="modal ${this.mode}"
+                @transitionrun=${this.handleTransitionEvent}
                 @transitionend=${this.handleModalTransitionend}
                 @close=${this.handleClose}
             >
@@ -198,8 +210,6 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                         this.dialog.shouldManageTabOrderForScrolling();
                     });
                 }
-            } else {
-                this.tabIndex = 0;
             }
         }
     }
