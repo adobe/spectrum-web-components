@@ -1048,6 +1048,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Second');
 
+        thirdElement.focus();
         thirdElement.click();
 
         await elementUpdated(el);
@@ -1153,6 +1154,7 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
         expect(el.selected.length).to.equal(0);
 
+        thirdElement.focus();
         thirdElement.click();
 
         await elementUpdated(el);
