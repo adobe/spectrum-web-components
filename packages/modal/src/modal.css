@@ -20,3 +20,7 @@ governing permissions and limitations under the License.
 
     height: 100dvh;
 }
+
+.modal {
+    overflow: visible;
+}

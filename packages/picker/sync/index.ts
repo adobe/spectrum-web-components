@@ -12,16 +12,9 @@ governing permissions and limitations under the License.
 
 import { Picker } from '../src/Picker.js';
 import {
-    Overlay,
-    OverlayOptions,
+    OverlayOptionsV1,
     TriggerInteractions,
 } from '@spectrum-web-components/overlay';
 
-Picker.openOverlay = async (
-    target: HTMLElement,
-    interaction: TriggerInteractions,
-    content: HTMLElement,
-    options: OverlayOptions
-): Promise<() => void> => {
-    return await Overlay.open(target, interaction, content, options);
-};
+export { Picker };
+export type { OverlayOptionsV1, TriggerInteractions };
