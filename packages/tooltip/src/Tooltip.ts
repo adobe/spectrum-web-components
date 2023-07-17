@@ -36,6 +36,8 @@ class TooltipOpenable extends HTMLElement {
         newValue: 'string'
     ): void {
         switch (name) {
+            // API generally sets `open` as a property
+            /* c8 ignore next 3 */
             case 'open':
                 this.open = newValue !== null;
                 break;

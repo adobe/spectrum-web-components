@@ -822,6 +822,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
+    /* c8 ignore next 3 */
     protected resolveCacheUpdated = (): void => {
         return;
     };
