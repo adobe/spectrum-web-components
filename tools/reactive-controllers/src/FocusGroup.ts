@@ -168,17 +168,13 @@ export class FocusGroupController<T extends HTMLElement>
         let focusIndex = currentIndex;
         if (currentIndex < this.elements.length - 1) {
             for (let i = currentIndex + 1; i < this.elements.length; i++) {
-                if (!this.elements[i]?.disabled) {
-                    focusIndex = i;
-                    break;
-                }
+                focusIndex = i;
+                break;
             }
         } else if (currentIndex > 0) {
             for (let i = currentIndex - 1; i >= 0; i--) {
-                if (!this.elements[i].disabled) {
-                    focusIndex = i;
-                    break;
-                }
+                focusIndex = i;
+                break;
             }
         }
         if (focusIndex !== currentIndex) {
