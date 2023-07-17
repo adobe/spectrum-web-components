@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
@@ -43,49 +44,55 @@ class SubmenuReady extends HTMLElement {
         });
     }
 
+    menu!: ActionMenu;
+    submenu!: MenuItem;
+    submenuChild!: MenuItem;
+
     async setup(): Promise<void> {
         await nextFrame();
 
-        const menu = document.querySelector(`sp-action-menu`) as ActionMenu;
-        menu.addEventListener('sp-opened', this.handleMenuOpened, {
-            once: true,
-        });
-        menu.open = true;
+        this.menu = document.querySelector(`sp-action-menu`) as ActionMenu;
+        this.menu.addEventListener('sp-opened', this.handleMenuOpened);
+        this.menu.open = true;
     }
 
     handleMenuOpened = async (event: Event): Promise<void> => {
+        this.menu.removeEventListener('sp-opened', this.handleMenuOpened);
         await nextFrame();
         await (event.target as ActionMenu).updateComplete;
 
-        const submenu = document.querySelector('#submenu-item-1') as MenuItem;
-        if (!submenu) {
+        this.submenu = document.querySelector('#submenu-item-1') as MenuItem;
+        if (!this.submenu) {
             return;
         }
-        submenu.addEventListener('sp-opened', this.handleSubmenuOpened, {
-            once: true,
-        });
-        submenu.dispatchEvent(
-            new PointerEvent('pointerenter', { bubbles: true, composed: true })
-        );
+
+        this.submenu.addEventListener('sp-opened', this.handleSubmenuOpened);
+        this.submenu.click();
     };
 
     handleSubmenuOpened = async (event: Event): Promise<void> => {
+        this.submenu.removeEventListener('sp-opened', this.handleSubmenuOpened);
         await nextFrame();
         await (event.target as MenuItem).updateComplete;
 
-        const submenu = document.querySelector('#submenu-item-2') as MenuItem;
-        if (!submenu) {
+        this.submenuChild = document.querySelector(
+            '#submenu-item-2'
+        ) as MenuItem;
+        if (!this.submenuChild) {
             return;
         }
-        submenu.addEventListener('sp-opened', this.handleSubmenuChildOpened, {
-            once: true,
-        });
-        submenu.dispatchEvent(
-            new PointerEvent('pointerenter', { bubbles: true, composed: true })
+        this.submenuChild.addEventListener(
+            'sp-opened',
+            this.handleSubmenuChildOpened
         );
+        this.submenuChild.click();
     };
 
     handleSubmenuChildOpened = async (event: Event): Promise<void> => {
+        this.submenuChild.removeEventListener(
+            'sp-opened',
+            this.handleSubmenuChildOpened
+        );
         await nextFrame();
         await (event.target as MenuItem).updateComplete;
 
@@ -293,6 +300,7 @@ export const contextMenu = (): TemplateResult => {
             placement: 'right-start',
             receivesFocus: 'auto',
             virtualTrigger,
+            notImmediatelyClosable: true,
         });
     };
     const getValueEls = (): { root: HTMLElement; first: HTMLElement } => {
@@ -309,6 +317,9 @@ export const contextMenu = (): TemplateResult => {
     const handleRootChange = (event: Event & { target: ActionMenu }): void => {
         const valueEls = getValueEls();
         valueEls.root.textContent = event.target.value;
+        event.target.parentElement?.dispatchEvent(
+            new Event('close', { bubbles: true })
+        );
     };
     const handleFirstDescendantChange = (
         event: Event & { target: Menu }

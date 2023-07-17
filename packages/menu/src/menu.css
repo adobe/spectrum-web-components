@@ -28,3 +28,10 @@ governing permissions and limitations under the License.
 :host(:focus) {
     outline: none;
 }
+
+::slotted(*) {
+    /**
+     * Remove when Spectrum CSS supports this correctly
+     */
+    flex-shrink: 0;
+}

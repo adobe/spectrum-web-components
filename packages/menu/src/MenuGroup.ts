@@ -36,15 +36,7 @@ export class MenuGroup extends Menu {
         return [...super.styles, menuGroupStyles];
     }
 
-    private static instances = 0;
-
-    private headerId!: string;
-
-    public constructor() {
-        super();
-        MenuGroup.instances += 1;
-        this.headerId = `sp-menu-group-label-${MenuGroup.instances}`;
-    }
+    private headerId = '';
 
     @queryAssignedNodes({
         slot: 'header',
@@ -75,6 +67,9 @@ export class MenuGroup extends Menu {
                 this.headerElement.removeAttribute('id');
             }
             if (headerElement) {
+                this.headerId =
+                    this.headerId ||
+                    `sp-menu-group-label-${crypto.randomUUID().slice(0, 8)}`;
                 const headerId = headerElement.id || this.headerId;
                 if (!headerElement.id) {
                     headerElement.id = headerId;
@@ -92,9 +87,7 @@ export class MenuGroup extends Menu {
             <span class="header" ?hidden=${!this.headerElement}>
                 <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
-            <sp-menu ignore>
-                <slot></slot>
-            </sp-menu>
+            <sp-menu ignore>${this.renderMenuItemSlot()}</sp-menu>
         `;
     }
 }
