@@ -377,10 +377,17 @@ describe('Menu', () => {
         const selectedItem = el.querySelector('.selected') as MenuItem;
 
         await elementUpdated(el);
-
+        await nextFrame();
         el.focus();
 
         expect(document.activeElement).to.equal(el);
+        // Enforce visible focus
+        await sendKeys({
+            press: 'ArrowUp',
+        });
+        await sendKeys({
+            press: 'ArrowDown',
+        });
         expect(selectedItem.focused).to.be.true;
 
         selectedItem.remove();

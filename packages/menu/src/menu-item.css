@@ -45,3 +45,8 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
 }
+
+::slotted([slot='submenu']) {
+    width: max-content;
+    max-width: 100%;
+}
