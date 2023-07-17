@@ -70,36 +70,6 @@ export class Tag extends SizedMixin(SpectrumElement, {
         this.removeEventListener('focusout', this.handleFocusout);
     };
 
-    /**
-     * This function, named 'focusAfterDelete', is used to handle the focus behavior after
-     * deleting an element within a parent element.
-     * @param parent
-     */
-    private focusAfterDelete = (parent: HTMLElement): void => {
-        const tags = Array.from(parent?.querySelectorAll('sp-tag') ?? []);
-        const currentIndex = tags.indexOf(this);
-        let focusIndex = currentIndex;
-        if (currentIndex < tags.length - 1) {
-            for (let i = currentIndex + 1; i < tags.length; i++) {
-                if (!tags[i].disabled) {
-                    focusIndex = i;
-                    break;
-                }
-            }
-        } else if (currentIndex > 0) {
-            for (let i = currentIndex - 1; i >= 0; i--) {
-                if (!tags[i].disabled) {
-                    focusIndex = i;
-                    break;
-                }
-            }
-        }
-        if (focusIndex !== currentIndex) {
-            const focusTag = tags[focusIndex];
-            focusTag.focus();
-        }
-    };
-
     private handleKeydown = (event: KeyboardEvent): void => {
         if (!this.deletable || this.disabled) {
             return;
@@ -116,10 +86,20 @@ export class Tag extends SizedMixin(SpectrumElement, {
         }
     };
 
+    private shiftFocusOnEvent(): void {
+        const event = new CustomEvent('sp-tag-focus', {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+        });
+        this.dispatchEvent(event);
+    }
+
     private delete(): void {
         if (this.readonly) {
             return;
         }
+        this.shiftFocusOnEvent();
         const deleteEvent = new Event('delete', {
             bubbles: true,
             composed: true,
@@ -133,7 +113,6 @@ export class Tag extends SizedMixin(SpectrumElement, {
         const parent = this.parentNode as HTMLElement | null;
         if (parent) {
             this.remove();
-            this.focusAfterDelete(parent);
         }
     }
 
