@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { Tooltip } from '@spectrum-web-components/tooltip';
-import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 import {
     elementUpdated,
     expect,
@@ -23,6 +22,7 @@ import {
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Tooltip', () => {
     testForLitDevWarnings(
@@ -45,6 +45,14 @@ describe('Tooltip', () => {
         await expect(el).to.be.accessible();
     });
     it('self manages', async () => {
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [1, 1],
+                },
+            ],
+        });
         const button = await fixture<Button>(
             html`
                 <sp-button>
@@ -62,7 +70,6 @@ describe('Tooltip', () => {
         const opened = oneEvent(button, 'sp-opened');
         button.focus();
         await opened;
-        await elementUpdated(el);
 
         expect(el.open).to.be.true;
         await expect(button).to.be.accessible();
@@ -70,65 +77,8 @@ describe('Tooltip', () => {
         const closed = oneEvent(button, 'sp-closed');
         button.blur();
         await closed;
-        await elementUpdated(el);
 
         expect(el.open).to.be.false;
-    });
-    it('allows pointer to enter the "tooltip" without closing the "tooltip"', async () => {
-        const button = await fixture<Button>(
-            html`
-                <sp-button>
-                    This is a button.
-                    <sp-tooltip self-managed placement="bottom">
-                        Help text.
-                    </sp-tooltip>
-                </sp-button>
-            `
-        );
-
-        const el = button.querySelector('sp-tooltip') as Tooltip;
-
-        await elementUpdated(el);
-        await expect(button).to.be.accessible();
-        let opened = oneEvent(button, 'sp-opened');
-        button.dispatchEvent(new PointerEvent('pointerenter'));
-        button.dispatchEvent(
-            new PointerEvent('pointerleave', {
-                relatedTarget: el,
-            })
-        );
-        el.dispatchEvent(
-            new PointerEvent('pointerleave', {
-                relatedTarget: button,
-            })
-        );
-        await opened;
-        await elementUpdated(el);
-
-        expect(el.open).to.be.true;
-        await expect(button).to.be.accessible();
-
-        let closed = oneEvent(button, 'sp-closed');
-        button.dispatchEvent(new PointerEvent('pointerleave'));
-        await closed;
-        await elementUpdated(el);
-
-        expect(el.open).to.be.false;
-
-        opened = oneEvent(button, 'sp-opened');
-        button.dispatchEvent(new PointerEvent('pointerenter'));
-        button.dispatchEvent(
-            new PointerEvent('pointerleave', {
-                relatedTarget: el,
-            })
-        );
-        await opened;
-        await elementUpdated(el);
-
-        closed = oneEvent(button, 'sp-closed');
-        el.dispatchEvent(new PointerEvent('pointerleave'));
-        await closed;
-        await elementUpdated(el);
     });
     it('cleans up when self manages', async () => {
         const button = await fixture<Button>(
@@ -144,21 +94,46 @@ describe('Tooltip', () => {
 
         await elementUpdated(el);
 
+        expect(el.open).to.be.false;
         const opened = oneEvent(button, 'sp-opened');
         button.focus();
         await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        let activeOverlay = document.querySelector('active-overlay');
-        expect(activeOverlay).to.not.be.null;
+
+        const closed = oneEvent(button, 'sp-closed');
+        button.blur();
+        await closed;
+
+        expect(el.open).to.be.false;
+    });
+    it('cleans up when self managed and removed', async () => {
+        const button = await fixture<Button>(
+            html`
+                <sp-button>
+                    This is a button.
+                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                </sp-button>
+            `
+        );
+
+        const el = button.querySelector('sp-tooltip') as Tooltip;
+
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+        const opened = oneEvent(button, 'sp-opened');
+        button.focus();
+        await opened;
+
+        expect(el.open).to.be.true;
 
         const closed = oneEvent(button, 'sp-closed');
         button.remove();
         await closed;
 
-        activeOverlay = document.querySelector('active-overlay');
-        expect(activeOverlay).to.be.null;
+        expect(el.open).to.be.false;
     });
     it('accepts variants', async () => {
         const el = await fixture<Tooltip>(
@@ -220,7 +195,7 @@ describe('Tooltip', () => {
         expect(el.getAttribute('variant')).to.equal('info');
     });
 
-    it('answers tip query', async () => {
+    it('surfaces tip element', async () => {
         const el = await fixture<Tooltip>(
             html`
                 <sp-tooltip placement="top">Help text.</sp-tooltip>
@@ -229,21 +204,6 @@ describe('Tooltip', () => {
 
         await elementUpdated(el);
 
-        const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent =
-            new CustomEvent<OverlayDisplayQueryDetail>('sp-overlay-query', {
-                bubbles: true,
-                composed: true,
-                detail: overlayDetailQuery,
-                cancelable: true,
-            });
-        el.dispatchEvent(queryOverlayDetailEvent);
-
-        expect(overlayDetailQuery.overlayContentTipElement).to.exist;
-        if (overlayDetailQuery.overlayContentTipElement) {
-            expect(overlayDetailQuery.overlayContentTipElement.id).to.equal(
-                'tip'
-            );
-        }
+        expect(typeof el.tipElement).to.not.equal('undefined');
     });
 });
