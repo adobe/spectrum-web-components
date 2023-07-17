@@ -1,6 +1,6 @@
 ## Description
 
-Overlays in Spectrum Web Components are created via the `Overlay` class system, which prepares an "overlay stack" that can manage the deployment of one or more overlays onto a page. Whether it's needed for transient content like a tooltip, for extended interactions like selecting a value from a picker, or for blocking content like a modal, the imperative APIs outlined below or the declarative APIs delivered by `<overlay-trigger>` should cover your overlay delivery needs.
+An `<sp-overlay>` element is used to decorate content that you would like to present to your visitors as "overlaid" on the rest of the application. This includes dialogs (modal and not), pickers, tooltips, context menus, et al.
 
 ### Usage
 
@@ -11,190 +11,265 @@ Overlays in Spectrum Web Components are created via the `Overlay` class system, 
 yarn add @spectrum-web-components/overlay
 ```
 
-Import the `Overlay` class to leverage its capabilities within your application or custom element:
-
-```js
-import { Overlay } from '@spectrum-web-components/overlay';
-```
-
-Primarily, this class gives you access to the `open` method that will allow you to open an overlay:
-
-```js
-Overlay.open(
-    (owner: HTMLElement), // the element to open the overlay in reference to, "trigger"
-    (interaction: TriggerInteractions), // the type of interaction type that opened the overlay
-    (overlayElement: HTMLElement), // the element that will be projected into the overlay, "content"
-    (options: OverlayOptions) // options to customize the overlay
-);
-```
-
-`Overlay.open()` is an asynchronous method that returns a function for closing the overlay, so it is common to leverage this functionality like the following:
-
-```js
-(async () => {
-    const trigger = document.querySelector('#trigger');
-    const interaction = 'click';
-    const content = document.querySelector('#content');
-    const options = {
-        offset: 0,
-        placement: 'bottom',
-    };
-    const closeOverlay = await Overlay.open(
-        trigger,
-        interaction,
-        content,
-        options
-    );
-})();
-```
-
-## Types
-
-### TriggerInteractions
-
-This outlines the user experience that is to be delivered through the process of opening and closing an overlay.
+Import the side effectful registration of `<sp-overlay>` as follows:
 
 ```
-type TriggerInteractions =
-    | 'click'
-    | 'custom',
-    | 'hover'
-    | 'inline'
-    | 'modal'
-    | 'replace';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 ```
 
-`click` will open an overlay that will close immediately on the next click that is not on an element within the overlay.
-
-`custom` is less opinionated and allows for some customization of the process from the outside.
-
-`hover` will close the overlay as soon as the pointer leaves the trigger to which the overlay is connected.
-
-`inline` places the overlay after the trigger but before the next element in the logical tab order. This means the `shift + tab` keyboard stroke will return to the trigger.
-
-`modal` manages the overlay like a modal and will trap the tab order within its contents only.
-
-`replace` will position the overlay directly in the position of the trigger in the logical tab order. This means the `shift + tab` keyboard stroke will return the focusable element immediately prior to the trigger.
-
-### OverlayOptions
+When looking to leverage the `Overlay` base class as a type and/or for extension purposes, do so via:
 
 ```
-type OverlayOptions = {
-    delayed?: boolean;
-    placement?: Placement;
-    offset?: number;
-    receivesFocus?: 'auto';
-    notImmediatelyClosable?: boolean;
-}
+import {
+    Overlay
+} from '@spectrum-web-components/overlay';
 ```
-
-`delayed` allows for the overlay to open the overlay with warmup/cooldown behaviors as described at https://spectrum.adobe.com/page/tooltip/#Immediate-or-delayed-appearance
-
-`placement` outlines where the overlay system should attempt to position the overlay in relation to the trigger. When the layout of the page and/or current scroll positioning prevents the successful placement of the content in this way, the `placement` will be automatically applied as the value best suited for those conditions. Placements available include: `"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"`.
-
-`offset` defines the distance of the overlay content from the trigger, measured in pixels.
-
-`receivesFocus` tells the overlay stack to throw focus into the overlay after it has opened.
-
-`notImmediatelyClosable` prevents immediate clicks from closing the overlay. If you find that a trigger event is immediately overridden with a subsequent click (for instance, a `focus` trigger that should be closed on `click`), set `notImmediatelyClosable: true` to disregard clicks that coincide with the opening trigger.
-
-### Events
-
-The work to both open and close an overlay is asynchronous. This asynchrony is surfaced into the application via DOM events dispatched from the `trigger` element of your overlay. An `sp-opened` event will be dispatched once the overlay has finished opening, and an `sp-closed` event will be dispatched once the overlay has finished closing. In both cases, the dispatched event will include a `detail` property with an `interaction: TriggerInteractions` key to support associating the event/overlay with its originating `interaction`.
 
 ## Example
 
+Leveraging the `trigger` attribut to pass an ID reference to another element with in the same DOM tree that will be the element from which the overlay is positioned when open. Add an interaction type `click`, `hover`, or `longpress` to the `trigger` attribute, separated from the ID reference by an `@` symbol and the overlay will bind itself to the referenced element via the DOM events associated with that interaction. The `<sp-button>` below has an id of `trigger`, so when the `<sp-overlay>` is provided the `trigger` attribute with the value `trigger@click` it associated itself to the `<sp-button>` and toggles its open state when that button is clicked.
+
 ```html
-<sp-button
-    onclick="
-        const trigger = this;
-        const interaction = 'click';
-        const content = this.nextElementSibling;
-        if (!content) return;
-        const options = {
-            offset: 0,
-            placement: 'right',
-        };
-        content.open = true;
-        const closeOverlayPromise = Overlay.open(
-            trigger, 
-            interaction,
-            content,
-            options
-        );
-        setTimeout(function () {
-            closeOverlayPromise.then(function(close) {
-                close();
-                content.open = false;
-            });
-        }, 5000);
-    "
->
-    Click me for a 5 second overlay!
-</sp-button>
-<sp-popover>
-    <sp-dialog size="medium">
-        <h2 slot="heading">Demo</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-        augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas
-        diam in arcu cursus euismod quis viverra. Posuere ac ut consequat semper
-        viverra nam libero justo laoreet. Enim ut tellus elementum sagittis
-        vitae et leo duis ut. Neque laoreet suspendisse interdum consectetur
-        libero id faucibus nisl. Diam volutpat commodo sed egestas egestas.
-        Dolor magna eget est lorem ipsum dolor. Vitae suscipit tellus mauris a
-        diam maecenas sed. Turpis in eu mi bibendum neque egestas congue.
-        Rhoncus est pellentesque elit ullamcorper dignissim cras lobortis.
-    </sp-dialog>
+<sp-button id="trigger">Overlay Trigger</sp-button>
+<sp-overlay trigger="trigger@click">
+    <sp-popover>
+        <sp-dialog>
+            <h2 slot="heading">Clicking opens this popover...</h2>
+            <p>But, it really could be anything. Really.</p>
+        </sp-dialog>
+    </sp-popover>
+</sp-overlay>
+```
+
+### Action bar
+
+```html
+<style>
+    .overlay-demo-popover sp-action-group {
+        padding: var(--spectrum-actiongroup-vertical-spacing-regular);
+    }
+    #overlay-demo {
+        position: static;
+    }
+    #overlay-demo:not(:defined),
+    #overlay-demo *:not(:defined) {
+        display: none;
+    }
+</style>
+<sp-popover id="overlay-demo" class="overlay-demo-popover" open>
+    <sp-action-group vertical quiet emphasized selects="single">
+        <sp-action-button id="trigger-1" hold-affordance>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-2" hold-affordance>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-3" hold-affordance>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+        </sp-action-button>
+    </sp-action-group>
 </sp-popover>
+<sp-overlay ?delayed="${delayed}" trigger="trigger-1@hover">
+    <sp-tooltip>Hover</sp-tooltip>
+</sp-overlay>
+<sp-overlay
+    trigger="trigger-1@longpress"
+    type="auto"
+    placement="right-start"
+    .offset="${popoverOffset}"
+>
+    <sp-popover class="overlay-demo-popover" tip>
+        <sp-action-group vertical quiet>
+            <sp-action-button>
+                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+            </sp-action-button>
+        </sp-action-group>
+    </sp-popover>
+</sp-overlay>
+<sp-overlay ?delayed="${delayed}" trigger="trigger-2@hover">
+    <sp-tooltip>Hover</sp-tooltip>
+</sp-overlay>
+<sp-overlay
+    trigger="trigger-2@longpress"
+    type="auto"
+    placement="right-start"
+    .offset="${popoverOffset}"
+>
+    <sp-popover class="overlay-demo-popover" tip>
+        <sp-action-group vertical quiet>
+            <sp-action-button>
+                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+            </sp-action-button>
+        </sp-action-group>
+    </sp-popover>
+</sp-overlay>
+<sp-overlay ?delayed="${delayed}" trigger="trigger-3@hover">
+    <sp-tooltip>Hover</sp-tooltip>
+</sp-overlay>
+<sp-overlay
+    trigger="trigger-3@longpress"
+    type="auto"
+    placement="right-start"
+    .offset="${popoverOffset}"
+>
+    <sp-popover class="overlay-demo-popover" tip>
+        <sp-action-group vertical quiet>
+            <sp-action-button>
+                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+            </sp-action-button>
+        </sp-action-group>
+    </sp-popover>
+</sp-overlay>
+```
+
+## API
+
+```html
+<sp-overlay
+    ?open=${boolean}
+    ?delayed=${boolean}
+    offset=${Number | [Number, Number]}
+    placement=${Placement}
+    receives-focus=${'true' | 'false' | 'auto' (default)
+    trigger=${string | ${string}@${string}}
+    .triggerElement=${HTMLElement}
+    .triggerInteraction=${'click' | 'longpress' | 'hover'}
+    type=${'auto' | 'hint' | 'manual' | 'modal' | 'page'}
+></sp-overlay>
 ```
 
 ## Styling
 
-When an overlay is opened from within a styled DOM scope as created by an `<sp-theme>` element, this scope will be resolved and recreated with in the `<active-overlay>` element that is created to host the overlaid content directly in the `<body>`. By default, the generated `<sp-theme>` element will be supplied with settings of the scope from which the overlay is triggered, including any "app" centric CSS Custom Properties that might be applied via `Theme.registerThemeFragment('app', 'app', themeFragment)` therein. In the case that you have set CSS Custom Properties for the scope created by an `<sp-theme>` element via other methods, you can specify that those values should also be applied to overlay content using the `theme` part on the `<active-overlay>` element via the `active-overlay::part(theme) { /* styles */ }` selector.
+`<sp-overlay>` element will use the `<dialog>` element or `popover` attribute to project your content onto the top-layer of the browser, but that content will still exist right where you placed it to start. That means that you can style your overlay content with whatever techniques you are already leveraging to style the content in said interaction that does not get overlaid. This means standard CSS selectors, CSS Custom Properties, and CSS Parts applied in your parent context will always apply to your overlaid content.
 
-## Advanced Usage
+## Fallback support
 
-When working with the DOM-based APIs of custom elements, it is sometimes preferred to project content into an overlay from a different shadow root (eg projecting a single-slotted element into the overlay). To ensure that the content can be marshalled through any number of `<slot>` elements which are addressed into subsequent `<slot>` elements, be sure to use the `flatten: true` option when querying `slot.asignedNodes()`:
+While the [`<dialog>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) is widely supported by browsers, the [`popover` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover) is still quite new. When leveraged in browsers that do not yet support the `popover` attribute, there may be additional intervention required to ensure your content is delivered to your visitors as expected.
 
-```js
-const trigger = shadowRoot.querySelector('#trigger');
-const slot = shadowRoot.querySelector('slot');
-const interaction = 'click';
-const content = slot
-    .assignedNodes({ flatten: true })
-    .find((node) => node instanceof HTMLElement);
-const options = {
-    offset: 0,
-    placement: 'bottom',
-};
-const closeOverlay = await Overlay.open(trigger, interaction, content, options);
+### Complex layered
+
+When an overlay is placed within a page with complex layering, the content therein can fall behind other content in the `z-index` stack. The following example is somewhat contrived but, imagine a toolbar next to a properties panel. If the toolbar has a lower `z-index` and the properties panel, any overlaid content (tooltips, etc.) within that toolbar will display underneath any content in the properties panel with which it may share pixels.
+
+```html
+<div class="complex-layered-demo">
+    <div class="complex-layered-holder">
+        <sp-action-button id="complex-layered">Trigger</sp-action-button>
+        <sp-overlay trigger="complex-layered@hover" placement="bottom-start">
+            <sp-tooltip>
+                I can be partially blocked when [popover] is not available
+            </sp-tooltip>
+        </sp-overlay>
+    </div>
+    <div class="complex-layered-blocker"></div>
+</div>
+<style>
+    .complex-layered-demo {
+        position: relative;
+    }
+    .complex-layered-holder {
+        z-index: 1;
+        position: relative;
+    }
+    .complex-layered-blocker {
+        position: relative;
+        z-index: 10;
+        background: white;
+        width: 100%;
+        height: 40px;
+    }
+</style>
 ```
 
-Other times, you may want to compose content from multiple shadow roots into a single overlay. This is a pattern seen in the `<sp-dropdown>` element: its `<sp-menu>` light DOM child is wrapped by its `<sp-popover>` shadow DOM child before being projected into an overlay. What follows is a more trivial example, where content in the light DOM of an element is injected into an element in the shadow DOM of the same element and then projected into an overlay. Notice the added work here of setting a comment node into the light DOM as a placeholder for the "stolen" content, and then swapping that content back into the light DOM when the overlay is closed.
+Properly managed `z-index` values will support working around this issue while browsers work to adopt the `popover` attribute. In this demo, you can easily achieve the same output but sharing one `z-index` between the various pieces of content, removing `z-index` values altogether, or raising the `.complex-layered-holder` element to a higher `z-index` than the `.complex-layered-blocker` element.
 
-```js
-const trigger = this.shadowRoot.querySelector('#trigger');
-const outterContent = this.shadowRoot.querySelector('#outter-content');
-const innerContent = this.querySelector('#inner-content');
-const innerContentParent =
-    innerContent.parentElement || innerContent.getRootNode();
-const placeholder = document.createComment('placeholder for inner content');
-innerContentParent.replaceChild(placeholder, innerContent);
-outterContent.append(innerContent);
-const interaction = 'click';
-const options = {
-    offset: 0,
-    placement: 'bottom',
-};
-const closeOverlayPromise = Overlay.open(
-    trigger,
-    interaction,
-    outterContent,
-    options
-);
-const closeOverlay = function () {
-    closeOverlayPromise.then((close) => close());
-    innerContentParent.replaceChild(placeholder, innerContent);
-};
+### Contained
+
+[CSS Containment](https://developer.mozilla.org/en-US/docs/Web/CSS/contain) allows a developer direct control over how the internals of one element affects the paint and layout of the internals of other elements on the same page. While leveraging some of its values can offer performance gains, they can interrupt the delivery of your overlaid content.
+
+```html
+<div class="contained-demo">
+    <sp-action-button id="contained">Trigger</sp-action-button>
+    <sp-overlay trigger="contained@hover" placement="bottom-start">
+        <sp-tooltip>
+            I can be blocked when [popover] is not available
+        </sp-tooltip>
+    </sp-overlay>
+</div>
+<style>
+    .contained-demo {
+        contain: content;
+    }
+</style>
+```
+
+You could just _remove_ the `contain` rule. But, if you are not OK with simply removing the `contain` value, you still have options. In the case that you would like to continue to leverage `contain` is to place "contained" content separately from your overlaid content, like so:
+
+```html
+<div class="contained-demo">
+    <sp-action-button id="contained-working">Trigger</sp-action-button>
+</div>
+<sp-overlay trigger="contained-working@hover" placement="bottom-start">
+    <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
+</sp-overlay>
+<style>
+    .contained-demo {
+        contain: content;
+    }
+</style>
+```
+
+`<sp-overlay>` accepts an ID reference via the `trigger` attribute to relate it to interactions and positioning in the DOM. To fulfill this reference the two elements need to be in the same DOM tree. However, `<sp-overlay>` alternatively accepts a `triggerElement` _property_ that opens even more flexibility in addressing this situation.
+
+### Clip pathed
+
+While not offering the same performance opportunities as `contain`, `clip-path` can also restrict how content in an element is surfaced at paint time. When overlaid content should display outside of the `clip-path`, without the `popover` attribute that content could be _clipped_.
+
+```html
+<div class="clip-pathed-demo">
+    <sp-action-button id="clip-pathed">Trigger</sp-action-button>
+    <sp-overlay trigger="clip-pathed@hover" placement="bottom-start">
+        <sp-tooltip>
+            I can be blocked when [popover] is not available
+        </sp-tooltip>
+    </sp-overlay>
+</div>
+<style>
+    .clip-pathed-demo {
+        clip-path: inset(0 0);
+    }
+</style>
+```
+
+Here, again, working with your content needs (whether or not you want to leverage `clip-path`) or DOM structure (not colocating clipped and non-clipped content) will allow you to avoid this issue:
+
+```html
+<div class="clip-pathed-demo">
+    <sp-action-button id="clip-pathed-working">Trigger</sp-action-button>
+</div>
+<sp-overlay trigger="clip-pathed-working@hover" placement="bottom-start">
+    <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
+</sp-overlay>
+<style>
+    .clip-pathed-demo {
+        clip-path: inset(0 0);
+    }
+</style>
 ```

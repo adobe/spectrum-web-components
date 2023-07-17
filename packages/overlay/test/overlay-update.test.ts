@@ -17,26 +17,26 @@ import { accordion } from '../stories/overlay.stories.js';
 describe('sp-update-overlays event', () => {
     it('updates overlay height', async () => {
         const el = await fixture<OverlayTrigger>(accordion());
-        const container = el.querySelector('div') as HTMLElement;
+        const container = el.querySelector('sp-popover') as HTMLElement;
         const item = el.querySelector(
             '[label="Other things"]'
         ) as AccordionItem;
 
         const height0 = container.getBoundingClientRect().height;
-        expect(height0).to.equal(0);
+        expect(height0).to.lessThan(200);
 
         const opened = oneEvent(el, 'sp-opened');
         el.open = 'click';
         await opened;
 
         const height1 = container.getBoundingClientRect().height;
-        expect(height1).to.not.equal(0);
+        expect(height1).to.equal(height0);
 
         item.click();
         await elementUpdated(item);
 
         const height2 = container.getBoundingClientRect().height;
-        expect(height2).to.not.equal(0);
+        expect(height2).to.not.equal(height0);
 
         expect(height1).to.be.lessThan(height2);
     });

@@ -113,17 +113,19 @@ class OverlayDrag extends LitElement {
         ) as HTMLElement;
         if (!this.targetElement) return;
 
-        this.targetElement.addEventListener('mousedown', (event) =>
-            this.onMouseDown(event)
+        this.targetElement.addEventListener(
+            'pointerdown',
+            (event: PointerEvent) => this.onMouseDown(event)
         );
 
         this.resetTargetPosition();
     }
 
-    private onMouseDown(event: MouseEvent): void {
+    private onMouseDown(event: PointerEvent): void {
         const target = event.target as HTMLElement;
         const parent = target.parentElement;
         if (!parent) return;
+        target.setPointerCapture(event.pointerId);
 
         const max = {
             x: parent.offsetWidth - target.offsetWidth,
@@ -152,13 +154,14 @@ class OverlayDrag extends LitElement {
             Overlay.update();
         };
 
-        const onMouseUp = (): void => {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
+        const onMouseUp = (event: PointerEvent): void => {
+            target.setPointerCapture(event.pointerId);
+            document.removeEventListener('pointermove', onMouseMove);
+            document.removeEventListener('pointerup', onMouseUp);
         };
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('pointermove', onMouseMove);
+        document.addEventListener('pointerup', onMouseUp);
     }
 
     public resetTargetPosition(): void {
@@ -289,7 +292,6 @@ class RecursivePopover extends LitElement {
                     slot="click-content"
                     direction="${this.placement}"
                     tip
-                    open
                 >
                     <sp-dialog size="s" no-divider>
                         ${this.depth < MAX_DEPTH
@@ -320,7 +322,7 @@ export class PopoverContent extends LitElement {
 
     override render(): TemplateResult {
         return html`
-            <overlay-trigger>
+            <overlay-trigger type="modal" placement="bottom">
                 <sp-button slot="trigger">Open me</sp-button>
                 <sp-popover slot="click-content" direction="bottom">
                     <sp-dialog no-divider>
