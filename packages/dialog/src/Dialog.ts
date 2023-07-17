@@ -282,7 +282,6 @@ export class Dialog extends FocusVisiblePolyfillMixin(
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        this.tabIndex = 0;
         window.addEventListener(
             'resize',
             this.shouldManageTabOrderForScrolling
