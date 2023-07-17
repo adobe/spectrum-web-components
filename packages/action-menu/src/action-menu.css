@@ -33,7 +33,6 @@ governing permissions and limitations under the License.
 #popover {
     width: auto;
     max-width: none;
-    display: none;
 }
 
 :host([dir='ltr']) ::slotted([slot='icon']),
