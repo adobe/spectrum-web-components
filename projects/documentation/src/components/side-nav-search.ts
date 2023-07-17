@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     LitElement,
+    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -26,8 +27,9 @@ import { Search } from '@spectrum-web-components/search';
 import { Popover } from '@spectrum-web-components/popover';
 import type { ResultGroup } from './search-index.js';
 import { Menu } from '@spectrum-web-components/menu';
-import { openOverlay } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/search/sp-search.js';
+import { OverlayBase } from 'overlay/src/OverlayBase';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
@@ -35,16 +37,17 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
 export class SearchComponent extends LitElement {
     private closeOverlay?: () => void;
 
-    private searchResultsPopover: Popover | null = null;
-
     @query('sp-popover')
-    private popoverEl?: Popover;
+    private popoverEl!: Popover;
+
+    @property({ type: Boolean })
+    private open = false;
+
+    @query('sp-menu')
+    private menuEl!: Menu;
 
     @query('sp-search')
     private searchField!: Search;
-
-    @query('#focus-return')
-    private focusReturn!: HTMLSpanElement;
 
     public static override get styles(): CSSResultArray {
         return [sideNavSearchMenuStyles];
@@ -65,29 +68,15 @@ export class SearchComponent extends LitElement {
     }
 
     private handleKeydown(event: KeyboardEvent) {
-        const { code, shiftKey } = event;
-        const willFocusResultsList = !shiftKey && code === 'Tab';
+        const { code } = event;
         const shouldFocusResultsList =
             code === 'ArrowDown' || code === 'ArrowUp';
-        const focusResultsList = willFocusResultsList || shouldFocusResultsList;
-        if (!focusResultsList) {
+        if (!shouldFocusResultsList) {
             return;
-        }
-        if (shouldFocusResultsList) {
+        } else {
             event.preventDefault();
         }
         this.focusResults({ shouldFocusResultsList });
-    }
-
-    private handlePopoverKeydown(event: KeyboardEvent) {
-        const { code, shiftKey } = event;
-        if (code === 'Tab') {
-            if (shiftKey) {
-                this.focusReturn.focus();
-            } else {
-                this.focus();
-            }
-        }
     }
 
     private async focusResults({
@@ -95,52 +84,33 @@ export class SearchComponent extends LitElement {
     }: {
         shouldFocusResultsList?: boolean;
     }): Promise<void> {
-        await this.updateComplete;
-        if (this.searchResultsPopover) {
-            if (shouldFocusResultsList) {
-                const popoverMenu = this.searchResultsPopover.querySelector(
-                    'sp-menu'
-                ) as Menu;
-                popoverMenu.focus();
-            } else {
-                this.searchResultsPopover.focus();
-            }
-        } else if (shouldFocusResultsList) {
-            const resultsAvailable = await this.updateSearchResults(
-                this.searchField.value
+        if (shouldFocusResultsList) {
+            this.menuEl.addEventListener(
+                'focus',
+                () => {
+                    this.menuEl.childItems[
+                        this.menuEl.focusedItemIndex
+                    ].focused = true;
+                },
+                {
+                    once: true,
+                }
             );
-            if (resultsAvailable) {
-                this.focusResults({ shouldFocusResultsList });
-            }
+            this.menuEl.focus();
+        } else {
+            this.popoverEl.focus();
         }
     }
 
-    private async openPopover() {
-        if (!this.popoverEl) return;
-
-        this.searchResultsPopover = this.popoverEl;
-
-        const { popoverEl: popover } = this;
-        this.closeOverlay = await openOverlay(
-            this.searchField,
-            'click',
-            popover,
-            {
-                placement: 'bottom-start',
-            }
-        );
-
-        await this.searchResultsPopover.updateComplete;
+    private openPopover() {
+        this.open = true;
     }
 
     private closePopover() {
-        if (this.closeOverlay) {
-            this.closeOverlay();
-        }
+        this.open = false;
     }
 
     private handleClosed(): void {
-        this.searchResultsPopover = null;
         if (this.closeOverlay) {
             delete this.closeOverlay;
         }
@@ -148,11 +118,8 @@ export class SearchComponent extends LitElement {
 
     handleSubmit(event: Event): void {
         event.preventDefault();
-        if (this.results.length < 0 || !this.searchResultsPopover) return;
-        const popoverMenu = this.searchResultsPopover.querySelector(
-            'sp-menu'
-        ) as Menu;
-        popoverMenu.focus();
+        if (this.results.length < 0) return;
+        this.menuEl.focus();
     }
 
     private async updateSearchResults(value: string): Promise<boolean> {
@@ -167,32 +134,23 @@ export class SearchComponent extends LitElement {
         );
         this.results = await search(searchParam);
 
-        await this.openPopover();
+        this.openPopover();
 
         return this.results.length > 0;
     }
 
-    private onFocusout(event: FocusEvent) {
-        const relatedTarget = event.relatedTarget as Node;
-        if (
-            relatedTarget &&
-            this.searchResultsPopover &&
-            this.shadowRoot &&
-            !this.shadowRoot.contains(relatedTarget) &&
-            !this.searchResultsPopover.contains(relatedTarget)
-        ) {
-            this.closePopover();
+    private handleMenuFocusout(event: FocusEvent) {
+        if (!this.menuEl.contains(event.relatedTarget as Node)) {
+            this.menuEl.childItems.forEach((item) => {
+                item.focused = false;
+            });
         }
-    }
-
-    handleMenuKeydown(event: KeyboardEvent): void {
-        event.preventDefault();
     }
 
     renderResults(): TemplateResult {
         if (this.results.length > 0) {
             return html`
-                <sp-menu @keydown=${this.handleMenuKeydown}>
+                <sp-menu tabindex="-1" @focusout=${this.handleMenuFocusout}>
                     ${this.results.map(
                         (category) => html`
                             <sp-menu-group>
@@ -221,7 +179,7 @@ export class SearchComponent extends LitElement {
 
     override render(): TemplateResult {
         return html`
-            <div id="search-container" @focusout=${this.onFocusout}>
+            <div id="search-container">
                 <sp-search
                     id="search"
                     @focusin=${this.handleSearchInput}
@@ -232,31 +190,26 @@ export class SearchComponent extends LitElement {
                     @submit=${this.handleSubmit}
                     autocomplete="off"
                 ></sp-search>
-                <sp-popover
-                    id="search-results-menu"
-                    open
-                    tabindex="0"
-                    @sp-overlay-closed=${this.handleClosed}
-                    @keydown=${this.handlePopoverKeydown}
+                <sp-overlay
+                    ?open=${this.open}
+                    placement="bottom-start"
+                    receives-focus="false"
+                    trigger="search"
+                    type="auto"
                 >
-                    <style>
-                        #search-results-menu {
-                            width: 250px;
-                            max-height: calc(100vh - 200px);
-                            display: flex;
-                            flex-direction: column;
-                        }
-
-                        sp-illustrated-message {
-                            flex: 1 1;
-                            margin-bottom: 2em;
-                            color: var(--spectrum-global-color-gray-800);
-                        }
-                    </style>
-                    ${this.renderResults()}
-                </sp-popover>
-                <span id="focus-return" tabindex="-1"></span>
+                    <sp-popover
+                        id="search-results-menu"
+                        @sp-overlay-closed=${this.handleClosed}
+                    >
+                        ${this.renderResults()}
+                    </sp-popover>
+                </sp-overlay>
             </div>
         `;
+    }
+
+    protected override firstUpdated(_changedProperties: PropertyValues): void {
+        super.firstUpdated(_changedProperties);
+        this.addEventListener('blur', this.closePopover);
     }
 }
