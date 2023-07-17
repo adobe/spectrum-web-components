@@ -76,9 +76,6 @@ export class OverlayTrigger extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
-    @state()
-    public hasLongpressContent = false;
-
     private longpressDescriptor?: HTMLElement;
 
     @state()
@@ -147,6 +144,7 @@ export class OverlayTrigger extends SpectrumElement {
             type = 'longpress';
         } else if (target === this.hoverOverlayElement) {
             type = 'hover';
+            /* c8 ignore next 3 */
         } else {
             return;
         }
@@ -250,15 +248,16 @@ export class OverlayTrigger extends SpectrumElement {
         /* eslint-enable lit-a11y/click-events-have-key-events */
     }
 
-    protected override updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (this.disabled && changes.has('disabled')) {
             this.open = undefined;
             return;
         }
         if (
-            changes.has('hasLongpressContent') &&
-            typeof changes.get('hasLongpressContent') !== 'undefined'
+            changes.has('longpressContent') &&
+            (this.longpressContent.length ||
+                typeof changes.get('longpressContent') !== 'undefined')
         ) {
             this.manageLongpressDescriptor();
         }
@@ -271,7 +270,7 @@ export class OverlayTrigger extends SpectrumElement {
         const ariaDescribedby = trigger.getAttribute('aria-describedby');
         let descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
 
-        if (this.hasLongpressContent) {
+        if (this.longpressContent.length) {
             if (!this.longpressDescriptor) {
                 this.longpressDescriptor = document.createElement(
                     'div'
