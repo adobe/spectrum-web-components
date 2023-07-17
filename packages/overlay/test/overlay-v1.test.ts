@@ -401,24 +401,18 @@ describe('Overlays, v1', () => {
         expect(await isInteractive(content)).to.be.true;
         expect(document.activeElement).to.equal(input);
 
+        const closed = oneEvent(content, 'sp-closed');
         await sendKeys({
             press: 'Shift+Tab',
         });
+        await closed;
 
         expect(document.activeElement).to.equal(trigger);
 
         await sendKeys({
             press: 'Tab',
         });
-
-        expect(document.activeElement).to.equal(input);
-
-        const closed = oneEvent(content, 'sp-closed');
-        await sendKeys({
-            press: 'Tab',
-        });
         expect(document.activeElement).to.equal(after);
-        await closed;
         expect(await isInteractive(content)).to.be.false;
     });
 

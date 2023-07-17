@@ -57,7 +57,9 @@ describe('Tooltip', () => {
             html`
                 <sp-button>
                     This is a button.
-                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                    <sp-tooltip self-managed placement="top">
+                        Help text.
+                    </sp-tooltip>
                 </sp-button>
             `
         );
