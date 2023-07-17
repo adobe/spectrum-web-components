@@ -15,13 +15,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { MenuItem } from '@spectrum-web-components/menu';
-import {
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    oneEvent,
-} from '@open-wc/testing';
+import { expect, fixture, html, nextFrame, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -54,7 +48,6 @@ const fixtureElements = async (): Promise<{
         </sp-theme>
     `);
     const picker = test.querySelector('sp-picker') as Picker;
-    await elementUpdated(picker);
     return {
         picker,
         before: test.querySelector('#before') as HTMLDivElement,
@@ -70,13 +63,13 @@ describe('Reparented Picker', () => {
         expect(picker.getAttribute('dir')).to.equal('ltr');
 
         after.append(picker);
-        await elementUpdated(picker);
+        await nextFrame();
 
         expect(picker.dir).to.equal('ltr');
         expect(picker.getAttribute('dir')).to.equal('ltr');
 
         before.append(picker);
-        await elementUpdated(picker);
+        await nextFrame();
 
         expect(picker.dir).to.equal('ltr');
         expect(picker.getAttribute('dir')).to.equal('ltr');
@@ -91,37 +84,38 @@ describe('Reparented Picker', () => {
         let opened = oneEvent(picker, 'sp-opened');
         picker.click();
         await opened;
-        await elementUpdated(picker);
+        expect(picker.open).to.be.true;
+        expect(picker.value).to.equal('');
         let closed = oneEvent(picker, 'sp-closed');
         item2.click();
         await closed;
-        await elementUpdated(picker);
 
         expect(picker.value).to.equal('2');
+        expect(picker.open).to.be.false;
 
         after.append(picker);
         opened = oneEvent(picker, 'sp-opened');
         picker.click();
         await opened;
-        await elementUpdated(picker);
+        expect(picker.open).to.be.true;
+        expect(picker.value).to.equal('2');
         closed = oneEvent(picker, 'sp-closed');
-        await elementUpdated(item3);
         item3.click();
         await closed;
-        await elementUpdated(picker);
 
         expect(picker.value).to.equal('3');
+        expect(picker.open).to.be.false;
 
         opened = oneEvent(picker, 'sp-opened');
         picker.click();
         await opened;
-        await elementUpdated(picker);
+        expect(picker.open).to.be.true;
         expect(picker.value).to.equal('3');
         closed = oneEvent(picker, 'sp-closed');
         before.append(picker);
         await closed;
-        await elementUpdated(picker);
 
+        expect(picker.optionsMenu.value).to.equal('3');
         expect(picker.value).to.equal('3');
     });
 });

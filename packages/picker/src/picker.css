@@ -49,13 +49,17 @@ governing permissions and limitations under the License.
     user-select: inherit;
 }
 
-sp-popover {
-    display: none;
-}
-
 .picker,
 .validation-icon {
     flex-shrink: 0;
+}
+
+sp-overlay {
+    pointer-events: none;
+}
+
+sp-menu {
+    pointer-events: initial;
 }
 
 /**

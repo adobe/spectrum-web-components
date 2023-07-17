@@ -13,6 +13,6 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/picker/sp-picker.js';
 import { runPickerTests } from './index.js';
 
-describe('Picker, sync', () => {
+describe('Picker, async', () => {
     runPickerTests();
 });
