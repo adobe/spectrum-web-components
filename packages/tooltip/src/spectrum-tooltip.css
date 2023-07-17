@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
+#tooltip {
     --spectrum-overlay-animation-distance: 6px;
     --spectrum-overlay-animation-duration: var(
         --spectrum-animation-duration-100
@@ -23,7 +23,7 @@ governing permissions and limitations under the License.
         visibility 0s linear var(--spectrum-overlay-animation-duration);
     visibility: hidden;
 }
-:host([open]) {
+:host([open]) #tooltip {
     opacity: 1;
     pointer-events: auto;
     transition-delay: 0s;
@@ -33,16 +33,16 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Tooltip--bottom-left,
 :host([open]) .spectrum-Tooltip--bottom-right,
 :host([open]) .spectrum-Tooltip--bottom-start,
-:host([placement*='bottom'][open]) {
+:host([placement*='bottom'][open]) #tooltip {
     --spectrum-overlay-animation-distance: 6px;
     transform: translateY(var(--spectrum-overlay-animation-distance));
 }
-:host([open]),
+:host([open]) #tooltip,
 :host([open]) .spectrum-Tooltip--top-end,
 :host([open]) .spectrum-Tooltip--top-left,
 :host([open]) .spectrum-Tooltip--top-right,
 :host([open]) .spectrum-Tooltip--top-start,
-:host([placement*='top'][open]) {
+:host([placement*='top'][open]) #tooltip {
     --spectrum-overlay-animation-distance: 6px;
     transform: translateY(
         calc(var(--spectrum-overlay-animation-distance) * -1)
@@ -56,7 +56,7 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Tooltip--end-top,
 :host([open]) .spectrum-Tooltip--right-bottom,
 :host([open]) .spectrum-Tooltip--right-top,
-:host([placement*='right'][open]) {
+:host([placement*='right'][open]) #tooltip {
     --spectrum-overlay-animation-distance: 6px;
     transform: translateX(var(--spectrum-overlay-animation-distance));
 }
@@ -68,13 +68,13 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Tooltip--start,
 :host([open]) .spectrum-Tooltip--start-bottom,
 :host([open]) .spectrum-Tooltip--start-top,
-:host([placement*='left'][open]) {
+:host([placement*='left'][open]) #tooltip {
     --spectrum-overlay-animation-distance: 6px;
     transform: translateX(
         calc(var(--spectrum-overlay-animation-distance) * -1)
     );
 }
-:host {
+#tooltip {
     --spectrum-tooltip-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -127,7 +127,7 @@ governing permissions and limitations under the License.
     );
 }
 @media (forced-colors: active) {
-    :host {
+    #tooltip {
         border: 1px solid #0000;
     }
     #tip {
@@ -138,7 +138,7 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
 }
-:host {
+#tooltip {
     -webkit-font-smoothing: antialiased;
     align-items: center;
     background-color: var(
@@ -183,23 +183,23 @@ governing permissions and limitations under the License.
     width: auto;
     word-break: break-word;
 }
-:host(:lang(ja)),
-:host(:lang(ko)),
-:host(:lang(zh)) {
+:host(:lang(ja)) #tooltip,
+:host(:lang(ko)) #tooltip,
+:host(:lang(zh)) #tooltip {
     line-height: var(
         --mod-tooltip-cjk-line-height,
         var(--spectrum-tooltip-cjk-line-height)
     );
 }
-:host {
+#tooltip {
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
 }
-p {
+#tooltip p {
     margin: 0;
 }
-:host([variant='info']) {
+:host([variant='info']) #tooltip {
     background-color: var(
         --highcontrast-tooltip-background-color-informative,
         var(
@@ -208,7 +208,7 @@ p {
         )
     );
 }
-:host([variant='positive']) {
+:host([variant='positive']) #tooltip {
     background-color: var(
         --highcontrast-tooltip-background-color-positive,
         var(
@@ -217,7 +217,7 @@ p {
         )
     );
 }
-:host([variant='negative']) {
+:host([variant='negative']) #tooltip {
     background-color: var(
         --highcontrast-tooltip-background-color-negative,
         var(
@@ -248,7 +248,7 @@ p {
         var(--spectrum-tooltip-tip-inline-size)
     );
 }
-:host([variant='info']) #tip {
+:host([variant='info']) #tooltip #tip {
     background-color: var(
         --highcontrast-tooltip-background-color-informative,
         var(
@@ -257,7 +257,7 @@ p {
         )
     );
 }
-:host([variant='positive']) #tip {
+:host([variant='positive']) #tooltip #tip {
     background-color: var(
         --highcontrast-tooltip-background-color-positive,
         var(
@@ -266,7 +266,7 @@ p {
         )
     );
 }
-:host([variant='negative']) #tip {
+:host([variant='negative']) #tooltip #tip {
     background-color: var(
         --highcontrast-tooltip-background-color-negative,
         var(
@@ -279,14 +279,14 @@ p {
 .spectrum-Tooltip--top-left #tip,
 .spectrum-Tooltip--top-right #tip,
 .spectrum-Tooltip--top-start #tip,
-:host([placement*='top']) #tip {
+:host([placement*='top']) #tooltip #tip {
     top: 100%;
 }
 .spectrum-Tooltip--bottom-end #tip,
 .spectrum-Tooltip--bottom-left #tip,
 .spectrum-Tooltip--bottom-right #tip,
 .spectrum-Tooltip--bottom-start #tip,
-:host([placement*='bottom']) #tip {
+:host([placement*='bottom']) #tooltip #tip {
     bottom: 100%;
     clip-path: polygon(50% 0, 0 105%, 100% 105%);
     top: auto;
@@ -358,8 +358,8 @@ p {
 .spectrum-Tooltip--start #tip,
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip,
-:host([placement*='left']) #tip,
-:host([placement*='right']) #tip {
+:host([placement*='left']) #tooltip #tip,
+:host([placement*='right']) #tooltip #tip {
     height: var(
         --mod-tooltip-tip-inline-size,
         var(--spectrum-tooltip-tip-inline-size)
@@ -387,7 +387,7 @@ p {
 .spectrum-Tooltip--end-top #tip,
 .spectrum-Tooltip--right-bottom #tip,
 .spectrum-Tooltip--right-top #tip,
-:host([placement*='right']) #tip {
+:host([placement*='right']) #tooltip #tip {
     clip-path: polygon(0 50%, 105% 100%, 105% 0);
     left: calc(
         var(
@@ -402,7 +402,7 @@ p {
 .spectrum-Tooltip--start #tip,
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip,
-:host([placement*='left']) #tip {
+:host([placement*='left']) #tooltip #tip {
     clip-path: polygon(-5% 0, -5% 100%, 100% 50%);
     left: 100%;
 }
@@ -486,12 +486,12 @@ p {
         var(--spectrum-tooltip-spacing-block-start)
     );
 }
+#tooltip,
 .spectrum-Tooltip--top-end,
 .spectrum-Tooltip--top-left,
 .spectrum-Tooltip--top-right,
 .spectrum-Tooltip--top-start,
-:host,
-:host([placement*='top']) {
+:host([placement*='top']) #tooltip {
     margin-bottom: calc(
         var(
                 --mod-tooltip-tip-block-size,
@@ -503,7 +503,7 @@ p {
 .spectrum-Tooltip--bottom-left,
 .spectrum-Tooltip--bottom-right,
 .spectrum-Tooltip--bottom-start,
-:host([placement*='bottom']) {
+:host([placement*='bottom']) #tooltip {
     margin-top: calc(
         var(
                 --mod-tooltip-tip-block-size,
@@ -513,7 +513,7 @@ p {
 }
 .spectrum-Tooltip--right-bottom,
 .spectrum-Tooltip--right-top,
-:host([placement*='right']) {
+:host([placement*='right']) #tooltip {
     margin-left: calc(
         var(
                 --mod-tooltip-tip-block-size,
@@ -523,7 +523,7 @@ p {
 }
 .spectrum-Tooltip--left-bottom,
 .spectrum-Tooltip--left-top,
-:host([placement*='left']) {
+:host([placement*='left']) #tooltip {
     margin-right: calc(
         var(
                 --mod-tooltip-tip-block-size,
@@ -551,7 +551,7 @@ p {
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
-:host {
+#tooltip {
     --spectrum-tooltip-backgound-color-default-neutral: var(
         --system-spectrum-tooltip-backgound-color-default-neutral
     );
