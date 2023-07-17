@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -21,22 +20,65 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-import type {
-    OverlayDisplayQueryDetail,
-    Placement,
-} from '@spectrum-web-components/overlay';
-import { openOverlay } from '@spectrum-web-components/overlay/src/loader.js';
+import type { Placement } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import tooltipStyles from './tooltip.css.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
-export class TooltipProxy extends HTMLElement {
-    disconnectedCallback(): void {
-        this.dispatchEvent(new Event('disconnected'));
+class TooltipOpenable extends HTMLElement {
+    static get observedAttributes(): string[] {
+        return ['open', 'placement'];
+    }
+    attributeChangedCallback(
+        name: 'open' | 'placement',
+        _oldValue: string,
+        newValue: 'string'
+    ): void {
+        switch (name) {
+            case 'open':
+                this.open = newValue !== null;
+                break;
+            case 'placement':
+                this.placement = newValue as Placement;
+                break;
+        }
+    }
+    set open(open: boolean) {
+        this._open = open;
+        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
+        if (tooltip) {
+            tooltip.open = open;
+        }
+    }
+    get open(): boolean {
+        return this._open;
+    }
+    private _open = false;
+    /**
+     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"}
+     * @attr
+     */
+    set placement(placement: Placement) {
+        this._placement = placement;
+        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
+        if (tooltip) {
+            tooltip.placement = placement;
+        }
+    }
+    get placement(): Placement {
+        return this._placement;
+    }
+    private _placement: Placement = 'top';
+    get tipElement(): HTMLElement {
+        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
+        return tooltip.tipElement;
     }
 }
 
-defineElement('tooltip-proxy', TooltipProxy);
+if (!customElements.get('sp-tooltip-openable')) {
+    customElements.define('sp-tooltip-openable', TooltipOpenable);
+}
 
 /**
  * @element sp-tooltip
@@ -44,18 +86,10 @@ defineElement('tooltip-proxy', TooltipProxy);
  * @slot icon - the icon element appearing at the start of the label
  * @slot - the text label of the Tooltip
  */
-
 export class Tooltip extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [tooltipStyles];
     }
-
-    /**
-     * @private
-     */
-    static instanceCount = 0;
-
-    private _tooltipId = `sp-tooltip-describedby-helper-${Tooltip.instanceCount++}`;
 
     /**
      * Automatically bind to the parent element's hover interaction. Without this, you must provide your own `overlay-trigger`.
@@ -64,21 +98,20 @@ export class Tooltip extends SpectrumElement {
     public selfManaged = false;
 
     @property({ type: Number, reflect: true })
-    public offset = 6;
-    private hadTooltipId = false;
+    public offset = 0;
 
     @property({ type: Boolean, reflect: true })
     public open = false;
 
     /**
-     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
+     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"}
      * @attr
      */
     @property({ reflect: true })
-    public placement: Placement = 'top';
+    public placement?: Placement;
 
     @query('#tip')
-    private tipElement!: HTMLSpanElement;
+    public tipElement!: HTMLSpanElement;
 
     /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
     private _variant = '';
@@ -100,198 +133,64 @@ export class Tooltip extends SpectrumElement {
         this._variant = '';
     }
 
-    public constructor() {
-        super();
-        this.addEventListener('sp-overlay-query', this.onOverlayQuery);
-    }
-
-    public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
-        /* c8 ignore next */
-        if (!event.target) return;
-
-        const target = event.target as Node;
-        /* c8 ignore next */
-        if (target !== this) return;
-
-        event.detail.overlayContentTipElement = this.tipElement;
-    }
-
-    private _proxy!: HTMLElement;
-
-    private generateProxy(): void {
-        if (this._proxy) {
-            return;
-        }
-        this._proxy = document.createElement('tooltip-proxy');
-        this._proxy.id = this._tooltipId;
-        this._proxy.hidden = true;
-        this._proxy.slot = 'hidden-tooltip-content';
-        this._proxy.setAttribute('role', 'tooltip');
-        this._proxy.addEventListener('disconnected', this.closeOverlay);
-    }
-
-    public overlayWillOpenCallback({
-        trigger,
-    }: {
-        trigger: HTMLElement;
-    }): void {
-        this.setAttribute('aria-hidden', 'true');
-        this.generateProxy();
-        this._proxy.textContent = this.textContent;
-        const ariaDescribedby = trigger.getAttribute('aria-describedby') || '';
-        this.hadTooltipId = ariaDescribedby.search(this._tooltipId) > -1;
-
-        this.insertAdjacentElement('beforebegin', this._proxy);
-
-        if (this.hadTooltipId) return;
-
-        if (ariaDescribedby) {
-            trigger.setAttribute(
-                'aria-describedby',
-                `${ariaDescribedby} ${this._tooltipId}`
-            );
-        } else {
-            trigger.setAttribute('aria-describedby', `${this._tooltipId}`);
-        }
-    }
-
-    public overlayOpenCancelledCallback({
-        trigger,
-    }: {
-        trigger: HTMLElement;
-    }): void {
-        this.overlayCloseCallback({ trigger });
-    }
-
-    public overlayCloseCallback({ trigger }: { trigger: HTMLElement }): void {
-        const ariaDescribedby = trigger.getAttribute('aria-describedby') || '';
-        let descriptors = ariaDescribedby.split(/\s+/);
-
-        if (!this.hadTooltipId) {
-            descriptors = descriptors.filter(
-                (descriptor) => descriptor !== this._tooltipId
-            );
-        }
-        if (descriptors.length) {
-            trigger.setAttribute('aria-describedby', descriptors.join(' '));
-        } else {
-            trigger.removeAttribute('aria-describedby');
-        }
-
-        this.removeAttribute('aria-hidden');
-        this.removeProxy();
-    }
-
-    private removeProxy(): void {
-        this._proxy.remove();
-    }
-
-    private closeOverlayCallback?: Promise<() => void>;
-    private abortOverlay: (cancelled: boolean) => void = () => {
-        return;
+    private handleOpenOverlay = (): void => {
+        this.open = true;
     };
 
-    private openOverlay = (): void => {
-        const parentElement = this.parentElement as HTMLElement;
-        const abortPromise: Promise<boolean> = new Promise((res) => {
-            this.abortOverlay = res;
-        });
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = true;
-        }
-        this.closeOverlayCallback = openOverlay(parentElement, 'hover', this, {
-            abortPromise,
-            offset: this.offset,
-            placement: this.placement,
-        });
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = false;
-        }
+    protected handleCloseOverlay = (): void => {
+        this.open = false;
     };
 
-    private closeOverlay = async (
-        event?: PointerEvent | FocusEvent | Event
-    ): Promise<void> => {
-        const pointerIsEnteringTooltip =
-            event &&
-            event.type === 'pointerleave' &&
-            (event as PointerEvent).relatedTarget === this;
-        if (pointerIsEnteringTooltip) {
-            this.addEventListener(
-                'pointerleave',
-                (event: PointerEvent) => {
-                    const pointerIsEnteringParnet =
-                        event.relatedTarget === this.parentElement;
-                    if (pointerIsEnteringParnet) {
-                        return;
-                    }
-                    this.closeOverlay(event);
-                },
-                { once: true }
-            );
-            return;
-        }
-        if (this.abortOverlay) this.abortOverlay(true);
-        if (!this.closeOverlayCallback) return;
-        (await this.closeOverlayCallback)();
-        delete this.closeOverlayCallback;
-    };
+    protected handleTransitionrun(event: TransitionEvent): void {
+        this.dispatchEvent(
+            new TransitionEvent('transitionrun', {
+                bubbles: true,
+                composed: true,
+                propertyName: event.propertyName,
+            })
+        );
+    }
 
-    private previousSlot?: string;
-
-    private manageTooltip(): void {
-        const parentElement = this.parentElement as HTMLElement;
-        if (this.selfManaged) {
-            if (this.slot) {
-                this.previousSlot = this.slot;
-            }
-            this.slot = 'self-managed-tooltip';
-            parentElement.addEventListener('pointerenter', this.openOverlay);
-            parentElement.addEventListener('focusin', this.openOverlay);
-            parentElement.addEventListener('pointerleave', this.closeOverlay);
-            parentElement.addEventListener('focusout', this.closeOverlay);
-        } else {
-            if (this.previousSlot) {
-                this.slot = this.previousSlot;
-            } else if (this.slot === 'self-managed-tooltip') {
-                this.removeAttribute('slot');
-            }
-            parentElement.removeEventListener('pointerenter', this.openOverlay);
-            parentElement.removeEventListener('focusin', this.openOverlay);
-            parentElement.removeEventListener(
-                'pointerleave',
-                this.closeOverlay
-            );
-            parentElement.removeEventListener('focusout', this.closeOverlay);
-        }
+    protected handleTransitionend(event: TransitionEvent): void {
+        this.dispatchEvent(
+            new TransitionEvent('transitionend', {
+                bubbles: true,
+                composed: true,
+                propertyName: event.propertyName,
+            })
+        );
     }
 
     override render(): TemplateResult {
-        return html`
-            <slot name="icon"></slot>
-            <span id="label"><slot></slot></span>
-            <span id="tip"></span>
+        const tooltip = html`
+            <sp-tooltip-openable
+                id="tooltip"
+                placement=${ifDefined(this.placement)}
+                @transitionrun=${this.handleTransitionrun}
+                @transitionend=${this.handleTransitionend}
+            >
+                <slot name="icon"></slot>
+                <span id="label"><slot></slot></span>
+                <span id="tip"></span>
+            </sp-tooltip-openable>
         `;
-    }
-
-    protected override async update(
-        changed: PropertyValues<this>
-    ): Promise<void> {
-        if (changed.has('open') && this.selfManaged) {
-            if (this.open) {
-                this.openOverlay();
-            } else {
-                this.closeOverlay();
-            }
-        }
-        this.generateProxy();
-        super.update(changed);
-    }
-
-    protected override updated(changed: PropertyValues<this>): void {
-        super.updated(changed);
-        if (changed.has('selfManaged')) {
-            this.manageTooltip();
+        if (this.selfManaged) {
+            return html`
+                <sp-overlay
+                    ?open=${this.open}
+                    offset=${this.offset}
+                    .placement=${this.placement}
+                    type="hint"
+                    .triggerElement=${this.parentElement}
+                    .triggerInteraction=${'hover'}
+                    @sp-opened=${this.handleOpenOverlay}
+                    @sp-closed=${this.handleCloseOverlay}
+                >
+                    ${tooltip}
+                </sp-overlay>
+            `;
+        } else {
+            return tooltip;
         }
     }
 }
