@@ -176,7 +176,7 @@ governing permissions and limitations under the License.
         --spectrum-component-height-100
     );
 }
-.spectrum-Textfield--sizeS {
+:host([size='s']) {
     --spectrum-textfield-height: var(--spectrum-component-height-75);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-small
@@ -225,7 +225,7 @@ governing permissions and limitations under the License.
         --spectrum-component-height-75
     );
 }
-.spectrum-Textfield--sizeM {
+:host([size='m']) {
     --spectrum-textfield-height: var(--spectrum-component-height-100);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-medium
@@ -274,7 +274,7 @@ governing permissions and limitations under the License.
         --spectrum-component-height-100
     );
 }
-.spectrum-Textfield--sizeL {
+:host([size='l']) {
     --spectrum-textfield-height: var(--spectrum-component-height-200);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-large
@@ -323,7 +323,7 @@ governing permissions and limitations under the License.
         --spectrum-component-height-200
     );
 }
-.spectrum-Textfield--sizeXL {
+:host([size='xl']) {
     --spectrum-textfield-height: var(--spectrum-component-height-300);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-extra-large

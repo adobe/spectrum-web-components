@@ -39,11 +39,19 @@ import {
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { iconsOnly } from '../stories/picker.stories.js';
+import {
+    Default,
+    iconsOnly,
+    noVisibleLabel,
+    slottedLabel,
+} from '../stories/picker.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { Popover } from '@spectrum-web-components/popover';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
-import { isWebKit } from '@spectrum-web-components/shared/src/platform.js';
+import {
+    isFirefox,
+    isWebKit,
+} from '@spectrum-web-components/shared/src/platform.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -80,6 +88,140 @@ export function runPickerTests(): void {
 
         return test.querySelector('sp-picker') as Picker;
     };
+    describe('accessibility model', () => {
+        it('accessible with "<sp-field-label>"', async () => {
+            const test = await fixture<HTMLDivElement>(html`
+                <div>
+                    ${Default({
+                        onChange: () => {
+                            return;
+                        },
+                    })}
+                </div>
+            `);
+            const el = test.querySelector('sp-picker') as Picker;
+
+            type NamedNode = { name: string };
+            let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name ===
+                        'Select a Country with a very long label, too long, in fact Where do you live?'
+                ),
+                '`name` is the label text'
+            ).to.not.be.null;
+
+            el.value = 'option-2';
+            await elementUpdated(el);
+            snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Select Inverse Where do you live?'
+                ),
+                '`name` is the the selected item text plus the label text'
+            ).to.not.be.null;
+        });
+        it('accessible with "label" attribute', async () => {
+            const test = await fixture<HTMLDivElement>(html`
+                <div>
+                    ${noVisibleLabel({
+                        onChange: () => {
+                            return;
+                        },
+                    })}
+                </div>
+            `);
+            const el = test.querySelector('sp-picker') as Picker;
+
+            type NamedNode = { name: string };
+            let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Where do you live?'
+                ),
+                '`name` is the label text'
+            ).to.not.be.null;
+
+            el.value = 'option-2';
+            await elementUpdated(el);
+            snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Select Inverse Where do you live?'
+                ),
+                '`name` is the the selected item text plus the label text'
+            ).to.not.be.null;
+        });
+        it('accessible with "label" slot', async () => {
+            const test = await fixture<HTMLDivElement>(html`
+                <div>
+                    ${slottedLabel({
+                        onChange: () => {
+                            return;
+                        },
+                    })}
+                </div>
+            `);
+            const el = test.querySelector('sp-picker') as Picker;
+
+            type NamedNode = { name: string };
+            let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Where do you live?'
+                ),
+                '`name` is the label text'
+            ).to.not.be.null;
+
+            el.value = 'option-2';
+            await elementUpdated(el);
+            snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            if (isFirefox()) {
+                // Firefox does not surface slotted content into this aria-labelledby reference made by Picker
+                // negative test to fail when conditions change
+                expect(
+                    findAccessibilityNode<NamedNode>(
+                        snapshot,
+                        (node) => node.name === 'Select Inverse'
+                    ),
+                    '`name` is the the selected item text without label test'
+                ).to.not.be.null;
+                return;
+            }
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Select Inverse Where do you live?'
+                ),
+                '`name` is the the selected item text plus the label text'
+            ).to.not.be.null;
+        });
+    });
     describe('standard', () => {
         beforeEach(async () => {
             el = await pickerFixture();
@@ -128,7 +270,7 @@ export function runPickerTests(): void {
             await elementUpdated(option2);
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
-            expect((el.button.textContent || '').trim()).to.equal(
+            expect((el.button.textContent || '').trim()).to.include(
                 'Select Inverse'
             );
             let itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
@@ -137,21 +279,21 @@ export function runPickerTests(): void {
             await itemUpdated;
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
-            expect((el.button.textContent || '').trim()).to.equal(newLabel1);
+            expect((el.button.textContent || '').trim()).to.include(newLabel1);
             itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
             const newLabel2 = 'Other option';
             option2.childNodes[0].textContent = newLabel2;
             await itemUpdated;
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
-            expect((el.button.textContent || '').trim()).to.equal(newLabel2);
+            expect((el.button.textContent || '').trim()).to.include(newLabel2);
         });
         it('accepts new selected item content when open', async () => {
             const option2 = el.querySelector('[value="option-2"') as MenuItem;
             el.value = 'option-2';
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
-            expect((el.button.textContent || '').trim()).to.equal(
+            expect((el.button.textContent || '').trim()).to.include(
                 'Select Inverse'
             );
             const opened = oneEvent(el, 'sp-opened');
@@ -165,7 +307,7 @@ export function runPickerTests(): void {
             await itemUpdated;
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
-            expect((el.button.textContent || '').trim()).to.equal(
+            expect((el.button.textContent || '').trim()).to.include(
                 'Invert Selection'
             );
         });
@@ -174,7 +316,7 @@ export function runPickerTests(): void {
 
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
-            expect((el.button.textContent || '').trim()).to.equal(
+            expect((el.button.textContent || '').trim()).to.include(
                 'Select Inverse'
             );
 
@@ -188,7 +330,9 @@ export function runPickerTests(): void {
             await Promise.all(removals);
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect((el.button.textContent || '').trim()).to.equal('');
+            expect((el.button.textContent || '').trim()).to.not.include(
+                'Select Inverse'
+            );
         });
         it('accepts a new item and value at the same time', async () => {
             el.value = 'option-2';
@@ -270,9 +414,9 @@ export function runPickerTests(): void {
             expect(
                 findAccessibilityNode<NamedNode>(
                     snapshot,
-                    (node) => node.name === 'Where do you live? Select Inverse'
+                    (node) => node.name === 'Select Inverse Where do you live?'
                 ),
-                '`name` is the label text plus the selected item text'
+                '`name` is the selected item text plus the label text'
             ).to.not.be.null;
         });
         it('manages `aria-activedescendant`', async () => {
@@ -1152,7 +1296,7 @@ export function runPickerTests(): void {
         expect(
             findAccessibilityNode<NamedNode>(
                 snapshot,
-                (node) => node.name === 'Choose an action type... Delete'
+                (node) => node.name === 'Delete Choose an action type...'
             ),
             '`name` is the label text'
         ).to.not.be.null;
@@ -1166,7 +1310,7 @@ export function runPickerTests(): void {
         expect(
             findAccessibilityNode<NamedNode>(
                 snapshot,
-                (node) => node.name === 'Choose an action type... Copy'
+                (node) => node.name === 'Copy Choose an action type...'
             ),
             '`name` is the label text plus the selected item text'
         ).to.not.be.null;

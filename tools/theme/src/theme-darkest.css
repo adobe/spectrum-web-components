@@ -12,3 +12,4 @@ governing permissions and limitations under the License.
 
 @import '@spectrum-web-components/styles/theme-darkest.css';
 @import '@spectrum-web-components/styles/tokens/darkest-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/custom-darkest-vars.css';

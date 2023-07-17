@@ -109,6 +109,11 @@ export function runSplitButtonTests(
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
+
+        const trigger = el.shadowRoot?.querySelector('.trigger');
+        expect(trigger).to.have.attribute('aria-expanded', 'false');
+        expect(trigger).not.to.have.attribute('aria-controls');
+
         let items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(3);
 
@@ -117,6 +122,8 @@ export function runSplitButtonTests(
         await opened;
 
         expect(el.open).to.be.true;
+        expect(trigger).to.have.attribute('aria-expanded', 'true');
+        expect(trigger).to.have.attribute('aria-controls', 'menu');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(0);
 
@@ -125,6 +132,8 @@ export function runSplitButtonTests(
         await closed;
 
         expect(el.open).to.be.false;
+        expect(trigger).to.have.attribute('aria-expanded', 'false');
+        expect(trigger).not.to.have.attribute('aria-controls');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(3);
 
@@ -133,6 +142,8 @@ export function runSplitButtonTests(
         await opened;
 
         expect(el.open).to.be.true;
+        expect(trigger).to.have.attribute('aria-expanded', 'true');
+        expect(trigger).to.have.attribute('aria-controls', 'menu');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(0);
 
@@ -141,6 +152,8 @@ export function runSplitButtonTests(
         await closed;
 
         expect(el.open).to.be.false;
+        expect(trigger).to.have.attribute('aria-expanded', 'false');
+        expect(trigger).not.to.have.attribute('aria-controls');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(3);
     });
@@ -151,6 +164,11 @@ export function runSplitButtonTests(
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
+
+        const trigger = el.shadowRoot?.querySelector('.trigger');
+        expect(trigger).to.have.attribute('aria-expanded', 'false');
+        expect(trigger).not.to.have.attribute('aria-controls');
+
         let items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(3);
 
@@ -159,6 +177,8 @@ export function runSplitButtonTests(
         await opened;
 
         expect(el.open).to.be.true;
+        expect(trigger).to.have.attribute('aria-expanded', 'true');
+        expect(trigger).to.have.attribute('aria-controls', 'menu');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(0);
 
@@ -167,6 +187,8 @@ export function runSplitButtonTests(
         await closed;
 
         expect(el.open).to.be.false;
+        expect(trigger).to.have.attribute('aria-expanded', 'false');
+        expect(trigger).not.to.have.attribute('aria-controls');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(3);
 
@@ -175,6 +197,8 @@ export function runSplitButtonTests(
         await opened;
 
         expect(el.open).to.be.true;
+        expect(trigger).to.have.attribute('aria-expanded', 'true');
+        expect(trigger).to.have.attribute('aria-controls', 'menu');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(0);
 
@@ -183,6 +207,8 @@ export function runSplitButtonTests(
         await closed;
 
         expect(el.open).to.be.false;
+        expect(trigger).to.have.attribute('aria-expanded', 'false');
+        expect(trigger).not.to.have.attribute('aria-controls');
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(3);
     });

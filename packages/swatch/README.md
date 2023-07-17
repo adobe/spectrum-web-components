@@ -208,6 +208,8 @@ The `mixed-value` attribute and `mixedValue` property outline when an `<sp-swatc
 </sp-swatch-group>
 ```
 
+Please note that the `aria-checked="mixed"` value only applies when the swatch is in a group with `selects="multiple"`
+
 ### Nothing
 
 The `nothing` attribute/property outlines that the `<sp-swatch>` represents no color or that it represents "transparent".

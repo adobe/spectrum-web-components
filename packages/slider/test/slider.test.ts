@@ -977,6 +977,84 @@ describe('Slider', () => {
 
         expect(input.getAttribute('aria-valuetext')).to.equal('50');
     });
+    it('supports units not included in Intl.NumberFormatOptions', async () => {
+        let el = await fixture<Slider>(
+            html`
+                <sp-slider value="50" min="0" max="100" format-options="{"style": "unit", "unit": "px"}"></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const input = el.focusElement as HTMLInputElement;
+        await elementUpdated(el);
+
+        expect(input.getAttribute('aria-valuetext')).to.equal('50');
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    value="5"
+                    step="1"
+                    min="0"
+                    max="255"
+                    format-options='{"style": "unit", "unit": "px"}'
+                >
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="5"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="250"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        let shadowRoot = el.shadowRoot as ShadowRoot;
+        expect(shadowRoot.querySelector('input#input-0[aria-valuetext="5px"]'))
+            .to.exist;
+        expect(
+            shadowRoot.querySelector('input#input-1[aria-valuetext="250px"]')
+        ).to.exist;
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider value="5" step="1" min="0" max="255">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="5"
+                        format-options='{"style": "unit", "unit": "px"}'
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="250"
+                        format-options='{"style": "unit", "unit": "px"}'
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        shadowRoot = el.shadowRoot as ShadowRoot;
+        expect(shadowRoot.querySelector('input#input-0[aria-valuetext="5px"]'))
+            .to.exist;
+        expect(
+            shadowRoot.querySelector('input#input-1[aria-valuetext="250px"]')
+        ).to.exist;
+    });
     it('accepts min/max/value in the same timing', async () => {
         const el = await fixture<Slider>(
             html`

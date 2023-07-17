@@ -2255,12 +2255,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-disabled: var(
         --spectrum-alias-component-background-color-disabled
     );
-    --spectrum-alias-tabs-divider-background-color-default: var(
-        --spectrum-global-color-gray-300
-    );
-    --spectrum-alias-tabs-divider-background-color-quiet: var(
-        --spectrum-alias-background-color-transparent
-    );
     --spectrum-alias-tabitem-text-color-default: var(
         --spectrum-alias-label-text-color
     );

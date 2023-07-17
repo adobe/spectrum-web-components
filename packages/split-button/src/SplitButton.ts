@@ -150,6 +150,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 <sp-button
                     aria-haspopup="true"
                     aria-expanded=${this.open ? 'true' : 'false'}
+                    aria-controls=${ifDefined(
+                        this.open ? this.optionsMenu.id : undefined
+                    )}
                     class="button trigger ${this.variant}"
                     @blur=${this.onButtonBlur}
                     @click=${this.onButtonClick}

@@ -22,22 +22,8 @@ governing permissions and limitations under the License.
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
-:host([size='m']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-}
-:host([size='l']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-}
+:host([size='l']),
+:host([size='m']),
 :host([size='xl']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-100
@@ -86,7 +72,7 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 :host([compact]:not([quiet])) ::slotted(:first-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: var(
+    --mod-actionbutton-focus-indicator-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
         )
@@ -109,7 +95,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])) ::slotted(:not(:first-child)) {
-    --spectrum-actionbutton-focus-ring-border-radius: 0px;
+    --mod-actionbutton-focus-indicator-border-radius: 0px;
     margin-inline-end: var(
         --mod-actiongroup-horizontal-spacing-compact,
         var(--spectrum-actiongroup-horizontal-spacing-compact)
@@ -120,7 +106,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])) ::slotted(:last-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: 0px
+    --mod-actionbutton-focus-indicator-border-radius: 0px
         var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
@@ -172,7 +158,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])[vertical]) ::slotted(:first-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: var(
+    --mod-actionbutton-focus-indicator-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
         )
@@ -221,7 +207,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])[vertical]) ::slotted(:last-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: 0px 0px
+    --mod-actionbutton-focus-indicator-border-radius: 0px 0px
         var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)

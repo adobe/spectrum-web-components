@@ -129,6 +129,19 @@ governing permissions and limitations under the License.
     --spectrum-floating-action-button-shadow-color: var(
         --spectrum-floating-action-button-drop-shadow-color
     );
+    --spectrum-table-row-hover-color: var(--spectrum-gray-900);
+    --spectrum-table-row-hover-opacity: 0.07;
+    --spectrum-table-selected-row-background-color: var(
+        --spectrum-informative-background-color-default
+    );
+    --spectrum-table-selected-row-background-opacity: 0.1;
+    --spectrum-table-selected-row-background-color-non-emphasized: var(
+        --spectrum-neutral-background-color-selected-default
+    );
+    --spectrum-table-selected-row-background-opacity-non-emphasized: 0.1;
+    --spectrum-table-row-down-opacity: 0.1;
+    --spectrum-table-selected-row-background-opacity-hover: 0.15;
+    --spectrum-table-selected-row-background-opacity-non-emphasized-hover: 0.15;
     --spectrum-white-rgb: 255, 255, 255;
     --spectrum-white: rgba(var(--spectrum-white-rgb));
     --spectrum-transparent-white-100-rgb: 255, 255, 255;
@@ -322,6 +335,43 @@ governing permissions and limitations under the License.
     --spectrum-color-handle-drop-shadow-x: 0;
     --spectrum-color-handle-drop-shadow-y: 0;
     --spectrum-color-handle-drop-shadow-blur: 0;
+    --spectrum-table-row-height-small-compact: var(
+        --spectrum-component-height-75
+    );
+    --spectrum-table-row-height-medium-compact: var(
+        --spectrum-component-height-100
+    );
+    --spectrum-table-row-height-large-compact: var(
+        --spectrum-component-height-200
+    );
+    --spectrum-table-row-height-extra-large-compact: var(
+        --spectrum-component-height-300
+    );
+    --spectrum-table-row-top-to-text-small-compact: var(
+        --spectrum-component-top-to-text-75
+    );
+    --spectrum-table-row-top-to-text-medium-compact: var(
+        --spectrum-component-top-to-text-100
+    );
+    --spectrum-table-row-top-to-text-large-compact: var(
+        --spectrum-component-top-to-text-200
+    );
+    --spectrum-table-row-top-to-text-extra-large-compact: var(
+        --spectrum-component-top-to-text-300
+    );
+    --spectrum-table-row-bottom-to-text-small-compact: var(
+        --spectrum-component-bottom-to-text-75
+    );
+    --spectrum-table-row-bottom-to-text-medium-compact: var(
+        --spectrum-component-bottom-to-text-100
+    );
+    --spectrum-table-row-bottom-to-text-large-compact: var(
+        --spectrum-component-bottom-to-text-200
+    );
+    --spectrum-table-row-bottom-to-text-extra-large-compact: var(
+        --spectrum-component-bottom-to-text-300
+    );
+    --spectrum-table-border-divider-width: 1px;
     --spectrum-tab-item-height-small: var(--spectrum-component-height-200);
     --spectrum-tab-item-height-medium: var(--spectrum-component-height-300);
     --spectrum-tab-item-height-large: var(--spectrum-component-height-400);

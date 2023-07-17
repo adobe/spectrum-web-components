@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dialog",
-    "version": "0.33.2",
+    "version": "0.34.0",
     "publishConfig": {
         "access": "public"
     },
@@ -73,17 +73,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.33.2",
-        "@spectrum-web-components/button": "^0.33.2",
-        "@spectrum-web-components/button-group": "^0.33.2",
-        "@spectrum-web-components/divider": "^0.33.2",
-        "@spectrum-web-components/icons-workflow": "^0.33.2",
-        "@spectrum-web-components/modal": "^0.33.2",
-        "@spectrum-web-components/shared": "^0.33.2",
-        "@spectrum-web-components/underlay": "^0.33.2"
+        "@spectrum-web-components/base": "^0.34.0",
+        "@spectrum-web-components/button": "^0.34.0",
+        "@spectrum-web-components/button-group": "^0.34.0",
+        "@spectrum-web-components/divider": "^0.34.0",
+        "@spectrum-web-components/icons-workflow": "^0.34.0",
+        "@spectrum-web-components/modal": "^0.34.0",
+        "@spectrum-web-components/shared": "^0.34.0",
+        "@spectrum-web-components/underlay": "^0.34.0"
     },
     "devDependencies": {
-        "@spectrum-css/dialog": "^6.0.56"
+        "@spectrum-css/dialog": "^6.0.60"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

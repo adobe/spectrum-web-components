@@ -537,11 +537,13 @@ export const TwoHandles = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="min"
+                    label="Minimum"
                     value="5"
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="max"
+                    label="Maximum"
                     value="250"
                 ></sp-slider-handle>
             </sp-slider>
@@ -573,11 +575,13 @@ export const TwoHandlesPt = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="min"
+                    label="Minimum"
                     value="5"
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="max"
+                    label="Maximum"
                     value="250"
                 ></sp-slider-handle>
             </sp-slider>
@@ -599,16 +603,25 @@ export const ThreeHandlesPc = (args: StoryArgs = {}): TemplateResult => {
                 max="255"
                 @input=${handleHandleEvent(args)}
                 @change=${handleHandleEvent(args)}
-                .formatOptions=${{
-                    style: 'unit',
-                    unit: 'pc',
-                }}
+                .formatOptions=${{ style: 'unit', unit: 'pc' }}
                 ...=${spreadProps(args)}
             >
                 Output Levels
-                <sp-slider-handle slot="handle" value="5"></sp-slider-handle>
-                <sp-slider-handle slot="handle" value="133"></sp-slider-handle>
-                <sp-slider-handle slot="handle" value="250"></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    value="5"
+                    label="Low"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    value="133"
+                    label="Mid"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    value="250"
+                    label="High"
+                ></sp-slider-handle>
             </sp-slider>
         </div>
     `;
@@ -632,12 +645,14 @@ export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="low"
+                    label="Low"
                     value="5"
                     max="next"
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="mid"
+                    label="Mid"
                     value="100"
                     min="previous"
                     max="next"
@@ -645,6 +660,7 @@ export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="high"
+                    label="High"
                     value="250"
                     min="previous"
                 ></sp-slider-handle>
@@ -785,12 +801,14 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="black"
+                    label="Black"
                     value=${values.black}
                     .normalization=${blackNormalization}
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="gray"
+                    label="Gray"
                     value="0.215"
                     min="0"
                     max="1"
@@ -801,6 +819,7 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="white"
+                    label="White"
                     value=${values.white}
                     .normalization=${whiteNormalization}
                 ></sp-slider-handle>

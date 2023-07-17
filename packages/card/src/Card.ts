@@ -31,6 +31,7 @@ import '@spectrum-web-components/asset/sp-asset.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import '@spectrum-web-components/divider/sp-divider.js';
 import cardStyles from './card.css.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
 import detailStyles from '@spectrum-web-components/styles/detail.js';
@@ -220,6 +221,11 @@ export class Card extends LikeAnchor(
             <sp-asset id="preview" variant=${ifDefined(this.asset)}>
                 <slot name="preview"></slot>
             </sp-asset>
+            ${this.variant !== 'quiet' && !this.horizontal
+                ? html`
+                      <sp-divider size="s"></sp-divider>
+                  `
+                : html``}
         `;
     }
 
@@ -228,6 +234,11 @@ export class Card extends LikeAnchor(
             <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
                 <slot name="cover-photo"></slot>
             </sp-asset>
+            ${this.variant !== 'quiet' && !this.horizontal
+                ? html`
+                      <sp-divider size="s"></sp-divider>
+                  `
+                : html``}
         `;
     }
 
@@ -259,6 +270,7 @@ export class Card extends LikeAnchor(
 
     protected override render(): TemplateResult {
         return html`
+            ${this.renderImage()}
             <div class="body">
                 <div class="header">
                     ${this.renderHeading}
@@ -295,7 +307,6 @@ export class Card extends LikeAnchor(
                       <slot name="footer"></slot>
                   `
                 : html``}
-            ${this.renderImage()}
             ${this.toggles
                 ? html`
                       <sp-quick-actions

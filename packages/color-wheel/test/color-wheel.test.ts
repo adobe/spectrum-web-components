@@ -628,4 +628,27 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(hue);
         expect(tinyHSLA.equals(el.color)).to.be.true;
     });
+    it('should flip orientation with dir="rtl"', async () => {
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel></sp-color-wheel>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        expect(
+            getComputedStyle(root.querySelector('.wheel') as HTMLElement)
+                .transform
+        ).to.equal('none');
+
+        el.setAttribute('dir', 'rtl');
+
+        await elementUpdated(el);
+        expect(
+            getComputedStyle(root.querySelector('.wheel') as HTMLElement)
+                .transform
+        ).to.equal('matrix(-1, 0, 0, 1, 0, 0)');
+    });
 });
