@@ -25,19 +25,46 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
-        "./src/ActiveOverlay.js": {
-            "development": "./src/ActiveOverlay.dev.js",
-            "default": "./src/ActiveOverlay.js"
+        "./src/Overlay.js": {
+            "development": "./src/Overlay.dev.js",
+            "default": "./src/Overlay.js"
+        },
+        "./src/OverlayBase.js": {
+            "development": "./src/OverlayBase.dev.js",
+            "default": "./src/OverlayBase.js"
+        },
+        "./src/OverlayDialog.js": {
+            "development": "./src/OverlayDialog.dev.js",
+            "default": "./src/OverlayDialog.js"
+        },
+        "./src/OverlayNoPopover.js": {
+            "development": "./src/OverlayNoPopover.dev.js",
+            "default": "./src/OverlayNoPopover.js"
+        },
+        "./src/OverlayPopover.js": {
+            "development": "./src/OverlayPopover.dev.js",
+            "default": "./src/OverlayPopover.js"
+        },
+        "./src/OverlayStack.js": {
+            "development": "./src/OverlayStack.dev.js",
+            "default": "./src/OverlayStack.js"
         },
         "./src/OverlayTrigger.js": {
             "development": "./src/OverlayTrigger.dev.js",
             "default": "./src/OverlayTrigger.js"
         },
+        "./src/PlacementController.js": {
+            "development": "./src/PlacementController.dev.js",
+            "default": "./src/PlacementController.js"
+        },
         "./src/VirtualTrigger.js": {
             "development": "./src/VirtualTrigger.dev.js",
             "default": "./src/VirtualTrigger.js"
         },
-        "./src/active-overlay.css.js": "./src/active-overlay.css.js",
+        "./src/fullSizePlugin.js": {
+            "development": "./src/fullSizePlugin.dev.js",
+            "default": "./src/fullSizePlugin.js"
+        },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -46,13 +73,10 @@
             "development": "./src/loader.dev.js",
             "default": "./src/loader.js"
         },
+        "./src/overlay-base.css.js": "./src/overlay-base.css.js",
         "./src/overlay-events.js": {
             "development": "./src/overlay-events.dev.js",
             "default": "./src/overlay-events.js"
-        },
-        "./src/overlay-stack.js": {
-            "development": "./src/overlay-stack.dev.js",
-            "default": "./src/overlay-stack.js"
         },
         "./src/overlay-timer.js": {
             "development": "./src/overlay-timer.dev.js",
@@ -63,13 +87,9 @@
             "development": "./src/overlay-types.dev.js",
             "default": "./src/overlay-types.js"
         },
-        "./src/overlay-utils.js": {
-            "development": "./src/overlay-utils.dev.js",
-            "default": "./src/overlay-utils.js"
-        },
-        "./src/overlay.js": {
-            "development": "./src/overlay.dev.js",
-            "default": "./src/overlay.js"
+        "./src/topLayerOverTransforms.js": {
+            "development": "./src/topLayerOverTransforms.dev.js",
+            "default": "./src/topLayerOverTransforms.js"
         },
         "./active-overlay.js": {
             "development": "./active-overlay.dev.js",
@@ -82,6 +102,10 @@
         "./sync/overlay-trigger.js": {
             "development": "./sync/overlay-trigger.dev.js",
             "default": "./sync/overlay-trigger.js"
+        },
+        "./sp-overlay.js": {
+            "development": "./sp-overlay.dev.js",
+            "default": "./sp-overlay.js"
         }
     },
     "scripts": {
@@ -102,9 +126,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@floating-ui/dom": "^1.2.0",
+        "@floating-ui/dom": "1.2.1",
         "@spectrum-web-components/action-button": "^0.34.0",
         "@spectrum-web-components/base": "^0.34.0",
+        "@spectrum-web-components/reactive-controllers": "^0.34.0",
         "@spectrum-web-components/shared": "^0.34.0",
         "@spectrum-web-components/theme": "^0.34.0"
     },
@@ -113,6 +138,7 @@
     "sideEffects": [
         "./active-overlay.js",
         "./overlay-trigger.js",
+        "./sp-overlay.js",
         "./sync/overlay-trigger.js",
         "./stories/overlay-story-components.js",
         "./**/*.dev.js"

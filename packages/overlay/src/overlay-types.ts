@@ -11,10 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import type { ThemeData } from '@spectrum-web-components/theme/src/Theme.js';
-import type { Placement as FloatingUIPlacement } from '@floating-ui/dom';
+import type { Placement } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 
-export type TriggerInteractions =
+export { Placement };
+
+export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
+
+export type TriggerInteractions = OverlayTypes;
+
+export type TriggerInteractionsV1 =
     | 'click'
     | 'longpress'
     | 'hover'
@@ -64,14 +70,12 @@ export interface OverlayDisplayQueryDetail {
     overlayContentTipElement?: HTMLElement;
 }
 
-export type Placement = FloatingUIPlacement | 'none';
-
-export type OverlayOptions = {
+export type OverlayOptionsV1 = {
     root?: HTMLElement;
     delayed?: boolean;
     placement?: Placement;
     offset?: number;
-    receivesFocus?: 'auto';
+    receivesFocus?: 'true' | 'false' | 'auto';
     notImmediatelyClosable?: boolean;
     abortPromise?: Promise<boolean>;
     virtualTrigger?: VirtualTrigger;

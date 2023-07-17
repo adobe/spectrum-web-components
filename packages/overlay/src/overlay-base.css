@@ -1,0 +1,150 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host {
+    display: contents;
+    pointer-events: none;
+
+    /**
+     * duplicate --spectrum-overlay-animation-distance, which is out of scope
+     * rather than over write so we continue to get new values from Spectrum CSS
+     * if they are provided in the future.
+     **/
+    --swc-overlay-animation-distance: var(
+        --spectrum-picker-m-texticon-popover-offset-y,
+        var(--spectrum-global-dimension-size-75)
+    );
+}
+
+.dialog {
+    margin: 0;
+    border: 0;
+    background: none;
+    padding: 0;
+    display: flex;
+    position: fixed;
+    overflow: visible;
+    opacity: 1 !important;
+    box-sizing: border-box;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    max-width: calc(100vw - 16px);
+
+    --sp-overlay-open: true;
+}
+
+:host(:not([open])) .dialog {
+    top: 0;
+    left: 0;
+    transform: translate(-999em, -999em);
+
+    --sp-overlay-open: false;
+}
+
+.dialog:focus {
+    outline: none;
+}
+
+.dialog::backdrop {
+    display: none;
+}
+
+.dialog:before {
+    position: absolute;
+    inset: -999em;
+    content: '';
+    pointer-events: auto !important;
+}
+
+.dialog:not(.not-immediately-closable):before {
+    display: none;
+}
+
+.dialog > div {
+    width: 100%;
+}
+
+::slotted(*) {
+    pointer-events: auto;
+}
+
+::slotted(sp-popover) {
+    position: static;
+}
+
+/**
+ * Offset the transition displacement from the trigger edge by
+ * padding the equivelent distance off of the opposite edge.
+ *
+ * <HACK>
+ * Prepare for Context Menus with [popover] by adding margin/border
+ * that _should_ still be under the pointer when `pointerup` is dispatched.
+ * </HACK>
+ **/
+.dialog[actual-placement*='top'] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: var(--swc-overlay-animation-distance);
+}
+
+.dialog[actual-placement*='right'] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog[actual-placement*='bottom'] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog[actual-placement*='left'] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: var(--swc-overlay-animation-distance);
+}
+
+slot[name='longpress-describedby-descriptor'] {
+    display: none;
+}
+
+/* stylelint-disable */
+@supports selector(:open) {
+    .dialog {
+        opacity: 0;
+    }
+
+    .dialog:open {
+        opacity: 1;
+    }
+}
+
+@supports selector(:popover-open) {
+    .dialog {
+        opacity: 0;
+    }
+
+    .dialog:popover-open {
+        opacity: 1;
+    }
+}
+
+@supports (not selector(:open)) and (not selector(:popover-open)) {
+    :host:not([open]) .dialog {
+        pointer-events: none;
+    }
+
+    .dialog[actual-placement] {
+        z-index: calc(
+            var(--swc-overlay-z-index-base, 1000) +
+                var(--swc-overlay-open-count)
+        );
+    }
+}
+/* stylelint-enable */

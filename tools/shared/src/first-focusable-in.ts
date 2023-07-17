@@ -23,3 +23,14 @@ export const firstFocusableIn = (
     ) as SpectrumElement;
     return firstFocusable;
 };
+
+export const firstFocusableSlottedIn = (
+    root: HTMLSlotElement
+): SpectrumElement | null => {
+    const firstFocusable = root
+        .assignedElements()
+        .find((element) =>
+            element.matches(firstFocusableSelector)
+        ) as SpectrumElement;
+    return firstFocusable;
+};
