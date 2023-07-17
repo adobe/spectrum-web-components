@@ -76,3 +76,8 @@ governing permissions and limitations under the License.
     padding-left: var(--spectrum-listitem-texticon-icon-gap);
     padding-right: 0;
 }
+
+::slotted([slot='submenu']) {
+    width: max-content;
+    max-width: 100%;
+}

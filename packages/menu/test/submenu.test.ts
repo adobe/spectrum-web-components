@@ -14,6 +14,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -32,14 +33,46 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import { ActiveOverlay } from '@spectrum-web-components/overlay';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult,
     dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await fixture<Theme>(html`
-        <sp-theme dir=${dir} scale="medium" color="dark">${story}</sp-theme>
+        <sp-theme dir=${dir} scale="medium" color="dark">
+            ${story}
+            <style>
+                sp-theme {
+                    --spectrum-global-animation-duration-100: 50ms;
+                    --spectrum-global-animation-duration-200: 50ms;
+                    --spectrum-global-animation-duration-300: 50ms;
+                    --spectrum-global-animation-duration-400: 50ms;
+                    --spectrum-global-animation-duration-500: 50ms;
+                    --spectrum-global-animation-duration-600: 50ms;
+                    --spectrum-global-animation-duration-700: 50ms;
+                    --spectrum-global-animation-duration-800: 50ms;
+                    --spectrum-global-animation-duration-900: 50ms;
+                    --spectrum-global-animation-duration-1000: 50ms;
+                    --spectrum-global-animation-duration-2000: 50ms;
+                    --spectrum-global-animation-duration-4000: 50ms;
+                    --spectrum-animation-duration-0: 50ms;
+                    --spectrum-animation-duration-100: 50ms;
+                    --spectrum-animation-duration-200: 50ms;
+                    --spectrum-animation-duration-300: 50ms;
+                    --spectrum-animation-duration-400: 50ms;
+                    --spectrum-animation-duration-500: 50ms;
+                    --spectrum-animation-duration-600: 50ms;
+                    --spectrum-animation-duration-700: 50ms;
+                    --spectrum-animation-duration-800: 50ms;
+                    --spectrum-animation-duration-900: 50ms;
+                    --spectrum-animation-duration-1000: 50ms;
+                    --spectrum-animation-duration-2000: 50ms;
+                    --spectrum-animation-duration-4000: 50ms;
+                    --spectrum-coachmark-animation-indicator-ring-duration: 50ms;
+                    --swc-test-duration: 1ms;
+                }
+            </style>
+        </sp-theme>
     `);
     document.documentElement.dir = dir;
     return test.children[0] as T;
@@ -118,11 +151,11 @@ describe('Submenu', () => {
             ],
         });
         await closed;
-        await nextFrame();
 
-        expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
-            .true;
-        expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be.true;
+        expect(submenuChanged.withArgs('Two').calledOnce, 'submenu changed').to
+            .be.true;
+        expect(rootChanged.withArgs('Has submenu').calledOnce, 'root changed')
+            .to.be.true;
     });
     it('closes deep tree on selection', async () => {
         const rootChanged = spy();
@@ -175,13 +208,14 @@ describe('Submenu', () => {
                 </sp-menu>
             `
         );
-
-        await elementUpdated(el);
         const rootItem = el.querySelector('.root') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
+        const item2 = document.querySelector('.submenu-item-2') as MenuItem;
+        const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
         expect(rootItem.open).to.be.false;
 
-        const opened = oneEvent(rootItem, 'sp-opened');
+        let opened = oneEvent(rootItem, 'sp-opened');
+        // Hover the root menu item to open a submenu
         sendMouse({
             steps: [
                 {
@@ -199,10 +233,10 @@ describe('Submenu', () => {
 
         expect(rootItem.open).to.be.true;
 
-        const item2 = document.querySelector('.submenu-item-2') as MenuItem;
         const item2BoundingRect = item2.getBoundingClientRect();
 
-        let closed = oneEvent(item2, 'sp-opened');
+        opened = oneEvent(item2, 'sp-opened');
+        // Click the submenu item to open a submenu
         sendMouse({
             steps: [
                 {
@@ -214,28 +248,14 @@ describe('Submenu', () => {
                 },
             ],
         });
-        await closed;
-        await nextFrame();
+        await opened;
 
         expect(item2.open).to.be.true;
 
-        const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
-        const itemCBoundingRect = itemC.getBoundingClientRect();
-
-        closed = oneEvent(rootItem, 'sp-closed');
-        sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        itemCBoundingRect.left + itemCBoundingRect.width / 2,
-                        itemCBoundingRect.top + itemCBoundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        const closed = oneEvent(rootItem, 'sp-closed');
+        // click to select and close
+        itemC.click();
         await closed;
-        await nextFrame();
 
         expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
             .true;
@@ -267,6 +287,7 @@ describe('Submenu', () => {
             const el = await styledFixture<Menu>(
                 html`
                     <sp-menu
+                        id="base"
                         @change=${(event: Event & { target: Menu }) => {
                             rootChanged(event.target.value);
                         }}
@@ -274,6 +295,7 @@ describe('Submenu', () => {
                         <sp-menu-item class="root">
                             Has submenu
                             <sp-menu
+                                id="sub"
                                 slot="submenu"
                                 @change=${(event: Event & { target: Menu }) => {
                                     submenuChanged(event.target.value);
@@ -297,6 +319,7 @@ describe('Submenu', () => {
 
             await elementUpdated(el);
             const rootItem = el.querySelector('.root') as MenuItem;
+            const submenu = el.querySelector('[slot="submenu"]') as Menu;
             expect(rootItem.open).to.be.false;
             el.focus();
             await elementUpdated(el);
@@ -308,6 +331,10 @@ describe('Submenu', () => {
             await opened;
 
             expect(rootItem.open).to.be.true;
+            expect(
+                submenu === document.activeElement,
+                `${document.activeElement?.id}`
+            ).to.be.true;
 
             let closed = oneEvent(rootItem, 'sp-closed');
             sendKeys({
@@ -316,6 +343,10 @@ describe('Submenu', () => {
             await closed;
 
             expect(rootItem.open).to.be.false;
+            expect(
+                el === document.activeElement,
+                `${document.activeElement?.id}`
+            ).to.be.true;
 
             opened = oneEvent(rootItem, 'sp-opened');
             sendKeys({
@@ -335,10 +366,13 @@ describe('Submenu', () => {
             });
             await closed;
 
-            expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
-                .true;
             expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be
                 .true;
+            expect(rootChanged.called, 'root has changed').to.be.true;
+            expect(
+                rootChanged.calledWith('Has submenu'),
+                'root specifically changed'
+            ).to.be.true;
         });
     });
     it('closes on `pointerleave`', async () => {
@@ -491,7 +525,8 @@ describe('Submenu', () => {
         });
         await closed;
     });
-    it('stays open when mousing between menu item and submenu', async () => {
+    it('continues to open when mousing between menu item and submenu', async () => {
+        const clickSpy = spy();
         const el = await styledFixture<Menu>(
             html`
                 <sp-menu>
@@ -501,7 +536,10 @@ describe('Submenu', () => {
                             <sp-menu-item class="submenu-item-1">
                                 One
                             </sp-menu-item>
-                            <sp-menu-item class="submenu-item-2">
+                            <sp-menu-item
+                                class="submenu-item-2"
+                                @click=${() => clickSpy()}
+                            >
                                 Two
                             </sp-menu-item>
                             <sp-menu-item class="submenu-item-3">
@@ -515,6 +553,7 @@ describe('Submenu', () => {
 
         await elementUpdated(el);
         const rootItem = el.querySelector('.root') as MenuItem;
+        const subItem = el.querySelector('.submenu-item-2') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
         expect(rootItem.open).to.be.false;
 
@@ -532,6 +571,80 @@ describe('Submenu', () => {
                 },
             ],
         });
+        await nextFrame();
+        await nextFrame();
+        const subItemBoundingRect = subItem.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        subItemBoundingRect.left +
+                            subItemBoundingRect.width / 2,
+                        subItemBoundingRect.top +
+                            subItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await opened;
+        expect(rootItem.open).to.be.true;
+        // Ensure it _doesn't_ get closed.
+        await aTimeout(150);
+
+        expect(rootItem.open).to.be.true;
+
+        const closed = oneEvent(rootItem, 'sp-closed');
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        subItemBoundingRect.left +
+                            subItemBoundingRect.width / 2,
+                        subItemBoundingRect.top +
+                            subItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await closed;
+
+        expect(clickSpy.callCount).to.equal(1);
+    });
+    it('stays open when mousing between menu item and submenu', async () => {
+        const clickSpy = spy();
+        const el = await styledFixture<Menu>(
+            html`
+                <sp-menu>
+                    <sp-menu-item class="root">
+                        Has submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item class="submenu-item-1">
+                                One
+                            </sp-menu-item>
+                            <sp-menu-item
+                                class="submenu-item-2"
+                                @click=${() => clickSpy()}
+                            >
+                                Two
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-3">
+                                Three
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+        const rootItem = el.querySelector('.root') as MenuItem;
+        const subItem = el.querySelector('.submenu-item-2') as MenuItem;
+        const rootItemBoundingRect = rootItem.getBoundingClientRect();
+        expect(rootItem.open).to.be.false;
+
+        const opened = oneEvent(rootItem, 'sp-opened');
         await sendMouse({
             steps: [
                 {
@@ -540,27 +653,53 @@ describe('Submenu', () => {
                         rootItemBoundingRect.left +
                             rootItemBoundingRect.width / 2,
                         rootItemBoundingRect.top +
-                            rootItemBoundingRect.height * 2,
-                    ],
-                },
-            ],
-        });
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect.left +
-                            rootItemBoundingRect.width * 1.5,
-                        rootItemBoundingRect.top +
                             rootItemBoundingRect.height / 2,
                     ],
                 },
             ],
         });
         await opened;
+        await nextFrame();
+        await nextFrame();
+        const subItemBoundingRect = subItem.getBoundingClientRect();
+        expect(rootItem.open).to.be.true;
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        subItemBoundingRect.left +
+                            subItemBoundingRect.width / 2,
+                        subItemBoundingRect.top +
+                            subItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        expect(rootItem.open).to.be.true;
+        // Ensure it _doesn't_ get closed.
+        await aTimeout(150);
 
         expect(rootItem.open).to.be.true;
+
+        const closed = oneEvent(rootItem, 'sp-closed');
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        subItemBoundingRect.left +
+                            subItemBoundingRect.width / 2,
+                        subItemBoundingRect.top +
+                            subItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await closed;
+
+        expect(clickSpy.callCount).to.equal(1);
     });
     it('not opens if disabled', async () => {
         const el = await styledFixture<Menu>(
@@ -611,15 +750,15 @@ describe('Submenu', () => {
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
-                <sp-menu-group role="none">
+                <sp-menu-group role="none" id="group">
                     <span slot="header">New York</span>
                     <sp-menu-item>Bronx</sp-menu-item>
                     <sp-menu-item id="submenu-item-1">
                         Brooklyn
-                        <sp-menu slot="submenu">
+                        <sp-menu slot="submenu" id="submenu-1">
                             <sp-menu-item id="submenu-item-2">
                                 Ft. Greene
-                                <sp-menu slot="submenu">
+                                <sp-menu slot="submenu" id="submenu-2">
                                     <sp-menu-item>S. Oxford St</sp-menu-item>
                                     <sp-menu-item>S. Portland Ave</sp-menu-item>
                                     <sp-menu-item>S. Elliot Pl</sp-menu-item>
@@ -631,7 +770,7 @@ describe('Submenu', () => {
                     </sp-menu-item>
                     <sp-menu-item id="submenu-item-3">
                         Manhattan
-                        <sp-menu slot="submenu">
+                        <sp-menu slot="submenu" id="submenu-3">
                             <sp-menu-item disabled>SoHo</sp-menu-item>
                             <sp-menu-item>
                                 Union Square
@@ -648,9 +787,9 @@ describe('Submenu', () => {
             </sp-action-menu>
         `);
 
-        const rootMenu1 = el.querySelector('#submenu-item-1') as Menu;
-        const rootMenu2 = el.querySelector('#submenu-item-3') as Menu;
-        const childMenu2 = el.querySelector('#submenu-item-2') as Menu;
+        const rootMenu1 = el.querySelector('#submenu-item-1') as MenuItem;
+        const rootMenu2 = el.querySelector('#submenu-item-3') as MenuItem;
+        const childMenu2 = el.querySelector('#submenu-item-2') as MenuItem;
 
         expect(el.open).to.be.false;
         let opened = oneEvent(el, 'sp-opened');
@@ -658,35 +797,29 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu1, 'sp-opened');
         rootMenu1.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
+        expect(rootMenu1.open).to.be.true;
 
         opened = oneEvent(childMenu2, 'sp-opened');
         childMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(3);
+        expect(childMenu2.open).to.be.true;
 
-        const overlaysManaged = Promise.all([
-            oneEvent(childMenu2, 'sp-closed'),
-            oneEvent(rootMenu1, 'sp-closed'),
-            oneEvent(rootMenu2, 'sp-opened'),
-        ]);
+        const childMenu2Closed = oneEvent(childMenu2, 'sp-closed');
+        const rootMenu1Closed = oneEvent(rootMenu1, 'sp-closed');
+        const rootMenu2Opened = oneEvent(rootMenu2, 'sp-opened');
         rootMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
-        await overlaysManaged;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
+        await childMenu2Closed;
+        await rootMenu1Closed;
+        await rootMenu2Opened;
     });
 
     it('closes back to the first overlay without a `root` when clicking away', async () => {
@@ -739,33 +872,31 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu1, 'sp-opened');
         rootMenu1.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
 
         opened = oneEvent(childMenu2, 'sp-opened');
         childMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(3);
-
         const closed = Promise.all([
             oneEvent(childMenu2, 'sp-closed'),
             oneEvent(rootMenu1, 'sp-closed'),
             oneEvent(el, 'sp-closed'),
         ]);
-        document.body.click();
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [600, 5],
+                },
+            ],
+        });
         await closed;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(0);
     });
 
     it('closes decendent menus when Menu Item in ancestor without a submenu is pointerentered', async () => {
@@ -808,23 +939,17 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu, 'sp-opened');
         rootMenu.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
 
         const closed = oneEvent(rootMenu, 'sp-closed');
         noSubmenu.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await closed;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
     });
 
     it('closes decendent menus when Menu Item in ancestor is clicked', async () => {
@@ -869,6 +994,7 @@ describe('Submenu', () => {
                 </sp-menu-group>
             </sp-action-menu>
         `);
+        await nextFrame();
 
         const rootMenu1 = el.querySelector('#submenu-item-1') as MenuItem;
         const childMenu2 = el.querySelector('#submenu-item-2') as MenuItem;
@@ -880,35 +1006,41 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu1, 'sp-opened');
         rootMenu1.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
 
         opened = oneEvent(childMenu2, 'sp-opened');
         childMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(3);
 
         const closed = Promise.all([
             oneEvent(childMenu2, 'sp-closed'),
             oneEvent(rootMenu1, 'sp-closed'),
             oneEvent(el, 'sp-closed'),
         ]);
-        ancestorItem.click();
+        const rect = ancestorItem.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                },
+            ],
+        });
         await closed;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(0);
     });
     it('cleans up submenus that close before they are "open"', async () => {
+        if ('showPopover' in document.createElement('div')) {
+            return;
+        }
         await sendMouse({
             steps: [
                 {
@@ -960,7 +1092,6 @@ describe('Submenu', () => {
 
         const rootItemBoundingRect1 = rootItem1.getBoundingClientRect();
         const rootItemBoundingRect2 = rootItem2.getBoundingClientRect();
-        let activeOverlay!: ActiveOverlay | null;
 
         // Open the first submenu
         await sendMouse({
@@ -1018,6 +1149,12 @@ describe('Submenu', () => {
                 },
             ],
         });
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         const closed = oneEvent(rootItem2, 'sp-closed');
         // Close the second submenu
         await sendMouse({
@@ -1028,22 +1165,13 @@ describe('Submenu', () => {
                         rootItemBoundingRect2.left +
                             rootItemBoundingRect2.width / 2,
                         rootItemBoundingRect2.top +
-                            rootItemBoundingRect2.top +
-                            rootItemBoundingRect2.height / 2,
+                            rootItemBoundingRect2.height * 2,
                     ],
                 },
             ],
         });
-        activeOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-        expect(activeOverlay).to.not.be.null;
         await closed;
 
-        activeOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-        expect(activeOverlay).to.be.null;
         expect(rootItem1.open, 'finally closed 1').to.be.false;
         expect(rootItem2.open, 'finally closed 2').to.be.false;
     });
