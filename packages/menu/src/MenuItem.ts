@@ -419,7 +419,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.open = true;
         this.active = true;
         this.setAttribute('aria-expanded', 'true');
-
         const submenu = (
             this.shadowRoot.querySelector(
                 'slot[name="submenu"]'
