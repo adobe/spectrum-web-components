@@ -321,7 +321,7 @@ export const invalid = (args: StoryArgs = {}): TemplateResult => {
     return renderTimeField(`Is invalid? ${args.invalid}`, args);
 };
 
-valid.storyName = 'Is invalid?';
+invalid.storyName = 'Is invalid?';
 
 invalid.argTypes = {
     invalid: {
