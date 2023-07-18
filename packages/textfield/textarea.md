@@ -130,9 +130,7 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 
 ### Grows
 
-By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element.
-
-Note: When leveraging the `quiet` attribute, the `grows` attribute does not effect the final delivery of the element.
+By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element.
 
 ```html
 <div style="display: flex; flex-wrap: wrap;">
@@ -142,7 +140,7 @@ Note: When leveraging the `quiet` attribute, the `grows` attribute does not effe
             id="story-4"
             multiline
             placeholder="Enter your name"
-            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element."
         ></sp-textfield>
     </div>
     <div>
@@ -152,7 +150,7 @@ Note: When leveraging the `quiet` attribute, the `grows` attribute does not effe
             grows
             multiline
             placeholder="Enter your name"
-            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element."
         ></sp-textfield>
     </div>
     <div>
@@ -162,7 +160,7 @@ Note: When leveraging the `quiet` attribute, the `grows` attribute does not effe
             grows
             multiline
             placeholder="Enter your name"
-            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element."
             quiet
         ></sp-textfield>
     </div>

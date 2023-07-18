@@ -58,7 +58,7 @@ export class TextfieldBase extends ManageHelpText(
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @query('.input')
+    @query('.input:not(#sizer)')
     protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
     @property({ type: Boolean, reflect: true })
@@ -225,9 +225,11 @@ export class TextfieldBase extends ManageHelpText(
 
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows && !this.quiet && this.rows === -1
+            ${this.grows && this.rows === -1
                 ? html`
-                      <div id="sizer">${this.value}&#8203;</div>
+                      <div id="sizer" class="input" aria-hidden="true">
+                          ${this.value}&#8203;
+                      </div>
                   `
                 : nothing}
             <!-- @ts-ignore -->
