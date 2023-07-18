@@ -44,15 +44,6 @@ textarea {
     forced-color-adjust: var(--swc-test-forced-color-adjust);
 }
 
-:host([grows]:not([quiet])) .input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    resize: none;
-    overflow: hidden;
-}
-
 :host([grows]:not([quiet])) #textfield:after {
     grid-area: unset;
     min-block-size: calc(
@@ -67,70 +58,10 @@ textarea {
     );
 }
 
-:host([grows]) #sizer {
-    min-block-size: var(
-        --mod-text-area-min-block-size,
-        var(--spectrum-text-area-min-block-size)
-    );
+#sizer {
+    block-size: auto;
     word-break: break-word;
-    white-space: pre-wrap;
-    box-sizing: border-box;
-    overflow-wrap: break-word;
-    border: var(--spectrum-textfield-texticon-border-size) solid;
-    border-radius: var(--spectrum-textfield-texticon-border-radius);
-    padding-block-end: calc(
-        var(
-                --mod-textfield-spacing-block-end,
-                var(--spectrum-textfield-spacing-block-end)
-            ) +
-            var(
-                --mod-textfield-border-width,
-                var(--spectrum-textfield-border-width)
-            )
-    );
-    padding-block-start: calc(
-        var(
-                --mod-textfield-spacing-block-start,
-                var(--spectrum-textfield-spacing-block-start)
-            ) +
-            var(
-                --mod-textfield-border-width,
-                var(--spectrum-textfield-border-width)
-            )
-    );
-    padding-inline: calc(
-        var(
-                --mod-textfield-spacing-inline,
-                var(--spectrum-textfield-spacing-inline)
-            ) +
-            var(
-                --mod-textfield-border-width,
-                var(--spectrum-textfield-border-width)
-            )
-    );
-    text-indent: 0;
-    inline-size: 100%;
-    vertical-align: top;
-    margin: 0;
-    overflow: visible;
-    font-family: var(--spectrum-textfield-texticon-text-font-family);
-    font-size: var(--spectrum-textfield-texticon-text-size);
-    line-height: var(--spectrum-textfield-texticon-text-line-height);
-    text-overflow: ellipsis;
-    transition: border-color
-            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out;
-    outline: none;
-    -webkit-appearance: none; /* stylelint-disable-line */
-    -moz-appearance: textfield; /* stylelint-disable-line */
-}
-
-:host([grows][quiet]) #sizer {
-    border-radius: var(--spectrum-textfield-quiet-texticon-border-radius);
-    border-width: 0 0 var(--spectrum-textfield-quiet-texticon-border-size) 0;
-    resize: none;
-    overflow-y: hidden;
+    opacity: 0;
 }
 
 .icon,
@@ -160,6 +91,15 @@ textarea {
 
 :host([multiline][rows='1']) .input {
     min-block-size: auto;
+}
+
+:host([grows]:not([rows])) .input:not(#sizer) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    resize: none;
+    overflow: hidden;
 }
 
 /* restore specificity from the original Spectrum CSS */
