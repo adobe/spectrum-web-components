@@ -206,7 +206,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
             passThroughSwatchActions.push((swatch) => {
                 if (
                     'selects' in targetValues &&
-                    targetValues['selects'] === 'multiple'
+                    targetValues['selects'] !== 'multiple'
                 )
                     swatch.mixedValue = false;
                 if ('border' in targetValues)
