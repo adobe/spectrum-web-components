@@ -85,7 +85,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
 
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.setAttribute('role', 'progressbar');
+        this.setAttribute('role', 'meter progressbar');
     }
 
     protected override updated(changes: PropertyValues): void {
