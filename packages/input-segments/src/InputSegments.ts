@@ -24,14 +24,19 @@ import {
     PropertyValueMap,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
+import {
+    classMap,
+    ifDefined,
+    styleMap,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
-
-import { property, query, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { styleMap } from 'lit/directives/style-map.js';
-import { when } from 'lit/directives/when.js';
 
 import {
     AM,
@@ -50,7 +55,7 @@ import {
 import styles from './input-segments.css.js';
 
 /**
- * @element sp-input-segments
+ * @event change - Announces when a new date/time is defined by emitting a `Date` object
  */
 export class InputSegments extends TextfieldBase {
     public static override get styles(): CSSResultArray {
@@ -60,17 +65,30 @@ export class InputSegments extends TextfieldBase {
     @query('.editable-segment')
     firstEditableSegment!: HTMLDivElement;
 
+    /**
+     * Indicates when date segments should be included in the field
+     */
+    @state()
+    protected includeDate = false;
+
+    /**
+     * Indicates when time segments should be included in the field
+     */
+    @state()
+    protected includeTime = false;
+
+    /**
+     * Indicates which segments that are part of time should be included. In addition to the hour segment, which will
+     * always be displayed, we can display the minutes (default) and seconds segment
+     */
+    @property()
+    timeGranularity: TimeGranularity = 'minute';
+
+    /**
+     * Defines whether a date/time should be displayed in the field
+     */
     @property({ reflect: true, attribute: false })
     selectedDateTime?: Date;
-
-    @property({ attribute: false })
-    includeDate = false;
-
-    @property({ attribute: false })
-    includeTime = false;
-
-    @property({ attribute: false })
-    timeGranularity: TimeGranularity = 'minute';
 
     @state()
     private _locale!: string;
@@ -158,11 +176,7 @@ export class InputSegments extends TextfieldBase {
             this._createSegments = true;
         }
 
-        if (
-            changedProperties.has('includeDate') ||
-            changedProperties.has('includeTime') ||
-            changedProperties.has('timeGranularity')
-        ) {
+        if (changedProperties.has('timeGranularity')) {
             this._createSegments = true;
         }
 
@@ -227,6 +241,7 @@ export class InputSegments extends TextfieldBase {
                     : undefined,
         };
 
+        // TODO: Include ARIA attributes for editable segments
         return html`
             <div
                 role="spinbutton"

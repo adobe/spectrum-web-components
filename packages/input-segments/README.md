@@ -9,20 +9,17 @@
 yarn add @spectrum-web-components/input-segments
 ```
 
-Import the side effectful registration of `<sp-input-segments>` via:
+`InputSegments` cannot be used directly as a component, as there is no `<sp-input-segments>` component. The only way to use `InputSegments` is by extending a class:
 
-```
-import '@spectrum-web-components/input-segments/sp-input-segments.js';
-```
-
-When looking to leverage the `InputSegments` base class as a type and/or for extension purposes, do so via:
-
-```
+```js
 import { InputSegments } from '@spectrum-web-components/input-segments';
+
+export class MyInput extends InputSegments {
+    ...
+}
 ```
 
-## Example
+## To-do list
 
-```html
-<sp-input-segments></sp-input-segments>
-```
+-   Include ARIA attributes for editable segments
+-   Use `@input`/`@beforeinput` events to handle data input/content cleanup
