@@ -19,7 +19,6 @@ import {
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
 
 import { Tag } from './Tag.js';
 
@@ -52,11 +51,6 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         },
         elements: () => this.tags,
         isFocusableElement: (el: Tag) => !el.disabled && el.deletable,
-    });
-
-    focusGroupController = new FocusGroupController<Tag>(this, {
-        direction: 'vertical',
-        elements: () => this.tags,
     });
 
     constructor() {
@@ -111,18 +105,20 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     private async changeDefaultFocus(event: Event): Promise<void> {
-        await 0;
         if (event.defaultPrevented) {
-            // No deleting when user prevents it.
             return;
         }
-        const items = [...this.tags] as Tag[];
-        /* c8 ignore next 3 */
-        if (items && !items.length) {
-            // no deleting when there aren't items.
+        // check if tags are not present
+        if (this.tags && !this.tags.length) {
             return;
         }
-        this.focusGroupController.changeDefaultItemFocus();
+        // check if tag item is disabled
+        this.tags.forEach((item) => {
+            if (item.disabled) {
+                return;
+            }
+        });
+        this.rovingTabindexController.changeDefaultItemFocus();
     }
 
     protected override render(): TemplateResult {
