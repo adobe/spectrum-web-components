@@ -48,14 +48,16 @@ When using `[variant="fixed"]`, the `<sp-action-bar>` will display by default at
 
 ```html
 <h4>Look down and to the left when toggling.</h4>
-<sp-action-bar variant="fixed">
-    <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-</sp-action-bar>
 <sp-button
-    onclick="javascript:this.previousElementSibling.open = !this.previousElementSibling.open;"
+    onclick="javascript:this.nextElementSibling.open = !this.nextElementSibling.open; this.setAttribute('aria-expanded', this.nextElementSibling.open);"
+    aria-expanded="false"
+    aria-controls="fixed-variant-id"
 >
     Toggle fixed action bar
 </sp-button>
+<sp-action-bar variant="fixed">
+    <sp-checkbox indeterminate>228 Selected</sp-checkbox>
+</sp-action-bar>
 ```
 
 ### Sticky
