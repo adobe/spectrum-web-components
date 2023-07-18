@@ -74,6 +74,26 @@ export class RovingTabindexController<
         });
     }
 
+    changeDefaultItemFocus(): void {
+        const currentIndex = this.currentIndex;
+        let focusIndex = currentIndex;
+        if (currentIndex < this.elements.length - 1) {
+            for (let i = currentIndex + 1; i < this.elements.length; i++) {
+                focusIndex = i;
+                break;
+            }
+        } else if (currentIndex > 0) {
+            for (let i = currentIndex - 1; i >= 0; i--) {
+                focusIndex = i;
+                break;
+            }
+        }
+        if (focusIndex !== currentIndex) {
+            const focusElement = this.elements[focusIndex];
+            focusElement.focus();
+        }
+    }
+
     override manage(): void {
         this.managed = true;
         this.manageTabindexes();

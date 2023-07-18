@@ -99,7 +99,6 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (this.readonly) {
             return;
         }
-        this.shiftFocusOnEvent();
         const deleteEvent = new Event('delete', {
             bubbles: true,
             composed: true,
@@ -109,11 +108,8 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (deleteEvent.defaultPrevented) {
             return;
         }
-
-        const parent = this.parentNode as HTMLElement | null;
-        if (parent) {
-            this.remove();
-        }
+        this.shiftFocusOnEvent();
+        this.remove();
     }
 
     protected override render(): TemplateResult {
