@@ -24,12 +24,46 @@ When looking to leverage the `Search` base class as a type and/or for extension 
 import { Search } from '@spectrum-web-components/search';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-search size="s"></sp-search>
+<sp-search size="s" disabled></sp-search>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
 
 ```html
 <sp-search></sp-search>
 <sp-search disabled></sp-search>
 ```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-search size="l"></sp-search>
+<sp-search size="l" disabled></sp-search>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-search size="xl"></sp-search>
+<sp-search size="xl" disabled></sp-search>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 

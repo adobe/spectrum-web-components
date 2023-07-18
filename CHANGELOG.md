@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **action-button,action-menu,picker,split-button:** expand and update application of aria-\* attributes ([52c0156](https://github.com/adobe/spectrum-web-components/commit/52c015636d42f2baf1524446a0db9d5e5cfeb689))
+-   **action-group:** ensure Action Button clicks are attributed to the right element ([#3292](https://github.com/adobe/spectrum-web-components/issues/3292)) ([ddccab7](https://github.com/adobe/spectrum-web-components/commit/ddccab766498a6da6ca29d9bbe9cebd7924e81e0))
+-   added role for href button ([5a4ad98](https://github.com/adobe/spectrum-web-components/commit/5a4ad98afa69669a8a4fb2a88d82a837c0c40c55))
+-   **color-area,color-slider:** color-area labeling, RTL support, vertical slider orientation([#3315](https://github.com/adobe/spectrum-web-components/issues/3315)) ([ca2acda](https://github.com/adobe/spectrum-web-components/commit/ca2acdafe004cb962c00ebb7f79c5b6061dc6843)), closes [#3313](https://github.com/adobe/spectrum-web-components/issues/3313)
+-   **color-loupe:** hide svg from screen readers ([#3318](https://github.com/adobe/spectrum-web-components/issues/3318)) ([01e75b7](https://github.com/adobe/spectrum-web-components/commit/01e75b7f0dbf1096976c290ad360534847781fee))
+-   **color-slider,color-wheel:** fix focused state [#3278](https://github.com/adobe/spectrum-web-components/issues/3278) ([96b83f7](https://github.com/adobe/spectrum-web-components/commit/96b83f7eb6ead1de2b30f1483478a2e5d6195349))
+-   **color-slider:** announce new value on change after keydown ([#3304](https://github.com/adobe/spectrum-web-components/issues/3304)) ([d70d0ae](https://github.com/adobe/spectrum-web-components/commit/d70d0aefdc03524192c3b8a0d6cb901cf49d37a9)), closes [#3303](https://github.com/adobe/spectrum-web-components/issues/3303)
+-   **number-field,search,textfield:** add t-shirt sizes ([fda8f96](https://github.com/adobe/spectrum-web-components/commit/fda8f96b71b1447a8281f73d885c1c33ae74cfec))
+-   **picker:** correct label application for screen readers ([8ce0cb0](https://github.com/adobe/spectrum-web-components/commit/8ce0cb0b76fcb76af34fdd3228ae268509f80ee0))
+-   **radio:** fix radio documentation usage of sp-field-label[for] and sp-radio-group[id] ([60f54fb](https://github.com/adobe/spectrum-web-components/commit/60f54fb2c5f656cc775d52637e1ef95bde5949f5))
+-   **sidenav:** express hierarchy using list and listitem ([f9019d7](https://github.com/adobe/spectrum-web-components/commit/f9019d7f5a37c81b61395d5329b251317497a685)), closes [#3348](https://github.com/adobe/spectrum-web-components/issues/3348) [#3348](https://github.com/adobe/spectrum-web-components/issues/3348)
+-   **slider:** [#3340](https://github.com/adobe/spectrum-web-components/issues/3340) fix visual regression ([88e0bda](https://github.com/adobe/spectrum-web-components/commit/88e0bda41df9f1ebb21debf97db05b0fd144deb7))
+-   **slider:** slider input aria-valuetext omits formatOptions for unit [#3340](https://github.com/adobe/spectrum-web-components/issues/3340) ([d5ff7e6](https://github.com/adobe/spectrum-web-components/commit/d5ff7e6e0196580f25941caa1a304557cb0f5088))
+-   **swatch:** mixed-value state must be conveyed to screen readers using ARIA ([#3330](https://github.com/adobe/spectrum-web-components/issues/3330)) ([7711264](https://github.com/adobe/spectrum-web-components/commit/7711264850f54794fc2fcc343a81c5ff1f64c907))
+-   **table:** include all dependencies, @lit-labs/observers was missing ([98d0370](https://github.com/adobe/spectrum-web-components/commit/98d03701b05101bae4a9e1f4d554bf0648979884))
+-   text fixes ([0121fd6](https://github.com/adobe/spectrum-web-components/commit/0121fd6e25755881f5f00c8b7cd989fc47e201d8))
+-   **textfield:** add rows attribute ([#3356](https://github.com/adobe/spectrum-web-components/issues/3356)) ([1ee1c37](https://github.com/adobe/spectrum-web-components/commit/1ee1c37f219c82fd74ca1b89941d4f59ccfd2785))
+-   **vrt-compare:** updating the readme about vrt tests ([#3380](https://github.com/adobe/spectrum-web-components/issues/3380)) ([8eb28c8](https://github.com/adobe/spectrum-web-components/commit/8eb28c866c960b2cf27930cc1eab8f96e2c057d9))
+
+### Features
+
+-   **accordion:** core token migration ([#3300](https://github.com/adobe/spectrum-web-components/issues/3300)) ([9650b71](https://github.com/adobe/spectrum-web-components/commit/9650b71dd7cf7b93c351ac7b369aaf424c82f47d))
+-   **card:** use core tokens ([9cccd26](https://github.com/adobe/spectrum-web-components/commit/9cccd26f00f688cbe1477dc7a9ce01542b179737))
+-   **tabs,top-nav:** use Core Tokens ([c6ba355](https://github.com/adobe/spectrum-web-components/commit/c6ba355c2160d1a8bda1618b8a9c28213194c7c5))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @adobe/spectrum-web-components

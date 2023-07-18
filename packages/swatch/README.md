@@ -201,12 +201,14 @@ The `disabled` attribute/property determines prevents interaction on the `<sp-sw
 The `mixed-value` attribute and `mixedValue` property outline when an `<sp-swatch>` element represents more than one color.
 
 ```html
-<sp-swatch-group>
+<sp-swatch-group selects="multiple">
     <sp-swatch mixed-value></sp-swatch>
     <sp-swatch mixed-value rounding="full"></sp-swatch>
     <sp-swatch mixed-value shape="rectangle"></sp-swatch>
 </sp-swatch-group>
 ```
+
+Please note that the `aria-checked="mixed"` value only applies when the swatch is in a group with `selects="multiple"`
 
 ### Nothing
 

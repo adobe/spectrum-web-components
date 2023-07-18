@@ -123,8 +123,8 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     ) => {
         const valueArray = [...values.values()];
         if (valueArray.length === 2)
-            return `${valueArray[0]}${this._forcedUnit} - ${valueArray[1]}${this._forcedUnit}`;
-        return valueArray.join(`${this._forcedUnit}, `) + this._forcedUnit;
+            return `${valueArray[0]} - ${valueArray[1]}`;
+        return valueArray.join(', ');
     };
 
     public override get ariaValueText(): string {

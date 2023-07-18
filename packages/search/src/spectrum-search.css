@@ -142,17 +142,17 @@ governing permissions and limitations under the License.
         var(--spectrum-search-background-color-disabled)
     );
 }
-.spectrum-Search--sizeS {
+:host([size='s']) {
     --spectrum-search-block-size: var(--spectrum-component-height-75);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-75);
 }
-.spectrum-Search--sizeL {
+:host([size='l']) {
     --spectrum-search-block-size: var(--spectrum-component-height-200);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-200);
 }
-.spectrum-Search--sizeXL {
+:host([size='xl']) {
     --spectrum-search-block-size: var(--spectrum-component-height-300);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-300);
@@ -372,7 +372,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-border-color-key-focus
     );
 }
-.spectrum-Search--sizeS {
+:host([size='s']) {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizes-border-radius
     );
@@ -380,7 +380,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-sizes-edge-to-visual
     );
 }
-.spectrum-Search--sizeM {
+:host([size='m']) {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizem-border-radius
     );
@@ -388,7 +388,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-sizem-edge-to-visual
     );
 }
-.spectrum-Search--sizeL {
+:host([size='l']) {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizel-border-radius
     );
@@ -396,7 +396,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-sizel-edge-to-visual
     );
 }
-.spectrum-Search--sizeXL {
+:host([size='xl']) {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizexl-border-radius
     );

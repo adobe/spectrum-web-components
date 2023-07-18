@@ -31,6 +31,7 @@ import {
     ColorValue,
     HSL,
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
 import styles from './color-wheel.css.js';
 
@@ -44,6 +45,9 @@ export class ColorWheel extends Focusable {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
+
+    @property({ type: String, reflect: true })
+    public override dir!: 'ltr' | 'rtl';
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
@@ -59,6 +63,8 @@ export class ColorWheel extends Focusable {
 
     @property({ type: Number })
     public step = 1;
+
+    private languageResolver = new LanguageResolutionController(this);
 
     private colorController = new ColorController(this, {
         /* c8 ignore next 3 */
@@ -180,11 +186,11 @@ export class ColorWheel extends Focusable {
         this.input.focus();
     }
 
-    private handleFocusin(): void {
+    private handleFocus(): void {
         this.focused = true;
     }
 
-    private handleFocusout(): void {
+    private handleBlur(): void {
         if (this._pointerDown) {
             return;
         }
@@ -261,7 +267,7 @@ export class ColorWheel extends Focusable {
         const pointY = event.clientY - centerY;
         const value = (Math.atan2(pointY, pointX) * 180) / Math.PI;
 
-        return (360 + (360 + value)) % 360;
+        return (360 + (360 + (this.isLTR ? value : 180 - value))) % 360;
     }
 
     private handleGradientPointerdown(event: PointerEvent): void {
@@ -311,7 +317,9 @@ export class ColorWheel extends Focusable {
 
         // Calculate handle position on the wheel.
         const translateX =
-            (radius - trackWidth / 2) * Math.cos((this.value * Math.PI) / 180);
+            (this.isLTR ? 1 : -1) *
+            (radius - trackWidth / 2) *
+            Math.cos((this.value * Math.PI) / 180);
         const translateY =
             (radius - trackWidth / 2) * Math.sin((this.value * Math.PI) / 180);
         const handleLocationStyles = `transform: translate(${translateX}px, ${translateY}px);`;
@@ -374,6 +382,16 @@ export class ColorWheel extends Focusable {
                 max="360"
                 step=${this.step}
                 .value=${String(this.value)}
+                aria-valuetext=${`${new Intl.NumberFormat(
+                    this.languageResolver.language,
+                    {
+                        maximumFractionDigits: 0,
+                        minimumIntegerDigits: 1,
+                        style: 'unit',
+                        unit: 'degree',
+                        unitDisplay: 'narrow',
+                    }
+                ).format(this.value)}`}
                 @input=${this.handleInput}
                 @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
@@ -384,8 +402,8 @@ export class ColorWheel extends Focusable {
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
-        this.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('focus', this.handleFocus);
+        this.addEventListener('blur', this.handleBlur);
     }
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];

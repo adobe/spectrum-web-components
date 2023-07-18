@@ -11,5 +11,6 @@
         "tools/**/*.dev.js": { "when": "$(basename).js" },
         "tools/**/*.d.ts": { "when": "$(basename).ts" },
         "**/*.test-vrt.ts": true
-    }
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

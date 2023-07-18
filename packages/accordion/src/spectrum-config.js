@@ -31,6 +31,7 @@ const config = {
             excludeByComponents: [
                 builder.class('spectrum-Accordion-item'),
                 builder.class('spectrum-Accordion-itemIndicator'),
+                builder.class('spectrum-Accordion-itemIconContainer'),
                 builder.class('spectrum-Accordion-itemHeading'),
                 builder.class('spectrum-Accordion-itemHeader'),
                 builder.class('spectrum-Accordion-itemContent'),
@@ -39,6 +40,21 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('is-disabled', 'disabled'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Accordion--compact', 'compact'],
+                        ['spectrum-Accordion--spacious', 'spacious'],
+                    ],
+                    'density'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Accordion--sizeS', 's'],
+                        ['spectrum-Accordion--sizeL', 'l'],
+                        ['spectrum-Accordion--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
             ],
         },
         {
@@ -46,10 +62,12 @@ const config = {
             outPackage: 'accordion',
             fileName: 'accordion-item',
             excludeByComponents: [
-                {
-                    type: 'class',
-                    name: 'spectrum-Accordion',
-                },
+                builder.class('spectrum-Accordion'),
+                builder.class('spectrum-Accordion--compact'),
+                builder.class('spectrum-Accordion--spacious'),
+                builder.class('spectrum-Accordion--sizeS'),
+                builder.class('spectrum-Accordion--sizeL'),
+                builder.class('spectrum-Accordion--sizeXL'),
             ],
             components: [
                 converterItem.classToHost(),
@@ -65,12 +83,21 @@ const config = {
                     'content'
                 ),
                 converter.classToClass(
+                    'spectrum-Accordion-itemIconContainer',
+                    'iconContainer'
+                ),
+                converter.classToClass(
                     'spectrum-Accordion-itemIndicator',
                     'indicator'
                 ),
                 {
                     find: builder.pseudoClass('first-of-type'),
                     replace: builder.pseudoClass('first-of-type'),
+                    hoist: true,
+                },
+                {
+                    find: builder.pseudoClass('first-child'),
+                    replace: builder.pseudoClass('first-child'),
                     hoist: true,
                 },
                 {
@@ -98,20 +125,6 @@ const config = {
                         },
                         {
                             replace: builder.pseudoClass('focus'),
-                        },
-                    ],
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Accordion-itemHeader'),
-                        builder.class('focus-ring'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.id('header'),
-                        },
-                        {
-                            replace: builder.pseudoClass('focus-visible'),
                         },
                     ],
                 },

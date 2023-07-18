@@ -43,6 +43,15 @@ export default {
                     ],
                     hoist: false,
                 },
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Textfield--sizeS', 's'],
+                        ['spectrum-Textfield--sizeM', 'm'],
+                        ['spectrum-Textfield--sizeL', 'l'],
+                        ['spectrum-Textfield--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
                 converter.classToClass(
                     'spectrum-Textfield-validationIcon',
                     'icon'

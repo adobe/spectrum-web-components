@@ -51,6 +51,7 @@ governing permissions and limitations under the License.
         --spectrum-bold-font-weight
     );
 }
+
 :host,
 :root {
     --system-spectrum-actionbutton-background-color-default: var(
@@ -1400,4 +1401,8 @@ governing permissions and limitations under the License.
     --system-spectrum-search-sizexl-edge-to-visual: var(
         --spectrum-component-edge-to-visual-300
     );
+}
+:host,
+:root {
+    --system-spectrum-tabs-font-weight: var(--spectrum-default-font-weight);
 }

@@ -275,6 +275,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             button.click();
             await elementUpdated(el);
             expect(el.open).to.be.true;
+            expect(button).to.have.attribute('aria-haspopup', 'true');
+            expect(button).to.have.attribute('aria-expanded', 'true');
+            expect(button).to.have.attribute('aria-controls', 'menu');
         });
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
@@ -290,6 +293,12 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const el = await actionMenuFixture();
 
             await elementUpdated(el);
+
+            const button = el.button as HTMLButtonElement;
+            expect(button).to.have.attribute('aria-haspopup', 'true');
+            expect(button).to.have.attribute('aria-expanded', 'false');
+            expect(button).not.to.have.attribute('aria-controls');
+
             let items = el.querySelectorAll('sp-menu-item');
             const count = items.length;
             expect(items.length).to.equal(count);
@@ -299,6 +308,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await opened;
 
             expect(el.open).to.be.true;
+            expect(button).to.have.attribute('aria-expanded', 'true');
+            expect(button).to.have.attribute('aria-controls', 'menu');
             items = el.querySelectorAll('sp-menu-item');
             expect(items.length).to.equal(0);
 
@@ -307,6 +318,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await closed;
 
             expect(el.open).to.be.false;
+            expect(button).to.have.attribute('aria-expanded', 'false');
+            expect(button).not.to.have.attribute('aria-controls');
             items = el.querySelectorAll('sp-menu-item');
             expect(items.length).to.equal(count);
 
@@ -315,6 +328,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await opened;
 
             expect(el.open).to.be.true;
+            expect(button).to.have.attribute('aria-expanded', 'true');
+            expect(button).to.have.attribute('aria-controls', 'menu');
             items = el.querySelectorAll('sp-menu-item');
             expect(items.length).to.equal(0);
 
@@ -323,6 +338,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await closed;
 
             expect(el.open).to.be.false;
+            expect(button).to.have.attribute('aria-expanded', 'false');
+            expect(button).not.to.have.attribute('aria-controls');
             items = el.querySelectorAll('sp-menu-item');
             expect(items.length).to.equal(count);
         });

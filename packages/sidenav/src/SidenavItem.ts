@@ -129,6 +129,12 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 aria-current=${ifDefined(
                     this.selected && this.href ? 'page' : undefined
                 )}
+                aria-expanded=${ifDefined(
+                    this.hasChildren ? this.expanded : undefined
+                )}
+                aria-controls=${ifDefined(
+                    this.hasChildren && this.expanded ? 'list' : undefined
+                )}
             >
                 <slot name="icon"></slot>
                 ${this.label}
@@ -136,15 +142,24 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             </a>
             ${this.expanded
                 ? html`
-                      <slot name="descendant"></slot>
+                      <div id="list" aria-labelledby="item-link" role="list">
+                          <slot name="descendant"></slot>
+                      </div>
                   `
                 : html``}
         `;
     }
 
     protected override updated(changes: PropertyValues): void {
-        if (this.hasChildren && this.expanded && !this.selected) {
+        if (
+            this.hasChildren &&
+            this.expanded &&
+            !this.selected &&
+            this.parentSideNav?.manageTabIndex
+        ) {
             this.focusElement.tabIndex = -1;
+        } else {
+            this.focusElement.removeAttribute('tabindex');
         }
         super.updated(changes);
     }
@@ -185,5 +200,10 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             parentSideNav.stopTrackingSelectionForItem(this);
         }
         this._parentSidenav = undefined;
+    }
+
+    protected override firstUpdated(changed: PropertyValues<this>): void {
+        super.firstUpdated(changed);
+        this.setAttribute('role', 'listitem');
     }
 }

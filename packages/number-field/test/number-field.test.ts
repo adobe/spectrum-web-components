@@ -73,6 +73,7 @@ describe('NumberField', () => {
     describe('receives input', () => {
         it('without language context', async () => {
             const el = await getElFrom(Default({ value: 1337 }));
+            el.size = 's';
             expect(el.formattedValue).to.equal('1,337');
             expect(el.valueAsString).to.equal('1337');
             expect(el.value).to.equal(1337);
@@ -92,6 +93,7 @@ describe('NumberField', () => {
                     ${Default({ value: 1337 })}
                 </div>
             `);
+            el.size = 'l';
             expect(el.formattedValue).to.equal('1 337');
             expect(el.valueAsString).to.equal('1337');
             expect(el.value).to.equal(1337);
@@ -115,6 +117,7 @@ describe('NumberField', () => {
                     value: 5,
                 })
             );
+            el.size = 'xl';
             expect(el.value).to.equal(5);
             expect(el.formattedValue).to.equal('5');
             expect(el.valueAsString).to.equal('5');
@@ -129,17 +132,17 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('NaN');
         });
         it('via pointer, only "left" button', async () => {
-            await clickBySelector(el, '.stepUp', { button: 'middle' });
+            await clickBySelector(el, '.step-up', { button: 'middle' });
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
             expect(el.value).to.be.NaN;
         });
         it('via pointer', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('1');
             expect(el.valueAsString).to.equal('1');
             expect(el.value).to.equal(1);
@@ -238,17 +241,17 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('NaN');
         });
         it('via pointer, only "left" button', async () => {
-            await clickBySelector(el, '.stepDown', { button: 'middle' });
+            await clickBySelector(el, '.step-down', { button: 'middle' });
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
             expect(el.value).to.be.NaN;
         });
         it('via pointer', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('-1');
             expect(el.valueAsString).to.equal('-1');
             expect(el.value).to.equal(-1);
@@ -445,17 +448,17 @@ describe('NumberField', () => {
             expect(el.value).to.equal(50);
         });
         it('one input/one change for each click', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(inputSpy.callCount).to.equal(1);
             expect(changeSpy.callCount).to.equal(1);
             expect(el.value).to.equal(51);
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(2);
             expect(el.value).to.equal(50);
         });
         it('click with modifier key', async () => {
-            let target = el.shadowRoot.querySelector('.stepUp') as HTMLElement;
+            let target = el.shadowRoot.querySelector('.step-up') as HTMLElement;
             const stepUpRect = target.getBoundingClientRect();
             const options = {
                 bubbles: true,
@@ -485,7 +488,7 @@ describe('NumberField', () => {
             expect(inputSpy.callCount).to.equal(1);
             expect(changeSpy.callCount).to.equal(1);
             expect(el.value).to.equal(60);
-            target = el.shadowRoot.querySelector('.stepDown') as HTMLElement;
+            target = el.shadowRoot.querySelector('.step-down') as HTMLElement;
             const stepDownRect = target.getBoundingClientRect();
             options.clientX = stepDownRect.x + 1;
             options.clientY = stepDownRect.y + 1;
@@ -499,7 +502,7 @@ describe('NumberField', () => {
         });
         it('many input, but one change', async () => {
             const buttonUp = el.shadowRoot.querySelector(
-                '.stepUp'
+                '.step-up'
             ) as HTMLElement;
             const buttonUpRect = buttonUp.getBoundingClientRect();
             const buttonUpPosition: [number, number] = [
@@ -507,7 +510,7 @@ describe('NumberField', () => {
                 buttonUpRect.y + buttonUpRect.height / 2,
             ];
             const buttonDown = el.shadowRoot.querySelector(
-                '.stepDown'
+                '.step-down'
             ) as HTMLElement;
             const buttonDownRect = buttonDown.getBoundingClientRect();
             const buttonDownPosition: [number, number] = [
@@ -567,14 +570,14 @@ describe('NumberField', () => {
         expect(el.formattedValue).to.equal('50');
         expect(el.valueAsString).to.equal('50');
         expect(el.value).to.equal(50);
-        const buttonUp = el.shadowRoot.querySelector('.stepUp') as HTMLElement;
+        const buttonUp = el.shadowRoot.querySelector('.step-up') as HTMLElement;
         const buttonUpRect = buttonUp.getBoundingClientRect();
         const buttonUpPosition: [number, number] = [
             buttonUpRect.x + buttonUpRect.width / 2,
             buttonUpRect.y + buttonUpRect.height / 2,
         ];
         const buttonDown = el.shadowRoot.querySelector(
-            '.stepDown'
+            '.step-down'
         ) as HTMLElement;
         const buttonDownRect = buttonDown.getBoundingClientRect();
         const buttonDownPosition: [number, number] = [
@@ -678,12 +681,12 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('45%');
             expect(el.valueAsString).to.equal('0.45');
             expect(el.value).to.equal(0.45);
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('44%');
             expect(el.valueAsString).to.equal('0.44');
             expect(el.value).to.equal(0.44);
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('45%');
             expect(el.valueAsString).to.equal('0.45');
@@ -764,7 +767,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(10);
         });
         it('disabled `stepUp` button', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -862,7 +865,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(100);
         });
         it('disabled `stepDown` button', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -902,13 +905,13 @@ describe('NumberField', () => {
             expect(el.value).to.equal(5);
         });
         it('step up via pointer', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('15');
             expect(el.valueAsString).to.equal('15');
             expect(el.value).to.equal(15);
         });
         it('step down via pointer', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('5');
             expect(el.valueAsString).to.equal('5');
             expect(el.value).to.equal(5);
@@ -1109,10 +1112,10 @@ describe('NumberField', () => {
                 (el as unknown as { displayValue: string }).displayValue
             ).to.equal('101');
         });
-        it('starts from `value` on click `.stepUp`', async () => {
+        it('starts from `value` on click `.step-up`', async () => {
             el.focus();
             await elementUpdated(el);
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('101');
             expect(el.valueAsString).to.equal('101');
@@ -1149,10 +1152,10 @@ describe('NumberField', () => {
                 (el as unknown as { displayValue: string }).displayValue
             ).to.equal('99');
         });
-        it('starts from `value` on click `.stepDown`', async () => {
+        it('starts from `value` on click `.step-down`', async () => {
             el.focus();
             await elementUpdated(el);
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('99');
             expect(el.valueAsString).to.equal('99');
@@ -1172,8 +1175,8 @@ describe('NumberField', () => {
     });
     it('removes the stepper UI with [hide-stepper]', async () => {
         const el = await getElFrom(Default({ hideStepper: true }));
-        const stepUp = el.shadowRoot.querySelector('.stepUp');
-        const stepDown = el.shadowRoot.querySelector('.stepDown');
+        const stepUp = el.shadowRoot.querySelector('.step-up');
+        const stepDown = el.shadowRoot.querySelector('.step-down');
         expect(stepUp).to.be.null;
         expect(stepDown).to.be.null;
     });
@@ -1211,10 +1214,10 @@ describe('NumberField', () => {
             el.dispatchEvent(new WheelEvent('wheel', { deltaY: -1 }));
         });
         it('prevents increment via stepper button', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
         });
         it('prevents decrement via stepper button', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
         });
     });
     describe('Readonly', () => {
@@ -1251,10 +1254,10 @@ describe('NumberField', () => {
             el.dispatchEvent(new WheelEvent('wheel', { deltaY: -1 }));
         });
         it('prevents increment via stepper button', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
         });
         it('prevents decrement via stepper button', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
         });
     });
 });

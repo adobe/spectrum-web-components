@@ -173,3 +173,33 @@ export const sized = (): TemplateResult => html`
         </sp-help-text>
     </sp-textfield>
 `;
+
+export const with5Rows = (): TemplateResult => html`
+    <sp-field-label for="predefinedRows">
+        Enter your life story with very long words...
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        id="predefinedRows"
+        value="Line 1
+Line 2
+Line 3
+Line 4
+Line 5"
+        placeholder="Enter your life story"
+        rows="5"
+    ></sp-textfield>
+`;
+
+export const with1Row = (): TemplateResult => html`
+    <sp-field-label for="predefinedRows">
+        Enter your life story with very long words...
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        id="predefinedRows"
+        value="Line 1"
+        placeholder="Enter your life story"
+        rows="1"
+    ></sp-textfield>
+`;

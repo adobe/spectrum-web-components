@@ -20,10 +20,14 @@ import {
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { classMap } from '@spectrum-web-components/base/src/directives.js';
+import {
+    classMap,
+    ifDefined,
+} from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import pickerStyles from './picker.css.js';
@@ -76,6 +80,9 @@ export class PickerBase extends SizedMixin(Focusable) {
     };
 
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
+
+    @state()
+    appliedLabel?: string;
 
     @query('#button')
     public button!: HTMLButtonElement;
@@ -373,7 +380,15 @@ export class PickerBase extends SizedMixin(Focusable) {
             return content;
         }
         return html`
-            <slot name="label">${this.label}</slot>
+            <slot name="label">
+                <span
+                    aria-hidden=${ifDefined(
+                        this.appliedLabel ? undefined : 'true'
+                    )}
+                >
+                    ${this.label}
+                </span>
+            </slot>
         `;
     }
 
@@ -382,29 +397,55 @@ export class PickerBase extends SizedMixin(Focusable) {
             'visually-hidden': this.icons === 'only' && !!this.value,
             placeholder: !this.value,
         };
+        const appliedLabel = this.appliedLabel || this.label;
         return [
             html`
+                </span>
                 <span id="icon" ?hidden=${this.icons === 'none'}>
                     ${this.selectedItemContent.icon}
                 </span>
                 <span id="label" class=${classMap(labelClasses)}>
                     ${this.renderLabelContent(this.selectedItemContent.content)}
                 </span>
-                ${this.invalid
-                    ? html`
-                          <sp-icon-alert
-                              class="validation-icon"
-                          ></sp-icon-alert>
-                      `
-                    : nothing}
+                ${
+                    this.value && this.selectedItem
+                        ? html`
+                              <span
+                                  aria-hidden="true"
+                                  class="visually-hidden"
+                                  id="applied-label"
+                              >
+                                  ${appliedLabel}
+                                  <slot name="label"></slot>
+                              </span>
+                          `
+                        : html`
+                              <span hidden id="applied-label">
+                                  ${appliedLabel}
+                              </span>
+                          `
+                }
+                ${
+                    this.invalid
+                        ? html`
+                              <sp-icon-alert
+                                  class="validation-icon"
+                              ></sp-icon-alert>
+                          `
+                        : nothing
+                }
                 <sp-icon-chevron100
-                    class="picker ${chevronClass[
-                        this.size as DefaultElementSize
-                    ]}"
+                    class="picker ${
+                        chevronClass[this.size as DefaultElementSize]
+                    }"
                 ></sp-icon-chevron100>
             `,
         ];
     }
+
+    applyFocusElementLabel = (value?: string): void => {
+        this.appliedLabel = value;
+    };
 
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
@@ -417,8 +458,9 @@ export class PickerBase extends SizedMixin(Focusable) {
             ></span>
             <button
                 aria-haspopup="true"
+                aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-labelledby="button icon label"
+                aria-labelledby="icon label applied-label"
                 id="button"
                 class="button"
                 @blur=${this.onButtonBlur}
@@ -498,7 +540,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             return html`
                 <sp-tray
                     id="popover"
-                    role="dialog"
+                    role="presentation"
                     @sp-menu-item-added-or-updated=${this.updateMenuItems}
                     .overlayOpenCallback=${this.overlayOpenCallback}
                     .overlayCloseCallback=${this.overlayCloseCallback}
@@ -510,7 +552,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         return html`
             <sp-popover
                 id="popover"
-                role="dialog"
+                role="presentation"
                 @sp-menu-item-added-or-updated=${this.updateMenuItems}
                 .overlayOpenCallback=${this.overlayOpenCallback}
                 .overlayCloseCallback=${this.overlayCloseCallback}

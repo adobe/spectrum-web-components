@@ -306,6 +306,17 @@ Events handlers for clicks and other user actions can be registered on a
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
 ```
 
+In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-button>` in place of the `<a>` element by using the `href` and optional `target` attribute.
+
+```html
+<sp-button
+    href="https://github.com/adobe/spectrum-web-components"
+    target="_blank"
+>
+    Click me
+</sp-button>
+```
+
 ### Autofocus
 
 The `autofocus` attribute sets focus to the `<sp-button>` when the component

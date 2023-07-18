@@ -31,6 +31,7 @@ const tokensRoot = path.join(
 
 /** @todo Could generate this from CSS packages that have @spectrum-css/tokens as a dependency */
 const tokenPackages = [
+    'accordion',
     'actionbutton',
     'avatar',
     'checkbox',
@@ -68,6 +69,7 @@ const tokenPackages = [
     'stepper',
     'textfield',
     'search',
+    'tabs',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

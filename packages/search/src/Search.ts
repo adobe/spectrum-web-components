@@ -118,6 +118,7 @@ export class Search extends Textfield {
                               label="Reset"
                               tabindex="-1"
                               type="reset"
+                              size=${ifDefined(this.size)}
                               @keydown=${stopPropagation}
                           ></sp-clear-button>
                       `

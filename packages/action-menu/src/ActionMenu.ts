@@ -65,7 +65,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
                 aria-haspopup="true"
-                aria-controls="popover"
+                aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this.label || undefined)}
                 id="button"

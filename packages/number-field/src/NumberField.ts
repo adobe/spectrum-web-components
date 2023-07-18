@@ -28,6 +28,8 @@ import { streamingListener } from '@spectrum-web-components/base/src/streaming-l
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import {
     isAndroid,
@@ -59,6 +61,33 @@ export const remapMultiByteCharacters: Record<string, string> = {
     '％': '%',
     '＋': '+',
     ー: '-',
+};
+
+const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
+    s: (dir) => html`
+        <sp-icon-chevron75
+            slot="icon"
+            class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
+        ></sp-icon-chevron75>
+    `,
+    m: (dir) => html`
+        <sp-icon-chevron75
+            slot="icon"
+            class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
+        ></sp-icon-chevron75>
+    `,
+    l: (dir) => html`
+        <sp-icon-chevron100
+            slot="icon"
+            class="stepper-icon spectrum-UIIcon-Chevron${dir}100"
+        ></sp-icon-chevron100>
+    `,
+    xl: (dir) => html`
+        <sp-icon-chevron200
+            slot="icon"
+            class="stepper-icon spectrum-UIIcon-Chevron${dir}200"
+        ></sp-icon-chevron200>
+    `,
 };
 
 /**
@@ -557,7 +586,7 @@ export class NumberField extends TextfieldBase {
                           })}
                       >
                           <sp-action-button
-                              class="stepUp"
+                              class="step-up"
                               label="Increment"
                               tabindex="-1"
                               ?focused=${this.focused}
@@ -567,13 +596,10 @@ export class NumberField extends TextfieldBase {
                                   this.value === this.max)}
                               ?quiet=${this.quiet}
                           >
-                              <sp-icon-chevron75
-                                  slot="icon"
-                                  class="stepper-icon spectrum-UIIcon-ChevronUp75"
-                              ></sp-icon-chevron75>
+                              ${chevronIcon[this.size]('Up')}
                           </sp-action-button>
                           <sp-action-button
-                              class="stepDown"
+                              class="step-down"
                               label="Decrement"
                               tabindex="-1"
                               ?focused=${this.focused}
@@ -583,10 +609,7 @@ export class NumberField extends TextfieldBase {
                                   this.value === this.min)}
                               ?quiet=${this.quiet}
                           >
-                              <sp-icon-chevron75
-                                  slot="icon"
-                                  class="stepper-icon spectrum-UIIcon-ChevronDown75"
-                              ></sp-icon-chevron75>
+                              ${chevronIcon[this.size]('Down')}
                           </sp-action-button>
                       </span>
                   `}
