@@ -56,6 +56,9 @@ import styles from './input-segments.css.js';
 
 /**
  * @event change - Announces when a new date/time is defined by emitting a `Date` object
+ *
+ * @slot help-text - Default or non-negative help text to associate to your form element
+ * @slot negative-help-text - Negative help text to associate to your form element when `invalid`
  */
 export class InputSegments extends TextfieldBase {
     public static override get styles(): CSSResultArray {

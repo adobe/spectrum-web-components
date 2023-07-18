@@ -5598,6 +5598,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-6.0.11.tgz#a4dbd8c2da1a317cd3c7208317364fe7a1026213"
   integrity sha512-lbqVZTUpk4UV18/8wRMTi8/0UwTGEKV5ocysNIeRSEhvHfO4ktQzhyn+T92E7TkY/WqKljEM8EnjX/K6hwUBNQ==
 
+<<<<<<< HEAD
 "@spectrum-css/thumbnail@^3.0.17":
   version "3.0.17"
   resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-3.0.17.tgz#1cd2f00e5b374aa0617ba3061c325f5174598ad3"
@@ -5607,6 +5608,12 @@
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-9.1.0.tgz#209b2397da9c1304b3b0e538025afcb5c29dc26b"
   integrity sha512-/DheKxtmvoAZneAs1Dql+1waSqCxTFIEAfzaPCaQvAYg+ctW9NhXMZjGz5cRbHTzCmeuE6reuCLfuFput9Z7bQ==
+=======
+"@spectrum-css/thumbnail@^3.0.15":
+  version "3.0.15"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-3.0.15.tgz#6c1a15f85cd309b75e1809813d834e1111b863ae"
+  integrity sha512-UnQDLrDl28VNVZCmksg5zVu65nWKMDpqDvb5QkOlslJrmouQ8LuB7RCEHUlEwJ/f4adkZ6EOjS09B6OZp02MDg==
+>>>>>>> 3725083d4 (feat(time-field): add new time field component)
 
 "@spectrum-css/tokens@^11.2.0":
   version "11.2.0"
