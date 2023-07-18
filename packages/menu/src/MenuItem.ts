@@ -431,7 +431,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
         );
         submenu.addEventListener('change', this.handleSubmenuChange);
         if (!submenu.id) {
-            // if the consumer has already applied an ID to this element then we won't explicitly aplly ID
             submenu.setAttribute('id', `${this.id}-submenu`);
         }
         this.setAttribute('aria-controls', submenu.id);
