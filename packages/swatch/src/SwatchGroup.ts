@@ -32,6 +32,7 @@ import type {
 } from './Swatch.js';
 
 export type SwatchGroupSizes = Exclude<ElementSize, 'xxs' | 'xl' | 'xxl'>;
+export type SwatchSelects = 'single' | 'multiple' | undefined;
 
 /**
  * @element sp-swatch-group
@@ -55,7 +56,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     public selected: string[] = [];
 
     @property()
-    public selects: 'single' | 'multiple' | undefined;
+    public selects: SwatchSelects;
 
     private selectedSet = new Set<string>();
 
@@ -168,7 +169,14 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
             rounding?: SwatchRounding;
             shape?: SwatchShape;
             size?: SwatchGroupSizes;
+            selects?: SwatchSelects;
         } = {};
+        if (
+            changes.has('selects') &&
+            (this.selects || typeof changes.get('selects') !== 'undefined')
+        ) {
+            targetValues.selects = this.selects;
+        }
         if (
             changes.has('border') &&
             (this.border || typeof changes.get('border') !== 'undefined')
@@ -196,6 +204,11 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         const passThroughSwatchActions: ((swatch: Swatch) => void)[] = [];
         if (Object.keys(targetValues).length) {
             passThroughSwatchActions.push((swatch) => {
+                if (
+                    'selects' in targetValues &&
+                    targetValues['selects'] === 'multiple'
+                )
+                    swatch.mixedValue = false;
                 if ('border' in targetValues)
                     swatch.border = targetValues.border;
                 if ('rounding' in targetValues)
