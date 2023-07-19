@@ -29,9 +29,10 @@ import { Calendar } from '@spectrum-web-components/calendar';
 
 ## To-do list
 
--   Attribute `role="heading"` removed from `.spectrum-Calendar-title`, due to error _'The "heading" role requires the attribute "aria-level"'_
--   Translate _"Previous"_ and _"Next"_ used in the `title` and `aria-label` of buttons displayed in the header of the calendar
--   Translate _"Today"_ and _"selected"_ used in the `title` of the day when it is today
+-   Attribute 'role="heading"' removed, due to error 'The "heading" role requires the attribute "aria-level"'
+-   Translate the "Previous" text used in the "title" and "aria-label" of the button displayed in the header of the calendar
+-   Translate the "Next" text used in the "title" and "aria-label" of the button displayed in the header of the calendar
+-   The title must include "Today," and " selected" translated to the current language
 -   Implement keyboard navigation
 -   Add support for other types of calendars - [React Calendar: International Calendars](https://react-spectrum.adobe.com/react-spectrum/Calendar.html#international-calendars)
 -   Include `aria-label` in calendar for accessibility - [React Calendar: Labeling](https://react-spectrum.adobe.com/react-spectrum/Calendar.html#labeling)

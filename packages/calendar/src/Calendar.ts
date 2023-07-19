@@ -140,12 +140,10 @@ export class Calendar extends SpectrumElement {
     }
 
     public renderCalendarHeader(): TemplateResult {
-        const monthAndYear = this._capitalFirstLetter(
-            this.formatDate(this.currentDate, {
-                month: 'long',
-                year: 'numeric',
-            })
-        );
+        const monthAndYear = this.formatDate(this.currentDate, {
+            month: 'long',
+            year: 'numeric',
+        });
 
         return html`
             <div class="spectrum-Calendar-header">
@@ -161,7 +159,10 @@ export class Calendar extends SpectrumElement {
                     ${monthAndYear}
                 </div>
 
-                <!-- TODO: Translate "Previous" -->
+                <!--
+                 * TODO: Translate the "Previous" text used in the "title" and "aria-label" of the button displayed in
+                 * the header of the calendar
+                -->
                 <sp-action-button
                     quiet
                     size="s"
@@ -178,7 +179,10 @@ export class Calendar extends SpectrumElement {
                     </div>
                 </sp-action-button>
 
-                <!-- TODO: Translate "Next" -->
+                <!--
+                 * TODO: Translate the "Next" text used in the "title" and "aria-label" of the button displayed in the
+                 * header of the calendar
+                -->
                 <sp-action-button
                     quiet
                     size="s"
@@ -285,6 +289,7 @@ export class Calendar extends SpectrumElement {
             'is-disabled': isDisabled,
         };
 
+        // TODO: The title must include "Today," and " selected" translated to the current language
         const currentDayTitle = this.formatDate(calendarDate, {
             weekday: 'long',
             year: 'numeric',
@@ -292,19 +297,11 @@ export class Calendar extends SpectrumElement {
             day: 'numeric',
         });
 
-        // TODO: Translate "Today" and "selected"
-        const todayTitle = isToday ? 'Today, ' : '';
-        const selectedTitle = isToday ? ' selected' : '';
-
-        const title = this._capitalFirstLetter(
-            `${todayTitle}${currentDayTitle}${selectedTitle}`
-        );
-
         return html`
             <td
                 role="gridcell"
                 class="spectrum-Calendar-tableCell"
-                title=${title}
+                title=${currentDayTitle}
                 tabindex=${ifDefined(!isOutsideMonth ? '-1' : undefined)}
                 aria-disabled=${isOutsideMonth || this.disabled}
                 aria-selected=${isSelected}
@@ -362,9 +359,7 @@ export class Calendar extends SpectrumElement {
 
             return {
                 narrow: this.formatDate(date, { weekday: 'narrow' }),
-                long: this._capitalFirstLetter(
-                    this.formatDate(date, { weekday: 'long' })
-                ),
+                long: this.formatDate(date, { weekday: 'long' }),
             };
         });
     }
@@ -483,14 +478,5 @@ export class Calendar extends SpectrumElement {
      */
     private formatNumber(number: number): string {
         return new NumberFormatter(this.locale).format(number);
-    }
-
-    /**
-     * Converts the first letter to uppercase
-     *
-     * @param text - The text to be capitalized
-     */
-    private _capitalFirstLetter(text: string): string {
-        return `${text.charAt(0).toUpperCase()}${text.substring(1)}`;
     }
 }
