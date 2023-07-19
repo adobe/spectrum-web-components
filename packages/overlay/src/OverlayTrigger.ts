@@ -22,10 +22,6 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import {
-    isAndroid,
-    isIOS,
-} from '@spectrum-web-components/shared/src/platform.js';
 
 import { OverlayTriggerInteractions } from './overlay-types';
 import overlayTriggerStyles from './overlay-trigger.css.js';
@@ -34,12 +30,6 @@ import { Placement } from '@floating-ui/dom';
 import { BeforetoggleOpenEvent, OverlayBase } from './OverlayBase.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
-
-export const LONGPRESS_INSTRUCTIONS = {
-    touch: 'Double tap and long press for additional options',
-    keyboard: 'Press Space or Alt+Down Arrow for additional options',
-    mouse: 'Click and hold for additional options',
-};
 
 /**
  * @element overlay-trigger
@@ -75,8 +65,6 @@ export class OverlayTrigger extends SpectrumElement {
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
-
-    private longpressDescriptor?: HTMLElement;
 
     @state()
     private clickContent: HTMLElement[] = [];
@@ -253,47 +241,6 @@ export class OverlayTrigger extends SpectrumElement {
         if (this.disabled && changes.has('disabled')) {
             this.open = undefined;
             return;
-        }
-        if (
-            changes.has('longpressContent') &&
-            (this.longpressContent.length ||
-                typeof changes.get('longpressContent') !== 'undefined')
-        ) {
-            this.manageLongpressDescriptor();
-        }
-    }
-
-    protected manageLongpressDescriptor(): void {
-        const trigger = this.querySelector(
-            '[slot="trigger"]'
-        ) as SpectrumElement;
-        const ariaDescribedby = trigger.getAttribute('aria-describedby');
-        let descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
-
-        if (this.longpressContent.length) {
-            if (!this.longpressDescriptor) {
-                this.longpressDescriptor = document.createElement(
-                    'div'
-                ) as HTMLElement;
-
-                this.longpressDescriptor.id = this._longpressId;
-                this.longpressDescriptor.slot = this._longpressId;
-            }
-            const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
-            this.longpressDescriptor.textContent =
-                LONGPRESS_INSTRUCTIONS[messageType];
-            this.appendChild(this.longpressDescriptor);
-            descriptors.push(this._longpressId);
-        } else {
-            if (this.longpressDescriptor) this.longpressDescriptor.remove();
-            descriptors = descriptors.filter(
-                (descriptor) => descriptor !== this._longpressId
-            );
-        }
-        if (descriptors.length) {
-            trigger.setAttribute('aria-describedby', descriptors.join(' '));
-        } else {
-            trigger.removeAttribute('aria-describedby');
         }
     }
 

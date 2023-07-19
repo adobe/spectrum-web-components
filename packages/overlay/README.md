@@ -27,7 +27,7 @@ import {
 
 ## Example
 
-Leveraging the `trigger` attribut to pass an ID reference to another element with in the same DOM tree that will be the element from which the overlay is positioned when open. Add an interaction type `click`, `hover`, or `longpress` to the `trigger` attribute, separated from the ID reference by an `@` symbol and the overlay will bind itself to the referenced element via the DOM events associated with that interaction. The `<sp-button>` below has an id of `trigger`, so when the `<sp-overlay>` is provided the `trigger` attribute with the value `trigger@click` it associated itself to the `<sp-button>` and toggles its open state when that button is clicked.
+Leverage the `trigger` attribute to pass an ID reference to another element with in the same DOM tree, your overlay will be positioned in relation to this element. When the ID reference is followed by an `@` symbol and interaction type, like `click`, `hover`, or `longpress`, the overlay will bind itself to the referenced element via the DOM events associated with that interaction. For example, the `<sp-button>` below has an id of `trigger`, and the `<sp-overlay>` is provided the `trigger` attribute with the value `trigger@click`. This creates an association between the overlay and the `<sp-button>` that opens the overlay when the button is clicked.
 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
@@ -142,7 +142,7 @@ Leveraging the `trigger` attribut to pass an ID reference to another element wit
 
 ## API
 
-```html
+```ts
 <sp-overlay
     ?open=${boolean}
     ?delayed=${boolean}
@@ -156,9 +156,18 @@ Leveraging the `trigger` attribut to pass an ID reference to another element wit
 ></sp-overlay>
 ```
 
+# Events
+
+When fully open the `<sp-overlay>` element will dispatch the `sp-opened` event, and when fully closed the `sp-closed` event will be dispatched. "Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` event. Keep in mind the following:
+
+-   `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
+-   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
+
+This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun` and `transitionend` events from that transition from the closest direct child of the `<sp-overlay>`.
+
 ## Styling
 
-`<sp-overlay>` element will use the `<dialog>` element or `popover` attribute to project your content onto the top-layer of the browser, but that content will still exist right where you placed it to start. That means that you can style your overlay content with whatever techniques you are already leveraging to style the content in said interaction that does not get overlaid. This means standard CSS selectors, CSS Custom Properties, and CSS Parts applied in your parent context will always apply to your overlaid content.
+`<sp-overlay>` element will use the `<dialog>` element or `popover` attribute to project your content onto the top-layer of the browser, without being moved in the DOM tree. That means that you can style your overlay content with whatever techniques you are already leveraging to style the content that doesn't get overlaid. This means standard CSS selectors, CSS Custom Properties, and CSS Parts applied in your parent context will always apply to your overlaid content.
 
 ## Fallback support
 
@@ -166,7 +175,7 @@ While the [`<dialog>` element](https://developer.mozilla.org/en-US/docs/Web/HTML
 
 ### Complex layered
 
-When an overlay is placed within a page with complex layering, the content therein can fall behind other content in the `z-index` stack. The following example is somewhat contrived but, imagine a toolbar next to a properties panel. If the toolbar has a lower `z-index` and the properties panel, any overlaid content (tooltips, etc.) within that toolbar will display underneath any content in the properties panel with which it may share pixels.
+When an overlay is placed within a page with complex layering, the content therein can fall behind other content in the `z-index` stack. The following example is somewhat contrived but, imagine a toolbar next to a properties panel. If the toolbar has a lower `z-index` than the properties panel, any overlaid content (tooltips, etc.) within that toolbar will display underneath any content in the properties panel with which it may share pixels.
 
 ```html
 <div class="complex-layered-demo">
@@ -198,11 +207,11 @@ When an overlay is placed within a page with complex layering, the content there
 </style>
 ```
 
-Properly managed `z-index` values will support working around this issue while browsers work to adopt the `popover` attribute. In this demo, you can easily achieve the same output but sharing one `z-index` between the various pieces of content, removing `z-index` values altogether, or raising the `.complex-layered-holder` element to a higher `z-index` than the `.complex-layered-blocker` element.
+Properly managed `z-index` values will support working around this issue while browsers work to adopt the `popover` attribute. In this demo, you can achieve the same output by sharing one `z-index` between the various pieces of content, removing `z-index` values altogether, or raising the `.complex-layered-holder` element to a higher `z-index` than the `.complex-layered-blocker` element.
 
 ### Contained
 
-[CSS Containment](https://developer.mozilla.org/en-US/docs/Web/CSS/contain) allows a developer direct control over how the internals of one element affects the paint and layout of the internals of other elements on the same page. While leveraging some of its values can offer performance gains, they can interrupt the delivery of your overlaid content.
+[CSS Containment](https://developer.mozilla.org/en-US/docs/Web/CSS/contain) gives a developer direct control over how the internals of one element affect the paint and layout of the internals of other elements on the same page. While leveraging some of its values can offer performance gains, they can interrupt the delivery of your overlaid content.
 
 ```html
 <div class="contained-demo">
@@ -220,7 +229,7 @@ Properly managed `z-index` values will support working around this issue while b
 </style>
 ```
 
-You could just _remove_ the `contain` rule. But, if you are not OK with simply removing the `contain` value, you still have options. In the case that you would like to continue to leverage `contain` is to place "contained" content separately from your overlaid content, like so:
+You could just _remove_ the `contain` rule. But, if you are not OK with simply removing the `contain` value, you still have options. If you would like to continue to leverage `contain`, you can place your "contained" content separately from your overlaid content, like so:
 
 ```html
 <div class="contained-demo">
@@ -240,7 +249,7 @@ You could just _remove_ the `contain` rule. But, if you are not OK with simply r
 
 ### Clip pathed
 
-While not offering the same performance opportunities as `contain`, `clip-path` can also restrict how content in an element is surfaced at paint time. When overlaid content should display outside of the `clip-path`, without the `popover` attribute that content could be _clipped_.
+`clip-path` can also restrict how content in an element is surfaced at paint time. When overlaid content should display outside of the `clip-path`, without the `popover` attribute, that content could be _clipped_.
 
 ```html
 <div class="clip-pathed-demo">

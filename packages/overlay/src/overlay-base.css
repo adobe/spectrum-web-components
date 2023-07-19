@@ -38,15 +38,14 @@ governing permissions and limitations under the License.
     max-height: calc(100vh - 16px);
     max-height: calc(100dvh - 16px);
     max-width: calc(100vw - 16px);
+    inset: auto;
+    top: 0;
+    left: 0;
 
     --sp-overlay-open: true;
 }
 
 :host(:not([open])) .dialog {
-    top: 0;
-    left: 0;
-    transform: translate(-999em, -999em);
-
     --sp-overlay-open: false;
 }
 

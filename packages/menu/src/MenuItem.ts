@@ -258,7 +258,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 ?disabled=${!this.hasSubmenu}
                 ?open=${this.hasSubmenu && this.open}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
-                .offset=${[-10, -5] as [number, number]}
+                .offset=${[-10, -4] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
             >
