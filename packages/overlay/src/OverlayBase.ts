@@ -198,7 +198,7 @@ export class OverlayBase extends SpectrumElement {
 
     private longressTimeout!: ReturnType<typeof setTimeout>;
 
-    @property()
+    @property({ type: Number })
     offset: number | [number, number] = 6;
 
     public placementController = new PlacementController(this);
@@ -230,6 +230,9 @@ export class OverlayBase extends SpectrumElement {
 
     @query('slot')
     slotEl!: HTMLSlotElement;
+
+    @property({ type: Number, attribute: 'tip-padding' })
+    tipPadding?: number;
 
     @property()
     trigger?: string;
@@ -292,14 +295,12 @@ export class OverlayBase extends SpectrumElement {
         const offset = this.offset || 0;
         const trigger = this.triggerElement as HTMLElement;
         const placement = (this.placement as Placement) || 'right';
+        const tipPadding = this.tipPadding;
 
         this.placementController.placeOverlay(this.dialogEl, {
-            // delayed?: boolean,
             offset,
             placement,
-            // notImmediatelyClosable?: boolean, // rename or place behind other API options
-            // receivesFocus?: 'auto';
-            // root?: HTMLElement;
+            tipPadding,
             trigger,
             type: this.type,
         });
