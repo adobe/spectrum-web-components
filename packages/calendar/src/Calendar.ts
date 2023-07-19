@@ -90,49 +90,49 @@ export class Calendar extends SpectrumElement {
     padded = false;
 
     @state()
-    private _currentDate!: CalendarDate;
+    private currentDate!: CalendarDate;
 
     @state()
-    private _minDate!: CalendarDate;
+    private minDate!: CalendarDate;
 
     @state()
-    private _maxDate!: CalendarDate;
+    private maxDate!: CalendarDate;
 
-    private _languageResolver = new LanguageResolutionController(this);
-    private _timeZone: string = getLocalTimeZone();
+    private languageResolver = new LanguageResolutionController(this);
+    private timeZone: string = getLocalTimeZone();
 
-    private get _locale(): string {
-        return this._languageResolver.language;
+    private get locale(): string {
+        return this.languageResolver.language;
     }
 
     public get today(): CalendarDate {
-        return today(this._timeZone);
+        return today(this.timeZone);
     }
 
     constructor() {
         super();
-        this._setInitialCalendarDate();
+        this.setInitialCalendarDate();
     }
 
     protected override willUpdate(
         changedProperties: PropertyValueMap<this>
     ): void {
         if (changedProperties.has('selectedDate')) {
-            this._setCurrentCalendarDate();
+            this.setCurrentCalendarDate();
         }
 
         if (changedProperties.has('min')) {
-            this._setMinCalendarDate();
+            this.setMinCalendarDate();
         }
 
         if (changedProperties.has('max')) {
-            this._setMaxCalendarDate();
+            this.setMaxCalendarDate();
         }
     }
 
     protected override render(): TemplateResult {
         return when(
-            this._currentDate,
+            this.currentDate,
             () => html`
                 ${this.renderCalendarHeader()}${this.renderCalendarGrid()}
             `
@@ -141,7 +141,7 @@ export class Calendar extends SpectrumElement {
 
     public renderCalendarHeader(): TemplateResult {
         const monthAndYear = this._capitalFirstLetter(
-            this._formatDate(this._currentDate, {
+            this.formatDate(this.currentDate, {
                 month: 'long',
                 year: 'numeric',
             })
@@ -220,7 +220,7 @@ export class Calendar extends SpectrumElement {
         return html`
             <thead role="presentation">
                 <tr role="row">
-                    ${this._getWeekdays().map((weekday) =>
+                    ${this.getWeekdays().map((weekday) =>
                         this.renderWeekdayColumn(weekday)
                     )}
                 </tr>
@@ -245,7 +245,7 @@ export class Calendar extends SpectrumElement {
     public renderCalendarTableBody(): TemplateResult {
         return html`
             <tbody role="presentation">
-                ${[...new Array(this._getWeeksInCurrentMonth()).keys()].map(
+                ${[...new Array(this.getWeeksInCurrentMonth()).keys()].map(
                     (weekIndex) => this.renderCalendarTableRow(weekIndex)
                 )}
             </tbody>
@@ -255,7 +255,7 @@ export class Calendar extends SpectrumElement {
     public renderCalendarTableRow(weekIndex: number): TemplateResult {
         return html`
             <tr role="row">
-                ${this._getDatesInWeek(weekIndex).map((calendarDate) =>
+                ${this.getDatesInWeek(weekIndex).map((calendarDate) =>
                     this.renderCalendarTableCell(calendarDate)
                 )}
             </tr>
@@ -263,19 +263,19 @@ export class Calendar extends SpectrumElement {
     }
 
     public renderCalendarTableCell(calendarDate: CalendarDate): TemplateResult {
-        const isOutsideMonth = calendarDate.month !== this._currentDate.month;
+        const isOutsideMonth = calendarDate.month !== this.currentDate.month;
 
         const isSelected = Boolean(
             this.selectedDate &&
-                isSameDay(this._toCalendarDate(this.selectedDate), calendarDate)
+                isSameDay(this.toCalendarDate(this.selectedDate), calendarDate)
         );
 
         const isToday = Boolean(isSameDay(calendarDate, this.today));
 
         const isDisabled = Boolean(
             this.disabled ||
-                (this._minDate && calendarDate.compare(this._minDate) < 0) ||
-                (this._maxDate && calendarDate.compare(this._maxDate) > 0)
+                (this.minDate && calendarDate.compare(this.minDate) < 0) ||
+                (this.maxDate && calendarDate.compare(this.maxDate) > 0)
         );
 
         const dayClasses = {
@@ -285,7 +285,7 @@ export class Calendar extends SpectrumElement {
             'is-disabled': isDisabled,
         };
 
-        const currentDayTitle = this._formatDate(calendarDate, {
+        const currentDayTitle = this.formatDate(calendarDate, {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -314,25 +314,25 @@ export class Calendar extends SpectrumElement {
                     class="spectrum-Calendar-date ${classMap(dayClasses)}"
                     @click=${() => this.handleDayClick(calendarDate)}
                 >
-                    ${this._formatNumber(calendarDate.day)}
+                    ${this.formatNumber(calendarDate.day)}
                 </span>
             </td>
         `;
     }
 
     public handlePreviousMonth(): void {
-        this._currentDate = startOfMonth(this._currentDate).subtract({
+        this.currentDate = startOfMonth(this.currentDate).subtract({
             months: 1,
         });
     }
 
     public handleNextMonth(): void {
-        this._currentDate = startOfMonth(this._currentDate).add({ months: 1 });
+        this.currentDate = startOfMonth(this.currentDate).add({ months: 1 });
     }
 
     public handleDayClick(calendarDate: CalendarDate): void {
-        this.selectedDate = calendarDate.toDate(this._timeZone);
-        this._setCurrentCalendarDate();
+        this.selectedDate = calendarDate.toDate(this.timeZone);
+        this.setCurrentCalendarDate();
 
         this.dispatchEvent(
             new CustomEvent('change', {
@@ -347,64 +347,64 @@ export class Calendar extends SpectrumElement {
     /**
      * Returns the number of weeks according to the defined month and locale
      */
-    private _getWeeksInCurrentMonth(): number {
-        return getWeeksInMonth(this._currentDate, this._locale);
+    private getWeeksInCurrentMonth(): number {
+        return getWeeksInMonth(this.currentDate, this.locale);
     }
 
     /**
      * Returns data for the days of the week, starting with the first day of the week according to the defined locale
      * (Sunday, Monday, etc.)
      */
-    private _getWeekdays(): CalendarWeekday[] {
+    private getWeekdays(): CalendarWeekday[] {
         return [...new Array(daysInWeek).keys()].map((dayIndex) => {
-            const weekStart = startOfWeek(this._currentDate, this._locale);
+            const weekStart = startOfWeek(this.currentDate, this.locale);
             const date = weekStart.add({ days: dayIndex });
 
             return {
-                narrow: this._formatDate(date, { weekday: 'narrow' }),
+                narrow: this.formatDate(date, { weekday: 'narrow' }),
                 long: this._capitalFirstLetter(
-                    this._formatDate(date, { weekday: 'long' })
+                    this.formatDate(date, { weekday: 'long' })
                 ),
             };
         });
     }
 
-    private _setInitialCalendarDate(): void {
-        this._currentDate = this.today;
+    private setInitialCalendarDate(): void {
+        this.currentDate = this.today;
     }
 
-    private _setCurrentCalendarDate(): void {
+    private setCurrentCalendarDate(): void {
         if (this.selectedDate) {
             this.selectedDate = new Date(this.selectedDate);
 
-            if (!this._isValidDate(this.selectedDate)) {
+            if (!this.isValidDate(this.selectedDate)) {
                 this.selectedDate = undefined;
             } else {
-                this._currentDate = this._toCalendarDate(this.selectedDate);
+                this.currentDate = this.toCalendarDate(this.selectedDate);
             }
         }
     }
 
-    private _setMinCalendarDate(): void {
+    private setMinCalendarDate(): void {
         if (this.min) {
             this.min = new Date(this.min);
 
-            if (!this._isValidDate(this.min)) {
+            if (!this.isValidDate(this.min)) {
                 this.min = undefined;
             } else {
-                this._minDate = this._toCalendarDate(this.min);
+                this.minDate = this.toCalendarDate(this.min);
             }
         }
     }
 
-    private _setMaxCalendarDate(): void {
+    private setMaxCalendarDate(): void {
         if (this.max) {
             this.max = new Date(this.max);
 
-            if (!this._isValidDate(this.max)) {
+            if (!this.isValidDate(this.max)) {
                 this.max = undefined;
             } else {
-                this._maxDate = this._toCalendarDate(this.max);
+                this.maxDate = this.toCalendarDate(this.max);
             }
         }
     }
@@ -415,12 +415,12 @@ export class Calendar extends SpectrumElement {
      *
      * @param weekIndex - The index of the week
      */
-    private _getDatesInWeek(weekIndex: number): CalendarDate[] {
+    private getDatesInWeek(weekIndex: number): CalendarDate[] {
         const dates: CalendarDate[] = [];
 
         let date = startOfWeek(
-            startOfMonth(this._currentDate).add({ weeks: weekIndex }),
-            this._locale
+            startOfMonth(this.currentDate).add({ weeks: weekIndex }),
+            this.locale
         );
 
         while (dates.length < daysInWeek) {
@@ -444,7 +444,7 @@ export class Calendar extends SpectrumElement {
      *
      * @param date - `Date` object to be converted
      */
-    private _toCalendarDate(date: Date): CalendarDate {
+    private toCalendarDate(date: Date): CalendarDate {
         return new CalendarDate(
             date.getFullYear(),
             date.getMonth() + 1, // The month to create a new `CalendarDate` cannot be a zero-based index, unlike `Date`
@@ -457,7 +457,7 @@ export class Calendar extends SpectrumElement {
      *
      * @param date - `Date` object to validate
      */
-    private _isValidDate(date: Date): boolean {
+    private isValidDate(date: Date): boolean {
         return !isNaN(date.getTime());
     }
 
@@ -467,12 +467,12 @@ export class Calendar extends SpectrumElement {
      * @param calendarDate - The `CalendarDate` object that will be used by the formatter
      * @param options - All date format options that will be used by the formatter
      */
-    private _formatDate(
+    private formatDate(
         calendarDate: CalendarDate,
         options: Intl.DateTimeFormatOptions
     ): string {
-        return new DateFormatter(this._locale, options).format(
-            calendarDate.toDate(this._timeZone)
+        return new DateFormatter(this.locale, options).format(
+            calendarDate.toDate(this.timeZone)
         );
     }
 
@@ -481,8 +481,8 @@ export class Calendar extends SpectrumElement {
      *
      * @param number - The number to format
      */
-    private _formatNumber(number: number): string {
-        return new NumberFormatter(this._locale).format(number);
+    private formatNumber(number: number): string {
+        return new NumberFormatter(this.locale).format(number);
     }
 
     /**
