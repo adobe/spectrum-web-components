@@ -272,6 +272,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                 ['left', 'negative'],
                 ['right', 'positive'],
                 ['top', 'info'],
+                ['top-start', ''],
             ] as [Placement, string][]
         ).map(([placement, variant]) => {
             return html`
@@ -299,6 +300,7 @@ export const overlaidTop = (): TemplateResult => overlaid('top');
 export const overlaidRight = (): TemplateResult => overlaid('right');
 export const overlaidBottom = (): TemplateResult => overlaid('bottom');
 export const overlaidLeft = (): TemplateResult => overlaid('left');
+export const overlaidTopStart = (): TemplateResult => overlaid('top-start');
 
 export const selfManaged = ({
     placement,

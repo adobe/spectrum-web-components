@@ -33,6 +33,7 @@ type OverlayOptionsV1 = {
     notImmediatelyClosable?: boolean; // rename or place behind other API options
     receivesFocus?: 'auto';
     root?: HTMLElement;
+    tipPadding?: number;
     trigger: HTMLElement | VirtualTrigger;
     type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
 };
@@ -187,7 +188,15 @@ export class PlacementController implements ReactiveController {
                     });
                 },
             }),
-            ...(tipElement ? [arrow({ element: tipElement })] : []),
+            ...(tipElement
+                ? [
+                      arrow({
+                          element: tipElement,
+                          padding:
+                              options.tipPadding || REQUIRED_DISTANCE_TO_EDGE,
+                      }),
+                  ]
+                : []),
             topLayerOverTransforms(),
         ];
         const { x, y, placement, middlewareData } = await computePosition(

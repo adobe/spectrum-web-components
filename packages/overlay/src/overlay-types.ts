@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ThemeData } from '@spectrum-web-components/theme/src/Theme.js';
 import type { Placement } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 
@@ -34,23 +33,6 @@ export type OverlayTriggerInteractions = Extract<
     'inline' | 'modal' | 'replace'
 >;
 
-export interface OverlayOpenDetail {
-    content: HTMLElement;
-    contentTip?: HTMLElement;
-    delayed: boolean;
-    offset: number;
-    skidding?: number;
-    placement?: Placement;
-    receivesFocus?: 'auto';
-    virtualTrigger?: VirtualTrigger;
-    trigger: HTMLElement;
-    root?: HTMLElement;
-    interaction: TriggerInteractions;
-    theme: ThemeData;
-    notImmediatelyClosable?: boolean;
-    abortPromise?: Promise<boolean>;
-}
-
 export interface OverlayOpenCloseDetail {
     interaction: TriggerInteractions;
     reason?: 'external-click';
@@ -58,16 +40,6 @@ export interface OverlayOpenCloseDetail {
 
 export interface OverlayCloseReasonDetail {
     reason?: 'external-click';
-}
-
-/**
- * Used, via an event, to query details about how an element should be shown in
- * an overlay
- */
-export interface OverlayDisplayQueryDetail {
-    overlayRootName?: string;
-    overlayRootElement?: HTMLElement;
-    overlayContentTipElement?: HTMLElement;
 }
 
 export type OverlayOptionsV1 = {
@@ -83,7 +55,6 @@ export type OverlayOptionsV1 = {
 
 declare global {
     interface GlobalEventHandlersEventMap {
-        'sp-overlay-query': CustomEvent<OverlayDisplayQueryDetail>;
         'sp-open': CustomEvent<OverlayOpenCloseDetail>;
         'sp-close': CustomEvent<OverlayOpenCloseDetail>;
     }
