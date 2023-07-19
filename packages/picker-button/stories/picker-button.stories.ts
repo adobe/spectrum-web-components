@@ -29,7 +29,10 @@ active.args = { active: true };
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
     icon: html`
-        <sp-icon-add slot="icon"></sp-icon-add>
+        <sp-icon-add
+            slot="icon"
+            class="spectrum-PickerButton-icon spectrum-Icon"
+        ></sp-icon-add>
     `,
 };
 

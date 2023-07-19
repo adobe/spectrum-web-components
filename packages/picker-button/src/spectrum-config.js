@@ -38,6 +38,12 @@ const convertSize = (size) => [
                     selectors: [builder.attribute('size', size)],
                 },
             },
+            {
+                replace: builder.combinator(' '),
+            },
+            {
+                replace: builder.class('root'),
+            },
         ],
     },
     {
