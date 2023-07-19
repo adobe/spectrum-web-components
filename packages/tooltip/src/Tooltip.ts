@@ -99,7 +99,7 @@ export class Tooltip extends SpectrumElement {
     @property({ type: Boolean, attribute: 'self-managed' })
     public selfManaged = false;
 
-    @property({ type: Number, reflect: true })
+    @property({ type: Number })
     public offset = 0;
 
     @property({ type: Boolean, reflect: true })
@@ -114,6 +114,9 @@ export class Tooltip extends SpectrumElement {
 
     @query('#tip')
     public tipElement!: HTMLSpanElement;
+
+    @property({ type: Number })
+    public tipPadding?: number;
 
     /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
     private _variant = '';
@@ -183,6 +186,7 @@ export class Tooltip extends SpectrumElement {
                     offset=${this.offset}
                     .placement=${this.placement}
                     type="hint"
+                    .tipPadding=${this.tipPadding}
                     .triggerElement=${this.parentElement}
                     .triggerInteraction=${'hover'}
                     @sp-opened=${this.handleOpenOverlay}
