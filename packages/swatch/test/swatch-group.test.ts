@@ -344,4 +344,18 @@ describe('Swatch Group - DOM selected', () => {
 
         expect(el.selected).to.deep.equal(['color-3', 'color-1']);
     });
+    it('clears previously selected children when updating `selected`', async () => {
+        const el = await fixture<SwatchGroup>(html`
+            <sp-swatch-group selects="single" .selected=${['color-1']}>
+                <sp-swatch value="color-0" color="red"></sp-swatch>
+                <sp-swatch value="color-1" color="green"></sp-swatch>
+                <sp-swatch value="color-2" color="blue"></sp-swatch>
+            </sp-swatch-group>
+        `);
+        await elementUpdated(el);
+        expect(el.selected).to.deep.equal(['color-1']);
+        el.selected = ['color-2'];
+        await elementUpdated(el);
+        expect(el.selected).to.deep.equal(['color-2']);
+    });
 });
