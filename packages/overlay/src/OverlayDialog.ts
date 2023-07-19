@@ -17,7 +17,7 @@ import {
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
-    guaranteedTransitionend,
+    guaranteedAllTransitionend,
     OpenableElement,
     OverlayBase,
 } from './OverlayBase.js';
@@ -157,7 +157,7 @@ export function OverlayDialog<T extends Constructor<OverlayBase>>(
                 }
             };
             this.elements.forEach((el, index) => {
-                guaranteedTransitionend(
+                guaranteedAllTransitionend(
                     el,
                     start(el, index),
                     finish(el, index)

@@ -38,7 +38,6 @@ import {
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { spy } from 'sinon';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Theme } from '@spectrum-web-components/theme';
@@ -139,16 +138,12 @@ describe('Overlays, v1', () => {
     ].map((direction) => {
         const placement = direction as Placement;
         it(`opens a popover - ${placement}`, async () => {
-            const clickSpy = spy();
             const button = testDiv.querySelector(
                 '#first-button'
             ) as HTMLElement;
             const outerPopover = testDiv.querySelector(
                 '#outer-popover'
             ) as Popover;
-            outerPopover.addEventListener('click', () => {
-                clickSpy();
-            });
 
             expect(await isInteractive(outerPopover)).to.be.false;
             expect(button).to.exist;

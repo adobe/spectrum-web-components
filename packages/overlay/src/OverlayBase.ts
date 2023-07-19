@@ -53,7 +53,7 @@ export type OpenableElement = HTMLElement & {
 
 const LONGPRESS_DURATION = 300;
 
-export type LongpressEvent = {
+type LongpressEvent = {
     source: 'pointer' | 'keyboard';
 };
 
@@ -97,11 +97,12 @@ export const noop = (): void => {
  * @param action {Function} - Method to trigger the "transition".
  * @param cb {Function} - Callback to trigger when the "transition" has ended.
  */
-export const guaranteedTransitionend = (
+export const guaranteedAllTransitionend = (
     el: HTMLElement,
     action: () => void,
     cb: () => void
 ): void => {
+    const runningTransitions = new Map<string, number>();
     const cleanup = (): void => {
         el.removeEventListener('transitionrun', handleTransitionrun);
         el.removeEventListener('transitionend', handleTransitionend);
@@ -109,8 +110,8 @@ export const guaranteedTransitionend = (
     };
     let guarantee2: number;
     let guarantee3: number;
-    // WebKit fires `transitionrun` a little earlier, so the inner/outer relationship
-    // here allows WebKit to be caught, but doesn't remove the animation listener until
+    // WebKit fires `transitionrun` a little earlier, the multiple guarantees here
+    // allow WebKit to be caught, but doesn't remove the animation listener until
     // after it would have fired in Chromium.
     const guarantee1 = requestAnimationFrame(() => {
         guarantee2 = requestAnimationFrame(() => {
@@ -120,26 +121,37 @@ export const guaranteedTransitionend = (
         });
     });
     const handleTransitionend = (event: TransitionEvent): void => {
-        if (event.propertyName === 'visibility') {
-            // Ignore "visibility" transitions because they often happen before/after a
-            // larger transition and don't represent the overall transition duration.
+        if (event.target !== el) {
             return;
         }
-        cleanup();
+        runningTransitions.set(
+            event.propertyName,
+            (runningTransitions.get(event.propertyName) as number) - 1
+        );
+        if (!runningTransitions.get(event.propertyName)) {
+            runningTransitions.delete(event.propertyName);
+        }
+        if (runningTransitions.size === 0) {
+            cleanup();
+        }
     };
     const handleTransitionrun = (event: TransitionEvent): void => {
-        if (event.propertyName === 'visibility') {
-            // Ignore "visibility" transitions because they often happen before/after a
-            // larger transition and don't represent the overall transition duration.
+        if (event.target !== el) {
             return;
         }
+        if (!runningTransitions.has(event.propertyName)) {
+            runningTransitions.set(event.propertyName, 0);
+        }
+        runningTransitions.set(
+            event.propertyName,
+            (runningTransitions.get(event.propertyName) as number) + 1
+        );
         cancelAnimationFrame(guarantee1);
         cancelAnimationFrame(guarantee2);
         cancelAnimationFrame(guarantee3);
-        el.removeEventListener('transitionrun', handleTransitionrun);
-        el.addEventListener('transitionend', handleTransitionend);
     };
     el.addEventListener('transitionrun', handleTransitionrun);
+    el.addEventListener('transitionend', handleTransitionend);
     action();
 };
 
@@ -169,7 +181,7 @@ export class OverlayBase extends SpectrumElement {
             this.wasOpen = this.open;
             this.open = false;
         } else {
-            this.bindEvents();
+            this.bindEvents(this.triggerElement);
             this.open = this.open || this.wasOpen;
             this.wasOpen = false;
         }
@@ -180,8 +192,8 @@ export class OverlayBase extends SpectrumElement {
     protected dispose = noop;
 
     @queryAssignedElements({
-        selector: ':not([slot="longpress-describedby-descriptor"])',
         flatten: true,
+        selector: ':not([slot="longpress-describedby-descriptor"])', // gather only elements slotted into the default slot
     })
     elements!: OpenableElement[];
 
@@ -212,6 +224,9 @@ export class OverlayBase extends SpectrumElement {
         if (open && this.disabled) return;
         if (open === this.open) return;
         this._open = open;
+        if (this.open) {
+            OverlayBase.openCount += 1;
+        }
         this.requestUpdate('open', !this.open);
     }
 
@@ -280,7 +295,7 @@ export class OverlayBase extends SpectrumElement {
     }
 
     protected get requiresPosition(): boolean {
-        // Do no position "page" overlays as they should block the entrie UI.
+        // Do not position "page" overlays as they should block the entire UI.
         if (this.type === 'page' || !this.open) return false;
         // Do not position content without a trigger element, what would you position it in relation to?
         // Do not automaticallyu position contnent, unless it is a "hint".
@@ -344,9 +359,7 @@ export class OverlayBase extends SpectrumElement {
         } else {
             this.managePopoverOpen();
         }
-        if (this.open) {
-            OverlayBase.openCount += 1;
-        } else {
+        if (!this.open) {
             // If the focus remains inside of the overlay or
             // a slotted descendent of the overlay you need to return
             // focus back to the trigger.
@@ -410,9 +423,11 @@ export class OverlayBase extends SpectrumElement {
         triggerElement.removeEventListener('longpress', this.handleLongpress);
     }
 
-    protected bindEvents(): void {
-        const nextTriggerElement = this.triggerElement as HTMLElement;
-        if (!nextTriggerElement) return;
+    protected bindEvents(
+        triggerElement: HTMLElement | VirtualTrigger | null
+    ): void {
+        if (!this.hasNonVirtualTrigger) return;
+        const nextTriggerElement = triggerElement as HTMLElement;
         switch (this.triggerInteraction) {
             case 'click':
                 this.bindClickEvents(nextTriggerElement);
@@ -471,7 +486,7 @@ export class OverlayBase extends SpectrumElement {
         ) {
             return;
         }
-        this.bindEvents();
+        this.bindEvents(this.triggerElement);
     }
 
     private elementIds: string[] = [];
@@ -833,6 +848,7 @@ export class OverlayBase extends SpectrumElement {
                 style=${styleMap({
                     '--swc-overlay-open-count':
                         OverlayBase.openCount.toString(),
+                    translate: this.hasUpdated ? null : '-999em -999em',
                 })}
             >
                 ${this.renderContent()}
@@ -856,6 +872,7 @@ export class OverlayBase extends SpectrumElement {
                     '--swc-overlay-z-index': (
                         1000 + OverlayBase.openCount
                     ).toString(),
+                    translate: this.hasUpdated ? null : '-999em -999em',
                 })}
             >
                 ${this.renderContent()}
@@ -877,7 +894,7 @@ export class OverlayBase extends SpectrumElement {
             this.open = false;
         });
         if (this.hasNonVirtualTrigger) {
-            this.bindEvents();
+            this.bindEvents(this.triggerElement);
         }
     }
 
