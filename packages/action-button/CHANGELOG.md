@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **action-button,action-menu,picker,split-button:** expand and update application of aria-\* attributes ([52c0156](https://github.com/adobe/spectrum-web-components/commit/52c015636d42f2baf1524446a0db9d5e5cfeb689))
+-   **action-group:** ensure Action Button clicks are attributed to the right element ([#3292](https://github.com/adobe/spectrum-web-components/issues/3292)) ([ddccab7](https://github.com/adobe/spectrum-web-components/commit/ddccab766498a6da6ca29d9bbe9cebd7924e81e0))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Features
+
+-   **accordion:** core token migration ([#3300](https://github.com/adobe/spectrum-web-components/issues/3300)) ([9650b71](https://github.com/adobe/spectrum-web-components/commit/9650b71dd7cf7b93c351ac7b369aaf424c82f47d))
+-   **tabs,top-nav:** use Core Tokens ([c6ba355](https://github.com/adobe/spectrum-web-components/commit/c6ba355c2160d1a8bda1618b8a9c28213194c7c5))
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/styles

@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
             var(--spectrum-color-handle-outer-border-width) +
             var(--mod-colorloupe-offset, var(--spectrum-colorloupe-offset))
     );
-    inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2 + 1px);
+    inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2);
     opacity: 0;
     pointer-events: none;
     position: absolute;
@@ -113,9 +113,11 @@ governing permissions and limitations under the License.
             var(--spectrum-colorloupe-outer-border-color)
         )
     );
-    stroke-width: var(
-        --mod-colorloupe-outer-border-width,
-        var(--spectrum-colorloupe-outer-border-width)
+    stroke-width: calc(
+        var(
+                --mod-colorloupe-outer-border-width,
+                var(--spectrum-colorloupe-outer-border-width)
+            ) + 2px
     );
 }
 .spectrum-ColorLoupe-checkerboard-pattern {

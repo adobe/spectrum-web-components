@@ -11,3 +11,11 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-action-bar.css';
+
+:host {
+    display: block;
+}
+
+:host([flexible]) {
+    display: inline-block;
+}

@@ -69,6 +69,8 @@ const tokenPackages = [
     'stepper',
     'textfield',
     'search',
+    'tabs',
+    'actionbar',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

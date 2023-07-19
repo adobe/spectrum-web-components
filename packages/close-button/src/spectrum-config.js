@@ -36,7 +36,7 @@ const config = {
                         ['spectrum-CloseButton--staticWhite', 'white'],
                         ['spectrum-CloseButton--staticBlack', 'black'],
                     ],
-                    'variant'
+                    'static'
                 ),
                 ...converter.enumerateAttributes(
                     [

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **sidenav:** express hierarchy using list and listitem ([f9019d7](https://github.com/adobe/spectrum-web-components/commit/f9019d7f5a37c81b61395d5329b251317497a685)), closes [#3348](https://github.com/adobe/spectrum-web-components/issues/3348) [#3348](https://github.com/adobe/spectrum-web-components/issues/3348)
+
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav
