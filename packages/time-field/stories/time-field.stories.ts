@@ -62,7 +62,7 @@ export default {
     component: 'sp-time-field',
 
     argTypes: {
-        locale: {
+        lang: {
             options: locales,
             control: {
                 type: 'select',
@@ -76,23 +76,25 @@ export default {
 
         // Don't render private properties and getters in the Storybook UI
         firstEditableSegment: { ...hiddenProperty },
-        _locale: { ...hiddenProperty },
-        _previousLocale: { ...hiddenProperty },
-        _currentDateTime: { ...hiddenProperty },
-        _newDateTime: { ...hiddenProperty },
-        _segments: { ...hiddenProperty },
-        _createSegments: { ...hiddenProperty },
-        _languageResolver: { ...hiddenProperty },
-        _timeZone: { ...hiddenProperty },
-        _formatter: { ...hiddenProperty },
-        _is12HourClock: { ...hiddenProperty },
-        _daySegment: { ...hiddenProperty },
-        _monthSegment: { ...hiddenProperty },
-        _yearSegment: { ...hiddenProperty },
-        _hourSegment: { ...hiddenProperty },
-        _minuteSegment: { ...hiddenProperty },
-        _secondSegment: { ...hiddenProperty },
-        _dayPeriodSegment: { ...hiddenProperty },
+        includeDate: { ...hiddenProperty },
+        includeTime: { ...hiddenProperty },
+        previousLocale: { ...hiddenProperty },
+        currentDateTime: { ...hiddenProperty },
+        newDateTime: { ...hiddenProperty },
+        segments: { ...hiddenProperty },
+        createSegments: { ...hiddenProperty },
+        languageResolver: { ...hiddenProperty },
+        timeZone: { ...hiddenProperty },
+        formatter: { ...hiddenProperty },
+        locale: { ...hiddenProperty },
+        daySegment: { ...hiddenProperty },
+        monthSegment: { ...hiddenProperty },
+        yearSegment: { ...hiddenProperty },
+        hourSegment: { ...hiddenProperty },
+        minuteSegment: { ...hiddenProperty },
+        secondSegment: { ...hiddenProperty },
+        dayPeriodSegment: { ...hiddenProperty },
+        is12HourClock: { ...hiddenProperty },
 
         // Inherited
         _dirParent: { ...hiddenProperty },
@@ -123,7 +125,7 @@ export default {
     },
 
     args: {
-        locale: defaultLocale,
+        lang: defaultLocale,
     },
 
     parameters: {
@@ -138,7 +140,7 @@ export default {
 };
 
 interface StoryArgs {
-    locale?: string;
+    lang?: string;
 
     selectedDateTime?: Date;
     timeGranularity?: TimeGranularity;
@@ -166,9 +168,9 @@ const renderTimeField = (
             }
         </style>
 
-        <sp-theme lang=${args.locale || defaultLocale}>
+        <sp-theme lang=${args.lang ?? defaultLocale}>
             <h1 class="demo-title">${title}</h1>
-            <h2 class="demo-subtitle">Locale: ${args.locale}</h2>
+            <h2 class="demo-subtitle">Locale: ${args.lang}</h2>
             <hr />
             <sp-time-field ...=${spreadProps(args)} @change=${args.onChange}>
                 ${content}
@@ -182,7 +184,7 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
 };
 
 export const selectedDateTime = (args: StoryArgs = {}): TemplateResult[] => {
-    const formatter = Intl.DateTimeFormat(args.locale || defaultLocale, {
+    const formatter = Intl.DateTimeFormat(args.lang ?? defaultLocale, {
         day: 'numeric',
         month: 'short',
         year: 'numeric',

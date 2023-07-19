@@ -81,8 +81,7 @@ export class InputSegments extends TextfieldBase {
     protected includeTime = false;
 
     /**
-     * Indicates which segments that are part of time should be included. In addition to the hour segment, which will
-     * always be displayed, we can display the minutes (default) and seconds segment
+     * Indicates which segments that are part of time should be used
      */
     @property()
     timeGranularity: TimeGranularity = 'minute';
@@ -94,57 +93,58 @@ export class InputSegments extends TextfieldBase {
     selectedDateTime?: Date;
 
     @state()
-    private _locale!: string;
+    private previousLocale?: string;
 
     @state()
-    private _previousLocale?: string;
+    private currentDateTime!: CalendarDateTime;
 
     @state()
-    private _currentDateTime!: CalendarDateTime;
+    private newDateTime?: CalendarDateTime;
 
     @state()
-    private _newDateTime?: CalendarDateTime;
+    private segments: Segment[] = [];
 
     @state()
-    private _segments: Segment[] = [];
+    private createSegments = true;
 
-    @state()
-    private _createSegments = true;
+    private languageResolver = new LanguageResolutionController(this);
+    private timeZone = getLocalTimeZone();
+    private formatter!: DateFormatter;
 
-    private _languageResolver = new LanguageResolutionController(this);
-    private _timeZone!: string;
-    private _formatter!: DateFormatter;
-
-    private get _daySegment(): Segment | undefined {
-        return this._segments.find((segment) => segment.type === 'day');
+    private get locale(): string {
+        return this.languageResolver.language;
     }
 
-    private get _monthSegment(): Segment | undefined {
-        return this._segments.find((segment) => segment.type === 'month');
+    private get daySegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'day');
     }
 
-    private get _yearSegment(): Segment | undefined {
-        return this._segments.find((segment) => segment.type === 'year');
+    private get monthSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'month');
     }
 
-    private get _hourSegment(): Segment | undefined {
-        return this._segments.find((segment) => segment.type === 'hour');
+    private get yearSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'year');
     }
 
-    private get _minuteSegment(): Segment | undefined {
-        return this._segments.find((segment) => segment.type === 'minute');
+    private get hourSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'hour');
     }
 
-    private get _secondSegment(): Segment | undefined {
-        return this._segments.find((segment) => segment.type === 'second');
+    private get minuteSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'minute');
     }
 
-    private get _dayPeriodSegment(): Segment | undefined {
-        return this._segments.find((segment) => segment.type === 'dayPeriod');
+    private get secondSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'second');
     }
 
-    private get _is12HourClock(): boolean {
-        return Boolean(this._formatter.resolvedOptions().hour12);
+    private get dayPeriodSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'dayPeriod');
+    }
+
+    private get is12HourClock(): boolean {
+        return Boolean(this.formatter.resolvedOptions().hour12);
     }
 
     /**
@@ -161,35 +161,31 @@ export class InputSegments extends TextfieldBase {
 
     constructor() {
         super();
-
-        this._setTimeZone();
-        this._setLocale();
-        this._setFormatter();
-        this._setInitialDateTime();
+        this.setInitialDateTime();
     }
 
     protected override willUpdate(
         changedProperties: PropertyValueMap<this>
     ): void {
-        this._setLocale();
-        this._setFormatter();
+        if (this.locale !== this.previousLocale) {
+            this.previousLocale = this.locale;
+            this.createSegments = true;
+
+            this.setFormatter();
+        }
 
         if (changedProperties.has('selectedDateTime')) {
-            this._setCurrentDateTime();
-            this._createSegments = true;
+            this.createSegments = true;
+
+            this.setCurrentDateTime();
         }
 
         if (changedProperties.has('timeGranularity')) {
-            this._createSegments = true;
+            this.createSegments = true;
         }
 
-        if (this._locale !== this._previousLocale) {
-            this._previousLocale = this._locale;
-            this._createSegments = true;
-        }
-
-        if (this._createSegments) {
-            this._setSegments();
+        if (this.createSegments) {
+            this.setSegments();
         }
     }
 
@@ -204,7 +200,7 @@ export class InputSegments extends TextfieldBase {
                     @focusin=${this.handleFocusIn}
                     @focusout=${this.handleFocusOut}
                 >
-                    ${this._segments.map((segment) =>
+                    ${this.segments.map((segment) =>
                         when(
                             segment.type === 'literal',
                             () => this.renderLiteralSegment(segment),
@@ -288,19 +284,19 @@ export class InputSegments extends TextfieldBase {
     public handleKeydown(segment: Segment, event: KeyboardEvent): void {
         switch (event.code) {
             case 'ArrowUp': {
-                this._incrementValue(segment);
+                this.incrementValue(segment);
                 break;
             }
             case 'ArrowRight': {
-                this._focusNextSegment(event);
+                this.focusNextSegment(event);
                 break;
             }
             case 'ArrowDown': {
-                this._decrementValue(segment);
+                this.decrementValue(segment);
                 break;
             }
             case 'ArrowLeft': {
-                this._focusPreviousSegment(event);
+                this.focusPreviousSegment(event);
                 break;
             }
             default: {
@@ -332,7 +328,7 @@ export class InputSegments extends TextfieldBase {
 
         if (min !== undefined && max !== undefined) {
             const typedValue = Number(event.key);
-            const isHourAmPm = this._is12HourClock && segment.type === 'hour';
+            const isHourAmPm = this.is12HourClock && segment.type === 'hour';
             const maxLength = String(max).length;
 
             let previousValue = segment.value;
@@ -341,7 +337,7 @@ export class InputSegments extends TextfieldBase {
             if (
                 isHourAmPm &&
                 previousValue !== undefined &&
-                this._isPM(previousValue)
+                this.isPM(previousValue)
             ) {
                 previousValue -= PM;
             }
@@ -364,7 +360,7 @@ export class InputSegments extends TextfieldBase {
             const useTypedValueOrMax = typedValue <= max ? typedValue : max;
 
             if (isHourAmPm) {
-                const isPM = this._isPM(min);
+                const isPM = this.isPM(min);
 
                 if (isPM && newValue !== min && newValue > maxHourAM) {
                     newValue = Number(String(newValue).slice(1));
@@ -390,7 +386,7 @@ export class InputSegments extends TextfieldBase {
 
             segment.value = newValue;
 
-            this._valueChanged(segment);
+            this.valueChanged(segment);
         }
     }
 
@@ -399,10 +395,10 @@ export class InputSegments extends TextfieldBase {
         let previousValue = segment.value;
 
         if (previousValue !== undefined) {
-            if (this._is12HourClock && segment.type === 'hour') {
+            if (this.is12HourClock && segment.type === 'hour') {
                 const isPM =
                     segment.minValue !== undefined &&
-                    this._isPM(segment.minValue);
+                    this.isPM(segment.minValue);
 
                 if (isPM) {
                     previousValue -= PM;
@@ -425,19 +421,11 @@ export class InputSegments extends TextfieldBase {
 
             segment.value = (newValue && Number(newValue)) || undefined;
 
-            this._valueChanged(segment);
+            this.valueChanged(segment);
         }
     }
 
-    private _setTimeZone(): void {
-        this._timeZone = getLocalTimeZone();
-    }
-
-    private _setLocale(): void {
-        this._locale = this._languageResolver.language;
-    }
-
-    private _setFormatter(): void {
+    private setFormatter(): void {
         let dateOptions: Intl.DateTimeFormatOptions = {};
         let timeOptions: Intl.DateTimeFormatOptions = {};
 
@@ -461,32 +449,32 @@ export class InputSegments extends TextfieldBase {
             };
         }
 
-        this._formatter = new DateFormatter(this._locale, {
+        this.formatter = new DateFormatter(this.locale, {
             ...dateOptions,
             ...timeOptions,
         });
     }
 
-    private _setInitialDateTime(): void {
-        this._currentDateTime = toCalendarDateTime(now(this._timeZone));
+    private setInitialDateTime(): void {
+        this.currentDateTime = toCalendarDateTime(now(this.timeZone));
     }
 
-    private _setCurrentDateTime(): void {
+    private setCurrentDateTime(): void {
         if (this.selectedDateTime) {
             this.selectedDateTime = new Date(this.selectedDateTime);
 
-            if (!this._isValidTime(this.selectedDateTime)) {
+            if (!this.isValidTime(this.selectedDateTime)) {
                 this.selectedDateTime = undefined;
             } else {
-                this._currentDateTime = this._dateToCalendarDateTime(
+                this.currentDateTime = this.dateToCalendarDateTime(
                     this.selectedDateTime
                 );
             }
         }
     }
 
-    private _setNewDateTime(): void {
-        this._newDateTime = undefined;
+    private setNewDateTime(): void {
+        this.newDateTime = undefined;
 
         let year: number | undefined = undefined;
         let month: number | undefined = undefined;
@@ -501,46 +489,46 @@ export class InputSegments extends TextfieldBase {
         const isSecond = this.timeGranularity === 'second';
 
         if (this.includeDate) {
-            if (this._yearSegment?.value !== undefined) {
-                year = this._yearSegment.value;
+            if (this.yearSegment?.value !== undefined) {
+                year = this.yearSegment.value;
             }
 
-            if (this._monthSegment?.value !== undefined) {
-                month = this._monthSegment.value;
+            if (this.monthSegment?.value !== undefined) {
+                month = this.monthSegment.value;
             }
 
-            if (this._daySegment?.value !== undefined) {
-                day = this._daySegment.value;
+            if (this.daySegment?.value !== undefined) {
+                day = this.daySegment.value;
             }
         }
 
         if (this.includeTime) {
-            const hasHourValue = this._hourSegment?.value !== undefined;
-            const hasMinuteValue = this._minuteSegment?.value !== undefined;
-            const hasSecondValue = this._secondSegment?.value !== undefined;
+            const hasHourValue = this.hourSegment?.value !== undefined;
+            const hasMinuteValue = this.minuteSegment?.value !== undefined;
+            const hasSecondValue = this.secondSegment?.value !== undefined;
 
             if (isHour && hasHourValue) {
-                hour = this._hourSegment?.value;
+                hour = this.hourSegment?.value;
             }
 
             if (isMinute && hasHourValue && hasMinuteValue) {
-                minute = this._minuteSegment?.value;
+                minute = this.minuteSegment?.value;
             }
 
             if (isSecond && hasHourValue && hasMinuteValue && hasSecondValue) {
-                second = this._secondSegment?.value;
+                second = this.secondSegment?.value;
             }
 
             if (!this.includeDate) {
-                year = this._currentDateTime.year;
-                month = this._currentDateTime.month;
-                day = this._currentDateTime.day;
+                year = this.currentDateTime.year;
+                month = this.currentDateTime.month;
+                day = this.currentDateTime.day;
             }
         }
 
         // To create a new CalendarDateTime the only mandatory values are those referring to the date
         if (year !== undefined && month !== undefined && day !== undefined) {
-            this._newDateTime = new CalendarDateTime(
+            this.newDateTime = new CalendarDateTime(
                 year,
                 month,
                 day,
@@ -556,7 +544,7 @@ export class InputSegments extends TextfieldBase {
      *
      * @param date - `Date` object to validate
      */
-    private _isValidTime(date: Date): boolean {
+    private isValidTime(date: Date): boolean {
         return !isNaN(date.getTime());
     }
 
@@ -565,7 +553,7 @@ export class InputSegments extends TextfieldBase {
      *
      * @param date - `Date` object to "convert"
      */
-    private _dateToCalendarDateTime(date: Date): CalendarDateTime {
+    private dateToCalendarDateTime(date: Date): CalendarDateTime {
         return new CalendarDateTime(
             date.getFullYear(),
             date.getMonth() + 1, // The month to create a new `CalendarDate` cannot be a zero-based index, unlike `Date`
@@ -581,8 +569,8 @@ export class InputSegments extends TextfieldBase {
      * segment referring to the hour will always be displayed, the other segments vary according to the defined locale
      * and granularity
      */
-    private _setSegments(): void {
-        const { hour, minute, second } = this._currentDateTime;
+    private setSegments(): void {
+        const { hour, minute, second } = this.currentDateTime;
 
         const dateTime = new Date();
         dateTime.setHours(hour, minute, second);
@@ -592,12 +580,12 @@ export class InputSegments extends TextfieldBase {
             ...(this.includeTime ? timeSegmentTypes : []),
         ];
 
-        this._segments = this._formatter
+        this.segments = this.formatter
             .formatToParts(dateTime)
-            .map((part) => this._mapToTimeSegment(part))
+            .map((part) => this.mapToTimeSegment(part))
             .filter((part) => segmentTypes.includes(part.type));
 
-        this._createSegments = false;
+        this.createSegments = false;
     }
 
     /**
@@ -606,21 +594,19 @@ export class InputSegments extends TextfieldBase {
      *
      * @param part - Part/segment to be "translated" (mapped)
      */
-    private _mapToTimeSegment(part: Intl.DateTimeFormatPart): Segment {
-        const { value, minValue, maxValue } = this._getSegmentDetails(
-            part.type
-        );
+    private mapToTimeSegment(part: Intl.DateTimeFormatPart): Segment {
+        const { value, minValue, maxValue } = this.getSegmentDetails(part.type);
 
         const segment: Segment = {
             type: part.type,
-            placeholder: this._getPlaceholder(part.type, part.value),
+            placeholder: this.getPlaceholder(part.type, part.value),
             formatted: part.value,
             value,
             minValue,
             maxValue,
         };
 
-        this._formatValues(segment);
+        this.formatValues(segment);
 
         return segment;
     }
@@ -630,17 +616,17 @@ export class InputSegments extends TextfieldBase {
      *
      * @param segment - Segment to be updated
      */
-    private _formatValues(segment: Segment): void {
+    private formatValues(segment: Segment): void {
         if (segment.value !== undefined) {
             const options: Intl.DateTimeFormatOptions = {};
 
-            let year = this._currentDateTime.year;
-            let month = this._currentDateTime.month;
-            let day = this._currentDateTime.day;
+            let year = this.currentDateTime.year;
+            let month = this.currentDateTime.month;
+            let day = this.currentDateTime.day;
 
-            let hour = this._currentDateTime.hour;
-            let minute = this._currentDateTime.minute;
-            let second = this._currentDateTime.second;
+            let hour = this.currentDateTime.hour;
+            let minute = this.currentDateTime.minute;
+            let second = this.currentDateTime.second;
 
             let padMaxLength = 2;
 
@@ -661,7 +647,7 @@ export class InputSegments extends TextfieldBase {
                     break;
                 }
                 case 'hour': {
-                    if (this._is12HourClock) {
+                    if (this.is12HourClock) {
                         padMaxLength = 1;
                     }
 
@@ -687,7 +673,7 @@ export class InputSegments extends TextfieldBase {
             }
 
             const date = new Date(year, month, day, hour, minute, second);
-            const formatted = new DateFormatter(this._locale, options)
+            const formatted = new DateFormatter(this.locale, options)
                 .formatToParts(date)
                 .find((part) => part.type === segment.type)?.value;
 
@@ -702,7 +688,7 @@ export class InputSegments extends TextfieldBase {
      * @param type - Type of segment
      * @param value - The value of the segment
      */
-    private _getPlaceholder(
+    private getPlaceholder(
         type: Intl.DateTimeFormatPartTypes,
         value: string
     ): string {
@@ -714,7 +700,7 @@ export class InputSegments extends TextfieldBase {
      *
      * @param hour - The hour to check
      */
-    private _isPM(hour: number): boolean {
+    private isPM(hour: number): boolean {
         return hour >= PM;
     }
 
@@ -723,8 +709,8 @@ export class InputSegments extends TextfieldBase {
      *
      * @param hour - The hour to identify the modifier
      */
-    private _getAmPmModifier(hour: number): typeof AM | typeof PM {
-        return this._isPM(hour) ? PM : AM;
+    private getAmPmModifier(hour: number): typeof AM | typeof PM {
+        return this.isPM(hour) ? PM : AM;
     }
 
     /**
@@ -734,44 +720,43 @@ export class InputSegments extends TextfieldBase {
      *
      * @param type - Segment type
      */
-    private _getSegmentDetails(
+    private getSegmentDetails(
         type: Intl.DateTimeFormatPartTypes
     ): SegmentValueAndLimits {
         switch (type) {
             case 'year':
                 return {
                     minValue: 1,
-                    maxValue: this._currentDateTime.calendar.getYearsInEra(
-                        this._currentDateTime
+                    maxValue: this.currentDateTime.calendar.getYearsInEra(
+                        this.currentDateTime
                     ),
                     value:
-                        this._newDateTime?.year ??
-                        (this.selectedDateTime && this._currentDateTime.year) ??
+                        this.newDateTime?.year ??
+                        (this.selectedDateTime && this.currentDateTime.year) ??
                         undefined,
                 };
 
             case 'month':
                 return {
-                    minValue: getMinimumMonthInYear(this._currentDateTime),
-                    maxValue: this._currentDateTime.calendar.getMonthsInYear(
-                        this._currentDateTime
+                    minValue: getMinimumMonthInYear(this.currentDateTime),
+                    maxValue: this.currentDateTime.calendar.getMonthsInYear(
+                        this.currentDateTime
                     ),
                     value:
-                        this._newDateTime?.month ??
-                        (this.selectedDateTime &&
-                            this._currentDateTime.month) ??
+                        this.newDateTime?.month ??
+                        (this.selectedDateTime && this.currentDateTime.month) ??
                         undefined,
                 };
 
             case 'day':
                 return {
-                    minValue: getMinimumDayInMonth(this._currentDateTime),
-                    maxValue: this._currentDateTime.calendar.getDaysInMonth(
-                        this._currentDateTime
+                    minValue: getMinimumDayInMonth(this.currentDateTime),
+                    maxValue: this.currentDateTime.calendar.getDaysInMonth(
+                        this.currentDateTime
                     ),
                     value:
-                        this._newDateTime?.day ??
-                        (this.selectedDateTime && this._currentDateTime.day) ??
+                        this.newDateTime?.day ??
+                        (this.selectedDateTime && this.currentDateTime.day) ??
                         undefined,
                 };
 
@@ -779,9 +764,9 @@ export class InputSegments extends TextfieldBase {
                 let min = 0;
                 let max = 23;
 
-                if (this._is12HourClock) {
-                    const isPM = this._isPM(
-                        this._newDateTime?.hour ?? this._currentDateTime.hour
+                if (this.is12HourClock) {
+                    const isPM = this.isPM(
+                        this.newDateTime?.hour ?? this.currentDateTime.hour
                     );
 
                     min = isPM ? minHourPM : minHourAM;
@@ -792,21 +777,21 @@ export class InputSegments extends TextfieldBase {
                     minValue: min,
                     maxValue: max,
                     value:
-                        this._newDateTime?.hour ??
-                        (this.selectedDateTime && this._currentDateTime.hour) ??
+                        this.newDateTime?.hour ??
+                        (this.selectedDateTime && this.currentDateTime.hour) ??
                         undefined,
                 };
 
             case 'minute':
             case 'second':
                 const minutes =
-                    this._newDateTime?.minute ??
-                    (this.selectedDateTime && this._currentDateTime.minute) ??
+                    this.newDateTime?.minute ??
+                    (this.selectedDateTime && this.currentDateTime.minute) ??
                     undefined;
 
                 const seconds =
-                    this._newDateTime?.second ??
-                    (this.selectedDateTime && this._currentDateTime.second) ??
+                    this.newDateTime?.second ??
+                    (this.selectedDateTime && this.currentDateTime.second) ??
                     undefined;
 
                 return {
@@ -820,12 +805,10 @@ export class InputSegments extends TextfieldBase {
                     minValue: AM,
                     maxValue: PM,
                     value:
-                        (this._newDateTime?.hour &&
-                            this._getAmPmModifier(this._newDateTime.hour)) ??
+                        (this.newDateTime?.hour &&
+                            this.getAmPmModifier(this.newDateTime.hour)) ??
                         (this.selectedDateTime &&
-                            this._getAmPmModifier(
-                                this._currentDateTime.hour
-                            )) ??
+                            this.getAmPmModifier(this.currentDateTime.hour)) ??
                         undefined,
                 };
 
@@ -834,7 +817,7 @@ export class InputSegments extends TextfieldBase {
         }
     }
 
-    private _incrementValue(segment: Segment): void {
+    private incrementValue(segment: Segment): void {
         const min = segment.minValue;
         const max = segment.maxValue;
 
@@ -852,10 +835,10 @@ export class InputSegments extends TextfieldBase {
             }
         }
 
-        this._valueChanged(segment);
+        this.valueChanged(segment);
     }
 
-    private _decrementValue(segment: Segment): void {
+    private decrementValue(segment: Segment): void {
         const min = segment.minValue;
         const max = segment.maxValue;
 
@@ -873,31 +856,31 @@ export class InputSegments extends TextfieldBase {
             }
         }
 
-        this._valueChanged(segment);
+        this.valueChanged(segment);
     }
 
     /**
      * When the day period is changed, it automatically adjusts the hour if it has already been informed previously to
      * match the new period (AM or PM). In addition, the minimum and maximum values of the hour are also changed
      */
-    private _updateHour(): void {
-        if (this._hourSegment && this._dayPeriodSegment) {
-            if (this._dayPeriodSegment.value !== undefined) {
-                const isAM = this._dayPeriodSegment.value === AM;
-                const isPM = this._dayPeriodSegment.value === PM;
+    private updateHour(): void {
+        if (this.hourSegment && this.dayPeriodSegment) {
+            if (this.dayPeriodSegment.value !== undefined) {
+                const isAM = this.dayPeriodSegment.value === AM;
+                const isPM = this.dayPeriodSegment.value === PM;
 
-                this._hourSegment.minValue = isPM ? minHourPM : minHourAM;
-                this._hourSegment.maxValue = isPM ? maxHourPM : maxHourAM;
+                this.hourSegment.minValue = isPM ? minHourPM : minHourAM;
+                this.hourSegment.maxValue = isPM ? maxHourPM : maxHourAM;
 
-                if (this._hourSegment.value !== undefined) {
-                    if (isAM && this._isPM(this._hourSegment.value)) {
-                        this._hourSegment.value -= PM;
-                    } else if (isPM && !this._isPM(this._hourSegment.value)) {
-                        this._hourSegment.value += PM;
+                if (this.hourSegment.value !== undefined) {
+                    if (isAM && this.isPM(this.hourSegment.value)) {
+                        this.hourSegment.value -= PM;
+                    } else if (isPM && !this.isPM(this.hourSegment.value)) {
+                        this.hourSegment.value += PM;
                     }
                 }
             } else {
-                this._resetHourAndDayPeriod();
+                this.resetHourAndDayPeriod();
             }
         }
     }
@@ -906,67 +889,67 @@ export class InputSegments extends TextfieldBase {
      * When the day period is cleared, we need to reset the min and max values of the day period and hour segments to
      * their initial values
      */
-    private _resetHourAndDayPeriod(): void {
-        const dayPeriod = this._getSegmentDetails('dayPeriod');
+    private resetHourAndDayPeriod(): void {
+        const dayPeriod = this.getSegmentDetails('dayPeriod');
 
-        if (this._dayPeriodSegment) {
-            this._dayPeriodSegment.value = dayPeriod.value;
-            this._dayPeriodSegment.minValue = dayPeriod.minValue;
-            this._dayPeriodSegment.maxValue = dayPeriod.maxValue;
+        if (this.dayPeriodSegment) {
+            this.dayPeriodSegment.value = dayPeriod.value;
+            this.dayPeriodSegment.minValue = dayPeriod.minValue;
+            this.dayPeriodSegment.maxValue = dayPeriod.maxValue;
 
-            if (this._dayPeriodSegment.value === undefined) {
-                this._dayPeriodSegment.formatted =
-                    this._dayPeriodSegment.placeholder;
+            if (this.dayPeriodSegment.value === undefined) {
+                this.dayPeriodSegment.formatted =
+                    this.dayPeriodSegment.placeholder;
             }
         }
 
-        const hour = this._getSegmentDetails('hour');
+        const hour = this.getSegmentDetails('hour');
 
-        if (this._hourSegment) {
-            this._hourSegment.minValue = hour.minValue;
-            this._hourSegment.maxValue = hour.maxValue;
+        if (this.hourSegment) {
+            this.hourSegment.minValue = hour.minValue;
+            this.hourSegment.maxValue = hour.maxValue;
 
-            if (this._hourSegment.value !== undefined) {
-                this._hourSegment.value += this._getAmPmModifier(
-                    this._currentDateTime.hour
+            if (this.hourSegment.value !== undefined) {
+                this.hourSegment.value += this.getAmPmModifier(
+                    this.currentDateTime.hour
                 );
             } else {
-                this._hourSegment.value = hour.value;
+                this.hourSegment.value = hour.value;
             }
         }
     }
 
-    private _valueChanged(segment: Segment): void {
-        if (this._is12HourClock && segment.type === 'dayPeriod') {
-            this._updateHour();
+    private valueChanged(segment: Segment): void {
+        if (this.is12HourClock && segment.type === 'dayPeriod') {
+            this.updateHour();
         }
 
-        this._formatValues(segment);
-        this._setNewDateTime();
+        this.formatValues(segment);
+        this.setNewDateTime();
 
         this.requestUpdate();
 
-        if (this._newDateTime) {
+        if (this.newDateTime) {
             this.dispatchEvent(
                 new CustomEvent('change', {
                     bubbles: true,
                     cancelable: true,
                     composed: true,
-                    detail: this._newDateTime.toDate(this._timeZone),
+                    detail: this.newDateTime.toDate(this.timeZone),
                 })
             );
         }
     }
 
-    private _focusNextSegment(event: KeyboardEvent): void {
-        this._focusSegment(event.target as HTMLDivElement, 'next');
+    private focusNextSegment(event: KeyboardEvent): void {
+        this.focusSegment(event.target as HTMLDivElement, 'next');
     }
 
-    private _focusPreviousSegment(event: KeyboardEvent): void {
-        this._focusSegment(event.target as HTMLDivElement, 'previous');
+    private focusPreviousSegment(event: KeyboardEvent): void {
+        this.focusSegment(event.target as HTMLDivElement, 'previous');
     }
 
-    private _focusSegment(
+    private focusSegment(
         segment: HTMLDivElement,
         elementToFocus: 'previous' | 'next'
     ): void {
