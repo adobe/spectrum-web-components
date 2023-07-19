@@ -17,7 +17,7 @@ import { ReactiveElement } from 'lit';
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
-    guaranteedTransitionend,
+    guaranteedAllTransitionend,
     OpenableElement,
     OverlayBase,
     overlayTimer,
@@ -146,7 +146,7 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
                 }
             };
             this.elements.forEach((el, index) => {
-                guaranteedTransitionend(
+                guaranteedAllTransitionend(
                     el,
                     start(el, index),
                     finish(el, index)

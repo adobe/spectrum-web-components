@@ -26,7 +26,7 @@ Overlay.open(
 );
 ```
 
-`Overlay.open()` is an asynchronous method that returns an `<sp-overlay>` element that wraps the `HTMLElement` provided as the `overlayElement`. While this process will set the `<sp-overlay>` element to `open`, consumers of this API will need to chose where to append this element to the DOM in order for the content to be made available in the browser.
+`Overlay.open()` is an asynchronous method that returns an `<sp-overlay>` element that wraps the `HTMLElement` provided as the `overlayElement`. While this process will set the `<sp-overlay>` element to `open`, consumers of this API will need to choose where to append this element to the DOM in order for the content to be made available in the browser.
 
 ```js
 (async () => {
@@ -42,7 +42,7 @@ Overlay.open(
 })();
 ```
 
-Keep in mind that a changing DOM tree can update the relationship between existing content and the CSS that you have applied to it when appending the `<sp-overlay>` element to your existing DOM.
+Keep in mind that a changing DOM tree is likely to alter the relationship between existing content. Without proper care this can negatively effect the CSS that you have applied to existing content. DOM events and DOM selection methods can also perform differently than expected as the tree shape changes.
 
 ## OverlayOptions
 
@@ -51,7 +51,7 @@ When leveraging `Overlay.open()`, you can provide an optional second argument of
 ```ts
 type OverlayOptions = {
     delayed?: boolean;
-    notImmediatelyClosable?: boolean;
+    notImmediatelyCloseable?: boolean;
     offset?: number | [number, number];
     placement?: Placement;
     receivesFocus?: 'auto' | 'true' | 'false';
@@ -62,7 +62,7 @@ type OverlayOptions = {
 
 ### delayed
 
-An Overlay that is `delayed` will wait until a warm-up period has completed before opening. Once the warmup period has completed, all subsequent Overlays will open immediately. When no Overlays are opened, a cooldown period will begin. Once the cooldown has completed, the next Overlay to be opened will be subject to the warm-up period if provided that option.
+An Overlay that is `delayed` will wait until a warm-up period of 1000ms has completed before opening. Once the warmup period has completed, all subsequent Overlays will open immediately. When no Overlays are opened, a cooldown period of 1000ms will begin. Once the cooldown has completed, the next Overlay to be opened will be subject to the warm-up period if provided that option.
 
 ### notImmediatelyCloseable
 
@@ -90,6 +90,6 @@ The `type` of an Overlay outlines a number of things about the interaction model
 
 -   `'modal'` Overlays are opened with the `showModal()` method on a `<dialog>` element, which causes the Overlay to accept focus and trap the tab stop within the content of said Overlay.
 -   `'page'` Overlays will act in a similar manner to a `'modal'` Overlay, however they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
--   `'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ be palce interactive content within this type of Overlay.
+-   `'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ to place interactive content within this type of Overlay.
 -   `'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus but will close when losing that focus, or when interacting with other parts of the page.
 -   `'manual'` Overlays act much like `"auto"` Overlays, but do not close when losing focus or interacting with other parts of the page. When a `"manual"` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.

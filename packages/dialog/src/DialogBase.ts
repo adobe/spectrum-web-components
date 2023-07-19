@@ -150,8 +150,8 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
     protected handleModalTransitionend(event: TransitionEvent): void {
         if (this.open || !this.underlay) {
             this.resolveTransitionPromise();
-            this.handleTransitionEvent(event);
         }
+        this.handleTransitionEvent(event);
     }
 
     protected override update(changes: PropertyValues<this>): void {
