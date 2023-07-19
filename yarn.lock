@@ -5445,10 +5445,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-4.0.21.tgz#09f1263ff4f0cd40698f7c898509640375b15ea9"
   integrity sha512-dSfk7ksroxdmqPmPXiSSLMAYfkDgRtD935bimQrAmKDf/pXV5Ik6oflmtOaHx0NSTavd3PUISBnkL+rzSprmWQ==
 
-"@spectrum-css/pickerbutton@^3.0.33":
-  version "3.0.33"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-3.0.33.tgz#a52ccac1037217c0c956e47d7e4f839da3e6b1db"
-  integrity sha512-NGH5gZnkh+F0/wjc7HmJDvRoZocSlizr820z34JUHgn3moHLqvN2lpHnyvxLUqGlLCf5B8nxaCffmRwFmmV/sg==
+"@spectrum-css/pickerbutton@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-4.0.0.tgz#74483edff4401c63cc9369b7f097090d978fde8d"
+  integrity sha512-YknT6EEpDQjVfz1xjpQqB1nBfm1XwVsxWtncXak90w7+noA/YNppk0bOcsJ2d4KNSzeVbdziTE85ga5Lk+qJ+A==
 
 "@spectrum-css/popover@^6.0.60":
   version "6.0.60"
