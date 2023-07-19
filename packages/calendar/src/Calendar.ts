@@ -34,7 +34,6 @@ import {
 import {
     classMap,
     ifDefined,
-    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
@@ -131,12 +130,9 @@ export class Calendar extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
-        return when(
-            this.currentDate,
-            () => html`
-                ${this.renderCalendarHeader()}${this.renderCalendarGrid()}
-            `
-        );
+        return html`
+            ${this.renderCalendarHeader()}${this.renderCalendarGrid()}
+        `;
     }
 
     public renderCalendarHeader(): TemplateResult {
