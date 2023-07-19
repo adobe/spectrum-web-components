@@ -59,7 +59,7 @@ export default {
     component: 'sp-calendar',
 
     argTypes: {
-        locale: {
+        lang: {
             options: locales,
             control: {
                 type: 'select',
@@ -88,7 +88,7 @@ export default {
     },
 
     args: {
-        locale: defaultLocale,
+        lang: defaultLocale,
     },
 
     parameters: {
@@ -103,7 +103,7 @@ export default {
 };
 
 interface StoryArgs {
-    locale?: string;
+    lang?: string;
 
     padded?: boolean;
     disabled?: boolean;
@@ -121,11 +121,11 @@ const renderCalendar = (
     args: StoryArgs = {}
 ): TemplateResult => {
     return html`
-        <sp-theme lang=${ifDefined(args.locale || undefined)}>
+        <sp-theme lang=${ifDefined(args.lang || undefined)}>
             <h1>${title}</h1>
             <h2>
                 Locale:
-                <code>${args.locale}</code>
+                <code>${args.lang}</code>
             </h2>
 
             <hr />

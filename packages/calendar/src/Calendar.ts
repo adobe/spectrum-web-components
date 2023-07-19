@@ -99,8 +99,11 @@ export class Calendar extends SpectrumElement {
     private _maxDate!: CalendarDate;
 
     private _languageResolver = new LanguageResolutionController(this);
-    private _locale!: string;
     private _timeZone: string = getLocalTimeZone();
+
+    private get _locale(): string {
+        return this._languageResolver.language;
+    }
 
     public get today(): CalendarDate {
         return today(this._timeZone);
@@ -108,16 +111,12 @@ export class Calendar extends SpectrumElement {
 
     constructor() {
         super();
-
-        this._setLocale();
         this._setInitialCalendarDate();
     }
 
     protected override willUpdate(
         changedProperties: PropertyValueMap<this>
     ): void {
-        this._setLocale();
-
         if (changedProperties.has('selectedDate')) {
             this._setCurrentCalendarDate();
         }
@@ -368,10 +367,6 @@ export class Calendar extends SpectrumElement {
                 ),
             };
         });
-    }
-
-    private _setLocale(): void {
-        this._locale = this._languageResolver.language;
     }
 
     private _setInitialCalendarDate(): void {
