@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import {
     CalendarDate,
+    DateFormatter,
     getLocalTimeZone,
     getWeeksInMonth,
     isSameDay,
@@ -18,6 +19,7 @@ import {
     startOfWeek,
     today,
 } from '@internationalized/date';
+import { NumberFormatter } from '@internationalized/number';
 import {
     CSSResultArray,
     html,
@@ -37,6 +39,7 @@ import {
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
 import { CalendarWeekday, daysInWeek } from './types.js';
+
 import styles from './calendar.css.js';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -46,8 +49,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 /**
  * @element sp-calendar
  *
- * @slot prev-icon - The icon used in the _"Previous Month"_ button
- * @slot next-icon - The icon used in the _"Next Month"_ button
+ * @slot prev-icon - The icon used in the "Previous Month" button
+ * @slot next-icon - The icon used in the "Next Month" button
  *
  * @event change - Announces when a day is selected by emitting a `Date` object
  */
@@ -56,20 +59,35 @@ export class Calendar extends SpectrumElement {
         return [styles];
     }
 
-    @property({ type: Boolean, reflect: true })
-    padded = false;
-
-    @property({ type: Boolean, reflect: true })
-    disabled = false;
-
+    /**
+     * Date used to display the calendar. If no date is given, the current month will be used
+     */
     @property({ reflect: true, attribute: false })
     selectedDate?: Date;
 
+    /**
+     * The minimum allowed date a user can select
+     */
     @property({ reflect: true, attribute: false })
     min?: Date;
 
+    /**
+     * The maximum allowed date a user can select
+     */
     @property({ reflect: true, attribute: false })
     max?: Date;
+
+    /**
+     * Indicates when the calendar should be disabled entirely
+     */
+    @property({ type: Boolean, reflect: true })
+    disabled = false;
+
+    /**
+     * Adds a padding around the calendar
+     */
+    @property({ type: Boolean, reflect: true })
+    padded = false;
 
     @state()
     private _currentDate!: CalendarDate;
@@ -279,7 +297,7 @@ export class Calendar extends SpectrumElement {
         const todayTitle = isToday ? 'Today, ' : '';
         const selectedTitle = isToday ? ' selected' : '';
 
-        const title: string = this._capitalFirstLetter(
+        const title = this._capitalFirstLetter(
             `${todayTitle}${currentDayTitle}${selectedTitle}`
         );
 
@@ -327,6 +345,9 @@ export class Calendar extends SpectrumElement {
         );
     }
 
+    /**
+     * Returns the number of weeks according to the defined month and locale
+     */
     private _getWeeksInCurrentMonth(): number {
         return getWeeksInMonth(this._currentDate, this._locale);
     }
@@ -393,6 +414,12 @@ export class Calendar extends SpectrumElement {
         }
     }
 
+    /**
+     * Returns an array with all days of the week corresponding to the given index, starting with the first day of the
+     * week according to the locale
+     *
+     * @param weekIndex - The index of the week
+     */
     private _getDatesInWeek(weekIndex: number): CalendarDate[] {
         const dates: CalendarDate[] = [];
 
@@ -417,6 +444,11 @@ export class Calendar extends SpectrumElement {
         return dates;
     }
 
+    /**
+     * Converts a `Date` object to a `CalendarDate`
+     *
+     * @param date - `Date` object to be converted
+     */
     private _toCalendarDate(date: Date): CalendarDate {
         return new CalendarDate(
             date.getFullYear(),
@@ -434,20 +466,36 @@ export class Calendar extends SpectrumElement {
         return !isNaN(date.getTime());
     }
 
+    /**
+     * Formats a `CalendarDate` object using the current locale and the provided date format options
+     *
+     * @param calendarDate - The `CalendarDate` object that will be used by the formatter
+     * @param options - All date format options that will be used by the formatter
+     */
     private _formatDate(
         calendarDate: CalendarDate,
         options: Intl.DateTimeFormatOptions
     ): string {
-        return new Intl.DateTimeFormat(this._locale, options).format(
+        return new DateFormatter(this._locale, options).format(
             calendarDate.toDate(this._timeZone)
         );
     }
 
+    /**
+     * Formats a number using the defined locale
+     *
+     * @param number - The number to format
+     */
     private _formatNumber(number: number): string {
-        return new Intl.NumberFormat(this._locale).format(number);
+        return new NumberFormatter(this._locale).format(number);
     }
 
-    private _capitalFirstLetter(string: string): string {
-        return `${string.charAt(0).toUpperCase()}${string.substring(1)}`;
+    /**
+     * Converts the first letter to uppercase
+     *
+     * @param text - The text to be capitalized
+     */
+    private _capitalFirstLetter(text: string): string {
+        return `${text.charAt(0).toUpperCase()}${text.substring(1)}`;
     }
 }

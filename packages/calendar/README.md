@@ -33,3 +33,5 @@ import { Calendar } from '@spectrum-web-components/calendar';
 -   Translate _"Previous"_ and _"Next"_ used in the `title` and `aria-label` of buttons displayed in the header of the calendar
 -   Translate _"Today"_ and _"selected"_ used in the `title` of the day when it is today
 -   Implement keyboard navigation
+-   Add support for other types of calendars - [React Calendar: International Calendars](https://react-spectrum.adobe.com/react-spectrum/Calendar.html#international-calendars)
+-   Include `aria-label` in calendar for accessibility - [React Calendar: Labeling](https://react-spectrum.adobe.com/react-spectrum/Calendar.html#labeling)
