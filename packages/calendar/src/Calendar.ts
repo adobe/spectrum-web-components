@@ -25,12 +25,16 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
+import {
+    classMap,
+    ifDefined,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
-
-import { property, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { when } from 'lit/directives/when.js';
 
 import { CalendarWeekday, daysInWeek } from './types.js';
 import styles from './calendar.css.js';

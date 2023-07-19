@@ -10,12 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
-
-import '../sp-calendar.js';
 
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
