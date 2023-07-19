@@ -97,6 +97,12 @@ export class Calendar extends SpectrumElement {
     @state()
     private maxDate!: CalendarDate;
 
+    @state()
+    private weeksInCurrentMonth: number[] = [];
+
+    @state()
+    private weekdays: CalendarWeekday[] = [];
+
     private languageResolver = new LanguageResolutionController(this);
     private timeZone: string = getLocalTimeZone();
 
@@ -127,6 +133,9 @@ export class Calendar extends SpectrumElement {
         if (changedProperties.has('max')) {
             this.setMaxCalendarDate();
         }
+
+        this.setWeeksInCurrentMonth();
+        this.setWeekdays();
     }
 
     protected override render(): TemplateResult {
@@ -220,7 +229,7 @@ export class Calendar extends SpectrumElement {
         return html`
             <thead role="presentation">
                 <tr role="row">
-                    ${this.getWeekdays().map((weekday) =>
+                    ${this.weekdays.map((weekday) =>
                         this.renderWeekdayColumn(weekday)
                     )}
                 </tr>
@@ -245,8 +254,8 @@ export class Calendar extends SpectrumElement {
     public renderCalendarTableBody(): TemplateResult {
         return html`
             <tbody role="presentation">
-                ${[...new Array(this.getWeeksInCurrentMonth()).keys()].map(
-                    (weekIndex) => this.renderCalendarTableRow(weekIndex)
+                ${this.weeksInCurrentMonth.map((weekIndex) =>
+                    this.renderCalendarTableRow(weekIndex)
                 )}
             </tbody>
         `;
@@ -338,18 +347,20 @@ export class Calendar extends SpectrumElement {
     }
 
     /**
-     * Returns the number of weeks according to the defined month and locale
+     * Defines the array with the indexes (starting at zero) of the weeks of the current month
      */
-    private getWeeksInCurrentMonth(): number {
-        return getWeeksInMonth(this.currentDate, this.locale);
+    private setWeeksInCurrentMonth(): void {
+        const numberOfWeeks = getWeeksInMonth(this.currentDate, this.locale);
+
+        this.weeksInCurrentMonth = [...new Array(numberOfWeeks).keys()];
     }
 
     /**
-     * Returns data for the days of the week, starting with the first day of the week according to the defined locale
-     * (Sunday, Monday, etc.)
+     * Defines the array with data for the days of the week, starting on the first day of the week according to the
+     * defined location (Sunday, Monday, etc.)
      */
-    private getWeekdays(): CalendarWeekday[] {
-        return [...new Array(daysInWeek).keys()].map((dayIndex) => {
+    private setWeekdays(): void {
+        this.weekdays = [...new Array(daysInWeek).keys()].map((dayIndex) => {
             const weekStart = startOfWeek(this.currentDate, this.locale);
             const date = weekStart.add({ days: dayIndex });
 

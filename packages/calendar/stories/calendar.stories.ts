@@ -72,12 +72,14 @@ export default {
         },
 
         // Don't render private properties and getters in the Storybook UI
-        languageResolver: { ...hiddenProperty },
-        locale: { ...hiddenProperty },
-        timeZone: { ...hiddenProperty },
         currentDate: { ...hiddenProperty },
         minDate: { ...hiddenProperty },
         maxDate: { ...hiddenProperty },
+        weeksInCurrentMonth: { ...hiddenProperty },
+        weekdays: { ...hiddenProperty },
+        languageResolver: { ...hiddenProperty },
+        timeZone: { ...hiddenProperty },
+        locale: { ...hiddenProperty },
         today: { ...hiddenProperty },
 
         // Inherited
