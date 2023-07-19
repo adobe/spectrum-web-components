@@ -279,7 +279,7 @@ export class Calendar extends SpectrumElement {
                 isSameDay(this.toCalendarDate(this.selectedDate), calendarDate)
         );
 
-        const isToday = Boolean(isSameDay(calendarDate, this.today));
+        const isToday = isSameDay(calendarDate, this.today);
 
         const isDisabled = Boolean(
             this.disabled ||
@@ -339,7 +339,6 @@ export class Calendar extends SpectrumElement {
         this.dispatchEvent(
             new CustomEvent('change', {
                 bubbles: true,
-                cancelable: true,
                 composed: true,
                 detail: this.selectedDate,
             })
@@ -371,44 +370,67 @@ export class Calendar extends SpectrumElement {
         });
     }
 
+    /**
+     * Defines the initial date that will be used to render the calendar, if no specific date is provided
+     */
     private setInitialCalendarDate(): void {
         this.currentDate = this.today;
     }
 
+    /**
+     * If a date is received by the component via property, it uses that date as the current date to render the calendar
+     */
     private setCurrentCalendarDate(): void {
-        if (this.selectedDate) {
-            this.selectedDate = new Date(this.selectedDate);
-
-            if (!this.isValidDate(this.selectedDate)) {
-                this.selectedDate = undefined;
-            } else {
-                this.currentDate = this.toCalendarDate(this.selectedDate);
-            }
+        if (!this.selectedDate) {
+            return;
         }
+
+        this.selectedDate = new Date(this.selectedDate);
+
+        if (!this.isValidDate(this.selectedDate)) {
+            this.selectedDate = undefined;
+            return;
+        }
+
+        this.currentDate = this.toCalendarDate(this.selectedDate);
     }
 
+    /**
+     * Sets the minimum allowed date a user can select by converting a `Date` object to `CalendarDate`, which is the
+     * type of object used internally by the class
+     */
     private setMinCalendarDate(): void {
-        if (this.min) {
-            this.min = new Date(this.min);
-
-            if (!this.isValidDate(this.min)) {
-                this.min = undefined;
-            } else {
-                this.minDate = this.toCalendarDate(this.min);
-            }
+        if (!this.min) {
+            return;
         }
+
+        this.min = new Date(this.min);
+
+        if (!this.isValidDate(this.min)) {
+            this.min = undefined;
+            return;
+        }
+
+        this.minDate = this.toCalendarDate(this.min);
     }
 
+    /**
+     * Sets the maximum allowed date a user can select by converting a `Date` object to `CalendarDate`, which is the
+     * type of object used internally by the class
+     */
     private setMaxCalendarDate(): void {
-        if (this.max) {
-            this.max = new Date(this.max);
-
-            if (!this.isValidDate(this.max)) {
-                this.max = undefined;
-            } else {
-                this.maxDate = this.toCalendarDate(this.max);
-            }
+        if (!this.max) {
+            return;
         }
+
+        this.max = new Date(this.max);
+
+        if (!this.isValidDate(this.max)) {
+            this.max = undefined;
+            return;
+        }
+
+        this.maxDate = this.toCalendarDate(this.max);
     }
 
     /**
