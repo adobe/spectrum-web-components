@@ -61,19 +61,19 @@ export class Calendar extends SpectrumElement {
     /**
      * Date used to display the calendar. If no date is given, the current month will be used
      */
-    @property({ reflect: true, attribute: false })
+    @property({ attribute: false })
     selectedDate?: Date;
 
     /**
      * The minimum allowed date a user can select
      */
-    @property({ reflect: true, attribute: false })
+    @property({ attribute: false })
     min?: Date;
 
     /**
      * The maximum allowed date a user can select
      */
-    @property({ reflect: true, attribute: false })
+    @property({ attribute: false })
     max?: Date;
 
     /**
