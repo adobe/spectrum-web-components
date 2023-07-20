@@ -204,11 +204,18 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         const passThroughSwatchActions: ((swatch: Swatch) => void)[] = [];
         if (Object.keys(targetValues).length) {
             passThroughSwatchActions.push((swatch) => {
-                if (
-                    'selects' in targetValues &&
-                    targetValues['selects'] !== 'multiple'
-                )
-                    swatch.mixedValue = false;
+                if (window.__swc.DEBUG) {
+                    if (
+                        'selects' in targetValues &&
+                        targetValues['selects'] !== 'multiple'
+                    ) {
+                        window.__swc.warn(
+                            this,
+                            `<sp-swatch> elements that are children of <sp-swatch-group> cannot have mixed-value attribute if sp-swatch-group does not have attribute selects="multiple"`,
+                            'https://opensource.adobe.com/spectrum-web-components/components/swatch-group/#multiple'
+                        );
+                    }
+                }
                 if ('border' in targetValues)
                     swatch.border = targetValues.border;
                 if ('rounding' in targetValues)
