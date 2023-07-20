@@ -57,7 +57,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@internationalized/date": "^3.2.0",
+        "@internationalized/date": "^3.2.1",
+        "@internationalized/number": "^3.2.1",
         "@spectrum-web-components/base": "^0.34.0",
         "@spectrum-web-components/reactive-controllers": "^0.34.0",
         "@spectrum-web-components/textfield": "^0.34.0"
