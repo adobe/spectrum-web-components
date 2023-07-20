@@ -16,18 +16,7 @@ governing permissions and limitations under the License.
     --mod-textfield-spacing-inline: var(
         --spectrum-alias-infieldbutton-full-height-m
     );
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-m
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-m
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-100
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-100
-    );
+    --mod-clear-button-padding: 0;
 }
 
 input::-webkit-search-cancel-button {
