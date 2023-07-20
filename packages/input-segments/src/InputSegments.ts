@@ -448,92 +448,64 @@ export class InputSegments extends TextfieldBase {
         }
     }
 
+    /**
+     * Sets the new date/time object according to the configuration parameters and if the minimum required values for
+     * each type (date only, time only or date and time together) were defined
+     */
     private setNewDateTime(): void {
+        const defined = (value: number | undefined): value is number => {
+            return typeof value === 'number';
+        };
+
         this.newDateTime = undefined;
 
-        let year: number | undefined = undefined;
-        let month: number | undefined = undefined;
-        let day: number | undefined = undefined;
+        // If none of the date/time segments are being used, there is nothing to do here
+        if (!this.includeDate && !this.includeTime) {
+            return;
+        }
 
-        let hour: number | undefined = undefined;
-        let minute: number | undefined = undefined;
-        let second: number | undefined = undefined;
+        let year = this.yearSegment?.value;
+        let month = this.monthSegment?.value;
+        let day = this.daySegment?.value;
+
+        // When only date segments are being used
+        if (this.includeDate && !this.includeTime) {
+            if (defined(year) && defined(month) && defined(day)) {
+                this.newDateTime = new CalendarDateTime(year, month, day);
+            }
+
+            return;
+        }
+
+        // When only time segments are being used, we need to set the date based on the current date
+        if (!this.includeDate) {
+            year = this.currentDateTime.year;
+            month = this.currentDateTime.month;
+            day = this.currentDateTime.day;
+        }
+
+        const hour = this.hourSegment?.value;
+        const minute = this.minuteSegment?.value;
+        const second = this.secondSegment?.value;
 
         const isHour = this.timeGranularity === 'hour';
         const isMinute = this.timeGranularity === 'minute';
         const isSecond = this.timeGranularity === 'second';
 
-        if (this.includeDate) {
-            if (this.yearSegment?.value !== undefined) {
-                year = this.yearSegment.value;
-            }
+        const hasTime =
+            (isHour && defined(hour)) ||
+            (isMinute && defined(hour) && defined(minute)) ||
+            (isSecond && defined(hour) && defined(minute) && defined(second));
 
-            if (this.monthSegment?.value !== undefined) {
-                month = this.monthSegment.value;
-            }
-
-            if (this.daySegment?.value !== undefined) {
-                day = this.daySegment.value;
-            }
-
-            if (
-                year !== undefined &&
-                month !== undefined &&
-                day !== undefined &&
-                !this.includeTime
-            ) {
-                this.newDateTime = new CalendarDateTime(year, month, day);
-            }
-        }
-
-        if (this.includeTime) {
-            const hasHourValue = this.hourSegment?.value !== undefined;
-            const hasMinuteValue = this.minuteSegment?.value !== undefined;
-            const hasSecondValue = this.secondSegment?.value !== undefined;
-
-            if (isHour && hasHourValue) {
-                hour = this.hourSegment?.value;
-            }
-
-            if (isMinute && hasHourValue && hasMinuteValue) {
-                minute = this.minuteSegment?.value;
-            }
-
-            if (isSecond && hasHourValue && hasMinuteValue && hasSecondValue) {
-                second = this.secondSegment?.value;
-            }
-
-            if (!this.includeDate) {
-                year = this.currentDateTime.year;
-                month = this.currentDateTime.month;
-                day = this.currentDateTime.day;
-            }
-
-            const hasTime =
-                (this.timeGranularity === 'hour' && hasHourValue) ||
-                (this.timeGranularity === 'minute' &&
-                    hasHourValue &&
-                    hasMinuteValue) ||
-                (this.timeGranularity === 'second' &&
-                    hasHourValue &&
-                    hasMinuteValue &&
-                    hasSecondValue);
-
-            if (
-                year !== undefined &&
-                month !== undefined &&
-                day !== undefined &&
-                hasTime
-            ) {
-                this.newDateTime = new CalendarDateTime(
-                    year,
-                    month,
-                    day,
-                    hour,
-                    minute,
-                    second
-                );
-            }
+        if (defined(year) && defined(month) && defined(day) && hasTime) {
+            this.newDateTime = new CalendarDateTime(
+                year,
+                month,
+                day,
+                hour,
+                minute,
+                second
+            );
         }
     }
 
