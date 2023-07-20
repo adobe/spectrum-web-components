@@ -1,6 +1,4 @@
 {
-    ".": "./src/index.js",
-    "./src/*.js": "./src/*.js",
-    "./package.json": "./package.json",
-    "./sp-opacity-checkerboard.js": "./sp-opacity-checkerboard.js"
+    ".": "./src/opacity-checkerboard.css.js",
+    "./src/*": "./src/*"
 }

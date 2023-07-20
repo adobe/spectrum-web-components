@@ -20,24 +20,9 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
+        ".": "./src/opacity-checkerboard.css.js",
         "./package.json": "./package.json",
-        "./src/OpacityCheckerboard.js": {
-            "development": "./src/OpacityCheckerboard.dev.js",
-            "default": "./src/OpacityCheckerboard.js"
-        },
-        "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js",
-        "./sp-opacity-checkerboard.js": {
-            "development": "./sp-opacity-checkerboard.dev.js",
-            "default": "./sp-opacity-checkerboard.js"
-        }
+        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
