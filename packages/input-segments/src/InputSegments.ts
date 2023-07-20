@@ -652,8 +652,7 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Returns the placeholder that will be used. If it is the day period segment, use the actual value. For the rest of
-     * the segments, use two dashes as a placeholder
+     * Returns the placeholder that will be used according to the segment type
      *
      * @param type - Type of segment
      * @param value - The value of the segment
@@ -662,7 +661,14 @@ export class InputSegments extends TextfieldBase {
         type: Intl.DateTimeFormatPartTypes,
         value: string
     ): string {
-        return type === 'dayPeriod' ? value : '––';
+        switch (type) {
+            case 'dayPeriod':
+                return value;
+            case 'year':
+                return '––––';
+            default:
+                return '––';
+        }
     }
 
     /**
