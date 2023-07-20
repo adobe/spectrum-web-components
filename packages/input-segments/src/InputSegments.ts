@@ -349,40 +349,49 @@ export class InputSegments extends TextfieldBase {
         this.valueChanged(segment);
     }
 
+    /**
+     * Sets the new segment value after the user clears the content
+     *
+     * @param segment - The segment being changed
+     * @param event - Event details
+     */
     public handleClear(segment: Segment): void {
+        const details = this.extractDetails(segment);
+
+        if (details?.value === undefined) {
+            return;
+        }
+
         let newValue: string | undefined;
-        let previousValue = segment.value;
+        let previousValue = details.value;
 
-        if (previousValue !== undefined) {
-            if (this.is12HourClock && segment.type === 'hour') {
-                const isPM =
-                    segment.minValue !== undefined &&
-                    this.isPM(segment.minValue);
+        if (this.is12HourClock && segment.type === 'hour') {
+            const isPM = this.isPM(details.minValue);
 
-                if (isPM) {
-                    previousValue -= PM;
-                }
-
-                newValue =
-                    previousValue === minHourAM
-                        ? String(minHourAM + 1)
-                        : String(previousValue).slice(0, -1);
-
-                if (isPM && newValue !== '') {
-                    newValue = String(this.numberParser.parse(newValue) + PM);
-                }
-            } else {
-                newValue =
-                    segment.type === 'dayPeriod'
-                        ? undefined
-                        : String(previousValue).slice(0, -1);
+            if (isPM) {
+                previousValue -= PM;
             }
 
-            segment.value =
-                (newValue && this.numberParser.parse(newValue)) || undefined;
+            newValue =
+                previousValue === minHourAM
+                    ? String(minHourAM + 1)
+                    : String(previousValue).slice(0, -1);
 
-            this.valueChanged(segment);
+            if (isPM && newValue !== '') {
+                newValue = String(this.numberParser.parse(newValue) + PM);
+            }
+        } else {
+            newValue =
+                segment.type === 'dayPeriod'
+                    ? undefined
+                    : String(previousValue).slice(0, -1);
         }
+
+        segment.value =
+            (newValue !== undefined && this.numberParser.parse(newValue)) ||
+            undefined;
+
+        this.valueChanged(segment);
     }
 
     private setFormatter(): void {
