@@ -18,6 +18,7 @@ import {
     now,
     toCalendarDateTime,
 } from '@internationalized/date';
+import { NumberParser } from '@internationalized/number';
 import {
     CSSResultArray,
     html,
@@ -47,6 +48,7 @@ import {
     minHourPM,
     PM,
     Segment,
+    SegmentDetails,
     SegmentValueAndLimits,
     TimeGranularity,
     timeSegmentTypes,
@@ -110,6 +112,7 @@ export class InputSegments extends TextfieldBase {
     private languageResolver = new LanguageResolutionController(this);
     private timeZone = getLocalTimeZone();
     private formatter!: DateFormatter;
+    private numberParser!: NumberParser;
 
     private get locale(): string {
         return this.languageResolver.language;
@@ -172,6 +175,7 @@ export class InputSegments extends TextfieldBase {
             this.createSegments = true;
 
             this.setFormatter();
+            this.setNumberParser();
         }
 
         if (changedProperties.has('selectedDateTime')) {
@@ -227,7 +231,7 @@ export class InputSegments extends TextfieldBase {
     public renderEditableSegment(segment: Segment): TemplateResult {
         const isActive = !this.disabled && !this.readonly;
 
-        const isPlaceholderVisible = Boolean(segment.value === undefined);
+        const isPlaceholderVisible = segment.value === undefined;
 
         const segmentClasses = {
             'is-placeholder': isPlaceholderVisible,
@@ -302,19 +306,19 @@ export class InputSegments extends TextfieldBase {
             default: {
                 // TODO: Use @input/@beforeinput events to handle data input/content cleanup
                 const key = event.key;
-                const numberKey = /^[\d]+$/.test(key);
-                const clearKey = ['Backspace', 'Delete'].includes(key);
-                const allowedKey = ['Tab'].includes(key);
+                const isNumberKey = this.numberParser.isValidPartialNumber(key);
+                const isClearKey = ['Backspace', 'Delete'].includes(key);
+                const isAllowedKey = ['Tab'].includes(key);
 
-                if (numberKey) {
+                if (isNumberKey) {
                     this.handleTypedValue(segment, event);
                 }
 
-                if (clearKey) {
+                if (isClearKey) {
                     this.handleClear(segment);
                 }
 
-                if (numberKey || clearKey || !allowedKey) {
+                if (isNumberKey || isClearKey || !isAllowedKey) {
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -322,72 +326,27 @@ export class InputSegments extends TextfieldBase {
         }
     }
 
+    /**
+     * Sets new segment value after user types some number
+     *
+     * @param segment - The segment being changed
+     * @param event - Event details
+     */
     public handleTypedValue(segment: Segment, event: KeyboardEvent): void {
-        const min = segment.minValue;
-        const max = segment.maxValue;
+        const details = this.extractDetails(segment);
 
-        if (min !== undefined && max !== undefined) {
-            const typedValue = Number(event.key);
-            const isHourAmPm = this.is12HourClock && segment.type === 'hour';
-            const maxLength = String(max).length;
-
-            let previousValue = segment.value;
-            let newValue: number;
-
-            if (
-                isHourAmPm &&
-                previousValue !== undefined &&
-                this.isPM(previousValue)
-            ) {
-                previousValue -= PM;
-            }
-
-            newValue =
-                previousValue !== undefined
-                    ? Number(`${previousValue}${typedValue}`)
-                    : typedValue;
-
-            if (String(newValue).length > maxLength) {
-                newValue = isHourAmPm
-                    ? typedValue
-                    : Number(String(newValue).slice(1));
-            }
-
-            // Defines the value that should be used if the new defined value is less than the minimum allowed
-            const useTypedValueOrMin = typedValue >= min ? typedValue : min;
-
-            // Defines the value that should be used if the new defined value is greater than the maximum allowed
-            const useTypedValueOrMax = typedValue <= max ? typedValue : max;
-
-            if (isHourAmPm) {
-                const isPM = this.isPM(min);
-
-                if (isPM && newValue !== min && newValue > maxHourAM) {
-                    newValue = Number(String(newValue).slice(1));
-                } else if (newValue > max) {
-                    const useMinHourAM = !isPM && newValue === PM;
-                    newValue = useMinHourAM ? minHourAM : useTypedValueOrMax;
-                }
-
-                if (isPM && newValue !== min) {
-                    newValue += PM;
-                }
-            } else {
-                if (String(newValue).length > maxLength) {
-                    newValue = Number(String(newValue).slice(1));
-                }
-
-                if (newValue < min) {
-                    newValue = useTypedValueOrMin;
-                } else if (newValue > max) {
-                    newValue = useTypedValueOrMax;
-                }
-            }
-
-            segment.value = newValue;
-
-            this.valueChanged(segment);
+        if (details === undefined) {
+            return;
         }
+
+        const typedValue = this.numberParser.parse(event.key);
+        const isAmPmHour = this.is12HourClock && segment.type === 'hour';
+
+        segment.value = isAmPmHour
+            ? this.getNewValueForAmPmHourSegment(details, typedValue)
+            : this.getNewValueForOtherSegments(details, typedValue);
+
+        this.valueChanged(segment);
     }
 
     public handleClear(segment: Segment): void {
@@ -410,7 +369,7 @@ export class InputSegments extends TextfieldBase {
                         : String(previousValue).slice(0, -1);
 
                 if (isPM && newValue !== '') {
-                    newValue = String(Number(newValue) + PM);
+                    newValue = String(this.numberParser.parse(newValue) + PM);
                 }
             } else {
                 newValue =
@@ -419,7 +378,8 @@ export class InputSegments extends TextfieldBase {
                         : String(previousValue).slice(0, -1);
             }
 
-            segment.value = (newValue && Number(newValue)) || undefined;
+            segment.value =
+                (newValue && this.numberParser.parse(newValue)) || undefined;
 
             this.valueChanged(segment);
         }
@@ -452,6 +412,12 @@ export class InputSegments extends TextfieldBase {
         this.formatter = new DateFormatter(this.locale, {
             ...dateOptions,
             ...timeOptions,
+        });
+    }
+
+    private setNumberParser(): void {
+        this.numberParser = new NumberParser(this.locale, {
+            maximumFractionDigits: 0,
         });
     }
 
@@ -500,6 +466,15 @@ export class InputSegments extends TextfieldBase {
             if (this.daySegment?.value !== undefined) {
                 day = this.daySegment.value;
             }
+
+            if (
+                year !== undefined &&
+                month !== undefined &&
+                day !== undefined &&
+                !this.includeTime
+            ) {
+                this.newDateTime = new CalendarDateTime(year, month, day);
+            }
         }
 
         if (this.includeTime) {
@@ -524,18 +499,32 @@ export class InputSegments extends TextfieldBase {
                 month = this.currentDateTime.month;
                 day = this.currentDateTime.day;
             }
-        }
 
-        // To create a new CalendarDateTime the only mandatory values are those referring to the date
-        if (year !== undefined && month !== undefined && day !== undefined) {
-            this.newDateTime = new CalendarDateTime(
-                year,
-                month,
-                day,
-                hour,
-                minute,
-                second
-            );
+            const hasTime =
+                (this.timeGranularity === 'hour' && hasHourValue) ||
+                (this.timeGranularity === 'minute' &&
+                    hasHourValue &&
+                    hasMinuteValue) ||
+                (this.timeGranularity === 'second' &&
+                    hasHourValue &&
+                    hasMinuteValue &&
+                    hasSecondValue);
+
+            if (
+                year !== undefined &&
+                month !== undefined &&
+                day !== undefined &&
+                hasTime
+            ) {
+                this.newDateTime = new CalendarDateTime(
+                    year,
+                    month,
+                    day,
+                    hour,
+                    minute,
+                    second
+                );
+            }
         }
     }
 
@@ -693,6 +682,27 @@ export class InputSegments extends TextfieldBase {
         value: string
     ): string {
         return type === 'dayPeriod' ? value : '––';
+    }
+
+    /**
+     * Extracts the segment details, validating that the limits have been defined. The value currently assigned to the
+     * segment remains optional
+     *
+     * @param segment - The segment to extract the details
+     */
+    private extractDetails(segment: Segment): SegmentDetails | undefined {
+        const min = segment.minValue;
+        const max = segment.maxValue;
+
+        if (min === undefined || max === undefined) {
+            return undefined;
+        }
+
+        return {
+            value: segment.value,
+            minValue: min,
+            maxValue: max,
+        };
     }
 
     /**
@@ -933,12 +943,136 @@ export class InputSegments extends TextfieldBase {
             this.dispatchEvent(
                 new CustomEvent('change', {
                     bubbles: true,
-                    cancelable: true,
                     composed: true,
                     detail: this.newDateTime.toDate(this.timeZone),
                 })
             );
         }
+    }
+
+    /**
+     * Returns the value to be used if the typed value is less than the minimum allowed
+     *
+     * @param typedValue - The value typed by the user
+     * @param min - The minimum value allowed for that segment
+     */
+    private useTypedValueOrMin(typedValue: number, min: number): number {
+        return typedValue < min ? min : typedValue;
+    }
+
+    /**
+     * Returns the value to be used if the typed value is greater than the maximum allowed
+     *
+     * @param typedValue - The value typed by the user
+     * @param max - The maximum value allowed for that segment
+     */
+    private useTypedValueOrMax(typedValue: number, max: number): number {
+        return typedValue > max ? max : typedValue;
+    }
+
+    /**
+     * When the user types a value into a segment, we need to temporarily store the current segment's value before it
+     * changes to include the value the user has just entered. Also, we need to identify if it is the hour segment and
+     * if the clock format is 12 hours, if so, we have to adjust the previous value to perform some calculations
+     *
+     * @param segment - The segment being changed
+     */
+    private mergePreviousValueWithTypedValue(
+        details: SegmentDetails,
+        typedValue: number,
+        isAmPmHour = false
+    ): number {
+        let previousValue = details.value ?? 0;
+
+        if (isAmPmHour && this.isPM(previousValue)) {
+            previousValue -= PM;
+        }
+
+        let newValue = this.numberParser.parse(`${previousValue}${typedValue}`);
+
+        if (String(newValue).length > String(details.maxValue).length) {
+            newValue = isAmPmHour
+                ? typedValue
+                : this.numberParser.parse(String(newValue).slice(1));
+        }
+
+        return newValue;
+    }
+
+    /**
+     * For the hour segment whose clock format is 12 hours, we need to perform some checks before defining what will be
+     * the new value associated with the segment. This is necessary because the time the user sees might not match the
+     * value we need to store in the segment
+     *
+     * For example, if "10" is the value displayed in the field, the actual value could be "22" if it's PM, so we need
+     * to identify when we have to change the "actual value"
+     *
+     * @param details - Segment value and limits
+     * @param typedValue - The value typed by the user
+     */
+    private getNewValueForAmPmHourSegment(
+        details: SegmentDetails,
+        typedValue: number
+    ): number {
+        const isAmPmHour = true;
+
+        let newValue = this.mergePreviousValueWithTypedValue(
+            details,
+            typedValue,
+            isAmPmHour
+        );
+
+        const min = details.minValue;
+        const max = details.maxValue;
+        const isPM = this.isPM(min);
+
+        if (isPM && newValue !== min && newValue > maxHourAM) {
+            newValue = this.numberParser.parse(String(newValue).slice(1));
+        } else if (newValue > max) {
+            const useMinHourAM = !isPM && newValue === PM;
+
+            newValue = useMinHourAM
+                ? minHourAM
+                : this.useTypedValueOrMax(typedValue, max);
+        }
+
+        if (isPM && newValue !== min) {
+            newValue += PM;
+        }
+
+        return newValue;
+    }
+
+    /**
+     * Defines the new value that will be associated with the segment, with the exception of the hour segment for
+     * 12-hour clocks, whose value is defined in another method
+     *
+     * @param details - Segment value and limits
+     * @param typedValue - The value typed by the user
+     */
+    private getNewValueForOtherSegments(
+        details: SegmentDetails,
+        typedValue: number
+    ): number {
+        let newValue = this.mergePreviousValueWithTypedValue(
+            details,
+            typedValue
+        );
+
+        const min = details.minValue;
+        const max = details.maxValue;
+
+        if (String(newValue).length > String(max).length) {
+            newValue = this.numberParser.parse(String(newValue).slice(1));
+        }
+
+        if (newValue < min) {
+            newValue = this.useTypedValueOrMin(typedValue, min);
+        } else if (newValue > max) {
+            newValue = this.useTypedValueOrMax(typedValue, max);
+        }
+
+        return newValue;
     }
 
     private focusNextSegment(event: KeyboardEvent): void {

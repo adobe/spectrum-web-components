@@ -41,10 +41,22 @@ export interface Segment extends Omit<Intl.DateTimeFormatPart, 'value'> {
     maxValue?: number;
 }
 
+/**
+ * Value and limits of a segment. They are all optional, as literal segments have none of these properties
+ */
 export type SegmentValueAndLimits = Pick<
     Segment,
     'value' | 'minValue' | 'maxValue'
 >;
+
+/**
+ * Value and limits of a segment, however the limits are mandatory, as it is known that they have already been defined
+ */
+export interface SegmentDetails
+    extends Omit<SegmentValueAndLimits, 'minValue' | 'maxValue'> {
+    minValue: number;
+    maxValue: number;
+}
 
 export type TimeGranularity = 'hour' | 'minute' | 'second';
 
