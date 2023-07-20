@@ -52,6 +52,9 @@ export class TextfieldBase extends ManageHelpText(
         return [textfieldStyles, checkmarkStyles];
     }
 
+    @state()
+    appliedLabel?: string;
+
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';
 
@@ -235,7 +238,9 @@ export class TextfieldBase extends ManageHelpText(
             <!-- @ts-ignore -->
             <textarea
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label || this.placeholder}
+                aria-label=${this.label ||
+                this.appliedLabel ||
+                this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
@@ -266,7 +271,9 @@ export class TextfieldBase extends ManageHelpText(
             <input
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label || this.placeholder}
+                aria-label=${this.label ||
+                this.appliedLabel ||
+                this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(

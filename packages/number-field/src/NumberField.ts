@@ -102,7 +102,7 @@ export class NumberField extends TextfieldBase {
     }
 
     @state()
-    appliedLabel?: string;
+    override appliedLabel?: string;
 
     @query('.buttons')
     private buttons!: HTMLDivElement;

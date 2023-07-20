@@ -104,8 +104,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
 
             if (typeof applyLabel !== 'undefined') {
                 applyLabel(this.labelText);
-            }
-            if (targetParent === (this.getRootNode() as HTMLElement)) {
+            } else if (targetParent === (this.getRootNode() as HTMLElement)) {
                 const conditionAttribute = target
                     ? conditionAttributeWithId
                     : conditionAttributeWithoutId;
