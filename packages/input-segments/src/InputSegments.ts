@@ -908,7 +908,8 @@ export class InputSegments extends TextfieldBase {
         }
 
         if (segment.value === undefined) {
-            segment.value = min;
+            segment.value =
+                segment.type === 'year' ? this.currentDateTime.year : min;
         } else if (segment.type === 'dayPeriod') {
             segment.value = this.toggleDayPeriod(segment.value);
         } else {
@@ -936,7 +937,8 @@ export class InputSegments extends TextfieldBase {
         }
 
         if (segment.value === undefined) {
-            segment.value = max;
+            segment.value =
+                segment.type === 'year' ? this.currentDateTime.year : max;
         } else if (segment.type === 'dayPeriod') {
             segment.value = this.toggleDayPeriod(segment.value);
         } else {
