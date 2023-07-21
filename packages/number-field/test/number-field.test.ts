@@ -15,6 +15,7 @@ import {
     aTimeout,
     elementUpdated,
     expect,
+    fixture,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
@@ -36,7 +37,12 @@ import {
     indeterminatePlaceholder,
     NumberField,
 } from '@spectrum-web-components/number-field';
-import { sendKeys, setUserAgent } from '@web/test-runner-commands';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+    setUserAgent,
+} from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { clickBySelector, getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
@@ -1258,6 +1264,42 @@ describe('NumberField', () => {
         });
         it('prevents decrement via stepper button', async () => {
             await clickBySelector(el, '.step-down');
+        });
+    });
+    describe('accessibility model', () => {
+        it('buttons have proper label', async () => {
+            await fixture<HTMLDivElement>(html`
+                <div>
+                    ${Default({
+                        onChange: () => {
+                            return;
+                        },
+                    })}
+                </div>
+            `);
+
+            type NamedNode = { name: string };
+            const snapshot = (await a11ySnapshot(
+                {}
+            )) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Increase Enter a number'
+                ),
+                '`name` is the label text'
+            ).to.not.be.null;
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Decrease Enter a number'
+                ),
+                '`name` is the label text'
+            ).to.not.be.null;
         });
     });
 });
