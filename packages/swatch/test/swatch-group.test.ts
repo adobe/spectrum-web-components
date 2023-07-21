@@ -15,7 +15,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import '../sp-swatch.js';
 import { Swatch, SwatchGroup } from '../';
 import { Default } from '../stories/swatch-group.stories.js';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { html } from '@spectrum-web-components/base';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
@@ -357,5 +357,46 @@ describe('Swatch Group - DOM selected', () => {
         el.selected = ['color-2'];
         await elementUpdated(el);
         expect(el.selected).to.deep.equal(['color-2']);
+    });
+});
+
+describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
+    });
+
+    it('warns in Dev Mode when mixed-value attribute is added in sp-swatch when parent sp-swatch-group is not having selects="multiple"', async () => {
+        const el = await fixture<Swatch>(
+            html`
+                <sp-swatch-group selects="single">
+                    <sp-swatch mixed-value></sp-swatch>
+                </sp-swatch-group>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            (spyCall.args.at(0) as string).includes('"selects"'),
+            'confirm mixed-value-message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-swatch',
+                type: 'accessibility',
+                level: 'default',
+            },
+        });
     });
 });

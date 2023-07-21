@@ -212,8 +212,11 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                     ) {
                         window.__swc.warn(
                             this,
-                            `<sp-swatch> elements that are children of <sp-swatch-group> cannot have mixed-value attribute if sp-swatch-group does not have attribute selects="multiple"`,
-                            'https://opensource.adobe.com/spectrum-web-components/components/swatch-group/#multiple'
+                            `<sp-swatch> elements can only leverage the "mixed-value" attribute when their <sp-swatch-group> parent element is also leveraging "selects="multiple""`,
+                            'https://opensource.adobe.com/spectrum-web-components/components/swatch-group/#multiple',
+                            {
+                                type: 'accessibility',
+                            }
                         );
                     }
                 }
