@@ -906,24 +906,29 @@ export class InputSegments extends TextfieldBase {
      * match the new period (AM or PM). In addition, the minimum and maximum values of the hour are also changed
      */
     private updateHour(): void {
-        if (this.hourSegment && this.dayPeriodSegment) {
-            if (this.dayPeriodSegment.value !== undefined) {
-                const isAM = this.dayPeriodSegment.value === AM;
-                const isPM = this.dayPeriodSegment.value === PM;
+        if (!this.hourSegment || !this.dayPeriodSegment) {
+            this.resetHourAndDayPeriod();
+            return;
+        }
 
-                this.hourSegment.minValue = isPM ? minHourPM : minHourAM;
-                this.hourSegment.maxValue = isPM ? maxHourPM : maxHourAM;
+        if (this.dayPeriodSegment.value === undefined) {
+            return;
+        }
 
-                if (this.hourSegment.value !== undefined) {
-                    if (isAM && this.isPM(this.hourSegment.value)) {
-                        this.hourSegment.value -= PM;
-                    } else if (isPM && !this.isPM(this.hourSegment.value)) {
-                        this.hourSegment.value += PM;
-                    }
-                }
-            } else {
-                this.resetHourAndDayPeriod();
-            }
+        const isAM = this.dayPeriodSegment.value === AM;
+        const isPM = this.dayPeriodSegment.value === PM;
+
+        this.hourSegment.minValue = isPM ? minHourPM : minHourAM;
+        this.hourSegment.maxValue = isPM ? maxHourPM : maxHourAM;
+
+        if (this.hourSegment.value === undefined) {
+            return;
+        }
+
+        if (isAM && this.isPM(this.hourSegment.value)) {
+            this.hourSegment.value -= PM;
+        } else if (isPM && !this.isPM(this.hourSegment.value)) {
+            this.hourSegment.value += PM;
         }
     }
 
