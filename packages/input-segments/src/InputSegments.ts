@@ -624,30 +624,34 @@ export class InputSegments extends TextfieldBase {
 
         const options: Intl.DateTimeFormatOptions = {};
 
-        let year = this.currentDateTime.year;
-        let month = this.currentDateTime.month;
-        let day = this.currentDateTime.day;
+        const year = this.yearSegment?.value ?? this.currentDateTime.year;
+        const month = this.monthSegment?.value ?? this.currentDateTime.month;
+        const day = this.daySegment?.value ?? this.currentDateTime.day;
 
-        let hour = this.currentDateTime.hour;
-        let minute = this.currentDateTime.minute;
-        let second = this.currentDateTime.second;
+        // The hour can be changed if we are formatting the "dayPeriod" segment
+        let hour = this.hourSegment?.value ?? this.currentDateTime.hour;
+
+        const minute = this.minuteSegment?.value ?? this.currentDateTime.minute;
+        const second = this.secondSegment?.value ?? this.currentDateTime.second;
+
+        /**
+         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
+         * an unexpected way. For example, when typing "2", the year would be formatted as "1902", but we keep it as it
+         * is being displayed on the screen. If the user wants to enter the year "1902", he will enter number by number
+         */
+        if (segment.type === 'year') {
+            segment.formatted = String(year);
+            return;
+        }
 
         let padMaxLength = 2;
 
         switch (segment.type) {
-            case 'year': {
-                year = segment.value;
-                options.year = 'numeric';
-                padMaxLength = 0;
-                break;
-            }
             case 'month': {
-                month = segment.value;
                 options.month = '2-digit';
                 break;
             }
             case 'day': {
-                day = segment.value;
                 options.day = '2-digit';
                 break;
             }
@@ -656,17 +660,14 @@ export class InputSegments extends TextfieldBase {
                     padMaxLength = 1;
                 }
 
-                hour = segment.value;
                 options.hour = 'numeric';
                 break;
             }
             case 'minute': {
-                minute = segment.value;
                 options.minute = '2-digit';
                 break;
             }
             case 'second': {
-                second = segment.value;
                 options.second = '2-digit';
                 break;
             }
