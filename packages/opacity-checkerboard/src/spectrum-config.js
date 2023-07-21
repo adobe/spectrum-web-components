@@ -27,7 +27,7 @@ const config = {
             components: [
                 converter.classToClass(
                     'spectrum-OpacityCheckerboard',
-                    'opacityCheckerboard'
+                    'OpacityCheckerboard'
                 ),
             ],
         },
