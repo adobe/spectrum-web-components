@@ -31,8 +31,10 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
+    ClassInfo,
     classMap,
     ifDefined,
+    StyleInfo,
     styleMap,
     when,
 } from '@spectrum-web-components/base/src/directives.js';
@@ -237,12 +239,12 @@ export class InputSegments extends TextfieldBase {
 
         const isPlaceholderVisible = segment.value === undefined;
 
-        const segmentClasses = {
+        const segmentClasses: ClassInfo = {
             'is-placeholder': isPlaceholderVisible,
         };
 
-        const segmentStyles = {
-            minWidth:
+        const segmentStyles: StyleInfo = {
+            'min-width':
                 segment.maxValue !== undefined
                     ? `${String(segment.maxValue).length}ch`
                     : undefined,
