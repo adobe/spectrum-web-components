@@ -18,7 +18,11 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import progressCircleStyles from './progress-circle.css.js';
@@ -26,9 +30,12 @@ import progressCircleStyles from './progress-circle.css.js';
 /**
  * @element sp-progress-circle
  */
-export class ProgressCircle extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l'],
-}) {
+export class ProgressCircle extends SizedMixin(
+    ObserveSlotText(SpectrumElement, ''),
+    {
+        validSizes: ['s', 'm', 'l'],
+    }
+) {
     public static override get styles(): CSSResultArray {
         return [progressCircleStyles];
     }
@@ -47,6 +54,9 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
 
     @property({ type: Number })
     public progress = 0;
+
+    @query('slot')
+    private slotEl!: HTMLSlotElement;
 
     private makeRotation(rotation: number): string | undefined {
         return this.indeterminate
@@ -83,6 +93,9 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         ];
         const masks = ['Mask1', 'Mask2'];
         return html`
+            <div style="display:none">
+                <slot @slotchange=${this.onSlotChange}></slot>
+            </div>
             <div class="track"></div>
             <div class="fills">
                 ${masks.map(
@@ -99,6 +112,12 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
                 )}
             </div>
         `;
+    }
+
+    private onSlotChange(): void {
+        if (!this.label && this.slotHasContent) {
+            this.label = this.slotEl.assignedNodes()[0].textContent || '';
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {

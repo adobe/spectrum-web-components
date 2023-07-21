@@ -18,8 +18,12 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';
@@ -27,7 +31,9 @@ import styles from './progress-bar.css.js';
 /**
  * @element sp-progress-bar
  */
-export class ProgressBar extends SizedMixin(SpectrumElement) {
+export class ProgressBar extends SizedMixin(
+    ObserveSlotText(SpectrumElement, '')
+) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -35,7 +41,7 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 
-    @property({ type: String })
+    @property({ type: String, reflect: true })
     public label = '';
 
     private languageResolver = new LanguageResolutionController(this);
@@ -52,13 +58,17 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
     @property({ type: String, reflect: true })
     public static: 'white' | undefined;
 
+    @query('slot')
+    private slotEl!: HTMLSlotElement;
+
     protected override render(): TemplateResult {
         return html`
+            <sp-field-label size=${this.size} class="label">
+                ${this.slotHasContent ? html`` : this.label}
+                <slot @slotchange=${this.onSlotChange}>${this.label}</slot>
+            </sp-field-label>
             ${this.label
                 ? html`
-                      <sp-field-label size=${this.size} class="label">
-                          ${this.label}
-                      </sp-field-label>
                       ${this.indeterminate
                           ? html``
                           : html`
@@ -84,6 +94,12 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
                 ></div>
             </div>
         `;
+    }
+
+    private onSlotChange(): void {
+        if (!this.label && this.slotHasContent) {
+            this.label = this.slotEl.assignedNodes()[0].textContent || '';
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {

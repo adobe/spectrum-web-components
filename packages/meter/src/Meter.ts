@@ -18,7 +18,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
@@ -53,6 +56,9 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     @property({ type: String, reflect: true })
     public label = '';
 
+    @query('slot')
+    private slotEl!: HTMLSlotElement;
+
     private languageResolver = new LanguageResolutionController(this);
 
     @property({ type: Boolean, reflect: true, attribute: 'side-label' })
@@ -66,7 +72,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         return html`
             <sp-field-label size=${this.size} class="label">
                 ${this.slotHasContent ? html`` : this.label}
-                <slot>${this.label}</slot>
+                <slot @slotchange=${this.onSlotChange}>${this.label}</slot>
             </sp-field-label>
             <sp-field-label size=${this.size} class="percentage">
                 ${new Intl.NumberFormat(this.languageResolver.language, {
@@ -81,6 +87,12 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
                 ></div>
             </div>
         `;
+    }
+
+    private onSlotChange(): void {
+        if (!this.label && this.slotHasContent) {
+            this.label = this.slotEl.assignedNodes()[0].textContent || '';
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {
