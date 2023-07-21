@@ -19,7 +19,6 @@ import {
 import {
     property,
     query,
-    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
     LanguageResolutionController,
@@ -100,9 +99,6 @@ export class NumberField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
         return [...super.styles, styles, chevronStyles];
     }
-
-    @state()
-    override appliedLabel?: string;
 
     @query('.buttons')
     private buttons!: HTMLDivElement;

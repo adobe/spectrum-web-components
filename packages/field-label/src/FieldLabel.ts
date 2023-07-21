@@ -101,7 +101,6 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
             const applyLabel = this.target.applyFocusElementLabel;
             const focusable = this.target.focusElement || this.target;
             const targetParent = focusable.getRootNode() as HTMLElement;
-
             if (typeof applyLabel !== 'undefined') {
                 applyLabel(this.labelText);
             } else if (targetParent === (this.getRootNode() as HTMLElement)) {
