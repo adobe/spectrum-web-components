@@ -67,9 +67,6 @@ export class InputSegments extends TextfieldBase {
         return [...super.styles, styles];
     }
 
-    @query('.editable-segment')
-    firstEditableSegment!: HTMLDivElement;
-
     /**
      * Indicates when date segments should be included in the field
      */
@@ -108,6 +105,9 @@ export class InputSegments extends TextfieldBase {
 
     @state()
     private createSegments = true;
+
+    @query('.editable-segment')
+    firstEditableSegment!: HTMLDivElement;
 
     private languageResolver = new LanguageResolutionController(this);
     private timeZone = getLocalTimeZone();
@@ -271,10 +271,18 @@ export class InputSegments extends TextfieldBase {
         `;
     }
 
+    /**
+     * Indicates the parent component when a segment is focused, this way we can apply all styles to the "fake" input
+     * (wrapper) as if it were a standard input
+     */
     public handleFocusIn(): void {
         super.onFocus();
     }
 
+    /**
+     * Indicates the parent component when a segment is blurred, this way we can remove all styles that were applied to
+     * the "fake" input (wrapper) while one of the segments was focused
+     */
     public handleFocusOut(): void {
         super.onBlur();
     }
@@ -394,6 +402,9 @@ export class InputSegments extends TextfieldBase {
         this.valueChanged(segment);
     }
 
+    /**
+     * Defines the formatter that will be used in the creation of segments
+     */
     private setFormatter(): void {
         let dateOptions: Intl.DateTimeFormatOptions = {};
         let timeOptions: Intl.DateTimeFormatOptions = {};
@@ -407,14 +418,15 @@ export class InputSegments extends TextfieldBase {
         }
 
         if (this.includeTime) {
-            const useMinutes = (
-                ['minute', 'second'] as TimeGranularity[]
-            ).includes(this.timeGranularity);
+            const useMinutes: TimeGranularity[] = ['minute', 'second'];
+
+            const includeMinutes = useMinutes.includes(this.timeGranularity);
+            const includeSeconds = this.timeGranularity === 'second';
 
             timeOptions = {
                 hour: '2-digit',
-                ...(useMinutes && { minute: '2-digit' }),
-                ...(this.timeGranularity === 'second' && { second: '2-digit' }),
+                ...(includeMinutes && { minute: '2-digit' }),
+                ...(includeSeconds && { second: '2-digit' }),
             };
         }
 
@@ -424,28 +436,41 @@ export class InputSegments extends TextfieldBase {
         });
     }
 
+    /**
+     * * Defines the number parser using the defined locale
+     */
     private setNumberParser(): void {
         this.numberParser = new NumberParser(this.locale, {
             maximumFractionDigits: 0,
         });
     }
 
+    /**
+     * Defines the initial date and time that will be used to render the input, if no specific date and time is provided
+     */
     private setInitialDateTime(): void {
         this.currentDateTime = toCalendarDateTime(now(this.timeZone));
     }
 
+    /**
+     * If a datetime is received by the component via property, it will use it as the current datetime to render the
+     * input
+     */
     private setCurrentDateTime(): void {
-        if (this.selectedDateTime) {
-            this.selectedDateTime = new Date(this.selectedDateTime);
-
-            if (!this.isValidTime(this.selectedDateTime)) {
-                this.selectedDateTime = undefined;
-            } else {
-                this.currentDateTime = this.dateToCalendarDateTime(
-                    this.selectedDateTime
-                );
-            }
+        if (!this.selectedDateTime) {
+            return;
         }
+
+        this.selectedDateTime = new Date(this.selectedDateTime);
+
+        if (!this.isValidTime(this.selectedDateTime)) {
+            this.selectedDateTime = undefined;
+            return;
+        }
+
+        this.currentDateTime = this.dateToCalendarDateTime(
+            this.selectedDateTime
+        );
     }
 
     /**
@@ -519,14 +544,17 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Converts an object of type `Date` to `Calendar DateTime`
+     * Converts an object of type `Date` to `CalendarDateTime`
      *
      * @param date - `Date` object to "convert"
      */
     private dateToCalendarDateTime(date: Date): CalendarDateTime {
         return new CalendarDateTime(
             date.getFullYear(),
-            date.getMonth() + 1, // The month to create a new `CalendarDate` cannot be a zero-based index, unlike `Date`
+
+            // The month to create a new `CalendarDateTime` cannot be a zero-based index, unlike `Date`
+            date.getMonth() + 1,
+
             date.getDate(),
             date.getHours(),
             date.getMinutes(),
@@ -535,7 +563,7 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Determines which segments will be used by the input (date only, time only or both types)
+     * Creates the segments that will be used by the input
      */
     private setSegments(): void {
         const dateTime = this.currentDateTime.toDate(this.timeZone);
@@ -859,46 +887,69 @@ export class InputSegments extends TextfieldBase {
         }
     }
 
+    /**
+     * Increments the segment value respecting the minimum and maximum limits
+     *
+     * @param segment - The segment being changed
+     */
     private incrementValue(segment: Segment): void {
         const min = segment.minValue;
         const max = segment.maxValue;
 
-        if (min !== undefined && max !== undefined) {
-            if (segment.value === undefined) {
-                segment.value = min;
-            } else if (segment.type === 'dayPeriod') {
-                segment.value = segment.value === AM ? PM : AM;
-            } else {
-                segment.value++;
+        if (min === undefined || max === undefined) {
+            return;
+        }
 
-                if (segment.value > max) {
-                    segment.value = min;
-                }
+        if (segment.value === undefined) {
+            segment.value = min;
+        } else if (segment.type === 'dayPeriod') {
+            segment.value = this.toggleDayPeriod(segment.value);
+        } else {
+            segment.value++;
+
+            if (segment.value > max) {
+                segment.value = min;
             }
         }
 
         this.valueChanged(segment);
     }
 
+    /**
+     * Decrements the segment value respecting the minimum and maximum limits
+     *
+     * @param segment - The segment being changed
+     */
     private decrementValue(segment: Segment): void {
         const min = segment.minValue;
         const max = segment.maxValue;
 
-        if (min !== undefined && max !== undefined) {
-            if (segment.value === undefined) {
-                segment.value = max;
-            } else if (segment.type === 'dayPeriod') {
-                segment.value = segment.value === AM ? PM : AM;
-            } else {
-                segment.value--;
+        if (min === undefined || max === undefined) {
+            return;
+        }
 
-                if (segment.value < min) {
-                    segment.value = max;
-                }
+        if (segment.value === undefined) {
+            segment.value = max;
+        } else if (segment.type === 'dayPeriod') {
+            segment.value = this.toggleDayPeriod(segment.value);
+        } else {
+            segment.value--;
+
+            if (segment.value < min) {
+                segment.value = max;
             }
         }
 
         this.valueChanged(segment);
+    }
+
+    /**
+     * Switches the value of the `dayPeriod` segment from `AM` to `PM` or vice versa
+     *
+     * @param value - Current value of segment `dayPeriod`
+     */
+    private toggleDayPeriod(value: number): typeof AM | typeof PM {
+        return value === AM ? PM : AM;
     }
 
     /**
@@ -966,6 +1017,12 @@ export class InputSegments extends TextfieldBase {
         }
     }
 
+    /**
+     * After defining the new segment value, it formats the values that will be displayed on the screen and prepares the
+     * object that will be emitted by the component, if it is ready
+     *
+     * @param segment - The segment that was changed
+     */
     private valueChanged(segment: Segment): void {
         if (this.is12HourClock && segment.type === 'dayPeriod') {
             this.updateHour();
@@ -1111,14 +1168,30 @@ export class InputSegments extends TextfieldBase {
         return newValue;
     }
 
+    /**
+     * Focuses on the next editable segment, if any
+     *
+     * @param event - Event details
+     */
     private focusNextSegment(event: KeyboardEvent): void {
         this.focusSegment(event.target as HTMLDivElement, 'next');
     }
 
+    /**
+     * Focuses on the previous editable segment, if any
+     *
+     * @param event - Event details
+     */
     private focusPreviousSegment(event: KeyboardEvent): void {
         this.focusSegment(event.target as HTMLDivElement, 'previous');
     }
 
+    /**
+     * Focuses the segment according to the direction, if there is one to focus on
+     *
+     * @param segment - Segment that is currently focused
+     * @param elementToFocus - Defines which element will be focused: is it the previous one or the next one?
+     */
     private focusSegment(
         segment: HTMLDivElement,
         elementToFocus: 'previous' | 'next'
@@ -1141,9 +1214,9 @@ export class InputSegments extends TextfieldBase {
             if (siblingSegment.getAttribute('contenteditable')) {
                 segmentFound = true;
                 siblingSegment.focus();
-            } else {
-                currentSegment = siblingSegment;
             }
+
+            currentSegment = siblingSegment;
         }
     }
 }
