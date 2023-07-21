@@ -535,15 +535,10 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Determines which segments will be used by the input (hour, minute, second, day period for 12-hour clock). The
-     * segment referring to the hour will always be displayed, the other segments vary according to the defined locale
-     * and granularity
+     * Determines which segments will be used by the input (date only, time only or both types)
      */
     private setSegments(): void {
-        const { hour, minute, second } = this.currentDateTime;
-
-        const dateTime = new Date();
-        dateTime.setHours(hour, minute, second);
+        const dateTime = this.currentDateTime.toDate(this.timeZone);
 
         const segmentTypes = [
             ...(this.includeDate ? dateSegmentTypes : []),
@@ -565,7 +560,9 @@ export class InputSegments extends TextfieldBase {
      * @param part - Part/segment to be "translated" (mapped)
      */
     private mapToTimeSegment(part: Intl.DateTimeFormatPart): Segment {
-        const { value, minValue, maxValue } = this.getSegmentDetails(part.type);
+        const { value, minValue, maxValue } = this.getSegmentValueAndLimits(
+            part.type
+        );
 
         const segment: Segment = {
             type: part.type,
@@ -587,68 +584,76 @@ export class InputSegments extends TextfieldBase {
      * @param segment - Segment to be updated
      */
     private formatValues(segment: Segment): void {
-        if (segment.value !== undefined) {
-            const options: Intl.DateTimeFormatOptions = {};
-
-            let year = this.currentDateTime.year;
-            let month = this.currentDateTime.month;
-            let day = this.currentDateTime.day;
-
-            let hour = this.currentDateTime.hour;
-            let minute = this.currentDateTime.minute;
-            let second = this.currentDateTime.second;
-
-            let padMaxLength = 2;
-
-            switch (segment.type) {
-                case 'year': {
-                    year = segment.value;
-                    options.year = 'numeric';
-                    break;
-                }
-                case 'month': {
-                    month = segment.value;
-                    options.month = '2-digit';
-                    break;
-                }
-                case 'day': {
-                    day = segment.value;
-                    options.day = '2-digit';
-                    break;
-                }
-                case 'hour': {
-                    if (this.is12HourClock) {
-                        padMaxLength = 1;
-                    }
-
-                    hour = segment.value;
-                    options.hour = 'numeric';
-                    break;
-                }
-                case 'minute': {
-                    minute = segment.value;
-                    options.minute = '2-digit';
-                    break;
-                }
-                case 'second': {
-                    second = segment.value;
-                    options.second = '2-digit';
-                    break;
-                }
-                case 'dayPeriod': {
-                    hour = (segment.value || 0) + 1;
-                    options.hour = 'numeric';
-                    break;
-                }
-            }
-
-            const date = new Date(year, month, day, hour, minute, second);
-            const formatted = new DateFormatter(this.locale, options)
-                .formatToParts(date)
-                .find((part) => part.type === segment.type)?.value;
-
-            segment.formatted = formatted?.padStart(padMaxLength, '0');
+        if (segment.value === undefined) {
+            return;
         }
+
+        const options: Intl.DateTimeFormatOptions = {};
+
+        let year = this.currentDateTime.year;
+        let month = this.currentDateTime.month;
+        let day = this.currentDateTime.day;
+
+        let hour = this.currentDateTime.hour;
+        let minute = this.currentDateTime.minute;
+        let second = this.currentDateTime.second;
+
+        let padMaxLength = 2;
+
+        switch (segment.type) {
+            case 'year': {
+                year = segment.value;
+                options.year = 'numeric';
+                padMaxLength = 0;
+                break;
+            }
+            case 'month': {
+                month = segment.value;
+                options.month = '2-digit';
+                break;
+            }
+            case 'day': {
+                day = segment.value;
+                options.day = '2-digit';
+                break;
+            }
+            case 'hour': {
+                if (this.is12HourClock) {
+                    padMaxLength = 1;
+                }
+
+                hour = segment.value;
+                options.hour = 'numeric';
+                break;
+            }
+            case 'minute': {
+                minute = segment.value;
+                options.minute = '2-digit';
+                break;
+            }
+            case 'second': {
+                second = segment.value;
+                options.second = '2-digit';
+                break;
+            }
+            case 'dayPeriod': {
+                hour = (segment.value || 0) + 1;
+                options.hour = 'numeric';
+                padMaxLength = 0;
+                break;
+            }
+        }
+
+        /**
+         * As we use `CalendarDateTime`, we need to subtract 1 from the month before creating a new `Date` object,
+         * as this uses zero-based months, and `CalendarDateTime` does not
+         */
+        const date = new Date(year, month - 1, day, hour, minute, second);
+        const formatted = new DateFormatter(this.locale, options)
+            .formatToParts(date)
+            .find((part) => part.type === segment.type)?.value;
+
+        segment.formatted = formatted?.padStart(padMaxLength, '0');
     }
 
     /**
@@ -711,15 +716,88 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
+     * Checks whether the segment being created or updated will have a value or not by checking the following order:
+     *
+     * 1. Did the segment already have a previously defined value? If so, keep the same value
+     *
+     * 2. Since the segment doesn't have a previous value to keep, was the component given a specific date/time when it
+     *    was created? If yes, then use that information
+     *
+     * 3. There is no value to use at this point, so it will remain as `undefined`
+     *
+     * @param newValue - Current segment value, if any
+     * @param currentValue - Current date/time value with the same segment type as the current value
+     */
+    private useNewOrCurrentValue(
+        newValue: number | undefined,
+        currentValue: number
+    ): number | undefined {
+        return newValue ?? (this.selectedDateTime && currentValue) ?? undefined;
+    }
+
+    /**
+     * Gets the current value of the segment according to the type
+     *
+     * @param type - Type of segment
+     */
+    private getCurrentValue(
+        type: Intl.DateTimeFormatPartTypes
+    ): number | undefined {
+        switch (type) {
+            case 'year':
+                return this.useNewOrCurrentValue(
+                    this.yearSegment?.value,
+                    this.currentDateTime.year
+                );
+            case 'month':
+                return this.useNewOrCurrentValue(
+                    this.monthSegment?.value,
+                    this.currentDateTime.month
+                );
+            case 'day':
+                return this.useNewOrCurrentValue(
+                    this.daySegment?.value,
+                    this.currentDateTime.day
+                );
+            case 'hour':
+                return this.useNewOrCurrentValue(
+                    this.hourSegment?.value,
+                    this.currentDateTime.hour
+                );
+            case 'minute':
+                return this.useNewOrCurrentValue(
+                    this.minuteSegment?.value,
+                    this.currentDateTime.minute
+                );
+            case 'second':
+                return this.useNewOrCurrentValue(
+                    this.secondSegment?.value,
+                    this.currentDateTime.second
+                );
+            case 'dayPeriod':
+                // To identify the current value of "AM/PM", we use the value of the hour, not the day period itself
+                return this.useNewOrCurrentValue(
+                    this.hourSegment?.value &&
+                        this.getAmPmModifier(this.hourSegment.value),
+                    this.getAmPmModifier(this.currentDateTime.hour)
+                );
+            default:
+                return undefined;
+        }
+    }
+
+    /**
      * Returns the minimum and maximum values for each segment that will be used, in addition to defining if there is a
      * current value to be used. If segments are being recreated, we try to recover the value that was previously set
      * for each segment, if possible
      *
-     * @param type - Segment type
+     * @param type - Type of segment
      */
-    private getSegmentDetails(
+    private getSegmentValueAndLimits(
         type: Intl.DateTimeFormatPartTypes
     ): SegmentValueAndLimits {
+        const value = this.getCurrentValue(type);
+
         switch (type) {
             case 'year':
                 return {
@@ -727,36 +805,24 @@ export class InputSegments extends TextfieldBase {
                     maxValue: this.currentDateTime.calendar.getYearsInEra(
                         this.currentDateTime
                     ),
-                    value:
-                        this.newDateTime?.year ??
-                        (this.selectedDateTime && this.currentDateTime.year) ??
-                        undefined,
+                    value,
                 };
-
             case 'month':
                 return {
                     minValue: getMinimumMonthInYear(this.currentDateTime),
                     maxValue: this.currentDateTime.calendar.getMonthsInYear(
                         this.currentDateTime
                     ),
-                    value:
-                        this.newDateTime?.month ??
-                        (this.selectedDateTime && this.currentDateTime.month) ??
-                        undefined,
+                    value,
                 };
-
             case 'day':
                 return {
                     minValue: getMinimumDayInMonth(this.currentDateTime),
                     maxValue: this.currentDateTime.calendar.getDaysInMonth(
                         this.currentDateTime
                     ),
-                    value:
-                        this.newDateTime?.day ??
-                        (this.selectedDateTime && this.currentDateTime.day) ??
-                        undefined,
+                    value,
                 };
-
             case 'hour':
                 let min = 0;
                 let max = 23;
@@ -773,42 +839,21 @@ export class InputSegments extends TextfieldBase {
                 return {
                     minValue: min,
                     maxValue: max,
-                    value:
-                        this.newDateTime?.hour ??
-                        (this.selectedDateTime && this.currentDateTime.hour) ??
-                        undefined,
+                    value,
                 };
-
             case 'minute':
             case 'second':
-                const minutes =
-                    this.newDateTime?.minute ??
-                    (this.selectedDateTime && this.currentDateTime.minute) ??
-                    undefined;
-
-                const seconds =
-                    this.newDateTime?.second ??
-                    (this.selectedDateTime && this.currentDateTime.second) ??
-                    undefined;
-
                 return {
                     minValue: 0,
                     maxValue: 59,
-                    value: type === 'minute' ? minutes : seconds,
+                    value,
                 };
-
             case 'dayPeriod':
                 return {
                     minValue: AM,
                     maxValue: PM,
-                    value:
-                        (this.newDateTime?.hour &&
-                            this.getAmPmModifier(this.newDateTime.hour)) ??
-                        (this.selectedDateTime &&
-                            this.getAmPmModifier(this.currentDateTime.hour)) ??
-                        undefined,
+                    value,
                 };
-
             default:
                 return {};
         }
@@ -887,7 +932,7 @@ export class InputSegments extends TextfieldBase {
      * their initial values
      */
     private resetHourAndDayPeriod(): void {
-        const dayPeriod = this.getSegmentDetails('dayPeriod');
+        const dayPeriod = this.getSegmentValueAndLimits('dayPeriod');
 
         if (this.dayPeriodSegment) {
             this.dayPeriodSegment.value = dayPeriod.value;
@@ -900,7 +945,7 @@ export class InputSegments extends TextfieldBase {
             }
         }
 
-        const hour = this.getSegmentDetails('hour');
+        const hour = this.getSegmentValueAndLimits('hour');
 
         if (this.hourSegment) {
             this.hourSegment.minValue = hour.minValue;
@@ -923,7 +968,6 @@ export class InputSegments extends TextfieldBase {
 
         this.formatValues(segment);
         this.setNewDateTime();
-
         this.requestUpdate();
 
         if (this.newDateTime) {
