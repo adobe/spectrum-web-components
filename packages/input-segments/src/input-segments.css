@@ -29,18 +29,19 @@ governing permissions and limitations under the License.
     display: inline-block;
     height: 100%;
     color: var(--spectrum-textfield-text-color-default);
-    white-space: nowrap;
 }
 
 .editable-segment {
     padding: 0 0.15em;
     font-variant-numeric: tabular-nums;
     text-align: end;
+    white-space: nowrap;
     caret-color: transparent;
     outline: none;
 }
 
 .literal-segment {
+    white-space: pre;
     user-select: none;
 }
 

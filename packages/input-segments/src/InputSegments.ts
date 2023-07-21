@@ -217,14 +217,18 @@ export class InputSegments extends TextfieldBase {
     }
 
     public renderLiteralSegment(segment: Segment): TemplateResult {
+        /**
+         * We use `.innerText` here to preserve the text exactly as it is, including all spaces. If we use string
+         * interpolation, the value can be changed because of the code format, in which the contents of the tags are
+         * moved to a separate line, and this causes problems for the contents of some literal segments
+         */
         return html`
             <span
                 class="literal-segment"
                 aria-hidden="true"
                 data-testid=${segment.type}
-            >
-                ${segment.formatted}
-            </span>
+                .innerText=${segment.formatted ?? ''}
+            ></span>
         `;
     }
 
