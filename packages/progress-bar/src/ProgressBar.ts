@@ -115,6 +115,7 @@ export class ProgressBar extends SizedMixin(
             if (this.indeterminate) {
                 this.removeAttribute('aria-valuemin');
                 this.removeAttribute('aria-valuemax');
+                this.removeAttribute('aria-valuenow');
             } else {
                 this.setAttribute('aria-valuemin', '0');
                 this.setAttribute('aria-valuemax', '100');
@@ -122,8 +123,6 @@ export class ProgressBar extends SizedMixin(
         }
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
-        } else if (this.hasAttribute('aria-valuenow')) {
-            this.removeAttribute('aria-valuenow');
         }
         if (this.label && changes.has('label')) {
             this.setAttribute('aria-label', this.label);
