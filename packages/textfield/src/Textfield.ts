@@ -52,13 +52,16 @@ export class TextfieldBase extends ManageHelpText(
         return [textfieldStyles, checkmarkStyles];
     }
 
+    @state()
+    appliedLabel?: string;
+
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @query('.input')
+    @query('.input:not(#sizer)')
     protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
     @property({ type: Boolean, reflect: true })
@@ -225,15 +228,19 @@ export class TextfieldBase extends ManageHelpText(
 
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows && !this.quiet && this.rows === -1
+            ${this.grows && this.rows === -1
                 ? html`
-                      <div id="sizer">${this.value}&#8203;</div>
+                      <div id="sizer" class="input" aria-hidden="true">
+                          ${this.value}&#8203;
+                      </div>
                   `
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label || this.placeholder}
+                aria-label=${this.label ||
+                this.appliedLabel ||
+                this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
@@ -264,7 +271,9 @@ export class TextfieldBase extends ManageHelpText(
             <input
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label || this.placeholder}
+                aria-label=${this.label ||
+                this.appliedLabel ||
+                this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
