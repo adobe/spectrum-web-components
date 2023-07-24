@@ -91,19 +91,7 @@ export class ProgressCircle extends SizedMixin(
         ];
         const masks = ['Mask1', 'Mask2'];
         return html`
-            <slot
-                @slotchange=${() => {
-                    const labelFromSlot = getLabelFromSlot(
-                        this.label,
-                        this.slotHasContent,
-                        this.slotEl
-                    );
-                    if (labelFromSlot) {
-                        this.label = labelFromSlot;
-                    }
-                }}
-                style="display:none"
-            ></slot>
+            <slot @slotchange=${this.onSlotChange}></slot>
             <div class="track"></div>
             <div class="fills">
                 ${masks.map(
@@ -120,6 +108,17 @@ export class ProgressCircle extends SizedMixin(
                 )}
             </div>
         `;
+    }
+
+    protected onSlotChange(): void {
+        const labelFromSlot = getLabelFromSlot(
+            this.label,
+            this.slotHasContent,
+            this.slotEl
+        );
+        if (labelFromSlot) {
+            this.label = labelFromSlot;
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {

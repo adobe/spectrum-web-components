@@ -65,20 +65,8 @@ export class ProgressBar extends SizedMixin(
     protected override render(): TemplateResult {
         return html`
             <sp-field-label size=${this.size} class="label">
-                <slot
-                    @slotchange=${() => {
-                        const labelFromSlot = getLabelFromSlot(
-                            this.label,
-                            this.slotHasContent,
-                            this.slotEl
-                        );
-                        if (labelFromSlot) {
-                            this.label = labelFromSlot;
-                        }
-                    }}
-                >
-                    ${this.label}
-                </slot>
+                ${this.slotHasContent ? html`` : this.label}
+                <slot @slotchange=${this.onSlotChange}>${this.label}</slot>
             </sp-field-label>
             ${this.label
                 ? html`
@@ -107,6 +95,17 @@ export class ProgressBar extends SizedMixin(
                 ></div>
             </div>
         `;
+    }
+
+    protected onSlotChange(): void {
+        const labelFromSlot = getLabelFromSlot(
+            this.label,
+            this.slotHasContent,
+            this.slotEl
+        );
+        if (labelFromSlot) {
+            this.label = labelFromSlot;
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {

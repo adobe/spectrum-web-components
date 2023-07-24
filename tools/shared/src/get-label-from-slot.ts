@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 export const getLabelFromSlot = (
-    label: String,
-    slotHasContent: Boolean,
+    label: string,
+    slotHasContent: boolean,
     slotEl: HTMLSlotElement
 ): string | null => {
     if (label || !slotHasContent) return null;
