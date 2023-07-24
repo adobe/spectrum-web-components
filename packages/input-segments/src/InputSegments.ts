@@ -1036,30 +1036,34 @@ export class InputSegments extends TextfieldBase {
 
     /**
      * It validates if the day is valid for the given month and, if it is above the maximum limit, it changes the day to
-     * correspond to the last day of that month. Also, if the month segment has changed, updates the maximum limit of
-     * day segment
+     * correspond to the last day of that month. In addition, updates the maximum limit of day segment
      *
-     * @param monthChanged - Indicates whether it was the month segment that was changed
+     * @param updateDayMaxValue - Indicates when the maximum allowed value for the day should be changed
      */
-    private updateDay(monthChanged: boolean): void {
+    private updateDay(): void {
         if (
-            this.daySegment?.value === undefined ||
-            this.monthSegment?.value === undefined
+            this.monthSegment?.value === undefined ||
+            this.daySegment === undefined
         ) {
             return;
         }
 
+        const useThisDate = isNumber(this.yearSegment?.value)
+            ? this.currentDateTime.set({ year: this.yearSegment?.value })
+            : this.currentDateTime.copy();
+
         const lastDayOfMonth = endOfMonth(
-            this.currentDateTime.set({ month: this.monthSegment.value })
+            useThisDate.set({ month: this.monthSegment.value })
         );
 
-        if (this.daySegment.value > lastDayOfMonth.day) {
-            this.daySegment.value = lastDayOfMonth.day;
-            this.formatValues(this.daySegment);
-        }
+        this.daySegment.maxValue = lastDayOfMonth.day;
 
-        if (monthChanged) {
-            this.daySegment.maxValue = lastDayOfMonth.day;
+        if (
+            isNumber(this.daySegment.value) &&
+            this.daySegment.value > this.daySegment.maxValue
+        ) {
+            this.daySegment.value = this.daySegment.maxValue;
+            this.formatValues(this.daySegment);
         }
     }
 
@@ -1077,16 +1081,12 @@ export class InputSegments extends TextfieldBase {
         const hasDay = isNumber(this.daySegment?.value);
         const hasMonth = isNumber(this.monthSegment?.value);
 
-        const dayChanged = segment.type === 'day';
-        const monthChanged = segment.type === 'month';
-        const yearChanged = segment.type === 'year';
-
         if (
-            (dayChanged && hasMonth) ||
-            (monthChanged && hasDay) ||
-            (yearChanged && hasDay && hasMonth)
+            segment.type === 'month' ||
+            (segment.type === 'day' && hasMonth) ||
+            (segment.type === 'year' && hasDay && hasMonth)
         ) {
-            this.updateDay(monthChanged);
+            this.updateDay();
         }
 
         this.formatValues(segment);
