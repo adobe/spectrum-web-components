@@ -31,10 +31,7 @@ import progressCircleStyles from './progress-circle.css.js';
  * @element sp-progress-circle
  */
 export class ProgressCircle extends SizedMixin(
-    ObserveSlotText(SpectrumElement, ''),
-    {
-        validSizes: ['s', 'm', 'l'],
-    }
+    ObserveSlotText(SpectrumElement, '')
 ) {
     public static override get styles(): CSSResultArray {
         return [progressCircleStyles];
@@ -93,9 +90,7 @@ export class ProgressCircle extends SizedMixin(
         ];
         const masks = ['Mask1', 'Mask2'];
         return html`
-            <div style="display:none">
-                <slot @slotchange=${this.onSlotChange}></slot>
-            </div>
+            <slot @slotchange=${this.onSlotChange} style="display:none"></slot>
             <div class="track"></div>
             <div class="fills">
                 ${masks.map(
@@ -115,8 +110,20 @@ export class ProgressCircle extends SizedMixin(
     }
 
     private onSlotChange(): void {
-        if (!this.label && this.slotHasContent) {
-            this.label = this.slotEl.assignedNodes()[0].textContent || '';
+        if (this.label || !this.slotHasContent) return;
+        const textContent = this.slotEl
+            .assignedNodes()
+            .reduce((accumulator, node) => {
+                if (node.textContent) {
+                    return accumulator + node.textContent;
+                } else {
+                    return accumulator;
+                }
+            }, '');
+        if (textContent) {
+            this.label = textContent;
+        } else {
+            this.removeAttribute('aria-label');
         }
     }
 
@@ -146,13 +153,12 @@ export class ProgressCircle extends SizedMixin(
             ) {
                 window.__swc.warn(
                     this,
-                    '<sp-progress-circle> elements will not be accessible to screen readers without one of the following:',
+                    '<sp-progress-circle> elements will not be accessible to screen readers in the following situations:',
                     'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',
                     {
                         type: 'accessibility',
                         issues: [
-                            'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-                            'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
+                            'if the value is not supplied to "label" attribute and the "content" is also not set for the component, or',
                             'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
                         ],
                     }

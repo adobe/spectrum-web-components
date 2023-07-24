@@ -21,7 +21,7 @@ export default {
 
 export const label = (): TemplateResult => {
     return html`
-        <sp-progress-bar label="Loading"></sp-progress-bar>
+        <sp-progress-bar label="Loading" progress="50"></sp-progress-bar>
     `;
 };
 

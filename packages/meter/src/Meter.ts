@@ -71,7 +71,6 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     protected override render(): TemplateResult {
         return html`
             <sp-field-label size=${this.size} class="label">
-                ${this.slotHasContent ? html`` : this.label}
                 <slot @slotchange=${this.onSlotChange}>${this.label}</slot>
             </sp-field-label>
             <sp-field-label size=${this.size} class="percentage">
@@ -90,8 +89,20 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     }
 
     private onSlotChange(): void {
-        if (!this.label && this.slotHasContent) {
-            this.label = this.slotEl.assignedNodes()[0].textContent || '';
+        if (this.label || !this.slotHasContent) return;
+        const textContent = this.slotEl
+            .assignedNodes()
+            .reduce((accumulator, node) => {
+                if (node.textContent) {
+                    return accumulator + node.textContent;
+                } else {
+                    return accumulator;
+                }
+            }, '');
+        if (textContent) {
+            this.label = textContent;
+        } else {
+            this.removeAttribute('aria-label');
         }
     }
 
