@@ -13,6 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/swatch/sp-swatch-group.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
 import type {
     SwatchBorder,
     SwatchRounding,
