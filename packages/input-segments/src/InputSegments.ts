@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CalendarDateTime,
     DateFormatter,
+    endOfMonth,
     getLocalTimeZone,
     getMinimumDayInMonth,
     getMinimumMonthInYear,
@@ -57,6 +58,15 @@ import {
 } from './types.js';
 
 import styles from './input-segments.css.js';
+
+/**
+ * An utility to check if the given value is a number (not `undefined`)
+ *
+ * @param value - Number to check
+ */
+const isNumber = (value: number | undefined): value is number => {
+    return typeof value === 'number';
+};
 
 /**
  * @event change - Announces when a new date/time is defined by emitting a `Date` object
@@ -244,10 +254,9 @@ export class InputSegments extends TextfieldBase {
         };
 
         const segmentStyles: StyleInfo = {
-            'min-width':
-                segment.maxValue !== undefined
-                    ? `${String(segment.maxValue).length}ch`
-                    : undefined,
+            'min-width': isNumber(segment.maxValue)
+                ? `${String(segment.maxValue).length}ch`
+                : undefined,
         };
 
         // TODO: Include ARIA attributes for editable segments
@@ -484,10 +493,6 @@ export class InputSegments extends TextfieldBase {
      * each type (date only, time only or date and time together) were defined
      */
     private setNewDateTime(): void {
-        const defined = (value: number | undefined): value is number => {
-            return typeof value === 'number';
-        };
-
         this.newDateTime = undefined;
 
         // If none of the date/time segments are being used, there is nothing to do here
@@ -501,7 +506,7 @@ export class InputSegments extends TextfieldBase {
 
         // When only date segments are being used
         if (this.includeDate && !this.includeTime) {
-            if (defined(year) && defined(month) && defined(day)) {
+            if (isNumber(year) && isNumber(month) && isNumber(day)) {
                 this.newDateTime = new CalendarDateTime(year, month, day);
             }
 
@@ -524,11 +529,14 @@ export class InputSegments extends TextfieldBase {
         const isSecond = this.timeGranularity === 'second';
 
         const hasTime =
-            (isHour && defined(hour)) ||
-            (isMinute && defined(hour) && defined(minute)) ||
-            (isSecond && defined(hour) && defined(minute) && defined(second));
+            (isHour && isNumber(hour)) ||
+            (isMinute && isNumber(hour) && isNumber(minute)) ||
+            (isSecond &&
+                isNumber(hour) &&
+                isNumber(minute) &&
+                isNumber(second));
 
-        if (defined(year) && defined(month) && defined(day) && hasTime) {
+        if (isNumber(year) && isNumber(month) && isNumber(day) && hasTime) {
             this.newDateTime = new CalendarDateTime(
                 year,
                 month,
@@ -1016,7 +1024,7 @@ export class InputSegments extends TextfieldBase {
             this.hourSegment.minValue = hour.minValue;
             this.hourSegment.maxValue = hour.maxValue;
 
-            if (this.hourSegment.value !== undefined) {
+            if (isNumber(this.hourSegment.value)) {
                 this.hourSegment.value += this.getAmPmModifier(
                     this.currentDateTime.hour
                 );
@@ -1027,14 +1035,58 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
+     * It validates if the day is valid for the given month and, if it is above the maximum limit, it changes the day to
+     * correspond to the last day of that month. Also, if the month segment has changed, updates the maximum limit of
+     * day segment
+     *
+     * @param monthChanged - Indicates whether it was the month segment that was changed
+     */
+    private updateDay(monthChanged: boolean): void {
+        if (
+            this.daySegment?.value === undefined ||
+            this.monthSegment?.value === undefined
+        ) {
+            return;
+        }
+
+        const lastDayOfMonth = endOfMonth(
+            this.currentDateTime.set({ month: this.monthSegment.value })
+        );
+
+        if (this.daySegment.value > lastDayOfMonth.day) {
+            this.daySegment.value = lastDayOfMonth.day;
+            this.formatValues(this.daySegment);
+        }
+
+        if (monthChanged) {
+            this.daySegment.maxValue = lastDayOfMonth.day;
+        }
+    }
+
+    /**
      * After defining the new segment value, it formats the values that will be displayed on the screen and prepares the
-     * object that will be emitted by the component, if it is ready
+     * object that will be emitted by the component, if it is ready/defined
      *
      * @param segment - The segment that was changed
      */
     private valueChanged(segment: Segment): void {
         if (this.is12HourClock && segment.type === 'dayPeriod') {
             this.updateHour();
+        }
+
+        const hasDay = isNumber(this.daySegment?.value);
+        const hasMonth = isNumber(this.monthSegment?.value);
+
+        const dayChanged = segment.type === 'day';
+        const monthChanged = segment.type === 'month';
+        const yearChanged = segment.type === 'year';
+
+        if (
+            (dayChanged && hasMonth) ||
+            (monthChanged && hasDay) ||
+            (yearChanged && hasDay && hasMonth)
+        ) {
+            this.updateDay(monthChanged);
         }
 
         this.formatValues(segment);
