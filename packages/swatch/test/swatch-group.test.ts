@@ -321,11 +321,9 @@ describe('Swatch Group - DOM selected', () => {
 
             await elementUpdated(el);
 
-            // Make sure the console.warn was called
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
 
-            // Ensure the correct warning message is triggered
             expect(
                 (spyCall.args.at(0) as string).includes(
                     '<sp-swatch> elements can only leverage the "mixed-value" attribute when their <sp-swatch-group> parent element is also leveraging "selects="multiple"'
@@ -333,7 +331,6 @@ describe('Swatch Group - DOM selected', () => {
                 'confirm warning message'
             ).to.be.true;
 
-            // Ensure the correct data object is passed to the warning
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
                 data: {
                     localName: 'sp-swatch-group',
