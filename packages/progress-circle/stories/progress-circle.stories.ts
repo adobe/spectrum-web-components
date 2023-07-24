@@ -81,7 +81,6 @@ export const staticWhite = ({
                 ?indeterminate=${indeterminate}
                 label="Loading progess demo"
             >
-                waddup
             </sp-progress-circle>
             <sp-progress-circle
                 progress="53"
