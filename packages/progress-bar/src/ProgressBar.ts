@@ -23,6 +23,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
+import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -64,7 +65,20 @@ export class ProgressBar extends SizedMixin(
     protected override render(): TemplateResult {
         return html`
             <sp-field-label size=${this.size} class="label">
-                <slot @slotchange=${this.onSlotChange}>${this.label}</slot>
+                <slot
+                    @slotchange=${() => {
+                        const labelFromSlot = getLabelFromSlot(
+                            this.label,
+                            this.slotHasContent,
+                            this.slotEl
+                        );
+                        if (labelFromSlot) {
+                            this.label = labelFromSlot;
+                        }
+                    }}
+                >
+                    ${this.label}
+                </slot>
             </sp-field-label>
             ${this.label
                 ? html`
@@ -93,24 +107,6 @@ export class ProgressBar extends SizedMixin(
                 ></div>
             </div>
         `;
-    }
-
-    private onSlotChange(): void {
-        if (this.label || !this.slotHasContent) return;
-        const textContent = this.slotEl
-            .assignedNodes()
-            .reduce((accumulator, node) => {
-                if (node.textContent) {
-                    return accumulator + node.textContent;
-                } else {
-                    return accumulator;
-                }
-            }, '');
-        if (textContent) {
-            this.label = textContent;
-        } else {
-            this.removeAttribute('aria-label');
-        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {

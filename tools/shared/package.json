@@ -45,6 +45,10 @@
             "development": "./src/get-deep-element-from-point.dev.js",
             "default": "./src/get-deep-element-from-point.js"
         },
+        "./src/get-label-from-slot.js": {
+            "development": "./src/get-label-from-slot.dev.js",
+            "default": "./src/get-label-from-slot.js"
+        },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
