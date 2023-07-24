@@ -23,6 +23,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
+import { Placement } from '@spectrum-web-components/overlay';
 
 /**
  * @element sp-action-menu
@@ -42,6 +43,12 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
+    @property({ type: String })
+    public tooltip_description = null;
+
+    @property({ type: String })
+    public tooltip_placement: Placement = 'none';
+
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
     private get hasLabel(): boolean {
@@ -57,6 +64,26 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
             `,
         ];
+    }
+
+    private renderTooltipPanel(): TemplateResult {
+        // change function name
+        if (
+            this.tooltip_description != null &&
+            this.tooltip_placement != 'none'
+        )
+            return html`
+                <sp-tooltip self-managed placement=${this.tooltip_placement}>
+                    ${this.tooltip_description}
+                </sp-tooltip>
+            `;
+        else if (this.tooltip_description != null)
+            return html`
+                <sp-tooltip self-managed>
+                    ${this.tooltip_description}
+                </sp-tooltip>
+            `;
+        else return html``;
     }
 
     protected override render(): TemplateResult {
@@ -76,7 +103,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 @focus=${this.onButtonFocus}
                 ?disabled=${this.disabled}
             >
-                ${this.buttonContent}
+                ${this.buttonContent} ${this.renderTooltipPanel()}
             </sp-action-button>
         `;
     }
