@@ -12,8 +12,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-import '../sp-swatch-group.js';
-import '../sp-swatch.js';
+import '@spectrum-web-components/swatch/sp-swatch-group.js';
 import type {
     SwatchBorder,
     SwatchRounding,
