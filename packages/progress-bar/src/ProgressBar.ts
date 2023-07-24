@@ -139,7 +139,8 @@ export class ProgressBar extends SizedMixin(
             if (
                 !this.label &&
                 !this.getAttribute('aria-label') &&
-                !this.getAttribute('aria-labelledby')
+                !this.getAttribute('aria-labelledby') &&
+                !this.slotHasContent
             ) {
                 window.__swc.warn(
                     this,

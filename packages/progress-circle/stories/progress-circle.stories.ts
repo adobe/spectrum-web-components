@@ -47,18 +47,18 @@ export const Default = ({ indeterminate }: StoryArgs = {}): TemplateResult => {
                 progress="27"
                 size="s"
                 ?indeterminate=${indeterminate}
-                label="Loading progess demo"
+                label="Loading progress demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="27"
                 ?indeterminate=${indeterminate}
-                label="Loading progess demo"
+                label="Loading progress demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="27"
                 size="l"
                 ?indeterminate=${indeterminate}
-                label="Loading progess demo"
+                label="Loading progress demo"
             ></sp-progress-circle>
         </div>
     `;
@@ -79,7 +79,7 @@ export const staticWhite = ({
                 static="white"
                 size="s"
                 ?indeterminate=${indeterminate}
-                label="Loading progess demo"
+                label="Loading progress demo"
             >
                 waddup
             </sp-progress-circle>
@@ -87,14 +87,14 @@ export const staticWhite = ({
                 progress="53"
                 static="white"
                 ?indeterminate=${indeterminate}
-                label="Loading progess demo"
+                label="Loading progress demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="53"
                 static="white"
                 size="l"
                 ?indeterminate=${indeterminate}
-                label="Loading progess demo"
+                label="Loading progress demo"
             ></sp-progress-circle>
         </div>
     `;
