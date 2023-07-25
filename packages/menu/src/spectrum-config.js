@@ -311,7 +311,7 @@ const config = {
             fileName: 'menu',
             excludeByComponents: [
                 builder.class('spectrum-Menu-divider'),
-                builder.class('spectrum-Menu-sectionHeading'),
+                // builder.class('spectrum-Menu-sectionHeading'),
                 builder.class('spectrum-menu-itemSelection'),
                 {
                     type: 'class',
@@ -422,6 +422,50 @@ const config = {
                                     [builder.class('menu-divider')],
                                 ],
                             },
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.element('li'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [builder.class('spectrum-Menu-item')],
+                                [builder.class('spectrum-Menu-divider')],
+                            ],
+                        },
+                        builder.combinator('child'),
+                        builder.class('spectrum-Menu-sectionHeading'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.element('li'),
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'not',
+                                selectors: [
+                                    [
+                                        {
+                                            type: 'pseudo-element',
+                                            kind: 'slotted',
+                                            selector: [
+                                                builder.element('sp-menu-item'),
+                                            ],
+                                        },
+                                    ],
+                                    [builder.class('menu-divider')],
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('child'),
+                        },
+                        {
+                            replace: builder.class('header'),
                         },
                     ],
                 },

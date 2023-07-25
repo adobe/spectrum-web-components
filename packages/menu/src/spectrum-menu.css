@@ -324,6 +324,15 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-selectable-edge-to-text-not-selected)
     );
 }
+:host([selects]) ::slotted(sp-menu-item[selected]) {
+    --spectrum-menu-checkmark-display: var(
+        --spectrum-menu-checkmark-display-shown
+    );
+    padding-inline-start: var(
+        --mod-menu-item-label-inline-edge-to-content,
+        var(--spectrum-menu-item-label-inline-edge-to-content)
+    );
+}
 li:not(::slotted(sp-menu-item), .menu-divider) {
     align-items: center;
     background-color: var(
@@ -363,4 +372,53 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
 li:not(::slotted(sp-menu-item), .menu-divider) {
     display: grid;
     grid-template: '. chevronAreaCollapsible . iconArea sectionHeadingArea . . .' 1fr 'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn' '. . . . descriptionArea . . .' '. . . . submenuArea . . .' / auto auto auto auto 1fr auto auto auto;
+}
+.spectrum-Menu-sectionHeading {
+    grid-area: sectionHeadingArea/1/sectionHeadingArea/-1;
+}
+li:not(::slotted(sp-menu-item), .menu-divider) > .header {
+    padding-inline-start: var(
+        --mod-menu-item-label-inline-edge-to-content,
+        var(--spectrum-menu-item-label-inline-edge-to-content)
+    );
+}
+.spectrum-Menu-sectionHeading {
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-section-header-color,
+            var(--spectrum-menu-section-header-color)
+        )
+    );
+    display: block;
+    font-size: var(
+        --mod-menu-section-header-font-size,
+        var(--spectrum-menu-section-header-font-size)
+    );
+    font-weight: var(
+        --mod-menu-section-header-font-weight,
+        var(--spectrum-menu-section-header-font-weight)
+    );
+    line-height: var(
+        --mod-menu-section-header-line-height,
+        var(--spectrum-menu-section-header-line-height)
+    );
+    min-inline-size: var(
+        --mod-menu-section-header-min-width,
+        var(--spectrum-menu-section-header-min-width)
+    );
+    padding-block-end: var(
+        --mod-menu-section-header-bottom-edge-to-text,
+        var(
+            --mod-menu-item-bottom-edge-to-text,
+            var(--spectrum-menu-item-bottom-edge-to-text)
+        )
+    );
+    padding-block-start: var(
+        --mod-menu-section-header-top-edge-to-text,
+        var(
+            --mod-menu-item-top-edge-to-text,
+            var(--spectrum-menu-item-top-edge-to-text)
+        )
+    );
 }
