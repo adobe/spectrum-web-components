@@ -154,7 +154,7 @@ export class ProgressBar extends SizedMixin(
                 window.__swc.warn(
                     this,
                     '<sp-progress-bar> elements need one of the following to be accessible:',
-                    'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',
+                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#accessibility',
                     {
                         type: 'accessibility',
                         issues: [
