@@ -43,6 +43,9 @@ governing permissions and limitations under the License.
     --spectrum-menu-item-checkmark-width: var(
         --spectrum-menu-item-checkmark-width-medium
     );
+    --spectrum-menu-item-top-to-checkmark: var(
+        --spectrum-menu-item-top-to-selected-icon-medium
+    );
     --spectrum-menu-item-label-line-height: var(--spectrum-line-height-100);
     --spectrum-menu-item-label-line-height-cjk: var(
         --spectrum-cjk-line-height-100
@@ -205,6 +208,9 @@ governing permissions and limitations under the License.
     --spectrum-menu-item-checkmark-width: var(
         --spectrum-menu-item-checkmark-width-small
     );
+    --spectrum-menu-item-top-to-checkmark: var(
+        --spectrum-menu-item-top-to-selected-icon-small
+    );
 }
 :host([size='l']) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-200);
@@ -238,6 +244,9 @@ governing permissions and limitations under the License.
     --spectrum-menu-item-checkmark-width: var(
         --spectrum-menu-item-checkmark-width-large
     );
+    --spectrum-menu-item-top-to-checkmark: var(
+        --spectrum-menu-item-top-to-selected-icon-large
+    );
 }
 :host([size='xl']) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-300);
@@ -270,6 +279,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-menu-item-checkmark-width: var(
         --spectrum-menu-item-checkmark-width-extra-large
+    );
+    --spectrum-menu-item-top-to-checkmark: var(
+        --spectrum-menu-item-top-to-selected-icon-extra-large
     );
 }
 @media (forced-colors: active) {
@@ -334,53 +346,11 @@ governing permissions and limitations under the License.
     );
 }
 li:not(::slotted(sp-menu-item), .menu-divider) {
-    align-items: center;
-    background-color: var(
-        --highcontrast-menu-item-background-color-default,
-        var(
-            --mod-menu-item-background-color-default,
-            var(--spectrum-menu-item-background-color-default)
-        )
-    );
     box-sizing: border-box;
-    cursor: pointer;
-    line-height: var(
-        --mod-menu-item-label-line-height,
-        var(--spectrum-menu-item-label-line-height)
-    );
+    display: block;
     margin: 0;
-    min-block-size: var(
-        --mod-menu-item-min-height,
-        var(--spectrum-menu-item-min-height)
-    );
-    padding-block-end: var(
-        --mod-menu-item-bottom-edge-to-text,
-        var(--spectrum-menu-item-bottom-edge-to-text)
-    );
-    padding-block-start: var(
-        --mod-menu-item-top-edge-to-text,
-        var(--spectrum-menu-item-top-edge-to-text)
-    );
-    padding-inline: var(
-        --mod-menu-item-label-inline-edge-to-content,
-        var(--spectrum-menu-item-label-inline-edge-to-content)
-    );
+    padding: 0;
     position: relative;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-}
-li:not(::slotted(sp-menu-item), .menu-divider) {
-    display: grid;
-    grid-template: '. chevronAreaCollapsible . iconArea sectionHeadingArea . . .' 1fr 'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn' '. . . . descriptionArea . . .' '. . . . submenuArea . . .' / auto auto auto auto 1fr auto auto auto;
-}
-.spectrum-Menu-sectionHeading {
-    grid-area: sectionHeadingArea/1/sectionHeadingArea/-1;
-}
-li:not(::slotted(sp-menu-item), .menu-divider) > .header {
-    padding-inline-start: var(
-        --mod-menu-item-label-inline-edge-to-content,
-        var(--spectrum-menu-item-label-inline-edge-to-content)
-    );
 }
 .spectrum-Menu-sectionHeading {
     color: var(
@@ -399,6 +369,7 @@ li:not(::slotted(sp-menu-item), .menu-divider) > .header {
         --mod-menu-section-header-font-weight,
         var(--spectrum-menu-section-header-font-weight)
     );
+    grid-area: sectionHeadingArea/1/sectionHeadingArea/-1;
     line-height: var(
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
@@ -420,5 +391,9 @@ li:not(::slotted(sp-menu-item), .menu-divider) > .header {
             --mod-menu-item-top-edge-to-text,
             var(--spectrum-menu-item-top-edge-to-text)
         )
+    );
+    padding-inline: var(
+        --mod-menu-item-label-inline-edge-to-content,
+        var(--spectrum-menu-item-label-inline-edge-to-content)
     );
 }

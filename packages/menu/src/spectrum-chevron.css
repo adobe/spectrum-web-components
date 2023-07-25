@@ -17,14 +17,11 @@ governing permissions and limitations under the License.
     grid-area: chevronArea;
     height: var(--spectrum-menu-item-checkmark-height);
     inline-size: var(--spectrum-menu-item-checkmark-width);
-    width: var(--spectrum-menu-item-checkmark-width);
-}
-.chevron,
-.chevron--withAdjacentIcon {
     margin-inline-end: var(
         --mod-menu-item-text-to-control,
         var(--spectrum-menu-item-text-to-control)
     );
+    width: var(--spectrum-menu-item-checkmark-width);
 }
 :host([dir='rtl']) .chevron {
     transform: rotate(-180deg);

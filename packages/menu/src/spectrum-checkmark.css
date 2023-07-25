@@ -19,7 +19,7 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-checkmark-icon-color-default)
         )
     );
-    align-self: center;
+    align-self: start;
     block-size: var(
         --mod-menu-item-checkmark-height,
         var(--spectrum-menu-item-checkmark-height)
@@ -40,12 +40,19 @@ governing permissions and limitations under the License.
         --mod-menu-item-checkmark-width,
         var(--spectrum-menu-item-checkmark-width)
     );
-    opacity: 1;
-}
-.checkmark,
-.checkmark--withAdjacentIcon {
+    margin-block-start: calc(
+        var(
+                --mod-menu-item-top-to-checkmark,
+                var(--spectrum-menu-item-top-to-checkmark)
+            ) -
+            var(
+                --mod-menu-item-top-edge-to-text,
+                var(--spectrum-menu-item-top-edge-to-text)
+            )
+    );
     margin-inline-end: var(
         --mod-menu-item-text-to-control,
         var(--spectrum-menu-item-text-to-control)
     );
+    opacity: 1;
 }

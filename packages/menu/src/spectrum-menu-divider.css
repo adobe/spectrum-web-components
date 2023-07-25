@@ -17,5 +17,9 @@ governing permissions and limitations under the License.
         --mod-menu-item-bottom-edge-to-text,
         var(--spectrum-menu-item-bottom-edge-to-text)
     );
+    margin-inline: var(
+        --mod-menu-item-label-inline-edge-to-content,
+        var(--spectrum-menu-item-label-inline-edge-to-content)
+    );
     overflow: visible;
 }

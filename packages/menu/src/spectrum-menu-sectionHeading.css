@@ -51,4 +51,8 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-item-top-edge-to-text)
         )
     );
+    padding-inline: var(
+        --mod-menu-item-label-inline-edge-to-content,
+        var(--spectrum-menu-item-label-inline-edge-to-content)
+    );
 }

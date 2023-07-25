@@ -457,10 +457,11 @@ governing permissions and limitations under the License.
     );
 }
 ::slotted([slot='icon']) {
-    align-self: center;
+    align-self: start;
     grid-area: iconArea;
 }
 .checkmark {
+    align-self: start;
     grid-area: checkmarkArea;
 }
 .menu-itemSelection {
@@ -522,9 +523,16 @@ governing permissions and limitations under the License.
         --mod-menu-item-checkmark-width,
         var(--spectrum-menu-item-checkmark-width)
     );
-}
-.checkmark,
-.checkmark--withAdjacentIcon {
+    margin-block-start: calc(
+        var(
+                --mod-menu-item-top-to-checkmark,
+                var(--spectrum-menu-item-top-to-checkmark)
+            ) -
+            var(
+                --mod-menu-item-top-edge-to-text,
+                var(--spectrum-menu-item-top-edge-to-text)
+            )
+    );
     margin-inline-end: var(
         --mod-menu-item-text-to-control,
         var(--spectrum-menu-item-text-to-control)
@@ -536,8 +544,7 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-label-text-to-visual)
     );
 }
-.chevron,
-.chevron--withAdjacentIcon {
+.chevron {
     margin-inline-end: var(
         --mod-menu-item-text-to-control,
         var(--spectrum-menu-item-text-to-control)
@@ -608,6 +615,22 @@ governing permissions and limitations under the License.
         var(
             --mod-menu-item-background-color-default,
             var(--spectrum-menu-item-background-color-default)
+        )
+    );
+}
+.spectrum-Menu-item--collapsible > ::slotted([slot='icon']) {
+    padding-block-end: var(
+        --mod-menu-section-header-bottom-edge-to-text,
+        var(
+            --mod-menu-item-bottom-edge-to-text,
+            var(--spectrum-menu-item-bottom-edge-to-text)
+        )
+    );
+    padding-block-start: var(
+        --mod-menu-section-header-top-edge-to-text,
+        var(
+            --mod-menu-item-top-edge-to-text,
+            var(--spectrum-menu-item-top-edge-to-text)
         )
     );
 }
