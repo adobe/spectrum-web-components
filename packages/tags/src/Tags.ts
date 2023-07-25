@@ -18,10 +18,11 @@ import {
 } from '@spectrum-web-components/base';
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import { Tag } from './Tag.js';
+import { nextSibling, Tag } from './Tag.js';
 
 import styles from './tags.css.js';
 
@@ -31,6 +32,9 @@ import styles from './tags.css.js';
  * @slot - Tag elements to manage as a group
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
+    @property({ type: Number, reflect: true })
+    public currentFocusedElementIndex = 0;
+
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -62,7 +66,9 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 subtree: true,
             },
             callback: () => {
-                this.rovingTabindexController.changeDefaultItemFocus();
+                this.rovingTabindexController.changeDefaultItemFocus(
+                    nextSibling
+                );
             },
         });
         this.addEventListener('focusin', this.handleFocusin);
@@ -80,7 +86,6 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     private handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         if (code !== 'PageUp' && code !== 'PageDown') return;
-
         const circularIndexedElement = <T extends HTMLElement>(
             list: T[],
             index: number
