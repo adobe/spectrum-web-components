@@ -45,7 +45,7 @@ Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/).
 
 ## Do you intend to add a new feature or change an existing one?
 
--   Suggest your change in the rubyonrails-core mailing list and start writing code.
+-   Suggest your change in the swc-core mailing list and start writing code.
 
 -   Do not open an issue on GitHub until you have collected positive feedback about the change. You can start on [Adding your idea here](https://github.com/adobe/spectrum-web-components/discussions/categories/ideas) under Ideas
 
@@ -63,7 +63,7 @@ Please follow these steps to have your contribution considered by the maintainer
 
 ## Git Commit Messages
 
-We usually maintain a specific standard while committing to the respository like [Conventional Committs](https://www.conventionalcommits.org/en/v1.0.0/#summary)
+We usually maintain a specific standard while committing to the respository. See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
 
 ## Do you want to contribute to the Spectrum Web Components documentation?
 
