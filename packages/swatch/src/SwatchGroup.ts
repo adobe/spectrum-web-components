@@ -207,7 +207,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                 if (window.__swc.DEBUG) {
                     if (
                         'selects' in targetValues &&
-                        targetValues['selects'] !== 'multiple' &&
+                        targetValues.selects !== 'multiple' &&
                         swatch.mixedValue
                     ) {
                         window.__swc.warn(
