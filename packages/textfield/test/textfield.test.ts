@@ -168,7 +168,9 @@ describe('Textfield', () => {
 
         const boundsDefaultElement = defaultTextarea?.getBoundingClientRect();
         const boundsOneRowElement = oneRowTextarea?.getBoundingClientRect();
-        expect(boundsDefaultElement?.height).to.be.greaterThan(boundsOneRowElement?.height ?? 0);
+        expect(boundsDefaultElement?.height).to.be.greaterThan(
+            boundsOneRowElement?.height ?? 0
+        );
     });
     it('multiline with rows does not resize', async () => {
         const el = await litFixture<Textfield>(
@@ -429,6 +431,41 @@ describe('Textfield', () => {
             : null;
         expect(input).to.not.be.null;
     });
+    it('valid - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="^[\\d]+$"
+                    value="123"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#valid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.not.have.attribute('title');
+    });
+    it('valid - multiline - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    placeholder="Enter your number"
+                    pattern="^[\\d]+$"
+                    value="123"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#valid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.not.have.attribute('title');
+    });
     it('valid - unicode', async () => {
         const el = await litFixture<Textfield>(
             html`
@@ -601,6 +638,43 @@ describe('Textfield', () => {
             ? el.shadowRoot.querySelector('#invalid')
             : null;
         expect(input).to.not.be.null;
+    });
+    it('invalid - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    type="url"
+                    value="invalid-email"
+                    invalid
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#invalid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.have.attribute('title');
+    });
+    it('invalid - multiline - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    placeholder="Enter your number"
+                    type="url"
+                    value="invalid-email"
+                    invalid
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#invalid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.have.attribute('title');
     });
     it('invalid - multiline - boundary-type assertions', async () => {
         const el = await litFixture<Textfield>(
