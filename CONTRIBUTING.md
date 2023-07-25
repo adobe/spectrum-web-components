@@ -58,8 +58,7 @@ Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/).
 Please follow these steps to have your contribution considered by the maintainers:
 
 1. Follow all instructions in [the template](PULL_REQUEST_TEMPLATE.md)
-2. Follow the [styleguides](#styleguides)
-3. After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing.
+2. After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing.
 
 ## Git Commit Messages
 
