@@ -11505,9 +11505,9 @@ es6-promisify@^6.0.0:
   integrity sha512-HBL8I3mIki5C1Cc9QjKUenHtnG0A5/xA8Q/AllRcfiwl2CZFXGK7ddBiCoRwAix4i2KxcQfjtIVcrVbB3vbmwg==
 
 esbuild-plugin-lit-css@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/esbuild-plugin-lit-css/-/esbuild-plugin-lit-css-2.0.0.tgz#3eacf4585e3c4199f8a89400210f8718509c9d5b"
-  integrity sha512-Y/P34Wop7F17AO0idEyZMmWHj1qg4F8om2uqlTtDbMl0FTyefDNhvghlvcM+482pj92AJiOMj6YKB+2DMk4cdA==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/esbuild-plugin-lit-css/-/esbuild-plugin-lit-css-2.0.4.tgz#e0d2b1284912b1e29955d29ccc9b8789909e5030"
+  integrity sha512-06rVGN46RQ+UOspS4BfN4iqM67QEeQYL8tBzkYoMT77MSA+Km9P2cSAiHumv1SClLXYZLL9rCyELa09UYdV3eA==
   dependencies:
     "@pwrs/lit-css" "^2.0.0"
 
