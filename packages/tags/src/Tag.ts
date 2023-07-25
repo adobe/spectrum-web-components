@@ -86,15 +86,6 @@ export class Tag extends SizedMixin(SpectrumElement, {
         }
     };
 
-    private shiftFocusOnEvent(): void {
-        const event = new CustomEvent('sp-tag-focus', {
-            bubbles: true,
-            composed: true,
-            cancelable: true,
-        });
-        this.dispatchEvent(event);
-    }
-
     private delete(): void {
         if (this.readonly) {
             return;
@@ -108,7 +99,6 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (deleteEvent.defaultPrevented) {
             return;
         }
-        this.shiftFocusOnEvent();
         this.remove();
     }
 

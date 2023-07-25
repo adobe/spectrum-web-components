@@ -19,6 +19,7 @@ import {
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import { Tag } from './Tag.js';
 
@@ -55,6 +56,15 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     constructor() {
         super();
+        new MutationController(this, {
+            config: {
+                childList: true,
+                subtree: true,
+            },
+            callback: () => {
+                this.rovingTabindexController.changeDefaultItemFocus();
+            },
+        });
         this.addEventListener('focusin', this.handleFocusin);
     }
 
@@ -104,29 +114,9 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.rovingTabindexController.clearElementCache();
     }
 
-    private async changeDefaultFocus(event: Event): Promise<void> {
-        if (event.defaultPrevented) {
-            return;
-        }
-        // check if tags are not present
-        if (this.tags && !this.tags.length) {
-            return;
-        }
-        // check if tag item is disabled
-        this.tags.forEach((item) => {
-            if (item.disabled) {
-                return;
-            }
-        });
-        this.rovingTabindexController.changeDefaultItemFocus();
-    }
-
     protected override render(): TemplateResult {
         return html`
-            <slot
-                @slotchange=${this.handleSlotchange}
-                @sp-tag-focus=${this.changeDefaultFocus}
-            ></slot>
+            <slot @slotchange=${this.handleSlotchange}></slot>
         `;
     }
 

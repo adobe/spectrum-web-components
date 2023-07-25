@@ -75,6 +75,7 @@ export class RovingTabindexController<
     }
 
     changeDefaultItemFocus(): void {
+        // console.log(" I am called from RovingTab Index")
         const currentIndex = this.currentIndex;
         let focusIndex = currentIndex;
         if (currentIndex < this.elements.length - 1) {
