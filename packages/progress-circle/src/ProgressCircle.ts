@@ -32,7 +32,10 @@ import progressCircleStyles from './progress-circle.css.js';
  * @element sp-progress-circle
  */
 export class ProgressCircle extends SizedMixin(
-    ObserveSlotText(SpectrumElement, '')
+    ObserveSlotText(SpectrumElement, ''),
+    {
+        validSizes: ['s', 'm', 'l'],
+    }
 ) {
     public static override get styles(): CSSResultArray {
         return [progressCircleStyles];
@@ -136,7 +139,11 @@ export class ProgressCircle extends SizedMixin(
             this.removeAttribute('aria-valuenow');
         }
         if (this.label && changes.has('label')) {
-            this.setAttribute('aria-label', this.label);
+            if (this.label.length) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
 
         if (window.__swc.DEBUG) {
@@ -148,12 +155,14 @@ export class ProgressCircle extends SizedMixin(
             ) {
                 window.__swc.warn(
                     this,
-                    '<sp-progress-circle> elements will not be accessible to screen readers in the following situations:',
+                    '<sp-progress-circle> elements need one of the following to be accessible:',
                     'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',
                     {
                         type: 'accessibility',
                         issues: [
-                            'if the value is not supplied to "label" attribute and the "content" is also not set for the component, or',
+                            'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
+                            'text content supplied directly to the <sp-progress-circle> element, or',
+                            'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
                             'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
                         ],
                     }
