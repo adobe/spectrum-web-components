@@ -57,6 +57,47 @@ export default {
             },
             control: 'text',
         },
+        tooltip_description: {
+            name: 'tooltip description',
+            type: { name: 'string', required: false },
+            description: 'Tooltip description',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'none' },
+            },
+            control: {
+                type: 'text',
+            },
+        },
+        tooltip_placement: {
+            name: 'tooltip placement',
+            type: { name: 'string', required: false },
+            description: 'Tooltip Placement.',
+            table: {
+                defaultValue: { summary: 'none' },
+            },
+            control: {
+                options: [
+                    'auto',
+                    'auto-start',
+                    'auto-end',
+                    'top',
+                    'bottom',
+                    'right',
+                    'left',
+                    'top-start',
+                    'top-end',
+                    'bottom-start',
+                    'bottom-end',
+                    'right-start',
+                    'right-end',
+                    'left-start',
+                    'left-end',
+                    'none',
+                ],
+                type: 'select',
+            },
+        },
         quiet: {
             name: 'quiet',
             type: { name: 'boolean', required: false },
@@ -75,6 +116,7 @@ export default {
         disabled: false,
         open: false,
         quiet: false,
+        tooltip_description: 'none',
     },
 };
 
@@ -86,6 +128,8 @@ interface StoryArgs {
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
+    tooltip_description?: string | 'none';
+    tooltip_placement?: string | 'none';
 }
 
 const Template = (args: StoryArgs = {}): TemplateResult =>
@@ -112,6 +156,14 @@ export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
 iconOnly.args = {
     visibleLabel: '',
+};
+
+export const tooltip_description_placement = (
+    args: StoryArgs = {}
+): TemplateResult => Template(args);
+tooltip_description_placement.args = {
+    tooltip_description: 'none',
+    tooltip_placement: 'none',
 };
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);

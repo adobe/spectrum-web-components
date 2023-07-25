@@ -27,6 +27,8 @@ export const ActionMenuMarkup = ({
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
     selects = '' as 'single',
     selected = false,
+    tooltip_description = 'none',
+    tooltip_placement = 'none',
 } = {}): TemplateResult => {
     return html`
         <sp-action-menu
@@ -35,6 +37,8 @@ export const ActionMenuMarkup = ({
             ?open=${open}
             ?quiet=${quiet}
             size=${size}
+            tooltip_description=${tooltip_description}
+            tooltip_placement=${tooltip_placement}
             @change="${changeHandler}"
             .selects=${selects ? selects : undefined}
             value=${selected ? 'Select Inverse' : ''}

@@ -44,7 +44,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public override selects: undefined | 'single' = undefined;
 
     @property({ type: String })
-    public tooltip_description = null;
+    public tooltip_description = 'none';
 
     @property({ type: String })
     public tooltip_placement: Placement = 'none';
@@ -66,10 +66,9 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         ];
     }
 
-    private renderTooltipPanel(): TemplateResult {
-        // change function name
+    private renderTooltip(): TemplateResult {
         if (
-            this.tooltip_description != null &&
+            this.tooltip_description != 'none' &&
             this.tooltip_placement != 'none'
         )
             return html`
@@ -77,7 +76,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                     ${this.tooltip_description}
                 </sp-tooltip>
             `;
-        else if (this.tooltip_description != null)
+        else if (this.tooltip_description != 'none')
             return html`
                 <sp-tooltip self-managed>
                     ${this.tooltip_description}
@@ -103,7 +102,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 @focus=${this.onButtonFocus}
                 ?disabled=${this.disabled}
             >
-                ${this.buttonContent} ${this.renderTooltipPanel()}
+                ${this.buttonContent} ${this.renderTooltip()}
             </sp-action-button>
         `;
     }
