@@ -62,7 +62,7 @@ Please follow these steps to have your contribution considered by the maintainer
 
 ## Git Commit Messages
 
-We usually maintain a specific standard while committing to the respository. See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
+We maintain a specific standard of commit messages while committing to the respository. See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
 
 ## Do you want to contribute to the Spectrum Web Components documentation?
 
