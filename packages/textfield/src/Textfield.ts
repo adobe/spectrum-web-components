@@ -249,6 +249,7 @@ export class TextfieldBase extends ManageHelpText(
                 minlength=${ifDefined(
                     this.minlength > -1 ? this.minlength : undefined
                 )}
+                title=${this.invalid ? '' : nothing}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.displayValue}
@@ -276,6 +277,7 @@ export class TextfieldBase extends ManageHelpText(
                 this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
+                title=${this.invalid ? '' : nothing}
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
                 )}
