@@ -31,6 +31,7 @@ import styles from './tag.css.js';
  * @slot avatar - an avatar element to display within the Tag
  * @slot icon - an icon element to display within the Tag
  */
+export let nextSibling: HTMLElement;
 export class Tag extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
@@ -99,6 +100,9 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (deleteEvent.defaultPrevented) {
             return;
         }
+        nextSibling =
+            (this.nextElementSibling as HTMLElement) ||
+            (this.previousElementSibling as HTMLElement);
         this.remove();
     }
 
