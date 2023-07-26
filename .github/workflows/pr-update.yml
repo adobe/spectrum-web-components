@@ -29,3 +29,4 @@ jobs:
                   include_drafts: false
                   limit: 50
                   exclude_labels: blocked,wip
+                  trigger_labels: in-review,ready-for-merge
