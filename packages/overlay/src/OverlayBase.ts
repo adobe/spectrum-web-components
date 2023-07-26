@@ -35,6 +35,7 @@ import {
 import { VirtualTrigger } from './VirtualTrigger.js';
 import {
     ifDefined,
+    StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import styles from './overlay-base.css.js';
@@ -158,6 +159,8 @@ export const guaranteedAllTransitionend = (
 export class OverlayBase extends SpectrumElement {
     static override styles = [styles];
 
+    abortController!: AbortController;
+
     @property({ type: Boolean })
     delayed = false;
 
@@ -176,12 +179,12 @@ export class OverlayBase extends SpectrumElement {
         this._disabled = disabled;
         if (disabled) {
             if (this.hasNonVirtualTrigger) {
-                this.unbindEvents(this.triggerElement as HTMLElement);
+                this.unbindEvents();
             }
             this.wasOpen = this.open;
             this.open = false;
         } else {
-            this.bindEvents(this.triggerElement);
+            this.bindEvents();
             this.open = this.open || this.wasOpen;
             this.wasOpen = false;
         }
@@ -298,7 +301,7 @@ export class OverlayBase extends SpectrumElement {
         // Do not position "page" overlays as they should block the entire UI.
         if (this.type === 'page' || !this.open) return false;
         // Do not position content without a trigger element, what would you position it in relation to?
-        // Do not automaticallyu position contnent, unless it is a "hint".
+        // Do not automatically position content, unless it is a "hint".
         if (!this.triggerElement || (!this.placement && this.type !== 'hint'))
             return false;
         return true;
@@ -390,44 +393,21 @@ export class OverlayBase extends SpectrumElement {
                 (this.contains(
                     (this.getRootNode() as Document).activeElement
                 ) ||
-                    !!getAncestors().find((el) => el === this))
+                    getAncestors().includes(this))
             ) {
                 (this.triggerElement as HTMLElement).focus();
             }
         }
     }
 
-    protected unbindEvents(triggerElement: HTMLElement): void {
-        triggerElement.removeEventListener('click', this.handleClick);
-        triggerElement.removeEventListener(
-            'pointerdown',
-            this.handlePointerdownForClick
-        );
-        triggerElement.removeEventListener('focusin', this.handleFocusin);
-        triggerElement.removeEventListener('focusout', this.handleFocusout);
-        triggerElement.removeEventListener(
-            'pointerenter',
-            this.handlePointerenter
-        );
-        triggerElement.removeEventListener(
-            'pointerleave',
-            this.handlePointerleave
-        );
-        this.removeEventListener(
-            'pointerleave',
-            this.handleOverlayPointerleave
-        );
-        triggerElement.addEventListener('pointerdown', this.handlePointerdown);
-        triggerElement.removeEventListener('keydown', this.handleKeydown);
-        triggerElement.removeEventListener('keyup', this.handleKeyup);
-        triggerElement.removeEventListener('longpress', this.handleLongpress);
+    protected unbindEvents(): void {
+        this.abortController?.abort();
     }
 
-    protected bindEvents(
-        triggerElement: HTMLElement | VirtualTrigger | null
-    ): void {
+    protected bindEvents(): void {
         if (!this.hasNonVirtualTrigger) return;
-        const nextTriggerElement = triggerElement as HTMLElement;
+        this.abortController = new AbortController();
+        const nextTriggerElement = this.triggerElement as HTMLElement;
         switch (this.triggerInteraction) {
             case 'click':
                 this.bindClickEvents(nextTriggerElement);
@@ -442,34 +422,56 @@ export class OverlayBase extends SpectrumElement {
     }
 
     protected bindClickEvents(triggerElement: HTMLElement): void {
-        triggerElement.addEventListener('click', this.handleClick);
+        const options = { signal: this.abortController.signal };
+        triggerElement.addEventListener('click', this.handleClick, options);
         triggerElement.addEventListener(
             'pointerdown',
-            this.handlePointerdownForClick
+            this.handlePointerdownForClick,
+            options
         );
     }
 
     protected bindLongpressEvents(triggerElement: HTMLElement): void {
-        triggerElement.addEventListener('pointerdown', this.handlePointerdown);
-        triggerElement.addEventListener('keydown', this.handleKeydown);
-        triggerElement.addEventListener('keyup', this.handleKeyup);
-        triggerElement.addEventListener('longpress', this.handleLongpress);
+        const options = { signal: this.abortController.signal };
+        triggerElement.addEventListener(
+            'pointerdown',
+            this.handlePointerdown,
+            options
+        );
+        triggerElement.addEventListener('keydown', this.handleKeydown, options);
+        triggerElement.addEventListener('keyup', this.handleKeyup, options);
+        triggerElement.addEventListener(
+            'longpress',
+            this.handleLongpress,
+            options
+        );
 
         this.prepareLongpressDescription(triggerElement);
     }
 
     protected bindHoverEvents(triggerElement: HTMLElement): void {
-        triggerElement.addEventListener('focusin', this.handleFocusin);
-        triggerElement.addEventListener('focusout', this.handleFocusout);
+        const options = { signal: this.abortController.signal };
+        triggerElement.addEventListener('focusin', this.handleFocusin, options);
+        triggerElement.addEventListener(
+            'focusout',
+            this.handleFocusout,
+            options
+        );
         triggerElement.addEventListener(
             'pointerenter',
-            this.handlePointerenter
+            this.handlePointerenter,
+            options
         );
         triggerElement.addEventListener(
             'pointerleave',
-            this.handlePointerleave
+            this.handlePointerleave,
+            options
         );
-        this.addEventListener('pointerleave', this.handleOverlayPointerleave);
+        this.addEventListener(
+            'pointerleave',
+            this.handleOverlayPointerleave,
+            options
+        );
         if (this.receivesFocus === 'true') return;
 
         this.prepareAriaDescribedby(triggerElement);
@@ -477,16 +479,16 @@ export class OverlayBase extends SpectrumElement {
 
     protected manageTriggerElement(triggerElement: HTMLElement | null): void {
         if (triggerElement) {
-            this.unbindEvents(triggerElement);
+            this.unbindEvents();
             this.releaseAriaDescribedby();
         }
-        if (
+        const missingOrVirtual =
             !this.triggerElement ||
-            !!(this.triggerElement as VirtualTrigger).updateBoundingClientRect
-        ) {
+            this.triggerElement instanceof VirtualTrigger;
+        if (missingOrVirtual) {
             return;
         }
-        this.bindEvents(this.triggerElement);
+        this.bindEvents();
     }
 
     private elementIds: string[] = [];
@@ -641,6 +643,12 @@ export class OverlayBase extends SpectrumElement {
         }
     };
 
+    /**
+     * An overlay with a `click` interaction should not close on click `triggerElement`.
+     * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the
+     * overlay is `open` to prevent from toggling the overlay when the click event
+     * propagates later in the interaction.
+     */
     private preventNextToggle = false;
 
     protected handlePointerdownForClick = (): void => {
@@ -837,7 +845,23 @@ export class OverlayBase extends SpectrumElement {
         `;
     }
 
+    private get dialogStyleMap(): StyleInfo {
+        return {
+            '--swc-overlay-open-count': OverlayBase.openCount.toString(),
+            translate: this.hasUpdated ? null : '-999em -999em',
+        };
+    }
+
     protected renderDialog(): TemplateResult {
+        /**
+         * `--swc-overlay-open-count` is applied to mimic the single stack
+         * nature of the top layer in browsers that do not yet support it.
+         *
+         * The value should always be the full number of overlays ever opened
+         * which will be added to `--swc-overlay-z-index-base` which can be
+         * provided by a consuming developer but defaults to 1000 to beat as
+         * much stacking as possible durring fallback delivery.
+         **/
         return html`
             <dialog
                 class="dialog"
@@ -845,11 +869,7 @@ export class OverlayBase extends SpectrumElement {
                 @close=${this.handleBrowserClose}
                 @cancel=${this.handleBrowserClose}
                 @beforetoggle=${this.handleBeforetoggle}
-                style=${styleMap({
-                    '--swc-overlay-open-count':
-                        OverlayBase.openCount.toString(),
-                    translate: this.hasUpdated ? null : '-999em -999em',
-                })}
+                style=${styleMap(this.dialogStyleMap)}
             >
                 ${this.renderContent()}
             </dialog>
@@ -861,6 +881,15 @@ export class OverlayBase extends SpectrumElement {
         const popoverValue = hasPopoverAttribute
             ? this.popoverValue
             : undefined;
+        /**
+         * `--swc-overlay-open-count` is applied to mimic the single stack
+         * nature of the top layer in browsers that do not yet support it.
+         *
+         * The value should always be the full number of overlays ever opened
+         * which will be added to `--swc-overlay-z-index-base` which can be
+         * provided by a consuming developer but defaults to 1000 to beat as
+         * much stacking as possible durring fallback delivery.
+         **/
         return html`
             <div
                 class="dialog"
@@ -868,12 +897,7 @@ export class OverlayBase extends SpectrumElement {
                 popover=${ifDefined(popoverValue)}
                 @beforetoggle=${this.handleBeforetoggle}
                 @close=${this.handleBrowserClose}
-                style=${styleMap({
-                    '--swc-overlay-z-index': (
-                        1000 + OverlayBase.openCount
-                    ).toString(),
-                    translate: this.hasUpdated ? null : '-999em -999em',
-                })}
+                style=${styleMap(this.dialogStyleMap)}
             >
                 ${this.renderContent()}
             </div>
@@ -894,13 +918,13 @@ export class OverlayBase extends SpectrumElement {
             this.open = false;
         });
         if (this.hasNonVirtualTrigger) {
-            this.bindEvents(this.triggerElement);
+            this.bindEvents();
         }
     }
 
     override disconnectedCallback(): void {
         if (this.hasNonVirtualTrigger) {
-            this.unbindEvents(this.triggerElement as HTMLElement);
+            this.unbindEvents();
         }
         this.open = false;
         super.disconnectedCallback();
