@@ -21,7 +21,6 @@ jobs:
             - uses: castastrophe/actions-pr-auto-update@v1.1.0
               with:
                   token: ${{ secrets.GH_PAC_TOKEN }}
-                  # Draft PRs will not be automatically updated by this utility
                   include_drafts: false
                   limit: 50
                   exclude_labels: blocked,wip
