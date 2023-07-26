@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 
-import '../sp-swatch.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
 import { Swatch, SwatchGroup } from '../';
 import { Default } from '../stories/swatch-group.stories.js';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { html } from '@spectrum-web-components/base';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
@@ -296,6 +296,50 @@ describe('Swatch Group', () => {
 });
 
 describe('Swatch Group - DOM selected', () => {
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('warns in Dev Mode when mixed-value attribute is added in sp-swatch when parent sp-swatch-group is not having selects="multiple"', async () => {
+            const el = await fixture<SwatchGroup>(
+                html`
+                    <sp-swatch-group selects="single">
+                        <sp-swatch mixed-value></sp-swatch>
+                    </sp-swatch-group>
+                `
+            );
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+
+            expect(
+                (spyCall.args.at(0) as string).includes(
+                    '<sp-swatch> elements can only leverage the "mixed-value" attribute when their <sp-swatch-group> parent element is also leveraging "selects="multiple"'
+                ),
+                'confirm warning message'
+            ).to.be.true;
+
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-swatch-group',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
+    });
     it('accepts selection from DOM', async () => {
         const el = await fixture<SwatchGroup>(html`
             <sp-swatch-group selects="multiple">
