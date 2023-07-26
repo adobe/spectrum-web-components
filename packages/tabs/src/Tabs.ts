@@ -183,8 +183,7 @@ export class Tabs extends SizedMixin(Focusable) {
             });
             return firstFocusableElement ? focusInIndex : -1;
         },
-        direction: () =>
-            this.direction === 'horizontal' ? 'horizontal' : 'vertical',
+        direction: () => 'both',
         elementEnterAction: (el) => {
             if (!this.auto) return;
 

@@ -158,7 +158,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     @click=${this.onButtonClick}
                     @focus=${this.onButtonFocus}
                     ?disabled=${this.disabled}
-                    aria-label="More"
+                    aria-labelledby="button"
                     variant=${this.variant}
                     treatment=${treatment}
                     size=${this.size}
