@@ -200,7 +200,7 @@ export class MenuItem extends LikeAnchor(
     private anchorElement!: HTMLAnchorElement;
 
     public override get focusElement(): HTMLElement {
-        return this.anchorElement || this;
+        return this;
     }
 
     protected get hasIcon(): boolean {

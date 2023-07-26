@@ -311,7 +311,6 @@ const config = {
             fileName: 'menu',
             excludeByComponents: [
                 builder.class('spectrum-Menu-divider'),
-                // builder.class('spectrum-Menu-sectionHeading'),
                 builder.class('spectrum-menu-itemSelection'),
                 {
                     type: 'class',
