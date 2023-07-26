@@ -10,15 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, render, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
-import { openOverlay, VirtualTrigger } from '@spectrum-web-components/overlay';
-import type { Popover } from '@spectrum-web-components/popover';
+import { Overlay, VirtualTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
@@ -219,89 +218,16 @@ export const submenu = (): TemplateResult => {
 submenu.decorators = [submenuDecorator];
 
 export const contextMenu = (): TemplateResult => {
-    const contextMenuTemplate = (): TemplateResult => html`
-        <sp-popover
-            style="max-width: 33vw;"
-            @click=${(event: Event) =>
-                event.target?.dispatchEvent(
-                    new Event('close', { bubbles: true })
-                )}
-        >
-            <sp-menu @change=${handleRootChange}>
-                <sp-menu-group>
-                    <span slot="header">Options</span>
-                    <sp-menu-item>
-                        Copy
-                        <span slot="value">⌘​S</span>
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Paste
-                        <span slot="value">⌘​P</span>
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Cut
-                        <span slot="value">⌘​X</span>
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Select layer
-                        <sp-menu
-                            slot="submenu"
-                            selects="single"
-                            @change=${handleFirstDescendantChange}
-                        >
-                            <sp-menu-item selected>Ellipse 1</sp-menu-item>
-                            <sp-menu-item>Rectangle</sp-menu-item>
-                        </sp-menu>
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Group
-                        <span slot="value">⌘​G</span>
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Unlock
-                        <span slot="value">⌘​L</span>
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Bring to front
-                        <span slot="value">⇧​⌘​​]</span>
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Bring forward
-                        <span slot="value">⌘​​]</span>
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Send backward
-                        <span slot="value">⌘​​[</span>
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Send to back
-                        <span slot="value">⇧​⌘​​[</span>
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Delete
-                        <span slot="value">DEL</span>
-                    </sp-menu-item>
-                </sp-menu-group>
-            </sp-menu>
-        </sp-popover>
-    `;
-    const pointerenter = async (event: PointerEvent): Promise<void> => {
+    const contextmenu = async (event: PointerEvent): Promise<void> => {
         event.preventDefault();
-        const trigger = event.target as HTMLElement;
         const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
-        const fragment = document.createDocumentFragment();
-        render(contextMenuTemplate(), fragment);
-        const popover = fragment.querySelector('sp-popover') as Popover;
+        const overlay = document.querySelector('sp-overlay') as Overlay;
         clearValues();
-        openOverlay(trigger, 'modal', popover, {
-            placement: 'right-start',
-            receivesFocus: 'auto',
-            virtualTrigger,
-            notImmediatelyClosable: true,
-        });
+        overlay.triggerElement = virtualTrigger;
+        overlay.willPreventClose = true;
+        overlay.type = 'auto';
+        overlay.placement = 'right-start';
+        overlay.open = true;
     };
     const getValueEls = (): { root: HTMLElement; first: HTMLElement } => {
         return {
@@ -337,7 +263,7 @@ export const contextMenu = (): TemplateResult => {
                 --swc-menu-width: 200px;
             }
         </style>
-        <div class="app-root" @contextmenu=${pointerenter}>
+        <div class="app-root" @contextmenu=${contextmenu}>
             <div>
                 Root value:
                 <span id="root-value"></span>
@@ -347,5 +273,74 @@ export const contextMenu = (): TemplateResult => {
                 <br />
             </div>
         </div>
+        <sp-overlay>
+            <sp-popover
+                style="max-width: 33vw;"
+                @click=${(event: Event) =>
+                    event.target?.dispatchEvent(
+                        new Event('close', { bubbles: true })
+                    )}
+            >
+                <sp-menu @change=${handleRootChange}>
+                    <sp-menu-group>
+                        <span slot="header">Options</span>
+                        <sp-menu-item>
+                            Copy
+                            <span slot="value">⌘​S</span>
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Paste
+                            <span slot="value">⌘​P</span>
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Cut
+                            <span slot="value">⌘​X</span>
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Select layer
+                            <sp-menu
+                                slot="submenu"
+                                selects="single"
+                                @change=${handleFirstDescendantChange}
+                            >
+                                <sp-menu-item selected>Ellipse 1</sp-menu-item>
+                                <sp-menu-item>Rectangle</sp-menu-item>
+                            </sp-menu>
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Group
+                            <span slot="value">⌘​G</span>
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Unlock
+                            <span slot="value">⌘​L</span>
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Bring to front
+                            <span slot="value">⇧​⌘​​]</span>
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Bring forward
+                            <span slot="value">⌘​​]</span>
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Send backward
+                            <span slot="value">⌘​​[</span>
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Send to back
+                            <span slot="value">⇧​⌘​​[</span>
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Delete
+                            <span slot="value">DEL</span>
+                        </sp-menu-item>
+                    </sp-menu-group>
+                </sp-menu>
+            </sp-popover>
+        </sp-overlay>
     `;
 };

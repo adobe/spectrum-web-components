@@ -96,15 +96,15 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     public selects: undefined | 'single' = 'single';
 
-    public get menuItems(): MenuItem[] {
+    protected get menuItems(): MenuItem[] {
         return this.optionsMenu.childItems;
     }
 
     @query('sp-menu')
-    public optionsMenu!: Menu;
+    protected optionsMenu!: Menu;
 
     /**
-     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
+     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" }
      * @attr
      */
 
@@ -227,7 +227,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle(true);
     };
 
-    public async setValueFromItem(
+    protected async setValueFromItem(
         item: MenuItem,
         menuChangeEvent?: Event
     ): Promise<void> {

@@ -51,6 +51,9 @@ import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js'
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import type { Menu } from '@spectrum-web-components/menu';
+
+export type TestablePicker = { optionsMenu: Menu };
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -335,7 +338,9 @@ export function runPickerTests(): void {
             await elementUpdated(el);
             await nextFrame();
             await aTimeout(150);
-            expect(el.optionsMenu.childItems.length).to.equal(0);
+            expect(
+                (el as unknown as TestablePicker).optionsMenu.childItems.length
+            ).to.equal(0);
             if ('showPopover' in document.createElement('div')) {
                 return;
             }
@@ -438,12 +443,16 @@ export function runPickerTests(): void {
             el.open = true;
             await opened;
             expect(
-                el.optionsMenu.getAttribute('aria-activedescendant')
+                (el as unknown as TestablePicker).optionsMenu.getAttribute(
+                    'aria-activedescendant'
+                )
             ).to.equal(firstItem?.id);
             await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(el);
             expect(
-                el.optionsMenu.getAttribute('aria-activedescendant')
+                (el as unknown as TestablePicker).optionsMenu.getAttribute(
+                    'aria-activedescendant'
+                )
             ).to.equal(secondItem?.id);
         });
         it('renders invalid accessibly', async () => {
@@ -1439,15 +1448,18 @@ export function runPickerTests(): void {
             `activeElement is ${document.activeElement?.localName}`
         ).to.be.true;
         expect(
-            el.optionsMenu === el.shadowRoot.activeElement,
+            (el as unknown as TestablePicker).optionsMenu ===
+                el.shadowRoot.activeElement,
             `activeElement is ${el.shadowRoot.activeElement?.localName}`
         ).to.be.true;
 
         expect(firstItem.focused, 'firstItem NOT "focused"').to.be.false;
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
-        expect(el.optionsMenu.getAttribute('aria-activedescendant')).to.equal(
-            secondItem.id
-        );
+        expect(
+            (el as unknown as TestablePicker).optionsMenu.getAttribute(
+                'aria-activedescendant'
+            )
+        ).to.equal(secondItem.id);
     });
     it('resets value when item not available', async () => {
         const el = await fixture<Picker>(

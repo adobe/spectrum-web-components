@@ -19,6 +19,7 @@ import { expect, fixture, html, nextFrame, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import type { TestablePicker } from './index.js';
 
 const fixtureElements = async (): Promise<{
     picker: Picker;
@@ -115,7 +116,9 @@ describe('Reparented Picker', () => {
         before.append(picker);
         await closed;
 
-        expect(picker.optionsMenu.value).to.equal('3');
+        expect(
+            (picker as unknown as TestablePicker).optionsMenu.value
+        ).to.equal('3');
         expect(picker.value).to.equal('3');
     });
 });
