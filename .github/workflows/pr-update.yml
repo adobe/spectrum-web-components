@@ -20,7 +20,7 @@ jobs:
               # README: https://github.com/castastrophe/actions-pr-auto-update#auto-update-pull-requests
             - uses: castastrophe/actions-pr-auto-update@v1.1.0
               with:
-                  token: ${{ secrets.GH_PAC_TOKEN }}
+                  token: ${{ secrets.USER_TOKEN }}
                   include_drafts: false
                   limit: 50
                   exclude_labels: blocked,wip
