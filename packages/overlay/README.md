@@ -27,7 +27,7 @@ import {
 
 ## Example
 
-Leverage the `trigger` attribute to pass an ID reference to another element with in the same DOM tree, your overlay will be positioned in relation to this element. When the ID reference is followed by an `@` symbol and interaction type, like `click`, `hover`, or `longpress`, the overlay will bind itself to the referenced element via the DOM events associated with that interaction. For example, the `<sp-button>` below has an id of `trigger`, and the `<sp-overlay>` is provided the `trigger` attribute with the value `trigger@click`. This creates an association between the overlay and the `<sp-button>` that opens the overlay when the button is clicked.
+By leveraging the `trigger` attribute to pass an ID reference to another element with in the same DOM tree, your overlay will be positioned in relation to this element. When the ID reference is followed by an `@` symbol and interaction type, like `click`, `hover`, or `longpress`, the overlay will bind itself to the referenced element via the DOM events associated with that interaction. For example, the `<sp-button>` below has an id of `trigger`, and the `<sp-overlay>` is provided the `trigger` attribute with the value `trigger@click`. This creates an association between the overlay and the `<sp-button>` that opens the overlay when the button is clicked.
 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>

@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import type { MiddlewareArguments } from '@floating-ui/dom';
+import type { MiddlewareState } from '@floating-ui/dom';
 
 export const topLayerOverTransforms = () => ({
     name: 'topLayer',
-    async fn(middlewareArguments: MiddlewareArguments) {
+    async fn(middlewareArguments: MiddlewareState) {
         const {
             x,
             y,
