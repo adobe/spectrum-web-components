@@ -12,7 +12,7 @@ you are expected to uphold this code. Please report unacceptable behavior to
 
 ## TL;DR
 
-> --Note:-- [Please don't file an issue to ask a question.](https://github.com/adobe/spectrum-web-components/discussions) You'll get faster results by using the resources below.
+> **Note:** [Please don't file an issue to ask a question.](https://github.com/adobe/spectrum-web-components/discussions) You'll get faster results by using the resources below.
 
 We have an official message board with a detailed FAQ and where the community chimes in with helpful advice if you have questions.
 
@@ -28,15 +28,7 @@ license agreement. [Sign our CLA](http://opensource.adobe.com/cla.html).
 
 ### Security Issues
 
-Do not open up a GitHub issue if the bug is a security vulnerability in Rails, and instead to refer to our [security policy](https://helpx.adobe.com/security/alertus.html).
-
-### Commitlint
-
--   We use [Commitlint](https://github.com/conventional-changelog/commitlint/#what-is-commitlint) to help manage the semantic versions across the various packages in this library. Please be sure that you take this into concideration when submitting PRs to this repositiory. Generally, your commits should look like the following:
-
-```bash
-type(scope?): subject #scope is optional, but should reference the package you are updating
-```
+Do not open up a GitHub issue if the bug is a security vulnerability in Spectrum Web Components, and instead to refer to our [security policy](https://helpx.adobe.com/security/alertus.html).
 
 ## Did you find a bug?
 
@@ -91,6 +83,14 @@ Please follow these steps to have your contribution considered by the maintainer
 -   After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing.
 
 ## Git Commit Messages
+
+### Commitlint
+
+We use [Commitlint](https://github.com/conventional-changelog/commitlint/#what-is-commitlint) to help manage the semantic versions across the various packages in this library. Please be sure that you take this into concideration when submitting PRs to this repositiory. Generally, your commits should look like the following:
+
+```bash
+type(scope?): subject #scope is optional, but should reference the package you are updating
+```
 
 We maintain a specific standard of commit messages while committing to the respository. See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
 
