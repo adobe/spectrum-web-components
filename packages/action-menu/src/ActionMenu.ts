@@ -23,7 +23,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
-import { Placement } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 /**
  * @element sp-action-menu
@@ -43,12 +43,6 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
-    @property({ type: String })
-    public tooltip_description = 'none';
-
-    @property({ type: String })
-    public tooltip_placement: Placement = 'none';
-
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
     private get hasLabel(): boolean {
@@ -62,27 +56,9 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                     <sp-icon-more class="icon"></sp-icon-more>
                 </slot>
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
+                <slot name="tooltip"></slot>
             `,
         ];
-    }
-
-    private renderTooltip(): TemplateResult {
-        if (
-            this.tooltip_description != 'none' &&
-            this.tooltip_placement != 'none'
-        )
-            return html`
-                <sp-tooltip self-managed placement=${this.tooltip_placement}>
-                    ${this.tooltip_description}
-                </sp-tooltip>
-            `;
-        else if (this.tooltip_description != 'none')
-            return html`
-                <sp-tooltip self-managed>
-                    ${this.tooltip_description}
-                </sp-tooltip>
-            `;
-        else return html``;
     }
 
     protected override render(): TemplateResult {
@@ -102,7 +78,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 @focus=${this.onButtonFocus}
                 ?disabled=${this.disabled}
             >
-                ${this.buttonContent} ${this.renderTooltip()}
+                ${this.buttonContent}
             </sp-action-button>
         `;
     }

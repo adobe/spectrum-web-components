@@ -27,8 +27,8 @@ export const ActionMenuMarkup = ({
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
     selects = '' as 'single',
     selected = false,
-    tooltip_description = 'none',
-    tooltip_placement = 'none',
+    tooltip_description = 'Dummy tooltip description on hovering the menu',
+    tooltip_placement = 'bottom',
 } = {}): TemplateResult => {
     return html`
         <sp-action-menu
@@ -37,8 +37,6 @@ export const ActionMenuMarkup = ({
             ?open=${open}
             ?quiet=${quiet}
             size=${size}
-            tooltip_description=${tooltip_description}
-            tooltip_placement=${tooltip_placement}
             @change="${changeHandler}"
             .selects=${selects ? selects : undefined}
             value=${selected ? 'Select Inverse' : ''}
@@ -56,6 +54,9 @@ export const ActionMenuMarkup = ({
             <sp-menu-divider></sp-menu-divider>
             <sp-menu-item>Save Selection</sp-menu-item>
             <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            ${tooltip_description
+                ? html`<sp-tooltip slot='tooltip' self-managed placement=${tooltip_placement}>${tooltip_description}</sp-tooltip`
+                : html``}
         </sp-action-menu>
     `;
 };
