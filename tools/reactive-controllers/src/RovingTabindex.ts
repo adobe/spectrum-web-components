@@ -74,10 +74,6 @@ export class RovingTabindexController<
         });
     }
 
-    changeDefaultItemFocus(el: HTMLElement): void {
-        el?.focus();
-    }
-
     override manage(): void {
         this.managed = true;
         this.manageTabindexes();

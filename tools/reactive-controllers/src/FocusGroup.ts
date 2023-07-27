@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import type { ReactiveController, ReactiveElement } from 'lit';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 type DirectionTypes = 'horizontal' | 'vertical' | 'both' | 'grid';
 export type FocusGroupConfig<T> = {
@@ -123,6 +124,15 @@ export class FocusGroupController<T extends HTMLElement>
             listenerScope,
         }: FocusGroupConfig<T> = { elements: () => [] }
     ) {
+        new MutationController(host, {
+            config: {
+                childList: true,
+                subtree: true,
+            },
+            callback: () => {
+                this.changeDefaultItemFocus();
+            },
+        });
         this.host = host;
         this.host.addController(this);
         this._elements = elements;
@@ -143,6 +153,27 @@ export class FocusGroupController<T extends HTMLElement>
             'object',
             this._listenerScope
         );
+    }
+
+    changeDefaultItemFocus(): void {
+        const currentIndex = this.currentIndex;
+        // console.log(this.currentIndex)
+        let focusIndex = currentIndex;
+        if (currentIndex < this.elements.length - 1) {
+            for (let i = currentIndex + 1; i < this.elements.length; i++) {
+                focusIndex = i;
+                break;
+            }
+        } else if (currentIndex > 0) {
+            for (let i = currentIndex - 1; i >= 0; i--) {
+                focusIndex = i;
+                break;
+            }
+        }
+        if (focusIndex !== currentIndex) {
+            const focusElement = this.elements[focusIndex];
+            focusElement.focus();
+        }
     }
 
     update({ elements }: FocusGroupConfig<T> = { elements: () => [] }): void {

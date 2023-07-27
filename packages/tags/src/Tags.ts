@@ -20,9 +20,8 @@ import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import { nextSibling, Tag } from './Tag.js';
+import { Tag } from './Tag.js';
 
 import styles from './tags.css.js';
 
@@ -60,17 +59,6 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     constructor() {
         super();
-        new MutationController(this, {
-            config: {
-                childList: true,
-                subtree: true,
-            },
-            callback: () => {
-                this.rovingTabindexController.changeDefaultItemFocus(
-                    nextSibling
-                );
-            },
-        });
         this.addEventListener('focusin', this.handleFocusin);
     }
 
