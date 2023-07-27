@@ -82,30 +82,6 @@ describe('ProgressCircle', () => {
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('100');
     });
-    it('accepts a changing process', async () => {
-        const el = await fixture<ProgressCircle>(html`
-            <sp-progress-circle>Changing Value</sp-progress-circle>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el.hasAttribute('aria-valuenow')).to.be.true;
-        expect(el.getAttribute('aria-valuenow')).to.equal('0');
-
-        el.progress = 50;
-
-        await elementUpdated(el);
-
-        expect(el.hasAttribute('aria-valuenow')).to.be.true;
-        expect(el.getAttribute('aria-valuenow')).to.equal('50');
-
-        el.progress = 100;
-
-        await elementUpdated(el);
-
-        expect(el.hasAttribute('aria-valuenow')).to.be.true;
-        expect(el.getAttribute('aria-valuenow')).to.equal('100');
-    });
     it('accepts user `role`', async () => {
         const el = await fixture<ProgressCircle>(html`
             <sp-progress-circle

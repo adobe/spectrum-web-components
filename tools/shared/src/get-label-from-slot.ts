@@ -26,7 +26,7 @@ export const getLabelFromSlot = (
             }
         }, '');
     if (textContent) {
-        return textContent;
+        return textContent.trim();
     } else {
         return null;
     }
