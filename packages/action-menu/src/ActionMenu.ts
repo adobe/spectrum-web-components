@@ -29,6 +29,7 @@ import actionMenuStyles from './action-menu.css.js';
  * @slot - menu items to be listed in the Action Menu
  * @slot icon - The icon to use for Action Menu
  * @slot label - The label to use on for the Action Menu
+ * @slot tooltip - Tooltip to use on for the Action menu
  * @attr selects - By default `sp-action-menu` does not manage a selection. If
  *   you'd like for a selection to be held by the `sp-menu` that it presents in
  *   its overlay, use `selects="single" to activate this functionality.
