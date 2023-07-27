@@ -73,7 +73,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         return html`
             <sp-field-label size=${this.size} class="label">
                 ${this.slotHasContent ? html`` : this.label}
-                <slot @slotchange=${this.onSlotChange}>${this.label}</slot>
+                <slot @slotchange=${this.handleSlotchange}>${this.label}</slot>
             </sp-field-label>
             <sp-field-label size=${this.size} class="percentage">
                 ${new Intl.NumberFormat(this.languageResolver.language, {
@@ -90,7 +90,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         `;
     }
 
-    protected onSlotChange(): void {
+    protected handleSlotchange(): void {
         const labelFromSlot = getLabelFromSlot(
             this.label,
             this.slotHasContent,

@@ -22,7 +22,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+// import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
@@ -31,12 +31,9 @@ import progressCircleStyles from './progress-circle.css.js';
 /**
  * @element sp-progress-circle
  */
-export class ProgressCircle extends SizedMixin(
-    ObserveSlotText(SpectrumElement, ''),
-    {
-        validSizes: ['s', 'm', 'l'],
-    }
-) {
+export class ProgressCircle extends SizedMixin(SpectrumElement, {
+    validSizes: ['s', 'm', 'l'],
+}) {
     public static override get styles(): CSSResultArray {
         return [progressCircleStyles];
     }
@@ -58,6 +55,9 @@ export class ProgressCircle extends SizedMixin(
 
     @query('slot')
     private slotEl!: HTMLSlotElement;
+
+    @property({ type: Boolean })
+    private slotHasContent = false;
 
     private makeRotation(rotation: number): string | undefined {
         return this.indeterminate
@@ -94,7 +94,7 @@ export class ProgressCircle extends SizedMixin(
         ];
         const masks = ['Mask1', 'Mask2'];
         return html`
-            <slot @slotchange=${this.onSlotChange}></slot>
+            <slot @slotchange=${this.handleSlotchange}></slot>
             <div class="track"></div>
             <div class="fills">
                 ${masks.map(
@@ -113,7 +113,7 @@ export class ProgressCircle extends SizedMixin(
         `;
     }
 
-    protected onSlotChange(): void {
+    protected handleSlotchange(): void {
         const labelFromSlot = getLabelFromSlot(
             this.label,
             this.slotHasContent,
@@ -129,6 +129,7 @@ export class ProgressCircle extends SizedMixin(
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'progressbar');
         }
+        this.slotHasContent = this.slotEl.assignedNodes().length > 0;
     }
 
     protected override updated(changes: PropertyValues): void {
