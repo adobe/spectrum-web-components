@@ -19,3 +19,4 @@ export * from './observe-slot-presence.js';
 export * from './observe-slot-text.js';
 export * from './platform.js';
 export * from './reparent-children.js';
+export * from './get-label-from-slot.js';
