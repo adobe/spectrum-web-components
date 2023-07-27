@@ -55,9 +55,6 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     @query('slot')
     private slotEl!: HTMLSlotElement;
 
-    @property({ type: Boolean })
-    private slotHasContent = false;
-
     private makeRotation(rotation: number): string | undefined {
         return this.indeterminate
             ? undefined
@@ -113,11 +110,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     }
 
     protected handleSlotchange(): void {
-        const labelFromSlot = getLabelFromSlot(
-            this.label,
-            this.slotHasContent,
-            this.slotEl
-        );
+        const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
         if (labelFromSlot) {
             this.label = labelFromSlot;
         }
@@ -128,7 +121,6 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'progressbar');
         }
-        this.slotHasContent = this.slotEl.assignedNodes().length > 0;
     }
 
     protected override updated(changes: PropertyValues): void {
@@ -151,7 +143,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
                 !this.label &&
                 !this.getAttribute('aria-label') &&
                 !this.getAttribute('aria-labelledby') &&
-                !this.slotHasContent
+                !this.slotEl.assignedNodes().length
             ) {
                 window.__swc.warn(
                     this,

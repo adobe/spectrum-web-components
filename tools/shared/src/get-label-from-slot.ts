@@ -12,10 +12,9 @@ governing permissions and limitations under the License.
 
 export const getLabelFromSlot = (
     label: string,
-    slotHasContent: boolean,
     slotEl: HTMLSlotElement
 ): string | null => {
-    if (label || !slotHasContent) return null;
+    if (label) return null;
     const textContent = slotEl
         .assignedNodes()
         .reduce((accumulator: string, node: Node) => {

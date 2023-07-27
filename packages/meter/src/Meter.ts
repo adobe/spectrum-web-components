@@ -91,11 +91,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     }
 
     protected handleSlotchange(): void {
-        const labelFromSlot = getLabelFromSlot(
-            this.label,
-            this.slotHasContent,
-            this.slotEl
-        );
+        const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
         if (labelFromSlot) {
             this.label = labelFromSlot;
         }
