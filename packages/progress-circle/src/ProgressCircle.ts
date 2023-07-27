@@ -138,7 +138,7 @@ export class ProgressCircle extends SizedMixin(
         } else if (this.hasAttribute('aria-valuenow')) {
             this.removeAttribute('aria-valuenow');
         }
-        if (this.label && changes.has('label')) {
+        if (changes.has('label')) {
             if (this.label.length) {
                 this.setAttribute('aria-label', this.label);
             } else {

@@ -111,7 +111,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         if (changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
         }
-        if (this.label && changes.has('label')) {
+        if (changes.has('label')) {
             if (this.label.length) {
                 this.setAttribute('aria-label', this.label);
             } else {

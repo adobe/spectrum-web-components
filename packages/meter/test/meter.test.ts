@@ -73,7 +73,6 @@ describe('Meter', () => {
 
         expect(el.getAttribute('label')).to.equal('Label From Slot');
     });
-
     it('accepts a changing process', async () => {
         const el = await fixture<Meter>(html`
             <sp-meter>Changing Value</sp-meter>

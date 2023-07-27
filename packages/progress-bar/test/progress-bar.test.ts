@@ -51,7 +51,6 @@ describe('ProgressBar', () => {
 
         expect(el.getAttribute('label')).to.equal('Label From Slot');
     });
-
     it('accepts a changing progress', async () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar label="Changing value"></sp-progress-bar>
