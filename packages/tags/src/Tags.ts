@@ -18,7 +18,7 @@ import {
 } from '@spectrum-web-components/base';
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import { Tag } from './Tag.js';
@@ -31,9 +31,6 @@ import styles from './tags.css.js';
  * @slot - Tag elements to manage as a group
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
-    @property({ type: Number, reflect: true })
-    public currentFocusedElementIndex = 0;
-
     public static override get styles(): CSSResultArray {
         return [styles];
     }

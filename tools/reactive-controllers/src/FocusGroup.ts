@@ -156,24 +156,21 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     changeDefaultItemFocus(): void {
-        const currentIndex = this.currentIndex;
-        // console.log(this.currentIndex)
-        let focusIndex = currentIndex;
-        if (currentIndex < this.elements.length - 1) {
-            for (let i = currentIndex + 1; i < this.elements.length; i++) {
-                focusIndex = i;
-                break;
-            }
-        } else if (currentIndex > 0) {
-            for (let i = currentIndex - 1; i >= 0; i--) {
-                focusIndex = i;
-                break;
-            }
+        this.clearElementCache();
+        let diff = 0;
+        if (this.currentIndex === this.elements.length) {
+            diff = -1;
         }
-        if (focusIndex !== currentIndex) {
-            const focusElement = this.elements[focusIndex];
-            focusElement.focus();
+        this.setCurrentIndexCircularly(diff);
+        let steps = this.elements.length;
+        while (
+            steps > 0 &&
+            !this.isFocusableElement(this.elements[this.currentIndex])
+        ) {
+            this.setCurrentIndexCircularly(1);
+            steps--;
         }
+        this?.elements[this?.currentIndex]?.focus();
     }
 
     update({ elements }: FocusGroupConfig<T> = { elements: () => [] }): void {
@@ -226,7 +223,6 @@ export class FocusGroupController<T extends HTMLElement>
         this.host.addEventListener('focusin', this.handleFocusin);
         this.host.removeEventListener('focusout', this.handleFocusout);
         this.host.removeEventListener('keydown', this.handleKeydown);
-        this.currentIndex = this.focusInIndex;
         this.focused = false;
     }
 
