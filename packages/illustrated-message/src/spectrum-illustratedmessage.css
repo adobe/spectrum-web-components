@@ -81,9 +81,11 @@ governing permissions and limitations under the License.
 :host {
     align-items: center;
     block-size: 100%;
-    display: flex;
+    display: var(--mod-illustrated-message-display, flex);
     flex-direction: column;
     justify-content: center;
+    max-inline-size: var(--mod-illustrated-message-content-maximum-width);
+    pointer-events: var(--mod-illustrated-message-pointer-events);
     text-align: center;
 }
 #illustration {
@@ -137,7 +139,8 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-title-line-height,
         var(--spectrum-illustrated-message-title-line-height)
     );
-    margin-block: 0;
+    margin-block-end: var(--mod-illustrated-message-heading-to-body, 0);
+    margin-block-start: 0;
     max-inline-size: var(
         --mod-illustrated-message-heading-max-inline-size,
         var(--spectrum-illustrated-message-heading-max-inline-size)
@@ -177,4 +180,7 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-description-max-inline-size,
         var(--spectrum-illustrated-message-description-max-inline-size)
     );
+    pointer-events: var(--mod-illustrated-message-description-pointer-events);
+    position: var(--mod-illustrated-message-description-position);
+    z-index: var(--mod-illustrated-message-description-z-index);
 }

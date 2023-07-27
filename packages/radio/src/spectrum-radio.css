@@ -68,7 +68,7 @@ governing permissions and limitations under the License.
 :host(:lang(ja)),
 :host(:lang(ko)),
 :host(:lang(zh)) {
-    --spectrum-radio-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-radio-line-height-cjk: var(--spectrum-cjk-line-height-100);
 }
 :host([size='s']) {
     --spectrum-radio-height: var(--spectrum-component-height-75);
@@ -525,7 +525,10 @@ governing permissions and limitations under the License.
 #label:lang(ja),
 #label:lang(ko),
 #label:lang(zh) {
-    line-height: var(--spectrum-radio-cjk-line-height);
+    line-height: var(
+        --mod-radio-line-height-cjk,
+        var(--spectrum-radio-line-height-cjk)
+    );
 }
 #button {
     block-size: var(
