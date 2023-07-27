@@ -86,17 +86,8 @@ export const deletable = (args: Props): TemplateResult => {
     return html`
         <sp-tags @delete=${args.onDelete}>
             <sp-tag deletable>Tag 1</sp-tag>
-            <sp-tag deletable>Tag 2</sp-tag>
-            <sp-tag deletable>Tag 3</sp-tag>
-            <sp-tag deletable>Tag 4</sp-tag>
-            <sp-tag deletable>Tag 5</sp-tag>
-            <sp-tag deletable>Tag 6</sp-tag>
-            <sp-tag deletable>Tag 7</sp-tag>
-            <sp-tag deletable>Tag 8</sp-tag>
-            <sp-tag deletable>Tag 9</sp-tag>
-            <sp-tag deletable>Tag 10</sp-tag>
-            <sp-tag invalid deletable>Tag 11</sp-tag>
-            <sp-tag deletable>Tag 12</sp-tag>
+            <sp-tag invalid deletable>Tag 2</sp-tag>
+            <sp-tag disabled deletable>Tag 3</sp-tag>
         </sp-tags>
         <br />
         <br />
