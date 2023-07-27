@@ -23,6 +23,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
+
 /**
  * @element sp-action-menu
  *
