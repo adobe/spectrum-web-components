@@ -57,8 +57,8 @@ export default {
             },
             control: 'text',
         },
-        tooltip_description: {
-            name: 'tooltip description',
+        tooltipDescription: {
+            name: 'Tooltip Description',
             type: { name: 'string', required: false },
             description: 'Tooltip description',
             table: {
@@ -69,8 +69,8 @@ export default {
                 type: 'text',
             },
         },
-        tooltip_placement: {
-            name: 'tooltip placement',
+        tooltipPlacement: {
+            name: 'Tooltip Placement',
             type: { name: 'string', required: false },
             description: 'Tooltip Placement.',
             table: {
@@ -116,8 +116,8 @@ export default {
         disabled: false,
         open: false,
         quiet: false,
-        tooltip_description: 'Dummy tooltip description on hovering the menu',
-        tooltip_placement: 'bottom',
+        tooltipDescription: 'Dummy tooltip description on hovering action menu',
+        tooltipPlacement: 'bottom',
     },
 };
 
@@ -129,8 +129,8 @@ interface StoryArgs {
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
-    tooltip_description?: string | 'none';
-    tooltip_placement?: string | 'none';
+    tooltipDescription?: string | 'none';
+    tooltipPlacement?: string | 'none';
 }
 
 const Template = (args: StoryArgs = {}): TemplateResult =>
@@ -159,12 +159,12 @@ iconOnly.args = {
     visibleLabel: '',
 };
 
-export const tooltip_description_placement = (
+export const tooltipDescriptionAndPlacement = (
     args: StoryArgs = {}
 ): TemplateResult => Template(args);
-tooltip_description_placement.args = {
-    tooltip_description: 'Dummy tooltip description on hovering the menu',
-    tooltip_placement: 'bottom',
+tooltipDescriptionAndPlacement.args = {
+    tooltipDescription: 'Dummy tooltip description on hovering action menu',
+    tooltipPlacement: 'bottom',
 };
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
