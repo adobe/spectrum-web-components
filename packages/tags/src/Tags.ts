@@ -70,6 +70,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     private handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         if (code !== 'PageUp' && code !== 'PageDown') return;
+
         const circularIndexedElement = <T extends HTMLElement>(
             list: T[],
             index: number
