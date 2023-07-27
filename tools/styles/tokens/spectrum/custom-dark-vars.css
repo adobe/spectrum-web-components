@@ -32,4 +32,32 @@ governing permissions and limitations under the License.
     --spectrum-drop-zone-background-color-rgb: var(
         --spectrum-blue-900-rgb
     ); /* var(--spectrum-accent-color-900);*/
+
+    --spectrum-calendar-day-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
+    --spectrum-calendar-day-background-color-hover: rgba(
+        var(--spectrum-white-rgb),
+        0.07
+    );
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-down: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-calendar-day-background-color-cap-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-key-focus: var(
+        --spectrum-transparent-white-600
+    );
+    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
 }

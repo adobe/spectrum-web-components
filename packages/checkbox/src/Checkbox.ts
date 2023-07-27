@@ -36,25 +36,25 @@ const checkmarkIcon = {
     s: html`
         <sp-icon-checkmark75
             id="checkmark"
-            class="spectrum-UIIcon-Checkmark75"
+            class="spectrum-Icon spectrum-UIIcon-Checkmark75"
         ></sp-icon-checkmark75>
     `,
     m: html`
         <sp-icon-checkmark100
             id="checkmark"
-            class="spectrum-UIIcon-Checkmark100"
+            class="spectrum-Icon spectrum-UIIcon-Checkmark100"
         ></sp-icon-checkmark100>
     `,
     l: html`
         <sp-icon-checkmark200
             id="checkmark"
-            class="spectrum-UIIcon-Checkmark200"
+            class="spectrum-Icon spectrum-UIIcon-Checkmark200"
         ></sp-icon-checkmark200>
     `,
     xl: html`
         <sp-icon-checkmark300
             id="checkmark"
-            class="spectrum-UIIcon-Checkmark300"
+            class="spectrum-Icon spectrum-UIIcon-Checkmark300"
         ></sp-icon-checkmark300>
     `,
 };
@@ -63,25 +63,25 @@ const dashIcon = {
     s: html`
         <sp-icon-dash75
             id="partialCheckmark"
-            class="spectrum-UIIcon-Dash75"
+            class="spectrum-Icon spectrum-UIIcon-Dash75"
         ></sp-icon-dash75>
     `,
     m: html`
         <sp-icon-dash100
             id="partialCheckmark"
-            class="spectrum-UIIcon-Dash100"
+            class="spectrum-Icon spectrum-UIIcon-Dash100"
         ></sp-icon-dash100>
     `,
     l: html`
         <sp-icon-dash200
             id="partialCheckmark"
-            class="spectrum-UIIcon-Dash200"
+            class="spectrum-Icon spectrum-UIIcon-Dash200"
         ></sp-icon-dash200>
     `,
     xl: html`
         <sp-icon-dash300
             id="partialCheckmark"
-            class="spectrum-UIIcon-Dash300"
+            class="spectrum-Icon spectrum-UIIcon-Dash300"
         ></sp-icon-dash300>
     `,
 };
