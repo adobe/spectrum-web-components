@@ -130,7 +130,7 @@ export class FocusGroupController<T extends HTMLElement>
                 subtree: true,
             },
             callback: () => {
-                this.changeDefaultItemFocus();
+                this.handleItemMutation();
             },
         });
         this.host = host;
@@ -155,12 +155,9 @@ export class FocusGroupController<T extends HTMLElement>
         );
     }
 
-    changeDefaultItemFocus(): void {
+    handleItemMutation(): void {
         this.clearElementCache();
-        let diff = 0;
-        if (this.currentIndex === this.elements.length) {
-            diff = -1;
-        }
+        const diff = this.currentIndex === this.elements.length ? -1 : 0;
         this.setCurrentIndexCircularly(diff);
         let steps = this.elements.length;
         while (
