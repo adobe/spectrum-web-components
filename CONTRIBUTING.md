@@ -49,19 +49,19 @@ Create an issue on the repository and provide the following information by filli
 
 -   A quick summary and/or background
 -   Steps to reproduce -
-    -   Please Be specific!
-    -   Optionally, give sample code [here](https://studio.webcomponents.dev/workspace/adobe)
--   What you expected would happen
+    -   Please be specific!
+    -   Reproduce your issue [here](https://studio.webcomponents.dev/workspace/adobe)
+-   What you would expect to happen
 -   What actually happens
--   Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
+-   Notes (for example why you think this might be happening, or stuff you tried that didn't work)
 
 ## Do you intend to add a new feature or change an existing one?
 
--   Suggest your change in the swc-core mailing list and start writing code.
+-   Suggest your change in the [ideas list](https://github.com/adobe/spectrum-web-components/discussions/categories/ideas) and start writing code.
 
 -   Do not open an issue on GitHub until you have collected positive feedback about the change. You can start on [Adding your idea here](https://github.com/adobe/spectrum-web-components/discussions/categories/ideas) under Ideas
 
--   Once your Idea or request is submitted, you can start creating an [issue](https://github.com/adobe/spectrum-web-components/issues/new/choose) with the New Component or a Feature Request template.
+-   Once your Idea or request is submitted, you can create an [issue](https://github.com/adobe/spectrum-web-components/issues/new/choose) with the New Component or a Feature Request template.
 
 -   Please make sure that your PR follows our [best practices](https://opensource.adobe.com/spectrum-web-components/migrations/2021-8-11/#using-lit%402.0-inside-of-lit-html-and%2For-litelement) and [styleguide](https://spectrum.corp.adobe.com/page/design-tokens/#Usage-guidelines) before you submit for review
 
@@ -74,8 +74,6 @@ Create an issue on the repository and provide the following information by filli
 -   `[issue]` refers to the associated issue or feature number.
 
 For e.g: Be descriptive after the /, like `john-doe/123-fix-bug`.
-
-Please follow these steps to have your contribution considered by the maintainers
 
 ## Create your first Pull Request
 
