@@ -22,7 +22,6 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-// import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
