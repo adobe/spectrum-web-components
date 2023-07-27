@@ -40,6 +40,18 @@ describe('ProgressBar', () => {
         await expect(el).to.be.accessible();
     });
 
+    it('accepts label from `slot`', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar role="progressbar">
+                Label From Slot
+            </sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('label')).to.equal('Label From Slot');
+    });
+
     it('accepts a changing progress', async () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar label="Changing value"></sp-progress-bar>

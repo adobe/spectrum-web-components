@@ -64,6 +64,16 @@ describe('Meter', () => {
         expect(el.getAttribute('aria-valuenow')).to.equal('100');
     });
 
+    it('accepts label from `slot`', async () => {
+        const el = await fixture<Meter>(html`
+            <sp-meter>Label From Slot</sp-meter>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('label')).to.equal('Label From Slot');
+    });
+
     it('accepts a changing process', async () => {
         const el = await fixture<Meter>(html`
             <sp-meter>Changing Value</sp-meter>

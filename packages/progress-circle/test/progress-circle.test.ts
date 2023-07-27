@@ -47,6 +47,65 @@ describe('ProgressCircle', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('accepts label from `slot`', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle role="progressbar">
+                Label From Slot
+            </sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-label')).to.equal('Label From Slot');
+    });
+    it('accepts a changing process w/ [label]', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle label="Changing Value"></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('0');
+
+        el.progress = 50;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('50');
+
+        el.progress = 100;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('100');
+    });
+    it('accepts a changing process', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle>Changing Value</sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('0');
+
+        el.progress = 50;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('50');
+
+        el.progress = 100;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('100');
+    });
     it('accepts user `role`', async () => {
         const el = await fixture<ProgressCircle>(html`
             <sp-progress-circle
