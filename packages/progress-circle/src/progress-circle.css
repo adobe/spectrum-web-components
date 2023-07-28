@@ -17,3 +17,7 @@ governing permissions and limitations under the License.
         --spectrum-alias-track-fill-color-overbackground
     );
 }
+
+slot {
+    display: none;
+}

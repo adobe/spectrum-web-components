@@ -18,7 +18,11 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import progressCircleStyles from './progress-circle.css.js';
@@ -47,6 +51,9 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
 
     @property({ type: Number })
     public progress = 0;
+
+    @query('slot')
+    private slotEl!: HTMLSlotElement;
 
     private makeRotation(rotation: number): string | undefined {
         return this.indeterminate
@@ -83,6 +90,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         ];
         const masks = ['Mask1', 'Mask2'];
         return html`
+            <slot @slotchange=${this.handleSlotchange}></slot>
             <div class="track"></div>
             <div class="fills">
                 ${masks.map(
@@ -101,6 +109,13 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         `;
     }
 
+    protected handleSlotchange(): void {
+        const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
+        if (labelFromSlot) {
+            this.label = labelFromSlot;
+        }
+    }
+
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         if (!this.hasAttribute('role')) {
@@ -115,24 +130,30 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         } else if (this.hasAttribute('aria-valuenow')) {
             this.removeAttribute('aria-valuenow');
         }
-        if (this.label && changes.has('label')) {
-            this.setAttribute('aria-label', this.label);
+        if (changes.has('label')) {
+            if (this.label.length) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
 
         if (window.__swc.DEBUG) {
             if (
                 !this.label &&
                 !this.getAttribute('aria-label') &&
-                !this.getAttribute('aria-labelledby')
+                !this.getAttribute('aria-labelledby') &&
+                !this.slotEl.assignedNodes().length
             ) {
                 window.__swc.warn(
                     this,
-                    '<sp-progress-circle> elements will not be accessible to screen readers without one of the following:',
+                    '<sp-progress-circle> elements need one of the following to be accessible:',
                     'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',
                     {
                         type: 'accessibility',
                         issues: [
                             'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
+                            'text content supplied directly to the <sp-progress-circle> element, or',
                             'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
                             'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
                         ],
