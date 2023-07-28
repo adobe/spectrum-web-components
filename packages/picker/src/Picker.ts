@@ -224,16 +224,14 @@ export class PickerBase extends SizedMixin(Focusable) {
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
 
-        // When there are no selects, don't set a value.
-        if (this.selects) {
-            // Set a value, but allow it to be prevented.
-            this.selectedItem = item;
-            this.value = item.value;
-            await this.updateComplete;
-        }
+        // Set a value.
+        this.selectedItem = item;
+        this.value = item.value;
+        await this.updateComplete;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
+                // Allow it to be prevented.
                 cancelable: true,
                 composed: true,
             })
@@ -249,6 +247,11 @@ export class PickerBase extends SizedMixin(Focusable) {
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
             this.open = true;
+            return;
+        } else if (!this.selects) {
+            // Unset the value if not carrying a selection
+            this.selectedItem = oldSelectedItem;
+            this.value = oldValue;
             return;
         }
         if (oldSelectedItem) {
