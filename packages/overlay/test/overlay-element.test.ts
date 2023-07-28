@@ -17,7 +17,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { OverlayBase } from '@spectrum-web-components/overlay/src/OverlayBase.js';
+import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
@@ -49,7 +49,7 @@ async function styledFixture<T extends Element>(
 describe('sp-overlay', () => {
     function opensDeclaratively(overlayType: OverlayTypes): void {
         it(`as [type="'${overlayType}'"]`, async () => {
-            const el = await styledFixture<OverlayBase>(html`
+            const el = await styledFixture<Overlay>(html`
                 <sp-overlay open type=${overlayType}>
                     <sp-tooltip>Content</sp-tooltip>
                 </sp-overlay>
@@ -76,7 +76,7 @@ describe('sp-overlay', () => {
         opensDeclaratively('modal');
         describe('interaction with other non-ancestor overlays', function () {
             beforeEach(async function () {
-                this.fixture = await styledFixture<OverlayBase>(html`
+                this.fixture = await styledFixture<Overlay>(html`
                     <div>
                         ${OVERLAY_TYPES.map(
                             (type) => html`
@@ -90,19 +90,19 @@ describe('sp-overlay', () => {
 
                 this.modal = this.fixture.querySelector(
                     '[type="modal"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.page = this.fixture.querySelector(
                     '[type="page"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.hint = this.fixture.querySelector(
                     '[type="hint"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.auto = this.fixture.querySelector(
                     '[type="auto"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.manual = this.fixture.querySelector(
                     '[type="manual"]'
-                ) as OverlayBase;
+                ) as Overlay;
 
                 expect(this.modal.open).to.be.false;
                 expect(this.page.open).to.be.false;
@@ -203,7 +203,7 @@ describe('sp-overlay', () => {
         opensDeclaratively('page');
         describe('interaction with other non-ancestor overlays', function () {
             beforeEach(async function () {
-                this.fixture = await styledFixture<OverlayBase>(html`
+                this.fixture = await styledFixture<Overlay>(html`
                     <div>
                         ${OVERLAY_TYPES.map(
                             (type) => html`
@@ -217,19 +217,19 @@ describe('sp-overlay', () => {
 
                 this.modal = this.fixture.querySelector(
                     '[type="modal"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.page = this.fixture.querySelector(
                     '[type="page"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.hint = this.fixture.querySelector(
                     '[type="hint"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.auto = this.fixture.querySelector(
                     '[type="auto"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.manual = this.fixture.querySelector(
                     '[type="manual"]'
-                ) as OverlayBase;
+                ) as Overlay;
 
                 expect(this.modal.open).to.be.false;
                 expect(this.page.open).to.be.false;
@@ -326,7 +326,7 @@ describe('sp-overlay', () => {
             });
         });
         it('ignores Escape key interactions', async () => {
-            const el = await styledFixture<OverlayBase>(html`
+            const el = await styledFixture<Overlay>(html`
                 <sp-overlay type="page">
                     <sp-popover>This is a "page" Overlay</sp-popover>
                 </sp-overlay>
@@ -351,7 +351,7 @@ describe('sp-overlay', () => {
         opensDeclaratively('hint');
 
         it('closes other `[type=hint]` overlays when opening', async () => {
-            const test = await styledFixture<OverlayBase>(html`
+            const test = await styledFixture<Overlay>(html`
                 <div>
                     ${[1, 2].map(
                         (overlay) => html`
@@ -362,8 +362,8 @@ describe('sp-overlay', () => {
                     )}
                 </div>
             `);
-            const hint1 = test.querySelector('.hint-1') as OverlayBase;
-            const hint2 = test.querySelector('.hint-2') as OverlayBase;
+            const hint1 = test.querySelector('.hint-1') as Overlay;
+            const hint2 = test.querySelector('.hint-2') as Overlay;
 
             expect(hint1.open).to.be.false;
             expect(hint2.open).to.be.false;
@@ -414,7 +414,7 @@ describe('sp-overlay', () => {
             const button = test.querySelector('sp-button') as Button;
             const overlay = test.querySelector(
                 'sp-overlay'
-            ) as unknown as OverlayBase;
+            ) as unknown as Overlay;
             const el = test.querySelector('sp-tooltip') as Tooltip;
             const buttonRect = button.getBoundingClientRect();
             const buttonPoint = [
@@ -653,7 +653,7 @@ describe('sp-overlay', () => {
         opensDeclaratively('manual');
         describe('interaction with other non-ancestor overlays', function () {
             beforeEach(async function () {
-                this.fixture = await styledFixture<OverlayBase>(html`
+                this.fixture = await styledFixture<Overlay>(html`
                     <div>
                         ${OVERLAY_TYPES.map(
                             (type) => html`
@@ -667,19 +667,19 @@ describe('sp-overlay', () => {
 
                 this.modal = this.fixture.querySelector(
                     '[type="modal"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.page = this.fixture.querySelector(
                     '[type="page"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.hint = this.fixture.querySelector(
                     '[type="hint"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.auto = this.fixture.querySelector(
                     '[type="auto"]'
-                ) as OverlayBase;
+                ) as Overlay;
                 this.manual = this.fixture.querySelector(
                     '[type="manual"]'
-                ) as OverlayBase;
+                ) as Overlay;
 
                 expect(this.modal.open).to.be.false;
                 expect(this.page.open).to.be.false;

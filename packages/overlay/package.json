@@ -25,13 +25,13 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/AbstractOverlay.js": {
+            "development": "./src/AbstractOverlay.dev.js",
+            "default": "./src/AbstractOverlay.js"
+        },
         "./src/Overlay.js": {
             "development": "./src/Overlay.dev.js",
             "default": "./src/Overlay.js"
-        },
-        "./src/OverlayBase.js": {
-            "development": "./src/OverlayBase.dev.js",
-            "default": "./src/OverlayBase.js"
         },
         "./src/OverlayDialog.js": {
             "development": "./src/OverlayDialog.dev.js",
