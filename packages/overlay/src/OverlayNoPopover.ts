@@ -14,28 +14,25 @@ import {
     firstFocusableSlottedIn,
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { ReactiveElement } from 'lit';
+import { VirtualTrigger } from './VirtualTrigger.js';
+import {
+    Constructor,
+    OpenableElement,
+    OverlayOpenCloseDetail,
+} from './overlay-types.js';
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
-    OpenableElement,
-    OverlayBase,
     overlayTimer,
-} from './OverlayBase.js';
-import { VirtualTrigger } from './VirtualTrigger.js';
-import { OverlayOpenCloseDetail } from './overlay-types.js';
-
-type Constructor<T = Record<string, unknown>> = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    new (...args: any[]): T;
-    prototype: T;
-};
+} from './AbstractOverlay.js';
+import type { AbstractOverlay } from './AbstractOverlay.js';
 
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
-export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
+export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<ReactiveElement> {
     class OverlayWithNoPopover extends constructor {

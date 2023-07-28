@@ -36,7 +36,7 @@ import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-che
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import { OverlayBase } from 'overlay/src/OverlayBase.js';
+import type { Overlay } from 'overlay/src/Overlay.js';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -155,7 +155,7 @@ export class MenuItem extends LikeAnchor(
     private anchorElement!: HTMLAnchorElement;
 
     @query('sp-overlay')
-    public overlayElement!: OverlayBase;
+    public overlayElement!: Overlay;
 
     public override get focusElement(): HTMLElement {
         return this;
@@ -415,7 +415,7 @@ export class MenuItem extends LikeAnchor(
                 el !== this.overlayElement &&
                 (el as HTMLElement).localName === 'sp-overlay'
             );
-        }) as OverlayBase;
+        }) as Overlay;
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
 

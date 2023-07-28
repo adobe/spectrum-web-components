@@ -23,7 +23,8 @@ import {
 } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import { topLayerOverTransforms } from './topLayerOverTransforms.js';
-import type { OpenableElement, OverlayBase } from './OverlayBase.js';
+import type { OpenableElement } from './overlay-types.js';
+import type { Overlay } from './Overlay.js';
 
 type OverlayOptionsV1 = {
     abortPromise?: Promise<boolean>;
@@ -262,7 +263,7 @@ export class PlacementController implements ReactiveController {
     }
 
     hostUpdated(): void {
-        if (!(this.host as OverlayBase).open) {
+        if (!(this.host as Overlay).open) {
             this.cleanup?.();
             this.cleanup = undefined;
         }

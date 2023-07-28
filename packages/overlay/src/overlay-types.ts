@@ -13,6 +13,12 @@ governing permissions and limitations under the License.
 import type { Placement } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 
+export type Constructor<T = Record<string, unknown>> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    new (...args: any[]): T;
+    prototype: T;
+};
+
 export { Placement };
 
 export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
@@ -42,6 +48,16 @@ export interface OverlayCloseReasonDetail {
     reason?: 'external-click';
 }
 
+export type OverlayOptions = {
+    delayed?: boolean;
+    notImmediatelyClosable?: boolean;
+    offset?: number | [number, number]; // supporting multi-axis
+    placement?: Placement;
+    receivesFocus?: 'auto' | 'true' | 'false';
+    trigger?: HTMLElement | VirtualTrigger;
+    type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
+};
+
 export type OverlayOptionsV1 = {
     root?: HTMLElement;
     delayed?: boolean;
@@ -59,3 +75,9 @@ declare global {
         'sp-close': CustomEvent<OverlayOpenCloseDetail>;
     }
 }
+
+export type OpenableElement = HTMLElement & {
+    open: boolean;
+    tipElement?: HTMLElement;
+    updateComplete?: Promise<void>;
+};

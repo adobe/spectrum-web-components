@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { OverlayBase as Overlay } from './OverlayBase.js';
+import { Overlay } from './Overlay.js';
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 

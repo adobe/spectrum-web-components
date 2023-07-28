@@ -25,7 +25,7 @@ import {
 
 import { MenuItem } from './MenuItem.js';
 import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
-import { OverlayBase } from '@spectrum-web-components/overlay/src/OverlayBase.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
 import menuStyles from './menu.css.js';
 
 export interface MenuChildItem {
@@ -393,7 +393,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
         this.removeEventListener('keydown', this.handleKeydown);
     }
 
-    private descendentOverlays = new Map<OverlayBase, OverlayBase>();
+    private descendentOverlays = new Map<Overlay, Overlay>();
 
     protected handleDescendentOverlayOpened(event: Event): void {
         const target = event.composedPath()[0] as MenuItem;
@@ -412,7 +412,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     public handleSubmenuClosed = (event: Event): void => {
         event.stopPropagation();
-        const target = event.composedPath()[0] as OverlayBase;
+        const target = event.composedPath()[0] as Overlay;
         target.dispatchEvent(
             new Event('sp-menu-submenu-closed', {
                 bubbles: true,
@@ -423,7 +423,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     public handleSubmenuOpened = (event: Event): void => {
         event.stopPropagation();
-        const target = event.composedPath()[0] as OverlayBase;
+        const target = event.composedPath()[0] as Overlay;
         target.dispatchEvent(
             new Event('sp-menu-submenu-opened', {
                 bubbles: true,
@@ -708,7 +708,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
         this.descendentOverlays.forEach((overlay) => {
             overlay.open = false;
         });
-        this.descendentOverlays = new Map<OverlayBase, OverlayBase>();
+        this.descendentOverlays = new Map<Overlay, Overlay>();
     }
 
     private forwardFocusVisibleToItem(item: MenuItem): void {
