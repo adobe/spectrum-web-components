@@ -62,10 +62,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
     @property({ reflect: true })
     public variant: ButtonVariants = 'accent';
 
-    public override get target(): HTMLButtonElement | this {
-        return this;
-    }
-
     @property({ type: String })
     public type: SplitButtonTypes = 'field';
 
@@ -147,9 +143,12 @@ export class SplitButton extends SizedMixin(PickerBase) {
                         this.open ? this.optionsMenu.id : undefined
                     )}
                     class="button trigger ${this.variant}"
-                    @blur=${this.onButtonBlur}
-                    @click=${this.onButtonClick}
-                    @focus=${this.onButtonFocus}
+                    @blur=${this.handleButtonBlur}
+                    @click=${this.handleButtonClick}
+                    @keydown=${{
+                        handleEvent: this.handleEnterKeydown,
+                        capture: true,
+                    }}
                     @pointerdown=${this.handlePointerdown}
                     ?disabled=${this.disabled}
                     aria-labelledby="button"

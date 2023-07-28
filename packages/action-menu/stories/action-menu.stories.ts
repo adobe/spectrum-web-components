@@ -234,7 +234,11 @@ export const controlled = (): TemplateResult => {
             </sp-menu-item>
             <sp-menu-item>
                 Show
-                <sp-menu slot="submenu">
+                <sp-menu
+                    slot="submenu"
+                    selects="multiple"
+                    @change=${(event: Event) => event.preventDefault()}
+                >
                     <sp-menu-item
                         value="grid"
                         ?selected=${state.grid}

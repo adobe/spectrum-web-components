@@ -127,6 +127,8 @@ export function runSplitButtonTests(
 
         await elementUpdated(el1);
         await elementUpdated(el2);
+        await nextFrame();
+        await nextFrame();
 
         type NamedRoledPopupNode = {
             name: string;
