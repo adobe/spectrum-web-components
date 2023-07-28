@@ -552,10 +552,10 @@ export class Menu extends SpectrumElement {
     }
 
     public handleKeydown(event: KeyboardEvent): void {
-        if (
+        const isNotThisOrDirectChild =
             event.target !== this &&
-            this !== (event.target as HTMLElement).parentElement
-        ) {
+            this !== (event.target as HTMLElement).parentElement;
+        if (isNotThisOrDirectChild || event.defaultPrevented) {
             return;
         }
         const { code } = event;

@@ -69,10 +69,6 @@ export class PickerBase extends SizedMixin(Focusable) {
     @query('#button')
     public button!: HTMLButtonElement;
 
-    public get target(): HTMLButtonElement | this {
-        return this.button;
-    }
-
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
@@ -163,12 +159,8 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.focused = true;
     }
 
-    public onButtonBlur(): void {
+    public handleButtonBlur(): void {
         this.focused = false;
-        (this.target as HTMLButtonElement).removeEventListener(
-            'keydown',
-            this.onKeydown
-        );
     }
 
     private preventNextToggle = false;
@@ -177,7 +169,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.preventNextToggle = this.open;
     }
 
-    protected onButtonClick(): void {
+    protected handleButtonClick(): void {
+        if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
+            return;
+        }
         if (!this.preventNextToggle) {
             this.toggle();
         }
@@ -192,17 +187,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
-    public onHelperFocus(): void {
-        // set focused to true here instead of onButtonFocus so clicks don't flash a focus outline
+    public handleHelperFocus(): void {
+        // set focused to true here instead of handleButtonFocus so clicks don't flash a focus outline
         this.focused = true;
         this.button.focus();
-    }
-
-    public onButtonFocus(): void {
-        (this.target as HTMLButtonElement).addEventListener(
-            'keydown',
-            this.onKeydown
-        );
     }
 
     public handleChange(event: Event): void {
@@ -218,7 +206,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
-    protected onKeydown = (event: KeyboardEvent): void => {
+    protected handleKeydown = (event: KeyboardEvent): void => {
         this.focused = true;
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
             return;
@@ -426,7 +414,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             <span
                 id="focus-helper"
                 tabindex="${this.focused || this.open ? '-1' : '0'}"
-                @focus=${this.onHelperFocus}
+                @focus=${this.handleHelperFocus}
             ></span>
             <button
                 aria-haspopup="true"
@@ -435,9 +423,12 @@ export class PickerBase extends SizedMixin(Focusable) {
                 aria-labelledby="icon label applied-label"
                 id="button"
                 class="button"
-                @blur=${this.onButtonBlur}
-                @click=${this.onButtonClick}
-                @focus=${this.onButtonFocus}
+                @blur=${this.handleButtonBlur}
+                @click=${this.handleButtonClick}
+                @keydown=${{
+                    handleEvent: this.handleEnterKeydown,
+                    capture: true,
+                }}
                 @pointerdown=${this.handlePointerdown}
                 ?disabled=${this.disabled}
                 tabindex="-1"
@@ -481,6 +472,11 @@ export class PickerBase extends SizedMixin(Focusable) {
         super.update(changes);
     }
 
+    protected override firstUpdated(changes: PropertyValues<this>): void {
+        super.firstUpdated(changes);
+        this.button.addEventListener('keydown', this.handleKeydown);
+    }
+
     protected get dismissHelper(): TemplateResult {
         return html`
             <div class="visually-hidden">
@@ -503,6 +499,10 @@ export class PickerBase extends SizedMixin(Focusable) {
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
                 @sp-menu-item-added-or-updated=${this.shouldManageSelection}
+                @keydown=${{
+                    handleEvent: this.handleEnterKeydown,
+                    capture: true,
+                }}
             >
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>
@@ -606,6 +606,31 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private recentlyConnected = false;
 
+    private enterKeydownOn: EventTarget | null = null;
+
+    protected handleEnterKeydown = (event: KeyboardEvent): void => {
+        if (event.code !== 'Enter') {
+            return;
+        }
+
+        if (this.enterKeydownOn) {
+            event.preventDefault();
+            return;
+        } else {
+            this.addEventListener(
+                'keyup',
+                (keyupEvent: KeyboardEvent) => {
+                    if (keyupEvent.code !== 'Enter') {
+                        return;
+                    }
+                    this.enterKeydownOn = null;
+                },
+                { once: true }
+            );
+        }
+        this.enterKeydownOn = this.enterKeydownOn || event.target;
+    };
+
     public override connectedCallback(): void {
         super.connectedCallback();
         this.recentlyConnected = this.hasUpdated;
@@ -640,9 +665,13 @@ export class Picker extends PickerBase {
         return styles;
     }
 
-    protected override onKeydown = (event: KeyboardEvent): void => {
+    protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
+        if (code === 'ArrowUp' || code === 'ArrowDown') {
+            this.toggle(true);
+            return;
+        }
         if (!code.startsWith('Arrow') || this.readonly) {
             return;
         }

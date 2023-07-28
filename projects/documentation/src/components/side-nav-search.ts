@@ -29,7 +29,6 @@ import type { ResultGroup } from './search-index.js';
 import { Menu } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/search/sp-search.js';
-import { OverlayBase } from 'overlay/src/OverlayBase';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
