@@ -27,7 +27,8 @@ import { OverlayTriggerInteractions } from './overlay-types';
 import overlayTriggerStyles from './overlay-trigger.css.js';
 import '../sp-overlay.js';
 import { Placement } from '@floating-ui/dom';
-import { BeforetoggleOpenEvent, OverlayBase } from './OverlayBase.js';
+import { BeforetoggleOpenEvent } from './AbstractOverlay.js';
+import type { Overlay } from './Overlay.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
@@ -85,13 +86,13 @@ export class OverlayTrigger extends SpectrumElement {
     private targetContent: HTMLElement[] = [];
 
     @query('#click-overlay', true)
-    clickOverlayElement!: OverlayBase;
+    clickOverlayElement!: Overlay;
 
     @query('#longpress-overlay', true)
-    longpressOverlayElement!: OverlayBase;
+    longpressOverlayElement!: Overlay;
 
     @query('#hover-overlay', true)
-    hoverOverlayElement!: OverlayBase;
+    hoverOverlayElement!: Overlay;
 
     private _longpressId = `longpress-describedby-descriptor`;
 

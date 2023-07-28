@@ -51,7 +51,7 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import { OverlayBase } from '@spectrum-web-components/overlay/src/OverlayBase.js';
+import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -400,7 +400,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 .receivesFocus=${'true'}
                 @beforetoggle=${(
                     event: Event & {
-                        target: OverlayBase;
+                        target: Overlay;
                         newState: 'open' | 'closed';
                     }
                 ) => {
