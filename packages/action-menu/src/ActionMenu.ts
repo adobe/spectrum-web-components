@@ -42,10 +42,29 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
+    @property({ type: Boolean })
+    public showTooltip = true;
+
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
     private get hasLabel(): boolean {
         return this.slotHasContent;
+    }
+
+    public handleMenuOpened = (event: Event): void => {
+        event.stopPropagation();
+        this.showTooltip = false;
+    };
+
+    public handleMenuClosed1 = (event: Event): void => {
+        event.stopPropagation();
+        this.showTooltip = true;
+    };
+
+    public constructor() {
+        super();
+        this.addEventListener('sp-opened', this.handleMenuOpened);
+        this.addEventListener('sp-closed', this.handleMenuClosed1);
     }
 
     protected override get buttonContent(): TemplateResult[] {
@@ -55,6 +74,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                     <sp-icon-more class="icon"></sp-icon-more>
                 </slot>
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
+                <slot name="tooltip" ?hidden=${!this.showTooltip}></slot>
             `,
         ];
     }

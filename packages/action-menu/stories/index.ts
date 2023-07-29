@@ -27,6 +27,8 @@ export const ActionMenuMarkup = ({
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
     selects = '' as 'single',
     selected = false,
+    tooltipDescription = 'Dummy tooltip description on hovering action menu',
+    tooltipPlacement = 'bottom',
 } = {}): TemplateResult => {
     return html`
         <sp-action-menu
@@ -43,6 +45,17 @@ export const ActionMenuMarkup = ({
             ${visibleLabel
                 ? html`
                       <span slot="label">${visibleLabel}</span>
+                  `
+                : html``}
+            ${tooltipDescription
+                ? html`
+                      <sp-tooltip
+                          slot="tooltip"
+                          self-managed
+                          placement=${tooltipPlacement}
+                      >
+                          ${tooltipDescription}
+                      </sp-tooltip>
                   `
                 : html``}
             <sp-menu-item>Deselect</sp-menu-item>
