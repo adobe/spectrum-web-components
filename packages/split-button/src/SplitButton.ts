@@ -182,6 +182,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
         `;
     }
 
+    protected override bindButtonKeydownListener(): void {
+        this.trigger.addEventListener('keydown', this.handleKeydown);
+    }
+
     protected override async manageSelection(): Promise<void> {
         await this.manageSplitButtonItems();
         await super.manageSelection();

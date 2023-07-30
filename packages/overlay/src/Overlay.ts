@@ -18,6 +18,7 @@ import {
     property,
     query,
     queryAssignedElements,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
     isAndroid,
@@ -44,7 +45,7 @@ import { noop } from './AbstractOverlay.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { PlacementController } from './PlacementController.js';
 
-import styles from './overlay-base.css.js';
+import styles from './overlay.css.js';
 
 const LONGPRESS_DURATION = 300;
 
@@ -139,6 +140,9 @@ export class Overlay extends OverlayFeatures {
 
     private longressTimeout!: ReturnType<typeof setTimeout>;
 
+    @state()
+    override isVisible = false;
+
     /**
      * The `offset` property accepts either a single number, to
      * define the offset of the Overlay along the main axis from
@@ -149,7 +153,7 @@ export class Overlay extends OverlayFeatures {
     @property({ type: Number })
     offset: number | [number, number] = 6;
 
-    public placementController = new PlacementController(this);
+    protected override placementController = new PlacementController(this);
 
     @property({ type: Boolean, reflect: true })
     override get open(): boolean {
@@ -162,6 +166,7 @@ export class Overlay extends OverlayFeatures {
         this._open = open;
         if (this.open) {
             Overlay.openCount += 1;
+            this.isVisible = true;
         }
         this.requestUpdate('open', !this.open);
     }
@@ -775,7 +780,7 @@ export class Overlay extends OverlayFeatures {
 
     protected renderContent(): TemplateResult {
         return html`
-            <div part="content">
+            <div style=${styleMap(this.dialogStyleMap)} part="content">
                 <slot @slotchange=${this.handleSlotchange}></slot>
             </div>
         `;
@@ -784,7 +789,6 @@ export class Overlay extends OverlayFeatures {
     private get dialogStyleMap(): StyleInfo {
         return {
             '--swc-overlay-open-count': Overlay.openCount.toString(),
-            translate: this.hasUpdated ? null : '-999em -999em',
         };
     }
 
@@ -805,7 +809,7 @@ export class Overlay extends OverlayFeatures {
                 @close=${this.handleBrowserClose}
                 @cancel=${this.handleBrowserClose}
                 @beforetoggle=${this.handleBeforetoggle}
-                style=${styleMap(this.dialogStyleMap)}
+                ?is-visible=${this.isVisible}
             >
                 ${this.renderContent()}
             </dialog>
@@ -833,7 +837,7 @@ export class Overlay extends OverlayFeatures {
                 popover=${ifDefined(popoverValue)}
                 @beforetoggle=${this.handleBeforetoggle}
                 @close=${this.handleBrowserClose}
-                style=${styleMap(this.dialogStyleMap)}
+                ?is-visible=${this.isVisible}
             >
                 ${this.renderContent()}
             </div>

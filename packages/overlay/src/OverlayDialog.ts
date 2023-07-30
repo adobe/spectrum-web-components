@@ -41,7 +41,6 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             if (this.open !== targetOpenState) {
                 return;
             }
-            await this.dialogEnsureOnDOM();
             if (this.open !== targetOpenState) {
                 return;
             }
@@ -50,13 +49,6 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                 return;
             }
             await this.dialogApplyFocus(targetOpenState, focusEl);
-        }
-
-        protected async dialogEnsureOnDOM(): Promise<void> {
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
         }
 
         protected async dialogMakeTransition(
@@ -102,6 +94,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     return;
                 }
                 const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
+                this.isVisible = this.isVisible && targetOpenState;
                 if (index > 0) {
                     el.dispatchEvent(
                         new CustomEvent<OverlayOpenCloseDetail>(eventName, {

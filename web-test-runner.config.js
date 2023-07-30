@@ -83,7 +83,6 @@ export default {
             '**/overlay-stack.*',
             '**/overlay-utils.*',
             '**/OverlayPopover.*',
-            '**/topLayerOverTransforms.*',
         ],
         threshold: {
             statements: 98.5,

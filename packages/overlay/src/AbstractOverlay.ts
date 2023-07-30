@@ -22,6 +22,7 @@ import type {
 import { Overlay } from './Overlay.js';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import { OverlayTimer } from './overlay-timer.js';
+import { PlacementController } from './PlacementController.js';
 
 export const overlayTimer = new OverlayTimer();
 
@@ -125,6 +126,7 @@ export class AbstractOverlay extends SpectrumElement {
     };
     dispose = noop;
     elements!: OpenableElement[];
+    isVisible!: boolean;
     protected async manageDialogOpen(): Promise<void> {
         return;
     }
@@ -140,6 +142,7 @@ export class AbstractOverlay extends SpectrumElement {
     set open(_open: boolean) {
         return;
     }
+    protected placementController!: PlacementController;
     receivesFocus!: 'true' | 'false' | 'auto';
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;

@@ -475,9 +475,13 @@ export class PickerBase extends SizedMixin(Focusable) {
         super.update(changes);
     }
 
+    protected bindButtonKeydownListener(): void {
+        this.button.addEventListener('keydown', this.handleKeydown);
+    }
+
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
-        this.button.addEventListener('keydown', this.handleKeydown);
+        this.bindButtonKeydownListener();
     }
 
     protected get dismissHelper(): TemplateResult {
