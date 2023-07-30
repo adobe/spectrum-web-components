@@ -114,6 +114,7 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
                     return;
                 }
                 const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
+                this.isVisible = this.isVisible && targetOpenState;
                 el.dispatchEvent(
                     new CustomEvent<OverlayOpenCloseDetail>(eventName, {
                         bubbles: false,

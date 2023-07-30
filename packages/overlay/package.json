@@ -73,7 +73,6 @@
             "development": "./src/loader.dev.js",
             "default": "./src/loader.js"
         },
-        "./src/overlay-base.css.js": "./src/overlay-base.css.js",
         "./src/overlay-events.js": {
             "development": "./src/overlay-events.dev.js",
             "default": "./src/overlay-events.js"
@@ -87,6 +86,7 @@
             "development": "./src/overlay-types.dev.js",
             "default": "./src/overlay-types.js"
         },
+        "./src/overlay.css.js": "./src/overlay.css.js",
         "./src/topLayerOverTransforms.js": {
             "development": "./src/topLayerOverTransforms.dev.js",
             "default": "./src/topLayerOverTransforms.js"
@@ -126,7 +126,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@floating-ui/dom": "1.2.1",
+        "@floating-ui/dom": "^1.5.1",
+        "@floating-ui/utils": "0.1.1",
         "@spectrum-web-components/action-button": "^0.36.0",
         "@spectrum-web-components/base": "^0.36.0",
         "@spectrum-web-components/reactive-controllers": "^0.36.0",

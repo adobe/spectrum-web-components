@@ -69,8 +69,21 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             }
         }
 
-        private async ensureOnDOM(targetOpenState: boolean): Promise<void> {
-            await nextFrame();
+        private async shouldHidePopover(
+            targetOpenState: boolean
+        ): Promise<void> {
+            if (targetOpenState && this.open !== targetOpenState) {
+                return;
+            }
+            // When in a parent Overlay, this Overlay may need to position itself
+            // while closing in due to the parent _also_ closing which means the
+            // location can no longer rely on "top layer over transform" math.
+            await this.placementController.resetOverlayPosition();
+        }
+
+        private async shouldShowPopover(
+            targetOpenState: boolean
+        ): Promise<void> {
             let popoverOpen = false;
             try {
                 popoverOpen = this.dialogEl.matches(':popover-open');
@@ -91,6 +104,12 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                 this.dialogEl.showPopover();
                 await this.managePosition();
             }
+        }
+
+        private async ensureOnDOM(targetOpenState: boolean): Promise<void> {
+            await nextFrame();
+            await this.shouldHidePopover(targetOpenState);
+            await this.shouldShowPopover(targetOpenState);
             await nextFrame();
         }
 
@@ -134,6 +153,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                     const eventName = targetOpenState
                         ? 'sp-opened'
                         : 'sp-closed';
+                    this.isVisible = this.isVisible && targetOpenState;
                     if (index > 0) {
                         el.dispatchEvent(
                             new CustomEvent<OverlayOpenCloseDetail>(eventName, {

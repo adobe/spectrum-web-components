@@ -3,4 +3,3 @@ packages/*/node_modules/**/*
 tools/**/*.d.ts
 tools/*/node_modules/**/*
 config/*
-packages/overlay/src/topLayerOverTransforms.ts

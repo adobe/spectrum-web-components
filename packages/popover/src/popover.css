@@ -24,12 +24,6 @@ governing permissions and limitations under the License.
     overscroll-behavior: contain;
 }
 
-@supports selector(:popover-open) {
-    * {
-        --mod-popover-filter: var(--spectrum-popover-filter);
-    }
-}
-
 /* orient the tip */
 
 :host([placement*='left']) #tip[style],

@@ -1373,6 +1373,7 @@ export const virtualElement = (args: Properties): TemplateResult => {
             placement: args.placement,
             offset: 0,
             notImmediatelyClosable: true,
+            type: 'auto',
         });
         trigger.insertAdjacentElement('afterend', overlay);
     };
