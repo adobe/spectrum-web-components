@@ -266,6 +266,7 @@ governing permissions and limitations under the License.
         --mod-sidenav-text-font-weight,
         var(--spectrum-sidenav-text-font-weight)
     );
+    -webkit-hyphens: auto;
     hyphens: auto;
     inline-size: var(--mod-sidenav-width, var(--spectrum-sidenav-width));
     justify-content: start;
