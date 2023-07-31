@@ -13,7 +13,7 @@
         "build": "wireit",
         "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
         "build:component-inventory": "node ./tasks/build-component-inventory.js",
-        "build:confirm": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,close-button,clear-button,iconset,modal,shared,styles,custom-vars-viewer},@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- test -f src/index.js",
+        "build:confirm": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,close-button,clear-button,iconset,modal,shared,styles,custom-vars-viewer,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- test -f src/index.js",
         "build:css": "wireit",
         "build:css:watch": "wireit",
         "build:react": "yarn gen-react-wrapper && node ./tasks/build-react.js && yarn tsc --build tsconfig-react-wrapper.json",
