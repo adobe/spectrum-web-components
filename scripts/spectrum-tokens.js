@@ -71,6 +71,7 @@ const tokenPackages = [
     'search',
     'tabs',
     'actionbar',
+    'alertdialog',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
