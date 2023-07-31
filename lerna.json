@@ -1,12 +1,6 @@
 {
-    "packages": [
-        "linters/*",
-        "packages/*",
-        "projects/*",
-        "tools/*",
-        "react/*"
-    ],
-    "version": "0.34.0",
+    "packages": ["linters/*", "packages/*", "projects/*", "tools/*", "react/*"],
+    "version": "0.35.0",
     "granularPathspec": false,
     "npmClient": "yarn",
     "useWorkspaces": true,

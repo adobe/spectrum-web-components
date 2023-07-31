@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **swatch:** clear previously selected children when updating `selected` ([ce1bd36](https://github.com/adobe/spectrum-web-components/commit/ce1bd360dcb1ae0afdf694f4eeabbf735d1b6c74))
+-   **swatch:** warn when mixed-value used with selects !== 'multiple' ([#3460](https://github.com/adobe/spectrum-web-components/issues/3460)) ([89c288e](https://github.com/adobe/spectrum-web-components/commit/89c288ef12e8d879f6e3c12a1e0ea94828797b50))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes
