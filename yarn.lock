@@ -2513,13 +2513,6 @@
   dependencies:
     "@swc/helpers" "^0.4.14"
 
-"@internationalized/number@^3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@internationalized/number/-/number-3.2.1.tgz#570e4010544a84a8225e65b34a689a36187caaa8"
-  integrity sha512-hK30sfBlmB1aIe3/OwAPg9Ey0DjjXvHEiGVhNaOiBJl31G0B6wMaX8BN3ibzdlpyRNE9p7X+3EBONmxtJO9Yfg==
-  dependencies:
-    "@swc/helpers" "^0.5.0"
-
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@isaacs/cliui/-/cliui-8.0.2.tgz#b37667b7bc181c168782259bab42474fbf52b550"
