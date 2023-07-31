@@ -194,6 +194,8 @@ export function runSplitButtonTests(
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
         const trigger = el.shadowRoot?.querySelector('.trigger');
         expect(trigger).to.have.attribute('aria-expanded', 'false');
@@ -238,6 +240,8 @@ export function runSplitButtonTests(
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
         const trigger = el.shadowRoot?.querySelector('.trigger');
         expect(trigger).to.have.attribute('aria-expanded', 'false');

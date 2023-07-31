@@ -174,7 +174,6 @@ export const form = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >
@@ -538,7 +537,6 @@ export const tooltips = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >

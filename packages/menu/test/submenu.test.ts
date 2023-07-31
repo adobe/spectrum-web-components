@@ -281,7 +281,7 @@ describe('Submenu', () => {
             closeKey: 'ArrowRight' | 'ArrowLeft';
         }[]
     ).map((testData) => {
-        it(`selects - keyboard: ${testData.dir}`, async () => {
+        it(`selects - keyboard: ${testData.dir}`, async function () {
             const rootChanged = spy();
             const submenuChanged = spy();
             const el = await styledFixture<Menu>(
@@ -320,6 +320,7 @@ describe('Submenu', () => {
             await elementUpdated(el);
             const rootItem = el.querySelector('.root') as MenuItem;
             const submenu = el.querySelector('[slot="submenu"]') as Menu;
+            const submenuItem = el.querySelector('.submenu-item-2') as MenuItem;
             expect(rootItem.open).to.be.false;
             el.focus();
             await elementUpdated(el);
@@ -359,6 +360,13 @@ describe('Submenu', () => {
             await sendKeys({
                 press: 'ArrowDown',
             });
+            await elementUpdated(submenuItem);
+            await nextFrame();
+            await nextFrame();
+
+            expect(submenu.getAttribute('aria-activedescendant')).to.equal(
+                submenuItem.id
+            );
 
             closed = oneEvent(rootItem, 'sp-closed');
             sendKeys({

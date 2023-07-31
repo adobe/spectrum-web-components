@@ -118,15 +118,36 @@ export const guaranteedAllTransitionend = (
     action();
 };
 
+export function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
 export class AbstractOverlay extends SpectrumElement {
+    protected async applyFocus(
+        _targetOpenState: boolean,
+        _focusEl: HTMLElement | null
+    ): Promise<void> {
+        return;
+    }
     delayed!: boolean;
     dialogEl!: HTMLDialogElement & {
         showPopover(): void;
         hidePopover(): void;
     };
     dispose = noop;
+    protected async ensureOnDOM(_targetOpenState: boolean): Promise<void> {
+        return;
+    }
     elements!: OpenableElement[];
     isVisible!: boolean;
+    protected async makeTransition(
+        _targetOpenState: boolean
+    ): Promise<HTMLElement | null> {
+        return null;
+    }
+    protected async manageDelay(_targetOpenState: boolean): Promise<void> {
+        return;
+    }
     protected async manageDialogOpen(): Promise<void> {
         return;
     }
@@ -223,6 +244,8 @@ export class AbstractOverlay extends SpectrumElement {
             const trigger = triggerOrContent;
             const interaction = interactionOrOptions;
             const options = optionsV1;
+            overlay.delayed =
+                options.delayed || overlayContent.hasAttribute('delayed');
             overlay.receivesFocus = options.receivesFocus ?? 'auto';
             overlay.triggerElement = options.virtualTrigger || trigger;
             overlay.type =
@@ -242,6 +265,8 @@ export class AbstractOverlay extends SpectrumElement {
 
         const options = interactionOrOptions as OverlayOptions;
         overlay.append(overlayContent);
+        overlay.delayed =
+            options.delayed || overlayContent.hasAttribute('delayed');
         overlay.receivesFocus = options.receivesFocus ?? 'auto';
         overlay.triggerElement = options.trigger || null;
         overlay.type = options.type || 'modal';

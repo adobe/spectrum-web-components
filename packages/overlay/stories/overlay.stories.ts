@@ -512,7 +512,7 @@ export const complexModal = (): TemplateResult => {
                 --swc-test-duration: 1ms;
             }
         </style>
-        <overlay-trigger type="modal" placement="none" open="click">
+        <overlay-trigger type="modal" open="click">
             <sp-dialog-wrapper
                 slot="click-content"
                 headline="Dialog title"
@@ -934,7 +934,7 @@ export const longpress = (): TemplateResult => {
 export const modalLoose = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
-        <overlay-trigger type="modal" placement="none">
+        <overlay-trigger type="modal">
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog
                 size="s"
@@ -966,7 +966,7 @@ export const modalLoose = (): TemplateResult => {
 export const modalManaged = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
-        <overlay-trigger type="modal" placement="none">
+        <overlay-trigger type="modal">
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog-wrapper
                 underlay
@@ -1106,7 +1106,7 @@ export const sideHoverDraggable = (): TemplateResult => {
 
 export const superComplexModal = (): TemplateResult => {
     return html`
-        <overlay-trigger type="modal" placement="none">
+        <overlay-trigger type="modal">
             <sp-button slot="trigger" variant="accent">Toggle Dialog</sp-button>
             <sp-popover slot="click-content">
                 <sp-dialog size="s">
