@@ -29,6 +29,8 @@ import { Calendar } from '@spectrum-web-components/calendar';
 
 ## To-do list
 
+-   Implement a cache mechanism to store the value of `today` and use this value to initialise `currentDate`
+-   Include a condition to run the `setWeekdays()` method only when really needed
 -   Attribute 'role="heading"' removed, due to error 'The "heading" role requires the attribute "aria-level"'
 -   Translate the "Previous" text used in the "title" and "aria-label" of the button displayed in the header of the calendar
 -   Translate the "Next" text used in the "title" and "aria-label" of the button displayed in the header of the calendar

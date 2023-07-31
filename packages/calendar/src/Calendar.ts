@@ -32,6 +32,7 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
+    ClassInfo,
     classMap,
     ifDefined,
 } from '@spectrum-web-components/base/src/directives.js';
@@ -110,6 +111,7 @@ export class Calendar extends SpectrumElement {
         return this.languageResolver.language;
     }
 
+    // TODO: Implement a cache mechanism to store the value of `today` and use this value to initialise `currentDate`
     public get today(): CalendarDate {
         return today(this.timeZone);
     }
@@ -135,6 +137,8 @@ export class Calendar extends SpectrumElement {
         }
 
         this.setWeeksInCurrentMonth();
+
+        // TODO: Include a condition to run the `setWeekdays()` method only when really needed
         this.setWeekdays();
     }
 
@@ -173,7 +177,7 @@ export class Calendar extends SpectrumElement {
                     size="s"
                     aria-label="Previous"
                     title="Previous"
-                    class="spectrum-ActionButton spectrum-Calendar-prevMonth"
+                    class="spectrum-Calendar-prevMonth"
                     ?disabled=${this.disabled}
                     @click=${this.handlePreviousMonth}
                 >
@@ -193,7 +197,7 @@ export class Calendar extends SpectrumElement {
                     size="s"
                     aria-label="Next"
                     title="Next"
-                    class="spectrum-ActionButton spectrum-Calendar-nextMonth"
+                    class="spectrum-Calendar-nextMonth"
                     ?disabled=${this.disabled}
                     @click=${this.handleNextMonth}
                 >
@@ -287,7 +291,8 @@ export class Calendar extends SpectrumElement {
                 (this.maxDate && calendarDate.compare(this.maxDate) > 0)
         );
 
-        const dayClasses = {
+        const dayClasses: ClassInfo = {
+            'spectrum-Calendar-date': true,
             'is-outsideMonth': isOutsideMonth,
             'is-selected': isSelected,
             'is-today': isToday,
@@ -313,7 +318,7 @@ export class Calendar extends SpectrumElement {
             >
                 <span
                     role="presentation"
-                    class="spectrum-Calendar-date ${classMap(dayClasses)}"
+                    class=${classMap(dayClasses)}
                     @click=${() => this.handleDayClick(calendarDate)}
                 >
                     ${this.formatNumber(calendarDate.day)}
