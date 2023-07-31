@@ -18,6 +18,7 @@
         { "path": "../../packages/banner" },
         { "path": "../../packages/button" },
         { "path": "../../packages/button-group" },
+        { "path": "../../packages/calendar" },
         { "path": "../../packages/card" },
         { "path": "../../packages/checkbox" },
         { "path": "../../packages/coachmark" },
