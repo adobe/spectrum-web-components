@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import type { MiddlewareState } from '@floating-ui/dom';
+import type { Middleware, MiddlewareState } from '@floating-ui/dom';
 import { getContainingBlock, getWindow } from '@floating-ui/utils/dom';
 
-export const topLayerOverTransforms = () => ({
+export const topLayerOverTransforms = (): Middleware => ({
     name: 'topLayer',
     async fn(middlewareArguments: MiddlewareState) {
         const {
@@ -29,15 +29,15 @@ export const topLayerOverTransforms = () => ({
         try {
             onTopLayer = onTopLayer || floating.matches(':popover-open');
             // eslint-disable-next-line no-empty
-        } catch (e) {}
+        } catch (error) {}
         try {
             onTopLayer = onTopLayer || floating.matches(':open');
             // eslint-disable-next-line no-empty
-        } catch (e) {}
+        } catch (error) {}
         try {
             onTopLayer = onTopLayer || floating.matches(':modal');
             // eslint-disable-next-line no-empty
-        } catch (e) {}
+        } catch (error) {}
         topLayerIsFloating = onTopLayer;
         if (!onTopLayer) {
             const dialogAncestorQueryEvent = new Event(
@@ -57,7 +57,7 @@ export const topLayerOverTransforms = () => ({
                                     // console.log(el);
                                 }
                                 // eslint-disable-next-line no-empty
-                            } catch (e) {}
+                            } catch (error) {}
                         }
                     );
                 },
@@ -75,8 +75,8 @@ export const topLayerOverTransforms = () => ({
             overTransforms = true;
         }
 
-        if (onTopLayer && overTransforms) {
-            const rect = containingBlock!.getBoundingClientRect();
+        if (onTopLayer && overTransforms && containingBlock) {
+            const rect = containingBlock.getBoundingClientRect();
             diffCoords.x = rect.x;
             diffCoords.y = rect.y;
         }

@@ -692,7 +692,7 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
             it.skip('manages multiple layers of `type="modal"', async () => {
                 const el = await fixture(html`
-                    <overlay-trigger type="modal" placement="none">
+                    <overlay-trigger type="modal">
                         <sp-button slot="trigger" variant="accent">
                             Toggle Dialog
                         </sp-button>

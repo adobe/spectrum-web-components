@@ -35,7 +35,7 @@ import {
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 
-import { AbstractOverlay } from './AbstractOverlay.js';
+import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
 import { OverlayDialog } from './OverlayDialog.js';
 import { OpenableElement, OverlayTypes, Placement } from './overlay-types.js';
 import { OverlayPopover } from './OverlayPopover.js';
@@ -263,6 +263,51 @@ export class Overlay extends OverlayFeatures {
             trigger,
             type: this.type,
         });
+    }
+
+    protected override async managePopoverOpen(): Promise<void> {
+        super.managePopoverOpen();
+        const targetOpenState = this.open;
+        if (this.open !== targetOpenState) {
+            return;
+        }
+        await this.manageDelay(targetOpenState);
+        if (this.open !== targetOpenState) {
+            return;
+        }
+        await this.ensureOnDOM(targetOpenState);
+        if (this.open !== targetOpenState) {
+            return;
+        }
+        const focusEl = await this.makeTransition(targetOpenState);
+        if (this.open !== targetOpenState) {
+            return;
+        }
+        await this.applyFocus(targetOpenState, focusEl);
+    }
+
+    protected override async applyFocus(
+        targetOpenState: boolean,
+        focusEl: HTMLElement | null
+    ): Promise<void> {
+        // Do not move focus when explicitly told not to
+        // and when the Overlay is a "hint"
+        if (this.receivesFocus === 'false' || this.type === 'hint') {
+            return;
+        }
+
+        await nextFrame();
+        await nextFrame();
+        if (targetOpenState === this.open && !this.open) {
+            if (
+                this.hasNonVirtualTrigger &&
+                this.contains((this.getRootNode() as Document).activeElement)
+            ) {
+                (this.triggerElement as HTMLElement).focus();
+            }
+            return;
+        }
+        focusEl?.focus();
     }
 
     protected async manageOpen(oldOpen: boolean): Promise<void> {
@@ -713,7 +758,6 @@ export class Overlay extends OverlayFeatures {
                 }
                 // If you don't know where the focus went, we can't do anyting here.
                 if (!event.relatedTarget) {
-                    // this.open = false;
                     return;
                 }
                 const relationEvent = new Event('overlay-relation-query', {

@@ -191,7 +191,7 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(overlayTrigger1.open).to.be.undefined;
         expect(overlayTrigger2.open).to.equal('hover');
     });
-    it.only('does not close ancestor "click" overlays on `click`', async () => {
+    it('does not close ancestor "click" overlays on `click`', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${deep()}</div>
         `);

@@ -24,39 +24,18 @@ import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
+    nextFrame,
     overlayTimer,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
-
-function nextFrame(): Promise<void> {
-    return new Promise((res) => requestAnimationFrame(() => res()));
-}
 
 export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<ReactiveElement> {
     class OverlayWithPopover extends constructor {
-        protected override async managePopoverOpen(): Promise<void> {
-            const targetOpenState = this.open;
-            if (this.open !== targetOpenState) {
-                return;
-            }
-            await this.manageDelay(targetOpenState);
-            if (this.open !== targetOpenState) {
-                return;
-            }
-            await this.ensureOnDOM(targetOpenState);
-            if (this.open !== targetOpenState) {
-                return;
-            }
-            const focusEl = await this.makeTransition(targetOpenState);
-            if (this.open !== targetOpenState) {
-                return;
-            }
-            await this.applyFocus(targetOpenState, focusEl);
-        }
-
-        private async manageDelay(targetOpenState: boolean): Promise<void> {
+        protected override async manageDelay(
+            targetOpenState: boolean
+        ): Promise<void> {
             if (targetOpenState === false || targetOpenState !== this.open) {
                 overlayTimer.close(this);
                 return;
@@ -106,14 +85,16 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             }
         }
 
-        private async ensureOnDOM(targetOpenState: boolean): Promise<void> {
+        protected override async ensureOnDOM(
+            targetOpenState: boolean
+        ): Promise<void> {
             await nextFrame();
             await this.shouldHidePopover(targetOpenState);
             await this.shouldShowPopover(targetOpenState);
             await nextFrame();
         }
 
-        private async makeTransition(
+        protected override async makeTransition(
             targetOpenState: boolean
         ): Promise<HTMLElement | null> {
             if (this.open !== targetOpenState) {
@@ -234,38 +215,6 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                 );
             });
             return focusEl;
-        }
-
-        private async applyFocus(
-            targetOpenState: boolean,
-            focusEl: HTMLElement | null
-        ): Promise<void> {
-            // Do not move focus when explicitly told not to
-            // and when the Overlay is a "hint"
-            if (this.receivesFocus === 'false' || this.type === 'hint') {
-                return;
-            }
-
-            await nextFrame();
-            await nextFrame();
-            if (targetOpenState === this.open && !this.open) {
-                if (
-                    // Only return focus when the trigger is not "virtual"
-                    this.triggerElement &&
-                    !(this.triggerElement instanceof VirtualTrigger)
-                ) {
-                    if (
-                        this.contains(
-                            (this.getRootNode() as Document).activeElement
-                        )
-                    ) {
-                        this.triggerElement.focus();
-                    }
-                }
-                return;
-            }
-
-            focusEl?.focus();
         }
     }
     return OverlayWithPopover;

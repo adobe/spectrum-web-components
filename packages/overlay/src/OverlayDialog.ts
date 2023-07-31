@@ -27,10 +27,6 @@ import {
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 
-function nextFrame(): Promise<void> {
-    return new Promise((res) => requestAnimationFrame(() => res()));
-}
-
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<ReactiveElement> {
@@ -161,36 +157,11 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             focusEl: HTMLElement | null
         ): Promise<void> {
             /**
-             * Focus should handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
+             * Focus should be handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
              * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
              * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
              **/
-            if (this.receivesFocus === 'false') {
-                return;
-            }
-
-            await nextFrame();
-            await nextFrame();
-            if (targetOpenState === this.open && !this.open) {
-                if (
-                    // Do not return focus to trigger when overlay is a "hint" (tooltip)
-                    this.type !== 'hint' &&
-                    // Only return focus when the trigger is not "virtual"
-                    this.triggerElement &&
-                    !(this.triggerElement instanceof VirtualTrigger)
-                ) {
-                    if (
-                        this.contains(
-                            (this.getRootNode() as Document).activeElement
-                        )
-                    ) {
-                        this.triggerElement.focus();
-                    }
-                }
-                return;
-            }
-
-            focusEl?.focus();
+            this.applyFocus(targetOpenState, focusEl);
         }
     }
     return OverlayWithDialog;

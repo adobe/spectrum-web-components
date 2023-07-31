@@ -123,14 +123,23 @@ export class PlacementController implements ReactiveController {
                 );
             });
             cleanup();
+            this.updateCount = 0;
         };
     }
 
+    updateCount = 0;
+
     updatePlacement = (): void => {
-        if (this.options.type !== 'modal' && this.cleanup) {
+        // For some reason Safari steps through here twice just to get started...
+        if (
+            this.updateCount > 1 &&
+            this.options.type !== 'modal' &&
+            this.cleanup
+        ) {
             this.target.dispatchEvent(new Event('close', { bubbles: true }));
             return;
         }
+        this.updateCount += 1;
         this.computePlacement();
     };
 

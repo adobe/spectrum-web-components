@@ -283,12 +283,8 @@ describe('Overlay Trigger - Hover', () => {
         expect(el.open).to.be.undefined;
     });
     it('will not return focus to a "modal" parent', async () => {
-        // // There is an `sp-dialog-base` recyling issue in Firefox
-        // if (isFirefox()) {
-        //     return;
-        // }
         const el = await styledFixture<OverlayTrigger>(html`
-            <overlay-trigger type="modal" placement="none">
+            <overlay-trigger type="modal">
                 <sp-button slot="trigger">Toggle Dialog</sp-button>
                 <sp-dialog-wrapper
                     slot="click-content"

@@ -435,8 +435,9 @@ describe('sp-overlay', () => {
                     },
                 ],
             });
-            await nextFrame();
-            await nextFrame();
+            await elementUpdated(overlay);
+            // Allow the overlay process time to get started (we're not waiting for it to finish),
+            // so that the next step can happen _while_ it opens.
             await nextFrame();
             await nextFrame();
             expect(overlay.open).to.be.true;
@@ -467,6 +468,7 @@ describe('sp-overlay', () => {
                     },
                 ],
             });
+            // Give the Overlay some time to process what just happened.
             await nextFrame();
             await nextFrame();
             expect(overlay.open).to.be.true;
