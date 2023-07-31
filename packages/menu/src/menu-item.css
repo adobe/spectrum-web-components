@@ -36,22 +36,12 @@ governing permissions and limitations under the License.
     margin-left: auto;
 }
 
-/* .checkmark {
-    color: var(
-        --highcontrast-menu-checkmark-icon-color-default,
-        var(
-            --mod-menu-checkmark-icon-color-default,
-            var(--spectrum-menu-checkmark-icon-color-default)
-        )
-    );
+/* N: Manually adding this selector because I can't use this selector in 
+** spectrum-menu.css without touching all the other `.spectrum-Menu-item`s in
+** that file which I don't want to surface 
+*/
+@media (forced-colors: active) {
+    :host {
+        forced-color-adjust: none;
+    }
 }
-
-.chevron {
-    color: var(
-        --highcontrast-menu-drillin-icon-color-default,
-        var(
-            --mod-menu-drillin-icon-color-default,
-            var(--spectrum-menu-drillin-icon-color-default)
-        )
-    );
-} */

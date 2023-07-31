@@ -73,13 +73,6 @@ const config = {
                 },
             ],
             components: [
-                {
-                    find: {
-                        type: 'pseudo-class',
-                        kind: 'focus-visible',
-                    },
-                    replace: builder.attribute('focused'),
-                },
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-active', 'active'),
@@ -111,6 +104,13 @@ const config = {
                     'spectrum-menu-itemSelection',
                     'menu-itemSelection'
                 ),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'focus-visible',
+                    },
+                    replace: builder.attribute('focused'),
+                },
                 {
                     find: [builder.class('spectrum-Menu-itemLabel--wrapping')],
                     replace: [
@@ -351,6 +351,7 @@ const config = {
                     builder.class('spectrum-Menu-item'),
                     builder.class('is-selected'),
                 ],
+                // [builder.class('spectrum-Menu-item')],
             ],
             components: [
                 converter.classToHost(),
