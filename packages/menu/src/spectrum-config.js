@@ -73,6 +73,13 @@ const config = {
                 },
             ],
             components: [
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'focus-visible',
+                    },
+                    replace: builder.attribute('focused'),
+                },
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-active', 'active'),
