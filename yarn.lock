@@ -5420,9 +5420,9 @@
   integrity sha512-MBreca2cSkkgttp2NgNiJY+rzo3zwOxUZ7UCBBO/csH/3wt4RSHIusU5Xk8G88mbP/f9EINvree5uSZ+jxxreQ==
 
 "@spectrum-css/fieldlabel@^7.0.16":
-  version "7.0.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-7.0.16.tgz#7ac4ffb8f5c488ce406397a244c88017e7480fe5"
-  integrity sha512-fTeo9zAvYJODIikfCGYSFfi9py1GCl+Y7eU82a3RMmL/w08D++oN5kfGVCK5D19Rs+2Llr8FY4UT0KkjlG2odQ==
+  version "7.0.19"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-7.0.19.tgz#6c2efdcd2b507c7e8d91a036ae32fc44cf4b6f4b"
+  integrity sha512-CoNxDjMQw9XhIrcwsxPn3geYZK+hoOuFrzGwev0CJWxe+8sOE92en5AzZJTGbQ4PhZwnlhCXDP0kopfSqDf00Q==
 
 "@spectrum-css/helptext@^4.0.42":
   version "4.0.42"
@@ -5605,7 +5605,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "1.1.1"
+  version "0.35.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
