@@ -634,6 +634,7 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-drillin-icon-color-default)
         )
     );
+    margin-inline-end: 0;
     margin-inline-start: var(
         --mod-menu-item-label-to-value-area-min-spacing,
         var(--spectrum-menu-item-label-to-value-area-min-spacing)
