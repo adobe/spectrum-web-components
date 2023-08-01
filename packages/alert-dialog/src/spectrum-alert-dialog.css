@@ -1,0 +1,190 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-alert-dialog-min-width: var(
+        --spectrum-alert-dialog-minimum-width
+    );
+    --spectrum-alert-dialog-max-width: var(
+        --spectrum-alert-dialog-maximum-width
+    );
+    --spectrum-alert-dialog-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-alert-dialog-warning-icon-color: var(
+        --spectrum-notice-visual-color
+    );
+    --spectrum-alert-dialog-error-icon-color: var(
+        --spectrum-negative-visual-color
+    );
+    --spectrum-alert-dialog-title-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-alert-dialog-title-font-weight: var(
+        --spectrum-heading-sans-serif-font-weight
+    );
+    --spectrum-alert-dialog-title-font-style: var(
+        --spectrum-heading-sans-serif-font-style
+    );
+    --spectrum-alert-dialog-title-font-size: var(
+        --spectrum-alert-dialog-title-size
+    );
+    --spectrum-alert-dialog-title-line-height: var(
+        --spectrum-heading-line-height
+    );
+    --spectrum-alert-dialog-title-color: var(--spectrum-heading-color);
+    --spectrum-alert-dialog-body-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-alert-dialog-body-font-weight: var(
+        --spectrum-body-sans-serif-font-weight
+    );
+    --spectrum-alert-dialog-body-font-style: var(
+        --spectrum-body-sans-serif-font-style
+    );
+    --spectrum-alert-dialog-body-font-size: var(
+        --spectrum-alert-dialog-description-size
+    );
+    --spectrum-alert-dialog-body-line-height: var(--spectrum-line-height-100);
+    --spectrum-alert-dialog-body-color: var(--spectrum-body-color);
+    --spectrum-alert-dialog-title-to-divider: var(--spectrum-spacing-200);
+    --spectrum-alert-dialog-divider-to-description: var(--spectrum-spacing-300);
+    --spectrum-alert-dialog-title-to-icon: var(--spectrum-spacing-300);
+    --mod-buttongroup-justify-content: flex-end;
+}
+:host {
+    box-sizing: border-box;
+    display: flex;
+    inline-size: -moz-fit-content;
+    inline-size: fit-content;
+    max-inline-size: var(
+        --mod-alert-dialog-max-width,
+        var(--spectrum-alert-dialog-max-width)
+    );
+    max-height: inherit;
+    min-inline-size: var(
+        --mod-alert-dialog-min-width,
+        var(--spectrum-alert-dialog-min-width)
+    );
+    outline: none;
+    padding: var(
+        --mod-alert-dialog-padding,
+        var(--spectrum-alert-dialog-padding)
+    );
+}
+.spectrum-Icon {
+    block-size: var(
+        --mod-alert-dialog-icon-size,
+        var(--spectrum-alert-dialog-icon-size)
+    );
+    flex-shrink: 0;
+    inline-size: var(
+        --mod-alert-dialog-icon-size,
+        var(--spectrum-alert-dialog-icon-size)
+    );
+    margin-left: var(
+        --mod-alert-dialog-title-to-icon,
+        var(--spectrum-alert-dialog-title-to-icon)
+    );
+}
+.spectrum-AlertDialog--warning {
+    --mod-icon-color: var(
+        --mod-alert-dialog-warning-icon-color,
+        var(--spectrum-alert-dialog-warning-icon-color)
+    );
+}
+.spectrum-AlertDialog--error {
+    --mod-icon-color: var(
+        --mod-alert-dialog-error-icon-color,
+        var(--spectrum-alert-dialog-error-icon-color)
+    );
+}
+.spectrum-AlertDialog-grid {
+    display: grid;
+}
+.spectrum-AlertDialog-header {
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+}
+.spectrum-AlertDialog-heading {
+    color: var(
+        --mod-alert-dialog-title-color,
+        var(--spectrum-alert-dialog-title-color)
+    );
+    font-family: var(
+        --mod-alert-dialog-title-font-family,
+        var(--spectrum-alert-dialog-title-font-family)
+    );
+    font-size: var(
+        --mod-alert-dialog-title-font-size,
+        var(--spectrum-alert-dialog-title-font-size)
+    );
+    font-style: var(
+        --mod-alert-dialog-title-font-style,
+        var(--spectrum-alert-dialog-title-font-style)
+    );
+    font-weight: var(
+        --mod-alert-dialog-title-font-weight,
+        var(--spectrum-alert-dialog-title-font-weight)
+    );
+    line-height: var(
+        --mod-alert-dialog-title-line-height,
+        var(--spectrum-alert-dialog-title-line-height)
+    );
+    margin: 0;
+    margin-block-end: var(
+        --mod-alert-dialog-title-to-divider,
+        var(--spectrum-alert-dialog-title-to-divider)
+    );
+}
+.spectrum-AlertDialog-content {
+    -webkit-overflow-scrolling: touch;
+    color: var(
+        --mod-alert-dialog-body-color,
+        var(--spectrum-alert-dialog-body-color)
+    );
+    font-family: var(
+        --mod-alert-dialog-body-font-family,
+        var(--spectrum-alert-dialog-body-font-family)
+    );
+    font-size: var(
+        --mod-alert-dialog-body-font-size,
+        var(--spectrum-alert-dialog-body-font-size)
+    );
+    font-style: var(
+        --mod-alert-dialog-body-font-style,
+        var(--spectrum-alert-dialog-body-font-style)
+    );
+    font-weight: var(
+        --mod-alert-dialog-body-font-weight,
+        var(--spectrum-alert-dialog-body-font-weight)
+    );
+    line-height: var(
+        --mod-alert-dialog-body-line-height,
+        var(--spectrum-alert-dialog-body-line-height)
+    );
+    margin: 0;
+    margin-block-end: var(
+        --mod-alert-dialog-description-to-buttons,
+        var(--spectrum-alert-dialog-description-to-buttons)
+    );
+    margin-block-start: var(
+        --mod-alert-dialog-divider-to-description,
+        var(--spectrum-alert-dialog-divider-to-description)
+    );
+    overflow-y: auto;
+}
+@media (forced-colors: active) {
+    :host {
+        border: solid;
+    }
+}

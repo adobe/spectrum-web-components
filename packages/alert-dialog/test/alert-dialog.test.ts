@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-alert-dialog.js';
-import { AlertDialog } from '..';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
+import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('AlertDialog', () => {

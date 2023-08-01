@@ -16,10 +16,29 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "type": "module",
-    "exports": {},
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/AlertDialog.js": {
+            "development": "./src/AlertDialog.dev.js",
+            "default": "./src/AlertDialog.js"
+        },
+        "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-alert-dialog.js": {
+            "development": "./sp-alert-dialog.dev.js",
+            "default": "./sp-alert-dialog.js"
+        }
+    },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
