@@ -51,25 +51,6 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         return this.slotHasContent;
     }
 
-    public handleMenuOpened = (event: Event): void => {
-        event.stopPropagation();
-        // Flag to check whether menu is really opened or not
-        if (this.open) {
-            this.showTooltip = false;
-        }
-    };
-
-    public handleMenuClosed = (event: Event): void => {
-        event.stopPropagation();
-        this.showTooltip = true;
-    };
-
-    public constructor() {
-        super();
-        this.addEventListener('sp-opened', this.handleMenuOpened);
-        this.addEventListener('sp-closed', this.handleMenuClosed);
-    }
-
     protected override get buttonContent(): TemplateResult[] {
         return [
             html`
@@ -77,7 +58,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                     <sp-icon-more class="icon"></sp-icon-more>
                 </slot>
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
-                <slot name="tooltip" ?hidden=${!this.showTooltip}></slot>
+                <slot name="tooltip" ?hidden=${this.open}></slot>
             `,
         ];
     }
