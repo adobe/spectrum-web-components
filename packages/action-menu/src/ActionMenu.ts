@@ -53,10 +53,13 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
 
     public handleMenuOpened = (event: Event): void => {
         event.stopPropagation();
-        this.showTooltip = false;
+        // Flag to check whether menu is really opened or not
+        if (this.open) {
+            this.showTooltip = false;
+        }
     };
 
-    public handleMenuClosed1 = (event: Event): void => {
+    public handleMenuClosed = (event: Event): void => {
         event.stopPropagation();
         this.showTooltip = true;
     };
@@ -64,7 +67,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public constructor() {
         super();
         this.addEventListener('sp-opened', this.handleMenuOpened);
-        this.addEventListener('sp-closed', this.handleMenuClosed1);
+        this.addEventListener('sp-closed', this.handleMenuClosed);
     }
 
     protected override get buttonContent(): TemplateResult[] {
