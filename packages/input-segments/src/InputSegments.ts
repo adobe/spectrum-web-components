@@ -761,21 +761,25 @@ export class InputSegments extends TextfieldBase {
     /**
      * Checks whether the segment being created or updated will have a value or not by checking the following order:
      *
-     * 1. Did the segment already have a previously defined value? If so, keep the same value
+     * 1. Did the segment already have a previously defined value? If yes, use it
      *
      * 2. Since the segment doesn't have a previous value to keep, was the component given a specific date/time when it
      *    was created? If yes, then use that information
      *
      * 3. There is no value to use at this point, so it will remain as `undefined`
      *
-     * @param newValue - Current segment value, if any
-     * @param currentValue - Current date/time value with the same segment type as the current value
+     * @param previousValue - Previous segment value, if there is one
+     * @param currentValue - Current segment value
      */
-    private useNewOrCurrentValue(
-        newValue: number | undefined,
+    private usePreviousOrCurrentValue(
+        previousValue: number | undefined,
         currentValue: number
     ): number | undefined {
-        return newValue ?? (this.selectedDateTime && currentValue) ?? undefined;
+        return (
+            previousValue ??
+            (this.selectedDateTime && currentValue) ??
+            undefined
+        );
     }
 
     /**
@@ -788,38 +792,38 @@ export class InputSegments extends TextfieldBase {
     ): number | undefined {
         switch (type) {
             case 'year':
-                return this.useNewOrCurrentValue(
+                return this.usePreviousOrCurrentValue(
                     this.yearSegment?.value,
                     this.currentDateTime.year
                 );
             case 'month':
-                return this.useNewOrCurrentValue(
+                return this.usePreviousOrCurrentValue(
                     this.monthSegment?.value,
                     this.currentDateTime.month
                 );
             case 'day':
-                return this.useNewOrCurrentValue(
+                return this.usePreviousOrCurrentValue(
                     this.daySegment?.value,
                     this.currentDateTime.day
                 );
             case 'hour':
-                return this.useNewOrCurrentValue(
+                return this.usePreviousOrCurrentValue(
                     this.hourSegment?.value,
                     this.currentDateTime.hour
                 );
             case 'minute':
-                return this.useNewOrCurrentValue(
+                return this.usePreviousOrCurrentValue(
                     this.minuteSegment?.value,
                     this.currentDateTime.minute
                 );
             case 'second':
-                return this.useNewOrCurrentValue(
+                return this.usePreviousOrCurrentValue(
                     this.secondSegment?.value,
                     this.currentDateTime.second
                 );
             case 'dayPeriod':
                 // To identify the current value of "AM/PM", we use the value of the hour, not the day period itself
-                return this.useNewOrCurrentValue(
+                return this.usePreviousOrCurrentValue(
                     this.hourSegment?.value &&
                         this.getAmPmModifier(this.hourSegment.value),
                     this.getAmPmModifier(this.currentDateTime.hour)
@@ -1005,9 +1009,9 @@ export class InputSegments extends TextfieldBase {
      * their initial values
      */
     private resetHourAndDayPeriod(): void {
-        const dayPeriod = this.getSegmentValueAndLimits('dayPeriod');
-
         if (this.dayPeriodSegment) {
+            const dayPeriod = this.getSegmentValueAndLimits('dayPeriod');
+
             this.dayPeriodSegment.value = dayPeriod.value;
             this.dayPeriodSegment.minValue = dayPeriod.minValue;
             this.dayPeriodSegment.maxValue = dayPeriod.maxValue;
@@ -1018,9 +1022,9 @@ export class InputSegments extends TextfieldBase {
             }
         }
 
-        const hour = this.getSegmentValueAndLimits('hour');
-
         if (this.hourSegment) {
+            const hour = this.getSegmentValueAndLimits('hour');
+
             this.hourSegment.minValue = hour.minValue;
             this.hourSegment.maxValue = hour.maxValue;
 
