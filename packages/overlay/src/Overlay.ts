@@ -37,7 +37,12 @@ import {
 
 import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
 import { OverlayDialog } from './OverlayDialog.js';
-import { OpenableElement, OverlayTypes, Placement } from './overlay-types.js';
+import {
+    OpenableElement,
+    OverlayState,
+    OverlayTypes,
+    Placement,
+} from './overlay-types.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
 import { overlayStack } from './OverlayStack.js';
@@ -140,9 +145,6 @@ export class Overlay extends OverlayFeatures {
 
     private longressTimeout!: ReturnType<typeof setTimeout>;
 
-    @state()
-    override isVisible = false;
-
     /**
      * The `offset` property accepts either a single number, to
      * define the offset of the Overlay along the main axis from
@@ -161,12 +163,16 @@ export class Overlay extends OverlayFeatures {
     }
 
     override set open(open: boolean) {
+        // Don't respond when disabled.
         if (open && this.disabled) return;
+        // Don't respond when state not dirty
         if (open === this.open) return;
+        // Don't respond when you're in the shadow on a longpress
+        // Shadow occurs when the first "click" would normally close the popover
+        if (this.longpressed && !open) return;
         this._open = open;
         if (this.open) {
             Overlay.openCount += 1;
-            this.isVisible = true;
         }
         this.requestUpdate('open', !this.open);
     }
@@ -190,6 +196,23 @@ export class Overlay extends OverlayFeatures {
 
     @query('slot')
     slotEl!: HTMLSlotElement;
+
+    @state()
+    override get state(): OverlayState {
+        return this._state;
+    }
+
+    override set state(state) {
+        if (state === this.state) return;
+        const oldState = this.state;
+        this._state = state;
+        if (this.state === 'opened' || this.state === 'closed') {
+            this.longpressed = false;
+        }
+        this.requestUpdate('state', oldState);
+    }
+
+    override _state: OverlayState = 'closed';
 
     @property({ type: Number, attribute: 'tip-padding' })
     tipPadding?: number;
@@ -342,6 +365,7 @@ export class Overlay extends OverlayFeatures {
             }
             overlayStack.remove(this);
         }
+        this.state = this.open ? 'opening' : 'closing';
 
         if (this.usesDialog) {
             this.manageDialogOpen();
@@ -586,9 +610,6 @@ export class Overlay extends OverlayFeatures {
     private handlePointerup = (): void => {
         clearTimeout(this.longressTimeout);
         if (!this.triggerElement) return;
-        if (this.longpressed) {
-            this.open = true;
-        }
         setTimeout(() => {
             this.longpressed = false;
         });
@@ -725,7 +746,12 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected handleBrowserClose(): void {
-        this.open = false;
+        if (!this.longpressed) {
+            this.open = false;
+            return;
+        }
+        this.open = true;
+        this.manageOpen(false);
     }
 
     protected handleSlotchange(): void {
@@ -853,7 +879,7 @@ export class Overlay extends OverlayFeatures {
                 @close=${this.handleBrowserClose}
                 @cancel=${this.handleBrowserClose}
                 @beforetoggle=${this.handleBeforetoggle}
-                ?is-visible=${this.isVisible}
+                ?is-visible=${this.state !== 'closed'}
             >
                 ${this.renderContent()}
             </dialog>
@@ -881,7 +907,7 @@ export class Overlay extends OverlayFeatures {
                 popover=${ifDefined(popoverValue)}
                 @beforetoggle=${this.handleBeforetoggle}
                 @close=${this.handleBrowserClose}
-                ?is-visible=${this.isVisible}
+                ?is-visible=${this.state !== 'closed'}
             >
                 ${this.renderContent()}
             </div>

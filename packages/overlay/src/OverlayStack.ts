@@ -104,6 +104,18 @@ class OverlayStack {
     };
 
     /**
+     * Get an array of Overlays that all share the same trigger element.
+     *
+     * @param triggerElement {HTMLELement}
+     * @returns {Overlay[]}
+     */
+    overlaysByTriggerElement(triggerElement: HTMLElement): Overlay[] {
+        return this.stack.filter(
+            (overlay) => overlay.triggerElement === triggerElement
+        );
+    }
+
+    /**
      * When overlays are added manage the open state of exisiting overlays appropriately:
      * - 'modal': should close other overlays
      * - 'page': should close other overlays

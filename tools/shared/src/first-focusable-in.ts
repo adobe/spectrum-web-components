@@ -11,15 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import type { SpectrumElement } from '@spectrum-web-components/base';
-
-const firstFocusableSelector =
-    'button:not([tabindex="-1"]), [href]:not([tabindex="-1"]), input:not([tabindex="-1"]), select:not([tabindex="-1"]), textarea:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"]), [focusable]:not([tabindex="-1"])';
+import { userFocusableSelector } from './focusable-selectors.js';
 
 export const firstFocusableIn = (
     root: HTMLElement | ShadowRoot
 ): SpectrumElement | null => {
     const firstFocusable = root.querySelector(
-        firstFocusableSelector
+        userFocusableSelector
     ) as SpectrumElement;
     return firstFocusable;
 };
@@ -30,7 +28,7 @@ export const firstFocusableSlottedIn = (
     const firstFocusable = root
         .assignedElements()
         .find((element) =>
-            element.matches(firstFocusableSelector)
+            element.matches(userFocusableSelector)
         ) as SpectrumElement;
     return firstFocusable;
 };

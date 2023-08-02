@@ -134,7 +134,6 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                     const eventName = targetOpenState
                         ? 'sp-opened'
                         : 'sp-closed';
-                    this.isVisible = this.isVisible && targetOpenState;
                     if (index > 0) {
                         el.dispatchEvent(
                             new CustomEvent<OverlayOpenCloseDetail>(eventName, {
@@ -159,9 +158,10 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                             })
                         );
                         el.dispatchEvent(
-                            new Event(eventName, {
+                            new CustomEvent<OverlayOpenCloseDetail>(eventName, {
                                 bubbles: false,
                                 composed: false,
+                                detail: { interaction: this.type },
                             })
                         );
                         if (this.triggerElement && !hasVirtualTrigger) {
@@ -176,6 +176,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                                 )
                             );
                         }
+                        this.state = targetOpenState ? 'opened' : 'closed';
                     };
                     if (this.open !== targetOpenState) {
                         return;

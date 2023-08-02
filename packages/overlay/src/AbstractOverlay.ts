@@ -16,6 +16,7 @@ import type {
     OpenableElement,
     OverlayOptions,
     OverlayOptionsV1,
+    OverlayState,
     OverlayTypes,
     TriggerInteractionsV1,
 } from './overlay-types.js';
@@ -139,7 +140,6 @@ export class AbstractOverlay extends SpectrumElement {
         return;
     }
     elements!: OpenableElement[];
-    isVisible!: boolean;
     protected async makeTransition(
         _targetOpenState: boolean
     ): Promise<HTMLElement | null> {
@@ -165,6 +165,13 @@ export class AbstractOverlay extends SpectrumElement {
     }
     protected placementController!: PlacementController;
     receivesFocus!: 'true' | 'false' | 'auto';
+    get state(): OverlayState {
+        return 'closed';
+    }
+    set state(_state: OverlayState) {
+        return;
+    }
+    protected _state!: OverlayState;
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;
 

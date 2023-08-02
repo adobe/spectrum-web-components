@@ -25,6 +25,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import tooltipStyles from './tooltip.css.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { focusableSelector } from '@spectrum-web-components/shared/src/focusable-selectors.js';
 
 class TooltipOpenable extends HTMLElement {
     static get observedAttributes(): string[] {
@@ -94,7 +95,8 @@ export class Tooltip extends SpectrumElement {
     }
 
     /**
-     * Automatically bind to the parent element's hover interaction. Without this, you must provide your own `overlay-trigger`.
+     * Automatically bind to the parent element of the assigned `slot` or the parent element of the `sp-tooltip`.
+     * Without this, you must provide your own `overlay-trigger`.
      */
     @property({ type: Boolean, attribute: 'self-managed' })
     public selfManaged = false;
@@ -166,6 +168,24 @@ export class Tooltip extends SpectrumElement {
         );
     }
 
+    private get triggerElement(): HTMLElement {
+        // Resolve the parent element of the assigned slot (if one exists) or of the Tooltip.
+        let start: HTMLElement = this.assignedSlot || this;
+        let root = start.getRootNode();
+        let triggerElement = (start.parentElement ||
+            (root as ShadowRoot).host ||
+            root) as HTMLElement;
+        while (!triggerElement?.matches(focusableSelector)) {
+            start =
+                triggerElement.assignedSlot || (triggerElement as HTMLElement);
+            root = start.getRootNode();
+            triggerElement = (start.parentElement ||
+                (root as ShadowRoot).host ||
+                root) as HTMLElement;
+        }
+        return triggerElement;
+    }
+
     override render(): TemplateResult {
         const tooltip = html`
             <sp-tooltip-openable
@@ -187,7 +207,7 @@ export class Tooltip extends SpectrumElement {
                     .placement=${this.placement}
                     type="hint"
                     .tipPadding=${this.tipPadding}
-                    .triggerElement=${this.parentElement}
+                    .triggerElement=${this.triggerElement}
                     .triggerInteraction=${'hover'}
                     @sp-opened=${this.handleOpenOverlay}
                     @sp-closed=${this.handleCloseOverlay}

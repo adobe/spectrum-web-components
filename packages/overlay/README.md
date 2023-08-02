@@ -68,76 +68,79 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
             <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
         </sp-action-button>
     </sp-action-group>
+    <sp-overlay trigger="trigger-1@hover">
+        <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+        trigger="trigger-1@longpress"
+        type="auto"
+        placement="right-start"
+    >
+        <sp-popover class="overlay-demo-popover" tip>
+            <sp-action-group vertical quiet>
+                <sp-action-button>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-polygon-select
+                        slot="icon"
+                    ></sp-icon-polygon-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                </sp-action-button>
+            </sp-action-group>
+        </sp-popover>
+    </sp-overlay>
+    <sp-overlay trigger="trigger-2@hover">
+        <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+        trigger="trigger-2@longpress"
+        type="auto"
+        placement="right-start"
+    >
+        <sp-popover class="overlay-demo-popover" tip>
+            <sp-action-group vertical quiet>
+                <sp-action-button>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-polygon-select
+                        slot="icon"
+                    ></sp-icon-polygon-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                </sp-action-button>
+            </sp-action-group>
+        </sp-popover>
+    </sp-overlay>
+    <sp-overlay trigger="trigger-3@hover">
+        <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+        trigger="trigger-3@longpress"
+        type="auto"
+        placement="right-start"
+    >
+        <sp-popover class="overlay-demo-popover" tip>
+            <sp-action-group vertical quiet>
+                <sp-action-button>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-polygon-select
+                        slot="icon"
+                    ></sp-icon-polygon-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                </sp-action-button>
+            </sp-action-group>
+        </sp-popover>
+    </sp-overlay>
 </sp-popover>
-<sp-overlay ?delayed="${delayed}" trigger="trigger-1@hover">
-    <sp-tooltip>Hover</sp-tooltip>
-</sp-overlay>
-<sp-overlay
-    trigger="trigger-1@longpress"
-    type="auto"
-    placement="right-start"
-    .offset="${popoverOffset}"
->
-    <sp-popover class="overlay-demo-popover" tip>
-        <sp-action-group vertical quiet>
-            <sp-action-button>
-                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-            </sp-action-button>
-        </sp-action-group>
-    </sp-popover>
-</sp-overlay>
-<sp-overlay ?delayed="${delayed}" trigger="trigger-2@hover">
-    <sp-tooltip>Hover</sp-tooltip>
-</sp-overlay>
-<sp-overlay
-    trigger="trigger-2@longpress"
-    type="auto"
-    placement="right-start"
-    .offset="${popoverOffset}"
->
-    <sp-popover class="overlay-demo-popover" tip>
-        <sp-action-group vertical quiet>
-            <sp-action-button>
-                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-            </sp-action-button>
-        </sp-action-group>
-    </sp-popover>
-</sp-overlay>
-<sp-overlay ?delayed="${delayed}" trigger="trigger-3@hover">
-    <sp-tooltip>Hover</sp-tooltip>
-</sp-overlay>
-<sp-overlay
-    trigger="trigger-3@longpress"
-    type="auto"
-    placement="right-start"
-    .offset="${popoverOffset}"
->
-    <sp-popover class="overlay-demo-popover" tip>
-        <sp-action-group vertical quiet>
-            <sp-action-button>
-                <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-            </sp-action-button>
-        </sp-action-group>
-    </sp-popover>
-</sp-overlay>
 ```
 
 ## API

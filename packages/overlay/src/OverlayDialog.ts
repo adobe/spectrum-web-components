@@ -90,7 +90,6 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     return;
                 }
                 const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
-                this.isVisible = this.isVisible && targetOpenState;
                 if (index > 0) {
                     el.dispatchEvent(
                         new CustomEvent<OverlayOpenCloseDetail>(eventName, {
@@ -128,6 +127,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                             })
                         );
                     }
+                    this.state = targetOpenState ? 'opened' : 'closed';
                 };
                 if (!targetOpenState && this.dialogEl.open) {
                     this.dialogEl.addEventListener(

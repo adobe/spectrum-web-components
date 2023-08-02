@@ -58,7 +58,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.36.0",
-        "@spectrum-web-components/overlay": "^0.36.0"
+        "@spectrum-web-components/overlay": "^0.36.0",
+        "@spectrum-web-components/shared": "^0.36.0"
     },
     "devDependencies": {
         "@spectrum-css/tooltip": "^5.1.3"
