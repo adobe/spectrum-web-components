@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 0daed21ab8929e17ec1d62354e4aae4f4f25ef67
+        default: [0ed74a69eed08d6b68c1913c37feb81fe6dca260](https://967c433261880f46b944fdaf1a4287b4--spectrum-web-components.netlify.app/review/#)
     wireit_cache_name:
         type: string
         default: wireit
