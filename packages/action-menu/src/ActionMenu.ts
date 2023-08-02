@@ -49,6 +49,11 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         return this.slotHasContent;
     }
 
+    /**
+     * Remove ?hidden=${this.open} in tooltip slot once overlay issue for
+     * action menu is fixed.
+     * [Issue]: Tooltip opening when hovering on menu items.
+     */
     protected override get buttonContent(): TemplateResult[] {
         return [
             html`
