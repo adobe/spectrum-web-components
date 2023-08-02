@@ -63,7 +63,7 @@ export default {
             description: 'Tooltip description',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'none' },
+                defaultValue: { summary: '' },
             },
             control: {
                 type: 'text',
@@ -116,7 +116,7 @@ export default {
         disabled: false,
         open: false,
         quiet: false,
-        tooltipDescription: 'Dummy tooltip description on hovering action menu',
+        tooltipDescription: '',
         tooltipPlacement: 'bottom',
     },
 };
@@ -157,6 +157,14 @@ export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
 iconOnly.args = {
     visibleLabel: '',
+};
+
+export const tooltipDescriptionAndPlacement = (
+    args: StoryArgs = {}
+): TemplateResult => Template(args);
+tooltipDescriptionAndPlacement.args = {
+    tooltipDescription: '',
+    tooltipPlacement: 'bottom',
 };
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);

@@ -28,7 +28,7 @@ export const ActionMenuMarkup = ({
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
     selects = '' as 'single',
     selected = false,
-    tooltipDescription = 'Dummy tooltip description on hovering action menu',
+    tooltipDescription = '',
     tooltipPlacement = 'bottom',
 } = {}): TemplateResult => {
     return html`
