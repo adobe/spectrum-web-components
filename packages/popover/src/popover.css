@@ -36,30 +36,6 @@ governing permissions and limitations under the License.
     right: auto;
 }
 
-:host([placement*='left']) #tip,
-:host([placement*='right']) #tip {
-    width: var(
-        --mod-popover-pointer-width,
-        var(--spectrum-popover-pointer-width)
-    ) !important;
-    height: var(
-        --mod-popover-pointer-width,
-        var(--spectrum-popover-pointer-width)
-    ) !important;
-}
-
-:host([placement*='top']) #tip,
-:host([placement*='bottom']) #tip {
-    width: var(
-        --mod-popover-pointer-width,
-        var(--spectrum-popover-pointer-width)
-    ) !important;
-    height: var(
-        --mod-popover-pointer-width,
-        var(--spectrum-popover-pointer-width)
-    ) !important;
-}
-
 .block {
     width: 100%;
     height: 50%;

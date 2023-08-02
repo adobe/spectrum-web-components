@@ -230,8 +230,7 @@ describe('Overlay Trigger - Longpress', () => {
         );
 
         const closed = oneEvent(el, 'sp-closed');
-
-        await sendKeys({
+        sendKeys({
             press: 'Escape',
         });
         await closed;

@@ -81,3 +81,5 @@ export type OpenableElement = HTMLElement & {
     tipElement?: HTMLElement;
     updateComplete?: Promise<void>;
 };
+
+export type OverlayState = 'closed' | 'opening' | 'opened' | 'closing';

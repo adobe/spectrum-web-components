@@ -82,6 +82,9 @@ describe('Overlay Trigger - Hover and Click', () => {
         const trigger = el.querySelector(
             '[slot=trigger]'
         ) as unknown as ActionButton;
+        const clickContent = el.querySelector(
+            '[slot="click-content"]'
+        ) as HTMLElement;
         const bounds = el.getBoundingClientRect();
         let interaction: TriggerInteractions;
 
@@ -109,13 +112,13 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         // repeatedly click to toggle the popover
         for (let i = 0; i < 3; i++) {
-            const openedEvent = oneEvent(el, 'sp-opened');
+            const openedEvent = oneEvent(clickContent, 'sp-opened');
             trigger.click();
             interaction = (await openedEvent).detail.interaction;
 
             expect(interaction).equals('auto');
 
-            const closedEvent = oneEvent(el, 'sp-closed');
+            const closedEvent = oneEvent(clickContent, 'sp-closed');
             trigger.click();
             interaction = (await closedEvent).detail.interaction;
 

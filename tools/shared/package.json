@@ -33,6 +33,10 @@
             "development": "./src/focus-visible.dev.js",
             "default": "./src/focus-visible.js"
         },
+        "./src/focusable-selectors.js": {
+            "development": "./src/focusable-selectors.dev.js",
+            "default": "./src/focusable-selectors.js"
+        },
         "./src/focusable.js": {
             "development": "./src/focusable.dev.js",
             "default": "./src/focusable.js"

@@ -23,6 +23,8 @@ governing permissions and limitations under the License.
         --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
     );
+    --mod-popover-pointer-width: var(--spectrum-popover-pointer-width);
+    --mod-popover-pointer-height: var(--spectrum-popover-pointer-width);
 }
 
 .dialog {
