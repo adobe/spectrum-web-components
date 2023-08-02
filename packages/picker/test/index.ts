@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import type { Picker } from '@spectrum-web-components/picker';
 
-// import type { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import type { MenuItem } from '@spectrum-web-components/menu';
 import {
     aTimeout,
@@ -927,6 +926,49 @@ export function runPickerTests(): void {
             );
             expect(isMenuActiveElement(el)).to.be.true;
             expect(thirdItem.focused).to.be.true;
+        });
+        it('does not listen to streaming `Enter` keydown', async () => {
+            const openSpy = spy();
+            const closedSpy = spy();
+            el.addEventListener('sp-opened', () => openSpy());
+            el.addEventListener('sp-closed', () => closedSpy());
+            const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+            const thirdItem = el.querySelector(
+                'sp-menu-item:nth-of-type(3)'
+            ) as MenuItem;
+            const input = document.createElement('input');
+            el.insertAdjacentElement('afterend', input);
+
+            el.focus();
+            await sendKeys({ press: 'Tab' });
+            expect(document.activeElement === input).to.be.true;
+            await sendKeys({ press: 'Shift+Tab' });
+            expect(document.activeElement === el).to.be.true;
+            const opened = oneEvent(el, 'sp-opened');
+            sendKeys({ down: 'Enter' });
+            await opened;
+            await aTimeout(300);
+            expect(openSpy.callCount).to.equal(1);
+            await sendKeys({ up: 'Enter' });
+
+            await waitUntil(
+                () => firstItem.focused,
+                'The first items should have become focused visually.'
+            );
+
+            await sendKeys({ press: 'ArrowDown' });
+            await sendKeys({ press: 'ArrowDown' });
+            expect(thirdItem.focused).to.be.true;
+
+            const closed = oneEvent(el, 'sp-closed');
+            sendKeys({ down: 'Enter' });
+            await closed;
+            await aTimeout(300);
+
+            expect(el.value).to.equal(thirdItem.value);
+            expect(openSpy.callCount).to.equal(1);
+            expect(closedSpy.callCount).to.equal(1);
+            await sendKeys({ up: 'Enter' });
         });
         it('allows tabing to close', async () => {
             const input = document.createElement('input');

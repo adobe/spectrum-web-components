@@ -20,6 +20,7 @@ import {
 } from '@open-wc/testing';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import { Popover } from '@spectrum-web-components/popover';
@@ -60,7 +61,7 @@ describe('Overlay Trigger - Longpress', () => {
                 await closed;
             }
         });
-        it.skip('opens/closes for `Space`', async function () {
+        it('opens/closes for `Space`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
             await sendKeys({
                 press: 'Space',
@@ -79,16 +80,22 @@ describe('Overlay Trigger - Longpress', () => {
                 ],
             });
             await closed;
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
 
-            expect(this.content.open, 'closes for `Space`').to.be.false;
             expect(await isOnTopLayer(this.content)).to.be.false;
+            expect(this.content.open, 'closes for `Space`').to.be.false;
         });
-        it.skip('opens/closes for `Alt+ArrowDown`', async function () {
+        it('opens/closes for `Alt+ArrowDown`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
             sendKeys({
                 press: 'Alt+ArrowDown',
             });
             await open;
+            await nextFrame();
+            await nextFrame();
             expect(this.content.open, 'opens for `Alt+ArrowDown`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(this.el, 'sp-closed');
@@ -96,10 +103,40 @@ describe('Overlay Trigger - Longpress', () => {
                 press: 'Escape',
             });
             await closed;
+            await nextFrame();
+            await nextFrame();
             expect(this.content.open, 'closes for `Alt+ArrowDown`').to.be.false;
             expect(await isOnTopLayer(this.content)).to.be.false;
         });
-        it.skip('opens/closes for `longpress`', async function () {
+        it('opens/closes for `Alt+ArrowDown` with Button', async function () {
+            const button = document.createElement('sp-button');
+            button.slot = 'trigger';
+            this.trigger.replaceWith(button);
+            await elementUpdated(button);
+            button.focus();
+            await elementUpdated(button);
+
+            const open = oneEvent(this.el, 'sp-opened');
+            sendKeys({
+                press: 'Alt+ArrowDown',
+            });
+            await open;
+            await nextFrame();
+            await nextFrame();
+            expect(await isOnTopLayer(this.content)).to.be.true;
+            expect(this.content.open, 'opens for `Alt+ArrowDown`').to.be.true;
+            const closed = oneEvent(this.el, 'sp-closed');
+            await sendKeys({
+                press: 'Escape',
+            });
+            await closed;
+            await nextFrame();
+            await nextFrame();
+            expect(await isOnTopLayer(this.content)).to.be.false;
+            expect(this.content.open, 'closes for `Alt+ArrowDown`').to.be.false;
+        });
+        it('opens/closes for `longpress`', async function () {
+            expect(this.trigger.holdAffordance).to.be.true;
             let open = oneEvent(this.el, 'sp-opened');
             const rect = this.trigger.getBoundingClientRect();
             await sendMouse({
@@ -118,25 +155,95 @@ describe('Overlay Trigger - Longpress', () => {
             });
             // Hover content opens, first.
             await open;
+            await nextFrame();
+            await nextFrame();
             open = oneEvent(this.el, 'sp-opened');
             // Then, the longpress content opens.
             await open;
+            expect(this.content.open, 'opens for `pointerdown`').to.be.true;
             await sendMouse({
                 steps: [
                     {
                         type: 'up',
                     },
+                    {
+                        type: 'move',
+                        position: [
+                            rect.left + rect.width * 2,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
                 ],
             });
-            expect(this.content.open, 'opens for `pointerdown`').to.be.true;
+            await nextFrame();
+            await nextFrame();
+            expect(this.content.open, 'stays open for `pointerup`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(this.trigger, 'sp-closed');
             await sendKeys({
                 press: 'Escape',
             });
             await closed;
-            expect(this.content.open, 'closes for `pointerdown`').to.be.false;
             expect(await isOnTopLayer(this.content)).to.be.false;
+            expect(this.content.open, 'closes for `pointerdown`').to.be.false;
+        });
+        it('opens/closes for `longpress` with Button', async function () {
+            const button = document.createElement('sp-button');
+            button.slot = 'trigger';
+            this.trigger.replaceWith(button);
+            await elementUpdated(button);
+            button.focus();
+            await elementUpdated(button);
+
+            let open = oneEvent(this.el, 'sp-opened');
+            const rect = button.getBoundingClientRect();
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
+            // Hover content opens, first.
+            await open;
+            await nextFrame();
+            await nextFrame();
+            open = oneEvent(this.el, 'sp-opened');
+            // Then, the longpress content opens.
+            await open;
+            expect(this.content.open, 'opens for `pointerdown`').to.be.true;
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'up',
+                    },
+                    {
+                        type: 'move',
+                        position: [
+                            rect.left + rect.width * 2,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await nextFrame();
+            await nextFrame();
+            expect(this.content.open, 'stays open for `pointerup`').to.be.true;
+            expect(await isOnTopLayer(this.content)).to.be.true;
+            const closed = oneEvent(button, 'sp-closed');
+            await sendKeys({
+                press: 'Escape',
+            });
+            await closed;
+            expect(await isOnTopLayer(this.content)).to.be.false;
+            expect(this.content.open, 'closes for `pointerdown`').to.be.false;
         });
     });
     it('displays `longpress` declaratively', async () => {

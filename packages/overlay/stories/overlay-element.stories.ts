@@ -163,17 +163,18 @@ export const all = ({ delayed }: Properties): TemplateResult => html`
 `;
 
 export const actionGroup = ({ delayed }: Properties): TemplateResult => {
-    const popoverOffset = [6, -9] as [number, number];
+    const popoverOffset = [6, -13] as [number, number];
     return html`
         <style>
             sp-popover sp-action-group {
                 padding: var(--spectrum-actiongroup-vertical-spacing-regular);
             }
-            sp-popover {
-                position: static;
+            .root {
+                inset-inline-end: 3em;
+                inset-block-start: 3em;
             }
         </style>
-        <sp-popover open>
+        <sp-popover open class="root">
             <sp-action-group vertical quiet emphasized selects="single">
                 <sp-action-button id="trigger-1" hold-affordance>
                     <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>

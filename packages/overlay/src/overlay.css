@@ -23,8 +23,6 @@ governing permissions and limitations under the License.
         --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
     );
-    --mod-popover-pointer-width: var(--spectrum-popover-pointer-width);
-    --mod-popover-pointer-height: var(--spectrum-popover-pointer-width);
 }
 
 .dialog {
@@ -84,6 +82,15 @@ governing permissions and limitations under the License.
 
 ::slotted(sp-popover) {
     position: static;
+
+    --mod-popover-pointer-width: max(
+        var(--spectrum-popover-pointer-width),
+        var(--spectrum-popover-pointer-height)
+    );
+    --mod-popover-pointer-height: max(
+        var(--spectrum-popover-pointer-width),
+        var(--spectrum-popover-pointer-height)
+    );
 }
 
 /**
