@@ -12,48 +12,53 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorslider-handle-hitarea-border-radius: 0%;
-    --spectrum-colorslider-handle-hitarea-width: var(
-        --spectrum-global-dimension-size-300
+    --spectrum-color-slider-handle-margin-block: var(
+        --spectrum-component-top-to-text-75
     );
-    --spectrum-colorslider-handle-hitarea-height: var(
-        --spectrum-global-dimension-size-300
+    --spectrum-color-slider-border-color-rgba: rgba(
+        var(--spectrum-gray-900-rgb),
+        var(--spectrum-color-slider-border-opacity)
     );
-    --spectrum-colorslider-checkerboard-size: var(
+    --spectrum-color-slider-checkerboard-size: var(
         --spectrum-opacity-checkerboard-square-size
     );
-    --spectrum-colorslider-checkerboard-dark-color: var(
+    --spectrum-color-slider-checkerboard-dark-color: var(
         --spectrum-opacity-checkerboard-square-dark
     );
-    --spectrum-colorslider-checkerboard-light-color: var(
+    --spectrum-color-slider-checkerboard-light-color: var(
         --spectrum-opacity-checkerboard-square-light
     );
+    --mod-colorhandle-hitarea-border-radius: var(
+        --mod-color-slider-handle-hitarea-border-radius,
+        0px
+    );
 }
-.slider {
-    height: 100%;
-    left: 0;
-    margin: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 0;
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-color-slider-border-color: CanvasText;
+        --highcontrast-color-slider-border-color-disabled: GrayText;
+        --highcontrast-color-slider-background-color-disabled: Canvas;
+        forced-color-adjust: none;
+    }
 }
 :host {
+    block-size: var(
+        --mod-color-slider-control-track-width,
+        var(--spectrum-color-control-track-width)
+    );
     cursor: default;
     display: block;
-    height: var(
-        --spectrum-colorslider-height,
-        var(--spectrum-global-dimension-size-300)
+    inline-size: var(
+        --mod-color-slider-length,
+        var(--spectrum-color-slider-length)
+    );
+    min-inline-size: var(
+        --mod-color-slider-minimum-length,
+        var(--spectrum-color-slider-minimum-length)
     );
     position: relative;
     -webkit-user-select: none;
     user-select: none;
-    width: var(
-        --spectrum-colorslider-default-length,
-        var(--spectrum-global-dimension-size-2400)
-    );
 }
 :host([focused]) {
     z-index: 2;
@@ -61,100 +66,100 @@ governing permissions and limitations under the License.
 :host([disabled]) {
     pointer-events: none;
 }
+:host([disabled]) .gradient {
+    display: none;
+}
 :host([vertical]) {
+    block-size: var(
+        --mod-color-slider-vertical-height,
+        var(--mod-color-slider-length, var(--spectrum-color-slider-length))
+    );
     display: inline-block;
-    height: var(
-        --spectrum-colorslider-vertical-default-length,
-        var(--spectrum-global-dimension-size-2400)
+    inline-size: var(
+        --mod-color-slider-vertical-control-track-width,
+        var(
+            --mod-color-slider-control-track-height,
+            var(--spectrum-color-control-track-width)
+        )
     );
-    width: var(
-        --spectrum-colorslider-vertical-width,
-        var(--spectrum-global-dimension-size-300)
+    min-block-size: var(
+        --mod-color-slider-vertical-minimum-height,
+        var(
+            --mod-color-slider-minimum-length,
+            var(--spectrum-color-slider-minimum-length)
+        )
     );
+    min-inline-size: 0;
 }
 :host([vertical]) .handle {
-    left: 50%;
-    top: 0;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
 }
 .handle {
-    left: 0;
-    top: 50%;
-}
-.handle:after {
-    border-radius: var(--spectrum-colorslider-handle-hitarea-border-radius);
-    height: var(--spectrum-colorslider-handle-hitarea-height);
-    width: var(--spectrum-colorslider-handle-hitarea-width);
+    inset-block-start: 50%;
+    inset-inline-start: 0;
 }
 .checkerboard {
-    background: repeating-conic-gradient(
-            var(--spectrum-colorslider-checkerboard-light-color) 0 25%,
-            var(--spectrum-colorslider-checkerboard-dark-color) 0 50%
+    --spectrum-color-slider-border-color-local: var(
+        --highcontrast-color-slider-border-color,
+        var(
+            --mod-color-slider-border-color,
+            var(--spectrum-color-slider-border-color-rgba)
         )
-        0 0 / calc(var(--spectrum-colorslider-checkerboard-size) * 2)
-        calc(var(--spectrum-colorslider-checkerboard-size) * 2);
+    );
 }
 .checkerboard:before {
     border-radius: var(
-        --spectrum-colorslider-border-radius,
-        var(--spectrum-alias-border-radius-regular)
+        --mod-color-slider-border-rounding,
+        var(--spectrum-color-slider-border-rounding)
     );
+    box-shadow: 0 0 0
+        var(
+            --mod-color-slider-border-width,
+            var(--spectrum-color-slider-border-width)
+        )
+        var(--spectrum-color-slider-border-color-local);
     content: '';
     inset: 0;
     position: absolute;
     z-index: 1;
 }
+:host([disabled]) .checkerboard {
+    --spectrum-color-slider-border-color-local: var(
+        --highcontrast-color-slider-border-color-disabled,
+        var(
+            --mod-color-slider-border-color-disabled,
+            var(--spectrum-disabled-background-color)
+        )
+    );
+    background: var(
+        --highcontrast-color-slider-background-color-disabled,
+        var(
+            --mod-color-slider-background-color-disabled,
+            var(--spectrum-disabled-background-color)
+        )
+    );
+}
 .checkerboard,
 .gradient {
+    block-size: 100%;
     border-radius: var(
-        --spectrum-colorslider-border-radius,
-        var(--spectrum-alias-border-radius-regular)
+        --mod-color-slider-border-rounding,
+        var(--spectrum-color-slider-border-rounding)
     );
-    height: 100%;
-    width: 100%;
+    inline-size: 100%;
 }
-:host {
-    --spectrum-colorslider-border-color: var(
-        --spectrum-colorarea-border-color,
-        var(--spectrum-alias-border-color-translucent)
-    );
+:host([dir='rtl']) .gradient {
+    transform: scaleX(-1);
 }
-.checkerboard:before {
-    box-shadow: inset 0 0 0
-        var(
-            --spectrum-colorslider-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        var(
-            --spectrum-colorslider-border-color,
-            var(--spectrum-alias-border-color-translucent)
-        );
-}
-:host([disabled]) .checkerboard {
-    background: var(
-        --spectrum-colorslider-fill-color-disabled,
-        var(--spectrum-alias-track-color-disabled)
-    );
-}
-:host([disabled]) .checkerboard:before {
-    box-shadow: 0 0 0
-        var(
-            --spectrum-colorslider-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        var(
-            --spectrum-colorslider-border-color-disabled,
-            var(--spectrum-alias-track-color-disabled)
-        );
-}
-:host([disabled]) .gradient {
-    display: none;
-}
-@media (forced-colors: active) {
-    :host {
-        --spectrum-colorslider-border-color-disabled: GrayText;
-        --spectrum-colorslider-fill-color-disabled: Canvas;
-    }
-    :host {
-        forced-color-adjust: none;
-    }
+.slider {
+    block-size: 100%;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
 }

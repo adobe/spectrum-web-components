@@ -6242,10 +6242,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorloupe/-/colorloupe-4.1.17.tgz#900984b5f6ac84f77445d3858b646462e56dbd00"
   integrity sha512-Srg7lqjTwrXdnCB0EjCAxLBP95Wde+HUTvHvxz8Dcwpx+tyS4w/+/B/QwF3hq+UfAbJl4OxP5pWh4fkQ9nHslQ==
 
-"@spectrum-css/colorslider@^3.0.23":
-  version "3.0.23"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorslider/-/colorslider-3.0.23.tgz#7bce9e0b4f06f90d0660fde9553486bbe2ff3dc2"
-  integrity sha512-H9ew4UZ9dHNuZGBHMu3JmovrrJja49mwuF6H3OyOwUU+c8ldytgzkMMmpFr0P9qZ93P4Nr0LPYO26Pmp9vChoA==
+"@spectrum-css/colorslider@^5.0.0-beta.0":
+  version "5.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorslider/-/colorslider-5.0.0-beta.0.tgz#3d668a5e879e92b308d0c4369cb4cffd15da9209"
+  integrity sha512-g26azYay/sAYGzg5MSEH9bOFerU+H+pVXjnG1QF6SlqzbYe8bZDQEIkqDkL/P8kklZRkTr5OK43KYmfpxElWsA==
 
 "@spectrum-css/colorwheel@^3.0.33":
   version "3.0.33"
