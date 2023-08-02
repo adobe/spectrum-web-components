@@ -37,6 +37,7 @@ export const topLayerOverTransforms = (): Middleware => ({
         try {
             onTopLayer = onTopLayer || floating.matches(':modal');
             // eslint-disable-next-line no-empty
+            /* c8 ignore next 3 */
         } catch (error) {}
         topLayerIsFloating = onTopLayer;
         if (!onTopLayer) {
@@ -53,10 +54,8 @@ export const topLayerOverTransforms = (): Middleware => ({
                                 return;
                             try {
                                 onTopLayer = onTopLayer || el.matches(':modal');
-                                if (onTopLayer) {
-                                    // console.log(el);
-                                }
                                 // eslint-disable-next-line no-empty
+                                /* c8 ignore next */
                             } catch (error) {}
                         }
                     );
@@ -72,7 +71,8 @@ export const topLayerOverTransforms = (): Middleware => ({
             getWindow(containingBlock) !==
                 (containingBlock as unknown as Window)
         ) {
-            overTransforms = true;
+            const css = getComputedStyle(containingBlock);
+            overTransforms = css.transform !== 'none';
         }
 
         if (onTopLayer && overTransforms && containingBlock) {

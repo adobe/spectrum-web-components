@@ -64,13 +64,18 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         };
                         el.addEventListener('close', close);
                     }
-                    if (index > 0 || !targetOpenState) {
+                    if (index > 0) {
+                        // Announce workflow on the first element _only_.
                         return;
                     }
                     const event = targetOpenState
                         ? BeforetoggleOpenEvent
                         : BeforetoggleClosedEvent;
                     this.dispatchEvent(new event());
+                    if (!targetOpenState) {
+                        // Show/focus workflow when opening _only_.
+                        return;
+                    }
                     focusEl = focusEl || firstFocusableIn(el);
                     if (!focusEl) {
                         const childSlots = el.querySelectorAll('slot');

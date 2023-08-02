@@ -9,14 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-    expect,
-    fixture,
-    html,
-    nextFrame,
-    oneEvent,
-    waitUntil,
-} from '@open-wc/testing';
+import { expect, html, nextFrame, oneEvent, waitUntil } from '@open-wc/testing';
 
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
@@ -25,7 +18,10 @@ import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { fixture } from '../../../test/testing-helpers.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 const initTest = async (
     styles = html``
@@ -42,6 +38,7 @@ const initTest = async (
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        flex-direction: column;
                     }
                 </style>
                 ${styles}
@@ -58,7 +55,6 @@ const initTest = async (
                         slot="click-content"
                         direction="bottom"
                         tip
-                        open
                         tabindex="0"
                         placement="top"
                     >
@@ -137,32 +133,40 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('bottom');
     });
 
-    it.skip('occludes content behind the overlay', async () => {
+    xit('occludes content behind the overlay', async () => {
+        // currently fails for no reason in Firefox locally, and most browsers in CI.
         ({ overlayTrigger, button, popover } = await initTest());
         const textfield = document.createElement('sp-textfield');
-        document.body.append(textfield);
+        overlayTrigger.insertAdjacentElement('afterend', textfield);
 
-        const boundingRect = textfield.getBoundingClientRect();
-        expect(document.activeElement).to.not.equal(textfield);
+        const textfieldRect = textfield.getBoundingClientRect();
+        expect(document.activeElement === textfield).to.be.false;
         await sendMouse({
             steps: [
                 {
                     type: 'click',
-                    position: [
-                        boundingRect.left + boundingRect.width / 2,
-                        boundingRect.top + boundingRect.height / 2,
-                    ],
+                    position: [textfieldRect.left + 5, textfieldRect.top + 5],
                 },
             ],
         });
-        expect(document.activeElement).to.equal(textfield);
+        expect(
+            document.activeElement === textfield,
+            'clicking focuses the Textfield'
+        ).to.be.true;
 
         expect(popover.placement).to.equal('top');
 
         const open = oneEvent(overlayTrigger, 'sp-opened');
-        button.click();
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+        expect(document.activeElement === button, 'button focused').to.be.true;
+        await sendKeys({
+            press: 'Enter',
+        });
         await open;
 
+        expect(overlayTrigger.type).to.equal('modal');
         expect(overlayTrigger.open).to.equal('click');
         expect(popover.placement).to.equal('bottom');
 
@@ -171,38 +175,37 @@ describe('Overlay Trigger - extended', () => {
             steps: [
                 {
                     type: 'click',
-                    position: [
-                        boundingRect.left + boundingRect.width / 2,
-                        boundingRect.top + boundingRect.height / 2,
-                    ],
+                    position: [textfieldRect.left + 5, textfieldRect.top + 5],
                 },
             ],
         });
         await close;
-        expect(overlayTrigger.open).to.be.null;
-        expect(document.activeElement).to.not.equal(textfield);
+
+        expect(overlayTrigger.open).to.be.undefined;
+        expect(
+            document.activeElement === textfield,
+            'closing does not focus the Textfield'
+        ).to.be.false;
+
         await sendMouse({
             steps: [
                 {
                     type: 'click',
                     position: [
-                        boundingRect.left + boundingRect.width / 2,
-                        boundingRect.top + boundingRect.height / 2,
+                        textfieldRect.left + textfieldRect.width / 2,
+                        textfieldRect.top + textfieldRect.height / 2,
                     ],
                 },
             ],
         });
-        expect(document.activeElement).to.equal(textfield);
-        textfield.remove();
+        expect(
+            document.activeElement === textfield,
+            'the Textfield is focused again'
+        ).to.be.true;
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {
-        /**
-         * This test "passes" when tested manually in browser, but
-         * not when leveraged in the automated test process.
-         *
-         * xit for now...
-         **/
+        // currently fails for no reason in Firefox locally, and most browsers in CI.
         ({ overlayTrigger, button, popover } = await initTest());
         const scrollingArea = document.createElement('div');
         Object.assign(scrollingArea.style, {
@@ -251,10 +254,6 @@ describe('Overlay Trigger - extended', () => {
         const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
         await open;
-        // const activeOverlay = document.querySelector(
-        //     'active-overlay'
-        // ) as HTMLDivElement;
-        // await elementUpdated(activeOverlay);
 
         expect(overlayTrigger.open).to.equal('click');
         expect(popover.placement).to.equal('bottom');
@@ -272,6 +271,7 @@ describe('Overlay Trigger - extended', () => {
         await nextFrame();
         await nextFrame();
         await nextFrame();
+
         expect(
             scrollingArea.scrollTop,
             `scrollTop should be ${distance}.`

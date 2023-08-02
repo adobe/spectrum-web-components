@@ -155,7 +155,11 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 html`
                     <sp-action-menu
                         label="More Actions"
-                        @change=${() => changeSpy()}
+                        @change=${({
+                            target: { value },
+                        }: Event & { target: ActionMenu }) => {
+                            changeSpy(value);
+                        }}
                     >
                         <sp-icon-settings slot="icon"></sp-icon-settings>
                         <sp-menu-item>Deselect</sp-menu-item>
@@ -188,6 +192,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(el.open).to.be.false;
             expect(changeSpy.callCount).to.equal(1);
+            expect(changeSpy.calledWith('Deselect')).to.be.true;
         });
         it('closes when Menu Item has [href]', async () => {
             const changeSpy = spy();

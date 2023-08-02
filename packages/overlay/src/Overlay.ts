@@ -67,6 +67,7 @@ export const LONGPRESS_INSTRUCTIONS = {
 const supportsPopover = 'showPopover' in document.createElement('div');
 
 let OverlayFeatures = OverlayDialog(AbstractOverlay);
+/* c8 ignore next 2 */
 if (supportsPopover) {
     OverlayFeatures = OverlayPopover(OverlayFeatures);
 } else {
@@ -141,7 +142,8 @@ export class Overlay extends OverlayFeatures {
         );
     }
 
-    protected longpressed = false;
+    protected longpressState: 'null' | 'potential' | 'opening' | 'pressed' =
+        'null';
 
     private longressTimeout!: ReturnType<typeof setTimeout>;
 
@@ -169,7 +171,12 @@ export class Overlay extends OverlayFeatures {
         if (open === this.open) return;
         // Don't respond when you're in the shadow on a longpress
         // Shadow occurs when the first "click" would normally close the popover
-        if (this.longpressed && !open) return;
+        if (
+            (this.longpressState === 'opening' ||
+                this.longpressState === 'pressed') &&
+            !open
+        )
+            return;
         this._open = open;
         if (this.open) {
             Overlay.openCount += 1;
@@ -207,7 +214,14 @@ export class Overlay extends OverlayFeatures {
         const oldState = this.state;
         this._state = state;
         if (this.state === 'opened' || this.state === 'closed') {
-            this.longpressed = false;
+            // When triggered by the pointer, the last of `opened`
+            // or `pointerup` should move the `longpressState` to
+            // `null` so that the earlier event can void the "light
+            // dismiss" and keep the Overlay open.
+            this.longpressState =
+                this.longpressState === 'pressed'
+                    ? 'null'
+                    : this.longpressState;
         }
         this.requestUpdate('state', oldState);
     }
@@ -250,6 +264,11 @@ export class Overlay extends OverlayFeatures {
     }
 
     private get popoverValue(): 'auto' | 'manual' | undefined {
+        const hasPopoverAttribute = 'popover' in this;
+        if (!hasPopoverAttribute) {
+            return undefined;
+        }
+        /* c8 ignore next 9 */
         switch (this.type) {
             case 'modal':
             case 'page':
@@ -291,6 +310,7 @@ export class Overlay extends OverlayFeatures {
     protected override async managePopoverOpen(): Promise<void> {
         super.managePopoverOpen();
         const targetOpenState = this.open;
+        /* c8 ignore next 3 */
         if (this.open !== targetOpenState) {
             return;
         }
@@ -299,6 +319,7 @@ export class Overlay extends OverlayFeatures {
             return;
         }
         await this.ensureOnDOM(targetOpenState);
+        /* c8 ignore next 3 */
         if (this.open !== targetOpenState) {
             return;
         }
@@ -365,7 +386,11 @@ export class Overlay extends OverlayFeatures {
             }
             overlayStack.remove(this);
         }
-        this.state = this.open ? 'opening' : 'closing';
+        if (this.open && this.state !== 'opened') {
+            this.state = 'opening';
+        } else if (!this.open && this.state !== 'closed') {
+            this.state = 'closing';
+        }
 
         if (this.usesDialog) {
             this.manageDialogOpen();
@@ -444,19 +469,25 @@ export class Overlay extends OverlayFeatures {
     protected bindLongpressEvents(triggerElement: HTMLElement): void {
         const options = { signal: this.abortController.signal };
         triggerElement.addEventListener(
-            'pointerdown',
-            this.handlePointerdown,
-            options
-        );
-        triggerElement.addEventListener('keydown', this.handleKeydown, options);
-        triggerElement.addEventListener('keyup', this.handleKeyup, options);
-        triggerElement.addEventListener(
             'longpress',
             this.handleLongpress,
             options
         );
-
+        triggerElement.addEventListener(
+            'pointerdown',
+            this.handlePointerdown,
+            options
+        );
         this.prepareLongpressDescription(triggerElement);
+        if (
+            (triggerElement as HTMLElement & { holdAffordance: boolean })
+                .holdAffordance
+        ) {
+            // Only bind keyboard events when the trigger element isn't doing it for us.
+            return;
+        }
+        triggerElement.addEventListener('keydown', this.handleKeydown, options);
+        triggerElement.addEventListener('keyup', this.handleKeyup, options);
     }
 
     protected bindHoverEvents(triggerElement: HTMLElement): void {
@@ -590,9 +621,16 @@ export class Overlay extends OverlayFeatures {
         if (!this.triggerElement) return;
         if (event.button !== 0) return;
         const triggerElement = this.triggerElement as HTMLElement;
-        this.longpressed = false;
+        this.longpressState = 'potential';
         triggerElement.addEventListener('pointerup', this.handlePointerup);
         triggerElement.addEventListener('pointercancel', this.handlePointerup);
+        if (
+            (triggerElement as HTMLElement & { holdAffordance: boolean })
+                .holdAffordance
+        ) {
+            // Only dispatch longpress event if the trigger element isn't doing it for us.
+            return;
+        }
         this.longressTimeout = setTimeout(() => {
             if (!triggerElement) return;
             triggerElement.dispatchEvent(
@@ -610,9 +648,11 @@ export class Overlay extends OverlayFeatures {
     private handlePointerup = (): void => {
         clearTimeout(this.longressTimeout);
         if (!this.triggerElement) return;
-        setTimeout(() => {
-            this.longpressed = false;
-        });
+        // When triggered by the pointer, the last of `opened`
+        // or `pointerup` should move the `longpressState` to
+        // `null` so that the earlier event can void the "light
+        // dismiss" and keep the Overlay open.
+        this.longpressState = this.state === 'opening' ? 'pressed' : 'null';
         const triggerElement = this.triggerElement as HTMLElement;
         triggerElement.removeEventListener('pointerup', this.handlePointerup);
         triggerElement.removeEventListener(
@@ -637,8 +677,11 @@ export class Overlay extends OverlayFeatures {
     protected handleKeyup = (event: KeyboardEvent): void => {
         const { code, altKey } = event;
         if (code === 'Space' || (altKey && code === 'ArrowDown')) {
+            if (!this.triggerElement || !this.hasNonVirtualTrigger) {
+                return;
+            }
             event.stopPropagation();
-            this.dispatchEvent(
+            (this.triggerElement as HTMLElement).dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
                     bubbles: true,
                     composed: true,
@@ -647,6 +690,9 @@ export class Overlay extends OverlayFeatures {
                     },
                 })
             );
+            setTimeout(() => {
+                this.longpressState = 'null';
+            });
         }
     };
 
@@ -663,7 +709,12 @@ export class Overlay extends OverlayFeatures {
     };
 
     protected handleClick = (): void => {
-        if (this.longpressed) return;
+        if (
+            this.longpressState === 'opening' ||
+            this.longpressState === 'pressed'
+        ) {
+            return;
+        }
         if (!this.preventNextToggle) {
             this.open = !this.open;
         }
@@ -736,7 +787,8 @@ export class Overlay extends OverlayFeatures {
 
     protected handleLongpress = (): void => {
         this.open = true;
-        this.longpressed = true;
+        this.longpressState =
+            this.longpressState === 'potential' ? 'opening' : 'pressed';
     };
 
     protected handleBeforetoggle(event: Event & { newState: string }): void {
@@ -746,7 +798,10 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected handleBrowserClose(): void {
-        if (!this.longpressed) {
+        if (
+            this.longpressState !== 'opening' &&
+            this.longpressState !== 'pressed'
+        ) {
             this.open = false;
             return;
         }
@@ -887,10 +942,6 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected renderPopover(): TemplateResult {
-        const hasPopoverAttribute = 'popover' in this;
-        const popoverValue = hasPopoverAttribute
-            ? this.popoverValue
-            : undefined;
         /**
          * `--swc-overlay-open-count` is applied to mimic the single stack
          * nature of the top layer in browsers that do not yet support it.
@@ -904,7 +955,7 @@ export class Overlay extends OverlayFeatures {
             <div
                 class="dialog"
                 part="dialog"
-                popover=${ifDefined(popoverValue)}
+                popover=${ifDefined(this.popoverValue)}
                 @beforetoggle=${this.handleBeforetoggle}
                 @close=${this.handleBrowserClose}
                 ?is-visible=${this.state !== 'closed'}

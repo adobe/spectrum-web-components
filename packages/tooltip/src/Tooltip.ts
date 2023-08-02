@@ -175,7 +175,7 @@ export class Tooltip extends SpectrumElement {
         let triggerElement = (start.parentElement ||
             (root as ShadowRoot).host ||
             root) as HTMLElement;
-        while (!triggerElement?.matches(focusableSelector)) {
+        while (!triggerElement?.matches?.(focusableSelector)) {
             start =
                 triggerElement.assignedSlot || (triggerElement as HTMLElement);
             root = start.getRootNode();

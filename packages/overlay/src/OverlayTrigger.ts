@@ -125,7 +125,7 @@ export class OverlayTrigger extends SpectrumElement {
     }
 
     private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
-        const target = event.composedPath()[0];
+        const { target } = event;
         let type: OverlayContentTypes;
         if (target === this.clickOverlayElement) {
             type = 'click';
@@ -248,11 +248,5 @@ export class OverlayTrigger extends SpectrumElement {
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         return complete;
-    }
-
-    protected override willUpdate(): void {
-        if ((this.placement as unknown as 'none') === 'none') {
-            this.placement = undefined;
-        }
     }
 }
