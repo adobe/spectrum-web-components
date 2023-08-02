@@ -248,10 +248,16 @@ An `<sp-action-menu>` parent will ensure that the internal `<sp-menu>` features 
 
 ## Adding tootip in action menu
 
-Tooltip in action menu can be added via a slot. It can be attached to action menu by adding <sp-action-menu> and giving various parameters (e.g. placement, content, etc) as needed.
+Tooltip in action menu can be attached via adding <sp-tooltip> and can be customized by using various parameters (e.g. placement, content, etc) as needed.
 
 ```html
-<sp-action-menu
-    <sp-tooltip slot='tooltip' self-managed placement='bottom'>'Content'</sp-tooltip>`
+<sp-action-menu>
+    <sp-tooltip slot="tooltip" self-managed placement="bottom">
+        Content
+    </sp-tooltip>
+    <span slot="label">Available shapes</span>
+    <sp-menu-item value="shape-1-square">Square</sp-menu-item>
+    <sp-menu-item value="shape-2-triangle">Triangle</sp-menu-item>
+    <sp-menu-item value="shape-3-parallelogram">Parallelogram</sp-menu-item>
 </sp-action-menu>
 ```

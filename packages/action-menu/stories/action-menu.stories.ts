@@ -159,14 +159,6 @@ iconOnly.args = {
     visibleLabel: '',
 };
 
-export const tooltipDescriptionAndPlacement = (
-    args: StoryArgs = {}
-): TemplateResult => Template(args);
-tooltipDescriptionAndPlacement.args = {
-    tooltipDescription: 'Dummy tooltip description on hovering action menu',
-    tooltipPlacement: 'bottom',
-};
-
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
     customIcon: html`
