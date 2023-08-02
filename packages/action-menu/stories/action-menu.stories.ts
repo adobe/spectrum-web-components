@@ -163,7 +163,8 @@ export const tooltipDescriptionAndPlacement = (
     args: StoryArgs = {}
 ): TemplateResult => Template(args);
 tooltipDescriptionAndPlacement.args = {
-    tooltipDescription: '',
+    tooltipDescription: 'Your tooltip string here',
+    visibleLabel: '',
     tooltipPlacement: 'bottom',
 };
 
