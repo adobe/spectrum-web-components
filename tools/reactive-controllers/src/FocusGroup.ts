@@ -157,17 +157,13 @@ export class FocusGroupController<T extends HTMLElement>
 
     handleItemMutation(): void {
         this.clearElementCache();
-        const diff = this.currentIndex === this.elements.length ? -1 : 0;
-        this.setCurrentIndexCircularly(diff);
-        let steps = this.elements.length;
-        while (
-            steps > 0 &&
-            !this.isFocusableElement(this.elements[this.currentIndex])
-        ) {
-            this.setCurrentIndexCircularly(1);
-            steps--;
+        const moveToNextElement = this.currentIndex !== this.elements.length;
+        const diff = moveToNextElement ? 1 : -1;
+        if (moveToNextElement) {
+            this.setCurrentIndexCircularly(-1);
         }
-        this?.elements[this?.currentIndex]?.focus();
+        this.setCurrentIndexCircularly(diff);
+        this.focus();
     }
 
     update({ elements }: FocusGroupConfig<T> = { elements: () => [] }): void {
