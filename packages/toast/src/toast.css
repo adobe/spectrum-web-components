@@ -12,6 +12,23 @@ governing permissions and limitations under the License.
 
 @import './spectrum-toast.css';
 
-:host(:not([open])) {
-    display: none;
+:host {
+    --spectrum-overlay-animation-distance: 6px;
+    --spectrum-overlay-animation-duration: var(
+        --spectrum-animation-duration-100
+    );
+
+    opacity: 0;
+    pointer-events: none;
+    transition: transform var(--spectrum-overlay-animation-duration) ease-in-out,
+        opacity var(--spectrum-overlay-animation-duration) ease-in-out,
+        visibility 0s linear var(--spectrum-overlay-animation-duration);
+    visibility: hidden;
+}
+
+:host([open]) {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0s;
+    visibility: visible;
 }
