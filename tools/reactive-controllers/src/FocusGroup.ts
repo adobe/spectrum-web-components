@@ -174,10 +174,12 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     focus(options?: FocusOptions): void {
-        let focusElement = this.elements[this.currentIndex];
+        const elements = this.elements;
+        if (!elements.length) return;
+        let focusElement = elements[this.currentIndex];
         if (!focusElement || !this.isFocusableElement(focusElement)) {
             this.setCurrentIndexCircularly(1);
-            focusElement = this.elements[this.currentIndex];
+            focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
             focusElement.focus(options);
