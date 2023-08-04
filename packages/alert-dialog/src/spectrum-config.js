@@ -24,7 +24,26 @@ const config = {
             inPackage: '@spectrum-css/alertdialog',
             outPackage: 'alert-dialog',
             fileName: 'alert-dialog',
-            components: [converter.classToHost()],
+            components: [
+                converter.classToHost(),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-AlertDialog--error'],
+                        ['spectrum-AlertDialog--warning'],
+                    ],
+                    'variant'
+                ),
+                converter.classToClass('spectrum-AlertDialog-grid', 'grid'),
+                converter.classToClass('spectrum-AlertDialog-header', 'header'),
+                converter.classToClass(
+                    'spectrum-AlertDialog-heading',
+                    'heading'
+                ),
+                converter.classToClass(
+                    'spectrum-AlertDialog-content',
+                    'content'
+                ),
+            ],
         },
     ],
 };

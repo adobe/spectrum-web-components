@@ -24,5 +24,12 @@ import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 ## Example
 
 ```html
-<sp-alert-dialog></sp-alert-dialog>
+<sp-alert-dialog>
+    <h2 slot="heading">Enable Smart Filters?</h2>
+    <p>Something that might happen a lot is about to happen.</p>
+    <p>
+        The click events for the "OK" button are bound to the story not to the
+        components in specific.
+    </p>
+</sp-alert-dialog>
 ```

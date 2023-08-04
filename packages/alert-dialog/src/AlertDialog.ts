@@ -15,8 +15,26 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
+import '@spectrum-web-components/divider/sp-divider.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import styles from './alert-dialog.css.js';
+
+export const alertDialogVariants: AlertDialogVariants[] = [
+    'confirmation',
+    'positive',
+    'info',
+    'error',
+    'warning',
+];
+
+export type AlertDialogVariants =
+    | 'confirmation'
+    | 'positive'
+    | 'info'
+    | 'error'
+    | 'warning'
+    | '';
 
 /**
  * @element sp-alert-dialog
@@ -26,9 +44,69 @@ export class AlertDialog extends SpectrumElement {
         return [styles];
     }
 
+    public get variant(): AlertDialogVariants {
+        return this._variant;
+    }
+
+    private _variant: AlertDialogVariants = '';
+
+    // private renderIcon(variant: string): TemplateResult {
+    //     switch (variant) {
+    //         case 'info':
+    //             return html`
+    //                 <sp-icon-info
+    //                     label="Information"
+    //                     class="type"
+    //                 ></sp-icon-info>
+    //             `;
+    //         case 'negative':
+    //         case 'error': // deprecated
+    //         case 'warning': // deprecated
+    //             return html`
+    //                 <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+    //             `;
+    //         case 'positive':
+    //         case 'success': // deprecated
+    //             return html`
+    //                 <sp-icon-checkmark-circle
+    //                     label="Success"
+    //                     class="type"
+    //                 ></sp-icon-checkmark-circle>
+    //             `;
+    //         default:
+    //             return html``;
+    //     }
+    // }
+
+    protected renderHeading(): TemplateResult {
+        return html`
+            <slot class="heading" name="heading"></slot>
+        `;
+    }
+
+    protected renderContent(): TemplateResult {
+        return html`
+            <div class="content">
+                <slot></slot>
+            </div>
+        `;
+    }
+
+    protected renderButtons(): TemplateResult {
+        return html`
+            <sp-button-group class="button-group">
+                <slot name="button"></slot>
+            </sp-button-group>
+        `;
+    }
+
     protected override render(): TemplateResult {
         return html`
-            Markup goes here
+            <div class="grid">
+                <div class="heading">${this.renderHeading()}</div>
+                <sp-divider size="m" class="divider"></sp-divider>
+                <div class="content">${this.renderContent()}</div>
+            </div>
         `;
     }
 }
