@@ -159,14 +159,14 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                 <overlay-trigger
                     placement=${placement}
                     open=${ifDefined(
-                        openPlacement === placement ? 'hover' : undefined
+                        openPlacement === placement ? 'click' : undefined
                     )}
                 >
                     <sp-button label="${placement} test" slot="trigger">
-                        Hover for ${variant ? variant : 'toast'} on the
+                        Click for ${variant ? variant : 'toast'} on the
                         ${placement}
                     </sp-button>
-                    <sp-toast slot="hover-content" variant=${variant}>
+                    <sp-toast slot="click-content" variant=${variant}>
                         ${placement}
                     </sp-toast>
                 </overlay-trigger>
