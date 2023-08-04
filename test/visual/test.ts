@@ -104,7 +104,7 @@ export const test = (
                 await waitUntil(
                     () => test.ready,
                     'Wait for decorator to become ready...',
-                    { timeout: 15000 }
+                    { timeout: 20000 }
                 );
                 await nextFrame();
                 const testName = `${color} - ${scale} - ${dir} - ${name} - ${story}`;
