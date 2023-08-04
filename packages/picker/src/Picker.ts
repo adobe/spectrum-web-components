@@ -533,6 +533,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 role="${this.listRole}"
                 @change=${this.handleChange}
                 .selects=${this.selects}
+                size=${this.size}
             ></sp-menu>
             ${this.dismissHelper}
         `;
