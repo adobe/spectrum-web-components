@@ -28,13 +28,13 @@
     "@spectrum-web-components/styles": "^0.38.0"
   },
   "devDependencies": {
-    "@open-wc/building-rollup": "^2.2.1",
+    "@open-wc/building-rollup": "^3.0.2",
     "@open-wc/eslint-config": "^12.0.0",
     "@rollup/plugin-commonjs": "^25.0.2",
     "@types/node": "^18.11.0",
     "@typescript-eslint/eslint-plugin": "^5.35.0",
     "@typescript-eslint/parser": "^5.35.0",
-    "@web/dev-server": "^0.3.0",
+    "@web/dev-server": "^0.3.1",
     "concurrently": "^5.3.0",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^9.0.0",
