@@ -115,7 +115,7 @@ export const selectsWithIcons = (): TemplateResult => {
                     <sp-icon-export slot="icon"></sp-icon-export>
                     Quick export
                 </sp-menu-item>
-                <sp-menu-item>
+                <sp-menu-item selected>
                     <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
                     Open a copy
                 </sp-menu-item>
