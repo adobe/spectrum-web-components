@@ -127,7 +127,7 @@
     ],
     "dependencies": {
         "@floating-ui/dom": "^1.5.1",
-        "@floating-ui/utils": "0.1.1",
+        "@floating-ui/utils": "^0.1.1",
         "@spectrum-web-components/action-button": "^0.36.0",
         "@spectrum-web-components/base": "^0.36.0",
         "@spectrum-web-components/reactive-controllers": "^0.36.0",

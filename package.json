@@ -31,7 +31,7 @@
         "docs:review": "alex packages/**/*.md",
         "docs:start": "yarn workspace documentation serve --watch",
         "find": "test -f custom-elements.json",
-        "gen-react-wrapper": "rm -fr react && lerna exec --ignore \"{@spectrum-web-components/{base,bundle,custom-vars-viewer,modal,iconset,shared,opacity-checkerboard,styles,reactive-controllers},@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../cem-react-wrapper.config.js && node ./scripts/generate-icon-react-wrapper.js",
+        "gen-react-wrapper": "rm -fr react && lerna exec --ignore \"{@spectrum-web-components/{base,bundle,custom-vars-viewer,modal,iconset,shared,opacity-checkerboard,styles,reactive-controllers,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../cem-react-wrapper.config.js && node ./scripts/generate-icon-react-wrapper.js",
         "get-ready": "yarn build:clear-cache && yarn build",
         "icons": "wireit",
         "icons:ui": "wireit",
