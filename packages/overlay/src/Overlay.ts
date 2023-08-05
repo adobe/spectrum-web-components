@@ -931,6 +931,11 @@ export class Overlay extends OverlayFeatures {
             <dialog
                 class="dialog"
                 part="dialog"
+                placement=${ifDefined(
+                    this.requiresPosition
+                        ? this.placement || 'right'
+                        : undefined
+                )}
                 @close=${this.handleBrowserClose}
                 @cancel=${this.handleBrowserClose}
                 @beforetoggle=${this.handleBeforetoggle}
@@ -955,6 +960,11 @@ export class Overlay extends OverlayFeatures {
             <div
                 class="dialog"
                 part="dialog"
+                placement=${ifDefined(
+                    this.requiresPosition
+                        ? this.placement || 'right'
+                        : undefined
+                )}
                 popover=${ifDefined(this.popoverValue)}
                 @beforetoggle=${this.handleBeforetoggle}
                 @close=${this.handleBrowserClose}

@@ -17,6 +17,10 @@ governing permissions and limitations under the License.
     white-space: initial;
 }
 
+:host([placement]) #tooltip {
+    margin: var(--swc-tooltip-margin);
+}
+
 #tip {
     clip-path: polygon(0 -5%, 50% 50%, 100% -5%);
     width: var(--spectrum-tooltip-tip-inline-size) !important;

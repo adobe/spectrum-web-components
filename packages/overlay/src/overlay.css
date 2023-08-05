@@ -93,6 +93,10 @@ governing permissions and limitations under the License.
     );
 }
 
+::slotted(sp-tooltip) {
+    --swc-tooltip-margin: 0;
+}
+
 /**
  * Offset the transition displacement from the trigger edge by
  * padding the equivelent distance off of the opposite edge.
@@ -102,6 +106,26 @@ governing permissions and limitations under the License.
  * that _should_ still be under the pointer when `pointerup` is dispatched.
  * </HACK>
  **/
+.dialog:not([actual-placement])[placement*='top'] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: var(--swc-overlay-animation-distance);
+}
+
+.dialog:not([actual-placement])[placement*='right'] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog:not([actual-placement])[placement*='bottom'] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog:not([actual-placement])[placement*='left'] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: var(--swc-overlay-animation-distance);
+}
+
 .dialog[actual-placement*='top'] {
     padding-block: var(--swc-overlay-animation-distance);
     margin-top: var(--swc-overlay-animation-distance);
