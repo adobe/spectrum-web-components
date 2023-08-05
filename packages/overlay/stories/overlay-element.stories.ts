@@ -243,7 +243,7 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 </sp-action-group>
             </sp-popover>
         </sp-overlay>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-3@hover">
+        <sp-overlay ?delayed=${delayed} trigger="trigger-3@hover" open>
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay
