@@ -24,12 +24,37 @@ import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 ## Example
 
 ```html
-<sp-alert-dialog>
-    <h2 slot="heading">Enable Smart Filters?</h2>
-    <p>Something that might happen a lot is about to happen.</p>
-    <p>
-        The click events for the "OK" button are bound to the story not to the
-        components in specific.
-    </p>
-</sp-alert-dialog>
+<overlay-trigger type="modal" placement="none">
+    <sp-alert-dialog
+        variant="confirmation"
+        slot="click-content"
+        headline="Dialog title"
+        confirm-label="Keep Both"
+        secondary-label="Replace"
+        cancel-label="Cancel"
+        underlay
+    >
+        Content of the dialog
+    </sp-alert-dialog>
+    <sp-button
+        slot="trigger"
+        variant="primary"
+        onClick="
+            const overlayTrigger = this.parentElement;
+            const dialogWrapper = overlayTrigger.clickContent;
+            function handleEvent({type}) {
+                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                dialogWrapper.open = false;
+                dialogWrapper.removeEventListener('confirm', handleEvent);
+                dialogWrapper.removeEventListener('secondary', handleEvent);
+                dialogWrapper.removeEventListener('cancel', handleEvent);
+            }
+            dialogWrapper.addEventListener('confirm', handleEvent);
+            dialogWrapper.addEventListener('secondary', handleEvent);
+            dialogWrapper.addEventListener('cancel', handleEvent);
+        "
+    >
+        Toggle Dialog
+    </sp-button>
+</overlay-trigger>
 ```

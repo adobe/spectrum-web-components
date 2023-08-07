@@ -12,13 +12,15 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import styles from './alert-dialog.css.js';
+import alertStyles from './alert-dialog.css.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { DialogBase } from '@spectrum-web-components/dialog/src/DialogBase.js';
+import { Dialog } from '@spectrum-web-components/dialog/src/Dialog.js';
 
 export const alertDialogVariants: AlertDialogVariants[] = [
     'confirmation',
@@ -39,9 +41,32 @@ export type AlertDialogVariants =
 /**
  * @element sp-alert-dialog
  */
-export class AlertDialog extends SpectrumElement {
+
+export class AlertDialog extends DialogBase {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [...super.styles, alertStyles];
+    }
+
+    /**
+     * The variant applies specific styling when set to `negative`, `positive`, `info`, `error`, or `warning`.
+     * `variant` attribute is removed when not matching one of the above.
+     *
+     * @param {String} variant
+     */
+    @property({ type: String })
+    public set variant(variant: AlertDialogVariants) {
+        if (variant === this.variant) {
+            return;
+        }
+        const oldValue = this.variant;
+        if (alertDialogVariants.includes(variant)) {
+            this.setAttribute('variant', variant);
+            this._variant = variant;
+        } else {
+            this.removeAttribute('variant');
+            this._variant = '';
+        }
+        this.requestUpdate('variant', oldValue);
     }
 
     public get variant(): AlertDialogVariants {
@@ -50,63 +75,107 @@ export class AlertDialog extends SpectrumElement {
 
     private _variant: AlertDialogVariants = '';
 
-    // private renderIcon(variant: string): TemplateResult {
-    //     switch (variant) {
-    //         case 'info':
-    //             return html`
-    //                 <sp-icon-info
-    //                     label="Information"
-    //                     class="type"
-    //                 ></sp-icon-info>
-    //             `;
-    //         case 'negative':
-    //         case 'error': // deprecated
-    //         case 'warning': // deprecated
-    //             return html`
-    //                 <sp-icon-alert label="Error" class="type"></sp-icon-alert>
-    //             `;
-    //         case 'positive':
-    //         case 'success': // deprecated
-    //             return html`
-    //                 <sp-icon-checkmark-circle
-    //                     label="Success"
-    //                     class="type"
-    //                 ></sp-icon-checkmark-circle>
-    //             `;
-    //         default:
-    //             return html``;
-    //     }
-    // }
+    @property({ attribute: 'cancel-label' })
+    public cancelLabel = '';
 
-    protected renderHeading(): TemplateResult {
-        return html`
-            <slot class="heading" name="heading"></slot>
-        `;
+    @property({ attribute: 'confirm-label' })
+    public confirmLabel = '';
+
+    @property({ attribute: 'secondary-label' })
+    public secondaryLabel = '';
+
+    @property()
+    public headline = '';
+
+    private renderIcon(variant: string): TemplateResult {
+        switch (variant) {
+            case 'warning':
+            case 'error':
+                return html`
+                    <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+                `;
+
+            default:
+                return html``;
+        }
     }
 
-    protected renderContent(): TemplateResult {
+    protected override get dialog(): Dialog {
+        return this.shadowRoot.querySelector('sp-dialog') as Dialog;
+    }
+
+    private clickSecondary(): void {
+        this.dispatchEvent(
+            new Event('secondary', {
+                bubbles: true,
+            })
+        );
+    }
+
+    private clickCancel(): void {
+        this.dispatchEvent(
+            new Event('cancel', {
+                bubbles: true,
+            })
+        );
+    }
+
+    private clickConfirm(): void {
+        this.dispatchEvent(
+            new Event('confirm', {
+                bubbles: true,
+            })
+        );
+    }
+
+    protected override renderDialog(): TemplateResult {
         return html`
-            <div class="content">
+            <sp-dialog>
+                ${this.headline
+                    ? html`
+                          <div class="header" slot="heading">
+                              <h1 class="heading">${this.headline}</h1>
+                              ${this.renderIcon(this.variant)}
+                          </div>
+                      `
+                    : html``}
                 <slot></slot>
-            </div>
-        `;
-    }
-
-    protected renderButtons(): TemplateResult {
-        return html`
-            <sp-button-group class="button-group">
-                <slot name="button"></slot>
-            </sp-button-group>
-        `;
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <div class="grid">
-                <div class="heading">${this.renderHeading()}</div>
-                <sp-divider size="m" class="divider"></sp-divider>
-                <div class="content">${this.renderContent()}</div>
-            </div>
+                ${this.cancelLabel
+                    ? html`
+                          <sp-button
+                              variant="secondary"
+                              treatment="outline"
+                              slot="button"
+                              @click=${this.clickCancel}
+                          >
+                              ${this.cancelLabel}
+                          </sp-button>
+                      `
+                    : html``}
+                ${this.secondaryLabel
+                    ? html`
+                          <sp-button
+                              variant="primary"
+                              treatment="outline"
+                              slot="button"
+                              @click=${this.clickSecondary}
+                          >
+                              ${this.secondaryLabel}
+                          </sp-button>
+                      `
+                    : html``}
+                ${this.confirmLabel
+                    ? html`
+                          <sp-button
+                              variant="accent"
+                              slot="button"
+                              @click=${this.clickConfirm}
+                          >
+                              ${this.confirmLabel}
+                          </sp-button>
+                      `
+                    : html``}
+            </sp-dialog>
         `;
     }
 }

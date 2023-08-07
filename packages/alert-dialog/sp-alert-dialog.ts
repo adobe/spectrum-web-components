@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { AlertDialog } from './src/AlertDialog.js';
 
-customElements.define('sp-alert-dialog', AlertDialog);
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+defineElement('sp-alert-dialog', AlertDialog);
 
 declare global {
     interface HTMLElementTagNameMap {
