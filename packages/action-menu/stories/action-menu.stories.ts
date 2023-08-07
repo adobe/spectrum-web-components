@@ -16,6 +16,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionMenuMarkup } from './';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';

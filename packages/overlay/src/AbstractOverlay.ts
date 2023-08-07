@@ -66,10 +66,10 @@ export const guaranteedAllTransitionend = (
     action: () => void,
     cb: () => void
 ): void => {
+    const abortController = new AbortController();
     const runningTransitions = new Map<string, number>();
     const cleanup = (): void => {
-        el.removeEventListener('transitionrun', handleTransitionrun);
-        el.removeEventListener('transitionend', handleTransitionend);
+        abortController.abort();
         cb();
     };
     let guarantee2: number;
@@ -114,8 +114,12 @@ export const guaranteedAllTransitionend = (
         cancelAnimationFrame(guarantee2);
         cancelAnimationFrame(guarantee3);
     };
-    el.addEventListener('transitionrun', handleTransitionrun);
-    el.addEventListener('transitionend', handleTransitionend);
+    el.addEventListener('transitionrun', handleTransitionrun, {
+        signal: abortController.signal,
+    });
+    el.addEventListener('transitionend', handleTransitionend, {
+        signal: abortController.signal,
+    });
     action();
 };
 

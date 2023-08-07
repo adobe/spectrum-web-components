@@ -94,6 +94,10 @@ export class MenuItem extends LikeAnchor(
         return [menuItemStyles, checkmarkStyles, chevronStyles];
     }
 
+    abortControllerPointer!: AbortController;
+
+    abortControllerSubmenu!: AbortController;
+
     @property({ type: Boolean, reflect: true })
     public active = false;
 
@@ -467,19 +471,25 @@ export class MenuItem extends LikeAnchor(
         ) {
             if (this.active) {
                 this.menuData.selectionRoot?.closeDescendentOverlays();
-                this.addEventListener('pointerup', this.handleRemoveActive);
-                this.addEventListener('pointerleave', this.handleRemoveActive);
-                this.addEventListener('pointercancel', this.handleRemoveActive);
-            } else {
-                this.removeEventListener('pointerup', this.handleRemoveActive);
-                this.removeEventListener(
+                this.abortControllerPointer = new AbortController();
+                const options = { signal: this.abortControllerPointer.signal };
+                this.addEventListener(
+                    'pointerup',
+                    this.handleRemoveActive,
+                    options
+                );
+                this.addEventListener(
                     'pointerleave',
-                    this.handleRemoveActive
+                    this.handleRemoveActive,
+                    options
                 );
-                this.removeEventListener(
+                this.addEventListener(
                     'pointercancel',
-                    this.handleRemoveActive
+                    this.handleRemoveActive,
+                    options
                 );
+            } else {
+                this.abortControllerPointer?.abort();
             }
         }
         if (this.anchorElement) {
@@ -495,21 +505,30 @@ export class MenuItem extends LikeAnchor(
                 typeof changes.get('hasSubmenu') !== 'undefined')
         ) {
             if (this.hasSubmenu) {
-                this.addEventListener('click', this.handleSubmenuClick);
-                this.addEventListener('pointerenter', this.handlePointerenter);
-                this.addEventListener('pointerleave', this.handlePointerleave);
-                this.addEventListener('sp-opened', this.handleSubmenuOpen);
-            } else {
-                this.removeEventListener('click', this.handleSubmenuClick);
-                this.removeEventListener(
+                this.abortControllerSubmenu = new AbortController();
+                const options = { signal: this.abortControllerSubmenu.signal };
+                this.addEventListener(
+                    'click',
+                    this.handleSubmenuClick,
+                    options
+                );
+                this.addEventListener(
                     'pointerenter',
-                    this.handlePointerenter
+                    this.handlePointerenter,
+                    options
                 );
-                this.removeEventListener(
+                this.addEventListener(
                     'pointerleave',
-                    this.handlePointerleave
+                    this.handlePointerleave,
+                    options
                 );
-                this.removeEventListener('sp-opened', this.handleSubmenuOpen);
+                this.addEventListener(
+                    'sp-opened',
+                    this.handleSubmenuOpen,
+                    options
+                );
+            } else {
+                this.abortControllerSubmenu?.abort();
             }
         }
     }
