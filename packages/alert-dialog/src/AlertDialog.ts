@@ -24,18 +24,22 @@ import { Dialog } from '@spectrum-web-components/dialog/src/Dialog.js';
 
 export const alertDialogVariants: AlertDialogVariants[] = [
     'confirmation',
-    'positive',
-    'info',
-    'error',
+    'information',
     'warning',
+    'error',
+    'destructive',
+    'secondary',
+    'scroll',
 ];
 
 export type AlertDialogVariants =
     | 'confirmation'
-    | 'positive'
-    | 'info'
-    | 'error'
+    | 'information'
     | 'warning'
+    | 'error'
+    | 'destructive'
+    | 'secondary'
+    | 'scroll'
     | '';
 
 /**
@@ -92,7 +96,7 @@ export class AlertDialog extends DialogBase {
             case 'warning':
             case 'error':
                 return html`
-                    <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+                    <sp-icon-alert class="icon"></sp-icon-alert>
                 `;
 
             default:
@@ -128,9 +132,26 @@ export class AlertDialog extends DialogBase {
         );
     }
 
+    private getBtnVariant(variant: string): string {
+        switch (variant) {
+            case 'confirmation':
+                return 'accent';
+            case 'information':
+            case 'warning':
+            case 'error':
+            case 'secondary':
+            case 'scroll':
+                return 'primary';
+            case 'destructive':
+                return 'negative';
+            default:
+                return 'confirmation';
+        }
+    }
+
     protected override renderDialog(): TemplateResult {
         return html`
-            <sp-dialog>
+            <sp-dialog ?variant=${this.variant}>
                 ${this.headline
                     ? html`
                           <div class="header" slot="heading">
@@ -167,7 +188,7 @@ export class AlertDialog extends DialogBase {
                 ${this.confirmLabel
                     ? html`
                           <sp-button
-                              variant="accent"
+                              variant=${this.getBtnVariant(this.variant)}
                               slot="button"
                               @click=${this.clickConfirm}
                           >
