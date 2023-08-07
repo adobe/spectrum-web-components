@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **meter, progress-bar, progress-circle:** use innerText when label is not provided ([#3483](https://github.com/adobe/spectrum-web-components/issues/3483)) ([59358c7](https://github.com/adobe/spectrum-web-components/commit/59358c7ada3283e2fdb08793d4c4160dcfe7aee2))
+-   **meter:** added role meter progressbar in meter component ([#3459](https://github.com/adobe/spectrum-web-components/issues/3459)) ([d2eccef](https://github.com/adobe/spectrum-web-components/commit/d2eccef6de8a1c7a0f09bcae9618b4aff2109edd))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 **Note:** Version bump only for package @spectrum-web-components/meter

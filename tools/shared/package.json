@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/shared",
-    "version": "0.34.0",
+    "version": "0.35.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,6 +44,10 @@
         "./src/get-deep-element-from-point.js": {
             "development": "./src/get-deep-element-from-point.dev.js",
             "default": "./src/get-deep-element-from-point.js"
+        },
+        "./src/get-label-from-slot.js": {
+            "development": "./src/get-label-from-slot.dev.js",
+            "default": "./src/get-label-from-slot.js"
         },
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -89,7 +93,7 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.34.0",
+        "@spectrum-web-components/base": "^0.35.0",
         "focus-visible": "^5.1.0"
     },
     "types": "./src/index.d.ts",

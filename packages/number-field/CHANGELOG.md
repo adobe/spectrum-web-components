@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **number-field:** update button label to use number-field-labels as part of the text ([#3474](https://github.com/adobe/spectrum-web-components/issues/3474)) ([b92daf2](https://github.com/adobe/spectrum-web-components/commit/b92daf2f50224a362215477341d7d10a4eb39734))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes

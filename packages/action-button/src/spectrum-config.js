@@ -52,7 +52,7 @@ const config = {
                         ['spectrum-ActionButton--staticWhite', 'white'],
                         ['spectrum-ActionButton--staticBlack', 'black'],
                     ],
-                    'variant'
+                    'static'
                 ),
                 ...converter.enumerateAttributes(
                     [

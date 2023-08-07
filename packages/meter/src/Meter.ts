@@ -18,8 +18,12 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 
+import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -53,6 +57,9 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     @property({ type: String, reflect: true })
     public label = '';
 
+    @query('slot')
+    private slotEl!: HTMLSlotElement;
+
     private languageResolver = new LanguageResolutionController(this);
 
     @property({ type: Boolean, reflect: true, attribute: 'side-label' })
@@ -66,7 +73,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         return html`
             <sp-field-label size=${this.size} class="label">
                 ${this.slotHasContent ? html`` : this.label}
-                <slot>${this.label}</slot>
+                <slot @slotchange=${this.handleSlotchange}>${this.label}</slot>
             </sp-field-label>
             <sp-field-label size=${this.size} class="percentage">
                 ${new Intl.NumberFormat(this.languageResolver.language, {
@@ -83,9 +90,16 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         `;
     }
 
+    protected handleSlotchange(): void {
+        const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
+        if (labelFromSlot) {
+            this.label = labelFromSlot;
+        }
+    }
+
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.setAttribute('role', 'progressbar');
+        this.setAttribute('role', 'meter progressbar');
     }
 
     protected override updated(changes: PropertyValues): void {
@@ -93,8 +107,12 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         if (changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
         }
-        if (this.label && changes.has('label')) {
-            this.setAttribute('aria-label', this.label);
+        if (changes.has('label')) {
+            if (this.label.length) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
     }
 }

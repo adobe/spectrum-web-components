@@ -30,7 +30,7 @@ class RootEl extends LitElement {
 
     costructor() {
         super();
-        this.resovledElement.selector = '.other-element';
+        this.resolvedElement.selector = '.other-element';
     }
 }
 
@@ -70,7 +70,7 @@ class RootEl extends LitElement {
 
     costructor() {
         super();
-        this.resovledElement.selector = '.other-element';
+        this.resolvedElement.selector = '.other-element';
     }
 
     protected override willUpdate(changes: PropertyValues): void {

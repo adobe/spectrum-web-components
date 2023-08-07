@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/grid",
-    "version": "0.34.0",
+    "version": "0.35.0",
     "publishConfig": {
         "access": "public"
     },
@@ -64,8 +64,9 @@
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
         "@lit-labs/virtualizer": "^2.0.2",
-        "@spectrum-web-components/base": "^0.34.0",
-        "@spectrum-web-components/reactive-controllers": "^0.34.0"
+        "@spectrum-web-components/base": "^0.35.0",
+        "@spectrum-web-components/reactive-controllers": "^0.35.0",
+        "lit": "^2.5.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

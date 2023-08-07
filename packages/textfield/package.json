@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/textfield",
-    "version": "0.34.0",
+    "version": "0.35.0",
     "publishConfig": {
         "access": "public"
     },
@@ -57,15 +57,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.34.0",
-        "@spectrum-web-components/help-text": "^0.34.0",
-        "@spectrum-web-components/icon": "^0.34.0",
-        "@spectrum-web-components/icons-ui": "^0.34.0",
-        "@spectrum-web-components/icons-workflow": "^0.34.0",
-        "@spectrum-web-components/shared": "^0.34.0"
+        "@spectrum-web-components/base": "^0.35.0",
+        "@spectrum-web-components/help-text": "^0.35.0",
+        "@spectrum-web-components/icon": "^0.35.0",
+        "@spectrum-web-components/icons-ui": "^0.35.0",
+        "@spectrum-web-components/icons-workflow": "^0.35.0",
+        "@spectrum-web-components/shared": "^0.35.0"
     },
     "devDependencies": {
-        "@spectrum-css/textfield": "^6.0.2"
+        "@spectrum-css/textfield": "^6.0.7"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

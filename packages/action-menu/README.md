@@ -245,3 +245,19 @@ When `selects` is set to `single`, the `<sp-action-menu>` element will maintain 
 ## Accessibility
 
 An `<sp-action-menu>` parent will ensure that the internal `<sp-menu>` features a role of `listbox` and contains children with the role `option`. Upon focusing the `<sp-action-menu>` using `ArrowDown` will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item to assist in selecting of a new value.
+
+## Adding tootip in action menu
+
+Tooltip in action menu can be attached via adding <sp-tooltip> and can be customized by using various parameters (e.g. placement, content, etc) as needed.
+
+```html
+<sp-action-menu>
+    <sp-tooltip slot="tooltip" self-managed placement="bottom">
+        Content
+    </sp-tooltip>
+    <span slot="label">Available shapes</span>
+    <sp-menu-item value="shape-1-square">Square</sp-menu-item>
+    <sp-menu-item value="shape-2-triangle">Triangle</sp-menu-item>
+    <sp-menu-item value="shape-3-parallelogram">Parallelogram</sp-menu-item>
+</sp-action-menu>
+```

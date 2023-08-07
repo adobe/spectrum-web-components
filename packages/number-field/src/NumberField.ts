@@ -549,6 +549,10 @@ export class NumberField extends TextfieldBase {
         return this.focused ? this._numberParserFocused : this._numberParser;
     }
 
+    applyFocusElementLabel = (value?: string): void => {
+        this.appliedLabel = value;
+    };
+
     private _numberParser?: NumberParser;
     private _numberParserFocused?: NumberParser;
 
@@ -587,7 +591,8 @@ export class NumberField extends TextfieldBase {
                       >
                           <sp-action-button
                               class="step-up"
-                              label="Increment"
+                              aria-describedby=${this.helpTextId}
+                              label=${'Increase ' + this.appliedLabel}
                               tabindex="-1"
                               ?focused=${this.focused}
                               ?disabled=${this.disabled ||
@@ -600,7 +605,8 @@ export class NumberField extends TextfieldBase {
                           </sp-action-button>
                           <sp-action-button
                               class="step-down"
-                              label="Decrement"
+                              aria-describedby=${this.helpTextId}
+                              label=${'Decrease ' + this.appliedLabel}
                               tabindex="-1"
                               ?focused=${this.focused}
                               ?disabled=${this.disabled ||

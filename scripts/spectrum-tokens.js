@@ -70,6 +70,8 @@ const tokenPackages = [
     'textfield',
     'search',
     'tabs',
+    'actionbar',
+    'pickerbutton',
     'table',
 ];
 

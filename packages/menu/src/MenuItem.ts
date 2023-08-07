@@ -329,7 +329,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
         const assignedElements = event.target.assignedElements({
             flatten: true,
         });
-        this.hasSubmenu = this.open || !!assignedElements.length;
+        this.hasSubmenu = this.open || !!assignedElements;
+        if (this.hasSubmenu) {
+            this.setAttribute('aria-haspopup', 'true');
+        }
     }
 
     private handleRemoveActive(event: Event): void {
@@ -415,6 +418,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
         this.open = true;
         this.active = true;
+        this.setAttribute('aria-expanded', 'true');
         const submenu = (
             this.shadowRoot.querySelector(
                 'slot[name="submenu"]'
@@ -425,6 +429,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
             this.handleSubmenuPointerenter
         );
         submenu.addEventListener('change', this.handleSubmenuChange);
+        if (!submenu.id) {
+            submenu.setAttribute('id', `${this.id}-submenu`);
+        }
+        this.setAttribute('aria-controls', submenu.id);
         const popover = document.createElement('sp-popover');
         const returnSubmenu = reparentChildren([submenu], popover, {
             position: 'beforeend',
@@ -446,6 +454,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
             root: this.menuData.focusRoot,
         });
         const closeSubmenu = async (): Promise<void> => {
+            this.setAttribute('aria-expanded', 'false');
             delete this.closeOverlay;
             (await closeOverlay)();
         };

@@ -84,6 +84,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     public toggles = false;
 
     @property({ reflect: true })
+    public static?: 'white' | 'black';
+
+    @property({ reflect: true })
     public variant?: 'white' | 'black';
 
     @property({ type: String })
@@ -240,6 +243,19 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                         this.selected ? 'true' : 'false'
                     );
                 }
+            }
+        }
+        if (
+            changes.has('variant') &&
+            (this.variant || typeof changes.get('variant'))
+        ) {
+            this.static = this.variant;
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "variant" attribute/property of <${this.localName}> have been deprecated. Use "static" with any of the same values instead. "variant" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed'
+                );
             }
         }
     }
