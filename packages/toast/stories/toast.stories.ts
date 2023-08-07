@@ -14,6 +14,10 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/button/sp-button.js';
 
+import { Placement } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
 const toast = ({
     variant = '',
     open = true,
@@ -104,3 +108,74 @@ export const Negative = (args: Properties): TemplateResult =>
 
 export const Info = (args: Properties): TemplateResult =>
     variantDemo({ ...args, variant: 'info' });
+
+const overlayStyles = html`
+    <style>
+        html,
+        body,
+        #root,
+        #root-inner,
+        sp-story-decorator {
+            height: 100%;
+            margin: 0;
+        }
+
+        sp-story-decorator > div {
+            display: contents;
+        }
+
+        sp-story-decorator::part(container) {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        overlay-trigger {
+            flex: none;
+            margin: 24px 0;
+        }
+
+        .self-managed:nth-child(3) {
+            margin-left: 50px;
+        }
+    </style>
+`;
+
+const overlaid = (openPlacement: Placement): TemplateResult => {
+    return html`
+        ${overlayStyles}
+        ${(
+            [
+                ['bottom', ''],
+                ['left', 'negative'],
+                ['right', 'positive'],
+                ['top', 'info'],
+            ] as [Placement, string][]
+        ).map(([placement, variant]) => {
+            return html`
+                <overlay-trigger
+                    placement=${placement}
+                    open=${ifDefined(
+                        openPlacement === placement ? 'click' : undefined
+                    )}
+                >
+                    <sp-button label="${placement} test" slot="trigger">
+                        Click for ${variant ? variant : 'toast'} on the
+                        ${placement}
+                    </sp-button>
+                    <sp-toast slot="click-content" variant=${variant}>
+                        ${placement}
+                    </sp-toast>
+                </overlay-trigger>
+            `;
+        })}
+    `;
+};
+
+export const overlaidTop = (): TemplateResult => overlaid('top');
+export const overlaidRight = (): TemplateResult => overlaid('right');
+export const overlaidBottom = (): TemplateResult => overlaid('bottom');
+export const overlaidLeft = (): TemplateResult => overlaid('left');
