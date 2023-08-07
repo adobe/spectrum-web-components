@@ -11,10 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
@@ -23,23 +25,16 @@ import { spy } from 'sinon';
 
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
+import {
+    ignoreResizeObserverLoopError,
+    fixture as styledFixture,
+} from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
-import { Theme } from '@spectrum-web-components/theme';
-import { TemplateResult } from '@spectrum-web-components/base';
-
-async function styledFixture<T extends Element>(
-    story: TemplateResult
-): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme theme="spectrum" scale="medium" color="dark">
-            ${story}
-        </sp-theme>
-    `);
-    return test.children[0] as T;
-}
+import { tooltipDescriptionAndPlacement } from '../stories/action-menu.stories';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import type { TestablePicker } from '../../picker/test/index.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -453,6 +448,104 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(unselectedItem.selected).to.be.false;
             expect(selectedItem.textContent).to.include('Two');
             expect(selectedItem.selected).to.be.true;
+        });
+        it('shows tooltip', async () => {
+            const openSpy = spy();
+            const el = await styledFixture<ActionMenu>(
+                tooltipDescriptionAndPlacement(
+                    tooltipDescriptionAndPlacement.args
+                )
+            );
+            const tooltip = el.querySelector('sp-tooltip') as Tooltip;
+            const rect = el.getBoundingClientRect();
+            tooltip.addEventListener('sp-opened', () => openSpy());
+            await elementUpdated(tooltip);
+
+            await nextFrame();
+            await nextFrame();
+
+            const overlay = tooltip.shadowRoot.querySelector(
+                'sp-overlay'
+            ) as Overlay;
+            await elementUpdated(overlay);
+
+            expect(overlay.triggerElement === el.button).to.be.true;
+            let open = oneEvent(tooltip, 'sp-opened');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+            await open;
+
+            expect(tooltip.open).to.be.true;
+
+            let close = oneEvent(tooltip, 'sp-closed');
+            el.click();
+            await close;
+
+            expect(tooltip.open).to.be.false;
+            expect(el.open).to.be.true;
+
+            open = oneEvent(tooltip, 'sp-opened');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width * 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+            await open;
+
+            close = oneEvent(tooltip, 'sp-closed');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width * 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+            await close;
+
+            const menu = (el as unknown as TestablePicker).optionsMenu;
+            const menuRect = menu.getBoundingClientRect();
+
+            await sendMouse({
+                steps: [
+                    {
+                        position: [
+                            menuRect.left + menuRect.width / 2,
+                            menuRect.top + menuRect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+
+            await aTimeout(150);
+
+            expect(openSpy.callCount).to.equal(2);
         });
     });
 };

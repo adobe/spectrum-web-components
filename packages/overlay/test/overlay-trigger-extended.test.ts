@@ -66,6 +66,8 @@ const initTest = async (
             </div>
         `
     );
+    await nextFrame();
+    await nextFrame();
     return {
         overlayTrigger: test.querySelector('overlay-trigger') as OverlayTrigger,
         button: test.querySelector('sp-button') as Button,
@@ -122,14 +124,16 @@ describe('Overlay Trigger - extended', () => {
 
         expect(popover.placement).to.equal('top');
 
-        const { scrollHeight } = document.documentElement;
-        document.documentElement.scrollTop = scrollHeight / 2;
+        button.scrollIntoView({
+            behavior: 'instant' as ScrollBehavior,
+            block: 'start',
+        });
 
-        // one frame for scroll to trigger
         await nextFrame();
-        // one frame for the UI to update
         await nextFrame();
-        // _then_ we test...
+        await nextFrame();
+        await nextFrame();
+
         expect(popover.placement).to.equal('bottom');
     });
 

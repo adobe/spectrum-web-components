@@ -160,6 +160,8 @@ describe('Overlay Trigger - Longpress', () => {
             open = oneEvent(this.el, 'sp-opened');
             // Then, the longpress content opens.
             await open;
+            await nextFrame();
+            await nextFrame();
             expect(this.content.open, 'opens for `pointerdown`').to.be.true;
             await sendMouse({
                 steps: [
@@ -218,6 +220,8 @@ describe('Overlay Trigger - Longpress', () => {
             open = oneEvent(this.el, 'sp-opened');
             // Then, the longpress content opens.
             await open;
+            await nextFrame();
+            await nextFrame();
             expect(this.content.open, 'opens for `pointerdown`').to.be.true;
             await sendMouse({
                 steps: [

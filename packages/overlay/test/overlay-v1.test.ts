@@ -250,6 +250,7 @@ describe('Overlays, v1', () => {
         expect(button).to.exist;
 
         const opened = oneEvent(outerPopover, 'sp-opened');
+        const start = performance.now();
         openOverlays.push(
             await Overlay.open(button, 'click', outerPopover, {
                 delayed: true,
@@ -257,7 +258,9 @@ describe('Overlays, v1', () => {
             })
         );
         await opened;
+        const end = performance.now();
         expect(await isInteractive(outerPopover)).to.be.true;
+        expect(end - start).to.be.greaterThan(1000);
     });
 
     it('opens hover overlay', async () => {

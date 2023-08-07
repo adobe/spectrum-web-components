@@ -20,7 +20,11 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import type { Placement } from '@spectrum-web-components/overlay';
+import type {
+    Overlay,
+    OverlayOpenCloseDetail,
+    Placement,
+} from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import tooltipStyles from './tooltip.css.js';
@@ -28,6 +32,24 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { focusableSelector } from '@spectrum-web-components/shared/src/focusable-selectors.js';
 
 class TooltipOpenable extends HTMLElement {
+    constructor() {
+        super();
+        this.addEventListener('sp-opened', this.redispatchEvent);
+        this.addEventListener('sp-closed', this.redispatchEvent);
+    }
+    redispatchEvent(event: Event): void {
+        event.stopPropagation();
+        this.tooltip.dispatchEvent(
+            new CustomEvent<OverlayOpenCloseDetail>(event.type, {
+                bubbles: event.bubbles,
+                composed: event.composed,
+                detail: (event as CustomEvent<OverlayOpenCloseDetail>).detail,
+            })
+        );
+    }
+    get tooltip(): Tooltip {
+        return (this.getRootNode() as ShadowRoot).host as Tooltip;
+    }
     static get observedAttributes(): string[] {
         return ['open', 'placement'];
     }
@@ -49,10 +71,11 @@ class TooltipOpenable extends HTMLElement {
     }
     set open(open: boolean) {
         this._open = open;
-        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
-        if (tooltip) {
-            tooltip.open = open;
+        const { tooltip } = this;
+        if (!tooltip) {
+            return;
         }
+        tooltip.open = open;
     }
     get open(): boolean {
         return this._open;
@@ -64,18 +87,18 @@ class TooltipOpenable extends HTMLElement {
      */
     set placement(placement: Placement) {
         this._placement = placement;
-        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
-        if (tooltip) {
-            tooltip.placement = placement;
+        const { tooltip } = this;
+        if (!tooltip) {
+            return;
         }
+        tooltip.placement = placement;
     }
     get placement(): Placement {
         return this._placement;
     }
     private _placement: Placement = 'top';
     get tipElement(): HTMLElement {
-        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
-        return tooltip.tipElement;
+        return this.tooltip.tipElement;
     }
 }
 
@@ -106,6 +129,9 @@ export class Tooltip extends SpectrumElement {
 
     @property({ type: Boolean, reflect: true })
     public open = false;
+
+    @query('sp-overlay')
+    public overlayElement?: Overlay;
 
     /**
      * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"}
@@ -172,6 +198,16 @@ export class Tooltip extends SpectrumElement {
         // Resolve the parent element of the assigned slot (if one exists) or of the Tooltip.
         let start: HTMLElement = this.assignedSlot || this;
         let root = start.getRootNode();
+        if (window.__swc.DEBUG) {
+            if (root === document) {
+                window.__swc.warn(
+                    this,
+                    `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays'
+                );
+                return root;
+            }
+        }
         let triggerElement = (start.parentElement ||
             (root as ShadowRoot).host ||
             root) as HTMLElement;
@@ -179,6 +215,16 @@ export class Tooltip extends SpectrumElement {
             start =
                 triggerElement.assignedSlot || (triggerElement as HTMLElement);
             root = start.getRootNode();
+            if (window.__swc.DEBUG) {
+                if (root === document) {
+                    window.__swc.warn(
+                        this,
+                        `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays'
+                    );
+                    return root;
+                }
+            }
             triggerElement = (start.parentElement ||
                 (root as ShadowRoot).host ||
                 root) as HTMLElement;
@@ -207,7 +253,6 @@ export class Tooltip extends SpectrumElement {
                     .placement=${this.placement}
                     type="hint"
                     .tipPadding=${this.tipPadding}
-                    .triggerElement=${this.triggerElement}
                     .triggerInteraction=${'hover'}
                     @sp-opened=${this.handleOpenOverlay}
                     @sp-closed=${this.handleCloseOverlay}
@@ -218,5 +263,20 @@ export class Tooltip extends SpectrumElement {
         } else {
             return tooltip;
         }
+    }
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+
+        this.updateComplete.then(() => {
+            if (!this.selfManaged) {
+                return;
+            }
+            const overlayElement = this.overlayElement;
+            if (overlayElement) {
+                const triggerElement = this.triggerElement;
+                overlayElement.triggerElement = triggerElement;
+            }
+        });
     }
 }
