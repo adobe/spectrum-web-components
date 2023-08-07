@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-75
     );
 }
-:host {
+.spectrum-ProgressBar--sizeM {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2400);
     --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
     --spectrum-progressbar-thickness: var(
@@ -93,7 +93,7 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-200
     );
 }
-:host([size='xl']) {
+.spectrum-ProgressBar--sizeXL {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2800);
     --spectrum-progressbar-font-size: var(--spectrum-font-size-200);
     --spectrum-progressbar-thickness: var(
