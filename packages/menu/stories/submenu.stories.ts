@@ -52,6 +52,16 @@ class SubmenuReady extends HTMLElement {
 
         this.menu = document.querySelector(`sp-action-menu`) as ActionMenu;
         this.menu.addEventListener('sp-opened', this.handleMenuOpened);
+        this.menu.addEventListener(
+            'sp-closed',
+            () => {
+                this.menu.removeEventListener(
+                    'sp-opened',
+                    this.handleMenuOpened
+                );
+            },
+            { once: true }
+        );
         this.menu.open = true;
     }
 

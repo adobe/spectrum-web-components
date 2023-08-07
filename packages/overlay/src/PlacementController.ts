@@ -10,7 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController, ReactiveElement } from 'lit';
+import type {
+    ReactiveController,
+    ReactiveElement,
+} from '@spectrum-web-components/base';
 import {
     arrow,
     autoUpdate,
@@ -106,6 +109,7 @@ export class PlacementController implements ReactiveController {
             this.updatePlacement,
             {
                 elementResize: false,
+                layoutShift: false,
             }
         );
         this.cleanup = () => {
@@ -123,23 +127,14 @@ export class PlacementController implements ReactiveController {
                 );
             });
             cleanup();
-            this.updateCount = 0;
         };
     }
 
-    updateCount = 0;
-
     updatePlacement = (): void => {
-        // For some reason Safari steps through here twice just to get started...
-        if (
-            this.updateCount > 1 &&
-            this.options.type !== 'modal' &&
-            this.cleanup
-        ) {
+        if (this.options.type !== 'modal' && this.cleanup) {
             this.target.dispatchEvent(new Event('close', { bubbles: true }));
             return;
         }
-        this.updateCount += 1;
         this.computePlacement();
     };
 
