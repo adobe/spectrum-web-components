@@ -67,8 +67,7 @@
         "@spectrum-web-components/underlay": "^0.34.0"
     },
     "devDependencies": {
-        "@spectrum-css/alertdialog": "1.0.0-alpha.1",
-        "@spectrum-css/dialog": "^6.0.62"
+        "@spectrum-css/alertdialog": "1.0.0-alpha.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
