@@ -74,6 +74,7 @@ export const buildPackage = async (paths) => {
         outdir: '.',
         outbase: '.',
         sourcemap: true,
+        target: ['es2018'],
     };
     if (devPaths.length) {
         builds.push(
@@ -97,7 +98,6 @@ export const buildPackage = async (paths) => {
                 ...prodConfig,
                 entryPoints: prodPath,
                 minify: true,
-                target: ['es2018'],
             }).catch(() => process.exit(1))
         );
     }

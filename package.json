@@ -136,7 +136,7 @@
         "custom-elements-manifest": "^2.0.0",
         "debounce": "^1.2.1",
         "deepmerge": "^4.2.2",
-        "esbuild": "^0.17.19",
+        "esbuild": "^0.19.0",
         "eslint": "^8.23.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-formatter-pretty": "^5.0.0",
@@ -226,7 +226,9 @@
                 "packages/**/*.ts",
                 "tools/**/*.ts",
                 "!packages/**/*.d.ts",
-                "!tools/**/*.d.ts"
+                "!tools/**/*.d.ts",
+                "tasks/esbuild-packages.js",
+                "tasks/ts-tools.js"
             ],
             "output": [
                 "packages/**/*.js",
