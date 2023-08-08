@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    SpectrumElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import { state } from '@spectrum-web-components/base/src/decorators.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/action-group/sp-action-group.js';
@@ -217,3 +222,192 @@ vertical.args = {
     vertical: true,
     selects: undefined,
 };
+
+class ActionGroupTooltips extends SpectrumElement {
+    @state()
+    alignment = 'left';
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-action-group quiet>
+                <sp-action-button
+                    quiet
+                    value="left"
+                    ?selected=${this.alignment === 'left'}
+                    @click=${() => {
+                        this.alignment = 'left';
+                    }}
+                >
+                    <sp-icon slot="icon">
+                        <svg
+                            role="img"
+                            fill="currentColor"
+                            viewBox="0 0 18 18"
+                            id="STextAlignLeft18N-icon"
+                            width="18"
+                            height="18"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <rect
+                                fill-rule="evenodd"
+                                x="2"
+                                y="14"
+                                width="12"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="2"
+                                y="2"
+                                width="15"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="2"
+                                y="6"
+                                width="12"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="2"
+                                y="10"
+                                width="15"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                        </svg>
+                    </sp-icon>
+                    <sp-tooltip self-managed placement="bottom" offset="0">
+                        Left align
+                    </sp-tooltip>
+                </sp-action-button>
+                <sp-action-button
+                    quiet
+                    value="center"
+                    ?selected=${this.alignment === 'center'}
+                    @click=${() => {
+                        this.alignment = 'center';
+                    }}
+                >
+                    <sp-icon slot="icon">
+                        <svg
+                            role="img"
+                            fill="currentColor"
+                            viewBox="0 0 18 18"
+                            id="STextAlignCenter18N-icon"
+                            width="18"
+                            height="18"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <rect
+                                fill-rule="evenodd"
+                                x="4"
+                                y="14"
+                                width="10"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="1"
+                                y="10"
+                                width="16"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="1"
+                                y="2"
+                                width="16"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="4"
+                                y="6"
+                                width="10"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                        </svg>
+                    </sp-icon>
+                    <sp-tooltip self-managed placement="bottom" offset="0">
+                        Center align
+                    </sp-tooltip>
+                </sp-action-button>
+                <sp-action-button
+                    quiet
+                    value="right"
+                    ?selected=${this.alignment === 'right'}
+                    @click=${() => {
+                        this.alignment = 'right';
+                    }}
+                >
+                    <sp-icon slot="icon">
+                        <svg
+                            role="img"
+                            fill="currentColor"
+                            viewBox="0 0 18 18"
+                            id="STextAlignRight18N-icon"
+                            width="18"
+                            height="18"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <rect
+                                fill-rule="evenodd"
+                                x="4"
+                                y="14"
+                                width="12"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="1"
+                                y="2"
+                                width="15"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="4"
+                                y="6"
+                                width="12"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                            <rect
+                                fill-rule="evenodd"
+                                x="1"
+                                y="10"
+                                width="15"
+                                height="2"
+                                rx="0.5"
+                            ></rect>
+                        </svg>
+                    </sp-icon>
+                    <sp-tooltip self-managed placement="bottom" offset="0">
+                        Right align
+                    </sp-tooltip>
+                </sp-action-button>
+            </sp-action-group>
+        `;
+    }
+}
+
+customElements.define('action-group-tooltips', ActionGroupTooltips);
+
+export const controlled = (): TemplateResult => html`
+    <action-group-tooltips></action-group-tooltips>
+`;
