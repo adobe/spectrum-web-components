@@ -17,6 +17,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -396,4 +398,14 @@ export const selfManagedIconOnly = (): TemplateResult => html`
     <sp-action-button class="self-managed">
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
+`;
+
+export const selfManagedFieldLabel = (): TemplateResult => html`
+    <div style="display: inline-flex; flex-direction: column;">
+        <sp-field-label for="input">
+            <sp-icon-edit></sp-icon-edit>
+            <sp-tooltip self-managed>Edit</sp-tooltip>
+        </sp-field-label>
+        <sp-textfield id="input"></sp-textfield>
+    </div>
 `;

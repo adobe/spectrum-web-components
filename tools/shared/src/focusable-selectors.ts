@@ -15,6 +15,7 @@ const focusables = [
     '[focusable]',
     '[href]',
     'input',
+    'label',
     'select',
     'textarea',
     '[tabindex]',

@@ -205,7 +205,7 @@ export class Tooltip extends SpectrumElement {
                     `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
                     'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays'
                 );
-                return root;
+                return root as HTMLElement;
             }
         }
         let triggerElement = (start.parentElement ||
@@ -222,7 +222,7 @@ export class Tooltip extends SpectrumElement {
                         `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
                         'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays'
                     );
-                    return root;
+                    return root as HTMLElement;
                 }
             }
             triggerElement = (start.parentElement ||
