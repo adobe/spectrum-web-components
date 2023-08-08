@@ -132,26 +132,31 @@ export class AlertDialog extends DialogBase {
         );
     }
 
-    private getBtnVariant(variant: string): string {
+    private getButtonVariantAndTreatment(variant: string): [string, string] {
+        let buttonVariant = '';
+        let buttonTreatment = '';
+
         switch (variant) {
             case 'confirmation':
-                return 'accent';
-            case 'information':
-            case 'warning':
-            case 'error':
-            case 'secondary':
-            case 'scroll':
-                return 'primary';
+                buttonVariant = 'accent';
+                break;
             case 'destructive':
-                return 'negative';
+                buttonVariant = 'negative';
+                break;
             default:
-                return 'confirmation';
+                buttonVariant = 'primary';
+                buttonTreatment = 'outline';
+                break;
         }
+
+        return [buttonVariant, buttonTreatment];
     }
 
     protected override renderDialog(): TemplateResult {
+        const [buttonVariant, buttonTreatment] =
+            this.getButtonVariantAndTreatment(this.variant);
         return html`
-            <sp-dialog ?variant=${this.variant}>
+            <sp-dialog>
                 ${this.headline
                     ? html`
                           <div class="header" slot="heading">
@@ -161,6 +166,18 @@ export class AlertDialog extends DialogBase {
                       `
                     : html``}
                 <slot></slot>
+                ${this.secondaryLabel
+                    ? html`
+                          <sp-button
+                              variant="secondary"
+                              treatment="outline"
+                              slot="button"
+                              @click=${this.clickSecondary}
+                          >
+                              ${this.secondaryLabel}
+                          </sp-button>
+                      `
+                    : html``}
                 ${this.cancelLabel
                     ? html`
                           <sp-button
@@ -173,22 +190,11 @@ export class AlertDialog extends DialogBase {
                           </sp-button>
                       `
                     : html``}
-                ${this.secondaryLabel
-                    ? html`
-                          <sp-button
-                              variant="primary"
-                              treatment="outline"
-                              slot="button"
-                              @click=${this.clickSecondary}
-                          >
-                              ${this.secondaryLabel}
-                          </sp-button>
-                      `
-                    : html``}
                 ${this.confirmLabel
                     ? html`
                           <sp-button
-                              variant=${this.getBtnVariant(this.variant)}
+                              variant=${buttonVariant}
+                              treatment=${buttonTreatment}
                               slot="button"
                               @click=${this.clickConfirm}
                           >

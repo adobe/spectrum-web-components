@@ -74,7 +74,7 @@ Information alert dialogs communicate important information that a user needs to
         variant="information"
         slot="click-content"
         headline="Connect to wifi"
-        secondary-label="Continue"
+        confirm-label="Continue"
         cancel-label="Cancel"
         underlay
     >
@@ -114,7 +114,7 @@ Warning alert dialogs communicate important information to users in relation to 
         variant="warning"
         slot="click-content"
         headline="Unverified format"
-        secondary-label="Continue"
+        confirm-label="Continue"
         cancel-label="Cancel"
         underlay
     >
@@ -154,7 +154,7 @@ Error alert dialogs communicate critical information about an issue that a user 
         variant="error"
         slot="click-content"
         headline="Unable to share"
-        secondary-label="Continue"
+        confirm-label="Continue"
         underlay
     >
         An error occured while sharing your project. Please verify the email
@@ -232,9 +232,9 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
         variant="secondary"
         slot="click-content"
         headline="Rate this app"
-        secondary-label="Rate now"
+        confirm-label="Rate now"
         cancel-label="Remind me later"
-        cancel-label="No, thanks"
+        secondary-label="No, thanks"
         underlay
     >
         If you enjoy our app, would you mind taking a moment to rate it?
@@ -270,7 +270,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
         variant="scroll"
         slot="click-content"
         headline="Lorem Ipsum"
-        secondary-label="Continue"
+        confirm-label="Continue"
         cancel-label="Cancel"
         underlay
     >
