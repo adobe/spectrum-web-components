@@ -180,7 +180,7 @@
         "re-template-tag": "^2.0.1",
         "rimraf": "^3.0.2",
         "rollup": "^3.19.1",
-        "sinon": "^14.0.0",
+        "sinon": "^15.2.0",
         "stylelint": "^14.9.1",
         "stylelint-config-prettier": "^9.0.3",
         "stylelint-config-standard": "^28.0.0",
