@@ -112,7 +112,7 @@
         "@types/node": "^18.11.0",
         "@types/react": "^18.0.25",
         "@types/sinon": "^10.0.0",
-        "@types/webpack": "^4.4.26",
+        "@types/webpack": "^5.28.1",
         "@types/webpack-env": "^1.13.9",
         "@typescript-eslint/eslint-plugin": "^5.35.0",
         "@typescript-eslint/parser": "^5.35.0",
