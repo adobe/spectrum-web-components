@@ -85,6 +85,7 @@
         "update:spectrum-css": "node ./scripts/update-spectrum-css.js --latest || yarn update:spectrum-css:cleanup",
         "update:spectrum-css:cleanup": "yarn lint:packagejson && yarn --ignore-scripts && yarn process-spectrum",
         "update:spectrum-css:nonbreaking": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
+        "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
     },
     "peerDependencies": {

@@ -1,0 +1,25 @@
+<script type="module">
+    import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
+    import { render } from 'lit';
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    const packageName = urlParams.get('p') || 'action-bar';
+    const file = urlParams.get('f') || 'action-bar';
+    const story = urlParams.get('s') || 'Default';
+    const vrt = await import(
+        `../../packages/${packageName}/stories/${file}.stories.js`
+    ).then((stories) => {
+        return stories[story];
+    });
+
+    const decorator = document.createElement('sp-story-decorator');
+    document.body.append(decorator);
+    render(vrt(), decorator);
+</script>
+<style>
+    body {
+        margin: 0;
+    }
+</style>
