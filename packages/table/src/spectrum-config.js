@@ -104,16 +104,57 @@ const config = {
             outPackage: 'table',
             fileName: 'table-checkbox-cell',
             components: [
+                converterHeadCell.classToAttribute(
+                    'spectrum-Table-headCell',
+                    'head-cell'
+                ),
+                converterHeadCell.classToAttribute('is-sortable', 'sortable'),
+                converterHeadCell.classToAttribute('is-focused', 'focused'),
+                converterHeadCell.pseudoToAttribute('active', 'active'),
+                {
+                    find: [builder.class('spectrum-Table-cell')],
+                    replace: [
+                        //:host(:not([head-cell]))
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'not',
+                                        selectors: [
+                                            [builder.attribute('head-cell')],
+                                        ],
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+
                 converterCell.classToHost('spectrum-Table-checkboxCell'),
-                converter.classToClass('spectrum-Table-checkbox'),
+                converter.classToSlotted('spectrum-Table-checkbox'),
+                converter.classToSlotted('spectrum-Checkbox'),
+                converter.classToId('spectrum-Checkbox-box', 'box'),
             ],
             excludeByComponents: [
                 builder.class('spectrum-Table'),
+                // Also include all Table-cell and Table-headCell classes.
+                // They are converted to selectors with or without the [head-cell] attribute.
                 {
                     type: 'class',
                     name: 'regex',
-                    regex: /spectrum-Table-(?!checkbox)/,
+                    regex: /spectrum-Table-(?!checkbox|headCell|cell)/,
                 },
+                builder.class('is-sortable'),
+                // Unneeded cell modifier classes (align*, collapsible, divider).
+                {
+                    type: 'class',
+                    regex: /spectrum-Table-cell--/,
+                    name: 'regex',
+                },
+                builder.element('div'),
             ],
         },
         {

@@ -21,8 +21,6 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import cellStyles from './table-cell.css.js';
-import headCellStyles from './table-head-cell.css.js';
 import styles from './table-checkbox-cell.css.js';
 import { Checkbox } from '@spectrum-web-components/checkbox';
 
@@ -31,8 +29,11 @@ import { Checkbox } from '@spectrum-web-components/checkbox';
  */
 export class TableCheckboxCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [cellStyles, headCellStyles, styles];
+        return [styles];
     }
+
+    @property({ type: Boolean })
+    public headCell = false;
 
     @property({ reflect: true })
     public role = 'gridcell';

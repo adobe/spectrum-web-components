@@ -11,6 +11,200 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@media (forced-colors: active) {
+    :host(:not([head-cell])) {
+        background-color: #0000;
+        forced-color-adjust: none;
+    }
+}
+:host([head-cell]) {
+    --spectrum-table-icon-color: var(
+        --highcontrast-table-icon-color,
+        var(
+            --mod-table-icon-color-default,
+            var(--spectrum-table-icon-color-default)
+        )
+    );
+    background-color: var(
+        --mod-table-header-background-color,
+        var(--spectrum-table-header-background-color)
+    );
+    block-size: var(
+        --mod-table-min-header-height,
+        var(--spectrum-table-min-header-height)
+    );
+    border-radius: var(
+        --mod-table-border-radius,
+        var(--spectrum-table-border-radius)
+    );
+    box-sizing: border-box;
+    color: var(
+        --mod-table-header-text-color,
+        var(--spectrum-table-header-text-color)
+    );
+    cursor: var(--mod-table-cursor-header-default, initial);
+    font-family: var(
+        --mod-table-header-font-family,
+        var(--spectrum-table-row-font-family)
+    );
+    font-size: var(
+        --mod-table-header-font-size,
+        var(--spectrum-table-row-font-size)
+    );
+    font-weight: var(
+        --mod-table-header-font-weight,
+        var(--spectrum-table-header-font-weight)
+    );
+    line-height: var(
+        --mod-table-header-line-height,
+        var(--spectrum-table-row-line-height)
+    );
+    min-block-size: var(
+        --mod-table-min-header-height,
+        var(--spectrum-table-min-header-height)
+    );
+    outline: 0;
+    padding-block: var(
+            --mod-table-header-top-to-text,
+            var(--spectrum-table-header-top-to-text)
+        )
+        var(
+            --mod-table-header-bottom-to-text,
+            var(--spectrum-table-header-bottom-to-text)
+        );
+    padding-inline: var(
+        --mod-table-cell-inline-space,
+        var(--spectrum-table-cell-inline-space)
+    );
+    text-align: start;
+    text-transform: var(--mod-table-header-text-transform, none);
+    transition: color
+        var(
+            --highcontrast-table-transition-duration,
+            var(
+                --mod-table-transition-duration,
+                var(--spectrum-table-transition-duration)
+            )
+        )
+        ease-in-out;
+    vertical-align: var(
+        --mod-table-header-vertical-align,
+        var(--spectrum-table-header-vertical-align)
+    );
+}
+:host(:not([head-cell])) {
+    border-block-start: var(
+            --mod-table-border-width,
+            var(--spectrum-table-border-width)
+        )
+        solid
+        var(
+            --highcontrast-table-divider-color,
+            var(--mod-table-divider-color, var(--spectrum-table-divider-color))
+        );
+}
+:host(:not([head-cell])) {
+    block-size: var(
+        --mod-table-min-row-height,
+        var(--spectrum-table-min-row-height)
+    );
+    box-sizing: border-box;
+    color: var(
+        --highcontrast-table-row-text-color,
+        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
+    );
+    font-size: var(
+        --mod-table-row-font-size,
+        var(--spectrum-table-row-font-size)
+    );
+    font-weight: var(
+        --mod-table-row-font-weight,
+        var(--spectrum-table-row-font-weight)
+    );
+    line-height: var(
+        --mod-table-row-line-height,
+        var(--spectrum-table-row-line-height)
+    );
+    min-block-size: var(
+        --mod-table-min-row-height,
+        var(--spectrum-table-min-row-height)
+    );
+    padding-block-end: var(
+        --mod-table-row-bottom-to-text,
+        var(--spectrum-table-row-bottom-to-text)
+    );
+    padding-block-start: calc(
+        var(--mod-table-row-top-to-text, var(--spectrum-table-row-top-to-text)) -
+            var(--mod-table-border-width, var(--spectrum-table-border-width))
+    );
+    padding-inline: calc(
+        var(--mod-table-edge-to-content, var(--spectrum-table-edge-to-content)) -
+            var(
+                --mod-table-outer-border-inline-width,
+                var(--spectrum-table-outer-border-inline-width)
+            )
+    );
+    vertical-align: var(
+        --mod-table-default-vertical-align,
+        var(--spectrum-table-default-vertical-align)
+    );
+}
+:host(:not([head-cell])),
+:host([head-cell]) {
+    position: relative;
+}
+:host(:not([head-cell])).focus-visible,
+:host(:not([head-cell])[focused]),
+:host([head-cell]).focus-visible,
+:host([head-cell][focused]) {
+    outline-color: var(
+        --highcontrast-table-cell-focus-indicator-color,
+        var(
+            --highcontrast-table-focus-indicator-color,
+            var(
+                --mod-table-focus-indicator-color,
+                var(--spectrum-table-focus-indicator-color)
+            )
+        )
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+}
+:host(:not([head-cell])):focus-visible,
+:host(:not([head-cell])[focused]),
+:host([head-cell]):focus-visible,
+:host([head-cell][focused]) {
+    outline-color: var(
+        --highcontrast-table-cell-focus-indicator-color,
+        var(
+            --highcontrast-table-focus-indicator-color,
+            var(
+                --mod-table-focus-indicator-color,
+                var(--spectrum-table-focus-indicator-color)
+            )
+        )
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+}
 :host {
     padding-inline-end: calc(
         var(
@@ -23,9 +217,41 @@ governing permissions and limitations under the License.
             )
     );
 }
-.spectrum-Checkbox {
+::slotted(*) {
     min-block-size: 0;
 }
-.spectrum-Checkbox .spectrum-Checkbox-box {
+::slotted(*)#box {
     margin: 0;
+}
+:host(:not([head-cell])) {
+    padding-block: 0;
+}
+:host(:not([head-cell])) ::slotted(*) {
+    margin-block-end: var(
+        --mod-table-row-checkbox-block-spacing,
+        var(--spectrum-table-row-checkbox-block-spacing)
+    );
+    margin-block-start: calc(
+        var(
+                --mod-table-row-checkbox-block-spacing,
+                var(--spectrum-table-row-checkbox-block-spacing)
+            ) -
+            var(--mod-table-border-width, var(--spectrum-table-border-width))
+    );
+}
+:host([head-cell]) {
+    padding-block: 0;
+}
+:host([head-cell]) ::slotted(*) {
+    margin-block-end: var(
+        --mod-table-header-checkbox-block-spacing,
+        var(--spectrum-table-header-checkbox-block-spacing)
+    );
+    margin-block-start: calc(
+        var(
+                --mod-table-header-checkbox-block-spacing,
+                var(--spectrum-table-header-checkbox-block-spacing)
+            ) -
+            var(--mod-table-border-width, var(--spectrum-table-border-width))
+    );
 }
