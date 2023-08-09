@@ -21,6 +21,7 @@ import {
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
+import { stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
@@ -207,5 +208,45 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         expect(typeof el.tipElement).to.not.equal('undefined');
+    });
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('loads default badge accessibly', async () => {
+            const el = await fixture<Tooltip>(
+                html`
+                    <sp-tooltip variant="negative" self-managed>
+                        Help text.
+                    </sp-tooltip>
+                `
+            );
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('Self managed'),
+                'confirm self managed-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-tooltip',
+                    type: 'api',
+                    level: 'high',
+                },
+            });
+        });
     });
 });
