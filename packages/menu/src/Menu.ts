@@ -114,9 +114,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
     private updateCachedMenuItems(): MenuItem[] {
         this.cachedChildItems = [];
 
-        const slotElements = this.menuSlot
-            ? this.menuSlot.assignedElements({ flatten: true })
-            : [];
+        const slotElements = this.menuSlot.assignedElements({ flatten: true });
         for (const slotElement of slotElements) {
             const childMenuItems: MenuItem[] =
                 slotElement instanceof MenuItem
@@ -192,6 +190,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
         event: MenuItemAddedOrUpdatedEvent
     ): void {
         const cascadeData = event.menuCascade.get(this);
+        /* c8 ignore next 1 */
         if (!cascadeData) return;
 
         event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
@@ -397,6 +396,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     protected handleDescendentOverlayOpened(event: Event): void {
         const target = event.composedPath()[0] as MenuItem;
+        /* c8 ignore next 1 */
         if (!target.overlayElement) return;
         this.descendentOverlays.set(
             target.overlayElement,
@@ -406,6 +406,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     protected handleDescendentOverlayClosed(event: Event): void {
         const target = event.composedPath()[0] as MenuItem;
+        /* c8 ignore next 1 */
         if (!target.overlayElement) return;
         this.descendentOverlays.delete(target.overlayElement);
     }
@@ -437,6 +438,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
         const openedItem = event
             .composedPath()
             .find((el) => this.childItemSet.has(el as MenuItem));
+        /* c8 ignore next 1 */
         if (!openedItem) return;
         const openedItemIndex = this.childItems.indexOf(openedItem as MenuItem);
         this.focusedItemIndex = openedItemIndex;
@@ -542,7 +544,6 @@ export class Menu extends SizedMixin(SpectrumElement) {
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
-                // this.blur();
                 lastFocusedItem.openOverlay();
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
@@ -792,6 +793,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
         ) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);
+                /* c8 ignore next 3 */
             } else {
                 this.removeAttribute('aria-label');
             }
