@@ -72,6 +72,7 @@ class TooltipOpenable extends HTMLElement {
     set open(open: boolean) {
         this._open = open;
         const { tooltip } = this;
+        /* c8 ignore next 3 */
         if (!tooltip) {
             return;
         }
@@ -93,6 +94,7 @@ class TooltipOpenable extends HTMLElement {
         }
         tooltip.placement = placement;
     }
+    /* c8 ignore next 3 */
     get placement(): Placement {
         return this._placement;
     }
@@ -203,7 +205,10 @@ export class Tooltip extends SpectrumElement {
                 window.__swc.warn(
                     this,
                     `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays'
+                    'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays',
+                    {
+                        level: 'high',
+                    }
                 );
                 return root as HTMLElement;
             }
@@ -215,12 +220,16 @@ export class Tooltip extends SpectrumElement {
             start =
                 triggerElement.assignedSlot || (triggerElement as HTMLElement);
             root = start.getRootNode();
+            /* c8 ignore next 13 */
             if (window.__swc.DEBUG) {
                 if (root === document) {
                     window.__swc.warn(
                         this,
                         `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays'
+                        'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays',
+                        {
+                            level: 'high',
+                        }
                     );
                     return root as HTMLElement;
                 }

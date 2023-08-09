@@ -71,7 +71,6 @@ describe('Dialog', () => {
         const el = await fixture<Dialog>(html`
             <sp-dialog size="s">
                 <h2 slot="heading">Disclaimer</h2>
-                <p>Initial paragraph.</p>
             </sp-dialog>
         `);
 
@@ -82,8 +81,40 @@ describe('Dialog', () => {
         const paragraph = document.createElement('p');
         paragraph.textContent = 'Added paragraph.';
 
-        const target = el.querySelector('p') as HTMLParagraphElement;
-        target.insertAdjacentElement('beforebegin', paragraph);
+        el.querySelector('p')?.remove();
+        el.insertAdjacentElement('beforeend', paragraph);
+
+        // Slotchange time exists outside of the standard update lifecycle
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+
+        paragraph.querySelector('p')?.remove();
+
+        // Slotchange time exists outside of the standard update lifecycle
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+
+        el.insertAdjacentElement('beforeend', paragraph);
+
+        // Slotchange time exists outside of the standard update lifecycle
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+
+        const heading = document.createElement('h2');
+        heading.slot = 'heading';
+        heading.textContent = 'New heading';
+
+        el.querySelector('h2')?.remove();
+        el.insertAdjacentElement('afterbegin', heading);
 
         // Slotchange time exists outside of the standard update lifecycle
         await nextFrame();
