@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import type { Middleware, MiddlewareState } from '@floating-ui/dom';
-import { getContainingBlock, getWindow } from '@floating-ui/utils/dom';
+import {
+    getContainingBlock,
+    getWindow,
+    isContainingBlock,
+} from '@floating-ui/utils/dom';
+import { VirtualTrigger } from './VirtualTrigger.js';
 
 export const topLayerOverTransforms = (): Middleware => ({
     name: 'topLayer',
@@ -22,6 +27,7 @@ export const topLayerOverTransforms = (): Middleware => ({
         } = middlewareArguments;
         let onTopLayer = false;
         let topLayerIsFloating = false;
+        let withinReference = false;
         const diffCoords = {
             x: 0,
             y: 0,
@@ -40,45 +46,47 @@ export const topLayerOverTransforms = (): Middleware => ({
             /* c8 ignore next 3 */
         } catch (error) {}
         topLayerIsFloating = onTopLayer;
-        if (!onTopLayer) {
-            const dialogAncestorQueryEvent = new Event(
-                'floating-ui-dialog-test',
-                { composed: true, bubbles: true }
-            );
-            floating.addEventListener(
-                'floating-ui-dialog-test',
-                (event: Event) => {
-                    (event.composedPath() as unknown as Element[]).forEach(
-                        (el) => {
-                            if (el === floating || el.localName !== 'dialog')
-                                return;
-                            try {
-                                onTopLayer = onTopLayer || el.matches(':modal');
-                                // eslint-disable-next-line no-empty
-                                /* c8 ignore next */
-                            } catch (error) {}
-                        }
-                    );
-                },
-                { once: true }
-            );
-            floating.dispatchEvent(dialogAncestorQueryEvent);
-        }
+        const dialogAncestorQueryEvent = new Event('floating-ui-dialog-test', {
+            composed: true,
+            bubbles: true,
+        });
+        floating.addEventListener(
+            'floating-ui-dialog-test',
+            (event: Event) => {
+                (event.composedPath() as unknown as Element[]).forEach((el) => {
+                    withinReference = withinReference || el === reference;
+                    if (el === floating || el.localName !== 'dialog') return;
+                    try {
+                        onTopLayer = onTopLayer || el.matches(':modal');
+                        // eslint-disable-next-line no-empty
+                        /* c8 ignore next */
+                    } catch (error) {}
+                });
+            },
+            { once: true }
+        );
+        floating.dispatchEvent(dialogAncestorQueryEvent);
         let overTransforms = false;
-        const containingBlock = getContainingBlock(reference as Element);
-        if (
-            containingBlock !== null &&
-            getWindow(containingBlock) !==
-                (containingBlock as unknown as Window)
-        ) {
-            const css = getComputedStyle(containingBlock);
-            overTransforms = css.transform !== 'none';
-        }
+        if (!(reference instanceof VirtualTrigger)) {
+            const containingBlock = isContainingBlock(reference as Element)
+                ? (reference as Element)
+                : getContainingBlock(reference as Element);
+            if (
+                containingBlock !== null &&
+                getWindow(containingBlock) !==
+                    (containingBlock as unknown as Window)
+            ) {
+                const css = getComputedStyle(containingBlock);
+                overTransforms =
+                    withinReference &&
+                    (css.transform !== 'none' || css.filter !== 'none');
+            }
 
-        if (onTopLayer && overTransforms && containingBlock) {
-            const rect = containingBlock.getBoundingClientRect();
-            diffCoords.x = rect.x;
-            diffCoords.y = rect.y;
+            if (onTopLayer && overTransforms && containingBlock) {
+                const rect = containingBlock.getBoundingClientRect();
+                diffCoords.x = rect.x;
+                diffCoords.y = rect.y;
+            }
         }
 
         if (onTopLayer && topLayerIsFloating) {
