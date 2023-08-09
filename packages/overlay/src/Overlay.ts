@@ -806,6 +806,7 @@ export class Overlay extends OverlayFeatures {
             return;
         }
         this.open = true;
+        this.placementController.allowPlacementUpdate = true;
         this.manageOpen(false);
     }
 

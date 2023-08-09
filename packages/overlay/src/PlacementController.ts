@@ -130,12 +130,19 @@ export class PlacementController implements ReactiveController {
         };
     }
 
+    allowPlacementUpdate = false;
+
     updatePlacement = (): void => {
-        if (this.options.type !== 'modal' && this.cleanup) {
+        if (
+            !this.allowPlacementUpdate &&
+            this.options.type !== 'modal' &&
+            this.cleanup
+        ) {
             this.target.dispatchEvent(new Event('close', { bubbles: true }));
             return;
         }
         this.computePlacement();
+        this.allowPlacementUpdate = false;
     };
 
     async computePlacement(): Promise<void> {

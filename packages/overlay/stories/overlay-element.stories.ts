@@ -272,3 +272,126 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
         </sp-overlay>
     `;
 };
+
+export const actionGroupWithFilters = ({
+    delayed,
+}: Properties): TemplateResult => {
+    const popoverOffset = [6, -13] as [number, number];
+    return html`
+        <style>
+            sp-popover sp-action-group {
+                padding: var(--spectrum-actiongroup-vertical-spacing-regular);
+            }
+            .root {
+                inset-inline-end: 3em;
+                inset-block-start: 3em;
+            }
+            sp-action-button {
+                background-image: linear-gradient(
+                    rgba(125, 125, 125, 0.2),
+                    rgba(125, 125, 125, 0.2)
+                );
+                background-blend-mode: multiply;
+                filter: brightness(1) saturate(1);
+            }
+        </style>
+        <sp-popover open class="root">
+            <sp-action-group vertical quiet emphasized selects="single">
+                <sp-action-button id="trigger-1" hold-affordance>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                    <sp-tooltip ?delayed=${delayed} self-managed>
+                        Hover
+                    </sp-tooltip>
+                    <sp-overlay
+                        trigger="trigger-1@longpress"
+                        type="auto"
+                        placement="right-start"
+                        .offset=${popoverOffset}
+                    >
+                        <sp-popover tip>
+                            <sp-action-group vertical quiet>
+                                <sp-action-button>
+                                    <sp-icon-anchor-select
+                                        slot="icon"
+                                    ></sp-icon-anchor-select>
+                                </sp-action-button>
+                                <sp-action-button>
+                                    <sp-icon-polygon-select
+                                        slot="icon"
+                                    ></sp-icon-polygon-select>
+                                </sp-action-button>
+                                <sp-action-button>
+                                    <sp-icon-rect-select
+                                        slot="icon"
+                                    ></sp-icon-rect-select>
+                                </sp-action-button>
+                            </sp-action-group>
+                        </sp-popover>
+                    </sp-overlay>
+                </sp-action-button>
+                <sp-action-button id="trigger-2" hold-affordance>
+                    <sp-icon-polygon-select
+                        slot="icon"
+                    ></sp-icon-polygon-select>
+                </sp-action-button>
+                <sp-action-button id="trigger-3" hold-affordance>
+                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    <sp-tooltip ?delayed=${delayed} self-managed>
+                        Hover
+                    </sp-tooltip>
+                </sp-action-button>
+            </sp-action-group>
+        </sp-popover>
+        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover">
+            <sp-tooltip>Hover</sp-tooltip>
+        </sp-overlay>
+        <sp-overlay
+            trigger="trigger-2@longpress"
+            type="auto"
+            placement="right-start"
+            .offset=${popoverOffset}
+        >
+            <sp-popover tip>
+                <sp-action-group vertical quiet>
+                    <sp-action-button>
+                        <sp-icon-anchor-select
+                            slot="icon"
+                        ></sp-icon-anchor-select>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-polygon-select
+                            slot="icon"
+                        ></sp-icon-polygon-select>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-popover>
+        </sp-overlay>
+        <sp-overlay
+            trigger="trigger-3@longpress"
+            type="auto"
+            placement="right-start"
+            .offset=${popoverOffset}
+        >
+            <sp-popover tip>
+                <sp-action-group vertical quiet>
+                    <sp-action-button>
+                        <sp-icon-anchor-select
+                            slot="icon"
+                        ></sp-icon-anchor-select>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-polygon-select
+                            slot="icon"
+                        ></sp-icon-polygon-select>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-popover>
+        </sp-overlay>
+    `;
+};
