@@ -249,7 +249,9 @@
                 "!test/visual/create.js",
                 "!test/visual/review.js",
                 "!test/visual/rollup.config.js",
-                "!test/visual/src/review.js"
+                "!test/visual/src/review.js",
+                "!test/visual/src/index.html",
+                "!test/visual/src/wds-vrt.config.js"
             ],
             "clean": "if-file-deleted"
         },
