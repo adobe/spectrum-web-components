@@ -333,44 +333,43 @@ export const scroll = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-    <overlay-trigger type="modal"
-        placement="none"
-        @close=${handleClose(args)}
-        open=${ifDefined(open)}
-    >
-        <sp-button slot="trigger" variant="primary">
-                    Toggle Dialog
-        </sp-button>
-                <sp-alert-dialog
-                    slot="click-content"
-                    variant="scroll"
-                    ?open=${open}
-                    underlay
-                    headline="Lorem Ipsum"
-                    confirm-label="Continue"
-                    cancel-label="Cancel"
-                    @close=${handleClose(args)}
-                    @confirm=${({
-                        target,
-                    }: Event & { target: HTMLElement }) => {
-                        target.dispatchEvent(
-                            new Event('close', {
-                                bubbles: true,
-                                composed: true,
-                            })
-                        );
-                        handleConfirm(args);
-                    }}
-                    @cancel=${({ target }: Event & { target: HTMLElement }) => {
-                        target.dispatchEvent(
-                            new Event('close', {
-                                bubbles: true,
-                                composed: true,
-                            })
-                        );
-                        handleCancel(args);
-                    }}
-                >
+        <overlay-trigger
+            type="modal"
+            placement="none"
+            @close=${handleClose(args)}
+            open=${ifDefined(open)}
+        >
+            <sp-button slot="trigger" variant="primary">
+                Toggle Dialog
+            </sp-button>
+            <sp-alert-dialog
+                slot="click-content"
+                variant="scroll"
+                ?open=${open}
+                underlay
+                headline="Lorem Ipsum"
+                confirm-label="Continue"
+                cancel-label="Cancel"
+                @close=${handleClose(args)}
+                @confirm=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', {
+                            bubbles: true,
+                            composed: true,
+                        })
+                    );
+                    handleConfirm(args);
+                }}
+                @cancel=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', {
+                            bubbles: true,
+                            composed: true,
+                        })
+                    );
+                    handleCancel(args);
+                }}
+            >
                 <p>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
                     Sed ac dolor sit amet purus malesuada congue. Donec quis
@@ -464,8 +463,9 @@ export const scroll = (
                     sem sit amet enim. Nam sed tellus id magna elementum
                     tincidunt. In enim a arcu imperdiet malesuada.
                 </p>
-    </overlay-trigger>
-            `;
+            </sp-alert-dialog>
+        </overlay-trigger>
+    `;
 };
 
 confirmation.decorators = [overlayTriggerDecorator];

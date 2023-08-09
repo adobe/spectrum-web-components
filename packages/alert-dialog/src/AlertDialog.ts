@@ -16,7 +16,6 @@ import {
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import alertStyles from './alert-dialog.css.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { DialogBase } from '@spectrum-web-components/dialog/src/DialogBase.js';
@@ -57,7 +56,7 @@ export class AlertDialog extends DialogBase {
      *
      * @param {String} variant
      */
-    @property({ type: String })
+    @property({ type: String, reflect: true })
     public set variant(variant: AlertDialogVariants) {
         if (variant === this.variant) {
             return;
