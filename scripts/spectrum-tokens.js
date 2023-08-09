@@ -72,6 +72,7 @@ const tokenPackages = [
     'tabs',
     'actionbar',
     'alertdialog',
+    'pickerbutton',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

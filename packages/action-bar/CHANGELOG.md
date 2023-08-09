@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Features
+
+-   **action-bar:** use core tokens ([4e21edf](https://github.com/adobe/spectrum-web-components/commit/4e21edfa369dcdbba823e3cfc1b35d65f48cab6f))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 **Note:** Version bump only for package @spectrum-web-components/action-bar

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   menu item missing aria labels ([#3417](https://github.com/adobe/spectrum-web-components/issues/3417)) ([0d04869](https://github.com/adobe/spectrum-web-components/commit/0d048696792522af0d849b64983ae793dfeae289))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

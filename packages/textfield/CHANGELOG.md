@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **number-field:** update button label to use number-field-labels as part of the text ([#3474](https://github.com/adobe/spectrum-web-components/issues/3474)) ([b92daf2](https://github.com/adobe/spectrum-web-components/commit/b92daf2f50224a362215477341d7d10a4eb39734))
+-   setting title when textfield is invalid ([36d0537](https://github.com/adobe/spectrum-web-components/commit/36d05372bd829470ac3e16f52f1fad2a7ea513ba))
+-   **textfield:** add support for [grows] when [multiline] ([3b306d4](https://github.com/adobe/spectrum-web-components/commit/3b306d434d366ae826ecf7d47e20f7780eb74a28))
+-   **textfield:** update focus state when [multiline][quiet] ([#3452](https://github.com/adobe/spectrum-web-components/issues/3452)) ([a7f563a](https://github.com/adobe/spectrum-web-components/commit/a7f563a240cda22c58c4a850fc65ed5d867bafb1))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes
