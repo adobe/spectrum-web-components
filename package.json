@@ -85,6 +85,7 @@
         "update:spectrum-css": "node ./scripts/update-spectrum-css.js --latest || yarn update:spectrum-css:cleanup",
         "update:spectrum-css:cleanup": "yarn lint:packagejson && yarn --ignore-scripts && yarn process-spectrum",
         "update:spectrum-css:nonbreaking": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
+        "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
     },
     "peerDependencies": {
@@ -112,7 +113,7 @@
         "@types/node": "^18.11.0",
         "@types/react": "^18.0.25",
         "@types/sinon": "^10.0.0",
-        "@types/webpack": "^4.4.26",
+        "@types/webpack": "^5.28.1",
         "@types/webpack-env": "^1.13.9",
         "@typescript-eslint/eslint-plugin": "^5.35.0",
         "@typescript-eslint/parser": "^5.35.0",
@@ -136,9 +137,9 @@
         "custom-elements-manifest": "^2.0.0",
         "debounce": "^1.2.1",
         "deepmerge": "^4.2.2",
-        "esbuild": "^0.17.19",
+        "esbuild": "^0.19.0",
         "eslint": "^8.23.0",
-        "eslint-config-prettier": "^8.5.0",
+        "eslint-config-prettier": "^9.0.0",
         "eslint-formatter-pretty": "^5.0.0",
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-lit-a11y": "^2.2.2",
@@ -180,7 +181,7 @@
         "re-template-tag": "^2.0.1",
         "rimraf": "^3.0.2",
         "rollup": "^3.19.1",
-        "sinon": "^14.0.0",
+        "sinon": "^15.2.0",
         "stylelint": "^14.9.1",
         "stylelint-config-prettier": "^9.0.3",
         "stylelint-config-standard": "^28.0.0",
@@ -226,7 +227,9 @@
                 "packages/**/*.ts",
                 "tools/**/*.ts",
                 "!packages/**/*.d.ts",
-                "!tools/**/*.d.ts"
+                "!tools/**/*.d.ts",
+                "tasks/esbuild-packages.js",
+                "tasks/ts-tools.js"
             ],
             "output": [
                 "packages/**/*.js",
@@ -248,7 +251,9 @@
                 "!test/visual/create.js",
                 "!test/visual/review.js",
                 "!test/visual/rollup.config.js",
-                "!test/visual/src/review.js"
+                "!test/visual/src/review.js",
+                "!test/visual/src/index.html",
+                "!test/visual/src/wds-vrt.config.js"
             ],
             "clean": "if-file-deleted"
         },

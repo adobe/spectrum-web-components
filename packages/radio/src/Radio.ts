@@ -147,7 +147,7 @@ export class Radio extends SizedMixin(
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');
             } else {
-                this.removeAttribute('aria-disabeld');
+                this.removeAttribute('aria-disabled');
             }
         }
     }
