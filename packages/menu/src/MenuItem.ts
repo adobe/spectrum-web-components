@@ -343,8 +343,17 @@ export class MenuItem extends LikeAnchor(
         this.active = false;
     }
 
-    private handlePointerdown(): void {
+    private handlePointerdown(event: PointerEvent): void {
         this.active = true;
+        if (event.target === this && this.hasSubmenu && this.open) {
+            this.addEventListener('focus', this.handleSubmenuFocus, {
+                once: true,
+            });
+            this.overlayElement.addEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {
@@ -376,6 +385,17 @@ export class MenuItem extends LikeAnchor(
             this.overlayElement.open = this.open;
         });
     }
+
+    protected handleBeforetoggle = (event: Event): void => {
+        if ((event as Event & { newState: string }).newState === 'closed') {
+            this.open = true;
+            this.overlayElement.manuallyKeepOpen();
+            this.overlayElement.removeEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
+        }
+    };
 
     protected handlePointerenter(): void {
         if (this.leaveTimeout) {
@@ -518,11 +538,6 @@ export class MenuItem extends LikeAnchor(
                 this.addEventListener(
                     'click',
                     this.handleSubmenuClick,
-                    options
-                );
-                this.addEventListener(
-                    'focus',
-                    this.handleSubmenuFocus,
                     options
                 );
                 this.addEventListener(
