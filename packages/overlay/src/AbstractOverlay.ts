@@ -179,6 +179,10 @@ export class AbstractOverlay extends SpectrumElement {
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;
 
+    public manuallyKeepOpen(): void {
+        return;
+    }
+
     public static update(): void {
         const overlayUpdateEvent = new CustomEvent('sp-update-overlays', {
             bubbles: true,

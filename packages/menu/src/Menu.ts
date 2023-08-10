@@ -560,13 +560,16 @@ export class Menu extends SizedMixin(SpectrumElement) {
         if (isNotThisOrDirectChild || event.defaultPrevented) {
             return;
         }
+        const lastFocusedItem = this.childItems[this.focusedItemIndex];
+        if (lastFocusedItem) {
+            lastFocusedItem.focused = true;
+        }
         const { code } = event;
         if (code === 'Tab') {
             this.prepareToCleanUp();
             return;
         }
         if (code === 'Space') {
-            const lastFocusedItem = this.childItems[this.focusedItemIndex];
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
