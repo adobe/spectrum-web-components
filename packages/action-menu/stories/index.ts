@@ -15,6 +15,7 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 export const ActionMenuMarkup = ({
     ariaLabel = 'More Actions',
@@ -27,7 +28,9 @@ export const ActionMenuMarkup = ({
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
     selects = '' as 'single',
     selected = false,
+
     tooltipDescription = 'Dummy tooltip description on hovering action menu',
+
     tooltipPlacement = 'bottom',
 } = {}): TemplateResult => {
     return html`
@@ -65,6 +68,17 @@ export const ActionMenuMarkup = ({
             <sp-menu-divider></sp-menu-divider>
             <sp-menu-item>Save Selection</sp-menu-item>
             <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            ${tooltipDescription
+                ? html`
+                      <sp-tooltip
+                          slot="tooltip"
+                          self-managed
+                          placement=${tooltipPlacement}
+                      >
+                          ${tooltipDescription}
+                      </sp-tooltip>
+                  `
+                : html``}
         </sp-action-menu>
     `;
 };

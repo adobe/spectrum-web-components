@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **tabs:** allow bi-directional arrow key navigation in both orientations ([#3410](https://github.com/adobe/spectrum-web-components/issues/3410)) ([ea10049](https://github.com/adobe/spectrum-web-components/commit/ea10049c4d9eea0ef619cdd41fae2e1152455570))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Features

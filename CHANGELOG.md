@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **color-wheel:** reorient reactively to "dir" changes ([#3319](https://github.com/adobe/spectrum-web-components/issues/3319)) ([6a9dcec](https://github.com/adobe/spectrum-web-components/commit/6a9dcecbd1cff5dc0ea42c9288d1898072301045))
+-   **grid:** added lit dependency ([#3489](https://github.com/adobe/spectrum-web-components/issues/3489)) ([fb5f166](https://github.com/adobe/spectrum-web-components/commit/fb5f1664022a457620f5be097a47fa6381d4f8aa))
+-   menu item missing aria labels ([#3417](https://github.com/adobe/spectrum-web-components/issues/3417)) ([0d04869](https://github.com/adobe/spectrum-web-components/commit/0d048696792522af0d849b64983ae793dfeae289))
+-   **meter, progress-bar, progress-circle:** use innerText when label is not provided ([#3483](https://github.com/adobe/spectrum-web-components/issues/3483)) ([59358c7](https://github.com/adobe/spectrum-web-components/commit/59358c7ada3283e2fdb08793d4c4160dcfe7aee2))
+-   **meter:** added role meter progressbar in meter component ([#3459](https://github.com/adobe/spectrum-web-components/issues/3459)) ([d2eccef](https://github.com/adobe/spectrum-web-components/commit/d2eccef6de8a1c7a0f09bcae9618b4aff2109edd))
+-   **number-field:** update button label to use number-field-labels as part of the text ([#3474](https://github.com/adobe/spectrum-web-components/issues/3474)) ([b92daf2](https://github.com/adobe/spectrum-web-components/commit/b92daf2f50224a362215477341d7d10a4eb39734))
+-   setting title when textfield is invalid ([36d0537](https://github.com/adobe/spectrum-web-components/commit/36d05372bd829470ac3e16f52f1fad2a7ea513ba))
+-   **split-button:** update more button label application ([#3354](https://github.com/adobe/spectrum-web-components/issues/3354)) ([b4c9595](https://github.com/adobe/spectrum-web-components/commit/b4c959526580848dcbe56bd57191144610c07742)), closes [#3305](https://github.com/adobe/spectrum-web-components/issues/3305)
+-   **swatch:** clear previously selected children when updating `selected` ([ce1bd36](https://github.com/adobe/spectrum-web-components/commit/ce1bd360dcb1ae0afdf694f4eeabbf735d1b6c74))
+-   **swatch:** warn when mixed-value used with selects !== 'multiple' ([#3460](https://github.com/adobe/spectrum-web-components/issues/3460)) ([89c288e](https://github.com/adobe/spectrum-web-components/commit/89c288ef12e8d879f6e3c12a1e0ea94828797b50))
+-   **tabs:** allow bi-directional arrow key navigation in both orientations ([#3410](https://github.com/adobe/spectrum-web-components/issues/3410)) ([ea10049](https://github.com/adobe/spectrum-web-components/commit/ea10049c4d9eea0ef619cdd41fae2e1152455570))
+-   **textfield:** add support for [grows] when [multiline] ([3b306d4](https://github.com/adobe/spectrum-web-components/commit/3b306d434d366ae826ecf7d47e20f7780eb74a28))
+-   **textfield:** update focus state when [multiline][quiet] ([#3452](https://github.com/adobe/spectrum-web-components/issues/3452)) ([a7f563a](https://github.com/adobe/spectrum-web-components/commit/a7f563a240cda22c58c4a850fc65ed5d867bafb1))
+
+### Features
+
+-   **action-bar:** use core tokens ([4e21edf](https://github.com/adobe/spectrum-web-components/commit/4e21edfa369dcdbba823e3cfc1b35d65f48cab6f))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes

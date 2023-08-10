@@ -1373,3 +1373,30 @@ governing permissions and limitations under the License.
 :root {
     --system-spectrum-tabs-font-weight: var(--spectrum-bold-font-weight);
 }
+
+:host,
+:root {
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color: var(
+        --spectrum-gray-200
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-hover: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-down: var(
+        --spectrum-gray-400
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-key-focus: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-color: none;
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius: var(
+        --spectrum-corner-radius-75
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-rounded-sided: var(
+        --spectrum-corner-radius-200
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-sided: var(
+        --spectrum-corner-radius-75
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-width: 0px;
+}

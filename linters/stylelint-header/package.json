@@ -1,6 +1,7 @@
 {
     "name": "stylelint-header",
-    "version": "1.0.0",
+    "version": "0.35.0",
+    "private": true,
     "license": "Apache-2.0",
     "author": "Adobe",
     "main": "index.js",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **split-button:** update more button label application ([#3354](https://github.com/adobe/spectrum-web-components/issues/3354)) ([b4c9595](https://github.com/adobe/spectrum-web-components/commit/b4c959526580848dcbe56bd57191144610c07742)), closes [#3305](https://github.com/adobe/spectrum-web-components/issues/3305)
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes

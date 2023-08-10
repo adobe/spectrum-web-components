@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **color-wheel:** reorient reactively to "dir" changes ([#3319](https://github.com/adobe/spectrum-web-components/issues/3319)) ([6a9dcec](https://github.com/adobe/spectrum-web-components/commit/6a9dcecbd1cff5dc0ea42c9288d1898072301045))
+
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes
