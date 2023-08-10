@@ -12,6 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-alert-dialog.css';
 
-.content[tabindex] {
-    overflow: auto;
+:host sp-dialog .heading {
+    margin-block-end: 0 !important;
 }
