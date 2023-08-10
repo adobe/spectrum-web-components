@@ -591,7 +591,8 @@ export class Menu extends SizedMixin(SpectrumElement) {
         const focusedItem = this.childItems[this.focusedItemIndex];
         if (focusedItem) {
             focusedItem.focused = false;
-            focusedItem.active = false;
+            // Remain active while a submenu is opened.
+            focusedItem.active = focusedItem.open;
         }
         this.focusedItemIndex =
             (this.childItems.length + this.focusedItemIndex + offset) %

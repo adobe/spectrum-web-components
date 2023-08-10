@@ -14,6 +14,7 @@ import {
     getContainingBlock,
     getWindow,
     isContainingBlock,
+    isWebKit,
 } from '@floating-ui/utils/dom';
 import { VirtualTrigger } from './VirtualTrigger.js';
 
@@ -79,7 +80,9 @@ export const topLayerOverTransforms = (): Middleware => ({
                 const css = getComputedStyle(containingBlock);
                 overTransforms =
                     withinReference &&
-                    (css.transform !== 'none' || css.filter !== 'none');
+                    (css.transform !== 'none' ||
+                        (!isWebKit() &&
+                            (css.filter ? css.filter !== 'none' : false)));
             }
 
             if (onTopLayer && overTransforms && containingBlock) {

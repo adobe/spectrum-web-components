@@ -369,6 +369,14 @@ export class MenuItem extends LikeAnchor(
         this.openOverlay();
     }
 
+    protected handleSubmenuFocus(): void {
+        requestAnimationFrame(() => {
+            // Wait till after `closeDescendentOverlays` has happened in Menu
+            // to reopen (keey open) the direct descendent of this Menu Item
+            this.overlayElement.open = this.open;
+        });
+    }
+
     protected handlePointerenter(): void {
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
@@ -510,6 +518,11 @@ export class MenuItem extends LikeAnchor(
                 this.addEventListener(
                     'click',
                     this.handleSubmenuClick,
+                    options
+                );
+                this.addEventListener(
+                    'focus',
+                    this.handleSubmenuFocus,
                     options
                 );
                 this.addEventListener(
