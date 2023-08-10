@@ -155,53 +155,55 @@ export class AlertDialog extends DialogBase {
         const [buttonVariant, buttonTreatment] =
             this.getButtonVariantAndTreatment(this.variant);
         return html`
-            <sp-dialog>
-                ${this.headline
-                    ? html`
-                          <div class="header" slot="heading">
-                              <h1 class="heading">${this.headline}</h1>
-                              ${this.renderIcon(this.variant)}
-                          </div>
-                      `
-                    : html``}
-                <slot></slot>
-                ${this.secondaryLabel
-                    ? html`
-                          <sp-button
-                              variant="secondary"
-                              treatment="outline"
-                              slot="button"
-                              @click=${this.clickSecondary}
-                          >
-                              ${this.secondaryLabel}
-                          </sp-button>
-                      `
-                    : html``}
-                ${this.cancelLabel
-                    ? html`
-                          <sp-button
-                              variant="secondary"
-                              treatment="outline"
-                              slot="button"
-                              @click=${this.clickCancel}
-                          >
-                              ${this.cancelLabel}
-                          </sp-button>
-                      `
-                    : html``}
-                ${this.confirmLabel
-                    ? html`
-                          <sp-button
-                              variant=${buttonVariant}
-                              treatment=${buttonTreatment}
-                              slot="button"
-                              @click=${this.clickConfirm}
-                          >
-                              ${this.confirmLabel}
-                          </sp-button>
-                      `
-                    : html``}
-            </sp-dialog>
+            <div class="alertDialog">
+                <sp-dialog>
+                    ${this.headline
+                        ? html`
+                              <div class="header" slot="heading">
+                                  <h1 class="heading">${this.headline}</h1>
+                                  ${this.renderIcon(this.variant)}
+                              </div>
+                          `
+                        : html``}
+                    <slot></slot>
+                    ${this.secondaryLabel
+                        ? html`
+                              <sp-button
+                                  variant="secondary"
+                                  treatment="outline"
+                                  slot="button"
+                                  @click=${this.clickSecondary}
+                              >
+                                  ${this.secondaryLabel}
+                              </sp-button>
+                          `
+                        : html``}
+                    ${this.cancelLabel
+                        ? html`
+                              <sp-button
+                                  variant="secondary"
+                                  treatment="outline"
+                                  slot="button"
+                                  @click=${this.clickCancel}
+                              >
+                                  ${this.cancelLabel}
+                              </sp-button>
+                          `
+                        : html``}
+                    ${this.confirmLabel
+                        ? html`
+                              <sp-button
+                                  variant=${buttonVariant}
+                                  treatment=${buttonTreatment}
+                                  slot="button"
+                                  @click=${this.clickConfirm}
+                              >
+                                  ${this.confirmLabel}
+                              </sp-button>
+                          `
+                        : html``}
+                </sp-dialog>
+            </div>
         `;
     }
 }

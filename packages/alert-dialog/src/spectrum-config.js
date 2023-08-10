@@ -25,7 +25,6 @@ const config = {
             outPackage: 'alert-dialog',
             fileName: 'alert-dialog',
             components: [
-                converter.classToHost(),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-AlertDialog--error'],
@@ -33,6 +32,7 @@ const config = {
                     ],
                     'variant'
                 ),
+                converter.classToClass('spectrum-AlertDialog', 'alertDialog'),
                 converter.classToClass('spectrum-AlertDialog-header', 'header'),
                 converter.classToClass(
                     'spectrum-AlertDialog-heading',
