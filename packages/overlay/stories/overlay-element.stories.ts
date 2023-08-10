@@ -167,11 +167,24 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
     return html`
         <style>
             sp-popover sp-action-group {
-                padding: var(--spectrum-actiongroup-vertical-spacing-regular);
+                padding: calc(
+                        var(--spectrum-actiongroup-vertical-spacing-regular) *
+                            0.75
+                    )
+                    calc(
+                        var(--spectrum-actiongroup-vertical-spacing-regular) / 2
+                    );
             }
             .root {
-                inset-inline-end: 3em;
+                inset-inline-end: 0em;
                 inset-block-start: 3em;
+                padding-block-end: 3em;
+                overflow: hidden;
+            }
+            .root > sp-action-group > sp-action-button,
+            .root > sp-action-group > sp-action-menu {
+                top: 3em;
+                position: relative;
             }
         </style>
         <sp-popover open class="root">
@@ -187,6 +200,41 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 <sp-action-button id="trigger-3" hold-affordance>
                     <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
                 </sp-action-button>
+                <sp-action-menu placement="left">
+                    <sp-menu-group id="cms">
+                        <span slot="header">cms</span>
+                        <sp-menu-item value="updateAllSiteContent">
+                            Update All Content
+                        </sp-menu-item>
+                        <sp-menu-item value="refreshAllXDs">
+                            Refresh All XDs
+                        </sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-group id="ssg">
+                        <span slot="header">ssg</span>
+                        <sp-menu-item value="clearCache">
+                            Clear Cache
+                        </sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-group id="vrt">
+                        <span slot="header">vrt</span>
+                        <sp-menu-item value="vrt-contributions">
+                            Contributions
+                        </sp-menu-item>
+                        <sp-menu-item value="vrt-internal">
+                            Internal
+                        </sp-menu-item>
+                        <sp-menu-item value="vrt-public">Public</sp-menu-item>
+                        <sp-menu-item value="vrt-patterns">
+                            Patterns
+                        </sp-menu-item>
+                        <sp-menu-item value="vrt">All</sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-group id="misc">
+                        <sp-menu-item value="logout">Logout</sp-menu-item>
+                    </sp-menu-group>
+                </sp-action-menu>
             </sp-action-group>
         </sp-popover>
         <sp-overlay ?delayed=${delayed} trigger="trigger-1@hover">
@@ -280,13 +328,27 @@ export const actionGroupWithFilters = ({
     return html`
         <style>
             sp-popover sp-action-group {
-                padding: var(--spectrum-actiongroup-vertical-spacing-regular);
+                padding: calc(
+                        var(--spectrum-actiongroup-vertical-spacing-regular) *
+                            0.75
+                    )
+                    calc(
+                        var(--spectrum-actiongroup-vertical-spacing-regular) / 2
+                    );
             }
             .root {
-                inset-inline-end: 3em;
+                inset-inline-end: 0em;
                 inset-block-start: 3em;
+                padding-block-end: 3em;
+                overflow: hidden;
             }
-            sp-action-button {
+            .root > sp-action-group > sp-action-button,
+            .root > sp-action-group > sp-action-menu {
+                top: 3em;
+                position: relative;
+            }
+            sp-action-button,
+            sp-action-menu {
                 background-image: linear-gradient(
                     rgba(125, 125, 125, 0.2),
                     rgba(125, 125, 125, 0.2)
@@ -340,6 +402,41 @@ export const actionGroupWithFilters = ({
                         Hover
                     </sp-tooltip>
                 </sp-action-button>
+                <sp-action-menu>
+                    <sp-menu-group id="cms">
+                        <span slot="header">cms</span>
+                        <sp-menu-item value="updateAllSiteContent">
+                            Update All Content
+                        </sp-menu-item>
+                        <sp-menu-item value="refreshAllXDs">
+                            Refresh All XDs
+                        </sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-group id="ssg">
+                        <span slot="header">ssg</span>
+                        <sp-menu-item value="clearCache">
+                            Clear Cache
+                        </sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-group id="vrt">
+                        <span slot="header">vrt</span>
+                        <sp-menu-item value="vrt-contributions">
+                            Contributions
+                        </sp-menu-item>
+                        <sp-menu-item value="vrt-internal">
+                            Internal
+                        </sp-menu-item>
+                        <sp-menu-item value="vrt-public">Public</sp-menu-item>
+                        <sp-menu-item value="vrt-patterns">
+                            Patterns
+                        </sp-menu-item>
+                        <sp-menu-item value="vrt">All</sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-group id="misc">
+                        <sp-menu-item value="logout">Logout</sp-menu-item>
+                    </sp-menu-group>
+                </sp-action-menu>
             </sp-action-group>
         </sp-popover>
         <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover">
