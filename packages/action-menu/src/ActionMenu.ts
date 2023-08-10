@@ -53,12 +53,15 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
 
     public handleMenuOpened = (event: Event): void => {
         event.stopPropagation();
-        this.showTooltip = false;
+        if (this.open) {
+            this.showTooltip = false;
+        } else {
+            this.showTooltip = true;
+        }
     };
 
     public handleMenuClosed1 = (event: Event): void => {
         event.stopPropagation();
-        this.showTooltip = true;
     };
 
     public constructor() {
