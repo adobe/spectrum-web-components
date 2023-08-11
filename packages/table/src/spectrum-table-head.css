@@ -14,9 +14,6 @@ governing permissions and limitations under the License.
 :host {
     display: table-header-group;
 }
-:host([role='row']) {
-    display: table-row;
-}
 :host .spectrum-Table-scroller {
     position: sticky;
     top: 0;

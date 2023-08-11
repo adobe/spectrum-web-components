@@ -15,6 +15,7 @@ governing permissions and limitations under the License.
 :host {
     display: block;
     flex-grow: 1;
+    overflow: auto;
 
     /* When made scrollable through non table element display properties, the
        body needs an additional border around it. */

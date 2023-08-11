@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 @import './spectrum-table-row.css';
 
-:host {
+:host,
+:host([role='row']) {
     display: flex;
     width: 100%;
 }

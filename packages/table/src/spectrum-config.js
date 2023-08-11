@@ -166,6 +166,7 @@ const config = {
                     regex: /spectrum-Table-head$/,
                 },
             ],
+            excludeByComponents: [builder.attribute('role')],
         },
         {
             inPackage: '@spectrum-css/table',
