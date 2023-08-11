@@ -39,10 +39,7 @@ governing permissions and limitations under the License.
         outline: var(--highcontrast-table-selected-row-text-color) 1px solid;
     }
 }
-:host {
-    border-block-start: none;
-}
-:host(:first-child) ::slotted(*) {
+:host(:first-child) .spectrum-Table-body ::slotted(*) {
     border-block-start: var(
             --mod-table-border-width,
             var(--spectrum-table-border-width)
@@ -53,7 +50,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-:host(:last-child) ::slotted(*) {
+:host(:last-child) .spectrum-Table-body ::slotted(*) {
     border-block-end: var(
             --mod-table-border-width,
             var(--spectrum-table-border-width)
@@ -64,7 +61,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-::slotted(:first-child) {
+:host .spectrum-Table-body ::slotted(:first-child) {
     border-inline-start: var(
             --mod-table-outer-border-inline-width,
             var(--spectrum-table-outer-border-inline-width)
@@ -75,7 +72,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
 }
-::slotted(:last-child) {
+:host .spectrum-Table-body ::slotted(:last-child) {
     border-inline-end: var(
             --mod-table-outer-border-inline-width,
             var(--spectrum-table-outer-border-inline-width)
@@ -111,13 +108,7 @@ governing permissions and limitations under the License.
     );
 }
 :host {
-    background-color: var(
-        --highcontrast-table-row-background-color,
-        var(
-            --mod-table-row-background-color,
-            var(--spectrum-table-row-background-color)
-        )
-    );
+    border-block-start: none;
     cursor: var(--mod-table-cursor-row-default, pointer);
     position: relative;
     transition: background-color
@@ -162,7 +153,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-icon-color: var(
         --highcontrast-table-row-text-color-hover
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-row-background-color-hover,
         var(
             --mod-table-row-background-color-hover,
@@ -179,7 +170,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-icon-color: var(
         --highcontrast-table-row-text-color-hover
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-row-background-color-hover,
         var(
             --mod-table-row-background-color-hover,
@@ -194,7 +185,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-icon-color: var(
         --highcontrast-table-row-text-color-hover
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-row-background-color-hover,
         var(
             --mod-table-row-active-color,
@@ -209,7 +200,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-icon-color: var(
         --highcontrast-table-selected-row-text-color
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color,
         var(
             --mod-table-selected-row-background-color-non-emphasized,
@@ -226,7 +217,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-icon-color: var(
         --highcontrast-table-selected-row-text-color-focus
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color-focus,
         var(
             --mod-table-selected-row-background-color-non-emphasized-focus,
@@ -245,7 +236,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-icon-color: var(
         --highcontrast-table-selected-row-text-color-focus
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color-focus,
         var(
             --mod-table-selected-row-background-color-non-emphasized-focus,
@@ -256,7 +247,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([selected]) .spectrum-Table-row--emphasized {
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color,
         var(
             --mod-table-selected-row-background-color,
@@ -267,7 +258,7 @@ governing permissions and limitations under the License.
 :host([selected]) .spectrum-Table-row--emphasized.focus-visible,
 :host([selected]) .spectrum-Table-row--emphasized:hover,
 :host([selected][focused]) .spectrum-Table-row--emphasized {
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color-focus,
         var(
             --mod-table-selected-row-background-color-focus,
@@ -278,7 +269,7 @@ governing permissions and limitations under the License.
 :host([selected]) .spectrum-Table-row--emphasized:focus-visible,
 :host([selected]) .spectrum-Table-row--emphasized:hover,
 :host([selected][focused]) .spectrum-Table-row--emphasized {
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color-focus,
         var(
             --mod-table-selected-row-background-color-focus,
@@ -294,7 +285,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-icon-color: var(
         --highcontrast-table-selected-row-text-color
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color,
         var(
             --mod-table-drop-zone-background-color,
@@ -336,7 +327,7 @@ governing permissions and limitations under the License.
     );
 }
 .spectrum-Table-row--summary {
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-row-background-color,
         var(
             --mod-table-summary-row-background-color,
@@ -374,7 +365,7 @@ governing permissions and limitations under the License.
     );
 }
 .spectrum-Table-row--sectionHeader {
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-section-header-background-color,
         var(
             --mod-table-section-header-background-color,
@@ -415,10 +406,6 @@ governing permissions and limitations under the License.
         --mod-table-section-header-line-height,
         var(--spectrum-table-row-line-height)
     );
-    min-block-size: var(
-        --mod-table-section-header-min-height,
-        var(--spectrum-table-section-header-min-height)
-    );
     padding-block-end: calc(
         var(
                 --mod-table-section-header-block-end-spacing,
@@ -439,7 +426,7 @@ governing permissions and limitations under the License.
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-section-header-text-color
     );
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-section-header-background-color,
         var(
             --mod-table-section-header-background-color,
@@ -447,8 +434,22 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host div {
+:host {
     display: table-row;
+}
+:host(:first-child) .spectrum-Table-scroller .spectrum-Table-body ::slotted(*) {
+    border-block-start: none;
+    border-radius: 0;
+}
+:host(:last-child) .spectrum-Table-scroller .spectrum-Table-body ::slotted(*) {
+    border-block-end: none;
+    border-radius: 0;
+}
+:host .spectrum-Table-scroller .spectrum-Table-body ::slotted(:first-child) {
+    border-inline-start: none;
+}
+:host .spectrum-Table-scroller .spectrum-Table-body ::slotted(:last-child) {
+    border-inline-end: none;
 }
 .spectrum-Table-row--collapsible {
     --spectrum-table-row-tier: 0;

@@ -35,6 +35,7 @@ governing permissions and limitations under the License.
         );
 }
 :host {
+    background-color: var(--spectrum-table-cell-background-color);
     block-size: var(
         --mod-table-min-row-height,
         var(--spectrum-table-min-row-height)
@@ -55,10 +56,6 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-table-row-line-height,
         var(--spectrum-table-row-line-height)
-    );
-    min-block-size: var(
-        --mod-table-min-row-height,
-        var(--spectrum-table-min-row-height)
     );
     padding-block-end: var(
         --mod-table-row-bottom-to-text,
@@ -142,7 +139,7 @@ governing permissions and limitations under the License.
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
 }
-:host div {
+:host {
     display: table-cell;
 }
 .spectrum-Table-cell--collapsible {

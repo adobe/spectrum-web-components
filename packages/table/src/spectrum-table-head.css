@@ -11,9 +11,14 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host div {
+:host {
     display: table-header-group;
 }
-:host([role='row']) div div {
+:host([role='row']) {
     display: table-row;
+}
+:host .spectrum-Table-scroller {
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }

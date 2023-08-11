@@ -33,10 +33,7 @@ governing permissions and limitations under the License.
         --mod-table-min-header-height,
         var(--spectrum-table-min-header-height)
     );
-    border-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-radius: 0;
     box-sizing: border-box;
     color: var(
         --mod-table-header-text-color,
@@ -58,10 +55,6 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-table-header-line-height,
         var(--spectrum-table-row-line-height)
-    );
-    min-block-size: var(
-        --mod-table-min-header-height,
-        var(--spectrum-table-min-header-height)
     );
     outline: 0;
     padding-block: var(
@@ -104,6 +97,7 @@ governing permissions and limitations under the License.
         );
 }
 :host(:not([head-cell])) {
+    background-color: var(--spectrum-table-cell-background-color);
     block-size: var(
         --mod-table-min-row-height,
         var(--spectrum-table-min-row-height)
@@ -124,10 +118,6 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-table-row-line-height,
         var(--spectrum-table-row-line-height)
-    );
-    min-block-size: var(
-        --mod-table-min-row-height,
-        var(--spectrum-table-min-row-height)
     );
     padding-block-end: var(
         --mod-table-row-bottom-to-text,
@@ -206,6 +196,7 @@ governing permissions and limitations under the License.
     );
 }
 :host {
+    padding-block: 0;
     padding-inline-end: calc(
         var(
                 --mod-table-checkbox-to-text,
@@ -218,13 +209,8 @@ governing permissions and limitations under the License.
     );
 }
 ::slotted(*) {
+    --mod-checkbox-spacing: 0px;
     min-block-size: 0;
-}
-::slotted(*)#box {
-    margin: 0;
-}
-:host(:not([head-cell])) {
-    padding-block: 0;
 }
 :host(:not([head-cell])) ::slotted(*) {
     margin-block-end: var(
@@ -239,9 +225,6 @@ governing permissions and limitations under the License.
             var(--mod-table-border-width, var(--spectrum-table-border-width))
     );
 }
-:host([head-cell]) {
-    padding-block: 0;
-}
 :host([head-cell]) ::slotted(*) {
     margin-block-end: var(
         --mod-table-header-checkbox-block-spacing,
@@ -254,4 +237,8 @@ governing permissions and limitations under the License.
             ) -
             var(--mod-table-border-width, var(--spectrum-table-border-width))
     );
+}
+:host(:not([head-cell])),
+:host([head-cell]) {
+    display: table-cell;
 }

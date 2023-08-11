@@ -45,10 +45,7 @@ governing permissions and limitations under the License.
         --mod-table-min-header-height,
         var(--spectrum-table-min-header-height)
     );
-    border-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-radius: 0;
     box-sizing: border-box;
     color: var(
         --mod-table-header-text-color,
@@ -70,10 +67,6 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-table-header-line-height,
         var(--spectrum-table-row-line-height)
-    );
-    min-block-size: var(
-        --mod-table-min-header-height,
-        var(--spectrum-table-min-header-height)
     );
     outline: 0;
     padding-block: var(
@@ -225,10 +218,7 @@ governing permissions and limitations under the License.
         var(--spectrum-table-focus-indicator-thickness)
     );
 }
-:host .spectrum-Table-checkboxCell {
-    padding-block: 0;
-}
-:host .spectrum-Table-checkboxCell .spectrum-Checkbox {
+:host .spectrum-Table-checkboxCell .spectrum-Table-checkbox {
     margin-block-end: var(
         --mod-table-header-checkbox-block-spacing,
         var(--spectrum-table-header-checkbox-block-spacing)
@@ -241,6 +231,17 @@ governing permissions and limitations under the License.
             var(--mod-table-border-width, var(--spectrum-table-border-width))
     );
 }
-:host div {
+:host {
     display: table-cell;
+}
+:host .spectrum-Table-scroller {
+    border-block-end: var(
+            --mod-table-border-width,
+            var(--spectrum-table-border-width)
+        )
+        solid
+        var(
+            --highcontrast-table-border-color,
+            var(--mod-table-border-color, var(--spectrum-table-border-color))
+        );
 }

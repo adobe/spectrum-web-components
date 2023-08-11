@@ -12,13 +12,13 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-table-min-header-height: var(--spectrum-component-height-100);
     --spectrum-table-header-top-to-text: var(
         --spectrum-table-column-header-row-top-to-text-medium
     );
     --spectrum-table-header-bottom-to-text: var(
         --spectrum-table-column-header-row-bottom-to-text-medium
     );
+    --spectrum-table-min-header-height: var(--spectrum-component-height-100);
     --spectrum-table-min-row-height: var(
         --spectrum-table-row-height-medium-regular
     );
@@ -29,11 +29,11 @@ governing permissions and limitations under the License.
         --spectrum-table-row-bottom-to-text-medium-regular
     );
     --spectrum-table-cell-inline-space: var(--spectrum-table-edge-to-content);
+    --spectrum-table-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-table-border-width: var(--spectrum-table-border-divider-width);
     --spectrum-table-outer-border-inline-width: var(
-        --spectrum-table-border-width
+        --spectrum-table-border-divider-width
     );
-    --spectrum-table-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-table-icon-to-text: var(--spectrum-text-to-visual-100);
     --spectrum-table-default-vertical-align: top;
     --spectrum-table-header-vertical-align: middle;
@@ -524,10 +524,10 @@ governing permissions and limitations under the License.
         }
     }
 }
-:host {
+:host:not(.spectrum-Table-scroller) {
     border-collapse: separate;
     border-spacing: 0;
 }
-:host div {
+:host:not(.spectrum-Table-scroller) {
     display: table;
 }

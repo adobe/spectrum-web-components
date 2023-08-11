@@ -108,9 +108,9 @@ const config = {
                     'spectrum-Table-headCell',
                     'head-cell'
                 ),
-                converterHeadCell.classToAttribute('is-sortable', 'sortable'),
-                converterHeadCell.classToAttribute('is-focused', 'focused'),
-                converterHeadCell.pseudoToAttribute('active', 'active'),
+                converter.classToAttribute('is-sortable', 'sortable'),
+                converter.classToAttribute('is-focused', 'focused'),
+                converter.pseudoToAttribute('active', 'active'),
                 {
                     find: [builder.class('spectrum-Table-cell')],
                     replace: [
@@ -132,11 +132,8 @@ const config = {
                         },
                     ],
                 },
-
-                converterCell.classToHost('spectrum-Table-checkboxCell'),
+                converter.classToHost('spectrum-Table-checkboxCell'),
                 converter.classToSlotted('spectrum-Table-checkbox'),
-                converter.classToSlotted('spectrum-Checkbox'),
-                converter.classToId('spectrum-Checkbox-box', 'box'),
             ],
             excludeByComponents: [
                 builder.class('spectrum-Table'),

@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    background-color: var(
+    --spectrum-table-cell-background-color: var(
         --highcontrast-table-row-background-color,
         var(
             --mod-table-row-background-color,
@@ -24,7 +24,6 @@ governing permissions and limitations under the License.
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
     );
-    overflow: auto;
     position: relative;
 }
 :host([drop-target]) {
@@ -42,6 +41,6 @@ governing permissions and limitations under the License.
         var(--spectrum-table-focus-indicator-thickness)
     );
 }
-:host div {
+:host {
     display: table-row-group;
 }
