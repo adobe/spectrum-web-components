@@ -195,7 +195,7 @@ governing permissions and limitations under the License.
         var(--spectrum-table-focus-indicator-thickness)
     );
 }
-:host {
+:host(:host) {
     padding-block: 0;
     padding-inline-end: calc(
         var(
@@ -208,11 +208,11 @@ governing permissions and limitations under the License.
             )
     );
 }
-::slotted(*) {
+:host(:host) sp-checkbox {
     --mod-checkbox-spacing: 0px;
     min-block-size: 0;
 }
-:host(:not([head-cell])) ::slotted(*) {
+:host(:host:not([head-cell])) sp-checkbox {
     margin-block-end: var(
         --mod-table-row-checkbox-block-spacing,
         var(--spectrum-table-row-checkbox-block-spacing)
@@ -225,7 +225,7 @@ governing permissions and limitations under the License.
             var(--mod-table-border-width, var(--spectrum-table-border-width))
     );
 }
-:host([head-cell]) ::slotted(*) {
+:host(:host[head-cell]) sp-checkbox {
     margin-block-end: var(
         --mod-table-header-checkbox-block-spacing,
         var(--spectrum-table-header-checkbox-block-spacing)

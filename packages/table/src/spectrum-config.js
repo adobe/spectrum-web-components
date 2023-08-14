@@ -132,8 +132,35 @@ const config = {
                         },
                     ],
                 },
-                converter.classToHost('spectrum-Table-checkboxCell'),
-                converter.classToSlotted('spectrum-Table-checkbox'),
+                {
+                    find: [builder.class('spectrum-Table-checkboxCell')],
+                    replace: [
+                        //:host(:host) for increased specificity, to be higher than [head-cell] selectors.
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'host',
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+                {
+                    find: [builder.class('spectrum-Table-checkbox')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'type',
+                                name: 'sp-checkbox',
+                            },
+                        },
+                    ],
+                },
             ],
             excludeByComponents: [
                 builder.class('spectrum-Table'),

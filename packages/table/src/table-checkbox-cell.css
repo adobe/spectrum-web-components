@@ -17,6 +17,13 @@ governing permissions and limitations under the License.
     align-items: center;
     flex: 0 1 0%;
     border-radius: 0;
+    block-size: auto;
+}
+
+:host(:not([head-cell])),
+:host([head-cell]) {
+    display: flex;
+    block-size: auto;
 }
 
 :host([selects-single]) sp-checkbox {
