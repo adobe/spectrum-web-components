@@ -36,6 +36,7 @@ governing permissions and limitations under the License.
         var(--mod-tray-background-color, var(--spectrum-tray-background-color))
     );
     border-radius: unset;
+    box-sizing: border-box;
     inline-size: 100%;
     margin-block-start: var(
         --mod-tray-spacing-edge-to-tray-safe-zone,
@@ -50,6 +51,14 @@ governing permissions and limitations under the License.
     );
     outline: none;
     overflow: auto;
+    padding-block-end: var(
+        --mod-tray-bottom-to-content-area,
+        var(--spectrum-tray-top-to-content-area)
+    );
+    padding-block-start: var(
+        --mod-tray-top-to-content-area,
+        var(--spectrum-tray-top-to-content-area)
+    );
     transform: translateY(100%);
     transition: opacity
             var(

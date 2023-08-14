@@ -152,12 +152,15 @@ governing permissions and limitations under the License.
     stroke-linecap: square;
     stroke-linejoin: miter;
     fill: var(
-        --mod-popover-background-color,
-        var(--spectrum-popover-background-color)
+        --highcontrast-popover-background-color,
+        var(
+            --mod-popover-background-color,
+            var(--spectrum-popover-background-color)
+        )
     );
     stroke: var(
-        --mod-popover-border-color,
-        var(--spectrum-popover-border-color)
+        --highcontrast-popover-border-color,
+        var(--mod-popover-border-color, var(--spectrum-popover-border-color))
     );
     stroke-width: var(
         --mod-popover-border-width,

@@ -25,6 +25,8 @@ governing permissions and limitations under the License.
     --spectrum-slider-control-to-field-label: var(
         --spectrum-slider-control-to-field-label-medium
     );
+    --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
+    --spectrum-slider-value-inline-size: 18px;
 }
 .spectrum-Slider--sizeS {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
@@ -40,6 +42,7 @@ governing permissions and limitations under the License.
     --spectrum-slider-control-to-field-label: var(
         --spectrum-slider-control-to-field-label-small
     );
+    --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-100);
 }
 .spectrum-Slider--sizeL {
     --spectrum-slider-font-size: var(--spectrum-font-size-100);
@@ -57,6 +60,8 @@ governing permissions and limitations under the License.
     --spectrum-slider-control-to-field-label: var(
         --spectrum-slider-control-to-field-label-large
     );
+    --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
+    --spectrum-slider-value-inline-size: 18px;
 }
 .spectrum-Slider--sizeXL {
     --spectrum-slider-font-size: var(--spectrum-font-size-200);
@@ -76,6 +81,8 @@ governing permissions and limitations under the License.
     --spectrum-slider-control-to-field-label: var(
         --spectrum-slider-control-to-field-label-extra-large
     );
+    --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
+    --spectrum-slider-value-inline-size: 22px;
 }
 :host {
     --spectrum-slider-cjk-line-height: var(--spectrum-cjk-line-height-100);
@@ -140,6 +147,31 @@ governing permissions and limitations under the License.
     -webkit-user-select: none;
     user-select: none;
     z-index: 1;
+}
+.spectrum-Slider--sideLabel {
+    align-items: center;
+    display: flex;
+}
+.spectrum-Slider--sideLabel #label-container,
+.spectrum-Slider--sideLabel #label-container + #controls {
+    margin-block-start: 0;
+}
+.spectrum-Slider--sideLabel #controls {
+    margin-inline-end: var(
+        --mod-slider-controls-margin,
+        var(--spectrum-slider-controls-margin)
+    );
+}
+.spectrum-Slider--sideLabel #value {
+    inline-size: var(
+        --mod-slider-value-inline-size,
+        var(--spectrum-slider-value-inline-size)
+    );
+    margin-inline-start: var(
+        --mod-slider-value-side-padding-inline,
+        var(--spectrum-slider-value-side-padding-inline)
+    );
+    text-align: start;
 }
 #controls {
     block-size: var(

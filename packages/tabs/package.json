@@ -93,7 +93,7 @@
         "@spectrum-web-components/shared": "^0.35.0"
     },
     "devDependencies": {
-        "@spectrum-css/tabs": "^4.0.2"
+        "@spectrum-css/tabs": "^4.0.8"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
