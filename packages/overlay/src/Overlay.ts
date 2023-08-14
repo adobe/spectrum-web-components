@@ -159,6 +159,9 @@ export class Overlay extends OverlayFeatures {
 
     protected override placementController = new PlacementController(this);
 
+    /**
+     * Whether the Overlay is projected onto the "top layer" or not.
+     */
     @property({ type: Boolean, reflect: true })
     override get open(): boolean {
         return this._open;
@@ -191,10 +194,17 @@ export class Overlay extends OverlayFeatures {
     /**
      * Instruct the Overlay where to place itself in
      * relationship to the trigger element.
+     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      */
     @property()
     placement?: Placement;
 
+    /**
+     * Whether to pass focus to the overlay once opened, or
+     * to the appropriate value based on the "type" of the overlay
+     * when set to `"auto"`.
+     *
+     */
     @property({ attribute: 'receives-focus' })
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
@@ -252,8 +262,12 @@ export class Overlay extends OverlayFeatures {
     @property({ attribute: false })
     triggerInteraction?: 'click' | 'longpress' | 'hover';
 
+    /**
+     * Configures the open/close heuristics of the Overlay.
+     * @type {"auto" | "hint" | "manual" | "modal" | "page"}
+     */
     @property()
-    override type: OverlayTypes = 'hint';
+    override type: OverlayTypes = 'auto';
 
     protected wasOpen = false;
 

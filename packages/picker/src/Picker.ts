@@ -100,7 +100,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected optionsMenu!: Menu;
 
     /**
-     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" }
+     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      * @attr
      */
 

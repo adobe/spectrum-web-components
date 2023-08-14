@@ -357,6 +357,10 @@ export const actionGroupWithFilters = ({
                 filter: brightness(1) saturate(1);
             }
         </style>
+        <p>
+            This story outlines some CSS usage that is not yet covered by the
+            placement calculations within the Overlay API.
+        </p>
         <sp-popover open class="root">
             <sp-action-group vertical quiet emphasized selects="single">
                 <sp-action-button id="trigger-1" hold-affordance>
