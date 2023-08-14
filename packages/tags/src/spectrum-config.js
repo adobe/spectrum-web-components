@@ -79,9 +79,9 @@ const config = {
                     'clear-button'
                 ),
                 converter.classToClass('spectrum-ClearButton', 'clear-button'),
-                converter.classToClass('spectrum-Tags-itemLabel', 'label'),
+                converter.classToClass('spectrum-Tag-itemLabel', 'label'),
                 converter.classToSlotted('spectrum-Avatar', 'avatar'),
-                converter.classToSlotted('spectrum-Tags-itemIcon', 'icon'),
+                converter.classToSlotted('spectrum-Tag-itemIcon', 'icon'),
             ],
         },
     ],

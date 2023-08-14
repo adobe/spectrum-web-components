@@ -22,7 +22,19 @@ governing permissions and limitations under the License.
     --spectrum-tag-focus-ring-color: var(--spectrum-focus-indicator-color);
     --spectrum-tag-label-line-height: var(--spectrum-line-height-100);
     --spectrum-tag-label-font-weight: var(--spectrum-regular-font-weight);
-    --spectrum-tag-content-color-selected: var(--spectrum-white);
+    --spectrum-tag-content-color-selected: var(--spectrum-gray-50);
+    --spectrum-tag-background-color-selected: var(
+        --spectrum-neutral-background-color-selected-default
+    );
+    --spectrum-tag-background-color-selected-hover: var(
+        --spectrum-neutral-background-color-selected-hover
+    );
+    --spectrum-tag-background-color-selected-active: var(
+        --spectrum-neutral-background-color-selected-down
+    );
+    --spectrum-tag-background-color-selected-focus: var(
+        --spectrum-neutral-background-color-selected-key-focus
+    );
     --spectrum-tag-border-color-invalid: var(--spectrum-negative-color-900);
     --spectrum-tag-border-color-invalid-hover: var(
         --spectrum-negative-color-1000
@@ -1006,7 +1018,7 @@ governing permissions and limitations under the License.
         --highcontrast-tag-border-color: ButtonText;
         --highcontrast-tag-border-color-hover: ButtonText;
         --highcontrast-tag-border-color-active: ButtonText;
-        --highcontrast-tag-border-color-focus: ButtonText;
+        --highcontrast-tag-border-color-focus: Highlight;
         --highcontrast-tag-background-color: ButtonFace;
         --highcontrast-tag-background-color-hover: ButtonFace;
         --highcontrast-tag-background-color-active: ButtonFace;
@@ -1015,6 +1027,7 @@ governing permissions and limitations under the License.
         --highcontrast-tag-content-color-hover: ButtonText;
         --highcontrast-tag-content-color-active: ButtonText;
         --highcontrast-tag-content-color-focus: ButtonText;
+        --highcontrast-tag-focus-ring-color: Highlight;
         forced-color-adjust: none;
     }
     :host([selected]) {
@@ -1119,18 +1132,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-tag-border-color-selected-focus: var(
         --system-spectrum-tag-border-color-selected-focus
-    );
-    --spectrum-tag-background-color-selected: var(
-        --system-spectrum-tag-background-color-selected
-    );
-    --spectrum-tag-background-color-selected-hover: var(
-        --system-spectrum-tag-background-color-selected-hover
-    );
-    --spectrum-tag-background-color-selected-active: var(
-        --system-spectrum-tag-background-color-selected-active
-    );
-    --spectrum-tag-background-color-selected-focus: var(
-        --system-spectrum-tag-background-color-selected-focus
     );
     --spectrum-tag-border-color-disabled: var(
         --system-spectrum-tag-border-color-disabled

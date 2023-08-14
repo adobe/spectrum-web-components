@@ -72,7 +72,7 @@
         "@spectrum-web-components/shared": "^0.35.0"
     },
     "devDependencies": {
-        "@spectrum-css/tag": "^5.0.42",
+        "@spectrum-css/tag": "^6.0.0",
         "@spectrum-css/taggroup": "^3.3.55"
     },
     "types": "./src/index.d.ts",

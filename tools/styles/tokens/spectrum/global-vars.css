@@ -1196,18 +1196,6 @@ governing permissions and limitations under the License.
     --system-spectrum-tag-border-color-selected-focus: var(
         --spectrum-neutral-subdued-background-color-key-focus
     );
-    --system-spectrum-tag-background-color-selected: var(
-        --spectrum-neutral-subdued-background-color-default
-    );
-    --system-spectrum-tag-background-color-selected-hover: var(
-        --spectrum-neutral-subdued-background-color-hover
-    );
-    --system-spectrum-tag-background-color-selected-active: var(
-        --spectrum-neutral-subdued-background-color-down
-    );
-    --system-spectrum-tag-background-color-selected-focus: var(
-        --spectrum-neutral-subdued-background-color-key-focus
-    );
     --system-spectrum-tag-border-color-disabled: transparent;
     --system-spectrum-tag-background-color-disabled: var(
         --spectrum-disabled-background-color
