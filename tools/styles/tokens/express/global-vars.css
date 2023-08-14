@@ -1075,18 +1075,6 @@ governing permissions and limitations under the License.
     --system-spectrum-radio-button-border-color-hover: var(--spectrum-gray-900);
     --system-spectrum-radio-button-border-color-down: var(--spectrum-gray-900);
     --system-spectrum-radio-button-border-color-focus: var(--spectrum-gray-900);
-    --system-spectrum-radio-button-checked-border-color-default: var(
-        --spectrum-gray-800
-    );
-    --system-spectrum-radio-button-checked-border-color-hover: var(
-        --spectrum-gray-900
-    );
-    --system-spectrum-radio-button-checked-border-color-down: var(
-        --spectrum-gray-900
-    );
-    --system-spectrum-radio-button-checked-border-color-focus: var(
-        --spectrum-gray-900
-    );
     --system-spectrum-radio-emphasized-button-checked-border-color-default: var(
         --spectrum-accent-color-900
     );
@@ -1103,18 +1091,6 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
-    --system-spectrum-switch-background-color-selected-default: var(
-        --spectrum-gray-800
-    );
-    --system-spectrum-switch-background-color-selected-hover: var(
-        --spectrum-gray-900
-    );
-    --system-spectrum-switch-background-color-selected-down: var(
-        --spectrum-gray-900
-    );
-    --system-spectrum-switch-background-color-selected-focus: var(
-        --spectrum-gray-900
-    );
     --system-spectrum-switch-handle-border-color-default: var(
         --spectrum-gray-800
     );

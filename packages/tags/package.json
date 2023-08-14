@@ -72,8 +72,8 @@
         "@spectrum-web-components/shared": "^0.35.0"
     },
     "devDependencies": {
-        "@spectrum-css/tag": "^5.0.42",
-        "@spectrum-css/taggroup": "^3.3.55"
+        "@spectrum-css/tag": "^5.0.46",
+        "@spectrum-css/taggroup": "^3.3.60"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
