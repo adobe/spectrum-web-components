@@ -27,14 +27,17 @@ export default {
 
 type StoryArgs = {
     onChange: (val: string) => void;
+    open: false;
 };
 
 const picker = ({
     onChange,
+    open,
     size,
 }: {
     onChange: (val: string) => void;
     size: 's' | 'm' | 'l' | 'xl';
+    open: boolean;
 }): TemplateResult => {
     return html`
         <sp-field-label for="picker-${size}" size=${size}>
@@ -48,6 +51,7 @@ const picker = ({
                 onChange(picker.value);
             }}"
             label="Select a Country with a very long label, too long, in fact"
+            ?open=${open}
         >
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
@@ -63,11 +67,23 @@ const picker = ({
 export const s = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 's' });
 
+export const sOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 's' });
+
 export const m = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'm' });
+
+export const mOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 'm' });
 
 export const l = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'l' });
 
+export const lOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 'l' });
+
 export const XL = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'xl' });
+
+export const XLOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 'xl' });

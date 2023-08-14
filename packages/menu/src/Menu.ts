@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
+    SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -60,7 +61,7 @@ function elementIsOrContains(
  *   When the `selects` attribute is not present a `value` will not be maintained and the Menu
  *   Item children of this Menu will not have their `selected` state managed.
  */
-export class Menu extends SpectrumElement {
+export class Menu extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [menuStyles];
     }
