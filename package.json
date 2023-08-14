@@ -253,7 +253,7 @@
                 "!test/visual/rollup.config.js",
                 "!test/visual/src/review.js",
                 "!test/visual/src/index.html",
-                "!test/visual/src/wds-vrt.config.js"
+                "!test/visual/wds-vrt.config.js"
             ],
             "clean": "if-file-deleted"
         },
