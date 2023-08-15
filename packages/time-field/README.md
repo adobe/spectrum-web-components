@@ -26,3 +26,8 @@ import { TimeField } from '@spectrum-web-components/time-field';
 ```html
 <sp-time-field></sp-time-field>
 ```
+
+## To-do list
+
+-   Complete documentation
+-   Add/Review unit tests

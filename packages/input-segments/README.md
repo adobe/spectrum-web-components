@@ -23,3 +23,5 @@ export class MyInput extends InputSegments {
 
 -   Include ARIA attributes for editable segments
 -   Use `@input`/`@beforeinput` events to handle data input/content cleanup
+-   Complete documentation
+-   Add/Review unit tests

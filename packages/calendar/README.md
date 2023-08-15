@@ -38,3 +38,5 @@ import { Calendar } from '@spectrum-web-components/calendar';
 -   Implement keyboard navigation
 -   Add support for other types of calendars - [React Calendar: International Calendars](https://react-spectrum.adobe.com/react-spectrum/Calendar.html#international-calendars)
 -   Include `aria-label` in calendar for accessibility - [React Calendar: Labeling](https://react-spectrum.adobe.com/react-spectrum/Calendar.html#labeling)
+-   Complete documentation
+-   Add/Review unit tests
