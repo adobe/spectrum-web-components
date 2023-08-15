@@ -23,7 +23,7 @@ import { NumberParser } from '@internationalized/number';
 import {
     CSSResultArray,
     html,
-    PropertyValueMap,
+    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -39,7 +39,10 @@ import {
     styleMap,
     when,
 } from '@spectrum-web-components/base/src/directives.js';
-import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 
 import {
@@ -81,17 +84,13 @@ export class InputSegments extends TextfieldBase {
         return [...super.styles, styles];
     }
 
-    /**
-     * Indicates when date segments should be included in the field
-     */
-    @state()
-    protected includeDate = false;
+    protected languageResolver = new LanguageResolutionController(this);
+    protected timeZone = getLocalTimeZone();
+    protected formatter!: DateFormatter;
+    protected numberParser!: NumberParser;
 
-    /**
-     * Indicates when time segments should be included in the field
-     */
-    @state()
-    protected includeTime = false;
+    @query('.editable-segment')
+    firstEditableSegment!: HTMLDivElement;
 
     /**
      * Indicates which segments that are part of time should be used
@@ -105,64 +104,26 @@ export class InputSegments extends TextfieldBase {
     @property({ attribute: false })
     selectedDateTime?: Date;
 
+    /**
+     * Indicates when date segments should be included in the field
+     */
     @state()
-    private previousLocale?: string;
+    protected includeDate = false;
+
+    /**
+     * Indicates when time segments should be included in the field
+     */
+    @state()
+    protected includeTime = false;
 
     @state()
-    private currentDateTime!: CalendarDateTime;
+    protected currentDateTime = toCalendarDateTime(now(this.timeZone));
 
     @state()
-    private newDateTime?: CalendarDateTime;
+    protected newDateTime?: CalendarDateTime;
 
     @state()
-    private segments: Segment[] = [];
-
-    @state()
-    private createSegments = true;
-
-    @query('.editable-segment')
-    firstEditableSegment!: HTMLDivElement;
-
-    private languageResolver = new LanguageResolutionController(this);
-    private timeZone = getLocalTimeZone();
-    private formatter!: DateFormatter;
-    private numberParser!: NumberParser;
-
-    private get locale(): string {
-        return this.languageResolver.language;
-    }
-
-    private get daySegment(): Segment | undefined {
-        return this.segments.find((segment) => segment.type === 'day');
-    }
-
-    private get monthSegment(): Segment | undefined {
-        return this.segments.find((segment) => segment.type === 'month');
-    }
-
-    private get yearSegment(): Segment | undefined {
-        return this.segments.find((segment) => segment.type === 'year');
-    }
-
-    private get hourSegment(): Segment | undefined {
-        return this.segments.find((segment) => segment.type === 'hour');
-    }
-
-    private get minuteSegment(): Segment | undefined {
-        return this.segments.find((segment) => segment.type === 'minute');
-    }
-
-    private get secondSegment(): Segment | undefined {
-        return this.segments.find((segment) => segment.type === 'second');
-    }
-
-    private get dayPeriodSegment(): Segment | undefined {
-        return this.segments.find((segment) => segment.type === 'dayPeriod');
-    }
-
-    private get is12HourClock(): boolean {
-        return Boolean(this.formatter.resolvedOptions().hour12);
-    }
+    protected segments: Segment[] = [];
 
     /**
      * The `TextfieldBase` class requires this getter to return an element of type `HTMLInputElement` or
@@ -176,33 +137,70 @@ export class InputSegments extends TextfieldBase {
         return this.firstEditableSegment as HTMLInputElement;
     }
 
-    constructor() {
-        super();
-        this.setInitialDateTime();
+    public get is12HourClock(): boolean {
+        return Boolean(this.formatter.resolvedOptions().hour12);
     }
 
-    protected override willUpdate(
-        changedProperties: PropertyValueMap<this>
-    ): void {
-        if (this.locale !== this.previousLocale) {
-            this.previousLocale = this.locale;
-            this.createSegments = true;
+    protected get locale(): string {
+        return this.languageResolver.language;
+    }
+
+    protected get daySegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'day');
+    }
+
+    protected get monthSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'month');
+    }
+
+    protected get yearSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'year');
+    }
+
+    protected get hourSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'hour');
+    }
+
+    protected get minuteSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'minute');
+    }
+
+    protected get secondSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'second');
+    }
+
+    /**
+     * "Day period" is what indicates whether the hour is AM or PM for 12-hour clocks
+     */
+    protected get dayPeriodSegment(): Segment | undefined {
+        return this.segments.find((segment) => segment.type === 'dayPeriod');
+    }
+
+    protected override willUpdate(changedProperties: PropertyValues): void {
+        /**
+         * Segments should be created only when some properties are changed, so we control when this should happen and
+         * not every time the `willUpdate()` method is executed
+         */
+        let createSegments = false;
+
+        if (changedProperties.has(languageResolverUpdatedSymbol)) {
+            createSegments = true;
 
             this.setFormatter();
             this.setNumberParser();
         }
 
         if (changedProperties.has('selectedDateTime')) {
-            this.createSegments = true;
+            createSegments = true;
 
             this.setCurrentDateTime();
         }
 
         if (changedProperties.has('timeGranularity')) {
-            this.createSegments = true;
+            createSegments = true;
         }
 
-        if (this.createSegments) {
+        if (createSegments) {
             this.setSegments();
         }
     }
@@ -463,13 +461,6 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Defines the initial date and time that will be used to render the input, if no specific date and time is provided
-     */
-    private setInitialDateTime(): void {
-        this.currentDateTime = toCalendarDateTime(now(this.timeZone));
-    }
-
-    /**
      * If a datetime is received by the component via property, it will use it as the current datetime to render the
      * input
      */
@@ -593,8 +584,6 @@ export class InputSegments extends TextfieldBase {
             .formatToParts(dateTime)
             .map((part) => this.mapToTimeSegment(part))
             .filter((part) => segmentTypes.includes(part.type));
-
-        this.createSegments = false;
     }
 
     /**
