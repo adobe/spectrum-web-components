@@ -69,6 +69,13 @@ export type OverlayOptionsV1 = {
     virtualTrigger?: VirtualTrigger;
 };
 
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-opened': CustomEvent<OverlayOpenCloseDetail>;
+        'sp-closed': CustomEvent<OverlayOpenCloseDetail>;
+    }
+}
+
 export type OpenableElement = HTMLElement & {
     open: boolean;
     tipElement?: HTMLElement;
