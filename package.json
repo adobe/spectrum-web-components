@@ -179,7 +179,7 @@
         "pretty-bytes": "^5.6.0",
         "pretty-quick": "^3.1.3",
         "re-template-tag": "^2.0.1",
-        "rimraf": "^3.0.2",
+        "rimraf": "^5.0.1",
         "rollup": "^3.19.1",
         "sinon": "^15.2.0",
         "stylelint": "^14.9.1",
