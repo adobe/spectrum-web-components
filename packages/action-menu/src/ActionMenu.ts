@@ -79,7 +79,6 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
-                @pointerdown=${this.handlePointerdown}
                 ?disabled=${this.disabled}
             >
                 ${this.buttonContent}

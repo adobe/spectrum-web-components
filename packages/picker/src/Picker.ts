@@ -99,6 +99,9 @@ export class PickerBase extends SizedMixin(Focusable) {
     @query('sp-menu')
     protected optionsMenu!: Menu;
 
+    @query('sp-overlay')
+    protected overlayElement!: Overlay;
+
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      * @attr
@@ -134,20 +137,6 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected listRole: 'listbox' | 'menu' = 'listbox';
     protected itemRole = 'option';
 
-    public constructor() {
-        super();
-        this.addEventListener('focusout', (event: FocusEvent) => {
-            if (
-                (event.relatedTarget &&
-                    this.contains(event.relatedTarget as Element)) ||
-                event.target !== this
-            ) {
-                return;
-            }
-            this.open = false;
-        });
-    }
-
     public override get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
@@ -163,20 +152,11 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.focused = false;
     }
 
-    private preventNextToggle = false;
-
-    protected handlePointerdown(): void {
-        this.preventNextToggle = this.open;
-    }
-
     protected handleButtonClick(): void {
         if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
             return;
         }
-        if (!this.preventNextToggle) {
-            this.toggle();
-        }
-        this.preventNextToggle = false;
+        this.toggle();
     }
 
     public override focus(options?: FocusOptions): void {
@@ -383,7 +363,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected get renderOverlay(): TemplateResult {
         return html`
             <sp-overlay
-                .triggerElement=${this as HTMLElement}
+                .triggerElement=${this.button as HTMLElement}
                 .offset=${0}
                 ?open=${this.open}
                 .placement=${this.placement}
@@ -398,7 +378,9 @@ export class PickerBase extends SizedMixin(Focusable) {
                     if (event.composedPath()[0] !== event.target) {
                         return;
                     }
-                    this.open = event.newState === 'open';
+                    if (event.newState === 'closed') {
+                        this.open = false;
+                    }
                     if (!this.open) {
                         this.optionsMenu.updateSelectedItemIndex();
                         this.optionsMenu.closeDescendentOverlays();
@@ -432,7 +414,6 @@ export class PickerBase extends SizedMixin(Focusable) {
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
-                @pointerdown=${this.handlePointerdown}
                 ?disabled=${this.disabled}
                 tabindex="-1"
             >

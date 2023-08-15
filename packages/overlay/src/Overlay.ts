@@ -850,31 +850,23 @@ export class Overlay extends OverlayFeatures {
         return shouldPreventClose;
     }
 
+    private focusout = (event: FocusEvent): void => {
+        // Only "auto" popovers should close on any sort of focusout
+        if (this.type !== 'auto') {
+            return;
+        }
+        if (!event.composedPath().includes(this)) {
+            this.open = false;
+        }
+    };
+
     override willUpdate(changes: PropertyValues): void {
-        if (!this.hasUpdated) {
-            this.addEventListener('focusout', (event: FocusEvent) => {
-                // Only "auto" popovers should close on any sort of focusout
-                if (this.type !== 'auto') {
-                    return;
-                }
-                // If you don't know where the focus went, we can't do anyting here.
-                if (!event.relatedTarget) {
-                    return;
-                }
-                const relationEvent = new Event('overlay-relation-query', {
-                    bubbles: true,
-                    composed: true,
-                });
-                event.relatedTarget.addEventListener(
-                    relationEvent.type,
-                    (event: Event) => {
-                        if (!event.composedPath().includes(this)) {
-                            this.open = false;
-                        }
-                    }
-                );
-                event.relatedTarget.dispatchEvent(relationEvent);
-            });
+        if (changes.has('open')) {
+            if (this.open) {
+                document.addEventListener('focusin', this.focusout);
+            } else {
+                document.removeEventListener('focusin', this.focusout);
+            }
         }
         if (!this.hasAttribute('id')) {
             this.setAttribute(

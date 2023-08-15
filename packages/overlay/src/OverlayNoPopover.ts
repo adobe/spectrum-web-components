@@ -24,7 +24,6 @@ import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
-    nextFrame,
     overlayTimer,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
@@ -55,8 +54,7 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
         protected override async ensureOnDOM(
             _targetOpenState: boolean
         ): Promise<void> {
-            await nextFrame();
-            await nextFrame();
+            this.offsetHeight;
         }
 
         protected override async makeTransition(

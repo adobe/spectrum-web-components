@@ -176,19 +176,9 @@ export class Tooltip extends SpectrumElement {
         this.open = false;
     };
 
-    protected handleTransitionrun(event: TransitionEvent): void {
+    protected forwardTransitionEvent(event: TransitionEvent): void {
         this.dispatchEvent(
-            new TransitionEvent('transitionrun', {
-                bubbles: true,
-                composed: true,
-                propertyName: event.propertyName,
-            })
-        );
-    }
-
-    protected handleTransitionend(event: TransitionEvent): void {
-        this.dispatchEvent(
-            new TransitionEvent('transitionend', {
+            new TransitionEvent(event.type, {
                 bubbles: true,
                 composed: true,
                 propertyName: event.propertyName,
@@ -246,8 +236,9 @@ export class Tooltip extends SpectrumElement {
             <sp-tooltip-openable
                 id="tooltip"
                 placement=${ifDefined(this.placement)}
-                @transitionrun=${this.handleTransitionrun}
-                @transitionend=${this.handleTransitionend}
+                @transitionrun=${this.forwardTransitionEvent}
+                @transitionend=${this.forwardTransitionEvent}
+                @transitioncancel=${this.forwardTransitionEvent}
             >
                 <slot name="icon"></slot>
                 <span id="label"><slot></slot></span>

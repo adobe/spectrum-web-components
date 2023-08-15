@@ -423,6 +423,7 @@ describe('sp-overlay', () => {
             ] as [number, number];
 
             await elementUpdated(overlay);
+
             // This test is possibly weird in its over simplicity for this contexts...
             await expect(button).to.be.accessible();
             // Pointer enter the button to trigger the tooltip
@@ -530,7 +531,7 @@ describe('sp-overlay', () => {
             });
             await closed;
         });
-        it('stays open when pointer enters overlay from trigger element', async () => {
+        it('stays open when pointer enters overlay from trigger element: self managed', async () => {
             const button = await styledFixture(
                 html`
                     <sp-button>

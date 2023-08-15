@@ -120,6 +120,9 @@ export const guaranteedAllTransitionend = (
     el.addEventListener('transitionend', handleTransitionend, {
         signal: abortController.signal,
     });
+    el.addEventListener('transitioncancel', handleTransitionend, {
+        signal: abortController.signal,
+    });
     action();
 };
 
