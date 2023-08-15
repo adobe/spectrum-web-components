@@ -102,7 +102,7 @@ export class InputSegments extends TextfieldBase {
     /**
      * Defines whether a date/time should be displayed in the field
      */
-    @property({ reflect: true, attribute: false })
+    @property({ attribute: false })
     selectedDateTime?: Date;
 
     @state()
