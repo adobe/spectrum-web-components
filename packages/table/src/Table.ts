@@ -145,10 +145,10 @@ export class Table extends SizedMixin(SpectrumElement, {
     public scroller = false;
 
     /**
-     * Deliver the Table with additional visual emphasis.
+     * Deliver the Table with additional visual emphasis to selected rows.
      */
     @property({ type: Boolean, reflect: true })
-    public emphasized = false;
+    public emphasized = true;
 
     private tableBody?: TableBody;
 

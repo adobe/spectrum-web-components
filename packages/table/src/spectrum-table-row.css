@@ -246,7 +246,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([selected]) .spectrum-Table-row--emphasized {
+:host([selected][emphasized]) {
     --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color,
         var(
@@ -255,9 +255,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([selected]) .spectrum-Table-row--emphasized.focus-visible,
-:host([selected]) .spectrum-Table-row--emphasized:hover,
-:host([selected][focused]) .spectrum-Table-row--emphasized {
+:host([selected][emphasized]).focus-visible,
+:host([selected][emphasized]:hover),
+:host([selected][emphasized][focused]) {
     --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color-focus,
         var(
@@ -266,9 +266,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([selected]) .spectrum-Table-row--emphasized:focus-visible,
-:host([selected]) .spectrum-Table-row--emphasized:hover,
-:host([selected][focused]) .spectrum-Table-row--emphasized {
+:host([selected][emphasized]):focus-visible,
+:host([selected][emphasized]:hover),
+:host([selected][emphasized][focused]) {
     --spectrum-table-cell-background-color: var(
         --highcontrast-table-selected-row-background-color-focus,
         var(

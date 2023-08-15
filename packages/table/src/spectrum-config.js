@@ -32,6 +32,7 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Table--quiet'),
+                converter.classToAttribute('spectrum-Table--emphasized'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Table--sizeS', 's'],
@@ -247,6 +248,10 @@ const config = {
                     replace: builder.pseudoClass('last-child'),
                     hoist: true,
                 },
+                converter.classToAttribute(
+                    'spectrum-Table-row--emphasized',
+                    'emphasized'
+                ),
                 converter.classToAttribute('is-drop-target', 'drop-target'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-focused', 'focused'),
