@@ -69,9 +69,10 @@ export const topLayerOverTransforms = (): Middleware => ({
         floating.dispatchEvent(dialogAncestorQueryEvent);
         let overTransforms = false;
         if (!(reference instanceof VirtualTrigger)) {
-            const containingBlock = isContainingBlock(reference as Element)
-                ? (reference as Element)
-                : getContainingBlock(reference as Element);
+            const root = (withinReference ? reference : floating) as Element;
+            const containingBlock = isContainingBlock(root)
+                ? root
+                : getContainingBlock(root);
             if (
                 containingBlock !== null &&
                 getWindow(containingBlock) !==
@@ -79,10 +80,9 @@ export const topLayerOverTransforms = (): Middleware => ({
             ) {
                 const css = getComputedStyle(containingBlock);
                 overTransforms =
-                    withinReference &&
-                    (css.transform !== 'none' ||
-                        (!isWebKit() &&
-                            (css.filter ? css.filter !== 'none' : false)));
+                    css.transform !== 'none' ||
+                    (!isWebKit() &&
+                        (css.filter ? css.filter !== 'none' : false));
             }
 
             if (onTopLayer && overTransforms && containingBlock) {
