@@ -13,8 +13,13 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
@@ -154,7 +159,7 @@ export const all = ({ delayed }: Properties): TemplateResult => html`
     <sp-overlay trigger="trigger@click" type="auto" placement="right">
         <sp-popover dialog>Click content</sp-popover>
     </sp-overlay>
-    <sp-overlay ?delayed=${delayed} trigger="trigger@hover">
+    <sp-overlay ?delayed=${delayed} trigger="trigger@hover" type="hint">
         <sp-tooltip>Hover content</sp-tooltip>
     </sp-overlay>
     <sp-overlay trigger="trigger@longpress" type="auto" placement="right">
@@ -179,7 +184,6 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 inset-inline-end: 0em;
                 inset-block-start: 3em;
                 padding-block-end: 3em;
-                overflow: hidden;
             }
             .root > sp-action-group > sp-action-button,
             .root > sp-action-group > sp-action-menu {
@@ -237,7 +241,7 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 </sp-action-menu>
             </sp-action-group>
         </sp-popover>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-1@hover">
+        <sp-overlay ?delayed=${delayed} trigger="trigger-1@hover" type="hint">
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay
@@ -264,7 +268,7 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 </sp-action-group>
             </sp-popover>
         </sp-overlay>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover">
+        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover" type="hint">
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay
@@ -291,7 +295,12 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 </sp-action-group>
             </sp-popover>
         </sp-overlay>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-3@hover" open>
+        <sp-overlay
+            ?delayed=${delayed}
+            trigger="trigger-3@hover"
+            type="hint"
+            open
+        >
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay
@@ -443,7 +452,7 @@ export const actionGroupWithFilters = ({
                 </sp-action-menu>
             </sp-action-group>
         </sp-popover>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover">
+        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover" type="hint">
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay

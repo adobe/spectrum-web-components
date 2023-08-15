@@ -178,7 +178,11 @@ export class PlacementController implements ReactiveController {
                     availableWidth,
                     availableHeight,
                     rects: { floating },
+                    middlewareData,
                 }) => {
+                    if (!middlewareData.size) {
+                        return;
+                    }
                     const maxHeight = Math.max(
                         MIN_OVERLAY_HEIGHT,
                         Math.floor(availableHeight)
