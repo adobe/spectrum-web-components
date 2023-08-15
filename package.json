@@ -147,7 +147,7 @@
         "eslint-plugin-prettier": "^4.0.0",
         "express": "^4.16.4",
         "fast-glob": "^3.2.12",
-        "fs-extra": "^10.0.0",
+        "fs-extra": "^11.1.1",
         "geckodriver": "4.2.0",
         "gh-pages": "^4.0.0",
         "glob": "^10.3.0",
