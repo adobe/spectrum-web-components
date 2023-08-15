@@ -82,5 +82,6 @@ declare global {
         'sp-overlay-query': CustomEvent<OverlayDisplayQueryDetail>;
         'sp-open': CustomEvent<OverlayOpenCloseDetail>;
         'sp-close': CustomEvent<OverlayOpenCloseDetail>;
+        'sp-closed': CustomEvent<OverlayOpenCloseDetail>;
     }
 }

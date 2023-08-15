@@ -58,6 +58,10 @@
             "development": "./src/overlay-timer.dev.js",
             "default": "./src/overlay-timer.js"
         },
+        "./src/overlay-trigger-directive.js": {
+            "development": "./src/overlay-trigger-directive.dev.js",
+            "default": "./src/overlay-trigger-directive.js"
+        },
         "./src/overlay-trigger.css.js": "./src/overlay-trigger.css.js",
         "./src/overlay-types.js": {
             "development": "./src/overlay-types.dev.js",
