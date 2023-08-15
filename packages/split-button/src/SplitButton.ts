@@ -149,7 +149,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
                         handleEvent: this.handleEnterKeydown,
                         capture: true,
                     }}
-                    @pointerdown=${this.handlePointerdown}
                     ?disabled=${this.disabled}
                     aria-labelledby="button"
                     variant=${this.variant}

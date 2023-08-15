@@ -171,7 +171,17 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(overlayTrigger2.open).to.undefined;
 
         opened = oneEvent(trigger2, 'sp-opened');
-        trigger2.focus();
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rect2.left + rect2.width / 2,
+                        rect2.top + rect2.height / 2,
+                    ],
+                },
+            ],
+        });
         await opened;
 
         expect(overlayTrigger1.open).to.equal('click');

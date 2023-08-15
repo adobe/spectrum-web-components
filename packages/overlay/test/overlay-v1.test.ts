@@ -433,12 +433,9 @@ describe('Overlays, v1', () => {
         const input = el.querySelector('.content input') as HTMLInputElement;
         const before = el.querySelector('#before') as HTMLAnchorElement;
 
+        const open = oneEvent(trigger, 'sp-opened');
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
-
-        trigger.focus();
-        await sendKeys({
-            press: 'Tab',
-        });
+        await open;
 
         expect(document.activeElement).to.equal(input);
 
