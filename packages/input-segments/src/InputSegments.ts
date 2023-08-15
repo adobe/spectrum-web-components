@@ -50,11 +50,13 @@ import {
     minHourAM,
     minHourPM,
     PM,
+    timeSegmentTypes,
+} from './types.js';
+import type {
     Segment,
     SegmentDetails,
     SegmentValueAndLimits,
     TimeGranularity,
-    timeSegmentTypes,
 } from './types.js';
 
 import styles from './input-segments.css.js';
