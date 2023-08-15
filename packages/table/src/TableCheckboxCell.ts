@@ -35,7 +35,7 @@ export class TableCheckboxCell extends SpectrumElement {
     /**
      * Whether or not the checkbox cell is in the table head.
      */
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true, attribute: 'head-cell' })
     public headCell = false;
 
     @property({ reflect: true })
