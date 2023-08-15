@@ -59,9 +59,9 @@
     "dependencies": {
         "@internationalized/date": "^3.2.1",
         "@internationalized/number": "^3.1.0",
-        "@spectrum-web-components/base": "^0.34.0",
-        "@spectrum-web-components/reactive-controllers": "^0.34.0",
-        "@spectrum-web-components/textfield": "^0.34.0"
+        "@spectrum-web-components/base": "^0.35.0",
+        "@spectrum-web-components/reactive-controllers": "^0.35.0",
+        "@spectrum-web-components/textfield": "^0.35.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

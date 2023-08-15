@@ -5638,83 +5638,8 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
-"@spectrum-web-components/base@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/base/-/base-0.34.0.tgz#d341665a23e6431fd589727241cf2287f102f220"
-  integrity sha512-/2J7BT0lKkGeFv4SE5vmGxUtBE9NBo7oa8M1nYTgahm6OL/wN6O5/7qZIY+H2iCTy9719bO/BUa+7A7N5wiLFg==
-  dependencies:
-    lit "^2.5.0"
-
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
   version "0.35.0"
-
-"@spectrum-web-components/help-text@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/help-text/-/help-text-0.34.0.tgz#9ef71d0a3e71f2d5560a338c74ecb57b583c29b0"
-  integrity sha512-VsFBgae+6dKDJcdf6UNMr3/aFPsyaUmeBubIV92kS52nHKTi1dKlYWtnAcvxFY6n3iH4iOn943FVkImuXboRkQ==
-  dependencies:
-    "@spectrum-web-components/base" "^0.34.0"
-    "@spectrum-web-components/icons-workflow" "^0.34.0"
-
-"@spectrum-web-components/icon@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/icon/-/icon-0.34.0.tgz#109c52b9a0c911051507ff467ee44339eb225158"
-  integrity sha512-gASDbootZDmXYiRaqd1jlUoXapCI0U/s1ZNqaakAWm+vGoZB6T3b5eV2fUO0aHP8/UCAt+F07T1jTPo/ygaQMA==
-  dependencies:
-    "@spectrum-web-components/base" "^0.34.0"
-    "@spectrum-web-components/iconset" "^0.34.0"
-
-"@spectrum-web-components/icons-ui@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/icons-ui/-/icons-ui-0.34.0.tgz#ab61568145759e2e0d6cc42dcc176f6d3ec8a959"
-  integrity sha512-zom55CdjSxpff1f5VVbvqFy3KN7PIXw2M+3RjogKF1Yl5TRt5OUGl6cMBT+vmsBJ9ZOs5g4l0POepJ2Zdom/JQ==
-  dependencies:
-    "@spectrum-web-components/base" "^0.34.0"
-    "@spectrum-web-components/icon" "^0.34.0"
-    "@spectrum-web-components/iconset" "^0.34.0"
-
-"@spectrum-web-components/icons-workflow@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/icons-workflow/-/icons-workflow-0.34.0.tgz#b575a32b4c8cc01958dbc21290167454ae34f613"
-  integrity sha512-Vsa9lzzgC86+NMrW/qYCnAHUw5vk0+FfXpFcCCc3lPYVJQD4ByCQYZ2U+uF/n85o1A88xeuMjaZsGIMHxDMPbA==
-  dependencies:
-    "@spectrum-web-components/base" "^0.34.0"
-    "@spectrum-web-components/icon" "^0.34.0"
-
-"@spectrum-web-components/iconset@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/iconset/-/iconset-0.34.0.tgz#e2b88cc19c702ec6de1b7047c91128cce1256fc2"
-  integrity sha512-/pvVyBcJnhrfiIAjnXxwVGMrls6/8uvsSFCt0WFAFaiw5p5/njcuDJRNMo65EctiCQs1ApksA6E6s3rXj7S8TQ==
-  dependencies:
-    "@spectrum-web-components/base" "^0.34.0"
-
-"@spectrum-web-components/reactive-controllers@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/reactive-controllers/-/reactive-controllers-0.34.0.tgz#692663db46bbcb9db85ebdf8a8b4c97905e1119b"
-  integrity sha512-hAv6gbYhFfLY5f6nRL0YT5qjXLG8IzFx9LbNQVzYpVd7afLa0WZN0EuomgGQ+i0t35VTMnstypNtN3q4FUuV2w==
-  dependencies:
-    lit "^2.5.0"
-
-"@spectrum-web-components/shared@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/shared/-/shared-0.34.0.tgz#60605fd85c71f5e3c6dece2b388c3dbb59b2bab1"
-  integrity sha512-FGCLiOCJC2/lKdcBh6TcYfxOHF2nKca2RaCDZ2jRJ1fKRx9B48F80lSnSxlwtK7N1XZ8svvKGwJEFWNNvBMH2w==
-  dependencies:
-    "@lit-labs/observers" "^2.0.0"
-    "@spectrum-web-components/base" "^0.34.0"
-    focus-visible "^5.1.0"
-
-"@spectrum-web-components/textfield@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/textfield/-/textfield-0.34.0.tgz#ec3c64dd3a703b20ccff9180c035298e637e96f7"
-  integrity sha512-RPODpW7zmpSa4otI40Pn7EW5z/TLVkQOZT3eF6LPnk+ffdOmGJvutL5JB9R8U15jLUFNSt05E6XFqnNxPSRllQ==
-  dependencies:
-    "@spectrum-web-components/base" "^0.34.0"
-    "@spectrum-web-components/help-text" "^0.34.0"
-    "@spectrum-web-components/icon" "^0.34.0"
-    "@spectrum-web-components/icons-ui" "^0.34.0"
-    "@spectrum-web-components/icons-workflow" "^0.34.0"
-    "@spectrum-web-components/shared" "^0.34.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
