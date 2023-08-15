@@ -117,7 +117,7 @@
         "@types/webpack-env": "^1.13.9",
         "@typescript-eslint/eslint-plugin": "^5.35.0",
         "@typescript-eslint/parser": "^5.35.0",
-        "@web/dev-server": "^0.2.1",
+        "@web/dev-server": "^0.3.0",
         "@web/dev-server-rollup": "^0.5.0",
         "@web/dev-server-storybook": "^0.7.1",
         "@web/rollup-plugin-copy": "^0.4.0",

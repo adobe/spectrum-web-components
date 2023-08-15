@@ -125,14 +125,7 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.11", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.14.5", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.16.7.tgz#44416b6bd7624b998f5b1af5d470856c40138789"
-  integrity sha512-iAXqUn8IIeBTNd72xsFlgaXHkMBMt6y4HJp1tIaK465CWLT/fG1aqB7ykr95gHHmlBdGbFeWWfyB4NJJ0nmeIg==
-  dependencies:
-    "@babel/highlight" "^7.16.7"
-
-"@babel/code-frame@^7.22.5":
+"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.11", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.14.5", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.22.5":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.22.5.tgz#234d98e1551960604f1246e6475891a570ad5658"
   integrity sha512-Xmwn266vad+6DAqEB2A6V/CcZVp62BbwVmcOJc2RPuwih1kw02TjQvWVWlcKGbBPd+8/0V5DEkOcizRGYsspYQ==
@@ -754,15 +747,6 @@
     "@babel/template" "^7.22.5"
     "@babel/traverse" "^7.22.6"
     "@babel/types" "^7.22.5"
-
-"@babel/highlight@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.16.7.tgz#81a01d7d675046f0d96f82450d9d9578bdfd6b0b"
-  integrity sha512-aKpPMfLvGO3Q97V0qhw/V2SWNWlwfJknuwAunU7wZLSfrM4xTBvg7E5opUVi1kJTBKihE38CPg4nBiqX83PWYw==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.16.7"
-    chalk "^2.0.0"
-    js-tokens "^4.0.0"
 
 "@babel/highlight@^7.22.5":
   version "7.22.5"
@@ -6795,26 +6779,6 @@
     path-is-inside "^1.0.2"
     rollup "^3.15.0"
     storybook-addon-markdown-docs "^1.0.4"
-
-"@web/dev-server@^0.2.1":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.5.tgz#7f690db24b7966edd9530cf278bbf5053e6a1882"
-  integrity sha512-IQWzjnK9H861X5BN+R9uQk2L7knogegHQcKyGsSfjyFC3fDdLit5WG2vUVpxFAYfhS4zjJWGajXGbTMhF8clkQ==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@types/command-line-args" "^5.0.0"
-    "@web/config-loader" "^0.2.1"
-    "@web/dev-server-core" "^0.5.1"
-    "@web/dev-server-rollup" "^0.5.1"
-    camelcase "^6.2.0"
-    command-line-args "^5.1.1"
-    command-line-usage "^7.0.1"
-    debounce "^1.2.0"
-    deepmerge "^4.2.2"
-    ip "^1.1.5"
-    nanocolors "^0.2.1"
-    open "^8.0.2"
-    portfinder "^1.0.32"
 
 "@web/dev-server@^0.3.0":
   version "0.3.0"

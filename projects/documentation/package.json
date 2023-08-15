@@ -38,7 +38,7 @@
         "@toycode/markdown-it-class": "^1.2.4",
         "@types/lunr": "^2.3.3",
         "@types/prismjs": "^1.16.6",
-        "@web/dev-server": "^0.2.1",
+        "@web/dev-server": "^0.3.0",
         "@web/rollup-plugin-copy": "^0.4.0",
         "@web/rollup-plugin-html": "^2.0.0",
         "alex": "^10.0.0",
