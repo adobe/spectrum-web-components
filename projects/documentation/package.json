@@ -52,7 +52,7 @@
         "posthtml-attrs-parser": "^0.1.1",
         "posthtml-match-helper": "^1.0.3",
         "prismjs": "^1.26.0",
-        "rimraf": "^3.0.2",
+        "rimraf": "^5.0.1",
         "rollup": "^3.19.1",
         "rollup-plugin-lit-css": "^4.0.0",
         "rollup-plugin-minify-html-literals": "^1.2.6",
