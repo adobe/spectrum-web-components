@@ -5281,15 +5281,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-6.0.59.tgz#1d57dcbb80fe3a57d051bb8d63594c1f8d6701f1"
   integrity sha512-66KeRA8zU3o57XzsbzuCuNNvfhepyuWd0I9MQpPxze2GfmsT/ZgqGlesN6pdyzpSkZ5nVvTsYgDnI8r32MIjWw==
 
-"@spectrum-css/actionbutton@^4.0.13":
-  version "4.0.13"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-4.0.13.tgz#5ff2f77f907b5c091ec0dca8c7cce5a6b2513c2c"
-  integrity sha512-KfxlqWKGyUsjOUDBOzCWE2nWU3xPuGfr0itTfjQY2ndlUpbqwjz3rEMM9o/0B5mJ4NvJ+1NXTxD+a+t8kA1cBQ==
+"@spectrum-css/actionbutton@^5.0.0-beta.0":
+  version "5.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-5.0.0-beta.0.tgz#90d142455b3370375224e8e1c67b12c221c39ad1"
+  integrity sha512-ZOGEa61QIfwhcn/GRkoSvx10QoIcjpstUu6nukXQk/FaRoRbKtQEdtL52wgi7uo/slKMov86AJ9/u0+6fseI7w==
 
-"@spectrum-css/actiongroup@^3.0.61":
-  version "3.0.61"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-3.0.61.tgz#86d734adeade6cc0a56b7d20dd42fcd31b8533e8"
-  integrity sha512-oRDpEHbmtfBaJ6RcIdDhD2wtk/D4jqhmRzDSwJB4BVKE+16EmctVkvhPBh3bJSZFW8QTpxPbIlgdzTAtcOGVGQ==
+"@spectrum-css/actiongroup@^4.0.0-beta.0":
+  version "4.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-4.0.0-beta.0.tgz#611092c374f2484820897943d7edc3596030a77f"
+  integrity sha512-hTQ6YrGxMHgI2BdE6TtTTysrBb3Bm3bW9TJTNgBw4Qxs80ot5cWMQBdtDnr4gvxq6CS0Jr7dQ/lM4Hb+j2o8XQ==
 
 "@spectrum-css/actionmenu@^4.0.50":
   version "4.0.50"
@@ -5316,10 +5316,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/button@^10.1.14":
-  version "10.1.14"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-10.1.14.tgz#9d8dcb29d3a0c82ea725107cf07e299f49d6611c"
-  integrity sha512-xxbsu5di1e0lxG9//LqZGpvsNWRBzGwLwIMDGPcbSbvCxZPCLFuqn7S1FQ3v6D9ENjXoB/OHwDoPQZzr23SP8w==
+"@spectrum-css/button@^11.0.0-beta.0":
+  version "11.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-11.0.0-beta.0.tgz#fbfe29b99df1715a66f0335548d640f08ee8b5e0"
+  integrity sha512-yY9vVXPl3kPx5N00TirpviCk+B7PRJyeCZWTvnCdmB44M9R8voYwb479Mpd34TJb4fbeIY15QfPIToJz8O9+PQ==
 
 "@spectrum-css/buttongroup@^6.0.61":
   version "6.0.61"
@@ -5341,10 +5341,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/clearbutton/-/clearbutton-1.2.38.tgz#22979649c16300256beda41da2697169cb941c46"
   integrity sha512-FRs5iMImltVCqndh9uYPWu4lk9hPz3COZ6rOTRBpinlYkEXLRO12AB+Ba/JChjz7KcsGz8hTLG+Il5TlYwH8AQ==
 
-"@spectrum-css/closebutton@^3.1.14":
-  version "3.1.14"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-3.1.14.tgz#b19445d2f3754830a0f084349f457f54ea8ca720"
-  integrity sha512-RelV4cZe8GJYXjMbFruvlDwBRQfUye7/e3Va0ysnQyk6dxtNjjS+wcriL1JvyzbbSgzaCLooMNLsstSiJBvalQ==
+"@spectrum-css/closebutton@^4.0.0-beta.0":
+  version "4.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-4.0.0-beta.0.tgz#cb567c8b9bf0185ff1a3b2dbeb75dcbb4357df4b"
+  integrity sha512-QjdGMh67FjDQz3L64/CG49XMLoR7vzsw9x4lyuUiK2wqgqJ/O4ONO5bsyPkuyFKkPJ6tHhvkARyY2tePpDdN9w==
 
 "@spectrum-css/coachmark@^5.0.58":
   version "5.0.58"
@@ -5471,10 +5471,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.0.74.tgz#40db06217f9b0bbf2804325bcaf65112e33c0c90"
   integrity sha512-w1qvJTlhIr9Gc9N0fht0cmVT3vcNfSoqSLbHyv0/uI/uy9gMyyW1G8prgXtH0K8XlqfwAUOBxPSh6NnV1D8WXQ==
 
-"@spectrum-css/radio@^7.0.46":
-  version "7.0.46"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-7.0.46.tgz#a61cb0411a5021c40b1a542766a50a455d9f99e4"
-  integrity sha512-vSwJULAcsRBa3F2U23eQKZYqn3wZ6IZwDElq01McExlMd0w4sAmi5HrOfOw3cf5Po744VfvIAJI+FgNQvYmZ0w==
+"@spectrum-css/radio@^8.0.0-beta.0":
+  version "8.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-8.0.0-beta.0.tgz#aaca9aac41a09b8565851bb4c785c40abb37dc2a"
+  integrity sha512-pJ5cFJ7j/mEtfX1h5GsYiOLizciO4Wgaq+xVqACCXtB28oQuV6lY0IHZpwRSCw9/l4TbXtc8i24noWJCrGBuiQ==
 
 "@spectrum-css/search@^6.0.11":
   version "6.0.11"
@@ -5491,10 +5491,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-4.1.0.tgz#98d5ff69e8734aa5bd20e2f6f3bbf93cfdc4a2da"
   integrity sha512-w26tc0YZI6/pyQj1HJTTRa42znbPzoKRbmK5tAalUHdzQ6HhlTd8N/AsVFftP0cCDWqb4o9llMEE36NmVn7gHQ==
 
-"@spectrum-css/splitbutton@^5.0.60":
-  version "5.0.60"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-5.0.60.tgz#6e740966eaf6153670530151ce4a27d413fbdd5f"
-  integrity sha512-rgNF6DAtM3IPbi1A9kkeiHQ4PxZI8JjgGDlKB8yXBh/5Ly7l4BvUgKzs5xbEyuTYKWinz8NAqgTgnnP6YQUZIA==
+"@spectrum-css/splitbutton@^6.0.0-beta.0":
+  version "6.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-6.0.0-beta.0.tgz#be3705240eec520c7974bec0aac95c0ba0a79be6"
+  integrity sha512-eCSSOHdimlnLjC20KVfFaU7fSwrYh1GmzqXJNumERjeS1W3iYNC254IVj56WrQIjDCaeBBwD3pz2OVBCzhGYPg==
 
 "@spectrum-css/splitview@^3.0.47":
   version "3.0.47"
@@ -5521,10 +5521,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/swatchgroup/-/swatchgroup-2.0.60.tgz#0848aea0f6930474b6797d49edba1ad6fe22a219"
   integrity sha512-dRuF3QDB1VBh/HFBMQoTcNpmozyx2VLhqKjtOOLHtIl9Z/G1+mwPWnKZ+z5FQHw3XDBcUKMyv85O5ezxam9d7w==
 
-"@spectrum-css/switch@^3.1.13":
-  version "3.1.13"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-3.1.13.tgz#d1ef3d8b82a39700e96f21c42eaeca42a59bf018"
-  integrity sha512-biaRRXvl3Ve6131vy9z3zttTyhgY1Pr52ZtK5NERX03m/X20nc1zXTuC/U8LlkINfdolfBroHwp61caSLMwRpg==
+"@spectrum-css/switch@^4.0.0-beta.0":
+  version "4.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-4.0.0-beta.0.tgz#41c6f9f45dfae5fcdecb2a1888f17e4fcbeea4a4"
+  integrity sha512-w9Dn6znq8xTAa3qcjaf7mAjCsbjifZX9NMYY2cHeSLrtaSLWMZQjUnmUTJHlNEID3s2x6Egq+l1vFyFtEi7ZXg==
 
 "@spectrum-css/table@^4.0.66":
   version "4.0.66"

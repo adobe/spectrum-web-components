@@ -89,7 +89,7 @@ const config = {
                 {
                     find: [
                         builder.class('spectrum-ActionGroup-item'),
-                        builder.class('focus-ring'),
+                        builder.pseudoClass('focus-visible'),
                     ],
                     replace: [
                         {

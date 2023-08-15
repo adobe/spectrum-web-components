@@ -40,6 +40,18 @@ const config = {
             ],
             components: [
                 converter.classToHost(),
+                {
+                    find: [builder.pseudoClass('focus-visible')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'focus-visible',
+                            },
+                            hoist: true,
+                        },
+                    ],
+                },
                 converter.classToAttribute('spectrum-ActionButton--quiet'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.pseudoToAttribute('disabled', 'disabled'),

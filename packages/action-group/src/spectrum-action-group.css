@@ -43,6 +43,12 @@ governing permissions and limitations under the License.
 ::slotted(*) {
     flex-shrink: 0;
 }
+::slotted(.focus-visible) {
+    z-index: 3;
+}
+::slotted(:focus-visible) {
+    z-index: 3;
+}
 :host(:not([vertical]):not([compact])) ::slotted(*) {
     flex-shrink: 0;
 }

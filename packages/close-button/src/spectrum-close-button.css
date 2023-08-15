@@ -176,28 +176,11 @@ governing permissions and limitations under the License.
         --highcontrast-closebutton-focus-indicator-color: ButtonText;
     }
     :host(.focus-visible):after {
-        border-radius: 100%;
-        box-shadow: 0 0 0
-            var(
-                --mod-closebutton-focus-indicator-thickness,
-                var(--spectrum-closebutton-focus-indicator-thickness)
-            )
-            var(
-                --highcontrast-closebutton-focus-indicator-color,
-                var(
-                    --mod-closebutton-focus-indicator-color,
-                    var(--spectrum-closebutton-focus-indicator-color)
-                )
-            );
-        content: '';
-        display: block;
         forced-color-adjust: none;
-        inset: 0;
         margin: var(
             --mod-closebutton-focus-indicator-gap,
             var(--spectrum-closebutton-focus-indicator-gap)
         );
-        position: absolute;
         transition: opacity
                 var(
                     --mod-closebutton-animation-duration,
@@ -212,28 +195,11 @@ governing permissions and limitations under the License.
                 ease-out;
     }
     :host(:focus-visible):after {
-        border-radius: 100%;
-        box-shadow: 0 0 0
-            var(
-                --mod-closebutton-focus-indicator-thickness,
-                var(--spectrum-closebutton-focus-indicator-thickness)
-            )
-            var(
-                --highcontrast-closebutton-focus-indicator-color,
-                var(
-                    --mod-closebutton-focus-indicator-color,
-                    var(--spectrum-closebutton-focus-indicator-color)
-                )
-            );
-        content: '';
-        display: block;
         forced-color-adjust: none;
-        inset: 0;
         margin: var(
             --mod-closebutton-focus-indicator-gap,
             var(--spectrum-closebutton-focus-indicator-gap)
         );
-        position: absolute;
         transition: opacity
                 var(
                     --mod-closebutton-animation-duration,
@@ -311,9 +277,11 @@ governing permissions and limitations under the License.
 }
 :host(.focus-visible) {
     box-shadow: none;
+    outline: none;
 }
 :host(:focus-visible) {
     box-shadow: none;
+    outline: none;
 }
 :host(.focus-visible):after {
     box-shadow: 0 0 0

@@ -31,7 +31,7 @@ const config = {
                 {
                     find: [
                         builder.class('spectrum-Switch-input'),
-                        builder.class('focus-ring'),
+                        builder.pseudoClass('focus-visible'),
                     ],
                     replace: [
                         {

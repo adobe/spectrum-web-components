@@ -461,8 +461,7 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-button-selection-indicator) / 2
     );
 }
-#input.focus-visible + #button:after,
-:host(.focus-visible) #input + #button:after {
+#input.focus-visible + #button:after {
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
@@ -484,8 +483,7 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-focus-indicator-gap) * 2
     );
 }
-#input:focus-visible + #button:after,
-:host(:focus-visible) #input + #button:after {
+#input:focus-visible + #button:after {
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
