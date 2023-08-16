@@ -60,7 +60,7 @@ governing permissions and limitations under the License.
 }
 
 .editable-segment.is-placeholder,
-.editable-segment.is-placeholder ~ .literal-segment {
+.editable-segment.is-placeholder + .literal-segment {
     color: var(--spectrum-gray-500);
 }
 
@@ -71,7 +71,7 @@ governing permissions and limitations under the License.
 
 .editable-segment:focus,
 .editable-segment:focus .placeholder {
-    color: var(--spectrum-textfield-text-color-default);
+    color: var(--spectrum-white);
     background-color: var(--spectrum-accent-background-color-default);
 }
 
