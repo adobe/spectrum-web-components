@@ -16,11 +16,12 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
-import { AlertDialog } from '@spectrum-web-components/alert-dialog';
+import {
+    AlertDialog,
+    AlertDialogBase,
+} from '@spectrum-web-components/alert-dialog';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
-import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
-import { Dialog } from '@spectrum-web-components/dialog';
 import { confirmation, warning } from '../stories/alert-dialog.stories.js';
 import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
 
@@ -40,11 +41,9 @@ describe('AlertDialog', () => {
         const test = await styledFixture<OverlayTrigger>(confirmation());
         const el = test.querySelector('sp-alert-dialog') as AlertDialog;
         await elementUpdated(el);
-        const dialog = el.shadowRoot.querySelector('sp-dialog') as Dialog;
-        const divider = dialog.shadowRoot.querySelector(
-            'sp-divider.divider'
-        ) as Divider;
-        expect(divider).to.be.not.null;
+        const dialog = el.shadowRoot.querySelector(
+            'sp-alert-dialog-base'
+        ) as AlertDialogBase;
         const confirmButton = dialog.querySelector(
             'sp-button[variant="accent"]'
         ) as Button;
@@ -64,7 +63,9 @@ describe('AlertDialog', () => {
         const test = await styledFixture<OverlayTrigger>(warning());
         const el = test.querySelector('sp-alert-dialog') as AlertDialog;
         await elementUpdated(el);
-        const dialog = el.shadowRoot.querySelector('sp-dialog') as Dialog;
+        const dialog = el.shadowRoot.querySelector(
+            'sp-alert-dialog-base'
+        ) as AlertDialogBase;
         const alertIcon = dialog.querySelector('sp-icon-alert') as IconAlert;
         expect(alertIcon).to.be.not.null;
     });
