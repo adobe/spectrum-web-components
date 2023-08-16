@@ -21,6 +21,8 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog-base.js';
+
 import { overlayTriggerDecorator } from '../../dialog/stories/index.js';
 
 export default {
