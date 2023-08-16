@@ -105,6 +105,12 @@
                     }
                 ]
             }
+        },
+        {
+            "files": ["./base/src/version.js"],
+            "rules": {
+                "notice/notice": "off"
+            }
         }
     ]
 }
