@@ -201,11 +201,7 @@ governing permissions and limitations under the License.
         --highcontrast-table-selected-row-text-color
     );
     --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(
-            --mod-table-selected-row-background-color-non-emphasized,
-            var(--spectrum-table-selected-row-background-color-non-emphasized)
-        )
+        --spectrum-table-selected-cell-background-color
     );
 }
 :host([selected]).focus-visible,
@@ -218,13 +214,7 @@ governing permissions and limitations under the License.
         --highcontrast-table-selected-row-text-color-focus
     );
     --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-non-emphasized-focus,
-            var(
-                --spectrum-table-selected-row-background-color-non-emphasized-focus
-            )
-        )
+        --spectrum-table-selected-cell-background-color-focus
     );
 }
 :host([selected]):focus-visible,
@@ -237,44 +227,7 @@ governing permissions and limitations under the License.
         --highcontrast-table-selected-row-text-color-focus
     );
     --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-non-emphasized-focus,
-            var(
-                --spectrum-table-selected-row-background-color-non-emphasized-focus
-            )
-        )
-    );
-}
-:host([selected][emphasized]) {
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(
-            --mod-table-selected-row-background-color,
-            var(--spectrum-table-selected-row-background-color)
-        )
-    );
-}
-:host([selected][emphasized]).focus-visible,
-:host([selected][emphasized]:hover),
-:host([selected][emphasized][focused]) {
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-focus,
-            var(--spectrum-table-selected-row-background-color-focus)
-        )
-    );
-}
-:host([selected][emphasized]):focus-visible,
-:host([selected][emphasized]:hover),
-:host([selected][emphasized][focused]) {
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-focus,
-            var(--spectrum-table-selected-row-background-color-focus)
-        )
+        --spectrum-table-selected-cell-background-color-focus
     );
 }
 :host([drop-target]),

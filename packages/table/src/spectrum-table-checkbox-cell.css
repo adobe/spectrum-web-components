@@ -196,6 +196,7 @@ governing permissions and limitations under the License.
     );
 }
 :host(:host) {
+    inline-size: var(--spectrum-checkbox-control-size-small);
     padding-block: 0;
     padding-inline-end: calc(
         var(

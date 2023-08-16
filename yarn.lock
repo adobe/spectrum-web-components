@@ -5547,10 +5547,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-3.1.8.tgz#c01b3aeddf34766c3d3ee55d42d4340ff6ffd9aa"
   integrity sha512-p0wJ+Z8rT+ftvXrRZN5IbAM2B2pnkxgBC4UpZBAgTAMOpLPTd2BoWymAnzOrzgtJ0+PlbZcCXhdHZQ0XzqxAOQ==
 
-"@spectrum-css/table@^5.0.0-beta.2":
-  version "5.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-5.0.0-beta.2.tgz#e4595163dc8c4f1ff282fd2af13ab161f9ebb38a"
-  integrity sha512-6z5oMO1HaE0Eymvw7d+Rac3gXEYOVHfhrrq4uqIgw7IVVjcMIAn7cXOSrHv/25VqM5gSnU/bCSegR9lgq2nFvA==
+"@spectrum-css/table@^5.0.0-beta.3":
+  version "5.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-5.0.0-beta.3.tgz#60ed0425fd8950aabb67fc94ef86f2f89b425d8f"
+  integrity sha512-fkjJu57UEJ5MR5aMKdFX889z7BwomvN7eBwt5tKpMrWlXUV9MkJeY5DfN+SntNkDjiNieITFEv9hahIiQFpN9A==
 
 "@spectrum-css/tabs@^4.0.2":
   version "4.0.2"
