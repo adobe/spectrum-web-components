@@ -13,9 +13,9 @@ import opacityCheckeryBoardStyles from '@spectrum-web-components/tools/opacity-c
 Add it to your component's styles array
 
 ```js
-    public static override get styles(): CSSResultArray {
-        return [...styles, opacityCheckeryBoardStyles];
-    }
+public static override get styles(): CSSResultArray {
+    return [...styles, opacityCheckeryBoardStyles];
+}
 ```
 
 Use the `opacity-checkerboard` class in `render()` method
