@@ -45,10 +45,13 @@ import {
     slottedLabel,
 } from '../stories/picker.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import type { Popover } from '@spectrum-web-components/popover';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
-import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import type { Menu } from '@spectrum-web-components/menu';
 
@@ -79,7 +82,6 @@ export function runPickerTests(): void {
                         </sp-menu-item>
                         <sp-menu-item>Feather...</sp-menu-item>
                         <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>Save Selection</sp-menu-item>
                         <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-picker>
@@ -236,6 +238,8 @@ export function runPickerTests(): void {
         beforeEach(async () => {
             el = await pickerFixture();
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
         });
         it('loads accessibly', async () => {
             await expect(el).to.be.accessible();
@@ -1123,9 +1127,10 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
         });
         it('scrolls selected into view on open', async () => {
-            (
-                el.shadowRoot.querySelector('sp-popover') as Popover
-            ).style.height = '40px';
+            // the Popover is transient, you need to be able to apply custom styles to it...
+            const styles = document.createElement('style');
+            styles.innerText = 'sp-popover { height: 40px; }';
+            el.shadowRoot.append(styles);
 
             const firstItem = el.querySelector(
                 'sp-menu-item:first-child'
@@ -1185,7 +1190,6 @@ export function runPickerTests(): void {
                             <sp-menu-item value="1">
                                 I'm already using them
                             </sp-menu-item>
-                            <sp-menu-divider></sp-menu-divider>
                             <sp-menu-item value="2">Soon</sp-menu-item>
                             <sp-menu-item value="3">
                                 As part of my next project
@@ -1226,7 +1230,6 @@ export function runPickerTests(): void {
                             </sp-menu-item>
                             <sp-menu-item>Feather...</sp-menu-item>
                             <sp-menu-item>Select and Mask...</sp-menu-item>
-                            <sp-menu-divider></sp-menu-divider>
                             <sp-menu-item>Save Selection</sp-menu-item>
                             <sp-menu-item disabled>Make Work Path</sp-menu-item>
                         </sp-picker>
@@ -1272,7 +1275,6 @@ export function runPickerTests(): void {
                                 </sp-menu-item>
                                 <sp-menu-item>Feather...</sp-menu-item>
                                 <sp-menu-item>Select and Mask...</sp-menu-item>
-                                <sp-menu-divider></sp-menu-divider>
                                 <sp-menu-item>Save Selection</sp-menu-item>
                                 <sp-menu-item disabled>
                                     Make Work Path
@@ -1450,7 +1452,6 @@ export function runPickerTests(): void {
                     <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
                     <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
                     <sp-menu-item>Save Selection</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-picker>
@@ -1514,7 +1515,6 @@ export function runPickerTests(): void {
                     <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
                     <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
                     <sp-menu-item>Save Selection</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-picker>

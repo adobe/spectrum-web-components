@@ -451,8 +451,11 @@ export class Menu extends SizedMixin(SpectrumElement) {
         const oldSelected = this.selected.slice();
         const oldSelectedItems = this.selectedItems.slice();
         const oldValue = this.value;
-        this.childItems[this.focusedItemIndex].focused = false;
-        this.childItems[this.focusedItemIndex].active = false;
+        const focusedChild = this.childItems[this.focusedItemIndex];
+        if (focusedChild) {
+            focusedChild.focused = false;
+            focusedChild.active = false;
+        }
         this.focusedItemIndex = this.childItems.indexOf(targetItem);
         this.forwardFocusVisibleToItem(targetItem);
 

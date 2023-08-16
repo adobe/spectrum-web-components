@@ -115,6 +115,12 @@ export const runOverlayTriggerTests = (type: string): void => {
                         </div>
                     `
                 );
+                await nextFrame();
+                await nextFrame();
+                await nextFrame();
+                await nextFrame();
+                await nextFrame();
+                await nextFrame();
 
                 this.innerTrigger = this.testDiv.querySelector(
                     '#inner-trigger'

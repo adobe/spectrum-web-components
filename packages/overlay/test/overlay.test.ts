@@ -62,7 +62,7 @@ async function styledFixture<T extends Element>(
     return test.children[0] as T;
 }
 
-describe('Overlays, v2', () => {
+describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
     let openOverlays: Overlay[] = [];
 
@@ -590,7 +590,7 @@ describe('Overlays, v2', () => {
         content.remove();
     });
 });
-describe('Overlay - type="modal", v2', () => {
+describe('Overlay - type="modal"', () => {
     describe('handle multiple separate `contextmenu` events', async () => {
         let width = 0;
         let height = 0;
@@ -767,7 +767,7 @@ describe('Overlay - type="modal", v2', () => {
         expect(el.open).to.be.null;
     });
 });
-describe('Overlay - timing, v2', () => {
+describe('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>

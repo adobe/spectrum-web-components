@@ -38,7 +38,7 @@ import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 import { longpress } from '../stories/overlay.stories.js';
 
 describe('Overlay Trigger - Longpress', () => {
-    describe('responds to input', () => {
+    describe('responds to use interactions', () => {
         beforeEach(async function () {
             this.el = await fixture<OverlayTrigger>(longpress());
             this.trigger = this.el.querySelector(
@@ -53,13 +53,6 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content.open).to.be.false;
 
             this.trigger.focus();
-        });
-        afterEach(async function () {
-            if (this.el.open) {
-                const closed = oneEvent(this.trigger, 'sp-closed');
-                this.el.open = undefined;
-                await closed;
-            }
         });
         it('opens/closes for `Space`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
@@ -192,10 +185,11 @@ describe('Overlay Trigger - Longpress', () => {
         it('opens/closes for `longpress` with Button', async function () {
             const button = document.createElement('sp-button');
             button.slot = 'trigger';
-            this.trigger.replaceWith(button);
-            await elementUpdated(button);
-            button.focus();
-            await elementUpdated(button);
+            this.trigger.remove();
+            this.el.append(button);
+            await elementUpdated(this.el);
+            await nextFrame();
+            await nextFrame();
 
             let open = oneEvent(this.el, 'sp-opened');
             const rect = button.getBoundingClientRect();
@@ -309,6 +303,8 @@ describe('Overlay Trigger - Longpress', () => {
                 </overlay-trigger>
             `
         );
+        await nextFrame();
+        await nextFrame();
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
 
         await elementUpdated(el);
@@ -388,15 +384,23 @@ describe('Overlay Trigger - Longpress', () => {
         ) as Popover;
         await elementUpdated(el);
 
-        expect(trigger.hasAttribute('aria-describedby')).to.be.true;
+        expect(
+            trigger.hasAttribute('aria-describedby'),
+            'applies described by content'
+        ).to.be.true;
         expect(el.childNodes.length, 'always').to.equal(6);
 
         el.removeAttribute('hold-affordance');
         content.remove();
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
-        expect(trigger.hasAttribute('aria-describedby')).to.be.false;
+        expect(
+            trigger.hasAttribute('aria-describedby'),
+            'removed described by content'
+        ).to.be.false;
         expect(el.childNodes.length, 'always').to.equal(4);
 
         el.setAttribute('hold-affordance', 'true');

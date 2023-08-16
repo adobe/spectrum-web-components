@@ -68,6 +68,10 @@ const initTest = async (
     );
     await nextFrame();
     await nextFrame();
+    await nextFrame();
+    await nextFrame();
+    await nextFrame();
+    await nextFrame();
     return {
         overlayTrigger: test.querySelector('overlay-trigger') as OverlayTrigger,
         button: test.querySelector('sp-button') as Button,

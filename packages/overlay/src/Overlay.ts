@@ -35,14 +35,14 @@ import {
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 
-import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
-import { OverlayDialog } from './OverlayDialog.js';
-import {
+import type {
     OpenableElement,
     OverlayState,
     OverlayTypes,
     Placement,
 } from './overlay-types.js';
+import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
+import { OverlayDialog } from './OverlayDialog.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
 import { overlayStack } from './OverlayStack.js';
@@ -129,7 +129,7 @@ export class Overlay extends OverlayFeatures {
 
     @queryAssignedElements({
         flatten: true,
-        selector: ':not([slot="longpress-describedby-descriptor"])', // gather only elements slotted into the default slot
+        selector: ':not([slot="longpress-describedby-descriptor"], slot)', // gather only elements slotted into the default slot
     })
     override elements!: OpenableElement[];
 
@@ -917,9 +917,7 @@ export class Overlay extends OverlayFeatures {
 
     protected renderContent(): TemplateResult {
         return html`
-            <div style=${styleMap(this.dialogStyleMap)} part="content">
-                <slot @slotchange=${this.handleSlotchange}></slot>
-            </div>
+            <slot @slotchange=${this.handleSlotchange}></slot>
         `;
     }
 
@@ -948,6 +946,7 @@ export class Overlay extends OverlayFeatures {
                         ? this.placement || 'right'
                         : undefined
                 )}
+                style=${styleMap(this.dialogStyleMap)}
                 @close=${this.handleBrowserClose}
                 @cancel=${this.handleBrowserClose}
                 @beforetoggle=${this.handleBeforetoggle}
@@ -978,6 +977,7 @@ export class Overlay extends OverlayFeatures {
                         : undefined
                 )}
                 popover=${ifDefined(this.popoverValue)}
+                style=${styleMap(this.dialogStyleMap)}
                 @beforetoggle=${this.handleBeforetoggle}
                 @close=${this.handleBrowserClose}
                 ?is-visible=${this.state !== 'closed'}
@@ -1009,6 +1009,8 @@ export class Overlay extends OverlayFeatures {
         if (this.hasNonVirtualTrigger) {
             this.unbindEvents();
         }
+        this.releaseAriaDescribedby();
+        this.releaseLongpressDescribedby();
         this.open = false;
         super.disconnectedCallback();
     }
