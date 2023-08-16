@@ -130,6 +130,11 @@ export function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
+export function forcePaint(): void {
+    // force the browser to paint
+    document.body.offsetHeight;
+}
+
 export class AbstractOverlay extends SpectrumElement {
     protected async applyFocus(
         _targetOpenState: boolean,
