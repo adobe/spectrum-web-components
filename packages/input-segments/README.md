@@ -23,5 +23,8 @@ export class MyInput extends InputSegments {
 
 -   Include ARIA attributes for editable segments
 -   Use `@input`/`@beforeinput` events to handle data input/content cleanup
+-   Move `handleKeydown()` call to a cache so that it doesn't cycle on the binding in each render pass
+-   Rename `handleKeydown()` to match the new events used
+-   Define/revise list of locales and include them in the VRT process to ensure long-term delivery
 -   Complete documentation
 -   Add/Review unit tests

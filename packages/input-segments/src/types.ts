@@ -24,6 +24,13 @@ export const timeSegmentTypes: Intl.DateTimeFormatPartTypes[] = [
     'literal',
 ];
 
+type EditableSegmentTypes = Pick<
+    Intl.DateTimeFormatPartTypesRegistry,
+    'day' | 'month' | 'year' | 'hour' | 'minute' | 'second' | 'dayPeriod'
+>;
+
+export type EditableSegmentType = keyof EditableSegmentTypes;
+
 export interface Segment extends Omit<Intl.DateTimeFormatPart, 'value'> {
     /** A placeholder string for the segment */
     placeholder?: string;
