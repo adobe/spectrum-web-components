@@ -5442,9 +5442,9 @@
   integrity sha512-ciX5xKTn6TdxxbQ1K0p7jGjrynIE6VsjGUrbISX07kexPa0E1JSbLdd1max8zqceH6Ik8cSIRC50ENjN5aO+rQ==
 
 "@spectrum-css/opacitycheckerboard@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/opacitycheckerboard/-/opacitycheckerboard-1.0.1.tgz#a6e47b1c1923a80afc7c3fdf3244e99ea8413a24"
-  integrity sha512-T1ZmDViKICdSZVwAt0qER0/uOr3eX4vNOdAOLA/tpc2RX+qu731ODwXd9UrdmOy9Y3jdHsTy7hR4CbpyrWEMCQ==
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/opacitycheckerboard/-/opacitycheckerboard-1.0.4.tgz#d0341d609419e091e7597cdfe42b4f0691199343"
+  integrity sha512-SRUwZqsSWHol83cvcK5l0aGrQLlHG/YGDQOgfsHZb64RwG4zTDsaQBAmGSNtaZTU4foDwrIKSsntfI3fum9oXA==
 
 "@spectrum-css/picker@^4.0.22":
   version "4.0.22"

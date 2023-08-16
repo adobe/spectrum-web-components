@@ -20,8 +20,9 @@ public static override get styles(): CSSResultArray {
 
 Use the `opacity-checkerboard` class in `render()` method
 
-```
-<div style="inline-size: 100px; block-size: 100px;">
-    <div class="opacity-checkerboard"></div>
-</div>
+```html-live demo
+<div
+    class="opacity-checkerboard"
+    style="inline-size: 100px; block-size: 100px;"
+></div>
 ```
