@@ -150,6 +150,7 @@
         "fast-glob": "^3.2.12",
         "fs-extra": "^11.1.1",
         "geckodriver": "4.2.0",
+        "genversion": "^3.1.1",
         "gh-pages": "^4.0.0",
         "glob": "^10.3.0",
         "gunzip-maybe": "^1.4.2",
@@ -254,7 +255,8 @@
                 "!test/visual/rollup.config.js",
                 "!test/visual/src/review.js",
                 "!test/visual/src/index.html",
-                "!test/visual/wds-vrt.config.js"
+                "!test/visual/wds-vrt.config.js",
+                "!tools/base/src/version.js"
             ],
             "clean": "if-file-deleted"
         },
@@ -272,7 +274,8 @@
             "output": [
                 "packages/**/*.d.ts",
                 "tools/**/*.d.ts",
-                "!**/local.d.ts"
+                "!**/local.d.ts",
+                "!tools/base/src/version.d.ts"
             ],
             "clean": "if-file-deleted"
         },

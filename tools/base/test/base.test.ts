@@ -10,6 +10,7 @@ governing permissions and limitations under the License.
 */
 import { SpectrumElement } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { version } from '../src/version';
 
 class DirElement extends SpectrumElement {}
 
@@ -31,5 +32,8 @@ describe('Base', () => {
 
         expect(el.dir).to.equal('rtl');
         expect(el.isLTR).to.be.false;
+    });
+    it('has a static VERSION property', () => {
+        expect(DirElement.VERSION).to.equal(version);
     });
 });
