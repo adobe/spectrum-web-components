@@ -49,4 +49,6 @@
         0.06
     );
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-800);
+
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
 }
