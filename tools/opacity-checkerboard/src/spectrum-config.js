@@ -22,7 +22,7 @@ const config = {
     conversions: [
         {
             inPackage: '@spectrum-css/opacitycheckerboard',
-            outPackage: 'opacity-checkerboard',
+            outPackage: ['tools', 'opacity-checkerboard'],
             fileName: 'opacity-checkerboard',
             components: [
                 converter.classToClass(
