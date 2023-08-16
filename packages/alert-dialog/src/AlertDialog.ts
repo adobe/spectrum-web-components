@@ -19,7 +19,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import alertStyles from './alert-dialog.css.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { DialogBase } from '@spectrum-web-components/dialog/src/DialogBase.js';
-import { Dialog } from '@spectrum-web-components/dialog/src/Dialog.js';
+import { AlertDialogBase } from './AlertDialogBase.js';
 
 export const alertDialogVariants: AlertDialogVariants[] = [
     'confirmation',
@@ -103,8 +103,10 @@ export class AlertDialog extends DialogBase {
         }
     }
 
-    protected override get dialog(): Dialog {
-        return this.shadowRoot.querySelector('sp-dialog') as Dialog;
+    protected get alertDialogBase(): AlertDialogBase {
+        return this.shadowRoot.querySelector(
+            'sp-alert-dialog-base'
+        ) as AlertDialogBase;
     }
 
     private clickSecondary(): void {
@@ -155,55 +157,53 @@ export class AlertDialog extends DialogBase {
         const [buttonVariant, buttonTreatment] =
             this.getButtonVariantAndTreatment(this.variant);
         return html`
-            <div class="alertDialog">
-                <sp-dialog>
-                    ${this.headline
-                        ? html`
-                              <div class="header" slot="heading">
-                                  <h1 class="heading">${this.headline}</h1>
-                                  ${this.renderIcon(this.variant)}
-                              </div>
-                          `
-                        : html``}
-                    <slot></slot>
-                    ${this.secondaryLabel
-                        ? html`
-                              <sp-button
-                                  variant="secondary"
-                                  treatment="outline"
-                                  slot="button"
-                                  @click=${this.clickSecondary}
-                              >
-                                  ${this.secondaryLabel}
-                              </sp-button>
-                          `
-                        : html``}
-                    ${this.cancelLabel
-                        ? html`
-                              <sp-button
-                                  variant="secondary"
-                                  treatment="outline"
-                                  slot="button"
-                                  @click=${this.clickCancel}
-                              >
-                                  ${this.cancelLabel}
-                              </sp-button>
-                          `
-                        : html``}
-                    ${this.confirmLabel
-                        ? html`
-                              <sp-button
-                                  variant=${buttonVariant}
-                                  treatment=${buttonTreatment}
-                                  slot="button"
-                                  @click=${this.clickConfirm}
-                              >
-                                  ${this.confirmLabel}
-                              </sp-button>
-                          `
-                        : html``}
-                </sp-dialog>
-            </div>
+            <sp-alert-dialog-base>
+                ${this.headline
+                    ? html`
+                          <div class="header" slot="heading">
+                              <h1 class="heading">${this.headline}</h1>
+                              ${this.renderIcon(this.variant)}
+                          </div>
+                      `
+                    : html``}
+                <slot></slot>
+                ${this.secondaryLabel
+                    ? html`
+                          <sp-button
+                              variant="secondary"
+                              treatment="outline"
+                              slot="button"
+                              @click=${this.clickSecondary}
+                          >
+                              ${this.secondaryLabel}
+                          </sp-button>
+                      `
+                    : html``}
+                ${this.cancelLabel
+                    ? html`
+                          <sp-button
+                              variant="secondary"
+                              treatment="outline"
+                              slot="button"
+                              @click=${this.clickCancel}
+                          >
+                              ${this.cancelLabel}
+                          </sp-button>
+                      `
+                    : html``}
+                ${this.confirmLabel
+                    ? html`
+                          <sp-button
+                              variant=${buttonVariant}
+                              treatment=${buttonTreatment}
+                              slot="button"
+                              @click=${this.clickConfirm}
+                          >
+                              ${this.confirmLabel}
+                          </sp-button>
+                      `
+                    : html``}
+            </sp-alert-dialog-base>
         `;
     }
 }

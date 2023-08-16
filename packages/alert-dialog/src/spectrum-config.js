@@ -32,7 +32,7 @@ const config = {
                     ],
                     'variant'
                 ),
-                converter.classToClass('spectrum-AlertDialog', 'alertDialog'),
+                converter.classToClass('spectrum-AlertDialog', 'alert-dialog'),
                 converter.classToClass('spectrum-AlertDialog-header', 'header'),
                 converter.classToClass(
                     'spectrum-AlertDialog-heading',
@@ -42,6 +42,7 @@ const config = {
                     'spectrum-AlertDialog-content',
                     'content'
                 ),
+                converter.classToClass('spectrum-AlertDialog-grid', 'grid'),
                 converter.classToClass('spectrum-Icon', 'icon'),
             ],
         },

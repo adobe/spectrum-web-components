@@ -29,6 +29,10 @@
             "development": "./src/AlertDialog.dev.js",
             "default": "./src/AlertDialog.js"
         },
+        "./src/AlertDialogBase.js": {
+            "development": "./src/AlertDialogBase.dev.js",
+            "default": "./src/AlertDialogBase.js"
+        },
         "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -37,6 +41,10 @@
         "./sp-alert-dialog.js": {
             "development": "./sp-alert-dialog.dev.js",
             "default": "./sp-alert-dialog.js"
+        },
+        "./sp-alert-dialog-base.js": {
+            "development": "./sp-alert-dialog-base.dev.js",
+            "default": "./sp-alert-dialog-base.js"
         }
     },
     "scripts": {
