@@ -64,7 +64,7 @@
         "@spectrum-web-components/textfield": "^0.35.0"
     },
     "devDependencies": {
-        "@spectrum-css/search": "^6.0.7"
+        "@spectrum-css/search": "^6.0.11"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

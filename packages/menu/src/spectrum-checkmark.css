@@ -12,21 +12,47 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .checkmark {
-    align-self: flex-start;
-    display: none;
-    opacity: 1;
-    transform: scale(1);
-}
-:host([dir='ltr']) .checkmark {
-    padding-left: var(--spectrum-listitem-texticon-icon-gap);
-}
-:host([dir='rtl']) .checkmark {
-    padding-right: var(--spectrum-listitem-texticon-icon-gap);
-}
-.checkmark {
-    flex-grow: 0;
-    margin-top: calc(
-        var(--spectrum-listitem-texticon-ui-icon-margin-top) -
-            var(--spectrum-listitem-texticon-padding-y) + 1px
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
     );
+    align-self: start;
+    block-size: var(
+        --mod-menu-item-checkmark-height,
+        var(--spectrum-menu-item-checkmark-height)
+    );
+    color: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
+    display: var(
+        --mod-menu-checkmark-display,
+        var(--spectrum-menu-checkmark-display)
+    );
+    grid-area: checkmarkArea;
+    inline-size: var(
+        --mod-menu-item-checkmark-width,
+        var(--spectrum-menu-item-checkmark-width)
+    );
+    margin-block-start: calc(
+        var(
+                --mod-menu-item-top-to-checkmark,
+                var(--spectrum-menu-item-top-to-checkmark)
+            ) -
+            var(
+                --mod-menu-item-top-edge-to-text,
+                var(--spectrum-menu-item-top-edge-to-text)
+            )
+    );
+    margin-inline-end: var(
+        --mod-menu-item-text-to-control,
+        var(--spectrum-menu-item-text-to-control)
+    );
+    opacity: 1;
 }

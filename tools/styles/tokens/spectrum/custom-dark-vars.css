@@ -56,8 +56,11 @@ governing permissions and limitations under the License.
         var(--spectrum-blue-800-rgb),
         0.25
     );
-    --spectrum-calendar-day-background-color-key-focus: var(
-        --spectrum-transparent-white-600
+    --spectrum-calendar-day-background-color-key-focus: rgba(
+        var(--spectrum-white-rgb),
+        0.07
     );
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
 }

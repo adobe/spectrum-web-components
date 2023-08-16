@@ -21,6 +21,17 @@ export default {
 };
 
 export const s = (): TemplateResult => ActionMenuMarkup({ size: 's' });
+export const sOpen = (): TemplateResult =>
+    ActionMenuMarkup({ size: 's', open: true });
+
 export const m = (): TemplateResult => ActionMenuMarkup({ size: 'm' });
+export const mOpen = (): TemplateResult =>
+    ActionMenuMarkup({ size: 'm', open: true });
+
 export const l = (): TemplateResult => ActionMenuMarkup({ size: 'l' });
-export const xl = (): TemplateResult => ActionMenuMarkup({ size: 'xl' });
+export const lOpen = (): TemplateResult =>
+    ActionMenuMarkup({ size: 'l', open: true });
+
+export const XL = (): TemplateResult => ActionMenuMarkup({ size: 'xl' });
+export const XLOpen = (): TemplateResult =>
+    ActionMenuMarkup({ size: 'xl', open: true });

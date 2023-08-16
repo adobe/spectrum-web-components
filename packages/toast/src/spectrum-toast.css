@@ -16,6 +16,7 @@ governing permissions and limitations under the License.
     --spectrum-toast-font-size: var(--spectrum-font-size-100);
     --spectrum-toast-corner-radius: var(--spectrum-corner-radius-100);
     --spectrum-toast-block-size: var(--spectrum-toast-height);
+    --spectrum-toast-max-inline-size: var(--spectrum-toast-maximum-width);
     --spectrum-toast-border-width: var(--spectrum-border-width-100);
     --spectrum-toast-line-height: var(--spectrum-line-height-100);
     --spectrum-toast-line-height-cjk: var(--spectrum-cjk-line-height-100);
@@ -96,7 +97,14 @@ governing permissions and limitations under the License.
         --mod-toast-font-weight,
         var(--spectrum-toast-font-weight)
     );
-    min-block-size: var(--spectrum-toast-block-size);
+    max-inline-size: var(
+        --mod-toast-max-inline-size,
+        var(--spectrum-toast-max-inline-size)
+    );
+    min-block-size: var(
+        --mod-toast-block-size,
+        var(--spectrum-toast-block-size)
+    );
     padding-inline-start: var(
         --mod-toast-spacing-start-edge-to-text-and-icon,
         var(--spectrum-toast-spacing-start-edge-to-text-and-icon)

@@ -58,6 +58,16 @@ export type TestsType = StoriesType & {
     };
 };
 
+async function testReady(test: StoryDecorator, retry = 0): Promise<void> {
+    await waitUntil(
+        () => test.ready,
+        `Wait for decorator to become ready on try number ${retry + 1}`,
+        {
+            timeout: 20000,
+        }
+    );
+}
+
 export const test = (
     tests: TestsType,
     name: string,
@@ -95,17 +105,12 @@ export const test = (
                 ) => {
                     return () => decorator(story, { args });
                 };
-
                 while (decorators.length) {
                     const decorator = decorators.shift();
                     decoratedStory = decorate(decoratedStory, decorator);
                 }
                 render(decoratedStory(), test);
-                await waitUntil(
-                    () => test.ready,
-                    'Wait for decorator to become ready...',
-                    { timeout: 15000 }
-                );
+                await testReady(test);
                 await nextFrame();
                 const testName = `${color} - ${scale} - ${dir} - ${name} - ${story}`;
                 const allowedRetries = 4;
@@ -113,6 +118,7 @@ export const test = (
                 let passed = false;
                 while (retries && !passed) {
                     retries -= 1;
+                    const retry = allowedRetries - retries;
                     try {
                         await visualDiff(test, testName);
                         passed = true;
@@ -136,11 +142,7 @@ export const test = (
                             test = await fixture<StoryDecorator>(wrap());
                             await elementUpdated(test);
                             render(decoratedStory(), test);
-                            await waitUntil(
-                                () => test.ready,
-                                'Wait for decorator to become ready...',
-                                { timeout: 20000 }
-                            );
+                            await testReady(test, retry);
                             await nextFrame();
                             if (!retries) {
                                 try {
