@@ -39,7 +39,6 @@
         { "path": "../../packages/icons-workflow" },
         { "path": "../../packages/iconset" },
         { "path": "../../packages/illustrated-message" },
-        { "path": "../../packages/input-segments" },
         { "path": "../../packages/link" },
         { "path": "../../packages/menu" },
         { "path": "../../packages/meter" },

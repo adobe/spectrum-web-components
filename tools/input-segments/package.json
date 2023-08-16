@@ -9,10 +9,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/input-segments"
+        "directory": "tools/input-segments"
     },
     "author": "",
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/input-segments",
+    "homepage": "https://adobe.github.io/spectrum-web-components/tools/input-segments",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },

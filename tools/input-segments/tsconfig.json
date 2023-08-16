@@ -7,8 +7,8 @@
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
-        { "path": "../../tools/base" },
-        { "path": "../../tools/reactive-controllers" },
-        { "path": "../textfield" }
+        { "path": "../base" },
+        { "path": "../reactive-controllers" },
+        { "path": "../../packages/textfield" }
     ]
 }
