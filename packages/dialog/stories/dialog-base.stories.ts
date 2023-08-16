@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog-base.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
