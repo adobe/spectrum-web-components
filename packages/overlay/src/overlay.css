@@ -38,6 +38,7 @@ governing permissions and limitations under the License.
     max-height: calc(100vh - 16px);
     max-height: calc(100dvh - 16px);
     max-width: calc(100vw - 16px);
+    height: auto;
     inset: auto;
     top: 0;
     left: 0;

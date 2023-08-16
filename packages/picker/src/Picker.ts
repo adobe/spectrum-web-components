@@ -37,7 +37,6 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import type {
     Menu,
@@ -68,6 +67,8 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     @query('#button')
     public button!: HTMLButtonElement;
+
+    private deprecatedMenu: Menu | null = null;
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
@@ -313,44 +314,37 @@ export class PickerBase extends SizedMixin(Focusable) {
         const appliedLabel = this.appliedLabel || this.label;
         return [
             html`
-                </span>
                 <span id="icon" ?hidden=${this.icons === 'none'}>
                     ${this.selectedItemContent.icon}
                 </span>
                 <span id="label" class=${classMap(labelClasses)}>
                     ${this.renderLabelContent(this.selectedItemContent.content)}
                 </span>
-                ${
-                    this.value && this.selectedItem
-                        ? html`
-                              <span
-                                  aria-hidden="true"
-                                  class="visually-hidden"
-                                  id="applied-label"
-                              >
-                                  ${appliedLabel}
-                                  <slot name="label"></slot>
-                              </span>
-                          `
-                        : html`
-                              <span hidden id="applied-label">
-                                  ${appliedLabel}
-                              </span>
-                          `
-                }
-                ${
-                    this.invalid
-                        ? html`
-                              <sp-icon-alert
-                                  class="validation-icon"
-                              ></sp-icon-alert>
-                          `
-                        : nothing
-                }
+                ${this.value && this.selectedItem
+                    ? html`
+                          <span
+                              aria-hidden="true"
+                              class="visually-hidden"
+                              id="applied-label"
+                          >
+                              ${appliedLabel}
+                              <slot name="label"></slot>
+                          </span>
+                      `
+                    : html`
+                          <span hidden id="applied-label">${appliedLabel}</span>
+                      `}
+                ${this.invalid
+                    ? html`
+                          <sp-icon-alert
+                              class="validation-icon"
+                          ></sp-icon-alert>
+                      `
+                    : nothing}
                 <sp-icon-chevron100
-                    class="picker ${
-                        chevronClass[this.size as DefaultElementSize]
-                    }"
+                    class="picker ${chevronClass[
+                        this.size as DefaultElementSize
+                    ]}"
                 ></sp-icon-chevron100>
             `,
         ];
@@ -360,10 +354,11 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.appliedLabel = value;
     };
 
-    protected get renderOverlay(): TemplateResult {
+    protected renderOverlay(menu: TemplateResult): TemplateResult {
+        import('@spectrum-web-components/overlay/sp-overlay.js');
         return html`
             <sp-overlay
-                .triggerElement=${this.button as HTMLElement}
+                .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open}
                 .placement=${this.placement}
@@ -387,7 +382,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                     }
                 }}
             >
-                ${this.renderContainer}
+                ${this.renderContainer(menu)}
             </sp-overlay>
         `;
     }
@@ -419,7 +414,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             >
                 ${this.buttonContent}
             </button>
-            ${this.renderOverlay}
+            ${this.renderMenu}
         `;
     }
 
@@ -439,8 +434,9 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
         // Maybe it's finally time to remove this support?
         if (!this.hasUpdated) {
-            const deprecatedMenu = this.querySelector(':scope > sp-menu');
-            deprecatedMenu?.setAttribute('selects', 'inherit');
+            this.deprecatedMenu = this.querySelector(':scope > sp-menu');
+            this.deprecatedMenu?.toggleAttribute('ignore', true);
+            this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
         if (window.__swc.DEBUG) {
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
@@ -477,25 +473,9 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
-    protected get renderContainer(): TemplateResult {
-        const content = html`
-            ${this.dismissHelper}
-            <sp-menu
-                id="menu"
-                role="${this.listRole}"
-                @change=${this.handleChange}
-                .selects=${this.selects}
-                .selected=${this.value ? [this.value] : []}
-                size=${this.size}
-                @sp-menu-item-added-or-updated=${this.shouldManageSelection}
-                @keydown=${{
-                    handleEvent: this.handleEnterKeydown,
-                    capture: true,
-                }}
-            >
-                <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
-            </sp-menu>
-            ${this.dismissHelper}
+    protected renderContainer(menu: TemplateResult): TemplateResult {
+        const accessibleMenu = html`
+            ${this.dismissHelper} ${menu} ${this.dismissHelper}
         `;
         // @todo: test in mobile
         /* c8 ignore next 11 */
@@ -506,7 +486,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                     role="presentation"
                     style=${styleMap(this.containerStyles)}
                 >
-                    ${content}
+                    ${accessibleMenu}
                 </sp-tray>
             `;
         }
@@ -517,9 +497,37 @@ export class PickerBase extends SizedMixin(Focusable) {
                 style=${styleMap(this.containerStyles)}
                 placement=${this.placement}
             >
-                ${content}
+                ${accessibleMenu}
             </sp-popover>
         `;
+    }
+
+    protected hasOpened = false;
+
+    protected get renderMenu(): TemplateResult {
+        const menu = html`
+            <sp-menu
+                tabindex=${ifDefined(!this.open ? -1 : undefined)}
+                aria-labelledby="applied-label"
+                id="menu"
+                role=${this.listRole}
+                @change=${this.handleChange}
+                .selects=${this.selects}
+                .selected=${this.value ? [this.value] : []}
+                @sp-menu-item-added-or-updated=${this.shouldManageSelection}
+                @keydown=${{
+                    handleEvent: this.handleEnterKeydown,
+                    capture: true,
+                }}
+            >
+                <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
+            </sp-menu>
+        `;
+        this.hasOpened = this.hasOpened || this.open || !!this.deprecatedMenu;
+        if (this.hasOpened) {
+            return this.renderOverlay(menu);
+        }
+        return menu;
     }
 
     private willManageSelection = false;
@@ -590,6 +598,9 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.selectionPromise;
+        if (this.overlayElement) {
+            await this.overlayElement.updateComplete;
+        }
         return complete;
     }
 

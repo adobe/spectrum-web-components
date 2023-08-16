@@ -177,7 +177,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
             buttons.reverse();
         }
         return html`
-            ${buttons} ${this.renderOverlay}
+            ${buttons} ${this.renderMenu}
         `;
     }
 

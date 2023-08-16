@@ -83,7 +83,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
             >
                 ${this.buttonContent}
             </sp-action-button>
-            ${this.renderOverlay}
+            ${this.renderMenu}
         `;
     }
 

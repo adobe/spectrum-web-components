@@ -18,7 +18,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(
     html`
-        <overlay-trigger>
+        <overlay-trigger content="click">
             <sp-button slot="trigger">Trigger</sp-button>
             <sp-popover slot="click-content">
                 <p>This is the content.</p>

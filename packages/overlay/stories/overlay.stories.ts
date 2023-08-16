@@ -153,6 +153,7 @@ const template = ({
     return html`
         ${storyStyles}
         <overlay-trigger
+            content="click hover"
             id="trigger"
             placement="${placement}"
             offset="${offset}"

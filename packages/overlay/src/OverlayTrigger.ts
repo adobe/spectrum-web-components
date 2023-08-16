@@ -22,13 +22,13 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import type { Placement } from '@floating-ui/dom';
 
-import { OverlayTriggerInteractions } from './overlay-types';
-import overlayTriggerStyles from './overlay-trigger.css.js';
-import '../sp-overlay.js';
-import { Placement } from '@floating-ui/dom';
-import { BeforetoggleOpenEvent } from './AbstractOverlay.js';
+import type { BeforetoggleOpenEvent } from './AbstractOverlay.js';
 import type { Overlay } from './Overlay.js';
+import type { OverlayTriggerInteractions } from './overlay-types';
+
+import overlayTriggerStyles from './overlay-trigger.css.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
@@ -47,6 +47,9 @@ export class OverlayTrigger extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
+
+    @property()
+    content = 'click hover longpress';
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
@@ -106,22 +109,26 @@ export class OverlayTrigger extends SpectrumElement {
         this.targetContent = this.getAssignedElementsFromSlot(event.target);
     }
 
-    private handleClickContent(
+    private handleSlotContent(
         event: Event & { target: HTMLSlotElement }
     ): void {
-        this.clickContent = this.getAssignedElementsFromSlot(event.target);
-    }
-
-    private handleLongpressContent(
-        event: Event & { target: HTMLSlotElement }
-    ): void {
-        this.longpressContent = this.getAssignedElementsFromSlot(event.target);
-    }
-
-    private handleHoverContent(
-        event: Event & { target: HTMLSlotElement }
-    ): void {
-        this.hoverContent = this.getAssignedElementsFromSlot(event.target);
+        switch (event.target.name) {
+            case 'click-content':
+                this.clickContent = this.getAssignedElementsFromSlot(
+                    event.target
+                );
+                break;
+            case 'longpress-content':
+                this.longpressContent = this.getAssignedElementsFromSlot(
+                    event.target
+                );
+                break;
+            case 'hover-content':
+                this.hoverContent = this.getAssignedElementsFromSlot(
+                    event.target
+                );
+                break;
+        }
     }
 
     private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
@@ -169,7 +176,88 @@ export class OverlayTrigger extends SpectrumElement {
         super.update(changes);
     }
 
+    protected renderSlot(name: string): TemplateResult {
+        return html`
+            <slot name=${name} @slotchange=${this.handleSlotContent}></slot>
+        `;
+    }
+
+    protected renderClickOverlay(): TemplateResult {
+        import('@spectrum-web-components/overlay/sp-overlay.js');
+        const slot = this.renderSlot('click-content');
+        if (!this.clickContent.length) {
+            return slot;
+        }
+        return html`
+            <sp-overlay
+                id="click-overlay"
+                ?disabled=${this.disabled || !this.clickContent.length}
+                ?open=${this.open === 'click' && !!this.clickContent.length}
+                .offset=${this.offset}
+                .placement=${this.clickPlacement || this.placement}
+                .triggerElement=${this.targetContent[0]}
+                .triggerInteraction=${'click'}
+                .type=${this.type !== 'modal' ? 'auto' : 'modal'}
+                @beforetoggle=${this.handleBeforetoggle}
+            >
+                ${slot}
+            </sp-overlay>
+        `;
+    }
+
+    protected renderHoverOverlay(): TemplateResult {
+        import('@spectrum-web-components/overlay/sp-overlay.js');
+        const slot = this.renderSlot('hover-content');
+        if (!this.hoverContent.length) {
+            return slot;
+        }
+        return html`
+            <sp-overlay
+                id="hover-overlay"
+                ?disabled=${this.disabled ||
+                !this.hoverContent.length ||
+                (!!this.open && this.open !== 'hover')}
+                ?open=${this.open === 'hover' && !!this.hoverContent.length}
+                .offset=${this.offset}
+                .placement=${this.hoverPlacement || this.placement}
+                .triggerElement=${this.targetContent[0]}
+                .triggerInteraction=${'hover'}
+                .type=${'hint'}
+                @beforetoggle=${this.handleBeforetoggle}
+            >
+                ${slot}
+            </sp-overlay>
+        `;
+    }
+
+    protected renderLongpressOverlay(): TemplateResult {
+        import('@spectrum-web-components/overlay/sp-overlay.js');
+        const slot = this.renderSlot('longpress-content');
+        if (!this.longpressContent.length) {
+            return slot;
+        }
+        return html`
+            <sp-overlay
+                id="longpress-overlay"
+                ?disabled=${this.disabled || !this.longpressContent.length}
+                ?open=${this.open === 'longpress' &&
+                !!this.longpressContent.length}
+                .offset=${this.offset}
+                .placement=${this.longpressPlacement || this.placement}
+                .triggerElement=${this.targetContent[0]}
+                .triggerInteraction=${'longpress'}
+                .type=${'auto'}
+                @beforetoggle=${this.handleBeforetoggle}
+            >
+                ${slot}
+                <slot name="longpress-describedby-descriptor"></slot>
+            </sp-overlay>
+            <slot name=${this._longpressId}></slot>
+        `;
+    }
+
     protected override render(): TemplateResult {
+        const content = this.content.split(' ');
         // Keyboard event availability documented in README.md
         /* eslint-disable lit-a11y/click-events-have-key-events */
         return html`
@@ -178,61 +266,13 @@ export class OverlayTrigger extends SpectrumElement {
                 name="trigger"
                 @slotchange=${this.handleTriggerContent}
             ></slot>
-            <div id="overlay-content">
-                <sp-overlay
-                    id="click-overlay"
-                    ?disabled=${this.disabled || !this.clickContent.length}
-                    ?open=${this.open === 'click' && !!this.clickContent.length}
-                    .offset=${this.offset}
-                    .placement=${this.clickPlacement || this.placement}
-                    .triggerElement=${this.targetContent[0]}
-                    .triggerInteraction=${'click'}
-                    .type=${this.type !== 'modal' ? 'auto' : 'modal'}
-                    @beforetoggle=${this.handleBeforetoggle}
-                >
-                    <slot
-                        name="click-content"
-                        @slotchange=${this.handleClickContent}
-                    ></slot>
-                </sp-overlay>
-                <sp-overlay
-                    id="longpress-overlay"
-                    ?disabled=${this.disabled || !this.longpressContent.length}
-                    ?open=${this.open === 'longpress' &&
-                    !!this.longpressContent.length}
-                    .offset=${this.offset}
-                    .placement=${this.longpressPlacement || this.placement}
-                    .triggerElement=${this.targetContent[0]}
-                    .triggerInteraction=${'longpress'}
-                    .type=${'auto'}
-                    @beforetoggle=${this.handleBeforetoggle}
-                >
-                    <slot
-                        name="longpress-content"
-                        @slotchange=${this.handleLongpressContent}
-                    ></slot>
-                    <slot name="longpress-describedby-descriptor"></slot>
-                </sp-overlay>
-                <sp-overlay
-                    id="hover-overlay"
-                    ?disabled=${this.disabled ||
-                    !this.hoverContent.length ||
-                    (!!this.open && this.open !== 'hover')}
-                    ?open=${this.open === 'hover' && !!this.hoverContent.length}
-                    .offset=${this.offset}
-                    .placement=${this.hoverPlacement || this.placement}
-                    .triggerElement=${this.targetContent[0]}
-                    .triggerInteraction=${'hover'}
-                    .type=${'hint'}
-                    @beforetoggle=${this.handleBeforetoggle}
-                >
-                    <slot
-                        name="hover-content"
-                        @slotchange=${this.handleHoverContent}
-                    ></slot>
-                </sp-overlay>
-                <slot name=${this._longpressId}></slot>
-            </div>
+            ${[
+                content.includes('click') ? this.renderClickOverlay() : html``,
+                content.includes('hover') ? this.renderHoverOverlay() : html``,
+                content.includes('longpress')
+                    ? this.renderLongpressOverlay()
+                    : html``,
+            ]}
         `;
         /* eslint-enable lit-a11y/click-events-have-key-events */
     }

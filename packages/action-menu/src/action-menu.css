@@ -18,6 +18,10 @@ governing permissions and limitations under the License.
     min-width: 0;
 }
 
+:host > sp-menu {
+    display: none;
+}
+
 ::slotted([slot='icon']) {
     flex-shrink: 0;
 }

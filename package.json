@@ -68,7 +68,7 @@
         "storybook:quick": "run-p build:watch storybook:run",
         "storybook:run": "web-dev-server --config wds-storybook.config.js",
         "test": "yarn test:focus unit",
-        "test:bench": "node test/benchmark/cli.js",
+        "test:bench": "yarn build:tests && node test/benchmark/cli.js",
         "test:changed": "node ./tasks/test-changes.js",
         "test:ci": "yarn test:start",
         "test:create": "wireit",

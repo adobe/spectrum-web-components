@@ -120,6 +120,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             );
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             await expect(el).to.be.accessible();
         });
@@ -140,6 +142,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             );
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             await expect(el).to.be.accessible();
         });
@@ -174,9 +178,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const menuItem2 = el.querySelector(
                 'sp-menu-item:nth-child(2)'
             ) as MenuItem;
-
             const opened = oneEvent(el, 'sp-opened');
             el.click();
+            await elementUpdated(el);
             await opened;
 
             expect(el.open).to.be.true;
