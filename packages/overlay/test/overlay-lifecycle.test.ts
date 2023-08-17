@@ -72,6 +72,9 @@ describe('Overlay Trigger - accessible hover content management', () => {
             <div id="descriptor">I'm a description!</div>
         `);
 
+        await nextFrame();
+        await nextFrame();
+
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
         const tooptip = el.querySelector(
             '[slot="hover-content"]'
