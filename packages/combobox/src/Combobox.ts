@@ -86,7 +86,7 @@ export type ComboboxOption = {
  * @element sp-combobox
  */
 export class Combobox extends Textfield {
-    constructor(inputType = 'number') {
+    constructor(inputType = 'text') {
         super();
         if (inputType == 'number') {
             this._inputType = 'number';
