@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import '@spectrum-web-components/styles/express/scale-medium.css';
-@import '@spectrum-web-components/styles/tokens/medium-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/custom-medium-vars.css';
-@import '@spectrum-web-components/styles/tokens/express/custom-medium-vars.css';
-@import '@spectrum-web-components/styles/tokens/express/medium-vars.css';
+@import url('@spectrum-web-components/styles/express/scale-medium.css');
+@import url('@spectrum-web-components/styles/tokens/medium-vars.css');
+@import url('@spectrum-web-components/styles/tokens/spectrum/custom-medium-vars.css');
+@import url('@spectrum-web-components/styles/tokens/express/custom-medium-vars.css');
+@import url('@spectrum-web-components/styles/tokens/express/medium-vars.css');
