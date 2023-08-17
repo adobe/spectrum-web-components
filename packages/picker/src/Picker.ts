@@ -507,18 +507,19 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected get renderMenu(): TemplateResult {
         const menu = html`
             <sp-menu
-                tabindex=${ifDefined(!this.open ? -1 : undefined)}
                 aria-labelledby="applied-label"
-                id="menu"
-                role=${this.listRole}
                 @change=${this.handleChange}
-                .selects=${this.selects}
-                .selected=${this.value ? [this.value] : []}
-                @sp-menu-item-added-or-updated=${this.shouldManageSelection}
+                id="menu"
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
+                role=${this.listRole}
+                .selects=${this.selects}
+                .selected=${this.value ? [this.value] : []}
+                size=${this.size}
+                @sp-menu-item-added-or-updated=${this.shouldManageSelection}
+                tabindex=${ifDefined(!this.open ? -1 : undefined)}
             >
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>

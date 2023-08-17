@@ -46,16 +46,20 @@ governing permissions and limitations under the License.
     --sp-overlay-open: true;
 }
 
-:host(:not([open])) .dialog {
-    --sp-overlay-open: false;
-}
-
 .dialog:not([is-visible]) {
     translate: -999em -999em !important;
 }
 
 .dialog:focus {
     outline: none;
+}
+
+dialog:modal {
+    --mod-popover-filter: var(--spectrum-popover-filter);
+}
+
+:host(:not([open])) .dialog {
+    --sp-overlay-open: false;
 }
 
 .dialog::backdrop {
@@ -83,15 +87,6 @@ governing permissions and limitations under the License.
 
 ::slotted(sp-popover) {
     position: static;
-
-    --mod-popover-pointer-width: max(
-        var(--spectrum-popover-pointer-width),
-        var(--spectrum-popover-pointer-height)
-    );
-    --mod-popover-pointer-height: max(
-        var(--spectrum-popover-pointer-width),
-        var(--spectrum-popover-pointer-height)
-    );
 }
 
 ::slotted(sp-tooltip) {
