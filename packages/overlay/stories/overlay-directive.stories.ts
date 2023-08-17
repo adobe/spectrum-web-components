@@ -123,17 +123,22 @@ export default {
         placement: 'bottom',
         offset: 0,
         colorStop: 'light',
+        triggerOn: 'click',
     },
 };
 
 interface Properties {
     placement: Placement;
     offset: number;
-    open?: OverlayContentTypes;
+    triggerOn?: OverlayContentTypes;
     type?: Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'>;
 }
 
-const template = ({ placement, offset, open }: Properties): TemplateResult => {
+const template = ({
+    placement,
+    offset,
+    triggerOn,
+}: Properties): TemplateResult => {
     return html`
         ${storyStyles}
         <sp-button
@@ -186,7 +191,7 @@ const template = ({ placement, offset, open }: Properties): TemplateResult => {
                 `,
                 {
                     placement,
-                    triggerOn: open,
+                    triggerOn,
                     offset,
                 }
             )}
