@@ -38,45 +38,6 @@ import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 
-import {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
-import { NumberFormatter, NumberParser } from '@internationalized/number';
-
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import {
-    isAndroid,
-    isIPhone,
-} from '@spectrum-web-components/shared/src/platform.js';
-
-import numberStyles from '@spectrum-web-components/number-field/src/number-field.css.js';
-
-export const FRAMES_PER_CHANGE = 5;
-// Debounce duration for inserting a `change` event after a batch of `wheel` originating `input` events.
-export const CHANGE_DEBOUNCE_MS = 100;
-export const indeterminatePlaceholder = '-';
-export const remapMultiByteCharacters: Record<string, string> = {
-    '１': '1',
-    '２': '2',
-    '３': '3',
-    '４': '4',
-    '５': '5',
-    '６': '6',
-    '７': '7',
-    '８': '8',
-    '９': '9',
-    '０': '0',
-    '、': ',',
-    '，': ',',
-    '。': '.',
-    '．': '.',
-    '％': '%',
-    '＋': '+',
-    ー: '-',
-};
-
 export type ComboboxOption = {
     id: string;
     value: string;
@@ -86,32 +47,10 @@ export type ComboboxOption = {
  * @element sp-combobox
  */
 export class Combobox extends Textfield {
-    constructor(inputType = 'text') {
-        super();
-        if (inputType == 'number') {
-            this._inputType = 'number';
-            Combobox._comboboxStyle = [
-                Textfield.styles,
-                numberStyles,
-                styles,
-                chevronStyles,
-            ];
-        } else {
-            this._inputType = 'text';
-        }
+    public static override get styles(): CSSResultArray {
+        return [...super.styles, styles, chevronStyles];
     }
     _inputType = 'text';
-    static _comboboxStyle: CSSResultArray = [
-        ...super.styles,
-        styles,
-        chevronStyles,
-    ];
-
-    public static override get styles(): CSSResultArray {
-        return Combobox._comboboxStyle;
-        //return [...super.styles, numberStyles,styles, chevronStyles];
-    }
-
     /**
      * The currently active ComboboxItem descendent, when available.
      */
@@ -149,11 +88,6 @@ export class Combobox extends Textfield {
      **/
     @property({ type: Array })
     public options: MenuItem[] = [];
-
-    @property({ type: Boolean, reflect: true })
-    public override focused = false;
-
-    _forcedUnit = '';
 
     /**
      * The distance by which to alter the value of the element when taking a "step".
@@ -198,13 +132,9 @@ export class Combobox extends Textfield {
     @property({ type: Number })
     public min?: number;
 
+    // { value: "String thing", id: "string1" }
     public override focus(): void {
         this.focusElement.focus();
-        if (this._inputType == 'number') {
-            this._trackingValue = this.inputValue;
-            this.keyboardFocused = !this.readonly && true;
-            this.addEventListener('wheel', this.onScroll, { passive: false });
-        }
     }
 
     public override click(): void {
@@ -222,6 +152,35 @@ export class Combobox extends Textfield {
             return 0.01;
         }
         return 1;
+    }
+
+    private validateInput(value: number): number {
+        if (typeof this.min !== 'undefined') {
+            value = Math.max(this.min, value);
+        }
+        if (typeof this.max !== 'undefined') {
+            value = Math.min(this.max, value);
+        }
+        // Step shouldn't validate when 0...
+        if (this.step) {
+            const min = typeof this.min !== 'undefined' ? this.min : 0;
+            const moduloStep = (value - min) % this.step;
+            const fallsOnStep = moduloStep === 0;
+            if (!fallsOnStep) {
+                const overUnder = Math.round(moduloStep / this.step);
+                if (overUnder === 1) {
+                    value += this.step - moduloStep;
+                } else {
+                    value -= moduloStep;
+                }
+            }
+            if (typeof this.max !== 'undefined') {
+                while (value > this.max) {
+                    value -= this.step;
+                }
+            }
+        }
+        return value;
     }
 
     private stepBy(count: number): void {
@@ -245,29 +204,6 @@ export class Combobox extends Textfield {
         this.focus();
     }
 
-    protected onScroll(event: WheelEvent): void {
-        event.preventDefault();
-        this.managedInput = true;
-        const direction = event.shiftKey
-            ? event.deltaX / Math.abs(event.deltaX)
-            : event.deltaY / Math.abs(event.deltaY);
-        if (direction !== 0 && !isNaN(direction)) {
-            this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
-            clearTimeout(this.queuedChangeEvent);
-            this.queuedChangeEvent = setTimeout(() => {
-                this.dispatchEvent(
-                    new Event('change', { bubbles: true, composed: true })
-                );
-            }, CHANGE_DEBOUNCE_MS) as unknown as number;
-        }
-        this.managedInput = false;
-    }
-
-    /*protected override onFocus(): void {
-        super.onFocus();
-        
-    }
-  */
     private increment(factor = 1): void {
         this.stepBy(1 * factor);
     }
@@ -327,10 +263,8 @@ export class Combobox extends Textfield {
             this.focusElement.setSelectionRange(0, 0);
             this.activeDescendent = undefined;
         } else if (event.code === 'End') {
-            if (typeof this.value == 'string') {
-                const { length } = this.value;
-                this.focusElement.setSelectionRange(length, length);
-            }
+            const { length } = this.value;
+            this.focusElement.setSelectionRange(length, length);
             this.activeDescendent = undefined;
         } else if (event.code === 'ArrowLeft') {
             this.activeDescendent = undefined;
@@ -408,7 +342,7 @@ export class Combobox extends Textfield {
         target,
     }: Event & { target: HTMLInputElement }): void {
         // Element data.
-        if (this._inputType == 'text') this.value = target.value;
+        this.value = target.value;
         this.activeDescendent = undefined;
         this.open = true;
     }
@@ -494,40 +428,14 @@ export class Combobox extends Textfield {
         this.listbox.style.maxHeight = `${targetRect.height}px`;
     }
 
-    protected override onBlur(): void {
-        /*if (
+    protected override onBlur(event: FocusEvent): void {
+        if (
             event.relatedTarget &&
             this.contains(event.relatedTarget as HTMLElement)
         ) {
             return;
-        }*/
-        super.onBlur();
-        if (this._inputType == 'number') {
-            this.keyboardFocused = !this.readonly && false;
-            this.removeEventListener('wheel', this.onScroll);
         }
-    }
-
-    public get formattedValue(): string {
-        if (this._inputType == 'number') {
-            const rawValue = Number(this.value);
-            if (isNaN(rawValue)) {
-                return '';
-            }
-            const value =
-                this.numberFormatter.format(rawValue) +
-                (this.focused ? '' : this._forcedUnit);
-            return value;
-        }
-        return '';
-    }
-
-    private _trackingValue = '';
-
-    private get inputValue(): string {
-        return this.indeterminate
-            ? this.formattedValue
-            : this.inputElement.value;
+        super.onBlur(event);
     }
 
     protected override renderField(): TemplateResult {
@@ -702,157 +610,6 @@ export class Combobox extends Textfield {
         }
     }
 
-    private wasIndeterminate = false;
-    private indeterminateValue?: number;
-
-    protected override get displayValue(): string {
-        if (this._inputType == 'number') {
-            const indeterminateValue = this.focused
-                ? ''
-                : indeterminatePlaceholder;
-            return this.indeterminate
-                ? indeterminateValue
-                : this.formattedValue;
-        }
-        return this.value;
-    }
-
-    private convertValueToNumber(value: string): number {
-        if (isIPhone() && this.inputElement.inputMode === 'decimal') {
-            const parts = this.numberFormatter.formatToParts(1000.1);
-            const sourceDecimal = value
-                .split('')
-                .find((char) => char === ',' || char === '.');
-            const replacementDecimal = parts.find(
-                (part) => part.type === 'decimal'
-            )?.value;
-            if (sourceDecimal && replacementDecimal) {
-                value = value.replace(sourceDecimal, replacementDecimal);
-            }
-        }
-        return this.numberParser.parse(value);
-    }
-
-    protected override handleChange(): void {
-        if (this._inputType == 'text') {
-            super.handleInput();
-            return;
-        }
-
-        const value = this.convertValueToNumber(this.inputValue);
-        if (this.wasIndeterminate) {
-            this.wasIndeterminate = false;
-            this.indeterminateValue = undefined;
-            if (isNaN(value)) {
-                this.indeterminate = true;
-                return;
-            }
-        }
-        this.value = value.toString();
-        super.handleChange();
-    }
-
-    private validateInput(value: number): number {
-        if (typeof this.min !== 'undefined') {
-            value = Math.max(this.min, value);
-        }
-        if (typeof this.max !== 'undefined') {
-            value = Math.min(this.max, value);
-        }
-        // Step shouldn't validate when 0...
-        if (this.step) {
-            const min = typeof this.min !== 'undefined' ? this.min : 0;
-            const moduloStep = (value - min) % this.step;
-            const fallsOnStep = moduloStep === 0;
-            if (!fallsOnStep) {
-                const overUnder = Math.round(moduloStep / this.step);
-                if (overUnder === 1) {
-                    value += this.step - moduloStep;
-                } else {
-                    value -= moduloStep;
-                }
-            }
-            if (typeof this.max !== 'undefined') {
-                while (value > this.max) {
-                    value -= this.step;
-                }
-            }
-        }
-        return value;
-    }
-
-    protected override handleInput(): void {
-        if (this._inputType == 'text') {
-            super.handleInput();
-            return;
-        }
-        if (this.indeterminate) {
-            this.wasIndeterminate = true;
-            if (typeof this.value == 'number')
-                this.indeterminateValue = this.value;
-            this.inputElement.value = this.inputElement.value.replace(
-                indeterminatePlaceholder,
-                ''
-            );
-        }
-        const { value: originalValue, selectionStart } = this.inputElement;
-        const value = originalValue
-            .split('')
-            .map((char) => remapMultiByteCharacters[char] || char)
-            .join('');
-        if (this.numberParser.isValidPartialNumber(value)) {
-            const valueAsNumber = this.convertValueToNumber(value);
-            if (!value && this.indeterminateValue) {
-                this.indeterminate = true;
-                this._value = this.indeterminateValue.toString();
-            } else {
-                this.indeterminate = false;
-                this._value = this.validateInput(valueAsNumber).toString();
-            }
-            this._trackingValue = value;
-            this.inputElement.value = value;
-            return;
-        }
-        const currentLength = value.length;
-        const previousLength = this._trackingValue.length;
-        const nextSelectStart =
-            (selectionStart || currentLength) -
-            (currentLength - previousLength);
-        this.inputElement.value = this.indeterminate
-            ? indeterminatePlaceholder
-            : this._trackingValue;
-        this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
-    }
-
-    protected override update(changes: PropertyValues): void {
-        if (this._inputType == 'number') {
-            if (
-                changes.has('formatOptions') ||
-                changes.has('resolvedLanguage')
-            ) {
-                this.clearNumberFormatterCache();
-            }
-            if (
-                changes.has('value') ||
-                changes.has('max') ||
-                changes.has('min')
-            ) {
-                const value = this.numberParser.parse(
-                    this.formattedValue.replace(this._forcedUnit, '')
-                );
-                this.value = value.toString();
-            }
-        }
-        super.update(changes);
-    }
-
-    public override willUpdate(changes: PropertyValues): void {
-        this.multiline = false;
-        if (changes.has(languageResolverUpdatedSymbol)) {
-            this.clearNumberFormatterCache();
-        }
-    }
-
     protected override updated(changed: PropertyValues<this>): void {
         if (changed.has('open')) {
             this.manageListOverlay();
@@ -871,120 +628,7 @@ export class Combobox extends Textfield {
                 this.activeDescendent.focused = true;
             }
         }
-
-        if (this._inputType == 'number') {
-            if (changed.has('min') || changed.has('formatOptions')) {
-                let inputMode = 'numeric';
-                const hasNegative =
-                    typeof this.min !== 'undefined' && this.min < 0;
-                const { maximumFractionDigits } =
-                    this.numberFormatter.resolvedOptions();
-                const hasDecimals = maximumFractionDigits > 0;
-                /* c8 ignore next 18 */
-                if (isIPhone()) {
-                    // iPhone doesn't have a minus sign in either numeric or decimal.
-                    // Note this is only for iPhone, not iPad, which always has both
-                    // minus and decimal in numeric.
-                    if (hasNegative) {
-                        inputMode = 'text';
-                    } else if (hasDecimals) {
-                        inputMode = 'decimal';
-                    }
-                } else if (isAndroid()) {
-                    // Android numeric has both a decimal point and minus key.
-                    // decimal does not have a minus key.
-                    if (hasNegative) {
-                        inputMode = 'numeric';
-                    } else if (hasDecimals) {
-                        inputMode = 'decimal';
-                    }
-                }
-                this.inputElement.inputMode = inputMode;
-            }
-        }
     }
-
-    protected clearNumberFormatterCache(): void {
-        this._numberFormatter = undefined;
-        this._numberParser = undefined;
-    }
-
-    protected get numberFormatter(): NumberFormatter {
-        if (!this._numberFormatter || !this._numberFormatterFocused) {
-            const {
-                style,
-                unit,
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                unitDisplay,
-                ...formatOptionsNoUnit
-            } = this.formatOptions;
-            if (style !== 'unit') {
-                (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
-            }
-            this._numberFormatterFocused = new NumberFormatter(
-                this.languageResolver.language,
-                formatOptionsNoUnit
-            );
-            try {
-                this._numberFormatter = new NumberFormatter(
-                    this.languageResolver.language,
-                    this.formatOptions
-                );
-                this._forcedUnit = '';
-                this._numberFormatter.format(1);
-            } catch (error) {
-                if (style === 'unit') {
-                    this._forcedUnit = unit as string;
-                }
-                this._numberFormatter = this._numberFormatterFocused;
-            }
-        }
-        return this.focused
-            ? this._numberFormatterFocused
-            : this._numberFormatter;
-    }
-
-    private _numberFormatter?: NumberFormatter;
-    private _numberFormatterFocused?: NumberFormatter;
-
-    protected get numberParser(): NumberParser {
-        if (!this._numberParser || !this._numberParserFocused) {
-            const {
-                style,
-                unit,
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                unitDisplay,
-                ...formatOptionsNoUnit
-            } = this.formatOptions;
-            if (style !== 'unit') {
-                (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
-            }
-            this._numberParserFocused = new NumberParser(
-                this.languageResolver.language,
-                formatOptionsNoUnit
-            );
-            try {
-                this._numberParser = new NumberParser(
-                    this.languageResolver.language,
-                    this.formatOptions
-                );
-                this._forcedUnit = '';
-                this._numberParser.parse('0');
-            } catch (error) {
-                if (style === 'unit') {
-                    this._forcedUnit = unit as string;
-                }
-                this._numberParser = this._numberParserFocused;
-            }
-        }
-        return this.focused ? this._numberParserFocused : this._numberParser;
-    }
-
-    private _numberParser?: NumberParser;
-    private _numberParserFocused?: NumberParser;
-
-    private change!: (event: PointerEvent) => void;
-    private languageResolver = new LanguageResolutionController(this);
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = await super.getUpdateComplete();
