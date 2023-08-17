@@ -158,11 +158,13 @@ export class FocusGroupController<T extends HTMLElement>
         Then we are checking if the deleted element was the focused one before the deletion if so then we need to proceed else we casn return;
     */
     handleItemMutation(): void {
-        if (this._currentIndex == -1) return;
-        const lengthOfElementsBeforeMutation = this.elements.length;
+        if (
+            this._currentIndex == -1 ||
+            this.elements.length <= this._elements().length
+        )
+            return;
         const focusedElement = this.elements[this.currentIndex];
         this.clearElementCache();
-        if (lengthOfElementsBeforeMutation <= this.elements.length) return;
         if (this.elements.includes(focusedElement)) return;
         const moveToNextElement = this.currentIndex !== this.elements.length;
         const diff = moveToNextElement ? 1 : -1;
