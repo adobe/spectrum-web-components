@@ -66,10 +66,6 @@ export class AlertDialogBase extends FocusVisiblePolyfillMixin(
     @query('.content')
     private contentElement!: HTMLDivElement;
 
-    protected get hasButtons(): boolean {
-        return this.getSlotContentPresence('[slot="button"]');
-    }
-
     protected renderHeading(): TemplateResult {
         return html`
             <slot name="heading" @slotchange=${this.onHeadingSlotchange}></slot>

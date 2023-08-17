@@ -168,6 +168,7 @@ export class AlertDialog extends DialogBase {
                 ${this.secondaryLabel
                     ? html`
                           <sp-button
+                              id="secondaryButton"
                               variant="secondary"
                               treatment="outline"
                               slot="button"
@@ -180,6 +181,7 @@ export class AlertDialog extends DialogBase {
                 ${this.cancelLabel
                     ? html`
                           <sp-button
+                              id="cancelButton"
                               variant="secondary"
                               treatment="outline"
                               slot="button"
@@ -192,6 +194,7 @@ export class AlertDialog extends DialogBase {
                 ${this.confirmLabel
                     ? html`
                           <sp-button
+                              id="confirmButton"
                               variant=${buttonVariant}
                               treatment=${buttonTreatment}
                               slot="button"

@@ -22,8 +22,15 @@ import {
 } from '@spectrum-web-components/alert-dialog';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
-import { confirmation, warning } from '../stories/alert-dialog.stories.js';
+import {
+    confirmation,
+    destructive,
+    secondary,
+    warning,
+} from '../stories/alert-dialog.stories.js';
 import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
+import { Underlay } from '@spectrum-web-components/underlay';
+import { spy } from 'sinon';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -44,6 +51,7 @@ describe('AlertDialog', () => {
         const dialog = el.shadowRoot.querySelector(
             'sp-alert-dialog-base'
         ) as AlertDialogBase;
+        expect(dialog).to.be.an.instanceOf(AlertDialogBase);
         const confirmButton = dialog.querySelector(
             'sp-button[variant="accent"]'
         ) as Button;
@@ -68,5 +76,63 @@ describe('AlertDialog', () => {
         ) as AlertDialogBase;
         const alertIcon = dialog.querySelector('sp-icon-alert') as IconAlert;
         expect(alertIcon).to.be.not.null;
+    });
+    it('does not dismiss via clicking the underlay :not([dismissable])', async () => {
+        const test = await styledFixture<OverlayTrigger>(destructive());
+        const el = test.querySelector('sp-alert-dialog') as AlertDialog;
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
+        underlay.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+    });
+    it('dispatches `confirm`, `cancel` and `secondary`', async () => {
+        const confirmSpy = spy();
+        const cancelSpy = spy();
+        const secondarySpy = spy();
+        const handleConfirm = (): void => confirmSpy();
+        const handleCancel = (): void => cancelSpy();
+        const handleSecondary = (): void => secondarySpy();
+        const test = await styledFixture<OverlayTrigger>(secondary());
+        const el = test.querySelector('sp-alert-dialog') as AlertDialog;
+        el.addEventListener('confirm', handleConfirm);
+        el.addEventListener('cancel', handleCancel);
+        el.addEventListener('secondary', handleSecondary);
+
+        await elementUpdated(el);
+        expect(confirmSpy.called).to.be.false;
+        expect(cancelSpy.called).to.be.false;
+        expect(secondarySpy.called).to.be.false;
+        const confirmButton = el.shadowRoot.querySelector(
+            '#confirmButton'
+        ) as Button;
+        const cancelButton = el.shadowRoot.querySelector(
+            '#cancelButton'
+        ) as Button;
+        const secondaryButton = el.shadowRoot.querySelector(
+            '#secondaryButton'
+        ) as Button;
+
+        confirmButton.click();
+
+        await elementUpdated(el);
+        expect(confirmSpy.called, 'dispatched `confirm`').to.be.true;
+        expect(secondarySpy.called).to.be.false;
+        expect(cancelSpy.called).to.be.false;
+
+        cancelButton.click();
+
+        await elementUpdated(el);
+        expect(confirmSpy.callCount).to.equal(1);
+        expect(cancelSpy.called, 'dispatched `cancel`').to.be.true;
+        expect(secondarySpy.called).to.be.false;
+
+        secondaryButton.click();
+
+        await elementUpdated(el);
+        expect(confirmSpy.callCount).to.equal(1);
+        expect(cancelSpy.callCount).to.equal(1);
+        expect(secondarySpy.called, 'dispatched `secondary`').to.be.true;
     });
 });
