@@ -19,9 +19,7 @@ import {
 } from '@spectrum-web-components/base';
 import { query } from '@spectrum-web-components/base/src/decorators.js';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
-
 import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import {
@@ -96,12 +94,10 @@ export class AlertDialogBase extends FocusVisiblePolyfillMixin(
 
     protected override render(): TemplateResult {
         return html`
-            <div class="alert-dialog">
-                <div class="grid">
-                    ${this.renderHeading()}
-                    <sp-divider size="m" class="divider"></sp-divider>
-                    ${this.renderContent()} ${this.renderButtons()}
-                </div>
+            <div class="grid">
+                ${this.renderHeading()}
+                <sp-divider size="m" class="divider"></sp-divider>
+                ${this.renderContent()} ${this.renderButtons()}
             </div>
         `;
     }

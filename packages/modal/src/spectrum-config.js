@@ -28,7 +28,10 @@ const config = {
             outPackage: 'modal',
             fileName: 'modal-wrapper',
             components: [
-                converter.classToHost('spectrum-Modal-wrapper'),
+                converter.classToClass(
+                    'spectrum-Modal-wrapper',
+                    'modal-wrapper'
+                ),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('spectrum-Modal--responsive'),
             ],
