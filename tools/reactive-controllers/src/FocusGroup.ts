@@ -154,7 +154,8 @@ export class FocusGroupController<T extends HTMLElement>
             this._listenerScope
         );
     }
-    /*jkbdfjqwhfb   qwk
+    /* In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
+    Then we are checking if the deleted element was the focused one before the deletion if so then we need to proceed else we casn return;
      */
     handleItemMutation(): void {
         if (
