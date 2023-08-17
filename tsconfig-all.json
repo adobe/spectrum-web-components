@@ -81,6 +81,7 @@
         { "path": "packages/top-nav" },
         { "path": "packages/tray" },
         { "path": "packages/underlay" },
+        { "path": "tools/opacity-checkerboard" },
         { "path": "tools/base" },
         { "path": "tools/bundle" },
         { "path": "tools/grid" },
