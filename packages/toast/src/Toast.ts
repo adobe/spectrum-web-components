@@ -22,6 +22,7 @@ import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import toastStyles from './toast.css.js';
 
@@ -50,7 +51,7 @@ export type ToastVariants =
  * @fires close - Announces that the Toast has been closed by the user or by its timeout.
  */
 
-export class Toast extends SpectrumElement {
+export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [toastStyles];
     }
