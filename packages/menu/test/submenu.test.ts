@@ -113,6 +113,8 @@ describe('Submenu', () => {
         );
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
         const rootItem = el.querySelector('.root') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
         expect(rootItem.open).to.be.false;
