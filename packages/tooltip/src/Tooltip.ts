@@ -25,7 +25,6 @@ import type {
     OverlayOpenCloseDetail,
     Placement,
 } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import tooltipStyles from './tooltip.css.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -246,6 +245,7 @@ export class Tooltip extends SpectrumElement {
             </sp-tooltip-openable>
         `;
         if (this.selfManaged) {
+            import('@spectrum-web-components/overlay/sp-overlay.js');
             return html`
                 <sp-overlay
                     ?open=${this.open}
