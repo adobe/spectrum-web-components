@@ -42,6 +42,7 @@ export type ComboboxOption = {
     id: string;
     value: string;
 };
+export const CHANGE_DEBOUNCE_MS = 100;
 
 /**
  * @element sp-combobox
@@ -135,6 +136,11 @@ export class Combobox extends Textfield {
     // { value: "String thing", id: "string1" }
     public override focus(): void {
         this.focusElement.focus();
+        if (this._inputType == 'number') {
+            //this._trackingValue = this.inputValue;
+            this.keyboardFocused = !this.readonly && true;
+            this.addEventListener('wheel', this.onScroll, { passive: false });
+        }
     }
 
     public override click(): void {
@@ -202,6 +208,24 @@ export class Combobox extends Textfield {
         );
         this.indeterminate = false;
         this.focus();
+    }
+
+    protected onScroll(event: WheelEvent): void {
+        event.preventDefault();
+        this.managedInput = true;
+        const direction = event.shiftKey
+            ? event.deltaX / Math.abs(event.deltaX)
+            : event.deltaY / Math.abs(event.deltaY);
+        if (direction !== 0 && !isNaN(direction)) {
+            this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
+            clearTimeout(this.queuedChangeEvent);
+            this.queuedChangeEvent = setTimeout(() => {
+                this.dispatchEvent(
+                    new Event('change', { bubbles: true, composed: true })
+                );
+            }, CHANGE_DEBOUNCE_MS) as unknown as number;
+        }
+        this.managedInput = false;
     }
 
     private increment(factor = 1): void {
@@ -436,6 +460,10 @@ export class Combobox extends Textfield {
             return;
         }
         super.onBlur(event);
+        if (this._inputType == 'number') {
+            this.keyboardFocused = !this.readonly && false;
+            this.removeEventListener('wheel', this.onScroll);
+        }
     }
 
     protected override renderField(): TemplateResult {
