@@ -24,6 +24,7 @@ governing permissions and limitations under the License.
 :host([head-cell]) {
     display: flex;
     block-size: auto;
+    inline-size: auto;
 }
 
 :host([selects-single]) sp-checkbox {
