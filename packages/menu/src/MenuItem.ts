@@ -35,7 +35,6 @@ import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
 import type { Overlay } from 'overlay/src/Overlay.js';
 
 /**
@@ -266,6 +265,7 @@ export class MenuItem extends LikeAnchor(
         if (!this.hasSubmenu) {
             return slot;
         }
+        import('@spectrum-web-components/overlay/sp-overlay.js');
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
