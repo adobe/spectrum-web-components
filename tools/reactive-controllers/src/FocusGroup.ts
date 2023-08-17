@@ -154,11 +154,18 @@ export class FocusGroupController<T extends HTMLElement>
             this._listenerScope
         );
     }
-
+    /*jkbdfjqwhfb   qwk
+     */
     handleItemMutation(): void {
-        const focusedElement = this.elements[this.currentIndex];
+        if (
+            this._currentIndex == -1 ||
+            this.elements.length <= this._elements.length
+        )
+            return;
         this.clearElementCache();
-        if (focusedElement == this.elements[this.currentIndex]) return;
+        const focusedElement = this.elements[this.currentIndex];
+        if (this.elements.includes(focusedElement)) return;
+
         const moveToNextElement = this.currentIndex !== this.elements.length;
         const diff = moveToNextElement ? 1 : -1;
         if (moveToNextElement) {
@@ -179,6 +186,7 @@ export class FocusGroupController<T extends HTMLElement>
         const elements = this.elements;
         if (!elements.length) return;
         let focusElement = elements[this.currentIndex];
+        //console.log(this.currentIndex);
         if (!focusElement || !this.isFocusableElement(focusElement)) {
             this.setCurrentIndexCircularly(1);
             focusElement = elements[this.currentIndex];
