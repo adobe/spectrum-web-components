@@ -266,6 +266,7 @@ export class MenuItem extends LikeAnchor(
             return slot;
         }
         import('@spectrum-web-components/overlay/sp-overlay.js');
+        import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}

@@ -43,8 +43,6 @@ import type {
     MenuItem,
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/tray/sp-tray.js';
-import '@spectrum-web-components/popover/sp-popover.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import {
     IS_MOBILE,
@@ -480,6 +478,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         // @todo: test in mobile
         /* c8 ignore next 11 */
         if (this.isMobile.matches) {
+            import('@spectrum-web-components/tray/sp-tray.js');
             return html`
                 <sp-tray
                     id="popover"
@@ -490,6 +489,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 </sp-tray>
             `;
         }
+        import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-popover
                 id="popover"
