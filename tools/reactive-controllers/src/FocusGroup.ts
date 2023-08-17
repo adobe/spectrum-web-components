@@ -156,7 +156,9 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     handleItemMutation(): void {
+        const focusedElement = this.elements[this.currentIndex];
         this.clearElementCache();
+        if (focusedElement == this.elements[this.currentIndex]) return;
         const moveToNextElement = this.currentIndex !== this.elements.length;
         const diff = moveToNextElement ? 1 : -1;
         if (moveToNextElement) {
