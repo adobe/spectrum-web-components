@@ -36,14 +36,27 @@ export default {
 export const s = (args: Properties): TemplateResult =>
     renderSplitButtonSet(args);
 s.args = { size: ElementSizes.s };
+
+export const sOpen = (args: Properties): TemplateResult => splitbutton(args);
+sOpen.args = { size: ElementSizes.s, open: true };
+
 export const m = (args: Properties): TemplateResult =>
     renderSplitButtonSet(args);
 m.args = { size: ElementSizes.m };
+
+export const mOpen = (args: Properties): TemplateResult => splitbutton(args);
+mOpen.args = { size: ElementSizes.m, open: true };
+
 export const l = (args: Properties): TemplateResult =>
     renderSplitButtonSet(args);
 l.args = { size: ElementSizes.l };
+
+export const lOpen = (args: Properties): TemplateResult => splitbutton(args);
+lOpen.args = { size: ElementSizes.l, open: true };
+
 export const XL = (args: Properties): TemplateResult =>
     renderSplitButtonSet(args);
 XL.args = { size: ElementSizes.xl };
-export const open = (args: Properties): TemplateResult => splitbutton(args);
-open.args = { open: true };
+
+export const XLOpen = (args: Properties): TemplateResult => splitbutton(args);
+XLOpen.args = { size: ElementSizes.xl, open: true };

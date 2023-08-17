@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -20,7 +21,11 @@ import {
 
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import {
+    LitElement,
+    SpectrumElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionGroup } from '@spectrum-web-components/action-group';
@@ -35,6 +40,9 @@ import {
 } from '../../../test/testing-helpers';
 import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/action-group/sp-action-group.js';
+import { controlled } from '../stories/action-group-tooltip.stories.js';
+import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -145,6 +153,49 @@ describe('ActionGroup', () => {
         expect(el.getAttribute('aria-label')).to.equal('Default Group');
         expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('button');
+    });
+    it('applies `static` attribute to its children', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group static="white">
+                    <sp-action-button id="first">First</sp-action-button>
+                    <sp-action-button id="second">Second</sp-action-button>
+                </sp-action-group>
+            `
+        );
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const secondButton = el.querySelector('#second') as ActionButton;
+
+        await elementUpdated(el);
+
+        expect(firstButton.static).to.equal('white');
+        expect(secondButton.static).to.equal('white');
+
+        el.static = undefined;
+
+        await elementUpdated(el);
+
+        expect(firstButton.static).to.be.undefined;
+        expect(secondButton.static).to.be.undefined;
+    });
+    it('manages "label"', async () => {
+        const testLabel = 'Testable action group';
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group label=${testLabel}>
+                    <sp-action-button id="first">First</sp-action-button>
+                    <sp-action-button id="second">Second</sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        expect(el.getAttribute('aria-label')).to.equal(testLabel);
+
+        el.label = '';
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
     });
     it('applies `quiet` attribute to its children', async () => {
         const el = await fixture<ActionGroup>(
@@ -1174,5 +1225,36 @@ describe('ActionGroup', () => {
 
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
+    });
+    it('processes `selects` correctly when mutations occur (because Overlays/Tooltips)', async () => {
+        const test = await fixture<SpectrumElement>(controlled());
+        const actionButtons = [
+            ...test.shadowRoot.querySelectorAll('sp-action-button'),
+        ] as ActionButton[];
+
+        expect(actionButtons[0].selected).to.be.true;
+        expect(actionButtons[1].selected).to.be.false;
+        expect(actionButtons[2].selected).to.be.false;
+
+        const changeSpy = spy();
+        test.addEventListener('change', () => changeSpy());
+        const rect = actionButtons[1].getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await aTimeout(500);
+
+        expect(actionButtons[0].selected).to.be.false;
+        expect(actionButtons[1].selected).to.be.true;
+        expect(actionButtons[2].selected).to.be.false;
     });
 });

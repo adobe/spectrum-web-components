@@ -15,6 +15,7 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
 @import '@spectrum-web-components/styles/typography.css';
+@import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
 
 @import '@spectrum-web-components/styles/scale-medium.css' screen and
         (min-width: 701px) and (min-height: 701px),
@@ -280,15 +281,6 @@ sp-sidenav:not(:defined) {
 sp-sidenav-item:not([tabindex]) {
     display: list-item;
     list-style-type: none;
-    margin: var(
-            --spectrum-sidenav-item-gap,
-            var(--spectrum-global-dimension-size-50)
-        )
-        0;
-}
-
-docs-page > sp-sidenav {
-    content-visibility: auto;
 }
 
 docs-page > sp-sidenav-item {

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-picker.css';
+@import url('./spectrum-picker.css');
 
 :host {
     display: inline-flex;
@@ -72,6 +72,10 @@ sp-popover {
     );
 }
 
+#label.visually-hidden ~ .picker {
+    margin-inline-start: auto;
+}
+
 :host([focused]:not([quiet])) #button .picker {
     /* .spectrum-Picker-trigger.focus-ring .spectrum-Picker-icon */
     color: var(
@@ -91,8 +95,4 @@ sp-popover {
     position: absolute;
     width: 1px;
     white-space: nowrap;
-}
-
-#label.visually-hidden ~ .picker {
-    margin-inline-start: auto;
 }

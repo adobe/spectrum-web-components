@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-checkmark.css';
-@import './spectrum-chevron.css';
-@import './spectrum-menu-item.css';
-@import './spectrum-itemLabel.css';
+@import url('./spectrum-checkmark.css');
+@import url('./spectrum-chevron.css');
+@import url('./spectrum-menu-item.css');
+@import url('./spectrum-itemLabel.css');
 
 :host([hidden]) {
     display: none;
@@ -28,18 +28,6 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
-::slotted([slot='value']) {
-    align-self: start;
-}
-
-:host([dir='ltr']) ::slotted([slot='value']) {
-    margin-left: var(--spectrum-listitem-texticon-icon-gap);
-}
-
-:host([dir='rtl']) ::slotted([slot='value']) {
-    margin-right: var(--spectrum-listitem-texticon-icon-gap);
-}
-
 :host([dir='ltr']) [icon-only]::slotted(:last-of-type) {
     margin-right: auto;
 }
@@ -48,31 +36,12 @@ governing permissions and limitations under the License.
     margin-left: auto;
 }
 
-:host([dir='ltr']) ::slotted([slot='icon']) {
-    /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
-   * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-right: var(--spectrum-listitem-texticon-icon-gap);
-}
-
-:host([dir='rtl']) ::slotted([slot='icon']) {
-    /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
-   * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-left: var(--spectrum-listitem-texticon-icon-gap);
-}
-
-:host([dir='rtl']) slot[name='icon'] + #label {
-    /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
-   * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-right: 0;
-}
-
-:host([dir='ltr']) slot[name='icon'] + #label {
-    /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
-   * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-left: 0;
-}
-
-:host([dir='rtl']) .chevron {
-    padding-left: var(--spectrum-listitem-texticon-icon-gap);
-    padding-right: 0;
+/* N: Manually adding this selector because I can't use this selector in 
+** spectrum-menu.css without touching all the other `.spectrum-Menu-item`s in
+** that file which I don't want to surface 
+*/
+@media (forced-colors: active) {
+    :host {
+        forced-color-adjust: none;
+    }
 }

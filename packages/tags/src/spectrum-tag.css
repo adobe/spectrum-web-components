@@ -1006,7 +1006,7 @@ governing permissions and limitations under the License.
         --highcontrast-tag-border-color: ButtonText;
         --highcontrast-tag-border-color-hover: ButtonText;
         --highcontrast-tag-border-color-active: ButtonText;
-        --highcontrast-tag-border-color-focus: ButtonText;
+        --highcontrast-tag-border-color-focus: Highlight;
         --highcontrast-tag-background-color: ButtonFace;
         --highcontrast-tag-background-color-hover: ButtonFace;
         --highcontrast-tag-background-color-active: ButtonFace;
@@ -1015,6 +1015,7 @@ governing permissions and limitations under the License.
         --highcontrast-tag-content-color-hover: ButtonText;
         --highcontrast-tag-content-color-active: ButtonText;
         --highcontrast-tag-content-color-focus: ButtonText;
+        --highcontrast-tag-focus-ring-color: Highlight;
         forced-color-adjust: none;
     }
     :host([selected]) {

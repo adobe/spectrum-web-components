@@ -47,6 +47,18 @@ governing permissions and limitations under the License.
     );
     --spectrum-radio-border-width: var(--spectrum-border-width-200);
     --spectrum-radio-button-background-color: var(--spectrum-gray-75);
+    --spectrum-radio-button-checked-border-color-default: var(
+        --spectrum-neutral-background-color-selected-default
+    );
+    --spectrum-radio-button-checked-border-color-hover: var(
+        --spectrum-neutral-background-color-selected-hover
+    );
+    --spectrum-radio-button-checked-border-color-down: var(
+        --spectrum-neutral-background-color-selected-down
+    );
+    --spectrum-radio-button-checked-border-color-focus: var(
+        --spectrum-neutral-background-color-selected-focus
+    );
     --spectrum-radio-line-height: var(--spectrum-line-height-100);
     --spectrum-radio-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-radio-height: var(--spectrum-component-height-100);
@@ -628,18 +640,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-radio-button-border-color-focus: var(
         --system-spectrum-radio-button-border-color-focus
-    );
-    --spectrum-radio-button-checked-border-color-default: var(
-        --system-spectrum-radio-button-checked-border-color-default
-    );
-    --spectrum-radio-button-checked-border-color-hover: var(
-        --system-spectrum-radio-button-checked-border-color-hover
-    );
-    --spectrum-radio-button-checked-border-color-down: var(
-        --system-spectrum-radio-button-checked-border-color-down
-    );
-    --spectrum-radio-button-checked-border-color-focus: var(
-        --system-spectrum-radio-button-checked-border-color-focus
     );
 }
 :host([emphasized]) {

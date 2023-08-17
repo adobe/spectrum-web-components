@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-progress-circle.css';
+@import url('./spectrum-progress-circle.css');
 
 :host {
     --spectrum-progresscircle-m-over-background-track-fill-color: var(

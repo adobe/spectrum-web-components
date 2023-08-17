@@ -18,7 +18,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import type { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
@@ -40,9 +43,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         return [styles];
     }
 
-    public set buttons(tabs: ActionButton[]) {
-        if (tabs === this.buttons) return;
-        this._buttons = tabs;
+    public set buttons(buttons: ActionButton[]) {
+        /* c8 ignore next 1 */
+        if (buttons === this.buttons) return;
+        this._buttons = buttons;
         this.rovingTabindexController.clearElementCache();
     }
 
@@ -65,6 +69,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             callback: () => {
                 this.manageButtons();
             },
+            skipInitial: true,
         });
     }
 
@@ -128,6 +133,9 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         return this._selected;
     }
 
+    @query('slot')
+    slotElement!: HTMLSlotElement;
+
     private dispatchChange(old: string[]): void {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -146,6 +154,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     }
 
     private setSelected(selected: string[], announce?: boolean): void {
+        /* c8 ignore next 1 */
         if (selected === this.selected) return;
 
         const old = this.selected;
@@ -167,7 +176,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             el.selected = false;
             el.tabIndex = -1;
             el.setAttribute(
-                !this.selects ? 'aria-pressed' : 'aria-checked',
+                this.selects ? 'aria-checked' : /* c8 ignore */ 'aria-pressed',
                 'false'
             );
         });
@@ -363,17 +372,21 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             if (this.static || changes?.get('static')) {
                 button.static = this.static;
             }
-            button.selected = this.selected.includes(button.value);
+            if (this.selects || !this.hasManaged) {
+                button.selected = this.selected.includes(button.value);
+            }
             if (this.size) {
                 button.size = this.size;
             }
         });
     }
 
+    private hasManaged = false;
+
     private manageButtons = (): void => {
-        const slot = this.shadowRoot.querySelector('slot');
-        if (!slot) return;
-        const assignedElements = slot.assignedElements({ flatten: true });
+        const assignedElements = this.slotElement.assignedElements({
+            flatten: true,
+        });
         const buttons = assignedElements.reduce((acc: unknown[], el) => {
             if (el.matches(this._buttonSelector)) {
                 acc.push(el);
@@ -386,15 +399,18 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             return acc;
         }, []);
         this.buttons = buttons as ActionButton[];
-        // <selected> element merges selected so following paradigm here
-        const currentlySelectedButtons: string[] = [];
-        this.buttons.forEach((button: ActionButton) => {
-            if (button.selected) {
-                currentlySelectedButtons.push(button.value);
-            }
-        });
-        this.setSelected(this.selected.concat(currentlySelectedButtons));
+        if (this.selects || !this.hasManaged) {
+            // <select> element merges selected so following paradigm here
+            const currentlySelectedButtons: string[] = [];
+            this.buttons.forEach((button: ActionButton) => {
+                if (button.selected) {
+                    currentlySelectedButtons.push(button.value);
+                }
+            });
+            this.setSelected(this.selected.concat(currentlySelectedButtons));
+        }
         this.manageChildren();
         this.manageSelects();
+        this.hasManaged = true;
     };
 }
