@@ -672,42 +672,51 @@ class DefinedOverlayReady extends HTMLElement {
         });
     }
 
-    overlay!: OverlayTrigger;
-    popover!: PopoverContent;
+    overlayElement!: OverlayTrigger;
+    popoverElement!: PopoverContent;
 
     async setup(): Promise<void> {
         await nextFrame();
         await nextFrame();
 
-        this.overlay = document.querySelector(
+        this.overlayElement = document.querySelector(
             `overlay-trigger`
         ) as OverlayTrigger;
         const button = document.querySelector(
             `[slot="trigger"]`
         ) as HTMLButtonElement;
-        this.overlay.addEventListener('sp-opened', this.handleTriggerOpened);
+        this.overlayElement.addEventListener(
+            'sp-opened',
+            this.handleTriggerOpened
+        );
         await nextFrame();
         await nextFrame();
         button.click();
     }
 
     handleTriggerOpened = async (): Promise<void> => {
-        this.overlay.removeEventListener('sp-opened', this.handleTriggerOpened);
+        this.overlayElement.removeEventListener(
+            'sp-opened',
+            this.handleTriggerOpened
+        );
         await nextFrame();
         await nextFrame();
         await nextFrame();
         await nextFrame();
 
-        this.popover = document.querySelector(
+        this.popoverElement = document.querySelector(
             'popover-content'
         ) as PopoverContent;
-        if (!this.popover) {
+        if (!this.popoverElement) {
             return;
         }
-        this.popover.addEventListener('sp-opened', this.handlePopoverOpen);
+        this.popoverElement.addEventListener(
+            'sp-opened',
+            this.handlePopoverOpen
+        );
         await nextFrame();
         await nextFrame();
-        this.popover.button.click();
+        this.popoverElement.button.click();
     };
 
     handlePopoverOpen = async (): Promise<void> => {
@@ -717,8 +726,14 @@ class DefinedOverlayReady extends HTMLElement {
     };
 
     disconnectedCallback(): void {
-        this.overlay.removeEventListener('sp-opened', this.handleTriggerOpened);
-        this.popover.removeEventListener('sp-opened', this.handlePopoverOpen);
+        this.overlayElement.removeEventListener(
+            'sp-opened',
+            this.handleTriggerOpened
+        );
+        this.popoverElement.removeEventListener(
+            'sp-opened',
+            this.handlePopoverOpen
+        );
     }
 
     private readyPromise: Promise<boolean> = Promise.resolve(false);
