@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-action-group.css';
+@import url('./spectrum-action-group.css');
 
 :host([size='xs']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
