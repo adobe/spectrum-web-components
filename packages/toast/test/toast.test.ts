@@ -308,4 +308,19 @@ describe('Toast', () => {
         expect(el.open).to.be.true;
         expect(closeSpy.callCount).to.equal(1);
     });
+    it('sp close button renders with static="white"', async () => {
+        const el = await fixture<Toast>(
+            html`
+                <sp-toast open>Help text.</sp-toast>
+            `
+        );
+        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+        const closeButton = renderRoot.querySelector(
+            'sp-close-button'
+        ) as CloseButton;
+
+        expect(closeButton).to.exist;
+
+        expect(closeButton.getAttribute('static')).to.equal('white');
+    });
 });
