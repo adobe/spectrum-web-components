@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-button-group.css';
+@import url('./spectrum-button-group.css');
 
 :host([vertical]) ::slotted(sp-action-button) {
     --spectrum-actionbutton-label-flex-grow: 1;

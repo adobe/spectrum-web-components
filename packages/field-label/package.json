@@ -64,7 +64,7 @@
         "@spectrum-web-components/shared": "^0.35.0"
     },
     "devDependencies": {
-        "@spectrum-css/fieldlabel": "^7.0.16"
+        "@spectrum-css/fieldlabel": "^7.0.23"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

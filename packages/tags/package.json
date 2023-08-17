@@ -73,7 +73,7 @@
     },
     "devDependencies": {
         "@spectrum-css/tag": "^6.0.0",
-        "@spectrum-css/taggroup": "^3.3.55"
+        "@spectrum-css/taggroup": "^3.3.60"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

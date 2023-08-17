@@ -30,7 +30,19 @@ governing permissions and limitations under the License.
     --spectrum-switch-background-color: var(--spectrum-gray-300);
     --spectrum-switch-background-color-disabled: var(--spectrum-gray-300);
     --spectrum-switch-background-color-selected-disabled: var(
-        --spectrum-gray-400
+        --spectrum-disabled-content-color
+    );
+    --spectrum-switch-background-color-selected-default: var(
+        --spectrum-neutral-background-color-selected-default
+    );
+    --spectrum-switch-background-color-selected-hover: var(
+        --spectrum-neutral-background-color-selected-hover
+    );
+    --spectrum-switch-background-color-selected-down: var(
+        --spectrum-neutral-background-color-selected-down
+    );
+    --spectrum-switch-background-color-selected-focus: var(
+        --spectrum-neutral-background-color-selected-key-focus
     );
     --spectrum-switch-focus-indicator-thickness: var(
         --mod-focus-indicator-thickness,
@@ -40,7 +52,9 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-color
     );
     --spectrum-switch-handle-background-color: var(--spectrum-gray-75);
-    --spectrum-switch-handle-border-color-disabled: var(--spectrum-gray-400);
+    --spectrum-switch-handle-border-color-disabled: var(
+        --spectrum-disabled-content-color
+    );
 }
 :host([disabled]) {
     --spectrum-switch-label-color-default: var(
@@ -737,18 +751,6 @@ governing permissions and limitations under the License.
     }
 }
 :host {
-    --spectrum-switch-background-color-selected-default: var(
-        --system-spectrum-switch-background-color-selected-default
-    );
-    --spectrum-switch-background-color-selected-hover: var(
-        --system-spectrum-switch-background-color-selected-hover
-    );
-    --spectrum-switch-background-color-selected-down: var(
-        --system-spectrum-switch-background-color-selected-down
-    );
-    --spectrum-switch-background-color-selected-focus: var(
-        --system-spectrum-switch-background-color-selected-focus
-    );
     --spectrum-switch-handle-border-color-default: var(
         --system-spectrum-switch-handle-border-color-default
     );

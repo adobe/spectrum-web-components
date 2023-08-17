@@ -119,6 +119,9 @@ governing permissions and limitations under the License.
     --spectrum-tooltip-content-color: var(--spectrum-white);
     --spectrum-tooltip-tip-inline-size: var(--spectrum-tooltip-tip-width);
     --spectrum-tooltip-tip-block-size: var(--spectrum-tooltip-tip-height);
+    --spectrum-tooltip-tip-square-size: var(--spectrum-tooltip-tip-inline-size);
+    --spectrum-tooltip-tip-height-percentage: 50%;
+    --spectrum-tooltip-tip-antialiasing-inset: 0.5px;
     --spectrum-tooltip-pointer-corner-spacing: var(
         --spectrum-corner-radius-100
     );
@@ -165,6 +168,7 @@ governing permissions and limitations under the License.
         --mod-tooltip-font-weight,
         var(--spectrum-tooltip-font-weight)
     );
+    inline-size: auto;
     line-height: var(
         --mod-tooltip-line-height,
         var(--spectrum-tooltip-line-height)
@@ -180,7 +184,6 @@ governing permissions and limitations under the License.
     );
     position: relative;
     vertical-align: top;
-    width: auto;
     word-break: break-word;
 }
 :host(:lang(ja)),
@@ -234,19 +237,41 @@ p {
             var(--spectrum-tooltip-background-color-default)
         )
     );
-    clip-path: polygon(0 -5%, 50% 100%, 100% -5%);
-    height: var(
-        --mod-tooltip-tip-block-size,
-        var(--spectrum-tooltip-tip-block-size)
+    block-size: var(
+        --mod-tooltip-tip-square-size,
+        var(--spectrum-tooltip-tip-square-size)
+    );
+    clip-path: polygon(
+        0
+            calc(
+                0% -
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            ),
+        50%
+            var(
+                --mod-tooltip-tip-height-percentage,
+                var(--spectrum-tooltip-tip-height-percentage)
+            ),
+        100%
+            calc(
+                0% -
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+    );
+    inline-size: var(
+        --mod-tooltip-tip-square-size,
+        var(--spectrum-tooltip-tip-square-size)
     );
     left: 50%;
     position: absolute;
     top: 100%;
     transform: translateX(-50%);
-    width: var(
-        --mod-tooltip-tip-inline-size,
-        var(--spectrum-tooltip-tip-inline-size)
-    );
 }
 :host([variant='info']) #tip {
     background-color: var(
@@ -288,7 +313,32 @@ p {
 .spectrum-Tooltip--bottom-start #tip,
 :host([placement*='bottom']) #tip {
     bottom: 100%;
-    clip-path: polygon(50% 0, 0 105%, 100% 105%);
+    clip-path: polygon(
+        50%
+            calc(
+                100% -
+                    var(
+                        --mod-tooltip-tip-height-percentage,
+                        var(--spectrum-tooltip-tip-height-percentage)
+                    )
+            ),
+        0
+            calc(
+                100% +
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            ),
+        100%
+            calc(
+                100% +
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+    );
     top: auto;
 }
 .spectrum-Tooltip--bottom-end #tip,
@@ -360,16 +410,8 @@ p {
 .spectrum-Tooltip--start-top #tip,
 :host([placement*='left']) #tip,
 :host([placement*='right']) #tip {
-    height: var(
-        --mod-tooltip-tip-inline-size,
-        var(--spectrum-tooltip-tip-inline-size)
-    );
     top: 50%;
     transform: translateY(-50%);
-    width: var(
-        --mod-tooltip-tip-block-size,
-        var(--spectrum-tooltip-tip-block-size)
-    );
 }
 .spectrum-Tooltip--end-bottom #tip,
 .spectrum-Tooltip--end-top #tip,
@@ -388,13 +430,33 @@ p {
 .spectrum-Tooltip--right-bottom #tip,
 .spectrum-Tooltip--right-top #tip,
 :host([placement*='right']) #tip {
-    clip-path: polygon(0 50%, 105% 100%, 105% 0);
-    left: calc(
-        var(
-                --mod-tooltip-tip-block-size,
-                var(--spectrum-tooltip-tip-block-size)
-            ) * -1
+    clip-path: polygon(
+        calc(
+                100% -
+                    var(
+                        --mod-tooltip-tip-height-percentage,
+                        var(--spectrum-tooltip-tip-height-percentage)
+                    )
+            )
+            50%,
+        calc(
+                100% +
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            100%,
+        calc(
+                100% +
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            0
     );
+    left: auto;
     right: 100%;
 }
 .spectrum-Tooltip--left-bottom #tip,
@@ -403,7 +465,29 @@ p {
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip,
 :host([placement*='left']) #tip {
-    clip-path: polygon(-5% 0, -5% 100%, 100% 50%);
+    clip-path: polygon(
+        calc(
+                0% -
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            0,
+        calc(
+                0% -
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            100%,
+        var(
+                --mod-tooltip-tip-height-percentage,
+                var(--spectrum-tooltip-tip-height-percentage)
+            )
+            50%
+    );
     left: 100%;
 }
 .spectrum-Tooltip--end-top #tip,
@@ -427,31 +511,72 @@ p {
 :host([dir='rtl']) .spectrum-Tooltip--end #tip,
 :host([dir='rtl']) .spectrum-Tooltip--end-bottom #tip,
 :host([dir='rtl']) .spectrum-Tooltip--end-top #tip {
-    clip-path: polygon(-5% 0, -5% 100%, 100% 50%);
-    left: 100%;
-    right: calc(
+    clip-path: polygon(
+        calc(
+                0% -
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            0,
+        calc(
+                0% -
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            100%,
         var(
-                --mod-tooltip-tip-block-size,
-                var(--spectrum-tooltip-tip-block-size)
-            ) * -1
+                --mod-tooltip-tip-height-percentage,
+                var(--spectrum-tooltip-tip-height-percentage)
+            )
+            50%
     );
+    left: 100%;
+    right: auto;
 }
 :host([dir='rtl']) .spectrum-Tooltip--start #tip,
 :host([dir='rtl']) .spectrum-Tooltip--start-bottom #tip,
 :host([dir='rtl']) .spectrum-Tooltip--start-top #tip {
-    clip-path: polygon(0 50%, 105% 100%, 105% 0);
-    left: calc(
+    clip-path: polygon(
         var(
-                --mod-tooltip-tip-block-size,
-                var(--spectrum-tooltip-tip-block-size)
-            ) * -1
+                --mod-tooltip-tip-height-percentage,
+                var(--spectrum-tooltip-tip-height-percentage)
+            )
+            50%,
+        calc(
+                100% +
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            100%,
+        calc(
+                100% +
+                    var(
+                        --mod-tooltip-tip-antialiasing-inset,
+                        var(--spectrum-tooltip-tip-antialiasing-inset)
+                    )
+            )
+            0
     );
+    left: auto;
     right: 100%;
 }
 ::slotted([slot='icon']) {
     align-self: flex-start;
+    block-size: var(
+        --mod-tooltip-icon-height,
+        var(--spectrum-tooltip-icon-height)
+    );
     flex-shrink: 0;
-    height: var(--mod-tooltip-icon-height, var(--spectrum-tooltip-icon-height));
+    inline-size: var(
+        --mod-tooltip-icon-width,
+        var(--spectrum-tooltip-icon-width)
+    );
     margin-block-start: var(
         --mod-tooltip-icon-spacing-block-start,
         var(--spectrum-tooltip-icon-spacing-block-start)
@@ -470,7 +595,6 @@ p {
                 var(--spectrum-tooltip-spacing-inline)
             )
     );
-    width: var(--mod-tooltip-icon-width, var(--spectrum-tooltip-icon-width));
 }
 #label {
     line-height: var(
