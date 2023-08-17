@@ -94,6 +94,7 @@ When `selects="single"`, the `<sp-table>` will manage a _single_ selection in th
 
 ```html
 <sp-table
+    emphasized
     size="m"
     selects="single"
     selected='["row1"]'
@@ -141,6 +142,7 @@ When `selects="multiple"`, the `<sp-table>` will manage a selection in the array
 
 ```html
 <sp-table
+    emphasized
     size="m"
     style="height: 200px"
     selects="multiple"
@@ -177,6 +179,69 @@ When `selects="multiple"`, the `<sp-table>` will manage a selection in the array
             <sp-table-cell>Row Item Echo</sp-table-cell>
             <sp-table-cell>Row Item Echo</sp-table-cell>
             <sp-table-cell>Row Item Echo</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+## Emphasized and Non-Emphasized
+
+Use the `emphasized` attribute to add priority to the information that is delivered within your `<table>` element. In particular, this affects the appearance of selected rows, and will set the emphasized style for the checkboxes within `sp-table-checkbox-cell`.
+Leaving off the `emphasized` attribute will display the non-emphasized colors.
+
+### Emphasized
+
+```html
+<sp-table emphasized size="m" selects="multiple" selected='["row1"]'>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+### Non-emphasized
+
+```html
+<sp-table size="m" selects="multiple" selected='["row1"]'>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
         </sp-table-row>
     </sp-table-body>
 </sp-table>
@@ -306,6 +371,7 @@ By default the `selected` property will surface an array of item indexes that ar
 
 ```html-live
 <sp-table
+    emphasized
     size="m"
     id="table-item-value-demo"
     style="height: 200px"
@@ -404,6 +470,7 @@ All values in the item array are assumed to be homogenous by default. This means
 
 ```html-live
 <sp-table
+    emphasized
     size="m"
     id="table-row-type-demo"
     style="height: 200px"
@@ -513,6 +580,7 @@ For each table column you want to sort, use the `sortable` attribute in its resp
 
 ```html-live
 <sp-table
+    emphasized
     size="m"
     id="sorted-virtualized-table"
     style="height: 200px"

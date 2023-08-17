@@ -53,7 +53,7 @@ export default {
 
 export const elements = (): TemplateResult => {
     return html`
-        <sp-table size="m">
+        <sp-table emphasized size="m">
             <sp-table-head>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -92,7 +92,7 @@ export const elements = (): TemplateResult => {
 
 export const small = (): TemplateResult => {
     return html`
-        <sp-table size="s">
+        <sp-table emphasized size="s">
             <sp-table-head>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -132,6 +132,7 @@ export const small = (): TemplateResult => {
 export const selectsSingle = (): TemplateResult => {
     return html`
         <sp-table
+            emphasized
             size="m"
             selects="single"
             .selected=${['row1']}
@@ -178,7 +179,47 @@ export const selectsSingle = (): TemplateResult => {
         <div>Selected: ["row1"]</div>
     `;
 };
+
 export const noSelectsSpecified = (): TemplateResult => {
+    return html`
+        <sp-table emphasized size="m" .selected=${['row1', 'row2']}>
+            <sp-table-head>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 120px">
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+    `;
+};
+
+export const nonEmphasized = (): TemplateResult => {
     return html`
         <sp-table size="m" .selected=${['row1', 'row2']}>
             <sp-table-head>
@@ -220,6 +261,7 @@ export const noSelectsSpecified = (): TemplateResult => {
 export const selectsMultiple = (): TemplateResult => {
     return html`
         <sp-table
+            emphasized
             size="m"
             selects="multiple"
             .selected=${['row1', 'row2']}

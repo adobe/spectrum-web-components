@@ -148,7 +148,7 @@ export class Table extends SizedMixin(SpectrumElement, {
      * Deliver the Table with additional visual emphasis to selected rows.
      */
     @property({ type: Boolean, reflect: true })
-    public emphasized = true;
+    public emphasized = false;
 
     private tableBody?: TableBody;
 
@@ -220,6 +220,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     protected manageSelects(): void {
         const checkboxes = this.querySelectorAll('sp-table-checkbox-cell');
         const checkbox = document.createElement('sp-table-checkbox-cell');
+
         if (!!this.selects) {
             let allSelected = false;
             if (this.isVirtualized) {
@@ -229,9 +230,11 @@ export class Table extends SizedMixin(SpectrumElement, {
             } else {
                 this.tableRows.forEach((row) => {
                     row.selected = this.selectedSet.has(row.value);
+                    // Create and initialize checkboxes in all rows within the table body.
                     if (!row.querySelector(':scope > sp-table-checkbox-cell')) {
                         const clonedCheckbox =
                             checkbox.cloneNode() as TableCheckboxCell;
+                        checkbox.emphasized = this.emphasized;
                         row.insertAdjacentElement('afterbegin', clonedCheckbox);
                         checkbox.checked = row.selected;
                     }
@@ -239,11 +242,13 @@ export class Table extends SizedMixin(SpectrumElement, {
                 allSelected = this.selected.length === this.tableRows.length;
             }
 
+            // Create and initialize table head checkbox cell.
             if (!this.tableHeadCheckboxCell) {
                 this.tableHeadCheckboxCell = document.createElement(
                     'sp-table-checkbox-cell'
                 ) as TableCheckboxCell;
                 this.tableHeadCheckboxCell.headCell = true;
+                this.tableHeadCheckboxCell.emphasized = this.emphasized;
                 this.tableHead.insertAdjacentElement(
                     'afterbegin',
                     this.tableHeadCheckboxCell
@@ -251,6 +256,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             }
             this.manageHeadCheckbox(allSelected);
         } else {
+            // Remove all checkbox cells.
             checkboxes.forEach((box) => {
                 box.remove();
             });
@@ -305,28 +311,32 @@ export class Table extends SizedMixin(SpectrumElement, {
 
     protected manageCheckboxes(): void {
         if (!!this.selects) {
+            // Create and initialize table head checkbox cell.
             this.tableHeadCheckboxCell = document.createElement(
                 'sp-table-checkbox-cell'
             ) as TableCheckboxCell;
             this.tableHeadCheckboxCell.headCell = true;
+            this.tableHeadCheckboxCell.emphasized = this.emphasized;
+
             const allSelected = this.selected.length === this.tableRows.length;
-
             this.manageHeadCheckbox(allSelected);
-
             this.tableHead.insertAdjacentElement(
                 'afterbegin',
                 this.tableHeadCheckboxCell
             );
 
+            // Create and initialize checkboxes in all rows within the table body.
             this.tableRows.forEach((row) => {
                 const checkbox = document.createElement(
                     'sp-table-checkbox-cell'
                 );
+                checkbox.emphasized = this.emphasized;
                 row.insertAdjacentElement('afterbegin', checkbox);
                 row.selected = this.selectedSet.has(row.value);
                 checkbox.checked = row.selected;
             });
         } else {
+            // Remove all checkbox cells.
             this.tableHead.querySelector('sp-table-checkbox-cell')?.remove();
             this.tableRows.forEach((row) => {
                 row.checkboxCells[0]?.remove();
@@ -341,6 +351,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
 
         this.tableHeadCheckboxCell.selectsSingle = this.selects === 'single';
+        this.tableHeadCheckboxCell.emphasized = this.emphasized;
         this.tableHeadCheckboxCell.checked = allSelected;
         this.tableHeadCheckboxCell.indeterminate =
             this.selected.length > 0 && !allSelected;

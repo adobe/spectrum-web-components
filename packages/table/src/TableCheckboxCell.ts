@@ -56,6 +56,9 @@ export class TableCheckboxCell extends SpectrumElement {
     @property({ type: Boolean, reflect: true, attribute: 'selects-single' })
     public selectsSingle = false;
 
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
     public override click(): void {
         this.checkbox.click();
     }
@@ -66,6 +69,7 @@ export class TableCheckboxCell extends SpectrumElement {
                 ?checked=${this.checked}
                 ?indeterminate=${this.indeterminate}
                 ?disabled=${this.disabled}
+                ?emphasized=${this.emphasized}
                 aria-hidden=${ifDefined(this.selectsSingle)}
                 class="checkbox"
             ></sp-checkbox>
