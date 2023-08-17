@@ -17,6 +17,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
@@ -68,6 +69,10 @@ describe('Tooltip', () => {
         const el = button.querySelector('sp-tooltip') as Tooltip;
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         await expect(button).to.be.accessible();
 
         const opened = oneEvent(button, 'sp-opened');
