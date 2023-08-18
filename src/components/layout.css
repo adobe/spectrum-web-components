@@ -251,11 +251,17 @@ aside {
     background-color: var(--spectrum-global-color-gray-75);
     width: var(--spectrum-global-dimension-size-2400);
     transition: transform
-        var(
-            --spectrum-dialog-confirm-background-entry-animation-duration,
-            var(--spectrum-global-animation-duration-600)
-        )
-        cubic-bezier(0, 0, 0.4, 1);
+            var(
+                --spectrum-dialog-confirm-background-entry-animation-duration,
+                var(--spectrum-global-animation-duration-600)
+            )
+            cubic-bezier(0, 0, 0.4, 1),
+        visibility 0s linear
+            var(
+                --spectrum-dialog-confirm-background-entry-animation-duration,
+                var(--spectrum-global-animation-duration-600)
+            );
+    visibility: visible;
 }
 
 aside .manage-theme {
@@ -281,6 +287,21 @@ aside .theme-control {
     margin: 0 0 var(--spectrum-spacing-300);
 }
 
+aside.show {
+    transition-delay: 0ms, 0ms;
+    visibility: visible;
+}
+
 aside:not(.show) {
     transform: translateX(100%);
+    visibility: hidden;
+}
+
+:host([dir='rtl']) aside {
+    left: 0;
+    right: auto;
+}
+
+:host([dir='rtl']) aside:not(.show) {
+    transform: translateX(-100%);
 }
