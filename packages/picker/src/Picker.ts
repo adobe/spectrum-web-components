@@ -552,7 +552,6 @@ export class PickerBase extends SizedMixin(Focusable) {
                 .selected=${this.value ? [this.value] : []}
                 size=${this.size}
                 @sp-menu-item-added-or-updated=${this.shouldManageSelection}
-                tabindex=${ifDefined(!this.open ? -1 : undefined)}
             >
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>
