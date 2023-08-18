@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-bar",
-    "version": "0.35.0",
+    "version": "0.36.0",
     "publishConfig": {
         "access": "public"
     },
@@ -57,10 +57,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-group": "^0.35.0",
-        "@spectrum-web-components/base": "^0.35.0",
-        "@spectrum-web-components/button": "^0.35.0",
-        "@spectrum-web-components/popover": "^0.35.0"
+        "@spectrum-web-components/action-group": "^0.36.0",
+        "@spectrum-web-components/base": "^0.36.0",
+        "@spectrum-web-components/button": "^0.36.0",
+        "@spectrum-web-components/popover": "^0.36.0"
     },
     "devDependencies": {
         "@spectrum-css/actionbar": "^6.0.59"

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/opacity-checkerboard",
-    "version": "0.0.1",
+    "version": "0.36.0",
     "publishConfig": {
         "access": "public"
     },
@@ -41,7 +41,6 @@
         "lit-element",
         "lit-html"
     ],
-    "dependencies": {},
     "devDependencies": {
         "@spectrum-css/opacitycheckerboard": "^1.0.0"
     },

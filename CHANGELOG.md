@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   **action-group:** separate first selection management from later selection management ([783b206](https://github.com/adobe/spectrum-web-components/commit/783b2067be23bf82eb222a361e5c899d89f05005))
+-   **action-menu:** add a slot for Tooltip content ([#3488](https://github.com/adobe/spectrum-web-components/issues/3488)) ([23cef3a](https://github.com/adobe/spectrum-web-components/commit/23cef3ad0393055a9285a0292667e657bd813c59))
+-   added default focus in focus group ([1abe7e7](https://github.com/adobe/spectrum-web-components/commit/1abe7e7ecc74d9f1323474505e7a182b9aefda1b))
+-   added default focus in focus group ([cd59f18](https://github.com/adobe/spectrum-web-components/commit/cd59f180afacaa719c01a8001bf8a656b4bbcb80))
+-   added Mutation Observer in the tags workflow ([3af1861](https://github.com/adobe/spectrum-web-components/commit/3af1861a09aa7eac6cd4eb0dbb7cce8ab057efec))
+-   close button static white ([d324017](https://github.com/adobe/spectrum-web-components/commit/d324017a5abcacf669ed56d9a878d9ae707b5c8e))
+-   parentNode declaration ([c45fdc3](https://github.com/adobe/spectrum-web-components/commit/c45fdc364fa6142fa7847f9b21179787880702dd))
+-   **picker-button:** include missing dependency on @spectrum-web-components/button ([#3515](https://github.com/adobe/spectrum-web-components/issues/3515)) ([ed44c2b](https://github.com/adobe/spectrum-web-components/commit/ed44c2bd5c729d8a563d9bd25e5d61f58ba1d074))
+-   **radio:** aria-disabled misspelling ([b3fbd25](https://github.com/adobe/spectrum-web-components/commit/b3fbd25cfa839ec9d4fc20b256755cfb538779a6)), closes [adobe/spectrum-web-components#3526](https://github.com/adobe/spectrum-web-components/issues/3526)
+-   **reactive-controllers:** functionality debugged ([f98013b](https://github.com/adobe/spectrum-web-components/commit/f98013bceced7e4d2759c698cdff7f9fe1d43c68))
+-   **reactive-controllers:** handleItemMutation ([d0e32a2](https://github.com/adobe/spectrum-web-components/commit/d0e32a255483c605bbbfc804f1c56c401b00ffe9))
+-   removed disabled property check ([816732f](https://github.com/adobe/spectrum-web-components/commit/816732f03fb271dbefe3ac7a0412cd5ec6479635))
+-   removed mutation controller from tags and added to focusgroup ([aaa1bc0](https://github.com/adobe/spectrum-web-components/commit/aaa1bc04437585a0d8f30e885e076868ecb1defa))
+-   **tags:** corner cases handled ([8ec6b6a](https://github.com/adobe/spectrum-web-components/commit/8ec6b6a0288629e1006b5d1c3ee17d162dd97d23))
+-   **tags:** delete functionality working ([60e6c2e](https://github.com/adobe/spectrum-web-components/commit/60e6c2e92e30c833d572d34ad6d41e94568a40d6))
+-   **tags:** documented the function ([f97c7a7](https://github.com/adobe/spectrum-web-components/commit/f97c7a77eb1dce32f8ec3202fe839dd0a9f0fdc8))
+-   **tags:** handled corner cases ([55a95b7](https://github.com/adobe/spectrum-web-components/commit/55a95b757baf89cab4261d50c2cf279471e7ef01))
+-   **tags:** performed the suggested changes ([6e3ef36](https://github.com/adobe/spectrum-web-components/commit/6e3ef36e8f423f08c2537eb2d075bec4118f2e86))
+-   **tags:** removed comment ([771dc0e](https://github.com/adobe/spectrum-web-components/commit/771dc0e63617e29c6777eb7bf3470c46ac9f7d17))
+-   **tags:** removed extra white spaces ([196bdae](https://github.com/adobe/spectrum-web-components/commit/196bdaef2fa5e2924676018b0ee147033237b32d))
+-   **tags:** some extra chnages ([45f1a9d](https://github.com/adobe/spectrum-web-components/commit/45f1a9d846e8d717bdd3fae999639b2419d53fc3))
+-   **tags:** some minor chnages ([36886fc](https://github.com/adobe/spectrum-web-components/commit/36886fc1fabecf23f99c5f23e8a9eae718f981b1))
+-   **tags:** suggested changes done ([8aca49e](https://github.com/adobe/spectrum-web-components/commit/8aca49e5249af235f20cf83cfee156336b3ca76f))
+-   **toast:** switches toast[open] to use visibility hidden to fix overlay handling ([#3511](https://github.com/adobe/spectrum-web-components/issues/3511)) ([8428cad](https://github.com/adobe/spectrum-web-components/commit/8428cadce83f2dd12b14bc29a28d6c43a6432bf0)), closes [#3510](https://github.com/adobe/spectrum-web-components/issues/3510)
+
+### Features
+
+-   **menu:** convert to core tokens ([#3254](https://github.com/adobe/spectrum-web-components/issues/3254)) ([da43540](https://github.com/adobe/spectrum-web-components/commit/da43540abcea3db75bf145194be800b61153ebe0))
+-   **opacity-checkerboard:** add component ([#3416](https://github.com/adobe/spectrum-web-components/issues/3416)) ([90202f9](https://github.com/adobe/spectrum-web-components/commit/90202f9b3e11d6ac4bd85c24e814d9300314bf5a))
+-   **picker-button:** migrate to core tokens ([b39219c](https://github.com/adobe/spectrum-web-components/commit/b39219cd92f8f17420eadc74a655e0f1d074cae3))
+-   **sidenav:** migrate to core tokens ([1846aa3](https://github.com/adobe/spectrum-web-components/commit/1846aa30d763b1f88801b9e26c16d2c20d5b4a6a))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 ### Bug Fixes

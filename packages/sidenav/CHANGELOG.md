@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Features
+
+-   **sidenav:** migrate to core tokens ([1846aa3](https://github.com/adobe/spectrum-web-components/commit/1846aa30d763b1f88801b9e26c16d2c20d5b4a6a))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav

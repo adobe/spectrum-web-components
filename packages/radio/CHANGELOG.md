@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   **radio:** aria-disabled misspelling ([b3fbd25](https://github.com/adobe/spectrum-web-components/commit/b3fbd25cfa839ec9d4fc20b256755cfb538779a6)), closes [adobe/spectrum-web-components#3526](https://github.com/adobe/spectrum-web-components/issues/3526)
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

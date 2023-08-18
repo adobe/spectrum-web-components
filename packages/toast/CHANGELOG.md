@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   close button static white ([d324017](https://github.com/adobe/spectrum-web-components/commit/d324017a5abcacf669ed56d9a878d9ae707b5c8e))
+-   **toast:** switches toast[open] to use visibility hidden to fix overlay handling ([#3511](https://github.com/adobe/spectrum-web-components/issues/3511)) ([8428cad](https://github.com/adobe/spectrum-web-components/commit/8428cadce83f2dd12b14bc29a28d6c43a6432bf0)), closes [#3510](https://github.com/adobe/spectrum-web-components/issues/3510)
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/toast

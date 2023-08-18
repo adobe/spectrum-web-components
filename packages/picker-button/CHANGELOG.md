@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   **picker-button:** include missing dependency on @spectrum-web-components/button ([#3515](https://github.com/adobe/spectrum-web-components/issues/3515)) ([ed44c2b](https://github.com/adobe/spectrum-web-components/commit/ed44c2bd5c729d8a563d9bd25e5d61f58ba1d074))
+
+### Features
+
+-   **picker-button:** migrate to core tokens ([b39219c](https://github.com/adobe/spectrum-web-components/commit/b39219cd92f8f17420eadc74a655e0f1d074cae3))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/picker-button
