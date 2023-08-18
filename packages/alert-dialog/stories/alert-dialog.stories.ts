@@ -14,10 +14,6 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/help-text/sp-help-text.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
@@ -85,7 +81,6 @@ export const confirmation = (
             <sp-alert-dialog
                 slot="click-content"
                 variant="confirmation"
-                ?open=${open}
                 underlay
                 headline="Enable Smart Filters?"
                 confirm-label="Enable"
@@ -129,7 +124,6 @@ export const information = (
             <sp-alert-dialog
                 slot="click-content"
                 variant="information"
-                ?open=${open}
                 underlay
                 headline="Connect to wifi"
                 confirm-label="Continue"
@@ -173,7 +167,6 @@ export const warning = (
             <sp-alert-dialog
                 slot="click-content"
                 variant="warning"
-                ?open=${open}
                 underlay
                 headline="Unverified format"
                 confirm-label="Continue"
@@ -217,7 +210,6 @@ export const error = (
             <sp-alert-dialog
                 slot="click-content"
                 variant="error"
-                ?open=${open}
                 underlay
                 headline="Unable to share"
                 confirm-label="Continue"
@@ -254,7 +246,6 @@ export const destructive = (
             <sp-alert-dialog
                 slot="click-content"
                 variant="destructive"
-                ?open=${open}
                 underlay
                 headline="Delete 3 documents?"
                 confirm-label="Delete"
@@ -297,7 +288,6 @@ export const secondary = (
             <sp-alert-dialog
                 slot="click-content"
                 variant="secondary"
-                ?open=${open}
                 underlay
                 headline="Rate this app"
                 confirm-label="Rate now"
@@ -347,7 +337,6 @@ export const scroll = (
             <sp-alert-dialog
                 slot="click-content"
                 variant="scroll"
-                ?open=${open}
                 underlay
                 headline="Lorem Ipsum"
                 confirm-label="Continue"
