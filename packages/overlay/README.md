@@ -68,7 +68,7 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
             <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
         </sp-action-button>
     </sp-action-group>
-    <sp-overlay trigger="trigger-1@hover">
+    <sp-overlay trigger="trigger-1@hover" type="hint">
         <sp-tooltip>Hover</sp-tooltip>
     </sp-overlay>
     <sp-overlay
@@ -92,7 +92,7 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
             </sp-action-group>
         </sp-popover>
     </sp-overlay>
-    <sp-overlay trigger="trigger-2@hover">
+    <sp-overlay trigger="trigger-2@hover" type="hint">
         <sp-tooltip>Hover</sp-tooltip>
     </sp-overlay>
     <sp-overlay
@@ -116,7 +116,7 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
             </sp-action-group>
         </sp-popover>
     </sp-overlay>
-    <sp-overlay trigger="trigger-3@hover">
+    <sp-overlay trigger="trigger-3@hover" type="hint">
         <sp-tooltip>Hover</sp-tooltip>
     </sp-overlay>
     <sp-overlay
@@ -159,14 +159,14 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 ></sp-overlay>
 ```
 
-# Events
+### Events
 
-When fully open the `<sp-overlay>` element will dispatch the `sp-opened` event, and when fully closed the `sp-closed` event will be dispatched. "Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` event. Keep in mind the following:
+When fully open the `<sp-overlay>` element will dispatch the `sp-opened` event, and when fully closed the `sp-closed` event will be dispatched. "Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` or `transitioncancel` event. Keep in mind the following:
 
 -   `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
 -   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
 
-This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun` and `transitionend` events from that transition from the closest direct child of the `<sp-overlay>`.
+This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
 
 ## Styling
 
@@ -188,7 +188,11 @@ When an overlay is placed within a page with complex layering, the content there
 <div class="complex-layered-demo">
     <div class="complex-layered-holder">
         <sp-action-button id="complex-layered">Trigger</sp-action-button>
-        <sp-overlay trigger="complex-layered@hover" placement="bottom-start">
+        <sp-overlay
+            trigger="complex-layered@hover"
+            type="hint"
+            placement="bottom-start"
+        >
             <sp-tooltip>
                 I can be partially blocked when [popover] is not available
             </sp-tooltip>
@@ -223,7 +227,7 @@ Properly managed `z-index` values will support working around this issue while b
 ```html
 <div class="contained-demo">
     <sp-action-button id="contained">Trigger</sp-action-button>
-    <sp-overlay trigger="contained@hover" placement="bottom-start">
+    <sp-overlay trigger="contained@hover" type="hint" placement="bottom-start">
         <sp-tooltip>
             I can be blocked when [popover] is not available
         </sp-tooltip>
@@ -242,7 +246,11 @@ You could just _remove_ the `contain` rule. But, if you are not OK with simply r
 <div class="contained-demo">
     <sp-action-button id="contained-working">Trigger</sp-action-button>
 </div>
-<sp-overlay trigger="contained-working@hover" placement="bottom-start">
+<sp-overlay
+    trigger="contained-working@hover"
+    type="hint"
+    placement="bottom-start"
+>
     <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
 </sp-overlay>
 <style>
@@ -261,7 +269,11 @@ You could just _remove_ the `contain` rule. But, if you are not OK with simply r
 ```html
 <div class="clip-pathed-demo">
     <sp-action-button id="clip-pathed">Trigger</sp-action-button>
-    <sp-overlay trigger="clip-pathed@hover" placement="bottom-start">
+    <sp-overlay
+        trigger="clip-pathed@hover"
+        type="hint"
+        placement="bottom-start"
+    >
         <sp-tooltip>
             I can be blocked when [popover] is not available
         </sp-tooltip>
@@ -280,7 +292,11 @@ Here, again, working with your content needs (whether or not you want to leverag
 <div class="clip-pathed-demo">
     <sp-action-button id="clip-pathed-working">Trigger</sp-action-button>
 </div>
-<sp-overlay trigger="clip-pathed-working@hover" placement="bottom-start">
+<sp-overlay
+    trigger="clip-pathed-working@hover"
+    type="hint"
+    placement="bottom-start"
+>
     <sp-tooltip>I can be blocked when [popover] is not available</sp-tooltip>
 </sp-overlay>
 <style>

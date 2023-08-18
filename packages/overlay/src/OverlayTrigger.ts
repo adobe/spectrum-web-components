@@ -97,8 +97,6 @@ export class OverlayTrigger extends SpectrumElement {
     @query('#hover-overlay', true)
     hoverOverlayElement!: Overlay;
 
-    private _longpressId = `longpress-describedby-descriptor`;
-
     private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
         return slot.assignedElements({ flatten: true }) as HTMLElement[];
     }
@@ -250,9 +248,8 @@ export class OverlayTrigger extends SpectrumElement {
                 @beforetoggle=${this.handleBeforetoggle}
             >
                 ${slot}
-                <slot name="longpress-describedby-descriptor"></slot>
             </sp-overlay>
-            <slot name=${this._longpressId}></slot>
+            <slot name="longpress-describedby-descriptor"></slot>
         `;
     }
 

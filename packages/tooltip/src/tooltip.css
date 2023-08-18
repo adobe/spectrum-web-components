@@ -17,6 +17,10 @@ governing permissions and limitations under the License.
     white-space: initial;
 }
 
+#tooltip {
+    inline-size: max-content;
+}
+
 :host([placement]) #tooltip {
     margin: var(--swc-tooltip-margin);
 }

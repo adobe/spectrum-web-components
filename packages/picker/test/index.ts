@@ -892,7 +892,7 @@ export function runPickerTests(): void {
         it('loads', async () => {
             expect(el).to.not.be.undefined;
         });
-        it('refocuses on list when open', async () => {
+        it('closes when focusing away from the menu', async () => {
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
             const thirdItem = el.querySelector(
                 'sp-menu-item:nth-of-type(3)'
@@ -920,16 +920,11 @@ export function runPickerTests(): void {
             await sendKeys({ press: 'ArrowDown' });
             expect(thirdItem.focused).to.be.true;
 
+            const closed = oneEvent(el, 'sp-closed');
             button.focus();
+            await closed;
             expect(isMenuActiveElement(el)).to.be.false;
-            el.focus();
-            await elementUpdated(el);
-            await waitUntil(
-                () => isMenuActiveElement(el),
-                'first item refocused'
-            );
-            expect(isMenuActiveElement(el)).to.be.true;
-            expect(thirdItem.focused).to.be.true;
+            expect(el.open).to.be.false;
         });
         it('does not listen to streaming `Enter` keydown', async () => {
             const openSpy = spy();

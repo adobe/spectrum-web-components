@@ -284,6 +284,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                 </sp-button>
                 <sp-overlay
                     trigger="trigger-${placement}@hover"
+                    type="hint"
                     placement=${placement}
                     open=${ifDefined(
                         openPlacement === placement ? 'hover' : undefined

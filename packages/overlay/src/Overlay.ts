@@ -368,6 +368,27 @@ export class Overlay extends OverlayFeatures {
         focusEl?.focus();
     }
 
+    private closeOnFocusOut = (event: FocusEvent): void => {
+        // If you don't know where the focus went, we can't do anyting here.
+        if (!event.relatedTarget) {
+            // this.open = false;
+            return;
+        }
+        const relationEvent = new Event('overlay-relation-query', {
+            bubbles: true,
+            composed: true,
+        });
+        event.relatedTarget.addEventListener(
+            relationEvent.type,
+            (event: Event) => {
+                if (!event.composedPath().includes(this)) {
+                    this.open = false;
+                }
+            }
+        );
+        event.relatedTarget.dispatchEvent(relationEvent);
+    };
+
     protected async manageOpen(oldOpen: boolean): Promise<void> {
         if (!this.isConnected && this.open) return;
 
@@ -410,6 +431,22 @@ export class Overlay extends OverlayFeatures {
             this.manageDialogOpen();
         } else {
             this.managePopoverOpen();
+        }
+        if (this.type === 'auto') {
+            const listenerRoot = this.getRootNode() as Document;
+            if (this.open) {
+                listenerRoot.addEventListener(
+                    'focusout',
+                    this.closeOnFocusOut,
+                    { capture: true }
+                );
+            } else {
+                listenerRoot.removeEventListener(
+                    'focusout',
+                    this.closeOnFocusOut,
+                    { capture: true }
+                );
+            }
         }
         if (!this.open) {
             // If the focus remains inside of the overlay or
@@ -636,8 +673,8 @@ export class Overlay extends OverlayFeatures {
         if (event.button !== 0) return;
         const triggerElement = this.triggerElement as HTMLElement;
         this.longpressState = 'potential';
-        triggerElement.addEventListener('pointerup', this.handlePointerup);
-        triggerElement.addEventListener('pointercancel', this.handlePointerup);
+        document.addEventListener('pointerup', this.handlePointerup);
+        document.addEventListener('pointercancel', this.handlePointerup);
         if (
             (triggerElement as HTMLElement & { holdAffordance: boolean })
                 .holdAffordance
@@ -667,12 +704,8 @@ export class Overlay extends OverlayFeatures {
         // `null` so that the earlier event can void the "light
         // dismiss" and keep the Overlay open.
         this.longpressState = this.state === 'opening' ? 'pressed' : 'null';
-        const triggerElement = this.triggerElement as HTMLElement;
-        triggerElement.removeEventListener('pointerup', this.handlePointerup);
-        triggerElement.removeEventListener(
-            'pointercancel',
-            this.handlePointerup
-        );
+        document.removeEventListener('pointerup', this.handlePointerup);
+        document.removeEventListener('pointercancel', this.handlePointerup);
     };
 
     /**
@@ -850,24 +883,7 @@ export class Overlay extends OverlayFeatures {
         return shouldPreventClose;
     }
 
-    private focusout = (event: FocusEvent): void => {
-        // Only "auto" popovers should close on any sort of focusout
-        if (this.type !== 'auto') {
-            return;
-        }
-        if (!event.composedPath().includes(this)) {
-            this.open = false;
-        }
-    };
-
     override willUpdate(changes: PropertyValues): void {
-        if (changes.has('open')) {
-            if (this.open) {
-                document.addEventListener('focusin', this.focusout);
-            } else {
-                document.removeEventListener('focusin', this.focusout);
-            }
-        }
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',

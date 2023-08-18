@@ -402,6 +402,7 @@ describe('sp-overlay', () => {
                         </sp-button>
                         <sp-overlay
                             trigger="test-button@hover"
+                            type="hint"
                             placement="bottom"
                             offset="-10"
                         >

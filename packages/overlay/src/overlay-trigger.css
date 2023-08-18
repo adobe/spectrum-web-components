@@ -13,3 +13,7 @@ governing permissions and limitations under the License.
 :host([disabled]) ::slotted([slot='trigger']) {
     pointer-events: none;
 }
+
+slot[name='longpress-describedby-descriptor'] {
+    display: none;
+}
