@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+### Bug Fixes
+
+-   address margin effected positioning ([38c8cf2](https://github.com/adobe/spectrum-web-components/commit/38c8cf2dd3f3b45a61062e3cd9b7480f903fae97))
+-   allow non-selection carying Picker derivatives to report value ([02c0134](https://github.com/adobe/spectrum-web-components/commit/02c013454cb2189f3026d1d928198fe815dd933d))
+-   ensure submenus stay open when root it clicked again ([83ced1c](https://github.com/adobe/spectrum-web-components/commit/83ced1c913f262620e7b87ad3b7e58dff0697442))
+-   handle longpress and over filter overlays ([483e52d](https://github.com/adobe/spectrum-web-components/commit/483e52df24f56be027d8417c1ae530211ef0deb1))
+
+### Features
+
+-   **dialog:** leverage Overlay v2 ([5c21ab5](https://github.com/adobe/spectrum-web-components/commit/5c21ab551836af3d6d2bcc3b21e1aa116fb80181))
+-   **menu:** prepare for Overlay v2 and less connnected/disconnected responsibilities ([5dfb71e](https://github.com/adobe/spectrum-web-components/commit/5dfb71e5ed26cf8af83ca335a7658938f3f135a6))
+-   **overlay:** ship Overlay API v2 ([67b5d1b](https://github.com/adobe/spectrum-web-components/commit/67b5d1b02e88dcb5b0b79b5a6c5ead92ad1a5aca))
+-   **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
+-   **popover:** leverage Overlay v2 ([cde0a16](https://github.com/adobe/spectrum-web-components/commit/cde0a168642c4eedbbd29613bb65b13a4c3f3132))
+-   **tooltip:** leverage Overlay v2 ([346edac](https://github.com/adobe/spectrum-web-components/commit/346edacc5a3c40aaefa622db67219f5f8cc8ae5c))
+
+### Performance Improvements
+
+-   make lots of things lazy ([b8fa3ad](https://github.com/adobe/spectrum-web-components/commit/b8fa3ada062bf54bbb42e76ab156c716d5820c7c))
+-   make submenus lazier ([a2d661c](https://github.com/adobe/spectrum-web-components/commit/a2d661cf4095f4ccb826d17b6f2e665c8c5bf70f))
+-   make submenus lazy ([93531b9](https://github.com/adobe/spectrum-web-components/commit/93531b9624259d519f6f9cab264f8485c9a32fdb))
+-   open/close timing update ([d4ebcd3](https://github.com/adobe/spectrum-web-components/commit/d4ebcd36ed5a256f211186e6863c3eee2631fa3f))
+
 # [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
 
 ### Bug Fixes

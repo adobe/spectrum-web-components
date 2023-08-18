@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+### Bug Fixes
+
+-   ensure submenus stay open when root it clicked again ([83ced1c](https://github.com/adobe/spectrum-web-components/commit/83ced1c913f262620e7b87ad3b7e58dff0697442))
+
+### Features
+
+-   **menu:** prepare for Overlay v2 and less connnected/disconnected responsibilities ([5dfb71e](https://github.com/adobe/spectrum-web-components/commit/5dfb71e5ed26cf8af83ca335a7658938f3f135a6))
+
+### Performance Improvements
+
+-   make lots of things lazy ([b8fa3ad](https://github.com/adobe/spectrum-web-components/commit/b8fa3ada062bf54bbb42e76ab156c716d5820c7c))
+-   make submenus lazier ([a2d661c](https://github.com/adobe/spectrum-web-components/commit/a2d661cf4095f4ccb826d17b6f2e665c8c5bf70f))
+-   make submenus lazy ([93531b9](https://github.com/adobe/spectrum-web-components/commit/93531b9624259d519f6f9cab264f8485c9a32fdb))
+
 # [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
 
 ### Features
