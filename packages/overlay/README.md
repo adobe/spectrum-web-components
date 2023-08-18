@@ -195,6 +195,6 @@ const closeOverlayPromise = Overlay.open(
 );
 const closeOverlay = function () {
     closeOverlayPromise.then((close) => close());
-    innerContentParent.replaceChild(placeholder, innerContent);
+    innerContentParent.replaceChild(innerContent, placeholder);
 };
 ```
