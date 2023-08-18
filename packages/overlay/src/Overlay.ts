@@ -390,6 +390,8 @@ export class Overlay extends OverlayFeatures {
     };
 
     protected async manageOpen(oldOpen: boolean): Promise<void> {
+        // The `.showPopover()` and `.showModal()` events will error on content that is not connected to the DOM.
+        // Prevent from entering the manage workflow in order to avoid this.
         if (!this.isConnected && this.open) return;
 
         if (!this.hasUpdated) {
@@ -564,9 +566,6 @@ export class Overlay extends OverlayFeatures {
             this.handleOverlayPointerleave,
             options
         );
-        if (this.receivesFocus === 'true') return;
-
-        this.prepareAriaDescribedby(triggerElement);
     }
 
     protected manageTriggerElement(triggerElement: HTMLElement | null): void {
@@ -581,6 +580,9 @@ export class Overlay extends OverlayFeatures {
             return;
         }
         this.bindEvents();
+        if (this.receivesFocus === 'true') return;
+
+        this.prepareAriaDescribedby();
     }
 
     private elementIds: string[] = [];
@@ -618,18 +620,21 @@ export class Overlay extends OverlayFeatures {
         };
     }
 
-    private prepareAriaDescribedby(trigger: HTMLElement): void {
+    private prepareAriaDescribedby(): void {
         if (
             // only "hover" relationships establed described by content
             this.triggerInteraction !== 'hover' ||
             // do not reapply until target is recycled
             this.releaseAriaDescribedby !== noop ||
             // require "hover content" to apply relationship
-            !this.elements.length
+            !this.elements.length ||
+            // Virtual triggers can have no aria content
+            !this.hasNonVirtualTrigger
         ) {
             return;
         }
 
+        const trigger = this.triggerElement as HTMLElement;
         const triggerRoot = trigger.getRootNode();
         const contentRoot = this.elements[0].getRootNode();
         const overlayRoot = this.getRootNode();
@@ -864,7 +869,7 @@ export class Overlay extends OverlayFeatures {
 
     protected handleSlotchange(): void {
         if (this.triggerElement) {
-            this.prepareAriaDescribedby(this.triggerElement as HTMLElement);
+            this.prepareAriaDescribedby();
         }
         if (!this.elements.length) {
             this.releaseLongpressDescribedby();

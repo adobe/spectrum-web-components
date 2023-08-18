@@ -86,6 +86,8 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         });
                     }
                     if (!this.isConnected || this.dialogEl.open) {
+                        // In both of these cases the browser will error.
+                        // You can neither "reopen" a <dialog> or open one that is not on the DOM.
                         return;
                     }
                     this.dialogEl.showModal();
@@ -106,6 +108,8 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     return;
                 }
                 if (!this.isConnected || targetOpenState !== this.open) {
+                    // Don't lead into the `.close()` workflow if not connected to the DOM.
+                    // The browser will error in this case.
                     return;
                 }
                 const reportChange = (): void => {
