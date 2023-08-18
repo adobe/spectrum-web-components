@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import type { ReactiveController, ReactiveElement } from 'lit';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 type DirectionTypes = 'horizontal' | 'vertical' | 'both' | 'grid';
 export type FocusGroupConfig<T> = {
@@ -123,6 +124,15 @@ export class FocusGroupController<T extends HTMLElement>
             listenerScope,
         }: FocusGroupConfig<T> = { elements: () => [] }
     ) {
+        new MutationController(host, {
+            config: {
+                childList: true,
+                subtree: true,
+            },
+            callback: () => {
+                this.handleItemMutation();
+            },
+        });
         this.host = host;
         this.host.addController(this);
         this._elements = elements;
@@ -144,6 +154,26 @@ export class FocusGroupController<T extends HTMLElement>
             this._listenerScope
         );
     }
+    /*  In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
+        Then we are checking if the deleted element was the focused one before the deletion if so then we need to proceed else we casn return;
+    */
+    handleItemMutation(): void {
+        if (
+            this._currentIndex == -1 ||
+            this.elements.length <= this._elements().length
+        )
+            return;
+        const focusedElement = this.elements[this.currentIndex];
+        this.clearElementCache();
+        if (this.elements.includes(focusedElement)) return;
+        const moveToNextElement = this.currentIndex !== this.elements.length;
+        const diff = moveToNextElement ? 1 : -1;
+        if (moveToNextElement) {
+            this.setCurrentIndexCircularly(-1);
+        }
+        this.setCurrentIndexCircularly(diff);
+        this.focus();
+    }
 
     update({ elements }: FocusGroupConfig<T> = { elements: () => [] }): void {
         this.unmanage();
@@ -153,10 +183,12 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     focus(options?: FocusOptions): void {
-        let focusElement = this.elements[this.currentIndex];
+        const elements = this.elements;
+        if (!elements.length) return;
+        let focusElement = elements[this.currentIndex];
         if (!focusElement || !this.isFocusableElement(focusElement)) {
             this.setCurrentIndexCircularly(1);
-            focusElement = this.elements[this.currentIndex];
+            focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
             focusElement.focus(options);
@@ -195,7 +227,6 @@ export class FocusGroupController<T extends HTMLElement>
         this.host.addEventListener('focusin', this.handleFocusin);
         this.host.removeEventListener('focusout', this.handleFocusout);
         this.host.removeEventListener('keydown', this.handleKeydown);
-        this.currentIndex = this.focusInIndex;
         this.focused = false;
     }
 
