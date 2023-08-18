@@ -691,7 +691,14 @@ export class Menu extends SizedMixin(SpectrumElement) {
     }
 
     private async updateCache(): Promise<void> {
-        await new Promise((res) => requestAnimationFrame(() => res(true)));
+        if (!this.hasUpdated) {
+            await Promise.all([
+                new Promise((res) => requestAnimationFrame(() => res(true))),
+                this.updateComplete,
+            ]);
+        } else {
+            await new Promise((res) => requestAnimationFrame(() => res(true)));
+        }
         if (this.cachedChildItems === undefined) {
             this.updateSelectedItemIndex();
             this.updateItemFocus();
