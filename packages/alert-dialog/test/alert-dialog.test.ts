@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -44,7 +44,31 @@ async function styledFixture<T extends Element>(
 }
 
 describe('AlertDialog', () => {
-    it('alert dialog renders with variant confirmation', async () => {
+    it('does not recycle applied content ids', async () => {
+        const el = await fixture<AlertDialogBase>(html`
+            <sp-alert-dialog>
+                <h2 slot="heading">Disclaimer</h2>
+                <p>Initial paragraph.</p>
+            </sp-alert-dialog>
+        `);
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+
+        const paragraph = document.createElement('p');
+        paragraph.textContent = 'Added paragraph.';
+
+        const target = el.querySelector('p') as HTMLParagraphElement;
+        target.insertAdjacentElement('beforebegin', paragraph);
+
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('renders with confirmation variant', async () => {
         const test = await styledFixture<OverlayTrigger>(confirmation());
         const el = test.querySelector('sp-alert-dialog') as AlertDialog;
         await elementUpdated(el);
@@ -67,7 +91,7 @@ describe('AlertDialog', () => {
         const expectedCancelLabel = el.getAttribute('cancel-label');
         expect(cancelButton.textContent?.trim()).to.equal(expectedCancelLabel);
     });
-    it('warning variant renders with an icon', async () => {
+    it('renders warning variant renders with an icon', async () => {
         const test = await styledFixture<OverlayTrigger>(warning());
         const el = test.querySelector('sp-alert-dialog') as AlertDialog;
         await elementUpdated(el);
