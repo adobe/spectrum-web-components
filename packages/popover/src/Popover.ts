@@ -63,7 +63,7 @@ export class Popover extends SpectrumElement {
 
     protected renderTip(): TemplateResult {
         return html`
-            <div id="tip">
+            <div id="tip" aria-hidden="true">
                 <svg class="tip block" viewBox="0 -0.5 16 9">
                     <path class="triangle" d="M-1,-1 8,8 17,-1"></path>
                 </svg>

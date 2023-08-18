@@ -241,7 +241,7 @@ export class Tooltip extends SpectrumElement {
             >
                 <slot name="icon"></slot>
                 <span id="label"><slot></slot></span>
-                <span id="tip"></span>
+                <span id="tip" aria-hidden="true"></span>
             </sp-tooltip-openable>
         `;
         if (this.selfManaged) {

@@ -151,8 +151,39 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.focused = false;
     }
 
+    protected preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
+
+    protected handlebuttonPointerdown(): void {
+        this.preventNextToggle = 'maybe';
+        const cleanup = (): void => {
+            document.removeEventListener('pointerup', cleanup);
+            document.removeEventListener('pointercancel', cleanup);
+            requestAnimationFrame(() => {
+                // Complete cleanup on the animation frame so that `click` can go first.
+                this.preventNextToggle = 'no';
+            });
+        };
+        // Ensure that however the pointer goes up we do `cleanup()`.
+        document.addEventListener('pointerup', cleanup);
+        document.addEventListener('pointercancel', cleanup);
+    }
+
+    protected handleButtonFocus(event: FocusEvent): void {
+        // When focus comes from a pointer event, and the related target is the Menu,
+        // we don't want to reopen the Menu.
+        if (
+            this.preventNextToggle === 'maybe' &&
+            event.relatedTarget === this.optionsMenu
+        ) {
+            this.preventNextToggle = 'yes';
+        }
+    }
+
     protected handleButtonClick(): void {
         if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
+            return;
+        }
+        if (this.preventNextToggle === 'yes') {
             return;
         }
         this.toggle();
@@ -402,6 +433,8 @@ export class PickerBase extends SizedMixin(Focusable) {
                 id="button"
                 class="button"
                 @blur=${this.handleButtonBlur}
+                @pointerdown=${this.handlebuttonPointerdown}
+                @focus=${this.handleButtonFocus}
                 @click=${this.handleButtonClick}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
