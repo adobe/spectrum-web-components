@@ -42,7 +42,7 @@ export const alertDialogVariants: AlertDialogVariants[] = [
 ];
 
 /**
- * @element sp-alert-dialog
+ * @element sp-alert-dialog-wrapper
  */
 
 export class AlertDialogWrapper extends DialogBase {

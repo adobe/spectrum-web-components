@@ -80,6 +80,7 @@ export const confirmation = (
                 slot="click-content"
                 variant="confirmation"
                 underlay
+                ?open=${open}
                 headline="Enable Smart Filters?"
                 confirm-label="Enable"
                 cancel-label="Cancel"
@@ -122,6 +123,7 @@ export const information = (
                 slot="click-content"
                 variant="information"
                 underlay
+                ?open=${open}
                 headline="Connect to wifi"
                 confirm-label="Continue"
                 cancel-label="Cancel"
@@ -164,6 +166,7 @@ export const warning = (
                 slot="click-content"
                 variant="warning"
                 underlay
+                ?open=${open}
                 headline="Unverified format"
                 confirm-label="Continue"
                 cancel-label="Cancel"
@@ -206,6 +209,7 @@ export const error = (
                 slot="click-content"
                 variant="error"
                 underlay
+                ?open=${open}
                 headline="Unable to share"
                 confirm-label="Continue"
                 @close=${handleClose(args)}
@@ -241,6 +245,7 @@ export const destructive = (
                 slot="click-content"
                 variant="destructive"
                 underlay
+                ?open=${open}
                 headline="Delete 3 documents?"
                 confirm-label="Delete"
                 cancel-label="Cancel"
@@ -282,6 +287,7 @@ export const secondary = (
                 slot="click-content"
                 variant="secondary"
                 underlay
+                ?open=${open}
                 headline="Rate this app"
                 confirm-label="Rate now"
                 cancel-label="Remind me later"
