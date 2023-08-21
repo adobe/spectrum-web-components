@@ -15,8 +15,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/underlay/sp-underlay.js';
 import { DialogBase } from '@spectrum-web-components/dialog/src/DialogBase.js';
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
 
@@ -50,6 +48,19 @@ export class AlertDialogWrapper extends DialogBase {
     public static override get styles(): CSSResultArray {
         return [...super.styles];
     }
+
+    @property({ attribute: 'cancel-label' })
+    public cancelLabel = '';
+
+    @property({ attribute: 'confirm-label' })
+    public confirmLabel = '';
+
+    @property({ attribute: 'secondary-label' })
+    public secondaryLabel = '';
+
+    @property()
+    public headline = '';
+
     @property({ type: String, reflect: true })
     public set variant(variant: AlertDialogVariants) {
         if (variant === this.variant) {
@@ -71,18 +82,6 @@ export class AlertDialogWrapper extends DialogBase {
     }
 
     public _variant: AlertDialogVariants = 'confirmation';
-
-    @property({ attribute: 'cancel-label' })
-    public cancelLabel = '';
-
-    @property({ attribute: 'confirm-label' })
-    public confirmLabel = '';
-
-    @property({ attribute: 'secondary-label' })
-    public secondaryLabel = '';
-
-    @property()
-    public headline = '';
 
     protected override get dialog(): AlertDialog {
         return this.shadowRoot.querySelector('sp-alert-dialog') as AlertDialog;

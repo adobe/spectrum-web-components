@@ -30,7 +30,7 @@ import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 This is the default variant for alert dialogs. Use a confirmation variant for asking a user to confirm a choice.
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-alert-dialog-wrapper
         variant="confirmation"
         slot="click-content"
@@ -50,13 +50,9 @@ This is the default variant for alert dialogs. Use a confirmation variant for as
             function handleEvent({type}) {
                 spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
+               
             }
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
+           
         "
     >
         Toggle Dialog
@@ -69,7 +65,7 @@ This is the default variant for alert dialogs. Use a confirmation variant for as
 Information alert dialogs communicate important information that a user needs to acknowledge. Before using this kind of alert dialog, make sure it’s the appropriate communication channel for the message instead of a toast or a more lightweight messaging option.
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-alert-dialog-wrapper
         variant="information"
         slot="click-content"
@@ -91,11 +87,9 @@ Information alert dialogs communicate important information that a user needs to
                 spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
                 dialogWrapper.removeEventListener('cancel', handleEvent);
             }
             dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
             dialogWrapper.addEventListener('cancel', handleEvent);
         "
     >
@@ -109,7 +103,7 @@ Information alert dialogs communicate important information that a user needs to
 Warning alert dialogs communicate important information to users in relation to an issue that needs to be acknowledged, but does not block the user from moving forward.
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-alert-dialog-wrapper
         variant="warning"
         slot="click-content"
@@ -131,11 +125,9 @@ Warning alert dialogs communicate important information to users in relation to 
                 spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
                 dialogWrapper.removeEventListener('cancel', handleEvent);
             }
             dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
             dialogWrapper.addEventListener('cancel', handleEvent);
         "
     >
@@ -149,7 +141,7 @@ Warning alert dialogs communicate important information to users in relation to 
 Error alert dialogs communicate critical information about an issue that a user needs to acknowledge.
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-alert-dialog-wrapper
         variant="error"
         slot="click-content"
@@ -170,11 +162,9 @@ Error alert dialogs communicate critical information about an issue that a user 
                 spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
                 dialogWrapper.removeEventListener('cancel', handleEvent);
             }
             dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
             dialogWrapper.addEventListener('cancel', handleEvent);
         "
     >
@@ -188,7 +178,7 @@ Error alert dialogs communicate critical information about an issue that a user 
 Destructive alert dialogs are for when a user needs to confirm an action that will impact their data or experience in a potentially negative way, such as deleting files or contacts.
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-alert-dialog-wrapper
         variant="destructive"
         slot="click-content"
@@ -209,11 +199,9 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
                 spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
                 dialogWrapper.removeEventListener('cancel', handleEvent);
             }
             dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
             dialogWrapper.addEventListener('cancel', handleEvent);
         "
     >
@@ -227,7 +215,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 An alert dialog can have a total of 3 buttons if the secondary outline button label is defined.
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-alert-dialog-wrapper
         variant="secondary"
         slot="click-content"
@@ -265,7 +253,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
 ### Scroll
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-alert-dialog-wrapper
         variant="scroll"
         slot="click-content"
@@ -373,8 +361,9 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
                 dialogWrapper.removeEventListener('secondary', handleEvent);
                 dialogWrapper.removeEventListener('cancel', handleEvent);
             }
+             dialogWrapper.addEventListener('secondary', handleEvent);
+
             dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
             dialogWrapper.addEventListener('cancel', handleEvent);
         "
     >
