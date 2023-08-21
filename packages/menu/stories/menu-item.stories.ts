@@ -39,6 +39,28 @@ export const noWrap = (): TemplateResult => {
     `;
 };
 
+export const descriptionSlot = (): TemplateResult => {
+    return html`
+        <sp-menu>
+            <sp-menu-item>
+                <sp-icon-export slot="icon"></sp-icon-export>
+                Quick export
+                <span slot="description">Share a snapshot</span>
+            </sp-menu-item>
+            <sp-menu-item>
+                <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                Open a copy
+                <span slot="description">Illustrator for iPad</span>
+            </sp-menu-item>
+            <sp-menu-item>
+                <sp-icon-share slot="icon"></sp-icon-share>
+                Share link
+                <span slot="description">Enable comments and download</span>
+            </sp-menu-item>
+        </sp-menu>
+    `;
+};
+
 export const valueSlot = (): TemplateResult => {
     /**
      * This story featurs zero width spaces between the characters in the `<kbd>` element.

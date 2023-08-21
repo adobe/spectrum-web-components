@@ -128,6 +128,7 @@ function resetRemoveEvent(): void {
  * @element sp-menu-item
  *
  * @slot - text content to display within the Menu Item
+ * @slot description - description to be placed below the label of the Menu Item
  * @slot icon - icon element to be placed at the start of the Menu Item
  * @slot value - content placed at the end of the Menu Item like values, keyboard shortcuts, etc.
  * @slot submenu - content placed in a submenu
@@ -317,6 +318,9 @@ export class MenuItem extends LikeAnchor(
             <div id="label">
                 <slot id="slot"></slot>
             </div>
+            <span class="description">
+                <slot name="description"></slot>
+            </span>
             <slot name="value"></slot>
             ${this.href && this.href.length > 0
                 ? super.renderAnchor({

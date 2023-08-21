@@ -101,6 +101,10 @@ const config = {
                 ),
                 converter.classToSlotted('spectrum-Menu-itemValue', 'value'),
                 converter.classToClass(
+                    'spectrum-Menu-itemDescription',
+                    'description'
+                ),
+                converter.classToClass(
                     'spectrum-menu-itemSelection',
                     'menu-itemSelection'
                 ),
