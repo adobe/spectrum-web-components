@@ -24,6 +24,8 @@ governing permissions and limitations under the License.
 }
 
 .demo-example {
+    position: relative;
+    z-index: 1;
     max-width: 100%;
     overflow: auto;
     flex: 1;

@@ -13,6 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -179,3 +180,19 @@ export const overlaidTop = (): TemplateResult => overlaid('top');
 export const overlaidRight = (): TemplateResult => overlaid('right');
 export const overlaidBottom = (): TemplateResult => overlaid('bottom');
 export const overlaidLeft = (): TemplateResult => overlaid('left');
+
+export const overlay = (args: Properties): TemplateResult => {
+    return html`
+        <style>
+            sp-toast {
+                position: fixed;
+                bottom: 1em;
+                left: 1em;
+            }
+        </style>
+        <sp-button id="overlay">Toggle Toast overlay</sp-button>
+        <sp-overlay trigger="overlay@click" type="auto" open>
+            ${variantDemo({ ...args, variant: 'positive' })}
+        </sp-overlay>
+    `;
+};

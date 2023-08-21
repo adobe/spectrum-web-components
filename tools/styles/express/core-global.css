@@ -13,5 +13,5 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
 }

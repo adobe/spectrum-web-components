@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+### Features
+
+-   **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
+
+### Performance Improvements
+
+-   make lots of things lazy ([b8fa3ad](https://github.com/adobe/spectrum-web-components/commit/b8fa3ada062bf54bbb42e76ab156c716d5820c7c))
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   **action-menu:** add a slot for Tooltip content ([#3488](https://github.com/adobe/spectrum-web-components/issues/3488)) ([23cef3a](https://github.com/adobe/spectrum-web-components/commit/23cef3ad0393055a9285a0292667e657bd813c59))
+
+### Features
+
+-   **menu:** convert to core tokens ([#3254](https://github.com/adobe/spectrum-web-components/issues/3254)) ([da43540](https://github.com/adobe/spectrum-web-components/commit/da43540abcea3db75bf145194be800b61153ebe0))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

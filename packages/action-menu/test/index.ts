@@ -11,19 +11,30 @@ governing permissions and limitations under the License.
 */
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 import { spy } from 'sinon';
 
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import {
+    ignoreResizeObserverLoopError,
+    fixture as styledFixture,
+} from '../../../test/testing-helpers.js';
+import '@spectrum-web-components/dialog/sp-dialog-base.js';
+import { tooltipDescriptionAndPlacement } from '../stories/action-menu.stories';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import type { TestablePicker } from '../../picker/test/index.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -109,6 +120,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             );
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             await expect(el).to.be.accessible();
         });
@@ -129,6 +142,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             );
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             await expect(el).to.be.accessible();
         });
@@ -139,7 +154,11 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 html`
                     <sp-action-menu
                         label="More Actions"
-                        @change=${() => changeSpy()}
+                        @change=${({
+                            target: { value },
+                        }: Event & { target: ActionMenu }) => {
+                            changeSpy(value);
+                        }}
                     >
                         <sp-icon-settings slot="icon"></sp-icon-settings>
                         <sp-menu-item>Deselect</sp-menu-item>
@@ -159,21 +178,20 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const menuItem2 = el.querySelector(
                 'sp-menu-item:nth-child(2)'
             ) as MenuItem;
-
             const opened = oneEvent(el, 'sp-opened');
             el.click();
-            await opened;
             await elementUpdated(el);
+            await opened;
 
             expect(el.open).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
             menuItem2.click();
             await closed;
-            await elementUpdated(el);
 
             expect(el.open).to.be.false;
             expect(changeSpy.callCount).to.equal(1);
+            expect(changeSpy.calledWith('Deselect')).to.be.true;
         });
         it('closes when Menu Item has [href]', async () => {
             const changeSpy = spy();
@@ -182,7 +200,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 html`
                     <sp-action-menu
                         label="More Actions"
-                        @change=${() => changeSpy()}
+                        @change=${() => {
+                            changeSpy();
+                        }}
                     >
                         <sp-icon-settings slot="icon"></sp-icon-settings>
                         <sp-menu-item href="#">Deselect</sp-menu-item>
@@ -208,21 +228,18 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
-            await elementUpdated(el);
 
             expect(el.open).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
             menuItem2.click();
             await closed;
-            await elementUpdated(el);
 
             expect(el.open).to.be.false;
             expect(changeSpy.callCount).to.equal(0);
         });
         it('can be `quiet`', async () => {
             const el = await actionMenuFixture();
-            await elementUpdated(el);
 
             expect(el.quiet).to.be.false;
 
@@ -234,8 +251,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('stay `valid`', async () => {
             const el = await actionMenuFixture();
 
-            await elementUpdated(el);
-
             expect(el.invalid).to.be.false;
 
             el.invalid = true;
@@ -246,8 +261,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('focus()', async () => {
             const el = await actionMenuFixture();
 
-            await elementUpdated(el);
-
             el.focus();
 
             expect(document.activeElement).to.equal(el);
@@ -256,8 +269,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
-
-            expect(document.activeElement).to.not.equal(el);
 
             const closed = oneEvent(el, 'sp-closed');
             el.open = false;
@@ -269,7 +280,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('opens unmeasured', async () => {
             const el = await actionMenuFixture();
 
-            await elementUpdated(el);
             const button = el.button as HTMLButtonElement;
 
             button.click();
@@ -282,7 +292,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
 
-            await elementUpdated(el);
             const button = el.button as HTMLButtonElement;
 
             button.click();
@@ -299,10 +308,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(button).to.have.attribute('aria-expanded', 'false');
             expect(button).not.to.have.attribute('aria-controls');
 
-            let items = el.querySelectorAll('sp-menu-item');
-            const count = items.length;
-            expect(items.length).to.equal(count);
-
             let opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
@@ -310,8 +315,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.true;
             expect(button).to.have.attribute('aria-expanded', 'true');
             expect(button).to.have.attribute('aria-controls', 'menu');
-            items = el.querySelectorAll('sp-menu-item');
-            expect(items.length).to.equal(0);
 
             let closed = oneEvent(el, 'sp-closed');
             el.open = false;
@@ -320,8 +323,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.false;
             expect(button).to.have.attribute('aria-expanded', 'false');
             expect(button).not.to.have.attribute('aria-controls');
-            items = el.querySelectorAll('sp-menu-item');
-            expect(items.length).to.equal(count);
 
             opened = oneEvent(el, 'sp-opened');
             el.open = true;
@@ -330,8 +331,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.true;
             expect(button).to.have.attribute('aria-expanded', 'true');
             expect(button).to.have.attribute('aria-controls', 'menu');
-            items = el.querySelectorAll('sp-menu-item');
-            expect(items.length).to.equal(0);
 
             closed = oneEvent(el, 'sp-closed');
             el.open = false;
@@ -340,8 +339,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.false;
             expect(button).to.have.attribute('aria-expanded', 'false');
             expect(button).not.to.have.attribute('aria-controls');
-            items = el.querySelectorAll('sp-menu-item');
-            expect(items.length).to.equal(count);
         });
         it('allows submenu items to be selected', async () => {
             const root = await actionSubmenuFixture();
@@ -366,8 +363,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 new PointerEvent('pointerenter', { bubbles: true })
             );
             await opened;
-            const overlays = document.querySelectorAll('active-overlay');
-            expect(overlays.length).to.equal(2);
 
             await elementUpdated(submenu);
             expect(
@@ -376,7 +371,25 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             ).to.be.true;
         });
         it('allows top-level selection state to change', async () => {
-            const root = await actionSubmenuFixture();
+            const root = await styledFixture<ActionMenu>(html`
+                <sp-action-menu label="More Actions">
+                    <sp-menu-item>One</sp-menu-item>
+                    <sp-menu-item selected id="root-selected-item">
+                        Two
+                    </sp-menu-item>
+                    <sp-menu-item id="item-with-submenu">
+                        B should be selected
+                        <sp-menu slot="submenu">
+                            <sp-menu-item>A</sp-menu-item>
+                            <sp-menu-item selected id="sub-selected-item">
+                                B
+                            </sp-menu-item>
+                            <sp-menu-item>C</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-action-menu>
+            `);
+
             const unselectedItem = root.querySelector(
                 'sp-menu-item'
             ) as MenuItem;
@@ -405,6 +418,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             selectedItem.click();
             await closed;
 
+            expect(root.open).to.be.false;
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
@@ -438,6 +452,104 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(unselectedItem.selected).to.be.false;
             expect(selectedItem.textContent).to.include('Two');
             expect(selectedItem.selected).to.be.true;
+        });
+        it('shows tooltip', async () => {
+            const openSpy = spy();
+            const el = await styledFixture<ActionMenu>(
+                tooltipDescriptionAndPlacement(
+                    tooltipDescriptionAndPlacement.args
+                )
+            );
+            const tooltip = el.querySelector('sp-tooltip') as Tooltip;
+            const rect = el.getBoundingClientRect();
+            tooltip.addEventListener('sp-opened', () => openSpy());
+            await elementUpdated(tooltip);
+
+            await nextFrame();
+            await nextFrame();
+
+            const overlay = tooltip.shadowRoot.querySelector(
+                'sp-overlay'
+            ) as Overlay;
+            await elementUpdated(overlay);
+
+            expect(overlay.triggerElement === el.button).to.be.true;
+            let open = oneEvent(tooltip, 'sp-opened');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+            await open;
+
+            expect(tooltip.open).to.be.true;
+
+            let close = oneEvent(tooltip, 'sp-closed');
+            el.click();
+            await close;
+
+            expect(tooltip.open).to.be.false;
+            expect(el.open).to.be.true;
+
+            open = oneEvent(tooltip, 'sp-opened');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width * 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+            await open;
+
+            close = oneEvent(tooltip, 'sp-closed');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width * 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+            await close;
+
+            const menu = (el as unknown as TestablePicker).optionsMenu;
+            const menuRect = menu.getBoundingClientRect();
+
+            await sendMouse({
+                steps: [
+                    {
+                        position: [
+                            menuRect.left + menuRect.width / 2,
+                            menuRect.top + menuRect.height / 2,
+                        ],
+                        type: 'move',
+                    },
+                ],
+            });
+
+            await aTimeout(150);
+
+            expect(openSpy.callCount).to.equal(2);
         });
     });
 };

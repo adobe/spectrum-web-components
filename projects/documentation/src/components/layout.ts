@@ -50,6 +50,7 @@ import {
     DARK_MODE,
     IS_MOBILE,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import type { ActionButton } from '@spectrum-web-components/bundle';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
@@ -193,6 +194,21 @@ export class LayoutElement extends LitElement {
         this.isNarrow = event.matches;
     };
 
+    handleEscapeKey = (event: KeyboardEvent) => {
+        if (
+            event.key === 'Escape' &&
+            (event.target! as Element).closest(
+                '[role="listbox"],[role="menu"]'
+            ) === null
+        ) {
+            if (this.settings) {
+                this.toggleSettings();
+            } else if (this.open) {
+                this.toggleNav();
+            }
+        }
+    };
+
     toggleNav() {
         this.open = !this.open;
     }
@@ -308,7 +324,7 @@ export class LayoutElement extends LitElement {
                 id="side-nav"
                 ?inert=${this.isNarrow && !this.open}
                 ?open=${this.open}
-                @close=${this.toggleNav}
+                @close=${this.open ? this.toggleNav : undefined}
             >
                 ${this._sidenavRendered ? navContent : nothing}
             </docs-side-nav>
@@ -319,31 +335,40 @@ export class LayoutElement extends LitElement {
         if (this.settings || !this.isNarrow) {
             import('./settings.js');
         }
-        return html`
-            <sp-underlay
-                class="scrim"
-                ?open=${this.settings}
-                @click=${this.toggleSettings}
-                ?hidden=${!this.isNarrow}
-            ></sp-underlay>
-            <aside class=${this.settings ? 'show' : ''}>
-                <header>
-                    <sp-action-button
-                        quiet
-                        label="Cloase Navigation"
-                        @click=${this.toggleSettings}
-                    >
-                        <sp-icon-close slot="icon"></sp-icon-close>
-                    </sp-action-button>
-                </header>
-                ${this.manageTheme}
-            </aside>
-        `;
+        return (
+            this.isNarrow
+                ? html`
+                      <sp-underlay
+                          class="scrim"
+                          ?open=${this.settings}
+                          @click=${this.toggleSettings}
+                          ?hidden=${!this.isNarrow}
+                      ></sp-underlay>
+                      <aside
+                          aria-label="Settings"
+                          ?inert=${!this.settings}
+                          class=${this.settings ? 'show' : ''}
+                      >
+                          <header>
+                              <sp-action-button
+                                  quiet
+                                  label="Close Settings"
+                                  @click=${this.toggleSettings}
+                                  id="close-settings-id"
+                              >
+                                  <sp-icon-close slot="icon"></sp-icon-close>
+                              </sp-action-button>
+                          </header>
+                          ${this.manageTheme}
+                      </aside>
+                  `
+                : nothing
+        ) as TemplateResult;
     }
 
     private get manageTheme(): TemplateResult {
         return html`
-            <div class="manage-theme">
+            <div class="manage-theme" role="form" aria-label="Settings">
                 <div class="theme-control">
                     <sp-field-label for="theme-theme">Theme</sp-field-label>
                     <sp-picker
@@ -425,8 +450,15 @@ export class LayoutElement extends LitElement {
                           <header>
                               <sp-action-button
                                   quiet
-                                  label="Open Navigation"
+                                  label=${this.open
+                                      ? 'Close Navigation'
+                                      : 'Open Navigation'}
+                                  tabindex=${this.isNarrow && this.open
+                                      ? '-1'
+                                      : '0'}
+                                  ?inert=${this.isNarrow && this.settings}
                                   @click=${this.toggleNav}
+                                  id="toggle-nav-id"
                               >
                                   <sp-icon-show-menu
                                       slot="icon"
@@ -435,8 +467,15 @@ export class LayoutElement extends LitElement {
 
                               <sp-action-button
                                   quiet
-                                  label="Open Settings"
+                                  label=${this.settings
+                                      ? 'Close Settings'
+                                      : 'Open Settings'}
+                                  tabindex=${this.isNarrow && this.settings
+                                      ? '-1'
+                                      : '0'}
+                                  ?inert=${this.isNarrow && this.open}
                                   @click=${this.toggleSettings}
+                                  id="toggle-settings-id"
                               >
                                   <sp-icon-settings
                                       slot="icon"
@@ -449,7 +488,7 @@ export class LayoutElement extends LitElement {
                     ${this.sideNav} ${this.settingsContent}
                     <div
                         id="page"
-                        ?inert=${this.isNarrow && this.open}
+                        ?inert=${this.isNarrow && (this.open || this.settings)}
                         @alert=${this.addAlert}
                         @copy-text=${this.copyText}
                     >
@@ -522,9 +561,40 @@ export class LayoutElement extends LitElement {
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
-        if (changes.has('open') && this.open) {
-            this.focus();
+        if (changes.has('open')) {
+            this.open
+                ? this.focus()
+                : (this.shadowRoot!.querySelector(
+                      '#toggle-nav-id'
+                  ) as ActionButton)!.focus();
         }
+
+        if (changes.has('settings')) {
+            (this.shadowRoot!.querySelector(
+                this.settings ? '#close-settings-id' : '#toggle-settings-id'
+            ) as ActionButton)!.focus();
+            if (this.settings && this.isNarrow) {
+                this.ownerDocument!.addEventListener(
+                    'keydown',
+                    this.handleEscapeKey,
+                    true
+                );
+            } else {
+                this.ownerDocument!.removeEventListener(
+                    'keydown',
+                    this.handleEscapeKey,
+                    true
+                );
+            }
+        }
+
+        if (changes.has('isNarrow')) {
+            if (!this.isNarrow) {
+                this.open = false;
+                this.settings = false;
+            }
+        }
+
         if (loadStyleFragments) {
             lazyStyleFragment(this.color, this.theme);
             lazyStyleFragment(this.scale, this.theme);

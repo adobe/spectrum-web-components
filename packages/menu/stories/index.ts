@@ -11,6 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 
 export const MenuMarkup = ({
     size = 'm' as 's' | 'm' | 'l' | 'xl',

@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-split-button.css');
 
+:host > sp-menu {
+    display: none;
+}
+
 #button {
     --spectrum-splitbutton-flat-edge-padding: calc(
         var(--spectrum-button-edge-to-text) -
@@ -73,10 +77,6 @@ sp-button {
 /**
  * End workaround for SplitButton not natively supporting t-shirt sizes.
  */
-
-sp-popover {
-    display: none;
-}
 
 ::slotted(sp-menu) {
     display: none;

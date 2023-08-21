@@ -4,7 +4,7 @@ An `<overlay-trigger>` element supports the delivery of temporary overlay conten
 
 ### Placement
 
-When using the `placement` attribute of an `<overlay-trigger>` (`"top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"`), you can suggest to the overlay in which direction relative to the trigger that the content should display. When there is adequate room for the content to display in the specified direction, it will do so. When adequate room is not available, the overlaid content will calculate the direction in which it has the most room to be displayed and use that direction. When setting [type](#type) to `modal`, set `placement="none"` so the underlay covers the entire viewport. 
+When using the `placement` attribute of an `<overlay-trigger>` (`"top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"`), you can suggest to the overlay in which direction relative to the trigger that the content should display. When there is adequate room for the content to display in the specified direction, it will do so. When adequate room is not available, the overlaid content will calculate the direction in which it has the most room to be displayed and use that direction. When setting [type](#type) to `modal`, set `placement="none"` so the underlay covers the entire viewport.
 
 ### Type
 
@@ -115,79 +115,6 @@ The delivery of hover content can be customized via the `placement` attribute. H
         Hover Content
     </sp-tooltip>
 </overlay-trigger>
-```
-
-## Styling
-
-Content that is thrown into an overlay (e.g. `[slot="*-content"]`) will be moved out of the CSS scope created by its parent `<overlay-trigger>` and other related elements within the same DOM/shadow tree. In this way styling rules that rely on that scope will not travel with the content into its overlay context. In order to ensure that your overlay content is styled as you would like you will need to bind those styles by applying them inline, including a `<style>` element _inside_ of your content element, or by making your content its own custom element.
-
-**Inline Styles**
-
-```html
-<overlay-trigger placement="top-start">
-    <sp-button slot="trigger" variant="primary">Trigger Element</sp-button>
-    <div
-        slot="click-content"
-        style="
-        background-color: var(--spectrum-gray-50);
-        color: var(--spectrum-gray-800);
-        border: 1px solid;
-        padding: 2em;
-    "
-    >
-        This content is delivered with inline styles.
-    </div>
-</overlay-trigger>
-```
-
-**Style Element**
-
-```html
-<overlay-trigger placement="top-start">
-    <sp-button slot="trigger" variant="primary">Trigger Element</sp-button>
-    <div slot="click-content" id="styled-content">
-        <style>
-            #styled-content {
-                background-color: var(--spectrum-gray-50);
-                color: var(--spectrum-gray-800);
-                border: 1px solid;
-                padding: 2em;
-            }
-        </style>
-        This content is delivered with a style element defining its styles.
-    </div>
-</overlay-trigger>
-```
-
-**Custom Element**
-
-```html
-<overlay-trigger placement="top-start">
-    <sp-button slot="trigger" variant="primary">Trigger Element</sp-button>
-    <styled-element slot="click-content">
-        This content is delivered as its own custom element.
-    </styled-element>
-</overlay-trigger>
-<script>
-    class StyledElement extends HTMLElement {
-        constructor() {
-            super();
-            this.attachShadow({ mode: 'open' });
-            this.shadowRoot.innerHTML = `
-                <style>
-                    :host {
-                        background-color: var(--spectrum-gray-50);
-                        color: var(--spectrum-gray-800);
-                        border: 1px solid;
-                        padding: 2em;
-                    }
-                </style>
-                <slot></slot>
-            `;
-        }
-    }
-    customElements.define('styled-element', StyledElement);
-</script>
 ```
 
 ## Accessibility

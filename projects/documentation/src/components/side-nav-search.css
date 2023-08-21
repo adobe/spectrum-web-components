@@ -7,6 +7,15 @@ sp-search {
     --spectrum-alias-single-line-width: 100%;
 }
 
-#search-container sp-popover {
-    display: none;
+#search-results-menu {
+    width: 250px;
+    max-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+}
+
+sp-illustrated-message {
+    flex: 1 1;
+    margin-bottom: 2em;
+    color: var(--spectrum-global-color-gray-800);
 }

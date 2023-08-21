@@ -112,11 +112,12 @@ export const wrapperDismissable = (
     return html`
         <sp-dialog-wrapper
             ?open=${open}
-            hero=${landscape}
+            .hero=${landscape}
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
             @close=${handleClose(args)}
             size="s"
+            tabindex="0"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -173,7 +174,6 @@ export const form = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >
@@ -260,7 +260,6 @@ export const longContent = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >
@@ -538,7 +537,6 @@ export const tooltips = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >
