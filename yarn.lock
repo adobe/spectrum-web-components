@@ -5591,10 +5591,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-9.1.0.tgz#209b2397da9c1304b3b0e538025afcb5c29dc26b"
   integrity sha512-/DheKxtmvoAZneAs1Dql+1waSqCxTFIEAfzaPCaQvAYg+ctW9NhXMZjGz5cRbHTzCmeuE6reuCLfuFput9Z7bQ==
 
-"@spectrum-css/tokens@11.2.0-alpha.0":
-  version "11.2.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-11.2.0-alpha.0.tgz#6ed4c1aa8956f6de5af1ecba6721114a7629b85a"
-  integrity sha512-6xbvhHeeW14Ju7WX/P/2flyexNm0CKVU0Ax+oOiSiRjG0l5agmHxFCF4l0IBX23KLKjdfSOQGRAZd4SFL3YUhA==
+"@spectrum-css/tokens@11.2.1":
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-11.2.1.tgz#89b7023a2b0d8f42b07cebf6e7bfe46782a2e10f"
+  integrity sha512-HfiUz5AZooNMxXpwHI6M/y35F6tT5RD1d7Hr6jP+fAu/wYCOj/n1hPO9UjBRVNRNUCr0qXHAvzRPYqCK6/W22Q==
 
 "@spectrum-css/tooltip@^5.1.3":
   version "5.1.3"

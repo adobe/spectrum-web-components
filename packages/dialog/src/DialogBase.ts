@@ -177,14 +177,12 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                       ></sp-underlay>
                   `
                 : html``}
-            <div class="modal-wrapper">
-                <div
-                    class="modal ${this.mode}"
-                    @transitionend=${this.handleModalTransitionend}
-                    @close=${this.handleClose}
-                >
-                    ${this.renderDialog()}
-                </div>
+            <div
+                class="modal ${this.mode}"
+                @transitionend=${this.handleModalTransitionend}
+                @close=${this.handleClose}
+            >
+                ${this.renderDialog()}
             </div>
         `;
     }

@@ -29,9 +29,9 @@
             "development": "./src/AlertDialog.dev.js",
             "default": "./src/AlertDialog.js"
         },
-        "./src/AlertDialogBase.js": {
-            "development": "./src/AlertDialogBase.dev.js",
-            "default": "./src/AlertDialogBase.js"
+        "./src/AlertDialogWrapper.js": {
+            "development": "./src/AlertDialogWrapper.dev.js",
+            "default": "./src/AlertDialogWrapper.js"
         },
         "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
         "./src/index.js": {
@@ -42,9 +42,9 @@
             "development": "./sp-alert-dialog.dev.js",
             "default": "./sp-alert-dialog.js"
         },
-        "./sp-alert-dialog-base.js": {
-            "development": "./sp-alert-dialog-base.dev.js",
-            "default": "./sp-alert-dialog-base.js"
+        "./sp-alert-dialog-wrapper.js": {
+            "development": "./sp-alert-dialog-wrapper.dev.js",
+            "default": "./sp-alert-dialog-wrapper.js"
         }
     },
     "scripts": {

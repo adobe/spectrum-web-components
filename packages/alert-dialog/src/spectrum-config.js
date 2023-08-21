@@ -34,7 +34,7 @@ const config = {
                     'variant'
                 ),
                 converter.classToClass('spectrum-AlertDialog-header', 'header'),
-                converter.classToClass(
+                converter.classToSlotted(
                     'spectrum-AlertDialog-heading',
                     'heading'
                 ),

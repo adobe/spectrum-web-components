@@ -16,14 +16,13 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
-import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
-import '@spectrum-web-components/alert-dialog/sp-alert-dialog-base.js';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog-wrapper.js';
 
 import { overlayTriggerDecorator } from '../../dialog/stories/index.js';
 
 export default {
     title: 'Alert Dialog',
-    component: 'sp-alert-dialog',
+    component: 'sp-alert-dialog-wrapper',
     argTypes: {
         onClose: { action: 'close' },
         onConfirm: { action: 'confirm' },
@@ -78,7 +77,7 @@ export const confirmation = (
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
-            <sp-alert-dialog
+            <sp-alert-dialog-wrapper
                 slot="click-content"
                 variant="confirmation"
                 underlay
@@ -102,7 +101,7 @@ export const confirmation = (
             >
                 Smart filters are nondestructive and will preserve your original
                 images.
-            </sp-alert-dialog>
+            </sp-alert-dialog-wrapper>
         </overlay-trigger>
     `;
 };
@@ -122,7 +121,7 @@ export const information = (
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
-            <sp-alert-dialog
+            <sp-alert-dialog-wrapper
                 slot="click-content"
                 variant="information"
                 underlay
@@ -146,7 +145,7 @@ export const information = (
             >
                 Please connect to wifi to sync your projects or go to Settings
                 to change your prefernces.
-            </sp-alert-dialog>
+            </sp-alert-dialog-wrapper>
         </overlay-trigger>
     `;
 };
@@ -166,7 +165,7 @@ export const warning = (
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
-            <sp-alert-dialog
+            <sp-alert-dialog-wrapper
                 slot="click-content"
                 variant="warning"
                 underlay
@@ -190,7 +189,7 @@ export const warning = (
             >
                 This format has not been verified and may not be viewable for
                 some users. Do you want to continue publishing?
-            </sp-alert-dialog>
+            </sp-alert-dialog-wrapper>
         </overlay-trigger>
     `;
 };
@@ -210,7 +209,7 @@ export const error = (
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
-            <sp-alert-dialog
+            <sp-alert-dialog-wrapper
                 slot="click-content"
                 variant="error"
                 underlay
@@ -227,7 +226,7 @@ export const error = (
             >
                 An error occured while sharing your project. Please verify the
                 email address and try again.
-            </sp-alert-dialog>
+            </sp-alert-dialog-wrapper>
         </overlay-trigger>
     `;
 };
@@ -247,7 +246,7 @@ export const destructive = (
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
-            <sp-alert-dialog
+            <sp-alert-dialog-wrapper
                 slot="click-content"
                 variant="destructive"
                 underlay
@@ -270,7 +269,7 @@ export const destructive = (
                 }}
             >
                 Are you sure you want to delete the 3 selected documents?
-            </sp-alert-dialog>
+            </sp-alert-dialog-wrapper>
         </overlay-trigger>
     `;
 };
@@ -290,7 +289,7 @@ export const secondary = (
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
-            <sp-alert-dialog
+            <sp-alert-dialog-wrapper
                 slot="click-content"
                 variant="secondary"
                 underlay
@@ -320,7 +319,7 @@ export const secondary = (
                 }}
             >
                 If you enjoy our app, would you mind taking a moment to rate it?
-            </sp-alert-dialog>
+            </sp-alert-dialog-wrapper>
         </overlay-trigger>
     `;
 };
@@ -340,7 +339,7 @@ export const scroll = (
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
-            <sp-alert-dialog
+            <sp-alert-dialog-wrapper
                 slot="click-content"
                 variant="scroll"
                 underlay
@@ -461,7 +460,7 @@ export const scroll = (
                     sem sit amet enim. Nam sed tellus id magna elementum
                     tincidunt. In enim a arcu imperdiet malesuada.
                 </p>
-            </sp-alert-dialog>
+            </sp-alert-dialog-wrapper>
         </overlay-trigger>
     `;
 };

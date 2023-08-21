@@ -1,6 +1,6 @@
 ## Description
 
-`sp-alert-dialog` supplies an attribute based interface for the managed custmization of an `sp-dialog` element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an `sp-underlay` element between your page content and the `sp-dialog` that opens over it.
+`sp-alert-dialog-wrapper` supplies an attribute based interface for the managed custmization of an `sp-alert-dialog` element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an `sp-underlay` element between your page content and the `sp-alert-dialog` that opens over it.
 
 ### Usage
 
@@ -11,10 +11,10 @@
 yarn add @spectrum-web-components/alert-dialog
 ```
 
-Import the side effectful registration of `<sp-alert-dialog>` via:
+Import the side effectful registration of `<sp-alert-dialog-wrapper>` via:
 
 ```
-import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog-wrapper.js';
 ```
 
 When looking to leverage the `AlertDialog` base class as a type and/or for extension purposes, do so via:
@@ -31,7 +31,7 @@ This is the default variant for alert dialogs. Use a confirmation variant for as
 
 ```html
 <overlay-trigger type="modal" placement="none">
-    <sp-alert-dialog
+    <sp-alert-dialog-wrapper
         variant="confirmation"
         slot="click-content"
         headline="Enable Smart Filters?"
@@ -40,7 +40,7 @@ This is the default variant for alert dialogs. Use a confirmation variant for as
         underlay
     >
         Smart filters are nondestructive and will preserve your original images.
-    </sp-alert-dialog>
+    </sp-alert-dialog-wrapper>
     <sp-button
         slot="trigger"
         variant="primary"
@@ -48,7 +48,7 @@ This is the default variant for alert dialogs. Use a confirmation variant for as
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
             function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
@@ -70,7 +70,7 @@ Information alert dialogs communicate important information that a user needs to
 
 ```html
 <overlay-trigger type="modal" placement="none">
-    <sp-alert-dialog
+    <sp-alert-dialog-wrapper
         variant="information"
         slot="click-content"
         headline="Connect to wifi"
@@ -80,7 +80,7 @@ Information alert dialogs communicate important information that a user needs to
     >
         Please connect to wifi to sync your projects or go to Settings to change
         your prefernces.
-    </sp-alert-dialog>
+    </sp-alert-dialog-wrapper>
     <sp-button
         slot="trigger"
         variant="primary"
@@ -88,7 +88,7 @@ Information alert dialogs communicate important information that a user needs to
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
             function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
@@ -110,7 +110,7 @@ Warning alert dialogs communicate important information to users in relation to 
 
 ```html
 <overlay-trigger type="modal" placement="none">
-    <sp-alert-dialog
+    <sp-alert-dialog-wrapper
         variant="warning"
         slot="click-content"
         headline="Unverified format"
@@ -120,7 +120,7 @@ Warning alert dialogs communicate important information to users in relation to 
     >
         This format has not been verified and may not be viewable for some
         users. Do you want to continue publishing?
-    </sp-alert-dialog>
+    </sp-alert-dialog-wrapper>
     <sp-button
         slot="trigger"
         variant="primary"
@@ -128,7 +128,7 @@ Warning alert dialogs communicate important information to users in relation to 
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
             function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
@@ -150,7 +150,7 @@ Error alert dialogs communicate critical information about an issue that a user 
 
 ```html
 <overlay-trigger type="modal" placement="none">
-    <sp-alert-dialog
+    <sp-alert-dialog-wrapper
         variant="error"
         slot="click-content"
         headline="Unable to share"
@@ -159,7 +159,7 @@ Error alert dialogs communicate critical information about an issue that a user 
     >
         An error occured while sharing your project. Please verify the email
         address and try again.
-    </sp-alert-dialog>
+    </sp-alert-dialog-wrapper>
     <sp-button
         slot="trigger"
         variant="primary"
@@ -167,7 +167,7 @@ Error alert dialogs communicate critical information about an issue that a user 
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
             function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
@@ -189,7 +189,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 ```html
 <overlay-trigger type="modal" placement="none">
-    <sp-alert-dialog
+    <sp-alert-dialog-wrapper
         variant="destructive"
         slot="click-content"
         headline="Delete 3 documents?"
@@ -198,7 +198,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
         underlay
     >
         Are you sure you want to delete the 3 selected documents?
-    </sp-alert-dialog>
+    </sp-alert-dialog-wrapper>
     <sp-button
         slot="trigger"
         variant="primary"
@@ -206,7 +206,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
             function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
@@ -228,7 +228,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
 
 ```html
 <overlay-trigger type="modal" placement="none">
-    <sp-alert-dialog
+    <sp-alert-dialog-wrapper
         variant="secondary"
         slot="click-content"
         headline="Rate this app"
@@ -238,7 +238,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
         underlay
     >
         If you enjoy our app, would you mind taking a moment to rate it?
-    </sp-alert-dialog>
+    </sp-alert-dialog-wrapper>
     <sp-button
         slot="trigger"
         variant="primary"
@@ -246,7 +246,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
             function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
@@ -266,7 +266,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
 
 ```html
 <overlay-trigger type="modal" placement="none">
-    <sp-alert-dialog
+    <sp-alert-dialog-wrapper
         variant="scroll"
         slot="click-content"
         headline="Lorem Ipsum"
@@ -359,7 +359,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
             tellus id magna elementum tincidunt. In enim a arcu imperdiet
             malesuada.
         </p>
-    </sp-alert-dialog>
+    </sp-alert-dialog-wrapper>
     <sp-button
         slot="trigger"
         variant="primary"
@@ -367,7 +367,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
             function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog> '${type}' event handled.`);
+                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);

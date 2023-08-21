@@ -10,4 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './AlertDialog.js';
-export * from './AlertDialogBase.js';
+export * from './AlertDialogWrapper.js';

@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { AlertDialogBase } from './src/AlertDialogBase.js';
+import { AlertDialogWrapper } from './src/AlertDialogWrapper.js';
 
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-defineElement('sp-alert-dialog-base', AlertDialogBase);
+defineElement('sp-alert-dialog-wrapper', AlertDialogWrapper);
 
 declare global {
     interface HTMLElementTagNameMap {
-        'sp-alert-dialog-base': AlertDialogBase;
+        'sp-alert-dialog-wrapper': AlertDialogWrapper;
     }
 }

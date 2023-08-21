@@ -95,4 +95,4 @@ import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
-import '@spectrum-web-components/alert-dialog/sp-alert-dialog-base.js';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog-wrapper.js';
