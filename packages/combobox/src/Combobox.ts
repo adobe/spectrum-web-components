@@ -52,6 +52,7 @@ export class Combobox extends Textfield {
         return [...super.styles, styles, chevronStyles];
     }
     _inputType = 'text';
+    _icon = true;
     /**
      * The currently active ComboboxItem descendent, when available.
      */
@@ -522,15 +523,19 @@ export class Combobox extends Textfield {
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
         return html`
-            <sp-field-label
-                id="label"
-                for="input"
-                side-aligned=${ifDefined(
-                    this.labelPosition ? 'start' : undefined
-                )}
-            >
-                <slot name="label">${this.label}</slot>
-            </sp-field-label>
+            ${this._icon
+                ? html`
+                      <sp-field-label
+                          id="label"
+                          for="input"
+                          side-aligned=${ifDefined(
+                              this.labelPosition ? 'start' : undefined
+                          )}
+                      >
+                          <slot name="label">${this.label}</slot>
+                      </sp-field-label>
+                  `
+                : ''}
             ${super.render()}
             <sp-picker-button
                 aria-controls="listbox-menu"
