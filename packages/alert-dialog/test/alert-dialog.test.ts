@@ -18,13 +18,15 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
 import {
     AlertDialog,
-    AlertDialogBase,
+    alertDialogVariants,
+    AlertDialogWrapper,
 } from '@spectrum-web-components/alert-dialog';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
 import {
     confirmation,
     destructive,
+    information,
     secondary,
     warning,
 } from '../stories/alert-dialog.stories.js';
@@ -45,13 +47,12 @@ async function styledFixture<T extends Element>(
 
 describe('AlertDialog', () => {
     it('does not recycle applied content ids', async () => {
-        const el = await fixture<AlertDialogBase>(html`
+        const el = await fixture<AlertDialogWrapper>(html`
             <sp-alert-dialog>
                 <h2 slot="heading">Disclaimer</h2>
                 <p>Initial paragraph.</p>
             </sp-alert-dialog>
         `);
-
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
@@ -68,17 +69,52 @@ describe('AlertDialog', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('validates variants', async () => {
+        const el = await fixture<AlertDialogWrapper>(
+            html`
+                <sp-alert-dialog-wrapper variant="invalid" open>
+                    This Alert Dialog validates variants.
+                </sp-alert-dialog-wrapper>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal('');
+
+        el.variant = alertDialogVariants[0];
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal(alertDialogVariants[0]);
+
+        el.variant = alertDialogVariants[0];
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal(alertDialogVariants[0]);
+    });
+    it('loads with underlay and headline accessibly', async () => {
+        const test = await styledFixture<OverlayTrigger>(information());
+        const el = test.querySelector(
+            'sp-alert-dialog-wrapper'
+        ) as AlertDialogWrapper;
+        await elementUpdated(el);
+        el.headline = 'I am a headline';
+        await elementUpdated(el);
+        await expect(el).to.be.accessible();
+    });
     it('renders with confirmation variant', async () => {
         const test = await styledFixture<OverlayTrigger>(confirmation());
-        const el = test.querySelector('sp-alert-dialog') as AlertDialog;
+        const el = test.querySelector(
+            'sp-alert-dialog-wrapper'
+        ) as AlertDialogWrapper;
         await elementUpdated(el);
         const dialog = el.shadowRoot.querySelector(
-            'sp-alert-dialog-base'
-        ) as AlertDialogBase;
-        expect(dialog).to.be.an.instanceOf(AlertDialogBase);
+            'sp-alert-dialog'
+        ) as AlertDialog;
+        expect(dialog).to.be.an.instanceOf(AlertDialog);
         const confirmButton = dialog.querySelector(
             'sp-button[variant="accent"]'
         ) as Button;
+        confirmButton.setAttribute('treatment', 'outline');
         expect(confirmButton).to.be.not.undefined;
         const expectedConfirmLabel = el.getAttribute('confirm-label');
         expect(confirmButton.textContent?.trim()).to.equal(
@@ -93,17 +129,23 @@ describe('AlertDialog', () => {
     });
     it('renders warning variant renders with an icon', async () => {
         const test = await styledFixture<OverlayTrigger>(warning());
-        const el = test.querySelector('sp-alert-dialog') as AlertDialog;
+        const el = test.querySelector(
+            'sp-alert-dialog-wrapper'
+        ) as AlertDialogWrapper;
         await elementUpdated(el);
         const dialog = el.shadowRoot.querySelector(
-            'sp-alert-dialog-base'
-        ) as AlertDialogBase;
-        const alertIcon = dialog.querySelector('sp-icon-alert') as IconAlert;
+            'sp-alert-dialog'
+        ) as AlertDialog;
+        const alertIcon = dialog.shadowRoot.querySelector(
+            'sp-icon-alert'
+        ) as IconAlert;
         expect(alertIcon).to.be.not.null;
     });
     it('does not dismiss via clicking the underlay :not([dismissable])', async () => {
         const test = await styledFixture<OverlayTrigger>(destructive());
-        const el = test.querySelector('sp-alert-dialog') as AlertDialog;
+        const el = test.querySelector(
+            'sp-alert-dialog-wrapper'
+        ) as AlertDialogWrapper;
         await elementUpdated(el);
         expect(el.open).to.be.true;
         const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
@@ -119,7 +161,9 @@ describe('AlertDialog', () => {
         const handleCancel = (): void => cancelSpy();
         const handleSecondary = (): void => secondarySpy();
         const test = await styledFixture<OverlayTrigger>(secondary());
-        const el = test.querySelector('sp-alert-dialog') as AlertDialog;
+        const el = test.querySelector(
+            'sp-alert-dialog-wrapper'
+        ) as AlertDialogWrapper;
         el.addEventListener('confirm', handleConfirm);
         el.addEventListener('cancel', handleCancel);
         el.addEventListener('secondary', handleSecondary);
