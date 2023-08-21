@@ -5599,7 +5599,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-9.1.0.tgz#209b2397da9c1304b3b0e538025afcb5c29dc26b"
   integrity sha512-/DheKxtmvoAZneAs1Dql+1waSqCxTFIEAfzaPCaQvAYg+ctW9NhXMZjGz5cRbHTzCmeuE6reuCLfuFput9Z7bQ==
 
-"@spectrum-css/tokens@11.2.1":
+"@spectrum-css/tokens@^11.2.0":
   version "11.2.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-11.2.1.tgz#89b7023a2b0d8f42b07cebf6e7bfe46782a2e10f"
   integrity sha512-HfiUz5AZooNMxXpwHI6M/y35F6tT5RD1d7Hr6jP+fAu/wYCOj/n1hPO9UjBRVNRNUCr0qXHAvzRPYqCK6/W22Q==
