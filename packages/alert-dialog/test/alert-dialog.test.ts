@@ -30,7 +30,6 @@ import {
     secondary,
     warning,
 } from '../stories/alert-dialog.stories.js';
-import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
 import { Underlay } from '@spectrum-web-components/underlay';
 import { spy } from 'sinon';
 
@@ -136,9 +135,7 @@ describe('AlertDialog', () => {
         const dialog = el.shadowRoot.querySelector(
             'sp-alert-dialog'
         ) as AlertDialog;
-        const alertIcon = dialog.shadowRoot.querySelector(
-            'sp-icon-alert'
-        ) as IconAlert;
+        const alertIcon = dialog.shadowRoot.querySelector('sp-icon-alert');
         expect(alertIcon).to.be.not.null;
     });
     it('does not dismiss via clicking the underlay :not([dismissable])', async () => {

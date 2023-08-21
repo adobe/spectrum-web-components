@@ -17,6 +17,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { DialogBase } from '@spectrum-web-components/dialog/src/DialogBase.js';
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
+import '@spectrum-web-components/button/sp-button.js';
 
 import { AlertDialog } from './AlertDialog.js';
 

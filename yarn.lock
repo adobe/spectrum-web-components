@@ -5630,7 +5630,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.35.0"
+  version "0.37.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
