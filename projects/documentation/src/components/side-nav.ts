@@ -36,9 +36,27 @@ export class SideNav extends LitElement {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    public toggle() {
+    public toggle(event: MouseEvent | KeyboardEvent) {
+        if (
+            event.type === 'keydown' &&
+            (event as KeyboardEvent).code !== 'Enter' &&
+            (event as KeyboardEvent).code !== 'Space'
+        ) {
+            return;
+        }
         this.open = !this.open;
     }
+
+    handleKeydown = (event: KeyboardEvent) => {
+        if (
+            event.code === 'Escape' &&
+            (event.target! as Element).closest(
+                '[role="listbox"],[role="menu"]'
+            ) === null
+        ) {
+            this.open = false;
+        }
+    };
 
     public override focus() {
         const target = document.querySelector(
@@ -82,8 +100,21 @@ export class SideNav extends LitElement {
     }
 
     override updated(changes: PropertyValues) {
-        if (changes.has('open') && !this.open && changes.get('open')) {
-            this.dispatchEvent(new Event('close'));
+        if (changes.has('open')) {
+            if (!this.open && changes.get('open')) {
+                this.dispatchEvent(new Event('close'));
+                this.ownerDocument.removeEventListener(
+                    'keydown',
+                    this.handleKeydown,
+                    true
+                );
+            } else if (this.open && !changes.get('open')) {
+                this.ownerDocument.addEventListener(
+                    'keydown',
+                    this.handleKeydown,
+                    true
+                );
+            }
         }
     }
 }

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/tags
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   added default focus in focus group ([1abe7e7](https://github.com/adobe/spectrum-web-components/commit/1abe7e7ecc74d9f1323474505e7a182b9aefda1b))
+-   added default focus in focus group ([cd59f18](https://github.com/adobe/spectrum-web-components/commit/cd59f180afacaa719c01a8001bf8a656b4bbcb80))
+-   added Mutation Observer in the tags workflow ([3af1861](https://github.com/adobe/spectrum-web-components/commit/3af1861a09aa7eac6cd4eb0dbb7cce8ab057efec))
+-   parentNode declaration ([c45fdc3](https://github.com/adobe/spectrum-web-components/commit/c45fdc364fa6142fa7847f9b21179787880702dd))
+-   removed mutation controller from tags and added to focusgroup ([aaa1bc0](https://github.com/adobe/spectrum-web-components/commit/aaa1bc04437585a0d8f30e885e076868ecb1defa))
+-   **tags:** delete functionality working ([60e6c2e](https://github.com/adobe/spectrum-web-components/commit/60e6c2e92e30c833d572d34ad6d41e94568a40d6))
+-   **tags:** performed the suggested changes ([6e3ef36](https://github.com/adobe/spectrum-web-components/commit/6e3ef36e8f423f08c2537eb2d075bec4118f2e86))
+-   **tags:** removed extra white spaces ([196bdae](https://github.com/adobe/spectrum-web-components/commit/196bdaef2fa5e2924676018b0ee147033237b32d))
+-   **tags:** some minor chnages ([36886fc](https://github.com/adobe/spectrum-web-components/commit/36886fc1fabecf23f99c5f23e8a9eae718f981b1))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/tags

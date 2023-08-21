@@ -83,7 +83,6 @@ export default {
             '**/overlay-stack.*',
             '**/overlay-utils.*',
             '**/OverlayPopover.*',
-            '**/topLayerOverTransforms.*',
         ],
         threshold: {
             statements: 98.5,
@@ -128,6 +127,7 @@ export default {
                 'packages/overlay/test/*.test.js',
                 'packages/picker/test/*.test.js',
                 'packages/split-button/test/*.test.js',
+                'packages/tooltip/test/*.test.js',
             ],
             browsers: [chromium, chromiumWithFlags, firefox, webkit],
         },

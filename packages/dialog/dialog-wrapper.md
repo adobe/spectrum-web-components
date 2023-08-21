@@ -29,7 +29,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 ### Small
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-dialog-wrapper
         slot="click-content"
         headline="Dialog title"
@@ -46,7 +46,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 ### Fullscreen Mode
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-dialog-wrapper
         slot="click-content"
         headline="Dialog title"
@@ -84,7 +84,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 ### Fullscreen Takeover Mode
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-dialog-wrapper
         slot="click-content"
         headline="Dialog title"

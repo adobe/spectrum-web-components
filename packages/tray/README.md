@@ -26,7 +26,7 @@ import { Tray } from '@spectrum-web-components/tray';
 ## Dialog
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-button slot="trigger" variant="secondary">Toggle tray</sp-button>
     <sp-tray slot="click-content">
         <sp-dialog size="s" dismissable>
@@ -40,7 +40,7 @@ import { Tray } from '@spectrum-web-components/tray';
 ## Menu
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-button slot="trigger" variant="secondary">Toggle menu</sp-button>
     <sp-tray slot="click-content">
         <sp-menu style="width: 100%">

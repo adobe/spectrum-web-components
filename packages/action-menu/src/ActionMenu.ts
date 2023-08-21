@@ -73,13 +73,17 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 id="button"
                 class="button"
                 size=${this.size}
-                @blur=${this.onButtonBlur}
-                @click=${this.onButtonClick}
-                @focus=${this.onButtonFocus}
+                @blur=${this.handleButtonBlur}
+                @click=${this.handleButtonClick}
+                @keydown=${{
+                    handleEvent: this.handleEnterKeydown,
+                    capture: true,
+                }}
                 ?disabled=${this.disabled}
             >
                 ${this.buttonContent}
             </sp-action-button>
+            ${this.renderMenu}
         `;
     }
 
