@@ -35,10 +35,11 @@ const config = {
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('is-focused', 'focused'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Picker--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Picker--sizeS', 's'],
-                        ['spectrum-Picker--sizeM', 'm'],
                         ['spectrum-Picker--sizeL', 'l'],
                         ['spectrum-Picker--sizeXL', 'xl'],
                     ],

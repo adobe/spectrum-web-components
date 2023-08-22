@@ -37,10 +37,11 @@ const config = {
                     ],
                     'side-aligned'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-FieldLabel--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-FieldLabel--sizeS', 's'],
-                        ['spectrum-FieldLabel--sizeM', 'm'],
                         ['spectrum-FieldLabel--sizeL', 'l'],
                         ['spectrum-FieldLabel--sizeXL', 'xl'],
                     ],

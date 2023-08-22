@@ -22,8 +22,8 @@ governing permissions and limitations under the License.
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
+:host,
 :host([size='l']),
-:host([size='m']),
 :host([size='xl']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-100

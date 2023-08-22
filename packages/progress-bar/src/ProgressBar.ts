@@ -34,7 +34,10 @@ import styles from './progress-bar.css.js';
  * @element sp-progress-bar
  */
 export class ProgressBar extends SizedMixin(
-    ObserveSlotText(SpectrumElement, '')
+    ObserveSlotText(SpectrumElement, ''),
+    {
+        noDefaultSize: true,
+    }
 ) {
     public static override get styles(): CSSResultArray {
         return [styles];

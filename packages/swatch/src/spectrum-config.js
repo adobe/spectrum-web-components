@@ -69,11 +69,12 @@ export default {
                     [['spectrum-Swatch--rectangle', 'rectangle']],
                     'shape'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Swatch--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Swatch--sizeXS', 'xs'],
                         ['spectrum-Swatch--sizeS', 's'],
-                        ['spectrum-Swatch--sizeM', 'm'],
                         ['spectrum-Swatch--sizeL', 'l'],
                     ],
                     'size'

@@ -36,10 +36,11 @@ const config = {
                 converter.classToAttribute('spectrum-Search--quiet', 'quiet'),
                 converter.classToId('spectrum-Search-clearButton', 'button'),
                 converter.classToId('spectrum-Search-textfield', 'textfield'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Search--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Search--sizeS', 's'],
-                        ['spectrum-Search--sizeM', 'm'],
                         ['spectrum-Search--sizeL', 'l'],
                         ['spectrum-Search--sizeXL', 'xl'],
                     ],

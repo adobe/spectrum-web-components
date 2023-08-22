@@ -98,34 +98,6 @@ governing permissions and limitations under the License.
     --spectrum-tag-content-color-disabled: var(
         --spectrum-disabled-content-color
     );
-    --spectrum-tag-icon-spacing-inline-end: var(--spectrum-text-to-visual-100);
-    --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-100);
-    --spectrum-tag-icon-spacing-block-start: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
-    --spectrum-tag-icon-spacing-block-end: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
-    --spectrum-tag-avatar-spacing-block-start: var(
-        --spectrum-tag-top-to-avatar-medium
-    );
-    --spectrum-tag-avatar-spacing-block-end: var(
-        --spectrum-tag-top-to-avatar-medium
-    );
-    --spectrum-tag-avatar-spacing-inline-end: var(
-        --spectrum-text-to-visual-100
-    );
-    --spectrum-tag-label-spacing-block: var(
-        --spectrum-component-top-to-text-100
-    );
-    --spectrum-tag-clear-button-spacing-inline-start: var(
-        --spectrum-text-to-visual-100
-    );
-    --spectrum-tag-height: var(--spectrum-component-height-100);
-    --spectrum-tag-font-size: var(--spectrum-font-size-100);
-    --spectrum-tag-clear-button-spacing-block: var(
-        --spectrum-tag-top-to-cross-icon-medium
-    );
 }
 :host([size='s']) {
     --spectrum-tag-height: var(--spectrum-component-height-75);
@@ -165,7 +137,7 @@ governing permissions and limitations under the License.
         --spectrum-tag-size-small-clear-button-spacing-inline-end
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-tag-height: var(--spectrum-component-height-100);
     --spectrum-tag-font-size: var(--spectrum-font-size-100);
     --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-100);

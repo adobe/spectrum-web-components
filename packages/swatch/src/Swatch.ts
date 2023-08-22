@@ -63,6 +63,7 @@ const dashIcon: Record<string, () => TemplateResult> = {
  */
 export class Swatch extends SizedMixin(Focusable, {
     validSizes: ['xs', 's', 'm', 'l'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles, dashStyles];

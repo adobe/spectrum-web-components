@@ -51,6 +51,7 @@ export type LongpressEvent = {
  */
 export class ActionButton extends SizedMixin(ButtonBase, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, cornerTriangleStyles];

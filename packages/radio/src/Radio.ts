@@ -35,7 +35,8 @@ import radioStyles from './radio.css.js';
  * @fires change - When the input is interacted with and its state is changed
  */
 export class Radio extends SizedMixin(
-    FocusVisiblePolyfillMixin(SpectrumElement)
+    FocusVisiblePolyfillMixin(SpectrumElement),
+    { noDefaultSize: true }
 ) {
     public static override get styles(): CSSResultArray {
         return [radioStyles];

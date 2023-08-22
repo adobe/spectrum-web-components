@@ -27,6 +27,7 @@ import styles from './divider.css.js';
  */
 export class Divider extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
+    noDefaultSize: true,
 }) {
     public static override styles: CSSResultArray = [styles];
 

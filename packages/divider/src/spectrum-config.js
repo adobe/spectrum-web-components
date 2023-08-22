@@ -27,10 +27,11 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Divider--vertical'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Divider--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Divider--sizeS', 's'],
-                        ['spectrum-Divider--sizeM', 'm'],
                         ['spectrum-Divider--sizeL', 'l'],
                     ],
                     'size'

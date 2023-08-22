@@ -254,7 +254,6 @@
     --spectrum-progress-bar-maximum-width: 768px;
     --spectrum-meter-minimum-width: 48px;
     --spectrum-meter-maximum-width: 768px;
-    --spectrum-meter-default-width: var(--spectrum-meter-width);
     --spectrum-in-line-alert-minimum-width: 240px;
     --spectrum-popover-tip-width: 16px;
     --spectrum-popover-tip-height: 8px;

@@ -46,7 +46,7 @@ export type ButtonTreatments = 'fill' | 'outline';
  * @slot - text label of the Button
  * @slot icon - The icon to use for Button
  */
-export class Button extends SizedMixin(ButtonBase) {
+export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
     }

@@ -35,7 +35,9 @@ import styles from './meter.css.js';
  *
  * @slot - text labeling the Meter
  */
-export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
+export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
