@@ -24,7 +24,6 @@ export default {
     title: 'Alert Dialog',
     component: 'sp-alert-dialog-wrapper',
     argTypes: {
-        onClose: { action: 'close' },
         onConfirm: { action: 'confirm' },
         onSecondary: { action: 'secondary' },
         onCancel: { action: 'cancel' },
@@ -32,17 +31,10 @@ export default {
 };
 
 type StoryArgs = {
-    onClose?: (event: Event) => void;
     onConfirm?: (event: Event) => void;
     onSecondary?: (event: Event) => void;
     onCancel?: (event: Event) => void;
 };
-
-const handleClose =
-    ({ onClose }: StoryArgs) =>
-    (event: Event) => {
-        if (onClose) onClose(event);
-    };
 
 const handleConfirm =
     ({ onConfirm }: StoryArgs) =>
@@ -68,11 +60,7 @@ export const confirmation = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
+        <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
@@ -84,7 +72,6 @@ export const confirmation = (
                 headline="Enable Smart Filters?"
                 confirm-label="Enable"
                 cancel-label="Cancel"
-                @close=${handleClose(args)}
                 @confirm=${({ target }: Event & { target: HTMLElement }) => {
                     target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
@@ -111,11 +98,7 @@ export const information = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
+        <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
@@ -127,7 +110,6 @@ export const information = (
                 headline="Connect to wifi"
                 confirm-label="Continue"
                 cancel-label="Cancel"
-                @close=${handleClose(args)}
                 @confirm=${({ target }: Event & { target: HTMLElement }) => {
                     target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
@@ -154,11 +136,7 @@ export const warning = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
+        <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
@@ -170,7 +148,6 @@ export const warning = (
                 headline="Unverified format"
                 confirm-label="Continue"
                 cancel-label="Cancel"
-                @close=${handleClose(args)}
                 @confirm=${({ target }: Event & { target: HTMLElement }) => {
                     target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
@@ -197,11 +174,7 @@ export const error = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
+        <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
@@ -212,7 +185,6 @@ export const error = (
                 ?open=${open}
                 headline="Unable to share"
                 confirm-label="Continue"
-                @close=${handleClose(args)}
                 @confirm=${({ target }: Event & { target: HTMLElement }) => {
                     target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
@@ -233,11 +205,7 @@ export const destructive = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
+        <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
@@ -249,7 +217,6 @@ export const destructive = (
                 headline="Delete 3 documents?"
                 confirm-label="Delete"
                 cancel-label="Cancel"
-                @close=${handleClose(args)}
                 @confirm=${({ target }: Event & { target: HTMLElement }) => {
                     target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
@@ -273,13 +240,9 @@ export const secondary = (
     args: StoryArgs = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
-    const open = context.viewMode === 'docs' ? undefined : 'click';
+    const open = context.viewMode === 'docs' ? false : true;
     return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
+        <overlay-trigger type="modal" ?open=${open}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
@@ -292,7 +255,6 @@ export const secondary = (
                 confirm-label="Rate now"
                 cancel-label="Remind me later"
                 secondary-label="No, thanks"
-                @close=${handleClose(args)}
                 @confirm=${({ target }: Event & { target: HTMLElement }) => {
                     target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
@@ -324,11 +286,7 @@ export const scroll = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger
-            type="modal"
-            @close=${handleClose(args)}
-            open=${ifDefined(open)}
-        >
+        <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
@@ -339,7 +297,6 @@ export const scroll = (
                 headline="Lorem Ipsum"
                 confirm-label="Continue"
                 cancel-label="Cancel"
-                @close=${handleClose(args)}
                 @confirm=${({ target }: Event & { target: HTMLElement }) => {
                     target.dispatchEvent(
                         new Event('close', {
