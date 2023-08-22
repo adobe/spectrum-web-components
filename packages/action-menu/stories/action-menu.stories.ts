@@ -18,6 +18,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionMenuMarkup } from './';
+import { makeOverBackground } from '../../button/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
@@ -25,6 +26,7 @@ import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
+    decorators: [makeOverBackground()],
     argTypes: {
         disabled: {
             name: 'disabled',
@@ -112,6 +114,19 @@ export default {
                 type: 'boolean',
             },
         },
+        staticValue: {
+            name: 'static',
+            type: { name: 'string', required: false },
+            description: 'The visual static variant to apply to the button.',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: undefined },
+            },
+            control: {
+                type: 'select',
+                options: ['white', 'black', undefined],
+            },
+        },
     },
     args: {
         visibleLabel: 'More Actions',
@@ -120,6 +135,7 @@ export default {
         quiet: false,
         tooltipDescription: '',
         tooltipPlacement: 'bottom',
+        static: undefined,
     },
 };
 
@@ -131,6 +147,7 @@ interface StoryArgs {
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
+    stati?: 'white' | 'black';
     tooltipDescription?: string | 'none';
     tooltipPlacement?: string | 'none';
 }
@@ -139,6 +156,18 @@ const Template = (args: StoryArgs = {}): TemplateResult =>
     ActionMenuMarkup(args);
 
 export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);
+
+export const staticWhite = (args: StoryArgs = {}): TemplateResult =>
+    Template(args);
+staticWhite.args = {
+    staticValue: 'white',
+};
+
+export const staticBlack = (args: StoryArgs = {}): TemplateResult =>
+    Template(args);
+staticBlack.args = {
+    staticValue: 'black',
+};
 
 export const quiet = (args: StoryArgs = {}): TemplateResult => Template(args);
 quiet.args = {
