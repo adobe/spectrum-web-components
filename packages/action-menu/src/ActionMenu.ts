@@ -74,6 +74,8 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 class="button"
                 size=${this.size}
                 @blur=${this.handleButtonBlur}
+                @pointerdown=${this.handleButtonPointerdown}
+                @focus=${this.handleButtonFocus}
                 @click=${this.handleButtonClick}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
