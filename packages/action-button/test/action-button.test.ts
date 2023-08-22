@@ -87,7 +87,22 @@ describe('ActionButton', () => {
         expect(el.tabIndex).to.equal(-1);
         expect(el.disabled).to.be.false;
     });
-    it('maintains a `size` attribute', async () => {
+    it('manages a `size` attribute', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button size="xl">Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.size).to.equal('xl');
+        expect(el.getAttribute('size')).to.equal('xl');
+        el.removeAttribute('size');
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
+    });
+    it('does not apply a default `size` attribute', async () => {
         const el = await fixture<ActionButton>(
             html`
                 <sp-action-button>Button</sp-action-button>
@@ -96,11 +111,7 @@ describe('ActionButton', () => {
 
         await elementUpdated(el);
         expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
-        el.removeAttribute('size');
-        await elementUpdated(el);
-        expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
     });
     it('dispatches `longpress` events when [hold-affordance]', async () => {
         const longpressSpy = spy();

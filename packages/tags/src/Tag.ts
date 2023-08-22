@@ -34,6 +34,7 @@ import styles from './tag.css.js';
  */
 export class Tag extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];

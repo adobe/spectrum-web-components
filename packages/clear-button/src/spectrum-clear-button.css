@@ -114,7 +114,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-infieldbutton-padding-s)
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-clearbutton-fill-uiicon-color-disabled: var(
         --spectrum-clearbutton-m-fill-uiicon-color-disabled,
         var(--spectrum-alias-component-icon-color-disabled)

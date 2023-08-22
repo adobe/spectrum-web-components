@@ -49,10 +49,11 @@ export default {
                     ],
                     'variant'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-StatusLight--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-StatusLight--sizeS', 's'],
-                        ['spectrum-StatusLight--sizeM', 'm'],
                         ['spectrum-StatusLight--sizeL', 'l'],
                         ['spectrum-StatusLight--sizeXL', 'xl'],
                     ],

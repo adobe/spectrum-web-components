@@ -60,7 +60,7 @@ export interface TableItem extends Record<string, unknown> {
 
 export class Table extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm'],
-    defaultSize: 'm',
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];

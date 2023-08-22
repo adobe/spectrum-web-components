@@ -12,15 +12,8 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
     --spectrum-fieldlabel-color: var(
         --spectrum-neutral-subdued-content-color-default
-    );
-    --spectrum-field-label-top-to-asterisk: var(
-        --spectrum-field-label-top-to-asterisk-medium
-    );
-    --spectrum-field-label-text-to-asterisk: var(
-        --spectrum-field-label-text-to-asterisk-medium
     );
     --spectrum-fieldlabel-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-fieldlabel-line-height: var(--spectrum-line-height-100);
@@ -44,7 +37,7 @@ governing permissions and limitations under the License.
         --spectrum-field-label-text-to-asterisk-small
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
     --spectrum-fieldlabel-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-fieldlabel-bottom-to-text: var(

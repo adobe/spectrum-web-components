@@ -47,7 +47,9 @@ type Labelable = Focusable & {
  *
  * @slot - text content of the label
  */
-export class FieldLabel extends SizedMixin(SpectrumElement) {
+export class FieldLabel extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles, asteriskIconStyles];
     }

@@ -31,11 +31,10 @@ const config = {
             fileName: 'table',
             components: [
                 converter.classToHost(),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Table--sizeM'),
                 ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Table--sizeS', 's'],
-                        ['spectrum-Table--sizeM', 'm'],
-                    ],
+                    [['spectrum-Table--sizeS', 's']],
                     'size'
                 ),
                 ...converter.enumerateAttributes(

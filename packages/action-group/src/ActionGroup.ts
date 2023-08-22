@@ -38,6 +38,7 @@ const EMPTY_SELECTION: string[] = [];
  */
 export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -374,7 +375,11 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             if (this.selects || !this.hasManaged) {
                 button.selected = this.selected.includes(button.value);
             }
-            if (this.size) {
+            if (
+                this.size &&
+                (this.size !== 'm' ||
+                    typeof changes?.get('size') !== 'undefined')
+            ) {
                 button.size = this.size;
             }
         });

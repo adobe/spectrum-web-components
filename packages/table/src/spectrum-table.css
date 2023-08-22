@@ -341,7 +341,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-border-size-thin)
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-table-compact-quiet-border-radius: var(
         --spectrum-table-m-compact-quiet-border-radius,
         var(--spectrum-global-dimension-static-size-0)

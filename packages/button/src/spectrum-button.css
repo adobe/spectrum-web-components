@@ -145,7 +145,7 @@ governing permissions and limitations under the License.
         --spectrum-button-bottom-to-text-small
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-button-min-width: calc(
         var(--spectrum-component-height-100) *
             var(--spectrum-button-minimum-width-multiplier)
