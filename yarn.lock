@@ -5605,9 +5605,9 @@
   integrity sha512-79f1PaU1ScjjS4W8F13vl+b0VWkD0Q+ScPTtFoeDTzOcnzPd0qfEqbi0KABvA1XSghTDEn1yIEcOgxgVo09kDQ==
 
 "@spectrum-css/typography@^5.0.32":
-  version "5.0.32"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.32.tgz#c65215a608a29726e692855894e17186fd61117e"
-  integrity sha512-UbwZ6ZkLGzWHHd2T91lWBSxXXcbjKcsR8J3FbU7g1Mu+McvijUTIL8D3/48Es4aYNjFS0nuhiAs//mF35h/DcA==
+  version "5.0.35"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.35.tgz#84359b647397f9562aa19bf37480d38a90a6c8c5"
+  integrity sha512-Nk6rmpYfugs9qoq+pZEGM6pobdM3BY9AS39IcWg2S3CbKU6VdFsW8HZnJ/IiKEMZeVj0vL0JS1IG/7G2iERekg==
 
 "@spectrum-css/underlay@^2.0.53":
   version "2.0.53"
