@@ -107,6 +107,46 @@ export const multipleSelect = (): TemplateResult => {
     `;
 };
 
+export const menuItemHasDescription = (): TemplateResult => {
+    return html`
+        <sp-menu>
+            <sp-menu-item>
+                <sp-icon-export slot="icon"></sp-icon-export>
+                Quick export
+                <span slot="description">Share a snapshot</span>
+            </sp-menu-item>
+            <sp-menu-item>
+                <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                Open a copy
+                <span slot="description">Illustrator for iPad</span>
+            </sp-menu-item>
+            <sp-menu-item>
+                <sp-icon-share slot="icon"></sp-icon-share>
+                Share link
+                <span slot="description">Enable comments and download</span>
+            </sp-menu-item>
+        </sp-menu>
+
+        <sp-popover open>
+            <sp-menu selects="multiple">
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item selected>
+                    Select Inverse
+                    <span slot="description">Enable inverse selection</span>
+                </sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item selected>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>
+                    Make Work Path
+                    <span slot="description">Create a reusable work path</span>
+                </sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
+};
+
 export const selectsWithIcons = (): TemplateResult => {
     return html`
         <sp-popover open>
@@ -122,6 +162,7 @@ export const selectsWithIcons = (): TemplateResult => {
                 <sp-menu-item>
                     <sp-icon-share slot="icon"></sp-icon-share>
                     Share link
+                    <span slot="description">Enable comments and download</span>
                 </sp-menu-item>
             </sp-menu>
         </sp-popover>
@@ -152,6 +193,13 @@ export const headersAndIcons = (): TemplateResult => {
                             slot="icon"
                         ></sp-icon-checkmark-circle>
                         Download
+                    </sp-menu-item>
+                    <sp-menu-item disabled>
+                        <sp-icon-checkmark-circle
+                            slot="icon"
+                        ></sp-icon-checkmark-circle>
+                        Share link
+                        <span slot="description">Enable comments</span>
                     </sp-menu-item>
                 </sp-menu-group>
             </sp-menu>

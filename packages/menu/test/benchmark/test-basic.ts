@@ -24,6 +24,10 @@ measureFixtureCreation(html`
             <sp-menu-item>Action 1</sp-menu-item>
             <sp-menu-item>Action 2</sp-menu-item>
             <sp-menu-item>Action 3</sp-menu-item>
+            <sp-menu-item selected>
+                Quick export
+                <span slot="description">Share a snapshot</span>
+            </sp-menu-item>
         </sp-menu-group>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-group selects="inherit">
