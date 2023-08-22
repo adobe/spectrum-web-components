@@ -5479,10 +5479,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-4.0.3.tgz#6f63e2259769cd56e613ad70271dca49d55a694e"
   integrity sha512-hbkTTQqANC0tux4SZGLE18VRYtkUGRxXo13x8xLVTbOUi4QVbLxX2DvE8tV6o4e/EfZTC2jzYgC/oJPDxUaQAg==
 
-"@spectrum-css/popover@7.0.0-beta.1":
-  version "7.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-7.0.0-beta.1.tgz#9678ba1094037d131d51fa7bf00fd42f6b6ec020"
-  integrity sha512-qcRyEhagmjh1Yva89If7YGyj0WxSPqzkuQ84HborQogWrejRej93nolPm0kKscUJGOZWoNq7nYoKWZRv31oE7A==
+"@spectrum-css/popover@7.0.0-beta.2":
+  version "7.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-7.0.0-beta.2.tgz#7fe5cce3f1ad21cb12ccdaca1e55e1dd76a5db2e"
+  integrity sha512-+u6ugWIrDTmbugg8EbfxlDv3o0P7/f7zItgrK7Z+uR8/h4pZCPuvHhrk8yTggTkCvbNOuSZ5UgVbnh+H0tO1dA==
 
 "@spectrum-css/progressbar@^3.0.61":
   version "3.0.61"
