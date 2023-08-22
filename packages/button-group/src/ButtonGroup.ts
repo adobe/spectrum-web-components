@@ -26,7 +26,9 @@ import styles from './button-group.css.js';
  * @element sp-button-group
  * @slot - the sp-button elements that make up the group
  */
-export class ButtonGroup extends SizedMixin(SpectrumElement) {
+export class ButtonGroup extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -34,9 +36,11 @@ export class ButtonGroup extends SizedMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
-    protected handleSlotchange({ target: slot }: Event & { target: HTMLSlotElement }): void {
+    protected handleSlotchange({
+        target: slot,
+    }: Event & { target: HTMLSlotElement }): void {
         const assignedElements = slot.assignedElements() as Button[];
-        assignedElements.forEach(button => {
+        assignedElements.forEach((button) => {
             button.size = this.size;
         });
     }

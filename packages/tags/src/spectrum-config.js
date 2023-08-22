@@ -66,10 +66,11 @@ const config = {
                     'spectrum-Tag--removable',
                     'deletable'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Tag--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Tag--sizeS', 's'],
-                        ['spectrum-Tag--sizeM', 'm'],
                         ['spectrum-Tag--sizeL', 'l'],
                     ],
                     'size'

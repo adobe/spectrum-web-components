@@ -48,10 +48,11 @@ const config = {
                 converter.classToAttribute('is-positive', 'positive'),
                 converter.classToAttribute('is-notice', 'notice'),
                 converter.classToAttribute('is-negative', 'negative'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-ProgressBar--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ProgressBar--sizeS', 's'],
-                        ['spectrum-ProgressBar--sizeM', 'm'],
                         ['spectrum-ProgressBar--sizeL', 'l'],
                         ['spectrum-ProgressBar--sizeXL', 'xl'],
                     ],

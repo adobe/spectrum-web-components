@@ -381,10 +381,11 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-selectable', 'selects'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Menu--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Menu--sizeS', 's'],
-                        ['spectrum-Menu--sizeM', 'm'],
                         ['spectrum-Menu--sizeL', 'l'],
                         ['spectrum-Menu--sizeXL', 'xl'],
                     ],

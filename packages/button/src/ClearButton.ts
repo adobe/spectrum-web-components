@@ -58,7 +58,9 @@ const crossIcon: Record<string, () => TemplateResult> = {
  * @slot - text label of the Clear Button
  * @slot icon - The icon to use for Clear Button
  */
-export class ClearButton extends SizedMixin(StyledButton) {
+export class ClearButton extends SizedMixin(StyledButton, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, crossMediumStyles];
     }

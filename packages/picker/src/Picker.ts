@@ -57,7 +57,7 @@ const chevronClass = {
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
-export class PickerBase extends SizedMixin(Focusable) {
+export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
     static instanceCount = 0;
