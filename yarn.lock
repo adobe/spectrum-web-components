@@ -5435,9 +5435,9 @@
   integrity sha512-iDyPS5ZiZ6Omb1KrBOuSLQVNR0Z8nkLCtNTugIayBQSXGyCJiTyYRxmF2Pop+EKapUkw6tP9P8aw6MwVtOWmQg==
 
 "@spectrum-css/helptext@^4.0.46":
-  version "4.0.46"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-4.0.46.tgz#4e8c5ea184e7711545dfde92f33b28485aa316dd"
-  integrity sha512-0jBDIrlkFsuZniHaJgFD8lX2mHZdCsQvdckDBD8gFkqarcgtpUbOFwNAKBy+ORRKWz1yxUJla+txjt/ulM7yNA==
+  version "4.0.49"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-4.0.49.tgz#c8dafbe6759174d0accd5d084bf0806b0e9f6291"
+  integrity sha512-R1Ka2NfoVEvrnSH9ahM5RpH9Iz7hhgZhW0HRrYvKybu6ex7r3Y9IPARDCQOK/wOvnRoFbmQ5ekYm9BX9g4a1BQ==
 
 "@spectrum-css/icon@^3.0.50":
   version "3.0.50"
@@ -5620,7 +5620,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.35.0"
+  version "0.37.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
