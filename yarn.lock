@@ -5354,10 +5354,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-6.0.9.tgz#c260af92a2e31c8b58998d2bba3f4cd0e391a7f2"
   integrity sha512-j723BdCFW1+mz+4OMvKCOTp4QDbOz3NVHmEq9ypcfch0X1Po7bFBHTdZ28qPp/rtN7MflfTD2/9CN5M/PYKRCQ==
 
-"@spectrum-css/checkbox@^6.1.10":
-  version "6.1.10"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-6.1.10.tgz#7349cfe58c75d4e7dc6cb9228cdf72ae3bbf02bd"
-  integrity sha512-v1Of5dB2vkB1ZBRPR5Y/AMk/G1vkL6EeQI8m35/s4Jo98Pl70UzgDxZ822ke+3n6mPULJ2KZi5fK5+jnAHcOKQ==
+"@spectrum-css/checkbox@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-7.0.5.tgz#2715e47973100bc2e415c87f2b4a4186164a1db8"
+  integrity sha512-NaJdxC7ND/9+BodSk87reaJ6/II4ThvSuA4/ITdb7/jzDgD79jSbdeOwBPdoxXdam3oJ/fN/nRlgh2fnnxM2Cg==
 
 "@spectrum-css/clearbutton@^1.2.38":
   version "1.2.38"
@@ -5620,7 +5620,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.35.0"
+  version "0.37.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
