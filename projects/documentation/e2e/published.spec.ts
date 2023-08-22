@@ -13,7 +13,8 @@ import { expect, Page, test } from '@playwright/test';
 
 test.describe('search and go', () => {
     const startURL = 'https://opensource.adobe.com/spectrum-web-components/';
-    const menuSelector = 'active-overlay > sp-popover > sp-menu';
+    const menuSelector =
+        '#search-container sp-overlay[open] > sp-popover > sp-menu > sp-menu-group:nth-child(1)';
     const searchFor = async (
         searchString: string,
         page: Page
