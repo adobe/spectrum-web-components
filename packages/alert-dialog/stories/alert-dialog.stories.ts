@@ -240,9 +240,9 @@ export const secondary = (
     args: StoryArgs = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
-    const open = context.viewMode === 'docs' ? false : true;
+    const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger type="modal" ?open=${open}>
+        <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog
             </sp-button>
