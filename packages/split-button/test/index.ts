@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
-    fixture,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
@@ -32,6 +32,8 @@ import moreDefaults, {
 import type { Button } from '@spectrum-web-components/button';
 import type { MenuItem } from '@spectrum-web-components/menu';
 import type { SplitButton } from '@spectrum-web-components/split-button';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { fixture } from '../../../test/testing-helpers.js';
 
 export function runSplitButtonTests(
     wrapInDiv: (storyArgument: TemplateResult) => TemplateResult,
@@ -233,6 +235,61 @@ export function runSplitButtonTests(
         expect(trigger).to.have.attribute('aria-expanded', 'false');
         expect(trigger).not.to.have.attribute('aria-controls');
     });
+
+    it('[type="field"] opens, then closes, on subsequent clicks', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(
+                field({
+                    ...fieldDefaults.args,
+                    ...field.args,
+                })
+            )
+        );
+        const el = test.querySelector('sp-split-button') as SplitButton;
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        const { trigger } = el as unknown as { trigger: HTMLButtonElement };
+        const rect = trigger.getBoundingClientRect();
+
+        const open = oneEvent(el, 'sp-opened');
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await open;
+
+        expect(el.open).to.be.true;
+        await aTimeout(50);
+        expect(el.open).to.be.true;
+
+        const close = oneEvent(el, 'sp-closed');
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await close;
+
+        expect(el.open).to.be.false;
+        await aTimeout(50);
+        expect(el.open).to.be.false;
+    });
+
     it('[type="more"] toggles open/close multiple time', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(more({ ...moreDefaults.args, ...more.args }))
@@ -279,6 +336,56 @@ export function runSplitButtonTests(
         expect(trigger).to.have.attribute('aria-expanded', 'false');
         expect(trigger).not.to.have.attribute('aria-controls');
     });
+
+    it('[type="more"] opens, then closes, on subsequent clicks', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(more({ ...moreDefaults.args, ...more.args }))
+        );
+        const el = test.querySelector('sp-split-button') as SplitButton;
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        const { trigger } = el as unknown as { trigger: HTMLButtonElement };
+        const rect = trigger.getBoundingClientRect();
+
+        const open = oneEvent(el, 'sp-opened');
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await open;
+
+        expect(el.open).to.be.true;
+        await aTimeout(50);
+        expect(el.open).to.be.true;
+
+        const close = oneEvent(el, 'sp-closed');
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await close;
+
+        expect(el.open).to.be.false;
+        await aTimeout(50);
+        expect(el.open).to.be.false;
+    });
+
     it('receives "focus()"', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(
