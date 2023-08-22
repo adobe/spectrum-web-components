@@ -51,4 +51,7 @@
     --spectrum-sidenav-heading-top-margin: 24px; /* TODO replace with var(--spectrum-side-navigation-item-to-header); once token is updated */
     --spectrum-sidenav-heading-bottom-margin: 8px; /* TODO replace with var(--spectrum-side-navigation-item-to-header); once token is added */
     --spectrum-sidenav-bottom-to-label: 8px; /* TODO replace with updated var(--spectrum-component-bottom-to-text-100); */
+
+    --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
+    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
 }
