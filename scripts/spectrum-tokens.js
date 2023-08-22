@@ -83,6 +83,7 @@ const tokenPackages = [
     'pickerbutton',
     'sidenav',
     'table',
+    'underlay',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
