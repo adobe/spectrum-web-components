@@ -337,7 +337,6 @@ export class Calendar extends SpectrumElement {
 
     public handleDayClick(calendarDate: CalendarDate): void {
         this.selectedDate = calendarDate.toDate(this.timeZone);
-        this.setCurrentCalendarDate();
 
         this.dispatchEvent(
             new CustomEvent('change', {
