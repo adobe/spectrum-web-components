@@ -14,8 +14,8 @@ import { html, LitElement } from 'lit';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
-describe('Match Media', () => {
-    it('responds to media changes', async () => {
+describe('Element Resolution', () => {
+    it('responds to DOM changes', async () => {
         class TestEl extends LitElement {}
         if (!customElements.get('test-element-resolution-el')) {
             customElements.define('test-element-resolution-el', TestEl);
