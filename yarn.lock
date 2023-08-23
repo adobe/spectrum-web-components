@@ -3542,6 +3542,14 @@
     lit "^2.7.0"
     tslib "^2.0.3"
 
+"@lit-labs/virtualizer@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-2.0.6.tgz#3ed38af4e2d90cc026347d855b40ef30383ebfbe"
+  integrity sha512-c6WhQrND2wGhwJ/XRlgrcmSVl3mNFJpYSFEnCGaf+NCxlUQVVxiMkOyTYRsHiJegAjPX0NVNFajTXpfpWEpMtA==
+  dependencies:
+    lit "^2.8.0"
+    tslib "^2.0.3"
+
 "@lit/reactive-element@^1.0.0", "@lit/reactive-element@^1.1.0", "@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.6.0":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.6.2.tgz#c256690f82f2d7d0ffb0b1cdf68dcb1ec86cea28"
@@ -16553,6 +16561,13 @@ lit-html@^2.0.0, lit-html@^2.7.0:
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
+lit-html@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.8.0.tgz#96456a4bb4ee717b9a7d2f94562a16509d39bffa"
+  integrity sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==
+  dependencies:
+    "@types/trusted-types" "^2.0.2"
+
 lit@^2.0.0, lit@^2.0.2, lit@^2.5.0, lit@^2.7.0:
   version "2.7.6"
   resolved "https://registry.yarnpkg.com/lit/-/lit-2.7.6.tgz#810007b876ed43e0c70124de91831921598b1665"
@@ -16561,6 +16576,15 @@ lit@^2.0.0, lit@^2.0.2, lit@^2.5.0, lit@^2.7.0:
     "@lit/reactive-element" "^1.6.0"
     lit-element "^3.3.0"
     lit-html "^2.7.0"
+
+lit@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-2.8.0.tgz#4d838ae03059bf9cafa06e5c61d8acc0081e974e"
+  integrity sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA==
+  dependencies:
+    "@lit/reactive-element" "^1.6.0"
+    lit-element "^3.3.0"
+    lit-html "^2.8.0"
 
 load-json-file@^1.0.0:
   version "1.1.0"
