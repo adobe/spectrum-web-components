@@ -255,16 +255,18 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                     ${this.slotHasContent ? nothing : this.label}
                     <slot>${this.label}</slot>
                 </sp-field-label>
-                <output
+                <sp-field-label
                     class=${classMap({
                         'visually-hidden': valueLabelVisible,
                     })}
-                    id="value"
-                    aria-live="off"
-                    for="input"
+                    for=${this.editable
+                        ? 'number-field'
+                        : this.handleController.activeHandleInputId}
                 >
-                    ${this.ariaValueText}
-                </output>
+                    <output id="value" aria-live="off" for="input">
+                        ${this.ariaValueText}
+                    </output>
+                </sp-field-label>
             </div>
         `;
     }

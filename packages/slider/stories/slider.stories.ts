@@ -406,6 +406,13 @@ export const tick = (args: StoryArgs = {}): TemplateResult => {
             max="92"
             ...=${spreadProps(args)}
         ></sp-slider>
+        <sp-slider
+            label="Slider Label"
+            variant="tick"
+            min="0"
+            max="92"
+            ...=${spreadProps(args)}
+        ></sp-slider>
     `;
 };
 tick.args = {
@@ -415,6 +422,14 @@ tick.args = {
 
 export const tickLabels = (args: StoryArgs = {}): TemplateResult => {
     return html`
+        <sp-slider
+            label="Slider Label"
+            tick-labels
+            variant="tick"
+            min="50"
+            max="75"
+            ...=${spreadProps(args)}
+        ></sp-slider>
         <sp-slider
             label="Slider Label"
             tick-labels
