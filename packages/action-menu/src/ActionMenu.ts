@@ -44,7 +44,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public override selects: undefined | 'single' = undefined;
 
     @property({ type: String, reflect: true })
-    public static: 'white' | 'black' | 'none' = 'none';
+    public static: 'white' | 'black' | undefined = undefined;
 
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';

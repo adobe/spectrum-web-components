@@ -251,7 +251,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('can be `static`', async () => {
             const el = await actionMenuFixture();
 
-            expect(el.static == 'none').to.be.true;
+            expect(el.static == undefined).to.be.true;
 
             el.static = 'black';
             await elementUpdated(el);

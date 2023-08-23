@@ -124,6 +124,11 @@ export default {
             },
             control: {
                 type: 'select',
+                labels: {
+                    white: 'white',
+                    black: 'black',
+                    none: undefined,
+                },
                 options: ['white', 'black', 'none'],
             },
         },
@@ -135,7 +140,7 @@ export default {
         quiet: false,
         tooltipDescription: '',
         tooltipPlacement: 'bottom',
-        static: 'none',
+        static: undefined,
     },
 };
 
@@ -147,7 +152,7 @@ interface StoryArgs {
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
-    stati?: 'white' | 'black';
+    staticValue?: 'white' | 'black' | undefined;
     tooltipDescription?: string | 'none';
     tooltipPlacement?: string | 'none';
 }
