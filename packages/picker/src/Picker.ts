@@ -153,7 +153,7 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
 
-    protected handlebuttonPointerdown(): void {
+    protected handleButtonPointerdown(): void {
         this.preventNextToggle = 'maybe';
         const cleanup = (): void => {
             document.removeEventListener('pointerup', cleanup);
@@ -433,7 +433,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 id="button"
                 class="button"
                 @blur=${this.handleButtonBlur}
-                @pointerdown=${this.handlebuttonPointerdown}
+                @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
                 @click=${this.handleButtonClick}
                 @keydown=${{

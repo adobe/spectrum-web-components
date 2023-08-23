@@ -3542,6 +3542,14 @@
     lit "^2.7.0"
     tslib "^2.0.3"
 
+"@lit-labs/virtualizer@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-2.0.6.tgz#3ed38af4e2d90cc026347d855b40ef30383ebfbe"
+  integrity sha512-c6WhQrND2wGhwJ/XRlgrcmSVl3mNFJpYSFEnCGaf+NCxlUQVVxiMkOyTYRsHiJegAjPX0NVNFajTXpfpWEpMtA==
+  dependencies:
+    lit "^2.8.0"
+    tslib "^2.0.3"
+
 "@lit/reactive-element@^1.0.0", "@lit/reactive-element@^1.1.0", "@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.6.0":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.6.2.tgz#c256690f82f2d7d0ffb0b1cdf68dcb1ec86cea28"
@@ -5600,14 +5608,14 @@
   integrity sha512-ER4GUn+A4BvuZNTsJYw/TIefMMbms7HZ0HSoOTe4kwbq5C4zMnopd0PTa/oURMktz6Bz8JWZIoScRU88SWXVYQ==
 
 "@spectrum-css/tray@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.1.3.tgz#d1a581b8c0b51ec79ef91ff1cc3bf699d6112dbb"
-  integrity sha512-2cKv7DDN7lzNN4KvzY339nbpa3GVwef4bFU985UT7ns9qT54/i+t0cPSnmF4onBGxbuqUZSY++BY1KKJ7YBBqA==
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.1.6.tgz#a3b3bfab535f9364acaa63af1482fa4234ad669e"
+  integrity sha512-79f1PaU1ScjjS4W8F13vl+b0VWkD0Q+ScPTtFoeDTzOcnzPd0qfEqbi0KABvA1XSghTDEn1yIEcOgxgVo09kDQ==
 
 "@spectrum-css/typography@^5.0.32":
-  version "5.0.32"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.32.tgz#c65215a608a29726e692855894e17186fd61117e"
-  integrity sha512-UbwZ6ZkLGzWHHd2T91lWBSxXXcbjKcsR8J3FbU7g1Mu+McvijUTIL8D3/48Es4aYNjFS0nuhiAs//mF35h/DcA==
+  version "5.0.35"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.35.tgz#84359b647397f9562aa19bf37480d38a90a6c8c5"
+  integrity sha512-Nk6rmpYfugs9qoq+pZEGM6pobdM3BY9AS39IcWg2S3CbKU6VdFsW8HZnJ/IiKEMZeVj0vL0JS1IG/7G2iERekg==
 
 "@spectrum-css/underlay@^2.0.53":
   version "2.0.53"
@@ -5620,7 +5628,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.35.0"
+  version "0.37.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
@@ -16553,6 +16561,13 @@ lit-html@^2.0.0, lit-html@^2.7.0:
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
+lit-html@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.8.0.tgz#96456a4bb4ee717b9a7d2f94562a16509d39bffa"
+  integrity sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==
+  dependencies:
+    "@types/trusted-types" "^2.0.2"
+
 lit@^2.0.0, lit@^2.0.2, lit@^2.5.0, lit@^2.7.0:
   version "2.7.6"
   resolved "https://registry.yarnpkg.com/lit/-/lit-2.7.6.tgz#810007b876ed43e0c70124de91831921598b1665"
@@ -16561,6 +16576,15 @@ lit@^2.0.0, lit@^2.0.2, lit@^2.5.0, lit@^2.7.0:
     "@lit/reactive-element" "^1.6.0"
     lit-element "^3.3.0"
     lit-html "^2.7.0"
+
+lit@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-2.8.0.tgz#4d838ae03059bf9cafa06e5c61d8acc0081e974e"
+  integrity sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA==
+  dependencies:
+    "@lit/reactive-element" "^1.6.0"
+    lit-element "^3.3.0"
+    lit-html "^2.8.0"
 
 load-json-file@^1.0.0:
   version "1.1.0"
