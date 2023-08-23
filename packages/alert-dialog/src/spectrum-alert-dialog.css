@@ -80,7 +80,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-dialog-padding)
     );
 }
-.spectrum-Icon {
+.icon {
     block-size: var(
         --mod-alert-dialog-icon-size,
         var(--spectrum-alert-dialog-icon-size)
@@ -95,27 +95,27 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-dialog-title-to-icon)
     );
 }
-.spectrum-AlertDialog--warning {
+:host([variant='warning']) {
     --mod-icon-color: var(
         --mod-alert-dialog-warning-icon-color,
         var(--spectrum-alert-dialog-warning-icon-color)
     );
 }
-.spectrum-AlertDialog--error {
+:host([variant='error']) {
     --mod-icon-color: var(
         --mod-alert-dialog-error-icon-color,
         var(--spectrum-alert-dialog-error-icon-color)
     );
 }
-.spectrum-AlertDialog-grid {
+.grid {
     display: grid;
 }
-.spectrum-AlertDialog-header {
+.header {
     align-items: baseline;
     display: flex;
     justify-content: space-between;
 }
-.spectrum-AlertDialog-heading {
+::slotted([slot='heading']) {
     color: var(
         --mod-alert-dialog-title-color,
         var(--spectrum-alert-dialog-title-color)
@@ -146,7 +146,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-dialog-title-to-divider)
     );
 }
-.spectrum-AlertDialog-content {
+.content {
     -webkit-overflow-scrolling: touch;
     color: var(
         --mod-alert-dialog-body-color,
