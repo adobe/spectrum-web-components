@@ -16,6 +16,7 @@ import {
     html,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -72,18 +73,22 @@ describe('Overlay Trigger - accessible hover content management', () => {
             <div id="descriptor">I'm a description!</div>
         `);
 
-        await nextFrame();
-        await nextFrame();
-
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        const tooptip = el.querySelector(
+        const tooltip = el.querySelector(
             '[slot="hover-content"]'
         ) as HTMLElement;
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        await waitUntil(
+            () => tooltip.id,
+            'Tooltip never published an ID for itself'
+        );
 
         expect(trigger.getAttribute('aria-describedby')).to.equal(
-            `descriptor ${tooptip.id}`
+            `descriptor ${tooltip.id}`
         );
 
         trigger.remove();
@@ -106,13 +111,20 @@ describe('Overlay Trigger - accessible hover content management', () => {
         `);
 
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        const tooptip = el.querySelector(
+        const tooltip = el.querySelector(
             '[slot="hover-content"]'
         ) as HTMLElement;
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooptip.id);
+        await waitUntil(
+            () => tooltip.id,
+            'Tooltip never published an ID for itself'
+        );
+
+        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
 
         trigger.remove();
 
