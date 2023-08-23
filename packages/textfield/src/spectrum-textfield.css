@@ -1031,9 +1031,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-.input:read-only,
 :host([readonly]) #textfield .input,
-:host([readonly]) #textfield:hover .input {
+:host([readonly]) #textfield:hover .input,
+:host([readonly]) .input {
     background-color: #0000;
     border-color: #0000;
     color: var(
@@ -1045,9 +1045,9 @@ governing permissions and limitations under the License.
     );
     outline: none;
 }
-.input:read-only::placeholder,
 :host([readonly]) #textfield .input::placeholder,
-:host([readonly]) #textfield:hover .input::placeholder {
+:host([readonly]) #textfield:hover .input::placeholder,
+:host([readonly]) .input::placeholder {
     background-color: #0000;
     color: var(
         --highcontrast-textfield-text-color-readonly,
