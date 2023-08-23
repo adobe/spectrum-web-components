@@ -3567,10 +3567,10 @@
   resolved "https://registry.yarnpkg.com/@import-maps/resolve/-/resolve-1.0.1.tgz#1e9fcadcf23aa0822256a329aabca241879d37c9"
   integrity sha512-tWZNBIS1CoekcwlMuyG2mr0a1Wo5lb5lEHwwWvZo+5GLgr3e9LLDTtmgtCWEwBpXMkxn9D+2W9j2FY6eZQq0tA==
 
-"@internationalized/date@^3.2.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@internationalized/date/-/date-3.4.0.tgz#e843ac40b04afafe99fe0a41bae7abdd221a9a44"
-  integrity sha512-QUDSGCsvrEVITVf+kv9VSAraAmCgjQmU5CiXtesUBBhBe374NmnEIIaOFBZ72t29dfGMBP0zF+v6toVnbcc6jg==
+"@internationalized/date@^3.2.1":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@internationalized/date/-/date-3.3.0.tgz#90386d4b4e707f28507d1a1b3cc0e162ad5ee038"
+  integrity sha512-qfRd7jCIgUjabI8RxeAsxhLDRS1u8eUPX96GB5uBp1Tpm6YY6dVveE7YwsTEV6L4QOp5LKFirFHHGsL/XQwJIA==
   dependencies:
     "@swc/helpers" "^0.5.0"
 
@@ -6316,10 +6316,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.1.6.tgz#7997f2b4f6376f0717b4d1f238b1e8edf97203ee"
   integrity sha512-gvlw4Kf9oRi63zetm4O+s/fXFIICpG//AyaBws4s+GkSXjA0ym5hWJvMzmxXNib2hkrXL/wzXkfBoM4niA87lg==
 
-"@spectrum-css/calendar@^3.2.6":
-  version "3.2.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/calendar/-/calendar-3.2.7.tgz#10fd44176b6afbdf5baf29ce16728baa98b0d844"
-  integrity sha512-e2BGyuXzP+VOv0q855EIgrR+ne7e/EP8AMMuSAWazgq2fPZ4CoJIeLYP3tnniKnj2dlb3Gr1LH+6MPlUXS74RA==
+"@spectrum-css/calendar@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/calendar/-/calendar-4.0.3.tgz#3519942dd92d2c427f782bd1d174c42ec761185e"
+  integrity sha512-nwBNY8HxuC0ukFV9Wptdta3T06MOXgjSBKI46TCTgPdM9K4zf2OybgUV8bpV/dACeM7GUJmN1YeNOPpaLbYK+A==
 
 "@spectrum-css/card@^6.0.18":
   version "6.0.18"
