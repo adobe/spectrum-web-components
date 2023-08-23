@@ -107,7 +107,7 @@ export const multipleSelect = (): TemplateResult => {
     `;
 };
 
-export const menuItemHasDescription = (): TemplateResult => {
+export const menuItemWithDescription = (): TemplateResult => {
     return html`
         <sp-menu>
             <sp-menu-item>
