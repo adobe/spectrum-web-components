@@ -120,11 +120,11 @@ export default {
             description: 'The visual static variant to apply to the button.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: undefined },
+                defaultValue: { summary: 'none' },
             },
             control: {
                 type: 'select',
-                options: ['white', 'black', undefined],
+                options: ['white', 'black', 'none'],
             },
         },
     },
@@ -135,7 +135,7 @@ export default {
         quiet: false,
         tooltipDescription: '',
         tooltipPlacement: 'bottom',
-        static: undefined,
+        static: 'none',
     },
 };
 
