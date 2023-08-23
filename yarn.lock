@@ -5443,9 +5443,9 @@
   integrity sha512-iDyPS5ZiZ6Omb1KrBOuSLQVNR0Z8nkLCtNTugIayBQSXGyCJiTyYRxmF2Pop+EKapUkw6tP9P8aw6MwVtOWmQg==
 
 "@spectrum-css/helptext@^4.0.46":
-  version "4.0.46"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-4.0.46.tgz#4e8c5ea184e7711545dfde92f33b28485aa316dd"
-  integrity sha512-0jBDIrlkFsuZniHaJgFD8lX2mHZdCsQvdckDBD8gFkqarcgtpUbOFwNAKBy+ORRKWz1yxUJla+txjt/ulM7yNA==
+  version "4.0.50"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-4.0.50.tgz#fc7047260386f43025f9edc7d71032c0bdf638f7"
+  integrity sha512-mU0ABOkQtWCxd7Gd+TFl3Xw4KX1bihx36xjknjDepCvITdC4dALl+EvlwiHQ7KWWU3HaKZLHO47EZdlFFmJvrg==
 
 "@spectrum-css/icon@^3.0.50":
   version "3.0.50"
