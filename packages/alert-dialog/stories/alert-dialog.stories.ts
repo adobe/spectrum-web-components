@@ -62,7 +62,7 @@ export const confirmation = (
     return html`
         <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
+                Toggle Alert Dialog
             </sp-button>
             <sp-alert-dialog-wrapper
                 slot="click-content"
@@ -100,7 +100,7 @@ export const information = (
     return html`
         <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
+                Toggle Alert Dialog
             </sp-button>
             <sp-alert-dialog-wrapper
                 slot="click-content"
@@ -138,7 +138,7 @@ export const warning = (
     return html`
         <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
+                Toggle Alert Dialog
             </sp-button>
             <sp-alert-dialog-wrapper
                 slot="click-content"
@@ -176,7 +176,7 @@ export const error = (
     return html`
         <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
+                Toggle Alert Dialog
             </sp-button>
             <sp-alert-dialog-wrapper
                 slot="click-content"
@@ -207,7 +207,7 @@ export const destructive = (
     return html`
         <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
+                Toggle Alert Dialog
             </sp-button>
             <sp-alert-dialog-wrapper
                 slot="click-content"
@@ -244,7 +244,7 @@ export const secondary = (
     return html`
         <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
+                Toggle Alert Dialog
             </sp-button>
             <sp-alert-dialog-wrapper
                 slot="click-content"
@@ -288,7 +288,7 @@ export const scroll = (
     return html`
         <overlay-trigger type="modal" open=${ifDefined(open)}>
             <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
+                Toggle Alert Dialog
             </sp-button>
             <sp-alert-dialog-wrapper
                 slot="click-content"

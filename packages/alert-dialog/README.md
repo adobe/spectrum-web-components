@@ -31,6 +31,8 @@ This is the default variant for alert dialogs. Use a confirmation variant for as
 
 ```html
 <overlay-trigger type="modal">
+    <sp-button variant="primary" slot="trigger">Toggle Alert Dialog</sp-button>
+
     <sp-alert-dialog-wrapper
         variant="confirmation"
         slot="click-content"
@@ -41,22 +43,6 @@ This is the default variant for alert dialogs. Use a confirmation variant for as
     >
         Smart filters are nondestructive and will preserve your original images.
     </sp-alert-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-               
-            }
-           
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
 
@@ -66,6 +52,7 @@ Information alert dialogs communicate important information that a user needs to
 
 ```html
 <overlay-trigger type="modal">
+    <sp-button variant="primary" slot="trigger">Toggle Alert Dialog</sp-button>
     <sp-alert-dialog-wrapper
         variant="information"
         slot="click-content"
@@ -75,26 +62,8 @@ Information alert dialogs communicate important information that a user needs to
         underlay
     >
         Please connect to wifi to sync your projects or go to Settings to change
-        your prefernces.
+        your preferences.
     </sp-alert-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
-            }
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
 
@@ -104,6 +73,7 @@ Warning alert dialogs communicate important information to users in relation to 
 
 ```html
 <overlay-trigger type="modal">
+    <sp-button variant="primary" slot="trigger">Toggle Alert Dialog</sp-button>
     <sp-alert-dialog-wrapper
         variant="warning"
         slot="click-content"
@@ -115,24 +85,6 @@ Warning alert dialogs communicate important information to users in relation to 
         This format has not been verified and may not be viewable for some
         users. Do you want to continue publishing?
     </sp-alert-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
-            }
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
 
@@ -142,6 +94,7 @@ Error alert dialogs communicate critical information about an issue that a user 
 
 ```html
 <overlay-trigger type="modal">
+    <sp-button variant="primary" slot="trigger">Toggle Alert Dialog</sp-button>
     <sp-alert-dialog-wrapper
         variant="error"
         slot="click-content"
@@ -152,24 +105,6 @@ Error alert dialogs communicate critical information about an issue that a user 
         An error occured while sharing your project. Please verify the email
         address and try again.
     </sp-alert-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
-            }
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
 
@@ -179,6 +114,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 ```html
 <overlay-trigger type="modal">
+    <sp-button variant="primary" slot="trigger">Toggle Alert Dialog</sp-button>
     <sp-alert-dialog-wrapper
         variant="destructive"
         slot="click-content"
@@ -189,24 +125,6 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
     >
         Are you sure you want to delete the 3 selected documents?
     </sp-alert-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
-            }
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
 
@@ -216,6 +134,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
 
 ```html
 <overlay-trigger type="modal">
+    <sp-button variant="primary" slot="trigger">Toggle Alert Dialog</sp-button>
     <sp-alert-dialog-wrapper
         variant="secondary"
         slot="click-content"
@@ -227,26 +146,6 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
     >
         If you enjoy our app, would you mind taking a moment to rate it?
     </sp-alert-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
-            }
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
 
@@ -254,6 +153,7 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
 
 ```html
 <overlay-trigger type="modal">
+    <sp-button variant="primary" slot="trigger">Toggle Alert Dialog</sp-button>
     <sp-alert-dialog-wrapper
         variant="scroll"
         slot="click-content"
@@ -348,30 +248,5 @@ An alert dialog can have a total of 3 buttons if the secondary outline button la
             malesuada.
         </p>
     </sp-alert-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-alert-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
-            }
-             dialogWrapper.addEventListener('secondary', handleEvent);
-
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
-
-## Accessibility
-
-An `<sp-toast>` element is by default rendered with a `role` of `alert`. When rendering the `<sp-toast>` to a page, it should be place in a container with a `role` of `region`.
