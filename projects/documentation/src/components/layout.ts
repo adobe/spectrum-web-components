@@ -564,15 +564,23 @@ export class LayoutElement extends LitElement {
         if (changes.has('open')) {
             this.open
                 ? this.focus()
-                : (this.shadowRoot!.querySelector(
-                      '#toggle-nav-id'
-                  ) as ActionButton)!.focus();
+                : (
+                      this.shadowRoot!.querySelector(
+                          '#toggle-nav-id'
+                      ) as ActionButton
+                  )?.focus();
         }
 
         if (changes.has('settings')) {
-            (this.shadowRoot!.querySelector(
-                this.settings ? '#close-settings-id' : '#toggle-settings-id'
-            ) as ActionButton)!.focus();
+            if (typeof changes.get('settings') !== 'undefined') {
+                (
+                    this.shadowRoot!.querySelector(
+                        this.settings
+                            ? '#close-settings-id'
+                            : '#toggle-settings-id'
+                    ) as ActionButton
+                )?.focus();
+            }
             if (this.settings && this.isNarrow) {
                 this.ownerDocument!.addEventListener(
                     'keydown',
