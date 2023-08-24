@@ -45,8 +45,6 @@ import {
 
 ## Example
 
-To ensure that the table scrolls, make sure to add a `style` attribute to `<sp-table>` with your desired height. Otherwise, the table will automatically show all its items.
-
 ```html
 <sp-table>
     <sp-table-head>
@@ -97,7 +95,6 @@ When `selects="single"`, the `<sp-table>` will manage a _single_ selection in th
     emphasized
     selects="single"
     selected='["row1"]'
-    style="height: 200px"
     onchange="spAlert(this, `Selected: ${JSON.stringify(this.selected)}`)"
 >
     <sp-table-head>
@@ -142,7 +139,6 @@ When `selects="multiple"`, the `<sp-table>` will manage a selection in the array
 ```html
 <sp-table
     emphasized
-    style="height: 200px"
     selects="multiple"
     selected='["row1", "row2"]'
     onchange="spAlert(this, `Selected: ${JSON.stringify(this.selected)}`)"
