@@ -150,6 +150,12 @@ export class Table extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * Changes the spacing around table cell content.
+     */
+    @property({ type: String, reflect: true })
+    public density?: 'compact' | 'spacious';
+
     private tableBody?: TableBody;
 
     private tableHeadCheckboxCell?: TableCheckboxCell;

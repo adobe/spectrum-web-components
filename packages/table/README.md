@@ -192,7 +192,7 @@ Leaving off the `emphasized` attribute will display the non-emphasized colors.
 ### Emphasized
 
 ```html
-<sp-table emphasized size="m" selects="multiple" selected='["row1"]'>
+<sp-table emphasized selects="multiple" selected='["row1"]'>
     <sp-table-head>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -221,7 +221,69 @@ Leaving off the `emphasized` attribute will display the non-emphasized colors.
 ### Non-emphasized
 
 ```html
-<sp-table size="m" selects="multiple" selected='["row1"]'>
+<sp-table selects="multiple" selected='["row1"]'>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+## Density
+
+The optional `density` property changes the spacing around table cell content from the "regular" default. It accepts the values of `compact` or `spacious`.
+
+### Compact
+
+```html
+<sp-table density="compact">
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+### Spacious
+
+```html
+<sp-table density="spacious">
     <sp-table-head>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
