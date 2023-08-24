@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 
 describe('popover', () => {
     let popover!: Popover;
@@ -53,7 +52,7 @@ describe('popover', () => {
         expect(tip).to.not.equal(undefined);
     });
 
-    it('answers tip query', async () => {
+    it('surfaces tip element', async () => {
         const el = await fixture<Popover>(
             html`
                 <sp-popover variant="dialog" placement="top" tip open>
@@ -70,21 +69,6 @@ describe('popover', () => {
 
         await elementUpdated(el);
 
-        const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent =
-            new CustomEvent<OverlayDisplayQueryDetail>('sp-overlay-query', {
-                bubbles: true,
-                composed: true,
-                detail: overlayDetailQuery,
-                cancelable: true,
-            });
-        el.dispatchEvent(queryOverlayDetailEvent);
-
-        expect(overlayDetailQuery.overlayContentTipElement).to.exist;
-        if (overlayDetailQuery.overlayContentTipElement) {
-            expect(overlayDetailQuery.overlayContentTipElement.id).to.equal(
-                'tip'
-            );
-        }
+        expect(typeof el.tipElement).to.not.equal('undefined');
     });
 });

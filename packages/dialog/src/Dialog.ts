@@ -98,6 +98,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         return this.getSlotContentPresence('[slot="button"]');
     }
 
+    /* c8 ignore next 3 */
     protected get hasHero(): boolean {
         return this.getSlotContentPresence('[slot="hero"]');
     }
@@ -282,7 +283,6 @@ export class Dialog extends FocusVisiblePolyfillMixin(
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        this.tabIndex = 0;
         window.addEventListener(
             'resize',
             this.shouldManageTabOrderForScrolling

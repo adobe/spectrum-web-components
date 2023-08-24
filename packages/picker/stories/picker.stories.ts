@@ -15,7 +15,6 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/picker/sp-picker.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
@@ -112,7 +111,6 @@ export const Default = (args: StoryArgs): TemplateResult => {
             <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
             <sp-menu-item value="option-3">Feather...</sp-menu-item>
             <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item value="option-5">Save Selection</sp-menu-item>
             <sp-menu-item disabled value="option-6">
                 Make Work Path
@@ -139,7 +137,6 @@ export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
             <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
             <sp-menu-item value="option-3">Feather...</sp-menu-item>
             <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item value="option-5">Save Selection</sp-menu-item>
             <sp-menu-item disabled value="option-6">
                 Make Work Path
@@ -163,7 +160,6 @@ export const slottedLabel = (args: StoryArgs): TemplateResult => {
             <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
             <sp-menu-item value="option-3">Feather...</sp-menu-item>
             <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item value="option-5">Save Selection</sp-menu-item>
             <sp-menu-item disabled value="option-6">
                 Make Work Path
@@ -351,7 +347,6 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
                 <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
                 <sp-menu-item>Save Selection</sp-menu-item>
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-picker>
@@ -393,7 +388,6 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
             <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
             <sp-menu-item value="item-3">Feather...</sp-menu-item>
             <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item value="item-5">Save Selection</sp-menu-item>
             <sp-menu-item disabled value="item-6">Make Work Path</sp-menu-item>
         </sp-picker>
@@ -415,7 +409,6 @@ export const readonly = (args: StoryArgs): TemplateResult => {
             <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
             <sp-menu-item value="item-3">Feather...</sp-menu-item>
             <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item value="item-5">Save Selection</sp-menu-item>
             <sp-menu-item disabled value="item-6">Make Work Path</sp-menu-item>
         </sp-picker>

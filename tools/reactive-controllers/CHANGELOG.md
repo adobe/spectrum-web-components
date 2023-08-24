@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+### Features
+
+-   **overlay:** ship Overlay API v2 ([67b5d1b](https://github.com/adobe/spectrum-web-components/commit/67b5d1b02e88dcb5b0b79b5a6c5ead92ad1a5aca))
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   added default focus in focus group ([cd59f18](https://github.com/adobe/spectrum-web-components/commit/cd59f180afacaa719c01a8001bf8a656b4bbcb80))
+-   added Mutation Observer in the tags workflow ([3af1861](https://github.com/adobe/spectrum-web-components/commit/3af1861a09aa7eac6cd4eb0dbb7cce8ab057efec))
+-   **reactive-controllers:** functionality debugged ([f98013b](https://github.com/adobe/spectrum-web-components/commit/f98013bceced7e4d2759c698cdff7f9fe1d43c68))
+-   **reactive-controllers:** handleItemMutation ([d0e32a2](https://github.com/adobe/spectrum-web-components/commit/d0e32a255483c605bbbfc804f1c56c401b00ffe9))
+-   removed disabled property check ([816732f](https://github.com/adobe/spectrum-web-components/commit/816732f03fb271dbefe3ac7a0412cd5ec6479635))
+-   removed mutation controller from tags and added to focusgroup ([aaa1bc0](https://github.com/adobe/spectrum-web-components/commit/aaa1bc04437585a0d8f30e885e076868ecb1defa))
+-   **tags:** corner cases handled ([8ec6b6a](https://github.com/adobe/spectrum-web-components/commit/8ec6b6a0288629e1006b5d1c3ee17d162dd97d23))
+-   **tags:** delete functionality working ([60e6c2e](https://github.com/adobe/spectrum-web-components/commit/60e6c2e92e30c833d572d34ad6d41e94568a40d6))
+-   **tags:** documented the function ([f97c7a7](https://github.com/adobe/spectrum-web-components/commit/f97c7a77eb1dce32f8ec3202fe839dd0a9f0fdc8))
+-   **tags:** handled corner cases ([55a95b7](https://github.com/adobe/spectrum-web-components/commit/55a95b757baf89cab4261d50c2cf279471e7ef01))
+-   **tags:** performed the suggested changes ([6e3ef36](https://github.com/adobe/spectrum-web-components/commit/6e3ef36e8f423f08c2537eb2d075bec4118f2e86))
+-   **tags:** removed comment ([771dc0e](https://github.com/adobe/spectrum-web-components/commit/771dc0e63617e29c6777eb7bf3470c46ac9f7d17))
+-   **tags:** some extra chnages ([45f1a9d](https://github.com/adobe/spectrum-web-components/commit/45f1a9d846e8d717bdd3fae999639b2419d53fc3))
+-   **tags:** some minor chnages ([36886fc](https://github.com/adobe/spectrum-web-components/commit/36886fc1fabecf23f99c5f23e8a9eae718f981b1))
+-   **tags:** suggested changes done ([8aca49e](https://github.com/adobe/spectrum-web-components/commit/8aca49e5249af235f20cf83cfee156336b3ca76f))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/reactive-controllers

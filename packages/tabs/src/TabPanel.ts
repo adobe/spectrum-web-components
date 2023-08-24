@@ -39,9 +39,20 @@ export class TabPanel extends SpectrumElement {
     @property({ type: String, reflect: true })
     public value = '';
 
+    protected handleFocusin(): void {
+        this.removeAttribute('tabindex');
+    }
+
+    protected handleFocusout(): void {
+        this.tabIndex = this.selected ? 0 : -1;
+    }
+
     protected override render(): TemplateResult {
         return html`
-            <slot></slot>
+            <slot
+                @focusin=${this.handleFocusin}
+                @focusout=${this.handleFocusout}
+            ></slot>
         `;
     }
 

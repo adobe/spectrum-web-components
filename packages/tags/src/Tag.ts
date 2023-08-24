@@ -71,16 +71,16 @@ export class Tag extends SizedMixin(SpectrumElement, {
     };
 
     private handleKeydown = (event: KeyboardEvent): void => {
-        if (!this.deletable) {
+        if (!this.deletable || this.disabled) {
             return;
         }
         const { code } = event;
+
         switch (code) {
             case 'Backspace':
             case 'Space':
             case 'Delete':
                 this.delete();
-                return;
             default:
                 return;
         }
@@ -90,11 +90,16 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (this.readonly) {
             return;
         }
-        this.dispatchEvent(
+        const applyDefault = this.dispatchEvent(
             new Event('delete', {
                 bubbles: true,
+                composed: true,
             })
         );
+        if (!applyDefault) {
+            return;
+        }
+        this.remove();
     }
 
     protected override render(): TemplateResult {

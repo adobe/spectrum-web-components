@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import './router.js';
-import { Overlay } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
@@ -34,6 +33,9 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-save-floppy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-stopwatch.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-user-activity.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
@@ -53,14 +55,6 @@ if ('requestIdleCallback' in window) {
         import('@spectrum-web-components/grid/sp-grid.js');
     });
 }
-
-declare global {
-    interface Window {
-        Overlay: typeof Overlay;
-    }
-}
-
-window.Overlay = Overlay;
 
 class StyledElement extends HTMLElement {
     constructor() {

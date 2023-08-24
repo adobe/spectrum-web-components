@@ -194,7 +194,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 target.tabIndex = 0;
                 target.setAttribute('aria-checked', 'true');
                 this.setSelected([target.value], true);
-                target.focus();
                 break;
             }
             case 'multiple': {

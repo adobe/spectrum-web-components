@@ -58,13 +58,13 @@ describe('Overlay Trigger - Hover and Click', () => {
             trigger.click();
             interaction = (await openedEvent).detail.interaction;
 
-            expect(interaction).equals('click');
+            expect(interaction).equals('auto');
 
             const closedEvent = oneEvent(el, 'sp-closed');
             trigger.click();
             interaction = (await closedEvent).detail.interaction;
 
-            expect(interaction).equals('click');
+            expect(interaction).equals('auto');
         }
     });
     it('toggles on click after hover', async () => {
@@ -82,6 +82,9 @@ describe('Overlay Trigger - Hover and Click', () => {
         const trigger = el.querySelector(
             '[slot=trigger]'
         ) as unknown as ActionButton;
+        const clickContent = el.querySelector(
+            '[slot="click-content"]'
+        ) as HTMLElement;
         const bounds = el.getBoundingClientRect();
         let interaction: TriggerInteractions;
 
@@ -105,21 +108,21 @@ describe('Overlay Trigger - Hover and Click', () => {
         });
         interaction = (await hoveredEvent).detail.interaction;
 
-        expect(interaction).equals('hover');
+        expect(interaction).equals('hint');
 
         // repeatedly click to toggle the popover
         for (let i = 0; i < 3; i++) {
-            const openedEvent = oneEvent(el, 'sp-opened');
+            const openedEvent = oneEvent(clickContent, 'sp-opened');
             trigger.click();
             interaction = (await openedEvent).detail.interaction;
 
-            expect(interaction).equals('click');
+            expect(interaction).equals('auto');
 
-            const closedEvent = oneEvent(el, 'sp-closed');
+            const closedEvent = oneEvent(clickContent, 'sp-closed');
             trigger.click();
             interaction = (await closedEvent).detail.interaction;
 
-            expect(interaction).equals('click');
+            expect(interaction).equals('auto');
         }
     });
     it('persists a hover overlay when clicking its trigger and closes the next highest overlay on the stack', async () => {
@@ -154,13 +157,6 @@ describe('Overlay Trigger - Hover and Click', () => {
         sendMouse({
             steps: [
                 {
-                    type: 'move',
-                    position: [
-                        rect1.left + rect1.width / 2,
-                        rect1.top + rect1.height / 2,
-                    ],
-                },
-                {
                     type: 'click',
                     position: [
                         rect1.left + rect1.width / 2,
@@ -170,15 +166,23 @@ describe('Overlay Trigger - Hover and Click', () => {
             ],
         });
         await opened;
-        await elementUpdated(overlayTrigger1);
 
         expect(overlayTrigger1.open).to.equal('click');
         expect(overlayTrigger2.open).to.undefined;
 
         opened = oneEvent(trigger2, 'sp-opened');
-        trigger2.focus();
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rect2.left + rect2.width / 2,
+                        rect2.top + rect2.height / 2,
+                    ],
+                },
+            ],
+        });
         await opened;
-        await elementUpdated(overlayTrigger2);
 
         expect(overlayTrigger1.open).to.equal('click');
         expect(overlayTrigger2.open).to.equal('hover');
@@ -197,7 +201,7 @@ describe('Overlay Trigger - Hover and Click', () => {
         });
         await closed;
 
-        expect(overlayTrigger1.open).to.be.null;
+        expect(overlayTrigger1.open).to.be.undefined;
         expect(overlayTrigger2.open).to.equal('hover');
     });
     it('does not close ancestor "click" overlays on `click`', async () => {
@@ -206,21 +210,21 @@ describe('Overlay Trigger - Hover and Click', () => {
         `);
         const el = test.querySelector('overlay-trigger') as OverlayTrigger;
         const button = el.querySelector('sp-action-button') as ActionButton;
+        const button2 = el.querySelector(
+            'sp-action-button:nth-of-type(2)'
+        ) as ActionButton;
         const tooltip = button.querySelector('sp-tooltip') as Tooltip;
 
         expect(el.open).to.be.undefined;
         expect(tooltip.open).to.be.false;
 
-        let opened = oneEvent(el, 'sp-opened');
+        const opened = oneEvent(el, 'sp-opened');
+        const tooltipOpen = oneEvent(button, 'sp-opened');
         el.open = 'click';
         await opened;
+        await tooltipOpen;
 
         expect(el.open).to.equal('click');
-
-        opened = oneEvent(button, 'sp-opened');
-        button.focus();
-        await opened;
-
         expect(tooltip.open).to.be.true;
 
         button.click();
@@ -231,17 +235,24 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(tooltip.open).to.be.true;
 
         let closed = oneEvent(button, 'sp-closed');
-        button.blur();
+        button2.focus();
         await closed;
 
         expect(el.open).to.equal('click');
         expect(tooltip.open).to.be.false;
 
         closed = oneEvent(el, 'sp-closed');
-        document.body.click();
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [1, 1],
+                },
+            ],
+        });
         await closed;
 
-        expect(el.open).to.be.null;
+        expect(el.open, '"click" overlay no longer open').to.be.undefined;
         expect(tooltip.open).to.be.false;
     });
 });

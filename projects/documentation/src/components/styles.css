@@ -179,6 +179,7 @@ body {
     color: var(--spectrum-global-color-gray-800);
     text-decoration: none;
     width: var(--spectrum-global-dimension-size-2400);
+    position: relative;
 }
 
 #logo svg {
@@ -203,6 +204,18 @@ body {
         --spectrum-alias-body-text-font-family,
         var(--spectrum-global-font-family-base)
     );
+}
+
+#logo:focus-visible::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--spectrum-global-dimension-size-350) - 4px);
+    right: calc(var(--spectrum-global-dimension-size-300) - 4px);
+    bottom: calc(var(--spectrum-global-dimension-size-350) - 4px);
+    left: calc(var(--spectrum-global-dimension-size-300) - 4px);
+    border: 2px solid
+        var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
+    border-radius: 4px;
 }
 
 docs-page:not(:defined) #title-header {

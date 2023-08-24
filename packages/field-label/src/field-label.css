@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-field-label.css');
+
+label {
+    display: inline-block;
+}

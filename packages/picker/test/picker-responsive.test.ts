@@ -74,7 +74,7 @@ describe('Picker, responsive', () => {
             el.open = true;
             await opened;
 
-            const tray = document.querySelector('sp-tray');
+            const tray = el.shadowRoot.querySelector('sp-tray');
 
             expect(tray).to.not.be.null;
         });
@@ -83,12 +83,13 @@ describe('Picker, responsive', () => {
             await setViewport({ width: 701, height: 640 });
             // Allow viewport update to propagate.
             await nextFrame();
+            await nextFrame();
 
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
 
-            const popover = document.querySelector('sp-popover');
+            const popover = el.shadowRoot.querySelector('sp-popover');
 
             expect(popover).to.not.be.null;
         });
