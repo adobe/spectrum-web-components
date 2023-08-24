@@ -83,6 +83,9 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property()
     public label?: string;
 
+    @property()
+    public description?: string = 'picker';
+
     @property({ type: Boolean, reflect: true })
     public open = false;
 
@@ -454,6 +457,9 @@ export class PickerBase extends SizedMixin(Focusable) {
             // Always force `selects` to "single" when set.
             // TODO: Add support functionally and visually for "multiple"
             this.selects = 'single';
+        }
+        if (this.description) {
+            this.setAttribute('aria-describedby', this.description);
         }
         if (changes.has('disabled') && this.disabled) {
             this.open = false;

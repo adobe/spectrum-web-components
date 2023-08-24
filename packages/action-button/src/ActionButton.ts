@@ -86,6 +86,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     @property({ reflect: true })
     public static?: 'white' | 'black';
 
+    @property({ type: String })
+    public description = 'Action-button';
+
     @property({ reflect: true })
     public variant?: 'white' | 'black';
 
@@ -228,6 +231,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                 this.hasAttribute('aria-haspopup') &&
                 this.hasAttribute('aria-expanded')
             );
+        if (this.description) {
+            this.setAttribute('aria-describedby', this.description);
+        }
         if (changes.has('selected') || changes.has('role')) {
             // When role !== 'button' then the Action Button is within
             // an Action Group that manages selects which means the

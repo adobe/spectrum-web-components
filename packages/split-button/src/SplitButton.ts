@@ -65,6 +65,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
     @property({ type: String })
     public type: SplitButtonTypes = 'field';
 
+    @property({ type: String })
+    public description?: string = 'split button description';
+
     @query('.trigger')
     private trigger!: HTMLButtonElement;
 
@@ -114,6 +117,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
             }
         }
         super.update(changes);
+        if (this.description) {
+            this.setAttribute('aria-describedby', this.description);
+        }
     }
 
     protected override render(): TemplateResult {
