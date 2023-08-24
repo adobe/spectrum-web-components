@@ -53,7 +53,7 @@ export default {
 
 export const elements = (): TemplateResult => {
     return html`
-        <sp-table emphasized size="m">
+        <sp-table emphasized>
             <sp-table-head>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -133,7 +133,6 @@ export const selectsSingle = (): TemplateResult => {
     return html`
         <sp-table
             emphasized
-            size="m"
             selects="single"
             .selected=${['row1']}
             @change=${({ target }: Event & { target: Table }) => {
@@ -182,7 +181,7 @@ export const selectsSingle = (): TemplateResult => {
 
 export const noSelectsSpecified = (): TemplateResult => {
     return html`
-        <sp-table emphasized size="m" .selected=${['row1', 'row2']}>
+        <sp-table emphasized .selected=${['row1', 'row2']}>
             <sp-table-head>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -221,7 +220,7 @@ export const noSelectsSpecified = (): TemplateResult => {
 
 export const nonEmphasized = (): TemplateResult => {
     return html`
-        <sp-table size="m" .selected=${['row1', 'row2']}>
+        <sp-table .selected=${['row1', 'row2']}>
             <sp-table-head>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -262,7 +261,6 @@ export const selectsMultiple = (): TemplateResult => {
     return html`
         <sp-table
             emphasized
-            size="m"
             selects="multiple"
             .selected=${['row1', 'row2']}
             @change=${({ target }: Event & { target: Table }) => {
@@ -316,7 +314,7 @@ export const selectsMultiple = (): TemplateResult => {
 
 // export const selectsMultipleAttributes = (): TemplateResult => {
 //     return html`
-//         <sp-table size="m" selects="multiple">
+//         <sp-table selects="multiple">
 //             <sp-table-head>
 //                 <sp-table-head-cell>
 //                     Column Title

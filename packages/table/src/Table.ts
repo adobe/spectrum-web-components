@@ -58,7 +58,7 @@ export interface TableItem extends Record<string, unknown> {
  */
 
 export class Table extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm'],
+    validSizes: ['s', 'm', 'l', 'xl'],
     defaultSize: 'm',
 }) {
     public static override get styles(): CSSResultArray {
