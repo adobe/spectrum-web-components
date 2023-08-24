@@ -551,5 +551,45 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(openSpy.callCount).to.equal(2);
         });
+        it('opens, then closes, on subsequent clicks', async () => {
+            const el = await actionMenuFixture();
+            const rect = el.getBoundingClientRect();
+
+            const open = oneEvent(el, 'sp-opened');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'click',
+                    },
+                ],
+            });
+            await open;
+
+            expect(el.open).to.be.true;
+            await aTimeout(50);
+            expect(el.open).to.be.true;
+
+            const close = oneEvent(el, 'sp-closed');
+            sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'click',
+                    },
+                ],
+            });
+            await close;
+
+            expect(el.open).to.be.false;
+            await aTimeout(50);
+            expect(el.open).to.be.false;
+        });
     });
 };
