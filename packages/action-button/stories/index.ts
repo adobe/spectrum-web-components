@@ -24,6 +24,7 @@ export interface Properties {
     disabled?: boolean;
     selected?: boolean;
     toggles?: boolean;
+    description?: string;
     emphasized?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
     variant?: 'white' | 'black';
@@ -42,6 +43,7 @@ export function renderButton(properties: Properties): TemplateResult {
             ?disabled=${!!properties.disabled}
             ?selected=${!!properties.selected}
             ?toggles=${!!properties.toggles}
+            description="${ifDefined(properties.description)}"
             size=${properties.size || 'm'}
             ?hold-affordance=${!!properties.holdAffordance}
             ?active=${!!properties.active}

@@ -83,8 +83,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property()
     public label?: string;
 
-    @property()
-    public description?: string = 'picker';
+    @property({ type: String })
+    public description = '';
 
     @property({ type: Boolean, reflect: true })
     public open = false;

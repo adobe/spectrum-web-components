@@ -65,14 +65,12 @@ export class SplitButton extends SizedMixin(PickerBase) {
     @property({ type: String })
     public type: SplitButtonTypes = 'field';
 
-    @property({ type: String })
-    public description?: string = 'split button description';
-
     @query('.trigger')
     private trigger!: HTMLButtonElement;
 
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
+    //public  description = "";
 
     public override get focusElement(): HTMLElement {
         if (this.open) {

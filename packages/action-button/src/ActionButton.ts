@@ -87,7 +87,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     public static?: 'white' | 'black';
 
     @property({ type: String })
-    public description = 'Action-button';
+    public description = '';
 
     @property({ reflect: true })
     public variant?: 'white' | 'black';
