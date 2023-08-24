@@ -3534,14 +3534,6 @@
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.1.0.tgz#3361d6b8c4cb2ac426d5794ac7cd9776cd2f0814"
   integrity sha512-92uQ5ARf7UXYrzaFcAX3T2rTvaS9Z1//ukV+DqjACM4c8s0ZBQd7ayJU5Dh2AFLD/Ayuyz4uMmxQec8q3U4Ong==
 
-"@lit-labs/virtualizer@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-2.0.2.tgz#7ba1435b3c88d95b7e922eda47508e2a255770b9"
-  integrity sha512-+E+UKTbEfQC5j7FNqN1xWBdGtzfREPbqPAGsNRiz7g2orXb2y+rBy6FmfTQ+Qcly2fjkei06xRg7f/yN/hS3zQ==
-  dependencies:
-    lit "^2.7.0"
-    tslib "^2.0.3"
-
 "@lit-labs/virtualizer@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-2.0.6.tgz#3ed38af4e2d90cc026347d855b40ef30383ebfbe"
@@ -16554,30 +16546,14 @@ lit-element@^3.3.0:
     "@lit/reactive-element" "^1.3.0"
     lit-html "^2.7.0"
 
-lit-html@^2.0.0, lit-html@^2.7.0:
-  version "2.7.5"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.7.5.tgz#0c1b9d381abe20c01475ae53ea4b07bf4c923eb8"
-  integrity sha512-YqUzpisJodwKIlbMFCtyrp58oLloKGnnPLMJ1t23cbfIJjg/H9pvLWK4XS69YeubK5HUs1UE4ys9w5dP1zg6IA==
-  dependencies:
-    "@types/trusted-types" "^2.0.2"
-
-lit-html@^2.8.0:
+lit-html@2.8.0, lit-html@^2.0.0, lit-html@^2.7.0, lit-html@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.8.0.tgz#96456a4bb4ee717b9a7d2f94562a16509d39bffa"
   integrity sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
-lit@^2.0.0, lit@^2.0.2, lit@^2.5.0, lit@^2.7.0:
-  version "2.7.6"
-  resolved "https://registry.yarnpkg.com/lit/-/lit-2.7.6.tgz#810007b876ed43e0c70124de91831921598b1665"
-  integrity sha512-1amFHA7t4VaaDe+vdQejSVBklwtH9svGoG6/dZi9JhxtJBBlqY5D1RV7iLUYY0trCqQc4NfhYYZilZiVHt7Hxg==
-  dependencies:
-    "@lit/reactive-element" "^1.6.0"
-    lit-element "^3.3.0"
-    lit-html "^2.7.0"
-
-lit@^2.8.0:
+lit@2.8.0, lit@^2.0.0, lit@^2.0.2, lit@^2.5.0, lit@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/lit/-/lit-2.8.0.tgz#4d838ae03059bf9cafa06e5c61d8acc0081e974e"
   integrity sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA==
