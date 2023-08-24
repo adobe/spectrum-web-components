@@ -152,6 +152,48 @@ longpress.args = {
     type: 'auto',
 };
 
+export const transformed = (args: Properties): TemplateResult => html`
+    <style>
+        .transformed {
+            transform: translateX(-50%);
+            position: absolute;
+            inset: auto;
+            inset-inline-start: 200px;
+            inset-block-start: 200px;
+            inline-size: 100px;
+            block-size: 50px;
+        }
+    </style>
+    <div class="transformed">${Template(args)}</div>
+`;
+transformed.args = {
+    interaction: 'click',
+    placement: 'right',
+    type: 'auto',
+};
+
+export const contained = (args: Properties): TemplateResult => html`
+    <style>
+        .contained {
+            contain: strict;
+            position: absolute;
+            inset: auto;
+            inset-inline-start: 200px;
+            inset-block-start: 200px;
+            inline-size: 200px;
+            block-size: 50px;
+            padding-block: 75px;
+            padding-inline-start: 300px;
+        }
+    </style>
+    <div class="contained">${Template(args)}</div>
+`;
+contained.args = {
+    interaction: 'click',
+    placement: 'right',
+    type: 'auto',
+};
+
 export const all = ({ delayed }: Properties): TemplateResult => html`
     <sp-action-button id="trigger" hold-affordance>
         Open the overlay
