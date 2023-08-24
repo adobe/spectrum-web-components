@@ -70,7 +70,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
 
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
-    //public  description = "";
 
     public override get focusElement(): HTMLElement {
         if (this.open) {

@@ -125,7 +125,6 @@ export const argTypes = {
             options: ['field', 'more'],
         },
     },
-
     variant: {
         name: 'variant',
         type: { name: 'string', required: false },
