@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/action-group/sp-action-group.js';
@@ -182,7 +182,7 @@ const template = (args: Properties): TemplateResult => {
             ? html`
                   <div>Selected:</div>
               `
-            : html``}
+            : nothing}
     `;
 };
 
