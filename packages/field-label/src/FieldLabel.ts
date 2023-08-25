@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -155,7 +156,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
                               class="required-icon spectrum-UIIcon-Asterisk100"
                           ></sp-icon-asterisk100>
                       `
-                    : html``}
+                    : nothing}
             </label>
         `;
     }
