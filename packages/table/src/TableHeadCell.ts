@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
@@ -85,7 +86,7 @@ export class TableHeadCell extends SpectrumElement {
                           class="sortedIcon spectrum-UIIcon-ArrowDown100"
                       ></sp-icon-arrow100>
                   `
-                : html``}
+                : nothing}
         `;
     }
 

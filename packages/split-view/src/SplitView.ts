@@ -217,7 +217,7 @@ export class SplitView extends SpectrumElement {
                               ? html`
                                     <div id="gripper"></div>
                                 `
-                              : html``}
+                              : nothing}
                       </div>
                   `
                 : nothing}

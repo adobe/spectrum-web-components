@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -42,12 +42,12 @@ export const ActionMenuMarkup = ({
             .selects=${selects ? selects : undefined}
             value=${selected ? 'Select Inverse' : ''}
         >
-            ${customIcon ? customIcon : html``}
+            ${customIcon ? customIcon : nothing}
             ${visibleLabel
                 ? html`
                       <span slot="label">${visibleLabel}</span>
                   `
-                : html``}
+                : nothing}
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item ?selected=${selected}>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>

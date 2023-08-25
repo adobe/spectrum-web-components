@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -122,7 +123,7 @@ export class Search extends Textfield {
                               @keydown=${stopPropagation}
                           ></sp-clear-button>
                       `
-                    : html``}
+                    : nothing}
             </form>
         `;
     }
