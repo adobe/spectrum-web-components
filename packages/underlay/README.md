@@ -8,7 +8,7 @@ An `<sp-underlay>` is used primarily in concert with elements similar to `<sp-di
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/underlay?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/underlay)
 
 ```
-yarn add @spectrum-web-components/underlay
+yarn add @spectrum-web-components/underlays
 ```
 
 Import the side effectful registration of `<sp-underlay>` via:
