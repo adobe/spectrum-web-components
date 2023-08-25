@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -132,7 +133,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
                           @click=${this.delete}
                       ></sp-clear-button>
                   `
-                : html``}
+                : nothing}
         `;
     }
 

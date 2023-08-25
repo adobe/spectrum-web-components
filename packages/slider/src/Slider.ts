@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -211,7 +212,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           @change=${this.handleNumberChange}
                       ></sp-number-field>
                   `
-                : html``}
+                : nothing}
         `;
     }
 
@@ -251,7 +252,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                         : this.handleController.activeHandleInputId}
                     @click=${this.handleLabelClick}
                 >
-                    ${this.slotHasContent ? html`` : this.label}
+                    ${this.slotHasContent ? nothing : this.label}
                     <slot>${this.label}</slot>
                 </sp-field-label>
                 <output
@@ -316,7 +317,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                                           ${i * tickStep + this.min}
                                       </div>
                                   `
-                                : html``}
+                                : nothing}
                         </div>
                     `
                 )}

@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -310,7 +311,7 @@ export class MenuItem extends LikeAnchor(
                               : ''}"
                       ></sp-icon-checkmark100>
                   `
-                : html``}
+                : nothing}
             <slot name="icon"></slot>
             <div id="label">
                 <slot id="slot"></slot>
@@ -322,7 +323,7 @@ export class MenuItem extends LikeAnchor(
                       ariaHidden: true,
                       className: 'button anchor hidden',
                   })
-                : html``}
+                : nothing}
             ${this.renderSubmenu()}
         `;
     }

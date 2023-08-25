@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     render,
     SizedMixin,
@@ -95,7 +96,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                                   ?checked=${selected}
                               ></sp-table-checkbox-cell>
                           `
-                        : html``}
+                        : nothing}
                     ${fn(item, index)}
                 </sp-table-row>
             `;

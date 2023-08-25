@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -77,7 +78,7 @@ export class ProgressBar extends SizedMixin(
             ${this.label
                 ? html`
                       ${this.indeterminate
-                          ? html``
+                          ? nothing
                           : html`
                                 <sp-field-label
                                     size=${this.size}
@@ -93,7 +94,7 @@ export class ProgressBar extends SizedMixin(
                                 </sp-field-label>
                             `}
                   `
-                : html``}
+                : nothing}
             <div class="track">
                 <div
                     class="fill"
