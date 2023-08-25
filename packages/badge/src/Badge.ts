@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -120,7 +121,7 @@ export class Badge extends SizedMixin(
                           ?icon-only=${!this.slotHasContent}
                       ></slot>
                   `
-                : html``}
+                : nothing}
             <div class="label">
                 <slot></slot>
             </div>
