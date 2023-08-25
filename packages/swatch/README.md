@@ -8,7 +8,7 @@ An `<sp-swatch>` shows a small sample of a fill — such as a color, gradient, t
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/swatch?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/swatch)
 
 ```
-yarn add @spectrum-web-components/swatch
+yarn add @spectrum-web-components/swatchs
 ```
 
 Import the side effectful registration of `<sp-swatch>` via:
