@@ -315,3 +315,13 @@ Here, again, working with your content needs (whether or not you want to leverag
     }
 </style>
 ```
+
+### Non-overflowing, relative containers with z-index in Safari
+
+Under very specific conditions, [WebKit will incorrectly clip fixed-position content](https://bugs.webkit.org/show_bug.cgi?id=160953).
+WebKit clips `position: fixed` elements within containers that have all of:
+1. `position: relative`
+2. `overflow: clip` or `overflow: hidden`
+3. `z-index` greater than zero
+  
+If you notice overlay clipping *only* in Safari, this is likely the culprit. The solution is to break up the conditions into separate elements to avoid triggering WebKit's bug. For example, leaving relative positioning and z-index on the outermost container while creating an inner container that enforces the overflow rules.
