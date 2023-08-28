@@ -27,7 +27,11 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
-import type { Table, TableCheckboxCell } from '@spectrum-web-components/table';
+import type {
+    Table,
+    TableCheckboxCell,
+    TableHead,
+} from '@spectrum-web-components/table';
 import { elements } from '../stories/table-elements.stories.js';
 import { spy } from 'sinon';
 
@@ -266,5 +270,45 @@ describe('Table', () => {
         expect(el.selected).to.deep.equal([]);
         expect(tableHeadCheckboxCell.checkbox.checked).to.be.false;
         expect(tableHeadCheckboxCell.checkbox.indeterminate).to.be.false;
+    });
+
+    it('can be headerless', async () => {
+        const el = await fixture<Table>(html`
+            <sp-table>
+                <sp-table-body style="height: 120px">
+                    <sp-table-row value="row1">
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row2">
+                        <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row3">
+                        <sp-table-cell>Row Item Charlie</sp-table-cell>
+                        <sp-table-cell>Row Item Charlie</sp-table-cell>
+                        <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row4">
+                        <sp-table-cell>Row Item Delta</sp-table-cell>
+                        <sp-table-cell>Row Item Delta</sp-table-cell>
+                        <sp-table-cell>Row Item Delta</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row5">
+                        <sp-table-cell>Row Item Echo</sp-table-cell>
+                        <sp-table-cell>Row Item Echo</sp-table-cell>
+                        <sp-table-cell>Row Item Echo</sp-table-cell>
+                    </sp-table-row>
+                </sp-table-body>
+            </sp-table>
+        `);
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        const tableHead = el.querySelector('sp-table-head') as TableHead;
+        expect(tableHead).to.not.exist;
+        const tableRows = el.querySelectorAll('sp-table-row');
+        expect(tableRows.length).to.equal(5);
     });
 });
