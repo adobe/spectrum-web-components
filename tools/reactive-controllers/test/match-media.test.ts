@@ -29,9 +29,14 @@ describe('Match Media', () => {
             el as LitElement & { shadowRoot: ShadowRoot },
             '(min-width: 500px)'
         );
+        // Allow Controller to initialize
+        await nextFrame();
+        await nextFrame();
         expect(controller.matches).to.be.true;
+
         await setViewport({ width: 360, height: 640 });
         // Allow viewport update to propagate.
+        await nextFrame();
         await nextFrame();
         expect(controller.matches).to.be.false;
     });
