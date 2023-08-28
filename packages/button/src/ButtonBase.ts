@@ -30,7 +30,7 @@ import buttonStyles from './button-base.css.js';
  * @slot icon - icon element(s) to display at the start of the button
  */
 export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
-    'sp-tooltip',
+    'sp-overlay,sp-tooltip',
 ]) {
     public static override get styles(): CSSResultArray {
         return [buttonStyles];

@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -146,7 +147,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                           <slot name="descendant"></slot>
                       </div>
                   `
-                : html``}
+                : nothing}
         `;
     }
 

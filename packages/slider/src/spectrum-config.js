@@ -41,6 +41,24 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-disabled', 'disabled'),
+                {
+                    exactSelector: true,
+                    find: [builder.class('spectrum-Slider--tick')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'attribute',
+                                        name: 'tick-labels',
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Slider--color', 'color'],
@@ -51,6 +69,24 @@ const config = {
                     ],
                     'variant'
                 ),
+                {
+                    find: [
+                        builder.class('spectrum-Slider-labelContainer'),
+                        builder.combinator('+'),
+                        builder.class('spectrum-Slider-controls'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('label-container'),
+                        },
+                        {
+                            replace: builder.combinator('+'),
+                        },
+                        {
+                            replace: builder.id('track'),
+                        },
+                    ],
+                },
                 converter.classToId('spectrum-Slider-buffer', 'buffer'),
                 converter.classToId('spectrum-Slider-controls', 'controls'),
                 converter.classToId('spectrum-Slider-fill', 'fill'),

@@ -73,6 +73,12 @@ export async function processREADME(mdPath) {
         customElements,
         (declaration) => declaration.tagName === 'sp-' + componentName
     );
+    if (componentName === 'sp-overlay') {
+        tag = findDeclaration(
+            customElements,
+            (declaration) => declaration.name === 'OverlayBase'
+        );
+    }
     if (!tag) {
         tag = findDeclaration(
             customElements,
@@ -145,9 +151,13 @@ export async function processREADME(mdPath) {
     const body = fs.readFileSync(mdPath);
     fs.writeFileSync(
         exampleDestinationFile,
-        exampleDestinationTemplate(componentName, componentHeading, tagType, 
+        exampleDestinationTemplate(
+            componentName,
+            componentHeading,
+            tagType,
             parent,
-            packageName)
+            packageName
+        )
     );
     fs.writeFileSync(
         examplePartialFile,

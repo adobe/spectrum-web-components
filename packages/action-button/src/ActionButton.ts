@@ -116,7 +116,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     constructor() {
         super();
         this.addEventListener('click', this.onClick);
-        this.addEventListener('pointerdown', this.onPointerdown);
     }
 
     private onClick = (): void => {
@@ -134,10 +133,13 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }
     };
 
-    private onPointerdown(event: PointerEvent): void {
+    private handlePointerdownHoldAffordance(event: PointerEvent): void {
         if (event.button !== 0) return;
-        this.addEventListener('pointerup', this.onPointerup);
-        this.addEventListener('pointercancel', this.onPointerup);
+        this.addEventListener('pointerup', this.handlePointerupHoldAffordance);
+        this.addEventListener(
+            'pointercancel',
+            this.handlePointerupHoldAffordance
+        );
         LONGPRESS_TIMEOUT = setTimeout(() => {
             this.dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
@@ -151,10 +153,16 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }, LONGPRESS_DURATION);
     }
 
-    private onPointerup(): void {
+    private handlePointerupHoldAffordance(): void {
         clearTimeout(LONGPRESS_TIMEOUT);
-        this.removeEventListener('pointerup', this.onPointerup);
-        this.removeEventListener('pointercancel', this.onPointerup);
+        this.removeEventListener(
+            'pointerup',
+            this.handlePointerupHoldAffordance
+        );
+        this.removeEventListener(
+            'pointercancel',
+            this.handlePointerupHoldAffordance
+        );
     }
 
     /**
@@ -256,6 +264,20 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                     `The "variant" attribute/property of <${this.localName}> have been deprecated. Use "static" with any of the same values instead. "variant" will be removed in a future release.`,
                     'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed'
                 );
+            }
+        }
+        if (changes.has('holdAffordance')) {
+            if (this.holdAffordance) {
+                this.addEventListener(
+                    'pointerdown',
+                    this.handlePointerdownHoldAffordance
+                );
+            } else {
+                this.removeEventListener(
+                    'pointerdown',
+                    this.handlePointerdownHoldAffordance
+                );
+                this.handlePointerupHoldAffordance();
             }
         }
     }

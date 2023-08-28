@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -72,7 +73,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     protected override render(): TemplateResult {
         return html`
             <sp-field-label size=${this.size} class="label">
-                ${this.slotHasContent ? html`` : this.label}
+                ${this.slotHasContent ? nothing : this.label}
                 <slot @slotchange=${this.handleSlotchange}>${this.label}</slot>
             </sp-field-label>
             <sp-field-label size=${this.size} class="percentage">

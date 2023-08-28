@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,35 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { OverlayOptions, TriggerInteractions } from './overlay-types';
+import { Overlay } from './Overlay.js';
 
-export const openOverlay = async (
-    target: HTMLElement,
-    interaction: TriggerInteractions,
-    content: HTMLElement,
-    options: OverlayOptions
-): Promise<() => void> => {
-    if (window.__swc.DEBUG) {
-        // eslint-disable-next-line no-var
-        var ignoreDeprecations = window.__swc.ignoreWarningLevels.deprecation;
-    }
-    const { Overlay } = await import(
-        '@spectrum-web-components/overlay/src/overlay.js'
-    );
-    if (window.__swc.DEBUG) {
-        if (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            ignoreDeprecations &&
-            !window.__swc.ignoreWarningLevels.deprecation
-        ) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            window.__swc.ignoreWarningLevels.deprecation = ignoreDeprecations;
-            requestAnimationFrame(() => {
-                window.__swc.ignoreWarningLevels.deprecation = false;
-            });
-        }
-    }
-    return Overlay.open(target, interaction, content, options);
-};
+export const openOverlay = Overlay.open;

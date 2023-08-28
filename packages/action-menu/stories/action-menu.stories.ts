@@ -11,10 +11,12 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionMenuMarkup } from './';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
@@ -233,7 +235,11 @@ export const controlled = (): TemplateResult => {
             </sp-menu-item>
             <sp-menu-item>
                 Show
-                <sp-menu slot="submenu">
+                <sp-menu
+                    slot="submenu"
+                    selects="multiple"
+                    @change=${(event: Event) => event.preventDefault()}
+                >
                     <sp-menu-item
                         value="grid"
                         ?selected=${state.grid}

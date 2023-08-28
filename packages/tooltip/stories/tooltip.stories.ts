@@ -10,16 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { Placement } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 
 const iconOptions: {
     [key: string]: ({
@@ -156,7 +158,7 @@ export const wIcon = ({
 }: Properties): TemplateResult => {
     return html`
         <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
-            ${!!variant ? iconOptions[variant]() : html``} ${text}
+            ${!!variant ? iconOptions[variant]() : nothing} ${text}
         </sp-tooltip>
     `;
 };
@@ -254,15 +256,11 @@ const overlayStyles = html`
             height: 100%;
             align-items: center;
             justify-content: center;
+            gap: 24px;
         }
 
-        overlay-trigger {
-            flex: none;
-            margin: 24px 0;
-        }
-
-        .self-managed:nth-child(3) {
-            margin-left: 50px;
+        sp-button:nth-of-type(1) {
+            margin-top: 24px;
         }
     </style>
 `;
@@ -276,23 +274,26 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                 ['left', 'negative'],
                 ['right', 'positive'],
                 ['top', 'info'],
+                ['top-start', ''],
             ] as [Placement, string][]
         ).map(([placement, variant]) => {
             return html`
-                <overlay-trigger
+                <sp-button id="trigger-${placement}" label="${placement} test">
+                    Hover for ${variant ? variant : 'tooltip'} on the
+                    ${placement}
+                </sp-button>
+                <sp-overlay
+                    trigger="trigger-${placement}@hover"
+                    type="hint"
                     placement=${placement}
                     open=${ifDefined(
                         openPlacement === placement ? 'hover' : undefined
                     )}
                 >
-                    <sp-button label="${placement} test" slot="trigger">
-                        Hover for ${variant ? variant : 'tooltip'} on the
-                        ${placement}
-                    </sp-button>
-                    <sp-tooltip slot="hover-content" variant=${variant}>
+                    <sp-tooltip variant=${variant} placement=${placement}>
                         ${placement}
                     </sp-tooltip>
-                </overlay-trigger>
+                </sp-overlay>
             `;
         })}
     `;
@@ -302,6 +303,7 @@ export const overlaidTop = (): TemplateResult => overlaid('top');
 export const overlaidRight = (): TemplateResult => overlaid('right');
 export const overlaidBottom = (): TemplateResult => overlaid('bottom');
 export const overlaidLeft = (): TemplateResult => overlaid('left');
+export const overlaidTopStart = (): TemplateResult => overlaid('top-start');
 
 export const selfManaged = ({
     placement,
@@ -397,4 +399,14 @@ export const selfManagedIconOnly = (): TemplateResult => html`
     <sp-action-button class="self-managed">
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
+`;
+
+export const selfManagedFieldLabel = (): TemplateResult => html`
+    <div style="display: inline-flex; flex-direction: column;">
+        <sp-field-label for="input">
+            <sp-icon-edit></sp-icon-edit>
+            <sp-tooltip self-managed>Edit</sp-tooltip>
+        </sp-field-label>
+        <sp-textfield id="input"></sp-textfield>
+    </div>
 `;

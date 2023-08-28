@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+**Note:** Version bump only for package documentation
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Features
+
+-   **opacity-checkerboard:** add component ([#3416](https://github.com/adobe/spectrum-web-components/issues/3416)) ([90202f9](https://github.com/adobe/spectrum-web-components/commit/90202f9b3e11d6ac4bd85c24e814d9300314bf5a))
+-   **sidenav:** migrate to core tokens ([1846aa3](https://github.com/adobe/spectrum-web-components/commit/1846aa30d763b1f88801b9e26c16d2c20d5b4a6a))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package documentation

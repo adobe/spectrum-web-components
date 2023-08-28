@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 export * from './first-focusable-in.js';
 export * from './focus-visible.js';
 export * from './focusable.js';
+export * from './focusable-selectors.js';
 export * from './get-active-element.js';
 export * from './like-anchor.js';
 export * from './observe-slot-presence.js';

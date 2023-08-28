@@ -10,11 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ThemeData } from '@spectrum-web-components/theme/src/Theme.js';
-import type { Placement as FloatingUIPlacement } from '@floating-ui/dom';
+import type { Placement } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 
-export type TriggerInteractions =
+export type Constructor<T = Record<string, unknown>> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    new (...args: any[]): T;
+    prototype: T;
+};
+
+export { Placement };
+
+export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
+
+export type TriggerInteractions = OverlayTypes;
+
+export type TriggerInteractionsV1 =
     | 'click'
     | 'longpress'
     | 'hover'
@@ -28,23 +39,6 @@ export type OverlayTriggerInteractions = Extract<
     'inline' | 'modal' | 'replace'
 >;
 
-export interface OverlayOpenDetail {
-    content: HTMLElement;
-    contentTip?: HTMLElement;
-    delayed: boolean;
-    offset: number;
-    skidding?: number;
-    placement?: Placement;
-    receivesFocus?: 'auto';
-    virtualTrigger?: VirtualTrigger;
-    trigger: HTMLElement;
-    root?: HTMLElement;
-    interaction: TriggerInteractions;
-    theme: ThemeData;
-    notImmediatelyClosable?: boolean;
-    abortPromise?: Promise<boolean>;
-}
-
 export interface OverlayOpenCloseDetail {
     interaction: TriggerInteractions;
     reason?: 'external-click';
@@ -54,24 +48,22 @@ export interface OverlayCloseReasonDetail {
     reason?: 'external-click';
 }
 
-/**
- * Used, via an event, to query details about how an element should be shown in
- * an overlay
- */
-export interface OverlayDisplayQueryDetail {
-    overlayRootName?: string;
-    overlayRootElement?: HTMLElement;
-    overlayContentTipElement?: HTMLElement;
-}
-
-export type Placement = FloatingUIPlacement | 'none';
-
 export type OverlayOptions = {
+    delayed?: boolean;
+    notImmediatelyClosable?: boolean;
+    offset?: number | [number, number]; // supporting multi-axis
+    placement?: Placement;
+    receivesFocus?: 'auto' | 'true' | 'false';
+    trigger?: HTMLElement | VirtualTrigger;
+    type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
+};
+
+export type OverlayOptionsV1 = {
     root?: HTMLElement;
     delayed?: boolean;
     placement?: Placement;
     offset?: number;
-    receivesFocus?: 'auto';
+    receivesFocus?: 'true' | 'false' | 'auto';
     notImmediatelyClosable?: boolean;
     abortPromise?: Promise<boolean>;
     virtualTrigger?: VirtualTrigger;
@@ -79,8 +71,15 @@ export type OverlayOptions = {
 
 declare global {
     interface GlobalEventHandlersEventMap {
-        'sp-overlay-query': CustomEvent<OverlayDisplayQueryDetail>;
         'sp-open': CustomEvent<OverlayOpenCloseDetail>;
         'sp-close': CustomEvent<OverlayOpenCloseDetail>;
     }
 }
+
+export type OpenableElement = HTMLElement & {
+    open: boolean;
+    tipElement?: HTMLElement;
+    updateComplete?: Promise<void>;
+};
+
+export type OverlayState = 'closed' | 'opening' | 'opened' | 'closing';

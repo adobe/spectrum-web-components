@@ -1022,15 +1022,6 @@
     --system-spectrum-checkbox-control-color-hover: var(--spectrum-gray-700);
     --system-spectrum-checkbox-control-color-down: var(--spectrum-gray-800);
     --system-spectrum-checkbox-control-color-focus: var(--spectrum-gray-700);
-    --system-spectrum-checkbox-control-selected-color-default: var(
-        --spectrum-gray-700
-    );
-    --system-spectrum-checkbox-control-selected-color-hover: var(
-        --spectrum-gray-800
-    );
-    --system-spectrum-checkbox-control-selected-color-down: var(
-        --spectrum-gray-900
-    );
 }
 :host,
 :root {

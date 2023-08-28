@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+### Features
+
+-   **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   **action-group:** separate first selection management from later selection management ([783b206](https://github.com/adobe/spectrum-web-components/commit/783b2067be23bf82eb222a361e5c899d89f05005))
+
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 ### Features

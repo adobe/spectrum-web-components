@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/shared",
-    "version": "0.35.0",
+    "version": "0.37.0",
     "publishConfig": {
         "access": "public"
     },
@@ -32,6 +32,10 @@
         "./src/focus-visible.js": {
             "development": "./src/focus-visible.dev.js",
             "default": "./src/focus-visible.js"
+        },
+        "./src/focusable-selectors.js": {
+            "development": "./src/focusable-selectors.dev.js",
+            "default": "./src/focusable-selectors.js"
         },
         "./src/focusable.js": {
             "development": "./src/focusable.dev.js",
@@ -93,7 +97,7 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.35.0",
+        "@spectrum-web-components/base": "^0.37.0",
         "focus-visible": "^5.1.0"
     },
     "types": "./src/index.d.ts",

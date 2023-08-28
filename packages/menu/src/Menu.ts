@@ -24,10 +24,8 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import { MenuItem } from './MenuItem.js';
-import type {
-    MenuItemAddedOrUpdatedEvent,
-    MenuItemRemovedEvent,
-} from './MenuItem.js';
+import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
 import menuStyles from './menu.css.js';
 
 export interface MenuChildItem {
@@ -66,7 +64,9 @@ export class Menu extends SizedMixin(SpectrumElement) {
         return [menuStyles];
     }
 
-    public isSubmenu = false;
+    private get isSubmenu(): boolean {
+        return this.slot === 'submenu';
+    }
 
     @property({ type: String, reflect: true })
     public label = '';
@@ -114,9 +114,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
     private updateCachedMenuItems(): MenuItem[] {
         this.cachedChildItems = [];
 
-        const slotElements = this.menuSlot
-            ? this.menuSlot.assignedElements({ flatten: true })
-            : [];
+        const slotElements = this.menuSlot.assignedElements({ flatten: true });
         for (const slotElement of slotElements) {
             const childMenuItems: MenuItem[] =
                 slotElement instanceof MenuItem
@@ -163,7 +161,7 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     /**
      * When a descendant `<sp-menu-item>` element is added or updated it will dispatch
-     * this event to announce its presence in the DOM. During the capture phase the first
+     * this event to announce its presence in the DOM. During the CAPTURE phase the first
      * Menu based element that the event encounters will manage the focus state of the
      * dispatching `<sp-menu-item>` element.
      * @param event
@@ -171,11 +169,35 @@ export class Menu extends SizedMixin(SpectrumElement) {
     private onFocusableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
     ): void {
-        if (event.item.menuData.focusRoot && !this.ignore) {
+        event.menuCascade.set(this, {
+            hadFocusRoot: !!event.item.menuData.focusRoot,
+            ancestorWithSelects: event.currentAncestorWithSelects,
+        });
+        if (this.selects) {
+            event.currentAncestorWithSelects = this;
+        }
+        event.item.menuData.focusRoot = event.item.menuData.focusRoot || this;
+    }
+
+    /**
+     * When a descendant `<sp-menu-item>` element is added or updated it will dispatch
+     * this event to announce its presence in the DOM. During the BUBBLE phase the first
+     * Menu based element that the event encounters that does not inherit selection will
+     * manage the selection state of the dispatching `<sp-menu-item>` element.
+     * @param event
+     */
+    private onSelectableItemAddedOrUpdated(
+        event: MenuItemAddedOrUpdatedEvent
+    ): void {
+        const cascadeData = event.menuCascade.get(this);
+        /* c8 ignore next 1 */
+        if (!cascadeData) return;
+
+        event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
+        if (cascadeData.hadFocusRoot && !this.ignore) {
             // Only have one tab stop per Menu tree
             this.tabIndex = -1;
         }
-        event.focusRoot = this;
         this.addChildItem(event.item);
 
         if (this.selects === 'inherit') {
@@ -191,7 +213,6 @@ export class Menu extends SizedMixin(SpectrumElement) {
                 ? 'none'
                 : ((this.getAttribute('role') || undefined) as RoleType);
             this.resolvedSelects = this.selects;
-            event.currentAncestorWithSelects = this;
         } else {
             this.resolvedRole = this.ignore
                 ? 'none'
@@ -199,27 +220,26 @@ export class Menu extends SizedMixin(SpectrumElement) {
             this.resolvedSelects =
                 this.resolvedRole === 'none' ? 'ignore' : 'none';
         }
-    }
 
-    /**
-     * When a descendant `<sp-menu-item>` element is added or updated it will dispatch
-     * this event to announce its presence in the DOM. During the bubble phase the first
-     * Menu based element that the event encounters that does not inherit selection will
-     * manage the selection state of the dispatching `<sp-menu-item>` element.
-     * @param event
-     */
-    private onSelectableItemAddedOrUpdated(
-        event: MenuItemAddedOrUpdatedEvent
-    ): void {
         const selects =
             this.resolvedSelects === 'single' ||
             this.resolvedSelects === 'multiple';
+        event.item.menuData.cleanupSteps.push((item: MenuItem) =>
+            this.removeChildItem(item)
+        );
         if (
             (selects || (!this.selects && this.resolvedSelects !== 'ignore')) &&
             !event.item.menuData.selectionRoot
         ) {
             event.item.setRole(this.childRole);
-            event.selectionRoot = this;
+            event.item.menuData.selectionRoot =
+                event.item.menuData.selectionRoot || this;
+            if (event.item.selected) {
+                this.selectedItemsMap.set(event.item, true);
+                this.selectedItems = [...this.selectedItems, event.item];
+                this.selected = [...this.selected, event.item.value];
+                this.value = this.selected.join(this.valueSeparator);
+            }
         }
     }
 
@@ -228,10 +248,10 @@ export class Menu extends SizedMixin(SpectrumElement) {
         this.handleItemsChanged();
     }
 
-    private async removeChildItem(event: MenuItemRemovedEvent): Promise<void> {
-        this.childItemSet.delete(event.item);
+    private async removeChildItem(item: MenuItem): Promise<void> {
+        this.childItemSet.delete(item);
         this.cachedChildItems = undefined;
-        if (event.item.focused) {
+        if (item.focused) {
             this.handleItemsChanged();
             await this.updateComplete;
             this.focus();
@@ -253,9 +273,11 @@ export class Menu extends SizedMixin(SpectrumElement) {
             }
         );
 
-        this.addEventListener('sp-menu-item-removed', this.removeChildItem);
-        this.addEventListener('click', this.onClick);
+        this.addEventListener('click', this.handleClick);
         this.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('sp-opened', this.handleSubmenuOpened);
+        this.addEventListener('sp-closed', this.handleSubmenuClosed);
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
@@ -275,13 +297,13 @@ export class Menu extends SizedMixin(SpectrumElement) {
         }
         this.focusMenuItemByOffset(0);
         super.focus({ preventScroll });
-        const selectedItem = this.querySelector('[selected]');
+        const selectedItem = this.selectedItems[0];
         if (selectedItem && !preventScroll) {
             selectedItem.scrollIntoView({ block: 'nearest' });
         }
     }
 
-    private onClick(event: Event): void {
+    private handleClick(event: Event): void {
         if (event.defaultPrevented) {
             return;
         }
@@ -319,12 +341,11 @@ export class Menu extends SizedMixin(SpectrumElement) {
     }
 
     public handleFocusin(event: FocusEvent): void {
-        const isOrContainsRelatedTarget = elementIsOrContains(
+        const wasOrContainedRelatedTarget = elementIsOrContains(
             this,
             event.relatedTarget as Node
         );
         if (
-            isOrContainsRelatedTarget ||
             this.childItems.some(
                 (childItem) => childItem.menuData.focusRoot !== this
             )
@@ -337,7 +358,10 @@ export class Menu extends SizedMixin(SpectrumElement) {
         const selectionRoot =
             this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
             this;
-        if (activeElement !== selectionRoot || !isOrContainsRelatedTarget) {
+        if (
+            activeElement !== selectionRoot ||
+            (!wasOrContainedRelatedTarget && event.target !== this)
+        ) {
             selectionRoot.focus({ preventScroll: true });
             if (activeElement && this.focusedItemIndex === 0) {
                 const offset = this.childItems.findIndex(
@@ -353,33 +377,73 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     public startListeningToKeyboard(): void {
         this.addEventListener('keydown', this.handleKeydown);
-        this.addEventListener('focusout', this.handleFocusout);
     }
 
     public handleFocusout(event: FocusEvent): void {
         if (elementIsOrContains(this, event.relatedTarget as Node)) {
-            (event.composedPath()[0] as MenuItem).focused = false;
             return;
         }
         this.stopListeningToKeyboard();
-        if (
-            event.target === this &&
-            this.childItems.some(
-                (childItem) => childItem.menuData.focusRoot === this
-            )
-        ) {
-            const focusedItem = this.childItems[this.focusedItemIndex];
-            if (focusedItem) {
-                focusedItem.focused = false;
-            }
-        }
+        this.childItems.forEach((child) => (child.focused = false));
         this.removeAttribute('aria-activedescendant');
     }
 
     public stopListeningToKeyboard(): void {
         this.removeEventListener('keydown', this.handleKeydown);
-        this.removeEventListener('focusout', this.handleFocusout);
     }
+
+    private descendentOverlays = new Map<Overlay, Overlay>();
+
+    protected handleDescendentOverlayOpened(event: Event): void {
+        const target = event.composedPath()[0] as MenuItem;
+        /* c8 ignore next 1 */
+        if (!target.overlayElement) return;
+        this.descendentOverlays.set(
+            target.overlayElement,
+            target.overlayElement
+        );
+    }
+
+    protected handleDescendentOverlayClosed(event: Event): void {
+        const target = event.composedPath()[0] as MenuItem;
+        /* c8 ignore next 1 */
+        if (!target.overlayElement) return;
+        this.descendentOverlays.delete(target.overlayElement);
+    }
+
+    public handleSubmenuClosed = (event: Event): void => {
+        event.stopPropagation();
+        const target = event.composedPath()[0] as Overlay;
+        target.dispatchEvent(
+            new Event('sp-menu-submenu-closed', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    };
+
+    public handleSubmenuOpened = (event: Event): void => {
+        event.stopPropagation();
+        const target = event.composedPath()[0] as Overlay;
+        target.dispatchEvent(
+            new Event('sp-menu-submenu-opened', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        const focusedItem = this.childItems[this.focusedItemIndex];
+        if (focusedItem) {
+            focusedItem.focused = false;
+        }
+        const openedItem = event
+            .composedPath()
+            .find((el) => this.childItemSet.has(el as MenuItem));
+        /* c8 ignore next 1 */
+        if (!openedItem) return;
+        const openedItemIndex = this.childItems.indexOf(openedItem as MenuItem);
+        this.focusedItemIndex = openedItemIndex;
+        this.focusInItemIndex = openedItemIndex;
+    };
 
     public async selectOrToggleItem(targetItem: MenuItem): Promise<void> {
         const resolvedSelects = this.resolvedSelects;
@@ -387,7 +451,11 @@ export class Menu extends SizedMixin(SpectrumElement) {
         const oldSelected = this.selected.slice();
         const oldSelectedItems = this.selectedItems.slice();
         const oldValue = this.value;
-        this.childItems[this.focusedItemIndex].focused = false;
+        const focusedChild = this.childItems[this.focusedItemIndex];
+        if (focusedChild) {
+            focusedChild.focused = false;
+            focusedChild.active = false;
+        }
         this.focusedItemIndex = this.childItems.indexOf(targetItem);
         this.forwardFocusVisibleToItem(targetItem);
 
@@ -461,10 +529,12 @@ export class Menu extends SizedMixin(SpectrumElement) {
             return;
         }
         event.preventDefault();
+        event.stopPropagation();
         itemToFocus.scrollIntoView({ block: 'nearest' });
     }
 
-    protected navigateBetweenRelatedMenus(code: string): void {
+    protected navigateBetweenRelatedMenus(event: KeyboardEvent): void {
+        const { code } = event;
         const shouldOpenSubmenu =
             (this.isLTR && code === 'ArrowRight') ||
             (!this.isLTR && code === 'ArrowLeft');
@@ -472,30 +542,41 @@ export class Menu extends SizedMixin(SpectrumElement) {
             (this.isLTR && code === 'ArrowLeft') ||
             (!this.isLTR && code === 'ArrowRight');
         if (shouldOpenSubmenu) {
+            event.stopPropagation();
             const lastFocusedItem = this.childItems[this.focusedItemIndex];
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
-                this.blur();
                 lastFocusedItem.openOverlay();
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
+            event.stopPropagation();
             this.dispatchEvent(new Event('close', { bubbles: true }));
+            this.updateSelectedItemIndex();
         }
     }
 
     public handleKeydown(event: KeyboardEvent): void {
+        const isNotThisOrDirectChild =
+            event.target !== this &&
+            this !== (event.target as HTMLElement).parentElement;
+        if (isNotThisOrDirectChild || event.defaultPrevented) {
+            return;
+        }
+        const lastFocusedItem = this.childItems[this.focusedItemIndex];
+        if (lastFocusedItem) {
+            lastFocusedItem.focused = true;
+        }
         const { code } = event;
         if (code === 'Tab') {
             this.prepareToCleanUp();
             return;
         }
         if (code === 'Space') {
-            const lastFocusedItem = this.childItems[this.focusedItemIndex];
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
-                this.blur();
+                // this.blur();
                 lastFocusedItem.openOverlay();
                 return;
             }
@@ -508,13 +589,17 @@ export class Menu extends SizedMixin(SpectrumElement) {
             this.navigateWithinMenu(event);
             return;
         }
-        this.navigateBetweenRelatedMenus(code);
+        this.navigateBetweenRelatedMenus(event);
     }
 
     public focusMenuItemByOffset(offset: number): MenuItem {
         const step = offset || 1;
         const focusedItem = this.childItems[this.focusedItemIndex];
-        focusedItem.focused = false;
+        if (focusedItem) {
+            focusedItem.focused = false;
+            // Remain active while a submenu is opened.
+            focusedItem.active = focusedItem.open;
+        }
         this.focusedItemIndex =
             (this.childItems.length + this.focusedItemIndex + offset) %
             this.childItems.length;
@@ -551,6 +636,8 @@ export class Menu extends SizedMixin(SpectrumElement) {
         );
     }
 
+    private _hasUpdatedSelectedItemIndex = false;
+
     public updateSelectedItemIndex(): void {
         let firstOrFirstSelectedIndex = 0;
         const selectedItemsMap = new Map<MenuItem, boolean>();
@@ -561,7 +648,11 @@ export class Menu extends SizedMixin(SpectrumElement) {
             itemIndex -= 1;
             const childItem = this.childItems[itemIndex];
             if (childItem.menuData.selectionRoot === this) {
-                if (childItem.selected) {
+                if (
+                    childItem.selected ||
+                    (!this._hasUpdatedSelectedItemIndex &&
+                        this.selected.includes(childItem.value))
+                ) {
                     firstOrFirstSelectedIndex = itemIndex;
                     selectedItemsMap.set(childItem, true);
                     selected.unshift(childItem.value);
@@ -594,23 +685,25 @@ export class Menu extends SizedMixin(SpectrumElement) {
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
         if (!this._willUpdateItems) {
-            /* c8 ignore next 3 */
-            let resolve = (): void => {
-                return;
-            };
-            this.cacheUpdated = new Promise((res) => (resolve = res));
             this._willUpdateItems = true;
-            // Debounce the update so we only update once
-            // if multiple items have changed
-            window.requestAnimationFrame(() => {
-                if (this.cachedChildItems === undefined) {
-                    this.updateSelectedItemIndex();
-                    this.updateItemFocus();
-                }
-                this._willUpdateItems = false;
-                resolve();
-            });
+            this.cacheUpdated = this.updateCache();
         }
+    }
+
+    private async updateCache(): Promise<void> {
+        if (!this.hasUpdated) {
+            await Promise.all([
+                new Promise((res) => requestAnimationFrame(() => res(true))),
+                this.updateComplete,
+            ]);
+        } else {
+            await new Promise((res) => requestAnimationFrame(() => res(true)));
+        }
+        if (this.cachedChildItems === undefined) {
+            this.updateSelectedItemIndex();
+            this.updateItemFocus();
+        }
+        this._willUpdateItems = false;
     }
 
     private updateItemFocus(): void {
@@ -626,11 +719,24 @@ export class Menu extends SizedMixin(SpectrumElement) {
         }
     }
 
+    public closeDescendentOverlays(): void {
+        this.descendentOverlays.forEach((overlay) => {
+            overlay.open = false;
+        });
+        this.descendentOverlays = new Map<Overlay, Overlay>();
+    }
+
     private forwardFocusVisibleToItem(item: MenuItem): void {
         if (item.menuData.focusRoot !== this) {
             return;
         }
-        item.focused = this.hasVisibleFocusInTree();
+        this.closeDescendentOverlays();
+        const focused =
+            this.hasVisibleFocusInTree() ||
+            !!this.childItems.find((child) => {
+                return child.hasVisibleFocusInTree();
+            });
+        item.focused = focused;
         this.setAttribute('aria-activedescendant', item.id);
         if (
             item.menuData.selectionRoot &&
@@ -640,13 +746,34 @@ export class Menu extends SizedMixin(SpectrumElement) {
         }
     }
 
-    public override render(): TemplateResult {
+    private handleSlotchange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        const assignedElement = target.assignedElements({
+            flatten: true,
+        }) as MenuItem[];
+        if (this.childItems.length !== assignedElement.length) {
+            assignedElement.forEach((item) => {
+                if (typeof item.triggerUpdate !== 'undefined') {
+                    item.triggerUpdate();
+                }
+            });
+        }
+    }
+
+    protected renderMenuItemSlot(): TemplateResult {
         return html`
-            <slot></slot>
+            <slot
+                @sp-menu-submenu-opened=${this.handleDescendentOverlayOpened}
+                @sp-menu-submenu-closed=${this.handleDescendentOverlayClosed}
+                @slotchange=${this.handleSlotchange}
+            ></slot>
         `;
     }
 
-    private _notFirstUpdated = false;
+    public override render(): TemplateResult {
+        return this.renderMenuItemSlot();
+    }
 
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
@@ -671,17 +798,20 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (changes.has('selects') && this._notFirstUpdated) {
+        if (changes.has('selects') && this.hasUpdated) {
             this.selectsChanged();
         }
-        if (changes.has('label')) {
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);
+                /* c8 ignore next 3 */
             } else {
                 this.removeAttribute('aria-label');
             }
         }
-        this._notFirstUpdated = true;
     }
 
     protected selectsChanged(): void {
@@ -708,6 +838,10 @@ export class Menu extends SizedMixin(SpectrumElement) {
 
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
+    /* c8 ignore next 3 */
+    protected resolveCacheUpdated = (): void => {
+        return;
+    };
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;

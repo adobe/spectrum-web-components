@@ -35,6 +35,7 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
+::slotted(sp-overlay),
 ::slotted(sp-tooltip) {
     position: absolute;
 }

@@ -32,7 +32,7 @@ export default {
     plugins: [
         defineElementPlugin(),
         reactWrapperPlugin({
-            exclude: ['StoryDecorator'],
+            exclude: ['StoryDecorator', 'TooltipOpenable'],
             outDir: '../../react',
             prettierConfig: yaml.load(
                 readFileSync(resolve('../../.prettierrc.yaml'))

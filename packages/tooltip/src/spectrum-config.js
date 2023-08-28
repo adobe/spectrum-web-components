@@ -29,26 +29,129 @@ export default {
             fileName: 'tooltip',
             excludeByComponents: [builder.class('u-tooltip-showOnHover')],
             components: [
-                converter.classToHost(),
+                converter.classToId('spectrum-Tooltip', 'tooltip'),
                 converter.classToAttribute('is-open', 'open'),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Tooltip--top'],
-                        ['spectrum-Tooltip--bottom'],
-                        ['spectrum-Tooltip--left'],
-                        ['spectrum-Tooltip--right'],
+                {
+                    find: [builder.class('spectrum-Tooltip--top')],
+                    replace: [
+                        {
+                            replace: builder.attribute(
+                                'placement',
+                                'top',
+                                'substring'
+                            ),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('tooltip'),
+                        },
                     ],
-                    'placement',
-                    'substring'
-                ),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Tooltip--info'],
-                        ['spectrum-Tooltip--positive'],
-                        ['spectrum-Tooltip--negative'],
+                    expandSelector: true,
+                },
+                {
+                    find: [builder.class('spectrum-Tooltip--bottom')],
+                    replace: [
+                        {
+                            replace: builder.attribute(
+                                'placement',
+                                'bottom',
+                                'substring'
+                            ),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('tooltip'),
+                        },
                     ],
-                    'variant'
-                ),
+                    expandSelector: true,
+                },
+                {
+                    find: [builder.class('spectrum-Tooltip--left')],
+                    replace: [
+                        {
+                            replace: builder.attribute(
+                                'placement',
+                                'left',
+                                'substring'
+                            ),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('tooltip'),
+                        },
+                    ],
+                    expandSelector: true,
+                },
+                {
+                    find: [builder.class('spectrum-Tooltip--right')],
+                    replace: [
+                        {
+                            replace: builder.attribute(
+                                'placement',
+                                'right',
+                                'substring'
+                            ),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('tooltip'),
+                        },
+                    ],
+                    expandSelector: true,
+                },
+                {
+                    find: [builder.class('spectrum-Tooltip--info')],
+                    replace: [
+                        {
+                            replace: builder.attribute('variant', 'info'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('tooltip'),
+                        },
+                    ],
+                    expandSelector: true,
+                },
+                {
+                    find: [builder.class('spectrum-Tooltip--positive')],
+                    replace: [
+                        {
+                            replace: builder.attribute('variant', 'positive'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('tooltip'),
+                        },
+                    ],
+                    expandSelector: true,
+                },
+                {
+                    find: [builder.class('spectrum-Tooltip--negative')],
+                    replace: [
+                        {
+                            replace: builder.attribute('variant', 'negative'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('tooltip'),
+                        },
+                    ],
+                    expandSelector: true,
+                },
                 converter.classToId('spectrum-Tooltip-label'),
                 converter.classToId('spectrum-Tooltip-tip'),
                 converter.classToSlotted('spectrum-Tooltip-typeIcon', 'icon'),

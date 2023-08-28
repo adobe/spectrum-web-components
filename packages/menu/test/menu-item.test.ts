@@ -169,4 +169,33 @@ describe('Menu item', () => {
         expect(el.value).to.equal('Selected Text');
         expect(el.hasAttribute('value')).to.be.false;
     });
+    it('acualizes a submenu', async () => {
+        const test = await fixture<Menu>(
+            html`
+                <sp-menu>
+                    <sp-menu-item selected>Selected</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        const el = test.querySelector('sp-menu-item') as MenuItem;
+
+        expect(el.hasSubmenu).to.be.false;
+
+        const submenuItem = document.createElement('sp-menu-item');
+        const submenu = document.createElement('sp-menu');
+        submenuItem.textContent = 'Test Submenu Item';
+        submenu.slot = 'submenu';
+        submenu.append(submenuItem);
+
+        el.append(submenu);
+        await elementUpdated(el);
+
+        expect(el.hasSubmenu).to.be.true;
+
+        submenu.remove();
+        await elementUpdated(el);
+
+        expect(el.hasSubmenu).to.be.false;
+    });
 });

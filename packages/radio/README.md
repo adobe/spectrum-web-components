@@ -91,6 +91,8 @@ import {
 
 Standard radio buttons are the default style for radio buttons. They are optimal for application panels where all visual elements are monochrome in order to direct focus to the content.
 
+Invalid selections in radio groups are identified using the `negative-help-text` slot. Read more about using [help text](#help-text) below.
+
 ```html-live
 <div style="display: flex; justify-content: space-between;">
     <div style="display: flex; flex-direction: column;">
@@ -107,9 +109,12 @@ Standard radio buttons are the default style for radio buttons. They are optimal
         <sp-field-label for="example-2" size="l">
             <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
         </sp-field-label>
-        <sp-radio-group id="example-2" name="example" vertical>
+        <sp-radio-group invalid id="example-2" name="example" vertical>
             <sp-radio invalid value="kittens">Kittens</sp-radio>
             <sp-radio invalid value="puppies" checked>Puppies</sp-radio>
+             <sp-help-text slot="negative-help-text" icon>
+                This selection is invalid.
+            </sp-help-text>
         </sp-radio-group>
     </div>
 
@@ -129,6 +134,8 @@ Standard radio buttons are the default style for radio buttons. They are optimal
 
 Emphasized radio buttons are a secondary style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
 
+Invalid selections in radio groups are identified using the `negative-help-text` slot. Read more about using [help text](#help-text) below.
+
 ```html-live
 <div style="display: flex; justify-content: space-between;">
     <div style="display: flex; flex-direction: column;">
@@ -145,9 +152,12 @@ Emphasized radio buttons are a secondary style for radio buttons. The blue color
         <sp-field-label for="example-b" size="l">
             <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
         </sp-field-label>
-        <sp-radio-group id="example-b" name="example" vertical>
+        <sp-radio-group invalid id="example-b" name="example" vertical>
             <sp-radio emphasized invalid value="kittens">Kittens</sp-radio>
             <sp-radio emphasized invalid value="puppies" checked>Puppies</sp-radio>
+            <sp-help-text slot="negative-help-text" icon>
+                This selection is invalid.
+            </sp-help-text>
         </sp-radio-group>
     </div>
 

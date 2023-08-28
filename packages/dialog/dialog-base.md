@@ -27,7 +27,7 @@ import { DialogBase } from '@spectrum-web-components/dialog';
 ## Example
 
 ```html
-<overlay-trigger type="modal" placement="none">
+<overlay-trigger type="modal">
     <sp-dialog-base underlay slot="click-content">
         <sp-dialog size="s">
             <h2 slot="heading">A thing is about to happen</h2>
