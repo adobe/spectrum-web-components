@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -35,7 +36,7 @@ import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-import type { Overlay } from 'overlay/src/Overlay.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -310,7 +311,7 @@ export class MenuItem extends LikeAnchor(
                               : ''}"
                       ></sp-icon-checkmark100>
                   `
-                : html``}
+                : nothing}
             <slot name="icon"></slot>
             <div id="label">
                 <slot id="slot"></slot>
@@ -322,7 +323,7 @@ export class MenuItem extends LikeAnchor(
                       ariaHidden: true,
                       className: 'button anchor hidden',
                   })
-                : html``}
+                : nothing}
             ${this.renderSubmenu()}
         `;
     }

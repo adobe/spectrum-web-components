@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export type StoryArgs = {
@@ -46,14 +46,14 @@ export const Template = ({
             ?rounded=${rounded}
             size=${size}
         >
-            ${icon ? icon : html``}
+            ${icon ? icon : nothing}
             ${label
                 ? html`
                       <span slot="label">
                           ${typeof label === 'string' ? label : 'All'}
                       </span>
                   `
-                : html``}
+                : nothing}
         </sp-picker-button>
     `;
 };
