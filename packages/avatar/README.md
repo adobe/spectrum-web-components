@@ -33,8 +33,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="50"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -45,8 +45,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="75"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -57,8 +57,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="100"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -69,8 +69,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="200"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -81,8 +81,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="300"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -93,8 +93,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="400"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -105,8 +105,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="500"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -117,8 +117,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="600"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
@@ -129,8 +129,8 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ```html demo
 <sp-avatar
     size="700"
-    label="Dog the User"
-    src="https://place.dog/500/500"
+    label="Demo User"
+    src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
 
