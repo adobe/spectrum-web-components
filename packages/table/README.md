@@ -246,8 +246,11 @@ For large amounts of data, the `<sp-table>` can be virtualised to easily add tab
         return items;
     }
 
-    const initTable = () => {
+    const initTable = async () => {
         const table = document.querySelector('#table-virtualized-demo');
+
+        await table.updateComplete;
+        await table.closest('code-example')?.updateComplete;
         table.items = initItems(50);
 
         table.renderItem = (item, index) => { 
@@ -260,8 +263,10 @@ For large amounts of data, the `<sp-table>` can be virtualised to easily add tab
             return [cell1, cell2, cell3];
         }
     };
-    customElements.whenDefined('sp-table').then(() => {
-        initTable();
+    customElements.whenDefined('code-example').then(() => {
+        customElements.whenDefined('sp-table').then(() => {
+            initTable();
+        });
     });
 </script>
 
@@ -373,8 +378,11 @@ By default the `selected` property will surface an array of item indexes that ar
         return items;
     }
 
-    const initTable = () => {
+    const initTable = async () => {
         const table = document.querySelector('#table-item-value-demo');
+
+        await table.updateComplete;
+        await table.closest('code-example')?.updateComplete;
         table.items = initItems(50);
         table.itemValue = (item) => item.id;
 
@@ -393,8 +401,10 @@ By default the `selected` property will surface an array of item indexes that ar
             selected.textContent = `Selected: ${JSON.stringify(event.target.selected, null, ' ')}`;
         });
     };
-    customElements.whenDefined('sp-table').then(() => {
-        initTable();
+    customElements.whenDefined('code-example').then(() => {
+        customElements.whenDefined('sp-table').then(() => {
+            initTable();
+        });
     });
 </script>
 
@@ -472,8 +482,11 @@ All values in the item array are assumed to be homogenous by default. This means
         return items;
     }
 
-    const initTable = () => {
+    const initTable = async () => {
         const table = document.querySelector('#table-row-type-demo');
+
+        await table.updateComplete;
+        await table.closest('code-example')?.updateComplete;
         const items = initItems(50);
         items.splice(3, 0, {
             _$rowType$: 1,
@@ -496,8 +509,10 @@ All values in the item array are assumed to be homogenous by default. This means
             return [cell1, cell2, cell3];
         };
     };
-    customElements.whenDefined('sp-table').then(() => {
-        initTable();
+    customElements.whenDefined('code-example').then(() => {
+        customElements.whenDefined('sp-table').then(() => {
+            initTable();
+        });
     });
 </script>
 
@@ -591,8 +606,11 @@ For each table column you want to sort, use the `sortable` attribute in its resp
 
     let items = initItems(50);
 
-    const initTable = () => {
+    const initTable = async () => {
         const table = document.querySelector('#sorted-virtualized-table');
+
+        await table.updateComplete;
+        await table.closest('code-example')?.updateComplete;
 
         table.items = items;
 
@@ -618,7 +636,9 @@ For each table column you want to sort, use the `sortable` attribute in its resp
         });
     };
 
-    customElements.whenDefined('sp-table').then(() => {
-        initTable();
+    customElements.whenDefined('code-example').then(() => {
+        customElements.whenDefined('sp-table').then(() => {
+            initTable();
+        });
     });
 </script>
