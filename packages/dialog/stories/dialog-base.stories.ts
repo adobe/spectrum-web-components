@@ -50,6 +50,35 @@ export const Slotted = (): TemplateResult => html`
     </sp-dialog-base>
 `;
 
+class CountdownWatcher extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    setup(): void {
+        (this.previousElementSibling as HTMLElement).addEventListener(
+            'countdown-complete',
+            () => {
+                this.ready(true);
+            }
+        );
+    }
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('countdown-complete-watcher', CountdownWatcher);
+
 export const disabledButton = (): TemplateResult => {
     return html`
         <sp-dialog-base
@@ -61,7 +90,7 @@ export const disabledButton = (): TemplateResult => {
                     );
                 }
             }}
-            @sp-opened=${() => {
+            @sp-opened=${({ target }: Event & { target: HTMLElement }) => {
                 let count = 5;
                 const timer = setInterval(() => {
                     count -= 1;
@@ -78,6 +107,7 @@ export const disabledButton = (): TemplateResult => {
                             ) as HTMLButtonElement
                         ).disabled = false;
                         clearInterval(timer);
+                        target.dispatchEvent(new Event('countdown-complete'));
                     }
                     (
                         document.querySelector('.time') as HTMLElement
@@ -113,6 +143,15 @@ export const disabledButton = (): TemplateResult => {
         </sp-dialog-base>
     `;
 };
+
+disabledButton.decorators = [
+    (story: () => TemplateResult): TemplateResult => {
+        return html`
+            ${story()}
+            <countdown-complete-watcher></countdown-complete-watcher>
+        `;
+    },
+];
 
 export const notAgain = (): TemplateResult => html`
     <sp-dialog-base
