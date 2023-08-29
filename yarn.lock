@@ -5403,10 +5403,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-3.0.33.tgz#4e980f38e56535abca5cd8e6570e189ad2d76f4d"
   integrity sha512-hnkiZms73dugvbc5twxKVBAc6nqI5OecaDOiSpctWJBxzsFADP0euikLeEdodh53QTIcYXMCM5olRH3qMTSa4Q==
 
-"@spectrum-css/commons@^7.0.8":
-  version "7.0.8"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-7.0.8.tgz#4c221d56eb296c21a259e5afcdddc2dd8fff878b"
-  integrity sha512-LTHHxD+GS+EHPp9sF1PiRg3B8XWKSXYMSRPgncQUc+6rG/w3G5lyJa4eobhuE5OjbcKnX8x7i15NMqltQ85TJg==
+"@spectrum-css/commons@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-8.0.0.tgz#c9e9eeaf87b17fee32a99674e9a126cf3af64d34"
+  integrity sha512-ohM/6ZEK0IVSGxKFoymkZIVqf3zwt2x/27u48SXq8ZgUXPl5l6IqdHHmP13vuJiyJ6hs341YLth5PamRlbQEjg==
 
 "@spectrum-css/dialog@^6.0.66":
   version "6.0.66"
@@ -5593,25 +5593,25 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-9.1.0.tgz#209b2397da9c1304b3b0e538025afcb5c29dc26b"
   integrity sha512-/DheKxtmvoAZneAs1Dql+1waSqCxTFIEAfzaPCaQvAYg+ctW9NhXMZjGz5cRbHTzCmeuE6reuCLfuFput9Z7bQ==
 
-"@spectrum-css/tokens@^11.2.0":
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-11.2.0.tgz#ad26bb021c76101d2f01383dbe1a4ac9f0c0f40a"
-  integrity sha512-beq++b5tSw2AjbBXbYlG8cZk4w2JvJVlsPHMiD15tq5SiSYcWFFL13lBPAi30XkPjW+1yAGPqMAHKkUxAFF/Rw==
+"@spectrum-css/tokens@^11.3.1":
+  version "11.3.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-11.3.1.tgz#743db7cb795769336bcd77d9e41d24c4ae54c7d2"
+  integrity sha512-Yn3M/1T1VxQETEAdOgj/00utCfD6esyDvOS+plxJWcpFtHhDh5J+qWgA1PitUG7glRfLyB1atx2/ZlD+ECHscA==
 
 "@spectrum-css/tooltip@^5.1.3":
   version "5.1.3"
   resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-5.1.3.tgz#734b48e5c41d248ef54ec2f87e67d252a78088b5"
   integrity sha512-ER4GUn+A4BvuZNTsJYw/TIefMMbms7HZ0HSoOTe4kwbq5C4zMnopd0PTa/oURMktz6Bz8JWZIoScRU88SWXVYQ==
 
-"@spectrum-css/tray@^2.1.3":
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.1.6.tgz#a3b3bfab535f9364acaa63af1482fa4234ad669e"
-  integrity sha512-79f1PaU1ScjjS4W8F13vl+b0VWkD0Q+ScPTtFoeDTzOcnzPd0qfEqbi0KABvA1XSghTDEn1yIEcOgxgVo09kDQ==
+"@spectrum-css/tray@^2.1.8":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.1.8.tgz#f91614e0a2bd89d291ac7dedfc83b4bbae65e3a8"
+  integrity sha512-GZF26vbwd+wD+gqwVRlIDLQNCVZ4jblvnwRJLrUhLDYRk0bvnuyqfr1lm9sIvNFWdQuPC0RJOf3P9tzQS/+xHg==
 
-"@spectrum-css/typography@^5.0.32":
-  version "5.0.35"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.35.tgz#84359b647397f9562aa19bf37480d38a90a6c8c5"
-  integrity sha512-Nk6rmpYfugs9qoq+pZEGM6pobdM3BY9AS39IcWg2S3CbKU6VdFsW8HZnJ/IiKEMZeVj0vL0JS1IG/7G2iERekg==
+"@spectrum-css/typography@^5.0.37":
+  version "5.0.37"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.37.tgz#d63177a4937122eaccf218eae5145b7f375fd1a5"
+  integrity sha512-buWiWksP38j194JdOuIq6EAJNE8xhzLCZsO9PUS0lkgFj0MVWLoMhBZY/7l7fJoUZHwYOE5yAo1/G6IOKq1TZg==
 
 "@spectrum-css/underlay@^2.0.53":
   version "2.0.53"
