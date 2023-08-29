@@ -116,8 +116,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:focus) > .description,
-:host([focused]) > .description {
+:host(:focus) > [name='description']::slotted(*),
+:host([focused]) > [name='description']::slotted(*) {
     color: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -226,7 +226,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover) > .description {
+:host(:hover) > [name='description']::slotted(*) {
     color: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -310,7 +310,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host:active > .description {
+:host:active > [name='description']::slotted(*) {
     color: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -390,8 +390,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([aria-disabled='true']) .description,
-:host([disabled]) .description {
+:host([aria-disabled='true']) [name='description']::slotted(*),
+:host([disabled]) [name='description']::slotted(*) {
     color: var(
         --highcontrast-menu-item-color-disabled,
         var(
@@ -480,7 +480,7 @@ governing permissions and limitations under the License.
 .spectrum-Menu-item--collapsible .chevron {
     grid-area: chevronAreaCollapsible;
 }
-.description {
+[name='description']::slotted(*) {
     grid-area: descriptionArea;
 }
 :host([has-submenu]) .chevron {
@@ -532,7 +532,7 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-text-to-control)
     );
 }
-.description {
+[name='description']::slotted(*) {
     color: var(
         --highcontrast-menu-item-color-default,
         var(
@@ -544,6 +544,8 @@ governing permissions and limitations under the License.
         --mod-menu-item-description-font-size,
         var(--spectrum-menu-item-description-font-size)
     );
+    -webkit-hyphens: auto;
+    hyphens: auto;
     line-height: var(
         --mod-menu-item-description-line-height,
         var(--spectrum-menu-item-description-line-height)
@@ -552,9 +554,9 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-to-description-spacing,
         var(--spectrum-menu-item-label-to-description-spacing)
     );
+    overflow-wrap: break-word;
 }
-#label,
-.description {
+#label {
     -webkit-hyphens: auto;
     hyphens: auto;
     overflow-wrap: break-word;

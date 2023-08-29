@@ -316,9 +316,7 @@ export class MenuItem extends LikeAnchor(
             <div id="label">
                 <slot id="slot"></slot>
             </div>
-            <span class="description">
-                <slot name="description"></slot>
-            </span>
+            <slot name="description"></slot>
             <slot name="value"></slot>
             ${this.href && this.href.length > 0
                 ? super.renderAnchor({

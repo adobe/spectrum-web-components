@@ -100,10 +100,31 @@ const config = {
                     'icon'
                 ),
                 converter.classToSlotted('spectrum-Menu-itemValue', 'value'),
-                converter.classToClass(
-                    'spectrum-Menu-itemDescription',
-                    'description'
-                ),
+                {
+                    find: [
+                        {
+                            type: 'class',
+                            name: 'spectrum-Menu-itemDescription',
+                        },
+                    ],
+                    replace: [
+                        {
+                            replace: builder.attribute('name', 'description'),
+                            hoist: false,
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [
+                                    {
+                                        type: 'universal',
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
                 converter.classToClass(
                     'spectrum-menu-itemSelection',
                     'menu-itemSelection'
