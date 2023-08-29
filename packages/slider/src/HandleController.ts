@@ -17,11 +17,7 @@ import {
 } from '@spectrum-web-components/base/src/directives.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import { Slider } from './Slider.js';
-import {
-    Controller,
-    SliderHandle,
-    SliderNormalization,
-} from './SliderHandle.js';
+import { SliderHandle, SliderNormalization } from './SliderHandle.js';
 
 interface HandleReference {
     handle: HTMLElement;
@@ -61,7 +57,7 @@ export interface HandleValueDictionary {
     [key: string]: number;
 }
 
-export class HandleController implements Controller {
+export class HandleController {
     private host!: Slider;
     private handles: Map<string, SliderHandle> = new Map();
     private model: ModelValue[] = [];

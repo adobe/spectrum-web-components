@@ -132,6 +132,14 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const minimalDOM = (): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider>Opacity</sp-slider>
+        </div>
+    `;
+};
+
 export const noVisibleTextLabel = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
