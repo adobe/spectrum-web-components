@@ -26,7 +26,6 @@ import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
-    decorators: [makeOverBackground()],
     argTypes: {
         disabled: {
             name: 'disabled',
@@ -167,13 +166,13 @@ export const staticWhite = (args: StoryArgs = {}): TemplateResult =>
 staticWhite.args = {
     staticValue: 'white',
 };
-
+staticWhite.decorators = [makeOverBackground()];
 export const staticBlack = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
 staticBlack.args = {
     staticValue: 'black',
 };
-
+staticBlack.decorators = [makeOverBackground()];
 export const quiet = (args: StoryArgs = {}): TemplateResult => Template(args);
 quiet.args = {
     quiet: true,
