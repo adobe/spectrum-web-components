@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -39,7 +40,9 @@ export const ActionMenuMarkup = ({
             ?disabled=${disabled}
             ?open=${open}
             ?quiet=${quiet}
-            static=${staticValue}
+            static=${ifDefined(
+                staticValue === 'none' ? undefined : staticValue
+            )}
             size=${size}
             @change="${changeHandler}"
             .selects=${selects ? selects : undefined}
