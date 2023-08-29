@@ -390,7 +390,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open}
-                .placement=${this.placement}
+                .placement=${this.isMobile.matches ? undefined : this.placement}
                 type="auto"
                 .receivesFocus=${'true'}
                 @beforetoggle=${(
