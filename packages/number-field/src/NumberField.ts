@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -561,7 +562,7 @@ export class NumberField extends TextfieldBase {
         return html`
             ${super.renderField()}
             ${this.hideStepper
-                ? html``
+                ? nothing
                 : html`
                       <span
                           class="buttons"

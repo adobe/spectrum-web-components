@@ -105,14 +105,20 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         `;
     }
 
+    private liveHTMLTransferred = false;
+
     private get renderedCode(): TemplateResult {
-        if (this.classList.contains('language-html-live')) {
+        if (
+            this.classList.contains('language-html-live') &&
+            !this.liveHTMLTransferred
+        ) {
             const demo =
                 this.querySelector('[slot="demo"]') ||
                 document.createElement('div');
             demo.slot = 'demo';
             demo.innerHTML = this.liveHTML;
             this.append(demo);
+            this.liveHTMLTransferred = true;
         }
         return toHtmlTemplateString(this.liveHTML);
     }
