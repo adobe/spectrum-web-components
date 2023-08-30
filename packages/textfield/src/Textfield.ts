@@ -171,7 +171,7 @@ export class TextfieldBase extends ManageHelpText(
         this.inputElement.select();
     }
 
-    protected handleInput(): void {
+    protected handleInput(_event: Event): void {
         if (this.allowedKeys && this.inputElement.value) {
             const regExp = new RegExp(`^[${this.allowedKeys}]*$`, 'u');
             if (!regExp.test(this.inputElement.value)) {
