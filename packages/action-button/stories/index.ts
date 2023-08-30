@@ -42,6 +42,9 @@ export function renderButton(properties: Properties): TemplateResult {
             ?disabled=${!!properties.disabled}
             ?selected=${!!properties.selected}
             ?toggles=${!!properties.toggles}
+
+            description="${properties.description}"
+
             size=${properties.size || 'm'}
             ?hold-affordance=${!!properties.holdAffordance}
             ?active=${!!properties.active}
