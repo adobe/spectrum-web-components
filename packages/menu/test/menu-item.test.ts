@@ -180,11 +180,8 @@ describe('Menu item', () => {
                 </sp-menu-item>
             `
         );
-
-        const descriptionElement = el.shadowRoot.querySelector(
-            'slot[name="description"]'
-        );
-        expect(descriptionElement).to.not.be.null;
+        const descriptionElement = el.querySelector('span') as HTMLElement;
+        expect(descriptionElement.assignedSlot).to.not.be.null;
     });
     it('acualizes a submenu', async () => {
         const test = await fixture<Menu>(
