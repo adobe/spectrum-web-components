@@ -248,6 +248,21 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(el.quiet).to.be.true;
         });
+        it('can be `static`', async () => {
+            const el = await actionMenuFixture();
+
+            expect(el.static == undefined).to.be.true;
+
+            el.static = 'black';
+            await elementUpdated(el);
+
+            expect(el.static == 'black').to.be.true;
+
+            el.static = 'white';
+            await elementUpdated(el);
+
+            expect(el.static == 'white').to.be.true;
+        });
         it('stay `valid`', async () => {
             const el = await actionMenuFixture();
 

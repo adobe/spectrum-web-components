@@ -18,6 +18,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionMenuMarkup } from './';
+import { makeOverBackground } from '../../button/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
@@ -112,6 +113,24 @@ export default {
                 type: 'boolean',
             },
         },
+        staticValue: {
+            name: 'static',
+            type: { name: 'string', required: false },
+            description: 'The visual static variant to apply to the button.',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'none' },
+            },
+            control: {
+                type: 'select',
+                labels: {
+                    white: 'white',
+                    black: 'black',
+                    none: undefined,
+                },
+                options: ['white', 'black', 'none'],
+            },
+        },
     },
     args: {
         visibleLabel: 'More Actions',
@@ -120,6 +139,7 @@ export default {
         quiet: false,
         tooltipDescription: '',
         tooltipPlacement: 'bottom',
+        static: undefined,
     },
 };
 
@@ -131,6 +151,7 @@ interface StoryArgs {
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
+    staticValue?: 'white' | 'black' | undefined;
     tooltipDescription?: string | 'none';
     tooltipPlacement?: string | 'none';
 }
@@ -140,6 +161,18 @@ const Template = (args: StoryArgs = {}): TemplateResult =>
 
 export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);
 
+export const staticWhite = (args: StoryArgs = {}): TemplateResult =>
+    Template(args);
+staticWhite.args = {
+    staticValue: 'white',
+};
+staticWhite.decorators = [makeOverBackground()];
+export const staticBlack = (args: StoryArgs = {}): TemplateResult =>
+    Template(args);
+staticBlack.args = {
+    staticValue: 'black',
+};
+staticBlack.decorators = [makeOverBackground()];
 export const quiet = (args: StoryArgs = {}): TemplateResult => Template(args);
 quiet.args = {
     quiet: true,
