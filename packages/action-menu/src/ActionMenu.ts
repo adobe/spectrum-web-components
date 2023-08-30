@@ -43,6 +43,9 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
+    @property({ type: String, reflect: true })
+    public static: 'white' | 'black' | undefined = undefined;
+
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
     private get hasLabel(): boolean {
@@ -66,6 +69,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
             <sp-action-button
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
+                static=${ifDefined(this.static)}
                 aria-haspopup="true"
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-expanded=${this.open ? 'true' : 'false'}
