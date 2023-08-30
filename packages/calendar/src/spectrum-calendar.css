@@ -53,13 +53,18 @@ governing permissions and limitations under the License.
         --spectrum-bold-font-weight
     );
     --spectrum-calendar-day-today-border-color: var(--spectrum-gray-800);
-    --spectrum-calendar-button-icon-color: var(--spectrum-gray-700);
     --spectrum-calendar-day-today-text-color-disabled: var(--spectrum-gray-500);
     --spectrum-calendar-day-today-border-color-disabled: var(
         --spectrum-gray-400
     );
-    --spectrum-calendar-day-text-color-disabled: var(--spectrum-gray-500);
+    --spectrum-calendar-day-text-color-disabled: var(
+        --spectrum-disabled-content-color
+    );
     --spectrum-calendar-day-text-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-calendar-button-icon-color: var(--spectrum-gray-700);
+    --spectrum-calendar-button-icon-color-disabled: var(
+        --spectrum-disabled-content-color
+    );
 }
 :host {
     display: inline-block;
@@ -103,8 +108,8 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) .spectrum-Calendar-prevMonth {
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
-.spectrum-Calendar-nextMonth,
-.spectrum-Calendar-prevMonth {
+.spectrum-Calendar-nextMonth:not([disabled]),
+.spectrum-Calendar-prevMonth:not([disabled]) {
     color: var(
         --highcontrast-calendar-button-icon-color,
         var(
@@ -679,8 +684,12 @@ governing permissions and limitations under the License.
     );
 }
 @media (forced-colors: active) {
-    .spectrum-Calendar-date {
+    .spectrum-Calendar-nextMonth,
+    .spectrum-Calendar-prevMonth {
+        --highcontrast-calendar-button-icon-color-disabled: GrayText;
         --highcontrast-calendar-button-icon-color: ButtonText;
+    }
+    .spectrum-Calendar-date {
         --highcontrast-calendar-day-background-color-cap-selected: Highlight;
         --highcontrast-calendar-day-background-color-down: ButtonFace;
         --highcontrast-calendar-day-background-color-hover: transparent;

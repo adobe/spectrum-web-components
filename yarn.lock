@@ -6316,10 +6316,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.1.6.tgz#7997f2b4f6376f0717b4d1f238b1e8edf97203ee"
   integrity sha512-gvlw4Kf9oRi63zetm4O+s/fXFIICpG//AyaBws4s+GkSXjA0ym5hWJvMzmxXNib2hkrXL/wzXkfBoM4niA87lg==
 
-"@spectrum-css/calendar@^4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/calendar/-/calendar-4.0.3.tgz#3519942dd92d2c427f782bd1d174c42ec761185e"
-  integrity sha512-nwBNY8HxuC0ukFV9Wptdta3T06MOXgjSBKI46TCTgPdM9K4zf2OybgUV8bpV/dACeM7GUJmN1YeNOPpaLbYK+A==
+"@spectrum-css/calendar@^4.0.9":
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/calendar/-/calendar-4.0.9.tgz#56674edc9567625a89fac1d8f17af1810c01ae54"
+  integrity sha512-E7OcOEeGuq9f3ie37j5gflh0k0aG7128QZY9g3LN0LoWp+c63h9q+e6Pm/Z7TlaSgCATT4p84g5/8lHwv+WX2A==
 
 "@spectrum-css/card@^6.0.18":
   version "6.0.18"
