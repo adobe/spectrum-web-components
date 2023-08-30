@@ -54,7 +54,7 @@
         "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn build:confirm",
         "prepare": "husky install",
         "prestorybook": "wireit",
-        "prestorybook:build": "cem analyze --outdir .storybook/",
+        "prestorybook:build": "cem analyze --outdir storybook/",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
         "pretest:visual": "yarn build && yarn build",
         "process-icons": "wireit",
@@ -359,13 +359,13 @@
             "clean": "if-file-deleted"
         },
         "prestorybook": {
-            "command": "cem analyze --outdir .storybook/",
+            "command": "cem analyze --outdir storybook/",
             "files": [
                 "packages/**/*.ts",
                 "tools/**/*.ts"
             ],
             "output": [
-                ".storybook/custom-elements.json"
+                "storybook/custom-elements.json"
             ]
         },
         "process-icons": {
