@@ -190,7 +190,9 @@ Note: the polyfilling done here is very simplistic and is triggered by supplying
 
 ### Label Visibility
 
-By default, an `<sp-slider>` element has both a "text" label and a "value" label. Either or both of these can be suppressed visually as needed by your application UI. This delivery is controlled by the `label-visibility` attribute (or `labelVisibility` property) which accepts `text`, `value`, or `none` as values.
+By default, an `<sp-slider>` element has both a "text" label and a "value" label. The "value" label is output by the element itself based on its state, but the "text" label must be supplied by the consuming developer in order for the `<sp-slider>` to be delivered in an accessible manner.
+
+Either or both of these can be suppressed visually as needed by your application UI, while still fulfilling their role in delivering a quality accessibility tree to the browser. This delivery is controlled by the `label-visibility` attribute (or `labelVisibility` property) which accepts `text`, `value`, or `none` as values.
 
 Use `label-visibility="text"` to suppress the "value" label:
 
