@@ -432,6 +432,37 @@ The optional `density` property changes the spacing around table cell content fr
 </sp-tab-panel>
 </sp-tabs>
 
+## Quiet
+
+When using the `quiet` property, the overall look of the table will change. The quiet variant of Table has a transparent background and no borders on the left and right.
+
+```html
+<sp-table quiet>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
 ## Virtualized Table
 
 For large amounts of data, the `<sp-table>` can be virtualised to easily add table rows by using properties.

@@ -151,6 +151,12 @@ export class Table extends SizedMixin(SpectrumElement, {
     public emphasized = false;
 
     /**
+     * Display with "quiet" variant styles.
+     */
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
+    /**
      * Changes the spacing around table cell content.
      */
     @property({ type: String, reflect: true })
