@@ -183,7 +183,9 @@ When `selects="multiple"`, the `<sp-table>` will manage a selection in the array
 Use the `emphasized` attribute to add priority to the information that is delivered within your `<table>` element. In particular, this affects the appearance of selected rows, and will set the emphasized style for the checkboxes within `sp-table-checkbox-cell`.
 Leaving off the `emphasized` attribute will display the non-emphasized colors.
 
-### Emphasized
+<sp-tabs selected="emphasized" auto label="Emphasized Attribute Options">
+<sp-tab value="emphasized">Emphasized</sp-tab>
+<sp-tab-panel value="emphasized">
 
 ```html
 <sp-table emphasized selects="multiple" selected='["row1"]'>
@@ -212,7 +214,9 @@ Leaving off the `emphasized` attribute will display the non-emphasized colors.
 </sp-table>
 ```
 
-### Non-emphasized
+</sp-tab-panel>
+<sp-tab value="non-emphasized">Non-emphasized</sp-tab>
+<sp-tab-panel value="non-emphasized">
 
 ```html
 <sp-table selects="multiple" selected='["row1"]'>
@@ -241,11 +245,16 @@ Leaving off the `emphasized` attribute will display the non-emphasized colors.
 </sp-table>
 ```
 
+</sp-tab-panel>
+</sp-tabs>
+
 ## Density
 
 The optional `density` property changes the spacing around table cell content from the "regular" default. It accepts the values of `compact` or `spacious`.
 
-### Compact
+<sp-tabs selected="compact" auto label="Density Attribute Options">
+<sp-tab value="compact">Compact</sp-tab>
+<sp-tab-panel value="compact">
 
 ```html
 <sp-table density="compact">
@@ -274,7 +283,9 @@ The optional `density` property changes the spacing around table cell content fr
 </sp-table>
 ```
 
-### Spacious
+</sp-tab-panel>
+<sp-tab value="spacious">Spacious</sp-tab>
+<sp-tab-panel value="spacious">
 
 ```html
 <sp-table density="spacious">
@@ -302,6 +313,9 @@ The optional `density` property changes the spacing around table cell content fr
     </sp-table-body>
 </sp-table>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Sizes
 
