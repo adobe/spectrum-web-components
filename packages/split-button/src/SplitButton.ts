@@ -114,9 +114,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
             }
         }
         super.update(changes);
-        if (this.description) {
-            this.setAttribute('aria-describedby', this.description);
-        }
     }
 
     protected override render(): TemplateResult {

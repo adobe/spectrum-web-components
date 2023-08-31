@@ -50,7 +50,6 @@ export interface Properties extends SplitButtonMenuOptions {
     size?: ElementSize;
     type?: SplitButtonTypes;
     variant?: ButtonVariants;
-    description?: string;
 }
 
 export const args = {
@@ -157,7 +156,6 @@ export const splitbutton = (
         type=${properties.type || 'field'}
         ?open=${!!properties.open}
         ?disabled=${properties.disabled}
-        description=${properties.description}
     >
         ${menu(properties)}
     </sp-split-button>
