@@ -31,7 +31,7 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
-<sp-overlay trigger="trigger@click">
+<sp-overlay trigger="trigger@click" placement="bottom">
     <sp-popover>
         <sp-dialog>
             <h2 slot="heading">Clicking opens this popover...</h2>
