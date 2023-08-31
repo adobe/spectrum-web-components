@@ -60,6 +60,18 @@ const chevronClass = {
 export class PickerBase extends SizedMixin(Focusable) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
+    static instanceCount = 0;
+    instanceCount: number;
+
+    @property({ type: String })
+    public description = '';
+
+    constructor() {
+        super();
+        this.instanceCount = PickerBase.instanceCount++;
+        this.description = `sp-picker-${this.instanceCount}`;
+    }
+
     @state()
     appliedLabel?: string;
 
@@ -82,9 +94,6 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     @property()
     public label?: string;
-
-    @property({ type: String })
-    public description = '';
 
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -419,6 +428,15 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
+    public renderDescriptionSlot(): TemplateResult {
+        return html`
+            <div
+                id=${ifDefined(this.description ? this.description : undefined)}
+            >
+                <slot name="description"></slot>
+            </div>
+        `;
+    }
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
@@ -448,7 +466,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             >
                 ${this.buttonContent}
             </button>
-            ${this.renderMenu}
+            ${this.renderMenu} ${this.renderDescriptionSlot()}
         `;
     }
 
@@ -457,9 +475,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             // Always force `selects` to "single" when set.
             // TODO: Add support functionally and visually for "multiple"
             this.selects = 'single';
-        }
-        if (this.description) {
-            this.setAttribute('aria-describedby', this.description);
         }
         if (changes.has('disabled') && this.disabled) {
             this.open = false;

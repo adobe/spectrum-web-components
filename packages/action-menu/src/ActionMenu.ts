@@ -64,6 +64,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     protected override render(): TemplateResult {
         return html`
             <sp-action-button
+                aria-describedby=${this.description}
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
                 aria-haspopup="true"

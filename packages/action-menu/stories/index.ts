@@ -66,6 +66,7 @@ export const ActionMenuMarkup = ({
                       </sp-tooltip>
                   `
                 : html``}
+            <div slot="description">Showing Action Menu</div>
         </sp-action-menu>
     `;
 };
