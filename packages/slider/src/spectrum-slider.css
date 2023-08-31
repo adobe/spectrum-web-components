@@ -153,7 +153,7 @@ governing permissions and limitations under the License.
     display: flex;
 }
 .spectrum-Slider--sideLabel #label-container,
-.spectrum-Slider--sideLabel #label-container + #controls {
+.spectrum-Slider--sideLabel #label-container + #track {
     margin-block-start: 0;
 }
 .spectrum-Slider--sideLabel #controls {
@@ -196,12 +196,12 @@ governing permissions and limitations under the License.
     vertical-align: top;
     z-index: auto;
 }
-#label-container + #controls {
+#label-container + #track {
     margin-block-start: calc(
         var(--spectrum-slider-control-to-field-label) * -1
     );
 }
-:host([variant='tick']) {
+:host([tick-labels]) {
     margin-block-end: var(
         --mod-slider-control-height,
         var(--spectrum-slider-control-height)

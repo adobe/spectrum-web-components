@@ -169,6 +169,20 @@ describe('Menu item', () => {
         expect(el.value).to.equal('Selected Text');
         expect(el.hasAttribute('value')).to.be.false;
     });
+    it('assigns content to the description slot', async () => {
+        const el = await fixture<MenuItem>(
+            html`
+                <sp-menu-item selected>
+                    Menu Item Text
+                    <span slot="description">
+                        Description for the Menu-Item
+                    </span>
+                </sp-menu-item>
+            `
+        );
+        const descriptionElement = el.querySelector('span') as HTMLElement;
+        expect(descriptionElement.assignedSlot).to.not.be.null;
+    });
     it('acualizes a submenu', async () => {
         const test = await fixture<Menu>(
             html`

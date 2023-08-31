@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
@@ -188,7 +189,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                           @transitioncancel=${this.handleTransitionEvent}
                       ></sp-underlay>
                   `
-                : html``}
+                : nothing}
             <div
                 class="modal ${this.mode}"
                 @transitionrun=${this.handleTransitionEvent}

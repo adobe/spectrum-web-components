@@ -100,6 +100,31 @@ const config = {
                     'icon'
                 ),
                 converter.classToSlotted('spectrum-Menu-itemValue', 'value'),
+                {
+                    find: [
+                        {
+                            type: 'class',
+                            name: 'spectrum-Menu-itemDescription',
+                        },
+                    ],
+                    replace: [
+                        {
+                            replace: builder.attribute('name', 'description'),
+                            hoist: false,
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [
+                                    {
+                                        type: 'universal',
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
                 converter.classToClass(
                     'spectrum-menu-itemSelection',
                     'menu-itemSelection'
@@ -356,10 +381,11 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-selectable', 'selects'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Menu--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Menu--sizeS', 's'],
-                        ['spectrum-Menu--sizeM', 'm'],
                         ['spectrum-Menu--sizeL', 'l'],
                         ['spectrum-Menu--sizeXL', 'xl'],
                     ],

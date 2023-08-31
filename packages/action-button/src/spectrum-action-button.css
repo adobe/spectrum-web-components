@@ -226,7 +226,7 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-border-width)
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-100) * 2 +
             var(--spectrum-workflow-icon-size-100)

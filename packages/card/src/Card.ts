@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -56,6 +57,7 @@ export class Card extends LikeAnchor(
         ]),
         {
             validSizes: ['s', 'm'],
+            noDefaultSize: true,
         }
     )
 ) {
@@ -225,7 +227,7 @@ export class Card extends LikeAnchor(
                 ? html`
                       <sp-divider size="s"></sp-divider>
                   `
-                : html``}
+                : nothing}
         `;
     }
 
@@ -238,7 +240,7 @@ export class Card extends LikeAnchor(
                 ? html`
                       <sp-divider size="s"></sp-divider>
                   `
-                : html``}
+                : nothing}
         `;
     }
 
@@ -276,7 +278,7 @@ export class Card extends LikeAnchor(
                     ${this.renderHeading}
                     ${this.variant === 'gallery'
                         ? this.renderSubtitleAndDescription
-                        : html``}
+                        : nothing}
                     ${this.variant !== 'quiet' || this.size !== 's'
                         ? html`
                               <div
@@ -286,7 +288,7 @@ export class Card extends LikeAnchor(
                                   <slot name="actions"></slot>
                               </div>
                           `
-                        : html``}
+                        : nothing}
                 </div>
                 ${this.variant !== 'gallery'
                     ? html`
@@ -294,19 +296,19 @@ export class Card extends LikeAnchor(
                               ${this.renderSubtitleAndDescription}
                           </div>
                       `
-                    : html``}
+                    : nothing}
             </div>
             ${this.href
                 ? this.renderAnchor({
                       id: 'like-anchor',
                       labelledby: 'heading',
                   })
-                : html``}
+                : nothing}
             ${this.variant === 'standard'
                 ? html`
                       <slot name="footer"></slot>
                   `
-                : html``}
+                : nothing}
             ${this.toggles
                 ? html`
                       <sp-quick-actions
@@ -321,7 +323,7 @@ export class Card extends LikeAnchor(
                           ></sp-checkbox>
                       </sp-quick-actions>
                   `
-                : html``}
+                : nothing}
             ${this.variant === 'quiet' && this.size === 's'
                 ? html`
                       <sp-quick-actions
@@ -331,7 +333,7 @@ export class Card extends LikeAnchor(
                           <slot name="actions"></slot>
                       </sp-quick-actions>
                   `
-                : html``}
+                : nothing}
         `;
     }
 

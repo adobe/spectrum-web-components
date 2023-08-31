@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -55,7 +56,10 @@ export type FixedValues =
  * @slot icon - Optional icon that appears to the left of the label
  */
 export class Badge extends SizedMixin(
-    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
+    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
+    {
+        noDefaultSize: true,
+    }
 ) {
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -120,7 +124,7 @@ export class Badge extends SizedMixin(
                           ?icon-only=${!this.slotHasContent}
                       ></slot>
                   `
-                : html``}
+                : nothing}
             <div class="label">
                 <slot></slot>
             </div>

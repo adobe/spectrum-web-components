@@ -27,10 +27,11 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-ButtonGroup--vertical'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-ButtonGroup--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ButtonGroup--sizeS', 's'],
-                        ['spectrum-ButtonGroup--sizeM', 'm'],
                         ['spectrum-ButtonGroup--sizeL', 'l'],
                         ['spectrum-ButtonGroup--sizeXL', 'xl'],
                     ],

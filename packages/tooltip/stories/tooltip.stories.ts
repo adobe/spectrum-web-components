@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
@@ -158,7 +158,7 @@ export const wIcon = ({
 }: Properties): TemplateResult => {
     return html`
         <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
-            ${!!variant ? iconOptions[variant]() : html``} ${text}
+            ${!!variant ? iconOptions[variant]() : nothing} ${text}
         </sp-tooltip>
     `;
 };

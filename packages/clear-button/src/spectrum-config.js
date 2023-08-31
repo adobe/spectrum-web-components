@@ -39,10 +39,11 @@ const config = {
                     ],
                     'variant'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-ClearButton--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ClearButton--sizeS', 's'],
-                        ['spectrum-ClearButton--sizeM', 'm'],
                         ['spectrum-ClearButton--sizeL', 'l'],
                         ['spectrum-ClearButton--sizeXL', 'xl'],
                     ],

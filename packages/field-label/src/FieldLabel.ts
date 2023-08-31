@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -46,7 +47,9 @@ type Labelable = Focusable & {
  *
  * @slot - text content of the label
  */
-export class FieldLabel extends SizedMixin(SpectrumElement) {
+export class FieldLabel extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles, asteriskIconStyles];
     }
@@ -155,7 +158,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
                               class="required-icon spectrum-UIIcon-Asterisk100"
                           ></sp-icon-asterisk100>
                       `
-                    : html``}
+                    : nothing}
             </label>
         `;
     }

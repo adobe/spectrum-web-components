@@ -54,7 +54,7 @@ governing permissions and limitations under the License.
         --spectrum-swatch-slash-thickness-small
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-swatch-size: var(--spectrum-swatch-size-medium);
     --spectrum-swatch-disabled-icon-size: var(
         --spectrum-workflow-icon-size-100

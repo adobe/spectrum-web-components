@@ -30,10 +30,11 @@ const config = {
                 // converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-readOnly', 'readonly'),
                 converter.classToAttribute('spectrum-Checkbox--emphasized'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Checkbox--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Checkbox--sizeS', 's'],
-                        ['spectrum-Checkbox--sizeM', 'm'],
                         ['spectrum-Checkbox--sizeL', 'l'],
                         ['spectrum-Checkbox--sizeXL', 'xl'],
                     ],
