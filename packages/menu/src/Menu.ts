@@ -59,7 +59,7 @@ function elementIsOrContains(
  *   When the `selects` attribute is not present a `value` will not be maintained and the Menu
  *   Item children of this Menu will not have their `selected` state managed.
  */
-export class Menu extends SizedMixin(SpectrumElement) {
+export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [menuStyles];
     }

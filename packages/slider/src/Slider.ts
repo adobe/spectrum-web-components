@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -211,7 +212,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           @change=${this.handleNumberChange}
                       ></sp-number-field>
                   `
-                : html``}
+                : nothing}
         `;
     }
 
@@ -251,19 +252,21 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                         : this.handleController.activeHandleInputId}
                     @click=${this.handleLabelClick}
                 >
-                    ${this.slotHasContent ? html`` : this.label}
+                    ${this.slotHasContent ? nothing : this.label}
                     <slot>${this.label}</slot>
                 </sp-field-label>
-                <output
+                <sp-field-label
                     class=${classMap({
                         'visually-hidden': valueLabelVisible,
                     })}
-                    id="value"
-                    aria-live="off"
-                    for="input"
+                    for=${this.editable
+                        ? 'number-field'
+                        : this.handleController.activeHandleInputId}
                 >
-                    ${this.ariaValueText}
-                </output>
+                    <output id="value" aria-live="off" for="input">
+                        ${this.ariaValueText}
+                    </output>
+                </sp-field-label>
             </div>
         `;
     }
@@ -316,7 +319,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                                           ${i * tickStep + this.min}
                                       </div>
                                   `
-                                : html``}
+                                : nothing}
                         </div>
                     `
                 )}

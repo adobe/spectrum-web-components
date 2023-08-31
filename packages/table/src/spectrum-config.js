@@ -36,7 +36,6 @@ const config = {
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Table--sizeS', 's'],
-                        ['spectrum-Table--sizeM', 'm'],
                         ['spectrum-Table--sizeL', 'l'],
                         ['spectrum-Table--sizeXL', 'xl'],
                     ],

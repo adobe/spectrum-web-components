@@ -48,10 +48,11 @@ const config = {
                     hoist: true,
                 },
                 converter.classToHost(),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Switch--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Switch--sizeS', 's'],
-                        ['spectrum-Switch--sizeM', 'm'],
                         ['spectrum-Switch--sizeL', 'l'],
                         ['spectrum-Switch--sizeXL', 'xl'],
                     ],

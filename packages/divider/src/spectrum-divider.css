@@ -12,10 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
-    --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-medium
-    );
     --spectrum-divider-background-color-small: var(--spectrum-gray-300);
     --spectrum-divider-background-color-medium: var(--spectrum-gray-300);
     --spectrum-divider-background-color-large: var(--spectrum-gray-800);
@@ -44,7 +40,7 @@ governing permissions and limitations under the License.
         --spectrum-divider-background-color-small
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-medium
@@ -59,7 +55,6 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     :host,
     :host([size='l']),
-    :host([size='m']),
     :host([size='s']) {
         --spectrum-divider-background-color: CanvasText;
         --spectrum-divider-background-color-small-static-white: CanvasText;
@@ -94,7 +89,7 @@ governing permissions and limitations under the License.
         var(--spectrum-divider-background-color-small-static-white)
     );
 }
-:host([static='white'][size='m']) {
+:host([static='white']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-medium-static-white,
         var(--spectrum-divider-background-color-medium-static-white)
@@ -112,7 +107,7 @@ governing permissions and limitations under the License.
         var(--spectrum-divider-background-color-small-static-black)
     );
 }
-:host([static='black'][size='m']) {
+:host([static='black']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-medium-static-black,
         var(--spectrum-divider-background-color-medium-static-black)

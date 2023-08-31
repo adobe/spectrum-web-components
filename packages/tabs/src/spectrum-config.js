@@ -272,10 +272,11 @@ const config = {
             outPackage: 'tabs',
             fileName: 'tabs-sizes',
             components: [
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Tabs--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Tabs--sizeS', 's'],
-                        ['spectrum-Tabs--sizeM', 'm'],
                         ['spectrum-Tabs--sizeL', 'l'],
                         ['spectrum-Tabs--sizeXL', 'xl'],
                     ],

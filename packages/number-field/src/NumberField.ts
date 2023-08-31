@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -323,6 +324,7 @@ export class NumberField extends TextfieldBase {
     }
 
     private handleKeydown(event: KeyboardEvent): void {
+        if (this.isComposing) return;
         switch (event.code) {
             case 'ArrowUp':
                 event.preventDefault();
@@ -401,7 +403,27 @@ export class NumberField extends TextfieldBase {
         super.handleChange();
     }
 
-    protected override handleInput(): void {
+    protected handleCompositionStart(): void {
+        this.isComposing = true;
+    }
+
+    protected handleCompositionEnd(): void {
+        this.isComposing = false;
+        requestAnimationFrame(() => {
+            this.inputElement.dispatchEvent(
+                new Event('input', {
+                    composed: true,
+                    bubbles: true,
+                })
+            );
+        });
+    }
+
+    protected override handleInput(event: Event): void {
+        if (this.isComposing) {
+            event.stopPropagation();
+            return;
+        }
         if (this.indeterminate) {
             this.wasIndeterminate = true;
             this.indeterminateValue = this.value;
@@ -426,16 +448,18 @@ export class NumberField extends TextfieldBase {
             }
             this._trackingValue = value;
             this.inputElement.value = value;
+            this.inputElement.setSelectionRange(selectionStart, selectionStart);
             return;
+        } else {
+            this.inputElement.value = this.indeterminate
+                ? indeterminatePlaceholder
+                : this._trackingValue;
         }
         const currentLength = value.length;
         const previousLength = this._trackingValue.length;
         const nextSelectStart =
             (selectionStart || currentLength) -
             (currentLength - previousLength);
-        this.inputElement.value = this.indeterminate
-            ? indeterminatePlaceholder
-            : this._trackingValue;
         this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
     }
 
@@ -561,7 +585,7 @@ export class NumberField extends TextfieldBase {
         return html`
             ${super.renderField()}
             ${this.hideStepper
-                ? html``
+                ? nothing
                 : html`
                       <span
                           class="buttons"
@@ -642,9 +666,13 @@ export class NumberField extends TextfieldBase {
         }
     }
 
+    private isComposing = false;
+
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('compositionstart', this.handleCompositionStart);
+        this.addEventListener('compositionend', this.handleCompositionEnd);
     }
 
     protected override updated(changes: PropertyValues<this>): void {

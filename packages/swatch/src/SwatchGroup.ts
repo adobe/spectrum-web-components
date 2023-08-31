@@ -41,6 +41,7 @@ export type SwatchSelects = 'single' | 'multiple' | undefined;
  */
 export class SwatchGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -191,7 +192,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         }
         if (
             changes.has('size') &&
-            (this.size || typeof changes.get('size') !== 'undefined')
+            (this.size !== 'm' || typeof changes.get('size') !== 'undefined')
         ) {
             targetValues.size = this.size as SwatchGroupSizes;
         }

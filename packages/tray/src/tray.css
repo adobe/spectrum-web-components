@@ -24,14 +24,7 @@ sp-underlay {
     touch-action: none;
 }
 
-/**
- * Default padding along the x axis causes a weird interaction with inner content,
- * e.g. dismissable dialogs, that layout children based off of their own width and
- * can't correct into the larger tray width. Move the default to 0 while still
- * surfacing the `--spectrum-tray-padding-x` override as needed.
- **/
 .tray {
-    padding: var(--spectrum-tray-padding-y, 0) var(--spectrum-tray-padding-x, 0);
     display: inline-flex;
     overscroll-behavior: contain;
 }

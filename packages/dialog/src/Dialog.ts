@@ -250,6 +250,10 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     protected onContentSlotChange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
+        requestAnimationFrame(() => {
+            // Content must be available _AND_ styles must be applied.
+            this.shouldManageTabOrderForScrolling();
+        });
         if (this.conditionDescribedby) {
             this.conditionDescribedby();
             delete this.conditionDescribedby;

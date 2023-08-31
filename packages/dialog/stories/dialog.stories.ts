@@ -493,3 +493,44 @@ export const fullscreenTakeover = (): TemplateResult => {
         </sp-dialog>
     `;
 };
+
+export const forcedScrolling = (): TemplateResult => html`
+    <style>
+        .container {
+            max-height: 300px;
+            border: 1px solid white;
+        }
+    </style>
+    <div class="container">
+        <sp-dialog size="m">
+            <h2 slot="heading">Disclaimer</h2>
+            <div class="contents">
+                The contents of this dialog is specifically prepared to force
+                scrolling, allowing us to test whether the scroll bar is
+                appopriately activated in this context.
+                <span style="color: red;">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Auctor augue mauris augue neque gravida. Libero
+                    volutpat sed ornare arcu. Quisque egestas diam in arcu
+                    cursus euismod quis viverra.
+                </span>
+                <span style="color: green;">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Auctor augue mauris augue neque gravida. Libero
+                    volutpat sed ornare arcu. Quisque egestas diam in arcu
+                    cursus euismod quis viverra.
+                </span>
+                <span style="color: blue;">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Auctor augue mauris augue neque gravida. Libero
+                    volutpat sed ornare arcu. Quisque egestas diam in arcu
+                    cursus euismod quis viverra.
+                </span>
+            </div>
+            <sp-button slot="button">Footer button</sp-button>
+        </sp-dialog>
+    </div>
+`;

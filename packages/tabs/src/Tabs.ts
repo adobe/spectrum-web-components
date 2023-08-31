@@ -74,7 +74,7 @@ export const ScaledIndicator = {
  *
  * @fires change - The selected Tab child has changed.
  */
-export class Tabs extends SizedMixin(Focusable) {
+export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [tabSizes, tabStyles, ScaledIndicator.baseStyles()];
     }

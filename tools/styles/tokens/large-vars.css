@@ -57,7 +57,7 @@
     --spectrum-progress-bar-thickness-medium: 8px;
     --spectrum-progress-bar-thickness-large: 10px;
     --spectrum-progress-bar-thickness-extra-large: 13px;
-    --spectrum-meter-default-width: 240px;
+    --spectrum-meter-width: 240px;
     --spectrum-meter-thickness-small: 5px;
     --spectrum-meter-thickness-large: 8px;
     --spectrum-tag-top-to-avatar-small: 5px;
@@ -154,9 +154,12 @@
         --spectrum-heading-cjk-size-s
     );
     --spectrum-illustrated-message-body-size: var(--spectrum-body-size-xs);
-    --spectrum-coach-mark-minimum-width: 208px;
+    --spectrum-coach-mark-width: 216px;
+    --spectrum-coach-mark-minimum-width: 216px;
+    --spectrum-coach-mark-maximum-width: 248px;
     --spectrum-coach-mark-edge-to-content: var(--spectrum-spacing-300);
     --spectrum-coach-mark-pagination-text-to-bottom-edge: 22px;
+    --spectrum-coach-mark-media-height: 162px;
     --spectrum-coach-mark-media-minimum-height: 121px;
     --spectrum-coach-mark-title-size: var(--spectrum-heading-size-xxs);
     --spectrum-coach-mark-body-size: var(--spectrum-body-size-xs);

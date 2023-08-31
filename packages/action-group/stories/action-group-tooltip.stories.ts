@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     html,
+    nothing,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -187,7 +188,7 @@ const template = (args: Properties): TemplateResult => {
             ? html`
                   <div>Selected:</div>
               `
-            : html``}
+            : nothing}
     `;
 };
 

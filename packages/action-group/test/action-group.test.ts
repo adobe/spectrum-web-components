@@ -1017,8 +1017,32 @@ describe('ActionGroup', () => {
         expect(secondElement.selected, 'second child not selected').to.be.false;
     });
 
-    it('maintains a `size` attribute', async () => {
-        const el = await fixture<ActionGroup>(
+    it('manages a `size` attribute', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-group size="xl">
+                    <sp-action-button>Button</sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        const button = el.querySelector('sp-action-button') as ActionButton;
+
+        await elementUpdated(el);
+        expect(el.size).to.equal('xl');
+        expect(button.size).to.equal('xl');
+        expect(el.getAttribute('size')).to.equal('xl');
+        expect(button.getAttribute('size')).to.equal('xl');
+        el.removeAttribute('size');
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
+        expect(button.size).to.equal('m');
+        expect(button.getAttribute('size')).to.equal('m');
+    });
+
+    it('does not apply a default `size` attribute', async () => {
+        const el = await fixture<ActionButton>(
             html`
                 <sp-action-group>
                     <sp-action-button>Button</sp-action-button>
@@ -1026,13 +1050,13 @@ describe('ActionGroup', () => {
             `
         );
 
+        const button = el.querySelector('sp-action-button') as ActionButton;
+
         await elementUpdated(el);
         expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
-        el.removeAttribute('size');
-        await elementUpdated(el);
-        expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
+        expect(button.size).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
+        expect(button.hasAttribute('size')).to.be.false;
     });
 
     it('will accept selected as a JSON string', async () => {

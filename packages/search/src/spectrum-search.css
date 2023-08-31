@@ -380,7 +380,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-sizes-edge-to-visual
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizem-border-radius
     );

@@ -84,6 +84,34 @@ export const Multilevel = ({
 
 Multilevel.storyName = 'Multi-level';
 
+export const MultilevelSlotted = ({
+    onChange,
+}: {
+    onChange: () => void;
+}): TemplateResult => {
+    return html`
+        <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
+            <sp-sidenav-item value="foo">foo</sp-sidenav-item>
+            <sp-sidenav-item value="baz">
+                baz
+                <sp-sidenav-item value="2.1">2.1</sp-sidenav-item>
+                <sp-sidenav-item value="2.2">2.2</sp-sidenav-item>
+                <sp-sidenav-item value="2.3">
+                    2.3
+                    <sp-sidenav-item value="2.3.1">2.3.1</sp-sidenav-item>
+                    <sp-sidenav-item disabled value="2.3.2">
+                        2.3.2
+                    </sp-sidenav-item>
+                </sp-sidenav-item>
+            </sp-sidenav-item>
+            <sp-sidenav-item value="test">test</sp-sidenav-item>
+            <sp-sidenav-item value="hi">hi</sp-sidenav-item>
+        </sp-sidenav>
+    `;
+};
+
+MultilevelSlotted.storyName = 'Multi-level Slotted';
+
 export const levelsAndDisabled = (): TemplateResult => {
     return html`
         <sp-sidenav>
