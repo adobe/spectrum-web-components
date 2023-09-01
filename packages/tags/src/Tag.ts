@@ -34,6 +34,7 @@ import styles from './tag.css.js';
  */
 export class Tag extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -47,14 +48,6 @@ export class Tag extends SizedMixin(SpectrumElement, {
 
     @property({ type: Boolean, reflect: true })
     public readonly = false;
-
-    private get hasIcon(): boolean {
-        return !!this.querySelector('[slot="icon"]');
-    }
-
-    private get hasAvatar(): boolean {
-        return !!this.querySelector('[slot="avatar"]');
-    }
 
     constructor() {
         super();
@@ -104,23 +97,9 @@ export class Tag extends SizedMixin(SpectrumElement, {
     }
 
     protected override render(): TemplateResult {
-        const slots: TemplateResult[] = [];
-        if (this.hasAvatar) {
-            slots.push(
-                html`
-                    <slot name="avatar"></slot>
-                `
-            );
-        }
-        if (this.hasIcon) {
-            slots.push(
-                html`
-                    <slot name="icon"></slot>
-                `
-            );
-        }
         return html`
-            ${slots}
+            <slot name="avatar"></slot>
+            <slot name="icon"></slot>
             <span class="label"><slot></slot></span>
             ${this.deletable
                 ? html`

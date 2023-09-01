@@ -56,7 +56,10 @@ export type FixedValues =
  * @slot icon - Optional icon that appears to the left of the label
  */
 export class Badge extends SizedMixin(
-    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
+    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
+    {
+        noDefaultSize: true,
+    }
 ) {
     public static override get styles(): CSSResultArray {
         return [styles];

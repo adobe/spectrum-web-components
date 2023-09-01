@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -23,6 +25,7 @@ export const ActionMenuMarkup = ({
     disabled = false,
     open = false,
     quiet = false,
+    staticValue = '',
     visibleLabel = '',
     customIcon = '' as string | TemplateResult,
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
@@ -37,6 +40,9 @@ export const ActionMenuMarkup = ({
             ?disabled=${disabled}
             ?open=${open}
             ?quiet=${quiet}
+            static=${ifDefined(
+                staticValue === 'none' ? undefined : staticValue
+            )}
             size=${size}
             @change="${changeHandler}"
             .selects=${selects ? selects : undefined}

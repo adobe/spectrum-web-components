@@ -39,6 +39,17 @@ export const noWrap = (): TemplateResult => {
     `;
 };
 
+export const descriptionSlot = (): TemplateResult => {
+    return html`
+        <sp-menu>
+            <sp-menu-item>
+                Quick export
+                <span slot="description">Share a snapshot</span>
+            </sp-menu-item>
+        </sp-menu>
+    `;
+};
+
 export const valueSlot = (): TemplateResult => {
     /**
      * This story featurs zero width spaces between the characters in the `<kbd>` element.

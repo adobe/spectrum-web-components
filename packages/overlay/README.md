@@ -31,7 +31,7 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
-<sp-overlay trigger="trigger@click">
+<sp-overlay trigger="trigger@click" placement="bottom">
     <sp-popover>
         <sp-dialog>
             <h2 slot="heading">Clicking opens this popover...</h2>
@@ -320,8 +320,9 @@ Here, again, working with your content needs (whether or not you want to leverag
 
 Under very specific conditions, [WebKit will incorrectly clip fixed-position content](https://bugs.webkit.org/show_bug.cgi?id=160953).
 WebKit clips `position: fixed` elements within containers that have all of:
+
 1. `position: relative`
 2. `overflow: clip` or `overflow: hidden`
 3. `z-index` greater than zero
-  
-If you notice overlay clipping *only* in Safari, this is likely the culprit. The solution is to break up the conditions into separate elements to avoid triggering WebKit's bug. For example, leaving relative positioning and z-index on the outermost container while creating an inner container that enforces the overflow rules.
+
+If you notice overlay clipping _only_ in Safari, this is likely the culprit. The solution is to break up the conditions into separate elements to avoid triggering WebKit's bug. For example, leaving relative positioning and z-index on the outermost container while creating an inner container that enforces the overflow rules.

@@ -34,10 +34,11 @@ const config = {
                     ],
                     'variant'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-HelpText--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-HelpText--sizeS', 's'],
-                        ['spectrum-HelpText--sizeM', 'm'],
                         ['spectrum-HelpText--sizeL', 'l'],
                         ['spectrum-HelpText--sizeXL', 'xl'],
                     ],

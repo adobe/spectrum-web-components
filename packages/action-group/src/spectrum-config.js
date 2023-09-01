@@ -37,10 +37,11 @@ const config = {
                 converter.classToAttribute('spectrum-ActionGroup--compact'),
                 converter.classToAttribute('spectrum-ActionGroup--quiet'),
                 converter.classToAttribute('spectrum-ActionGroup--justified'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-ActionGroup--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ActionGroup--sizeS', 's'],
-                        ['spectrum-ActionGroup--sizeM', 'm'],
                         ['spectrum-ActionGroup--sizeL', 'l'],
                         ['spectrum-ActionGroup--sizeXL', 'xl'],
                     ],

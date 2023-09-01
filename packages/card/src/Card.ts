@@ -57,6 +57,7 @@ export class Card extends LikeAnchor(
         ]),
         {
             validSizes: ['s', 'm'],
+            noDefaultSize: true,
         }
     )
 ) {

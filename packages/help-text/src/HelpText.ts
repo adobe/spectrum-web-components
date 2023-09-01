@@ -28,7 +28,9 @@ type HelpTextVariants = 'neutral' | 'negative';
 /**
  * @element sp-help-text
  */
-export class HelpText extends SizedMixin(SpectrumElement) {
+export class HelpText extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }

@@ -20,7 +20,7 @@ describe('Avatar', () => {
                 html`
                     <sp-avatar
                         label="Shantanu Narayen"
-                        src="https://place.dog/500/500"
+                        src="https://picsum.photos/500/500"
                     ></sp-avatar>
                 `
             )
@@ -30,7 +30,7 @@ describe('Avatar', () => {
             html`
                 <sp-avatar
                     label="Shantanu Narayen"
-                    src="https://place.dog/500/500"
+                    src="https://picsum.photos/500/500"
                 ></sp-avatar>
             `
         );
@@ -44,7 +44,7 @@ describe('Avatar', () => {
             html`
                 <sp-avatar
                     label="Shantanu Narayen"
-                    src="https://place.dog/500/500"
+                    src="https://picsum.photos/500/500"
                 ></sp-avatar>
             `
         );
@@ -64,7 +64,7 @@ describe('Avatar', () => {
             html`
                 <sp-avatar
                     label="Shantanu Narayen"
-                    src="https://place.dog/500/500"
+                    src="https://picsum.photos/500/500"
                 ></sp-avatar>
             `
         );
@@ -80,7 +80,7 @@ describe('Avatar', () => {
     it('loads with no label', async () => {
         const el = await fixture<Avatar>(
             html`
-                <sp-avatar src="https://place.dog/500/500"></sp-avatar>
+                <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
             `
         );
 
@@ -97,7 +97,7 @@ describe('Avatar', () => {
                 html`
                     <sp-avatar
                         label="Shantanu Narayen"
-                        src="https://place.dog/500/500"
+                        src="https://picsum.photos/500/500"
                         tabindex="0"
                     ></sp-avatar>
                 `

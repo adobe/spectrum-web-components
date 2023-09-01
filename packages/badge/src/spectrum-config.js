@@ -32,10 +32,11 @@ const config = {
             ],
             components: [
                 converter.classToHost(),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Badge--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Badge--sizeS', 's'],
-                        ['spectrum-Badge--sizeM', 'm'],
                         ['spectrum-Badge--sizeL', 'l'],
                         ['spectrum-Badge--sizeXL', 'xl'],
                     ],

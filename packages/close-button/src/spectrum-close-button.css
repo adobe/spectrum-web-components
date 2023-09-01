@@ -96,10 +96,6 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
-    --spectrum-closebutton-height: var(--spectrum-component-height-100);
-    --spectrum-closebutton-width: var(--spectrum-closebutton-height);
-    --spectrum-closebutton-size: var(--spectrum-closebutton-size-400);
-    --spectrum-closebutton-border-radius: var(--spectrum-closebutton-size-400);
     --spectrum-closebutton-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -110,7 +106,7 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-size: var(--spectrum-closebutton-size-300);
     --spectrum-closebutton-border-radius: var(--spectrum-closebutton-size-300);
 }
-:host([size='m']) {
+:host {
     --spectrum-closebutton-height: var(--spectrum-component-height-100);
     --spectrum-closebutton-width: var(--spectrum-closebutton-height);
     --spectrum-closebutton-size: var(--spectrum-closebutton-size-400);
