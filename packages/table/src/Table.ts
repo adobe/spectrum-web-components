@@ -262,7 +262,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                 ) as TableCheckboxCell;
                 this.tableHeadCheckboxCell.headCell = true;
                 this.tableHeadCheckboxCell.emphasized = this.emphasized;
-                this.tableHead.insertAdjacentElement(
+                this.tableHead?.insertAdjacentElement(
                     'afterbegin',
                     this.tableHeadCheckboxCell
                 );
@@ -333,7 +333,8 @@ export class Table extends SizedMixin(SpectrumElement, {
 
             const allSelected = this.selected.length === this.tableRows.length;
             this.manageHeadCheckbox(allSelected);
-            this.tableHead.insertAdjacentElement(
+
+            this.tableHead?.insertAdjacentElement(
                 'afterbegin',
                 this.tableHeadCheckboxCell
             );
@@ -350,7 +351,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             });
         } else {
             // Remove all checkbox cells.
-            this.tableHead.querySelector('sp-table-checkbox-cell')?.remove();
+            this.tableHead?.querySelector('sp-table-checkbox-cell')?.remove();
             this.tableRows.forEach((row) => {
                 row.checkboxCells[0]?.remove();
                 if (this.selected.length) {
