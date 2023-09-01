@@ -17,6 +17,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import { alertDestructive } from './dialog.stories.js';
 import { portrait } from './images.js';
+import './helpers.js';
 
 export default {
     title: 'Dialog Base',
@@ -49,35 +50,6 @@ export const Slotted = (): TemplateResult => html`
         ${alertDestructive()}
     </sp-dialog-base>
 `;
-
-class CountdownWatcher extends HTMLElement {
-    ready!: (value: boolean | PromiseLike<boolean>) => void;
-
-    constructor() {
-        super();
-        this.readyPromise = new Promise((res) => {
-            this.ready = res;
-            this.setup();
-        });
-    }
-
-    setup(): void {
-        (this.previousElementSibling as HTMLElement).addEventListener(
-            'countdown-complete',
-            () => {
-                this.ready(true);
-            }
-        );
-    }
-
-    private readyPromise: Promise<boolean> = Promise.resolve(false);
-
-    get updateComplete(): Promise<boolean> {
-        return this.readyPromise;
-    }
-}
-
-customElements.define('countdown-complete-watcher', CountdownWatcher);
 
 export const disabledButton = (): TemplateResult => {
     return html`
