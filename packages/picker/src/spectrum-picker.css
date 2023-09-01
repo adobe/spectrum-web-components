@@ -77,32 +77,17 @@ governing permissions and limitations under the License.
     --spectrum-picker-popover-quiet-offset-x: 14px;
 }
 :host {
-    --spectrum-picker-font-size: var(--spectrum-font-size-100);
     --spectrum-picker-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-picker-placeholder-font-style: var(
         --spectrum-default-font-style
     );
     --spectrum-picker-line-height: var(--spectrum-line-height-100);
-    --spectrum-picker-block-size: var(--spectrum-component-height-100);
     --spectrum-picker-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-picker-spacing-edge-to-text: var(
         --spectrum-component-edge-to-text-100
     );
     --spectrum-picker-spacing-edge-to-text-quiet: var(
         --spectrum-field-edge-to-text-quiet
-    );
-    --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-100);
-    --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
-        --spectrum-field-text-to-alert-icon-medium
-    );
-    --spectrum-picker-spacing-icon-to-disclosure-icon: var(
-        --spectrum-picker-visual-to-disclosure-icon-medium
-    );
-    --spectrum-picker-spacing-label-to-picker-quiet: var(
-        --spectrum-field-label-to-component-quiet-medium
-    );
-    --spectrum-picker-spacing-top-to-disclosure-icon: var(
-        --spectrum-field-top-to-disclosure-icon-100
     );
     --spectrum-picker-spacing-edge-to-disclosure-icon: var(
         --spectrum-field-top-to-disclosure-icon-100
@@ -205,7 +190,7 @@ governing permissions and limitations under the License.
         --spectrum-field-end-edge-to-disclosure-icon-75
     );
 }
-:host([size='m']) {
+:host {
     --spectrum-picker-font-size: var(--spectrum-font-size-100);
     --spectrum-picker-block-size: var(--spectrum-component-height-100);
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-100);

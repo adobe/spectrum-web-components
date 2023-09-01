@@ -28,7 +28,7 @@ import { Asset } from '@spectrum-web-components/asset';
 
 ```html
 <sp-asset style="height: 128px">
-    <img src="https://place.dog/500/500" alt="Demo Image" />
+    <img src="https://picsum.photos/500/500" alt="Demo Image" />
 </sp-asset>
 ```
 

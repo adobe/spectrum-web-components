@@ -78,10 +78,17 @@ export const topLayerOverTransforms = (): Middleware => ({
                     (containingBlock as unknown as Window)
             ) {
                 const css = getComputedStyle(containingBlock);
+                // The overlay is "over transforms" when the containing block uses specific CSS...
                 overTransforms =
-                    css.transform !== 'none' || css.filter
-                        ? css.filter !== 'none'
-                        : false;
+                    // the `transform` property
+                    css.transform !== 'none' ||
+                    // the `filter` property for anything other than "none"
+                    (css.filter ? css.filter !== 'none' : false) ||
+                    // a value of "paint", "layout", "strict", or "content" for `contain`
+                    ['paint', 'layout', 'strict', 'content'].some((value) =>
+                        (css.contain || '').includes(value)
+                    );
+                // overTransforms = true;
             }
 
             if (onTopLayer && overTransforms && containingBlock) {

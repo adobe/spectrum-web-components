@@ -57,6 +57,27 @@ Content assigned to the `icon` slot will be placed at the beginning of the `<sp-
 </sp-menu>
 ```
 
+### Description slot
+
+Content assigned to the `description` slot will be placed below the `<sp-menu-item>`, like help text for users to understand the context of corresponding `<sp-menu-item>`.
+
+```html
+<sp-menu style="width: 200px;">
+    <sp-menu-item>
+        Quick export
+        <span slot="description">Share a snapshot</span>
+    </sp-menu-item>
+    <sp-menu-item>
+        Open a copy
+        <span slot="description">Illustrator for iPad</span>
+    </sp-menu-item>
+    <sp-menu-item>
+        Share link
+        <span slot="description">Enable comments and download</span>
+    </sp-menu-item>
+</sp-menu>
+```
+
 ### Value slot
 
 Content assigned to the `value` slot will be placed at the end of the `<sp-menu-item>`, like values, keyboard shortcuts, etc., based on the current text direction.

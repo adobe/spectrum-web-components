@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     render,
     SizedMixin,
@@ -59,7 +60,7 @@ export interface TableItem extends Record<string, unknown> {
 
 export class Table extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm'],
-    defaultSize: 'm',
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -95,7 +96,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                                   ?checked=${selected}
                               ></sp-table-checkbox-cell>
                           `
-                        : html``}
+                        : nothing}
                     ${fn(item, index)}
                 </sp-table-row>
             `;
@@ -237,7 +238,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                 this.tableHeadCheckboxCell = document.createElement(
                     'sp-table-checkbox-cell'
                 ) as TableCheckboxCell;
-                this.tableHead.insertAdjacentElement(
+                this.tableHead?.insertAdjacentElement(
                     'afterbegin',
                     this.tableHeadCheckboxCell
                 );
@@ -305,7 +306,7 @@ export class Table extends SizedMixin(SpectrumElement, {
 
             this.manageHeadCheckbox(allSelected);
 
-            this.tableHead.insertAdjacentElement(
+            this.tableHead?.insertAdjacentElement(
                 'afterbegin',
                 this.tableHeadCheckboxCell
             );
@@ -319,7 +320,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                 checkbox.checked = row.selected;
             });
         } else {
-            this.tableHead.querySelector('sp-table-checkbox-cell')?.remove();
+            this.tableHead?.querySelector('sp-table-checkbox-cell')?.remove();
             this.tableRows.forEach((row) => {
                 row.checkboxCells[0]?.remove();
                 if (this.selected.length) {

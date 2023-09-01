@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -35,7 +36,7 @@ import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-import type { Overlay } from 'overlay/src/Overlay.js';
+import type { Overlay } from '@spectrum-web-components/overlay';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -81,6 +82,7 @@ export type MenuItemChildren = { icon: Element[]; content: Node[] };
  * @element sp-menu-item
  *
  * @slot - text content to display within the Menu Item
+ * @slot description - description to be placed below the label of the Menu Item
  * @slot icon - icon element to be placed at the start of the Menu Item
  * @slot value - content placed at the end of the Menu Item like values, keyboard shortcuts, etc.
  * @slot submenu - content placed in a submenu
@@ -310,11 +312,12 @@ export class MenuItem extends LikeAnchor(
                               : ''}"
                       ></sp-icon-checkmark100>
                   `
-                : html``}
+                : nothing}
             <slot name="icon"></slot>
             <div id="label">
                 <slot id="slot"></slot>
             </div>
+            <slot name="description"></slot>
             <slot name="value"></slot>
             ${this.href && this.href.length > 0
                 ? super.renderAnchor({
@@ -322,7 +325,7 @@ export class MenuItem extends LikeAnchor(
                       ariaHidden: true,
                       className: 'button anchor hidden',
                   })
-                : html``}
+                : nothing}
             ${this.renderSubmenu()}
         `;
     }

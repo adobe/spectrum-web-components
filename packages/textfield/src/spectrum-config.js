@@ -43,10 +43,11 @@ export default {
                     ],
                     hoist: false,
                 },
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Textfield--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Textfield--sizeS', 's'],
-                        ['spectrum-Textfield--sizeM', 'm'],
                         ['spectrum-Textfield--sizeL', 'l'],
                         ['spectrum-Textfield--sizeXL', 'xl'],
                     ],

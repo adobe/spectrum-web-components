@@ -48,10 +48,11 @@ const config = {
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-drop-target', 'drop-target'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Card--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Card--sizeS', 's'],
-                        ['spectrum-Card--sizeM', 'm'],
                         ['spectrum-Card--sizeL', 'l'],
                         ['spectrum-Card--sizeXL', 'xl'],
                     ],

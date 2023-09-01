@@ -59,7 +59,9 @@ const crossIcon: Record<string, () => TemplateResult> = {
  * @slot - text label of the Close Button
  * @slot icon - The icon to use for Close Button
  */
-export class CloseButton extends SizedMixin(StyledButton) {
+export class CloseButton extends SizedMixin(StyledButton, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, crossMediumStyles];
     }
