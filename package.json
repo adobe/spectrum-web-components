@@ -110,7 +110,6 @@
         "@storybook/addon-a11y": "^7.4.0",
         "@storybook/addon-essentials": "^7.4.0",
         "@storybook/addon-links": "^7.4.0",
-        "@storybook/addon-storysource": "^7.4.0",
         "@storybook/web-components": "^7.4.0",
         "@storybook/web-components-vite": "^7.4.0",
         "@types/chai": "^4.1.7",

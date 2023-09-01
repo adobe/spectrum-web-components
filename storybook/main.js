@@ -24,7 +24,6 @@ const config = {
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-a11y',
-        // "@storybook/addon-storysource"
     ],
     framework: {
         name: 'storybook-web-components-wds',
