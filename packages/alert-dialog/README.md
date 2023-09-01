@@ -140,10 +140,10 @@ Error alert dialogs communicate critical information about an issue that a user 
 Destructive alert dialogs are for when a user needs to confirm an action that will impact their data or experience in a potentially negative way, such as deleting files or contacts.
 
 ```html
-    <sp-alert-dialog variant="destructive">
-        <h2 slot="heading">Delete 3 documents?</h2>
-        Are you sure you want to delete the 3 selected documents?
-        <sp-button
+<sp-alert-dialog variant="destructive">
+    <h2 slot="heading">Delete 3 documents?</h2>
+    Are you sure you want to delete the 3 selected documents?
+    <sp-button
         slot="button"
         id="cancelButton"
         variant="secondary"
@@ -161,8 +161,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
     >
         Delete
     </sp-button>
-    </sp-alert-dialog>
-</overlay-trigger>
+</sp-alert-dialog>
 ```
 
 ### Secondary Button
