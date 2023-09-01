@@ -17,7 +17,7 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-border-width: var(--spectrum-border-width-100);
     --spectrum-thumbnail-border-color-rgba: rgba(
         var(--spectrum-gray-800-rgb),
-        var(--spectrum-thumbnail-border-opacity)
+        var(--spectrum-thumbnail-border-color-opacity)
     );
     --spectrum-thumbnail-layer-border-width-inner: var(
         --spectrum-border-width-400
@@ -44,15 +44,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-thumbnail-color-opacity-disabled: var(
         --spectrum-thumbnail-opacity-disabled
-    );
-    --spectrum-thumbnail-checkerboard-size: var(
-        --spectrum-opacity-checkerboard-square-size
-    );
-    --spectrum-thumbnail-checkerboard-dark-color: var(
-        --spectrum-opacity-checkerboard-square-dark
-    );
-    --spectrum-thumbnail-checkerboard-light-color: var(
-        --spectrum-opacity-checkerboard-square-light
     );
 }
 :host([size='50']) {
@@ -92,31 +83,6 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-1000);
 }
 :host {
-    background: repeating-conic-gradient(
-            var(
-                    --mod-thumbnail-checkerboard-light-color,
-                    var(--spectrum-thumbnail-checkerboard-light-color)
-                )
-                0 25%,
-            var(
-                    --mod-thumbnail-checkerboard-dark-color,
-                    var(--spectrum-thumbnail-checkerboard-dark-color)
-                )
-                0 50%
-        )
-        0 0 /
-        calc(
-            var(
-                    --mod-thumbnail-checkerboard-size,
-                    var(--spectrum-thumbnail-checkerboard-size)
-                ) * 2
-        )
-        calc(
-            var(
-                    --mod-thumbnail-checkerboard-size,
-                    var(--spectrum-thumbnail-checkerboard-size)
-                ) * 2
-        );
     block-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     border-radius: var(
         --mod-thumbnail-border-radius,
@@ -160,15 +126,9 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-color-opacity-disabled)
     );
 }
-:host(.focus-visible),
 :host([focused]) {
     overflow: visible;
 }
-:host(:focus-visible),
-:host([focused]) {
-    overflow: visible;
-}
-:host(.focus-visible):after,
 :host([focused]):after {
     border-color: var(
         --highcontrast-thumbnail-focus-indicator-color,
@@ -237,84 +197,6 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
-:host(:focus-visible):after,
-:host([focused]):after {
-    border-color: var(
-        --highcontrast-thumbnail-focus-indicator-color,
-        var(
-            --mod-thumbnail-focus-indicator-color,
-            var(--spectrum-thumbnail-focus-indicator-color)
-        )
-    );
-    border-radius: var(
-        --mod-thumbnail-border-radius,
-        var(--spectrum-thumbnail-border-radius)
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-thumbnail-focus-indicator-thickness,
-        var(--spectrum-thumbnail-focus-indicator-thickness)
-    );
-    content: '';
-    inset-block-end: calc(
-        (
-                var(
-                        --mod-thumbnail-focus-indicator-gap,
-                        var(--spectrum-thumbnail-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-thumbnail-focus-indicator-thickness,
-                        var(--spectrum-thumbnail-focus-indicator-thickness)
-                    )
-            ) * -1
-    );
-    inset-block-start: calc(
-        (
-                var(
-                        --mod-thumbnail-focus-indicator-gap,
-                        var(--spectrum-thumbnail-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-thumbnail-focus-indicator-thickness,
-                        var(--spectrum-thumbnail-focus-indicator-thickness)
-                    )
-            ) * -1
-    );
-    inset-inline-end: calc(
-        (
-                var(
-                        --mod-thumbnail-focus-indicator-gap,
-                        var(--spectrum-thumbnail-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-thumbnail-focus-indicator-thickness,
-                        var(--spectrum-thumbnail-focus-indicator-thickness)
-                    )
-            ) * -1
-    );
-    inset-inline-start: calc(
-        (
-                var(
-                        --mod-thumbnail-focus-indicator-gap,
-                        var(--spectrum-thumbnail-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-thumbnail-focus-indicator-thickness,
-                        var(--spectrum-thumbnail-focus-indicator-thickness)
-                    )
-            ) * -1
-    );
-    position: absolute;
-}
-:host(.focus-visible) .image-wrapper,
-:host([focused]) .image-wrapper {
-    border-radius: var(
-        --mod-thumbnail-border-radius,
-        var(--spectrum-thumbnail-border-radius)
-    );
-    overflow: hidden;
-}
-:host(:focus-visible) .image-wrapper,
 :host([focused]) .image-wrapper {
     border-radius: var(
         --mod-thumbnail-border-radius,
