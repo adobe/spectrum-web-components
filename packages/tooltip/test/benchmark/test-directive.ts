@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-action-button>
+    <sp-action-button
+        ${tooltip(() => html`Tip me!`)}
+    >
         I'm a button...
-        <sp-tooltip self-managed>Tip me!</sp-tooltip>
     </sp-action-button>
 `);

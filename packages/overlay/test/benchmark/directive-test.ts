@@ -10,38 +10,45 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import * as overlayTools from '@spectrum-web-components/overlay';
+import { trigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { html } from 'lit';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { html, TemplateResult } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
-if ('trigger' in overlayTools) {
-    const trigger = overlayTools.trigger;
-    measureFixtureCreation(
-        html`
-            <sp-button
-                ${trigger(html`
-                    <sp-popover>
-                        <p>This is the content.</p>
-                    </sp-popover>
-                `)}
-            >
-                Trigger
+const popover = (): TemplateResult => html`
+    <sp-popover>
+        <sp-dialog no-divider>
+            <sp-slider
+                value="5"
+                step="0.5"
+                min="0"
+                max="20"
+                label="Awesomeness"
+            ></sp-slider>
+            <div id="styled-div">
+                The background of this div should be blue
+            </div>
+            <sp-button>
+                Press Me
+                <sp-tooltip
+                    self-managed
+                    delayed
+                >
+                    Click to open another popover.
+                </sp-tooltip>
             </sp-button>
-        `
-    );
-} else {
-    // TODO: Remove this hackery once we land an official version of the directive approach
-    measureFixtureCreation(
-        html`
-            <overlay-trigger>
-                <sp-button slot="trigger">Trigger</sp-button>
-                <sp-popover slot="content">
-                    <p>This is the content.</p>
-                </sp-popover>
-            </overlay-trigger>
-        `
-    );
-}
+        </sp-dialog>
+    </sp-popover>
+`;
+
+measureFixtureCreation(
+    html`
+        <sp-button ${trigger(popover)}>
+            Trigger
+        </sp-button>
+    `
+);

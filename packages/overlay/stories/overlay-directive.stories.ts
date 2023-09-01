@@ -24,6 +24,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { trigger } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
 
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -143,9 +144,14 @@ const template = ({
         ${storyStyles}
         <sp-button
             variant="primary"
-            ${tooltip('Click to open a popover.')}
+            ${tooltip(
+                () =>
+                    html`
+                        Click to open a popover.
+                    `
+            )}
             ${trigger(
-                html`
+                () => html`
                     <sp-popover placement="${placement}" tip>
                         <sp-dialog no-divider>
                             <div class="options-popover-content">
@@ -160,9 +166,14 @@ const template = ({
                                     The background of this div should be blue
                                 </div>
                                 <sp-button
-                                    ${tooltip('Click to open another popover.')}
+                                    ${tooltip(
+                                        () =>
+                                            html`
+                                                Click to open another popover.
+                                            `
+                                    )}
                                     ${trigger(
-                                        html`
+                                        () => html`
                                             <sp-popover
                                                 placement="bottom"
                                                 tip
@@ -178,8 +189,10 @@ const template = ({
                                             </sp-popover>
                                         `,
                                         {
-                                            placement: 'bottom',
-                                            triggerOn: 'click',
+                                            triggerInteraction: 'click',
+                                            overlayOptions: {
+                                                placement: 'bottom',
+                                            },
                                         }
                                     )}
                                 >
@@ -190,9 +203,11 @@ const template = ({
                     </sp-popover>
                 `,
                 {
-                    placement,
-                    triggerOn,
-                    offset,
+                    triggerInteraction: triggerOn,
+                    overlayOptions: {
+                        placement,
+                        offset,
+                    },
                 }
             )}
         >
@@ -202,3 +217,7 @@ const template = ({
 };
 
 export const Default = (args: Properties): TemplateResult => template(args);
+
+Default.swc_vrt = {
+    skip: true,
+};

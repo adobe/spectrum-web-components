@@ -18,7 +18,7 @@ import { conditionAttributeWithId } from '@spectrum-web-components/base/src/cond
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { noop } from './AbstractOverlay.js';
-import { InteractionController } from './InteractionController.js';
+import { InteractionController, InteractionTypes } from './InteractionController.js';
 
 const LONGPRESS_DURATION = 300;
 export const LONGPRESS_INSTRUCTIONS = {
@@ -32,6 +32,8 @@ type LongpressEvent = {
 };
 
 export class LongpressController extends InteractionController {
+    override type = InteractionTypes.longpress;
+
     override get activelyOpening(): boolean {
         return (
             this.longpressState === 'opening' ||

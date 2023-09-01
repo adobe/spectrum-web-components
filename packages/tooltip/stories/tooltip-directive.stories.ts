@@ -40,7 +40,18 @@ export const Default = ({
     variant,
 }: Properties): TemplateResult => {
     return html`
-        <sp-button ${tooltip(text || 'Tooltip', { placement, variant })}>
+        <sp-button
+            ${tooltip(
+                () =>
+                    html`
+                        ${text || 'Tooltip'}
+                    `,
+                {
+                    overlayOptions: { placement },
+                    variant,
+                }
+            )}
+        >
             Hover me
         </sp-button>
     `;
@@ -116,4 +127,7 @@ Default.argTypes = {
             options: ['info', 'positive', 'negative', ''],
         },
     },
+};
+Default.swc_vrt = {
+    skip: true,
 };

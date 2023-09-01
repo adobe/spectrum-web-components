@@ -9,24 +9,23 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     OverlayTriggerOptions,
     trigger,
 } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
-import { html } from 'lit';
-import '../sp-tooltip.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 export const tooltip = function tooltip(
-    tooltipText: string,
+    tooltipContent: () => TemplateResult,
     options?: Partial<OverlayTriggerOptions & { variant: string }>
 ): ReturnType<typeof trigger> {
-    return trigger(
-        html`
+    return trigger(() => {
+        import('@spectrum-web-components/tooltip/sp-tooltip.js');
+        return html`
             <sp-tooltip variant=${ifDefined(options?.variant)}>
-                ${tooltipText}
+                ${tooltipContent()}
             </sp-tooltip>
-        `,
-        options
-    );
+        `;
+    }, options);
 };

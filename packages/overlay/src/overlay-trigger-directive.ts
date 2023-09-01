@@ -9,42 +9,50 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { ElementPart, nothing, render, TemplateResult } from 'lit';
-import { AsyncDirective, directive } from 'lit/async-directive.js';
-import { Overlay } from './overlay.js';
-import { OverlayContentTypes } from './OverlayTrigger.js';
 import {
-    OverlayOpenCloseDetail,
-    OverlayTriggerInteractions,
-    Placement,
-} from './overlay-types.js';
+    ElementPart,
+    nothing,
+    render,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import { AsyncDirective, directive } from 'lit/async-directive.js';
+import { Overlay, strategies } from './Overlay.js';
+import { OverlayOptions } from './overlay-types.js';
+import { ClickController } from './ClickController.js';
+import { HoverController } from './HoverController.js';
+import { LongpressController } from './LongpressController.js';
+import '../sp-overlay.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from './slottable-request-event.js';
 
 export type OverlayTriggerOptions = {
-    triggerOn: OverlayContentTypes;
-    placement: Placement;
-    type: OverlayTriggerInteractions;
-    offset: number;
+    triggerInteraction: 'click' | 'hover' | 'longpress';
+    overlayOptions: OverlayOptions;
 };
 
 export class OverlayTriggerDirective extends AsyncDirective {
-    private template?: TemplateResult;
-    private target?: HTMLElement;
+    private template!: () => TemplateResult;
+    private target!: HTMLElement;
+    private overlay = new Overlay();
+    private strategy?: ClickController | HoverController | LongpressController;
+    private abortController!: AbortController;
 
     protected defaultOptions: OverlayTriggerOptions = {
-        triggerOn: 'hover',
-        placement: 'top-start',
-        type: 'inline',
-        offset: 0,
+        triggerInteraction: 'hover',
+        overlayOptions: {
+            placement: 'top-start',
+            type: 'auto',
+            offset: 0,
+        },
     };
-    protected options: OverlayTriggerOptions = { ...this.defaultOptions };
-
-    private open = false;
-    private overlaidContent?: HTMLElement;
-    private closeOverlay?: Promise<() => void>;
-    private abortOverlay?: (value: boolean) => void;
+    protected options: OverlayOptions = {
+        ...this.defaultOptions.overlayOptions,
+    };
 
     render(
-        _template: TemplateResult,
+        _template: () => TemplateResult,
         _options?: Partial<OverlayTriggerOptions>
     ): unknown {
         // render function here just defines the interface to the update call later
@@ -57,144 +65,78 @@ export class OverlayTriggerDirective extends AsyncDirective {
         part: ElementPart,
         [template, options]: Parameters<this['render']>
     ): void {
-        if (this.target !== part.element) {
-            this.removeListeners();
-        }
         this.options = {
-            ...this.defaultOptions,
-            ...options,
+            ...this.defaultOptions.overlayOptions,
+            ...options?.overlayOptions,
         };
         this.template = template;
+        let newTarget = false;
+        if (this.target !== part.element) {
+            this.target = part.element as HTMLElement;
+            newTarget = true;
+        }
+        if (
+            newTarget ||
+            this.strategy?.type !== options?.triggerInteraction ||
+            this.defaultOptions.triggerInteraction
+        ) {
+            this.strategy?.abort();
+            this.strategy = new strategies[
+                options?.triggerInteraction ||
+                    this.defaultOptions.triggerInteraction
+            ](this.overlay, this.target, true);
+        }
+        this.init();
 
-        this.target = part.element as HTMLElement;
-        // start listening for trigger events
-        this.addListeners();
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                undefined,
+                `⚠️  WARNING ⚠️ : The Overlay Trigger Directive is experimental and there is no guarantees behind its usage in an application!! Its API and presence within the library could be changed at anytime. See "sp-overlay" or "Overlay.open()" for a stable API for overlaying content on your application.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/overlay',
+                {
+                    level: 'high',
+                    type: 'api',
+                }
+            );
+        }
     }
 
-    private async handleOpen(): Promise<void> {
-        if (this.open) {
-            return;
+    handleSlottableRequest(event: SlottableRequestEvent): void {
+        if (event.target !== event.currentTarget) return;
+
+        const willRemoveSlottable = event.data === removeSlottableRequest;
+
+        render(willRemoveSlottable ? undefined : this.template(), this.overlay);
+        if (willRemoveSlottable) {
+            this.overlay.remove();
+        } else {
+            Overlay.applyOptions(this.overlay, {
+                ...this.options,
+                trigger: this.target,
+            });
+            this.target.insertAdjacentElement('afterend', this.overlay);
         }
-        if (!this.template || !this.target) {
-            return;
-        }
-        this.open = true;
-        // render the template into an empty span (we'll discard later)
-        const fragment = document.createElement('span');
-        render(this.template, fragment);
-        // create an abort promise to exit overlay show early if we're rapidly closing
-        const abortPromise: Promise<boolean> = new Promise((res) => {
-            this.abortOverlay = res;
-        });
-        // we're going to capture the child of the span, since thats the content we actually want
-        this.overlaidContent = fragment.children[0] as HTMLElement;
-        // actually open the overlay with this content
-        this.closeOverlay = Overlay.open(
-            this.target,
-            this.options.triggerOn,
-            this.overlaidContent,
-            {
-                placement: this.options.placement,
-                offset: this.options.offset,
-                abortPromise,
-            }
+    }
+
+    init(): void {
+        this.abortController?.abort();
+        this.abortController = new AbortController();
+        const { signal } = this.abortController;
+        this.overlay.addEventListener(
+            'slottable-request',
+            (event: Event) =>
+                this.handleSlottableRequest(event as SlottableRequestEvent),
+            { signal }
         );
     }
 
-    private handleClosed = (
-        event: CustomEvent<OverlayOpenCloseDetail>
-    ): void => {
-        // closed outside of our control?
-        if (event?.detail.interaction === this.options.triggerOn) {
-            this.open = false;
-        }
-    };
-
-    private async doClose(): Promise<void> {
-        if (this.abortOverlay) {
-            this.abortOverlay(true);
-            this.abortOverlay = undefined;
-        }
-        if (this.closeOverlay) {
-            const closeOverlay = this.closeOverlay;
-            this.closeOverlay = undefined;
-            (await closeOverlay)();
-        }
-        this.overlaidContent = undefined;
-        this.open = false;
+    override disconnected(): void {
+        this.abortController.abort();
     }
 
-    private removeListeners(): void {
-        if (!this.target) {
-            return;
-        }
-        this.target.removeEventListener('mouseenter', this.activate);
-        this.target.removeEventListener('focusin', this.activate);
-        this.target.removeEventListener('mouseleave', this.deactivate);
-        this.target.removeEventListener('focusout', this.deactivate);
-        this.target.removeEventListener('click', this.activate);
-        this.target.removeEventListener('longpress', this.activate);
-        this.target.removeEventListener('sp-closed', this.handleClosed);
+    override reconnected(): void {
+        this.init();
     }
-
-    private addListeners(): void {
-        if (!this.template || !this.target) {
-            return;
-        }
-        this.target.addEventListener('sp-closed', this.handleClosed);
-
-        switch (this.options.triggerOn) {
-            case 'hover': {
-                this.target.addEventListener('mouseenter', this.activate);
-                this.target.addEventListener('focusin', this.activate);
-                this.target.addEventListener('mouseleave', this.deactivate);
-                this.target.addEventListener('focusout', this.deactivate);
-                break;
-            }
-            case 'click': {
-                this.target.addEventListener('click', this.activate);
-                break;
-            }
-            case 'longpress': {
-                this.target.addEventListener('longpress', this.activate);
-            }
-        }
-    }
-
-    private deactivate = (event: Event): void => {
-        const mouseIsEnteringHoverContent =
-            event.type === 'mouseleave' &&
-            this.options.triggerOn === 'hover' &&
-            this.open &&
-            (event as unknown as MouseEvent).relatedTarget ===
-                this.overlaidContent;
-        if (mouseIsEnteringHoverContent && this.overlaidContent) {
-            // mouse is moving from the trigger to the hover content
-            // start listening on the overlay to see if we leave it
-            this.overlaidContent.addEventListener(
-                'mouseleave',
-                (event: MouseEvent) => {
-                    // did the mouse exit back onto the trigger?
-                    const mouseIsEnteringTrigger =
-                        event.relatedTarget === this.target;
-                    if (mouseIsEnteringTrigger) {
-                        // then do nothing
-                        return;
-                    }
-                    // otherwise let the overlay close with the regular mouse leave behavior
-                    this.deactivate(event);
-                },
-                { once: true }
-            );
-            return;
-        }
-        this.doClose();
-    };
-
-    private activate = (_event: Event): void => {
-        if (!this.target) return;
-        this.handleOpen();
-    };
 }
 
 export const trigger = directive(OverlayTriggerDirective);

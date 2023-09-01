@@ -48,12 +48,12 @@ import { ClickController } from './ClickController.js';
 import { HoverController } from './HoverController.js';
 import { LongpressController } from './LongpressController.js';
 export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
-
-import styles from './overlay.css.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
 } from './slottable-request-event.js';
+
+import styles from './overlay.css.js';
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 
@@ -65,7 +65,7 @@ if (supportsPopover) {
     OverlayFeatures = OverlayNoPopover(OverlayFeatures);
 }
 
-const strategies = {
+export const strategies = {
     click: ClickController,
     longpress: LongpressController,
     hover: HoverController,
@@ -153,7 +153,12 @@ export class Overlay extends OverlayFeatures {
     @property({ type: Number })
     override offset: number | [number, number] = 0;
 
-    protected override placementController = new PlacementController(this);
+    protected override get placementController(): PlacementController {
+        if (!this._placementController) {
+            this._placementController = new PlacementController(this);
+        }
+        return this._placementController;
+    }
 
     /**
      * Whether the Overlay is projected onto the "top layer" or not.
@@ -222,7 +227,7 @@ export class Overlay extends OverlayFeatures {
 
     override _state: OverlayState = 'closed';
 
-    private strategy?: ClickController | HoverController | LongpressController;
+    public strategy?: ClickController | HoverController | LongpressController;
 
     @property({ type: Number, attribute: 'tip-padding' })
     tipPadding?: number;
@@ -257,7 +262,12 @@ export class Overlay extends OverlayFeatures {
 
     protected wasOpen = false;
 
-    private elementResolver = new ElementResolutionController(this);
+    protected override get elementResolver(): ElementResolutionController {
+        if (!this._elementResolver) {
+            this._elementResolver = new ElementResolutionController(this);
+        }
+        return this._elementResolver;
+    }
 
     private get usesDialog(): boolean {
         return this.type === 'modal' || this.type === 'page';
@@ -581,7 +591,11 @@ export class Overlay extends OverlayFeatures {
                 this.placementController.resetOverlayPosition();
             }
         }
-        if (changes.has('state') && this.state === 'closed') {
+        if (
+            changes.has('state') &&
+            this.state === 'closed' &&
+            typeof changes.get('state') !== 'undefined'
+        ) {
             this.placementController.clearOverlayPosition();
         }
     }
@@ -671,7 +685,9 @@ export class Overlay extends OverlayFeatures {
         this.addEventListener('close', () => {
             this.open = false;
         });
-        this.bindEvents();
+        if (this.hasUpdated) {
+            this.bindEvents();
+        }
     }
 
     override disconnectedCallback(): void {
