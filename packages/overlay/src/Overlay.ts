@@ -155,7 +155,7 @@ export class Overlay extends OverlayFeatures {
      * when there is no trigger element.
      */
     @property({ type: Number })
-    offset: number | [number, number] = 6;
+    override offset: number | [number, number] = 6;
 
     protected override placementController = new PlacementController(this);
 
@@ -197,7 +197,7 @@ export class Overlay extends OverlayFeatures {
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      */
     @property()
-    placement?: Placement;
+    override placement?: Placement;
 
     /**
      * Whether to pass focus to the overlay once opened, or
@@ -879,8 +879,6 @@ export class Overlay extends OverlayFeatures {
             );
         }
     }
-
-    public willPreventClose = false;
 
     public shouldPreventClose(): boolean {
         const shouldPreventClose = this.willPreventClose;
