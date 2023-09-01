@@ -1,5 +1,4 @@
 {
     "./src/*": "./src/*",
-    "./sp-alert-dialog.js": "./sp-alert-dialog.js",
-    "./sp-alert-dialog-wrapper.js": "./sp-alert-dialog-wrapper.js"
+    "./sp-alert-dialog.js": "./sp-alert-dialog.js"
 }

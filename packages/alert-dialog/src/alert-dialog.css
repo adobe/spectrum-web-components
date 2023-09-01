@@ -12,6 +12,6 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-alert-dialog.css');
 
-:host {
-    max-height: inherit;
+:host([variant='scroll']) {
+    max-height: 90vh;
 }

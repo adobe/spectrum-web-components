@@ -16,14 +16,55 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Dialog } from '@spectrum-web-components/dialog/src/Dialog.js';
+import '@spectrum-web-components/button/sp-button.js';
 import alertStyles from './alert-dialog.css.js';
+
+export type AlertDialogVariants =
+    | 'confirmation'
+    | 'information'
+    | 'warning'
+    | 'error'
+    | 'destructive'
+    | 'secondary'
+    | 'scroll'
+    | '';
+
+export const alertDialogVariants: AlertDialogVariants[] = [
+    'confirmation',
+    'information',
+    'warning',
+    'error',
+    'destructive',
+    'secondary',
+    'scroll',
+];
 
 export class AlertDialog extends Dialog {
     public static override get styles(): CSSResultArray {
         return [alertStyles];
     }
-    @property({ type: String })
-    public variant!: string;
+
+    @property({ type: String, reflect: true })
+    public set variant(variant: AlertDialogVariants) {
+        if (variant === this.variant) {
+            return;
+        }
+        const oldValue = this.variant;
+        if (alertDialogVariants.includes(variant)) {
+            this.setAttribute('variant', variant);
+            this._variant = variant;
+        } else {
+            this.removeAttribute('variant');
+            this._variant = '';
+        }
+        this.requestUpdate('variant', oldValue);
+    }
+
+    public get variant(): AlertDialogVariants {
+        return this._variant;
+    }
+
+    public _variant: AlertDialogVariants = 'confirmation';
 
     protected renderIcon(): TemplateResult {
         switch (this.variant) {
