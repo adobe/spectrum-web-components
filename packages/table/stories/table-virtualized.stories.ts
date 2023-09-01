@@ -97,7 +97,6 @@ class VirtualTable extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <sp-table
-                emphasized
                 aria-rowcount="50"
                 .items=${this.items}
                 .renderItem=${renderItem}
@@ -158,7 +157,6 @@ export const virtualizedSingle = (args: Properties): TemplateResult => {
 
     return html`
         <sp-table
-            emphasized
             size="m"
             scroller="true"
             style="height: 300px"
@@ -202,7 +200,6 @@ virtualizedSingle.args = {
 export const virtualizedMultiple = (args: Properties): TemplateResult => {
     return html`
         <sp-table
-            emphasized
             size="m"
             scroller="true"
             style="height: 200px"
@@ -239,7 +236,6 @@ virtualizedMultiple.args = {
 export const virtualizedCustomValue = (args: Properties): TemplateResult => {
     return html`
         <sp-table
-            emphasized
             size="m"
             scroller="true"
             style="height: 200px"
@@ -281,7 +277,6 @@ export const virtualizedCustomRow = (args: Properties): TemplateResult => {
 
     return html`
         <sp-table
-            emphasized
             size="m"
             scroller="true"
             style="height: 200px"
@@ -318,12 +313,7 @@ virtualizedCustomRow.args = {
 
 export const virtualizedNoScroller = (): TemplateResult => {
     return html`
-        <sp-table
-            emphasized
-            size="m"
-            .items=${virtualItems}
-            .renderItem=${renderItem}
-        >
+        <sp-table size="m" .items=${virtualItems} .renderItem=${renderItem}>
             <sp-table-head>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>

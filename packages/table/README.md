@@ -92,7 +92,6 @@ When `selects="single"`, the `<sp-table>` will manage a _single_ selection in th
 
 ```html
 <sp-table
-    emphasized
     selects="single"
     selected='["row1"]'
     onchange="spAlert(this, `Selected: ${JSON.stringify(this.selected)}`)"
@@ -134,11 +133,10 @@ When `selects="single"`, the `<sp-table>` will manage a _single_ selection in th
 
 ### `selects="multiple"`
 
-When `selects="multiple"`, the `<sp-table>` will manage a selection in the array value of `selected` in via a presence toggle. Additionally, an `<sp-table-checkbox-cell>` will be made available in the `<sp-table-head>` in order to select/deselect all items in the `<sp-table>`.
+When `selects="multiple"`, the `<sp-table>` manages selections via a presence toggle and adds them to the `selected` array. Additionally, an `<sp-table-checkbox-cell>` will be made available in the `<sp-table-head>` in order to select/deselect all items in the `<sp-table>`.
 
 ```html
 <sp-table
-    emphasized
     selects="multiple"
     selected='["row1", "row2"]'
     onchange="spAlert(this, `Selected: ${JSON.stringify(this.selected)}`)"
@@ -178,14 +176,10 @@ When `selects="multiple"`, the `<sp-table>` will manage a selection in the array
 </sp-table>
 ```
 
-## Emphasized and Non-Emphasized
+## Emphasized
 
 Use the `emphasized` attribute to add priority to the information that is delivered within your `<table>` element. In particular, this affects the appearance of selected rows, and will set the emphasized style for the checkboxes within `sp-table-checkbox-cell`.
 Leaving off the `emphasized` attribute will display the non-emphasized colors.
-
-<sp-tabs selected="emphasized" auto label="Emphasized Attribute Options">
-<sp-tab value="emphasized">Emphasized</sp-tab>
-<sp-tab-panel value="emphasized">
 
 ```html
 <sp-table emphasized selects="multiple" selected='["row1"]'>
@@ -213,40 +207,6 @@ Leaving off the `emphasized` attribute will display the non-emphasized colors.
     </sp-table-body>
 </sp-table>
 ```
-
-</sp-tab-panel>
-<sp-tab value="non-emphasized">Non-emphasized</sp-tab>
-<sp-tab-panel value="non-emphasized">
-
-```html
-<sp-table selects="multiple" selected='["row1"]'>
-    <sp-table-head>
-        <sp-table-head-cell>Column Title</sp-table-head-cell>
-        <sp-table-head-cell>Column Title</sp-table-head-cell>
-        <sp-table-head-cell>Column Title</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row value="row1">
-            <sp-table-cell>Row Item Alpha</sp-table-cell>
-            <sp-table-cell>Row Item Alpha</sp-table-cell>
-            <sp-table-cell>Row Item Alpha</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row value="row2">
-            <sp-table-cell>Row Item Bravo</sp-table-cell>
-            <sp-table-cell>Row Item Bravo</sp-table-cell>
-            <sp-table-cell>Row Item Bravo</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row value="row3">
-            <sp-table-cell>Row Item Charlie</sp-table-cell>
-            <sp-table-cell>Row Item Charlie</sp-table-cell>
-            <sp-table-cell>Row Item Charlie</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
-</sp-table>
-```
-
-</sp-tab-panel>
-</sp-tabs>
 
 ## Density
 
@@ -605,7 +565,6 @@ By default the `selected` property will surface an array of item indexes that ar
 
 ```html-live
 <sp-table
-    emphasized
     id="table-item-value-demo"
     style="height: 200px"
     scroller="true"
@@ -708,7 +667,6 @@ All values in the item array are assumed to be homogenous by default. This means
 
 ```html-live
 <sp-table
-    emphasized
     id="table-row-type-demo"
     style="height: 200px"
     scroller="true"
@@ -822,7 +780,6 @@ For each table column you want to sort, use the `sortable` attribute in its resp
 
 ```html-live
 <sp-table
-    emphasized
     id="sorted-virtualized-table"
     style="height: 200px"
     scroller="true"
