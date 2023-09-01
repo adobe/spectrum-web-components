@@ -363,6 +363,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     private manageChildren(changes?: PropertyValues): void {
         this.buttons.forEach((button) => {
+            button.toggles = false;
             if (this.quiet || changes?.get('quiet')) {
                 button.quiet = this.quiet;
             }
