@@ -31,6 +31,12 @@ const config = {
                 ),
             ],
         },
+        {
+            inPackage: '@spectrum-css/opacitycheckerboard',
+            outPackage: ['tools', 'opacity-checkerboard'],
+            fileName: 'is-opacity-checkerboard',
+            components: [converter.classToHost('spectrum-OpacityCheckerboard')],
+        },
     ],
 };
 

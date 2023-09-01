@@ -90,21 +90,21 @@ governing permissions and limitations under the License.
 }
 :host {
     align-items: center;
+    block-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
     display: flex;
-    height: var(--mod-swatch-size, var(--spectrum-swatch-size));
+    inline-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
     justify-content: center;
     outline: none;
     position: relative;
     -webkit-user-select: none;
     user-select: none;
-    width: var(--mod-swatch-size, var(--spectrum-swatch-size));
 }
 .disabledIcon {
-    height: var(
+    block-size: var(
         --mod-swatch-disabled-icon-size,
         var(--spectrum-swatch-disabled-icon-size)
     );
-    width: var(
+    inline-size: var(
         --mod-swatch-disabled-icon-size,
         var(--spectrum-swatch-disabled-icon-size)
     );
@@ -211,14 +211,14 @@ governing permissions and limitations under the License.
             var(--spectrum-swatch-slash-icon-color)
         )
     );
+    block-size: 200%;
     content: '';
-    height: var(
+    inline-size: var(
         --mod-swatch-slash-thickness,
         var(--spectrum-swatch-slash-thickness)
     );
     position: absolute;
     transform: rotate(-45deg);
-    width: 200%;
 }
 :host([nothing][shape='rectangle']) .fill:after {
     transform: rotate(-25deg);
@@ -285,33 +285,18 @@ governing permissions and limitations under the License.
     opacity: 1;
 }
 .fill {
-    --spectrum-swatch-checkerboard-size: var(
-        --spectrum-opacity-checkerboard-square-size
-    );
-    --spectrum-swatch-checkerboard-dark-color: var(
-        --spectrum-opacity-checkerboard-square-dark
-    );
-    --spectrum-swatch-checkerboard-light-color: var(
-        --spectrum-opacity-checkerboard-square-light
-    );
     align-items: center;
-    background: repeating-conic-gradient(
-            var(--spectrum-swatch-checkerboard-light-color) 0 25%,
-            var(--spectrum-swatch-checkerboard-dark-color) 0 50%
-        )
-        0 0 / calc(var(--spectrum-swatch-checkerboard-size) * 2)
-        calc(var(--spectrum-swatch-checkerboard-size) * 2);
+    block-size: 100%;
     border-radius: var(
         --mod-swatch-border-radius,
         var(--spectrum-swatch-border-radius)
     );
     box-sizing: border-box;
     display: flex;
-    height: 100%;
+    inline-size: 100%;
     justify-content: center;
     overflow: hidden;
     position: relative;
-    width: 100%;
 }
 .fill:before {
     background-color: var(--spectrum-picked-color, transparent);
@@ -379,7 +364,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([shape='rectangle']) {
-    width: calc(var(--mod-swatch-size, var(--spectrum-swatch-size)) * 2);
+    inline-size: calc(var(--mod-swatch-size, var(--spectrum-swatch-size)) * 2);
 }
 :host([rounding='none']),
 :host([rounding='none']) .fill,
@@ -412,7 +397,8 @@ governing permissions and limitations under the License.
     );
 }
 ::slotted([slot='image']) {
-    height: 100%;
+    block-size: 100%;
+    inline-size: 100%;
     object-fit: contain;
     transition: width
             var(
@@ -426,5 +412,4 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-in-out;
-    width: 100%;
 }

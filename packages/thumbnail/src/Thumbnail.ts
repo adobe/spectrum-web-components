@@ -18,6 +18,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 
 import styles from './thumbnail.css.js';
 
@@ -47,7 +48,7 @@ const defaultSize = validSizes[6];
 
 export class Thumbnail extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [opacityCheckerboardStyles, styles];
     }
 
     @property({ type: String, reflect: true })
@@ -115,7 +116,10 @@ export class Thumbnail extends SpectrumElement {
     protected override render(): TemplateResult {
         if (this.background) {
             return html`
-                <div class="background" style="background: ${this.background}">
+                <div
+                    class="opacity-checkerboard background"
+                    style="background: ${this.background}"
+                >
                     <div class="image-wrapper">
                         <slot></slot>
                     </div>
@@ -123,13 +127,13 @@ export class Thumbnail extends SpectrumElement {
             `;
         } else if (this.layer) {
             return html`
-                <div class="layer-inner">
+                <div class="opacity-checkerboard layer-inner">
                     <slot></slot>
                 </div>
             `;
         } else {
             return html`
-                <div class="image-wrapper">
+                <div class="opacity-checkerboard image-wrapper">
                     <slot></slot>
                 </div>
             `;
