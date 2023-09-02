@@ -41,6 +41,10 @@
             "development": "./src/define-element.dev.js",
             "default": "./src/define-element.js"
         },
+        "./src/directive.js": {
+            "development": "./src/directive.dev.js",
+            "default": "./src/directive.js"
+        },
         "./src/directives.js": {
             "development": "./src/directives.dev.js",
             "default": "./src/directives.js"
