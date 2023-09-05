@@ -5419,9 +5419,9 @@
   integrity sha512-+LHerGk5iyfSWNCRXTbNnSBvjtMzYFfe9PAssYEEiKPendjC7irI34LZAI+sP5Cv1vwQtFPu2VoOG74iDsbNoQ==
 
 "@spectrum-css/dropzone@^5.0.13":
-  version "5.0.13"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.13.tgz#27390fe39e5128f37364d64e513bd175d33b1e77"
-  integrity sha512-DW2hbIo4e/v/AKrzu4V8QxihzpWnNRD07kCNSsvsmGMMoSgeQM3tRyEjbrLE22Tjr1fww0aRuSC36fyohyzY5Q==
+  version "5.0.20"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.20.tgz#7c9e572c9419d207c5e45d91e577eae5bb37513d"
+  integrity sha512-Fg17TcsP8qlxS9MinTbIrsc0z2PrTlSpDVntexZI1HDywqRYoaFroQ2wIBjahukUEyG/k3OUnxI4HqWTNF3YRQ==
 
 "@spectrum-css/expressvars@^3.0.9":
   version "3.0.9"
