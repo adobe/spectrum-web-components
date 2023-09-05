@@ -5613,10 +5613,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.37.tgz#d63177a4937122eaccf218eae5145b7f375fd1a5"
   integrity sha512-buWiWksP38j194JdOuIq6EAJNE8xhzLCZsO9PUS0lkgFj0MVWLoMhBZY/7l7fJoUZHwYOE5yAo1/G6IOKq1TZg==
 
-"@spectrum-css/underlay@^2.0.53":
-  version "2.0.53"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-2.0.53.tgz#336b88f102a640f57df16ba76fd954e5d60becd0"
-  integrity sha512-rV42xKdxN4RXwiAp/iRrA4wlVL1EZ7i1IlECDrMUi2UypUyFN8evxwp+6ZGloPGYz0Gce/Vn41gOtrdCxkDJtA==
+"@spectrum-css/underlay@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-3.0.2.tgz#8fdf70ba85e17c59a7c2f078d96c1698aa61d451"
+  integrity sha512-zPGAN1IR86W6W7s3u1mM5hJb23mHllfxLXfVy4+vrqtsGVxz/dPjUGqFrPC0sa3jyOOAJCDzHz3+wdJxaxOMGg==
 
 "@spectrum-css/vars@^9.0.8":
   version "9.0.8"
@@ -5624,7 +5624,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.37.0"
+  version "0.38.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
