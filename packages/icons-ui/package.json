@@ -52,8 +52,8 @@
         "@spectrum-css/icon": "^3.0.50",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
+        "fast-glob": "^3.2.12",
         "fs": "^0.0.1-security",
-        "glob": "^10.3.0",
         "path": "^0.12.7",
         "prettier": "^2.7.1"
     },
