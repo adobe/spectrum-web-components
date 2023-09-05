@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import fs from 'fs';
-import { glob } from 'glob';
+import fg from 'fast-glob';
 import path from 'path';
 import { load } from 'cheerio';
 import prettier from 'prettier';
@@ -38,9 +38,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */`;
 
-const icons = (
-    await glob(`${rootDir}/node_modules/${iconsPath}/**.svg`)
-).sort();
+const icons = (await fg(`${rootDir}node_modules/${iconsPath}/*.svg`)).sort();
 
 if (!fs.existsSync(`${rootDir}packages/icons-ui/src`)) {
     fs.mkdirSync(`${rootDir}packages/icons-ui/src`);
