@@ -18,10 +18,8 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
-import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import type { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
@@ -38,38 +36,10 @@ import { virtualized } from '../stories/table-virtualized.stories.js';
 import { makeItems, renderItem } from '../stories/index.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { virtualizerRef } from '@lit-labs/virtualizer/virtualize.js';
-import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import { styledFixture, tableLayoutComplete } from './helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
-
-async function styledFixture<T extends Element>(
-    story: TemplateResult
-): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme theme="classic" scale="medium" color="light">
-            ${story}
-        </sp-theme>
-    `);
-    return test.children[0] as T;
-}
+ignoreResizeObserverLoopError(before, after);
 
 describe('Virtualized Table', () => {
     const virtualItems = makeItems(50);
@@ -353,10 +323,8 @@ describe('Virtualized Table', () => {
                 </sp-table-head>
             </sp-table>
         `);
-        const body = el.querySelector('sp-table-body') as unknown as {
-            [virtualizerRef]: Virtualizer;
-        };
-        await body[virtualizerRef].layoutComplete;
+
+        await tableLayoutComplete(el);
 
         expect(el.selected).to.deep.equal(['1', '47']);
 
