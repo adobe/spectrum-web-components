@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/field-group",
-    "version": "0.37.0",
+    "version": "0.38.0",
     "publishConfig": {
         "access": "public"
     },
@@ -57,8 +57,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.37.0",
-        "@spectrum-web-components/help-text": "^0.37.0"
+        "@spectrum-web-components/base": "^0.38.0",
+        "@spectrum-web-components/help-text": "^0.38.0"
     },
     "devDependencies": {
         "@spectrum-css/fieldgroup": "^4.0.62"

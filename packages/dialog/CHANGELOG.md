@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **dialog:** include tab order management at slotchange time ([0c7a079](https://github.com/adobe/spectrum-web-components/commit/0c7a07998343516b16d85fabfc60d1d6b6ff87dd))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 ### Features

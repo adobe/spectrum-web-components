@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **slider:** ensure first render when no "value" is supplied ([eed860b](https://github.com/adobe/spectrum-web-components/commit/eed860b28321a250a9160c2b597b12cdd2aea9c0))
+-   **slider:** update CSS conversion for more correct visual delivery ([99c83e4](https://github.com/adobe/spectrum-web-components/commit/99c83e46d138c5bbfa43c519c38770d7fbe34ca5))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

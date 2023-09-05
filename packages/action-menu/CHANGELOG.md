@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **action-menu,split-button:** ensure toggling the Menu closed completes ([2dd0f98](https://github.com/adobe/spectrum-web-components/commit/2dd0f9871a4d76a27f5d432ea2df230ab99cbdd1))
+-   **action-menu:** added static attribute support ([#3573](https://github.com/adobe/spectrum-web-components/issues/3573)) ([25889a8](https://github.com/adobe/spectrum-web-components/commit/25889a808d6dcf11779d5c716f1b7522050ddf2b))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 ### Features
