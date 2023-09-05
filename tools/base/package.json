@@ -77,6 +77,10 @@
             "development": "./directives.dev.js",
             "default": "./directives.js"
         },
+        "./directive.js": {
+            "development": "./directive.dev.js",
+            "default": "./directive.js"
+        },
         "./html.js": {
             "development": "./html.dev.js",
             "default": "./html.js"
