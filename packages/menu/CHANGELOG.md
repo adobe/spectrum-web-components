@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **menu:** added support for menu item description ([#3559](https://github.com/adobe/spectrum-web-components/issues/3559)) ([ce99528](https://github.com/adobe/spectrum-web-components/commit/ce99528b4ad61ba8185cde7eaacfa98a2a9fd619))
+-   **menu:** correct types import for .d.ts file creation ([a11d264](https://github.com/adobe/spectrum-web-components/commit/a11d2645863d23d3557fdb5803b68365cc373cb6))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 ### Bug Fixes

@@ -5419,9 +5419,9 @@
   integrity sha512-+LHerGk5iyfSWNCRXTbNnSBvjtMzYFfe9PAssYEEiKPendjC7irI34LZAI+sP5Cv1vwQtFPu2VoOG74iDsbNoQ==
 
 "@spectrum-css/dropzone@^5.0.13":
-  version "5.0.13"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.13.tgz#27390fe39e5128f37364d64e513bd175d33b1e77"
-  integrity sha512-DW2hbIo4e/v/AKrzu4V8QxihzpWnNRD07kCNSsvsmGMMoSgeQM3tRyEjbrLE22Tjr1fww0aRuSC36fyohyzY5Q==
+  version "5.0.20"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.20.tgz#7c9e572c9419d207c5e45d91e577eae5bb37513d"
+  integrity sha512-Fg17TcsP8qlxS9MinTbIrsc0z2PrTlSpDVntexZI1HDywqRYoaFroQ2wIBjahukUEyG/k3OUnxI4HqWTNF3YRQ==
 
 "@spectrum-css/expressvars@^3.0.9":
   version "3.0.9"
@@ -5568,15 +5568,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-4.0.8.tgz#acfcd39651bb806dbf5d46dfd175accf4ca1fd86"
   integrity sha512-ifDh9moA1Pfq9qzj/bVCKtssKMC4OmlrbCEy26cuc7iXNXOscSQq+FYLyTfq/5LZ9w/GjWxPKtU6QZkLhpTiIg==
 
-"@spectrum-css/tag@^5.0.46":
-  version "5.0.46"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tag/-/tag-5.0.46.tgz#85aa8948c4e2ca4b4494243c2731beb862bcb8df"
-  integrity sha512-9MXl5zPuqywoqb8+qNzp5yCjd+wfoWxCRcgt0lo5RuUOncuEcaPLNGN4sNEKquucpYoPqKxPEgqBKY6LpYtifw==
+"@spectrum-css/tag@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tag/-/tag-6.0.1.tgz#b35d24085983b14768a3ad76b03ec281fb49eadf"
+  integrity sha512-Fsbfa3VufWvO4zWFxoTdxgXoXFa5ooSZS7sTojX72jTLsnt8JSfZOJUJDehuWcuJCOweRCDlwVlSrZKvoZOUkQ==
 
-"@spectrum-css/taggroup@^3.3.60":
-  version "3.3.60"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-3.3.60.tgz#d8a5e8972afbd3cb83920d61c82aaf4ec43a52c8"
-  integrity sha512-4rWh+/KEN1kSkPksAvaHWqabRbvxmExQDx2ONSvtWv4LNT4XVWTp+rbLizEW1OVrnn9yCKjzb+7xaXLnhnSaeg==
+"@spectrum-css/taggroup@^4.0.0":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-4.0.3.tgz#d9a868bbb09eccc2403627f118c7001136a0cbce"
+  integrity sha512-YEVMtm+QzehHFDt/bQXJP3/XLV+4xAVKX4FVgJq0Cf7AWwNWEhInWJOpQGN0GlyemdqaNmi0IQSapNGtxdFWRQ==
 
 "@spectrum-css/textfield@^6.0.11":
   version "6.0.11"
@@ -5624,7 +5624,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.37.0"
+  version "0.38.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
@@ -20192,12 +20192,7 @@ picocolors@^1.0.0:
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
   integrity sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==
 
-picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.3.tgz#465547f359ccc206d3c48e46a1bcb89bf7ee619d"
-  integrity sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==
-
-picomatch@^2.2.3, picomatch@^2.3.1:
+picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.2.3, picomatch@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
@@ -22640,9 +22635,9 @@ rollup-plugin-terser@^7.0.0, rollup-plugin-terser@^7.0.2:
     terser "^5.0.0"
 
 rollup-plugin-visualizer@^5.9.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.0.tgz#013ac54fb6a9d7c9019e7eb77eced673399e5a0b"
-  integrity sha512-bbDOv47+Bw4C/cgs0czZqfm8L82xOZssk4ayZjG40y9zbXclNk7YikrZTDao6p7+HDiGxrN0b65SgZiVm9k1Cg==
+  version "5.9.2"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.2.tgz#f1aa2d9b1be8ebd6869223c742324897464d8891"
+  integrity sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==
   dependencies:
     open "^8.4.0"
     picomatch "^2.3.1"
