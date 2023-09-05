@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons",
-    "version": "0.37.0",
+    "version": "0.38.0",
     "publishConfig": {
         "access": "public"
     },
@@ -72,8 +72,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.37.0",
-        "@spectrum-web-components/iconset": "^0.37.0"
+        "@spectrum-web-components/base": "^0.38.0",
+        "@spectrum-web-components/iconset": "^0.38.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

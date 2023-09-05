@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/swatch",
-    "version": "0.37.0",
+    "version": "0.38.0",
     "publishConfig": {
         "access": "public"
     },
@@ -67,11 +67,11 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.37.0",
-        "@spectrum-web-components/icon": "^0.37.0",
-        "@spectrum-web-components/icons-ui": "^0.37.0",
-        "@spectrum-web-components/reactive-controllers": "^0.37.0",
-        "@spectrum-web-components/shared": "^0.37.0"
+        "@spectrum-web-components/base": "^0.38.0",
+        "@spectrum-web-components/icon": "^0.38.0",
+        "@spectrum-web-components/icons-ui": "^0.38.0",
+        "@spectrum-web-components/reactive-controllers": "^0.38.0",
+        "@spectrum-web-components/shared": "^0.38.0"
     },
     "devDependencies": {
         "@spectrum-css/swatch": "^4.0.31",

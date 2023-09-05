@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **action-menu,split-button:** ensure toggling the Menu closed completes ([2dd0f98](https://github.com/adobe/spectrum-web-components/commit/2dd0f9871a4d76a27f5d432ea2df230ab99cbdd1))
+-   **action-menu:** added static attribute support ([#3573](https://github.com/adobe/spectrum-web-components/issues/3573)) ([25889a8](https://github.com/adobe/spectrum-web-components/commit/25889a808d6dcf11779d5c716f1b7522050ddf2b))
+-   correct composition entry of multi-byte numbers ([#3610](https://github.com/adobe/spectrum-web-components/issues/3610)) ([5e11934](https://github.com/adobe/spectrum-web-components/commit/5e1193455dd876a45648b3040688a3bc389819a1))
+-   **dialog:** include tab order management at slotchange time ([0c7a079](https://github.com/adobe/spectrum-web-components/commit/0c7a07998343516b16d85fabfc60d1d6b6ff87dd))
+-   **menu:** added support for menu item description ([#3559](https://github.com/adobe/spectrum-web-components/issues/3559)) ([ce99528](https://github.com/adobe/spectrum-web-components/commit/ce99528b4ad61ba8185cde7eaacfa98a2a9fd619))
+-   **menu:** correct types import for .d.ts file creation ([a11d264](https://github.com/adobe/spectrum-web-components/commit/a11d2645863d23d3557fdb5803b68365cc373cb6))
+-   **overlay:** position for transformed and contained parents ([ca8fd8a](https://github.com/adobe/spectrum-web-components/commit/ca8fd8a48a5f4b7bbc97b5641082cf48f6869529))
+-   **picker:** ensure the Menu opens in a Tray on mobile ([6be2bed](https://github.com/adobe/spectrum-web-components/commit/6be2bed36b364c5abcd1210db9c95ebc883125ec))
+-   **radio-group:** onChange event not triggering on keyboard navigation ([#3592](https://github.com/adobe/spectrum-web-components/issues/3592)) ([8501239](https://github.com/adobe/spectrum-web-components/commit/850123925c567ca9713f68a49879651d1249f769))
+-   **search:** add mod to remove clear button padding ([65168fe](https://github.com/adobe/spectrum-web-components/commit/65168fe546ca271cd68722f0c3f4a0be8d4a3253))
+-   **sidenav:** reintroduce support for slotted label content ([26c7e6e](https://github.com/adobe/spectrum-web-components/commit/26c7e6e5c6065e7e8e44700fb03092b12d267a94))
+-   **slider:** ensure first render when no "value" is supplied ([eed860b](https://github.com/adobe/spectrum-web-components/commit/eed860b28321a250a9160c2b597b12cdd2aea9c0))
+-   **slider:** update CSS conversion for more correct visual delivery ([99c83e4](https://github.com/adobe/spectrum-web-components/commit/99c83e46d138c5bbfa43c519c38770d7fbe34ca5))
+-   **tags:** add mod for clear button width ([bea891f](https://github.com/adobe/spectrum-web-components/commit/bea891fdbf69390a1321400bd17bcd77f91cf914))
+
+### Features
+
+-   **clear-button:** migrate to core tokens ([64be98a](https://github.com/adobe/spectrum-web-components/commit/64be98ae6cae92c1a8668a8a8b8af58337b4ce0f))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 ### Bug Fixes
