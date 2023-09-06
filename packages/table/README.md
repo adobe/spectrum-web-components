@@ -45,10 +45,8 @@ import {
 
 ## Example
 
-To ensure that the table scrolls, make sure to add a `style` attribute to `<sp-table>` with your desired height. Otherwise, the table will automatically show all its items.
-
 ```html
-<sp-table size="m">
+<sp-table>
     <sp-table-head>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -94,10 +92,8 @@ When `selects="single"`, the `<sp-table>` will manage a _single_ selection in th
 
 ```html
 <sp-table
-    size="m"
     selects="single"
     selected='["row1"]'
-    style="height: 200px"
     onchange="spAlert(this, `Selected: ${JSON.stringify(this.selected)}`)"
 >
     <sp-table-head>
@@ -137,12 +133,10 @@ When `selects="single"`, the `<sp-table>` will manage a _single_ selection in th
 
 ### `selects="multiple"`
 
-When `selects="multiple"`, the `<sp-table>` will manage a selection in the array value of `selected` in via a presence toggle. Additionally, an `<sp-table-checkbox-cell>` will be made available in the `<sp-table-head>` in order to select/deselect all items in the `<sp-table>`.
+When `selects="multiple"`, the `<sp-table>` manages selections via a presence toggle and adds them to the `selected` array. Additionally, an `<sp-table-checkbox-cell>` will be made available in the `<sp-table-head>` in order to select/deselect all items in the `<sp-table>`.
 
 ```html
 <sp-table
-    size="m"
-    style="height: 200px"
     selects="multiple"
     selected='["row1", "row2"]'
     onchange="spAlert(this, `Selected: ${JSON.stringify(this.selected)}`)"
@@ -182,13 +176,273 @@ When `selects="multiple"`, the `<sp-table>` will manage a selection in the array
 </sp-table>
 ```
 
+## Emphasized
+
+Use the `emphasized` attribute to add priority to the information that is delivered within your `<table>` element. In particular, this affects the appearance of selected rows, and will set the emphasized style for the checkboxes within `sp-table-checkbox-cell`.
+Leaving off the `emphasized` attribute will display the non-emphasized colors.
+
+```html
+<sp-table emphasized selects="multiple" selected='["row1"]'>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+## Density
+
+The optional `density` property changes the spacing around table cell content from the "regular" default. It accepts the values of `compact` or `spacious`.
+
+<sp-tabs selected="compact" auto label="Density Attribute Options">
+<sp-tab value="compact">Compact</sp-tab>
+<sp-tab-panel value="compact">
+
+```html
+<sp-table density="compact">
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+</sp-tab-panel>
+<sp-tab value="spacious">Spacious</sp-tab>
+<sp-tab-panel value="spacious">
+
+```html
+<sp-table density="spacious">
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+## Sizes
+
+<sp-tabs selected="s" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-table size="s">
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium (Default)</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-table size="l">
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-table size="xl">
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+## Quiet
+
+When using the `quiet` property, the overall look of the table will change. The quiet variant of Table has a transparent background and no borders on the left and right.
+
+```html
+<sp-table quiet>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+            <sp-table-cell>Row Item Alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+            <sp-table-cell>Row Item Bravo</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+            <sp-table-cell>Row Item Charlie</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+```
+
 ## Virtualized Table
 
 For large amounts of data, the `<sp-table>` can be virtualised to easily add table rows by using properties.
 
 ```html-live
 <sp-table
-    size="m"
     id="table-virtualized-demo"
     style="height: 200px"
     scroller="true"
@@ -311,7 +565,6 @@ By default the `selected` property will surface an array of item indexes that ar
 
 ```html-live
 <sp-table
-    size="m"
     id="table-item-value-demo"
     style="height: 200px"
     scroller="true"
@@ -414,7 +667,6 @@ All values in the item array are assumed to be homogenous by default. This means
 
 ```html-live
 <sp-table
-    size="m"
     id="table-row-type-demo"
     style="height: 200px"
     scroller="true"
@@ -528,7 +780,6 @@ For each table column you want to sort, use the `sortable` attribute in its resp
 
 ```html-live
 <sp-table
-    size="m"
     id="sorted-virtualized-table"
     style="height: 200px"
     scroller="true"

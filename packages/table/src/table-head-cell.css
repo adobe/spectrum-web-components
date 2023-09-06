@@ -15,4 +15,5 @@ governing permissions and limitations under the License.
 :host {
     display: block;
     flex: 1;
+    block-size: auto;
 }
