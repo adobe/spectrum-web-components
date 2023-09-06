@@ -6282,10 +6282,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-4.0.62.tgz#b5c0a4f837a780ff6b6987ad4ee9bf4ffba5f433"
   integrity sha512-ESGF+WdKN5n4+aG8PMieuM2hERGExu01VwsJvKEbMRGLKTawycbb1UCNV6F7qaql1zeWeoqeYNTYLFdFOEfsOw==
 
-"@spectrum-css/fieldlabel@^7.0.23":
-  version "7.0.23"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-7.0.23.tgz#d46acb9072248ba0771827160a68056215d4b5f4"
-  integrity sha512-iDyPS5ZiZ6Omb1KrBOuSLQVNR0Z8nkLCtNTugIayBQSXGyCJiTyYRxmF2Pop+EKapUkw6tP9P8aw6MwVtOWmQg==
+"@spectrum-css/fieldlabel@^7.0.32":
+  version "7.0.32"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-7.0.32.tgz#ca415c851e7f9031c9021de6453a86d0d230001a"
+  integrity sha512-eBTIW5vUgpPjPsTsgzXdjnlBZHCoFJrlPWha/zN/Vddg5eR31A69GArQE7s2RwrNxjtqhN2/B5OYXBFuT4aEVQ==
 
 "@spectrum-css/helptext@^4.0.46":
   version "4.0.50"
@@ -6372,10 +6372,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-4.0.1.tgz#bab00a855d211d0541254b3a8d4a16e701551946"
   integrity sha512-M7ZNLIByXAZpeQpATzURc5aSZ7ftgRBQYF2nTzzyrhJsGyL9ezVTA3cOjj1BVbz8WcbFHFhVIwAyWDXTUAN73g==
 
-"@spectrum-css/slider@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-4.1.0.tgz#98d5ff69e8734aa5bd20e2f6f3bbf93cfdc4a2da"
-  integrity sha512-w26tc0YZI6/pyQj1HJTTRa42znbPzoKRbmK5tAalUHdzQ6HhlTd8N/AsVFftP0cCDWqb4o9llMEE36NmVn7gHQ==
+"@spectrum-css/slider@^4.1.8":
+  version "4.1.8"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-4.1.8.tgz#c85ab3461e6e39836fa68d61806b0fe978537c54"
+  integrity sha512-ZDixpjdH0pjgBoCyGGf7Gj//gB0YfzL6wcyvzmRDfraJSqEIc7GOL5ly3rJbCuHjsEB5tXyYc1AwHu4HFhhOFA==
 
 "@spectrum-css/splitbutton@^5.0.60":
   version "5.0.60"
