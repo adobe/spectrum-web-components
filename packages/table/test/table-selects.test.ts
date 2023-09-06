@@ -28,7 +28,6 @@ import type {
     TableCheckboxCell,
     TableRow,
 } from '@spectrum-web-components/table';
-
 import {
     elements,
     noSelectsSpecified,
@@ -36,25 +35,9 @@ import {
     selectsSingle,
 } from '../stories/table-elements.stories.js';
 import { spy } from 'sinon';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
+ignoreResizeObserverLoopError(before, after);
 
 describe('Table Selects', () => {
     it('selects items not initially visible in the <sp-table-body>', async () => {

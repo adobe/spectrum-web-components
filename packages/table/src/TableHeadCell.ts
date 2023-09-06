@@ -79,7 +79,6 @@ export class TableHeadCell extends SpectrumElement {
     protected override render(): TemplateResult {
         const visiblySorted = this.sortable && !!this.sortDirection;
         return html`
-            <slot></slot>
             ${visiblySorted
                 ? html`
                       <sp-icon-arrow100
@@ -87,6 +86,7 @@ export class TableHeadCell extends SpectrumElement {
                       ></sp-icon-arrow100>
                   `
                 : nothing}
+            <slot></slot>
         `;
     }
 

@@ -17,10 +17,8 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 
-import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import type { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
@@ -34,36 +32,10 @@ import type {
 } from '@spectrum-web-components/table';
 import { elements } from '../stories/table-elements.stories.js';
 import { spy } from 'sinon';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import { styledFixture } from './helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
-
-async function styledFixture<T extends Element>(
-    story: TemplateResult
-): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme theme="classic" scale="medium" color="light">
-            ${story}
-        </sp-theme>
-    `);
-    return test.children[0] as T;
-}
+ignoreResizeObserverLoopError(before, after);
 
 describe('Table', () => {
     it('loads default table accessibly', async () => {
