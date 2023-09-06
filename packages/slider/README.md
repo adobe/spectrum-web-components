@@ -30,6 +30,47 @@ When looking to leverage the `Slider` base class as a type and/or for extension 
 import { Slider } from '@spectrum-web-components/slider';
 ```
 
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-slider label="Slider Label" size="s"></sp-slider>
+<sp-slider label="Slider Label - Editable" editable size="s"></sp-slider>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-slider label="Slider Label"></sp-slider>
+<sp-slider label="Slider Label - Editable" editable></sp-slider>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-slider label="Slider Label" size="l"></sp-slider>
+<sp-slider label="Slider Label - Editable" editable size="l"></sp-slider>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-slider label="Slider Label" size="xl"></sp-slider>
+<sp-slider label="Slider Label - Editable" editable size="xl"></sp-slider>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 ## Variants
 
 ### Standard

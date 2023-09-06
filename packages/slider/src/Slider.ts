@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     nothing,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -45,7 +46,10 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
  * @slot - text label for the Slider
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
-export class Slider extends ObserveSlotText(SliderHandle, '') {
+export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
+    noDefaultSize: true,
+    validSizes: ['s', 'm', 'l', 'xl'],
+}) {
     public static override get styles(): CSSResultArray {
         return [sliderStyles];
     }
@@ -203,6 +207,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           min=${this.min}
                           max=${this.max}
                           step=${this.step}
+                          size=${this.size}
                           value=${this.value}
                           ?hide-stepper=${this.hideStepper}
                           ?disabled=${this.disabled}
@@ -251,6 +256,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                         ? 'number-field'
                         : this.handleController.activeHandleInputId}
                     @click=${this.handleLabelClick}
+                    size=${this.size}
                 >
                     ${this.slotHasContent ? nothing : this.label}
                     <slot>${this.label}</slot>
@@ -259,9 +265,11 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                     class=${classMap({
                         'visually-hidden': valueLabelVisible,
                     })}
+                    ?disabled=${this.disabled}
                     for=${this.editable
                         ? 'number-field'
                         : this.handleController.activeHandleInputId}
+                    size=${this.size}
                 >
                     <output id="value" aria-live="off" for="input">
                         ${this.ariaValueText}
