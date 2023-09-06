@@ -59,6 +59,16 @@ const config = {
                         },
                     ],
                 },
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Slider--sizeM'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Slider--sizeS', 's'],
+                        ['spectrum-Slider--sizeL', 'l'],
+                        ['spectrum-Slider--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Slider--color', 'color'],
