@@ -26,7 +26,6 @@ export type AlertDialogVariants =
     | 'error'
     | 'destructive'
     | 'secondary'
-    | 'scroll'
     | '';
 
 export const alertDialogVariants: AlertDialogVariants[] = [
@@ -36,7 +35,6 @@ export const alertDialogVariants: AlertDialogVariants[] = [
     'error',
     'destructive',
     'secondary',
-    'scroll',
 ];
 
 export class AlertDialog extends Dialog {
@@ -64,7 +62,7 @@ export class AlertDialog extends Dialog {
         return this._variant;
     }
 
-    public _variant: AlertDialogVariants = 'confirmation';
+    public _variant: AlertDialogVariants = '';
 
     protected renderIcon(): TemplateResult {
         switch (this.variant) {

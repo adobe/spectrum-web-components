@@ -1,6 +1,6 @@
 ## Description
 
-`sp-alert-dialog` supplies an attribute based interface for the managed custmization of an `sp-alert-dialog` element and the light DOM supplied to it.
+`sp-alert-dialog` displays important information that users need to acknowledge. When used directly the `sp-alert-dialog` element surfaces a `slot` based API for deep customization of the content to be included in the overlay.
 
 ### Usage
 
@@ -89,7 +89,7 @@ Information alert dialogs communicate important information that a user needs to
 Warning alert dialogs communicate important information to users in relation to an issue that needs to be acknowledged, but does not block the user from moving forward.
 
 ```html
-<sp-alert-dialog variant="warning" headline="Unverified format">
+<sp-alert-dialog variant="warning">
     <h2 slot="heading">Unverified format</h2>
     This format has not been verified and may not be viewable for some users. Do
     you want to continue publishing?
