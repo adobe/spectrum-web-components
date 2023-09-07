@@ -102,7 +102,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-1">Where do you live?</sp-field-label>
         <sp-picker
-            id="picker-1"
+            id="sp-picker-1"
             @change=${handleChange(args)}
             label="Select a Country with a very long label, too long, in fact"
             ${spreadProps(args)}

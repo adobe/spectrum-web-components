@@ -200,6 +200,7 @@ export function runSplitButtonTests(
         await nextFrame();
 
         const trigger = el.shadowRoot?.querySelector('.trigger');
+        expect(trigger).to.have.attribute('aria-describedby');
         expect(trigger).to.have.attribute('aria-expanded', 'false');
         expect(trigger).not.to.have.attribute('aria-controls');
 

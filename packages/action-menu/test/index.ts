@@ -289,6 +289,15 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(button).to.have.attribute('aria-expanded', 'true');
             expect(button).to.have.attribute('aria-controls', 'menu');
         });
+        it('has attribute aria-describedby', async () => {
+            const el = await actionMenuFixture();
+
+            const button = el.button as HTMLButtonElement;
+
+            await elementUpdated(el);
+
+            expect(button).to.have.attribute('aria-describedby');
+        });
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
 

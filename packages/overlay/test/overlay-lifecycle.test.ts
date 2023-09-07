@@ -96,7 +96,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
         // slot change timing
         await nextFrame();
 
-        expect(trigger.getAttribute('aria-describedby')).to.not.be.null;
+        expect(trigger.getAttribute('aria-describedby')).to.equal('descriptor');
     });
     it('applies `aria-describedby` attribute', async () => {
         const el = await fixture<OverlayTrigger>(html`
