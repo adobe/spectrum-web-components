@@ -34,9 +34,17 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./scopedActionBar/ActionBarScoped.js": {
+            "development": "./scopedActionBar/ActionBarScoped.dev.js",
+            "default": "./scopedActionBar/ActionBarScoped.js"
+        },
         "./sp-action-bar.js": {
             "development": "./sp-action-bar.dev.js",
             "default": "./sp-action-bar.js"
+        },
+        "./sp-action-bar-scoped.js": {
+            "development": "./sp-action-bar-scoped.dev.js",
+            "default": "./sp-action-bar-scoped.js"
         }
     },
     "scripts": {

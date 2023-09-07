@@ -3523,6 +3523,14 @@
   resolved "https://registry.yarnpkg.com/@lit-labs/react/-/react-1.1.1.tgz#88a4320d357dcdfd7c7e276f809e3453a124cbbc"
   integrity sha512-9TC+/ZWb6BJlWCyUr14FKFlaGnyKpeEDorufXozQgke/VoVrslUQNaL7nBmrAWdNrmzx5jWgi8lFmWwrxMjnlA==
 
+"@lit-labs/scoped-registry-mixin@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@lit-labs/scoped-registry-mixin/-/scoped-registry-mixin-1.0.1.tgz#0ad266c029f1eb385711d2cd26252baadf145a5d"
+  integrity sha512-7aKnBKb5izcTjICO4VdeQLRYpZoB8FepJjG7TmE2oe0cU8cb4MUA4NFCjze+vbE+wP/55xv4dAMFOuJN9EG26w==
+  dependencies:
+    "@lit/reactive-element" "^1.0.0"
+    lit "^2.0.0"
+
 "@lit-labs/ssr-dom-shim@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.0.0.tgz#427e19a2765681fd83411cd72c55ba80a01e0523"
@@ -5573,10 +5581,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tag/-/tag-6.0.1.tgz#b35d24085983b14768a3ad76b03ec281fb49eadf"
   integrity sha512-Fsbfa3VufWvO4zWFxoTdxgXoXFa5ooSZS7sTojX72jTLsnt8JSfZOJUJDehuWcuJCOweRCDlwVlSrZKvoZOUkQ==
 
-"@spectrum-css/taggroup@^4.0.0-beta.0":
-  version "4.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-4.0.0-beta.0.tgz#13ad9df866db267486ef44d3e9f2a21e5b4ada88"
-  integrity sha512-Z19nIL5FyLDftRIkgL/TA5vJy7Zas086eFKe9UMgFw2J9CmMCINOBjuDLewFGnVYntDIQ0nW+3k+IW5M3+kVAg==
+"@spectrum-css/taggroup@^4.0.0":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-4.0.3.tgz#d9a868bbb09eccc2403627f118c7001136a0cbce"
+  integrity sha512-YEVMtm+QzehHFDt/bQXJP3/XLV+4xAVKX4FVgJq0Cf7AWwNWEhInWJOpQGN0GlyemdqaNmi0IQSapNGtxdFWRQ==
 
 "@spectrum-css/textfield@^6.0.11":
   version "6.0.11"

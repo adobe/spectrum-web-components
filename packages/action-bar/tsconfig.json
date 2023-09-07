@@ -4,11 +4,17 @@
         "composite": true,
         "rootDir": "./"
     },
-    "include": ["*.ts", "src/*.ts"],
+    "include": ["*.ts", "src/*.ts", "scopedActionBar/ActionBarScoped.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
-        { "path": "../../tools/base" },
-        { "path": "../action-button" },
-        { "path": "../action-group" }
+        {
+            "path": "../../tools/base"
+        },
+        {
+            "path": "../action-button"
+        },
+        {
+            "path": "../action-group"
+        }
     ]
 }
