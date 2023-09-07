@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **sidenav:** reintroduce support for slotted label content ([26c7e6e](https://github.com/adobe/spectrum-web-components/commit/26c7e6e5c6065e7e8e44700fb03092b12d267a94))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav

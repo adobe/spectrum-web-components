@@ -21,8 +21,6 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import cellStyles from './table-cell.css.js';
-import headCellStyles from './table-head-cell.css.js';
 import styles from './table-checkbox-cell.css.js';
 import { Checkbox } from '@spectrum-web-components/checkbox';
 
@@ -31,8 +29,14 @@ import { Checkbox } from '@spectrum-web-components/checkbox';
  */
 export class TableCheckboxCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [cellStyles, headCellStyles, styles];
+        return [styles];
     }
+
+    /**
+     * Whether or not the checkbox cell is in the table head.
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'head-cell' })
+    public headCell = false;
 
     @property({ reflect: true })
     public role = 'gridcell';
@@ -52,6 +56,9 @@ export class TableCheckboxCell extends SpectrumElement {
     @property({ type: Boolean, reflect: true, attribute: 'selects-single' })
     public selectsSingle = false;
 
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
     public override click(): void {
         this.checkbox.click();
     }
@@ -62,6 +69,7 @@ export class TableCheckboxCell extends SpectrumElement {
                 ?checked=${this.checked}
                 ?indeterminate=${this.indeterminate}
                 ?disabled=${this.disabled}
+                ?emphasized=${this.emphasized}
                 aria-hidden=${ifDefined(this.selectsSingle)}
                 class="checkbox"
             ></sp-checkbox>

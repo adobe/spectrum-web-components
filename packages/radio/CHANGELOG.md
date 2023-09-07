@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **radio-group:** onChange event not triggering on keyboard navigation ([#3592](https://github.com/adobe/spectrum-web-components/issues/3592)) ([8501239](https://github.com/adobe/spectrum-web-components/commit/850123925c567ca9713f68a49879651d1249f769))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

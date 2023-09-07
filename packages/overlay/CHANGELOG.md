@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **action-menu:** added static attribute support ([#3573](https://github.com/adobe/spectrum-web-components/issues/3573)) ([25889a8](https://github.com/adobe/spectrum-web-components/commit/25889a808d6dcf11779d5c716f1b7522050ddf2b))
+-   **overlay:** position for transformed and contained parents ([ca8fd8a](https://github.com/adobe/spectrum-web-components/commit/ca8fd8a48a5f4b7bbc97b5641082cf48f6869529))
+
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 ### Bug Fixes

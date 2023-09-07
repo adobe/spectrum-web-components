@@ -82,6 +82,7 @@ const tokenPackages = [
     'alertdialog',
     'pickerbutton',
     'sidenav',
+    'table',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

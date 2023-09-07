@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/slider",
-    "version": "0.37.0",
+    "version": "0.38.0",
     "publishConfig": {
         "access": "public"
     },
@@ -75,12 +75,12 @@
     "dependencies": {
         "@internationalized/number": "^3.1.0",
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.37.0",
-        "@spectrum-web-components/field-label": "^0.37.0",
-        "@spectrum-web-components/number-field": "^0.37.0",
-        "@spectrum-web-components/reactive-controllers": "^0.37.0",
-        "@spectrum-web-components/shared": "^0.37.0",
-        "@spectrum-web-components/theme": "^0.37.0"
+        "@spectrum-web-components/base": "^0.38.0",
+        "@spectrum-web-components/field-label": "^0.38.0",
+        "@spectrum-web-components/number-field": "^0.38.0",
+        "@spectrum-web-components/reactive-controllers": "^0.38.0",
+        "@spectrum-web-components/shared": "^0.38.0",
+        "@spectrum-web-components/theme": "^0.38.0"
     },
     "devDependencies": {
         "@spectrum-css/slider": "^4.1.0"

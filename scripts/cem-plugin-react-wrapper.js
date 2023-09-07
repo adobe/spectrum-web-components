@@ -15,7 +15,7 @@ import fsExtra from 'fs-extra';
 import { basename, dirname, resolve } from 'path';
 import prettier from 'prettier';
 import Case from 'case';
-import { glob } from 'glob';
+import fg from 'fast-glob';
 import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
 
@@ -444,7 +444,7 @@ export const Icon${displayName}: ComponentType<Partial<Icon${displayName}Type> |
  * Core entry function
  */
 export async function generateIconWrapper(iconType) {
-    const icons = await glob(
+    const icons = await fg(
         resolve(__dirname, '..', `packages/${iconType}/src/elements/**.d.ts`)
     );
     for (let icon of icons) {

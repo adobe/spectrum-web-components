@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 67726502cd73d6087a264d828d0d703cf02bbbab
+        default: 25d5270ff12f63383aeceefda261f94b6b299bae
     wireit_cache_name:
         type: string
         default: wireit
@@ -24,7 +24,6 @@ commands:
             - restore_cache:
                   keys:
                       - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
-                      - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-
             - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
