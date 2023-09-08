@@ -6217,6 +6217,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-3.1.14.tgz#b19445d2f3754830a0f084349f457f54ea8ca720"
   integrity sha512-RelV4cZe8GJYXjMbFruvlDwBRQfUye7/e3Va0ysnQyk6dxtNjjS+wcriL1JvyzbbSgzaCLooMNLsstSiJBvalQ==
 
+"@spectrum-css/coachindicator@^1.0.0-alpha.0":
+  version "1.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachindicator/-/coachindicator-1.0.0-alpha.0.tgz#7b2f5bfc620667516e80d271a8aef0f18f114724"
+  integrity sha512-nMd927AOMa9SP+HyhRg71jRatxCQW9RxirBqrMnp/Ak0PnarCYVDpMM9WrW32mMlprzmEcJgCV800Q7EqVgi+A==
+
 "@spectrum-css/coachmark@^5.0.58":
   version "5.0.58"
   resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.58.tgz#4d6c85fcbd6c00229486df3e2c693e14753da8b6"
@@ -23476,17 +23481,7 @@ rollup-plugin-terser@^7.0.0:
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
 
-rollup-plugin-visualizer@^5.9.0:
-  version "5.9.2"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.2.tgz#f1aa2d9b1be8ebd6869223c742324897464d8891"
-  integrity sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==
-  dependencies:
-    open "^8.4.0"
-    picomatch "^2.3.1"
-    source-map "^0.7.4"
-    yargs "^17.5.1"
-
-rollup-plugin-visualizer@^5.9.2:
+rollup-plugin-visualizer@^5.9.0, rollup-plugin-visualizer@^5.9.2:
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.2.tgz#f1aa2d9b1be8ebd6869223c742324897464d8891"
   integrity sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==
