@@ -14,6 +14,51 @@ governing permissions and limitations under the License.
 
 :host {
     touch-action: none;
+    transition: inline-size
+            var(
+                --mod-colorhandle-animation-duration,
+                var(--spectrum-colorhandle-animation-duration)
+            )
+            var(
+                --mod-colorhandle-animation-easing,
+                var(--spectrum-colorhandle-animation-easing)
+            ),
+        block-size
+            var(
+                --mod-colorhandle-animation-duration,
+                var(--spectrum-colorhandle-animation-duration)
+            )
+            var(
+                --mod-colorhandle-animation-easing,
+                var(--spectrum-colorhandle-animation-easing)
+            ),
+        border-width
+            var(
+                --mod-colorhandle-animation-duration,
+                var(--spectrum-colorhandle-animation-duration)
+            )
+            var(
+                --mod-colorhandle-animation-easing,
+                var(--spectrum-colorhandle-animation-easing)
+            ),
+        margin-inline
+            var(
+                --mod-colorhandle-animation-duration,
+                var(--spectrum-colorhandle-animation-duration)
+            )
+            var(
+                --mod-colorhandle-animation-easing,
+                var(--spectrum-colorhandle-animation-easing)
+            ),
+        margin-block
+            var(
+                --mod-colorhandle-animation-duration,
+                var(--spectrum-colorhandle-animation-duration)
+            )
+            var(
+                --mod-colorhandle-animation-easing,
+                var(--spectrum-colorhandle-animation-easing)
+            );
 }
 
 :host(:focus) {

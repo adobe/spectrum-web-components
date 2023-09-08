@@ -32,6 +32,7 @@ import {
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
+import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 import styles from './color-slider.css.js';
 
 /**
@@ -42,7 +43,7 @@ import styles from './color-slider.css.js';
  */
 export class ColorSlider extends Focusable {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [opacityCheckerBoardStyles, styles];
     }
 
     @property({ type: String, reflect: true })
@@ -303,7 +304,7 @@ export class ColorSlider extends Focusable {
     protected override render(): TemplateResult {
         return html`
             <div
-                class="checkerboard"
+                class="opacity-checkerboard checkerboard"
                 role="presentation"
                 @pointerdown=${this.handleGradientPointerdown}
             >
