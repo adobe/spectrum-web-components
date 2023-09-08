@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     fill: currentColor;
-    color: inherit;
+    color: var(--mod-icon-color, inherit);
     display: inline-block;
     pointer-events: none;
 }

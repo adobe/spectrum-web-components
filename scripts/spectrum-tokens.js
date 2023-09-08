@@ -79,6 +79,7 @@ const tokenPackages = [
     'search',
     'tabs',
     'actionbar',
+    'alertdialog',
     'pickerbutton',
     'sidenav',
     'table',

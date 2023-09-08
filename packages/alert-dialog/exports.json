@@ -1,0 +1,4 @@
+{
+    "./src/*": "./src/*",
+    "./sp-alert-dialog.js": "./sp-alert-dialog.js"
+}

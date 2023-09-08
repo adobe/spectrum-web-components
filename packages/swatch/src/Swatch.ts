@@ -199,7 +199,10 @@ export class Swatch extends SizedMixin(Focusable, {
 
     protected override render(): TemplateResult {
         return html`
-            <div class="opacity-checkerboard fill" style="--spectrum-picked-color: ${this.color}">
+            <div
+                class="opacity-checkerboard fill"
+                style="--spectrum-picked-color: ${this.color}"
+            >
                 <slot name="image"></slot>
                 ${when(this.disabled, this.renderDisabled)}
                 ${when(this.mixedValue, this.renderMixedValue)}
