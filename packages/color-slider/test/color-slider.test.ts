@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, html } from '@open-wc/testing';
 import {
     arrowDownEvent,
     arrowDownKeyupEvent,
@@ -20,6 +20,7 @@ import {
     arrowRightKeyupEvent,
     arrowUpEvent,
     arrowUpKeyupEvent,
+    fixture,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
@@ -228,7 +229,6 @@ describe('ColorSlider', () => {
         input.dispatchEvent(arrowUpKeyupEvent());
 
         await elementUpdated(el);
-
 
         expect(el.sliderHandlePosition).to.be.approximately(
             (2 * 100) / 360,
@@ -543,7 +543,7 @@ describe('ColorSlider', () => {
             boundingClientRect.top + boundingClientRect.height / 2,
         ];
         const targetLocation: [number, number] = [
-            handleLocation[0] + 100,
+            handleLocation[0] + 105,
             handleLocation[1],
         ];
 
