@@ -55,6 +55,9 @@ tools/**/*.test-vrt.ts
 !tools/*/test/global.d.ts
 !tools/*/global.d.ts
 !tools/*/local.d.ts
+!tools/base/src/version.js
+!tools/base/src/version.d.ts
+
 
 .wireit
 
