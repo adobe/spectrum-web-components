@@ -6167,10 +6167,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-4.0.50.tgz#d620fd891a13da6ce04d44d5498277a83dc393bb"
   integrity sha512-EsU6dEn1vMbosUDt0Jx/KfeMQ+V4j1NbdODfpZX08pJFJ5GMVLlbigm0eKeXf/3BhnPYce7//AFv+G2tXHVtyQ==
 
-"@spectrum-css/alertdialog@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/alertdialog/-/alertdialog-1.0.5.tgz#0e80195194f3bd8751901c1e6a4ac45a408b6a07"
-  integrity sha512-LYQVp5wQJuVBiPnZ2gjKa2qpsbuIRmFQsJzPHc9Ra16acd6/geYC+8UbRbeoDvjLFv7hVFOHCg0wHgn01Z2sgA==
+"@spectrum-css/alertdialog@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/alertdialog/-/alertdialog-1.0.6.tgz#01edcfa30babfb32ad18b230cfd144f310e6efb6"
+  integrity sha512-2pKhXlHgikKJWi9kBd0LJY18NSsxiGzcqqICb4d5ll9u3LKtPViSnt90sM1cjSJOIYAe2jW8SM9yqCCJsYc2Zw==
 
 "@spectrum-css/asset@^3.0.47":
   version "3.0.47"
