@@ -41,7 +41,7 @@ const excludes = [
  *  }
  * - explodes wildcards
  * - excludes files in the `excludes` list above
- * - does not expose `development` conditions on `*.css.js` files
+ * - does not expose `development` conditions on `*.css.js` files & version.js file
  * - saves back into the `package.json` without linting
  *
  */
@@ -85,7 +85,8 @@ const hydrateExportMap = async (exportMapPath) => {
         if (
             key.endsWith('.css.js') ||
             exportMapResolved[key].endsWith('.css.js') ||
-            (key !== '.' && !key.endsWith('.js'))
+            (key !== '.' && !key.endsWith('.js')) ||
+            key.search('version.js') > -1
         ) {
             // simple map for assets without "development" versions
             exportMapExploded[key] = exportMapResolved[key];

@@ -65,6 +65,7 @@
             "development": "./src/streaming-listener.dev.js",
             "default": "./src/streaming-listener.js"
         },
+        "./src/version.js": "./src/version.js",
         "./condition-attribute-with-id.js": {
             "development": "./condition-attribute-with-id.dev.js",
             "default": "./condition-attribute-with-id.js"
