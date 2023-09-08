@@ -19,7 +19,26 @@
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
-    "exports": {},
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/CoachIndicator.js": {
+            "development": "./src/CoachIndicator.dev.js",
+            "default": "./src/CoachIndicator.js"
+        },
+        "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-coach-indicator.js": {
+            "development": "./sp-coach-indicator.dev.js",
+            "default": "./sp-coach-indicator.js"
+        }
+    },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },

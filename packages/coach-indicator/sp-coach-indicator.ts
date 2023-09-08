@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { CoachIndicator } from './src/CoachIndicator.js';
 
-customElements.define('sp-coach-indicator', CoachIndicator);
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+defineElement('sp-coach-indicator', CoachIndicator);
 
 declare global {
     interface HTMLElementTagNameMap {
