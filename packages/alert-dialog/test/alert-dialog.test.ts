@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
 import {
@@ -93,69 +93,5 @@ describe('AlertDialog', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
-    });
-
-    it('allows heading override', async () => {
-        class Override extends AlertDialog {
-            protected override renderHeading(): TemplateResult {
-                return html`
-                    <h2 id="heading-container">Test</h2>
-                `;
-            }
-        }
-
-        customElements.define('heading-dialog', Override);
-
-        const el = await fixture<Override>(
-            html`
-                <heading-dialog></heading-dialog>
-            `
-        );
-
-        const container = el.shadowRoot.querySelector('#heading-container');
-        expect(container).to.not.be.null;
-    });
-    it('allows content override', async () => {
-        class Override extends AlertDialog {
-            protected override renderContent(): TemplateResult {
-                return html`
-                    <p id="content-container">Test</p>
-                `;
-            }
-        }
-
-        customElements.define('content-dialog', Override);
-
-        const el = await fixture<Override>(
-            html`
-                <content-dialog></content-dialog>
-            `
-        );
-
-        const container = el.shadowRoot.querySelector('#content-container');
-        expect(container).to.not.be.null;
-    });
-    it('allows button override', async () => {
-        class Override extends AlertDialog {
-            protected override get hasButtons(): boolean {
-                return true;
-            }
-            protected override renderButtons(): TemplateResult {
-                return html`
-                    <p id="button-container">Test</p>
-                `;
-            }
-        }
-
-        customElements.define('button-dialog', Override);
-
-        const el = await fixture<Override>(
-            html`
-                <button-dialog></button-dialog>
-            `
-        );
-
-        const container = el.shadowRoot.querySelector('#button-container');
-        expect(container).to.not.be.null;
     });
 });

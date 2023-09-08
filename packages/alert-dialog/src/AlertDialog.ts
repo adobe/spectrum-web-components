@@ -12,12 +12,17 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { Dialog } from '@spectrum-web-components/dialog/src/Dialog.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-button.js';
 import alertStyles from './alert-dialog.css.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
+import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 
 export type AlertDialogVariants =
     | 'confirmation'
@@ -37,10 +42,34 @@ export const alertDialogVariants: AlertDialogVariants[] = [
     'secondary',
 ];
 
-export class AlertDialog extends Dialog {
+let appliedIds = 0;
+
+function gatherAppliedIdsFromSlottedChildren(
+    slot: HTMLSlotElement,
+    idBase: string
+): string[] {
+    const assignedElements = slot.assignedElements();
+    const ids: string[] = [];
+    assignedElements.forEach((el) => {
+        if (el.id) {
+            ids.push(el.id);
+        } else {
+            const id = idBase + `-${appliedIds++}`;
+            el.id = id;
+            ids.push(id);
+        }
+    });
+    return ids;
+}
+export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [alertStyles];
     }
+
+    @query('.content')
+    private contentElement!: HTMLDivElement;
+
+    public _variant: AlertDialogVariants = '';
 
     @property({ type: String, reflect: true })
     public set variant(variant: AlertDialogVariants) {
@@ -62,8 +91,6 @@ export class AlertDialog extends Dialog {
         return this._variant;
     }
 
-    public _variant: AlertDialogVariants = '';
-
     protected renderIcon(): TemplateResult {
         switch (this.variant) {
             case 'warning':
@@ -76,6 +103,103 @@ export class AlertDialog extends Dialog {
                 return html``;
         }
     }
+
+    protected renderHeading(): TemplateResult {
+        return html`
+            <slot name="heading" @slotchange=${this.onHeadingSlotchange}></slot>
+        `;
+    }
+
+    protected renderContent(): TemplateResult {
+        return html`
+            <div class="content">
+                <slot @slotchange=${this.onContentSlotChange}></slot>
+            </div>
+        `;
+    }
+
+    static instanceCount = 0;
+    private labelledbyId = `sp-dialog-label-${AlertDialog.instanceCount++}`;
+    private conditionLabelledby?: () => void;
+    private conditionDescribedby?: () => void;
+
+    private onHeadingSlotchange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        if (this.conditionLabelledby) {
+            this.conditionLabelledby();
+            delete this.conditionLabelledby;
+        }
+        const ids = gatherAppliedIdsFromSlottedChildren(
+            target,
+            this.labelledbyId
+        );
+        if (ids.length) {
+            this.conditionLabelledby = conditionAttributeWithId(
+                this,
+                'aria-labelledby',
+                ids
+            );
+        }
+    }
+
+    public shouldManageTabOrderForScrolling = (): void => {
+        const { offsetHeight, scrollHeight } = this.contentElement;
+        if (offsetHeight < scrollHeight) {
+            this.contentElement.tabIndex = 0;
+        } else {
+            this.contentElement.removeAttribute('tabindex');
+        }
+    };
+
+    private describedbyId = `sp-dialog-description-${AlertDialog.instanceCount++}`;
+
+    protected onContentSlotChange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        requestAnimationFrame(() => {
+            // Content must be available _AND_ styles must be applied.
+            this.shouldManageTabOrderForScrolling();
+        });
+        if (this.conditionDescribedby) {
+            this.conditionDescribedby();
+            delete this.conditionDescribedby;
+        }
+        const ids = gatherAppliedIdsFromSlottedChildren(
+            target,
+            this.describedbyId
+        );
+        if (ids.length && ids.length < 4) {
+            this.conditionDescribedby = conditionAttributeWithId(
+                this,
+                'aria-describedby',
+                ids
+            );
+        } else if (!ids.length) {
+            const idProvided = !!this.id;
+            if (!idProvided) this.id = this.describedbyId;
+            const conditionDescribedby = conditionAttributeWithId(
+                this,
+                'aria-describedby',
+                this.id
+            );
+            this.conditionDescribedby = () => {
+                conditionDescribedby();
+                if (!idProvided) {
+                    this.removeAttribute('id');
+                }
+            };
+        }
+    }
+
+    protected renderButtons(): TemplateResult {
+        return html`
+            <sp-button-group class="button-group">
+                <slot name="button"></slot>
+            </sp-button-group>
+        `;
+    }
+
     protected override render(): TemplateResult {
         return html`
             <div class="grid">
@@ -86,5 +210,21 @@ export class AlertDialog extends Dialog {
                 ${this.renderContent()} ${this.renderButtons()}
             </div>
         `;
+    }
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        window.addEventListener(
+            'resize',
+            this.shouldManageTabOrderForScrolling
+        );
+    }
+
+    public override disconnectedCallback(): void {
+        window.removeEventListener(
+            'resize',
+            this.shouldManageTabOrderForScrolling
+        );
+        super.disconnectedCallback();
     }
 }
