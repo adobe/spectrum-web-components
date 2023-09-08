@@ -25,6 +25,10 @@ import type {
     OverlayOpenCloseDetail,
     Placement,
 } from '@spectrum-web-components/overlay';
+import {
+    IS_MOBILE,
+    MatchMediaController,
+} from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 import tooltipStyles from './tooltip.css.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -117,6 +121,7 @@ export class Tooltip extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [tooltipStyles];
     }
+    protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
     /**
      * Automatically bind to the parent element of the assigned `slot` or the parent element of the `sp-tooltip`.
@@ -126,7 +131,7 @@ export class Tooltip extends SpectrumElement {
     public selfManaged = false;
 
     @property({ type: Number })
-    public offset = 0;
+    public offset = this.isMobile.matches ? 5 : 4;
 
     @property({ type: Boolean, reflect: true })
     public open = false;
