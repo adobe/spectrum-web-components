@@ -19,6 +19,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
@@ -66,7 +67,7 @@ export class Swatch extends SizedMixin(Focusable, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles, dashStyles];
+        return [opacityCheckerboardStyles, styles, dashStyles];
     }
 
     @property({ reflect: true })
@@ -198,7 +199,10 @@ export class Swatch extends SizedMixin(Focusable, {
 
     protected override render(): TemplateResult {
         return html`
-            <div class="fill" style="--spectrum-picked-color: ${this.color}">
+            <div
+                class="opacity-checkerboard fill"
+                style="--spectrum-picked-color: ${this.color}"
+            >
                 <slot name="image"></slot>
                 ${when(this.disabled, this.renderDisabled)}
                 ${when(this.mixedValue, this.renderMixedValue)}

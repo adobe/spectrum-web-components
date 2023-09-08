@@ -61,7 +61,7 @@
         "@spectrum-web-components/color-loupe": "^0.38.0"
     },
     "devDependencies": {
-        "@spectrum-css/colorhandle": "^5.0.15"
+        "@spectrum-css/colorhandle": "^7.0.6"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

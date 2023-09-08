@@ -19,13 +19,14 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './color-loupe.css.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 
 /**
  * @element sp-color-loupe
  */
 export class ColorLoupe extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [styles, opacityCheckerboardStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -36,6 +37,9 @@ export class ColorLoupe extends SpectrumElement {
 
     protected override render(): TemplateResult {
         return html`
+            <div class="opacity-checkerboard loupe-clipped"></div>
+            <div class="spectrum-ColorLoupe-inner-border loupe-clipped"></div>
+            <div class="spectrum-ColorLoupe-outer-border loupe-clipped"></div>
             <svg
                 aria-hidden="true"
                 class="spectrum-ColorLoupe is-open"
@@ -59,40 +63,14 @@ export class ColorLoupe extends SpectrumElement {
                         />
                         <use xlink:href="#path" fill="black" />
                     </mask>
-                    <pattern
-                        id="checkerboard-primary"
-                        patternUnits="userSpaceOnUse"
-                        width="16"
-                        height="16"
-                        class="spectrum-ColorLoupe-checkerboard-pattern"
-                    >
-                        <rect x="0" y="0" width="8" height="8" />
-                        <rect x="8" y="8" width="8" height="8" />
-                    </pattern>
-                    <pattern
-                        id="checkerboard-secondary"
-                        patternUnits="userSpaceOnUse"
-                        width="20"
-                        height="20"
-                        class="spectrum-ColorLoupe-checkerboard-pattern"
-                    >
-                        <rect x="0" y="0" width="10" height="10" />
-                        <rect x="10" y="10" width="10" height="10" />
-                    </pattern>
                 </defs>
 
                 <g class="spectrum-ColorLoupe-loupe">
                     <g>
                         <use
                             xlink:href="#loupe-path"
-                            class="spectrum-ColorLoupe-checkerboard-background"
-                        />
-                        <use
-                            xlink:href="#loupe-path"
-                            class="spectrum-ColorLoupe-checkerboard-fill"
-                        />
-                        <use
-                            xlink:href="#loupe-path"
+                            mask="url(#loupe-mask)"
+                            transform="translate(2, 2)"
                             class="spectrum-ColorLoupe-inner-border"
                         />
                         <use

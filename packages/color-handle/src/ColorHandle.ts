@@ -20,6 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/is-opacity-checkerboard.css.js';
 import styles from './color-handle.css.js';
 
 /**
@@ -27,7 +28,7 @@ import styles from './color-handle.css.js';
  */
 export class ColorHandle extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [opacityCheckerboardStyles, styles];
     }
 
     @property({ type: Boolean, reflect: true })

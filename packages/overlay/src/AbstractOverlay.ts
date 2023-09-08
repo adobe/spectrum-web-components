@@ -18,9 +18,10 @@ import type {
     OverlayOptionsV1,
     OverlayState,
     OverlayTypes,
+    Placement,
     TriggerInteractionsV1,
 } from './overlay-types.js';
-import { Overlay } from './Overlay.js';
+import type { Overlay } from './Overlay.js';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import { OverlayTimer } from './overlay-timer.js';
 import { PlacementController } from './PlacementController.js';
@@ -135,6 +136,10 @@ export function forcePaint(): void {
     document.body.offsetHeight;
 }
 
+/**
+ * Abstract Overlay base class so that property tyings and imperative API
+ * interfaces can be held separate from the actual class definition.
+ */
 export class AbstractOverlay extends SpectrumElement {
     protected async applyFocus(
         _targetOpenState: boolean,
@@ -169,12 +174,14 @@ export class AbstractOverlay extends SpectrumElement {
     protected managePosition(): void {
         return;
     }
+    protected offset: number | [number, number] = 6;
     get open(): boolean {
         return false;
     }
     set open(_open: boolean) {
         return;
     }
+    placement?: Placement;
     protected placementController!: PlacementController;
     receivesFocus!: 'true' | 'false' | 'auto';
     get state(): OverlayState {
@@ -186,6 +193,7 @@ export class AbstractOverlay extends SpectrumElement {
     protected _state!: OverlayState;
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;
+    willPreventClose = false;
 
     public manuallyKeepOpen(): void {
         return;
@@ -200,6 +208,12 @@ export class AbstractOverlay extends SpectrumElement {
         document.dispatchEvent(overlayUpdateEvent);
     }
 
+    /**
+     * Overloaded imperative API entry point that allows for both the pre-0.37.0
+     * argument signature as well as the post-0.37.0 signature. This allows for
+     * consumers to continue to leverage it as they had been in previous releases
+     * while also surfacing the more feature-rich API that has been made available.
+     */
     public static async open(
         trigger: HTMLElement,
         interaction: TriggerInteractionsV1,
@@ -219,9 +233,12 @@ export class AbstractOverlay extends SpectrumElement {
         content?: HTMLElement,
         optionsV1?: OverlayOptionsV1
     ): Promise<Overlay | (() => void)> {
+        await import('@spectrum-web-components/overlay/sp-overlay.js');
         const v2 = arguments.length === 2;
         const overlayContent = content || triggerOrContent;
-        const overlay = new Overlay();
+        // Use the `this` from the `static` method context rather than a
+        // specific imported constructor to prevent opening a circular dependency.
+        const overlay = new this() as Overlay;
         let restored = false;
         overlay.dispose = () => {
             overlay.addEventListener('sp-closed', () => {

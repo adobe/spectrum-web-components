@@ -16,12 +16,13 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
+    "main": "./src/opacity-checkerboard.css.js",
+    "module": "./src/opacity-checkerboard.css.js",
     "type": "module",
     "exports": {
         ".": "./src/opacity-checkerboard.css.js",
         "./package.json": "./package.json",
+        "./src/is-opacity-checkerboard.css.js": "./src/is-opacity-checkerboard.css.js",
         "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
     },
     "scripts": {
@@ -44,7 +45,7 @@
     "devDependencies": {
         "@spectrum-css/opacitycheckerboard": "^1.0.0"
     },
-    "types": "./src/index.d.ts",
+    "types": "./src/opacity-checkerboard.d.ts",
     "sideEffects": [
         "./sp-*.js",
         "./**/*.dev.js"

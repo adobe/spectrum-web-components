@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Overlay } from './Overlay.js';
+import { AbstractOverlay } from './AbstractOverlay.js';
 
 export class VirtualTrigger {
     private x = 0;
@@ -23,7 +23,7 @@ export class VirtualTrigger {
     public updateBoundingClientRect(x: number, y: number): void {
         this.x = x;
         this.y = y;
-        Overlay.update();
+        AbstractOverlay.update();
     }
 
     public getBoundingClientRect(): DOMRect {
