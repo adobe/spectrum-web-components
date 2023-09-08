@@ -21,6 +21,7 @@
         { "path": "packages/action-button" },
         { "path": "packages/action-group" },
         { "path": "packages/action-menu" },
+        { "path": "packages/alert-dialog" },
         { "path": "packages/asset" },
         { "path": "packages/avatar" },
         { "path": "packages/banner" },
