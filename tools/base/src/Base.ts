@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, ReactiveElement } from 'lit';
+import { version } from '@spectrum-web-components/base/src/version.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -183,7 +184,9 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     return SpectrumMixinElement;
 }
 
-export class SpectrumElement extends SpectrumMixin(LitElement) {}
+export class SpectrumElement extends SpectrumMixin(LitElement) {
+    static VERSION = version;
+}
 
 if (window.__swc.DEBUG) {
     const ignoreWarningTypes = {

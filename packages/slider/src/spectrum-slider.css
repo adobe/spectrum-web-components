@@ -28,7 +28,7 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
 }
-.spectrum-Slider--sizeS {
+:host([size='s']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-small);
     --spectrum-slider-control-height: var(--spectrum-component-height-75);
@@ -44,7 +44,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-100);
 }
-.spectrum-Slider--sizeL {
+:host([size='l']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-100);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-large);
     --spectrum-slider-control-height: var(--spectrum-component-height-200);
@@ -63,7 +63,7 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
 }
-.spectrum-Slider--sizeXL {
+:host([size='xl']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-200);
     --spectrum-slider-handle-size: var(
         --spectrum-slider-handle-size-extra-large

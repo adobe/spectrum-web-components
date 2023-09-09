@@ -115,7 +115,7 @@ const handleHandleEvent =
 
 export const Default = (args: StoryArgs = {}): TemplateResult => {
     return html`
-        <div style="width: 500px; margin: 12px 20px;">
+        <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
                 max="1"
                 min="0"
@@ -332,7 +332,7 @@ editable.decorators = [editableDecorator];
 export const editableCustom = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div
-            style="width: 500px; margin: 12px 20px; --spectrum-slider-editable-number-field-width: 150px;"
+            style="width: 500px; margin: 12px 20px; --mod-stepper-width: 150px;"
         >
             <sp-slider
                 editable

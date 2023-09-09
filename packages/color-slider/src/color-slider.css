@@ -37,10 +37,6 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 
-:host([dir='rtl']) .gradient {
-    transform: scaleX(-1);
-}
-
 ::slotted(*) {
     width: 100%;
     height: 100%;
