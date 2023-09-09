@@ -15,7 +15,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './coach-indicator.css.js';
 
 /**
@@ -26,9 +26,17 @@ export class CoachIndicator extends SpectrumElement {
         return [styles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
+    @property({ reflect: true })
+    public variant: 'dark' | 'light' | '' = '';
+
     protected override render(): TemplateResult {
         return html`
-            Markup goes here
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
         `;
     }
 }

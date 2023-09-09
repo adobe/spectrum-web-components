@@ -24,7 +24,18 @@ const config = {
             inPackage: '@spectrum-css/coachindicator',
             outPackage: 'coach-indicator',
             fileName: 'coach-indicator',
-            components: [converter.classToHost()],
+            components: [
+                converter.classToHost(),
+                converter.classToClass('spectrum-CoachIndicator-ring'),
+                converter.classToAttribute('spectrum-CoachIndicator--quiet'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-CoachIndicator--dark'],
+                        ['spectrum-CoachIndicator--light'],
+                    ],
+                    'variant'
+                ),
+            ],
         },
     ],
 };

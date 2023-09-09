@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-coach-indicator.js';
+import '@spectrum-web-components/coach-indicator/sp-coach-indicator.js';
 
 export default {
     title: 'Coach Indicator',
@@ -21,5 +21,15 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-coach-indicator></sp-coach-indicator>
+        <sp-coach-indicator variant="dark"></sp-coach-indicator>
+        <sp-coach-indicator variant="light"></sp-coach-indicator>
+    `;
+};
+
+export const quiet = (): TemplateResult => {
+    return html`
+        <sp-coach-indicator quiet></sp-coach-indicator>
+        <sp-coach-indicator quiet variant="dark"></sp-coach-indicator>
+        <sp-coach-indicator quiet variant="light"></sp-coach-indicator>
     `;
 };

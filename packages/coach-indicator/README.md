@@ -21,8 +21,18 @@ When looking to leverage the `CoachIndicator` base class as a type and/or for ex
 import { CoachIndicator } from '@spectrum-web-components/coach-indicator';
 ```
 
-## Example
+## Standard
 
 ```html
 <sp-coach-indicator></sp-coach-indicator>
+<sp-coach-indicator variant="dark"></sp-coach-indicator>
+<sp-coach-indicator variant="light"></sp-coach-indicator>
+```
+
+## Quiet
+
+```html
+<sp-coach-indicator quiet></sp-coach-indicator>
+<sp-coach-indicator quiet variant="dark"></sp-coach-indicator>
+<sp-coach-indicator quiet variant="light"></sp-coach-indicator>
 ```
