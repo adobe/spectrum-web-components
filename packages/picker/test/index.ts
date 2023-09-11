@@ -114,7 +114,7 @@ export function runPickerTests(): void {
                     snapshot,
                     (node) =>
                         node.name ===
-                        'Select a Country with a very long label, too long, in fact'
+                        'Select a Country with a very long label, too long, in fact Where do you live?'
                 ),
                 '`name` is the label text'
             ).to.not.be.null;
@@ -131,9 +131,7 @@ export function runPickerTests(): void {
             expect(
                 findAccessibilityNode<NamedNode>(
                     snapshot,
-                    (node) =>
-                        node.name ===
-                        'Select Inverse Select a Country with a very long label, too long, in fact'
+                    (node) => node.name === 'Select Inverse Where do you live?'
                 ),
                 '`name` is the the selected item text plus the label text'
             ).to.not.be.null;
