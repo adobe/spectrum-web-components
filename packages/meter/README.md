@@ -26,20 +26,12 @@ import { Meter } from '@spectrum-web-components/meter';
 
 ## Sizes
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tabs selected="s" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
 ```html
 <sp-meter size="s" progress="71">Tasks Completed</sp-meter>
-```
-
-</sp-tab-panel>
-<sp-tab value="m">Medium</sp-tab>
-<sp-tab-panel value="m">
-
-```html
-<sp-meter size="m" progress="71">Tasks Completed</sp-meter>
 ```
 
 </sp-tab-panel>
@@ -51,28 +43,42 @@ import { Meter } from '@spectrum-web-components/meter';
 ```
 
 </sp-tab-panel>
-<sp-tab value="xl">Extra Large</sp-tab>
-<sp-tab-panel value="xl">
-
-```html
-<sp-meter size="xl" progress="71">Tasks Completed</sp-meter>
-```
-
-</sp-tab-panel>
 </sp-tabs>
 
 ## Variants
 
-### Over Background
+### Informative
 
-When a loader needs to be placed on top of a colored background, use the over background loader as signified by `[over-background]`. This loader uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
+By default, the informative variant can be used to represent a neutral or non-semantic value, such as the number of tutorials completed.
 
 ```html
-<div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-transparent-black-400);"
->
-    <sp-meter progress="42" over-background>Tasks Completed</sp-meter>
-</div>
+<sp-meter progress="50">Storage Space</sp-meter>
+```
+
+### Positive
+
+The positive variant can be used to represent a positive semantic value, such as when there’s a lot of space remaining.
+Use the boolean `[positive]` attribute to define a noticed variant.
+
+```html
+<sp-meter positive progress="50">Storage Space</sp-meter>
+```
+
+### Notice
+
+The notice variant can be used to warn users about a situation that may need to be addressed soon, such as when space remaining is becoming limited. Use the boolean `[notice]` attribute to define a noticed variant.
+
+```html
+<sp-meter notice progress="73">Storage Space</sp-meter>
+```
+
+### Negative
+
+The negative variant can be used to warn users about a critical situation that needs their urgent attention, such as when space remaining is becoming very limited.
+Use the boolean `[negative]` attribute to define a negative variant.
+
+```html
+<sp-meter negative progress="92">Storage Space</sp-meter>
 ```
 
 ### Side Label

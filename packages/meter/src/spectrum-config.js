@@ -38,13 +38,8 @@ const config = {
                     'spectrum-ProgressBar--sideLabel',
                     'side-label'
                 ),
-                converter.classToAttribute('spectrum-ProgressBar-small'),
                 converter.classToAttribute(
                     'spectrum-ProgressBar--indeterminate'
-                ),
-                converter.classToAttribute(
-                    'spectrum-ProgressBar--overBackground',
-                    'over-background'
                 ),
                 converter.classToAttribute('is-positive', 'positive'),
                 converter.classToAttribute('is-notice', 'notice'),

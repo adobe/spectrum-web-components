@@ -45,9 +45,6 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     @property({ type: Number })
     public progress = 0;
 
-    @property({ type: Boolean, reflect: true, attribute: 'over-background' })
-    public overBackground = false;
-
     @property({ type: Boolean, reflect: true })
     public notice = false;
 
