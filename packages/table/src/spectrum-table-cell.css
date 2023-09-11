@@ -79,8 +79,8 @@ governing permissions and limitations under the License.
 :host {
     position: relative;
 }
-:host([focused]),
-:host.focus-visible {
+:host(.focus-visible),
+:host([focused]) {
     outline-color: var(
         --highcontrast-table-cell-focus-indicator-color,
         var(
@@ -103,8 +103,8 @@ governing permissions and limitations under the License.
         var(--spectrum-table-focus-indicator-thickness)
     );
 }
-:host([focused]),
-:host:focus-visible {
+:host(:focus-visible),
+:host([focused]) {
     outline-color: var(
         --highcontrast-table-cell-focus-indicator-color,
         var(
