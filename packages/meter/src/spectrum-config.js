@@ -50,6 +50,7 @@ const config = {
                     [
                         ['spectrum-ProgressBar--sizeS', 's'],
                         ['spectrum-ProgressBar--sizeL', 'l'],
+                        ['spectrum-ProgressBar--sizeXL', 'xl'],
                     ],
                     'size'
                 ),

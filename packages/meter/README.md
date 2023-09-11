@@ -26,7 +26,7 @@ import { Meter } from '@spectrum-web-components/meter';
 
 ## Sizes
 
-<sp-tabs selected="s" auto label="Size Attribute Options">
+<sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -35,11 +35,27 @@ import { Meter } from '@spectrum-web-components/meter';
 ```
 
 </sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-meter size="m" progress="71">Tasks Completed</sp-meter>
+```
+
+</sp-tab-panel>
 <sp-tab value="l">Large</sp-tab>
 <sp-tab-panel value="l">
 
 ```html
 <sp-meter size="l" progress="71">Tasks Completed</sp-meter>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-meter size="xl" progress="71">Tasks Completed</sp-meter>
 ```
 
 </sp-tab-panel>
