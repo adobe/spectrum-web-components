@@ -54,4 +54,17 @@
 
     --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
     --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
+
+    --spectrum-coach-indicator-gap: 6px;
+    --spectrum-coach-indicator-ring-diameter: var(--spectrum-spacing-300);
+    --spectrum-coach-indicator-quiet-ring-diameter: var(--spectrum-spacing-100);
+
+    --spectrum-coachmark-buttongroup-display: flex;
+    --spectrum-coachmark-buttongroup-mobile-display: none;
+    --spectrum-coachmark-menu-display: inline-flex;
+    --spectrum-coachmark-menu-mobile-display: none;
+    --spectrum-well-padding: var(--spectrum-spacing-300);
+    --spectrum-well-margin-top: var(--spectrum-spacing-75);
+    --spectrum-well-min-width: 240px;
+    --spectrum-well-border-radius: var(--spectrum-spacing-75);
 }
