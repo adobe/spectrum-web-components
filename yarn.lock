@@ -6977,31 +6977,6 @@
     process "^0.11.10"
     util "^0.12.4"
 
-"@storybook/builder-vite@7.5.0-alpha.1":
-  version "7.5.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@storybook/builder-vite/-/builder-vite-7.5.0-alpha.1.tgz#801c089e7b5b8c9e5b52bca11d31339ae2f7eac0"
-  integrity sha512-LX5o4E68JbXpjaRfboPZh1kBPyjT6q70UtZyF8eiU18Bi2en8g2ERN5Rl7ZBbe0majM9HEtd5xPfBgyHNIEhQw==
-  dependencies:
-    "@storybook/channels" "7.5.0-alpha.1"
-    "@storybook/client-logger" "7.5.0-alpha.1"
-    "@storybook/core-common" "7.5.0-alpha.1"
-    "@storybook/csf-plugin" "7.5.0-alpha.1"
-    "@storybook/mdx2-csf" "^1.0.0"
-    "@storybook/node-logger" "7.5.0-alpha.1"
-    "@storybook/preview" "7.5.0-alpha.1"
-    "@storybook/preview-api" "7.5.0-alpha.1"
-    "@storybook/types" "7.5.0-alpha.1"
-    "@types/find-cache-dir" "^3.2.1"
-    browser-assert "^1.2.1"
-    es-module-lexer "^0.9.3"
-    express "^4.17.3"
-    find-cache-dir "^3.0.0"
-    fs-extra "^11.1.0"
-    magic-string "^0.30.0"
-    remark-external-links "^8.0.0"
-    remark-slug "^6.0.0"
-    rollup "^2.25.0 || ^3.3.0"
-
 "@storybook/channels@7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-7.4.0.tgz#4ab69fce09c0fe7299f1595628b3de10b0fdcd8f"
@@ -7466,11 +7441,6 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/preview@7.5.0-alpha.1":
-  version "7.5.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@storybook/preview/-/preview-7.5.0-alpha.1.tgz#c1b844cec4bd53fb684111526300987b10e3211d"
-  integrity sha512-IFCER3uFeZAKGLon5OjfxDrCTbrSPdkviDlDgCQjvrAW7si80VO2mJSy4MGBpLTe41CiQ4PkKsRxRPkT+R82wA==
-
 "@storybook/preview@^7.0.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/preview/-/preview-7.4.0.tgz#a58756ac9b12ea21f203032eca47991946257b53"
@@ -7554,32 +7524,6 @@
     "@types/express" "^4.7.0"
     file-system-cache "2.3.0"
 
-"@storybook/web-components-vite@^7.5.0-alpha.1":
-  version "7.5.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@storybook/web-components-vite/-/web-components-vite-7.5.0-alpha.1.tgz#5a226b324bdfb647b8d493acff6231465f72f9fc"
-  integrity sha512-S6eR1eD9e9XoUhxgUjKIE4dW59oazihtQfhKpiR0snil2wSg6sXsovkL3/pgbwGANuWAIJo2yA56H0VXr5AD0w==
-  dependencies:
-    "@storybook/builder-vite" "7.5.0-alpha.1"
-    "@storybook/core-server" "7.5.0-alpha.1"
-    "@storybook/node-logger" "7.5.0-alpha.1"
-    "@storybook/web-components" "7.5.0-alpha.1"
-    magic-string "^0.30.0"
-
-"@storybook/web-components@7.5.0-alpha.1", "@storybook/web-components@^7.5.0-alpha.1":
-  version "7.5.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@storybook/web-components/-/web-components-7.5.0-alpha.1.tgz#aa5fc9cdc7e7623d7664b7030d786ad34999e7f9"
-  integrity sha512-LwhydNDFJ6c1bYrgBbMtPMXOa91ny5O2Cq0M1IMrfSwZHwE5lINUbkDd+Lqb5mDDrXelSabb7XazTPXYE8G0Tw==
-  dependencies:
-    "@storybook/client-logger" "7.5.0-alpha.1"
-    "@storybook/core-client" "7.5.0-alpha.1"
-    "@storybook/docs-tools" "7.5.0-alpha.1"
-    "@storybook/global" "^5.0.0"
-    "@storybook/manager-api" "7.5.0-alpha.1"
-    "@storybook/preview-api" "7.5.0-alpha.1"
-    "@storybook/types" "7.5.0-alpha.1"
-    tiny-invariant "^1.3.1"
-    ts-dedent "^2.0.0"
-
 "@storybook/web-components@^7.0.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/web-components/-/web-components-7.4.0.tgz#cf683963ea55435d27bc9c358d2a1bfec1d211bb"
@@ -7592,6 +7536,21 @@
     "@storybook/manager-api" "7.4.0"
     "@storybook/preview-api" "7.4.0"
     "@storybook/types" "7.4.0"
+    tiny-invariant "^1.3.1"
+    ts-dedent "^2.0.0"
+
+"@storybook/web-components@^7.5.0-alpha.1":
+  version "7.5.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@storybook/web-components/-/web-components-7.5.0-alpha.1.tgz#aa5fc9cdc7e7623d7664b7030d786ad34999e7f9"
+  integrity sha512-LwhydNDFJ6c1bYrgBbMtPMXOa91ny5O2Cq0M1IMrfSwZHwE5lINUbkDd+Lqb5mDDrXelSabb7XazTPXYE8G0Tw==
+  dependencies:
+    "@storybook/client-logger" "7.5.0-alpha.1"
+    "@storybook/core-client" "7.5.0-alpha.1"
+    "@storybook/docs-tools" "7.5.0-alpha.1"
+    "@storybook/global" "^5.0.0"
+    "@storybook/manager-api" "7.5.0-alpha.1"
+    "@storybook/preview-api" "7.5.0-alpha.1"
+    "@storybook/types" "7.5.0-alpha.1"
     tiny-invariant "^1.3.1"
     ts-dedent "^2.0.0"
 
@@ -8024,6 +7983,14 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/glob@^8.0.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-8.1.0.tgz#b63e70155391b0584dce44e7ea25190bbc38f2fc"
+  integrity sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==
+  dependencies:
+    "@types/minimatch" "^5.1.2"
+    "@types/node" "*"
+
 "@types/graceful-fs@^4.1.2", "@types/graceful-fs@^4.1.3":
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.6.tgz#e14b2576a1c25026b7f02ede1de3b84c3a1efeae"
@@ -8213,6 +8180,11 @@
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.4.tgz#f0ec25dbf2f0e4b18647313ac031134ca5b24b21"
   integrity sha512-1z8k4wzFnNjVK/tlxvrWuK5WMt6mydWWP7+zvH5eFep4oj+UkrfiJTRtjCeBXNpwaA/FYqqtb4/QS4ianFpIRA==
+
+"@types/minimatch@^5.1.2":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-5.1.2.tgz#07508b45797cb81ec3f273011b054cd0755eddca"
+  integrity sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==
 
 "@types/minimist@^1.2.0":
   version "1.2.1"
@@ -8883,27 +8855,7 @@
     rollup "^3.15.0"
     storybook-addon-markdown-docs "^2.0.0"
 
-"@web/dev-server@^0.2.1":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.2.5.tgz#7f690db24b7966edd9530cf278bbf5053e6a1882"
-  integrity sha512-IQWzjnK9H861X5BN+R9uQk2L7knogegHQcKyGsSfjyFC3fDdLit5WG2vUVpxFAYfhS4zjJWGajXGbTMhF8clkQ==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@types/command-line-args" "^5.0.0"
-    "@web/config-loader" "^0.2.1"
-    "@web/dev-server-core" "^0.5.1"
-    "@web/dev-server-rollup" "^0.5.1"
-    camelcase "^6.2.0"
-    command-line-args "^5.1.1"
-    command-line-usage "^7.0.1"
-    debounce "^1.2.0"
-    deepmerge "^4.2.2"
-    ip "^1.1.5"
-    nanocolors "^0.2.1"
-    open "^8.0.2"
-    portfinder "^1.0.32"
-
-"@web/dev-server@^0.3.1":
+"@web/dev-server@^0.3.0", "@web/dev-server@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.3.1.tgz#43c90b38e287788f20fc72f8b85f6c5789b6c7df"
   integrity sha512-RYxamuwR/mGjVcYR8+VXXwluqjEzfpOJSBSSHr3F/U7ecC0veKSAbTOHCwv++SNNU8/PY+dg9g8Ss+X2gSwIaw==
@@ -9005,6 +8957,41 @@
   integrity sha512-kgODttXmkDzWMj63aNZfkowFxnZTb7dcUHPFOFFX/jAf+hhJFcjGC34lDou56ai5QOkdgvpWuZZ6A39lcIPlYA==
   dependencies:
     "@web/polyfills-loader" "^2.0.0"
+
+"@web/storybook-builder@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@web/storybook-builder/-/storybook-builder-0.1.0.tgz#544d6a40eed16174e184b45a82dd2eaaeea157b7"
+  integrity sha512-qP6BcBksQTyGdP07CuX8VIugzkwcZBThcsB6hjASoM6hGc42OBCNzCRuFRP1C3AdkeMZGRrPmrNRnFEDYqz1dQ==
+  dependencies:
+    "@chialab/esbuild-plugin-commonjs" "^0.17.2"
+    "@rollup/plugin-node-resolve" "^15.1.0"
+    "@rollup/pluginutils" "^5.0.2"
+    "@storybook/core-common" "^7.0.0"
+    "@storybook/node-logger" "^7.0.0"
+    "@storybook/preview" "^7.0.0"
+    "@web/dev-server" "^0.3.0"
+    "@web/dev-server-core" "^0.5.2"
+    "@web/dev-server-rollup" "^0.5.2"
+    "@web/rollup-plugin-html" "^2.0.0"
+    browser-assert "^1.2.1"
+    es-module-lexer "^1.2.1"
+    esbuild "^0.17.19"
+    express "^4.18.2"
+    fs-extra "^11.1.1"
+    glob-promise "^6.0.3"
+    lodash-es "^4.17.21"
+    path-browserify "^1.0.1"
+    rollup "^3.25.1"
+    rollup-plugin-external-globals "^0.7.3"
+    slash "^5.1.0"
+
+"@web/storybook-framework-web-components@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@web/storybook-framework-web-components/-/storybook-framework-web-components-0.1.1.tgz#922a83df0460477c7684f89ebf5445b231ae7b56"
+  integrity sha512-xRdlf5n6hilDjRRJ+EvxWDbz8VM94AjgPUoaa1T5g1eC2cv4x/oEt7JP9wT47taOqmK1DZJkQUTXT4Nhfn2WzA==
+  dependencies:
+    "@storybook/web-components" "^7.0.0"
+    "@web/storybook-builder" "^0.1.0"
 
 "@web/storybook-prebuilt@^0.1.37":
   version "0.1.37"
@@ -13714,7 +13701,7 @@ esbuild@^0.17.19:
     "@esbuild/win32-ia32" "0.17.19"
     "@esbuild/win32-x64" "0.17.19"
 
-esbuild@^0.18.0, esbuild@^0.18.10:
+esbuild@^0.18.0:
   version "0.18.20"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.18.20.tgz#4709f5a34801b43b799ab7d6d82f7284a9b7a7a6"
   integrity sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA==
@@ -15539,6 +15526,13 @@ glob-parent@^6.0.1, glob-parent@^6.0.2:
   integrity sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==
   dependencies:
     is-glob "^4.0.3"
+
+glob-promise@^6.0.3:
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/glob-promise/-/glob-promise-6.0.5.tgz#3d56331b324fd7d097b43ba9e9959e9c7e200e2c"
+  integrity sha512-uUzvxo60yo/vMLXZHCNAlfdM5U5A07jCnUO8xTK44Z0Vc58poGDXhDx8ju1DmPdprOORh+4Lpog64hl+AJ5piA==
+  dependencies:
+    "@types/glob" "^8.0.0"
 
 glob-to-regexp@^0.3.0:
   version "0.3.0"
@@ -23981,15 +23975,6 @@ postcss@^8.4.25:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-postcss@^8.4.27:
-  version "8.4.29"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.29.tgz#33bc121cf3b3688d4ddef50be869b2a54185a1dd"
-  integrity sha512-cbI+jaqIeu/VGqXEarWkRCCffhjgXc0qjBtXpqJhTBohMUjUQnbBr0xqX3vEKudc4iviTewcJo5ajcec5+wdJw==
-  dependencies:
-    nanoid "^3.3.6"
-    picocolors "^1.0.0"
-    source-map-js "^1.0.2"
-
 posthtml-attrs-parser@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posthtml-attrs-parser/-/posthtml-attrs-parser-0.1.1.tgz#cc33e00155fb99ba96f67e25e330461f05742ac8"
@@ -25896,13 +25881,6 @@ rollup-pluginutils@^2.8.2:
   dependencies:
     estree-walker "^0.6.1"
 
-"rollup@^2.25.0 || ^3.3.0", rollup@^3.25.1, rollup@^3.27.1:
-  version "3.28.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.28.1.tgz#fb44aa6d5e65c7e13fd5bcfff266d0c4ea9ba433"
-  integrity sha512-R9OMQmIHJm9znrU3m3cpE8uhN0fGdXiawME7aZIpQqvpS/85+Vt1Hq1/yVIcYfOmaQiHjvXkQAoJukvLpau6Yw==
-  optionalDependencies:
-    fsevents "~2.3.2"
-
 rollup@^2.43.1:
   version "2.60.2"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.60.2.tgz#3f45ace36a9b10b4297181831ea0719922513463"
@@ -25914,6 +25892,13 @@ rollup@^3.15.0, rollup@^3.19.1:
   version "3.19.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.19.1.tgz#2b3a31ac1ff9f3afab2e523fa687fef5b0ee20fc"
   integrity sha512-lAbrdN7neYCg/8WaoWn/ckzCtz+jr70GFfYdlf50OF7387HTg+wiuiqJRFYawwSPpqfqDNYqK7smY/ks2iAudg==
+  optionalDependencies:
+    fsevents "~2.3.2"
+
+rollup@^3.25.1:
+  version "3.28.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.28.1.tgz#fb44aa6d5e65c7e13fd5bcfff266d0c4ea9ba433"
+  integrity sha512-R9OMQmIHJm9znrU3m3cpE8uhN0fGdXiawME7aZIpQqvpS/85+Vt1Hq1/yVIcYfOmaQiHjvXkQAoJukvLpau6Yw==
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -26870,40 +26855,6 @@ storybook-addon-markdown-docs@^2.0.0:
     unified "^9.2.2"
     unist-builder "^2.0.3"
     unist-util-visit-parents "^3.1.1"
-
-storybook-builder-wds@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/storybook-builder-wds/-/storybook-builder-wds-0.1.0.tgz#9817b72cdd231f8dcc7907eebca8e2249255c494"
-  integrity sha512-WLXeq7A6zRmzKzg6aB2Dkh10w2pfGgIo/sZ/bgrit8qZkU9AAGNQGnw6nIvz3+P97ZNZ7FhvWy+ToVNoFuwbeA==
-  dependencies:
-    "@chialab/esbuild-plugin-commonjs" "^0.17.2"
-    "@rollup/plugin-node-resolve" "^15.1.0"
-    "@rollup/pluginutils" "^5.0.2"
-    "@storybook/core-common" "^7.0.0"
-    "@storybook/node-logger" "^7.0.0"
-    "@storybook/preview" "^7.0.0"
-    "@web/dev-server" "^0.2.1"
-    "@web/dev-server-core" "^0.5.2"
-    "@web/dev-server-rollup" "^0.5.2"
-    "@web/rollup-plugin-html" "^2.0.0"
-    browser-assert "^1.2.1"
-    es-module-lexer "^1.2.1"
-    esbuild "^0.17.19"
-    express "^4.18.2"
-    fs-extra "^11.1.1"
-    lodash-es "^4.17.21"
-    path-browserify "^1.0.1"
-    rollup "^3.25.1"
-    rollup-plugin-external-globals "^0.7.3"
-    slash "^5.1.0"
-
-storybook-web-components-wds@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/storybook-web-components-wds/-/storybook-web-components-wds-0.1.0.tgz#de911f24ea5b9da44e2db97b6e36d09911dae4a4"
-  integrity sha512-+TPoDPX7rfUBQMG4nzgwDuu37mSyl5gj4Fb/2LGOwlP2A2mMwfUFVeeb9p5tGtQm5cM3gMXRmRQLdUWoy2qqsg==
-  dependencies:
-    "@storybook/web-components" "^7.0.0"
-    storybook-builder-wds "^0.1.0"
 
 storybook@^7.5.0-alpha.1:
   version "7.5.0-alpha.1"
@@ -29263,17 +29214,6 @@ vfile@^5.0.0, vfile@^5.1.0:
     is-buffer "^2.0.0"
     unist-util-stringify-position "^3.0.0"
     vfile-message "^3.0.0"
-
-vite@^4.4.9:
-  version "4.4.9"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-4.4.9.tgz#1402423f1a2f8d66fd8d15e351127c7236d29d3d"
-  integrity sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==
-  dependencies:
-    esbuild "^0.18.10"
-    postcss "^8.4.27"
-    rollup "^3.27.1"
-  optionalDependencies:
-    fsevents "~2.3.2"
 
 void-elements@^3.1.0:
   version "3.1.0"

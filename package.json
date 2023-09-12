@@ -63,7 +63,7 @@
         "spectrum-tokens": "wireit",
         "spectrum-vars": "wireit",
         "start": "yarn storybook",
-        "storybook": "storybook dev -p 6006 -c storybook",
+        "storybook": "wireit",
         "storybook:build": "storybook build -o projects/documentation/dist/storybook -c storybook",
         "storybook:quick": "run-p build:watch storybook:run",
         "storybook:run": "web-dev-server --config wds-storybook.config.js",
@@ -111,7 +111,6 @@
         "@storybook/addon-essentials": "^7.5.0-alpha.1",
         "@storybook/addon-links": "^7.5.0-alpha.1",
         "@storybook/web-components": "^7.5.0-alpha.1",
-        "@storybook/web-components-vite": "^7.5.0-alpha.1",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",
@@ -127,6 +126,8 @@
         "@web/dev-server-rollup": "^0.5.2",
         "@web/rollup-plugin-copy": "^0.4.0",
         "@web/rollup-plugin-html": "^2.0.1",
+        "@web/storybook-builder": "^0.1.0",
+        "@web/storybook-framework-web-components": "^0.1.1",
         "@web/test-runner": "^0.17.1",
         "@web/test-runner-commands": "^0.8.0",
         "@web/test-runner-junit-reporter": "^0.6.1",
@@ -192,8 +193,6 @@
         "rollup": "^3.27.2",
         "sinon": "^15.2.0",
         "storybook": "^7.5.0-alpha.1",
-        "storybook-builder-wds": "^0.1.0",
-        "storybook-web-components-wds": "^0.1.0",
         "stylelint": "^15.10.2",
         "stylelint-config-prettier": "^9.0.5",
         "stylelint-config-standard": "^34.0.0",
@@ -201,7 +200,6 @@
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
         "typescript": "^4.7.2",
-        "vite": "^4.4.9",
         "wireit": "^0.9.5",
         "yargs": "^17.2.1"
     },
@@ -394,11 +392,8 @@
             "clean": false
         },
         "storybook": {
-            "command": "web-dev-server --config wds-storybook.config.js",
+            "command": "storybook dev -p 8080 -c storybook",
             "service": true,
-            "files": [
-                "wds-storybook.config.js"
-            ],
             "dependencies": [
                 "build:watch",
                 "prestorybook"

@@ -26,12 +26,12 @@ const config = {
         '@storybook/addon-a11y',
     ],
     framework: {
-        name: 'storybook-web-components-wds',
+        name: '@web/storybook-framework-web-components',
     },
     refs: {
         'design-system': {
             title: 'Spectrum CSS',
-            url: 'https://opensource.adobe.com/spectrum-css/preview/?path=/docs/components-accordion--docs',
+            url: 'https://opensource.adobe.com/spectrum-css/preview/',
             expanded: false, // Optional, true by default
         },
     },
