@@ -4386,9 +4386,9 @@
   integrity sha512-92uQ5ARf7UXYrzaFcAX3T2rTvaS9Z1//ukV+DqjACM4c8s0ZBQd7ayJU5Dh2AFLD/Ayuyz4uMmxQec8q3U4Ong==
 
 "@lit-labs/virtualizer@^2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-2.0.6.tgz#3ed38af4e2d90cc026347d855b40ef30383ebfbe"
-  integrity sha512-c6WhQrND2wGhwJ/XRlgrcmSVl3mNFJpYSFEnCGaf+NCxlUQVVxiMkOyTYRsHiJegAjPX0NVNFajTXpfpWEpMtA==
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-2.0.7.tgz#b88c963fff5ed91e8a0875817aec50d2c3b70390"
+  integrity sha512-WWkI31QsSVoJZRuFo3sMn28LgSf2MYL7gp6OG2ZNksr2EoA3D8igNGp49cajI8HGHurSK4jGpMN2LHZrmy+Cxw==
   dependencies:
     lit "^2.8.0"
     tslib "^2.0.3"
