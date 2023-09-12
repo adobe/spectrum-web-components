@@ -6222,10 +6222,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-3.1.14.tgz#b19445d2f3754830a0f084349f457f54ea8ca720"
   integrity sha512-RelV4cZe8GJYXjMbFruvlDwBRQfUye7/e3Va0ysnQyk6dxtNjjS+wcriL1JvyzbbSgzaCLooMNLsstSiJBvalQ==
 
-"@spectrum-css/coachmark@^5.0.58":
-  version "5.0.58"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.58.tgz#4d6c85fcbd6c00229486df3e2c693e14753da8b6"
-  integrity sha512-XSvUbNs0y1DpgYDiCkPObBwqHUBezbMp3pMvSoEquaa77NwyoZ+1UF3XG+aa/moLKP+PAA1f6VIKJd/Ye4VifQ==
+"@spectrum-css/coachmark@6.0.0-beta.0":
+  version "6.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-6.0.0-beta.0.tgz#4019128918cce7a73c116ecd2d591d506ae72e7c"
+  integrity sha512-R53HiPT1P8tgtb3VVJ4qU0ip+fqzTbdiUL262kuSre2dwrstAziAAlFDS4c9tSfssOAR/Uw4UVSVWkuphiq1Dg==
 
 "@spectrum-css/colorarea@^4.0.33":
   version "4.0.33"

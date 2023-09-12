@@ -24,18 +24,33 @@ When looking to leverage the `Coachmark` base class as a type and/or for extensi
 import { Coachmark } from '@spectrum-web-components/coachmark';
 ```
 
-## Standard
+## Default
 
 ```html
-<sp-coachmark></sp-coachmark>
-<sp-coachmark variant="dark"></sp-coachmark>
-<sp-coachmark variant="light"></sp-coachmark>
+<sp-coachmark heading="Card Heading">
+    Switch to the zoom tool then click and drag in the canvas to move your
+    camera forward and backward.
+    <sp-action-menu slot="actions" placement="bottom-end" quiet>
+        <sp-menu-item>Skip tour</sp-menu-item>
+        <sp-menu-item>Restart tour</sp-menu-item>
+    </sp-action-menu>
+</sp-coachmark>
 ```
 
-## Quiet
+## With media
 
 ```html
-<sp-coachmark quiet></sp-coachmark>
-<sp-coachmark quiet variant="dark"></sp-coachmark>
-<sp-coachmark quiet variant="light"></sp-coachmark>
+<sp-coachmark heading="Card Heading">
+    Switch to the zoom tool then click and drag in the canvas to move your
+    camera forward and backward.
+    <img
+        slot="cover-photo"
+        src="https://picsum.photos/200/300"
+        alt="Demo Image"
+    />
+    <sp-action-menu slot="actions" placement="bottom-end" quiet>
+        <sp-menu-item>Skip tour</sp-menu-item>
+        <sp-menu-item>Restart tour</sp-menu-item>
+    </sp-action-menu>
+</sp-coachmark>
 ```
