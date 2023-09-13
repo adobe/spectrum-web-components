@@ -89,7 +89,7 @@ const reduceMotionProperties = css`
     --spectrum-animation-duration-2000: 0ms;
     --spectrum-animation-duration-4000: 0ms;
     --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
-    --spectrum-coach-animation-indicator-ring-duration: 0ms;
+    --mod--coach-animation-indicator-ring-duration: 0ms; // TODO waiting for css team to abstract --spectrum-coach-animation-indicator-ring-duration into tokens
     --swc-test-duration: 1ms;
 `;
 
