@@ -43,7 +43,7 @@
         "lit-html"
     ],
     "devDependencies": {
-        "@spectrum-css/opacitycheckerboard": "^1.0.0"
+        "@spectrum-css/opacitycheckerboard": "^1.0.4"
     },
     "types": "./src/opacity-checkerboard.d.ts",
     "sideEffects": [

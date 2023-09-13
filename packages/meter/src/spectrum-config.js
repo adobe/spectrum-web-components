@@ -29,6 +29,7 @@ const config = {
             fileName: 'meter',
             components: [
                 converter.classToHost(),
+                converter.classToHost('spectrum-Meter'),
                 converter.classToClass('spectrum-ProgressBar-track'),
                 converter.classToClass('spectrum-ProgressBar-fill'),
                 converter.classToClass('spectrum-ProgressBar-label'),

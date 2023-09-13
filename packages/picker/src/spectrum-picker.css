@@ -16,7 +16,6 @@ governing permissions and limitations under the License.
     -moz-osx-font-smoothing: grayscale;
     align-items: center;
     -webkit-appearance: button;
-    box-sizing: border-box;
     cursor: pointer;
     display: inline-flex;
     font-family: var(
@@ -70,27 +69,55 @@ governing permissions and limitations under the License.
 #button:disabled {
     cursor: default;
 }
-.spectrum--medium {
-    --spectrum-picker-popover-quiet-offset-x: 12px;
-}
-.spectrum--large {
-    --spectrum-picker-popover-quiet-offset-x: 14px;
-}
 :host {
+    --spectrum-picker-font-size: var(--spectrum-font-size-100);
     --spectrum-picker-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-picker-placeholder-font-style: var(
         --spectrum-default-font-style
     );
     --spectrum-picker-line-height: var(--spectrum-line-height-100);
+    --spectrum-picker-block-size: var(--spectrum-component-height-100);
+    --spectrum-picker-inline-size: var(--spectrum-field-width);
     --spectrum-picker-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-picker-spacing-top-to-text: var(
+        --spectrum-component-top-to-text-100
+    );
+    --spectrum-picker-spacing-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-100
+    );
     --spectrum-picker-spacing-edge-to-text: var(
         --spectrum-component-edge-to-text-100
     );
     --spectrum-picker-spacing-edge-to-text-quiet: var(
         --spectrum-field-edge-to-text-quiet
     );
-    --spectrum-picker-spacing-edge-to-disclosure-icon: var(
+    --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
+        --spectrum-field-label-top-margin-medium
+    );
+    --spectrum-picker-spacing-label-to-picker: var(
+        --spectrum-field-label-to-component
+    );
+    --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-100);
+    --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
+        --spectrum-field-text-to-alert-icon-medium
+    );
+    --spectrum-picker-spacing-icon-to-disclosure-icon: var(
+        --spectrum-picker-visual-to-disclosure-icon-medium
+    );
+    --spectrum-picker-spacing-label-to-picker-quiet: var(
+        --spectrum-field-label-to-component-quiet-medium
+    );
+    --spectrum-picker-spacing-top-to-alert-icon: var(
+        --spectrum-field-top-to-alert-icon-medium
+    );
+    --spectrum-picker-spacing-top-to-progress-circle: var(
+        --spectrum-field-top-to-progress-circle-medium
+    );
+    --spectrum-picker-spacing-top-to-disclosure-icon: var(
         --spectrum-field-top-to-disclosure-icon-100
+    );
+    --spectrum-picker-spacing-edge-to-disclosure-icon: var(
+        --spectrum-field-end-edge-to-disclosure-icon-100
     );
     --spectrum-picker-spacing-edge-to-disclosure-icon-quiet: var(
         --spectrum-picker-end-edge-to-disclousure-icon-quiet
@@ -173,6 +200,18 @@ governing permissions and limitations under the License.
 :host([size='s']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-75);
     --spectrum-picker-block-size: var(--spectrum-component-height-75);
+    --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
+        --spectrum-field-label-top-margin-small
+    );
+    --spectrum-picker-spacing-top-to-text: var(
+        --spectrum-component-top-to-text-75
+    );
+    --spectrum-picker-spacing-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-75
+    );
+    --spectrum-picker-spacing-edge-to-text: var(
+        --spectrum-component-edge-to-text-75
+    );
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-75);
     --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
         --spectrum-field-text-to-alert-icon-small
@@ -183,6 +222,12 @@ governing permissions and limitations under the License.
     --spectrum-picker-spacing-label-to-picker-quiet: var(
         --spectrum-field-label-to-component-quiet-small
     );
+    --spectrum-picker-spacing-top-to-alert-icon: var(
+        --spectrum-field-top-to-alert-icon-small
+    );
+    --spectrum-picker-spacing-top-to-progress-circle: var(
+        --spectrum-field-top-to-progress-circle-small
+    );
     --spectrum-picker-spacing-top-to-disclosure-icon: var(
         --spectrum-field-top-to-disclosure-icon-75
     );
@@ -190,29 +235,21 @@ governing permissions and limitations under the License.
         --spectrum-field-end-edge-to-disclosure-icon-75
     );
 }
-:host {
-    --spectrum-picker-font-size: var(--spectrum-font-size-100);
-    --spectrum-picker-block-size: var(--spectrum-component-height-100);
-    --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-100);
-    --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
-        --spectrum-field-text-to-alert-icon-medium
-    );
-    --spectrum-picker-spacing-icon-to-disclosure-icon: var(
-        --spectrum-picker-visual-to-disclosure-icon-medium
-    );
-    --spectrum-picker-spacing-label-to-picker-quiet: var(
-        --spectrum-field-label-to-component-quiet-medium
-    );
-    --spectrum-picker-spacing-top-to-disclosure-icon: var(
-        --spectrum-field-top-to-disclosure-icon-100
-    );
-    --spectrum-picker-spacing-edge-to-disclosure-icon: var(
-        --spectrum-field-end-edge-to-disclosure-icon-100
-    );
-}
 :host([size='l']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-200);
     --spectrum-picker-block-size: var(--spectrum-component-height-200);
+    --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
+        --spectrum-field-label-top-margin-large
+    );
+    --spectrum-picker-spacing-top-to-text: var(
+        --spectrum-component-top-to-text-200
+    );
+    --spectrum-picker-spacing-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-200
+    );
+    --spectrum-picker-spacing-edge-to-text: var(
+        --spectrum-component-edge-to-text-200
+    );
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-200);
     --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
         --spectrum-field-text-to-alert-icon-large
@@ -222,6 +259,12 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-spacing-label-to-picker-quiet: var(
         --spectrum-field-label-to-component-quiet-large
+    );
+    --spectrum-picker-spacing-top-to-alert-icon: var(
+        --spectrum-field-top-to-alert-icon-large
+    );
+    --spectrum-picker-spacing-top-to-progress-circle: var(
+        --spectrum-field-top-to-progress-circle-large
     );
     --spectrum-picker-spacing-top-to-disclosure-icon: var(
         --spectrum-field-top-to-disclosure-icon-200
@@ -233,6 +276,18 @@ governing permissions and limitations under the License.
 :host([size='xl']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-300);
     --spectrum-picker-block-size: var(--spectrum-component-height-300);
+    --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
+        --spectrum-field-label-top-margin-extra-large
+    );
+    --spectrum-picker-spacing-top-to-text: var(
+        --spectrum-component-top-to-text-300
+    );
+    --spectrum-picker-spacing-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-300
+    );
+    --spectrum-picker-spacing-edge-to-text: var(
+        --spectrum-component-edge-to-text-300
+    );
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-300);
     --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
         --spectrum-field-text-to-alert-icon-extra-large
@@ -242,6 +297,12 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-spacing-label-to-picker-quiet: var(
         --spectrum-field-label-to-component-quiet-extra-large
+    );
+    --spectrum-picker-spacing-top-to-alert-icon: var(
+        --spectrum-field-top-to-alert-icon-extra-large
+    );
+    --spectrum-picker-spacing-top-to-progress-circle: var(
+        --spectrum-field-top-to-progress-circle-extra-large
     );
     --spectrum-picker-spacing-top-to-disclosure-icon: var(
         --spectrum-field-top-to-disclosure-icon-300
@@ -316,6 +377,7 @@ governing permissions and limitations under the License.
         --mod-picker-border-width,
         var(--spectrum-picker-border-width)
     );
+    box-sizing: border-box;
     color: var(
         --highcontrast-picker-font-color-default,
         var(
@@ -324,6 +386,14 @@ governing permissions and limitations under the License.
         )
     );
     display: flex;
+    inline-size: var(
+        --mod-picker-inline-size,
+        var(--spectrum-picker-inline-size)
+    );
+    margin-block-start: var(
+        --mod-picker-spacing-label-to-picker,
+        var(--spectrum-picker-spacing-label-to-picker)
+    );
     max-inline-size: 100%;
     min-inline-size: calc(
         var(--spectrum-picker-minimum-width-multiplier) *
@@ -820,14 +890,24 @@ governing permissions and limitations under the License.
 #label {
     flex: auto;
     font-size: var(--mod-picker-font-size, var(--spectrum-picker-font-size));
-    line-height: calc(
-        var(--mod-picker-block-size, var(--spectrum-picker-block-size)) -
-            var(--mod-picker-border-width, var(--spectrum-picker-border-width)) *
-            2
+    font-weight: var(
+        --mod-picker-font-weight,
+        var(--spectrum-picker-font-weight)
     );
     line-height: var(
         --mod-picker-line-height,
         var(--spectrum-picker-line-height)
+    );
+    margin-block-end: calc(
+        var(
+                --mod-picker-spacing-bottom-to-text,
+                var(--spectrum-picker-spacing-bottom-to-text)
+            ) -
+            var(--mod-picker-border-width, var(--spectrum-picker-border-width))
+    );
+    margin-block-start: var(
+        --mod-picker-spacing-top-to-text,
+        var(--spectrum-picker-spacing-top-to-text)
     );
     overflow: hidden;
     text-align: start;
@@ -847,7 +927,7 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-placeholder-font-style)
     );
     font-weight: var(
-        --mod-picker-font-weight,
+        --mod-picker-placeholder-font-weight,
         var(--spectrum-picker-font-weight)
     );
     transition: color
@@ -918,6 +998,38 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-spacing-text-to-alert-icon-inline-start)
     );
 }
+.validation-icon {
+    margin-block-end: calc(
+        var(
+                --mod-picker-spacing-top-to-alert-icon,
+                var(--spectrum-picker-spacing-top-to-alert-icon)
+            ) -
+            var(--mod-picker-border-width, var(--spectrum-picker-border-width))
+    );
+    margin-block-start: calc(
+        var(
+                --mod-picker-spacing-top-to-alert-icon,
+                var(--spectrum-picker-spacing-top-to-alert-icon)
+            ) -
+            var(--mod-picker-border-width, var(--spectrum-picker-border-width))
+    );
+}
+#button .spectrum-ProgressCircle {
+    margin-block-end: calc(
+        var(
+                --mod-picker-spacing-top-to-progress-circle,
+                var(--spectrum-picker-spacing-top-to-progress-circle)
+            ) -
+            var(--mod-picker-border-width, var(--spectrum-picker-border-width))
+    );
+    margin-block-start: calc(
+        var(
+                --mod-picker-spacing-top-to-progress-circle,
+                var(--spectrum-picker-spacing-top-to-progress-circle)
+            ) -
+            var(--mod-picker-border-width, var(--spectrum-picker-border-width))
+    );
+}
 #label ~ .picker {
     margin-inline-start: var(
         --mod-picker-spacing-text-to-icon,
@@ -944,6 +1056,11 @@ governing permissions and limitations under the License.
     padding-inline: var(
         --mod-picker-spacing-edge-to-text-quiet,
         var(--spectrum-picker-spacing-edge-to-text-quiet)
+    );
+}
+:host([quiet]) #button.spectrum-Picker--sideLabel {
+    margin-block-start: calc(
+        var(--spectrum-picker-spacing-top-to-text-side-label-quiet) * -1
     );
 }
 :host([quiet]) #button .picker {
@@ -1037,6 +1154,10 @@ governing permissions and limitations under the License.
 :host([quiet]) #button:disabled,
 :host([quiet][disabled]) #button {
     background-color: #0000;
+}
+.spectrum-Picker--sideLabel {
+    display: inline-flex;
+    vertical-align: top;
 }
 :host {
     --spectrum-picker-background-color-default: var(
