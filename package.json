@@ -260,7 +260,7 @@
             "clean": "if-file-deleted"
         },
         "build:types": {
-            "command": "tsc --build tsconfig-all.json",
+            "command": "tsc --build tsconfig-all.json --pretty",
             "dependencies": [
                 "process-icons",
                 "test:create",
@@ -272,7 +272,9 @@
             ],
             "output": [
                 "packages/**/*.d.ts",
+                "packages/**/tsconfig.tsbuildinfo",
                 "tools/**/*.d.ts",
+                "tools/**/tsconfig.tsbuildinfo",
                 "!**/local.d.ts",
                 "!tools/base/src/version.d.ts"
             ],
