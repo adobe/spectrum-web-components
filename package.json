@@ -151,7 +151,7 @@
         "fs-extra": "^11.1.1",
         "geckodriver": "4.2.0",
         "genversion": "^3.1.1",
-        "gh-pages": "^4.0.0",
+        "gh-pages": "^6.0.0",
         "gunzip-maybe": "^1.4.2",
         "husky": "^8.0.3",
         "latest-version": "^7.0.0",
