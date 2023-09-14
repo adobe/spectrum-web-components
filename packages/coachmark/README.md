@@ -27,30 +27,54 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 ## Default
 
 ```html
-<sp-coachmark heading="Card Heading">
-    Switch to the zoom tool then click and drag in the canvas to move your
-    camera forward and backward.
-    <sp-action-menu slot="actions" placement="bottom-end" quiet>
-        <sp-menu-item>Skip tour</sp-menu-item>
-        <sp-menu-item>Restart tour</sp-menu-item>
-    </sp-action-menu>
-</sp-coachmark>
+<sp-popover open style="position: relative">
+    <sp-coachmark heading="Card Heading">
+        Switch to the zoom tool then click and drag in the canvas to move your
+        camera forward and backward.
+        <sp-action-menu slot="actions" placement="bottom-end" quiet>
+            <sp-menu-item>Skip tour</sp-menu-item>
+            <sp-menu-item>Restart tour</sp-menu-item>
+        </sp-action-menu>
+        <sp-button
+            slot="button-previous"
+            variant="secondary"
+            treatment="outline"
+        >
+            Previous
+        </sp-button>
+        <sp-button slot="button-next" variant="primary" treatment="outline">
+            Next
+        </sp-button>
+    </sp-coachmark>
+</sp-popover>
 ```
 
 ## With media
 
 ```html
-<sp-coachmark heading="Card Heading">
-    Switch to the zoom tool then click and drag in the canvas to move your
-    camera forward and backward.
-    <img
-        slot="cover-photo"
-        src="https://picsum.photos/200/300"
-        alt="Demo Image"
-    />
-    <sp-action-menu slot="actions" placement="bottom-end" quiet>
-        <sp-menu-item>Skip tour</sp-menu-item>
-        <sp-menu-item>Restart tour</sp-menu-item>
-    </sp-action-menu>
-</sp-coachmark>
+<sp-popover open style="position: relative">
+    <sp-coachmark heading="Card Heading">
+        Switch to the zoom tool then click and drag in the canvas to move your
+        camera forward and backward.
+        <img
+            slot="cover-photo"
+            src="https://picsum.photos/200/300"
+            alt="Demo Image"
+        />
+        <sp-action-menu slot="actions" placement="bottom-end" quiet>
+            <sp-menu-item>Skip tour</sp-menu-item>
+            <sp-menu-item>Restart tour</sp-menu-item>
+        </sp-action-menu>
+        <sp-button
+            slot="button-previous"
+            variant="secondary"
+            treatment="outline"
+        >
+            Previous
+        </sp-button>
+        <sp-button slot="button-next" variant="primary" treatment="outline">
+            Next
+        </sp-button>
+    </sp-coachmark>
+</sp-popover>
 ```

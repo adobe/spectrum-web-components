@@ -28,6 +28,7 @@ import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import coachmarkStyles from './coachmark.css.js';
 import '@spectrum-web-components/button/sp-button.js';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 import {
     IS_MOBILE,
     MatchMediaController,
@@ -44,11 +45,7 @@ export class Coachmark extends LikeAnchor(
     SizedMixin(
         ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
             '[slot="cover-photo"]',
-        ]),
-        {
-            validSizes: ['s', 'm'],
-            noDefaultSize: true,
-        }
+        ])
     )
 ) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
@@ -60,10 +57,10 @@ export class Coachmark extends LikeAnchor(
     @property()
     public asset?: 'file' | 'folder';
 
-    @property({ type: Boolean, reflect: true, attribute: 'has-action-menu' })
+    @property({ type: Boolean, reflect: true })
     public hasActionMenu = true;
 
-    @property({ type: Boolean, reflect: true, attribute: 'has-pagination' })
+    @property({ type: Boolean, reflect: true })
     public hasPagination = true;
 
     @property()
@@ -74,6 +71,12 @@ export class Coachmark extends LikeAnchor(
 
     @property()
     public subheading = '';
+
+    @property({ type: Number })
+    public currentStep = 2;
+
+    @property({ type: Number })
+    public totalSteps = 4;
 
     protected get hasCoverPhoto(): boolean {
         return this.getSlotContentPresence('[slot="cover-photo"]');
@@ -117,50 +120,71 @@ export class Coachmark extends LikeAnchor(
         }
     }
 
+    protected renderPrevButton = (): TemplateResult => {
+        // mobile view
+        if (this.isMobile.matches) {
+            import(
+                '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js'
+            );
+            return html`
+                <sp-button variant="secondary" treatment="outline">
+                    <sp-icon-chevron75 slot="icon"></sp-icon-chevron75>
+                </sp-button>
+            `;
+        }
+        return html`
+            <slot name="button-previous"></slot>
+        `;
+    };
+
     protected renderButtons(): TemplateResult {
+        const showPreviousButton = this.currentStep > 0;
+        const showNextButton =
+            this.currentStep < this.totalSteps || this.totalSteps === 0;
         return html`
             <sp-button-group class="spectrum-ButtonGroup">
-                ${this.isMobile
+                ${showPreviousButton ? this.renderPrevButton() : nothing}
+                ${showNextButton
                     ? html`
-                          <sp-button variant="secondary" treatment="outline">
-                              Previous
-                          </sp-button>
+                          <slot
+                              name="button-next"
+                              ?hidden=${!showNextButton}
+                          ></slot>
                       `
-                    : html`
-                          <sp-button variant="secondary" treatment="outline">
-                              Previous
-                          </sp-button>
-                      `}
-                <sp-button variant="primary" treatment="outline">
-                    Next
-                </sp-button>
+                    : nothing}
             </sp-button-group>
         `;
     }
+
+    protected renderSteps = (): TemplateResult => {
+        return html`
+            <div class="step">
+                <bdo dir="ltr">${this.currentStep} of ${this.totalSteps}</bdo>
+            </div>
+        `;
+    };
+
+    protected renderActionMenu = (): TemplateResult => {
+        return html`
+            <div class="action-menu" @pointerdown=${this.stopPropagationOnHref}>
+                <slot name="actions"></slot>
+            </div>
+        `;
+    };
 
     protected override render(): TemplateResult {
         return html`
             ${this.renderImage()}
             <div class="header">
                 ${this.renderHeading}
-                ${this.hasActionMenu
-                    ? html`
-                          <div
-                              class="action-menu"
-                              @pointerdown=${this.stopPropagationOnHref}
-                          >
-                              <slot name="actions"></slot>
-                          </div>
-                      `
-                    : nothing}
+                ${when(this.hasActionMenu, this.renderActionMenu)}
             </div>
             <div class="content">${this.renderSubtitleAndDescription()}</div>
             <div class="footer">
-                ${this.hasPagination
-                    ? html`
-                          <div class="step"><bdo dir="ltr">2 of 8</bdo></div>
-                      `
-                    : nothing}
+                ${when(
+                    this.hasPagination && this.totalSteps > 0,
+                    this.renderSteps
+                )}
                 ${this.renderButtons()}
             </div>
         `;

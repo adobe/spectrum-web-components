@@ -13,6 +13,10 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/asset/sp-asset.js';
+import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 
 export default {
     title: 'Coachmark',
@@ -21,16 +25,63 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-coachmark></sp-coachmark>
-        <sp-coachmark variant="dark"></sp-coachmark>
-        <sp-coachmark variant="light"></sp-coachmark>
+        <sp-popover open style="position: relative">
+            <sp-coachmark heading="Card Heading">
+                Switch to the zoom tool then click and drag in the canvas to
+                move your camera forward and backward.
+                <sp-action-menu slot="actions" placement="bottom-end" quiet>
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+                <sp-button
+                    slot="button-previous"
+                    variant="secondary"
+                    treatment="outline"
+                >
+                    Previous
+                </sp-button>
+                <sp-button
+                    slot="button-next"
+                    variant="primary"
+                    treatment="outline"
+                >
+                    Next
+                </sp-button>
+            </sp-coachmark>
+        </sp-popover>
     `;
 };
 
-export const quiet = (): TemplateResult => {
+export const withMedia = (): TemplateResult => {
     return html`
-        <sp-coachmark quiet></sp-coachmark>
-        <sp-coachmark quiet variant="dark"></sp-coachmark>
-        <sp-coachmark quiet variant="light"></sp-coachmark>
+        <sp-popover open style="position: relative">
+            <sp-coachmark heading="Card Heading">
+                Switch to the zoom tool then click and drag in the canvas to
+                move your camera forward and backward.
+                <img
+                    slot="cover-photo"
+                    src="https://picsum.photos/200/300"
+                    alt="Demo"
+                />
+                <sp-action-menu slot="actions" placement="bottom-end" quiet>
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+                <sp-button
+                    slot="button-previous"
+                    variant="secondary"
+                    treatment="outline"
+                >
+                    Previous
+                </sp-button>
+                <sp-button
+                    slot="button-next"
+                    variant="primary"
+                    treatment="outline"
+                >
+                    Next
+                </sp-button>
+            </sp-coachmark>
+        </sp-popover>
     `;
 };
