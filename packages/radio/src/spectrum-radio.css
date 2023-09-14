@@ -34,7 +34,9 @@ governing permissions and limitations under the License.
     --spectrum-radio-disabled-content-color: var(
         --spectrum-disabled-content-color
     );
-    --spectrum-radio-disabled-border-color: var(--spectrum-gray-400);
+    --spectrum-radio-disabled-border-color: var(
+        --spectrum-disabled-content-color
+    );
     --spectrum-radio-emphasized-accent-color: var(--spectrum-accent-color-900);
     --spectrum-radio-emphasized-accent-color-hover: var(
         --spectrum-accent-color-1000
@@ -446,8 +448,7 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-button-selection-indicator) / 2
     );
 }
-#input.focus-visible + #button:after,
-:host(.focus-visible) #input + #button:after {
+#input.focus-visible + #button:after {
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
@@ -469,8 +470,7 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-focus-indicator-gap) * 2
     );
 }
-#input:focus-visible + #button:after,
-:host(:focus-visible) #input + #button:after {
+#input:focus-visible + #button:after {
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(

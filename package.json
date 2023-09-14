@@ -151,7 +151,7 @@
         "fs-extra": "^11.1.1",
         "geckodriver": "4.2.0",
         "genversion": "^3.1.1",
-        "gh-pages": "^4.0.0",
+        "gh-pages": "^6.0.0",
         "gunzip-maybe": "^1.4.2",
         "husky": "^8.0.3",
         "latest-version": "^7.0.0",
@@ -260,7 +260,7 @@
             "clean": "if-file-deleted"
         },
         "build:types": {
-            "command": "tsc --build tsconfig-all.json",
+            "command": "tsc --build tsconfig-all.json --pretty",
             "dependencies": [
                 "process-icons",
                 "test:create",
@@ -272,7 +272,9 @@
             ],
             "output": [
                 "packages/**/*.d.ts",
+                "packages/**/tsconfig.tsbuildinfo",
                 "tools/**/*.d.ts",
+                "tools/**/tsconfig.tsbuildinfo",
                 "!**/local.d.ts",
                 "!tools/base/src/version.d.ts"
             ],

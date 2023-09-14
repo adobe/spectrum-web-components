@@ -74,7 +74,8 @@ governing permissions and limitations under the License.
     );
 }
 :host {
-    --spectrum-popover-cross-offset: 0;
+    --flow-direction: 1;
+    --spectrum-popover-offset: 0px;
     --spectrum-popover-background-color: var(
         --spectrum-background-layer-2-color
     );
@@ -97,6 +98,9 @@ governing permissions and limitations under the License.
         var(--spectrum-popover-pointer-edge-offset) -
             var(--spectrum-popover-tip-width) / 2
     );
+}
+:host([dir='rtl']) {
+    --flow-direction: -1;
 }
 @media (forced-colors: active) {
     :host {
@@ -175,34 +179,40 @@ governing permissions and limitations under the License.
 .spectrum-Popover--top-right,
 .spectrum-Popover--top-start,
 :host([placement*='top']) {
-    margin-bottom: var(--spectrum-popover-cross-offset);
+    margin-bottom: var(--mod-popover-offset, var(--spectrum-popover-offset));
 }
 .spectrum-Popover--bottom-end,
 .spectrum-Popover--bottom-left,
 .spectrum-Popover--bottom-right,
 .spectrum-Popover--bottom-start,
 :host([placement*='bottom']) {
-    margin-top: var(--spectrum-popover-cross-offset);
+    margin-top: var(--mod-popover-offset, var(--spectrum-popover-offset));
 }
 .spectrum-Popover--right-bottom,
 .spectrum-Popover--right-top,
 :host([placement*='right']) {
-    margin-left: var(--spectrum-popover-cross-offset);
+    margin-left: var(--mod-popover-offset, var(--spectrum-popover-offset));
 }
 .spectrum-Popover--left-bottom,
 .spectrum-Popover--left-top,
 :host([placement*='left']) {
-    margin-right: var(--spectrum-popover-cross-offset);
+    margin-right: var(--mod-popover-offset, var(--spectrum-popover-offset));
 }
 .spectrum-Popover--start,
 .spectrum-Popover--start-bottom,
 .spectrum-Popover--start-top {
-    margin-inline-end: var(--spectrum-popover-cross-offset);
+    margin-inline-end: var(
+        --mod-popover-offset,
+        var(--spectrum-popover-offset)
+    );
 }
 .spectrum-Popover--end,
 .spectrum-Popover--end-bottom,
 .spectrum-Popover--end-top {
-    margin-inline-start: var(--spectrum-popover-cross-offset);
+    margin-inline-start: var(
+        --mod-popover-offset,
+        var(--spectrum-popover-offset)
+    );
 }
 :host([tip]) #tip,
 :host([tip]) .spectrum-Popover--bottom-end #tip,

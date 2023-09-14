@@ -166,28 +166,28 @@ governing permissions and limitations under the License.
         var(--spectrum-clear-button-background-color-down)
     );
 }
-:host.focus-visible,
+:host(.focus-visible),
 :host:focus-within {
     color: var(
         --mod-clear-button-icon-color-key-focus,
         var(--spectrum-clear-button-icon-color-key-focus)
     );
 }
-:host:focus-visible,
+:host(:focus-visible),
 :host:focus-within {
     color: var(
         --mod-clear-button-icon-color-key-focus,
         var(--spectrum-clear-button-icon-color-key-focus)
     );
 }
-:host.focus-visible .fill,
+:host(.focus-visible) .fill,
 :host:focus-within .fill {
     background-color: var(
         --mod-clear-button-background-color-key-focus,
         var(--spectrum-clear-button-background-color-key-focus)
     );
 }
-:host:focus-visible .fill,
+:host(:focus-visible) .fill,
 :host:focus-within .fill {
     background-color: var(
         --mod-clear-button-background-color-key-focus,
@@ -206,10 +206,10 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     justify-content: center;
 }
-:host([variant='overBackground']).focus-visible {
+:host([variant='overBackground'].focus-visible) {
     outline: none;
 }
-:host([variant='overBackground']):focus-visible {
+:host([variant='overBackground']:focus-visible) {
     outline: none;
 }
 @media (forced-colors: active) {

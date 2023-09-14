@@ -4,4 +4,5 @@
     --spectrum-drop-zone-background-color-rgb: var(
         --spectrum-indigo-800-rgb
     ); /* var(--spectrum-accent-color-800);*/
+    --spectrum-well-border-color: rgba(var(--spectrum-black-rgb), 0.05);
 }

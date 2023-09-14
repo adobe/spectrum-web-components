@@ -40,7 +40,7 @@ const config = {
                     hoist: false,
                 },
                 {
-                    find: [builder.class('focus-ring')],
+                    find: [builder.pseudoClass('focus-visible')],
                     replace: [
                         {
                             replace: builder.pseudoClass('focus-visible'),

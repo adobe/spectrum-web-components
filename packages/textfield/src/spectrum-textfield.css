@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
     --spectrum-texfield-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -598,6 +599,7 @@ governing permissions and limitations under the License.
     );
     grid-area: 2/1 / auto/span 2;
     inline-size: 100%;
+    line-height: var(--spectrum-textfield-input-line-height);
     margin: 0;
     min-inline-size: var(
         --mod-textfield-min-width,
@@ -1093,6 +1095,9 @@ governing permissions and limitations under the License.
 .spectrum-Textfield--sideLabel .icon,
 .spectrum-Textfield--sideLabel .input {
     grid-area: 1/2 / span 1 / span 1;
+}
+:host([multiline]) {
+    --spectrum-textfield-input-line-height: normal;
 }
 :host([multiline]) .input {
     min-block-size: var(
