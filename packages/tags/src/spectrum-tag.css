@@ -329,6 +329,7 @@ governing permissions and limitations under the License.
     );
 }
 .clear-button {
+    --mod-clear-button-width: fit-content;
     --spectrum-clearbutton-fill-size: fit-content;
     --spectrum-clearbutton-fill-background-color: transparent;
     box-sizing: border-box;

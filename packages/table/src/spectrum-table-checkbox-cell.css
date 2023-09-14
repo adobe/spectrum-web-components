@@ -142,9 +142,9 @@ governing permissions and limitations under the License.
 :host([head-cell]) {
     position: relative;
 }
-:host(:not([head-cell])).focus-visible,
+:host(:not([head-cell]).focus-visible),
 :host(:not([head-cell])[focused]),
-:host([head-cell]).focus-visible,
+:host([head-cell].focus-visible),
 :host([head-cell][focused]) {
     outline-color: var(
         --highcontrast-table-cell-focus-indicator-color,
@@ -168,9 +168,9 @@ governing permissions and limitations under the License.
         var(--spectrum-table-focus-indicator-thickness)
     );
 }
-:host(:not([head-cell])):focus-visible,
+:host(:not([head-cell]):focus-visible),
 :host(:not([head-cell])[focused]),
-:host([head-cell]):focus-visible,
+:host([head-cell]:focus-visible),
 :host([head-cell][focused]) {
     outline-color: var(
         --highcontrast-table-cell-focus-indicator-color,

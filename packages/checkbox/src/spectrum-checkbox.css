@@ -303,8 +303,8 @@ governing permissions and limitations under the License.
 :host([indeterminate]) #input:checked + #box #checkmark {
     display: none;
 }
-:host([indeterminate]) #box .spectrum-Icon#partialCheckmark,
-:host([indeterminate]) #input:checked + #box .spectrum-Icon#partialCheckmark {
+:host([indeterminate]) #box #partialCheckmark,
+:host([indeterminate]) #input:checked + #box #partialCheckmark {
     display: block;
     opacity: 1;
     transform: scale(1);
@@ -479,8 +479,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized]).focus-visible #box:before,
-:host([emphasized]).focus-visible #input:checked + #box:before {
+:host([emphasized].focus-visible) #box:before,
+:host([emphasized].focus-visible) #input:checked + #box:before {
     border-color: var(
         --highcontrast-checkbox-color-focus,
         var(
@@ -489,8 +489,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized]):focus-visible #box:before,
-:host([emphasized]):focus-visible #input:checked + #box:before {
+:host([emphasized]:focus-visible) #box:before,
+:host([emphasized]:focus-visible) #input:checked + #box:before {
     border-color: var(
         --highcontrast-checkbox-color-focus,
         var(

@@ -31,6 +31,7 @@ governing permissions and limitations under the License.
     --spectrum-dialog-confirm-exit-animation-delay: 0s;
     --spectrum-dialog-fullscreen-margin: 32px;
     --spectrum-dialog-max-height: 90vh;
+    --spectrum-dialog-max-width: 90%;
 }
 .modal {
     border-radius: var(
@@ -38,6 +39,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-component-border-radius)
     );
     max-height: var(--spectrum-dialog-max-height);
+    max-width: var(--spectrum-dialog-max-width);
     outline: none;
     overflow: hidden;
     pointer-events: auto;
@@ -128,8 +130,5 @@ governing permissions and limitations under the License.
     transform: none;
 }
 .modal {
-    background: var(
-        --spectrum-dialog-confirm-background-color,
-        var(--spectrum-alias-background-color-default)
-    );
+    background: var(--spectrum-gray-100);
 }
