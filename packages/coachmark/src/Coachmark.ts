@@ -27,14 +27,14 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import '@spectrum-web-components/asset/sp-asset.js';
-import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
-import coachmarkStyles from './coachmark.css.js';
-import '@spectrum-web-components/button/sp-button.js';
 import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import '@spectrum-web-components/asset/sp-asset.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import coachmarkStyles from './coachmark.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 /**
  * @element sp-coackmark
@@ -161,10 +161,19 @@ export class Coachmark extends LikeAnchor(
         `;
     }
 
+    /**
+     * @description function to render the steps count
+     * role="status" to the div element to indicate that this element is providing status information.
+     * aria-live="polite" to make sure that screen readers announce changes to this content as it updates dynamically.
+     * @returns
+     */
+
     protected renderSteps = (): TemplateResult => {
         return html`
-            <div class="step">
-                <bdo dir="ltr">${this.currentStep} of ${this.totalSteps}</bdo>
+            <div class="step" role="status">
+                <span aria-live="polite">
+                    ${this.currentStep} of ${this.totalSteps}
+                </span>
             </div>
         `;
     };

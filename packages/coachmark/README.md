@@ -35,16 +35,6 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
             <sp-menu-item>Skip tour</sp-menu-item>
             <sp-menu-item>Restart tour</sp-menu-item>
         </sp-action-menu>
-        <sp-button
-            slot="button-previous"
-            variant="secondary"
-            treatment="outline"
-        >
-            Previous
-        </sp-button>
-        <sp-button slot="button-next" variant="primary" treatment="outline">
-            Next
-        </sp-button>
     </sp-coachmark>
 </sp-popover>
 ```
@@ -65,16 +55,6 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
             <sp-menu-item>Skip tour</sp-menu-item>
             <sp-menu-item>Restart tour</sp-menu-item>
         </sp-action-menu>
-        <sp-button
-            slot="button-previous"
-            variant="secondary"
-            treatment="outline"
-        >
-            Previous
-        </sp-button>
-        <sp-button slot="button-next" variant="primary" treatment="outline">
-            Next
-        </sp-button>
     </sp-coachmark>
 </sp-popover>
 ```
