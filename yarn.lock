@@ -6387,10 +6387,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/statuslight/-/statuslight-6.0.52.tgz#bec9833cbee3778d3f1b90a2b732fcc3d1f18a62"
   integrity sha512-4ZByK1+C7/crXj2CCPCmUVgbqqMZ4RIuklOK8h6XBjO1gxAiY7nMjRPGJpNNFB1fO/9+H+OBdN9vsh+kuNxNMQ==
 
-"@spectrum-css/stepper@^4.0.56":
-  version "4.0.56"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-4.0.56.tgz#86c89ba6b486cea7513cd9568ebcc1c55f187856"
-  integrity sha512-i8zjYEyhB8VDxI3/daezFHSNB/FpESYjW48/U6C7N90dUgiO7u9PnCZitejoZxWNv0V8qUMF/Hn3fyB7XosnaQ==
+"@spectrum-css/stepper@^5.0.0-beta.0":
+  version "5.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-5.0.0-beta.0.tgz#41ff45202e25b2f647ebd2e1df6687807d564a4f"
+  integrity sha512-9h0Z67U8D1C6ytgR3vZ5xC5c8LE8CxlEkz0VNA3527AXXMpKYnS9zLfAuUc2PXAumoA39btxwiXwGciNCkuuAA==
 
 "@spectrum-css/swatch@^5.0.12":
   version "5.0.12"

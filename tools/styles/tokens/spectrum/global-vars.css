@@ -1260,29 +1260,19 @@
 :host,
 :root {
     --system-spectrum-stepper-border-width: var(--spectrum-border-width-100);
-    --system-spectrum-stepper-button-border-width-reset: var(
-        --spectrum-border-width-100
-    );
-    --system-spectrum-stepper-button-icon-nudge: calc(
-        -1 * var(--spectrum-corner-radius-100) / 2
-    );
-    --system-spectrum-stepper-button-gap-reset: 0px;
-    --system-spectrum-stepper-button-border-radius-reset: 0px;
+    --system-spectrum-stepper-buttons-border-style: none;
+    --system-spectrum-stepper-buttons-border-width: 0;
+    --system-spectrum-stepper-buttons-background-color: var(--spectrum-gray-50);
     --system-spectrum-stepper-border-color: var(--spectrum-gray-500);
     --system-spectrum-stepper-border-color-hover: var(--spectrum-gray-600);
     --system-spectrum-stepper-border-color-focus: var(--spectrum-gray-800);
     --system-spectrum-stepper-border-color-focus-hover: var(
-        --spectrum-gray-900
+        --spectrum-gray-800
     );
     --system-spectrum-stepper-border-color-keyboard-focus: var(
         --spectrum-gray-900
     );
-    --system-spectrum-stepper-button-background-color-default: var(
-        --spectrum-gray-75
-    );
-    --system-spectrum-stepper-button-background-color-hover: var(
-        --spectrum-gray-200
-    );
+    --system-spectrum-stepper-button-border-radius-reset: 0px;
     --system-spectrum-stepper-button-background-color-focus: var(
         --spectrum-gray-300
     );
