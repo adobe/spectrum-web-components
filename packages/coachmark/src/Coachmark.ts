@@ -153,7 +153,7 @@ export class Coachmark extends LikeAnchor(
                               treatment="outline"
                               ?hidden=${!showNextButton}
                           >
-                              Next
+                              ${this.totalSteps === 0 ? 'Okay' : 'Next'}
                           </sp-button>
                       `
                     : nothing}

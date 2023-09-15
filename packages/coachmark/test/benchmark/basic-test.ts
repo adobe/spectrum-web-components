@@ -15,5 +15,12 @@ import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-coachmark open></sp-coachmark>
+    <sp-coachmark heading="Coachmark Heading">
+        Switch to the zoom tool then click and drag in the canvas to move your
+        camera forward and backward.
+        <sp-action-menu slot="actions" placement="bottom-end" quiet>
+            <sp-menu-item>Skip tour</sp-menu-item>
+            <sp-menu-item>Restart tour</sp-menu-item>
+        </sp-action-menu>
+    </sp-coachmark>
 `);
