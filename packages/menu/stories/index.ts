@@ -10,11 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import { Menu } from '@spectrum-web-components/menu';
 
 export const MenuMarkup = ({
     size = 'm' as 's' | 'm' | 'l' | 'xl',
@@ -43,3 +48,54 @@ export const MenuMarkup = ({
         </sp-popover>
     `;
 };
+
+export class ComplexSlottedGroup extends LitElement {
+    get menu(): Menu {
+        return this.renderRoot.querySelector('sp-menu') as Menu;
+    }
+    protected override render(): TemplateResult {
+        return html`
+            <sp-menu>
+                <sp-menu-group>
+                    <sp-menu-item id="i-1">Before First</sp-menu-item>
+                    <slot name="before"></slot>
+                </sp-menu-group>
+                <sp-menu-group>
+                    <sp-menu-item id="i-4">Sibling 1</sp-menu-item>
+                    <slot></slot>
+                    <sp-menu-item id="i-10">Sibling 2</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-group>
+                    <sp-menu-item id="i-11">After 1</sp-menu-item>
+                    <sp-menu-item id="i-12">After 2</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `;
+    }
+}
+
+customElements.define('complex-slotted-group', ComplexSlottedGroup);
+
+export class ComplexSlottedMenu extends LitElement {
+    get menu(): Menu {
+        return (
+            this.renderRoot.querySelector(
+                'complex-slotted-group'
+            ) as ComplexSlottedGroup
+        ).menu;
+    }
+    protected override render(): TemplateResult {
+        return html`
+            <complex-slotted-group id="group">
+                <sp-menu-item id="i-5">Middle 1</sp-menu-item>
+                <sp-menu-item id="i-6">Middle 2</sp-menu-item>
+                <sp-menu-item id="i-7">Middle 3</sp-menu-item>
+                <slot></slot>
+                <slot name="before" slot="before"></slot>
+                <sp-menu-item slot="before" id="i-3">Before Last</sp-menu-item>
+            </complex-slotted-group>
+        `;
+    }
+}
+
+customElements.define('complex-slotted-menu', ComplexSlottedMenu);
