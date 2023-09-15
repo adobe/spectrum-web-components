@@ -48,7 +48,7 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
         camera forward and backward.
         <img
             slot="cover-photo"
-            src="https://picsum.photos/200/300"
+            src="https://picsum.photos/id/18/200/300"
             alt="Demo Image"
         />
         <sp-action-menu slot="actions" placement="bottom-end" quiet>

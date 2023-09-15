@@ -30,7 +30,7 @@ describe('Coachmark', () => {
                     <sp-coachmark heading="Coachmark Heading">
                         <img
                             slot="preview"
-                            src="https://picsum.photos/532/192"
+                            src="https://picsum.photos/id/18/200/300"
                             alt="Slotted Preview"
                         />
                     </sp-coachmark>
@@ -43,7 +43,7 @@ describe('Coachmark', () => {
                 <sp-coachmark heading="Coachmark Heading">
                     <img
                         slot="preview"
-                        src="https://picsum.photos/532/192"
+                        src="https://picsum.photos/id/18/200/300"
                         alt="Slotted Preview"
                     />
                 </sp-coachmark>
@@ -61,7 +61,7 @@ describe('Coachmark', () => {
                 <sp-coachmark heading=${testHeading}>
                     <img
                         slot="preview"
-                        src="https://picsum.photos/532/192"
+                        src="https://picsum.photos/id/18/200/300"
                         alt="Slotted Preview"
                     />
                 </sp-coachmark>

@@ -91,7 +91,7 @@ export const withMedia = ({
                 move your camera forward and backward.
                 <img
                     slot="cover-photo"
-                    src="https://picsum.photos/200/300"
+                    src="https://picsum.photos/id/18/200/300"
                     alt="Demo"
                 />
                 <sp-action-menu slot="actions" placement="bottom-end" quiet>
