@@ -19,7 +19,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ifDefined,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
@@ -28,11 +31,11 @@ import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import coachmarkStyles from './coachmark.css.js';
 import '@spectrum-web-components/button/sp-button.js';
-import { when } from '@spectrum-web-components/base/src/directives.js';
 import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 /**
  * @element sp-coackmark
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
@@ -51,7 +54,7 @@ export class Coachmark extends LikeAnchor(
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
     public static override get styles(): CSSResultArray {
-        return [coachmarkStyles];
+        return [coachmarkStyles, chevronStyles];
     }
 
     @property()
@@ -65,12 +68,6 @@ export class Coachmark extends LikeAnchor(
 
     @property()
     public heading = '';
-
-    @property({ type: Boolean, reflect: true })
-    public horizontal = false;
-
-    @property()
-    public subheading = '';
 
     @property({ type: Number })
     public currentStep = 2;
@@ -124,16 +121,21 @@ export class Coachmark extends LikeAnchor(
         // mobile view
         if (this.isMobile.matches) {
             import(
-                '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js'
+                '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js'
             );
             return html`
-                <sp-button variant="secondary" treatment="outline">
-                    <sp-icon-chevron75 slot="icon"></sp-icon-chevron75>
+                <sp-button variant="secondary" treatment="outline" icon-only>
+                    <sp-icon-chevron200
+                        class="spectrum-UIIcon-ChevronLeft200"
+                        slot="icon"
+                    ></sp-icon-chevron200>
                 </sp-button>
             `;
         }
         return html`
-            <slot name="button-previous"></slot>
+            <sp-button variant="secondary" treatment="outline">
+                Previous
+            </sp-button>
         `;
     };
 
@@ -146,10 +148,13 @@ export class Coachmark extends LikeAnchor(
                 ${showPreviousButton ? this.renderPrevButton() : nothing}
                 ${showNextButton
                     ? html`
-                          <slot
-                              name="button-next"
+                          <sp-button
+                              variant="primary"
+                              treatment="outline"
                               ?hidden=${!showNextButton}
-                          ></slot>
+                          >
+                              Next
+                          </sp-button>
                       `
                     : nothing}
             </sp-button-group>

@@ -28,6 +28,10 @@ const config = {
                 converter.classToHost(),
                 converter.classToClass('spectrum-CoachMark-ring'),
                 converter.classToClass('spectrum-CoachMark-buttongroup'),
+                converter.classToClass(
+                    'spectrum-CoachMark-buttongroup--mobile',
+                    'buttongroup-mobile'
+                ),
                 converter.classToClass('spectrum-CoachMark-menu'),
                 converter.classToClass('spectrum-CoachMark-image-wrapper'),
                 converter.classToSlotted(

@@ -289,19 +289,13 @@ governing permissions and limitations under the License.
 :host([resizable]) #splitter:focus {
     outline: none;
 }
-:host([resizable]) #splitter.focus-visible {
+:host([resizable]) #splitter:focus-ring {
     background-color: var(
         --spectrum-alias-focus-color,
         var(--spectrum-global-color-blue-400)
     );
 }
-:host([resizable]) #splitter:focus-visible {
-    background-color: var(
-        --spectrum-alias-focus-color,
-        var(--spectrum-global-color-blue-400)
-    );
-}
-:host([resizable]) #splitter.focus-visible #gripper {
+:host([resizable]) #splitter:focus-ring #gripper {
     border-color: var(
         --spectrum-alias-focus-color,
         var(--spectrum-global-color-blue-400)
@@ -309,21 +303,7 @@ governing permissions and limitations under the License.
     box-shadow: 0 0 0 1px
         var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
 }
-:host([resizable]) #splitter:focus-visible #gripper {
-    border-color: var(
-        --spectrum-alias-focus-color,
-        var(--spectrum-global-color-blue-400)
-    );
-    box-shadow: 0 0 0 1px
-        var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
-}
-:host([resizable]) #splitter.focus-visible #gripper:before {
-    background-color: var(
-        --spectrum-alias-focus-color,
-        var(--spectrum-global-color-blue-400)
-    );
-}
-:host([resizable]) #splitter:focus-visible #gripper:before {
+:host([resizable]) #splitter:focus-ring #gripper:before {
     background-color: var(
         --spectrum-alias-focus-color,
         var(--spectrum-global-color-blue-400)

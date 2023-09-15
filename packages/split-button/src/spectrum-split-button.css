@@ -253,8 +253,14 @@ governing permissions and limitations under the License.
 .trigger {
     position: relative;
 }
-#button:focus,
-.trigger:focus {
+#button.focus-visible,
+.trigger.focus-visible {
+    outline: none;
+    z-index: 1;
+}
+#button:focus-visible,
+.trigger:focus-visible {
+    outline: none;
     z-index: 1;
 }
 :host([dir='ltr']) #button .label + .spectrum-Icon {

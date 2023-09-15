@@ -56,6 +56,12 @@ governing permissions and limitations under the License.
         --spectrum-transparent-white-300
     );
     --spectrum-progressbar-fill-color-white: var(--spectrum-white);
+    --spectrum-meter-min-width: var(--spectrum-meter-minimum-width);
+    --spectrum-meter-max-width: var(--spectrum-meter-maximum-width);
+    --spectrum-meter-inline-size: var(--spectrum-meter-default-width);
+    --spectrum-meter-thickness-s: var(--spectrum-meter-thickness-small);
+    --spectrum-meter-thickness-l: var(--spectrum-meter-thickness-large);
+    --spectrum-meter-top-to-text: var(--spectrum-component-top-to-text);
 }
 :host([size='s']) {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2400);
@@ -97,13 +103,46 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-300
     );
 }
-@media (forced-colors: active) {
-    .track {
-        --highcontrast-progressbar-fill-color: ButtonText;
-        --highcontrast-progressbar-track-color: ButtonFace;
-        border: 1px solid ButtonText;
-        forced-color-adjust: none;
-    }
+:host {
+    --spectrum-progressbar-size-default: var(
+        --mod-meter-inline-size,
+        var(--spectrum-meter-inline-size)
+    );
+    --spectrum-progressbar-max-size: var(
+        --mod-meter-max-width,
+        var(--spectrum-meter-max-width)
+    );
+    --spectrum-progressbar-min-size: var(
+        --mod-meter-min-width,
+        var(--spectrum-meter-min-width)
+    );
+}
+:host([positive]) .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-positive,
+            var(--spectrum-progressbar-fill-color-positive)
+        )
+    );
+}
+:host([notice]) .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-notice,
+            var(--spectrum-progressbar-fill-color-notice)
+        )
+    );
+}
+:host([negative]) .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-negative,
+            var(--spectrum-progressbar-fill-color-negative)
+        )
+    );
 }
 :host {
     align-items: center;
@@ -171,59 +210,31 @@ governing permissions and limitations under the License.
     );
 }
 .track {
-    background: var(
+    background-color: var(
         --highcontrast-progressbar-track-color,
         var(
             --mod-progressbar-track-color,
             var(--spectrum-progressbar-track-color)
         )
     );
-    block-size: var(
-        --mod-progressbar-thickness,
-        var(--spectrum-progressbar-thickness)
-    );
     border-radius: var(--spectrum-progressbar-corner-radius);
     inline-size: 100%;
     overflow: hidden;
 }
-:host([positive]) .fill {
-    background: var(
-        --highcontrast-progressbar-fill-color,
-        var(
-            --mod-progressbar-fill-color-positive,
-            var(--spectrum-progressbar-fill-color-positive)
-        )
-    );
-}
-:host([notice]) .fill {
-    background: var(
-        --highcontrast-progressbar-fill-color,
-        var(
-            --mod-progressbar-fill-color-notice,
-            var(--spectrum-progressbar-fill-color-notice)
-        )
-    );
-}
-:host([negative]) .fill {
-    background: var(
-        --highcontrast-progressbar-fill-color,
-        var(
-            --mod-progressbar-fill-color-negative,
-            var(--spectrum-progressbar-fill-color-negative)
-        )
+.fill,
+.track {
+    block-size: var(
+        --mod-progressbar-thickness,
+        var(--spectrum-progressbar-thickness)
     );
 }
 .fill {
-    background: var(
+    background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color,
             var(--spectrum-progressbar-fill-color)
         )
-    );
-    block-size: var(
-        --mod-progressbar-thickness,
-        var(--spectrum-progressbar-thickness)
     );
     border: none;
     transition: width 1s;
@@ -270,7 +281,7 @@ governing permissions and limitations under the License.
     text-align: end;
 }
 :host([static='white']) .fill {
-    background: var(
+    background-color: var(
         --mod-progressbar-fill-color-white,
         var(--spectrum-progressbar-fill-color-white)
     );
@@ -343,5 +354,13 @@ governing permissions and limitations under the License.
                     ) * -1
             )
         );
+    }
+}
+@media (forced-colors: active) {
+    .track {
+        --highcontrast-progressbar-fill-color: ButtonText;
+        --highcontrast-progressbar-track-color: ButtonFace;
+        border: 1px solid ButtonText;
+        forced-color-adjust: none;
     }
 }

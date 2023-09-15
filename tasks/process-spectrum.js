@@ -70,6 +70,12 @@ const isDirAttr = (component) => {
     return component.type === 'attribute' && component.name === 'dir';
 };
 
+const isFocusVisible = (component) => {
+    return (
+        component.type === 'pseudo-class' && component.name === 'focus-visible'
+    );
+};
+
 const isFocusRing = (component) => {
     return component.type === 'class' && component.name === 'focus-ring';
 };
@@ -81,7 +87,9 @@ const isPseudo = (component) => {
 const isHoistedPseudoClass = (component) => {
     return (
         component.type === 'pseudo-class' &&
-        (component.kind === 'focus' || component.kind === 'hover')
+        (component.kind === 'focus' ||
+            component.kind === 'focus-visible' ||
+            component.kind === 'hover')
     );
 };
 

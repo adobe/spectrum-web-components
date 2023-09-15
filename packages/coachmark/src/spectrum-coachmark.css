@@ -93,7 +93,7 @@ governing permissions and limitations under the License.
 .buttongroup {
     display: var(--spectrum-coachmark-buttongroup-display);
 }
-.spectrum-CoachMark-buttongroup--mobile {
+.buttongroup-mobile {
     --mod-buttongroup-spacing-horizontal: var(--spectrum-spacing-100);
     display: var(--spectrum-coachmark-buttongroup-mobile-display);
 }

@@ -552,6 +552,7 @@ governing permissions and limitations under the License.
         var(--spectrum-actionbutton-font-size)
     );
     overflow: hidden;
+    pointer-events: none;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -620,9 +621,11 @@ governing permissions and limitations under the License.
 }
 :host(.focus-visible) {
     box-shadow: none;
+    outline: none;
 }
 :host(:focus-visible) {
     box-shadow: none;
+    outline: none;
 }
 :host(.focus-visible):after {
     box-shadow: 0 0 0

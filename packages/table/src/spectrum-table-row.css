@@ -12,14 +12,18 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @media (forced-colors: active) {
+    :host(.focus-visible)
+        .spectrum-Table-checkbox
+        .spectrum-Checkbox-box:before,
     :host(:hover) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host.focus-visible .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
+    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
     }
+    :host(:focus-visible)
+        .spectrum-Table-checkbox
+        .spectrum-Checkbox-box:before,
     :host(:hover) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host:focus-visible .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
+    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
     }
     :host([drop-target]),
@@ -144,9 +148,9 @@ governing permissions and limitations under the License.
 :host(:focus) {
     outline: 0;
 }
+:host(.focus-visible),
 :host(:hover),
-:host([focused]),
-:host.focus-visible {
+:host([focused]) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-row-text-color-hover
     );
@@ -161,9 +165,9 @@ governing permissions and limitations under the License.
         )
     );
 }
+:host(:focus-visible),
 :host(:hover),
-:host([focused]),
-:host:focus-visible {
+:host([focused]) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-row-text-color-hover
     );
@@ -204,7 +208,7 @@ governing permissions and limitations under the License.
         --spectrum-table-selected-cell-background-color
     );
 }
-:host([selected]).focus-visible,
+:host([selected].focus-visible),
 :host([selected]:hover),
 :host([selected][focused]) {
     --highcontrast-table-row-text-color: var(
@@ -217,7 +221,7 @@ governing permissions and limitations under the License.
         --spectrum-table-selected-cell-background-color-focus
     );
 }
-:host([selected]):focus-visible,
+:host([selected]:focus-visible),
 :host([selected]:hover),
 :host([selected][focused]) {
     --highcontrast-table-row-text-color: var(
