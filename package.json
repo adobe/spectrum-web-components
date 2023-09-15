@@ -226,8 +226,15 @@
             ],
             "files": [
                 "packages/**/*.ts",
-                "tools/**/*.ts",
                 "!packages/**/*.d.ts",
+                "projects/**/*.ts",
+                "!projects/**/*.d.ts",
+                "!projects/documentation/**/*",
+                "!projects/css-custom-vars-viewer/**/*",
+                "!projects/example-project-rollup/**/*",
+                "!projects/example-project-webpack/**/*",
+                "!projects/templates/**/*",
+                "tools/**/*.ts",
                 "!tools/**/*.d.ts",
                 "tasks/esbuild-packages.js",
                 "tasks/ts-tools.js"

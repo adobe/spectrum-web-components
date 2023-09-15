@@ -8,16 +8,24 @@
     const packageName = urlParams.get('p') || 'action-bar';
     const file = urlParams.get('f') || 'action-bar';
     const storyName = urlParams.get('s') || 'Default';
-    const story = await import(
+    const [story, defaultArgs, defaultDecorators] = await import(
         `../../packages/${packageName}/stories/${file}.stories.js`
     ).then((stories) => {
-        return stories[storyName];
+        return [
+            stories[storyName],
+            stories.default.args,
+            stories.default.decorators,
+        ];
     });
 
     const args = {
+        ...(defaultArgs || {}),
         ...(story.args || {}),
     };
-    const decorators = [...(story.decorators || [])];
+    const decorators = [
+        ...(story.decorators || []),
+        ...(defaultDecorators || []),
+    ];
     let decoratedStory = () =>
         html`
             ${story(args)}
