@@ -17,7 +17,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import { alertDestructive } from './dialog.stories.js';
 import { portrait } from './images.js';
-import './helpers.js';
+import { disabledButtonDecorator } from './index.js';
 
 export default {
     title: 'Dialog Base',
@@ -116,14 +116,7 @@ export const disabledButton = (): TemplateResult => {
     `;
 };
 
-disabledButton.decorators = [
-    (story: () => TemplateResult): TemplateResult => {
-        return html`
-            ${story()}
-            <countdown-complete-watcher></countdown-complete-watcher>
-        `;
-    },
-];
+disabledButton.decorators = [disabledButtonDecorator];
 
 export const notAgain = (): TemplateResult => html`
     <sp-dialog-base
