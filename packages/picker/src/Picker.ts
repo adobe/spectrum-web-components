@@ -375,6 +375,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-chevron100>
+                <slot aria-hidden="true" name="tooltip" id="tooltip"></slot>
             `,
         ];
     }
@@ -426,9 +427,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 @focus=${this.handleHelperFocus}
             ></span>
             <button
-                aria-haspopup="true"
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
+                aria-describedby="tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
+                aria-haspopup="true"
                 aria-labelledby="icon label applied-label"
                 id="button"
                 class="button"
@@ -680,6 +682,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  * @element sp-picker
  *
  * @slot label - The placeholder content for the Picker
+ * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
