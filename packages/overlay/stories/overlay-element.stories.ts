@@ -67,7 +67,7 @@ type Properties = {
     interaction: 'click' | 'hover' | 'longpress';
     open?: boolean;
     placement?: Placement;
-    receivesFocus?: 'true' | 'false' | 'auto';
+    receivesFocus: 'true' | 'false' | 'auto';
     type?: OverlayTypes;
 };
 
@@ -172,7 +172,7 @@ export const receivesFocus = ({
         trigger="trigger@${interaction}"
         type=${ifDefined(type)}
         placement=${ifDefined(placement)}
-        .receivesFocus=${receivesFocus || 'auto'}
+        .receivesFocus=${receivesFocus}
     >
         <a href="https://example.com">Click Content</a>
     </sp-overlay>
