@@ -18,6 +18,7 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 
 export const ActionMenuMarkup = ({
     ariaLabel = 'More Actions',
@@ -32,7 +33,7 @@ export const ActionMenuMarkup = ({
     selects = '' as 'single',
     selected = false,
     tooltipDescription = '',
-    tooltipPlacement = 'bottom',
+    tooltipPlacement = 'bottom' as Placement,
 } = {}): TemplateResult => {
     return html`
         <sp-action-menu
@@ -41,7 +42,9 @@ export const ActionMenuMarkup = ({
             ?open=${open}
             ?quiet=${quiet}
             static=${ifDefined(
-                staticValue === 'none' ? undefined : staticValue
+                staticValue === 'none'
+                    ? undefined
+                    : (staticValue as 'black' | 'white')
             )}
             size=${size}
             @change="${changeHandler}"
