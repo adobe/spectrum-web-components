@@ -26,6 +26,7 @@ import {
     guaranteedAllTransitionend,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
+import { userFocusableSelector } from '@spectrum-web-components/shared';
 
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
@@ -75,6 +76,9 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     if (!targetOpenState) {
                         // Show/focus workflow when opening _only_.
                         return;
+                    }
+                    if (el.matches(userFocusableSelector)) {
+                        focusEl = el;
                     }
                     focusEl = focusEl || firstFocusableIn(el);
                     if (!focusEl) {

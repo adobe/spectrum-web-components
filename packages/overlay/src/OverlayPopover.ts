@@ -28,6 +28,7 @@ import {
     overlayTimer,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
+import { userFocusableSelector } from '@spectrum-web-components/shared';
 
 function isOpen(el: HTMLElement): boolean {
     let popoverOpen = false;
@@ -148,6 +149,9 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                 }
                 if (!targetOpenState) {
                     return;
+                }
+                if (el.matches(userFocusableSelector)) {
+                    focusEl = el;
                 }
                 focusEl = focusEl || firstFocusableIn(el);
                 if (focusEl) {
