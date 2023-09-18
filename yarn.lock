@@ -6342,6 +6342,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.71.tgz#514bcefd0883838f50b24891b31d113484e84f6b"
   integrity sha512-2sCXZOajotMOPYb5lwp9w9RNyIAS0PXsBumPKBb0PExbgQTygzJsbpiD6DGB70yK4fvtU35+hsshYHWAETUh3w==
 
+"@spectrum-css/progressbar@^3.0.73":
+  version "3.0.73"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.73.tgz#ac195ebb36b8a97b856b9635473896146bc21f6a"
+  integrity sha512-yKB16LMRpcLbIe9tzVK7YNmo5hUe2jxrHUSc4JW9m9oR0Suxcm1XJ6we/Q0YLoLPMOTIwcAntmcKmdUkzOEu+g==
+
 "@spectrum-css/progresscircle@^2.0.65":
   version "2.0.65"
   resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-2.0.65.tgz#44da6167cc66cb95090f40c607767f4d16fdb4e3"

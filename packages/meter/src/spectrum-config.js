@@ -41,9 +41,6 @@ const config = {
                 converter.classToAttribute(
                     'spectrum-ProgressBar--indeterminate'
                 ),
-                converter.classToAttribute('is-positive', 'positive'),
-                converter.classToAttribute('is-notice', 'notice'),
-                converter.classToAttribute('is-negative', 'negative'),
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-ProgressBar--sizeM'),
                 ...converter.enumerateAttributes(
@@ -60,6 +57,14 @@ const config = {
                         ['spectrum-ProgressBar--staticWhite', 'white'],
                     ],
                     'static'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['is-positive', 'positive'],
+                        ['is-notice', 'notice'],
+                        ['is-negative', 'negative'],
+                    ],
+                    'variant'
                 ),
             ],
             excludeByComponents: [

@@ -74,27 +74,28 @@ By default, the informative variant can be used to represent a neutral or non-se
 ### Positive
 
 The positive variant can be used to represent a positive semantic value, such as when there’s a lot of space remaining.
-Use the boolean `[positive]` attribute to define a noticed variant.
+Use value `variant="positive"` to define a positive variant.
 
 ```html
-<sp-meter positive progress="50">Storage Space</sp-meter>
+<sp-meter variant="positive" progress="50">Storage Space</sp-meter>
 ```
 
 ### Notice
 
-The notice variant can be used to warn users about a situation that may need to be addressed soon, such as when space remaining is becoming limited. Use the boolean `[notice]` attribute to define a noticed variant.
+The notice variant can be used to warn users about a situation that may need to be addressed soon, such as when space remaining is becoming limited.
+Use value `variant="notice"` to define a notice variant.
 
 ```html
-<sp-meter notice progress="73">Storage Space</sp-meter>
+<sp-meter variant="notice" progress="73">Storage Space</sp-meter>
 ```
 
 ### Negative
 
 The negative variant can be used to warn users about a critical situation that needs their urgent attention, such as when space remaining is becoming very limited.
-Use the boolean `[negative]` attribute to define a negative variant.
+Use value `variant="negative"` to define a negative variant.
 
 ```html
-<sp-meter negative progress="92">Storage Space</sp-meter>
+<sp-meter variant="negative" progress="92">Storage Space</sp-meter>
 ```
 
 ### Side Label
