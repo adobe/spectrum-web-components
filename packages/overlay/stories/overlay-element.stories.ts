@@ -67,6 +67,7 @@ type Properties = {
     interaction: 'click' | 'hover' | 'longpress';
     open?: boolean;
     placement?: Placement;
+    receivesFocus?: 'true' | 'false' | 'auto';
     type?: OverlayTypes;
 };
 
@@ -151,6 +152,37 @@ longpress.args = {
     placement: 'right',
     type: 'auto',
 };
+
+/**
+ * Proxy for fully encapsulated overlay containers that need to
+ * pass `focus` into a shadow child element.
+ */
+export const receivesFocus = ({
+    interaction,
+    open,
+    placement,
+    receivesFocus,
+    type,
+}: Properties): TemplateResult => html`
+    <sp-action-button id="trigger">
+        Open the overlay (with focus)
+    </sp-action-button>
+    <sp-overlay
+        ?open=${open}
+        trigger="trigger@${interaction}"
+        type=${ifDefined(type)}
+        placement=${ifDefined(placement)}
+        .receivesFocus=${receivesFocus || 'auto'}
+    >
+        <a href="https://example.com">Click Content</a>
+    </sp-overlay>
+`;
+receivesFocus.args = {
+    interaction: 'click',
+    placement: 'bottom-start',
+    type: 'auto',
+    receivesFocus: 'true',
+} as Properties;
 
 export const transformed = (args: Properties): TemplateResult => html`
     <style>
