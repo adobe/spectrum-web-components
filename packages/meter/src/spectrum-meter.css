@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-75
     );
 }
-.spectrum-ProgressBar--sizeM {
+:host {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2400);
     --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
     --spectrum-progressbar-thickness: var(
