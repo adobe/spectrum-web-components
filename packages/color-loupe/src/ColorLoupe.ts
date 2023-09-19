@@ -26,7 +26,7 @@ import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerb
  */
 export class ColorLoupe extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles, opacityCheckerboardStyles];
+        return [opacityCheckerboardStyles, styles];
     }
 
     @property({ type: Boolean, reflect: true })

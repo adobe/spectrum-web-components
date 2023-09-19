@@ -273,9 +273,16 @@ export class StoryDecorator extends SpectrumElement {
         target,
     }: Event & { target: HTMLSlotElement }): Promise<void> {
         this.ready = false;
-        const descendents = target.assignedElements({
+        const assignedElements = target.assignedElements({
             flatten: true,
         }) as SpectrumElement[];
+        const descendents = assignedElements;
+        assignedElements.forEach((descendent) => {
+            const gathered = [
+                ...(descendent.querySelectorAll('*') || []),
+            ] as SpectrumElement[];
+            descendents.push(...gathered);
+        });
         const litElementDescendents = descendents.filter(
             (el) =>
                 el.tagName.search('-') !== -1 &&

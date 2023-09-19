@@ -20,9 +20,21 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 
+import './index.js';
+
 export default {
     component: 'sp-menu',
     title: 'Menu Group',
+};
+
+export const complexSlotted = (): TemplateResult => {
+    return html`
+        <complex-slotted-menu>
+            <sp-menu-item slot="before" id="i-2">External A</sp-menu-item>
+            <sp-menu-item id="i-8">External 1</sp-menu-item>
+            <sp-menu-item id="i-9">External 2</sp-menu-item>
+        </complex-slotted-menu>
+    `;
 };
 
 export const mixed = (): TemplateResult => {
