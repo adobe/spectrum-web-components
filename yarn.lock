@@ -6377,10 +6377,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-6.0.8.tgz#69c235374a087a687f098fb12c22302bbcafaa03"
   integrity sha512-4yoH/Cg1pW/qAfUdudguJVOBIoa/MxLPZTclLyanbdNzNRWEKG3MgpNsjWjIrbGmBDRzOMGdnutfeGSsIcMTVw==
 
-"@spectrum-css/splitview@^3.0.48":
-  version "3.0.48"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-3.0.48.tgz#0b90489bc4a65e87ff48373bd262273cd818194d"
-  integrity sha512-zdOuXpAA20qBOt1TKMSUsEzE9eVv6xSlbb13KaDnMnt3hJ0VtC7U4imvw1OHAErm2kOghqBms5ZDf4XIAZg5ng==
+"@spectrum-css/splitview@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-4.0.3.tgz#ebfc75dee8537362abf276bc365fad218db1998c"
+  integrity sha512-32AF06o6I3hCl1XQzeqiNDNogtXfdJiuc8nCztS4uTxvJa3B5rwYlMVG9sFD4rhru14S5Uu5K0OYL75qsYm3tg==
 
 "@spectrum-css/statuslight@^6.0.52":
   version "6.0.52"
