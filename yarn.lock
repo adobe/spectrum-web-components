@@ -6222,6 +6222,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-4.0.7.tgz#3dbb46ee914e14b5b0f388015552f06bbabb35fe"
   integrity sha512-QV6vGOqwZVs0KTERPKQwIRuNTFB/Uey7UpEycii1bJPu2pyb+0efGKgPjtGTtze1xWLbskn/oTA11RSFvw/DjA==
 
+"@spectrum-css/coachindicator@^1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachindicator/-/coachindicator-1.0.0-alpha.1.tgz#7ada9e17bf52e3fe288e887e5e8ae065a6c68c82"
+  integrity sha512-8FcFVD6FN27/Ryq4V7OUzTbvF8tbctQVMn7r26YqjKT1AR/ZECEosRfgNkeUoir0IwevyzhEch+Pod7DHaYRNg==
+
 "@spectrum-css/coachmark@^5.0.67":
   version "5.0.67"
   resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.67.tgz#ec16c52ef5cac7f9e17e1a5405baf264e0c9787d"
@@ -6442,10 +6447,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-9.1.9.tgz#4bbd82c38718e9aca537ebbdc3da7c0fe4da2506"
   integrity sha512-MPCfhNrOqZrvAMe7uidm4FRZCN6F6RZwnhy90WtnG5D+MVTThUYmPnQn30GgfApSb2pHxrkYxufs30NJnIJTaQ==
 
-"@spectrum-css/tokens@^11.3.4":
-  version "11.3.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-11.3.4.tgz#f10a43eceb54fcb22b7cc757a4f57148dd67a7c6"
-  integrity sha512-JLY6GyzNYAXvN6CISo2R+N6OTgKZHY/Cu3vjUp2QmqeliqvM98lH6PpEW0Mxb3UALnORwzrUGxWNOwUVrSpOrA==
+"@spectrum-css/tokens@^11.3.7":
+  version "11.3.7"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-11.3.7.tgz#b4a32faa3febe1e0dc33a109e0ff5545a02bfac6"
+  integrity sha512-WX0dPqwb2t9u9WBzIRzzYXL/ZJc0r/cSBb7eJxw1xCyg5NQnUKIhGtRT+cMTTCQP0SERFgCk9CZEJcJkZDphGw==
 
 "@spectrum-css/tooltip@^5.1.11":
   version "5.1.11"

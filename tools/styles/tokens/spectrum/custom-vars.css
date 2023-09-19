@@ -15,6 +15,7 @@
     --spectrum-animation-duration-1000: 500ms;
     --spectrum-animation-duration-2000: 1000ms;
     --spectrum-animation-duration-4000: 2000ms;
+    --spectrum-animation-duration-6000: 3000ms;
     --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
