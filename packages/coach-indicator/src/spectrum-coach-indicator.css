@@ -82,7 +82,9 @@ governing permissions and limitations under the License.
     --spectrum-coach-indicator-left: calc(
         var(--spectrum-coach-indicator-ring-diameter) * 0.75
     );
-    --spectrum-coach-animation-indicator-ring-duration: 3s;
+    --spectrum-coach-animation-indicator-ring-duration: var(
+        --spectrum-animation-duration-6000
+    );
     --spectrum-coach-animation-indicator-ring-inner-delay-multiple: -0.5;
     --spectrum-coach-animation-indicator-ring-center-delay-multiple: -0.66;
     --spectrum-coach-animation-indicator-ring-outer-delay-multiple: -1;
