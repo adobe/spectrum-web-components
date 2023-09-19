@@ -67,4 +67,14 @@
     --spectrum-well-margin-top: var(--spectrum-spacing-75);
     --spectrum-well-min-width: 240px;
     --spectrum-well-border-radius: var(--spectrum-spacing-75);
+
+    --spectrum-icon-chevron-size-50: 6px;
+
+    --spectrum-treeview-item-indentation-medium: var(--spectrum-spacing-300);
+    --spectrum-treeview-item-indentation-small: var(--spectrum-spacing-200);
+    --spectrum-treeview-item-indentation-large: 20px;
+    --spectrum-treeview-item-indentation-extra-large: var(
+        --spectrum-spacing-400
+    );
+    --spectrum-treeview-indicator-inset-block-start: 5px;
 }
