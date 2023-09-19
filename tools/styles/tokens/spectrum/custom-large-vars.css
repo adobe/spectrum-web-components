@@ -63,8 +63,17 @@
     --spectrum-coachmark-buttongroup-mobile-display: flex;
     --spectrum-coachmark-menu-display: none;
     --spectrum-coachmark-menu-mobile-display: inline-flex;
+
     --spectrum-well-padding: 20px;
     --spectrum-well-margin-top: 5px;
     --spectrum-well-min-width: 300px;
     --spectrum-well-border-radius: 5px;
+
+    --spectrum-icon-chevron-size-50: 8px;
+
+    --spectrum-treeview-item-indentation-medium: 20px;
+    --spectrum-treeview-item-indentation-small: 15px;
+    --spectrum-treeview-item-indentation-large: 25px;
+    --spectrum-treeview-item-indentation-extra-large: 30px;
+    --spectrum-treeview-indicator-inset-block-start: 6px;
 }
