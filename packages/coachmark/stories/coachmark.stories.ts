@@ -61,15 +61,16 @@ export const Default = ({
     return html`
         <sp-popover
             open
-            style="--mod-popover-content-area-spacing-vertical:0, position: relative"
+            style="--mod-popover-content-area-spacing-vertical:0; position: relative"
         >
             <sp-coachmark
-                heading="Card Heading"
+                heading="Try playing with a pixel brush"
                 ?hasActionMenu=${hasActionMenu}
                 ?hasPagination=${hasPagination}
             >
-                Switch to the zoom tool then click and drag in the canvas to
-                move your camera forward and backward.
+                Pixel brushes use pixels to create brush strokes, just like in
+                other design and drawing tools. Start drawing, and zoom in to
+                see the pixels in each stroke.
                 <sp-action-menu slot="actions" placement="bottom-end" quiet>
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
@@ -86,15 +87,16 @@ export const withMedia = ({
     return html`
         <sp-popover
             open
-            style="--mod-popover-content-area-spacing-vertical:0, position: relative"
+            style="--mod-popover-content-area-spacing-vertical:0; position: relative"
         >
             <sp-coachmark
-                heading="Card Heading"
+                heading="Try playing with a pixel brush"
                 ?hasActionMenu=${hasActionMenu}
                 ?hasPagination=${hasPagination}
             >
-                Switch to the zoom tool then click and drag in the canvas to
-                move your camera forward and backward.
+                Pixel brushes use pixels to create brush strokes, just like in
+                other design and drawing tools. Start drawing, and zoom in to
+                see the pixels in each stroke.
                 <img
                     slot="cover-photo"
                     src="https://picsum.photos/id/18/200/300"
