@@ -537,7 +537,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
-    protected hasOpened = false;
+    protected hasRenderedOverlay = false;
 
     protected get renderMenu(): TemplateResult {
         const menu = html`
@@ -558,8 +558,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>
         `;
-        this.hasOpened = this.hasOpened || this.open || !!this.deprecatedMenu;
-        if (this.hasOpened) {
+        this.hasRenderedOverlay =
+            this.hasRenderedOverlay ||
+            this.focused ||
+            this.open ||
+            !!this.deprecatedMenu;
+        if (this.hasRenderedOverlay) {
             return this.renderOverlay(menu);
         }
         return menu;
@@ -704,23 +708,19 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-        if (code === 'ArrowUp' || code === 'ArrowDown') {
-            this.toggle(true);
-            return;
-        }
         if (!code.startsWith('Arrow') || this.readonly) {
             return;
         }
-        event.preventDefault();
         if (code === 'ArrowUp' || code === 'ArrowDown') {
             this.toggle(true);
             return;
         }
+        event.preventDefault();
         const selectedIndex = this.selectedItem
             ? this.menuItems.indexOf(this.selectedItem)
             : -1;
         // use a positive offset to find the first non-disabled item when no selection is available.
-        const nextOffset = !this.value || code === 'ArrowRight' ? 1 : -1;
+        const nextOffset = selectedIndex < 0 || code === 'ArrowRight' ? 1 : -1;
         let nextIndex = selectedIndex + nextOffset;
         while (
             this.menuItems[nextIndex] &&
