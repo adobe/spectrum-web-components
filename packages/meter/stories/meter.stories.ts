@@ -35,19 +35,19 @@ export const sideLabel = (): TemplateResult => {
 
 export const negative = (): TemplateResult => {
     return html`
-        <sp-meter negative progress="95">Storage Space</sp-meter>
+        <sp-meter variant="negative" progress="95">Storage Space</sp-meter>
     `;
 };
 
 export const notice = (): TemplateResult => {
     return html`
-        <sp-meter notice progress="73">Storage Space</sp-meter>
+        <sp-meter variant="notice" progress="73">Storage Space</sp-meter>
     `;
 };
 
 export const positive = (): TemplateResult => {
     return html`
-        <sp-meter positive progress="50">Storage Space</sp-meter>
+        <sp-meter variant="positive" progress="50">Storage Space</sp-meter>
     `;
 };
 

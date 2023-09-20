@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/meter/sp-meter.js';
-import { Meter } from '@spectrum-web-components/meter';
+import { Meter, meterVariants } from '@spectrum-web-components/meter';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 
@@ -38,7 +38,21 @@ describe('Meter', () => {
 
         await expect(el).to.be.accessible();
     });
+    meterVariants.map((variant) => {
+        it(`loads - [variant="${variant}"]`, async () => {
+            const el = await fixture<Meter>(
+                html`
+                    <sp-meter variant=${variant}>
+                        This meter is of the \`${variant}\` variant.
+                    </sp-meter>
+                `
+            );
 
+            await elementUpdated(el);
+
+            await expect(el).to.be.accessible();
+        });
+    });
     it('accepts a changing process w/ [label]', async () => {
         const el = await fixture<Meter>(html`
             <sp-meter label="Changing Value"></sp-meter>
@@ -124,5 +138,28 @@ describe('Meter', () => {
             '.percentage'
         ) as HTMLElement;
         expect(percentage.textContent?.search('٪')).to.not.equal(-1);
+    });
+
+    it('validates variants', async () => {
+        const el = await fixture<Meter>(
+            html`
+                <sp-meter variant="invalid">
+                    This meter validates variants.
+                </sp-meter>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal('');
+
+        el.variant = meterVariants[0];
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal(meterVariants[0]);
+
+        el.variant = meterVariants[0];
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal(meterVariants[0]);
     });
 });
