@@ -590,6 +590,48 @@ describe('ColorArea', () => {
         await elementUpdated(el);
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
+
+        el.inputX.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'Home' });
+        await sendKeys({ press: 'Home' });
+
+        await elementUpdated(el);
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+
+        el.inputX.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'End' });
+        await sendKeys({ press: 'End' });
+
+        await elementUpdated(el);
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+
+        el.inputY.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'PageUp' });
+        await sendKeys({ press: 'PageUp' });
+
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+
+        el.inputY.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'PageDown' });
+        await sendKeys({ press: 'PageDown' });
+
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
     });
     it('retains `hue` value when s = 0 in HSL string format', async () => {
         const el = await fixture<ColorArea>(
