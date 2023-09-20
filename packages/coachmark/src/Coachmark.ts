@@ -155,6 +155,7 @@ export class Coachmark extends LikeAnchor(
                               variant="secondary"
                               treatment="outline"
                               icon-only
+                              aria-label="previous"
                           >
                               <sp-icon-chevron200
                                   size="s"
