@@ -27,7 +27,10 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 ## Default
 
 ```html
-<sp-popover open style="position: relative">
+<sp-popover
+    open
+    style="--mod-popover-content-area-spacing-vertical:0, position: relative"
+>
     <sp-coachmark heading="Card Heading">
         Switch to the zoom tool then click and drag in the canvas to move your
         camera forward and backward.
@@ -42,7 +45,10 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 ## With media
 
 ```html
-<sp-popover open style="position: relative">
+<sp-popover
+    open
+    style="--mod-popover-content-area-spacing-vertical:0, position: relative"
+>
     <sp-coachmark heading="Card Heading">
         Switch to the zoom tool then click and drag in the canvas to move your
         camera forward and backward.

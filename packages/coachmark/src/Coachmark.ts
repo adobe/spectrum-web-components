@@ -36,6 +36,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import coachmarkStyles from './coachmark.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 /**
  * @element sp-coackmark
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
@@ -117,41 +118,59 @@ export class Coachmark extends LikeAnchor(
         }
     }
 
-    protected renderPrevButton = (): TemplateResult => {
-        // mobile view
-        if (this.isMobile.matches) {
-            import(
-                '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js'
-            );
-            return html`
-                <sp-button variant="secondary" treatment="outline" icon-only>
-                    <sp-icon-chevron200
-                        class="spectrum-UIIcon-ChevronLeft200"
-                        slot="icon"
-                    ></sp-icon-chevron200>
-                </sp-button>
-            `;
-        }
-        return html`
-            <sp-button variant="secondary" treatment="outline">
-                Previous
-            </sp-button>
-        `;
-    };
-
     protected renderButtons(): TemplateResult {
         const showPreviousButton = this.currentStep > 0;
         const showNextButton =
             this.currentStep < this.totalSteps || this.totalSteps === 0;
         return html`
-            <sp-button-group class="spectrum-ButtonGroup">
-                ${showPreviousButton ? this.renderPrevButton() : nothing}
+            <sp-button-group class="spectrum-ButtonGroup buttongroup">
+                ${showPreviousButton
+                    ? html`
+                          <sp-button variant="secondary" treatment="outline">
+                              Previous
+                          </sp-button>
+                      `
+                    : nothing}
                 ${showNextButton
                     ? html`
                           <sp-button
                               variant="primary"
                               treatment="outline"
                               ?hidden=${!showNextButton}
+                              size="s"
+                          >
+                              <!-- TODO -->
+                              ${this.totalSteps === 0 ? 'Okay' : 'Next'}
+                          </sp-button>
+                      `
+                    : nothing}
+            </sp-button-group>
+            <sp-button-group
+                class="spectrum-ButtonGroup buttongroup-mobile"
+                size="s"
+            >
+                ${showPreviousButton
+                    ? html`
+                          <sp-button
+                              variant="secondary"
+                              treatment="outline"
+                              icon-only
+                          >
+                              <sp-icon-chevron200
+                                  size="s"
+                                  class="spectrum-UIIcon-ChevronLeft75"
+                                  slot="icon"
+                              ></sp-icon-chevron200>
+                          </sp-button>
+                      `
+                    : nothing}
+                ${showNextButton
+                    ? html`
+                          <sp-button
+                              variant="primary"
+                              treatment="outline"
+                              ?hidden=${!showNextButton}
+                              size="s"
                           >
                               ${this.totalSteps === 0 ? 'Okay' : 'Next'}
                           </sp-button>

@@ -59,7 +59,10 @@ export const Default = ({
     hasPagination = false,
 }): TemplateResult => {
     return html`
-        <sp-popover open style="position: relative">
+        <sp-popover
+            open
+            style="--mod-popover-content-area-spacing-vertical:0, position: relative"
+        >
             <sp-coachmark
                 heading="Card Heading"
                 ?hasActionMenu=${hasActionMenu}
@@ -81,7 +84,10 @@ export const withMedia = ({
     hasPagination = false,
 }): TemplateResult => {
     return html`
-        <sp-popover open style="position: relative">
+        <sp-popover
+            open
+            style="--mod-popover-content-area-spacing-vertical:0, position: relative"
+        >
             <sp-coachmark
                 heading="Card Heading"
                 ?hasActionMenu=${hasActionMenu}
