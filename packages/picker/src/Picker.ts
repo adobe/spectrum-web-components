@@ -430,9 +430,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public renderDescriptionSlot(): TemplateResult {
         return html`
-            <div
-                id=${ifDefined(this.description ? this.description : undefined)}
-            >
+            <div id=${ifDefined(this.description)}>
                 <slot name="description"></slot>
             </div>
         `;
