@@ -31,6 +31,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { Button } from '@spectrum-web-components/button';
 import { sendKeys } from '@web/test-runner-commands';
+import { receivesFocus } from '../stories/overlay-element.stories.js';
 
 const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
 type OverlayTypes = typeof OVERLAY_TYPES[number];
@@ -652,6 +653,21 @@ describe('sp-overlay', () => {
     });
     describe('[type="auto"]', () => {
         opensDeclaratively('auto');
+        it('receives focus', async () => {
+            const test = await fixture(html`
+                <div>${receivesFocus(receivesFocus.args)}</div>
+            `);
+            const trigger = test.querySelector('#trigger') as Button;
+            const overlay = test.querySelector('a');
+
+            expect(document.activeElement === overlay).to.be.false;
+
+            const opened = oneEvent(trigger, 'sp-opened');
+            trigger.click();
+            await opened;
+
+            expect(document.activeElement === overlay).to.be.true;
+        });
     });
     describe('[type="manual"]', () => {
         opensDeclaratively('manual');

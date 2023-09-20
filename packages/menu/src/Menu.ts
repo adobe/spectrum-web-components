@@ -114,18 +114,28 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private updateCachedMenuItems(): MenuItem[] {
         this.cachedChildItems = [];
 
-        const slotElements = this.menuSlot.assignedElements({ flatten: true });
-        for (const slotElement of slotElements) {
-            const childMenuItems: MenuItem[] =
-                slotElement instanceof MenuItem
-                    ? [slotElement as MenuItem]
-                    : ([...slotElement.querySelectorAll(`*`)] as MenuItem[]);
-
-            for (const childMenuItem of childMenuItems) {
-                if (this.childItemSet.has(childMenuItem)) {
-                    this.cachedChildItems.push(childMenuItem);
-                }
+        const slottedElements = this.menuSlot.assignedElements({
+            flatten: true,
+        }) as HTMLElement[];
+        // Recursively flatten <slot> and non-<sp-menu-item> elements assigned to the menu into a single array.
+        for (const [i, slottedElement] of slottedElements.entries()) {
+            if (this.childItemSet.has(slottedElement as MenuItem)) {
+                // Assign <sp-menu-item> members of the array that are in this.childItemSet to this.chachedChildItems.
+                this.cachedChildItems.push(slottedElement as MenuItem);
+                continue;
             }
+            const isHTMLSlotElement = slottedElement.localName === 'slot';
+            const flattenedChildren = isHTMLSlotElement
+                ? (slottedElement as HTMLSlotElement).assignedElements({
+                      flatten: true,
+                  })
+                : [...slottedElement.querySelectorAll(`:scope > *`)];
+            slottedElements.splice(
+                i,
+                1,
+                slottedElement,
+                ...(flattenedChildren as HTMLElement[])
+            );
         }
 
         return this.cachedChildItems;
@@ -304,9 +314,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handleClick(event: Event): void {
-        if (event.defaultPrevented) {
-            return;
-        }
         const path = event.composedPath();
         const target = path.find((el) => {
             /* c8 ignore next 3 */
@@ -315,6 +322,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
+        if (event.defaultPrevented) {
+            const index = this.childItems.indexOf(target);
+            if (target?.menuData.focusRoot === this && index > -1) {
+                this.focusedItemIndex = index;
+            }
+            return;
+        }
         if (target?.href && target.href.length) {
             // This event will NOT ALLOW CANCELATION as link action
             // cancelation should occur on the `<sp-menu-item>` itself.
@@ -367,9 +381,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 const offset = this.childItems.findIndex(
                     (childItem) => childItem === activeElement
                 );
-                if (offset > 0) {
-                    this.focusMenuItemByOffset(offset);
-                }
+                this.focusMenuItemByOffset(Math.max(offset, 0));
             }
         }
         this.startListeningToKeyboard();
@@ -568,6 +580,27 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             lastFocusedItem.focused = true;
         }
         const { code } = event;
+        if (
+            event.shiftKey &&
+            event.target !== this &&
+            this.hasAttribute('tabindex')
+        ) {
+            this.removeAttribute('tabindex');
+            const replaceTabindex = (
+                event: FocusEvent | KeyboardEvent
+            ): void => {
+                if (
+                    !(event as KeyboardEvent).shiftKey &&
+                    !this.hasAttribute('tabindex')
+                ) {
+                    this.tabIndex = 0;
+                    document.removeEventListener('keyup', replaceTabindex);
+                    this.removeEventListener('focusout', replaceTabindex);
+                }
+            };
+            document.addEventListener('keyup', replaceTabindex);
+            this.addEventListener('focusout', replaceTabindex);
+        }
         if (code === 'Tab') {
             this.prepareToCleanUp();
             return;
@@ -606,7 +639,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         let itemToFocus = this.childItems[this.focusedItemIndex];
         let availableItems = this.childItems.length;
         // cycle through the available items in the directions of the offset to find the next non-disabled item
-        while (itemToFocus.disabled && availableItems) {
+        while (itemToFocus?.disabled && availableItems) {
             availableItems -= 1;
             this.focusedItemIndex =
                 (this.childItems.length + this.focusedItemIndex + step) %
@@ -727,7 +760,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private forwardFocusVisibleToItem(item: MenuItem): void {
-        if (item.menuData.focusRoot !== this) {
+        if (!item || item.menuData.focusRoot !== this) {
             return;
         }
         this.closeDescendentOverlays();
