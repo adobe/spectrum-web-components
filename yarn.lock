@@ -5759,14 +5759,14 @@
   integrity sha512-p2bbFZ7Dao4543Q9vkWTeO0+1NSSn3WBrXB5yGFwQ+W2UJ4PU9aOft1l7W+0iKY1JnBTI5CPEyaNOYxD/D2cCA==
 
 "@spectrum-css/popover@^6.0.74":
-  version "6.0.74"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.74.tgz#8b85c3aad298275ba085f3add883acb504b3c9c5"
-  integrity sha512-TNm4zCBjjFeBpVCU3pDZjL6o1Vr6VpM/2xWy5XuorXeOjAzd00pLRIYSqqdbHjDYK4iZr76a5vbjtYpYRWYehQ==
+  version "6.0.77"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.77.tgz#a05e41572a27c26467b7434b47eac4a134604d27"
+  integrity sha512-Ddb0Q+0dszhCn3bNsNTjeY6sp+IuPPBuSW+CdNdJGibIej1vE98jRYBSPDs4gyFDY0hINMhD8EnyTWuVaSWu8g==
 
-"@spectrum-css/progressbar@^3.0.71":
-  version "3.0.71"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.71.tgz#514bcefd0883838f50b24891b31d113484e84f6b"
-  integrity sha512-2sCXZOajotMOPYb5lwp9w9RNyIAS0PXsBumPKBb0PExbgQTygzJsbpiD6DGB70yK4fvtU35+hsshYHWAETUh3w==
+"@spectrum-css/progressbar@^3.0.73":
+  version "3.0.73"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.73.tgz#ac195ebb36b8a97b856b9635473896146bc21f6a"
+  integrity sha512-yKB16LMRpcLbIe9tzVK7YNmo5hUe2jxrHUSc4JW9m9oR0Suxcm1XJ6we/Q0YLoLPMOTIwcAntmcKmdUkzOEu+g==
 
 "@spectrum-css/progresscircle@^2.0.65":
   version "2.0.65"
