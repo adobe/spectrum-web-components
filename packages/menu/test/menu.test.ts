@@ -511,4 +511,49 @@ describe('Menu', () => {
         expect(el.value).to.equal('Second');
         expect(el.selectedItems.length).to.equal(1);
     });
+    it('can be controlled to manage a single togglable selection', async () => {
+        const toggleSingleSelected = (
+            event: Event & { target: Menu }
+        ): void => {
+            event.preventDefault();
+            const selected: string[] = [];
+            if (event.target.selected.length) {
+                selected.push(event.target.selected.at(-1) as string);
+            }
+            event.target.updateComplete.then(() => {
+                event.target.selected = selected;
+            });
+        };
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu selects="multiple" @change=${toggleSingleSelected}>
+                    <sp-menu-item value="1">First</sp-menu-item>
+                    <sp-menu-item value="2">Second</sp-menu-item>
+                    <sp-menu-item value="3">Third</sp-menu-item>
+                </sp-menu>
+            `
+        );
+        expect(el.selected).to.deep.equal([]);
+
+        const items = [...el.querySelectorAll('[value]')] as MenuItem[];
+
+        items[0].click();
+        await nextFrame();
+        await nextFrame();
+
+        items[0].click();
+        await nextFrame();
+        await nextFrame();
+        expect(el.selected).to.deep.equal([]);
+
+        items[1].click();
+        await nextFrame();
+        await nextFrame();
+        expect(el.selected).to.deep.equal(['2']);
+
+        items[2].click();
+        await nextFrame();
+        await nextFrame();
+        expect(el.selected).to.deep.equal(['3']);
+    });
 });
