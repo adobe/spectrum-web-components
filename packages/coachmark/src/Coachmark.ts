@@ -61,20 +61,26 @@ export class Coachmark extends LikeAnchor(
     @property()
     public asset?: 'file' | 'folder';
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public hasActionMenu = true;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public hasPagination = true;
+
+    @property({ type: Boolean })
+    public isSkipTour = false;
+
+    @property({ type: Boolean })
+    public isRestartTour = false;
 
     @property()
     public heading = '';
 
     @property({ type: Number })
-    public currentStep = 2;
+    public currentStep = 4;
 
     @property({ type: Number })
-    public totalSteps = 4;
+    public totalSteps = 0;
 
     protected get hasCoverPhoto(): boolean {
         return this.getSlotContentPresence('[slot="cover-photo"]');
@@ -118,10 +124,26 @@ export class Coachmark extends LikeAnchor(
         }
     }
 
+    public updateActionMenu(val: boolean): void {
+        this.hasActionMenu = val;
+    }
+
     protected renderButtons(): TemplateResult {
         const showPreviousButton = this.currentStep > 0;
-        const showNextButton =
-            this.currentStep < this.totalSteps || this.totalSteps === 0;
+        const showNextButton = this.totalSteps > 0;
+        const nextButtonText =
+            this.currentStep === this.totalSteps ? 'Finish' : 'Next';
+        if (this.totalSteps === 0) {
+            this.updateActionMenu(false);
+            return html`
+                <sp-button-group class="spectrum-ButtonGroup buttongroup">
+                    <sp-button variant="primary" treatment="outline" size="s">
+                        Ok
+                    </sp-button>
+                </sp-button-group>
+            `;
+        }
+
         return html`
             <sp-button-group class="spectrum-ButtonGroup buttongroup">
                 ${showPreviousButton
@@ -139,8 +161,7 @@ export class Coachmark extends LikeAnchor(
                               ?hidden=${!showNextButton}
                               size="s"
                           >
-                              <!-- TODO -->
-                              ${this.totalSteps === 0 ? 'Okay' : 'Next'}
+                              ${nextButtonText}
                           </sp-button>
                       `
                     : nothing}
@@ -173,7 +194,7 @@ export class Coachmark extends LikeAnchor(
                               ?hidden=${!showNextButton}
                               size="s"
                           >
-                              ${this.totalSteps === 0 ? 'Okay' : 'Next'}
+                              ${nextButtonText}
                           </sp-button>
                       `
                     : nothing}
@@ -198,10 +219,20 @@ export class Coachmark extends LikeAnchor(
         `;
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    public changeHandler(): void {}
+
     protected renderActionMenu = (): TemplateResult => {
         return html`
             <div class="action-menu" @pointerdown=${this.stopPropagationOnHref}>
-                <slot name="actions"></slot>
+                <sp-action-menu
+                    @change=${this.changeHandler}
+                    placement="bottom-end"
+                    quiet
+                >
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
             </div>
         `;
     };

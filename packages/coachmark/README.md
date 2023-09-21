@@ -35,10 +35,6 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
         Pixel brushes use pixels to create brush strokes, just like in other
         design and drawing tools. Start drawing, and zoom in to see the pixels
         in each stroke.
-        <sp-action-menu slot="actions" placement="bottom-end" quiet>
-            <sp-menu-item>Skip tour</sp-menu-item>
-            <sp-menu-item>Restart tour</sp-menu-item>
-        </sp-action-menu>
     </sp-coachmark>
 </sp-popover>
 ```
@@ -59,10 +55,6 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
             src="https://picsum.photos/id/18/200/300"
             alt="Demo Image"
         />
-        <sp-action-menu slot="actions" placement="bottom-end" quiet>
-            <sp-menu-item>Skip tour</sp-menu-item>
-            <sp-menu-item>Restart tour</sp-menu-item>
-        </sp-action-menu>
     </sp-coachmark>
 </sp-popover>
 ```
