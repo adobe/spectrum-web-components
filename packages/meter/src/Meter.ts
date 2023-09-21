@@ -30,6 +30,10 @@ import { LanguageResolutionController } from '@spectrum-web-components/reactive-
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './meter.css.js';
 
+export const meterVariants = ['positive', 'notice', 'negative'];
+
+export type MeterVariants = typeof meterVariants[number];
+
 /**
  * @element sp-meter
  *
@@ -45,17 +49,33 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     @property({ type: Number })
     public progress = 0;
 
-    @property({ type: Boolean, reflect: true, attribute: 'over-background' })
-    public overBackground = false;
+    /**
+     * The variant applies specific styling when set to `negative`, `positive`, `notice`
+     * `variant` attribute is removed when not matching one of the above.
+     *
+     * @param {String} variant
+     */
+    @property({ type: String })
+    public set variant(variant: MeterVariants) {
+        if (variant === this.variant) {
+            return;
+        }
+        const oldValue = this.variant;
+        if (meterVariants.includes(variant)) {
+            this.setAttribute('variant', variant);
+            this._variant = variant;
+        } else {
+            this.removeAttribute('variant');
+            this._variant = '';
+        }
+        this.requestUpdate('variant', oldValue);
+    }
 
-    @property({ type: Boolean, reflect: true })
-    public notice = false;
+    public get variant(): MeterVariants {
+        return this._variant;
+    }
 
-    @property({ type: Boolean, reflect: true })
-    public negative = false;
-
-    @property({ type: Boolean, reflect: true })
-    public positive = false;
+    private _variant: MeterVariants = '';
 
     @property({ type: String, reflect: true })
     public label = '';

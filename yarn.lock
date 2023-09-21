@@ -5699,9 +5699,9 @@
   integrity sha512-mnxdnF2NGNdba+3OomwFURPG0XqNRD+S2cmX0ARYnia9lv84HpzhbSoGuqmQO4+4+dXe46zYjnKRe2L8oJM/zw==
 
 "@spectrum-css/fieldgroup@^4.0.72":
-  version "4.0.72"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-4.0.72.tgz#105806d79fc6caa9250f37e00e6eeea58d79aeb5"
-  integrity sha512-SnGJXuEcgDqQnOkDBqWpzj8jcoM08mr4bDkzx7kH6WOrbzLZAziQBlZV/bLtrexOEdu3Q39ZirVJBLkGgb9S+w==
+  version "4.0.75"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-4.0.75.tgz#fb645b3206ca7e6486a2f16ea55b9b0820676346"
+  integrity sha512-Pue6Wb3mjyPRW6E70I33eqtb47ghefsmDIEQ/gyO3KQBg39okYIisxgkW+kYeXCuGeM0Xaip6haJ1J/y+8ewLA==
 
 "@spectrum-css/fieldlabel@^7.0.33":
   version "7.0.33"
@@ -5758,10 +5758,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.77.tgz#a05e41572a27c26467b7434b47eac4a134604d27"
   integrity sha512-Ddb0Q+0dszhCn3bNsNTjeY6sp+IuPPBuSW+CdNdJGibIej1vE98jRYBSPDs4gyFDY0hINMhD8EnyTWuVaSWu8g==
 
-"@spectrum-css/progressbar@^3.0.71":
-  version "3.0.71"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.71.tgz#514bcefd0883838f50b24891b31d113484e84f6b"
-  integrity sha512-2sCXZOajotMOPYb5lwp9w9RNyIAS0PXsBumPKBb0PExbgQTygzJsbpiD6DGB70yK4fvtU35+hsshYHWAETUh3w==
+"@spectrum-css/progressbar@^3.0.73":
+  version "3.0.73"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.73.tgz#ac195ebb36b8a97b856b9635473896146bc21f6a"
+  integrity sha512-yKB16LMRpcLbIe9tzVK7YNmo5hUe2jxrHUSc4JW9m9oR0Suxcm1XJ6we/Q0YLoLPMOTIwcAntmcKmdUkzOEu+g==
 
 "@spectrum-css/progresscircle@^2.0.65":
   version "2.0.65"
