@@ -86,9 +86,30 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public valueSeparator = ',';
 
     // TODO: which of these to keep?
-    // TODO: allow setting this in the API to change the values
     @property({ attribute: false })
-    public selected = [] as string[];
+    public get selected(): string[] {
+        return this._selected;
+    }
+
+    public set selected(selected: string[]) {
+        if (selected === this.selected) {
+            return;
+        }
+        const old = this.selected;
+        this._selected = selected;
+        this.selectedItems = [];
+        this.selectedItemsMap.clear();
+        this.childItems.forEach((item) => {
+            item.selected = this.selected.includes(item.value);
+            if (item.selected) {
+                this.selectedItems.push(item);
+                this.selectedItemsMap.set(item, true);
+            }
+        });
+        this.requestUpdate('selected', old);
+    }
+
+    protected _selected = [] as string[];
 
     @property({ attribute: false })
     public selectedItems = [] as MenuItem[];
@@ -113,6 +134,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     private updateCachedMenuItems(): MenuItem[] {
         this.cachedChildItems = [];
+
+        if (!this.menuSlot) {
+            return [];
+        }
 
         const slottedElements = this.menuSlot.assignedElements({
             flatten: true,
@@ -247,7 +272,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             if (event.item.selected) {
                 this.selectedItemsMap.set(event.item, true);
                 this.selectedItems = [...this.selectedItems, event.item];
-                this.selected = [...this.selected, event.item.value];
+                this._selected = [...this.selected, event.item.value];
                 this.value = this.selected.join(this.valueSeparator);
             }
         }
@@ -492,14 +517,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     selectedItems.push(childItem);
                 }
             });
-            this.selected = selected;
+            this._selected = selected;
             this.selectedItems = selectedItems;
             this.value = this.selected.join(this.valueSeparator);
         } else {
             this.selectedItemsMap.clear();
             this.selectedItemsMap.set(targetItem, true);
             this.value = targetItem.value;
-            this.selected = [targetItem.value];
+            this._selected = [targetItem.value];
             this.selectedItems = [targetItem];
         }
 
@@ -513,7 +538,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
         if (!applyDefault) {
             // Cancel the event & don't apply the selection
-            this.selected = oldSelected;
+            this._selected = oldSelected;
             this.selectedItems = oldSelectedItems;
             this.selectedItemsMap = oldSelectedItemsMap;
             this.value = oldValue;
@@ -706,7 +731,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
         });
         this.selectedItemsMap = selectedItemsMap;
-        this.selected = selected;
+        this._selected = selected;
         this.selectedItems = selectedItems;
         this.value = this.selected.join(this.valueSeparator);
         this.focusedItemIndex = firstOrFirstSelectedIndex;
