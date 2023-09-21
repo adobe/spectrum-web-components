@@ -117,7 +117,7 @@ governing permissions and limitations under the License.
         var(--spectrum-meter-min-width)
     );
 }
-:host([positive]) .fill {
+:host([variant='positive']) .fill {
     background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
@@ -126,7 +126,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([notice]) .fill {
+:host([variant='notice']) .fill {
     background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
@@ -135,7 +135,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([negative]) .fill {
+:host([variant='negative']) .fill {
     background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
