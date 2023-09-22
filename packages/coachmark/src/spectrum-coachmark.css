@@ -222,7 +222,7 @@ governing permissions and limitations under the License.
 .footer .spectrum-ButtonGroup {
     grid-column-start: 2;
 }
-.title {
+::slotted([slot='title']) {
     color: var(
         --mod-coachmark-title-color,
         var(--spectrum-coachmark-title-color)

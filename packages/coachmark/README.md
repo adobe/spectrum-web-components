@@ -31,10 +31,15 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
     open
     style="--mod-popover-content-area-spacing-vertical:0; position: relative"
 >
-    <sp-coachmark heading="Try playing with a pixel brush">
+    <sp-coachmark currentStep="1" totalSteps="8">
+        <div slot="title">Try playing with a pixel brush</div>
         Pixel brushes use pixels to create brush strokes, just like in other
         design and drawing tools. Start drawing, and zoom in to see the pixels
         in each stroke.
+        <sp-action-menu placement="bottom-end" quiet slot="actions">
+            <sp-menu-item>Skip tour</sp-menu-item>
+            <sp-menu-item>Restart tour</sp-menu-item>
+        </sp-action-menu>
     </sp-coachmark>
 </sp-popover>
 ```
@@ -46,15 +51,20 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
     open
     style="--mod-popover-content-area-spacing-vertical:0; position: relative"
 >
-    <sp-coachmark heading="Try playing with a pixel brush">
+    <sp-coachmark currentStep="1" totalSteps="8">
+        <div slot="title">Try playing with a pixel brush</div>
         Pixel brushes use pixels to create brush strokes, just like in other
         design and drawing tools. Start drawing, and zoom in to see the pixels
         in each stroke.
         <img
             slot="cover-photo"
             src="https://picsum.photos/id/18/200/300"
-            alt="Demo Image"
+            alt="Demo"
         />
+        <sp-action-menu placement="bottom-end" quiet slot="actions">
+            <sp-menu-item>Skip tour</sp-menu-item>
+            <sp-menu-item>Restart tour</sp-menu-item>
+        </sp-action-menu>
     </sp-coachmark>
 </sp-popover>
 ```

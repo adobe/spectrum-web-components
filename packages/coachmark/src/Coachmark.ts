@@ -62,12 +62,6 @@ export class Coachmark extends LikeAnchor(
     public asset?: 'file' | 'folder';
 
     @property({ type: Boolean })
-    public hasActionMenu = true;
-
-    @property({ type: Boolean })
-    public hasPagination = true;
-
-    @property({ type: Boolean })
     public isSkipTour = false;
 
     @property({ type: Boolean })
@@ -77,20 +71,23 @@ export class Coachmark extends LikeAnchor(
     public heading = '';
 
     @property({ type: Number })
-    public currentStep = 4;
+    public currentStep = 1;
 
     @property({ type: Number })
-    public totalSteps = 0;
+    public totalSteps = 8;
+
+    @property({ type: Boolean })
+    public inTour = true;
 
     protected get hasCoverPhoto(): boolean {
         return this.getSlotContentPresence('[slot="cover-photo"]');
     }
 
-    protected get renderHeading(): TemplateResult {
+    protected renderHeading = (): TemplateResult => {
         return html`
-            <div class="title">${this.heading}</div>
+            <slot name="title"></slot>
         `;
-    }
+    };
 
     protected get renderCoverImage(): TemplateResult {
         return html`
@@ -124,17 +121,9 @@ export class Coachmark extends LikeAnchor(
         }
     }
 
-    public updateActionMenu(val: boolean): void {
-        this.hasActionMenu = val;
-    }
-
-    protected renderButtons(): TemplateResult {
-        const showPreviousButton = this.currentStep > 0;
-        const showNextButton = this.totalSteps > 0;
-        const nextButtonText =
-            this.currentStep === this.totalSteps ? 'Finish' : 'Next';
-        if (this.totalSteps === 0) {
-            this.updateActionMenu(false);
+    protected renderButtons = (): TemplateResult => {
+        // if not in tour or for a single coach mark use OK
+        if (!this.inTour || this.totalSteps === 1) {
             return html`
                 <sp-button-group class="spectrum-ButtonGroup buttongroup">
                     <sp-button variant="primary" treatment="outline" size="s">
@@ -144,63 +133,76 @@ export class Coachmark extends LikeAnchor(
             `;
         }
 
-        return html`
-            <sp-button-group class="spectrum-ButtonGroup buttongroup">
-                ${showPreviousButton
-                    ? html`
-                          <sp-button variant="secondary" treatment="outline">
-                              Previous
-                          </sp-button>
-                      `
-                    : nothing}
-                ${showNextButton
-                    ? html`
-                          <sp-button
-                              variant="primary"
-                              treatment="outline"
-                              ?hidden=${!showNextButton}
-                              size="s"
-                          >
-                              ${nextButtonText}
-                          </sp-button>
-                      `
-                    : nothing}
-            </sp-button-group>
-            <sp-button-group
-                class="spectrum-ButtonGroup buttongroup-mobile"
-                size="s"
-            >
-                ${showPreviousButton
-                    ? html`
-                          <sp-button
-                              variant="secondary"
-                              treatment="outline"
-                              icon-only
-                              aria-label="previous"
-                          >
-                              <sp-icon-chevron200
+        if (this.inTour && this.totalSteps > 1) {
+            const showPreviousButton =
+                this.totalSteps > 1 && this.currentStep > 1;
+            const showNextButton = this.totalSteps > 0;
+            // Within a tour, use “Next” for all but the last step, and “Finish” for the last step
+            const nextButtonText =
+                this.currentStep === this.totalSteps ? 'Finish' : 'Next';
+            return html`
+                <sp-button-group class="spectrum-ButtonGroup buttongroup">
+                    ${showPreviousButton
+                        ? html`
+                              <sp-button
+                                  variant="secondary"
+                                  treatment="outline"
+                              >
+                                  Previous
+                              </sp-button>
+                          `
+                        : nothing}
+                    ${showNextButton
+                        ? html`
+                              <sp-button
+                                  variant="primary"
+                                  treatment="outline"
+                                  ?hidden=${!showNextButton}
                                   size="s"
-                                  class="spectrum-UIIcon-ChevronLeft75"
-                                  slot="icon"
-                              ></sp-icon-chevron200>
-                          </sp-button>
-                      `
-                    : nothing}
-                ${showNextButton
-                    ? html`
-                          <sp-button
-                              variant="primary"
-                              treatment="outline"
-                              ?hidden=${!showNextButton}
-                              size="s"
-                          >
-                              ${nextButtonText}
-                          </sp-button>
-                      `
-                    : nothing}
-            </sp-button-group>
-        `;
-    }
+                              >
+                                  ${nextButtonText}
+                              </sp-button>
+                          `
+                        : nothing}
+                </sp-button-group>
+                <sp-button-group
+                    class="spectrum-ButtonGroup buttongroup-mobile"
+                    size="s"
+                >
+                    ${showPreviousButton
+                        ? html`
+                              <sp-button
+                                  variant="secondary"
+                                  treatment="outline"
+                                  icon-only
+                                  aria-label="previous"
+                              >
+                                  <sp-icon-chevron200
+                                      size="s"
+                                      class="spectrum-UIIcon-ChevronLeft75"
+                                      slot="icon"
+                                  ></sp-icon-chevron200>
+                              </sp-button>
+                          `
+                        : nothing}
+                    ${showNextButton
+                        ? html`
+                              <sp-button
+                                  variant="primary"
+                                  treatment="outline"
+                                  ?hidden=${!showNextButton}
+                                  size="s"
+                              >
+                                  ${nextButtonText}
+                              </sp-button>
+                          `
+                        : nothing}
+                </sp-button-group>
+            `;
+        }
+        // Default case: return an empty template
+        return html``;
+    };
 
     /**
      * @description function to render the steps count
@@ -219,20 +221,10 @@ export class Coachmark extends LikeAnchor(
         `;
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    public changeHandler(): void {}
-
     protected renderActionMenu = (): TemplateResult => {
         return html`
             <div class="action-menu" @pointerdown=${this.stopPropagationOnHref}>
-                <sp-action-menu
-                    @change=${this.changeHandler}
-                    placement="bottom-end"
-                    quiet
-                >
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
+                <slot name="actions"></slot>
             </div>
         `;
     };
@@ -241,15 +233,11 @@ export class Coachmark extends LikeAnchor(
         return html`
             ${this.renderImage()}
             <div class="header">
-                ${this.renderHeading}
-                ${when(this.hasActionMenu, this.renderActionMenu)}
+                ${this.renderHeading()} ${this.renderActionMenu()}
             </div>
             <div class="content">${this.renderSubtitleAndDescription()}</div>
             <div class="footer">
-                ${when(
-                    this.hasPagination && this.totalSteps > 0,
-                    this.renderSteps
-                )}
+                ${when(this.inTour && this.totalSteps > 0, this.renderSteps)}
                 ${this.renderButtons()}
             </div>
         `;

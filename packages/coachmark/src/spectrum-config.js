@@ -42,7 +42,7 @@ const config = {
                 converter.classToClass('spectrum-CoachMark-content'),
                 converter.classToClass('spectrum-CoachMark-footer'),
                 converter.classToClass('spectrum-CoachMark-action-menu'),
-                converter.classToClass('spectrum-CoachMark-title'),
+                converter.classToSlotted('spectrum-CoachMark-title', 'title'),
                 converter.classToClass('spectrum-CoachMark-step'),
             ],
         },

@@ -23,22 +23,38 @@ export default {
     title: 'Coachmark',
     component: 'sp-coachmark',
     argTypes: {
-        hasActionMenu: {
-            name: 'ActionMenu',
-            type: { name: 'boolean' },
-            description: 'Show or hide action menu',
+        currentStep: {
+            name: 'currentStep',
+            type: { name: 'number' },
+            description:
+                'Current step in coachmark. Should always be less than totalSteps',
             table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true },
+                type: { summary: 'number' },
+                defaultValue: { summary: 1 },
             },
             control: {
-                type: 'boolean',
+                type: 'number',
+                min: 1,
+                max: 8,
             },
         },
-        hasPagination: {
-            name: 'Pagination',
+        totalSteps: {
+            name: 'totalSteps',
+            type: { name: 'number' },
+            description: 'totalSteps step in coachmark',
+            table: {
+                type: { summary: 'number' },
+                defaultValue: { summary: 8 },
+            },
+            control: {
+                type: 'number',
+                min: 1,
+            },
+        },
+        inTour: {
+            name: 'inTour',
             type: { name: 'boolean' },
-            description: 'Show or hide pagination',
+            description: 'Show or hide tour',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: true },
@@ -49,14 +65,16 @@ export default {
         },
     },
     args: {
-        hasActionMenu: true,
-        hasPagination: true,
+        currentStep: 1,
+        totalSteps: 8,
+        inTour: true,
     },
 };
 
 export const Default = ({
-    hasActionMenu = false,
-    hasPagination = false,
+    currentStep = 1,
+    totalSteps = 8,
+    inTour = true,
 }): TemplateResult => {
     return html`
         <sp-popover
@@ -65,20 +83,26 @@ export const Default = ({
         >
             <sp-coachmark
                 heading="Try playing with a pixel brush"
-                ?hasActionMenu=${hasActionMenu}
-                ?hasPagination=${hasPagination}
+                currentStep=${currentStep}
+                totalSteps=${totalSteps}
+                ?inTour=${inTour}
             >
                 Pixel brushes use pixels to create brush strokes, just like in
                 other design and drawing tools. Start drawing, and zoom in to
                 see the pixels in each stroke.
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
             </sp-coachmark>
         </sp-popover>
     `;
 };
 
 export const withMedia = ({
-    hasActionMenu = false,
-    hasPagination = false,
+    currentStep = 1,
+    totalSteps = 8,
+    inTour = true,
 }): TemplateResult => {
     return html`
         <sp-popover
@@ -87,8 +111,9 @@ export const withMedia = ({
         >
             <sp-coachmark
                 heading="Try playing with a pixel brush"
-                ?hasActionMenu=${hasActionMenu}
-                ?hasPagination=${hasPagination}
+                currentStep=${currentStep}
+                totalSteps=${totalSteps}
+                ?inTour=${inTour}
             >
                 Pixel brushes use pixels to create brush strokes, just like in
                 other design and drawing tools. Start drawing, and zoom in to
@@ -98,6 +123,10 @@ export const withMedia = ({
                     src="https://picsum.photos/id/18/200/300"
                     alt="Demo"
                 />
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
             </sp-coachmark>
         </sp-popover>
     `;
