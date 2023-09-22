@@ -27,7 +27,6 @@ import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy, stub } from 'sinon';
 import {
     arrowDownEvent,
-    arrowLeftEvent,
     arrowRightEvent,
     arrowUpEvent,
     testForLitDevWarnings,
@@ -43,9 +42,13 @@ import {
     iconsOnly,
     noVisibleLabel,
     slottedLabel,
+    tooltip,
 } from '../stories/picker.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import {
+    ignoreResizeObserverLoopError,
+    fixture as styledFixture,
+} from '../../../test/testing-helpers.js';
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -54,6 +57,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import type { Menu } from '@spectrum-web-components/menu';
+import { Tooltip } from '@spectrum-web-components/tooltip';
 
 export type TestablePicker = { optionsMenu: Menu };
 
@@ -843,39 +847,64 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('Deselect');
         });
         it('quick selects on ArrowLeft/Right', async () => {
-            await nextFrame();
             const selectionSpy = spy();
             el.addEventListener('change', (event: Event) => {
                 const { value } = event.target as Picker;
                 selectionSpy(value);
             });
-            const button = el.button as HTMLButtonElement;
 
             el.focus();
-            button.dispatchEvent(arrowLeftEvent());
+            await elementUpdated(el);
+            await waitUntil(
+                () =>
+                    (el as unknown as { menuItems: MenuItem[] }).menuItems
+                        .length === 6
+            );
 
+            await sendKeys({
+                press: 'ArrowLeft',
+            });
             await elementUpdated(el);
 
             expect(selectionSpy.callCount).to.equal(1);
             expect(selectionSpy.calledWith('Deselected'));
-            button.dispatchEvent(arrowLeftEvent());
+            await sendKeys({
+                press: 'ArrowLeft',
+            });
 
             await elementUpdated(el);
             expect(selectionSpy.callCount).to.equal(1);
-            button.dispatchEvent(arrowRightEvent());
+            await sendKeys({
+                press: 'ArrowRight',
+            });
 
-            await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
             expect(selectionSpy.calledWith('option-2'));
 
-            button.dispatchEvent(arrowRightEvent());
-            button.dispatchEvent(arrowRightEvent());
-            button.dispatchEvent(arrowRightEvent());
-            button.dispatchEvent(arrowRightEvent());
-
-            await elementUpdated(el);
-            expect(selectionSpy.callCount).to.equal(5);
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
             expect(selectionSpy.calledWith('Save Selection'));
             expect(selectionSpy.calledWith('Make Work Path')).to.be.false;
+            expect(selectionSpy.callCount).to.equal(5);
         });
         it('quick selects first item on ArrowRight when no value', async () => {
             await nextFrame();
@@ -1609,5 +1638,51 @@ export function runPickerTests(): void {
         // const closedEvent = closedSpy
         //     .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         // expect(closedEvent.detail.interaction).to.equal('modal');
+    });
+    it('closes tooltip on button blur', async () => {
+        const test = await styledFixture(html`
+            <div>${tooltip(tooltip.args)}</div>
+        `);
+        const el = test.querySelector('sp-picker') as Picker;
+        await elementUpdated(el);
+        const input1 = document.createElement('input');
+        const input2 = document.createElement('input');
+        const tooltipEl = el.querySelector('sp-tooltip') as Tooltip;
+        el.insertAdjacentElement('beforebegin', input1);
+        el.insertAdjacentElement('afterend', input2);
+        input1.focus();
+        expect(document.activeElement === input1).to.be.true;
+        const tooltipOpened = oneEvent(el, 'sp-opened');
+        await sendKeys({
+            press: 'Tab',
+        });
+        await tooltipOpened;
+        expect(
+            document.activeElement === el,
+            `Actually, ${document.activeElement?.localName}`
+        ).to.be.true;
+        expect(tooltipEl.open).to.be.true;
+        expect(el.open).to.be.false;
+        expect(el.focused).to.be.true;
+
+        const menuOpen = oneEvent(el, 'sp-opened');
+        const tooltipClosed = oneEvent(el, 'sp-closed');
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await menuOpen;
+        await tooltipClosed;
+        expect(document.activeElement === el).to.be.true;
+        expect(tooltipEl.open).to.be.false;
+        expect(el.open).to.be.true;
+
+        const menuClosed = oneEvent(el, 'sp-closed');
+        await sendKeys({
+            press: 'Tab',
+        });
+        await menuClosed;
+        expect(document.activeElement === el).to.be.false;
+        expect(tooltipEl.open).to.be.false;
+        expect(el.open).to.be.false;
     });
 }
