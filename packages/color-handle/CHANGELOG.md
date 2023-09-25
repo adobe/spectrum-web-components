@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+
+### Features
+
+-   **color-slider:** migrate to core tokens ([#3507](https://github.com/adobe/spectrum-web-components/issues/3507)) ([96d0d40](https://github.com/adobe/spectrum-web-components/commit/96d0d40419e9f0b2d1ed77528dc062b1e62aeea5))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 **Note:** Version bump only for package @spectrum-web-components/color-handle

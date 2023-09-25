@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **shared:** scope querySelector to direct children, like slots are ([515eaee](https://github.com/adobe/spectrum-web-components/commit/515eaee4ec8522f0389f967420f75cbf3545b58c))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 **Note:** Version bump only for package @spectrum-web-components/shared
