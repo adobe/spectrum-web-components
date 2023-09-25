@@ -5643,6 +5643,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-4.0.7.tgz#3dbb46ee914e14b5b0f388015552f06bbabb35fe"
   integrity sha512-QV6vGOqwZVs0KTERPKQwIRuNTFB/Uey7UpEycii1bJPu2pyb+0efGKgPjtGTtze1xWLbskn/oTA11RSFvw/DjA==
 
+"@spectrum-css/coachindicator@^1.0.0-alpha.2":
+  version "1.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachindicator/-/coachindicator-1.0.0-alpha.2.tgz#8a459602a974c6da698f7fa212d796c4f27255ac"
+  integrity sha512-MdFyuqkZYiEEbM2v1XaW5tAz34QPza07tqGnZxokBED3jNWJXDKKu0De61Ys0BPCSSWNXgDXKfMMKGYAGTJNng==
+
 "@spectrum-css/coachmark@6.0.0-beta.1":
   version "6.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-6.0.0-beta.1.tgz#4c00a0bc773310e9d32b08c37b8204b7d708b3c3"

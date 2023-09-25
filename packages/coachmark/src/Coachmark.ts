@@ -27,13 +27,10 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import {
-    IS_MOBILE,
-    MatchMediaController,
-} from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import coachmarkStyles from './coachmark.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
@@ -52,23 +49,12 @@ export class Coachmark extends LikeAnchor(
         ])
     )
 ) {
-    protected isMobile = new MatchMediaController(this, IS_MOBILE);
-
     public static override get styles(): CSSResultArray {
         return [coachmarkStyles, chevronStyles];
     }
 
     @property()
     public asset?: 'file' | 'folder';
-
-    @property({ type: Boolean })
-    public isSkipTour = false;
-
-    @property({ type: Boolean })
-    public isRestartTour = false;
-
-    @property()
-    public heading = '';
 
     @property({ type: Number })
     public currentStep = 1;

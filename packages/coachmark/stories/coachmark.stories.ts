@@ -18,6 +18,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 
 export default {
     title: 'Coachmark',
@@ -77,16 +78,14 @@ export const Default = ({
     inTour = true,
 }): TemplateResult => {
     return html`
-        <sp-popover
-            open
-            style="--mod-popover-content-area-spacing-vertical:0; position: relative"
-        >
+        <sp-coach-indicator></sp-coach-indicator>
+        <sp-popover open style="--mod-popover-content-area-spacing-vertical:0;">
             <sp-coachmark
-                heading="Try playing with a pixel brush"
                 currentStep=${currentStep}
                 totalSteps=${totalSteps}
                 ?inTour=${inTour}
             >
+                <div slot="title">Try playing with a pixel brush</div>
                 Pixel brushes use pixels to create brush strokes, just like in
                 other design and drawing tools. Start drawing, and zoom in to
                 see the pixels in each stroke.
@@ -105,16 +104,14 @@ export const withMedia = ({
     inTour = true,
 }): TemplateResult => {
     return html`
-        <sp-popover
-            open
-            style="--mod-popover-content-area-spacing-vertical:0; position: relative"
-        >
+        <sp-coach-indicator></sp-coach-indicator>
+        <sp-popover open style="--mod-popover-content-area-spacing-vertical:0;">
             <sp-coachmark
-                heading="Try playing with a pixel brush"
                 currentStep=${currentStep}
                 totalSteps=${totalSteps}
                 ?inTour=${inTour}
             >
+                <div slot="title">Try playing with a pixel brush</div>
                 Pixel brushes use pixels to create brush strokes, just like in
                 other design and drawing tools. Start drawing, and zoom in to
                 see the pixels in each stroke.

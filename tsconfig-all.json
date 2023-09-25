@@ -32,7 +32,6 @@
         { "path": "packages/checkbox" },
         { "path": "packages/clear-button" },
         { "path": "packages/close-button" },
-        { "path": "packages/coach-indicator" },
         { "path": "packages/coachmark" },
         { "path": "packages/color-area" },
         { "path": "packages/color-handle" },

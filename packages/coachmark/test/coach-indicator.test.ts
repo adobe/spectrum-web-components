@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '@spectrum-web-components/coach-indicator/sp-coach-indicator.js';
-import { CoachIndicator } from '@spectrum-web-components/coach-indicator';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+import { CoachIndicator } from '@spectrum-web-components/coachmark';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('CoachIndicator', () => {

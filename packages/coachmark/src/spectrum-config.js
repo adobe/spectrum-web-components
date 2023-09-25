@@ -21,6 +21,26 @@ const converter = converterFor('spectrum-CoachMark');
 const config = {
     conversions: [
         {
+            inPackage: '@spectrum-css/coachindicator',
+            outPackage: 'coachmark',
+            fileName: 'coach-indicator',
+            components: [
+                converter.classToHost('spectrum-CoachIndicator'),
+                converter.classToClass('spectrum-CoachIndicator-ring', 'ring'),
+                converter.classToAttribute(
+                    'spectrum-CoachIndicator--quiet',
+                    'quiet'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-CoachIndicator--dark', 'dark'],
+                        ['spectrum-CoachIndicator--light', 'light'],
+                    ],
+                    'variant'
+                ),
+            ],
+        },
+        {
             inPackage: '@spectrum-css/coachmark',
             outPackage: 'coachmark',
             fileName: 'coachmark',
