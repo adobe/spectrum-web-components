@@ -450,7 +450,7 @@ export class Overlay extends OverlayFeatures {
                 );
             }
         }
-        if (!this.open) {
+        if (!this.open && this.type !== 'hint') {
             // If the focus remains inside of the overlay or
             // a slotted descendent of the overlay you need to return
             // focus back to the trigger.

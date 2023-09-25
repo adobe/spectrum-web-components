@@ -47,6 +47,7 @@ export type SplitButtonTypes = 'field' | 'more';
  * @element sp-split-button
  *
  * @slot - menu items to be listed in the Button
+ * @slot tooltip - Tooltip to to be applied to the the main Button
  **/
 export class SplitButton extends SizedMixin(PickerBase) {
     public static override get styles(): CSSResultArray {
@@ -101,6 +102,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 >
                     ${this.selectedItem?.itemText || ''}
                 </div>
+                <slot name="tooltip"></slot>
             `,
         ];
     }

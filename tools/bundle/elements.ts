@@ -31,6 +31,7 @@ import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
+import '@spectrum-web-components/coach-indicator/sp-coach-indicator.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
