@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **menu:** allow Menu elements to be controlled ([74ed7fb](https://github.com/adobe/spectrum-web-components/commit/74ed7fb7d593199c333392f89c4827fcb8248cab))
+-   **menu:** manage deeply slotted menu items and initial focus ([7f9ad69](https://github.com/adobe/spectrum-web-components/commit/7f9ad69282b6e740efb04fa2933d3163164259c7))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 ### Bug Fixes

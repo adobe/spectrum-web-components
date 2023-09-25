@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Features
+
+-   **meter:** add "variant" (coalescing various boolean attributes) and remove "over-background" attributes ([#3514](https://github.com/adobe/spectrum-web-components/issues/3514)) ([40e5f8a](https://github.com/adobe/spectrum-web-components/commit/40e5f8ae476a590bb3df52d7281f76f5908b8672))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 **Note:** Version bump only for package @spectrum-web-components/meter
