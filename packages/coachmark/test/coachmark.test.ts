@@ -27,7 +27,8 @@ describe('Coachmark', () => {
         async () =>
             await fixture<Coachmark>(
                 html`
-                    <sp-coachmark heading="Coachmark Heading">
+                    <sp-coachmark>
+                        <div slot="title">Try playing with a pixel brush</div>
                         <img
                             slot="preview"
                             src="https://picsum.photos/id/18/200/300"
@@ -40,7 +41,8 @@ describe('Coachmark', () => {
     it('loads default coachmark accessibly', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark heading="Coachmark Heading">
+                <sp-coachmark>
+                    <div slot="title">Try playing with a pixel brush</div>
                     <img
                         slot="preview"
                         src="https://picsum.photos/id/18/200/300"
@@ -54,16 +56,12 @@ describe('Coachmark', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('displays the `heading` attribute as `.title`', async () => {
+    it('displays the slotted content as `.title`', async () => {
         const testHeading = 'This is a test heading';
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark heading=${testHeading}>
-                    <img
-                        slot="preview"
-                        src="https://picsum.photos/id/18/200/300"
-                        alt="Slotted Preview"
-                    />
+                <sp-coachmark>
+                    <h1 slot="title">${testHeading}</h1>
                 </sp-coachmark>
             `
         );
@@ -71,18 +69,63 @@ describe('Coachmark', () => {
         await elementUpdated(el);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
-        const headingEl = root.querySelector('.title');
+        const headingSlot = root.querySelector(
+            '[name="title"]'
+        ) as HTMLSlotElement;
 
-        expect(headingEl, 'did not find title element').to.not.be.null;
-        expect((headingEl as HTMLDivElement).textContent).to.contain(
-            testHeading,
-            'the heading renders in the element'
+        expect(headingSlot, 'did not find slot element').to.not.be.null;
+        const nodes = headingSlot.assignedNodes();
+        const h1Element = nodes.find(
+            (node) => (node as HTMLElement).tagName === 'H1'
         );
+        expect(h1Element, 'did not find H1 element').to.not.be.null;
+        expect((h1Element as HTMLHeadingElement).textContent).to.contain(
+            testHeading,
+            'the slotted content renders in the element'
+        );
+    });
+    it('if in tour it loads with steps and previous and next buttons', async () => {
+        const stepText = '2 of 8';
+        const el = await fixture<Coachmark>(
+            html`
+                <sp-coachmark currentStep="2" totalSteps="8">
+                    <div slot="title">Try playing with a pixel brush</div>
+                    Pixel brushes use pixels to create brush strokes, just like
+                    in other design and drawing tools. Start drawing, and zoom
+                    in to see the pixels in each stroke.
+                </sp-coachmark>
+            `
+        );
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        const stepCount = el.shadowRoot.querySelector(
+            'span[aria-live="polite"]'
+        );
+
+        expect((stepCount as HTMLElement).textContent).to.contain(
+            stepText,
+            'the slotted content renders in the element'
+        );
+
+        expect(stepCount?.textContent);
+        const nextButton = el.shadowRoot.querySelector(
+            'sp-button[variant="primary"'
+        );
+        expect(nextButton).to.not.be.undefined;
+        expect(nextButton?.textContent?.trim()).to.equal('Next');
+
+        const prevButton = el.shadowRoot.querySelector(
+            'sp-button[variant="secondary"'
+        );
+        expect(prevButton).to.not.be.undefined;
+        expect(prevButton?.textContent?.trim()).to.equal('Previous');
     });
     it('loads action-menu - [custom icon]', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark heading="Coachmark Heading">
+                <sp-coachmark>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
@@ -100,11 +143,8 @@ describe('Coachmark', () => {
     it('loads step when total step count is greater than 0', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark
-                    heading="Coachmark Heading"
-                    totalSteps="5"
-                    currentStep="2"
-                >
+                <sp-coachmark totalSteps="5" currentStep="2">
+                    <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
@@ -125,7 +165,8 @@ describe('Coachmark', () => {
     it('doesnt load pagination when total step count is equal to 0', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark heading="Coachmark Heading" totalSteps="0">
+                <sp-coachmark totalSteps="0">
+                    <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
@@ -140,10 +181,11 @@ describe('Coachmark', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads primary button with text "Okay" if totalSteps is equal to 0', async () => {
+    it('loads primary button with text "Ok" if totalSteps is equal to 0', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark heading="Coachmark Heading" totalSteps="0">
+                <sp-coachmark totalSteps="1">
+                    <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
@@ -157,12 +199,13 @@ describe('Coachmark', () => {
             'sp-button[variant="primary"'
         );
         expect(okayButton).to.not.be.null;
-        expect(okayButton?.textContent?.trim()).to.equal('Okay');
+        expect(okayButton?.textContent?.trim()).to.equal('Ok');
     });
     it('loads primary button with text "Next" if totalSteps is greater to 0', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark heading="Coachmark Heading" totalSteps="4">
+                <sp-coachmark totalSteps="4">
+                    <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
@@ -181,11 +224,8 @@ describe('Coachmark', () => {
     it('loads button with text "Previous" if totalSteps is greater than 1 & current step is less than totalSteps', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark
-                    heading="Coachmark Heading"
-                    totalSteps="4"
-                    currentStep="2"
-                >
+                <sp-coachmark totalSteps="4" currentStep="2">
+                    <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>

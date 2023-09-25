@@ -43,6 +43,7 @@ export class Coachmark extends LikeAnchor(
     SizedMixin(
         ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
             '[slot="cover-photo"]',
+            '[slot="preview"]',
         ])
     )
 ) {
@@ -78,6 +79,10 @@ export class Coachmark extends LikeAnchor(
         return this.getSlotContentPresence('[slot="cover-photo"]');
     }
 
+    protected get hasPreview(): boolean {
+        return this.getSlotContentPresence('[slot="preview"]');
+    }
+
     protected renderHeading = (): TemplateResult => {
         return html`
             <slot name="title"></slot>
@@ -94,9 +99,18 @@ export class Coachmark extends LikeAnchor(
         `;
     }
 
+    protected get renderPreviewImage(): TemplateResult {
+        return html`
+            <sp-asset id="preview">
+                <slot name="preview"></slot>
+            </sp-asset>
+        `;
+    }
+
     protected get images(): TemplateResult[] {
         const images: TemplateResult[] = [];
         if (this.hasCoverPhoto) images.push(this.renderCoverImage);
+        if (this.hasPreview) images.push(this.renderPreviewImage);
         return images;
     }
 
