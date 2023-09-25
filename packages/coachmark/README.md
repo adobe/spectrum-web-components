@@ -47,7 +47,7 @@ import { Coachmark, CoachIndicator } from '@spectrum-web-components/coachmark';
 <div style="position: relative;height: 230px;">
     <sp-coach-indicator></sp-coach-indicator>
     <sp-popover open style="--mod-popover-content-area-spacing-vertical:0">
-        <sp-coachmark currentStep="1" totalSteps="8">
+        <sp-coachmark currentStep="2" totalSteps="8">
             <div slot="title">Try playing with a pixel brush</div>
             Pixel brushes use pixels to create brush strokes, just like in other
             design and drawing tools. Start drawing, and zoom in to see the
@@ -67,7 +67,7 @@ import { Coachmark, CoachIndicator } from '@spectrum-web-components/coachmark';
 <div style="position:relative; height:450px;">
     <sp-coach-indicator></sp-coach-indicator>
     <sp-popover open style="--mod-popover-content-area-spacing-vertical:0">
-        <sp-coachmark currentStep="1" totalSteps="8">
+        <sp-coachmark currentStep="2" totalSteps="8">
             <div slot="title">Try playing with a pixel brush</div>
             Pixel brushes use pixels to create brush strokes, just like in other
             design and drawing tools. Start drawing, and zoom in to see the

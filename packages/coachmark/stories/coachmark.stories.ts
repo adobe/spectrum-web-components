@@ -31,12 +31,11 @@ export default {
                 'Current step in coachmark. Should always be less than totalSteps',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: 1 },
             },
             control: {
                 type: 'number',
                 min: 1,
-                max: 8,
+                default: 1,
             },
         },
         totalSteps: {
@@ -45,11 +44,33 @@ export default {
             description: 'totalSteps step in coachmark',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: 8 },
             },
             control: {
                 type: 'number',
-                min: 1,
+            },
+        },
+        prevButton: {
+            name: 'prevButton',
+            type: { name: 'boolean' },
+            description: 'Show or hide prevButton',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        nextButton: {
+            name: 'nextButton',
+            type: { name: 'boolean' },
+            description: 'Show or hide nextButton',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true },
+            },
+            control: {
+                type: 'boolean',
             },
         },
         inTour: {
@@ -64,18 +85,50 @@ export default {
                 type: 'boolean',
             },
         },
+        hasActionMenu: {
+            name: 'hasActionMenu',
+            type: { name: 'boolean' },
+            description: 'Show or hide Action Menu',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        showSteps: {
+            name: 'showSteps',
+            type: { name: 'boolean' },
+            description: 'Show or hide Step Counter',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
     args: {
-        currentStep: 1,
-        totalSteps: 8,
+        currentStep: undefined,
+        totalSteps: undefined,
         inTour: true,
+        prevButton: true,
+        nextButton: true,
+        hasActionMenu: true,
+        showSteps: true,
     },
 };
 
 export const Default = ({
-    currentStep = 1,
+    currentStep = 2,
     totalSteps = 8,
     inTour = true,
+    prevButton = true,
+    nextButton = true,
+    hasActionMenu = true,
+    showSteps = true,
 }): TemplateResult => {
     return html`
         <sp-coach-indicator></sp-coach-indicator>
@@ -84,6 +137,10 @@ export const Default = ({
                 currentStep=${currentStep}
                 totalSteps=${totalSteps}
                 ?inTour=${inTour}
+                ?prevButton=${prevButton}
+                ?nextButton=${nextButton}
+                ?hasActionMenu=${hasActionMenu}
+                ?showSteps=${showSteps}
             >
                 <div slot="title">Try playing with a pixel brush</div>
                 Pixel brushes use pixels to create brush strokes, just like in
@@ -99,9 +156,13 @@ export const Default = ({
 };
 
 export const withMedia = ({
-    currentStep = 1,
+    currentStep = 2,
     totalSteps = 8,
     inTour = true,
+    prevButton = true,
+    nextButton = true,
+    hasActionMenu = true,
+    showSteps = true,
 }): TemplateResult => {
     return html`
         <sp-coach-indicator></sp-coach-indicator>
@@ -110,6 +171,10 @@ export const withMedia = ({
                 currentStep=${currentStep}
                 totalSteps=${totalSteps}
                 ?inTour=${inTour}
+                ?prevButton=${prevButton}
+                ?nextButton=${nextButton}
+                ?hasActionMenu=${hasActionMenu}
+                ?showSteps=${showSteps}
             >
                 <div slot="title">Try playing with a pixel brush</div>
                 Pixel brushes use pixels to create brush strokes, just like in

@@ -19,10 +19,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    ifDefined,
-    when,
-} from '@spectrum-web-components/base/src/directives.js';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
@@ -60,10 +57,22 @@ export class Coachmark extends LikeAnchor(
     public currentStep = 1;
 
     @property({ type: Number })
-    public totalSteps = 8;
+    public totalSteps = 10;
 
     @property({ type: Boolean })
     public inTour = true;
+
+    @property({ type: Boolean, reflect: true })
+    public nextButton = true;
+
+    @property({ type: Boolean, reflect: true })
+    public prevButton = true;
+
+    @property({ type: Boolean, reflect: true })
+    public hasActionMenu = true;
+
+    @property({ type: Boolean, reflect: true })
+    public showSteps = true;
 
     protected get hasCoverPhoto(): boolean {
         return this.getSlotContentPresence('[slot="cover-photo"]');
@@ -77,7 +86,7 @@ export class Coachmark extends LikeAnchor(
 
     protected get renderCoverImage(): TemplateResult {
         return html`
-            <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
+            <sp-asset id="cover-photo">
                 <div class="image-wrapper">
                     <slot name="cover-photo"></slot>
                 </div>
@@ -120,9 +129,8 @@ export class Coachmark extends LikeAnchor(
         }
 
         if (this.inTour && this.totalSteps > 1) {
-            const showPreviousButton =
-                this.totalSteps > 1 && this.currentStep > 1;
-            const showNextButton = this.totalSteps > 0;
+            const showPreviousButton = this.currentStep > 1 && this.prevButton;
+            const showNextButton = this.totalSteps > 0 && this.nextButton;
             // Within a tour, use “Next” for all but the last step, and “Finish” for the last step
             const nextButtonText =
                 this.currentStep === this.totalSteps ? 'Finish' : 'Next';
@@ -219,11 +227,15 @@ export class Coachmark extends LikeAnchor(
         return html`
             ${this.renderImage()}
             <div class="header">
-                ${this.renderHeading()} ${this.renderActionMenu()}
+                ${this.renderHeading()}
+                ${when(this.hasActionMenu, this.renderActionMenu)}
             </div>
             <div class="content">${this.renderSubtitleAndDescription()}</div>
             <div class="footer">
-                ${when(this.inTour && this.totalSteps > 0, this.renderSteps)}
+                ${when(
+                    this.inTour && this.totalSteps > 0 && this.showSteps,
+                    this.renderSteps
+                )}
                 ${this.renderButtons()}
             </div>
         `;
