@@ -84,7 +84,7 @@
         "@spectrum-web-components/underlay": "^0.39.0"
     },
     "devDependencies": {
-        "@spectrum-css/dialog": "^6.0.68"
+        "@spectrum-css/dialog": "^8.0.7"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
