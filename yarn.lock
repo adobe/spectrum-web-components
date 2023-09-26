@@ -5831,10 +5831,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-8.0.0.tgz#c9e9eeaf87b17fee32a99674e9a126cf3af64d34"
   integrity sha512-ohM/6ZEK0IVSGxKFoymkZIVqf3zwt2x/27u48SXq8ZgUXPl5l6IqdHHmP13vuJiyJ6hs341YLth5PamRlbQEjg==
 
-"@spectrum-css/dialog@^6.0.68":
-  version "6.0.68"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-6.0.68.tgz#516944fd962d930bd284d6c6b105826a7a033714"
-  integrity sha512-bFk3Z4hMbAF+K7z3AXcY6de4N3YwB6h1hbkD2CjOqx6PPm9lMX9yO0st2jrlHoPxVdzcRo9kuTaME7r0CiVW5A==
+"@spectrum-css/dialog@^8.0.8":
+  version "8.0.8"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-8.0.8.tgz#11758c0432b16f20800f66b3688228f648964955"
+  integrity sha512-kaL8rp1or9NsGHvySpcsZSlClggk5miHPrS1TKhmB2pkY4KT5zVnKzvTgqmejZSPhXvPoO7pqiVd6951I4aafg==
 
 "@spectrum-css/divider@^2.1.25":
   version "2.1.25"
