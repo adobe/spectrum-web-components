@@ -160,6 +160,11 @@ export class NumberField extends TextfieldBase {
         }
         const oldValue = this._value;
         this._value = value;
+        if (!this.managedInput) {
+            this.dispatchEvent(
+                new Event('change', { bubbles: true, composed: true })
+            );
+        }
         this.requestUpdate('value', oldValue);
     }
 
@@ -329,16 +334,10 @@ export class NumberField extends TextfieldBase {
             case 'ArrowUp':
                 event.preventDefault();
                 this.increment(event.shiftKey ? this.stepModifier : 1);
-                this.dispatchEvent(
-                    new Event('change', { bubbles: true, composed: true })
-                );
                 break;
             case 'ArrowDown':
                 event.preventDefault();
                 this.decrement(event.shiftKey ? this.stepModifier : 1);
-                this.dispatchEvent(
-                    new Event('change', { bubbles: true, composed: true })
-                );
                 break;
         }
     }
@@ -400,6 +399,7 @@ export class NumberField extends TextfieldBase {
             }
         }
         this.value = value;
+        this.inputElement.value = this.formattedValue;
         super.handleChange();
     }
 
