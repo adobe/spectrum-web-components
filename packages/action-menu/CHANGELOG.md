@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **action-menu:** stack a "label-only" slot on top of the others to allow no icon menu buttons ([6b5817d](https://github.com/adobe/spectrum-web-components/commit/6b5817d34ff664ce0855f84165306731875e48a3))
+-   **menu:** allow Menu elements to be controlled ([74ed7fb](https://github.com/adobe/spectrum-web-components/commit/74ed7fb7d593199c333392f89c4827fcb8248cab))
+-   **picker,split-button:** include "tooltip" slot in the main button ([699b8af](https://github.com/adobe/spectrum-web-components/commit/699b8af2612f2dab8f7c65b9c105844f6feaa6ed))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 ### Bug Fixes

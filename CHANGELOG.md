@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **action-menu:** stack a "label-only" slot on top of the others to allow no icon menu buttons ([6b5817d](https://github.com/adobe/spectrum-web-components/commit/6b5817d34ff664ce0855f84165306731875e48a3))
+-   **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
+-   **base:** add re-export of lit/directive.js ([#3616](https://github.com/adobe/spectrum-web-components/issues/3616)) ([d2e237f](https://github.com/adobe/spectrum-web-components/commit/d2e237fe0fedf12ffe5fdcb726fdf31601409cb9))
+-   **base:** introduce static version property for component class ([#3582](https://github.com/adobe/spectrum-web-components/issues/3582)) ([e7e2b76](https://github.com/adobe/spectrum-web-components/commit/e7e2b769d21dc0317c3d38d02ee327b019871055))
+-   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+-   **menu:** allow Menu elements to be controlled ([74ed7fb](https://github.com/adobe/spectrum-web-components/commit/74ed7fb7d593199c333392f89c4827fcb8248cab))
+-   **menu:** manage deeply slotted menu items and initial focus ([7f9ad69](https://github.com/adobe/spectrum-web-components/commit/7f9ad69282b6e740efb04fa2933d3163164259c7))
+-   opacity checkerboard inclusion order ([#3651](https://github.com/adobe/spectrum-web-components/issues/3651)) ([4f417dc](https://github.com/adobe/spectrum-web-components/commit/4f417dc046d7d80d3c32e6286c71ee0311cf8a98))
+-   **overlay:** allow "receives-focus" to target the root of an overlay ([#3658](https://github.com/adobe/spectrum-web-components/issues/3658)) ([0db1025](https://github.com/adobe/spectrum-web-components/commit/0db10258d84409d364b5e1bad57e71683de93fea))
+-   **overlay:** ensure position when closing overlays over the top-layer ([55fab0d](https://github.com/adobe/spectrum-web-components/commit/55fab0d49047c64849ed9c8001b79b793440da48))
+-   **overlay:** reduce circular dependencies ([25eeb71](https://github.com/adobe/spectrum-web-components/commit/25eeb7138b19ba0c1a6543d1f37c4e8cea2cdbd6))
+-   **picker,split-button:** include "tooltip" slot in the main button ([699b8af](https://github.com/adobe/spectrum-web-components/commit/699b8af2612f2dab8f7c65b9c105844f6feaa6ed))
+-   **shared:** scope querySelector to direct children, like slots are ([515eaee](https://github.com/adobe/spectrum-web-components/commit/515eaee4ec8522f0389f967420f75cbf3545b58c))
+-   **slider:** add t-shirt sizing ([24dac78](https://github.com/adobe/spectrum-web-components/commit/24dac789239bc154e97b3062fa4a91b2174f685e))
+
+### Features
+
+-   **color-slider:** migrate to core tokens ([#3507](https://github.com/adobe/spectrum-web-components/issues/3507)) ([96d0d40](https://github.com/adobe/spectrum-web-components/commit/96d0d40419e9f0b2d1ed77528dc062b1e62aeea5))
+-   **meter:** add "variant" (coalescing various boolean attributes) and remove "over-background" attributes ([#3514](https://github.com/adobe/spectrum-web-components/issues/3514)) ([40e5f8a](https://github.com/adobe/spectrum-web-components/commit/40e5f8ae476a590bb3df52d7281f76f5908b8672))
+-   **table:** migrate to core tokens ([#3441](https://github.com/adobe/spectrum-web-components/issues/3441)) ([b866bab](https://github.com/adobe/spectrum-web-components/commit/b866bab30a56da1474d533221afd3ed536c31871))
+-   **underlay:** use core tokens ([9c555ab](https://github.com/adobe/spectrum-web-components/commit/9c555ab6afba738e8ac34ccda196d4775e97e30d))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 ### Bug Fixes
