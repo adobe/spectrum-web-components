@@ -54,15 +54,12 @@ const config = {
                 ),
                 converter.classToClass('spectrum-CoachMark-menu'),
                 converter.classToClass('spectrum-CoachMark-image-wrapper'),
-                converter.classToSlotted(
-                    'spectrum-CoachMark-image',
-                    'cover-photo'
-                ),
+                converter.classToClass('spectrum-CoachMark-image'),
                 converter.classToClass('spectrum-CoachMark-header'),
                 converter.classToClass('spectrum-CoachMark-content'),
                 converter.classToClass('spectrum-CoachMark-footer'),
                 converter.classToClass('spectrum-CoachMark-action-menu'),
-                converter.classToSlotted('spectrum-CoachMark-title', 'title'),
+                converter.classToClass('spectrum-CoachMark-title'),
                 converter.classToClass('spectrum-CoachMark-step'),
             ],
         },

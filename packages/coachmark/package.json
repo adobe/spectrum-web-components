@@ -33,6 +33,14 @@
             "development": "./src/Coachmark.dev.js",
             "default": "./src/Coachmark.js"
         },
+        "./src/CoachmarkItem.js": {
+            "development": "./src/CoachmarkItem.dev.js",
+            "default": "./src/CoachmarkItem.js"
+        },
+        "./src/CoachmarkTrigger.js": {
+            "development": "./src/CoachmarkTrigger.dev.js",
+            "default": "./src/CoachmarkTrigger.js"
+        },
         "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
         "./src/coachmark.css.js": "./src/coachmark.css.js",
         "./src/index.js": {
@@ -46,6 +54,10 @@
         "./sp-coach-indicator.js": {
             "development": "./sp-coach-indicator.dev.js",
             "default": "./sp-coach-indicator.js"
+        },
+        "./sp-coachmark-trigger.js": {
+            "development": "./sp-coachmark-trigger.dev.js",
+            "default": "./sp-coachmark-trigger.js"
         }
     },
     "scripts": {

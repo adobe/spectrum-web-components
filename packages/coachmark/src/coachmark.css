@@ -11,7 +11,3 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-coachmark.css');
-
-:host {
-    display: inline-block;
-}

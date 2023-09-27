@@ -15,22 +15,28 @@ import {
     html,
     nothing,
     PropertyValues,
-    SizedMixin,
-    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { when } from '@spectrum-web-components/base/src/directives.js';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import coachmarkStyles from './coachmark.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
+import { Popover } from '@spectrum-web-components/popover';
+import { join } from 'lit/directives/join.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { Placement } from '@spectrum-web-components/overlay';
+import { MediaType, VideoType } from './CoachmarkItem.js';
+import type { CoachmarkItem } from './CoachmarkItem.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
-import coachmarkStyles from './coachmark.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 /**
  * @element sp-coackmark
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
@@ -39,17 +45,67 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
  */
-export class Coachmark extends LikeAnchor(
-    SizedMixin(
-        ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
-            '[slot="cover-photo"]',
-            '[slot="preview"]',
-        ])
-    )
-) {
+export class Coachmark extends LikeAnchor(Popover) {
     public static override get styles(): CSSResultArray {
-        return [coachmarkStyles, chevronStyles];
+        return [...super.styles, coachmarkStyles, chevronStyles];
     }
+    @property({ type: Object })
+    public item?: CoachmarkItem;
+
+    @property({ type: String })
+    public override placement: Placement = 'right';
+    /**
+     * The text content of the Rich Tooltip.
+     * Includes an optional text descriptor for an image.
+     */
+    @property({ type: Object, attribute: false })
+    private content?: {
+        title?: string;
+        description?: string;
+        imageAlt?: string;
+    };
+
+    @property({ type: Number })
+    public offset = 6;
+
+    /**
+     * The keyboard shortcut corresponding to an action
+     */
+    @property({ attribute: 'shortcut-key' })
+    private shortcutKey?: string;
+
+    /**
+     * Any modifier keys needed for the shortcut, like Shift, Alt, Cmd, or Win.
+     * These render before the shortcutKey.
+     */
+    @property({ type: Array })
+    public modifierKeys?: string[] = [];
+
+    @property()
+    public triggerInteraction?: 'click' | 'longpress' | 'hover';
+
+    @property({ attribute: 'src' })
+    private source?: string;
+
+    @property({ attribute: 'media-type' })
+    private mediaType?: MediaType;
+
+    @property({ attribute: 'video-type' })
+    private videoType?: VideoType;
+
+    @property({ type: Boolean, attribute: 'has-asset', reflect: true })
+    public hasAsset = false;
+
+    /**
+     * attr can-play is used to trigger the video play
+     */
+    @property({ type: Boolean, attribute: 'can-play' })
+    public canPlay = false;
+
+    protected videoPlayPromise?: Promise<void>;
+
+    @query('video')
+    protected videoAsset?: HTMLVideoElement;
 
     @property()
     public asset?: 'file' | 'folder';
@@ -63,64 +119,169 @@ export class Coachmark extends LikeAnchor(
     @property({ type: Boolean })
     public inTour = true;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public nextButton = true;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public prevButton = true;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public hasActionMenu = true;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public showSteps = true;
 
-    protected get hasCoverPhoto(): boolean {
-        return this.getSlotContentPresence('[slot="cover-photo"]');
+    @property({ type: Boolean, attribute: 'skip-dissmissable' })
+    private skipDismissable = false;
+
+    constructor() {
+        super();
+        this.handleKeydown = this.handleKeydown.bind(this);
     }
 
-    protected get hasPreview(): boolean {
-        return this.getSlotContentPresence('[slot="preview"]');
+    protected handleKeydown(event: KeyboardEvent): void {
+        if (this.skipDismissable) {
+            return;
+        }
+        if (isCloseKeyEvent(event)) {
+            event.preventDefault();
+            this.dispatchClose();
+        }
     }
 
-    protected renderHeading = (): TemplateResult => {
-        return html`
-            <slot name="title"></slot>
-        `;
-    };
+    private dispatchClose(): void {
+        this.dispatchEvent(
+            new Event('close', { bubbles: true, composed: true })
+        );
+    }
 
-    protected get renderCoverImage(): TemplateResult {
+    private interactOnVideo(): void {
+        if (!this.videoAsset) return;
+
+        if (this.canPlay) {
+            this.videoPlayPromise = this.videoAsset.play();
+            this.videoPlayPromise.catch((error) => {
+                console.error(error);
+            });
+        } else {
+            this.pauseVideo();
+        }
+    }
+
+    private pauseVideo(): void {
+        if (this.videoPlayPromise !== undefined) {
+            this.videoPlayPromise.then(() => {
+                this.videoAsset?.pause();
+            });
+        }
+    }
+
+    private renderMedia(): TemplateResult {
+        const isVideo = this.mediaType === MediaType.VIDEO;
+        const isImage = this.mediaType === MediaType.IMAGE;
+        this.hasAsset = isVideo || isImage;
+
+        if (!isVideo && !isImage) {
+            return html`
+                <slot name="asset"></slot>
+            `;
+        }
+
+        if (isVideo) {
+            return html`
+                <sp-asset class="asset">
+                    <video loop muted preload="auto">
+                        <source
+                            src="${ifDefined(this.source)}"
+                            type="${ifDefined(this.videoType)}"
+                        />
+                    </video>
+                </sp-asset>
+            `;
+        }
+
         return html`
             <sp-asset id="cover-photo">
                 <div class="image-wrapper">
-                    <slot name="cover-photo"></slot>
+                    <img
+                        class="image"
+                        loading="lazy"
+                        slot="cover-photo"
+                        src="${ifDefined(this.source)}"
+                        alt="${ifDefined(this?.content?.imageAlt)}"
+                    />
                 </div>
             </sp-asset>
         `;
     }
 
-    protected get renderPreviewImage(): TemplateResult {
+    private renderModifier(
+        modifierKey: string,
+        type: 'modifier' | 'shortcut' = 'modifier'
+    ): TemplateResult {
         return html`
-            <sp-asset id="preview">
-                <slot name="preview"></slot>
-            </sp-asset>
+            <span type="${type}" class="keyboard-shortcut">${modifierKey}</span>
         `;
     }
 
-    protected get images(): TemplateResult[] {
-        const images: TemplateResult[] = [];
-        if (this.hasCoverPhoto) images.push(this.renderCoverImage);
-        if (this.hasPreview) images.push(this.renderPreviewImage);
-        return images;
-    }
-
-    private renderImage(): TemplateResult[] {
-        return this.images;
-    }
-
-    protected renderSubtitleAndDescription(): TemplateResult {
+    private renderJoiner(): TemplateResult {
         return html`
-            <slot></slot>
+            <span class="plus">&plus;</span>
+        `;
+    }
+
+    private renderHeader(): TemplateResult {
+        const hasModifier = this.modifierKeys && this.modifierKeys?.length > 0;
+        const hasShortcut = Boolean(this.shortcutKey);
+        const hasTitle = Boolean(this.content?.title);
+        if (!hasTitle && !hasModifier && !hasShortcut) {
+            return html`
+                <slot name="title"></slot>
+            `;
+        }
+        return html`
+            <div class="header">
+                ${hasTitle
+                    ? html`
+                          <div class="title">${this.content?.title}</div>
+                      `
+                    : nothing}
+                ${hasModifier || hasShortcut
+                    ? html`
+                          <kbd class="keys spectrum-Body spectrum-Body--sizeS">
+                              ${hasModifier
+                                  ? join(
+                                        this.modifierKeys?.map((k) =>
+                                            this.renderModifier(k)
+                                        ),
+                                        this.renderJoiner()
+                                    )
+                                  : nothing}
+                              ${hasShortcut && hasModifier
+                                  ? this.renderJoiner()
+                                  : nothing}
+                              ${hasShortcut
+                                  ? this.renderModifier(
+                                        this.shortcutKey!,
+                                        'shortcut'
+                                    )
+                                  : nothing}
+                          </kbd>
+                      `
+                    : nothing}
+                ${this.hasActionMenu ? this.renderActionMenu() : nothing}
+            </div>
+        `;
+    }
+
+    private renderContent(): TemplateResult {
+        const hasDescription = Boolean(this.content?.description);
+        if (!hasDescription)
+            return html`
+                <slot name="content"></slot>
+            `;
+        return html`
+            <div>${unsafeHTML(this.content?.description)}</div>
         `;
     }
 
@@ -232,19 +393,18 @@ export class Coachmark extends LikeAnchor(
     protected renderActionMenu = (): TemplateResult => {
         return html`
             <div class="action-menu" @pointerdown=${this.stopPropagationOnHref}>
-                <slot name="actions"></slot>
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
             </div>
         `;
     };
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderImage()}
-            <div class="header">
-                ${this.renderHeading()}
-                ${when(this.hasActionMenu, this.renderActionMenu)}
-            </div>
-            <div class="content">${this.renderSubtitleAndDescription()}</div>
+            ${this.renderMedia()} ${this.renderHeader()}
+            <div class="content">${this.renderContent()}</div>
             <div class="footer">
                 ${when(
                     this.inTour && this.totalSteps > 0 && this.showSteps,
@@ -255,7 +415,37 @@ export class Coachmark extends LikeAnchor(
         `;
     }
 
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        document.addEventListener('keydown', this.handleKeydown);
     }
+
+    public override disconnectedCallback(): void {
+        document.removeEventListener('keydown', this.handleKeydown);
+        super.disconnectedCallback();
+    }
+
+    protected override updated(changed: PropertyValues): void {
+        super.updated(changed);
+        if (!this.videoAsset) {
+            return;
+        }
+        if (changed.has('source')) {
+            this.videoAsset.load();
+            this.canPlay = true;
+            this.interactOnVideo();
+        }
+        if (changed.has('canPlay')) {
+            if (this.canPlay) {
+                this.interactOnVideo();
+            }
+        }
+    }
+}
+
+export function isCloseKeyEvent(event: KeyboardEvent): boolean {
+    return (
+        event.key === 'Escape' ||
+        (event.key === '.' && (event.metaKey || event.ctrlKey))
+    );
 }

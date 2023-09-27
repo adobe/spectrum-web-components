@@ -124,7 +124,7 @@ governing permissions and limitations under the License.
     object-fit: cover;
     object-position: center;
 }
-::slotted([slot='cover-photo']) {
+.image {
     border-start-end-radius: calc(
         var(
                 --mod-coachmark-border-radius,
@@ -222,7 +222,7 @@ governing permissions and limitations under the License.
 .footer .spectrum-ButtonGroup {
     grid-column-start: 2;
 }
-::slotted([slot='title']) {
+.title {
     color: var(
         --mod-coachmark-title-color,
         var(--spectrum-coachmark-title-color)
