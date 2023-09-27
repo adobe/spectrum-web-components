@@ -41,6 +41,7 @@ const config = {
                 converter.classToHost('spectrum-ActionGroup--sizeM'),
                 ...converter.enumerateAttributes(
                     [
+                        ['spectrum-ActionGroup--sizeXS', 'xs'],
                         ['spectrum-ActionGroup--sizeS', 's'],
                         ['spectrum-ActionGroup--sizeL', 'l'],
                         ['spectrum-ActionGroup--sizeXL', 'xl'],

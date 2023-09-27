@@ -5732,9 +5732,9 @@
   integrity sha512-fi6iIPnWR7hIpkldRtWWo5n30u8lQk0Ta6f/7Eccl1JlEe0FG0ykheqIohbWu6dd5MKJyrWG2mcTHAMpCuOmCA==
 
 "@spectrum-css/actiongroup@^4.0.7":
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-4.0.7.tgz#629a1f0b6db5c59a358abd6ff6cf1ec7ace5f910"
-  integrity sha512-mZe73pWX5JyXY4/9/Z9hNEtgsZvJ7c1suGxgyLMU7dEuuaBXFZqxmeNjgs337dqHFr+g9Zl9Ri8yYXkMhg5Scw==
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-4.1.3.tgz#9e92e67865edb5c8fab42d3c8ffd7afff98b04bb"
+  integrity sha512-M35xDc4H3aJW12Vg1EKh3eKd8m96LrLvEJhhHpm11lXajyMoKEeLE8zuZm6Uwd45Fj6y8P5BeEAvQxcDrXwdoQ==
 
 "@spectrum-css/actionmenu@^5.0.0":
   version "5.0.0"
