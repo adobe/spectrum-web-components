@@ -60,16 +60,12 @@ const chevronClass = {
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
-    static instanceCount = 0;
-    instanceCount: number;
-
     @property({ type: String })
     public description = '';
 
     constructor() {
         super();
-        this.instanceCount = PickerBase.instanceCount++;
-        this.description = `sp-picker-${this.instanceCount}`;
+        this.description = `sp-picker`;
     }
 
     @state()
@@ -444,6 +440,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 id="focus-helper"
                 tabindex="${this.focused || this.open ? '-1' : '0'}"
                 @focus=${this.handleHelperFocus}
+                aria-describedby=${this.description}
             ></span>
             <button
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}

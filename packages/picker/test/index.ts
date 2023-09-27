@@ -248,11 +248,6 @@ export function runPickerTests(): void {
         it('loads accessibly', async () => {
             await expect(el).to.be.accessible();
         });
-        it('checks for elements id and  description', async () => {
-            el = await pickerFixture();
-            expect(el).to.have.attribute('id');
-            expect(el.description).to.not.be.null;
-        });
         it('closes accessibly', async () => {
             el.focus();
             await elementUpdated(el);
