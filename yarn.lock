@@ -3358,11 +3358,11 @@
   integrity sha512-tWZNBIS1CoekcwlMuyG2mr0a1Wo5lb5lEHwwWvZo+5GLgr3e9LLDTtmgtCWEwBpXMkxn9D+2W9j2FY6eZQq0tA==
 
 "@internationalized/number@^3.1.0":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@internationalized/number/-/number-3.1.2.tgz#4482a6ac573acfb18efd354a42008af20da6c89c"
-  integrity sha512-Mbys8SGsn0ApXz3hJLNU+d95B8luoUbwnmCpBwl7d63UmYAlcT6TRDyvaS/vwdbElXLcsQJjQCu0gox2cv/Tig==
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@internationalized/number/-/number-3.2.1.tgz#570e4010544a84a8225e65b34a689a36187caaa8"
+  integrity sha512-hK30sfBlmB1aIe3/OwAPg9Ey0DjjXvHEiGVhNaOiBJl31G0B6wMaX8BN3ibzdlpyRNE9p7X+3EBONmxtJO9Yfg==
   dependencies:
-    "@swc/helpers" "^0.4.14"
+    "@swc/helpers" "^0.5.0"
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
@@ -5822,9 +5822,9 @@
   integrity sha512-3S309ZRw1YRX095cclw9lexPUprjrvQkslZ6r17i5FCrNYmj13ZXkpo7a85znVJD2uvuKR1pDhtLnA3CMDoSAg==
 
 "@spectrum-css/colorwheel@^3.0.41":
-  version "3.0.41"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-3.0.41.tgz#9e435b769264b07d6cd583392e6f3216f5b62a31"
-  integrity sha512-3YuTwcARS4g3KJPet/qB3IQeHg0TjlF/R9VhOXSDou3lBjrp70/LM8jMaAbQx3bI74q7xA//5DzfwBHXSsX5xA==
+  version "3.0.45"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-3.0.45.tgz#0aa422026efbb3b120a1a93387e5c8c4c6e305ed"
+  integrity sha512-TK2qf9SpBapNsHAR3lF6mfCGNADaU882t6OeFDgEOSpIGWuGw0wgRo876locPF6y8VDB1Kma4IHlyojWUzbHxA==
 
 "@spectrum-css/commons@^8.0.0":
   version "8.0.0"
@@ -6037,9 +6037,9 @@
   integrity sha512-8bTlM6ROKojGLVK7mUu6h3i64oOih4vTzeUp7bAtaj2Wt4+7xgts+4J64LI0RCrdHYWmQovYELPq7gY77u76bA==
 
 "@spectrum-css/underlay@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-3.0.3.tgz#817f91d74af90c25d2e1e5f0066bc0e6f612f7d2"
-  integrity sha512-RAgbnfz0KxwPuX9MaZsGKOyrwcV8wQjA+2o6QDrqcIAyAgJ3ssNqMUEtd6yW4Hj7IofRdfPB7hsobbcFUwKjDw==
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-3.0.6.tgz#9fac662925e81e06633078936f7fcd4b923e7ea1"
+  integrity sha512-ldSiQACUxl8BqhYn1YvfKE+N4FrJrtQ6hiHb3VG81ma0fLB2lwVkidlDDSIIXuPEescDWJ9bKXuK/cD5yphhog==
 
 "@spectrum-css/vars@^9.0.8":
   version "9.0.8"
@@ -6110,10 +6110,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@swc/helpers@^0.4.14":
-  version "0.4.14"
-  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.14.tgz#1352ac6d95e3617ccb7c1498ff019654f1e12a74"
-  integrity sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==
+"@swc/helpers@^0.5.0":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.2.tgz#85ea0c76450b61ad7d10a37050289eded783c27d"
+  integrity sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==
   dependencies:
     tslib "^2.4.0"
 
