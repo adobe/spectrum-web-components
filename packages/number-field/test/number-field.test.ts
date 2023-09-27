@@ -566,7 +566,7 @@ describe('NumberField', () => {
                 ],
             });
             expect(inputSpy.callCount).to.equal(4);
-            expect(changeSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(0); // the actual value hasn't changed so changespy won't be called
         });
     });
     it('accepts pointer interactions with the stepper UI', async () => {
@@ -751,7 +751,7 @@ describe('NumberField', () => {
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(lastInputValue, 'last input value').to.equal(10);
-            expect(lastChangeValue, 'last change value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(0); // value wouldn't go beyond max, so it remains unchanged after pressing enter and thus no changeSpy called
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -811,7 +811,7 @@ describe('NumberField', () => {
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(lastInputValue, 'last input value').to.equal(10);
-            expect(lastChangeValue, 'last change value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(0);
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);

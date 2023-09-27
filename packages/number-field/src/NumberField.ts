@@ -160,10 +160,11 @@ export class NumberField extends TextfieldBase {
         }
         const oldValue = this._value;
         this._value = value;
-        if (!this.managedInput) {
+        if (!this.managedInput && this.lastCommitedValue != this.value) {
             this.dispatchEvent(
                 new Event('change', { bubbles: true, composed: true })
             );
+            this.lastCommitedValue = this.value;
         }
         this.requestUpdate('value', oldValue);
     }
@@ -180,6 +181,7 @@ export class NumberField extends TextfieldBase {
 
     public override _value = NaN;
     private _trackingValue = '';
+    private lastCommitedValue = NaN;
 
     /**
      * Retreive the value of the element parsed to a Number.
@@ -285,9 +287,12 @@ export class NumberField extends TextfieldBase {
         this.buttons.releasePointerCapture(event.pointerId);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
-        this.dispatchEvent(
-            new Event('change', { bubbles: true, composed: true })
-        );
+        if (this.lastCommitedValue != this.value) {
+            this.dispatchEvent(
+                new Event('change', { bubbles: true, composed: true })
+            );
+            this.lastCommitedValue = this.value;
+        }
         this.managedInput = false;
     }
 
@@ -357,6 +362,7 @@ export class NumberField extends TextfieldBase {
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
+                this.lastCommitedValue = this.value;
             }, CHANGE_DEBOUNCE_MS) as unknown as number;
         }
         this.managedInput = false;
@@ -400,7 +406,10 @@ export class NumberField extends TextfieldBase {
         }
         this.value = value;
         this.inputElement.value = this.formattedValue;
-        super.handleChange();
+        if (this.lastCommitedValue != this.value) {
+            this.lastCommitedValue = this.value;
+            super.handleChange();
+        }
     }
 
     protected handleCompositionStart(): void {
