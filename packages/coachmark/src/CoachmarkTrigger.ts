@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -61,21 +61,6 @@ export class CoachmarkTrigger extends SpectrumElement {
         this.triggerElement = nodes[0] as HTMLElement;
     }
 
-    // protected handleOpen(event: Event): void {
-    //     this.open = true;
-    //     event.target?.dispatchEvent(new Event('sp-opened', {
-    //         bubbles: true,
-    //     }));
-
-    // }
-
-    // protected handleClose(event: Event): void {
-    //     this.open = true;
-    //     event.target?.dispatchEvent(new Event('sp-closed', {
-    //         bubbles: true,
-    //     }));
-    // }
-
     private handleBeforeToggle(
         event: Event & {
             target: Overlay;
@@ -83,14 +68,11 @@ export class CoachmarkTrigger extends SpectrumElement {
         }
     ): void {
         if (event.composedPath()[0] !== event.target) {
-            // Making sure that this Overlay is the only one that hears the @beforetoggle event
             return;
         }
         this.open = event.newState == 'open';
-        // console.log('before toggle: this.open is ', this.open);
     }
 
-    // (event: Event & { newState: string }) => (this.open = event.newState == 'open')
     protected override render(): TemplateResult {
         return html`
             <slot

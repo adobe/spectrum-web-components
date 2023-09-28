@@ -10,17 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import { gif } from '../../stories/images.js';
+import { CoachmarkItem } from '../../src/CoachmarkItem.js';
+
+const item: CoachmarkItem = {
+    heading: 'Heading',
+    content: 'Content',
+    src: gif,
+    mediaType: 'image',
+};
 
 measureFixtureCreation(html`
-    <sp-coachmark heading="Coachmark Heading">
-        Switch to the zoom tool then click and drag in the canvas to move your
-        camera forward and backward.
-        <sp-action-menu slot="actions" placement="bottom-end" quiet>
-            <sp-menu-item>Skip tour</sp-menu-item>
-            <sp-menu-item>Restart tour</sp-menu-item>
-        </sp-action-menu>
-    </sp-coachmark>
+    <sp-coachmark-trigger .item=${item} .triggerInteraction="${'click'}">
+        <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+    </sp-coachmark-trigger>
 `);

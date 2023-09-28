@@ -19,49 +19,51 @@ import {
 } from '@open-wc/testing';
 
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
-import { Coachmark } from '@spectrum-web-components/coachmark';
+import { Coachmark, CoachmarkItem } from '@spectrum-web-components/coachmark';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
+const defaultItem: CoachmarkItem = {
+    heading: 'I am the heading',
+    content: 'I am the content',
+    mediaType: 'image',
+};
 describe('Coachmark', () => {
     testForLitDevWarnings(
         async () =>
             await fixture<Coachmark>(
                 html`
-                    <sp-coachmark>
-                        <div slot="title">Try playing with a pixel brush</div>
-                        <img
-                            slot="preview"
-                            src="https://picsum.photos/id/18/200/300"
-                            alt="Slotted Preview"
-                        />
-                    </sp-coachmark>
+                    <sp-coachmark
+                        id="coachmark"
+                        .content=${{
+                            title: defaultItem.heading,
+                            description: defaultItem.content,
+                        }}
+                    ></sp-coachmark>
                 `
             )
     );
     it('loads default coachmark accessibly', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark>
-                    <div slot="title">Try playing with a pixel brush</div>
-                    <img
-                        slot="preview"
-                        src="https://picsum.photos/id/18/200/300"
-                        alt="Slotted Preview"
-                    />
-                </sp-coachmark>
+                <sp-coachmark
+                    id="coachmark"
+                    .content=${{
+                        title: defaultItem.heading,
+                        description: defaultItem.content,
+                    }}
+                ></sp-coachmark>
             `
         );
-
         await elementUpdated(el);
-
         await expect(el).to.be.accessible();
     });
     it('displays the slotted content as `.title`', async () => {
         const testHeading = 'This is a test heading';
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark>
+                <sp-coachmark id="coachmark">
                     <h1 slot="title">${testHeading}</h1>
+                    <div slot="content">Hello I am a content in slot</div>
                 </sp-coachmark>
             `
         );
@@ -90,9 +92,12 @@ describe('Coachmark', () => {
             html`
                 <sp-coachmark currentStep="2" totalSteps="8">
                     <div slot="title">Try playing with a pixel brush</div>
-                    Pixel brushes use pixels to create brush strokes, just like
-                    in other design and drawing tools. Start drawing, and zoom
-                    in to see the pixels in each stroke.
+                    <div slot="content">
+                        Try playing with a pixel brush Pixel brushes use pixels
+                        to create brush strokes, just like in other design and
+                        drawing tools. Start drawing, and zoom in to see the
+                        pixels in each stroke.
+                    </div>
                 </sp-coachmark>
             `
         );
@@ -122,7 +127,7 @@ describe('Coachmark', () => {
         expect(prevButton).to.not.be.undefined;
         expect(prevButton?.textContent?.trim()).to.equal('Previous');
     });
-    it('loads action-menu - [custom icon]', async () => {
+    it('loads action-menu', async () => {
         const el = await fixture<Coachmark>(
             html`
                 <sp-coachmark>
