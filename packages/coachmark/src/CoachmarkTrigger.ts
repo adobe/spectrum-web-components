@@ -18,7 +18,7 @@ import {
 import { Overlay, Placement } from '@spectrum-web-components/overlay';
 import { property, state } from 'lit/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import type { CoachmarkItem } from './CoachMarkItem.js';
+import type { CoachmarkItem } from '@spectrum-web-components/coachmark';
 import './Coachmark.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
