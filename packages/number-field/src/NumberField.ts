@@ -160,7 +160,7 @@ export class NumberField extends TextfieldBase {
         }
         const oldValue = this._value;
         this._value = value;
-        if (!this.managedInput && this.lastCommitedValue != this.value) {
+        if (!this.managedInput && this.lastCommitedValue !== this.value) {
             this.dispatchEvent(
                 new Event('change', { bubbles: true, composed: true })
             );
@@ -287,7 +287,7 @@ export class NumberField extends TextfieldBase {
         this.buttons.releasePointerCapture(event.pointerId);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
-        if (this.lastCommitedValue != this.value) {
+        if (this.lastCommitedValue !== this.value) {
             this.dispatchEvent(
                 new Event('change', { bubbles: true, composed: true })
             );
@@ -406,7 +406,7 @@ export class NumberField extends TextfieldBase {
         }
         this.value = value;
         this.inputElement.value = this.formattedValue;
-        if (this.lastCommitedValue != this.value) {
+        if (this.lastCommitedValue !== this.value) {
             this.lastCommitedValue = this.value;
             super.handleChange();
         }
