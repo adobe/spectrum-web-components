@@ -194,7 +194,9 @@ export class FocusGroupController<T extends HTMLElement>
         delete this.cachedElements;
         this.offset = offset;
         this.elements.forEach((element) => {
-            this.mutationObserver.observe(element);
+            this.mutationObserver.observe(element, {
+                attributes: true,
+            });
         });
     }
 
@@ -332,7 +334,9 @@ export class FocusGroupController<T extends HTMLElement>
 
     hostConnected(): void {
         this.elements.forEach((element) => {
-            this.mutationObserver.observe(element);
+            this.mutationObserver.observe(element, {
+                attributes: true,
+            });
         });
         this.addEventListeners();
     }
