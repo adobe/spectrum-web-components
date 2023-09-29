@@ -464,8 +464,7 @@ export class NumberField extends TextfieldBase {
     }
 
     private validateInput(value: number): number {
-        const signMultiplier = value < 0 ? -1 : 1;  // Basically I am checking if the the number is negative or not, if it is I am multiplying it by -1 to make it positive and the the function validateinput is doing its job and at the end before returning I am again multiplying by -1.
- 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
+        const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
         value *= signMultiplier;
         if (typeof this.min !== 'undefined') {
             value = Math.max(this.min, value);
