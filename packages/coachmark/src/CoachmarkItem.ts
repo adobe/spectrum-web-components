@@ -20,6 +20,13 @@ export type CoachmarkItem = {
     mediaType?: string;
     videoType?: string;
     toolVideoData?: string;
+    currentStep?: number;
+    totalSteps?: number;
+    inTour?: boolean;
+    prevButton?: boolean;
+    nextButton?: boolean;
+    hasActionMenu?: boolean;
+    showSteps?: boolean;
 };
 
 export enum VideoType {

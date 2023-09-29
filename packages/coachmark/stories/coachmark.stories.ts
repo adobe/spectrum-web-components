@@ -22,102 +22,6 @@ import { Placement } from '@spectrum-web-components/overlay';
 export default {
     title: 'Coachmark',
     component: 'sp-coachmark-trigger',
-    // argTypes: {
-    //     currentStep: {
-    //         name: 'currentStep',
-    //         type: { name: 'number' },
-    //         description:
-    //             'Current step in coachmark. Should always be less than totalSteps',
-    //         table: {
-    //             type: { summary: 'number' },
-    //         },
-    //         control: {
-    //             type: 'number',
-    //             min: 1,
-    //             default: 1,
-    //         },
-    //     },
-    //     totalSteps: {
-    //         name: 'totalSteps',
-    //         type: { name: 'number' },
-    //         description: 'totalSteps step in coachmark',
-    //         table: {
-    //             type: { summary: 'number' },
-    //         },
-    //         control: {
-    //             type: 'number',
-    //         },
-    //     },
-    //     prevButton: {
-    //         name: 'prevButton',
-    //         type: { name: 'boolean' },
-    //         description: 'Show or hide prevButton',
-    //         table: {
-    //             type: { summary: 'boolean' },
-    //             defaultValue: { summary: true },
-    //         },
-    //         control: {
-    //             type: 'boolean',
-    //         },
-    //     },
-    //     nextButton: {
-    //         name: 'nextButton',
-    //         type: { name: 'boolean' },
-    //         description: 'Show or hide nextButton',
-    //         table: {
-    //             type: { summary: 'boolean' },
-    //             defaultValue: { summary: true },
-    //         },
-    //         control: {
-    //             type: 'boolean',
-    //         },
-    //     },
-    //     inTour: {
-    //         name: 'inTour',
-    //         type: { name: 'boolean' },
-    //         description: 'Show or hide tour',
-    //         table: {
-    //             type: { summary: 'boolean' },
-    //             defaultValue: { summary: true },
-    //         },
-    //         control: {
-    //             type: 'boolean',
-    //         },
-    //     },
-    //     hasActionMenu: {
-    //         name: 'hasActionMenu',
-    //         type: { name: 'boolean' },
-    //         description: 'Show or hide Action Menu',
-    //         table: {
-    //             type: { summary: 'boolean' },
-    //             defaultValue: { summary: true },
-    //         },
-    //         control: {
-    //             type: 'boolean',
-    //         },
-    //     },
-    //     showSteps: {
-    //         name: 'showSteps',
-    //         type: { name: 'boolean' },
-    //         description: 'Show or hide Step Counter',
-    //         table: {
-    //             type: { summary: 'boolean' },
-    //             defaultValue: { summary: true },
-    //         },
-    //         control: {
-    //             type: 'boolean',
-    //         },
-    //     },
-    // },
-    // args: {
-    //     currentStep: undefined,
-    //     totalSteps: undefined,
-    //     inTour: true,
-    //     prevButton: true,
-    //     nextButton: true,
-    //     hasActionMenu: true,
-    //     showSteps: true,
-    // },
 };
 
 type Properties = {
@@ -134,8 +38,8 @@ type Properties = {
     imageAlt?: string;
     toolVideoData?: string;
     triggerInteraction: 'click' | 'hover' | 'longpress';
-    currentStep: number;
-    totalSteps: number;
+    currentStep?: number;
+    totalSteps?: number;
     inTour?: boolean;
     prevButton?: boolean;
     nextButton?: boolean;
@@ -165,6 +69,19 @@ Default.args = {
         'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here.',
     src: tree,
     mediaType: MediaType.IMAGE,
+    currentStep: 2,
+    totalSteps: 8,
+};
+
+export const NotInTour = (args: Properties): TemplateResult => Template(args);
+NotInTour.args = {
+    placement: 'right-start',
+    heading: 'Tooltip with 16:9 image',
+    content:
+        'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here.',
+    src: tree,
+    mediaType: MediaType.IMAGE,
+    inTour: false,
 };
 
 export const TextOnly = (args: Properties): TemplateResult => Template(args);
@@ -173,6 +90,8 @@ TextOnly.args = {
     heading: 'Bare bones',
     content:
         'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here.',
+    currentStep: 2,
+    totalSteps: 8,
 };
 
 export const Clickable = (args: Properties): TemplateResult => Template(args);
@@ -181,6 +100,8 @@ Clickable.args = {
     heading: 'Tooltip with 16:9 image',
     content: '16:9 is the default aspect ratio for the Rich Tooltip.',
     triggerInteraction: 'click',
+    currentStep: 2,
+    totalSteps: 8,
 };
 
 export const withGif = (args: Properties): TemplateResult => Template(args);
@@ -191,6 +112,8 @@ withGif.args = {
     content: 'This Rich Tooltip has a GIF in it.',
     src: gif,
     mediaType: MediaType.IMAGE,
+    currentStep: 2,
+    totalSteps: 8,
 };
 
 export const Video = (args: Properties): TemplateResult => Template(args);
@@ -202,6 +125,8 @@ Video.args = {
     src: 'https://download.samplelib.com/mp4/sample-5s.mp4',
     videoType: VideoType.MP4,
     mediaType: MediaType.VIDEO,
+    currentStep: 2,
+    totalSteps: 8,
 };
 
 export const Keys = (args: Properties): TemplateResult => Template(args);
@@ -214,6 +139,8 @@ Keys.args = {
         'Scale, rotate, skew, distort, warp, or apply perspective to pixel and vector layers',
     src: cave,
     mediaType: MediaType.IMAGE,
+    currentStep: 2,
+    totalSteps: 8,
 };
 
 export const linkInDescription = (args: Properties): TemplateResult =>
@@ -227,4 +154,6 @@ linkInDescription.args = {
     mediaType: MediaType.IMAGE,
     imageAlt: 'A gif of a red letter A over a purple background.',
     triggerInteraction: 'click',
+    currentStep: 2,
+    totalSteps: 8,
 };

@@ -18,7 +18,7 @@ import {
 import { Overlay, Placement } from '@spectrum-web-components/overlay';
 import { property, state } from 'lit/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import type { CoachmarkItem } from '@spectrum-web-components/coachmark';
+import type { CoachmarkItem } from './CoachmarkItem.js';
 import './Coachmark.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
@@ -105,6 +105,9 @@ export class CoachmarkTrigger extends SpectrumElement {
                               shortcut-key=${ifDefined(this.item.shortcutKey)}
                               .modifierKeys=${this.item.modifierKeys}
                               ?can-play="${this.canPlay}"
+                              currentStep=${ifDefined(this.item.currentStep)}
+                              totalSteps=${ifDefined(this.item.totalSteps)}
+                              ?intour=${this.item.inTour}
                           ></sp-coachmark>
                       `
                     : nothing}

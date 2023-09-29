@@ -17,11 +17,11 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { when } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import coachmarkStyles from './coachmark.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
@@ -111,10 +111,10 @@ export class Coachmark extends LikeAnchor(Popover) {
     public asset?: 'file' | 'folder';
 
     @property({ type: Number })
-    public currentStep = 1;
+    public currentStep?: number;
 
     @property({ type: Number })
-    public totalSteps = 10;
+    public totalSteps?: number;
 
     @property({ type: Boolean })
     public inTour = true;
@@ -303,8 +303,9 @@ export class Coachmark extends LikeAnchor(Popover) {
             `;
         }
 
-        if (this.inTour && this.totalSteps > 1) {
-            const showPreviousButton = this.currentStep > 1 && this.prevButton;
+        if (this.inTour && this.totalSteps && this.totalSteps > 1) {
+            const showPreviousButton =
+                this.currentStep && this.currentStep > 1 && this.prevButton;
             const showNextButton = this.totalSteps > 0 && this.nextButton;
             // Within a tour, use “Next” for all but the last step, and “Finish” for the last step
             const nextButtonText =
@@ -407,7 +408,7 @@ export class Coachmark extends LikeAnchor(Popover) {
             <div class="content">${this.renderContent()}</div>
             <div class="footer">
                 ${when(
-                    this.inTour && this.totalSteps > 0 && this.showSteps,
+                    this.inTour && this.totalSteps && this.totalSteps > 0,
                     this.renderSteps
                 )}
                 ${this.renderButtons()}
