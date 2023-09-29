@@ -44,9 +44,8 @@ export class CoachmarkTrigger extends SpectrumElement {
     @state()
     private triggerElement?: HTMLElement;
 
-    private get canPlay() {
-        return this.open;
-    }
+    @state()
+    private canPlay = false;
 
     private onSlotChange(event: Event): void {
         const slotTarget = event.target as HTMLSlotElement;
@@ -89,6 +88,7 @@ export class CoachmarkTrigger extends SpectrumElement {
                 .offset=${this.offset}
                 @beforetoggle=${this.handleBeforeToggle}
                 ?open=${this.open}
+                id="coachmark"
             >
                 ${this.item
                     ? html`

@@ -81,9 +81,6 @@ export class Coachmark extends LikeAnchor(Popover) {
     @property({ type: Array })
     public modifierKeys?: string[] = [];
 
-    @property()
-    public triggerInteraction?: 'click' | 'longpress' | 'hover';
-
     @property({ attribute: 'src' })
     private source?: string;
 

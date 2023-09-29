@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-coachmark>` element can be used to bring added attention to specific parts of your page.
+An `<sp-coachmark-trigger>` element can be used to bring added attention to specific parts of your page.
 
 ### Usage
 
@@ -12,17 +12,18 @@ An `<sp-coachmark>` element can be used to bring added attention to specific par
 yarn add @spectrum-web-components/coachmark
 ```
 
-Import the side effectful registration of `<sp-coachmark>` via:
+Import the side effectful registration of `<sp-coachmark-trigger>` and `<sp-coach-indicator>`via:
 
 ```
+import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
-import '@spectrum-web-components/coachmark/sp-coachmark.js';
-```
-
-When looking to leverage the `Coachmark` or `CoachIndicator` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Coachmark, CoachIndicator } from '@spectrum-web-components/coachmark';
+
+When looking to leverage the `CoachmarkTrigger` or `CoachIndicator` base class as a type and/or for extension purposes, do so via:
+
+```
+import { CoachmarkTrigger, CoachIndicator } from '@spectrum-web-components/coachmark';
 ```
 
 ## Standard CoachIndicator
@@ -41,47 +42,8 @@ import { Coachmark, CoachIndicator } from '@spectrum-web-components/coachmark';
 <sp-coach-indicator quiet variant="light"></sp-coach-indicator>
 ```
 
-## Default
+## Example
 
 ```html
-<div style="position: relative;height: 230px;">
-    <sp-coach-indicator></sp-coach-indicator>
-    <sp-popover open style="--mod-popover-content-area-spacing-vertical:0">
-        <sp-coachmark currentStep="2" totalSteps="8">
-            <div slot="title">Try playing with a pixel brush</div>
-            Pixel brushes use pixels to create brush strokes, just like in other
-            design and drawing tools. Start drawing, and zoom in to see the
-            pixels in each stroke.
-            <sp-action-menu placement="bottom-end" quiet slot="actions">
-                <sp-menu-item>Skip tour</sp-menu-item>
-                <sp-menu-item>Restart tour</sp-menu-item>
-            </sp-action-menu>
-        </sp-coachmark>
-    </sp-popover>
-</div>
-```
-
-## With media
-
-```html
-<div style="position:relative; height:450px;">
-    <sp-coach-indicator></sp-coach-indicator>
-    <sp-popover open style="--mod-popover-content-area-spacing-vertical:0">
-        <sp-coachmark currentStep="2" totalSteps="8">
-            <div slot="title">Try playing with a pixel brush</div>
-            Pixel brushes use pixels to create brush strokes, just like in other
-            design and drawing tools. Start drawing, and zoom in to see the
-            pixels in each stroke.
-            <img
-                slot="cover-photo"
-                src="https://picsum.photos/id/18/200/300"
-                alt="Demo"
-            />
-            <sp-action-menu placement="bottom-end" quiet slot="actions">
-                <sp-menu-item>Skip tour</sp-menu-item>
-                <sp-menu-item>Restart tour</sp-menu-item>
-            </sp-action-menu>
-        </sp-coachmark>
-    </sp-popover>
-</div>
+<sp-coachmark-trigger></sp-coachmark-trigger>
 ```
