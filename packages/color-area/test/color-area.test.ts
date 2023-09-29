@@ -547,6 +547,8 @@ describe('ColorArea', () => {
         );
 
         await elementUpdated(el);
+        const Xvalue = Number(Number(el.inputX.value).toFixed(2));
+        const Yvalue = Number(Number(el.inputY.value).toFixed(2));
 
         el.inputX.focus();
         inputSpy.resetHistory();
@@ -558,6 +560,9 @@ describe('ColorArea', () => {
 
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
+            (Xvalue + 0.02).toFixed(2)
+        );
 
         el.inputY.focus();
         inputSpy.resetHistory();
@@ -569,6 +574,9 @@ describe('ColorArea', () => {
 
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputY.value).toFixed(2)).to.equal(
+            (Yvalue + 0.02).toFixed(2)
+        );
 
         el.inputY.focus();
         inputSpy.resetHistory();
@@ -580,16 +588,78 @@ describe('ColorArea', () => {
 
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputY.value).toFixed(2)).to.equal(
+            Yvalue.toFixed(2)
+        );
 
         el.inputX.focus();
         inputSpy.resetHistory();
         changeSpy.resetHistory();
+
         await sendKeys({ press: 'ArrowLeft' });
         await sendKeys({ press: 'ArrowLeft' });
 
         await elementUpdated(el);
+        //expect(el.x).to.be.equal(0.98);
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
+            Xvalue.toFixed(2)
+        );
+
+        el.inputX.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'End' });
+        await sendKeys({ press: 'End' });
+
+        await elementUpdated(el);
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
+            (Xvalue + 0.2).toFixed(2)
+        );
+
+        el.inputX.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'Home' });
+        await sendKeys({ press: 'Home' });
+
+        await elementUpdated(el);
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
+            Xvalue.toFixed(2)
+        );
+
+        el.inputY.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'PageUp' });
+        await sendKeys({ press: 'PageUp' });
+
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputY.value).toFixed(2)).to.equal(
+            (Yvalue + 0.2).toFixed(2)
+        );
+
+        el.inputY.focus();
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        await sendKeys({ press: 'PageDown' });
+        await sendKeys({ press: 'PageDown' });
+
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+        expect(parseFloat(el.inputY.value).toFixed(2)).to.equal(
+            Yvalue.toFixed(2)
+        );
     });
     it('retains `hue` value when s = 0 in HSL string format', async () => {
         const el = await fixture<ColorArea>(
