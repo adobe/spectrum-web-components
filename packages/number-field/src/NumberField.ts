@@ -473,6 +473,8 @@ export class NumberField extends TextfieldBase {
     }
 
     private validateInput(value: number): number {
+        const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
+        value *= signMultiplier;
         if (typeof this.min !== 'undefined') {
             value = Math.max(this.min, value);
         }
@@ -498,6 +500,7 @@ export class NumberField extends TextfieldBase {
                 }
             }
         }
+        value *= signMultiplier;
         return value;
     }
 
