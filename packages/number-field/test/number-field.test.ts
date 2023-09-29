@@ -128,6 +128,20 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('5');
             expect(el.valueAsString).to.equal('5');
         });
+
+        it('supports both positive and negative decimal values', async () => {
+            const el = await getElFrom(
+                Default({
+                    step: 0.001,
+                    min: -10,
+                    max: 10,
+                    value: -2.4,
+                })
+            );
+            el.size = 'xl';
+            expect(el.value).to.equal(-2.4);
+            expect(el.valueAsString).to.equal('-2.4');
+        });
     });
     describe('Increments', () => {
         let el: NumberField;
