@@ -64,3 +64,11 @@ export function sendMouse(options: { steps: Step[] }) {
     queueMouseCleanUp();
     return executeServerCommand('send-pointer', options);
 }
+
+/**
+ * Call to the browser with instructions for interacting with the pointing
+ * device while queueing cleanup of those commands after the test is run.
+ */
+export function grantPermissions(options: string[]) {
+    return executeServerCommand('grant-permissions', options);
+}
