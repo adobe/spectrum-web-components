@@ -31,6 +31,7 @@ import {
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 describe('Menu', () => {
     it('renders empty', async () => {
@@ -164,6 +165,38 @@ describe('Menu', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+
+    it('has a "value" that can be copied during "change" events', async function () {
+        if (isWebKit()) {
+            this.skip();
+        }
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu
+                    selects="single"
+                    @change=${({
+                        target: { value },
+                    }: Event & { target: Menu }): void => {
+                        navigator.clipboard.writeText(value);
+                    }}
+                >
+                    <sp-menu-item>Not Selected</sp-menu-item>
+                    <sp-menu-item selected>Selected</sp-menu-item>
+                    <sp-menu-item id="other">Other</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const otherItem = el.querySelector('#other') as MenuItem;
+        otherItem.click();
+
+        await elementUpdated(el);
+
+        const clipboardText = await navigator.clipboard.readText();
+        expect(clipboardText).to.equal('Other');
     });
 
     it('renders w/ hrefs', async () => {
