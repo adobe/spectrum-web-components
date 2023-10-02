@@ -113,6 +113,8 @@ export class FocusGroupController<T extends HTMLElement>
     // and the first rendered element.
     offset = 0;
 
+    recentlyConnected = false;
+
     constructor(
         host: ReactiveElement,
         {
@@ -193,9 +195,11 @@ export class FocusGroupController<T extends HTMLElement>
         this.mutationObserver.disconnect();
         delete this.cachedElements;
         this.offset = offset;
-        this.elements.forEach((element) => {
-            this.mutationObserver.observe(element, {
-                attributes: true,
+        requestAnimationFrame(() => {
+            this.elements.forEach((element) => {
+                this.mutationObserver.observe(element, {
+                    attributes: true,
+                });
             });
         });
     }
@@ -333,16 +337,23 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     hostConnected(): void {
-        this.elements.forEach((element) => {
-            this.mutationObserver.observe(element, {
-                attributes: true,
-            });
-        });
+        this.recentlyConnected = true;
         this.addEventListeners();
     }
 
     hostDisconnected(): void {
         this.mutationObserver.disconnect();
         this.removeEventListeners();
+    }
+
+    hostUpdated(): void {
+        if (this.recentlyConnected) {
+            this.recentlyConnected = false;
+            this.elements.forEach((element) => {
+                this.mutationObserver.observe(element, {
+                    attributes: true,
+                });
+            });
+        }
     }
 }
