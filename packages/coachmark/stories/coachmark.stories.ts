@@ -48,7 +48,7 @@ type Properties = {
 };
 
 const Template = (props: Properties): TemplateResult => {
-    const { open, placement, triggerInteraction, ...item } = props;
+    const { open = true, placement, triggerInteraction, ...item } = props;
     return html`
         <sp-coachmark-trigger
             ?open=${open}
