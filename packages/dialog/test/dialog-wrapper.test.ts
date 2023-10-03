@@ -17,7 +17,7 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import { spy, stub } from 'sinon';
+import { SinonStub, spy, stub } from 'sinon';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -26,6 +26,7 @@ import { Dialog, DialogWrapper } from '@spectrum-web-components/dialog';
 import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
 import {
+    lazyHero,
     longContent,
     wrapperButtons,
     wrapperButtonsUnderlay,
@@ -42,6 +43,8 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -290,27 +293,77 @@ describe('Dialog Wrapper', () => {
         expect(cancelSpy.called, 'dispatched `secondary`').to.be.true;
     });
 
-    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        const el = await fixture<DialogWrapper>(html`
-            <sp-dialog-wrapper></sp-dialog-wrapper>
-        `);
-
-        await elementUpdated(el);
-
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            spyCall.args.at(0).includes('accessible'),
-            'confirm accessibility-centric message'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-dialog-wrapper',
-                type: 'accessibility',
-                level: 'default',
-            },
+    describe('dev mode', () => {
+        let consoleWarnStub!: SinonStub;
+        before(() => {
+            consoleWarnStub = stub(console, 'warn');
         });
-        consoleWarnStub.restore();
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            consoleWarnStub.restore();
+        });
+        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+            const el = await fixture<DialogWrapper>(html`
+                <sp-dialog-wrapper></sp-dialog-wrapper>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                spyCall.args.at(0).includes('accessible'),
+                'confirm accessibility-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-dialog-wrapper',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
+    });
+
+    it('manages content element tabindex on resize observer time', async () => {
+        const imgReadyPromise = new Promise((res) => {
+            const img = document.createElement('img');
+            img.onload = res;
+            img.src = lazyHero.args.src;
+        });
+        const test = await styledFixture(lazyHero(lazyHero.args));
+        const dialog = document.querySelector(
+            'sp-dialog-wrapper'
+        ) as DialogWrapper;
+        const button = document.querySelector('sp-button') as Button;
+        const rect = button.getBoundingClientRect();
+        const contentElement = (
+            (dialog as unknown as { dialog: Dialog }).dialog as unknown as {
+                contentElement: HTMLElement;
+            }
+        ).contentElement;
+        expect(contentElement.hasAttribute('tabindex')).to.be.false;
+        await elementUpdated(dialog);
+        const opened = oneEvent(test, 'sp-opened');
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await opened;
+        await elementUpdated(dialog);
+        await imgReadyPromise;
+        // Resize observer timing.
+        await nextFrame();
+        await nextFrame();
+        expect(contentElement.hasAttribute('tabindex')).to.be.true;
     });
 });
