@@ -93,7 +93,7 @@ export class CoachmarkTrigger extends SpectrumElement {
                 ${this.item
                     ? html`
                           <sp-coachmark
-                              id="coachmark"
+                              id="coachmarkContent"
                               .content=${{
                                   title: this.item.heading,
                                   description: this.item.content,

@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-coachmark-trigger>` element can be used to bring added attention to specific parts of your page.
+Coachmark is the way to show temporary messages that educate users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour..
 
 ### Usage
 
@@ -12,38 +12,59 @@ An `<sp-coachmark-trigger>` element can be used to bring added attention to spec
 yarn add @spectrum-web-components/coachmark
 ```
 
-Import the side effectful registration of `<sp-coachmark-trigger>` and `<sp-coach-indicator>`via:
+Import the side effectful registration of `<sp-coachmark-trigger>` via:
 
 ```
 import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
-import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 
 ```
 
-When looking to leverage the `CoachmarkTrigger` or `CoachIndicator` base class as a type and/or for extension purposes, do so via:
+When looking to leverage the `CoachmarkTrigger` base class as a type and/or for extension purposes, do so via:
 
 ```
 import { CoachmarkTrigger, CoachIndicator } from '@spectrum-web-components/coachmark';
 ```
 
-## Standard CoachIndicator
-
-```html
-<sp-coach-indicator></sp-coach-indicator>
-<sp-coach-indicator variant="dark"></sp-coach-indicator>
-<sp-coach-indicator variant="light"></sp-coach-indicator>
-```
-
-## Quiet CoachIndicator
-
-```html
-<sp-coach-indicator quiet></sp-coach-indicator>
-<sp-coach-indicator quiet variant="dark"></sp-coach-indicator>
-<sp-coach-indicator quiet variant="light"></sp-coach-indicator>
-```
-
 ## Example
 
-```html
-<sp-coachmark-trigger></sp-coachmark-trigger>
+```js
+const item = {
+    placement: 'right-start',
+    heading: 'Tooltip with 16:9 image',
+    content:
+        'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here.',
+    src: 'https://picsum.photos/200/300',
+    mediaType: 'image',
+    currentStep: 2,
+    totalSteps: 8,
+    triggerInteraction: 'click',
+};
 ```
+
+```html-live
+<sp-coachmark-trigger placement="right" triggerInteraction='click' .item=${item} open=${open}>
+    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+</sp-coachmark-trigger>
+```
+
+<script type="module">
+        const item = {
+            placement: 'right-start',
+            heading: 'Tooltip with 16:9 image',
+            content:
+                'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here.',
+            src: 'https://picsum.photos/id/237/200/300',
+            mediaType: 'image',
+            currentStep: 2,
+            totalSteps: 8,
+            triggerInteraction: 'click',
+    };
+    const initCoachMark = () => {
+        const coachmark = document.querySelector('sp-coachmark-trigger');
+        coachmark.item = item
+        return coachmark
+    };
+    customElements.whenDefined('sp-coachmark-trigger').then(() => {
+        initCoachMark();
+    });
+</script>
