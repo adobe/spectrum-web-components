@@ -5982,9 +5982,9 @@
   integrity sha512-BVuMWQ6LG/lqRQjqct1lHx/AhGz/ZXTgdaW5RwwEHYXGdNqBX3p5K/49vBgm6waFyiquczJDYGVmnY0T5X/8ww==
 
 "@spectrum-css/table@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-5.0.1.tgz#cef3fcd0550726e9fa31ff7839cf922492323775"
-  integrity sha512-GH7daJU2LlfIBZcP6+V6omW36hnyJCht2Ez2Gngkz+NS+2df6IsRgn7AS4WSrMPRqhr4CA+c8200t18g8aFLwQ==
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-5.0.5.tgz#8940fc28dcb1af3c4dbab3c4da1dad04068a3852"
+  integrity sha512-AZ4OiNTIwlwgK1p79SFAH2CR+l5s/LUJ0FrrnQHj2UCbTtF5ZPfMedKMevVf39jnBMDv9YjU6bNAKaO0v+ykeg==
 
 "@spectrum-css/tabs@^4.0.17":
   version "4.0.17"
