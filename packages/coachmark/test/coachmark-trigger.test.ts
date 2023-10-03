@@ -18,7 +18,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { sendKeys, sendMouse } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import {
@@ -28,6 +28,7 @@ import {
 } from '@spectrum-web-components/coachmark';
 import { Overlay } from '@spectrum-web-components/overlay';
 import { tree } from '../stories/images.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 const defaultItem: CoachmarkItem = {
     heading: 'Heading',
@@ -113,9 +114,16 @@ describe('CoachmarkTrigger', () => {
 
         const beforeToggleEvent = oneEvent(overlay, 'beforetoggle');
 
-        const pos = getMiddleOf(triggerEl);
+        const pos = triggerEl.getBoundingClientRect();
 
-        await sendMouse({ type: 'move', position: pos });
+        await sendMouse({
+            steps: [
+                {
+                    position: [pos.x + 2, pos.y + 2],
+                    type: 'move',
+                },
+            ],
+        });
 
         await beforeToggleEvent;
 
@@ -152,11 +160,3 @@ describe('CoachmarkTrigger', () => {
         });
     });
 });
-
-function getMiddleOf(el: HTMLElement): [number, number] {
-    const { x, y, width, height } = el.getBoundingClientRect();
-    return [
-        Math.round(x + window.scrollX + width / 2),
-        Math.round(y + window.scrollY + height / 2),
-    ];
-}
