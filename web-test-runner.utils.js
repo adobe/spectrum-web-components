@@ -20,6 +20,7 @@ export const chromium = playwrightLauncher({
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
         }),
 });
 
@@ -31,6 +32,7 @@ export const chromiumWithFlags = playwrightLauncher({
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
         }),
 });
 
@@ -50,6 +52,8 @@ export const firefox = playwrightLauncher({
             'dom.min_background_timeout_value': 10,
             'extensions.autoDisableScopes': 0,
             'extensions.enabledScopes': 15,
+            'dom.events.asyncClipboard.readText': true,
+            'dom.events.testing.asyncClipboard': true,
         },
     },
 });
