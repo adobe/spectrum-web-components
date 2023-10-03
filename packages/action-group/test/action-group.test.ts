@@ -535,6 +535,46 @@ describe('ActionGroup', () => {
             'Updates value of `selected`'
         );
     });
+    it('consumes descendant `change` events when `[selects]`', async () => {
+        const changeSpy = spy();
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    @change=${() => changeSpy()}
+                    label="Selects Single Group"
+                    selects="single"
+                >
+                    <sp-action-button toggles value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button toggles value="second" selected>
+                        Second
+                    </sp-action-button>
+                    <sp-action-button toggles value="third" class="third">
+                        Third
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+        const thirdElement = el.querySelector('.third') as ActionButton;
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected.includes('second'));
+        expect(changeSpy.callCount).to.equal(0);
+
+        thirdElement.click();
+
+        await elementUpdated(el);
+
+        expect(thirdElement.selected, 'third child selected').to.be.true;
+        expect(changeSpy.callCount).to.equal(1);
+
+        await waitUntil(
+            () => el.selected.length === 1 && el.selected.includes('third'),
+            'Updates value of `selected`'
+        );
+    });
     it('does not respond to clicks on itself', async () => {
         const el = await fixture<ActionGroup>(
             html`
