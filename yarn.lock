@@ -5972,9 +5972,9 @@
   integrity sha512-Msjab2Renj1oLJuEC3f7TfcZ4Rvy9887Dy/K2FfIeVYKqJg8n4gAhagYeV9gEY/AES5cvsnyF/wVqpCYp4oAOg==
 
 "@spectrum-css/swatchgroup@^2.0.68":
-  version "2.0.68"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/swatchgroup/-/swatchgroup-2.0.68.tgz#02071bf130cfda35506d8c194c40cdecc8473e88"
-  integrity sha512-I1l3A/4acma/pvKSeWK/wMY23D/ro5a0qd/R7GX0ATnVThIhEFvShOsQ2GnuX+rtKhK0Qg6KcbYB9WLLcrVxGQ==
+  version "2.0.72"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/swatchgroup/-/swatchgroup-2.0.72.tgz#0ca29423edc960d4c80dea37a30c8243d9455639"
+  integrity sha512-cmH7W0mQqZ5DczF4AtRnzOPD3yGlD8A38Hz+FLBQSlpQ7rtsyf6k9uJ42YztFGdwUkZUwh3DPFsMy0UOtgP2hQ==
 
 "@spectrum-css/switch@^4.0.7":
   version "4.0.7"
