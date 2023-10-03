@@ -115,6 +115,9 @@ withGif.args = {
     currentStep: 2,
     totalSteps: 8,
 };
+withGif.swc_vrt = {
+    skip: true,
+};
 
 export const Video = (args: Properties): TemplateResult => Template(args);
 Video.args = {
