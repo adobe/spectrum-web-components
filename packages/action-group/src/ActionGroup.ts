@@ -183,6 +183,11 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         });
     }
 
+    private handleActionButtonChange(event: Event): void {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
     private handleClick(event: Event): void {
         const target = event.target as ActionButton;
         if (typeof target.value === 'undefined') {
@@ -339,6 +344,17 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         if (changes.has('selects')) {
             this.manageSelects();
             this.manageChildren();
+            if (!!this.selects) {
+                this.shadowRoot.addEventListener(
+                    'change',
+                    this.handleActionButtonChange
+                );
+            } else {
+                this.shadowRoot.removeEventListener(
+                    'change',
+                    this.handleActionButtonChange
+                );
+            }
         }
         if (
             changes.has('quiet') ||

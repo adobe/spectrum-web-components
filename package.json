@@ -36,7 +36,7 @@
         "icons": "wireit",
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
-        "lerna-publish": "lerna publish --message \"chore: release new versions #publish\"",
+        "lerna-publish": "lerna publish --message \"chore: release new versions #publish\" --force-publish",
         "lint": "run-p lint:js lint:docs lint:ts lint:css lint:packagejson",
         "lint:css": "stylelint \"packages/**/*.css\" \"tools/**/*.css\"",
         "lint:docs": "eslint -f pretty \"projects/documentation/**/*.ts\"",

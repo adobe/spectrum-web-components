@@ -23,6 +23,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { landscape } from './images.js';
 import { overlayTriggerDecorator } from './index.js';
+import type { DialogWrapper } from '@spectrum-web-components/dialog';
 
 export default {
     title: 'Dialog Wrapped',
@@ -568,3 +569,76 @@ export const tooltips = (
 };
 
 tooltips.decorators = [overlayTriggerDecorator];
+
+export const lazyHero = ({ src }: { src: string }): TemplateResult => {
+    const handleOpened = (): void => {
+        (document.querySelector('sp-dialog-wrapper') as DialogWrapper).hero =
+            src;
+    };
+    return html`
+        <overlay-trigger content="click" @sp-opened=${handleOpened}>
+            <sp-button slot="trigger">Toggle Dialog</sp-button>
+            <sp-dialog-wrapper
+                slot="click-content"
+                headline="Dialog title"
+                confirm-label="Primary"
+            >
+                <p>Content of the dialog</p>
+                <ol>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                </ol>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
+    `;
+};
+
+lazyHero.args = {
+    src: 'https://dummyimage.com/800x400/000/fff',
+};
+
+lazyHero.swc_vrt = {
+    skip: true,
+};
