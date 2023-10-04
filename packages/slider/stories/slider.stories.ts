@@ -132,6 +132,26 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const autofocus = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                autofocus
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+
 export const minimalDOM = (): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
