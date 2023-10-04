@@ -38,7 +38,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 /**
- * @element sp-coackmark
+ * @element sp-coachmark
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
  * @slot heading - HTML content to be listed as the heading
  * @slot description - A description of the card
@@ -54,10 +54,7 @@ export class Coachmark extends LikeAnchor(Popover) {
 
     @property({ type: String })
     public override placement: Placement = 'right';
-    /**
-     * The text content of the Rich Tooltip.
-     * Includes an optional text descriptor for an image.
-     */
+
     @property({ type: Object, attribute: false })
     private content?: {
         title?: string;
@@ -68,16 +65,9 @@ export class Coachmark extends LikeAnchor(Popover) {
     @property({ type: Number })
     public offset = 6;
 
-    /**
-     * The keyboard shortcut corresponding to an action
-     */
     @property({ attribute: 'shortcut-key' })
     private shortcutKey?: string;
 
-    /**
-     * Any modifier keys needed for the shortcut, like Shift, Alt, Cmd, or Win.
-     * These render before the shortcutKey.
-     */
     @property({ type: Array })
     public modifierKeys?: string[] = [];
 
@@ -93,9 +83,6 @@ export class Coachmark extends LikeAnchor(Popover) {
     @property({ type: Boolean, attribute: 'has-asset', reflect: true })
     public hasAsset = false;
 
-    /**
-     * attr can-play is used to trigger the video play
-     */
     @property({ type: Boolean, attribute: 'can-play' })
     public canPlay = false;
 
@@ -233,41 +220,38 @@ export class Coachmark extends LikeAnchor(Popover) {
         const hasTitle = Boolean(this.content?.title);
         if (!hasTitle && !hasModifier && !hasShortcut) {
             return html`
-                <slot name="title"></slot>
+                <div class="title"><slot name="title"></slot></div>
             `;
         }
         return html`
-            <div class="header">
-                ${hasTitle
-                    ? html`
-                          <div class="title">${this.content?.title}</div>
-                      `
-                    : nothing}
-                ${hasModifier || hasShortcut
-                    ? html`
-                          <kbd class="keys spectrum-Body spectrum-Body--sizeS">
-                              ${hasModifier
-                                  ? join(
-                                        this.modifierKeys?.map((k) =>
-                                            this.renderModifier(k)
-                                        ),
-                                        this.renderJoiner()
-                                    )
-                                  : nothing}
-                              ${hasShortcut && hasModifier
-                                  ? this.renderJoiner()
-                                  : nothing}
-                              ${hasShortcut
-                                  ? this.renderModifier(
-                                        this.shortcutKey!,
-                                        'shortcut'
-                                    )
-                                  : nothing}
-                          </kbd>
-                      `
-                    : nothing}
-                ${this.hasActionMenu ? this.renderActionMenu() : nothing}
-            </div>
+            ${hasTitle
+                ? html`
+                      <div class="title">${this.content?.title}</div>
+                  `
+                : nothing}
+            ${hasModifier || hasShortcut
+                ? html`
+                      <kbd class="keys spectrum-Body spectrum-Body--sizeS">
+                          ${hasModifier
+                              ? join(
+                                    this.modifierKeys?.map((k) =>
+                                        this.renderModifier(k)
+                                    ),
+                                    this.renderJoiner()
+                                )
+                              : nothing}
+                          ${hasShortcut && hasModifier
+                              ? this.renderJoiner()
+                              : nothing}
+                          ${hasShortcut
+                              ? this.renderModifier(
+                                    this.shortcutKey!,
+                                    'shortcut'
+                                )
+                              : nothing}
+                      </kbd>
+                  `
+                : nothing}
         `;
     }
 
@@ -401,7 +385,12 @@ export class Coachmark extends LikeAnchor(Popover) {
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderMedia()} ${this.renderHeader()}
+            ${this.renderMedia()}
+            <div class="header">
+                ${this.renderHeader()}
+                ${when(this.hasActionMenu, this.renderActionMenu)}
+            </div>
+
             <div class="content">${this.renderContent()}</div>
             <div class="footer">
                 ${when(

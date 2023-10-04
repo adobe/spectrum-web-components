@@ -1,6 +1,6 @@
 ## Description
 
-Coachmark is the way to show temporary messages that educate users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour..
+`sp-coachmark` are temporary messages that educate users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour.
 
 ### Usage
 
@@ -12,59 +12,47 @@ Coachmark is the way to show temporary messages that educate users through new o
 yarn add @spectrum-web-components/coachmark
 ```
 
-Import the side effectful registration of `<sp-coachmark-trigger>` via:
+Import the side effectful registration of `<sp-coachmark>` via:
 
 ```
-import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
+import '@spectrum-web-components/coachmark/sp-coachmark.js';
 
 ```
 
-When looking to leverage the `CoachmarkTrigger` base class as a type and/or for extension purposes, do so via:
+When looking to leverage the `Coachmark` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { CoachmarkTrigger, CoachIndicator } from '@spectrum-web-components/coachmark';
+import { Coachmark } from '@spectrum-web-components/coachmark';
 ```
 
 ## Example
 
-```js
-const item = {
-    placement: 'right-start',
-    heading: 'Tooltip with 16:9 image',
-    content:
-        'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here.',
-    src: 'https://picsum.photos/200/300',
-    mediaType: 'image',
-    currentStep: 2,
-    totalSteps: 8,
-    triggerInteraction: 'click',
-};
+### Default
+
+```html
+<sp-coachmark currentstep="2" totalsteps="8" open>
+    <div slot="title">A thing is about to happen</div>
+    <div slot="content">
+        This is a Rich Tooltip with nothing but text in it. Kind of lonely in
+        here.
+    </div>
+</sp-coachmark>
 ```
 
-```html-live
-<sp-coachmark-trigger placement="right" triggerInteraction='click' .item=${item} open=${open}>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-</sp-coachmark-trigger>
-```
+### with Media
 
-<script type="module">
-        const item = {
-            placement: 'right-start',
-            heading: 'Tooltip with 16:9 image',
-            content:
-                'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here.',
-            src: 'https://picsum.photos/id/237/200/300',
-            mediaType: 'image',
-            currentStep: 2,
-            totalSteps: 8,
-            triggerInteraction: 'click',
-    };
-    const initCoachMark = () => {
-        const coachmark = document.querySelector('sp-coachmark-trigger');
-        coachmark.item = item
-        return coachmark
-    };
-    customElements.whenDefined('sp-coachmark-trigger').then(() => {
-        initCoachMark();
-    });
-</script>
+```html
+<sp-coachmark currentstep="2" totalsteps="8" open>
+    <div slot="title">Tooltip with 16:9 image</div>
+    <div slot="content">
+        This is a Rich Tooltip with nothing but text in it. Kind of lonely in
+        here.
+    </div>
+    <img
+        class="image"
+        loading="lazy"
+        slot="asset"
+        src="https://picsum.photos/id/237/200/300"
+    />
+</sp-coachmark>
+```
