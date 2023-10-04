@@ -533,7 +533,7 @@ export class HandleController {
     public render(): TemplateResult[] {
         this.clearHandleComponentCache();
         return this.model.map((model, index) => {
-            const zIndex = this.handleOrder.indexOf(model.name) + 1;
+            const zIndex = this.handleOrder.indexOf(model.name) + 2;
             return this.renderHandle(
                 model,
                 index,
