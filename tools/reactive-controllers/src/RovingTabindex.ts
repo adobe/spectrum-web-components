@@ -86,7 +86,8 @@ export class RovingTabindexController<
         super.unmanage();
     }
 
-    hostUpdated(): void {
+    override hostUpdated(): void {
+        super.hostUpdated();
         if (!this.host.hasUpdated) {
             this.manageTabindexes();
         }
