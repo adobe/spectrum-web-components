@@ -252,4 +252,80 @@ describe('Coachmark', () => {
         expect(prevButton).to.not.be.undefined;
         expect(prevButton?.textContent?.trim()).to.equal('Previous');
     });
+    it('renders a video element and allows play pause a video', async () => {
+        const el = await fixture<Coachmark>(html`
+            <sp-coachmark
+                currentstep="2"
+                totalsteps="8"
+                open
+                media-type="video"
+                video-type="mp4"
+                src="https://download.samplelib.com/mp4/sample-5s.mp4"
+            >
+                <div slot="title">Tooltip with 16:9 image</div>
+                <div slot="content">
+                    This is a Rich Tooltip with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+            </sp-coachmark>
+        `);
+        await elementUpdated(el);
+        const video = el.shadowRoot.querySelector(
+            'source[src="https://download.samplelib.com/mp4/sample-5s.mp4"]'
+        );
+        expect(video).to.not.be.undefined;
+    });
+    it('renders shortcut and modifier key with joiner', async () => {
+        const modifierKeys = ['⇧ Shift', '⌘'];
+        const el = await fixture<Coachmark>(html`
+            <sp-coachmark
+                currentstep="2"
+                totalsteps="8"
+                open
+                shortcut-key="Z"
+                .modifierKeys=${modifierKeys}
+            >
+                <div slot="title">Tooltip with 16:9 image</div>
+                <div slot="content">
+                    This is a Rich Tooltip with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+            </sp-coachmark>
+        `);
+        await elementUpdated(el);
+        const modifier = el.shadowRoot.querySelector('span[type="modifier"');
+        expect(modifier).to.not.be.undefined;
+        expect(modifier?.textContent?.trim()).to.include('⇧ Shift');
+        const joiner = el.shadowRoot.querySelector('span[class="plus"]');
+        expect(joiner).to.not.be.undefined;
+        expect(joiner?.textContent?.trim()).to.include('+');
+
+        const shortcutKey = el.shadowRoot.querySelector(
+            'span[type="shortcut"]'
+        );
+        expect(shortcutKey).to.not.be.undefined;
+        expect(shortcutKey?.textContent?.trim()).to.include('Z');
+    });
+    it('renders content with image asset', async () => {
+        const el = await fixture<Coachmark>(html`
+            <sp-coachmark
+                currentstep="2"
+                totalsteps="8"
+                open
+                media-type="image"
+                src="https://picsum.photos/id/237/200/300"
+            >
+                <div slot="title">Tooltip with 16:9 image</div>
+                <div slot="content">
+                    This is a Rich Tooltip with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+            </sp-coachmark>
+        `);
+        await elementUpdated(el);
+        const imageElement = el.shadowRoot.querySelector(
+            'img[src="https://picsum.photos/id/237/200/300"'
+        );
+        expect(imageElement).not.to.be.undefined;
+    });
 });
