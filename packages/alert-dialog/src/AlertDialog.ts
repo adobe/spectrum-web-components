@@ -20,9 +20,10 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-button.js';
-import alertStyles from './alert-dialog.css.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+import alertStyles from './alert-dialog.css.js';
 
 export type AlertDialogVariants =
     | 'confirmation'
@@ -68,6 +69,12 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     @query('.content')
     private contentElement!: HTMLDivElement;
+
+    private resizeController = new ResizeController(this, {
+        callback: () => {
+            this.shouldManageTabOrderForScrolling();
+        },
+    });
 
     public _variant: AlertDialogVariants = '';
 
@@ -144,6 +151,8 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     public shouldManageTabOrderForScrolling = (): void => {
+        if (!this.contentElement) return;
+
         const { offsetHeight, scrollHeight } = this.contentElement;
         if (offsetHeight < scrollHeight) {
             this.contentElement.tabIndex = 0;
@@ -158,8 +167,10 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         target,
     }: Event & { target: HTMLSlotElement }): void {
         requestAnimationFrame(() => {
-            // Content must be available _AND_ styles must be applied.
-            this.shouldManageTabOrderForScrolling();
+            // Can happen more than once. Take this.contentElement out
+            // of the observer before adding it again.
+            this.resizeController.unobserve(this.contentElement);
+            this.resizeController.observe(this.contentElement);
         });
         if (this.conditionDescribedby) {
             this.conditionDescribedby();
@@ -210,21 +221,5 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 ${this.renderContent()} ${this.renderButtons()}
             </div>
         `;
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        window.addEventListener(
-            'resize',
-            this.shouldManageTabOrderForScrolling
-        );
-    }
-
-    public override disconnectedCallback(): void {
-        window.removeEventListener(
-            'resize',
-            this.shouldManageTabOrderForScrolling
-        );
-        super.disconnectedCallback();
     }
 }

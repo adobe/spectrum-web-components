@@ -58,7 +58,14 @@ export const Default = (): TemplateResult => {
 
 export const singleSelect = (): TemplateResult => {
     return html`
-        <sp-menu selects="single">
+        <sp-menu
+            selects="single"
+            @change=${({
+                target: { value },
+            }: Event & { target: Menu }): void => {
+                navigator.clipboard.writeText(value);
+            }}
+        >
             <sp-menu-item selected>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>
@@ -69,7 +76,14 @@ export const singleSelect = (): TemplateResult => {
         </sp-menu>
 
         <sp-popover open>
-            <sp-menu selects="single">
+            <sp-menu
+                selects="single"
+                @change=${({
+                    target: { value },
+                }: Event & { target: Menu }): void => {
+                    navigator.clipboard.writeText(value);
+                }}
+            >
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item selected>Feather...</sp-menu-item>

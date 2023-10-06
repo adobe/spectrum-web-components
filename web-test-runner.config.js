@@ -26,6 +26,7 @@ import {
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
 import rollupCommonjs from '@rollup/plugin-commonjs';
+import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
@@ -38,6 +39,7 @@ export default {
         }),
         sendKeysPlugin(),
         sendMousePlugin(),
+        grantPermissionsPlugin(),
         a11ySnapshotPlugin(),
         configuredVisualRegressionPlugin(),
         json({}),

@@ -17,7 +17,7 @@ import {
     fixture as owcFixture,
 } from '@open-wc/testing';
 import { html } from '@spectrum-web-components/base';
-import { spy, stub } from 'sinon';
+import { SinonStub, spy, stub } from 'sinon';
 import type { HookFunction } from 'mocha';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -29,17 +29,27 @@ import { sendMouse } from './plugins/browser.js';
 export async function testForLitDevWarnings(
     fixture: () => Promise<HTMLElement>
 ): Promise<void> {
-    it('does not emit Lit Dev Mode warnings', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        const el = await fixture();
+    describe('lit dev mode', () => {
+        let consoleWarnStub!: SinonStub;
+        before(() => {
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            consoleWarnStub.restore();
+        });
+        it('does not emit warnings', async () => {
+            const el = await fixture();
 
-        await elementUpdated(el);
+            await elementUpdated(el);
 
-        expect(
-            consoleWarnStub.called,
-            consoleWarnStub.getCall(0)?.args.join(', ')
-        ).to.be.false;
-        consoleWarnStub.restore();
+            expect(
+                consoleWarnStub.called,
+                consoleWarnStub.getCall(0)?.args.join(', ')
+            ).to.be.false;
+        });
     });
 }
 

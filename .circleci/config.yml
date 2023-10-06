@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 99a8149cd777381cc814281e2a01fcce36b2a211
+        default: d9753afda922e1231ca00c526993367854742104
     wireit_cache_name:
         type: string
         default: wireit
@@ -20,7 +20,7 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - restore_cache:
                   keys:
                       - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
@@ -30,7 +30,8 @@ commands:
             - save_cache:
                   paths:
                       - ~/.cache/yarn
-                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - ~/.cache/ms-playwright
+                  key: v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
                       - .wireit

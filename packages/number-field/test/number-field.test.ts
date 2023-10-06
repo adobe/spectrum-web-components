@@ -128,6 +128,20 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('5');
             expect(el.valueAsString).to.equal('5');
         });
+
+        it('supports both positive and negative decimal values', async () => {
+            const el = await getElFrom(
+                Default({
+                    step: 0.001,
+                    min: -10,
+                    max: 10,
+                    value: -2.4,
+                })
+            );
+            el.size = 'xl';
+            expect(el.value).to.equal(-2.4);
+            expect(el.valueAsString).to.equal('-2.4');
+        });
     });
     describe('Increments', () => {
         let el: NumberField;
@@ -362,6 +376,16 @@ describe('NumberField', () => {
                 changeSpy((event.target as NumberField)?.value);
             });
         });
+        it('on changing `value`', async () => {
+            el.focus();
+            await elementUpdated(el);
+            expect(el.focused).to.be.true;
+            el.value = 51;
+            expect(changeSpy.callCount).to.equal(1);
+            await elementUpdated(el);
+            el.value = 52;
+            expect(changeSpy.callCount).to.equal(2);
+        });
         it('via scroll', async () => {
             el.focus();
             await elementUpdated(el);
@@ -542,6 +566,72 @@ describe('NumberField', () => {
             expect(el.value).to.equal(52);
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(0);
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(53);
+            expect(inputSpy.callCount).to.equal(3);
+            expect(changeSpy.callCount).to.equal(0);
+            sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonDownPosition,
+                    },
+                ],
+            });
+            let framesToWait = FRAMES_PER_CHANGE * 2;
+            while (framesToWait) {
+                // input is only processed onces per FRAMES_PER_CHANGE number of frames
+                framesToWait -= 1;
+                await nextFrame();
+            }
+            expect(inputSpy.callCount).to.equal(5);
+            expect(changeSpy.callCount).to.equal(0);
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+            expect(inputSpy.callCount).to.equal(5);
+            expect(changeSpy.callCount).to.equal(1);
+        });
+        it('no change in committed value - using buttons', async () => {
+            const buttonUp = el.shadowRoot.querySelector(
+                '.step-up'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition: [number, number] = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
+            const buttonDown = el.shadowRoot.querySelector(
+                '.step-down'
+            ) as HTMLElement;
+            const buttonDownRect = buttonDown.getBoundingClientRect();
+            const buttonDownPosition: [number, number] = [
+                buttonDownRect.x + buttonDownRect.width / 2,
+                buttonDownRect.y + buttonDownRect.height / 2,
+            ];
+            sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonUpPosition,
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(51);
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(0);
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(52);
+            expect(inputSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(0);
             sendMouse({
                 steps: [
                     {
@@ -566,7 +656,10 @@ describe('NumberField', () => {
                 ],
             });
             expect(inputSpy.callCount).to.equal(4);
-            expect(changeSpy.callCount).to.equal(1);
+            expect(
+                changeSpy.callCount,
+                'value does not change from initial value so no "change" event is dispatched'
+            ).to.equal(0);
         });
     });
     it('accepts pointer interactions with the stepper UI', async () => {
@@ -751,7 +844,10 @@ describe('NumberField', () => {
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(lastInputValue, 'last input value').to.equal(10);
-            expect(lastChangeValue, 'last change value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(
+                0,
+                'value does not change from initial value so no "change" event is dispatched'
+            );
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -785,6 +881,14 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('5');
             expect(el.value).to.equal(5);
         });
+        it('dispatches onchange on setting max value', async () => {
+            el.value = 5;
+            await elementUpdated(el);
+            expect(lastChangeValue, 'last change value').to.equal(5);
+            el.value = 15;
+            await elementUpdated(el);
+            expect(lastChangeValue, 'last change value').to.equal(10);
+        });
     });
     describe('min', () => {
         let el: NumberField;
@@ -811,10 +915,21 @@ describe('NumberField', () => {
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(lastInputValue, 'last input value').to.equal(10);
-            expect(lastChangeValue, 'last change value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(
+                0,
+                'value does not change from initial value so no "change" event is dispatched'
+            );
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
+        });
+        it('dispatches onchange on setting min value', async () => {
+            el.value = 15;
+            await elementUpdated(el);
+            expect(lastChangeValue, 'last change value').to.equal(15);
+            el.value = 5;
+            await elementUpdated(el);
+            expect(lastChangeValue, 'last change value').to.equal(10);
         });
         xit('manages `inputMode` in iPhone', async () => {
             // setUserAgent is not currently supported by Playwright

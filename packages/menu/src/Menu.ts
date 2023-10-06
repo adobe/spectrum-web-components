@@ -528,7 +528,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.selectedItems = [targetItem];
         }
 
-        await this.updateComplete;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,

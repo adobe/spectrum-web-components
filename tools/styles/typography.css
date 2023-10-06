@@ -597,7 +597,7 @@ governing permissions and limitations under the License.
     --spectrum-body-font-color: var(--spectrum-body-color);
 }
 @media (forced-colors: active) {
-    .spectrum-body {
+    .spectrum-Body {
         --highcontrast-body-font-color: Text;
     }
 }
