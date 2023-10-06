@@ -26,7 +26,7 @@ import {
 } from '@spectrum-web-components/overlay';
 
 import {
-    aTimeout,
+    // aTimeout,
     elementUpdated,
     expect,
     html,
@@ -769,7 +769,7 @@ describe('Overlay - type="modal"', () => {
     });
 });
 describe('Overlay - timing', () => {
-    it.only('manages multiple modals in a row without preventing them from closing', async () => {
+    it('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
                 <overlay-trigger id="test-1" placement="right">
@@ -827,6 +827,7 @@ describe('Overlay - timing', () => {
         await nextFrame();
 
         // Move pointer out of "Trigger 1", should _start_ to close "hover" content.
+        const closed = oneEvent(trigger1, 'sp-closed');
         await sendMouse({
             steps: [
                 {
@@ -835,8 +836,7 @@ describe('Overlay - timing', () => {
                 },
             ],
         });
-        // allow "hover" content to close by waiting for its timer to complete
-        await aTimeout(400);
+        await closed;
 
         // Move pointer over "Trigger 2", should _start_ to open "hover" content.
         await sendMouse({
@@ -849,6 +849,7 @@ describe('Overlay - timing', () => {
         });
         await nextFrame();
         await nextFrame();
+
         const opened = oneEvent(trigger2, 'sp-opened');
         // Click "Trigger 2", should _start_ to open "click" content and _start_ to close "hover" content.
         await sendMouse({
@@ -868,7 +869,7 @@ describe('Overlay - timing', () => {
         expect(overlayTrigger2.hasAttribute('open')).to.be.true;
         expect(overlayTrigger2.getAttribute('open')).to.equal('click');
 
-        const closed = oneEvent(overlayTrigger2, 'sp-closed');
+        const closedOverlayTrigger = oneEvent(overlayTrigger2, 'sp-closed');
         await sendMouse({
             steps: [
                 {
@@ -877,8 +878,8 @@ describe('Overlay - timing', () => {
                 },
             ],
         });
-        await closed;
-        await aTimeout(200);
+        await closedOverlayTrigger;
+
         // Both overlays are closed.
         // Neither trigger received "focus" because the pointer "clicked" away, redirecting focus to <body>
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
