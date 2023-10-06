@@ -14,18 +14,25 @@ import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
-import { gif } from '../../stories/images.js';
 import { CoachmarkItem } from '../../src/CoachmarkItem.js';
 
 const item: CoachmarkItem = {
-    heading: 'Heading',
-    content: 'Content',
-    src: gif,
-    mediaType: 'image',
+    heading: 'Bare bones',
+    content:
+        'This is a Rich Coachmark with nothing but text in it. Kind of lonely in here.',
+    currentStep: 2,
+    totalSteps: 8,
+    primaryCTA: 'Next',
+    secondaryCTA: 'Previous',
 };
 
 measureFixtureCreation(html`
-    <sp-coachmark-trigger .item=${item} .triggerInteraction="${'click'}">
+    <sp-coachmark-trigger
+        open
+        placement="right"
+        .item=${item}
+        triggerInteraction="click"
+    >
         <sp-coach-indicator slot="trigger"></sp-coach-indicator>
     </sp-coachmark-trigger>
 `);
