@@ -20,7 +20,7 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - restore_cache:
                   keys:
                       - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
@@ -30,7 +30,8 @@ commands:
             - save_cache:
                   paths:
                       - ~/.cache/yarn
-                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - ~/.cache/ms-playwright
+                  key: v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
                       - .wireit

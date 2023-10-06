@@ -20,6 +20,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type {
     Overlay,
     OverlayOpenCloseDetail,
@@ -27,7 +28,6 @@ import type {
 } from '@spectrum-web-components/overlay';
 
 import tooltipStyles from './tooltip.css.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { focusableSelector } from '@spectrum-web-components/shared/src/focusable-selectors.js';
 
 class TooltipOpenable extends HTMLElement {
