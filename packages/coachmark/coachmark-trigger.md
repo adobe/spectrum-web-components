@@ -36,6 +36,8 @@ const item = {
     currentStep: 2,
     totalSteps: 8,
     triggerInteraction: 'click',
+    primaryCTA: 'Next',
+    secondaryCTA: 'Previous',
 };
 ```
 
@@ -56,6 +58,8 @@ const item = {
             currentStep: 2,
             totalSteps: 8,
             triggerInteraction: 'click',
+            primaryCTA: 'Next',
+            secondaryCTA: 'Previous'
     };
     const initCoachMark = () => {
         const coachmark = document.querySelector('sp-coachmark-trigger');

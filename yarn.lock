@@ -6207,13 +6207,6 @@
   dependencies:
     "@spectrum-web-components/base" "^0.38.0"
 
-"@spectrum-web-components/coachmark@^0.39.0":
-  version "0.39.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/coachmark/-/coachmark-0.39.0.tgz#c7e6feb3337e1c807bb47578f2ae9b1fe1a1a874"
-  integrity sha512-5mhGsUc66ODCeJ0OvenkhFtDRlsBm6HkTi1Na3t2xwcafDuk9nz04jpDxURq/rGjPG4B1SPdfJINHYBY5dHHxQ==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.0"
-
 "@spectrum-web-components/color-area@^0.38.0":
   version "0.38.0"
   resolved "https://registry.yarnpkg.com/@spectrum-web-components/color-area/-/color-area-0.38.0.tgz#a7f2f716db5ff0ca71f13c3fd9da987ebabd586d"

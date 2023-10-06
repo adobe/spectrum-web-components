@@ -30,7 +30,13 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 ### Default
 
 ```html
-<sp-coachmark currentstep="2" totalsteps="8" open>
+<sp-coachmark
+    currentstep="2"
+    totalsteps="8"
+    open
+    primary-cta="Next"
+    secondary-cta="Previous"
+>
     <div slot="title">A thing is about to happen</div>
     <div slot="content">
         This is a Rich Tooltip with nothing but text in it. Kind of lonely in
@@ -42,7 +48,13 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 ### with Media
 
 ```html
-<sp-coachmark currentstep="2" totalsteps="8" open>
+<sp-coachmark
+    currentstep="2"
+    totalsteps="8"
+    open
+    primary-cta="Next"
+    secondary-cta="Previous"
+>
     <div slot="title">Tooltip with 16:9 image</div>
     <div slot="content">
         This is a Rich Tooltip with nothing but text in it. Kind of lonely in
