@@ -101,42 +101,16 @@ export class Coachmark extends LikeAnchor(Popover) {
     public totalSteps?: number;
 
     @property({ type: Boolean })
-    public inTour = true;
-
-    @property({ type: Boolean })
-    public nextButton = true;
-
-    @property({ type: Boolean })
-    public prevButton = true;
-
-    @property({ type: Boolean })
     public hasActionMenu = true;
 
-    @property({ type: Boolean })
-    public showSteps = true;
+    @property({ type: String, attribute: 'primary-cta' })
+    primaryCTA?: string;
 
-    @property({ type: Boolean, attribute: 'skip-dissmissable' })
-    private skipDismissable = false;
+    @property({ type: String, attribute: 'secondary-cta' })
+    secondaryCTA?: string;
 
     constructor() {
         super();
-        this.handleKeydown = this.handleKeydown.bind(this);
-    }
-
-    protected handleKeydown(event: KeyboardEvent): void {
-        if (this.skipDismissable) {
-            return;
-        }
-        if (isCloseKeyEvent(event)) {
-            event.preventDefault();
-            this.dispatchClose();
-        }
-    }
-
-    private dispatchClose(): void {
-        this.dispatchEvent(
-            new Event('close', { bubbles: true, composed: true })
-        );
     }
 
     private interactOnVideo(): void {
@@ -159,7 +133,7 @@ export class Coachmark extends LikeAnchor(Popover) {
             });
         }
     }
-
+    // render video and images
     private renderMedia(): TemplateResult {
         const isVideo = this.mediaType === MediaType.VIDEO;
         const isImage = this.mediaType === MediaType.IMAGE;
@@ -198,7 +172,7 @@ export class Coachmark extends LikeAnchor(Popover) {
             </sp-asset>
         `;
     }
-
+    // method to render modifier
     private renderModifier(
         modifierKey: string,
         type: 'modifier' | 'shortcut' = 'modifier'
@@ -213,7 +187,7 @@ export class Coachmark extends LikeAnchor(Popover) {
             <span class="plus">&plus;</span>
         `;
     }
-
+    // render heading title and modifier
     private renderHeader(): TemplateResult {
         const hasModifier = this.modifierKeys && this.modifierKeys?.length > 0;
         const hasShortcut = Boolean(this.shortcutKey);
@@ -254,7 +228,7 @@ export class Coachmark extends LikeAnchor(Popover) {
                 : nothing}
         `;
     }
-
+    // render description
     private renderContent(): TemplateResult {
         const hasDescription = Boolean(this.content?.description);
         if (!hasDescription)
@@ -272,96 +246,107 @@ export class Coachmark extends LikeAnchor(Popover) {
         }
     }
 
-    protected renderButtons = (): TemplateResult => {
-        // if not in tour or for a single coach mark use OK
-        if (!this.inTour || this.totalSteps === 1) {
-            return html`
-                <sp-button-group class="spectrum-ButtonGroup buttongroup">
-                    <sp-button variant="primary" treatment="outline" size="s">
-                        Ok
-                    </sp-button>
-                </sp-button-group>
-            `;
-        }
+    private close(): void {
+        this.dispatchEvent(
+            new Event('close', {
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+            })
+        );
+    }
+    // event on primary button
+    private handlePrimaryCTA(): void {
+        this.dispatchEvent(
+            new Event('primary', {
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+            })
+        );
+        this.close();
+    }
+    // event on secondary button
+    private handleSecondaryCTA(): void {
+        this.dispatchEvent(
+            new Event('secondary', {
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+            })
+        );
+        this.close();
+    }
 
-        if (this.inTour && this.totalSteps && this.totalSteps > 1) {
-            const showPreviousButton =
-                this.currentStep && this.currentStep > 1 && this.prevButton;
-            const showNextButton = this.totalSteps > 0 && this.nextButton;
-            // Within a tour, use “Next” for all but the last step, and “Finish” for the last step
-            const nextButtonText =
-                this.currentStep === this.totalSteps ? 'Finish' : 'Next';
-            return html`
-                <sp-button-group class="spectrum-ButtonGroup buttongroup">
-                    ${showPreviousButton
-                        ? html`
-                              <sp-button
-                                  variant="secondary"
-                                  treatment="outline"
-                              >
-                                  Previous
-                              </sp-button>
-                          `
-                        : nothing}
-                    ${showNextButton
-                        ? html`
-                              <sp-button
-                                  variant="primary"
-                                  treatment="outline"
-                                  ?hidden=${!showNextButton}
-                                  size="s"
-                              >
-                                  ${nextButtonText}
-                              </sp-button>
-                          `
-                        : nothing}
-                </sp-button-group>
-                <sp-button-group
-                    class="spectrum-ButtonGroup buttongroup-mobile"
-                    size="s"
-                >
-                    ${showPreviousButton
-                        ? html`
-                              <sp-button
-                                  variant="secondary"
-                                  treatment="outline"
-                                  icon-only
-                                  aria-label="previous"
-                              >
-                                  <sp-icon-chevron200
-                                      size="s"
-                                      class="spectrum-UIIcon-ChevronLeft75"
-                                      slot="icon"
-                                  ></sp-icon-chevron200>
-                              </sp-button>
-                          `
-                        : nothing}
-                    ${showNextButton
-                        ? html`
-                              <sp-button
-                                  variant="primary"
-                                  treatment="outline"
-                                  ?hidden=${!showNextButton}
-                                  size="s"
-                              >
-                                  ${nextButtonText}
-                              </sp-button>
-                          `
-                        : nothing}
-                </sp-button-group>
-            `;
-        }
-        // Default case: return an empty template
-        return html``;
-    };
+    protected renderButtons(): TemplateResult {
+        return html`
+            <sp-button-group class="spectrum-ButtonGroup buttongroup">
+                ${when(
+                    this.secondaryCTA,
+                    () => html`
+                        <sp-button
+                            treatment="outline"
+                            variant="secondary"
+                            @click=${this.handleSecondaryCTA}
+                        >
+                            ${this.secondaryCTA}
+                        </sp-button>
+                    `
+                )}
+                ${when(
+                    this.primaryCTA,
+                    () => html`
+                        <sp-button
+                            size="s"
+                            treatment="outline"
+                            variant="primary"
+                            @click=${this.handlePrimaryCTA}
+                        >
+                            ${this.primaryCTA}
+                        </sp-button>
+                    `
+                )}
+            </sp-button-group>
+            <sp-button-group
+                class="spectrum-ButtonGroup buttongroup-mobile"
+                size="s"
+            >
+                ${when(
+                    this.secondaryCTA,
+                    () => html`
+                        <sp-button
+                            variant="secondary"
+                            treatment="outline"
+                            icon-only
+                            aria-label="previous"
+                            @click=${this.handleSecondaryCTA}
+                        >
+                            <sp-icon-chevron200
+                                size="s"
+                                class="spectrum-UIIcon-ChevronLeft75"
+                                slot="icon"
+                            ></sp-icon-chevron200>
+                        </sp-button>
+                    `
+                )}
+                ${when(
+                    this.primaryCTA,
+                    () => html`
+                        <sp-button
+                            size="s"
+                            treatment="outline"
+                            variant="primary"
+                            @click=${this.handlePrimaryCTA}
+                        >
+                            ${this.primaryCTA}
+                        </sp-button>
+                    `
+                )}
+            </sp-button-group>
+        `;
+    }
 
-    /**
-     * @description function to render the steps count
-     * role="status" to the div element to indicate that this element is providing status information.
-     * aria-live="polite" to make sure that screen readers announce changes to this content as it updates dynamically.
-     * @returns
-     */
-
+    // render steps
     protected renderSteps = (): TemplateResult => {
         return html`
             <div class="step" role="status">
@@ -371,7 +356,7 @@ export class Coachmark extends LikeAnchor(Popover) {
             </div>
         `;
     };
-
+    // render action menu
     protected renderActionMenu = (): TemplateResult => {
         return html`
             <div class="action-menu" @pointerdown=${this.stopPropagationOnHref}>
@@ -388,13 +373,16 @@ export class Coachmark extends LikeAnchor(Popover) {
             ${this.renderMedia()}
             <div class="header">
                 ${this.renderHeader()}
-                ${when(this.hasActionMenu, this.renderActionMenu)}
+                ${when(
+                    this.secondaryCTA && this.primaryCTA,
+                    this.renderActionMenu
+                )}
             </div>
 
             <div class="content">${this.renderContent()}</div>
             <div class="footer">
                 ${when(
-                    this.inTour && this.totalSteps && this.totalSteps > 0,
+                    this.totalSteps && this.totalSteps > 0,
                     this.renderSteps
                 )}
                 ${this.renderButtons()}
@@ -404,11 +392,9 @@ export class Coachmark extends LikeAnchor(Popover) {
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        document.addEventListener('keydown', this.handleKeydown);
     }
 
     public override disconnectedCallback(): void {
-        document.removeEventListener('keydown', this.handleKeydown);
         super.disconnectedCallback();
     }
 

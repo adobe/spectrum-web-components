@@ -35,6 +35,10 @@ const defaultItem: CoachmarkItem = {
     content: 'Content',
     src: tree,
     mediaType: 'image',
+    currentStep: 2,
+    totalSteps: 8,
+    primaryCTA: 'Next',
+    secondaryCTA: 'Previous',
 };
 
 describe('CoachmarkTrigger', () => {

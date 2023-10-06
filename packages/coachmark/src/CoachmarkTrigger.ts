@@ -107,7 +107,8 @@ export class CoachmarkTrigger extends SpectrumElement {
                               ?can-play="${this.canPlay}"
                               currentStep=${ifDefined(this.item.currentStep)}
                               totalSteps=${ifDefined(this.item.totalSteps)}
-                              ?intour=${this.item.inTour}
+                              primary-cta=${ifDefined(this.item.primaryCTA)}
+                              secondary-cta=${ifDefined(this.item.secondaryCTA)}
                           ></sp-coachmark>
                       `
                     : nothing}

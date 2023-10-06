@@ -11,3 +11,38 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-coachmark.css');
+
+/* These css needs to be added from css team */
+.keyboard-shortcut {
+    align-items: center;
+    background-color: var(--spectrum-gray-200);
+    border: var(--spectrum-alias-border-size-thin) solid
+        var(--spectrum-gray-200);
+    border-radius: var(--spectrum-alias-border-radius-regular);
+    color: var(--spectrum-gray-800);
+    display: inline-flex;
+    flex-flow: row;
+    justify-content: center;
+    min-width: var(
+        --spectrum-badge-min-width,
+        var(--spectrum-global-dimension-size-225)
+    );
+    padding-block: var(--spectrum-global-dimension-size-50);
+    padding-inline: var(--spectrum-global-dimension-size-100);
+}
+
+.header {
+    row-gap: var(--spectrum-global-dimension-size-175);
+}
+
+.keys {
+    align-items: center;
+    column-gap: var(--spectrum-global-dimension-size-50);
+    display: flex;
+    flex-flow: wrap;
+    row-gap: var(--spectrum-global-dimension-size-175);
+    font-family: var(
+        --mod-body-sans-serif-font-family,
+        var(--spectrum-body-sans-serif-font-family)
+    );
+}
