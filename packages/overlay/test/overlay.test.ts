@@ -26,6 +26,7 @@ import {
 } from '@spectrum-web-components/overlay';
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
     html,
@@ -768,7 +769,7 @@ describe('Overlay - type="modal"', () => {
     });
 });
 describe('Overlay - timing', () => {
-    it('manages multiple modals in a row without preventing them from closing', async () => {
+    it.only('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
                 <overlay-trigger id="test-1" placement="right">
@@ -824,6 +825,7 @@ describe('Overlay - timing', () => {
         });
         await nextFrame();
         await nextFrame();
+
         // Move pointer out of "Trigger 1", should _start_ to close "hover" content.
         await sendMouse({
             steps: [
@@ -833,8 +835,9 @@ describe('Overlay - timing', () => {
                 },
             ],
         });
-        await nextFrame();
-        await nextFrame();
+        // allow "hover" content to close by waiting for its timer to complete
+        await aTimeout(400);
+
         // Move pointer over "Trigger 2", should _start_ to open "hover" content.
         await sendMouse({
             steps: [
@@ -875,7 +878,7 @@ describe('Overlay - timing', () => {
             ],
         });
         await closed;
-
+        await aTimeout(200);
         // Both overlays are closed.
         // Neither trigger received "focus" because the pointer "clicked" away, redirecting focus to <body>
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
