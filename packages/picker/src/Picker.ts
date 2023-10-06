@@ -433,7 +433,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 aria-haspopup="true"
                 aria-labelledby="icon label applied-label"
                 id="button"
-                class="button"
+                class=${this.quiet ? 'button sideLabel' : 'button'}
                 @blur=${this.handleButtonBlur}
                 @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}

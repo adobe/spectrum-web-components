@@ -1058,7 +1058,7 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-spacing-edge-to-text-quiet)
     );
 }
-:host([quiet]) #button.spectrum-Picker--sideLabel {
+:host([quiet]) #button.sideLabel {
     margin-block-start: calc(
         var(--spectrum-picker-spacing-top-to-text-side-label-quiet) * -1
     );
@@ -1155,7 +1155,7 @@ governing permissions and limitations under the License.
 :host([quiet][disabled]) #button {
     background-color: #0000;
 }
-.spectrum-Picker--sideLabel {
+.sideLabel {
     display: inline-flex;
     vertical-align: top;
 }
