@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+### Bug Fixes
+
+-   **action-button:** allow change events to bubble and pierce shadowdom ([#3614](https://github.com/adobe/spectrum-web-components/issues/3614)) ([3f76e04](https://github.com/adobe/spectrum-web-components/commit/3f76e04fb71ad263e067838050bd550c009b1a69))
+-   **alert-dialog:** use resize observer in place of page resize event for content measurement work ([b963813](https://github.com/adobe/spectrum-web-components/commit/b963813156489370f0b0fa4390cb0df0891070c9))
+-   **grid:** grid focusgroup fix on mutationObserver ([#3684](https://github.com/adobe/spectrum-web-components/issues/3684)) ([5d47db5](https://github.com/adobe/spectrum-web-components/commit/5d47db52b99ccd1cc58d9044781f3f1e38744bd6))
+-   **menu:** allow `change` events to be direct ([#3689](https://github.com/adobe/spectrum-web-components/issues/3689)) ([b2cd3da](https://github.com/adobe/spectrum-web-components/commit/b2cd3da1384c577f27f604c42847953bb7121cb2))
+-   **number-field:** handle negative numbers ([#3673](https://github.com/adobe/spectrum-web-components/issues/3673)) ([62553dd](https://github.com/adobe/spectrum-web-components/commit/62553dd437efb89b42372553adfdf95fc0be7496))
+-   **number-field:** update number-field value on pressing "enter" ([#3638](https://github.com/adobe/spectrum-web-components/issues/3638)) ([649eb2f](https://github.com/adobe/spectrum-web-components/commit/649eb2f5dd9e0d08bb18f640565b34e908c5b518))
+-   **progress-circle,toast,tooltip:** ensure complete dependency graph ([#3701](https://github.com/adobe/spectrum-web-components/issues/3701)) ([a5dfada](https://github.com/adobe/spectrum-web-components/commit/a5dfada0578afd5d5065d0fb7a44eb557979d292))
+-   **slider:** ensure z-index in Express theme ([c0cc655](https://github.com/adobe/spectrum-web-components/commit/c0cc655bd834188e26850309d71fbd0fb63ee7f5))
+
 # [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
 
 ### Bug Fixes
