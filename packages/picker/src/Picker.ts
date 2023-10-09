@@ -65,7 +65,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     constructor() {
         super();
-        this.description = `sp-picker`;
+        //this.description = `sp-picker`;
     }
 
     @state()
@@ -425,9 +425,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
-    public renderDescriptionSlot(): TemplateResult {
+    private get renderDescriptionSlot(): TemplateResult {
         return html`
-            <div id=${ifDefined(this.description)}>
+            <div id="sp-picker">
                 <slot name="description"></slot>
             </div>
         `;
@@ -463,7 +463,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             >
                 ${this.buttonContent}
             </button>
-            ${this.renderMenu} ${this.renderDescriptionSlot()}
+            ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
     }
 
@@ -702,6 +702,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  * @element sp-picker
  *
  * @slot label - The placeholder content for the Picker
+ * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
