@@ -120,17 +120,33 @@ describe('Overlay Trigger - Hover', () => {
             await nextFrame();
             await nextFrame();
             expect(tooltip.open).to.be.true;
+
             button.dispatchEvent(
                 new MouseEvent('pointerleave', {
-                    relatedTarget: tooltip,
                     bubbles: true,
                     composed: true,
                 })
             );
             await nextFrame();
+
+            button.dispatchEvent(
+                new MouseEvent('pointerenter', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await nextFrame();
+
             tooltip.dispatchEvent(
                 new MouseEvent('pointerleave', {
-                    relatedTarget: button,
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await nextFrame();
+
+            button.dispatchEvent(
+                new MouseEvent('pointerenter', {
                     bubbles: true,
                     composed: true,
                 })

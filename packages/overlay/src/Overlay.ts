@@ -808,57 +808,18 @@ export class Overlay extends OverlayFeatures {
     // set a timeout once the pointer enters and the overlay is shown
     // give the user time to enter the overlay
 
-    protected handleOverlayPointerenter = (event: PointerEvent): void => {
-        if (
-            this.triggerElement === event.relatedTarget ||
-            (this.hasNonVirtualTrigger &&
-                (this.triggerElement as HTMLElement).contains(
-                    event.relatedTarget as Node
-                ))
-        ) {
-            return;
-        }
-
+    protected handleOverlayPointerenter = (): void => {
         if (this.hoverTimeout) {
             clearTimeout(this.hoverTimeout);
             delete this.hoverTimeout;
         }
     };
 
-    protected handlePointerleave = (event: PointerEvent): void => {
-        if (
-            this === event.relatedTarget ||
-            this.contains(event.relatedTarget as Node) ||
-            [...this.children].find((child) => {
-                if (child.localName !== 'slot') {
-                    return false;
-                }
-                return (child as HTMLSlotElement)
-                    .assignedElements({ flatten: true })
-                    .find((el) => {
-                        return (
-                            el === event.relatedTarget ||
-                            el.contains(event.relatedTarget as Node)
-                        );
-                    });
-            })
-        ) {
-            return;
-        }
-
+    protected handlePointerleave = (): void => {
         this.doPointerleave();
     };
 
-    protected handleOverlayPointerleave = (event: PointerEvent): void => {
-        if (
-            this.triggerElement === event.relatedTarget ||
-            (this.hasNonVirtualTrigger &&
-                (this.triggerElement as HTMLElement).contains(
-                    event.relatedTarget as Node
-                ))
-        ) {
-            return;
-        }
+    protected handleOverlayPointerleave = (): void => {
         this.doPointerleave();
     };
 
