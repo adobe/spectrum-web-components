@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+### Bug Fixes
+
+-   **grid:** grid focusgroup fix on mutationObserver ([#3684](https://github.com/adobe/spectrum-web-components/issues/3684)) ([5d47db5](https://github.com/adobe/spectrum-web-components/commit/5d47db52b99ccd1cc58d9044781f3f1e38744bd6))
+
 # [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
 
 **Note:** Version bump only for package @spectrum-web-components/reactive-controllers

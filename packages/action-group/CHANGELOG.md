@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+### Bug Fixes
+
+-   **action-button:** allow change events to bubble and pierce shadowdom ([#3614](https://github.com/adobe/spectrum-web-components/issues/3614)) ([3f76e04](https://github.com/adobe/spectrum-web-components/commit/3f76e04fb71ad263e067838050bd550c009b1a69))
+
 # [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group
