@@ -60,6 +60,7 @@
         "@spectrum-web-components/action-group": "^0.39.1",
         "@spectrum-web-components/base": "^0.39.1",
         "@spectrum-web-components/button": "^0.39.1",
+        "@spectrum-web-components/field-label": "^0.39.1",
         "@spectrum-web-components/popover": "^0.39.1"
     },
     "devDependencies": {
