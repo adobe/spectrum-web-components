@@ -77,7 +77,7 @@ For e.g: Be descriptive after the /, like `john-doe/123-fix-bug`.
 
 ## Create your first Pull Request
 
--   Follow all instructions in [the template](PULL_REQUEST_TEMPLATE.md)
+-   Follow all instructions in [the template](https://github.com/adobe/spectrum-web-components/blob/main/.github/PULL_REQUEST_TEMPLATE.md)
 -   After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing.
 
 ## Git Commit Messages
