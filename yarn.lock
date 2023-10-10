@@ -5802,9 +5802,9 @@
   integrity sha512-Qd1TSwU2993fRGLZvjy6oJaX95Tr5KAONN9QVcV4/GgHbV0BXX5hvgQbop1p7wK0fwTtvkHVg6cErTWo37lZ9Q==
 
 "@spectrum-css/colorarea@^4.0.41":
-  version "4.0.41"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-4.0.41.tgz#036275937bf20ef80bfcfaebcb838a2350d0f9e7"
-  integrity sha512-iFN747TjJNHIgEh61JX5cUZGeZ4fEhX0TJJ54tHftVbTM1bWRTtn0+LmIUuD16mB0SeI3EWjPrdXHpYYriRKnw==
+  version "4.0.45"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-4.0.45.tgz#495442ac1015f1965efccfbcb49b7bd757ba8162"
+  integrity sha512-OaquAouZQUlHcIqtoN7vk/4rBx7Kk62fttFf9QF72rOs22v1nodBTAfoL4P1WDZl2k6zgafknxx8tUu3DOBI/Q==
 
 "@spectrum-css/colorhandle@^7.0.7":
   version "7.0.7"
@@ -6047,7 +6047,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.39.0"
+  version "0.39.1"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.5.16"
