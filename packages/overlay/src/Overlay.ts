@@ -53,6 +53,7 @@ import { PlacementController } from './PlacementController.js';
 import styles from './overlay.css.js';
 
 const LONGPRESS_DURATION = 300;
+const HOVER_DELAY = 300;
 
 type LongpressEvent = {
     source: 'pointer' | 'keyboard';
@@ -146,6 +147,7 @@ export class Overlay extends OverlayFeatures {
         'null';
 
     private longressTimeout!: ReturnType<typeof setTimeout>;
+    private hoverTimeout?: ReturnType<typeof setTimeout>;
 
     /**
      * The `offset` property accepts either a single number, to
@@ -562,6 +564,11 @@ export class Overlay extends OverlayFeatures {
             options
         );
         this.addEventListener(
+            'pointerenter',
+            this.handleOverlayPointerenter,
+            options
+        );
+        this.addEventListener(
             'pointerleave',
             this.handleOverlayPointerleave,
             options
@@ -789,44 +796,30 @@ export class Overlay extends OverlayFeatures {
     private pointerentered = false;
 
     protected handlePointerenter = (): void => {
+        if (this.hoverTimeout) {
+            clearTimeout(this.hoverTimeout);
+            delete this.hoverTimeout;
+        }
         if (this.disabled) return;
         this.open = true;
         this.pointerentered = true;
     };
 
-    protected handlePointerleave = (event: PointerEvent): void => {
-        if (
-            this === event.relatedTarget ||
-            this.contains(event.relatedTarget as Node) ||
-            [...this.children].find((child) => {
-                if (child.localName !== 'slot') {
-                    return false;
-                }
-                return (child as HTMLSlotElement)
-                    .assignedElements({ flatten: true })
-                    .find((el) => {
-                        return (
-                            el === event.relatedTarget ||
-                            el.contains(event.relatedTarget as Node)
-                        );
-                    });
-            })
-        ) {
-            return;
+    // set a timeout once the pointer enters and the overlay is shown
+    // give the user time to enter the overlay
+
+    protected handleOverlayPointerenter = (): void => {
+        if (this.hoverTimeout) {
+            clearTimeout(this.hoverTimeout);
+            delete this.hoverTimeout;
         }
+    };
+
+    protected handlePointerleave = (): void => {
         this.doPointerleave();
     };
 
-    protected handleOverlayPointerleave = (event: PointerEvent): void => {
-        if (
-            this.triggerElement === event.relatedTarget ||
-            (this.hasNonVirtualTrigger &&
-                (this.triggerElement as HTMLElement).contains(
-                    event.relatedTarget as Node
-                ))
-        ) {
-            return;
-        }
+    protected handleOverlayPointerleave = (): void => {
         this.doPointerleave();
     };
 
@@ -834,7 +827,10 @@ export class Overlay extends OverlayFeatures {
         this.pointerentered = false;
         const triggerElement = this.triggerElement as HTMLElement;
         if (this.focusedin && triggerElement.matches(':focus-visible')) return;
-        this.open = false;
+
+        this.hoverTimeout = setTimeout(() => {
+            this.open = false;
+        }, HOVER_DELAY);
     }
 
     protected handleLongpress = (): void => {

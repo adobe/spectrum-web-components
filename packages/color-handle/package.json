@@ -58,7 +58,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.39.1",
-        "@spectrum-web-components/color-loupe": "^0.39.1"
+        "@spectrum-web-components/color-loupe": "^0.39.1",
+        "@spectrum-web-components/opacity-checkerboard": "^0.39.1"
     },
     "devDependencies": {
         "@spectrum-css/colorhandle": "^7.0.7"
