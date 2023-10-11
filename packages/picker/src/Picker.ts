@@ -61,11 +61,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
     @property({ type: String })
-    public description = '';
+    public description = 'sp-picker';
 
     constructor() {
         super();
-        //this.description = `sp-picker`;
     }
 
     @state()
@@ -425,7 +424,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
-    private get renderDescriptionSlot(): TemplateResult {
+    protected get renderDescriptionSlot(): TemplateResult {
         return html`
             <div id="sp-picker">
                 <slot name="description"></slot>
@@ -440,7 +439,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 id="focus-helper"
                 tabindex="${this.focused || this.open ? '-1' : '0'}"
                 @focus=${this.handleHelperFocus}
-                aria-describedby=${this.description}
+                aria-describedby=${ifDefined(this.description)}
             ></span>
             <button
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
