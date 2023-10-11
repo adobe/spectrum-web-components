@@ -64,6 +64,7 @@
         "@ctrl/tinycolor": "^3.3.3",
         "@spectrum-web-components/base": "^0.39.1",
         "@spectrum-web-components/color-handle": "^0.39.1",
+        "@spectrum-web-components/opacity-checkerboard": "^0.39.1",
         "@spectrum-web-components/reactive-controllers": "^0.39.1",
         "@spectrum-web-components/shared": "^0.39.1"
     },

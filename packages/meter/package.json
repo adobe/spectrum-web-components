@@ -59,6 +59,7 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.39.1",
         "@spectrum-web-components/field-label": "^0.39.1",
+        "@spectrum-web-components/reactive-controllers": "^0.39.1",
         "@spectrum-web-components/shared": "^0.39.1"
     },
     "devDependencies": {
