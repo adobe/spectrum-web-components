@@ -1,6 +1,6 @@
 ## Description
 
-`sp-coachmark` are temporary messages that educate users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour.
+`sp-coachmark` is a temporary message that educates users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour.
 
 ### Usage
 
@@ -39,8 +39,7 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 >
     <div slot="title">A thing is about to happen</div>
     <div slot="content">
-        This is a Rich Tooltip with nothing but text in it. Kind of lonely in
-        here.
+        This is a Coachmark with nothing but text in it. Kind of lonely in here.
     </div>
 </sp-coachmark>
 ```
@@ -55,11 +54,8 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
     primary-cta="Next"
     secondary-cta="Previous"
 >
-    <div slot="title">Tooltip with 16:9 image</div>
-    <div slot="content">
-        This is a Rich Tooltip with nothing but text in it. Kind of lonely in
-        here.
-    </div>
+    <div slot="title">Coachmark with 16:9 image</div>
+    <div slot="content">This is a Coachmark with some description</div>
     <img
         class="image"
         loading="lazy"

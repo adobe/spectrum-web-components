@@ -18,19 +18,12 @@ export type CoachmarkItem = {
     src?: string;
     imageAlt?: string;
     mediaType?: string;
-    videoType?: string;
-    toolVideoData?: string;
     currentStep?: number;
     totalSteps?: number;
     hasActionMenu?: boolean;
     primaryCTA?: string;
     secondaryCTA?: string;
 };
-
-export enum VideoType {
-    WEBM = 'video/webm',
-    MP4 = 'video/mp4',
-}
 
 export enum MediaType {
     IMAGE = 'image',

@@ -31,10 +31,6 @@ governing permissions and limitations under the License.
     padding-inline: var(--spectrum-global-dimension-size-100);
 }
 
-.header {
-    row-gap: var(--spectrum-global-dimension-size-175);
-}
-
 .keys {
     align-items: center;
     column-gap: var(--spectrum-global-dimension-size-50);
@@ -45,4 +41,17 @@ governing permissions and limitations under the License.
         --mod-body-sans-serif-font-family,
         var(--spectrum-body-sans-serif-font-family)
     );
+}
+
+.flex-container {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: var(--spectrum-global-dimension-size-175);
+    column-gap: var(--spectrum-global-dimension-size-200);
+}
+
+.static-item {
+    flex: 0;
+    align-self: flex-start;
 }

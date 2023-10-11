@@ -101,7 +101,6 @@ export class CoachmarkTrigger extends SpectrumElement {
                               }}
                               .source=${this.item.src}
                               media-type=${ifDefined(this.item.mediaType)}
-                              video-type=${ifDefined(this.item.videoType)}
                               shortcut-key=${ifDefined(this.item.shortcutKey)}
                               .modifierKeys=${this.item.modifierKeys}
                               ?can-play="${this.canPlay}"

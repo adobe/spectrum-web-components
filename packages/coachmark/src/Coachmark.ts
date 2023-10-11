@@ -17,10 +17,7 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import coachmarkStyles from './coachmark.css.js';
@@ -31,7 +28,7 @@ import { join } from 'lit/directives/join.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { Placement } from '@spectrum-web-components/overlay';
-import { MediaType, VideoType } from './CoachmarkItem.js';
+import { MediaType } from './CoachmarkItem.js';
 import type { CoachmarkItem } from './CoachmarkItem.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/button/sp-button.js';
@@ -77,19 +74,8 @@ export class Coachmark extends LikeAnchor(Popover) {
     @property({ attribute: 'media-type' })
     private mediaType?: MediaType;
 
-    @property({ attribute: 'video-type' })
-    private videoType?: VideoType;
-
     @property({ type: Boolean, attribute: 'has-asset', reflect: true })
     public hasAsset = false;
-
-    @property({ type: Boolean, attribute: 'can-play' })
-    public canPlay = false;
-
-    protected videoPlayPromise?: Promise<void>;
-
-    @query('video')
-    protected videoAsset?: HTMLVideoElement;
 
     @property()
     public asset?: 'file' | 'folder';
@@ -113,51 +99,14 @@ export class Coachmark extends LikeAnchor(Popover) {
         super();
     }
 
-    private interactOnVideo(): void {
-        if (!this.videoAsset) return;
-
-        if (this.canPlay) {
-            this.videoPlayPromise = this.videoAsset.play();
-            this.videoPlayPromise.catch((error) => {
-                console.error(error);
-            });
-        } else {
-            this.pauseVideo();
-        }
-    }
-
-    private pauseVideo(): void {
-        if (this.videoPlayPromise !== undefined) {
-            this.videoPlayPromise.then(() => {
-                this.videoAsset?.pause();
-            });
-        }
-    }
     // render video and images
     private renderMedia(): TemplateResult {
-        const isVideo = this.mediaType === MediaType.VIDEO;
         const isImage = this.mediaType === MediaType.IMAGE;
-        this.hasAsset = isVideo || isImage;
-
-        if (!isVideo && !isImage) {
+        if (!isImage) {
             return html`
                 <slot name="asset"></slot>
             `;
         }
-
-        if (isVideo) {
-            return html`
-                <sp-asset class="asset">
-                    <video loop muted preload="auto">
-                        <source
-                            src="${ifDefined(this.source)}"
-                            type="${ifDefined(this.videoType)}"
-                        />
-                    </video>
-                </sp-asset>
-            `;
-        }
-
         return html`
             <sp-asset id="cover-photo">
                 <div class="image-wrapper">
@@ -360,10 +309,7 @@ export class Coachmark extends LikeAnchor(Popover) {
     protected renderActionMenu = (): TemplateResult => {
         return html`
             <div class="action-menu" @pointerdown=${this.stopPropagationOnHref}>
-                <sp-action-menu placement="bottom-end" quiet slot="actions">
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
+                <slot name="actions"></slot>
             </div>
         `;
     };
@@ -372,11 +318,13 @@ export class Coachmark extends LikeAnchor(Popover) {
         return html`
             ${this.renderMedia()}
             <div class="header">
-                ${this.renderHeader()}
-                ${when(
-                    this.secondaryCTA && this.primaryCTA,
-                    this.renderActionMenu
-                )}
+                <div class="flex-container">${this.renderHeader()}</div>
+                <div class="static-item">
+                    ${when(
+                        this.secondaryCTA && this.primaryCTA,
+                        this.renderActionMenu
+                    )}
+                </div>
             </div>
 
             <div class="content">${this.renderContent()}</div>
@@ -400,19 +348,6 @@ export class Coachmark extends LikeAnchor(Popover) {
 
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
-        if (!this.videoAsset) {
-            return;
-        }
-        if (changed.has('source')) {
-            this.videoAsset.load();
-            this.canPlay = true;
-            this.interactOnVideo();
-        }
-        if (changed.has('canPlay')) {
-            if (this.canPlay) {
-                this.interactOnVideo();
-            }
-        }
     }
 }
 

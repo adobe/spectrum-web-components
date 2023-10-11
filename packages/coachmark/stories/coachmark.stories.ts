@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { MediaType, VideoType } from '../src/CoachmarkItem.js';
+import { MediaType } from '../src/CoachmarkItem.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import { Placement } from '@spectrum-web-components/overlay';
 
@@ -29,10 +29,8 @@ type Properties = {
     modifierKeys?: string[];
     content: string;
     src?: string;
-    videoType?: VideoType;
     mediaType?: MediaType;
     imageAlt?: string;
-    toolVideoData?: string;
     triggerInteraction: 'click' | 'hover' | 'longpress';
     currentStep?: number;
     totalSteps?: number;
@@ -51,16 +49,20 @@ export const Default = (props: Properties): TemplateResult => {
             primary-cta="Next"
             secondary-cta="Previous"
         >
-            <div slot="title">Tooltip with 16:9 image</div>
+            <div slot="title">Coachmark with 16:9 image</div>
             <div slot="content">
-                This is a Rich Tooltip with nothing but text in it. Kind of
-                lonely in here.
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
             </div>
+            <sp-action-menu placement="bottom-end" quiet slot="actions">
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
         </sp-coachmark>
     `;
 };
 
-export const withMedia = (props: Properties): TemplateResult => {
+export const withImage = (props: Properties): TemplateResult => {
     const { open = true } = props;
     return html`
         <sp-coachmark
@@ -69,16 +71,18 @@ export const withMedia = (props: Properties): TemplateResult => {
             totalsteps="8"
             primary-cta="Next"
             secondary-cta="Previous"
-            src="https://download.samplelib.com/mp4/sample-5s.mp4"
-            media-type="video"
-            video-type="video/mp4"
-            can-play
+            src="https://picsum.photos/id/237/200/300"
+            media-type="image"
         >
-            <div slot="title">Tooltip with 16:9 image</div>
+            <div slot="title">Coachmark with 16:9 image</div>
             <div slot="content">
-                This is a Rich Tooltip with nothing but text in it. Kind of
-                lonely in here.
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
             </div>
+            <sp-action-menu placement="bottom-end" quiet slot="actions">
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
         </sp-coachmark>
     `;
 };
@@ -94,12 +98,16 @@ export const withKeys = (props: Properties): TemplateResult => {
             secondary-cta="Previous"
             .modifierKeys=${modifierKeys}
             .content=${{
-                title: 'Tooltip with 16:9 image',
+                title: 'I am a Coachmark with keys',
                 description:
-                    'This is a Rich Tooltip with nothing but text in it. Kind of lonely in here',
-                imageAlt: 'media',
+                    'This is a Coachmark with nothing but text in it. Kind of lonely in here',
             }}
-        ></sp-coachmark>
+        >
+            <sp-action-menu placement="bottom-end" quiet slot="actions">
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
+        </sp-coachmark>
     `;
 };
 
@@ -107,10 +115,10 @@ export const single = (props: Properties): TemplateResult => {
     const { open = true } = props;
     return html`
         <sp-coachmark ?open=${open} primary-cta="Ok">
-            <div slot="title">Tooltip with 16:9 image</div>
+            <div slot="title">Coachmark with 16:9 image</div>
             <div slot="content">
-                This is a Rich Tooltip with nothing but text in it. Kind of
-                lonely in here.
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
             </div>
         </sp-coachmark>
     `;
