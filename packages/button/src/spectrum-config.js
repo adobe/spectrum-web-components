@@ -39,10 +39,6 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Button--quiet'),
                 converter.classToAttribute('spectrum-Button--emphasized'),
-                converter.classToAttribute(
-                    'spectrum-Button--iconOnly',
-                    'icon-only'
-                ),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-focused', 'focused'),

@@ -61,7 +61,7 @@
         "@spectrum-web-components/button": "^0.39.1"
     },
     "devDependencies": {
-        "@spectrum-css/buttongroup": "^6.1.9"
+        "@spectrum-css/buttongroup": "^6.1.6"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
