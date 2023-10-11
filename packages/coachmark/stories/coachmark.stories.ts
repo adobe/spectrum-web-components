@@ -84,7 +84,7 @@ export const single = (props: Properties): TemplateResult => {
             .triggerInteraction=${triggerInteraction}
         >
             <sp-coachmark ?open=${open} primary-cta="Ok">
-                <div slot="title">Coachmark with 16:9 image</div>
+                <div slot="title">A single coachmark</div>
                 <div slot="content">
                     This is a Coachmark with nothing but text in it. Kind of
                     lonely in here.
@@ -222,7 +222,7 @@ export const withGif = (props: Properties): TemplateResult => {
                 currentstep="2"
                 totalsteps="8"
             >
-                <div slot="title">Coachmark with Media</div>
+                <div slot="title">Coachmark with GIF</div>
                 <div slot="content">
                     This is a Coachmark with nothing but text in it. Kind of
                     lonely in here.
@@ -295,7 +295,7 @@ export const linkInDescription = (props: Properties): TemplateResult => {
                 primary-cta="Ok"
                 shortcut-key="L"
                 .content=${{
-                    title: 'Coachmark with Shortcut',
+                    title: 'Coachmark with Shortcut and links in description',
                     description:
                         'This is a Coachmark with nothing but text in it. Kind of lonely in here',
                 }}

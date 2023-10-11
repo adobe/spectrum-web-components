@@ -16,11 +16,22 @@ import {
     fixture,
     html,
     nextFrame,
+    oneEvent,
 } from '@open-wc/testing';
 
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
-import { Coachmark, CoachmarkItem } from '@spectrum-web-components/coachmark';
+import {
+    CoachIndicator,
+    Coachmark,
+    CoachmarkItem,
+    CoachmarkTrigger,
+} from '@spectrum-web-components/coachmark';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+import { sendKeys } from '@web/test-runner-commands';
+import { Overlay } from '@spectrum-web-components/overlay';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 const defaultItem: CoachmarkItem = {
     heading: 'I am the heading',
@@ -317,5 +328,128 @@ describe('Coachmark', () => {
             'img[src="https://picsum.photos/id/237/200/300"'
         );
         expect(imageElement).not.to.be.undefined;
+    });
+    it('opens coachmark-trigger on programmatic click', async () => {
+        const interaction = 'click';
+        const el = await fixture<CoachmarkTrigger>(html`
+            <sp-coachmark-trigger
+                placement="bottom-end"
+                .triggerInteraction=${interaction}
+            >
+                <sp-coachmark primary-cta="Ok">
+                    <div slot="title">A single coachmark</div>
+                    <div slot="content">
+                        This is a Coachmark with nothing but text in it. Kind of
+                        lonely in here.
+                    </div>
+                </sp-coachmark>
+                <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+            </sp-coachmark-trigger>
+        `);
+        const triggerEl = el.querySelector('[slot=trigger]') as CoachIndicator;
+        const overlay = el.shadowRoot.querySelector(
+            'sp-overlay'
+        ) as unknown as Overlay;
+
+        await elementUpdated(el);
+
+        expect(overlay.open).to.be.false;
+        expect(el.open).to.be.false;
+
+        triggerEl.click();
+
+        await nextFrame();
+
+        expect(overlay.open).to.be.true;
+        expect(el.open).to.be.true;
+
+        triggerEl.click();
+
+        await nextFrame();
+
+        expect(overlay.open).to.be.false;
+        expect(el.open).to.be.false;
+    });
+    it('opens coachmark-trigger on sendMouse on the trigger element', async () => {
+        const interaction = 'hover';
+        const el = await fixture<CoachmarkTrigger>(html`
+            <sp-coachmark-trigger
+                placement="bottom-end"
+                .triggerInteraction=${interaction}
+            >
+                <sp-coachmark primary-cta="Ok">
+                    <div slot="title">A single coachmark</div>
+                    <div slot="content">
+                        This is a Coachmark with nothing but text in it. Kind of
+                        lonely in here.
+                    </div>
+                </sp-coachmark>
+                <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+            </sp-coachmark-trigger>
+        `);
+        const triggerEl = el.querySelector('[slot=trigger]') as CoachIndicator;
+        const overlay = el.shadowRoot.querySelector(
+            'sp-overlay'
+        ) as unknown as Overlay;
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(overlay.open).to.be.false;
+        expect(el.open).to.be.false;
+
+        const beforeToggleEvent = oneEvent(overlay, 'beforetoggle');
+
+        const pos = triggerEl.getBoundingClientRect();
+
+        await sendMouse({
+            steps: [
+                {
+                    position: [pos.x + 2, pos.y + 2],
+                    type: 'move',
+                },
+            ],
+        });
+
+        await beforeToggleEvent;
+
+        expect(overlay.open).to.be.true;
+        expect(el.open).to.be.true;
+    });
+    it('allows keyboard interaction on buttons in the coachmark-trigger', async () => {
+        const interaction = 'click';
+        const el = await fixture<CoachmarkTrigger>(html`
+            <sp-coachmark-trigger
+                placement="bottom-end"
+                .triggerInteraction=${interaction}
+            >
+                <sp-coachmark primary-cta="Ok">
+                    <div slot="title">A single coachmark</div>
+                    <div slot="content">
+                        This is a Coachmark with nothing but text in it. Kind of
+                        lonely in here.
+                    </div>
+                </sp-coachmark>
+                <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+            </sp-coachmark-trigger>
+        `);
+        const triggerEl = el.querySelector(
+            '[slot="trigger"]'
+        ) as CoachIndicator;
+
+        await elementUpdated(el);
+        expect(el.open).to.be.false;
+        triggerEl.click();
+        await sendKeys({
+            press: 'Enter',
+        });
+        await nextFrame();
+
+        expect(el.open).to.be.true;
+
+        await sendKeys({
+            press: 'Tab',
+        });
     });
 });
