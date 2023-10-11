@@ -279,7 +279,7 @@ governing permissions and limitations under the License.
             var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap))
     );
 }
-:host([icon-only]) {
+:host .spectrum-Button--iconOnly {
     border-radius: 50%;
     min-inline-size: unset;
     padding: calc(
@@ -290,10 +290,10 @@ governing permissions and limitations under the License.
             var(--mod-button-border-width, var(--spectrum-button-border-width))
     );
 }
-:host([icon-only]) ::slotted([slot='icon']) {
+:host .spectrum-Button--iconOnly ::slotted([slot='icon']) {
     margin-inline-start: 0;
 }
-:host([icon-only]):after {
+:host .spectrum-Button--iconOnly:after {
     border-radius: 50%;
 }
 #label {
