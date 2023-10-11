@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-coachmark.css');
 
-/* These css needs to be added from css team */
+/* These css needs to be added from css team once the keys component is created */
 .keyboard-shortcut {
     align-items: center;
     background-color: var(--spectrum-gray-200);
@@ -54,4 +54,9 @@ governing permissions and limitations under the License.
 .static-item {
     flex: 0;
     align-self: flex-start;
+}
+
+.image-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
 }

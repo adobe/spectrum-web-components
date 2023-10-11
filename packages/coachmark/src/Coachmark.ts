@@ -109,7 +109,7 @@ export class Coachmark extends LikeAnchor(Popover) {
         }
         return html`
             <sp-asset id="cover-photo">
-                <div class="image-wrapper">
+                <div class="image-container">
                     <img
                         class="image"
                         loading="lazy"
