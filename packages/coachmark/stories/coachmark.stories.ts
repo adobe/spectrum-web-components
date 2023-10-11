@@ -13,11 +13,15 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { MediaType } from '../src/CoachmarkItem.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
+import { cave, gif } from './images.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Placement } from '@spectrum-web-components/overlay';
-
+import '@spectrum-web-components/coachmark/sp-coachmark.js';
 export default {
-    title: 'Coachmark',
-    component: 'sp-coachmark',
+    title: 'Coachmark Trigger',
+    component: 'sp-coachmark-trigger',
 };
 
 type Properties = {
@@ -40,86 +44,263 @@ type Properties = {
 };
 
 export const Default = (props: Properties): TemplateResult => {
-    const { open = true } = props;
-    return html`
-        <sp-coachmark
-            ?open=${open}
-            currentstep="2"
-            totalsteps="8"
-            primary-cta="Next"
-            secondary-cta="Previous"
-        >
-            <div slot="title">Coachmark with 16:9 image</div>
-            <div slot="content">
-                This is a Coachmark with nothing but text in it. Kind of lonely
-                in here.
-            </div>
-            <sp-action-menu placement="bottom-end" quiet slot="actions">
-                <sp-menu-item>Skip tour</sp-menu-item>
-                <sp-menu-item>Restart tour</sp-menu-item>
-            </sp-action-menu>
-        </sp-coachmark>
-    `;
-};
+    const { open = true, placement, triggerInteraction } = props;
 
-export const withImage = (props: Properties): TemplateResult => {
-    const { open = true } = props;
     return html`
-        <sp-coachmark
+        <sp-coachmark-trigger
             ?open=${open}
-            currentstep="2"
-            totalsteps="8"
-            primary-cta="Next"
-            secondary-cta="Previous"
-            src="https://picsum.photos/id/237/200/300"
-            media-type="image"
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
         >
-            <div slot="title">Coachmark with 16:9 image</div>
-            <div slot="content">
-                This is a Coachmark with nothing but text in it. Kind of lonely
-                in here.
-            </div>
-            <sp-action-menu placement="bottom-end" quiet slot="actions">
-                <sp-menu-item>Skip tour</sp-menu-item>
-                <sp-menu-item>Restart tour</sp-menu-item>
-            </sp-action-menu>
-        </sp-coachmark>
-    `;
-};
-
-export const withKeys = (props: Properties): TemplateResult => {
-    const { open = true, modifierKeys = ['⇧ Shift', '⌘'] } = props;
-    return html`
-        <sp-coachmark
-            ?open=${open}
-            currentstep="2"
-            totalsteps="8"
-            primary-cta="Next"
-            secondary-cta="Previous"
-            .modifierKeys=${modifierKeys}
-            .content=${{
-                title: 'I am a Coachmark with keys',
-                description:
-                    'This is a Coachmark with nothing but text in it. Kind of lonely in here',
-            }}
-        >
-            <sp-action-menu placement="bottom-end" quiet slot="actions">
-                <sp-menu-item>Skip tour</sp-menu-item>
-                <sp-menu-item>Restart tour</sp-menu-item>
-            </sp-action-menu>
-        </sp-coachmark>
+            <sp-coachmark
+                ?open=${open}
+                currentstep="2"
+                totalsteps="8"
+                primary-cta="Next"
+                secondary-cta="Previous"
+            >
+                <div slot="title">Coachmark with Text Only</div>
+                <div slot="content">
+                    This is a Coachmark with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+            </sp-coachmark>
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
     `;
 };
 
 export const single = (props: Properties): TemplateResult => {
-    const { open = true } = props;
+    const { open = true, placement, triggerInteraction } = props;
+
     return html`
-        <sp-coachmark ?open=${open} primary-cta="Ok">
-            <div slot="title">Coachmark with 16:9 image</div>
-            <div slot="content">
-                This is a Coachmark with nothing but text in it. Kind of lonely
-                in here.
-            </div>
-        </sp-coachmark>
+        <sp-coachmark-trigger
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark ?open=${open} primary-cta="Ok">
+                <div slot="title">Coachmark with 16:9 image</div>
+                <div slot="content">
+                    This is a Coachmark with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+            </sp-coachmark>
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
+    `;
+};
+
+export const userActionDependent = (props: Properties): TemplateResult => {
+    const { open = true, placement, triggerInteraction } = props;
+
+    return html`
+        <sp-coachmark-trigger
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark
+                ?open=${open}
+                currentstep="2"
+                totalsteps="8"
+                primary-cta="Asset added"
+                secondary-cta="Previous"
+            >
+                <div slot="title">Coachmark with user action</div>
+                <div slot="content">
+                    This is a Coachmark with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+            </sp-coachmark>
+
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
+    `;
+};
+
+export const Clickable = (props: Properties): TemplateResult => {
+    const {
+        open = true,
+        placement = 'right-start',
+        triggerInteraction = 'click',
+    } = props;
+
+    return html`
+        <sp-coachmark-trigger
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark
+                ?open=${open}
+                currentstep="2"
+                totalsteps="8"
+                primary-cta="Next"
+                secondary-cta="Previous"
+            >
+                <div slot="title">Coachmark with Click</div>
+                <div slot="content">
+                    This is a Coachmark with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+            </sp-coachmark>
+
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
+    `;
+};
+export const withImage = (props: Properties): TemplateResult => {
+    const {
+        open = true,
+        placement = 'right-start',
+        triggerInteraction = 'hover',
+    } = props;
+
+    return html`
+        <sp-coachmark-trigger
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark
+                ?open=${open}
+                src=${cave}
+                media-type="image"
+                primary-cta="Next"
+                secondary-cta="Previous"
+                currentstep="2"
+                totalsteps="8"
+            >
+                <div slot="title">Coachmark with Media</div>
+                <div slot="content">
+                    This is a Coachmark with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+            </sp-coachmark>
+
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
+    `;
+};
+
+export const withGif = (props: Properties): TemplateResult => {
+    const {
+        open = true,
+        placement = 'right-start',
+        triggerInteraction = 'hover',
+    } = props;
+
+    return html`
+        <sp-coachmark-trigger
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark
+                ?open=${open}
+                src=${gif}
+                media-type="image"
+                primary-cta="Next"
+                secondary-cta="Previous"
+                currentstep="2"
+                totalsteps="8"
+            >
+                <div slot="title">Coachmark with Media</div>
+                <div slot="content">
+                    This is a Coachmark with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+            </sp-coachmark>
+
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
+    `;
+};
+
+withGif.swc_vrt = {
+    skip: true,
+};
+
+export const withKeys = (props: Properties): TemplateResult => {
+    const {
+        open = true,
+        placement = 'right-start',
+        modifierKeys = ['⇧ Shift', '⌘'],
+        triggerInteraction = 'hover',
+    } = props;
+    return html`
+        <sp-coachmark-trigger
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark
+                ?open=${open}
+                currentstep="2"
+                totalsteps="8"
+                primary-cta="Next"
+                secondary-cta="Previous"
+                .modifierKeys=${modifierKeys}
+                .content=${{
+                    title: 'I am a Coachmark with keys',
+                    description:
+                        'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+                }}
+            >
+                <sp-action-menu placement="bottom-end" quiet slot="actions">
+                    <sp-menu-item>Skip tour</sp-menu-item>
+                    <sp-menu-item>Restart tour</sp-menu-item>
+                </sp-action-menu>
+            </sp-coachmark>
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
+    `;
+};
+
+export const linkInDescription = (props: Properties): TemplateResult => {
+    const {
+        open = true,
+        placement = 'right-start',
+        triggerInteraction = 'hover',
+    } = props;
+    return html`
+        <sp-coachmark-trigger
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark
+                ?open=${open}
+                primary-cta="Ok"
+                shortcut-key="L"
+                .content=${{
+                    title: 'Coachmark with Shortcut',
+                    description:
+                        'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+                }}
+            ></sp-coachmark>
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark-trigger>
     `;
 };
