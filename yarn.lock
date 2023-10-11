@@ -5766,15 +5766,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/button@^11.0.11":
-  version "11.0.11"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-11.0.11.tgz#cc86f0ce51c89e036ad26fe5060b95f914fef573"
-  integrity sha512-OAJR6u7wryLYXdJm9/kpSM1eqKMAtz68atss+mlQD7oWpng19svZLPg2J3jta9XhiYeo5KPpl2Nr0XEJCPQurg==
+"@spectrum-css/button@^11.0.8":
+  version "11.0.12"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-11.0.12.tgz#ecfbfd36f3f08285f38763cb344e560e9f8fea86"
+  integrity sha512-zP3ZomO5xN6j9TKTWWZnzzgtWRD6h63VzruDigJ6HniYvItfLY5lqM77MG3BEdrOtenhJINg246MWGu55n/Ckw==
 
-"@spectrum-css/buttongroup@^6.1.9":
-  version "6.1.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.1.9.tgz#23b0a27157fb1a8c5160cb4cd81a56cfd3f8e513"
-  integrity sha512-3HbOHOtCMLYzElMLV8JjXZpY9ZHVEu94xqQBuo3i25jMUCehcfxU+Vwo4dEap1obXTKGGFEL7Si7VCZ9IJY6QQ==
+"@spectrum-css/buttongroup@^6.1.6":
+  version "6.1.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.1.10.tgz#6bbbe94e2d2f009f9c1243615a438d505800e1eb"
+  integrity sha512-hCMNBYfFgKVHY2Eqnj+ZI4BDrjwqhFs9Y8ZzKz54iVIoDda8MRUEzW2NF7P5TtsOiPO46+xVYiRKhrnIJOaEJA==
 
 "@spectrum-css/card@^6.0.18":
   version "6.0.18"
@@ -6283,7 +6283,7 @@
     "@spectrum-web-components/base" "^0.38.0"
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.39.0"
+  version "0.39.1"
 
 "@spectrum-web-components/field-group@^0.38.0":
   version "0.38.0"

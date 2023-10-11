@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { MediaType, VideoType } from '../src/CoachmarkItem.js';
+import { MediaType } from '../src/CoachmarkItem.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
@@ -33,10 +33,8 @@ type Properties = {
     modifierKeys?: string[];
     content: string;
     src?: string;
-    videoType?: VideoType;
     mediaType?: MediaType;
     imageAlt?: string;
-    toolVideoData?: string;
     triggerInteraction: 'click' | 'hover' | 'longpress';
     currentStep?: number;
     totalSteps?: number;
@@ -64,7 +62,7 @@ Default.args = {
     placement: 'right-start',
     heading: 'Coachmark with 16:9 image',
     content:
-        'This is a Rich Coachmark with nothing but text in it. Kind of lonely in here.',
+        'This is a Coachmark with nothing but text in it. Kind of lonely in here.',
     src: tree,
     mediaType: MediaType.IMAGE,
     currentStep: 2,
@@ -78,7 +76,7 @@ TextOnly.args = {
     placement: 'right',
     heading: 'Bare bones',
     content:
-        'This is a Rich Coachmark with nothing but text in it. Kind of lonely in here.',
+        'This is a Coachmark with nothing but text in it. Kind of lonely in here.',
     currentStep: 2,
     totalSteps: 8,
     primaryCTA: 'Next',
@@ -111,7 +109,7 @@ export const Clickable = (args: Properties): TemplateResult => Template(args);
 Clickable.args = {
     placement: 'right-start',
     heading: 'Coachmark with 16:9 image',
-    content: '16:9 is the default aspect ratio for the Rich Coachmark.',
+    content: '16:9 is the default aspect ratio for the Coachmark.',
     triggerInteraction: 'click',
     currentStep: 2,
     totalSteps: 8,
@@ -122,9 +120,9 @@ Clickable.args = {
 export const withGif = (args: Properties): TemplateResult => Template(args);
 withGif.args = {
     placement: 'right-start',
-    heading: 'Rich Coachmark with GIF',
+    heading: 'Coachmark with GIF',
     shortcutKey: 'G',
-    content: 'This Rich Coachmark has a GIF in it.',
+    content: 'This Coachmark has a GIF in it.',
     src: gif,
     mediaType: MediaType.IMAGE,
     currentStep: 2,
@@ -134,21 +132,6 @@ withGif.args = {
 };
 withGif.swc_vrt = {
     skip: true,
-};
-
-export const Video = (args: Properties): TemplateResult => Template(args);
-Video.args = {
-    placement: 'right',
-    heading: 'Coachmark with Video',
-    shortcutKey: 'v',
-    content: 'This rich tooltip has a video in it.',
-    src: 'https://download.samplelib.com/mp4/sample-5s.mp4',
-    videoType: VideoType.MP4,
-    mediaType: MediaType.VIDEO,
-    currentStep: 2,
-    totalSteps: 8,
-    primaryCTA: 'Next',
-    secondaryCTA: 'Previous',
 };
 
 export const Keys = (args: Properties): TemplateResult => Template(args);
