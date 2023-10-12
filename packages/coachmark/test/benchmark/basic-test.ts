@@ -14,25 +14,16 @@ import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
-import { CoachmarkItem } from '../../src/CoachmarkItem.js';
-
-const item: CoachmarkItem = {
-    heading: 'Bare bones',
-    content:
-        'This is a Rich Coachmark with nothing but text in it. Kind of lonely in here.',
-    currentStep: 2,
-    totalSteps: 8,
-    primaryCTA: 'Next',
-    secondaryCTA: 'Previous',
-};
 
 measureFixtureCreation(html`
-    <sp-coachmark-trigger
-        open
-        placement="right"
-        .item=${item}
-        triggerInteraction="click"
-    >
+    <sp-coachmark-trigger open placement="right" triggerInteraction="click">
+        <sp-coachmark open primary-cta="Ok">
+            <div slot="title">A single coachmark</div>
+            <div slot="content">
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
+            </div>
+        </sp-coachmark>
         <sp-coach-indicator slot="trigger"></sp-coach-indicator>
     </sp-coachmark-trigger>
 `);

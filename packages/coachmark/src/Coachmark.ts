@@ -36,11 +36,10 @@ import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 
 /**
  * @element sp-coachmark
- * @slot cover-photo - This is the cover photo for Default and Quiet Cards
+ * @slot cover-photo - This is the cover photo for Default and Quiet Coachmark
  * @slot heading - HTML content to be listed as the heading
  * @slot description - A description of the card
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
- * @slot footer - Footer text
  */
 export class Coachmark extends LikeAnchor(Popover) {
     public static override get styles(): CSSResultArray {

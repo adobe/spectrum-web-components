@@ -34,8 +34,8 @@ import { Overlay } from '@spectrum-web-components/overlay';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 const defaultItem: CoachmarkItem = {
-    heading: 'I am the heading',
-    content: 'I am the content',
+    heading: 'I am the heading for Coachmark',
+    content: 'I am the content for this Coachmark',
     mediaType: 'image',
 };
 describe('Coachmark', () => {
@@ -329,7 +329,7 @@ describe('Coachmark', () => {
         );
         expect(imageElement).not.to.be.undefined;
     });
-    it('opens coachmark-trigger on programmatic click', async () => {
+    it('opens coachmark on programmatic click', async () => {
         const interaction = 'click';
         const el = await fixture<CoachmarkTrigger>(html`
             <sp-coachmark-trigger
@@ -370,7 +370,7 @@ describe('Coachmark', () => {
         expect(overlay.open).to.be.false;
         expect(el.open).to.be.false;
     });
-    it('opens coachmark-trigger on sendMouse on the trigger element', async () => {
+    it('opens coachmark on sendMouse on the trigger element', async () => {
         const interaction = 'hover';
         const el = await fixture<CoachmarkTrigger>(html`
             <sp-coachmark-trigger
