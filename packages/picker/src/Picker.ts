@@ -63,10 +63,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ type: String })
     public description = 'sp-picker';
 
-    constructor() {
-        super();
-    }
-
     @state()
     appliedLabel?: string;
 
@@ -426,7 +422,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected get renderDescriptionSlot(): TemplateResult {
         return html`
-            <div id="sp-picker">
+            <div id=${this.description}>
                 <slot name="description"></slot>
             </div>
         `;

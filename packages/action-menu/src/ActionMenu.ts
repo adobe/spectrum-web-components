@@ -87,7 +87,7 @@ export class ActionMenu extends ObserveSlotPresence(
     protected override render(): TemplateResult {
         return html`
             <sp-action-button
-                aria-describedby=${ifDefined(this.description)}
+                aria-describedby=${this.description}
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
                 static=${ifDefined(this.static)}
