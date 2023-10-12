@@ -66,8 +66,10 @@
         "@spectrum-web-components/icon": "^0.39.1",
         "@spectrum-web-components/icons-ui": "^0.39.1",
         "@spectrum-web-components/icons-workflow": "^0.39.1",
+        "@spectrum-web-components/menu": "^0.39.1",
         "@spectrum-web-components/overlay": "^0.39.1",
-        "@spectrum-web-components/picker": "^0.39.1"
+        "@spectrum-web-components/picker": "^0.39.1",
+        "@spectrum-web-components/popover": "^0.39.1"
     },
     "devDependencies": {
         "@spectrum-css/splitbutton": "^6.0.8"

@@ -54,7 +54,9 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.39.1",
         "@spectrum-web-components/button": "^0.39.1",
-        "@spectrum-web-components/icons-ui": "^0.39.1"
+        "@spectrum-web-components/icon": "^0.39.1",
+        "@spectrum-web-components/icons-ui": "^0.39.1",
+        "@spectrum-web-components/shared": "^0.39.1"
     },
     "devDependencies": {
         "@spectrum-css/pickerbutton": "^4.0.12"

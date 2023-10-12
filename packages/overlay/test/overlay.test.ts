@@ -771,7 +771,7 @@ describe('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
-                <overlay-trigger id="test-1" placement="right">
+                <overlay-trigger id="test-1" placement="bottom">
                     <sp-button slot="trigger">Trigger 1</sp-button>
                     <sp-popover slot="hover-content">
                         <p>Hover contentent for "Trigger 1".</p>
@@ -813,7 +813,7 @@ describe('Overlay - timing', () => {
             boundingRectTrigger2.top + boundingRectTrigger2.height / 4,
         ];
 
-        // Move poitner over "Trigger 1", should _start_ to open "hover" content.
+        // Move pointer over "Trigger 1", should _start_ to open "hover" content.
         await sendMouse({
             steps: [
                 {
@@ -824,6 +824,7 @@ describe('Overlay - timing', () => {
         });
         await nextFrame();
         await nextFrame();
+
         // Move pointer out of "Trigger 1", should _start_ to close "hover" content.
         await sendMouse({
             steps: [
@@ -846,6 +847,7 @@ describe('Overlay - timing', () => {
         });
         await nextFrame();
         await nextFrame();
+
         const opened = oneEvent(trigger2, 'sp-opened');
         // Click "Trigger 2", should _start_ to open "click" content and _start_ to close "hover" content.
         await sendMouse({
