@@ -9,11 +9,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CoachmarkTrigger } from './src/CoachmarkTrigger';
+import { CoachmarkPopover } from './src/CoachmarkPopover';
 
-customElements.define('sp-coachmark-trigger', CoachmarkTrigger);
+customElements.define('sp-coachmark-popover', CoachmarkPopover);
 declare global {
     interface HTMLElementTagNameMap {
-        'sp-coachmark-trigger': CoachmarkTrigger;
+        'sp-coachmark-popover': CoachmarkPopover;
     }
 }

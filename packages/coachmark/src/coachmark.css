@@ -55,8 +55,3 @@ governing permissions and limitations under the License.
     flex: 0;
     align-self: flex-start;
 }
-
-.image-container {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-}

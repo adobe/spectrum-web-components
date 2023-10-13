@@ -10,20 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
+import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-popover.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-coachmark-trigger open placement="right" triggerInteraction="click">
-        <sp-coachmark open primary-cta="Ok">
+    <sp-coachmark open placement="right" triggerInteraction="click">
+        <sp-coachmark-popover open primary-cta="Ok">
             <div slot="title">A single coachmark</div>
             <div slot="content">
                 This is a Coachmark with nothing but text in it. Kind of lonely
                 in here.
             </div>
-        </sp-coachmark>
+        </sp-coachmark-popover>
         <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-    </sp-coachmark-trigger>
+    </sp-coachmark>
 `);

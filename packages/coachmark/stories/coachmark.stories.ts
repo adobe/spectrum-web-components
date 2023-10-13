@@ -12,16 +12,16 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import type { MediaType } from '../src/CoachmarkItem.js';
-import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-popover.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
-import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
+import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import { cave, gif } from './images.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 export default {
-    title: 'Coachmark Trigger',
-    component: 'sp-coachmark-trigger',
+    title: 'Coachmark',
+    component: 'sp-coachmark',
 };
 
 type Properties = {
@@ -47,12 +47,12 @@ export const Default = (props: Properties): TemplateResult => {
     const { open = true, placement, triggerInteraction } = props;
 
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark
+            <sp-coachmark-popover
                 ?open=${open}
                 currentstep="2"
                 totalsteps="8"
@@ -68,9 +68,9 @@ export const Default = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark>
+            </sp-coachmark-popover>
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };
 
@@ -78,20 +78,20 @@ export const single = (props: Properties): TemplateResult => {
     const { open = true, placement, triggerInteraction } = props;
 
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark ?open=${open} primary-cta="Ok">
+            <sp-coachmark-popover ?open=${open} primary-cta="Ok">
                 <div slot="title">A single coachmark</div>
                 <div slot="content">
                     This is a Coachmark with nothing but text in it. Kind of
                     lonely in here.
                 </div>
-            </sp-coachmark>
+            </sp-coachmark-popover>
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };
 
@@ -99,12 +99,12 @@ export const userActionDependent = (props: Properties): TemplateResult => {
     const { open = true, placement, triggerInteraction } = props;
 
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark
+            <sp-coachmark-popover
                 ?open=${open}
                 currentstep="2"
                 totalsteps="8"
@@ -120,10 +120,10 @@ export const userActionDependent = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark>
+            </sp-coachmark-popover>
 
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };
 
@@ -135,12 +135,12 @@ export const Clickable = (props: Properties): TemplateResult => {
     } = props;
 
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark
+            <sp-coachmark-popover
                 ?open=${open}
                 currentstep="2"
                 totalsteps="8"
@@ -156,10 +156,10 @@ export const Clickable = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark>
+            </sp-coachmark-popover>
 
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };
 export const withImage = (props: Properties): TemplateResult => {
@@ -170,12 +170,12 @@ export const withImage = (props: Properties): TemplateResult => {
     } = props;
 
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark
+            <sp-coachmark-popover
                 ?open=${open}
                 src=${cave}
                 media-type="image"
@@ -193,10 +193,10 @@ export const withImage = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark>
+            </sp-coachmark-popover>
 
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };
 
@@ -208,12 +208,12 @@ export const withGif = (props: Properties): TemplateResult => {
     } = props;
 
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark
+            <sp-coachmark-popover
                 ?open=${open}
                 src=${gif}
                 media-type="image"
@@ -231,10 +231,10 @@ export const withGif = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark>
+            </sp-coachmark-popover>
 
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };
 
@@ -250,12 +250,12 @@ export const withKeys = (props: Properties): TemplateResult => {
         triggerInteraction = 'hover',
     } = props;
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark
+            <sp-coachmark-popover
                 ?open=${open}
                 currentstep="2"
                 totalsteps="8"
@@ -272,9 +272,9 @@ export const withKeys = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark>
+            </sp-coachmark-popover>
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };
 
@@ -285,12 +285,12 @@ export const linkInDescription = (props: Properties): TemplateResult => {
         triggerInteraction = 'hover',
     } = props;
     return html`
-        <sp-coachmark-trigger
+        <sp-coachmark
             ?open=${open}
             placement=${ifDefined(placement)}
             .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark
+            <sp-coachmark-popover
                 ?open=${open}
                 primary-cta="Ok"
                 shortcut-key="L"
@@ -299,8 +299,8 @@ export const linkInDescription = (props: Properties): TemplateResult => {
                     description:
                         'This is a Coachmark with nothing but text in it. Kind of lonely in here',
                 }}
-            ></sp-coachmark>
+            ></sp-coachmark-popover>
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark-trigger>
+        </sp-coachmark>
     `;
 };

@@ -24,10 +24,10 @@ import {
     CoachIndicator,
     Coachmark,
     CoachmarkItem,
-    CoachmarkTrigger,
+    CoachmarkPopover,
 } from '@spectrum-web-components/coachmark';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-popover.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { sendKeys } from '@web/test-runner-commands';
 import type { Overlay } from '@spectrum-web-components/overlay';
@@ -41,7 +41,7 @@ const defaultItem: CoachmarkItem = {
 describe('Coachmark', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Coachmark>(
+            await fixture<CoachmarkPopover>(
                 html`
                     <sp-coachmark
                         id="coachmark"
@@ -54,15 +54,15 @@ describe('Coachmark', () => {
             )
     );
     it('loads default coachmark accessibly', async () => {
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark
+                <sp-coachmark-popover
                     id="coachmark"
                     .content=${{
                         title: defaultItem.heading,
                         description: defaultItem.content,
                     }}
-                ></sp-coachmark>
+                ></sp-coachmark-popover>
             `
         );
         await elementUpdated(el);
@@ -70,12 +70,12 @@ describe('Coachmark', () => {
     });
     it('displays the slotted content as `.title`', async () => {
         const testHeading = 'This is a test heading';
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark id="coachmark">
+                <sp-coachmark-popover id="coachmark">
                     <h1 slot="title">${testHeading}</h1>
                     <div slot="content">Hello I am a content in slot</div>
-                </sp-coachmark>
+                </sp-coachmark-popover>
             `
         );
 
@@ -99,9 +99,9 @@ describe('Coachmark', () => {
     });
     it('if in tour coachmark loads with steps with previous and next buttons', async () => {
         const stepText = '2 of 8';
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark
+                <sp-coachmark-popover
                     currentStep="2"
                     totalSteps="8"
                     primary-cta="Next"
@@ -114,7 +114,7 @@ describe('Coachmark', () => {
                         drawing tools. Start drawing, and zoom in to see the
                         pixels in each stroke.
                     </div>
-                </sp-coachmark>
+                </sp-coachmark-popover>
             `
         );
         await elementUpdated(el);
@@ -144,14 +144,14 @@ describe('Coachmark', () => {
         expect(prevButton?.textContent?.trim()).to.equal('Previous');
     });
     it('loads action-menu', async () => {
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark>
+                <sp-coachmark-popover>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
                     </sp-action-menu>
-                </sp-coachmark>
+                </sp-coachmark-popover>
             `
         );
 
@@ -162,15 +162,15 @@ describe('Coachmark', () => {
         await expect(el).to.be.accessible();
     });
     it('loads step when total step count is greater than 1', async () => {
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark totalSteps="5" currentStep="2">
+                <sp-coachmark-popover totalSteps="5" currentStep="2">
                     <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
                     </sp-action-menu>
-                </sp-coachmark>
+                </sp-coachmark-popover>
             `
         );
 
@@ -184,15 +184,15 @@ describe('Coachmark', () => {
         await expect(el).to.be.accessible();
     });
     it('doesnt load pagination when total step count is equal to 0 or 1', async () => {
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark totalSteps="0">
+                <sp-coachmark-popover totalSteps="0">
                     <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
                     </sp-action-menu>
-                </sp-coachmark>
+                </sp-coachmark-popover>
             `
         );
 
@@ -203,15 +203,15 @@ describe('Coachmark', () => {
         await expect(el).to.be.accessible();
     });
     it('loads primary button with text "Ok" for a single coachmark', async () => {
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark totalSteps="1" primary-cta="Ok">
+                <sp-coachmark-popover totalSteps="1" primary-cta="Ok">
                     <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
                     </sp-action-menu>
-                </sp-coachmark>
+                </sp-coachmark-popover>
             `
         );
 
@@ -223,9 +223,9 @@ describe('Coachmark', () => {
         expect(okayButton?.textContent?.trim()).to.equal('Ok');
     });
     it('loads primary button with text "Next" and secodanry button with Previous if totalSteps is greater to 1', async () => {
-        const el = await fixture<Coachmark>(
+        const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark
+                <sp-coachmark-popover
                     totalSteps="4"
                     currentStep="2"
                     secondary-cta="Previous"
@@ -236,7 +236,7 @@ describe('Coachmark', () => {
                         <sp-menu-item>Skip tour</sp-menu-item>
                         <sp-menu-item>Restart tour</sp-menu-item>
                     </sp-action-menu>
-                </sp-coachmark>
+                </sp-coachmark-popover>
             `
         );
 
@@ -253,33 +253,10 @@ describe('Coachmark', () => {
         expect(prevButton).to.not.be.undefined;
         expect(prevButton?.textContent?.trim()).to.equal('Previous');
     });
-    it('renders a video element and allows play pause a video', async () => {
-        const el = await fixture<Coachmark>(html`
-            <sp-coachmark
-                currentstep="2"
-                totalsteps="8"
-                open
-                media-type="video"
-                video-type="mp4"
-                src="https://download.samplelib.com/mp4/sample-5s.mp4"
-            >
-                <div slot="title">Tooltip with 16:9 image</div>
-                <div slot="content">
-                    This is a Rich Tooltip with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-            </sp-coachmark>
-        `);
-        await elementUpdated(el);
-        const video = el.shadowRoot.querySelector(
-            'source[src="https://download.samplelib.com/mp4/sample-5s.mp4"]'
-        );
-        expect(video).to.not.be.undefined;
-    });
     it('renders shortcut and modifier key with joiner', async () => {
         const modifierKeys = ['⇧ Shift', '⌘'];
-        const el = await fixture<Coachmark>(html`
-            <sp-coachmark
+        const el = await fixture<CoachmarkPopover>(html`
+            <sp-coachmark-popover
                 currentstep="2"
                 totalsteps="8"
                 open
@@ -291,7 +268,7 @@ describe('Coachmark', () => {
                     This is a Rich Tooltip with nothing but text in it. Kind of
                     lonely in here.
                 </div>
-            </sp-coachmark>
+            </sp-coachmark-popover>
         `);
         await elementUpdated(el);
         const modifier = el.shadowRoot.querySelector('span[type="modifier"');
@@ -308,7 +285,7 @@ describe('Coachmark', () => {
         expect(shortcutKey?.textContent?.trim()).to.include('Z');
     });
     it('renders content with image asset', async () => {
-        const el = await fixture<Coachmark>(html`
+        const el = await fixture<CoachmarkPopover>(html`
             <sp-coachmark
                 currentstep="2"
                 totalsteps="8"
@@ -331,20 +308,20 @@ describe('Coachmark', () => {
     });
     it('opens coachmark on programmatic click', async () => {
         const interaction = 'click';
-        const el = await fixture<CoachmarkTrigger>(html`
-            <sp-coachmark-trigger
+        const el = await fixture<Coachmark>(html`
+            <sp-coachmark
                 placement="bottom-end"
                 .triggerInteraction=${interaction}
             >
-                <sp-coachmark primary-cta="Ok">
+                <sp-coachmark-popover primary-cta="Ok">
                     <div slot="title">A single coachmark</div>
                     <div slot="content">
                         This is a Coachmark with nothing but text in it. Kind of
                         lonely in here.
                     </div>
-                </sp-coachmark>
+                </sp-coachmark-popover>
                 <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-            </sp-coachmark-trigger>
+            </sp-coachmark>
         `);
         const triggerEl = el.querySelector('[slot=trigger]') as CoachIndicator;
         const overlay = el.shadowRoot.querySelector(
@@ -372,20 +349,20 @@ describe('Coachmark', () => {
     });
     it('opens coachmark on sendMouse on the trigger element', async () => {
         const interaction = 'hover';
-        const el = await fixture<CoachmarkTrigger>(html`
-            <sp-coachmark-trigger
+        const el = await fixture<Coachmark>(html`
+            <sp-coachmark
                 placement="bottom-end"
                 .triggerInteraction=${interaction}
             >
-                <sp-coachmark primary-cta="Ok">
+                <sp-coachmark-popover primary-cta="Ok">
                     <div slot="title">A single coachmark</div>
                     <div slot="content">
                         This is a Coachmark with nothing but text in it. Kind of
                         lonely in here.
                     </div>
-                </sp-coachmark>
+                </sp-coachmark-popover>
                 <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-            </sp-coachmark-trigger>
+            </sp-coachmark>
         `);
         const triggerEl = el.querySelector('[slot=trigger]') as CoachIndicator;
         const overlay = el.shadowRoot.querySelector(
@@ -419,20 +396,20 @@ describe('Coachmark', () => {
     });
     it('allows keyboard interaction on buttons in the coachmark-trigger', async () => {
         const interaction = 'click';
-        const el = await fixture<CoachmarkTrigger>(html`
-            <sp-coachmark-trigger
+        const el = await fixture<Coachmark>(html`
+            <sp-coachmark
                 placement="bottom-end"
                 .triggerInteraction=${interaction}
             >
-                <sp-coachmark primary-cta="Ok">
+                <sp-coachmark-popover primary-cta="Ok">
                     <div slot="title">A single coachmark</div>
                     <div slot="content">
                         This is a Coachmark with nothing but text in it. Kind of
                         lonely in here.
                     </div>
-                </sp-coachmark>
+                </sp-coachmark-popover>
                 <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-            </sp-coachmark-trigger>
+            </sp-coachmark>
         `);
         const triggerEl = el.querySelector(
             '[slot="trigger"]'
