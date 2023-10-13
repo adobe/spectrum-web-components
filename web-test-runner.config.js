@@ -17,6 +17,7 @@ import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
     chromiumWithFlags,
+    chromiumWithMemoryTooling,
     configuredVisualRegressionPlugin,
     firefox,
     packages,
@@ -52,6 +53,13 @@ export default {
                 ) {
                     context.body = context.body.toString();
                 }
+            },
+        },
+        {
+            name: 'measureUserAgentSpecificMemory-plugin',
+            transform(context) {
+                context.set('Cross-Origin-Opener-Policy', 'same-origin');
+                context.set('Cross-Origin-Embedder-Policy', 'credentialless');
             },
         },
     ],
@@ -135,5 +143,5 @@ export default {
         },
     ],
     group: 'unit',
-    browsers: [chromium, firefox, webkit],
+    browsers: [chromiumWithMemoryTooling, firefox, webkit],
 };
