@@ -14,7 +14,6 @@ import {
     CSSResultArray,
     html,
     nothing,
-    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -27,7 +26,7 @@ import { Popover } from '@spectrum-web-components/popover';
 import { join } from 'lit/directives/join.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { Placement } from '@spectrum-web-components/overlay';
+import type { Placement } from '@spectrum-web-components/overlay';
 import { MediaType } from './CoachmarkItem.js';
 import type { CoachmarkItem } from './CoachmarkItem.js';
 import '@spectrum-web-components/asset/sp-asset.js';
@@ -93,10 +92,6 @@ export class Coachmark extends LikeAnchor(Popover) {
 
     @property({ type: String, attribute: 'secondary-cta' })
     secondaryCTA?: string;
-
-    constructor() {
-        super();
-    }
 
     // render video and images
     private renderMedia(): TemplateResult {
@@ -335,18 +330,6 @@ export class Coachmark extends LikeAnchor(Popover) {
                 ${this.renderButtons()}
             </div>
         `;
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-    }
-
-    public override disconnectedCallback(): void {
-        super.disconnectedCallback();
-    }
-
-    protected override updated(changed: PropertyValues): void {
-        super.updated(changed);
     }
 }
 

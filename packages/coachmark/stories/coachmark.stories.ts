@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { MediaType } from '../src/CoachmarkItem.js';
+import type { MediaType } from '../src/CoachmarkItem.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
 import { cave, gif } from './images.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { Placement } from '@spectrum-web-components/overlay';
+import type { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 export default {
     title: 'Coachmark Trigger',

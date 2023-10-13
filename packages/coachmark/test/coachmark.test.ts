@@ -30,7 +30,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/coachmark/sp-coachmark-trigger.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { Overlay } from '@spectrum-web-components/overlay';
+import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 const defaultItem: CoachmarkItem = {

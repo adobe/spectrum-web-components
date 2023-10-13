@@ -14,7 +14,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { Overlay, Placement } from '@spectrum-web-components/overlay';
+import type { Overlay, Placement } from '@spectrum-web-components/overlay';
 import { property, state } from 'lit/decorators.js';
 import type { CoachmarkItem } from './CoachmarkItem.js';
 import './Coachmark.js';
