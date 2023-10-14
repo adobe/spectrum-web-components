@@ -53,6 +53,7 @@ const config = {
             },
             plugins: [json(), watchSWC()],
             http2: true,
+            watch: true,
             middleware: [
                 async (ctx, next) => {
                     await next();

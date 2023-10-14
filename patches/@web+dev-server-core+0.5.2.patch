@@ -1,0 +1,13 @@
+diff --git a/node_modules/@web/dev-server-core/dist/server/DevServer.js b/node_modules/@web/dev-server-core/dist/server/DevServer.js
+index 26561b9..f6e8e89 100644
+--- a/node_modules/@web/dev-server-core/dist/server/DevServer.js
++++ b/node_modules/@web/dev-server-core/dist/server/DevServer.js
+@@ -30,6 +30,8 @@ class DevServer {
+                     this.connections.delete(connection);
+                 });
+             });
++        } else if (this.config.middlewareMode?.server) {
++            this.webSockets = new WebSocketsManager_1.WebSocketsManager(this.config.middlewareMode?.server);
+         }
+     }
+     async start() {
