@@ -53,12 +53,6 @@ describe('NumberField', () => {
     before(async () => {
         const shouldPolyfillEn = shouldPolyfill('en');
         const shouldPolyfillFr = shouldPolyfill('fr');
-        // eslint-disable-next-line no-console
-        console.log({
-            en: shouldPolyfillEn,
-            fr: shouldPolyfillFr,
-            shouldPolyfill,
-        });
         if (shouldPolyfillEn || shouldPolyfillFr) {
             await import('@formatjs/intl-numberformat/polyfill-force.js');
         }
@@ -376,15 +370,15 @@ describe('NumberField', () => {
                 changeSpy((event.target as NumberField)?.value);
             });
         });
-        it('on changing `value`', async () => {
+        it('except when changing `value` from the outside', async () => {
             el.focus();
             await elementUpdated(el);
             expect(el.focused).to.be.true;
             el.value = 51;
-            expect(changeSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(0);
             await elementUpdated(el);
             el.value = 52;
-            expect(changeSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(0);
         });
         it('via scroll', async () => {
             el.focus();
@@ -825,13 +819,23 @@ describe('NumberField', () => {
         let el: NumberField;
         let lastInputValue = 0;
         let lastChangeValue = 0;
+        const inputSpy = spy();
+        const changeSpy = spy();
         beforeEach(async () => {
+            inputSpy.resetHistory();
+            changeSpy.resetHistory();
             el = await getElFrom(
                 Default({
                     max: 10,
                     value: 10,
-                    onInput: (value: number) => (lastInputValue = value),
-                    onChange: (value: number) => (lastChangeValue = value),
+                    onInput: (value: number) => {
+                        inputSpy(value);
+                        lastInputValue = value;
+                    },
+                    onChange: (value: number) => {
+                        changeSpy(value);
+                        lastChangeValue = value;
+                    },
                 })
             );
             expect(el.formattedValue).to.equal('10');
@@ -884,9 +888,25 @@ describe('NumberField', () => {
         it('dispatches onchange on setting max value', async () => {
             el.value = 5;
             await elementUpdated(el);
-            expect(lastChangeValue, 'last change value').to.equal(5);
-            el.value = 15;
+            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value).to.equal(5);
+            el.focus();
+            await sendKeys({
+                press: 'Backspace',
+            });
+            await sendKeys({
+                press: '1',
+            });
+            await sendKeys({
+                press: '5',
+            });
+            await sendKeys({
+                press: 'Enter',
+            });
             await elementUpdated(el);
+            expect(el.value).to.equal(10);
+            expect(inputSpy.callCount).to.equal(3);
+            expect(changeSpy.callCount).to.equal(1);
             expect(lastChangeValue, 'last change value').to.equal(10);
         });
     });
@@ -894,13 +914,23 @@ describe('NumberField', () => {
         let el: NumberField;
         let lastInputValue = 0;
         let lastChangeValue = 0;
+        const inputSpy = spy();
+        const changeSpy = spy();
         beforeEach(async () => {
+            inputSpy.resetHistory();
+            changeSpy.resetHistory();
             el = await getElFrom(
                 Default({
                     min: 10,
                     value: 10,
-                    onInput: (value: number) => (lastInputValue = value),
-                    onChange: (value: number) => (lastChangeValue = value),
+                    onInput: (value: number) => {
+                        inputSpy(value);
+                        lastInputValue = value;
+                    },
+                    onChange: (value: number) => {
+                        changeSpy(value);
+                        lastChangeValue = value;
+                    },
                 })
             );
             expect(el.formattedValue).to.equal('10');
@@ -926,9 +956,25 @@ describe('NumberField', () => {
         it('dispatches onchange on setting min value', async () => {
             el.value = 15;
             await elementUpdated(el);
-            expect(lastChangeValue, 'last change value').to.equal(15);
-            el.value = 5;
+            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value).to.equal(15);
+            el.focus();
+            await sendKeys({
+                press: 'Backspace',
+            });
+            await sendKeys({
+                press: 'Backspace',
+            });
+            await sendKeys({
+                press: '5',
+            });
+            await sendKeys({
+                press: 'Enter',
+            });
             await elementUpdated(el);
+            expect(el.value).to.equal(10);
+            expect(inputSpy.callCount).to.equal(3);
+            expect(changeSpy.callCount).to.equal(1);
             expect(lastChangeValue, 'last change value').to.equal(10);
         });
         xit('manages `inputMode` in iPhone', async () => {

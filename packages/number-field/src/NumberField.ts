@@ -158,14 +158,9 @@ export class NumberField extends TextfieldBase {
         if (value === this.value) {
             return;
         }
+        this.lastCommitedValue = value;
         const oldValue = this._value;
         this._value = value;
-        if (!this.managedInput && this.lastCommitedValue !== this.value) {
-            this.dispatchEvent(
-                new Event('change', { bubbles: true, composed: true })
-            );
-            this.lastCommitedValue = this.value;
-        }
         this.requestUpdate('value', oldValue);
     }
 
@@ -181,7 +176,23 @@ export class NumberField extends TextfieldBase {
 
     public override _value = NaN;
     private _trackingValue = '';
-    private lastCommitedValue = NaN;
+    private lastCommitedValue?: number;
+
+    private setValue(value: number = this.value): void {
+        this.value = value;
+        if (
+            typeof this.lastCommitedValue === 'undefined' ||
+            this.lastCommitedValue === this.value
+        ) {
+            // Do not announce when the value is unchanged.
+            return;
+        }
+
+        this.dispatchEvent(
+            new Event('change', { bubbles: true, composed: true })
+        );
+        this.lastCommitedValue = this.value;
+    }
 
     /**
      * Retreive the value of the element parsed to a Number.
@@ -287,13 +298,8 @@ export class NumberField extends TextfieldBase {
         this.buttons.releasePointerCapture(event.pointerId);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
-        if (this.lastCommitedValue !== this.value) {
-            this.dispatchEvent(
-                new Event('change', { bubbles: true, composed: true })
-            );
-            this.lastCommitedValue = this.value;
-        }
         this.managedInput = false;
+        this.setValue();
     }
 
     private doNextChange(event: PointerEvent): number {
@@ -314,10 +320,9 @@ export class NumberField extends TextfieldBase {
         let value = this.value;
         value += count * this._step;
         if (isNaN(this.value)) {
-            this.value = min;
-        } else {
-            this.value = value;
+            value = min;
         }
+        this._value = this.validateInput(value);
         this.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
         );
@@ -339,10 +344,12 @@ export class NumberField extends TextfieldBase {
             case 'ArrowUp':
                 event.preventDefault();
                 this.increment(event.shiftKey ? this.stepModifier : 1);
+                this.setValue();
                 break;
             case 'ArrowDown':
                 event.preventDefault();
                 this.decrement(event.shiftKey ? this.stepModifier : 1);
+                this.setValue();
                 break;
         }
     }
@@ -359,10 +366,7 @@ export class NumberField extends TextfieldBase {
             this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
             clearTimeout(this.queuedChangeEvent);
             this.queuedChangeEvent = setTimeout(() => {
-                this.dispatchEvent(
-                    new Event('change', { bubbles: true, composed: true })
-                );
-                this.lastCommitedValue = this.value;
+                this.setValue();
             }, CHANGE_DEBOUNCE_MS) as unknown as number;
         }
         this.managedInput = false;
@@ -404,12 +408,8 @@ export class NumberField extends TextfieldBase {
                 return;
             }
         }
-        this.value = value;
+        this.setValue(value);
         this.inputElement.value = this.formattedValue;
-        if (this.lastCommitedValue !== this.value) {
-            this.lastCommitedValue = this.value;
-            super.handleChange();
-        }
     }
 
     protected handleCompositionStart(): void {
@@ -447,6 +447,8 @@ export class NumberField extends TextfieldBase {
             .map((char) => remapMultiByteCharacters[char] || char)
             .join('');
         if (this.numberParser.isValidPartialNumber(value)) {
+            // Use starting value as this.value is the `input` value.
+            this.lastCommitedValue = this.lastCommitedValue ?? this.value;
             const valueAsNumber = this.convertValueToNumber(value);
             if (!value && this.indeterminateValue) {
                 this.indeterminate = true;

@@ -230,7 +230,7 @@ export async function fixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
-        <sp-theme theme="spectrum" scale="medium" color="dark">
+        <sp-theme theme="spectrum" scale="medium" color="light">
             ${story}
         </sp-theme>
     `);
