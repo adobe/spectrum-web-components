@@ -171,6 +171,12 @@ export class MenuItem extends LikeAnchor(
     }
 
     public get itemChildren(): MenuItemChildren {
+        if (!this.iconSlot || !this.contentSlot) {
+            return {
+                icon: [],
+                content: [],
+            };
+        }
         if (this._itemChildren) {
             return this._itemChildren;
         }
