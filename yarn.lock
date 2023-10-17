@@ -6032,9 +6032,9 @@
   integrity sha512-N07Xn0SZzWfBNq8lBxWMCSCAxU1b/miemyzf+zX5hLlevkHDBURol3wFZHCs0EqlTxwJL9+dskSu8bpe26sUdA==
 
 "@spectrum-css/taggroup@^4.0.4":
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-4.0.4.tgz#8366a2eb62da101fd6669acc1b7a0814f8ba0fc0"
-  integrity sha512-C2dz7FPbH4wk8TOuk9NowUMoFLDBzo6ybz8yUSDi7uz3A0N0tjAJd5II9TkY1HvreDtpS65QF8m2X7NxXNhjvQ==
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-4.0.9.tgz#a25e83dfca8d5c8dd9cc452638bb876f5a63d16f"
+  integrity sha512-K7Scw8NbW+nzLCkKjf1sIWZLjYbfMwJ3OP7Xi1zbpqtXBX3x/nX0oH1GzgUoR7Pdc4PAIKLOPpNThhxVj60O0Q==
 
 "@spectrum-css/textfield@^6.0.20":
   version "6.0.20"
