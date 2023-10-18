@@ -29752,10 +29752,10 @@ winston@^3.10.0:
     triple-beam "^1.3.0"
     winston-transport "^4.5.0"
 
-wireit@^0.9.5:
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/wireit/-/wireit-0.9.5.tgz#7c3622f6ff5e63b7fac05783baf82f967f52562c"
-  integrity sha512-dKKNAwLxQjbPPMrltPxMUFKvLy2z6hlVjvR/qitvPm8GEQyb/1QYBG7ObvOQLsi95uAXpkWLJXBYkCKeVcMVgA==
+wireit@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/wireit/-/wireit-0.14.0.tgz#8ecb922280d9b3a493bed520900ab458e0f38727"
+  integrity sha512-CwHhyWduARI7zOoyyQvxH6U/5GTy8p6RxTe2LpwIhE4Y8PbaTk0iH8dLkeGMvxETVBkxCgQnF2GfzYKXMSmYSw==
   dependencies:
     braces "^3.0.2"
     chokidar "^3.5.3"
