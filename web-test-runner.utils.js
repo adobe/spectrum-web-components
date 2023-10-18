@@ -217,9 +217,19 @@ export function watchSWC() {
         name: 'watch-swc-plugin',
         async serverStart({ fileWatcher }) {
             // register SWC output files to be watched
-            const files = await fg('{packages,projects,tools}/**/*.js', {
-                ignore: ['**/*.map', '**/*.vrt.js', '**/spectrum-config.js'],
-            });
+            const files = await fg(
+                [
+                    '{packages,projects,tools}/**/*.js',
+                    '{packages,projects,tools}/**/spectrum-*.css',
+                ],
+                {
+                    ignore: [
+                        '**/*.map',
+                        '**/*.vrt.js',
+                        '**/spectrum-config.js',
+                    ],
+                }
+            );
             for (const file of files) {
                 fileWatcher.add(process.cwd() + file);
             }
