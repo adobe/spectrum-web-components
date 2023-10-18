@@ -370,8 +370,11 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 clear: left;
                 margin-bottom: 15px;
             }
+            .backdrop-filer-test {
+                backdrop-filter: saturate(80%);
+            }
         </style>
-        <fieldset>
+        <fieldset class="backdrop-filer-test">
             <sp-field-label for="picker-open">
                 Where do you live?
             </sp-field-label>
