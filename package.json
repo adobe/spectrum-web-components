@@ -137,7 +137,6 @@
         "alex": "^10.0.0",
         "cem-plugin-module-file-extensions": "^0.0.5",
         "chalk": "^5.0.1",
-        "chromedriver": "^116.0.0",
         "common-tags": "^1.8.2",
         "cssnano": "^5.0.15",
         "custom-elements-manifest": "^2.0.0",
