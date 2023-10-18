@@ -183,10 +183,10 @@ describe('Coachmark', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('doesnt load pagination when total step count is equal to 0 or 1', async () => {
+    it('doesnt load pagination count(steps) when total step count is less then 2', async () => {
         const el = await fixture<CoachmarkPopover>(
             html`
-                <sp-coachmark-popover totalSteps="0">
+                <sp-coachmark-popover totalSteps="1">
                     <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
@@ -222,7 +222,7 @@ describe('Coachmark', () => {
         expect(okayButton).to.not.be.null;
         expect(okayButton?.textContent?.trim()).to.equal('Ok');
     });
-    it('loads primary button with text "Next" and secodanry button with Previous if totalSteps is greater to 1', async () => {
+    it('loads primary button with text "Next" and secondary button with "Previous" if totalSteps is greater than 1', async () => {
         const el = await fixture<CoachmarkPopover>(
             html`
                 <sp-coachmark-popover
@@ -248,7 +248,7 @@ describe('Coachmark', () => {
         expect(nextButton?.textContent?.trim()).to.equal('Next');
 
         const prevButton = el.shadowRoot.querySelector(
-            'sp-button[variant="secondary"'
+            'sp-button[variant="secondary"]'
         );
         expect(prevButton).to.not.be.undefined;
         expect(prevButton?.textContent?.trim()).to.equal('Previous');
@@ -271,7 +271,7 @@ describe('Coachmark', () => {
             </sp-coachmark-popover>
         `);
         await elementUpdated(el);
-        const modifier = el.shadowRoot.querySelector('span[type="modifier"');
+        const modifier = el.shadowRoot.querySelector('span[type="modifier"]');
         expect(modifier).to.not.be.undefined;
         expect(modifier?.textContent?.trim()).to.include('⇧ Shift');
         const joiner = el.shadowRoot.querySelector('span[class="plus"]');
@@ -411,6 +411,9 @@ describe('Coachmark', () => {
                 <sp-coach-indicator slot="trigger"></sp-coach-indicator>
             </sp-coachmark>
         `);
+        const coachmarkPopover = el.querySelector(
+            'sp-coachmark-popover'
+        ) as CoachmarkPopover;
         const triggerEl = el.querySelector(
             '[slot="trigger"]'
         ) as CoachIndicator;
@@ -428,5 +431,6 @@ describe('Coachmark', () => {
         await sendKeys({
             press: 'Tab',
         });
+        expect(document.activeElement === coachmarkPopover).to.be.true;
     });
 });

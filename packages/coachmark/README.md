@@ -20,7 +20,7 @@ import '@spectrum-web-components/coachmark/sp-coachmark.js';
 
 ```
 
-When looking to leverage the `Coachmark` base class as a type and/or for extension purposes, do so via:
+When looking to leverage the `Coachmark` or `CoachmarkPopover` base classes as a type and/or for extension purposes, do so via:
 
 ```
 import { CoachmarkPopover, Coachmark } from '@spectrum-web-components/coachmark';
@@ -28,11 +28,10 @@ import { CoachmarkPopover, Coachmark } from '@spectrum-web-components/coachmark'
 
 ## Example
 
-### Default
+## Default
 
-Coach marks are in a tour when the primary action of one coach mark will lead to the display of another. When in a tour, a coach mark should have “Previous” and “Next” buttons as well as a step counter. When not in a tour, a coach mark should not have “Previous” and “Next” buttons nor a step counter.
-
-Coach marks in a tour should always have a step counter to display progress and show how many steps are left. A coach mark can have more ways to move through a tour, such as “Skip tour” or “Restart tour” actions that are always placed within the more actions menu.
+Coachmark can take a `placement`, an `offset`, and a
+`triggerInteraction`, similar to the [Overlay](https://opensource.adobe.com/spectrum-web-components/components/overlay/).
 
 ```html
 <sp-coachmark placement="right" open>
@@ -53,9 +52,9 @@ Coach marks in a tour should always have a step counter to display progress and 
 </sp-coachmark>
 ```
 
-### with More Actions
+## Using Action Menu
 
-All coach marks can include a more actions button. This appears on the top right of the coach mark. When the more actions button is in the down/touch state, the more actions menu is shown. The more actions menu should only include ways to interact with the tour as a whole, such as “Skip tour” and “Restart tour.”
+Coach marks can include an `ActionMenu`, which appears at the top right of the coach mark. The `ActionMenu` should only include ways to interact with the coach mark tour as a whole, with options like “Skip tour” or “Restart tour.”
 
 ```html
 <sp-coachmark placement="right" open>
@@ -80,43 +79,14 @@ All coach marks can include a more actions button. This appears on the top right
 </sp-coachmark>
 ```
 
-### single
+## User Action Dependent
 
-The primary action should be brief and consistent. Use "OK" for a single coach mark. This Coachmark is not in a tour. So steps and actions buttons will not be there.
+User action-dependent coachmarks are designed to guide users based on their interactions within your application. In such cases, there is no "Next Step" button, as the coachmark progresses when the user takes a specific action. This allows users to learn by doing, rather than simply reading instructions. The coachmark remains until the user performs the required action or takes an alternative route in the tour, such as skipping, restarting, or moving back to a previous step.
 
-```html
-<sp-coachmark placement="right" open>
-    <sp-coachmark-popover open primary-cta="Ok">
-        <div slot="title">A single coachmark</div>
-        <div slot="content">
-            This is a Coachmark with nothing but text in it. Kind of lonely in
-            here.
-        </div>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-</sp-coachmark>
-```
+Inside the `<sp-coachmark>`, add the content and instructions for the coachmark in the `<sp-coachmark-popover>`. You can also define primary and secondary CTA buttons for user interaction.
 
-### trigger open coachmark on click
-
-The primary action should be brief and consistent. Use "OK" for a single coach mark. This Coachmark is not in a tour. So steps and actions buttons will not be there.
-
-```html
-<sp-coachmark placement="right" triggerInteraction="click">
-    <sp-coachmark-popover primary-cta="Ok">
-        <div slot="title">A single coachmark</div>
-        <div slot="content">
-            This is a Coachmark with nothing but text in it. Kind of lonely in
-            here.
-        </div>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-</sp-coachmark>
-```
-
-### User Action Dependent
-
-Coach marks in a tour can be dependent on a user taking an action. When coach marks are action dependent, the “next step” button should be removed since the next step will be triggered by an action. This ensures that a user can learn by taking an action, rather than just reading about it. Unless the tour is skipped, restarted, or moved back to the previous step, this will persist until the user takes a corresponding action. For example, if a coach mark is educating a user about a shared library, it will persist until the user opens the Library panel.
+Event Handling:
+The primary and secondary CTA buttons within the coachmark popover can be configured to dispatch events when clicked.
 
 ```html
 <sp-coachmark placement="right" open>
@@ -126,6 +96,8 @@ Coach marks in a tour can be dependent on a user taking an action. When coach ma
         totalsteps="8"
         primary-cta="Asset added"
         secondary-cta="Previous"
+        @primary="${this.handleConfirm}"
+        @secondary="${this.handleCancel}"
     >
         <div slot="title">Coachmark with user action</div>
         <div slot="content">
@@ -141,9 +113,15 @@ Coach marks in a tour can be dependent on a user taking an action. When coach ma
 </sp-coachmark>
 ```
 
-### with Media
+## Using Images, GIFs
 
 Coach marks can contain images or videos that relate to their content, such as demonstrations of gestures, the feature being used, or illustrations.
+To use these kinds of media in your rich tooltip, specify a `src`, the type of media, either by using the string or `media-type` object, and
+an optional `imageAlt` text describing the content.
+
+Media Types allowed: `Images & Gifs`
+
+### Image
 
 ```html
 <sp-coachmark placement="right" open>
@@ -167,9 +145,37 @@ Coach marks can contain images or videos that relate to their content, such as d
 </sp-coachmark>
 ```
 
-### with Keyboard Shortcut
+### Custom Image/Gif
 
-A coach marks can contain a keyboard shortcut that relates to its content, such as a tool or action that can be used. When the more action buttons is present, the keyboard shortcut is placed under the title.
+A custom media can also be added via `<slot name="cover-photo"></slot>`
+
+```html
+<sp-coachmark placement="right" open>
+    <sp-coachmark-popover
+        currentstep="2"
+        totalsteps="8"
+        open
+        primary-cta="Next"
+        secondary-cta="Previous"
+    >
+        <div slot="title">Coachmark with 16:9 image</div>
+        <div slot="content">This is a Coachmark with some description</div>
+        <img slot="asset" src="https://picsum.photos/id/237/200/300" alt="" />
+        <sp-action-menu placement="bottom-end" quiet slot="actions">
+            <sp-menu-item>Skip tour</sp-menu-item>
+            <sp-menu-item>Restart tour</sp-menu-item>
+        </sp-action-menu>
+    </sp-coachmark-popover>
+    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+</sp-coachmark>
+```
+
+## Shortcut keys and modifier keys
+
+Shortcut keys and modifier keys are ways to show users how to trigger a particular tool.
+
+The `shortcutKey` is the primary key used to trigger an interaction and are typically an alphanumeric value (and thus will be rendered as an uppercase character), while the
+`modifierKeys` are an array of `string`s that represent alternate keys that can be pressed, like `Shift`, `Alt`, `Cmd`, etc.
 
 ```html
 <sp-coachmark placement="right" open id="coachmark-keys">
@@ -194,13 +200,12 @@ A coach marks can contain a keyboard shortcut that relates to its content, such 
 <script type="module">
     const initCoachMark = () => {
         const coachmark = document.querySelector('#coachmark-keys');
-        coachmark.renderItem = () => {
-            const coachmarkPopover = document.querySelector('sp-coachmark-popover');
-            coachmarkPopover.modifierKeys = ['⇧ Shift', '⌘']
-            return coachmarkPopover
-        }
+        const modifierKeys = ['⇧ Shift', '⌘']
+        coachmarkPopover.modifierKeys = modifierKeys
     };
-    customElements.whenDefined('sp-coachmark#coachmark-keys').then(() => {
-        initCoachMark();
+    customElements.whenDefined('code-example').then(() => {
+        customElements.whenDefined('sp-coachmark').then(() => {
+                initCoachMark();
+        });
     });
 </script>

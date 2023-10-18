@@ -324,7 +324,7 @@ export class CoachmarkPopover extends LikeAnchor(Popover) {
             <div class="content">${this.renderContent()}</div>
             <div class="footer">
                 ${when(
-                    this.totalSteps && this.totalSteps > 0,
+                    this.totalSteps && this.totalSteps > 1,
                     this.renderSteps
                 )}
                 ${this.renderButtons()}
