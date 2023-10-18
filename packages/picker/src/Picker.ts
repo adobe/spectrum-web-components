@@ -57,11 +57,9 @@ const chevronClass = {
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
+export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
-
-    @property({ type: String })
-    public description = 'sp-picker';
 
     @state()
     appliedLabel?: string;
@@ -422,7 +420,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected get renderDescriptionSlot(): TemplateResult {
         return html`
-            <div id=${this.description}>
+            <div id=${DESCRIPTION_ID}>
                 <slot name="description"></slot>
             </div>
         `;
@@ -435,7 +433,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 id="focus-helper"
                 tabindex="${this.focused || this.open ? '-1' : '0'}"
                 @focus=${this.handleHelperFocus}
-                aria-describedby=${ifDefined(this.description)}
+                aria-describedby=${DESCRIPTION_ID}
             ></span>
             <button
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
