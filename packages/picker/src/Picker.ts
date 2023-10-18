@@ -57,6 +57,7 @@ const chevronClass = {
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
+export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
@@ -417,6 +418,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
+    protected get renderDescriptionSlot(): TemplateResult {
+        return html`
+            <div id=${DESCRIPTION_ID}>
+                <slot name="description"></slot>
+            </div>
+        `;
+    }
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
@@ -425,6 +433,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 id="focus-helper"
                 tabindex="${this.focused || this.open ? '-1' : '0'}"
                 @focus=${this.handleHelperFocus}
+                aria-describedby=${DESCRIPTION_ID}
             ></span>
             <button
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
@@ -447,7 +456,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             >
                 ${this.buttonContent}
             </button>
-            ${this.renderMenu}
+            ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
     }
 
@@ -686,6 +695,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  * @element sp-picker
  *
  * @slot label - The placeholder content for the Picker
+ * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed

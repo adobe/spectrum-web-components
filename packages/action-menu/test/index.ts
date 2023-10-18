@@ -31,6 +31,7 @@ import {
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import { tooltipDescriptionAndPlacement } from '../stories/action-menu.stories';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
@@ -303,6 +304,22 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(button).to.have.attribute('aria-haspopup', 'true');
             expect(button).to.have.attribute('aria-expanded', 'true');
             expect(button).to.have.attribute('aria-controls', 'menu');
+        });
+        it('has attribute aria-describedby', async () => {
+            const name = 'sp-picker';
+            const description = 'Rendering a Picker';
+
+            const el = await fixture(html`
+                <sp-action-menu label=${name}>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <span slot="description">${description}</span>
+                </sp-action-menu>
+            `);
+
+            await elementUpdated(el);
+
+            await findDescribedNode(name, description);
         });
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
