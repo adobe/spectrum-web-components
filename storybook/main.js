@@ -28,13 +28,6 @@ const config = {
     framework: {
         name: '@web/storybook-framework-web-components',
     },
-    refs: {
-        'design-system': {
-            title: 'Spectrum CSS',
-            url: 'https://opensource.adobe.com/spectrum-css/preview/',
-            expanded: false, // Optional, true by default
-        },
-    },
     wdsFinal(config) {
         const json = fromRollup(rollupJson);
         return mergeConfigs(config, {
@@ -79,5 +72,15 @@ const config = {
         return config;
     },
 };
+
+if (process.env.NODE_ENV === 'development') {
+    config.refs = {
+        'design-system': {
+            title: 'Spectrum CSS',
+            url: 'https://opensource.adobe.com/spectrum-css/preview/',
+            expanded: false, // Optional, true by default
+        },
+    };
+}
 
 export default config;
