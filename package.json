@@ -199,7 +199,7 @@
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
         "typescript": "^4.7.2",
-        "wireit": "^0.9.5",
+        "wireit": "^0.14.0",
         "yargs": "^17.2.1"
     },
     "wireit": {

@@ -57,7 +57,7 @@
         "rollup-plugin-styles": "^4.0.0",
         "rollup-plugin-visualizer": "^5.9.2",
         "rollup-plugin-workbox": "^8.0.1",
-        "wireit": "^0.9.5"
+        "wireit": "^0.14.0"
     },
     "sideEffects": [
         "_site/**/*.css",
