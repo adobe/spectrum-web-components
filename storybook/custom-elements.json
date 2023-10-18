@@ -3803,6 +3803,19 @@
               }
             },
             {
+              "kind": "field",
+              "name": "renderDescriptionSlot",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "bindButtonKeydownListener",
               "privacy": "protected",
@@ -17023,8 +17036,29 @@
             {
               "kind": "field",
               "name": "lastCommitedValue",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "setValue",
               "privacy": "private",
-              "default": "NaN"
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "default": "this.value",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
             },
             {
               "kind": "field",
@@ -20797,6 +20831,14 @@
       "path": "packages/picker/src/Picker.js",
       "declarations": [
         {
+          "kind": "variable",
+          "name": "DESCRIPTION_ID",
+          "type": {
+            "text": "string"
+          },
+          "default": "'option-picker'"
+        },
+        {
           "kind": "class",
           "description": "",
           "name": "PickerBase",
@@ -21283,6 +21325,15 @@
               ]
             },
             {
+              "kind": "field",
+              "name": "renderDescriptionSlot",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "protected",
+              "readonly": true
+            },
+            {
               "kind": "method",
               "name": "bindButtonKeydownListener",
               "privacy": "protected",
@@ -21540,6 +21591,10 @@
             {
               "description": "The placeholder content for the Picker",
               "name": "label"
+            },
+            {
+              "description": "The description content for the Picker",
+              "name": "description"
             },
             {
               "description": "Tooltip to to be applied to the the Picker Button",
@@ -22209,6 +22264,19 @@
               }
             },
             {
+              "kind": "field",
+              "name": "renderDescriptionSlot",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "bindButtonKeydownListener",
               "privacy": "protected",
@@ -22569,6 +22637,14 @@
         }
       ],
       "exports": [
+        {
+          "kind": "js",
+          "name": "DESCRIPTION_ID",
+          "declaration": {
+            "name": "DESCRIPTION_ID",
+            "module": "packages/picker/src/Picker.js"
+          }
+        },
         {
           "kind": "js",
           "name": "PickerBase",
@@ -28687,6 +28763,19 @@
                   }
                 }
               ],
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "renderDescriptionSlot",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "protected",
+              "readonly": true,
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -38300,6 +38389,15 @@
           "members": [
             {
               "kind": "field",
+              "name": "__gridPart",
+              "type": {
+                "text": "RootPart | undefined"
+              },
+              "privacy": "private",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
               "name": "focusableSelector",
               "type": {
                 "text": "string"
@@ -40767,6 +40865,81 @@
           "declaration": {
             "name": "Theme",
             "module": "tools/theme/src/Theme.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/css-custom-vars-viewer/node_modules/@web/dev-server/src/DevServerStartError.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevServerStartError",
+          "superclass": {
+            "name": "Error",
+            "module": "projects/css-custom-vars-viewer/node_modules/@web/dev-server/src/DevServerStartError.ts"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevServerStartError",
+          "declaration": {
+            "name": "DevServerStartError",
+            "module": "projects/css-custom-vars-viewer/node_modules/@web/dev-server/src/DevServerStartError.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/node_modules/@web/dev-server/src/DevServerStartError.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevServerStartError",
+          "superclass": {
+            "name": "Error",
+            "module": "projects/documentation/node_modules/@web/dev-server/src/DevServerStartError.ts"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevServerStartError",
+          "declaration": {
+            "name": "DevServerStartError",
+            "module": "projects/documentation/node_modules/@web/dev-server/src/DevServerStartError.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/DevServerStartError.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevServerStartError",
+          "superclass": {
+            "name": "Error",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/DevServerStartError.ts"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevServerStartError",
+          "declaration": {
+            "name": "DevServerStartError",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/DevServerStartError.js"
           }
         }
       ]
