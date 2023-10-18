@@ -12,6 +12,9 @@ governing permissions and limitations under the License.
 
 import { LitElement, ReactiveElement } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
+// We need to import the polyfill for the scoped custom element registry before defining any custom elements
+import '@webcomponents/scoped-custom-element-registry';
+
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;

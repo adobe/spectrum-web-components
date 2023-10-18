@@ -29,14 +29,26 @@
             "development": "./src/ActionBar.dev.js",
             "default": "./src/ActionBar.js"
         },
+        "./src/ActionBarBase.js": {
+            "development": "./src/ActionBarBase.dev.js",
+            "default": "./src/ActionBarBase.js"
+        },
         "./src/action-bar.css.js": "./src/action-bar.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./scopedActionBar/ActionBarScoped.js": {
+            "development": "./scopedActionBar/ActionBarScoped.dev.js",
+            "default": "./scopedActionBar/ActionBarScoped.js"
+        },
         "./sp-action-bar.js": {
             "development": "./sp-action-bar.dev.js",
             "default": "./sp-action-bar.js"
+        },
+        "./sp-action-bar-scoped.js": {
+            "development": "./sp-action-bar-scoped.dev.js",
+            "default": "./sp-action-bar-scoped.js"
         }
     },
     "scripts": {

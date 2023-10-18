@@ -1,4 +1,6 @@
 {
     "./src/*": "./src/*",
-    "./sp-action-bar.js": "./sp-action-bar.js"
+    "./scopedActionBar/*": "./scopedActionBar/*",
+    "./sp-action-bar.js": "./sp-action-bar.js",
+    "./sp-action-bar-scoped.js": "./sp-action-bar-scoped.js"
 }

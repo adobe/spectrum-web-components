@@ -99,6 +99,7 @@
         "@commitlint/config-lerna-scopes": "^17.2.1",
         "@custom-elements-manifest/analyzer": "^0.8.3",
         "@lit-labs/react": "^1.1.1",
+        "@lit-labs/scoped-registry-mixin": "1.0.1",
         "@netlify/build": "^29.1.0",
         "@open-wc/dev-server-hmr": "^0.2.0",
         "@open-wc/testing": "^3.2.0",
