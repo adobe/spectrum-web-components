@@ -42,6 +42,9 @@
         "lit-element",
         "lit-html"
     ],
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.39.2"
+    },
     "devDependencies": {
         "@spectrum-css/opacitycheckerboard": "^1.0.4"
     },

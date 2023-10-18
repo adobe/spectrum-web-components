@@ -91,6 +91,7 @@
         "@spectrum-web-components/icon": "^0.39.2",
         "@spectrum-web-components/icons-ui": "^0.39.2",
         "@spectrum-web-components/overlay": "^0.39.2",
+        "@spectrum-web-components/popover": "^0.39.2",
         "@spectrum-web-components/shared": "^0.39.2"
     },
     "devDependencies": {
