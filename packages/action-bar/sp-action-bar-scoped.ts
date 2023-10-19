@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-import { ActionBarScoped } from './scopedActionBar/ActionBarScoped.js';
+import { ActionBarScoped } from './src/ActionBarScoped';
 
 defineElement('sp-action-bar-scoped', ActionBarScoped);
 

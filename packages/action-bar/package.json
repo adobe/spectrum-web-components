@@ -33,14 +33,14 @@
             "development": "./src/ActionBarBase.dev.js",
             "default": "./src/ActionBarBase.js"
         },
+        "./src/ActionBarScoped.js": {
+            "development": "./src/ActionBarScoped.dev.js",
+            "default": "./src/ActionBarScoped.js"
+        },
         "./src/action-bar.css.js": "./src/action-bar.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
-        },
-        "./scopedActionBar/ActionBarScoped.js": {
-            "development": "./scopedActionBar/ActionBarScoped.dev.js",
-            "default": "./scopedActionBar/ActionBarScoped.js"
         },
         "./sp-action-bar.js": {
             "development": "./sp-action-bar.dev.js",
@@ -69,6 +69,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@lit-labs/scoped-registry-mixin": "1.0.1",
         "@spectrum-web-components/action-group": "^0.39.2",
         "@spectrum-web-components/base": "^0.39.2",
         "@spectrum-web-components/button": "^0.39.2",
