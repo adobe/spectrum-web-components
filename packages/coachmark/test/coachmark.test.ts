@@ -32,6 +32,8 @@ import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import { sendKeys } from '@web/test-runner-commands';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { spy } from 'sinon';
+import { Button } from '@spectrum-web-components/button';
 
 const defaultItem: CoachmarkItem = {
     heading: 'I am the heading for Coachmark',
@@ -286,7 +288,7 @@ describe('Coachmark', () => {
     });
     it('renders content with image asset', async () => {
         const el = await fixture<CoachmarkPopover>(html`
-            <sp-coachmark
+            <sp-coachmark-popover
                 currentstep="2"
                 totalsteps="8"
                 open
@@ -298,7 +300,7 @@ describe('Coachmark', () => {
                     This is a Rich Tooltip with nothing but text in it. Kind of
                     lonely in here.
                 </div>
-            </sp-coachmark>
+            </sp-coachmark-popover>
         `);
         await elementUpdated(el);
         const imageElement = el.shadowRoot.querySelector(
@@ -432,5 +434,57 @@ describe('Coachmark', () => {
             press: 'Tab',
         });
         expect(document.activeElement === coachmarkPopover).to.be.true;
+    });
+    it('dispatches `primary` and `secondary`', async () => {
+        const primarySpy = spy();
+        const secondarySpy = spy();
+        const handlePrimary = (): void => primarySpy();
+        const handleSecondary = (): void => secondarySpy();
+        const el = await fixture<CoachmarkPopover>(html`
+            <sp-coachmark-popover
+                primary-cta="Next"
+                secondary-cta="Previous"
+                @primary=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                }}
+                @secondary=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                }}
+            >
+                <div slot="title">A single coachmark</div>
+                <div slot="content">
+                    This is a Coachmark with nothing but text in it. Kind of
+                    lonely in here.
+                </div>
+            </sp-coachmark-popover>
+        `);
+        el.addEventListener('primary', handlePrimary);
+        el.addEventListener('secondary', handleSecondary);
+
+        await elementUpdated(el);
+        expect(primarySpy.called).to.be.false;
+        expect(secondarySpy.called).to.be.false;
+
+        const primaryButton = el.shadowRoot.querySelector(
+            '[variant="primary"]'
+        ) as Button;
+        const secondaryButton = el.shadowRoot.querySelector(
+            '[variant="secondary"]'
+        ) as Button;
+        primaryButton.click();
+
+        await elementUpdated(el);
+        expect(primarySpy.called, 'dispatched `primary`').to.be.true;
+        expect(secondarySpy.called).to.be.false;
+
+        secondaryButton.click();
+
+        await elementUpdated(el);
+        expect(primarySpy.callCount).to.equal(1);
+        expect(secondarySpy.called, 'dispatched `secondary`').to.be.true;
     });
 });
