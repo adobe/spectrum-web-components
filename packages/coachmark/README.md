@@ -177,17 +177,16 @@ Shortcut keys and modifier keys are ways to show users how to trigger a particul
 The `shortcutKey` is the primary key used to trigger an interaction and are typically an alphanumeric value (and thus will be rendered as an uppercase character), while the
 `modifierKeys` are an array of `string`s that represent alternate keys that can be pressed, like `Shift`, `Alt`, `Cmd`, etc.
 
-```html
-<sp-coachmark placement="right" open id="coachmark-keys">
+```html-live
+<sp-coachmark placement="right" open>
     <sp-coachmark-popover
         open
         currentstep="2"
         totalsteps="8"
         primary-cta="Next"
         secondary-cta="Previous"
+        id="coachmark-keys"
     >
-        <div slot="title">Coachmark with Keyboard Shortcut</div>
-        <div slot="content">This is a Coachmark with some description</div>
         <sp-action-menu placement="bottom-end" quiet slot="actions">
             <sp-menu-item>Skip tour</sp-menu-item>
             <sp-menu-item>Restart tour</sp-menu-item>
@@ -195,13 +194,35 @@ The `shortcutKey` is the primary key used to trigger an interaction and are typi
     </sp-coachmark-popover>
     <sp-coach-indicator slot="trigger"></sp-coach-indicator>
 </sp-coachmark>
+<script type="module">
+    const initCoachMark = () => {
+        const coachmark = document.querySelector('#coachmark-keys');
+        const modifierKeys = ['⇧ Shift', '⌘'];
+        const content = {
+            title: 'I am a Coachmark with keys',
+            description: 'This is a Coachmark with nothing but text in it.'
+        };
+        coachmark.content= content
+        coachmark.modifierKeys = modifierKeys
+    };
+    customElements.whenDefined('code-example').then(() => {
+        customElements.whenDefined('sp-coachmark').then(() => {
+                initCoachMark();
+        });
+    });
+</script>
 ```
 
 <script type="module">
     const initCoachMark = () => {
         const coachmark = document.querySelector('#coachmark-keys');
-        const modifierKeys = ['⇧ Shift', '⌘']
-        coachmarkPopover.modifierKeys = modifierKeys
+        const modifierKeys = ['⇧ Shift', '⌘'];
+        const content = {
+            title: 'I am a Coachmark with keys',
+            description: 'This is a Coachmark with nothing but text in it.'
+        };
+        coachmark.content= content
+        coachmark.modifierKeys = modifierKeys
     };
     customElements.whenDefined('code-example').then(() => {
         customElements.whenDefined('sp-coachmark').then(() => {
