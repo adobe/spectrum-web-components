@@ -74,7 +74,12 @@ const renderItem = (
             />
             <div slot="description">10/15/18</div>
             <div slot="footer">Footer</div>
-            <sp-action-menu slot="actions" placement="bottom-end" quiet>
+            <sp-action-menu
+                label="File actions"
+                slot="actions"
+                placement="bottom-end"
+                quiet
+            >
                 <sp-tooltip slot="tooltip" self-managed placement="top">
                     Do stuff
                 </sp-tooltip>
