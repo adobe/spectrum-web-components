@@ -22,7 +22,28 @@ import '@spectrum-web-components/coachmark/sp-coachmark.js';
 export default {
     title: 'Coachmark',
     component: 'sp-coachmark',
+    argTypes: {
+        onPrimary: { action: 'primary' },
+        onSecondary: { action: 'secondary' },
+    },
 };
+
+type StoryArgs = {
+    onPrimary?: (event: Event) => void;
+    onSecondary?: (event: Event) => void;
+};
+
+const handlePrimary =
+    ({ onPrimary }: StoryArgs) =>
+    (event: Event) => {
+        if (onPrimary) onPrimary(event);
+    };
+
+const handleSecondary =
+    ({ onSecondary }: StoryArgs) =>
+    (event: Event) => {
+        if (onSecondary) onSecondary(event);
+    };
 
 type Properties = {
     open?: boolean;
@@ -90,38 +111,6 @@ export const single = (props: Properties): TemplateResult => {
                     lonely in here.
                 </div>
             </sp-coachmark-popover>
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
-    `;
-};
-
-export const userActionDependent = (props: Properties): TemplateResult => {
-    const { open = true, placement, triggerInteraction } = props;
-
-    return html`
-        <sp-coachmark
-            ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
-        >
-            <sp-coachmark-popover
-                ?open=${open}
-                currentstep="2"
-                totalsteps="8"
-                primary-cta="Asset added"
-                secondary-cta="Previous"
-            >
-                <div slot="title">Coachmark with user action</div>
-                <div slot="content">
-                    This is a Coachmark with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-                <sp-action-menu placement="bottom-end" quiet slot="actions">
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
-            </sp-coachmark-popover>
-
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>
         </sp-coachmark>
     `;
@@ -298,6 +287,49 @@ export const linkInDescription = (props: Properties): TemplateResult => {
                     title: 'Coachmark with Shortcut and links in description',
                     description:
                         'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+                }}
+            ></sp-coachmark-popover>
+            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+        </sp-coachmark>
+    `;
+};
+
+export const actionButtons = (
+    props: Properties,
+    args: StoryArgs = {}
+): TemplateResult => {
+    const {
+        open = true,
+        placement = 'right-start',
+        triggerInteraction = 'hover',
+    } = props;
+    return html`
+        <sp-coachmark
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            .triggerInteraction=${triggerInteraction}
+        >
+            <sp-coachmark-popover
+                ?open=${open}
+                primary-cta="Next"
+                secondary-cta="Previous"
+                shortcut-key="L"
+                .content=${{
+                    title: 'Coachmark with Shortcut',
+                    description:
+                        'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+                }}
+                @primary=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                    handlePrimary(args);
+                }}
+                @secondary=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                    handleSecondary(args);
                 }}
             ></sp-coachmark-popover>
             <sp-coach-indicator slot="trigger"></sp-coach-indicator>

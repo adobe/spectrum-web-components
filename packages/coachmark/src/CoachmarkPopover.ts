@@ -189,36 +189,21 @@ export class CoachmarkPopover extends LikeAnchor(Popover) {
         }
     }
 
-    private close(): void {
-        this.dispatchEvent(
-            new Event('close', {
-                bubbles: true,
-                cancelable: true,
-                composed: true,
-            })
-        );
-    }
     // event on primary button
     private handlePrimaryCTA(): void {
         this.dispatchEvent(
             new Event('primary', {
                 bubbles: true,
-                cancelable: true,
-                composed: true,
             })
         );
-        this.close();
     }
     // event on secondary button
     private handleSecondaryCTA(): void {
         this.dispatchEvent(
             new Event('secondary', {
                 bubbles: true,
-                cancelable: true,
-                composed: true,
             })
         );
-        this.close();
     }
 
     protected renderButtons(): TemplateResult {
