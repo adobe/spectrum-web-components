@@ -5710,13 +5710,15 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@playwright/test@1.30.0":
-  version "1.30.0"
-  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.30.0.tgz#8c0c4930ff2c7be7b3ec3fd434b2a3b4465ed7cb"
-  integrity sha512-SVxkQw1xvn/Wk/EvBnqWIq6NLo1AppwbYOjNLmyU0R1RoQ3rLEBtmjTnElcnz8VEtn11fptj1ECxK0tgURhajw==
+"@playwright/test@1.37.1":
+  version "1.37.1"
+  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.37.1.tgz#e7f44ae0faf1be52d6360c6bbf689fd0057d9b6f"
+  integrity sha512-bq9zTli3vWJo8S3LwB91U0qDNQDpEXnw7knhxLM0nwDvexQAwx9tO8iKDZSqqneVq+URd/WIoz+BALMqUTgdSg==
   dependencies:
     "@types/node" "*"
-    playwright-core "1.30.0"
+    playwright-core "1.37.1"
+  optionalDependencies:
+    fsevents "2.3.2"
 
 "@pnpm/network.ca-file@^1.0.1":
   version "1.0.1"
@@ -6725,7 +6727,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.39.2"
+  version "0.39.3"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.5.0"
@@ -8857,10 +8859,30 @@
     rollup "^3.15.0"
     storybook-addon-markdown-docs "^2.0.0"
 
-"@web/dev-server@^0.3.0", "@web/dev-server@^0.3.1":
+"@web/dev-server@^0.3.0", "@web/dev-server@^0.3.3":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.3.3.tgz#0724683aa2ed5eee325aa602423fdf8d704548b0"
   integrity sha512-dILoqPa4hHh/p2jK702fDHPSRv5JSjDiDaXKE+IfCX/hNEuX7SQ65Z5JPB7T+5qbtsOxbG/KOQpo2q8ZGm7hOQ==
+  dependencies:
+    "@babel/code-frame" "^7.12.11"
+    "@types/command-line-args" "^5.0.0"
+    "@web/config-loader" "^0.2.1"
+    "@web/dev-server-core" "^0.5.1"
+    "@web/dev-server-rollup" "^0.5.1"
+    camelcase "^6.2.0"
+    command-line-args "^5.1.1"
+    command-line-usage "^7.0.1"
+    debounce "^1.2.0"
+    deepmerge "^4.2.2"
+    ip "^1.1.5"
+    nanocolors "^0.2.1"
+    open "^8.0.2"
+    portfinder "^1.0.32"
+
+"@web/dev-server@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.3.1.tgz#43c90b38e287788f20fc72f8b85f6c5789b6c7df"
+  integrity sha512-RYxamuwR/mGjVcYR8+VXXwluqjEzfpOJSBSSHr3F/U7ecC0veKSAbTOHCwv++SNNU8/PY+dg9g8Ss+X2gSwIaw==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/command-line-args" "^5.0.0"
@@ -9074,6 +9096,14 @@
     "@web/test-runner-core" "^0.11.1"
     mkdirp "^1.0.4"
 
+"@web/test-runner-commands@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.8.1.tgz#61503478738bdda7fd2b295565ce0c9655fe616a"
+  integrity sha512-hGzm3jNByC8++nQb3osW60jZlmpIu77YeE51zlQ+lITw1v3rRcKLFl6zi2OlWPUENB7Wcjyvd74T6SLc/P7WQA==
+  dependencies:
+    "@web/test-runner-core" "^0.11.1"
+    mkdirp "^1.0.4"
+
 "@web/test-runner-core@^0.11.0", "@web/test-runner-core@^0.11.1", "@web/test-runner-core@^0.11.2":
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.11.2.tgz#d2e201339dbbdee8ad68632cfb18974a2956fb67"
@@ -9168,6 +9198,28 @@
     "@web/dev-server" "^0.3.1"
     "@web/test-runner-chrome" "^0.14.0"
     "@web/test-runner-commands" "^0.8.0"
+    "@web/test-runner-core" "^0.11.1"
+    "@web/test-runner-mocha" "^0.8.1"
+    camelcase "^6.2.0"
+    command-line-args "^5.1.1"
+    command-line-usage "^7.0.1"
+    convert-source-map "^2.0.0"
+    diff "^5.0.0"
+    globby "^11.0.1"
+    nanocolors "^0.2.1"
+    portfinder "^1.0.32"
+    source-map "^0.7.3"
+
+"@web/test-runner@^0.17.2":
+  version "0.17.2"
+  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.17.2.tgz#1131bd4c8ad06a09a1bd92e419d02753be155b3a"
+  integrity sha512-UQGw5yqD11K4ni/X0SNTmumzmUMbU7YslmIItYwBjB+2849GNfKMId2jykSz/csb86QG1+Jj739QAlT7BmnWKA==
+  dependencies:
+    "@web/browser-logs" "^0.3.3"
+    "@web/config-loader" "^0.2.1"
+    "@web/dev-server" "^0.3.3"
+    "@web/test-runner-chrome" "^0.14.0"
+    "@web/test-runner-commands" "^0.8.1"
     "@web/test-runner-core" "^0.11.1"
     "@web/test-runner-mocha" "^0.8.1"
     camelcase "^6.2.0"
@@ -15171,7 +15223,7 @@ fs@^0.0.1-security:
   resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
   integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
 
-fsevents@^2.3.2, fsevents@~2.3.2:
+fsevents@2.3.2, fsevents@^2.3.2, fsevents@~2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
@@ -23276,17 +23328,17 @@ pkg-up@^4.0.0:
   dependencies:
     find-up "^6.2.0"
 
-playwright-core@1.30.0:
-  version "1.30.0"
-  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.30.0.tgz#de987cea2e86669e3b85732d230c277771873285"
-  integrity sha512-7AnRmTCf+GVYhHbLJsGUtskWTE33SwMZkybJ0v6rqR1boxq2x36U7p1vDRV7HO2IwTZgmycracLxPEJI49wu4g==
+playwright-core@1.37.1:
+  version "1.37.1"
+  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.37.1.tgz#cb517d52e2e8cb4fa71957639f1cd105d1683126"
+  integrity sha512-17EuQxlSIYCmEMwzMqusJ2ztDgJePjrbttaefgdsiqeLWidjYz9BxXaTaZWxH1J95SHGk6tjE+dwgWILJoUZfA==
 
-playwright@1.30.0, playwright@^1.22.2:
-  version "1.30.0"
-  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.30.0.tgz#b1d7be2d45d97fbb59f829f36f521f12010fe072"
-  integrity sha512-ENbW5o75HYB3YhnMTKJLTErIBExrSlX2ZZ1C/FzmHjUYIfxj/UnI+DWpQr992m+OQVSg0rCExAOlRwB+x+yyIg==
+playwright@^1.22.2:
+  version "1.37.1"
+  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.37.1.tgz#6e488d82d7d98b9127c5db9c701f9c956ab47e76"
+  integrity sha512-bgUXRrQKhT48zHdxDYQTpf//0xDfDd5hLeEhjuSw8rXEGoT9YeElpfvs/izonTNY21IQZ7d3s22jLxYaAnubbQ==
   dependencies:
-    playwright-core "1.30.0"
+    playwright-core "1.37.1"
 
 please-upgrade-node@^3.2.0:
   version "3.2.0"

@@ -28,7 +28,11 @@ import {
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';
-import { fixture, isInteractive } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    isInteractive,
+    isOnTopLayer,
+} from '../../../test/testing-helpers.js';
 
 describe('Overlay Trigger - Click', () => {
     it('displays `click` declaratively', async () => {
@@ -109,7 +113,7 @@ describe('Overlay Trigger - Click', () => {
                     await closed;
 
                     expect(el.open).to.be.undefined;
-                    expect(await isInteractive(popover)).to.be.false;
+                    expect(await isOnTopLayer(popover)).to.be.false;
                 });
             }
         );
