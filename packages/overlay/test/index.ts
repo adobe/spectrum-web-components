@@ -32,6 +32,7 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 function pressKey(code: string): void {
     const up = new KeyboardEvent('keyup', {
@@ -351,6 +352,10 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
 
             it('opens a nested popover', async function () {
+                if (isWebKit()) {
+                    // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
+                    this.skip();
+                }
                 expect(
                     await isOnTopLayer(this.outerClickContent),
                     'hover not available at point'
@@ -513,6 +518,10 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
 
             it('click closes an open popover', async function () {
+                if (isWebKit()) {
+                    // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
+                    this.skip();
+                }
                 this.outerTrigger.type = 'auto';
                 this.innerTrigger.type = 'auto';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');

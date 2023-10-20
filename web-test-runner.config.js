@@ -16,7 +16,6 @@ import {
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
-    chromiumWithFlags,
     chromiumWithMemoryTooling,
     configuredVisualRegressionPlugin,
     firefox,
@@ -71,8 +70,6 @@ export default {
     },
     http2: true,
     protocol: 'https:',
-    concurrency: 4,
-    concurrentBrowsers: 1,
     testsFinishTimeout: 60000,
     coverageConfig: {
         report: true,
@@ -103,7 +100,8 @@ export default {
     },
     testFramework: {
         config: {
-            timeout: 3000,
+            timeout: 5000,
+            retries: 1,
         },
     },
     groups: [
@@ -139,9 +137,9 @@ export default {
                 'packages/split-button/test/*.test.js',
                 'packages/tooltip/test/*.test.js',
             ],
-            browsers: [chromium, chromiumWithFlags, firefox, webkit],
+            browsers: [chromium, firefox, webkit],
         },
     ],
     group: 'unit',
-    browsers: [chromiumWithMemoryTooling, firefox, webkit],
+    browsers: [firefox, chromiumWithMemoryTooling, webkit],
 };

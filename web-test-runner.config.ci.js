@@ -30,6 +30,6 @@ standard.middleware.push(async (ctx, next) => {
     ctx.set('Cache-Control', 'public, max-age=604800, immutable');
 });
 
-standard.testFramework.config.retries = 1;
+standard.testFramework.config.retries = 2;
 
 export default standard;

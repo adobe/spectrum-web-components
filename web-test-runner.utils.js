@@ -60,6 +60,7 @@ export const chromiumWithFlags = playwrightLauncher({
 
 export const firefox = playwrightLauncher({
     product: 'firefox',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -82,6 +83,7 @@ export const firefox = playwrightLauncher({
 
 export const webkit = playwrightLauncher({
     product: 'webkit',
+    concurrency: 4,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
