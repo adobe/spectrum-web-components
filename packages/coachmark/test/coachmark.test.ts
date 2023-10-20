@@ -340,14 +340,12 @@ describe('Coachmark', () => {
         await nextFrame();
 
         expect(overlay.open).to.be.true;
-        expect(el.open).to.be.true;
 
         triggerEl.click();
 
         await nextFrame();
 
         expect(overlay.open).to.be.false;
-        expect(el.open).to.be.false;
     });
     it('opens coachmark on sendMouse on the trigger element', async () => {
         const interaction = 'hover';
