@@ -30,7 +30,7 @@ export class IconBase extends SpectrumElement {
     public label = '';
 
     @property({ reflect: true })
-    public size?: 's' | 'm' | 'l' | 'xl' | 'xxl';
+    public size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 
     protected override update(changes: PropertyValues): void {
         if (changes.has('label')) {
