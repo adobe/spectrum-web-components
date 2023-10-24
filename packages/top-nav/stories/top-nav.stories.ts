@@ -77,7 +77,9 @@ export const Selected = (): TemplateResult => {
                 Page 1
             </sp-top-nav-item>
             <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
-            <sp-top-nav-item href=${href}>Page 3</sp-top-nav-item>
+            <sp-top-nav-item href=${href} class="selected">
+                Page 3
+            </sp-top-nav-item>
             <sp-top-nav-item href="#page-4">
                 Page with Really Long Name
             </sp-top-nav-item>

@@ -26,6 +26,19 @@ describe('TopNav', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('accepts and removes `label` accessibly', async () => {
+        const el = await fixture<TopNav>(Default());
+
+        await elementUpdated(el);
+
+        el.label = 'Page';
+        await elementUpdated(el);
+        await expect(el).to.be.accessible();
+
+        el.label = '';
+        await elementUpdated(el);
+        await expect(el).to.be.accessible();
+    });
     it('loads with a selected item accessible', async () => {
         const el = await fixture<TopNav>(Selected());
 
@@ -54,6 +67,20 @@ describe('TopNav', () => {
         const { width: widthEnd } = indicator.getBoundingClientRect();
 
         expect(widthStart).to.be.greaterThan(widthEnd);
+    });
+    it('can have an item removed', async () => {
+        const el = await fixture<TopNav>(Selected());
+        const item = el.querySelector('.selected') as TopNavItem;
+
+        await elementUpdated(el);
+        await elementUpdated(item);
+
+        expect(el.selected).to.equal(item.value);
+
+        item.remove();
+        await elementUpdated(el);
+
+        expect(el.selected).to.not.equal(item.value);
     });
 });
 
