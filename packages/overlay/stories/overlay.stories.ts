@@ -573,13 +573,13 @@ export const deep = (): TemplateResult => html`
         <sp-popover slot="click-content" direction="bottom" tip>
             <sp-dialog size="s" no-divider>
                 <sp-action-button>
-                    <sp-tooltip self-managed placement="bottom" offset="0">
+                    <sp-tooltip self-managed placement="bottom">
                         My Tooltip 1
                     </sp-tooltip>
                     A
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-tooltip self-managed placement="bottom" offset="0">
+                    <sp-tooltip self-managed placement="bottom">
                         My Tooltip 1
                     </sp-tooltip>
                     B

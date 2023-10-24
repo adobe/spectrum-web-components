@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-dialog.css');
 
+:host {
+    --swc-alert-dialog-error-icon-color: var(--spectrum-negative-visual-color);
+}
+
 .content {
     overflow: hidden;
 }
@@ -20,6 +24,14 @@ governing permissions and limitations under the License.
     color: var(
         --spectrum-dialog-confirm-description-text-color,
         var(--spectrum-global-color-gray-800)
+    );
+}
+
+.type-icon {
+    grid-area: typeIcon;
+    color: var(
+        --mod-alert-dialog-error-icon-color,
+        var(--swc-alert-dialog-error-icon-color)
     );
 }
 

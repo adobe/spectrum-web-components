@@ -603,6 +603,9 @@ governing permissions and limitations under the License.
             )
             ease-out;
 }
+:host([dir='rtl']) #button:after {
+    transform: translateX(50%) translateY(-50%);
+}
 :host {
     --spectrum-radio-button-border-color-default: var(
         --system-spectrum-radio-button-border-color-default

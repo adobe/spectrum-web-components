@@ -324,10 +324,9 @@ governing permissions and limitations under the License.
     );
 }
 :host([dir='ltr']) .body ::slotted([slot='action']) {
-    margin-left: auto;
+    margin-inline-start: auto;
 }
 :host([dir='rtl']) .body ::slotted([slot='action']) {
-    margin-right: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)

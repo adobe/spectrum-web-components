@@ -10,11 +10,9 @@
     --spectrum-neutral-background-color-selected-key-focus: var(
         --spectrum-gray-900
     );
-    --spectrum-color-handle-drop-shadow-color: var(
-        --spectrum-drop-shadow-color
-    );
     --spectrum-slider-track-thickness: 4px;
     --spectrum-slider-handle-gap: 0px;
+    --spectrum-picker-border-width: 0;
     --spectrum-in-field-button-fill-stacked-inner-border-rounding: 1px;
     --spectrum-in-field-button-edge-to-fill: 4px;
     --spectrum-in-field-button-stacked-inner-edge-to-fill: 1px;
@@ -1210,7 +1208,15 @@
     --system-spectrum-stepper-buttons-border-width: var(
         --spectrum-border-width-200
     );
+    --system-spectrum-stepper-buttons-border-color: transparent;
     --system-spectrum-stepper-buttons-background-color: var(--spectrum-gray-50);
+    --system-spectrum-stepper-buttons-border-color-hover: transparent;
+    --system-spectrum-stepper-buttons-border-color-focus: transparent;
+    --system-spectrum-stepper-buttons-border-color-keyboard-focus: transparent;
+    --system-spectrum-stepper-button-border-radius-reset: var(
+        --spectrum-in-field-button-fill-stacked-inner-border-rounding
+    );
+    --system-spectrum-stepper-button-border-width: 0;
     --system-spectrum-stepper-border-color: var(--spectrum-gray-400);
     --system-spectrum-stepper-border-color-hover: var(--spectrum-gray-500);
     --system-spectrum-stepper-border-color-focus: var(--spectrum-gray-800);
@@ -1220,9 +1226,10 @@
     --system-spectrum-stepper-border-color-keyboard-focus: var(
         --spectrum-gray-900
     );
-    --system-spectrum-stepper-button-border-radius-reset: var(
-        --spectrum-in-field-button-fill-stacked-inner-border-rounding
-    );
+    --system-spectrum-stepper-border-color-invalid: transparent;
+    --system-spectrum-stepper-border-color-focus-invalid: transparent;
+    --system-spectrum-stepper-border-color-focus-hover-invalid: transparent;
+    --system-spectrum-stepper-border-color-keyboard-focus-invalid: transparent;
     --system-spectrum-stepper-button-background-color-focus: var(
         --spectrum-gray-400
     );
