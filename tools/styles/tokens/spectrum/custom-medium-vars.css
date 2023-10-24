@@ -77,4 +77,32 @@
         --spectrum-spacing-400
     );
     --spectrum-treeview-indicator-inset-block-start: 5px;
+    --spectrum-dialog-confirm-entry-animation-distance: 20px;
+
+    --spectrum-dialog-confirm-hero-height: 128px;
+    --spectrum-dialog-confirm-border-radius: 4px;
+    --spectrum-dialog-confirm-title-text-size: 18px;
+    --spectrum-dialog-confirm-description-text-size: 14px;
+    --spectrum-dialog-confirm-padding-grid: 40px;
+
+    --spectrum-datepicker-initial-width: 128px;
+    --spectrum-datepicker-generic-padding: var(--spectrum-spacing-200);
+    --spectrum-datepicker-dash-line-height: 24px;
+    --spectrum-datepicker-width-quiet-first: 72px;
+    --spectrum-datepicker-width-quiet-second: 16px;
+    --spectrum-datepicker-datetime-width-first: 36px;
+    --spectrum-datepicker-invalid-icon-to-button: 8px;
+    --spectrum-datepicker-invalid-icon-to-button-quiet: 7px;
+    --spectrum-datepicker-input-datetime-width: var(--spectrum-spacing-400);
+
+    --spectrum-pagination-textfield-width: var(--spectrum-spacing-700);
+    --spectrum-pagination-item-inline-spacing: 5px;
+
+    --spectrum-dial-border-radius: 16px;
+    --spectrum-dial-handle-position: 8px;
+    --spectrum-dial-handle-block-margin: 16px;
+    --spectrum-dial-handle-inline-margin: 16px;
+    --spectrum-dial-controls-margin: 8px;
+    --spectrum-dial-label-gap-y: 5px;
+    --spectrum-dial-label-container-top-to-text: 4px;
 }
