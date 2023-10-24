@@ -25041,9 +25041,9 @@ rollup-plugin-visualizer@^5.9.0, rollup-plugin-visualizer@^5.9.2:
     yargs "^17.5.1"
 
 rollup-plugin-workbox@^8.0.0, rollup-plugin-workbox@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-workbox/-/rollup-plugin-workbox-8.0.1.tgz#719928f127cf03c1e7c027ee5a23dc1835bbf897"
-  integrity sha512-HGArp2fhs2EpmGyETWUnduJSwIMGRK9yVFkHywXTGqaGpFbHtNI4h2salxhC9LTsaq7jukvVmlwJtagz4l4JGg==
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-workbox/-/rollup-plugin-workbox-8.0.2.tgz#ea207d222a15a5edbf4c7da85e28ddfdc65bc62b"
+  integrity sha512-RIBWau1113dKFkOZuOReARlFRpLGukaonTR/3hVvLfQ1Fi0B7IOsSyoyPOueMflG4G9E4dp1ZkccwhqXA0iOyQ==
   dependencies:
     esbuild "^0.17.19"
     pretty-bytes "^5.5.0"
