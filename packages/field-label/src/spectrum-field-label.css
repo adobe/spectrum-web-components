@@ -114,7 +114,6 @@ governing permissions and limitations under the License.
             var(--spectrum-fieldlabel-bottom-to-text)
         );
     padding-inline: 0;
-    vertical-align: top;
 }
 :host(:lang(ja)),
 :host(:lang(ko)),
@@ -146,6 +145,7 @@ governing permissions and limitations under the License.
             --mod-fieldlabel-side-padding-right,
             var(--spectrum-fieldlabel-side-padding-right)
         );
+    vertical-align: top;
 }
 :host([side-aligned='end']) {
     text-align: end;

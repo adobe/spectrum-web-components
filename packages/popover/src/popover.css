@@ -13,14 +13,6 @@ governing permissions and limitations under the License.
 
 :host {
     --sp-popover-tip-size: 24px;
-    --mod-popover-pointer-width: max(
-        var(--spectrum-popover-pointer-width),
-        var(--spectrum-popover-pointer-height)
-    );
-    --mod-popover-pointer-height: max(
-        var(--spectrum-popover-pointer-width),
-        var(--spectrum-popover-pointer-height)
-    );
 
     min-width: min-content;
     max-height: 100%;
@@ -92,4 +84,8 @@ governing permissions and limitations under the License.
         --mod-popover-dialog-padding,
         var(--spectrum-popover-dialog-padding, 30px 29px)
     );
+}
+
+:host([tip][placement]) #tip {
+    height: auto;
 }

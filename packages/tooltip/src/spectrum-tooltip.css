@@ -16,6 +16,9 @@ governing permissions and limitations under the License.
     --spectrum-overlay-animation-duration: var(
         --spectrum-animation-duration-100
     );
+    --spectrum-overlay-animation-duration-opened: var(
+        --spectrum-animation-duration-0
+    );
     opacity: 0;
     pointer-events: none;
     transition: transform var(--spectrum-overlay-animation-duration) ease-in-out,
@@ -26,59 +29,16 @@ governing permissions and limitations under the License.
 :host([open]) #tooltip {
     opacity: 1;
     pointer-events: auto;
-    transition-delay: 0s;
+    transition-delay: var(
+        --mod-overlay-animation-duration-opened,
+        var(--spectrum-overlay-animation-duration-opened)
+    );
     visibility: visible;
-}
-:host([open]) .spectrum-Tooltip--bottom-end,
-:host([open]) .spectrum-Tooltip--bottom-left,
-:host([open]) .spectrum-Tooltip--bottom-right,
-:host([open]) .spectrum-Tooltip--bottom-start,
-:host([placement*='bottom'][open]) #tooltip {
-    --spectrum-overlay-animation-distance: 6px;
-    transform: translateY(var(--spectrum-overlay-animation-distance));
-}
-:host([open]) #tooltip,
-:host([open]) .spectrum-Tooltip--top-end,
-:host([open]) .spectrum-Tooltip--top-left,
-:host([open]) .spectrum-Tooltip--top-right,
-:host([open]) .spectrum-Tooltip--top-start,
-:host([placement*='top'][open]) #tooltip {
-    --spectrum-overlay-animation-distance: 6px;
-    transform: translateY(
-        calc(var(--spectrum-overlay-animation-distance) * -1)
-    );
-}
-:host([dir='rtl'][open]) .spectrum-Tooltip--start,
-:host([dir='rtl'][open]) .spectrum-Tooltip--start-bottom,
-:host([dir='rtl'][open]) .spectrum-Tooltip--start-top,
-:host([open]) .spectrum-Tooltip--end,
-:host([open]) .spectrum-Tooltip--end-bottom,
-:host([open]) .spectrum-Tooltip--end-top,
-:host([open]) .spectrum-Tooltip--right-bottom,
-:host([open]) .spectrum-Tooltip--right-top,
-:host([placement*='right'][open]) #tooltip {
-    --spectrum-overlay-animation-distance: 6px;
-    transform: translateX(var(--spectrum-overlay-animation-distance));
-}
-:host([dir='rtl'][open]) .spectrum-Tooltip--end,
-:host([dir='rtl'][open]) .spectrum-Tooltip--end-bottom,
-:host([dir='rtl'][open]) .spectrum-Tooltip--end-top,
-:host([open]) .spectrum-Tooltip--left-bottom,
-:host([open]) .spectrum-Tooltip--left-top,
-:host([open]) .spectrum-Tooltip--start,
-:host([open]) .spectrum-Tooltip--start-bottom,
-:host([open]) .spectrum-Tooltip--start-top,
-:host([placement*='left'][open]) #tooltip {
-    --spectrum-overlay-animation-distance: 6px;
-    transform: translateX(
-        calc(var(--spectrum-overlay-animation-distance) * -1)
-    );
 }
 #tooltip {
     --spectrum-tooltip-animation-duration: var(
         --spectrum-animation-duration-100
     );
-    --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
     --spectrum-tooltip-margin: 0px;
     --spectrum-tooltip-height: var(--spectrum-component-height-75);
     --spectrum-tooltip-max-inline-size: var(--spectrum-tooltip-maximum-width);
@@ -623,6 +583,21 @@ governing permissions and limitations under the License.
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
+:host([open]) #tooltip,
+:host([open]) .spectrum-Tooltip--top-end,
+:host([open]) .spectrum-Tooltip--top-left,
+:host([open]) .spectrum-Tooltip--top-right,
+:host([open]) .spectrum-Tooltip--top-start,
+:host([placement*='top'][open]) #tooltip {
+    transform: translateY(
+        calc(
+            var(
+                    --mod-tooltip-animation-distance,
+                    var(--spectrum-tooltip-animation-distance)
+                ) * -1
+        )
+    );
+}
 .spectrum-Tooltip--bottom-end,
 .spectrum-Tooltip--bottom-left,
 .spectrum-Tooltip--bottom-right,
@@ -635,6 +610,18 @@ governing permissions and limitations under the License.
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
+:host([open]) .spectrum-Tooltip--bottom-end,
+:host([open]) .spectrum-Tooltip--bottom-left,
+:host([open]) .spectrum-Tooltip--bottom-right,
+:host([open]) .spectrum-Tooltip--bottom-start,
+:host([placement*='bottom'][open]) #tooltip {
+    transform: translateY(
+        var(
+            --mod-tooltip-animation-distance,
+            var(--spectrum-tooltip-animation-distance)
+        )
+    );
+}
 .spectrum-Tooltip--right-bottom,
 .spectrum-Tooltip--right-top,
 :host([placement*='right']) #tooltip {
@@ -643,6 +630,16 @@ governing permissions and limitations under the License.
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+    );
+}
+:host([open]) .spectrum-Tooltip--right-bottom,
+:host([open]) .spectrum-Tooltip--right-top,
+:host([placement*='right'][open]) #tooltip {
+    transform: translateX(
+        var(
+            --mod-tooltip-animation-distance,
+            var(--spectrum-tooltip-animation-distance)
+        )
     );
 }
 .spectrum-Tooltip--left-bottom,
@@ -655,6 +652,18 @@ governing permissions and limitations under the License.
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
+:host([open]) .spectrum-Tooltip--left-bottom,
+:host([open]) .spectrum-Tooltip--left-top,
+:host([placement*='left'][open]) #tooltip {
+    transform: translateX(
+        calc(
+            var(
+                    --mod-tooltip-animation-distance,
+                    var(--spectrum-tooltip-animation-distance)
+                ) * -1
+        )
+    );
+}
 .spectrum-Tooltip--start,
 .spectrum-Tooltip--start-bottom,
 .spectrum-Tooltip--start-top {
@@ -665,6 +674,28 @@ governing permissions and limitations under the License.
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
+:host([open]) .spectrum-Tooltip--start,
+:host([open]) .spectrum-Tooltip--start-bottom,
+:host([open]) .spectrum-Tooltip--start-top {
+    transform: translateX(
+        calc(
+            var(
+                    --mod-tooltip-animation-distance,
+                    var(--spectrum-tooltip-animation-distance)
+                ) * -1
+        )
+    );
+}
+:host([dir='rtl'][open]) .spectrum-Tooltip--start,
+:host([dir='rtl'][open]) .spectrum-Tooltip--start-bottom,
+:host([dir='rtl'][open]) .spectrum-Tooltip--start-top {
+    transform: translateX(
+        var(
+            --mod-tooltip-animation-distance,
+            var(--spectrum-tooltip-animation-distance)
+        )
+    );
+}
 .spectrum-Tooltip--end,
 .spectrum-Tooltip--end-bottom,
 .spectrum-Tooltip--end-top {
@@ -673,6 +704,28 @@ governing permissions and limitations under the License.
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+    );
+}
+:host([open]) .spectrum-Tooltip--end,
+:host([open]) .spectrum-Tooltip--end-bottom,
+:host([open]) .spectrum-Tooltip--end-top {
+    transform: translateX(
+        var(
+            --mod-tooltip-animation-distance,
+            var(--spectrum-tooltip-animation-distance)
+        )
+    );
+}
+:host([dir='rtl'][open]) .spectrum-Tooltip--end,
+:host([dir='rtl'][open]) .spectrum-Tooltip--end-bottom,
+:host([dir='rtl'][open]) .spectrum-Tooltip--end-top {
+    transform: translateX(
+        calc(
+            var(
+                    --mod-tooltip-animation-distance,
+                    var(--spectrum-tooltip-animation-distance)
+                ) * -1
+        )
     );
 }
 #tooltip {

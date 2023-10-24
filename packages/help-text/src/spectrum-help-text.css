@@ -138,14 +138,21 @@ governing permissions and limitations under the License.
         --mod-helptext-font-size,
         var(--spectrum-helptext-font-size)
     );
-    min-height: var(
+    min-block-size: var(
         --mod-helptext-min-height,
         var(--spectrum-helptext-min-height)
     );
 }
 .icon {
+    block-size: var(
+        --mod-helptext-icon-size,
+        var(--spectrum-helptext-icon-size)
+    );
     flex-shrink: 0;
-    height: var(--mod-helptext-icon-size, var(--spectrum-helptext-icon-size));
+    inline-size: var(
+        --mod-helptext-icon-size,
+        var(--spectrum-helptext-icon-size)
+    );
     margin-inline-end: var(
         --mod-helptext-text-to-visual,
         var(--spectrum-helptext-text-to-visual)
@@ -158,7 +165,6 @@ governing permissions and limitations under the License.
         --mod-helptext-top-to-workflow-icon,
         var(--spectrum-helptext-top-to-workflow-icon)
     );
-    width: var(--mod-helptext-icon-size, var(--spectrum-helptext-icon-size));
 }
 .text {
     line-height: var(

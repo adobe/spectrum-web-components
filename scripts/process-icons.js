@@ -20,11 +20,14 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
     // get icon name from filename
     const iconName = path.basename(srcPath, path.extname(srcPath));
     // regex will extract width, height and svg content into $1, $2 and $3 respectively
-    const regex = new RegExp(/<svg.*viewBox="(.*)">(.*?)<\/svg>/i);
+    const regex = new RegExp(
+        /<svg.*viewBox="(.*)">[\s|\n]*(.*?)[\s|\n]*<\/svg>/i
+    );
 
     const content = fs.readFileSync(srcPath, 'utf8');
 
     const match = content.match(regex);
+
     if (!match) {
         // no matching result, bail
         return;
@@ -41,7 +44,14 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
 const spectrumIconsPath = path.resolve(
-    path.join(__dirname, '..', 'node_modules', '@spectrum-css', 'icon')
+    path.join(
+        __dirname,
+        '..',
+        'node_modules',
+        '@spectrum-css',
+        'ui-icons',
+        'dist'
+    )
 );
 
 // define the target icon sizes for each scale

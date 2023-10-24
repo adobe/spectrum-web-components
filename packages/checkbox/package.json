@@ -71,7 +71,7 @@
         "@spectrum-web-components/shared": "^0.40.2"
     },
     "devDependencies": {
-        "@spectrum-css/checkbox": "^8.0.3"
+        "@spectrum-css/checkbox": "^8.0.4"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
