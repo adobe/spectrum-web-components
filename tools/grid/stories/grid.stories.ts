@@ -79,6 +79,7 @@ const renderItem = (
                 slot="actions"
                 placement="bottom-end"
                 quiet
+                tabindex="-1"
             >
                 <sp-tooltip slot="tooltip" self-managed placement="top">
                     Do stuff
