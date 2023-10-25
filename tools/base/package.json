@@ -109,6 +109,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@webcomponents/scoped-custom-element-registry": "^0.0.9",
         "lit": "^2.5.0"
     },
     "types": "./src/index.d.ts",

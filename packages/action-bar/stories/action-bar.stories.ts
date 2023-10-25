@@ -13,46 +13,49 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
+import '@spectrum-web-components/action-bar/sp-action-bar-scoped.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 
+import { ActionBarWrapper } from './';
+
 export default {
     title: 'Action Bar',
     component: 'sp-action-bar',
+    args: {
+        open: true,
+        emphasized: false,
+        variant: 'sticky',
+        flexible: false,
+        scoped: false,
+    },
 };
 
-export const Default = (): TemplateResult => {
-    return html`
-        <sp-action-bar open>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+type Properties = {
+    scoped?: boolean;
+    open?: boolean;
+    emphasized?: boolean;
+    variant?: 'sticky' | 'fixed';
+    flexible?: boolean;
 };
 
-export const emphasized = (): TemplateResult => {
-    return html`
-        <sp-action-bar open emphasized>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+export const Default = (args?: Properties): TemplateResult => {
+    return ActionBarWrapper(args);
 };
 
-export const fixed = (): TemplateResult => {
+export const emphasized = (args?: Properties): TemplateResult => {
+    return ActionBarWrapper(args);
+};
+emphasized.args = {
+    open: true,
+    emphasized: true,
+};
+
+export const fixed = (args?: Properties): TemplateResult => {
+    const actionBarContent = ActionBarWrapper(args);
     return html`
         <style>
             [variant='fixed'] {
@@ -60,28 +63,19 @@ export const fixed = (): TemplateResult => {
                 inset-inline-end: 1em;
             }
         </style>
-        <sp-action-bar open variant="fixed">
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
-        </sp-action-bar>
+        ${actionBarContent}
     `;
 };
+fixed.args = {
+    open: true,
+    variant: 'fixed',
+};
 
-export const flexible = (): TemplateResult => {
-    return html`
-        <sp-action-bar open flexible emphasized>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+export const flexible = (args?: Properties): TemplateResult => {
+    return ActionBarWrapper(args);
+};
+flexible.args = {
+    open: true,
+    flexible: true,
+    emphasized: true,
 };
