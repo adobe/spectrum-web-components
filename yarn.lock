@@ -6458,7 +6458,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-3.0.48.tgz#0b90489bc4a65e87ff48373bd262273cd818194d"
   integrity sha512-zdOuXpAA20qBOt1TKMSUsEzE9eVv6xSlbb13KaDnMnt3hJ0VtC7U4imvw1OHAErm2kOghqBms5ZDf4XIAZg5ng==
 
-"@spectrum-css/statuslight@^6.0.52":
+"@spectrum-css/statuslight@^6.0.57":
   version "6.0.57"
   resolved "https://registry.yarnpkg.com/@spectrum-css/statuslight/-/statuslight-6.0.57.tgz#218dfcd215634b88b309849e9d73768ec614dbfa"
   integrity sha512-+UXo2sqSKbQVEiw5yEJiZkz5WiSrVMhZbqQgc6HhS7qMTU32mAa7fXPuNXoU+DO08may5iGxf7tJeOp/mS8I4g==
