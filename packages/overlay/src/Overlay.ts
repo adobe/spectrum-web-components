@@ -110,8 +110,14 @@ export class Overlay extends OverlayFeatures {
             return true;
         }
 
-        return false;
+        return this._delayed;
     }
+
+    override set delayed(delayed: boolean) {
+        this._delayed = delayed;
+    }
+
+    private _delayed = false;
 
     /**
      * Whether the overlay is currently functional or not
