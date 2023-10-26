@@ -1413,3 +1413,78 @@ export const virtualElement = (args: Properties): TemplateResult => {
 virtualElement.args = {
     placement: 'right-start' as Placement,
 };
+
+export const virtualElementDeclaratively = (
+    args: Properties
+): TemplateResult => {
+    const handleContextmenu = async (event: PointerEvent): Promise<void> => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const overlay = document.querySelector(
+            'sp-overlay:not([open])'
+        ) as Overlay;
+        overlay.triggerElement.updateBoundingClientRect(
+            event.clientX,
+            event.clientY
+        );
+        overlay.willPreventClose = true;
+        overlay.open = true;
+    };
+    const overlay = (): TemplateResult => html`
+        <sp-overlay
+            offset="0"
+            type="auto"
+            placement=${args.placement}
+            .triggerElement=${new VirtualTrigger(0, 0)}
+        >
+            <sp-popover
+                style="width:300px;"
+                @change=${(event: PointerEvent) => {
+                    event.target?.dispatchEvent(
+                        new Event('close', { bubbles: true })
+                    );
+                }}
+            >
+                <sp-menu>
+                    <sp-menu-group>
+                        <span slot="header">Menu</span>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item>Select inverse</sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and mask...</sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>Save selection</sp-menu-item>
+                        <sp-menu-item disabled>Make work path</sp-menu-item>
+                    </sp-menu-group>
+                </sp-menu>
+            </sp-popover>
+        </sp-overlay>
+    `;
+
+    return html`
+        <style>
+            .app-root {
+                position: absolute;
+                inset: 0;
+            }
+        </style>
+        <div
+            class="app-root"
+            @contextmenu=${{
+                capture: true,
+                handleEvent: handleContextmenu,
+            }}
+        >
+            ${overlay()} ${overlay()}
+        </div>
+    `;
+};
+
+virtualElementDeclaratively.args = {
+    placement: 'right-start' as Placement,
+};
+
+virtualElementDeclaratively.swc_vrt = {
+    skip: true,
+};
