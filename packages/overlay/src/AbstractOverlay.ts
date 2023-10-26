@@ -147,7 +147,9 @@ export class AbstractOverlay extends SpectrumElement {
     ): Promise<void> {
         return;
     }
-    delayed!: boolean;
+    get delayed(): boolean {
+        return false;
+    }
     dialogEl!: HTMLDialogElement & {
         showPopover(): void;
         hidePopover(): void;

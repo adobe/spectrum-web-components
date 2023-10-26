@@ -180,10 +180,6 @@ export class OverlayTrigger extends SpectrumElement {
         `;
     }
 
-    protected isDelayed(element: HTMLElement): boolean {
-        return element.hasAttribute('delayed');
-    }
-
     protected renderClickOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('click-content');
@@ -193,7 +189,6 @@ export class OverlayTrigger extends SpectrumElement {
         return html`
             <sp-overlay
                 id="click-overlay"
-                ?delayed=${this.isDelayed(this.clickContent[0])}
                 ?disabled=${this.disabled || !this.clickContent.length}
                 ?open=${this.open === 'click' && !!this.clickContent.length}
                 .offset=${this.offset}
@@ -217,7 +212,6 @@ export class OverlayTrigger extends SpectrumElement {
         return html`
             <sp-overlay
                 id="hover-overlay"
-                ?delayed=${this.isDelayed(this.hoverContent[0])}
                 ?disabled=${this.disabled ||
                 !this.hoverContent.length ||
                 (!!this.open && this.open !== 'hover')}
@@ -243,7 +237,6 @@ export class OverlayTrigger extends SpectrumElement {
         return html`
             <sp-overlay
                 id="longpress-overlay"
-                ?delayed=${this.isDelayed(this.longpressContent[0])}
                 ?disabled=${this.disabled || !this.longpressContent.length}
                 ?open=${this.open === 'longpress' &&
                 !!this.longpressContent.length}
