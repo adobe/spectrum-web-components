@@ -1,3 +1,8 @@
 [build]
   command = "yarn docs:build"
   publish = "projects/documentation/dist"
+
+[[headers]]
+  for = "/storybook/*.json"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
