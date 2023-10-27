@@ -21,3 +21,5 @@ export * from './observe-slot-text.js';
 export * from './platform.js';
 export * from './reparent-children.js';
 export * from './get-label-from-slot.js';
+export * from './scoped-story.js';
+export * from './scoped-story-component.js';

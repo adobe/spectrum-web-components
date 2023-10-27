@@ -76,6 +76,14 @@
         "./src/reparent-children.js": {
             "development": "./src/reparent-children.dev.js",
             "default": "./src/reparent-children.js"
+        },
+        "./src/scoped-story-component.js": {
+            "development": "./src/scoped-story-component.dev.js",
+            "default": "./src/scoped-story-component.js"
+        },
+        "./src/scoped-story.js": {
+            "development": "./src/scoped-story.dev.js",
+            "default": "./src/scoped-story.js"
         }
     },
     "scripts": {
@@ -97,6 +105,7 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
+        "@lit-labs/scoped-registry-mixin": "1.0.1",
         "@spectrum-web-components/base": "^0.39.2",
         "focus-visible": "^5.1.0"
     },
