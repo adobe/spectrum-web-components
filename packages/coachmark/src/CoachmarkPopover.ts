@@ -14,7 +14,6 @@ import {
     CSSResultArray,
     html,
     nothing,
-    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -318,17 +317,4 @@ export class CoachmarkPopover extends LikeAnchor(Popover) {
             </div>
         `;
     }
-
-    protected override updated(changes: PropertyValues): void {
-        if (changes.has('open')) {
-            // console.log("changes has open and i am fired")
-        }
-    }
-}
-
-export function isCloseKeyEvent(event: KeyboardEvent): boolean {
-    return (
-        event.key === 'Escape' ||
-        (event.key === '.' && (event.metaKey || event.ctrlKey))
-    );
 }
