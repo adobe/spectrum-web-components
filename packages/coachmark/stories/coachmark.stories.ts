@@ -14,6 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import type { MediaType } from '../src/CoachmarkItem.js';
 import '@spectrum-web-components/coachmark/sp-coachmark-popover.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import { cave, gif } from './images.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
@@ -267,7 +268,7 @@ export const withKeys = (props: Properties): TemplateResult => {
     `;
 };
 
-export const linkInDescription = (props: Properties): TemplateResult => {
+export const withShortCut = (props: Properties): TemplateResult => {
     const {
         open = true,
         placement = 'right-start',
@@ -284,7 +285,7 @@ export const linkInDescription = (props: Properties): TemplateResult => {
                 primary-cta="Ok"
                 shortcut-key="L"
                 .content=${{
-                    title: 'Coachmark with Shortcut and links in description',
+                    title: 'Coachmark with Shortcut',
                     description:
                         'This is a Coachmark with nothing but text in it. Kind of lonely in here',
                 }}

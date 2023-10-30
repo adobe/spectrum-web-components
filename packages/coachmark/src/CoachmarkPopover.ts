@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     nothing,
+    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -31,6 +32,7 @@ import { MediaType } from './CoachmarkItem.js';
 import type { CoachmarkItem } from './CoachmarkItem.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 
 /**
@@ -315,6 +317,12 @@ export class CoachmarkPopover extends LikeAnchor(Popover) {
                 ${this.renderButtons()}
             </div>
         `;
+    }
+
+    protected override updated(changes: PropertyValues): void {
+        if (changes.has('open')) {
+            // console.log("changes has open and i am fired")
+        }
     }
 }
 
