@@ -218,7 +218,7 @@ export class Overlay extends OverlayFeatures {
     @property({ attribute: 'receives-focus' })
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
-    private releaseAriaDescribedby = noop;
+    protected releaseAriaDescribedby = noop;
     private releaseLongpressDescribedby = noop;
 
     @query('slot')
@@ -653,7 +653,7 @@ export class Overlay extends OverlayFeatures {
         };
     }
 
-    private prepareAriaDescribedby(): void {
+    protected prepareAriaDescribedby(): void {
         if (
             // only "hover" relationships establed described by content
             this.triggerInteraction !== 'hover' ||
@@ -662,16 +662,19 @@ export class Overlay extends OverlayFeatures {
             // require "hover content" to apply relationship
             !this.elements.length ||
             // Virtual triggers can have no aria content
-            !this.hasNonVirtualTrigger
+            !this.hasNonVirtualTrigger ||
+            // Do not apply aria info info trigger has been set to Document
+            (this.triggerElement as unknown as Document) === document
         ) {
             return;
         }
 
         const trigger = this.triggerElement as HTMLElement;
-        const triggerRoot = trigger.getRootNode();
-        const contentRoot = this.elements[0].getRootNode();
-        const overlayRoot = this.getRootNode();
+        const triggerRoot = trigger.getRootNode() as ShadowRoot;
+        const contentRoot = this.elements[0].getRootNode() as ShadowRoot;
+        const overlayRoot = this.getRootNode() as ShadowRoot;
         if (triggerRoot == overlayRoot) {
+            // Trigger and overlay share DOM tree.
             const releaseAriaDescribedby = conditionAttributeWithId(
                 trigger,
                 'aria-describedby',
@@ -682,6 +685,7 @@ export class Overlay extends OverlayFeatures {
                 this.releaseAriaDescribedby = noop;
             };
         } else if (triggerRoot === contentRoot) {
+            // Trigger and overlay content share DOM tree.
             this.elementIds = this.elements.map((el) => el.id);
             const appliedIds = this.elements.map((el) => {
                 if (!el.id) {
@@ -703,6 +707,49 @@ export class Overlay extends OverlayFeatures {
                 });
                 this.releaseAriaDescribedby = noop;
             };
+        } else {
+            // Trigger doesn't share DOM tree with any overlay-centric elements.
+            let singleChildAncestorStringWithSharedDOMTree = false;
+            let ancestor = overlayRoot;
+            while (
+                !singleChildAncestorStringWithSharedDOMTree &&
+                ancestor.host &&
+                ancestor.children.length === 1
+            ) {
+                const ancestorRoot = ancestor.host.assignedSlot
+                    ? (ancestor.host.assignedSlot.getRootNode() as ShadowRoot)
+                    : (ancestor.host.getRootNode() as ShadowRoot);
+                singleChildAncestorStringWithSharedDOMTree =
+                    triggerRoot === ancestorRoot;
+                if (!singleChildAncestorStringWithSharedDOMTree) {
+                    ancestor = ancestorRoot;
+                }
+            }
+            if (singleChildAncestorStringWithSharedDOMTree) {
+                // There is a direct single child only ancestor path to the DOM tree.
+                // This often happens with self managed Tooltip element.
+                ancestor.host.id = ancestor.host.id || this.id;
+                const releaseAriaDescribedby = conditionAttributeWithId(
+                    trigger,
+                    'aria-describedby',
+                    [this.id]
+                );
+                this.releaseAriaDescribedby = () => {
+                    releaseAriaDescribedby();
+                    if (ancestor.host.id === this.id) {
+                        ancestor.host.removeAttribute('id');
+                    }
+                    this.releaseAriaDescribedby = noop;
+                };
+            } else {
+                if (window.__swc.DEBUG) {
+                    window.__swc.warn(
+                        this,
+                        'You have reached an unexpected state. In this state it is not currently possible to associate you overlay content with its trigger accessibly. Please share an abstract reproduction of your usage as a GitHub issue so we can look into better supporting it.',
+                        'https://github.com/adobe/spectrum-web-components/issues'
+                    );
+                }
+            }
         }
     }
 

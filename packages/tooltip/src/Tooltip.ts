@@ -273,6 +273,7 @@ export class Tooltip extends SpectrumElement {
     override render(): TemplateResult {
         const tooltip = html`
             <sp-tooltip-openable
+                role="tooltip"
                 id="tooltip"
                 placement=${ifDefined(this.placement)}
                 @transitionrun=${this.forwardTransitionEvent}

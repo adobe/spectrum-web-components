@@ -19,6 +19,7 @@ governing permissions and limitations under the License.
 
 #tooltip {
     inline-size: max-content;
+    visibility: visible;
 }
 
 :host([placement]) #tooltip {

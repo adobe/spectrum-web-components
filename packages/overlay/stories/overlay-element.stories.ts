@@ -205,6 +205,35 @@ hoverTooltip.args = {
     placement: 'right',
 };
 
+export const hoverTooltip = ({
+    interaction,
+    open,
+    placement,
+    type,
+}: Properties): TemplateResult => html`
+    <style>
+        .wrapper {
+            will-change: transform;
+        }
+    </style>
+    <div class="wrapper">
+        <sp-action-button id="trigger">Open the overlay</sp-action-button>
+        <sp-overlay
+            ?open=${open}
+            trigger="trigger@${interaction}"
+            type=${ifDefined(type)}
+            placement=${ifDefined(placement)}
+            offset="-10"
+        >
+            <sp-tooltip>Tooltip goes here.</sp-tooltip>
+        </sp-overlay>
+    </div>
+`;
+hoverTooltip.args = {
+    interaction: 'hover',
+    placement: 'right',
+};
+
 export const longpress = (args: Properties): TemplateResult => Template(args);
 longpress.args = {
     interaction: 'longpress',
