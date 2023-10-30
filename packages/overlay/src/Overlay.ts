@@ -86,12 +86,6 @@ export class Overlay extends OverlayFeatures {
 
     abortController!: AbortController;
 
-    @query('.dialog')
-    override dialogEl!: HTMLDialogElement & {
-        showPopover(): void;
-        hidePopover(): void;
-    };
-
     /**
      * An Overlay that is `delayed` will wait until a warm-up period of 1000ms
      * has completed before opening. Once the warmup period has completed, all
@@ -102,15 +96,7 @@ export class Overlay extends OverlayFeatures {
      */
     @property({ type: Boolean })
     override get delayed(): boolean {
-        if (this.elements.length === 0) {
-            return false;
-        }
-
-        if (this.elements[0].getAttribute('delayed') !== null) {
-            return true;
-        }
-
-        return this._delayed;
+        return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
     }
 
     override set delayed(delayed: boolean) {
@@ -118,6 +104,12 @@ export class Overlay extends OverlayFeatures {
     }
 
     private _delayed = false;
+
+    @query('.dialog')
+    override dialogEl!: HTMLDialogElement & {
+        showPopover(): void;
+        hidePopover(): void;
+    };
 
     /**
      * Whether the overlay is currently functional or not
