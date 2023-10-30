@@ -49,6 +49,7 @@ const tokenPackages = [
     'fieldlabel',
     'helptext',
     'illustratedmessage',
+    'infieldbutton',
     'link',
     'menu',
     'picker',

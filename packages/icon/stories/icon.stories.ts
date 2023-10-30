@@ -16,7 +16,7 @@ import { back } from './images';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
 
-const sizes = ['s', 'm', 'l', 'xl', 'xxl'];
+const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
 
 export default {
     component: 'sp-icon',

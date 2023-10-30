@@ -240,13 +240,29 @@ const config = {
                     'spectrum-Stepper-stepDown',
                     'step-down'
                 ),
-                converter.classToClass('spectrum-Stepper-stepUp', 'step-up'),
                 converter.classToClass(
                     'spectrum-Stepper-textfield',
                     'textfield'
                 ),
                 converter.classToClass('spectrum-Icon', 'stepper-icon'),
                 converter.classToClass('spectrum-Stepper-input', 'input'),
+                converter.classToClass('spectrum-Stepper-button', 'button'),
+                converter.classToClass(
+                    'spectrum-InfieldButton--top',
+                    'step-up'
+                ),
+                converter.classToClass(
+                    'spectrum-InfieldButton--bottom',
+                    'step-down'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Stepper--sizeS', 's'],
+                        ['spectrum-Stepper--sizeL', 'l'],
+                        ['spectrum-Stepper--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
             ],
         },
     ],

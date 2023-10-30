@@ -989,7 +989,12 @@ describe('Slider', () => {
     it('supports units not included in Intl.NumberFormatOptions', async () => {
         let el = await fixture<Slider>(
             html`
-                <sp-slider value="50" min="0" max="100" format-options="{"style": "unit", "unit": "px"}"></sp-slider>
+                <sp-slider
+                    value="50"
+                    min="0"
+                    max="100"
+                    format-options='{"style": "unit", "unit": "px"}'
+                ></sp-slider>
             `
         );
 
@@ -998,7 +1003,7 @@ describe('Slider', () => {
         const input = el.focusElement as HTMLInputElement;
         await elementUpdated(el);
 
-        expect(input.getAttribute('aria-valuetext')).to.equal('50');
+        expect(input.getAttribute('aria-valuetext')).to.equal('50px');
 
         el = await fixture<Slider>(
             html`

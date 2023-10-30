@@ -77,31 +77,38 @@ const Template = ({
     placement,
     type,
 }: Properties): TemplateResult => html`
-    <sp-action-button id="trigger">Open the overlay</sp-action-button>
-    <sp-overlay
-        ?open=${open}
-        trigger="trigger@${interaction}"
-        type=${ifDefined(type)}
-        placement=${ifDefined(placement)}
-        offset="-10"
-    >
-        <sp-popover dialog>
-            <p>
-                Content goes here.
-                ${type === 'modal' || type === 'page'
-                    ? html`
-                          Or, a link,
-                          <sp-link
-                              href="https://opensource.adobe.com/spectrum-web-components"
-                          >
-                              Spectrum Web Components
-                          </sp-link>
-                          .
-                      `
-                    : ''}
-            </p>
-        </sp-popover>
-    </sp-overlay>
+    <style>
+        .wrapper {
+            will-change: transform;
+        }
+    </style>
+    <div class="wrapper">
+        <sp-action-button id="trigger">Open the overlay</sp-action-button>
+        <sp-overlay
+            ?open=${open}
+            trigger="trigger@${interaction}"
+            type=${ifDefined(type)}
+            placement=${ifDefined(placement)}
+            offset="-10"
+        >
+            <sp-popover dialog>
+                <p>
+                    Content goes here.
+                    ${type === 'modal' || type === 'page'
+                        ? html`
+                              Or, a link,
+                              <sp-link
+                                  href="https://opensource.adobe.com/spectrum-web-components"
+                              >
+                                  Spectrum Web Components
+                              </sp-link>
+                              .
+                          `
+                        : ''}
+                </p>
+            </sp-popover>
+        </sp-overlay>
+    </div>
 `;
 
 export const modal = (args: Properties): TemplateResult => Template(args);

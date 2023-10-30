@@ -72,29 +72,45 @@ export const topLayerOverTransforms = (): Middleware => ({
             const containingBlock = isContainingBlock(root)
                 ? root
                 : getContainingBlock(root);
+            let css: CSSStyleDeclaration | Record<string, string> = {};
             if (
                 containingBlock !== null &&
                 getWindow(containingBlock) !==
                     (containingBlock as unknown as Window)
             ) {
-                const css = getComputedStyle(containingBlock);
+                css = getComputedStyle(containingBlock);
                 // The overlay is "over transforms" when the containing block uses specific CSS...
                 overTransforms =
                     // the `transform` property
                     css.transform !== 'none' ||
+                    // the `translate` property
+                    css.translate !== 'none' ||
+                    // the `backdropFilter` property
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    (css.backdropFilter
+                        ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          css.backdropFilter !== 'none'
+                        : false) ||
                     // the `filter` property for anything other than "none"
                     (css.filter ? css.filter !== 'none' : false) ||
+                    // the `transform` property "will-change"
+                    css.willChange.search('transform') > -1 ||
+                    // the `transform` property "will-change"
+                    css.willChange.search('translate') > -1 ||
                     // a value of "paint", "layout", "strict", or "content" for `contain`
                     ['paint', 'layout', 'strict', 'content'].some((value) =>
                         (css.contain || '').includes(value)
                     );
-                // overTransforms = true;
             }
 
             if (onTopLayer && overTransforms && containingBlock) {
                 const rect = containingBlock.getBoundingClientRect();
-                diffCoords.x = rect.x;
-                diffCoords.y = rect.y;
+                // Margins are not included in the bounding client rect and need to be handled separately.
+                const { marginInlineStart = '0', marginBlockStart = '0' } = css;
+                diffCoords.x = rect.x + parseFloat(marginInlineStart);
+                diffCoords.y = rect.y + parseFloat(marginBlockStart);
             }
         }
 

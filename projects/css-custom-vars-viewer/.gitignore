@@ -24,3 +24,5 @@ src/parsed-data.ts
 
 storybook-static
 custom-elements.json
+
+!.storybook/*.js

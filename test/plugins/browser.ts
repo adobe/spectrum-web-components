@@ -20,6 +20,10 @@ async function mouseCleanup() {
     await executeServerCommand('send-pointer', {
         steps: [
             {
+                type: 'move',
+                position: [0, 0],
+            },
+            {
                 type: 'up',
             },
         ],

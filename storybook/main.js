@@ -47,23 +47,6 @@ const config = {
             plugins: [json(), watchSWC()],
             http2: true,
             watch: true,
-            middleware: [
-                async (ctx, next) => {
-                    await next();
-                    if (
-                        // Icon packages
-                        ctx.url.search('/icons-') > -1 ||
-                        // Node modules
-                        (ctx.url.search('/node_modules/') > -1 &&
-                            ctx.url.search('/@spectrum-web-components') === -1)
-                    ) {
-                        ctx.set(
-                            'Cache-Control',
-                            'public, max-age=604800, stale-while-revalidate=86400'
-                        );
-                    }
-                },
-            ],
         });
     },
     rollupFinal(config) {

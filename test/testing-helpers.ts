@@ -187,7 +187,7 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
                 style.getPropertyValue('--sp-overlay-open') === 'true' &&
                 style.getPropertyValue('position') === 'fixed';
         }
-        resolve(open || modal || polyfill);
+        resolve(popoverOpen || open || modal || polyfill);
     });
     element.dispatchEvent(queryEvent);
     return found;

@@ -95,6 +95,7 @@
         "@spectrum-web-components/icons-workflow": "^0.39.3",
         "@spectrum-web-components/iconset": "^0.39.3",
         "@spectrum-web-components/illustrated-message": "^0.39.3",
+        "@spectrum-web-components/infield-button": "^0.0.1",
         "@spectrum-web-components/link": "^0.39.3",
         "@spectrum-web-components/menu": "^0.39.3",
         "@spectrum-web-components/meter": "^0.39.3",

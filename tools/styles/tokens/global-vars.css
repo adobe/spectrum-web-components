@@ -238,6 +238,10 @@
     --spectrum-transparent-black-900: rgba(
         var(--spectrum-transparent-black-900-rgb)
     );
+    --spectrum-icon-color-inverse: var(--spectrum-gray-50);
+    --spectrum-icon-color-primary-default: var(
+        --spectrum-neutral-content-color-default
+    );
     --spectrum-radio-button-selection-indicator: 4px;
     --spectrum-field-label-to-component: 0px;
     --spectrum-help-text-to-component: 0px;

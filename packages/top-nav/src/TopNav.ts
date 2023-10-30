@@ -48,6 +48,9 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    @property({ type: String })
+    public label = '';
+
     @property()
     public selectionIndicatorStyle = noSelectionStyle;
 
@@ -120,6 +123,8 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         );
         if (selectedChild) {
             this.selectTarget(selectedChild);
+        } else {
+            this.selected = '';
         }
     }
 
@@ -141,6 +146,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('direction', 'horizontal');
+        this.setAttribute('role', 'navigation');
     }
 
     protected override updated(changes: PropertyValues): void {
@@ -153,6 +159,16 @@ export class TopNav extends SizedMixin(SpectrumElement) {
             typeof changes.get('shouldAnimate') !== 'undefined'
         ) {
             this.shouldAnimate = true;
+        }
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
+            if (this.label.length) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
     }
 
