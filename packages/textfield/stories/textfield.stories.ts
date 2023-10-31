@@ -82,6 +82,16 @@ export const allowedKeys = (): TemplateResult => {
     `;
 };
 
+export const withNameAttribute = (): TemplateResult => {
+    return html`
+        <sp-textfield
+            name="name"
+            placeholder="Enter your name"
+            allowed-keys="a-z"
+        ></sp-textfield>
+    `;
+};
+
 export const readonly = (): TemplateResult => html`
     <sp-textfield
         label="Enter your life story"
