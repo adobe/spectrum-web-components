@@ -319,8 +319,11 @@ export class NumberField extends TextfieldBase {
         if (isNaN(this.value)) {
             value = min;
         }
+
         this._value = this.validateInput(value);
-        this.dispatchEvent(
+        this.inputElement.value = value.toString();
+
+        this.inputElement.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
         );
         this.indeterminate = false;
