@@ -492,4 +492,8 @@
     --spectrum-magenta-1300: rgba(var(--spectrum-magenta-1300-rgb));
     --spectrum-magenta-1400-rgb: 255, 252, 253;
     --spectrum-magenta-1400: rgba(var(--spectrum-magenta-1400-rgb));
+    --spectrum-icon-color-blue-primary-default: var(--spectrum-blue-800);
+    --spectrum-icon-color-green-primary-default: var(--spectrum-green-800);
+    --spectrum-icon-color-red-primary-default: var(--spectrum-red-700);
+    --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-1000);
 }

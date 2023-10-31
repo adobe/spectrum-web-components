@@ -78,6 +78,16 @@ export class TableRow extends SpectrumElement {
 
     protected async manageSelected(): Promise<void> {
         await this.updateComplete;
+        // Manage differently when parent table does not have `role="grid"`.
+        // See: https://github.com/adobe/spectrum-web-components/issues/3397 and https://github.com/adobe/spectrum-web-components/issues/3395
+        if (this.selectable) {
+            this.setAttribute(
+                'aria-selected',
+                this.selected ? 'true' : 'false'
+            );
+        } else {
+            this.removeAttribute('aria-selected');
+        }
         const [checkboxCell] = this.checkboxCells;
         if (!checkboxCell) return;
         checkboxCell.checked = this.selected;

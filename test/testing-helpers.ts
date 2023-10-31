@@ -187,7 +187,7 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
                 style.getPropertyValue('--sp-overlay-open') === 'true' &&
                 style.getPropertyValue('position') === 'fixed';
         }
-        resolve(open || modal || polyfill);
+        resolve(popoverOpen || open || modal || polyfill);
     });
     element.dispatchEvent(queryEvent);
     return found;
@@ -230,7 +230,7 @@ export async function fixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
-        <sp-theme theme="spectrum" scale="medium" color="dark">
+        <sp-theme theme="spectrum" scale="medium" color="light">
             ${story}
         </sp-theme>
     `);

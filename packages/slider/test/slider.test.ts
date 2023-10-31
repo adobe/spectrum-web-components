@@ -384,17 +384,25 @@ describe('Slider', () => {
 
     it('dispatches `input` of the animation frame', async () => {
         const inputSpy = spy();
+        const changeSpy = spy();
         const el = await fixture<Slider>(
             html`
                 <sp-slider
                     value="50"
                     style="width: 100px"
-                    @input=${({ target }: Event & { target: Slider }) =>
-                        inputSpy(target.value)}
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
                 ></sp-slider>
             `
         );
         await elementUpdated(el);
+
+        expect(inputSpy.callCount, 'start clean').to.equal(0);
+        expect(changeSpy.callCount, 'start clean').to.equal(0);
 
         let frames = 0;
         let shouldCountFrames = true;
@@ -435,6 +443,7 @@ describe('Slider', () => {
             inputSpy.callCount,
             'should not have more "input"s than frames'
         ).to.lte(frames);
+        expect(changeSpy.callCount, 'only one change').to.equal(1);
     });
 
     it('manages RTL when min != 0', async () => {
@@ -980,7 +989,12 @@ describe('Slider', () => {
     it('supports units not included in Intl.NumberFormatOptions', async () => {
         let el = await fixture<Slider>(
             html`
-                <sp-slider value="50" min="0" max="100" format-options="{"style": "unit", "unit": "px"}"></sp-slider>
+                <sp-slider
+                    value="50"
+                    min="0"
+                    max="100"
+                    format-options='{"style": "unit", "unit": "px"}'
+                ></sp-slider>
             `
         );
 
@@ -989,7 +1003,7 @@ describe('Slider', () => {
         const input = el.focusElement as HTMLInputElement;
         await elementUpdated(el);
 
-        expect(input.getAttribute('aria-valuetext')).to.equal('50');
+        expect(input.getAttribute('aria-valuetext')).to.equal('50px');
 
         el = await fixture<Slider>(
             html`

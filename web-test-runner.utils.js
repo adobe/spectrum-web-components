@@ -24,6 +24,28 @@ export const chromium = playwrightLauncher({
         }),
 });
 
+export const chromiumWithMemoryTooling = playwrightLauncher({
+    product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
+        }),
+    launchOptions: {
+        headless: false,
+        args: [
+            '--js-flags=--expose-gc',
+            '--headless=new',
+            /**
+             * Cause `measureUserAgentSpecificMemory()` to GC immediately,
+             * instead of up to 20s later:
+             * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
+             **/
+            '--enable-blink-features=ForceEagerMeasureMemory',
+        ],
+    },
+});
+
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
@@ -38,6 +60,7 @@ export const chromiumWithFlags = playwrightLauncher({
 
 export const firefox = playwrightLauncher({
     product: 'firefox',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -60,6 +83,7 @@ export const firefox = playwrightLauncher({
 
 export const webkit = playwrightLauncher({
     product: 'webkit',
+    concurrency: 4,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -217,9 +241,19 @@ export function watchSWC() {
         name: 'watch-swc-plugin',
         async serverStart({ fileWatcher }) {
             // register SWC output files to be watched
-            const files = await fg('{packages,projects,tools}/**/*.js', {
-                ignore: ['**/*.map', '**/*.vrt.js', '**/spectrum-config.js'],
-            });
+            const files = await fg(
+                [
+                    '{packages,projects,tools}/**/*.js',
+                    '{packages,projects,tools}/**/spectrum-*.css',
+                ],
+                {
+                    ignore: [
+                        '**/*.map',
+                        '**/*.vrt.js',
+                        '**/spectrum-config.js',
+                    ],
+                }
+            );
             for (const file of files) {
                 fileWatcher.add(process.cwd() + file);
             }

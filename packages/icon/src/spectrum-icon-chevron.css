@@ -15,6 +15,7 @@ governing permissions and limitations under the License.
 .spectrum-UIIcon-ChevronDown200,
 .spectrum-UIIcon-ChevronDown300,
 .spectrum-UIIcon-ChevronDown400,
+.spectrum-UIIcon-ChevronDown50,
 .spectrum-UIIcon-ChevronDown500,
 .spectrum-UIIcon-ChevronDown75 {
     transform: rotate(90deg);
@@ -23,6 +24,7 @@ governing permissions and limitations under the License.
 .spectrum-UIIcon-ChevronLeft200,
 .spectrum-UIIcon-ChevronLeft300,
 .spectrum-UIIcon-ChevronLeft400,
+.spectrum-UIIcon-ChevronLeft50,
 .spectrum-UIIcon-ChevronLeft500,
 .spectrum-UIIcon-ChevronLeft75 {
     transform: rotate(180deg);
@@ -31,9 +33,17 @@ governing permissions and limitations under the License.
 .spectrum-UIIcon-ChevronUp200,
 .spectrum-UIIcon-ChevronUp300,
 .spectrum-UIIcon-ChevronUp400,
+.spectrum-UIIcon-ChevronUp50,
 .spectrum-UIIcon-ChevronUp500,
 .spectrum-UIIcon-ChevronUp75 {
     transform: rotate(270deg);
+}
+.spectrum-UIIcon-ChevronDown50,
+.spectrum-UIIcon-ChevronLeft50,
+.spectrum-UIIcon-ChevronRight50,
+.spectrum-UIIcon-ChevronUp50 {
+    height: var(--spectrum-icon-chevron-size-50);
+    width: var(--spectrum-icon-chevron-size-50);
 }
 .spectrum-UIIcon-ChevronDown75,
 .spectrum-UIIcon-ChevronLeft75,

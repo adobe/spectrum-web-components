@@ -120,6 +120,7 @@ describe('Table Selects', () => {
 
         expect(rowTwoCheckbox.checked).to.be.false;
         expect(rowTwo.selected).to.be.false;
+        expect(rowTwo.getAttribute('aria-selected')).to.equal('false');
         expect(el.selected.length).to.equal(0);
     });
     it('ignores unexpected `change` events', async () => {
@@ -172,6 +173,8 @@ describe('Table Selects', () => {
             'sp-table-checkbox-cell'
         ) as TableCheckboxCell;
 
+        expect(rowTwo.getAttribute('aria-selected')).to.equal('false');
+
         const rowThree = el.querySelector('.row3') as TableRow;
         const rowThreeCheckbox = rowThree.querySelector(
             'sp-table-checkbox-cell'
@@ -182,6 +185,7 @@ describe('Table Selects', () => {
 
         expect(rowTwoCheckbox.checked).to.be.true;
         expect(el.selected).to.deep.equal(['row2']);
+        expect(rowTwo.getAttribute('aria-selected')).to.equal('true');
 
         rowThreeCheckbox.checkbox.click();
         await elementUpdated(el);

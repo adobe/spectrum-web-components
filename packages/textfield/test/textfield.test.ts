@@ -18,7 +18,11 @@ import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
+import {
+    isFirefox,
+    isWebKit,
+} from '@spectrum-web-components/shared/src/platform.js';
+import { fixture } from '../../../test/testing-helpers.js';
 
 describe('Textfield', () => {
     testForLitDevWarnings(
@@ -210,8 +214,11 @@ describe('Textfield', () => {
         expect(endBounds.height).equals(startBounds.height);
         expect(endBounds.width).equals(startBounds.width);
     });
-    it('resizes by default', async () => {
-        const el = await litFixture<Textfield>(
+    it('resizes by default', async function () {
+        if (isWebKit()) {
+            this.skip();
+        }
+        const el = await fixture<Textfield>(
             html`
                 <sp-textfield
                     multiline

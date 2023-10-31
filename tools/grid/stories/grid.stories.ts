@@ -20,6 +20,9 @@ import {
 import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/card/sp-card.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
@@ -61,6 +64,7 @@ const renderItem = (
             value="card-${item.id}"
             .selected=${selected}
             key=${index}
+            draggable="true"
         >
             <img
                 alt=""
@@ -70,6 +74,24 @@ const renderItem = (
             />
             <div slot="description">10/15/18</div>
             <div slot="footer">Footer</div>
+            <sp-action-menu
+                label="File actions"
+                slot="actions"
+                placement="bottom-end"
+                quiet
+                tabindex="-1"
+            >
+                <sp-tooltip slot="tooltip" self-managed placement="top">
+                    Do stuff
+                </sp-tooltip>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-action-menu>
         </sp-card>
     `;
 };
@@ -111,7 +133,7 @@ export const Default = (): TemplateResult => {
             .focusableSelector=${'sp-card'}
             .renderItem=${renderItem}
         ></sp-grid>
-        <sp-action-bar variant="fixed" style="display: none">
+        <sp-action-bar variant="fixed">
             <sp-checkbox @click=${handleActionBarChange} checked>
                 <span class="selected"></span>
                 Selected

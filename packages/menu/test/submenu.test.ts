@@ -33,6 +33,7 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult,
@@ -832,7 +833,11 @@ describe('Submenu', () => {
         await rootMenu2Opened;
     });
 
-    it('closes back to the first overlay without a `root` when clicking away', async () => {
+    it('closes back to the first overlay without a `root` when clicking away', async function () {
+        if (isWebKit()) {
+            // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
+            this.skip();
+        }
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
@@ -962,7 +967,11 @@ describe('Submenu', () => {
         await closed;
     });
 
-    it('closes decendent menus when Menu Item in ancestor is clicked', async () => {
+    it('closes decendent menus when Menu Item in ancestor is clicked', async function () {
+        if (isWebKit()) {
+            // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
+            this.skip();
+        }
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
@@ -1055,7 +1064,7 @@ describe('Submenu', () => {
             steps: [
                 {
                     type: 'move',
-                    position: [-5, -5],
+                    position: [1, 1],
                 },
             ],
         });
