@@ -6229,9 +6229,9 @@
   integrity sha512-p97FMXkMPudmKqh2aBZHX9dpQMyOJE9g4wFzz07hbalUBhU1O8BMdv8HJicl/3SmgjkVZRpn4T0pEtlLRxCJMQ==
 
 "@spectrum-css/actionbutton@^5.0.7":
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-5.0.7.tgz#35ee1ae27b5dc513937d867319c3e874b7fc6ea6"
-  integrity sha512-fi6iIPnWR7hIpkldRtWWo5n30u8lQk0Ta6f/7Eccl1JlEe0FG0ykheqIohbWu6dd5MKJyrWG2mcTHAMpCuOmCA==
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-5.0.12.tgz#4ab98f0c670196c28f1db48872599e266569ca6d"
+  integrity sha512-A/FfbkgOixnhtOXzg3QZK2PrOshaqhzVszviA+jZAu/SOiPpzuc1q8410seFZvwVbEvUuBhjN0TLQBPD9ZpKBg==
 
 "@spectrum-css/actiongroup@^4.0.7":
   version "4.1.3"
