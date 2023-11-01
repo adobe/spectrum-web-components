@@ -75,6 +75,7 @@ export class Coachmark extends SpectrumElement {
                 @slotchange=${this.onSlotChange}
             ></slot>
             <sp-overlay
+                .receivesFocus=${'false'}
                 .triggerElement=${this.triggerElement as HTMLElement}
                 .triggerInteraction=${!this.triggerInteraction
                     ? 'hover'
