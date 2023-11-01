@@ -6229,9 +6229,9 @@
   integrity sha512-p97FMXkMPudmKqh2aBZHX9dpQMyOJE9g4wFzz07hbalUBhU1O8BMdv8HJicl/3SmgjkVZRpn4T0pEtlLRxCJMQ==
 
 "@spectrum-css/actionbutton@^5.0.7":
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-5.0.7.tgz#35ee1ae27b5dc513937d867319c3e874b7fc6ea6"
-  integrity sha512-fi6iIPnWR7hIpkldRtWWo5n30u8lQk0Ta6f/7Eccl1JlEe0FG0ykheqIohbWu6dd5MKJyrWG2mcTHAMpCuOmCA==
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-5.0.12.tgz#4ab98f0c670196c28f1db48872599e266569ca6d"
+  integrity sha512-A/FfbkgOixnhtOXzg3QZK2PrOshaqhzVszviA+jZAu/SOiPpzuc1q8410seFZvwVbEvUuBhjN0TLQBPD9ZpKBg==
 
 "@spectrum-css/actiongroup@^4.0.7":
   version "4.1.3"
@@ -6289,9 +6289,9 @@
   integrity sha512-L7B/fHaMo9+zdjJROHsYMlxN4huPEnnJjTR/qDnA/0y46InGIBipNCDa514Li3gL61qMeMvJCiRW3W+cDXOpxw==
 
 "@spectrum-css/clearbutton@^5.0.5":
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/clearbutton/-/clearbutton-5.0.5.tgz#a17e8f0217659c893f2bd67ed417d45ad9f6345f"
-  integrity sha512-bQE0pNowoDq1f5y790eb/wbvFBBTE2j7H4dg71TrFhSxfnfbDJwfrBlqtioO7QGgO4svrwVF1JZ5ChxHlbEzog==
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/clearbutton/-/clearbutton-5.0.10.tgz#7c8ec2721bf0a82526af469d5f4cba6e0bfe44ae"
+  integrity sha512-pfMc/ePUudBq2Yz31A2qty8Dwsb69q/zGX1ZmmkP3hmBtN0cNsn16zE+Bv7JMfyIZLulp5tOHKnagCFCQUFMow==
 
 "@spectrum-css/closebutton@^4.0.7":
   version "4.0.7"
@@ -8257,9 +8257,9 @@
     "@types/qs" "*"
 
 "@types/command-line-args@^5.0.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@types/command-line-args/-/command-line-args-5.2.0.tgz#adbb77980a1cc376bb208e3f4142e907410430f6"
-  integrity sha512-UuKzKpJJ/Ief6ufIaIzr3A/0XnluX7RvFgwkV89Yzvm77wCh1kFaFmqN8XEnGcN62EuHdedQjEMb8mYxFLGPyA==
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/@types/command-line-args/-/command-line-args-5.2.2.tgz#ca93ae7045305a2b7c60936bfcb1ebc897b42270"
+  integrity sha512-9aZ7KzLDOBYyqH5J2bvB9edvsMXusX+H/aS8idAJOpWNmscZG5RqO1CVJPFa4Q0/1xKgvxcweXunFVx2l/dYFA==
 
 "@types/command-line-usage@^5.0.1":
   version "5.0.2"

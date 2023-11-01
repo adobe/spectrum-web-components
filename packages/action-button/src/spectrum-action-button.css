@@ -178,8 +178,8 @@ governing permissions and limitations under the License.
 }
 :host([size='xs']) {
     --spectrum-actionbutton-min-width: calc(
-        var(--spectrum-component-edge-to-visual-only-75) * 2 +
-            var(--spectrum-workflow-icon-size-75)
+        var(--spectrum-component-edge-to-visual-only-50) * 2 +
+            var(--spectrum-workflow-icon-size-50)
     );
     --spectrum-actionbutton-height: var(--spectrum-component-height-50);
     --spectrum-actionbutton-icon-size: var(--spectrum-workflow-icon-size-50);
@@ -339,6 +339,10 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-background-color-default)
         )
     );
+    block-size: var(
+        --mod-actionbutton-height,
+        var(--spectrum-actionbutton-height)
+    );
     border-color: var(
         --highcontrast-actionbutton-border-color-default,
         var(
@@ -375,7 +379,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-actionbutton-edge-to-visual-only)
             )
     );
-    height: var(--mod-actionbutton-height, var(--spectrum-actionbutton-height));
     min-inline-size: var(
         --mod-actionbutton-min-width,
         var(--spectrum-actionbutton-min-width)
@@ -502,8 +505,12 @@ governing permissions and limitations under the License.
     );
 }
 ::slotted([slot='icon']) {
+    block-size: var(
+        --mod-actionbutton-icon-size,
+        var(--spectrum-actionbutton-icon-size)
+    );
     color: inherit;
-    height: var(
+    inline-size: var(
         --mod-actionbutton-icon-size,
         var(--spectrum-actionbutton-icon-size)
     );
@@ -526,10 +533,6 @@ governing permissions and limitations under the License.
                 --mod-actionbutton-edge-to-text,
                 var(--spectrum-actionbutton-edge-to-text)
             )
-    );
-    width: var(
-        --mod-actionbutton-icon-size,
-        var(--spectrum-actionbutton-icon-size)
     );
 }
 .hold-affordance + ::slotted([slot='icon']),
