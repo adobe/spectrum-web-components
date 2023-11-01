@@ -125,6 +125,7 @@ governing permissions and limitations under the License.
     object-position: center;
 }
 .image {
+    block-size: 100%;
     border-start-end-radius: calc(
         var(
                 --mod-coachmark-border-radius,
@@ -146,9 +147,8 @@ governing permissions and limitations under the License.
             )
     );
     display: block;
-    height: 100%;
+    inline-size: 100%;
     object-fit: cover;
-    width: 100%;
 }
 .content,
 .footer,
