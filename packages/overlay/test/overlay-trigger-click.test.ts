@@ -179,17 +179,8 @@ describe('Overlay Trigger - Click', () => {
     });
 
     it('opens with a delay on click', async () => {
-        const openedSpy = spy();
-        const closedSpy = spy();
-
-        const start = performance.now();
-
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger
-                placement="right-start"
-                @sp-opened=${() => openedSpy()}
-                @sp-closed=${() => closedSpy()}
-            >
+            <overlay-trigger placement="right-start">
                 <sp-button slot="trigger" variant="primary"></sp-button>
                 <sp-tooltip
                     slot="click-content"
@@ -198,14 +189,11 @@ describe('Overlay Trigger - Click', () => {
                 ></sp-tooltip>
             </overlay-trigger>
         `);
+        const start = performance.now();
+        const opened = oneEvent(el, 'sp-opened');
 
-        await elementUpdated(el);
         el.setAttribute('open', 'click');
-        await waitUntil(
-            () => openedSpy.calledOnce,
-            'hover content projected to overlay',
-            { timeout: 8000 }
-        );
+        await opened;
 
         const end = performance.now();
         expect(end - start).to.be.greaterThan(1000);
