@@ -19,6 +19,9 @@ import {
 } from '@open-wc/testing';
 import type { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import {
@@ -173,5 +176,26 @@ describe('Overlay Trigger - Click', () => {
             { timeout: 2000 }
         );
         expect(el.open).to.equal('click');
+    });
+
+    it('opens with a delay on click', async () => {
+        const el = await fixture<OverlayTrigger>(html`
+            <overlay-trigger placement="right-start">
+                <sp-button slot="trigger" variant="primary"></sp-button>
+                <sp-tooltip
+                    slot="click-content"
+                    id="content"
+                    delayed
+                ></sp-tooltip>
+            </overlay-trigger>
+        `);
+        const start = performance.now();
+        const opened = oneEvent(el, 'sp-opened');
+
+        el.setAttribute('open', 'click');
+        await opened;
+
+        const end = performance.now();
+        expect(end - start).to.be.greaterThan(1000);
     });
 });
