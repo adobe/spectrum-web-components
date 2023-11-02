@@ -17,6 +17,7 @@ import { Default } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { AccordionMarkup } from '../stories/index.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Accordion', () => {
@@ -43,6 +44,22 @@ describe('Accordion', () => {
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
+    });
+    it('manages item size', async () => {
+        const el = await fixture<Accordion>(
+            AccordionMarkup({
+                size: 'l',
+            })
+        );
+        const item = el.querySelector('sp-accordion-item') as AccordionItem;
+        expect(el.size).to.equal('l');
+        expect(item.size).to.equal('l');
+
+        el.size = 's';
+        await elementUpdated(el);
+        await elementUpdated(item);
+        expect(el.size).to.equal('s');
+        expect(item.size).to.equal('s');
     });
     it('does not accept keyboard events when items are not present', async () => {
         const errorSpy = spy();
