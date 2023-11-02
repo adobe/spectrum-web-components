@@ -86,11 +86,13 @@ export default {
             // The following files are not used in Chrome where coverage is calculated.
             '**/OverlayNoPopover.*',
             'tools/shared/src/focus-visible.*',
+            // Deprecated
+            'packages/icons/**',
         ],
         threshold: {
             statements: 98.5,
             branches: 95.5,
-            functions: 96.5,
+            functions: 97,
             lines: 98.5,
         },
     },
