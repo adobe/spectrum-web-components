@@ -95,7 +95,15 @@ export class Overlay extends OverlayFeatures {
      * provided that option.
      */
     @property({ type: Boolean })
-    override delayed = false;
+    override get delayed(): boolean {
+        return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
+    }
+
+    override set delayed(delayed: boolean) {
+        this._delayed = delayed;
+    }
+
+    private _delayed = false;
 
     @query('.dialog')
     override dialogEl!: HTMLDialogElement & {

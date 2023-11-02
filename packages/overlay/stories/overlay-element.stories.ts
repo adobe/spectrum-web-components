@@ -76,6 +76,7 @@ const Template = ({
     open,
     placement,
     type,
+    delayed,
 }: Properties): TemplateResult => html`
     <style>
         .wrapper {
@@ -91,7 +92,7 @@ const Template = ({
             placement=${ifDefined(placement)}
             offset="-10"
         >
-            <sp-popover dialog>
+            <sp-popover dialog ?delayed=${delayed}>
                 <p>
                     Content goes here.
                     ${type === 'modal' || type === 'page'
