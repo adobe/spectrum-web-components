@@ -39,6 +39,21 @@ describe('Avatar', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('loads accessibly with [href]', async () => {
+        const el = await fixture<Avatar>(
+            html`
+                <sp-avatar
+                    label="Shantanu Narayen"
+                    src="https://picsum.photos/500/500"
+                    href="https://adobe.com"
+                ></sp-avatar>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
     it('validates `size`', async () => {
         const el = await fixture<Avatar>(
             html`
@@ -58,6 +73,12 @@ describe('Avatar', () => {
         await elementUpdated(el);
 
         expect(el.size).to.equal(100);
+
+        el.setAttribute('size', '600');
+
+        await elementUpdated(el);
+
+        expect(el.size).to.equal(600);
     });
     it('loads with everything set', async () => {
         const el = await fixture<Avatar>(
