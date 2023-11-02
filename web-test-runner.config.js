@@ -135,6 +135,9 @@ export default {
             ],
             browsers: [chromium, firefox, webkit],
         },
+        {
+            name: 'unit-ci',
+        },
     ],
     group: 'unit',
     browsers: [firefox, chromiumWithMemoryTooling, webkit],
