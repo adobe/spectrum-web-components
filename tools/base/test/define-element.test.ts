@@ -188,8 +188,8 @@ describe('define-element', function () {
                 this.skip();
             }
             const error = {
-                webkit: 'Cannot define multiple custom elements with the same tag name',
-                firefox: `'${name}' has already been defined`,
+                webkit: `"${name}" has already been used with this registry`,
+                firefox: `"${name}" has already been used with this registry`,
                 chromium: `"${name}" has already been used with this registry`,
             }[browser];
             let caughtError: Error | undefined;
@@ -200,7 +200,6 @@ describe('define-element', function () {
             } catch (error) {
                 caughtError = error as Error;
             }
-
             expect(caughtError?.message ?? '').to.include(error);
             expect(this.warn.called, 'should call console.warn()').to.be.true;
             const spyCall = this.warn.getCall(0);
