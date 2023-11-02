@@ -95,7 +95,15 @@ export class Overlay extends OverlayFeatures {
      * provided that option.
      */
     @property({ type: Boolean })
-    override delayed = false;
+    override get delayed(): boolean {
+        return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
+    }
+
+    override set delayed(delayed: boolean) {
+        this._delayed = delayed;
+    }
+
+    private _delayed = false;
 
     @query('.dialog')
     override dialogEl!: HTMLDialogElement & {
@@ -613,7 +621,21 @@ export class Overlay extends OverlayFeatures {
         const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
         longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
         longpressDescription.slot = 'longpress-describedby-descriptor';
-        trigger.insertAdjacentElement('afterend', longpressDescription);
+        const triggerParent = trigger.getRootNode() as HTMLElement;
+        const overlayParent = this.getRootNode() as HTMLElement;
+        // Manage the placement of the helper element in an accessible place with
+        // the lowest chance of negatively affecting the layout of the page.
+        if (triggerParent === overlayParent) {
+            // Trigger and Overlay in same DOM tree...
+            // Append helper element to Overlay.
+            this.append(longpressDescription);
+        } else {
+            // If Trigger in <body>, hide helper
+            longpressDescription.hidden = !('host' in triggerParent);
+            // Trigger and Overlay in different DOM tree, Trigger in shadow tree...
+            // Insert helper element after Trigger.
+            trigger.insertAdjacentElement('afterend', longpressDescription);
+        }
 
         const releaseLongpressDescribedby = conditionAttributeWithId(
             trigger,

@@ -68,4 +68,18 @@
         var(--spectrum-blue-900-rgb),
         0.1
     );
+
+    --spectrum-logic-button-and-background-color: var(--spectrum-blue-900);
+    --spectrum-logic-button-and-border-color: var(--spectrum-blue-900);
+    --spectrum-logic-button-and-background-color-hover: var(
+        --spectrum-blue-1100
+    );
+    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1100);
+
+    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-900);
+    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-900);
+    --spectrum-logic-button-or-background-color-hover: var(
+        --spectrum-magenta-1100
+    );
+    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
 }

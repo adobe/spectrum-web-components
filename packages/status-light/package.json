@@ -60,7 +60,7 @@
         "@spectrum-web-components/base": "^0.39.3"
     },
     "devDependencies": {
-        "@spectrum-css/statuslight": "^6.0.52"
+        "@spectrum-css/statuslight": "^6.0.57"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

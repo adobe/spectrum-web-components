@@ -23,7 +23,8 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import { Popover } from '@spectrum-web-components/popover';
+import type { Popover } from '@spectrum-web-components/popover';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/popover/sp-popover.js';
 import {
     LONGPRESS_INSTRUCTIONS,
@@ -44,6 +45,9 @@ describe('Overlay Trigger - Longpress', () => {
             this.trigger = this.el.querySelector(
                 'sp-action-button'
             ) as ActionButton;
+            this.tooltip = this.el.querySelector(
+                '[slot="hover-content"]'
+            ) as Tooltip;
             this.content = this.el.querySelector(
                 '[slot="longpress-content"]'
             ) as Popover;
@@ -183,13 +187,14 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content.open, 'closes for `pointerdown`').to.be.false;
         });
         it('opens/closes for `longpress` with Button', async function () {
+            this.tooltip.placement = 'bottom-start';
+            await elementUpdated(this.tooltip);
             const button = document.createElement('sp-button');
             button.slot = 'trigger';
             this.trigger.remove();
+            await elementUpdated(this.el);
             this.el.append(button);
             await elementUpdated(this.el);
-            await nextFrame();
-            await nextFrame();
 
             let open = oneEvent(this.el, 'sp-opened');
             const rect = button.getBoundingClientRect();
@@ -202,16 +207,18 @@ describe('Overlay Trigger - Longpress', () => {
                             rect.top + rect.height / 2,
                         ],
                     },
+                ],
+            });
+            // Hover content opens, first.
+            await open;
+            open = oneEvent(this.el, 'sp-opened');
+            await sendMouse({
+                steps: [
                     {
                         type: 'down',
                     },
                 ],
             });
-            // Hover content opens, first.
-            await open;
-            await nextFrame();
-            await nextFrame();
-            open = oneEvent(this.el, 'sp-opened');
             // Then, the longpress content opens.
             await open;
             await nextFrame();
@@ -311,12 +318,10 @@ describe('Overlay Trigger - Longpress', () => {
 
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(el.open).to.be.undefined;
-        /*
-         * This test passes because `<sp-overlay>` adds a new node to describe
-         * the longpress interaction now available on the trigger element
-         */
-        expect(el.childNodes.length, 'always').to.equal(6);
-
+        let longpressHelper = el.querySelector(
+            '[slot="longpress-describedby-descriptor"]'
+        ) as HTMLElement;
+        expect(longpressHelper).to.not.be.null;
         await findDescribedNode(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
@@ -329,7 +334,10 @@ describe('Overlay Trigger - Longpress', () => {
         await opened;
 
         expect(el.open).to.equal('longpress');
-        expect(el.childNodes.length, 'always').to.equal(6);
+        longpressHelper = el.querySelector(
+            '[slot="longpress-describedby-descriptor"]'
+        ) as HTMLElement;
+        expect(longpressHelper).to.not.be.null;
 
         await findDescribedNode(
             'Trigger with hold affordance',
@@ -344,7 +352,10 @@ describe('Overlay Trigger - Longpress', () => {
 
         expect(el.open).to.be.undefined;
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
-        expect(el.childNodes.length, 'always').to.equal(6);
+        longpressHelper = el.querySelector(
+            '[slot="longpress-describedby-descriptor"]'
+        ) as HTMLElement;
+        expect(longpressHelper).to.not.be.null;
 
         await findDescribedNode(
             'Trigger with hold affordance',
@@ -388,7 +399,11 @@ describe('Overlay Trigger - Longpress', () => {
             trigger.hasAttribute('aria-describedby'),
             'applies described by content'
         ).to.be.true;
-        expect(el.childNodes.length, 'always').to.equal(6);
+
+        const longpressHelper = el.querySelector(
+            '[slot="longpress-describedby-descriptor"]'
+        ) as HTMLElement;
+        expect(longpressHelper).to.not.be.null;
 
         el.removeAttribute('hold-affordance');
         content.remove();

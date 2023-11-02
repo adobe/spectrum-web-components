@@ -19,6 +19,9 @@ import {
 } from '@open-wc/testing';
 import type { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import {
@@ -28,11 +31,7 @@ import {
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';
-import {
-    fixture,
-    isInteractive,
-    isOnTopLayer,
-} from '../../../test/testing-helpers.js';
+import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 
 describe('Overlay Trigger - Click', () => {
     it('displays `click` declaratively', async () => {
@@ -72,18 +71,25 @@ describe('Overlay Trigger - Click', () => {
         });
     });
     describe('closes on scroll', () => {
-        afterEach(() => {
+        afterEach(async () => {
             if (document.scrollingElement) {
                 document.scrollingElement.scrollTop = 0;
             }
+            await waitUntil(() => {
+                if (document.scrollingElement) {
+                    return document.scrollingElement.scrollTop === 0;
+                }
+                return true;
+            });
         });
         (['click', 'replace', 'inline'] as TriggerInteractionsV1[]).map(
             (interaction) => {
-                it(`closes "${interaction}" overlay on scroll`, async () => {
+                it(`closes "${interaction}" overlay on scroll`, async function () {
                     const el = await fixture<OverlayTrigger>(html`
                         <overlay-trigger
-                            placement="right-start"
+                            placement="right"
                             type=${interaction}
+                            content="click"
                         >
                             <sp-action-button
                                 slot="trigger"
@@ -91,7 +97,9 @@ describe('Overlay Trigger - Click', () => {
                             >
                                 <sp-icon-magnify slot="icon"></sp-icon-magnify>
                             </sp-action-button>
-                            <sp-popover slot="click-content" tip></sp-popover>
+                            <sp-popover slot="click-content" tip>
+                                Content
+                            </sp-popover>
                         </overlay-trigger>
                     `);
                     await nextFrame();
@@ -100,19 +108,26 @@ describe('Overlay Trigger - Click', () => {
 
                     await elementUpdated(el);
                     const opened = oneEvent(el, 'sp-opened');
-                    el.open = 'click';
+                    const trigger = el.querySelector(
+                        'sp-action-button'
+                    ) as HTMLElement;
+                    trigger.click();
+
                     await opened;
 
                     expect(el.open).to.equal('click');
-                    expect(await isInteractive(popover)).to.be.true;
+
+                    expect(await isOnTopLayer(popover)).to.be.true;
 
                     const closed = oneEvent(el, 'sp-closed');
                     if (document.scrollingElement) {
                         document.scrollingElement.scrollTop = 100;
                     }
+
                     await closed;
 
                     expect(el.open).to.be.undefined;
+
                     expect(await isOnTopLayer(popover)).to.be.false;
                 });
             }
@@ -161,5 +176,26 @@ describe('Overlay Trigger - Click', () => {
             { timeout: 2000 }
         );
         expect(el.open).to.equal('click');
+    });
+
+    it('opens with a delay on click', async () => {
+        const el = await fixture<OverlayTrigger>(html`
+            <overlay-trigger placement="right-start">
+                <sp-button slot="trigger" variant="primary"></sp-button>
+                <sp-tooltip
+                    slot="click-content"
+                    id="content"
+                    delayed
+                ></sp-tooltip>
+            </overlay-trigger>
+        `);
+        const start = performance.now();
+        const opened = oneEvent(el, 'sp-opened');
+
+        el.setAttribute('open', 'click');
+        await opened;
+
+        const end = performance.now();
+        expect(end - start).to.be.greaterThan(1000);
     });
 });
