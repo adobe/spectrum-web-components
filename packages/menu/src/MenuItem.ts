@@ -581,6 +581,12 @@ export class MenuItem extends LikeAnchor(
 
     public override disconnectedCallback(): void {
         this.menuData.cleanupSteps.forEach((removal) => removal(this));
+        this.menuData = {
+            focusRoot: undefined,
+            parentMenu: undefined,
+            selectionRoot: undefined,
+            cleanupSteps: [],
+        };
         super.disconnectedCallback();
     }
 
@@ -596,6 +602,9 @@ export class MenuItem extends LikeAnchor(
     }
 
     public dispatchUpdate(): void {
+        if (!this.isConnected) {
+            return;
+        }
         this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
         this.willDispatchUpdate = false;
     }

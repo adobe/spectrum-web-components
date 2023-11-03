@@ -121,7 +121,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
-    private selectedItemsMap = new Map() as Map<MenuItem, boolean>;
+    private selectedItemsMap = new Map<MenuItem, boolean>();
 
     public get childItems(): MenuItem[] {
         if (!this.cachedChildItems) {
@@ -909,8 +909,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
         this.updateComplete.then(() => this.updateItemFocus());
     }
+
     public override disconnectedCallback(): void {
         this.cachedChildItems = undefined;
+        this.selectedItems = [];
+        this.selectedItemsMap.clear();
+        this.childItemSet.clear();
+        this.descendentOverlays = new Map<Overlay, Overlay>();
         super.disconnectedCallback();
     }
 
