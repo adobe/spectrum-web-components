@@ -1090,6 +1090,34 @@
     --system-spectrum-picker-border-color-active: var(--spectrum-gray-700);
     --system-spectrum-picker-border-color-key-focus: var(--spectrum-gray-600);
 }
+:host,
+:root {
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color: var(
+        --spectrum-gray-75
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-hover: var(
+        --spectrum-gray-200
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-down: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-key-focus: var(
+        --spectrum-gray-200
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-color: inherit;
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-rounded-sided: 0;
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-sided: 0;
+    --system-spectrum-pickerbutton-spectrum-picker-button-border-width: var(
+        --spectrum-border-width-100
+    );
+}
+:host,
+:root {
+    --system-spectrum-popover-border-width: var(--spectrum-border-width-100);
+}
 
 :host,
 :root {
@@ -1110,6 +1138,99 @@
     );
     --system-spectrum-radio-emphasized-button-checked-border-color-focus: var(
         --spectrum-accent-color-1000
+    );
+}
+:host,
+:root {
+    --system-spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --system-spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-100
+    );
+    --system-spectrum-search-border-color-default: var(--spectrum-gray-500);
+    --system-spectrum-search-border-color-hover: var(--spectrum-gray-600);
+    --system-spectrum-search-border-color-focus: var(--spectrum-gray-800);
+    --system-spectrum-search-border-color-focus-hover: var(--spectrum-gray-900);
+    --system-spectrum-search-border-color-key-focus: var(--spectrum-gray-900);
+    --system-spectrum-search-sizes-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizes-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-75
+    );
+    --system-spectrum-search-sizem-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizem-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-100
+    );
+    --system-spectrum-search-sizel-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizel-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-200
+    );
+    --system-spectrum-search-sizexl-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-spectrum-search-sizexl-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-300
+    );
+}
+
+:host,
+:root {
+    --system-spectrum-slider-track-color: var(--spectrum-gray-300);
+    --system-spectrum-slider-track-fill-color: var(--spectrum-gray-700);
+    --system-spectrum-slider-ramp-track-color: var(--spectrum-gray-400);
+    --system-spectrum-slider-ramp-track-color-disabled: var(
+        --spectrum-gray-200
+    );
+    --system-spectrum-slider-handle-background-color: transparent;
+    --system-spectrum-slider-handle-background-color-disabled: transparent;
+    --system-spectrum-slider-ramp-handle-background-color: var(
+        --spectrum-gray-100
+    );
+    --system-spectrum-slider-ticks-handle-background-color: var(
+        --spectrum-gray-100
+    );
+    --system-spectrum-slider-handle-border-color: var(--spectrum-gray-700);
+    --system-spectrum-slider-handle-disabled-background-color: var(
+        --spectrum-gray-100
+    );
+    --system-spectrum-slider-tick-mark-color: var(--spectrum-gray-300);
+    --system-spectrum-slider-handle-border-color-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-slider-handle-border-color-down: var(--spectrum-gray-800);
+    --system-spectrum-slider-handle-border-color-key-focus: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-slider-handle-focus-ring-color-key-focus: var(
+        --spectrum-focus-indicator-color
+    );
+}
+
+:host,
+:root {
+    --system-spectrum-stepper-border-width: var(--spectrum-border-width-100);
+    --system-spectrum-stepper-buttons-border-style: none;
+    --system-spectrum-stepper-buttons-border-width: 0;
+    --system-spectrum-stepper-buttons-background-color: var(--spectrum-gray-50);
+    --system-spectrum-stepper-border-color: var(--spectrum-gray-500);
+    --system-spectrum-stepper-border-color-hover: var(--spectrum-gray-600);
+    --system-spectrum-stepper-border-color-focus: var(--spectrum-gray-800);
+    --system-spectrum-stepper-border-color-focus-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-stepper-border-color-keyboard-focus: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-stepper-button-border-radius-reset: 0px;
+    --system-spectrum-stepper-button-background-color-focus: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-stepper-button-background-color-keyboard-focus: var(
+        --spectrum-gray-200
     );
 }
 
@@ -1137,6 +1258,11 @@
     --system-spectrum-switch-handle-border-color-selected-focus: var(
         --spectrum-gray-800
     );
+}
+
+:host,
+:root {
+    --system-spectrum-tabs-font-weight: var(--spectrum-default-font-weight);
 }
 :host,
 :root {
@@ -1215,103 +1341,6 @@
 }
 :host,
 :root {
-    --system-spectrum-toast-background-color-default: var(
-        --spectrum-neutral-subdued-background-color-default
-    );
-}
-:host,
-:root {
-    --system-spectrum-tooltip-backgound-color-default-neutral: var(
-        --spectrum-neutral-subdued-background-color-default
-    );
-}
-
-:host,
-:root {
-    --system-spectrum-picker-background-color-default: var(--spectrum-gray-75);
-    --system-spectrum-picker-background-color-default-open: var(
-        --spectrum-gray-200
-    );
-    --system-spectrum-picker-background-color-active: var(--spectrum-gray-300);
-    --system-spectrum-picker-background-color-hover: var(--spectrum-gray-200);
-    --system-spectrum-picker-background-color-hover-open: var(
-        --spectrum-gray-200
-    );
-    --system-spectrum-picker-background-color-key-focus: var(
-        --spectrum-gray-200
-    );
-    --system-spectrum-picker-border-color-default: var(--spectrum-gray-500);
-    --system-spectrum-picker-border-color-default-open: var(
-        --spectrum-gray-500
-    );
-    --system-spectrum-picker-border-color-hover: var(--spectrum-gray-600);
-    --system-spectrum-picker-border-color-hover-open: var(--spectrum-gray-600);
-    --system-spectrum-picker-border-color-active: var(--spectrum-gray-700);
-    --system-spectrum-picker-border-color-key-focus: var(--spectrum-gray-600);
-}
-
-:host,
-:root {
-    --system-spectrum-slider-track-color: var(--spectrum-gray-300);
-    --system-spectrum-slider-track-fill-color: var(--spectrum-gray-700);
-    --system-spectrum-slider-ramp-track-color: var(--spectrum-gray-400);
-    --system-spectrum-slider-ramp-track-color-disabled: var(
-        --spectrum-gray-200
-    );
-    --system-spectrum-slider-handle-background-color: transparent;
-    --system-spectrum-slider-handle-background-color-disabled: transparent;
-    --system-spectrum-slider-ramp-handle-background-color: var(
-        --spectrum-gray-100
-    );
-    --system-spectrum-slider-ticks-handle-background-color: var(
-        --spectrum-gray-100
-    );
-    --system-spectrum-slider-handle-border-color: var(--spectrum-gray-700);
-    --system-spectrum-slider-handle-disabled-background-color: var(
-        --spectrum-gray-100
-    );
-    --system-spectrum-slider-tick-mark-color: var(--spectrum-gray-300);
-    --system-spectrum-slider-handle-border-color-hover: var(
-        --spectrum-gray-800
-    );
-    --system-spectrum-slider-handle-border-color-down: var(--spectrum-gray-800);
-    --system-spectrum-slider-handle-border-color-key-focus: var(
-        --spectrum-gray-800
-    );
-    --system-spectrum-slider-handle-focus-ring-color-key-focus: var(
-        --spectrum-focus-indicator-color
-    );
-}
-:host,
-:root {
-    --system-spectrum-popover-border-width: var(--spectrum-border-width-100);
-}
-
-:host,
-:root {
-    --system-spectrum-stepper-border-width: var(--spectrum-border-width-100);
-    --system-spectrum-stepper-buttons-border-style: none;
-    --system-spectrum-stepper-buttons-border-width: 0;
-    --system-spectrum-stepper-buttons-background-color: var(--spectrum-gray-50);
-    --system-spectrum-stepper-border-color: var(--spectrum-gray-500);
-    --system-spectrum-stepper-border-color-hover: var(--spectrum-gray-600);
-    --system-spectrum-stepper-border-color-focus: var(--spectrum-gray-800);
-    --system-spectrum-stepper-border-color-focus-hover: var(
-        --spectrum-gray-800
-    );
-    --system-spectrum-stepper-border-color-keyboard-focus: var(
-        --spectrum-gray-900
-    );
-    --system-spectrum-stepper-button-border-radius-reset: 0px;
-    --system-spectrum-stepper-button-background-color-focus: var(
-        --spectrum-gray-300
-    );
-    --system-spectrum-stepper-button-background-color-keyboard-focus: var(
-        --spectrum-gray-200
-    );
-}
-:host,
-:root {
     --system-spectrum-textfield-border-color: var(--spectrum-gray-500);
     --system-spectrum-textfield-border-color-hover: var(--spectrum-gray-600);
     --system-spectrum-textfield-border-color-focus: var(--spectrum-gray-800);
@@ -1323,68 +1352,16 @@
     );
     --system-spectrum-textfield-border-width: var(--spectrum-border-width-100);
 }
-:host,
-:root {
-    --system-spectrum-search-border-radius: var(--spectrum-corner-radius-100);
-    --system-spectrum-search-edge-to-visual: var(
-        --spectrum-component-edge-to-visual-100
-    );
-    --system-spectrum-search-border-color-default: var(--spectrum-gray-500);
-    --system-spectrum-search-border-color-hover: var(--spectrum-gray-600);
-    --system-spectrum-search-border-color-focus: var(--spectrum-gray-800);
-    --system-spectrum-search-border-color-focus-hover: var(--spectrum-gray-900);
-    --system-spectrum-search-border-color-key-focus: var(--spectrum-gray-900);
-    --system-spectrum-search-sizes-border-radius: var(
-        --spectrum-corner-radius-100
-    );
-    --system-spectrum-search-sizes-edge-to-visual: var(
-        --spectrum-component-edge-to-visual-75
-    );
-    --system-spectrum-search-sizem-border-radius: var(
-        --spectrum-corner-radius-100
-    );
-    --system-spectrum-search-sizem-edge-to-visual: var(
-        --spectrum-component-edge-to-visual-100
-    );
-    --system-spectrum-search-sizel-border-radius: var(
-        --spectrum-corner-radius-100
-    );
-    --system-spectrum-search-sizel-edge-to-visual: var(
-        --spectrum-component-edge-to-visual-200
-    );
-    --system-spectrum-search-sizexl-border-radius: var(
-        --spectrum-corner-radius-100
-    );
-    --system-spectrum-search-sizexl-edge-to-visual: var(
-        --spectrum-component-edge-to-visual-300
-    );
-}
-:host,
-:root {
-    --system-spectrum-tabs-font-weight: var(--spectrum-default-font-weight);
-}
 
 :host,
 :root {
-    --system-spectrum-pickerbutton-spectrum-picker-button-background-color: var(
-        --spectrum-gray-75
+    --system-spectrum-toast-background-color-default: var(
+        --spectrum-neutral-subdued-background-color-default
     );
-    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-hover: var(
-        --spectrum-gray-200
-    );
-    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-down: var(
-        --spectrum-gray-300
-    );
-    --system-spectrum-pickerbutton-spectrum-picker-button-background-color-key-focus: var(
-        --spectrum-gray-200
-    );
-    --system-spectrum-pickerbutton-spectrum-picker-button-border-color: inherit;
-    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius: var(
-        --spectrum-corner-radius-100
-    );
-    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-rounded-sided: 0;
-    --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-sided: 0;
-    --system-spectrum-pickerbutton-spectrum-picker-button-border-width: var(
-        --spectrum-border-width-100
+}
+:host,
+:root {
+    --system-spectrum-tooltip-backgound-color-default-neutral: var(
+        --spectrum-neutral-subdued-background-color-default
     );
 }
