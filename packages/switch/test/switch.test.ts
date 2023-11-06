@@ -88,7 +88,7 @@ describe('Switch', () => {
         `);
         expect(el.checked).to.be.true;
 
-        el.focusElement.click();
+        el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;
