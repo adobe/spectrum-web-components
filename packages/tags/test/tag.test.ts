@@ -204,10 +204,7 @@ describe('Tag', () => {
 
         expect(deleteSpy.called).to.be.false;
 
-        const root: HTMLElement | DocumentFragment = el.shadowRoot
-            ? el.shadowRoot
-            : el;
-        const deleteButton = root.querySelector(
+        const deleteButton = el.shadowRoot.querySelector(
             'sp-clear-button'
         ) as ClearButton;
         deleteButton.click();
