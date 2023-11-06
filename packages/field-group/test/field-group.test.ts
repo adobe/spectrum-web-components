@@ -80,6 +80,19 @@ describe('FieldGroup', () => {
 
             await findDescribedNode(name, description);
         });
+        it('has attribute role', async () => {
+            const el = await fixture(html`
+                <sp-field-group label=${name}>
+                    <sp-help-text slot="help-text" id="help-text-id-1">
+                        ${description}
+                    </sp-help-text>
+                </sp-field-group>
+            `);
+
+            await elementUpdated(el);
+            expect(el.hasAttribute('role')).to.be.true;
+            expect(el.getAttribute('role')).to.equal('group');
+        });
         it('manages neutral/negative help text pairs', async () => {
             const el = await fixture<FieldGroup>(html`
                 <sp-field-group label=${name}>

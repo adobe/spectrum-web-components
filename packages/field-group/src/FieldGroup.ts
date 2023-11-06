@@ -63,6 +63,7 @@ export class FieldGroup extends ManageHelpText(SpectrumElement, {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
+        this.setAttribute('role', 'group');
         if (changes.has('label')) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);
