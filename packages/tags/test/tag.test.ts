@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
@@ -185,5 +185,34 @@ describe('Tag', () => {
             deleteSpy.callCount,
             'Does not respond after `focusout`'
         ).to.equal(expectedEventCount);
+    });
+    it('can have delete event prevented', async () => {
+        const deleteSpy = spy();
+        const handleDelete = (event: Event): void => {
+            event.preventDefault();
+            deleteSpy();
+        };
+        const el = await fixture<Tag>(
+            html`
+                <sp-tag deletable @delete=${handleDelete}>Tag</sp-tag>
+            `
+        );
+
+        const removeStub = stub(el, 'remove');
+
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.false;
+
+        const root: HTMLElement | DocumentFragment = el.shadowRoot
+            ? el.shadowRoot
+            : el;
+        const deleteButton = root.querySelector(
+            'sp-clear-button'
+        ) as ClearButton;
+        deleteButton.click();
+
+        expect(deleteSpy.callCount).to.equal(1);
+        expect(removeStub.called).to.be.false;
     });
 });
