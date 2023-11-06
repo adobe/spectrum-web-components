@@ -33,6 +33,10 @@
             "development": "./src/CheckboxBase.dev.js",
             "default": "./src/CheckboxBase.js"
         },
+        "./src/CheckboxMixin.js": {
+            "development": "./src/CheckboxMixin.dev.js",
+            "default": "./src/CheckboxMixin.js"
+        },
         "./src/checkbox.css.js": "./src/checkbox.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
