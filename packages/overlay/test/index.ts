@@ -628,7 +628,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 expect(await isOnTopLayer(this.hoverContent)).to.be.false;
 
                 const rect = this.outerTrigger.getBoundingClientRect();
-                const close = oneEvent(this.outerTrigger, 'sp-closed');
+                const open = oneEvent(this.outerTrigger, 'sp-opened');
                 await sendMouse({
                     steps: [
                         {
@@ -640,10 +640,12 @@ export const runOverlayTriggerTests = (type: string): void => {
                         },
                     ],
                 });
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
+                await open;
+                const close = oneEvent(this.outerTrigger, 'sp-closed');
+                expect(
+                    await isOnTopLayer(this.hoverContent),
+                    'hover content is available at point'
+                ).to.be.true;
                 await sendMouse({
                     steps: [
                         {

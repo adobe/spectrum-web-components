@@ -127,8 +127,12 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private onPointerdownManagementOfTabIndex(): void {
         if (this.tabIndex === -1) {
-            this.tabIndex = 0;
-            this.focus({ preventScroll: true });
+            setTimeout(() => {
+                // Ensure this happens _after_ WebKit attempts to focus the :host.
+                this.tabIndex = 0;
+                this.focus({ preventScroll: true });
+                this.tabIndex = -1;
+            });
         }
     }
 

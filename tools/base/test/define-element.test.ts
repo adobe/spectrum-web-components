@@ -206,7 +206,9 @@ describe('define-element', function () {
             const spyCall = this.warn.getCall(0);
             expect(
                 (spyCall.args.at(0) as string).includes('redefine'),
-                'message should warn about redefining an element'
+                `message should warn about redefining an element, instead got "${spyCall.args.at(
+                    0
+                )}"`
             ).to.be.true;
         })
     );
