@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 0199c372521883de94ab10ecd4156045d97ac33e
+        default: f62bf0d24191ef47a4d7f9172c40570e052808a2
     wireit_cache_name:
         type: string
         default: wireit
@@ -152,25 +152,36 @@ jobs:
                   path: /root/project/results/
             - store_artifacts:
                   path: coverage
-            - run:
-                  name: Are there changes?
-                  command: git diff --exit-code
 
     test-firefox:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
                   name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group unit
+                  command: |
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
-            - run:
-                  name: Are there changes?
-                  command: git diff-files
 
     test-webkit:
+        executor: node
+        parallelism: 5
+
+        steps:
+            - downstream
+            - run:
+                  name: Run tests
+                  command: |
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+            - store_test_results:
+                  path: /root/project/results/
+
+    lint:
         executor: node
 
         steps:
@@ -179,11 +190,6 @@ jobs:
                   name: Lint
                   command: yarn lint
             - run: yarn analyze
-            - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group unit
-            - store_test_results:
-                  path: /root/project/results/
             - run:
                   name: Are there changes?
                   command: git diff-files
@@ -300,6 +306,7 @@ workflows:
             - test-chromium
             - test-firefox
             - test-webkit
+            - lint
             - hcm-visual:
                   filters:
                       branches:

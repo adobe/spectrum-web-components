@@ -14,8 +14,9 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import { ActionBar } from '@spectrum-web-components/action-bar';
-import { Default } from '../stories/action-bar.stories.js';
+import { Default, emphasized } from '../stories/action-bar.stories.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { spy } from 'sinon';
 
 describe('ActionBar', () => {
     testForLitDevWarnings(async () => await fixture<ActionBar>(Default()));
@@ -87,5 +88,30 @@ describe('ActionBar', () => {
 
         expect(el.variant).to.equal('fixed');
         expect(el.getAttribute('variant')).to.equal('fixed');
+    });
+    it('dispatches close event', async () => {
+        const el = await fixture<ActionBar>(emphasized());
+        const closeSpy = spy();
+        el.addEventListener('close', () => closeSpy());
+        expect(closeSpy.callCount).to.equal(0);
+        expect(el.open).to.be.true;
+        const closeButton = el.shadowRoot.querySelector('sp-close-button');
+        closeButton?.click();
+        expect(closeSpy.callCount).to.equal(1);
+        expect(el.open).to.be.false;
+    });
+    it('can have close event prevented', async () => {
+        const el = await fixture<ActionBar>(emphasized());
+        const closeSpy = spy();
+        el.addEventListener('close', (event: Event) => {
+            event.preventDefault();
+            closeSpy();
+        });
+        expect(closeSpy.callCount).to.equal(0);
+        expect(el.open).to.be.true;
+        const closeButton = el.shadowRoot.querySelector('sp-close-button');
+        closeButton?.click();
+        expect(closeSpy.callCount).to.equal(1);
+        expect(el.open).to.be.true;
     });
 });

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **action-bar:** allow "close" event to be cancelled ([17cf55e](https://github.com/adobe/spectrum-web-components/commit/17cf55e5117d632e612e2055c77f6fcc4dadbe4c))
+
 ## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
 
 **Note:** Version bump only for package @spectrum-web-components/action-bar
