@@ -9,61 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { CheckboxMixin } from './CheckboxMixin.js';
 
-export class CheckboxBase extends Focusable {
-    @property({ type: Boolean, reflect: true })
-    public checked = false;
-
-    @property({ type: Boolean, reflect: true })
-    public readonly = false;
-
-    @property({ type: String, reflect: true })
-    public name: string | undefined;
-
-    @query('#input')
-    protected inputElement!: HTMLInputElement;
-
+export class CheckboxBase extends CheckboxMixin(Focusable) {
     public override get focusElement(): HTMLElement {
         return this.inputElement;
-    }
-
-    public handleChange(): void {
-        if (this.readonly) {
-            this.inputElement.checked = this.checked;
-            return;
-        }
-        this.checked = this.inputElement.checked;
-
-        const changeEvent = new CustomEvent('change', {
-            bubbles: true,
-            cancelable: true,
-            composed: true,
-        });
-        const applyDefault = this.dispatchEvent(changeEvent);
-
-        if (!applyDefault) {
-            this.checked = !this.inputElement.checked;
-            this.inputElement.checked = this.checked;
-        }
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <input
-                name=${ifDefined(this.name || undefined)}
-                id="input"
-                type="checkbox"
-                .checked=${this.checked}
-                @change=${this.handleChange}
-            />
-        `;
     }
 }
