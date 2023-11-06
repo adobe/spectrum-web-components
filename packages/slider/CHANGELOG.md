@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **infield-button:** add infield-button package ([057b885](https://github.com/adobe/spectrum-web-components/commit/057b885276f3d5dcbe32bab5ab36a2bb82334bc3))
+
 ## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
 
 ### Bug Fixes
