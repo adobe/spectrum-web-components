@@ -6374,9 +6374,9 @@
   integrity sha512-SV1UQJtmBg1JJ4zzgcFqqpFZZzVvJhNNJvM34PUWdHnj4YjUKGIxSCaqdEFl0LguNcgjSM3Be2P5ZNVkjwcMUA==
 
 "@spectrum-css/illustratedmessage@^6.0.21":
-  version "6.0.21"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-6.0.21.tgz#1759bd72530db9d76cda6f34237ae1a1d92f2d5d"
-  integrity sha512-97qHTDyEJ6m4thQWqdpRXrK1p3HPRHn8zO1gH8y0CS7EODRHFRyld1tksNFB1kg0VAQE+4RWJC2fYDm11F6w6g==
+  version "6.0.26"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-6.0.26.tgz#c83556159f158dc8455570178849c6e83e556746"
+  integrity sha512-Hmaz7qnDr2XNGtw3DlnKhtR2a8WZM1pI1a5069Aes/iOQy5FaEY+z6E/tBKfnwkQBRkJVWU2pLn+VllJFxwJ0Q==
 
 "@spectrum-css/infieldbutton@^4.0.1":
   version "4.0.1"
