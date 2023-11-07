@@ -169,6 +169,23 @@ describe('FieldLabel', () => {
         expect(input.hasAttribute('aria-labelledby'));
         expect(input.getAttribute('aria-labelledby')).to.equal(el.id);
     });
+    it('associates via "id" starting with number', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <sp-field-label required for="1"></sp-field-label>
+                    <input id="1" />
+                </div>
+            `
+        );
+        const el = test.querySelector('sp-field-label') as FieldLabel;
+        const input = test.querySelector('input') as HTMLInputElement;
+
+        await elementUpdated(el);
+
+        expect(input.hasAttribute('aria-labelledby'));
+        expect(input.getAttribute('aria-labelledby')).to.equal(el.id);
+    });
     it('passed clicks to assiciated form element as focus', async () => {
         const test = await fixture<HTMLDivElement>(
             html`

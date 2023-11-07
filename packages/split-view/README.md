@@ -182,3 +182,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
     </div>
 </sp-split-view>
 ```
+
+## Accessibility
+
+By default, the "separator" element within an `<sp-split-view>` is given the label "Resize the panels". A label is required to surface the interaction correctly to screen readers. You can customize or internationalize this with the `label` attribute.

@@ -138,6 +138,7 @@
         "alex": "^10.0.0",
         "cem-plugin-module-file-extensions": "^0.0.5",
         "chalk": "^5.0.1",
+        "chromedriver": "118",
         "common-tags": "^1.8.2",
         "cssnano": "^5.0.15",
         "custom-elements-manifest": "^2.0.0",
@@ -199,7 +200,7 @@
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
         "typescript": "^4.7.2",
-        "wireit": "^0.14.0",
+        "wireit": "^0.14.1",
         "yargs": "^17.2.1"
     },
     "wireit": {

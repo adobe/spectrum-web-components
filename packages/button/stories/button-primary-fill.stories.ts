@@ -17,6 +17,7 @@ import {
     renderLinkWithTarget,
     renderMinWidthButton,
     renderWithIcon,
+    renderWithIconOnly,
 } from './index.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 import type { Properties } from './index.js';
@@ -41,6 +42,9 @@ export const Default = (props: Properties): TemplateResult =>
 
 export const withIcon = (props: Properties): TemplateResult =>
     renderWithIcon(props);
+
+export const withIconOnly = (props: Properties): TemplateResult =>
+    renderWithIconOnly(props);
 
 export const iconSizeOverridden = (): TemplateResult =>
     renderIconSizeOverridden(variant, treatment);

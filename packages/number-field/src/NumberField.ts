@@ -28,10 +28,11 @@ import {
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron50.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import {
     isAndroid,
     isIPhone,
@@ -66,26 +67,22 @@ export const remapMultiByteCharacters: Record<string, string> = {
 
 const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
     s: (dir) => html`
-        <sp-icon-chevron75
-            slot="icon"
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
-        ></sp-icon-chevron75>
+        <sp-icon-chevron50
+            class="stepper-icon spectrum-UIIcon-Chevron${dir}50"
+        ></sp-icon-chevron50>
     `,
     m: (dir) => html`
         <sp-icon-chevron75
-            slot="icon"
             class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
         ></sp-icon-chevron75>
     `,
     l: (dir) => html`
         <sp-icon-chevron100
-            slot="icon"
             class="stepper-icon spectrum-UIIcon-Chevron${dir}100"
         ></sp-icon-chevron100>
     `,
     xl: (dir) => html`
         <sp-icon-chevron200
-            slot="icon"
             class="stepper-icon spectrum-UIIcon-Chevron${dir}200"
         ></sp-icon-chevron200>
     `,
@@ -627,10 +624,13 @@ export class NumberField extends TextfieldBase {
                               ],
                           })}
                       >
-                          <sp-action-button
-                              class="step-up"
+                          <sp-infield-button
+                              inline="end"
+                              block="start"
+                              class="button step-up"
                               aria-describedby=${this.helpTextId}
                               label=${'Increase ' + this.appliedLabel}
+                              size=${this.size}
                               tabindex="-1"
                               ?focused=${this.focused}
                               ?disabled=${this.disabled ||
@@ -640,11 +640,14 @@ export class NumberField extends TextfieldBase {
                               ?quiet=${this.quiet}
                           >
                               ${chevronIcon[this.size]('Up')}
-                          </sp-action-button>
-                          <sp-action-button
-                              class="step-down"
+                          </sp-infield-button>
+                          <sp-infield-button
+                              inline="end"
+                              block="end"
+                              class="button step-down"
                               aria-describedby=${this.helpTextId}
                               label=${'Decrease ' + this.appliedLabel}
+                              size=${this.size}
                               tabindex="-1"
                               ?focused=${this.focused}
                               ?disabled=${this.disabled ||
@@ -654,7 +657,7 @@ export class NumberField extends TextfieldBase {
                               ?quiet=${this.quiet}
                           >
                               ${chevronIcon[this.size]('Down')}
-                          </sp-action-button>
+                          </sp-infield-button>
                       </span>
                   `}
         `;

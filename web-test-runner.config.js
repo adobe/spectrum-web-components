@@ -78,23 +78,21 @@ export default {
             'packages/*/stories/*',
             'packages/icons-ui/**',
             'packages/icons-workflow/**',
-            // The following file is no longer used in Chrome where coverage is calculated.
             'test/**',
             '**/test/**',
             'tools/*/stories/*',
-            'tools/shared/src/focus-visible.*',
             'tools/styles/**',
             '**/node_modules/**',
-            // The following are WIP removals for the Overlay API update
-            '**/ActiveOverlay.*',
-            '**/overlay-stack.*',
-            '**/overlay-utils.*',
-            '**/OverlayPopover.*',
+            // The following files are not used in Chrome where coverage is calculated.
+            '**/OverlayNoPopover.*',
+            'tools/shared/src/focus-visible.*',
+            // Deprecated
+            'packages/icons/**',
         ],
         threshold: {
             statements: 98.5,
             branches: 95.5,
-            functions: 96.5,
+            functions: 97,
             lines: 98.5,
         },
     },
@@ -138,6 +136,9 @@ export default {
                 'packages/tooltip/test/*.test.js',
             ],
             browsers: [chromium, firefox, webkit],
+        },
+        {
+            name: 'unit-ci',
         },
     ],
     group: 'unit',
