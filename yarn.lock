@@ -6274,9 +6274,9 @@
   integrity sha512-bb70n4B2BZh7HARmUBXwaq2PGkXDOPRdr6uMJq1HprvgRlR7Y1EDZMMhtoMWuh4kk5EimbfviqHYmu53Eo5Xcg==
 
 "@spectrum-css/buttongroup@^6.1.6":
-  version "6.1.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.1.6.tgz#7997f2b4f6376f0717b4d1f238b1e8edf97203ee"
-  integrity sha512-gvlw4Kf9oRi63zetm4O+s/fXFIICpG//AyaBws4s+GkSXjA0ym5hWJvMzmxXNib2hkrXL/wzXkfBoM4niA87lg==
+  version "6.1.11"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.1.11.tgz#98cc2d61a0f52f843a6cd1cf76edda6b15b657fa"
+  integrity sha512-RG5kSuZtDwh01HcaBD2N541sXdMcd18sTbU13EQpMtoWCi5YwWMqmz1JnfVUx6FwQZZY1ys3KdRY4tL+MMC+lw==
 
 "@spectrum-css/card@^6.0.18":
   version "6.0.18"
