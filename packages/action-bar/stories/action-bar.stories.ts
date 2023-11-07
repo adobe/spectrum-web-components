@@ -18,6 +18,9 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
     title: 'Action Bar',
@@ -31,9 +34,18 @@ export const Default = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
+            <sp-action-menu label="More Actions" slot="menus">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item>
+                    Select some items
+                    <sp-menu slot="submenu" selects="multiple">
+                        <sp-menu-item>A</sp-menu-item>
+                        <sp-menu-item selected>B</sp-menu-item>
+                        <sp-menu-item>C</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-action-menu>
         </sp-action-bar>
     `;
 };
@@ -45,9 +57,18 @@ export const emphasized = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
+            <sp-action-menu label="More Actions" slot="menus">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item>
+                    Select some items
+                    <sp-menu slot="submenu" selects="multiple">
+                        <sp-menu-item>A</sp-menu-item>
+                        <sp-menu-item selected>B</sp-menu-item>
+                        <sp-menu-item>C</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-action-menu>
         </sp-action-bar>
     `;
 };
@@ -65,9 +86,18 @@ export const fixed = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
+            <sp-action-menu label="More Actions" slot="menus">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item>
+                    Select some items
+                    <sp-menu slot="submenu" selects="multiple">
+                        <sp-menu-item>A</sp-menu-item>
+                        <sp-menu-item selected>B</sp-menu-item>
+                        <sp-menu-item>C</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-action-menu>
         </sp-action-bar>
     `;
 };
@@ -79,9 +109,18 @@ export const flexible = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
+            <sp-action-menu label="More Actions" slot="menus">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item>
+                    Select some items
+                    <sp-menu slot="submenu" selects="multiple">
+                        <sp-menu-item>A</sp-menu-item>
+                        <sp-menu-item selected>B</sp-menu-item>
+                        <sp-menu-item>C</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-action-menu>
         </sp-action-bar>
     `;
 };

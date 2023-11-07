@@ -117,6 +117,7 @@ export class ActionBar extends SpectrumElement {
                         )}
                     >
                         <slot name="buttons"></slot>
+                        <slot name="menus"></slot>
                     </sp-action-group>
                 </slot>
             </sp-popover>
