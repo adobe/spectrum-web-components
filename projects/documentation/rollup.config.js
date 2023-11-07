@@ -19,7 +19,7 @@ import { createBasicConfig } from '@open-wc/building-rollup';
 import { injectManifest } from 'rollup-plugin-workbox';
 import path from 'path';
 import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
-import Terser from 'terser';
+import { minify as terserMinify } from 'terser';
 import { postCSSPlugins } from '../../scripts/css-processing.cjs';
 import postCSSPrefixwrap from 'postcss-prefixwrap';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -83,7 +83,7 @@ export default async () => {
                         useShortDoctype: true,
                         minifyCSS: true,
                         /** @param {string} code */
-                        minifyJS: (code) => Terser.minify(code).code,
+                        minifyJS: (code) => terserMinify(code).code,
                     }),
                 (html, { bundle: { entrypoints } }) => {
                     if (html.search('rel="modulepreload"') > -1) {
