@@ -44,6 +44,10 @@ const config = {
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.pseudoToAttribute('active', 'active'),
+                converter.classToAttribute(
+                    'spectrum-Button--iconOnly',
+                    'icon-only'
+                ),
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-Button--sizeM'),
                 ...converter.enumerateAttributes(
