@@ -87,6 +87,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
         const applyDefault = this.dispatchEvent(
             new Event('delete', {
                 bubbles: true,
+                cancelable: true,
                 composed: true,
             })
         );

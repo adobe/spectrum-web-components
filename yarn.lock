@@ -6463,10 +6463,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-6.0.8.tgz#69c235374a087a687f098fb12c22302bbcafaa03"
   integrity sha512-4yoH/Cg1pW/qAfUdudguJVOBIoa/MxLPZTclLyanbdNzNRWEKG3MgpNsjWjIrbGmBDRzOMGdnutfeGSsIcMTVw==
 
-"@spectrum-css/splitview@^3.0.48":
-  version "3.0.48"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-3.0.48.tgz#0b90489bc4a65e87ff48373bd262273cd818194d"
-  integrity sha512-zdOuXpAA20qBOt1TKMSUsEzE9eVv6xSlbb13KaDnMnt3hJ0VtC7U4imvw1OHAErm2kOghqBms5ZDf4XIAZg5ng==
+"@spectrum-css/splitview@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-4.0.5.tgz#7ffc7846c87c579b4a5ca721df8761552f5d28c5"
+  integrity sha512-oKEA0917TCqUU16NILREH8nwb3lNF0j/LLzSjs6yOF4qw7dTLmyHi4Gi3n7zEeIEfPuJi9cz7jx0Q6RU/XUQPw==
 
 "@spectrum-css/statuslight@^6.0.57":
   version "6.0.57"
@@ -6790,7 +6790,7 @@
     "@spectrum-web-components/base" "^0.38.0"
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.39.3"
+  version "0.39.4"
 
 "@spectrum-web-components/field-group@^0.38.0":
   version "0.38.0"
