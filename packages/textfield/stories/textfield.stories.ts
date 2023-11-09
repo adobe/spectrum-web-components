@@ -18,6 +18,24 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 export default {
     component: 'sp-textfield',
     title: 'Textfield',
+    args: {
+        disabled: false,
+        quiet: false,
+    },
+    argTypes: {
+        name: {
+            name: 'name',
+            type: { name: 'string', required: false },
+            description: 'Name attribute for the sp-textfield',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: {
+                type: 'text',
+            },
+        },
+    },
 };
 
 export const Default = (): TemplateResult => {
