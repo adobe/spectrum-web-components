@@ -34,7 +34,7 @@ export const Default = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-menu label="More Actions" slot="menus">
+            <sp-action-menu label="More Actions" slot="buttons">
                 <sp-menu-item>One</sp-menu-item>
                 <sp-menu-item>Two</sp-menu-item>
                 <sp-menu-item>
@@ -57,7 +57,7 @@ export const emphasized = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-menu label="More Actions" slot="menus">
+            <sp-action-menu label="More Actions" slot="buttons">
                 <sp-menu-item>One</sp-menu-item>
                 <sp-menu-item>Two</sp-menu-item>
                 <sp-menu-item>
@@ -86,7 +86,7 @@ export const fixed = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-menu label="More Actions" slot="menus">
+            <sp-action-menu label="More Actions" slot="buttons">
                 <sp-menu-item>One</sp-menu-item>
                 <sp-menu-item>Two</sp-menu-item>
                 <sp-menu-item>
@@ -109,7 +109,7 @@ export const flexible = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-menu label="More Actions" slot="menus">
+            <sp-action-menu label="More Actions" slot="buttons">
                 <sp-menu-item>One</sp-menu-item>
                 <sp-menu-item>Two</sp-menu-item>
                 <sp-menu-item>
