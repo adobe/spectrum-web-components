@@ -51,6 +51,9 @@ export class ActionMenu extends ObserveSlotPresence(
     @property({ type: String, reflect: true })
     public static: 'white' | 'black' | undefined = undefined;
 
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
     private get hasLabel(): boolean {
@@ -90,6 +93,7 @@ export class ActionMenu extends ObserveSlotPresence(
                 aria-describedby=${DESCRIPTION_ID}
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
+                ?emphasized=${this.emphasized}
                 static=${ifDefined(this.static)}
                 aria-haspopup="true"
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
