@@ -243,6 +243,10 @@ describe('Checkbox', () => {
 
         el = testFixture.querySelector('#checkbox1') as Checkbox;
         expect(el.hasAttribute('name'));
+        expect(el.name).to.be.undefined;
+        expect(el.name == undefined);
+        el.setAttribute('name', 'test');
+        expect(el.name).to.be.equal('test');
     });
 
     it('handles click events', async () => {

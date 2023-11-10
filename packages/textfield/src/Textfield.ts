@@ -70,8 +70,8 @@ export class TextfieldBase extends ManageHelpText(
     @property()
     public label = '';
 
-    @property()
-    public name = '';
+    @property({ type: String, reflect: true })
+    public name: string | undefined;
 
     @property()
     public placeholder = '';

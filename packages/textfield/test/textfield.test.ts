@@ -345,17 +345,14 @@ describe('Textfield', () => {
     it('handles `name` attribute', async () => {
         const el = await litFixture<Textfield>(
             html`
-                <sp-textfield
-                    name="name"
-                    placeholder="Enter your name"
-                ></sp-textfield>
+                <sp-textfield placeholder="Enter your name"></sp-textfield>
             `
         );
         expect(el).to.not.equal(undefined);
-        const input = el.shadowRoot
-            ? el.shadowRoot.querySelector('input')
-            : null;
-        expect(input?.name).to.equal('name');
+        expect(el.name).to.be.undefined;
+        expect(el.name === undefined);
+        el.setAttribute('name', 'test');
+        expect(el.name).to.be.equal('test');
     });
     it('handles `name` attribute with multiline', async () => {
         const el = await litFixture<Textfield>(
