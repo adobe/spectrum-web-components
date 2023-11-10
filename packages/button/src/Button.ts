@@ -43,7 +43,7 @@ export type ButtonTreatments = 'fill' | 'outline';
 /**
  * @element sp-button
  *
- * @slot - text label of the Button
+ * @slot text - label of the Button
  * @slot icon - The icon to use for Button
  */
 export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
