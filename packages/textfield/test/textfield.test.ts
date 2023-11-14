@@ -350,7 +350,7 @@ describe('Textfield', () => {
         );
         expect(el).to.not.equal(undefined);
         expect(el.name).to.be.undefined;
-        expect(el.name === undefined);
+
         el.setAttribute('name', 'test');
         expect(el.name).to.be.equal('test');
     });
