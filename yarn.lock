@@ -6359,9 +6359,9 @@
   integrity sha512-Pue6Wb3mjyPRW6E70I33eqtb47ghefsmDIEQ/gyO3KQBg39okYIisxgkW+kYeXCuGeM0Xaip6haJ1J/y+8ewLA==
 
 "@spectrum-css/fieldlabel@^7.0.33":
-  version "7.0.33"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-7.0.33.tgz#4a75e5c44384985f77e67d7e04610b5a5973acf1"
-  integrity sha512-bj2gPrhwFi/H7sxcitXvVbYxzsPy7OpKVxPIDIZm/o2ta9/Hv5ITygMSglHDXZAt4mT1QPAkzCRIyFc/7ufV9Q==
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-7.1.4.tgz#d826850b818c9e6b0f40db44d8f36a21a8bdd63e"
+  integrity sha512-pvFd/O3QK3/HdHdcozZipW06DHulQ+zgKcQrivpYxv24DbvRjo0yjwGBoN8ScDL4Xr5O8MtO0cPjaKWWRt+cyA==
 
 "@spectrum-css/helptext@^4.0.54":
   version "4.0.54"
