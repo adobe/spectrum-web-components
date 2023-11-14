@@ -8,24 +8,26 @@ updates:
           time: '12:00'
           timezone: 'America/Los_Angeles'
       open-pull-requests-limit: 5
-      ignore:
-          - dependency-name: '@spectrum-css/*'
       reviewers:
           - 'hunterloftis'
           - 'najikahalsema'
           - 'westbrook'
-
-    # This sets up a daily check for Spectrum CSS updates
-    # focused on the @spectrum-css/* packages
-    - package-ecosystem: 'npm'
-      directory: '/'
-      schedule:
-          interval: 'daily'
-      allow:
-          - dependency-name: '@spectrum-css/*'
-      labels: ['Spectrum CSS']
-      assignees:
-          - 'jnjosh'
-          - 'rajdeepc'
-          - 'pfulton'
-          - 'castastrophe'
+      groups:
+          # Specify a name for the group, which will be used in pull request titles
+          # and branch names
+          storybook-ecosystem:
+              # Define patterns to include dependencies in the group (based on
+              # dependency name)
+              patterns:
+                  - 'storybook'
+                  - '@storybook/*'
+                  - '@types/storybook*'
+          commitlint-ecosystem:
+              patterns:
+                  - '@commitlint/*'
+                  - 'commitlint'
+          eleventy-ecosystem:
+              patterns:
+                  - '@11ty/*'
+                  - 'eleventy'
+                  - 'eleventy-plugin-*'
