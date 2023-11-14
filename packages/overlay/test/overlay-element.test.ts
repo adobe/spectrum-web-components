@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -31,7 +32,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { Button } from '@spectrum-web-components/button';
 import { sendKeys } from '@web/test-runner-commands';
-import { receivesFocus } from '../stories/overlay-element.stories.js';
+import { click, receivesFocus } from '../stories/overlay-element.stories.js';
 
 const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
 type OverlayTypes = typeof OVERLAY_TYPES[number];
@@ -790,6 +791,48 @@ describe('sp-overlay', () => {
                 expect(this.hint.open).to.be.false;
                 expect(this.auto.open).to.be.true;
                 expect(this.manual.open).to.be.true;
+            });
+        });
+        describe('only close when mnually closed', function () {
+            it('does not close when clicking away', async () => {
+                const test = await fixture(html`
+                    <div>
+                        ${click({
+                            ...click.args,
+                            interaction: 'click',
+                            placement: 'bottom',
+                            type: 'manual',
+                            delayed: false,
+                            receivesFocus: 'auto',
+                        })}
+                    </div>
+                `);
+                const el = test.querySelector('sp-overlay') as Overlay;
+
+                expect(el.open).to.be.false;
+
+                const opened = oneEvent(el, 'sp-opened');
+                el.open = true;
+                await opened;
+
+                await sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [50, 400],
+                        },
+                    ],
+                });
+
+                await aTimeout(200);
+
+                expect(el.open).to.be.true;
+
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                await closed;
+
+                expect(el.open).to.be.false;
             });
         });
     });
