@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "@11ty/eleventy": "^2.0.0",
-        "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
+        "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
         "@fullhuman/postcss-purgecss": "^5.0.0",
         "@open-wc/building-rollup": "^3.0.2",
         "@rollup/plugin-alias": "^5.0.1",
