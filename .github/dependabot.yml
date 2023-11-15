@@ -8,7 +8,24 @@ updates:
           time: '12:00'
           timezone: 'America/Los_Angeles'
       open-pull-requests-limit: 5
+      ignore:
+          - dependency-name: '@spectrum-css/*'
       reviewers:
           - 'hunterloftis'
           - 'najikahalsema'
           - 'westbrook'
+
+    # This sets up a daily check for Spectrum CSS updates
+    # focused on the @spectrum-css/* packages
+    - package-ecosystem: 'npm'
+      directory: '/'
+      schedule:
+          interval: 'daily'
+      allow:
+          - dependency-name: '@spectrum-css/*'
+      labels: ['Spectrum CSS']
+      assignees:
+          - 'jnjosh'
+          - 'rajdeepc'
+          - 'pfulton'
+          - 'castastrophe'
