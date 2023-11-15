@@ -70,6 +70,9 @@ export class TextfieldBase extends ManageHelpText(
     @property()
     public label = '';
 
+    @property({ type: String, reflect: true })
+    public name: string | undefined;
+
     @property()
     public placeholder = '';
 
@@ -237,6 +240,7 @@ export class TextfieldBase extends ManageHelpText(
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
+                name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
                 aria-label=${this.label ||
                 this.appliedLabel ||
@@ -270,6 +274,7 @@ export class TextfieldBase extends ManageHelpText(
         return html`
             <!-- @ts-ignore -->
             <input
+                name=${ifDefined(this.name || undefined)}
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
                 aria-label=${this.label ||
