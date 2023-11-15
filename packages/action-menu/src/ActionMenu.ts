@@ -51,7 +51,7 @@ export class ActionMenu extends ObserveSlotPresence(
     @property({ type: String, reflect: true })
     public static: 'white' | 'black' | undefined = undefined;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public emphasized = false;
 
     protected override listRole: 'listbox' | 'menu' = 'menu';
