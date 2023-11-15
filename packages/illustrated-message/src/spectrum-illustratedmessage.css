@@ -85,7 +85,7 @@ governing permissions and limitations under the License.
     flex-direction: column;
     justify-content: center;
     max-inline-size: var(--mod-illustrated-message-content-maximum-width);
-    pointer-events: var(--mod-illustrated-message-pointer-events);
+    pointer-events: var(--mod-illustrated-message-pointer-events, auto);
     text-align: center;
 }
 #illustration {
@@ -180,7 +180,10 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-description-max-inline-size,
         var(--spectrum-illustrated-message-description-max-inline-size)
     );
-    pointer-events: var(--mod-illustrated-message-description-pointer-events);
+    pointer-events: var(
+        --mod-illustrated-message-description-pointer-events,
+        auto
+    );
     position: var(--mod-illustrated-message-description-position);
     z-index: var(--mod-illustrated-message-description-z-index);
 }

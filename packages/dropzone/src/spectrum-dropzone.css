@@ -82,7 +82,6 @@ governing permissions and limitations under the License.
         --spectrum-accent-visual-color
     );
     --spectrum-drop-zone-content-color: var(--spectrum-white);
-    --mod-illustrated-message-pointer-events: none;
     --mod-illustrated-message-content-maximum-width: var(
         --mod-drop-zone-content-maximum-width,
         var(--spectrum-drop-zone-content-maximum-width)
@@ -125,7 +124,6 @@ governing permissions and limitations under the License.
     );
     --mod-illustrated-message-description-position: relative;
     --mod-illustrated-message-description-z-index: 10;
-    --mod-illustrated-message-description-pointer-events: initial;
     --mod-illustrated-message-heading-to-description: 0;
     --mod-illustrated-message-description-font-family: var(
         --mod-drop-zone-body-font-family,
@@ -172,6 +170,10 @@ governing permissions and limitations under the License.
     );
 }
 :host {
+    background-color: var(
+        --mod-drop-zone-background-color,
+        var(--spectrum-drop-zone-background-color)
+    );
     background-size: cover;
     border-color: var(
         --mod-drop-zone-border-color,
@@ -195,25 +197,12 @@ governing permissions and limitations under the License.
                 var(--spectrum-drop-zone-border-width)
             )
     );
-    position: relative;
     text-align: center;
-}
-:host:after {
-    background-color: var(
-        --mod-drop-zone-background-color,
-        var(--spectrum-drop-zone-background-color)
-    );
-    block-size: 100%;
-    content: '';
-    inline-size: 100%;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    position: absolute;
 }
 :host([dragged]) {
     --mod-drop-zone-border-style: var(
         --mod-drop-zone-border-style--dragged,
-        solid
+        var(--mod-drop-zone-border-style-dragged, solid)
     );
     --mod-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
@@ -261,8 +250,8 @@ governing permissions and limitations under the License.
 }
 .spectrum-DropZone-content {
     align-items: center;
+    block-size: 100%;
     display: var(--mod-drop-zone-content-display, none);
-    height: 100%;
     justify-content: center;
     position: relative;
     z-index: 10;
@@ -317,10 +306,9 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     :host {
         --highcontrast-drop-zone-illustration-color: CanvasText;
-        --highcontrast-drop-zone-illustration-color-hover: Highlight;
         --highcontrast-drop-zone-border-color-hover: Highlight;
         --highcontrast-illustrated-message-illustration-color: var(
-            --highcontrast-drop-zone-illustration-color-hover
+            --highcontrast-drop-zone-illustration-color
         );
     }
 }
