@@ -15,17 +15,7 @@ updates:
           - 'najikahalsema'
           - 'westbrook'
 
-    # This sets up a daily check for Spectrum CSS updates
-    # focused on the @spectrum-css/* packages
-    - package-ecosystem: 'npm'
+    - package-ecosystem: 'github-actions'
       directory: '/'
       schedule:
-          interval: 'daily'
-      allow:
-          - dependency-name: '@spectrum-css/*'
-      labels: ['Spectrum CSS']
-      assignees:
-          - 'jnjosh'
-          - 'rajdeepc'
-          - 'pfulton'
-          - 'castastrophe'
+          interval: 'monthly'
