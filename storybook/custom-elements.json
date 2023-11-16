@@ -13570,6 +13570,171 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/illustrated-message/src/IllustratedMessage.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "IllustratedMessage",
+          "slots": [
+            {
+              "description": "The SVG that represents the illustration",
+              "name": ""
+            },
+            {
+              "description": "Headline for the message",
+              "name": "heading"
+            },
+            {
+              "description": "Description text for the illustration",
+              "name": "description"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "is",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "static": true,
+              "readonly": true,
+              "default": "'sp-illustrated-message'"
+            },
+            {
+              "kind": "field",
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "heading"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "VERSION",
+              "static": true,
+              "default": "version",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "tools/base/src/Base.js"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "heading"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "description"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-illustrated-message",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "IllustratedMessage",
+          "declaration": {
+            "name": "IllustratedMessage",
+            "module": "packages/illustrated-message/src/IllustratedMessage.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/infield-button/src/InfieldButton.js",
       "declarations": [
         {
@@ -13957,171 +14122,6 @@
           "declaration": {
             "name": "InfieldButton",
             "module": "packages/infield-button/src/InfieldButton.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/illustrated-message/src/IllustratedMessage.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "IllustratedMessage",
-          "slots": [
-            {
-              "description": "The SVG that represents the illustration",
-              "name": ""
-            },
-            {
-              "description": "Headline for the message",
-              "name": "heading"
-            },
-            {
-              "description": "Description text for the illustration",
-              "name": "description"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "is",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "static": true,
-              "readonly": true,
-              "default": "'sp-illustrated-message'"
-            },
-            {
-              "kind": "field",
-              "name": "heading",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "heading"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "VERSION",
-              "static": true,
-              "default": "version",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "tools/base/src/Base.js"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "heading",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "heading"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "description"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-illustrated-message",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "IllustratedMessage",
-          "declaration": {
-            "name": "IllustratedMessage",
-            "module": "packages/illustrated-message/src/IllustratedMessage.js"
           }
         }
       ]
