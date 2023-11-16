@@ -2129,7 +2129,27 @@ governing permissions and limitations under the License.
         --spectrum-gray-300
     );--system-spectrum-infieldbutton-spectrum-infield-button-background-color-key-focus:var(
         --spectrum-gray-200
-    )}:root{--system-spectrum-radio-button-border-color-default:var(
+    )}:root{--system-spectrum-picker-background-color-default:var(--spectrum-gray-75);--system-spectrum-picker-background-color-default-open:var(
+        --spectrum-gray-200
+    );--system-spectrum-picker-background-color-active:var(--spectrum-gray-300);--system-spectrum-picker-background-color-hover:var(--spectrum-gray-200);--system-spectrum-picker-background-color-hover-open:var(
+        --spectrum-gray-200
+    );--system-spectrum-picker-background-color-key-focus:var(
+        --spectrum-gray-200
+    );--system-spectrum-picker-border-color-default:var(--spectrum-gray-500);--system-spectrum-picker-border-color-default-open:var(
+        --spectrum-gray-500
+    );--system-spectrum-picker-border-color-hover:var(--spectrum-gray-600);--system-spectrum-picker-border-color-hover-open:var(--spectrum-gray-600);--system-spectrum-picker-border-color-active:var(--spectrum-gray-700);--system-spectrum-picker-border-color-key-focus:var(--spectrum-gray-600)}:root{--system-spectrum-pickerbutton-spectrum-picker-button-background-color:var(
+        --spectrum-gray-75
+    );--system-spectrum-pickerbutton-spectrum-picker-button-background-color-hover:var(
+        --spectrum-gray-200
+    );--system-spectrum-pickerbutton-spectrum-picker-button-background-color-down:var(
+        --spectrum-gray-300
+    );--system-spectrum-pickerbutton-spectrum-picker-button-background-color-key-focus:var(
+        --spectrum-gray-200
+    );--system-spectrum-pickerbutton-spectrum-picker-button-border-color:inherit;--system-spectrum-pickerbutton-spectrum-picker-button-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-pickerbutton-spectrum-picker-button-border-radius-rounded-sided:0;--system-spectrum-pickerbutton-spectrum-picker-button-border-radius-sided:0;--system-spectrum-pickerbutton-spectrum-picker-button-border-width:var(
+        --spectrum-border-width-100
+    )}:root{--system-spectrum-popover-border-width:var(--spectrum-border-width-100)}:root{--system-spectrum-radio-button-border-color-default:var(
         --spectrum-gray-600
     );--system-spectrum-radio-button-border-color-hover:var(--spectrum-gray-700);--system-spectrum-radio-button-border-color-down:var(--spectrum-gray-800);--system-spectrum-radio-button-border-color-focus:var(--spectrum-gray-700);--system-spectrum-radio-emphasized-button-checked-border-color-default:var(
         --spectrum-accent-color-900
@@ -2139,6 +2159,46 @@ governing permissions and limitations under the License.
         --spectrum-accent-color-1100
     );--system-spectrum-radio-emphasized-button-checked-border-color-focus:var(
         --spectrum-accent-color-1000
+    )}:root{--system-spectrum-search-border-radius:var(--spectrum-corner-radius-100);--system-spectrum-search-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-100
+    );--system-spectrum-search-border-color-default:var(--spectrum-gray-500);--system-spectrum-search-border-color-hover:var(--spectrum-gray-600);--system-spectrum-search-border-color-focus:var(--spectrum-gray-800);--system-spectrum-search-border-color-focus-hover:var(--spectrum-gray-900);--system-spectrum-search-border-color-key-focus:var(--spectrum-gray-900);--system-spectrum-search-sizes-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizes-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-75
+    );--system-spectrum-search-sizem-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizem-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-100
+    );--system-spectrum-search-sizel-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizel-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-200
+    );--system-spectrum-search-sizexl-border-radius:var(
+        --spectrum-corner-radius-100
+    );--system-spectrum-search-sizexl-edge-to-visual:var(
+        --spectrum-component-edge-to-visual-300
+    )}:root{--system-spectrum-slider-track-color:var(--spectrum-gray-300);--system-spectrum-slider-track-fill-color:var(--spectrum-gray-700);--system-spectrum-slider-ramp-track-color:var(--spectrum-gray-400);--system-spectrum-slider-ramp-track-color-disabled:var(
+        --spectrum-gray-200
+    );--system-spectrum-slider-handle-background-color:transparent;--system-spectrum-slider-handle-background-color-disabled:transparent;--system-spectrum-slider-ramp-handle-background-color:var(
+        --spectrum-gray-100
+    );--system-spectrum-slider-ticks-handle-background-color:var(
+        --spectrum-gray-100
+    );--system-spectrum-slider-handle-border-color:var(--spectrum-gray-700);--system-spectrum-slider-handle-disabled-background-color:var(
+        --spectrum-gray-100
+    );--system-spectrum-slider-tick-mark-color:var(--spectrum-gray-300);--system-spectrum-slider-handle-border-color-hover:var(
+        --spectrum-gray-800
+    );--system-spectrum-slider-handle-border-color-down:var(--spectrum-gray-800);--system-spectrum-slider-handle-border-color-key-focus:var(
+        --spectrum-gray-800
+    );--system-spectrum-slider-handle-focus-ring-color-key-focus:var(
+        --spectrum-focus-indicator-color
+    )}:root{--system-spectrum-stepper-border-width:var(--spectrum-border-width-100);--system-spectrum-stepper-buttons-border-style:none;--system-spectrum-stepper-buttons-border-width:0;--system-spectrum-stepper-buttons-background-color:var(--spectrum-gray-50);--system-spectrum-stepper-border-color:var(--spectrum-gray-500);--system-spectrum-stepper-border-color-hover:var(--spectrum-gray-600);--system-spectrum-stepper-border-color-focus:var(--spectrum-gray-800);--system-spectrum-stepper-border-color-focus-hover:var(
+        --spectrum-gray-800
+    );--system-spectrum-stepper-border-color-keyboard-focus:var(
+        --spectrum-gray-900
+    );--system-spectrum-stepper-button-border-radius-reset:0px;--system-spectrum-stepper-button-background-color-focus:var(
+        --spectrum-gray-300
+    );--system-spectrum-stepper-button-background-color-keyboard-focus:var(
+        --spectrum-gray-200
     )}:root{--system-spectrum-switch-handle-border-color-default:var(
         --spectrum-gray-600
     );--system-spectrum-switch-handle-border-color-hover:var(
@@ -2153,7 +2213,7 @@ governing permissions and limitations under the License.
         --spectrum-gray-900
     );--system-spectrum-switch-handle-border-color-selected-focus:var(
         --spectrum-gray-800
-    )}:root{--system-spectrum-tag-border-color:var(--spectrum-gray-700);--system-spectrum-tag-border-color-hover:var(--spectrum-gray-800);--system-spectrum-tag-border-color-active:var(--spectrum-gray-900);--system-spectrum-tag-border-color-focus:var(--spectrum-gray-800);--system-spectrum-tag-size-small-corner-radius:var(
+    )}:root{--system-spectrum-tabs-font-weight:var(--spectrum-default-font-weight)}:root{--system-spectrum-tag-border-color:var(--spectrum-gray-700);--system-spectrum-tag-border-color-hover:var(--spectrum-gray-800);--system-spectrum-tag-border-color-active:var(--spectrum-gray-900);--system-spectrum-tag-border-color-focus:var(--spectrum-gray-800);--system-spectrum-tag-size-small-corner-radius:var(
         --spectrum-corner-radius-100
     );--system-spectrum-tag-size-medium-corner-radius:var(
         --spectrum-corner-radius-100
@@ -2195,74 +2255,14 @@ governing permissions and limitations under the License.
         --spectrum-component-edge-to-text-200
     );--system-spectrum-tag-size-large-clear-button-spacing-inline-end:var(
         --spectrum-component-edge-to-visual-200
-    )}:root{--system-spectrum-toast-background-color-default:var(
-        --spectrum-neutral-subdued-background-color-default
-    )}:root{--system-spectrum-tooltip-backgound-color-default-neutral:var(
-        --spectrum-neutral-subdued-background-color-default
-    )}:root{--system-spectrum-picker-background-color-default:var(--spectrum-gray-75);--system-spectrum-picker-background-color-default-open:var(
-        --spectrum-gray-200
-    );--system-spectrum-picker-background-color-active:var(--spectrum-gray-300);--system-spectrum-picker-background-color-hover:var(--spectrum-gray-200);--system-spectrum-picker-background-color-hover-open:var(
-        --spectrum-gray-200
-    );--system-spectrum-picker-background-color-key-focus:var(
-        --spectrum-gray-200
-    );--system-spectrum-picker-border-color-default:var(--spectrum-gray-500);--system-spectrum-picker-border-color-default-open:var(
-        --spectrum-gray-500
-    );--system-spectrum-picker-border-color-hover:var(--spectrum-gray-600);--system-spectrum-picker-border-color-hover-open:var(--spectrum-gray-600);--system-spectrum-picker-border-color-active:var(--spectrum-gray-700);--system-spectrum-picker-border-color-key-focus:var(--spectrum-gray-600)}:root{--system-spectrum-slider-track-color:var(--spectrum-gray-300);--system-spectrum-slider-track-fill-color:var(--spectrum-gray-700);--system-spectrum-slider-ramp-track-color:var(--spectrum-gray-400);--system-spectrum-slider-ramp-track-color-disabled:var(
-        --spectrum-gray-200
-    );--system-spectrum-slider-handle-background-color:transparent;--system-spectrum-slider-handle-background-color-disabled:transparent;--system-spectrum-slider-ramp-handle-background-color:var(
-        --spectrum-gray-100
-    );--system-spectrum-slider-ticks-handle-background-color:var(
-        --spectrum-gray-100
-    );--system-spectrum-slider-handle-border-color:var(--spectrum-gray-700);--system-spectrum-slider-handle-disabled-background-color:var(
-        --spectrum-gray-100
-    );--system-spectrum-slider-tick-mark-color:var(--spectrum-gray-300);--system-spectrum-slider-handle-border-color-hover:var(
-        --spectrum-gray-800
-    );--system-spectrum-slider-handle-border-color-down:var(--spectrum-gray-800);--system-spectrum-slider-handle-border-color-key-focus:var(
-        --spectrum-gray-800
-    );--system-spectrum-slider-handle-focus-ring-color-key-focus:var(
-        --spectrum-focus-indicator-color
-    )}:root{--system-spectrum-popover-border-width:var(--spectrum-border-width-100)}:root{--system-spectrum-stepper-border-width:var(--spectrum-border-width-100);--system-spectrum-stepper-buttons-border-style:none;--system-spectrum-stepper-buttons-border-width:0;--system-spectrum-stepper-buttons-background-color:var(--spectrum-gray-50);--system-spectrum-stepper-border-color:var(--spectrum-gray-500);--system-spectrum-stepper-border-color-hover:var(--spectrum-gray-600);--system-spectrum-stepper-border-color-focus:var(--spectrum-gray-800);--system-spectrum-stepper-border-color-focus-hover:var(
-        --spectrum-gray-800
-    );--system-spectrum-stepper-border-color-keyboard-focus:var(
-        --spectrum-gray-900
-    );--system-spectrum-stepper-button-border-radius-reset:0px;--system-spectrum-stepper-button-background-color-focus:var(
-        --spectrum-gray-300
-    );--system-spectrum-stepper-button-background-color-keyboard-focus:var(
-        --spectrum-gray-200
     )}:root{--system-spectrum-textfield-border-color:var(--spectrum-gray-500);--system-spectrum-textfield-border-color-hover:var(--spectrum-gray-600);--system-spectrum-textfield-border-color-focus:var(--spectrum-gray-800);--system-spectrum-textfield-border-color-focus-hover:var(
         --spectrum-gray-900
     );--system-spectrum-textfield-border-color-keyboard-focus:var(
         --spectrum-gray-900
-    );--system-spectrum-textfield-border-width:var(--spectrum-border-width-100)}:root{--system-spectrum-search-border-radius:var(--spectrum-corner-radius-100);--system-spectrum-search-edge-to-visual:var(
-        --spectrum-component-edge-to-visual-100
-    );--system-spectrum-search-border-color-default:var(--spectrum-gray-500);--system-spectrum-search-border-color-hover:var(--spectrum-gray-600);--system-spectrum-search-border-color-focus:var(--spectrum-gray-800);--system-spectrum-search-border-color-focus-hover:var(--spectrum-gray-900);--system-spectrum-search-border-color-key-focus:var(--spectrum-gray-900);--system-spectrum-search-sizes-border-radius:var(
-        --spectrum-corner-radius-100
-    );--system-spectrum-search-sizes-edge-to-visual:var(
-        --spectrum-component-edge-to-visual-75
-    );--system-spectrum-search-sizem-border-radius:var(
-        --spectrum-corner-radius-100
-    );--system-spectrum-search-sizem-edge-to-visual:var(
-        --spectrum-component-edge-to-visual-100
-    );--system-spectrum-search-sizel-border-radius:var(
-        --spectrum-corner-radius-100
-    );--system-spectrum-search-sizel-edge-to-visual:var(
-        --spectrum-component-edge-to-visual-200
-    );--system-spectrum-search-sizexl-border-radius:var(
-        --spectrum-corner-radius-100
-    );--system-spectrum-search-sizexl-edge-to-visual:var(
-        --spectrum-component-edge-to-visual-300
-    )}:root{--system-spectrum-tabs-font-weight:var(--spectrum-default-font-weight)}:root{--system-spectrum-pickerbutton-spectrum-picker-button-background-color:var(
-        --spectrum-gray-75
-    );--system-spectrum-pickerbutton-spectrum-picker-button-background-color-hover:var(
-        --spectrum-gray-200
-    );--system-spectrum-pickerbutton-spectrum-picker-button-background-color-down:var(
-        --spectrum-gray-300
-    );--system-spectrum-pickerbutton-spectrum-picker-button-background-color-key-focus:var(
-        --spectrum-gray-200
-    );--system-spectrum-pickerbutton-spectrum-picker-button-border-color:inherit;--system-spectrum-pickerbutton-spectrum-picker-button-border-radius:var(
-        --spectrum-corner-radius-100
-    );--system-spectrum-pickerbutton-spectrum-picker-button-border-radius-rounded-sided:0;--system-spectrum-pickerbutton-spectrum-picker-button-border-radius-sided:0;--system-spectrum-pickerbutton-spectrum-picker-button-border-width:var(
-        --spectrum-border-width-100
+    );--system-spectrum-textfield-border-width:var(--spectrum-border-width-100)}:root{--system-spectrum-toast-background-color-default:var(
+        --spectrum-neutral-subdued-background-color-default
+    )}:root{--system-spectrum-tooltip-backgound-color-default-neutral:var(
+        --spectrum-neutral-subdued-background-color-default
     )}:root{--system:spectrum;--spectrum-animation-linear:cubic-bezier(0,0,1,1);--spectrum-animation-duration-0:0ms;--spectrum-animation-duration-100:130ms;--spectrum-animation-duration-200:160ms;--spectrum-animation-duration-300:190ms;--spectrum-animation-duration-400:220ms;--spectrum-animation-duration-500:250ms;--spectrum-animation-duration-600:300ms;--spectrum-animation-duration-700:350ms;--spectrum-animation-duration-800:400ms;--spectrum-animation-duration-900:450ms;--spectrum-animation-duration-1000:500ms;--spectrum-animation-duration-2000:1000ms;--spectrum-animation-duration-4000:2000ms;--spectrum-animation-duration-6000:3000ms;--spectrum-animation-ease-in-out:cubic-bezier(0.45,0,0.4,1);--spectrum-animation-ease-in:cubic-bezier(0.5,0,1,1);--spectrum-animation-ease-out:cubic-bezier(0,0,0.4,1);--spectrum-animation-ease-linear:cubic-bezier(0,0,1,1);--spectrum-sans-font-family-stack:adobe-clean,var(--spectrum-sans-serif-font-family),"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;--spectrum-sans-serif-font:var(--spectrum-sans-font-family-stack);--spectrum-serif-font-family-stack:adobe-clean-serif,var(--spectrum-serif-font-family),"Source Serif Pro",Georgia,serif;--spectrum-serif-font:var(--spectrum-serif-font-family-stack);--spectrum-code-font-family-stack:"Source Code Pro",Monaco,monospace;--spectrum-cjk-font-family-stack:adobe-clean-han-japanese,var(--spectrum-cjk-font-family),sans-serif;--spectrum-cjk-font:var(--spectrum-code-font-family-stack);
 
     /* static white / black background color for docs containers */--spectrum-docs-static-white-background-color-rgb:15,121,125;--spectrum-docs-static-white-background-color:rgba(var(--spectrum-docs-static-white-background-color-rgb));--spectrum-docs-static-black-background-color-rgb:206,247,243;--spectrum-docs-static-black-background-color:rgba(var(--spectrum-docs-static-black-background-color-rgb))}
