@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
     --spectrum-card-title-padding-right: var(--spectrum-spacing-400);
     --spectrum-card-content-margin-top: var(--spectrum-spacing-100);
     --spectrum-card-content-margin-bottom: var(--spectrum-spacing-300);
-    --spectrum-card-footer-margin-top: var(--spectrum-spacing-100);
+    --spectrum-card-footer-padding-top: var(--spectrum-spacing-100);
     --spectrum-card-subtitle-padding-right: var(--spectrum-spacing-100);
     --spectrum-card-border-width: var(--spectrum-border-width-100);
     --spectrum-card-corner-radius: var(--spectrum-corner-radius-100);
@@ -356,21 +356,33 @@ governing permissions and limitations under the License.
     );
 }
 .body {
-    padding-block-end: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-block-end: var(
+        --mod-card-body-padding-block-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
     padding-block-start: var(
-        --mod-card-title-padding-top,
-        var(--spectrum-card-title-padding-top)
+        --mod-card-body-padding-block-start,
+        var(
+            --mod-card-title-padding-top,
+            var(--spectrum-card-title-padding-top)
+        )
     );
-    padding-inline-end: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-inline-end: var(
+        --mod-card-body-padding-inline-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
-    padding-inline-start: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-inline-start: var(
+        --mod-card-body-padding-inline-start,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
 }
 #preview {
@@ -479,30 +491,42 @@ governing permissions and limitations under the License.
         --mod-card-body-line-height,
         var(--spectrum-card-body-line-height)
     );
-    margin-block-start: calc(
-        (
-                var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+    margin-block-start: var(
+        --mod-card-footer-margin-block-start,
+        calc(
+            (
                     var(
-                        --mod-card-content-margin-bottom,
-                        var(--spectrum-card-content-margin-bottom)
-                    )
-            ) * -1
+                            --mod-card-body-spacing,
+                            var(--spectrum-card-body-spacing)
+                        ) -
+                        var(
+                            --mod-card-content-margin-bottom,
+                            var(--spectrum-card-content-margin-bottom)
+                        )
+                ) * -1
+        )
     );
     margin-inline-end: var(
-        --mod-card-body-spacing,
-        var(--spectrum-card-body-spacing)
+        --mod-card-footer-margin-inline-end,
+        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing))
     );
     margin-inline-start: var(
-        --mod-card-body-spacing,
-        var(--spectrum-card-body-spacing)
+        --mod-card-footer-margin-inline-start,
+        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing))
     );
-    padding-block-end: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-block-end: var(
+        --mod-card-footer-padding-block-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
     padding-block-start: var(
-        --mod-card-footer-margin-top,
-        var(--spectrum-card-footer-margin-top)
+        --mod-card-footer-padding-block-start,
+        var(
+            --mod-card-footer-margin-top,
+            var(--spectrum-card-footer-padding-top)
+        )
     );
 }
 .header {

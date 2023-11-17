@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **number-field:** update display value on scroll and arrow up/down ([fc59a18](https://github.com/adobe/spectrum-web-components/commit/fc59a18c73bb9b63f319d006713a5b5d15778cca))
+
 ## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
 
 ### Bug Fixes

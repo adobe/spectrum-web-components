@@ -68,7 +68,11 @@ class OverlayStack {
             const inStack = composedPath.find(
                 (el) => el === overlay || el === overlay?.triggerElement
             );
-            return !inStack && !overlay.shouldPreventClose();
+            return (
+                !inStack &&
+                !overlay.shouldPreventClose() &&
+                overlay.type !== 'manual'
+            );
         }) as Overlay[];
         nonAncestorOverlays.reverse();
         nonAncestorOverlays.forEach((overlay) => {
