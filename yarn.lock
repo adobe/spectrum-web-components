@@ -24,12 +24,11 @@
     ssri "^8.0.1"
     ws "^8.13.0"
 
-"@11ty/eleventy-plugin-syntaxhighlight@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@11ty/eleventy-plugin-syntaxhighlight/-/eleventy-plugin-syntaxhighlight-4.2.0.tgz#f0c2d059ce4daabce06af4ae4c48f0084c7c9f20"
-  integrity sha512-Hf/26vyLvkAM1RCCoSNRHhWWhTOiBxJj4RMaerPXgWEGN9NEio2Xo7lCV527A/dCJN96gIWzjfHqTIk396zf6g==
+"@11ty/eleventy-plugin-syntaxhighlight@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy-plugin-syntaxhighlight/-/eleventy-plugin-syntaxhighlight-5.0.0.tgz#dc1c43427624a5326f5dda0fe8fbe3805225fdb8"
+  integrity sha512-y9BUmP1GofmbJgxM1+ky/UpFCpD8JSOeLeKItUs0WApgnrHk9haHziW7lS86lbArX5SiCVo4zTTw9x53gvRCaA==
   dependencies:
-    linkedom "^0.14.19"
     prismjs "^1.29.0"
 
 "@11ty/eleventy-utils@^1.0.1":
@@ -6331,10 +6330,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.25.tgz#9d15c4f9cac1837499bec3a57e41c7ea44a5f831"
   integrity sha512-9eXYHLGLSSL1c7d9IbxN0irBA3qqfqygilw+wuaOuIhg0V7gBzH5fw6h81Zev3nWNZnOW2eAjfOXi+QJde0lXg==
 
-"@spectrum-css/dropzone@^5.0.21":
-  version "5.0.21"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.21.tgz#770aba6be6ff20e0fe1cec9c5160c9f718af8daf"
-  integrity sha512-I6Hrov+zC3YlPBcK3kwu9KFGZIrXjonVWRUdJ94Pih0iKdnb0IfASb4I0V/pTyoL2hZ4WGtcntot/8yAn0a3VA==
+"@spectrum-css/dropzone@^5.0.29":
+  version "5.0.29"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.29.tgz#009554fc8290271d5f65685b748914839da1f6cb"
+  integrity sha512-RsdQNRiZWMuswfH8jDsFJ92qHQemcNaLaDhqvOqGyjI8zSrijPL6TEDpfUWjuLDqtr95foAQJv1bbjXTYCKZEg==
 
 "@spectrum-css/expressvars@^3.0.9":
   version "3.0.9"
@@ -6361,10 +6360,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-4.0.3.tgz#a2b2e7f267970439787f4b5269982b3096e4a7d0"
   integrity sha512-SV1UQJtmBg1JJ4zzgcFqqpFZZzVvJhNNJvM34PUWdHnj4YjUKGIxSCaqdEFl0LguNcgjSM3Be2P5ZNVkjwcMUA==
 
-"@spectrum-css/illustratedmessage@^6.0.21":
-  version "6.0.26"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-6.0.26.tgz#c83556159f158dc8455570178849c6e83e556746"
-  integrity sha512-Hmaz7qnDr2XNGtw3DlnKhtR2a8WZM1pI1a5069Aes/iOQy5FaEY+z6E/tBKfnwkQBRkJVWU2pLn+VllJFxwJ0Q==
+"@spectrum-css/illustratedmessage@^6.0.29":
+  version "6.0.29"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-6.0.29.tgz#37fbf7d7fa394ee4314f4bc0e8391d120a9369bd"
+  integrity sha512-xtA33zkjO6HL+YN7vNL7V/Q/WVaZF3QbG+B4/p92NSDpCqF3Rwp74WEv4pailpUtMP+DxgxoUWEqDqOOHb5WeQ==
 
 "@spectrum-css/infieldbutton@^4.0.1":
   version "4.0.1"
@@ -12611,11 +12610,6 @@ cssom@^0.4.4:
   resolved "https://registry.yarnpkg.com/cssom/-/cssom-0.4.4.tgz#5a66cf93d2d0b661d80bf6a44fb65f5c2e4e0a10"
   integrity sha512-p3pvU7r1MyyqbTk+WbNJIgJjG2VmTIaB10rI93LzVPrmDJKkzKYMtxxyAvQXR/NS6otuzveI7+7BBq3SjBS2mw==
 
-cssom@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/cssom/-/cssom-0.5.0.tgz#d254fa92cd8b6fbd83811b9fbaed34663cc17c36"
-  integrity sha512-iKuQcq+NdHqlAcwUY0o/HL69XQrUaQdMjmStJ8JFmUaiiQErlhrmuigkg/CU4E2J0IyUKUrMAgl36TvN67MqTw==
-
 cssom@~0.3.6:
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/cssom/-/cssom-0.3.8.tgz#9f1276f5b2b463f2114d3f2c75250af8c1a36f4a"
@@ -16183,11 +16177,6 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-html-escaper@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-3.0.3.tgz#4d336674652beb1dcbc29ef6b6ba7f6be6fdfed6"
-  integrity sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==
-
 html-minifier-terser@^5.0.0, html-minifier-terser@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/html-minifier-terser/-/html-minifier-terser-5.1.1.tgz#922e96f1f3bb60832c2634b79884096389b1f054"
@@ -18895,17 +18884,6 @@ lines-and-columns@^2.0.2, lines-and-columns@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-2.0.3.tgz#b2f0badedb556b747020ab8ea7f0373e22efac1b"
   integrity sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==
-
-linkedom@^0.14.19:
-  version "0.14.19"
-  resolved "https://registry.yarnpkg.com/linkedom/-/linkedom-0.14.19.tgz#a8e9b91af26d5c631b5b3d21614cef1db8a56fb7"
-  integrity sha512-sFNkQZlKBWpEaAcbsDIghTLE0hHbyvS6dZuM7IH+KTM09GaQ772PtDZAuFlN0oFgyAjUj8XS9FpoWSLmBjl8MA==
-  dependencies:
-    css-select "^5.1.0"
-    cssom "^0.5.0"
-    html-escaper "^3.0.3"
-    htmlparser2 "^8.0.1"
-    uhyphen "^0.1.0"
 
 linkify-it@^4.0.1:
   version "4.0.1"
@@ -27678,11 +27656,6 @@ uglifycss@^0.0.29:
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/uglifycss/-/uglifycss-0.0.29.tgz#abe49531155d146e75dd2fdf933d371bc1180054"
   integrity sha512-J2SQ2QLjiknNGbNdScaNZsXgmMGI0kYNrXaDlr4obnPW9ni1jljb1NeEVWAiTgZ8z+EBWP2ozfT9vpy03rjlMQ==
-
-uhyphen@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/uhyphen/-/uhyphen-0.1.0.tgz#3cc22afa790daa802b9f6789f3583108d5b4a08c"
-  integrity sha512-o0QVGuFg24FK765Qdd5kk0zU/U4dEsCtN/GSiwNI9i8xsSVtjIAOdTaVhLwZ1nrbWxFVMxNDDl+9fednsOMsBw==
 
 uid-safe@2.1.5:
   version "2.1.5"
