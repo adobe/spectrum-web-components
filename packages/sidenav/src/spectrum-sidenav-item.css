@@ -47,6 +47,12 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-start-to-content-with-icon-third-level: var(
         --spectrum-side-navigation-with-icon-third-level-edge-to-text
     );
+    --spectrum-sidenav-heading-top-margin: var(
+        --spectrum-side-navigation-item-to-header
+    );
+    --spectrum-sidenav-heading-bottom-margin: var(
+        --spectrum-side-navigation-header-to-item
+    );
     --spectrum-sidenav-background-disabled: transparent;
     --spectrum-sidenav-background-default: transparent;
     --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
@@ -134,6 +140,24 @@ governing permissions and limitations under the License.
     list-style-type: none;
     margin-inline: 0;
 }
+:host([disabled]) #item-link {
+    background-color: var(
+        --highcontrast-sidenav-background-disabled,
+        var(
+            --mod-sidenav-background-disabled,
+            var(--spectrum-sidenav-background-disabled)
+        )
+    );
+    color: var(
+        --highcontrast-sidenav-content-disabled-color,
+        var(
+            --mod-sidenav-content-disabled-color,
+            var(--spectrum-sidenav-content-disabled-color)
+        )
+    );
+    cursor: default;
+    pointer-events: none;
+}
 :host([selected]) #item-link {
     background-color: var(
         --highcontrast-sidenav-item-background-default-selected,
@@ -203,24 +227,6 @@ governing permissions and limitations under the License.
         --mod-sidenav-content-color-key-focus-selected,
         var(--spectrum-sidenav-content-color-key-focus-selected)
     );
-}
-:host([disabled]) #item-link {
-    background-color: var(
-        --highcontrast-sidenav-background-disabled,
-        var(
-            --mod-sidenav-background-disabled,
-            var(--spectrum-sidenav-background-disabled)
-        )
-    );
-    color: var(
-        --highcontrast-sidenav-content-disabled-color,
-        var(
-            --mod-sidenav-content-disabled-color,
-            var(--spectrum-sidenav-content-disabled-color)
-        )
-    );
-    cursor: default;
-    pointer-events: none;
 }
 #item-link {
     background-color: var(
@@ -303,11 +309,20 @@ governing permissions and limitations under the License.
     );
 }
 #item-link ::slotted([slot='icon']) {
-    block-size: var(--spectrum-sidenav-icon-size);
+    block-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
     flex-shrink: 0;
-    inline-size: var(--spectrum-sidenav-icon-size);
-    margin-block-start: var(--spectrum-sidenav-top-to-icon);
-    margin-inline-end: var(--spectrum-sidenav-icon-spacing);
+    inline-size: var(
+        --mod-sidenav-icon-size,
+        var(--spectrum-sidenav-icon-size)
+    );
+    margin-block-start: var(
+        --mod-sidenav-top-to-icon,
+        var(--spectrum-sidenav-top-to-icon)
+    );
+    margin-inline-end: var(
+        --mod-sidenav-icon-spacing,
+        var(--spectrum-sidenav-icon-spacing)
+    );
 }
 #item-link:hover {
     background-color: var(

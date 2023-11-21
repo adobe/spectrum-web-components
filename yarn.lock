@@ -6430,10 +6430,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/search/-/search-6.0.20.tgz#e0e9a3811e33c6d446a94a342c22635bae6a745c"
   integrity sha512-5o7kMs6Y9BSciQRR2xjPSNNvy8PgR6i0NkrS9f1B5EmBlN9C4H1DxCDSaw1DrwhfmBuHDWcrju0xsENOVuctDg==
 
-"@spectrum-css/sidenav@^4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-4.0.9.tgz#d1b14754e57c18ae8ad8b7f5a82c67a711a41f54"
-  integrity sha512-a2TAN0/CzmW2fOJ00SPgjL/pyFJ2oI+NnSEyoMfI+G+EBhzrg1ecjsmsihZjxb5cUseNtdS4T/nPG/XF2CFziQ==
+"@spectrum-css/sidenav@^4.0.17":
+  version "4.0.17"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-4.0.17.tgz#700a6e36413956709e8a44fe81fa95d74eed70b5"
+  integrity sha512-lJK5xjJXNG8i55HIQy6+7ZIf2geog/wd9YMhjBvBk+fY4YLVAiXEUz2WCIDrkgtAwU3ynnajDmrlGWzPxJSv7g==
 
 "@spectrum-css/slider@^4.1.14":
   version "4.1.14"
