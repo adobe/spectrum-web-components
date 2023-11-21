@@ -139,6 +139,5 @@ governing permissions and limitations under the License.
 }
 
 :host([label-visibility='none']) #track {
-    grid-area: number;
-    align-self: flex-end;
+    align-self: center;
 }
