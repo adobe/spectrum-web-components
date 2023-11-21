@@ -115,7 +115,7 @@ export function runSplitButtonTests(
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
     });
-    it('loads splitbutton accessibly and checks labels', async () => {
+    it('loads splitbutton accessibly and checks labels', async function () {
         const test = await fixture<HTMLDivElement>(html`
             <div>
                 <sp-split-button>${deprecatedMenu()}</sp-split-button>
