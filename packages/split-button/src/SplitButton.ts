@@ -125,7 +125,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
         const buttons: TemplateResult[] = [
             html`
                 <sp-button
-                    aria-label=${ifDefined(this.label || undefined)}
+                    aria-label=${ifDefined(
+                        this.label || this.selectedItem?.itemText || undefined
+                    )}
                     id="button"
                     class="button ${this.variant}"
                     @click=${this.passClick}
