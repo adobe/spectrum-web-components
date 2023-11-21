@@ -6421,9 +6421,9 @@
   integrity sha512-n/9UdXyMKJKv5a8rH6V2ovK/H2/wIQaE4cl5NfFkeyk+XLWNAQ4s0qA/LDTNXxbU5QHXcLyrO9doCFBeGa9bVw==
 
 "@spectrum-css/radio@^8.0.8":
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-8.0.8.tgz#6159690e0d7b34ada5d68c5ae244ecf8371f614f"
-  integrity sha512-FORAwx4UlWl9TlB3nQPWElAX1Rvc0cG1p91w219dvJoRZmDFrabg1RbZv98RPbbj2CNA+SZMAJQgbGxTGU78Lg==
+  version "8.0.16"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-8.0.16.tgz#58a6480703ba45dda825f73c31e5b3ed0e92298c"
+  integrity sha512-65a8fxc1CBWtAgP77BZ5DBkHcxXW5ZjZFzC3zhUarQKZ3UTcYDwlKshfUvCBCEUqR+alHVikVQLRRE0oZLIg8w==
 
 "@spectrum-css/search@^6.0.20":
   version "6.0.20"
