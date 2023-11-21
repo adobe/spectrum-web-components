@@ -160,7 +160,7 @@
     --spectrum-alert-dialog-description-size: var(--spectrum-body-size-xs);
     --spectrum-opacity-checkerboard-square-size: 10px;
     --spectrum-contextual-help-title-size: var(--spectrum-heading-size-xxs);
-    --spectrum-contextual-help-body-size: var(--spectrum-heading-size-xs);
+    --spectrum-contextual-help-body-size: var(--spectrum-body-size-xs);
     --spectrum-breadcrumbs-height-multiline: 84px;
     --spectrum-breadcrumbs-top-to-text: 17px;
     --spectrum-breadcrumbs-top-to-text-compact: 16px;
@@ -362,7 +362,8 @@
     --spectrum-side-navigation-with-icon-second-level-edge-to-text: 62px;
     --spectrum-side-navigation-with-icon-third-level-edge-to-text: 77px;
     --spectrum-side-navigation-item-to-item: 5px;
-    --spectrum-side-navigation-item-to-header: 20px;
+    --spectrum-side-navigation-item-to-header: 30px;
+    --spectrum-side-navigation-header-to-item: 10px;
     --spectrum-side-navigation-bottom-to-text: 10px;
     --spectrum-tray-top-to-content-area: 5px;
     --spectrum-text-to-visual-50: 8px;
@@ -481,10 +482,10 @@
     --spectrum-disclosure-indicator-top-to-disclosure-icon-medium: 13px;
     --spectrum-disclosure-indicator-top-to-disclosure-icon-large: 17px;
     --spectrum-disclosure-indicator-top-to-disclosure-icon-extra-large: 22px;
-    --spectrum-navigational-indicator-top-to-back-icon-small: 9px;
-    --spectrum-navigational-indicator-top-to-back-icon-medium: 13px;
-    --spectrum-navigational-indicator-top-to-back-icon-large: 17px;
-    --spectrum-navigational-indicator-top-to-back-icon-extra-large: 22px;
+    --spectrum-navigational-indicator-top-to-back-icon-small: 7px;
+    --spectrum-navigational-indicator-top-to-back-icon-medium: 12px;
+    --spectrum-navigational-indicator-top-to-back-icon-large: 16px;
+    --spectrum-navigational-indicator-top-to-back-icon-extra-large: 19px;
     --spectrum-color-control-track-width: 30px;
     --spectrum-font-size-50: 13px;
     --spectrum-font-size-75: 15px;
