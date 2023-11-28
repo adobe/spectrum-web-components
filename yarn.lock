@@ -6801,9 +6801,9 @@
   integrity sha512-cmH7W0mQqZ5DczF4AtRnzOPD3yGlD8A38Hz+FLBQSlpQ7rtsyf6k9uJ42YztFGdwUkZUwh3DPFsMy0UOtgP2hQ==
 
 "@spectrum-css/switch@^4.0.7":
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-4.0.7.tgz#2357eac1a833ceda17da7ba436f5bb84beacac17"
-  integrity sha512-BVuMWQ6LG/lqRQjqct1lHx/AhGz/ZXTgdaW5RwwEHYXGdNqBX3p5K/49vBgm6waFyiquczJDYGVmnY0T5X/8ww==
+  version "4.0.15"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-4.0.15.tgz#306b41f1b36871bb2b7d64bfafd2ad337fb53770"
+  integrity sha512-Kr4FXrVrV2gXZMLFJfxrxaWKYjlYR1SJ1vY0JyzOmCDLg8H10+ux9/Fbd7zaiuuj6T1+YmST4EyYRBOkvthLuA==
 
 "@spectrum-css/table@^5.0.1":
   version "5.0.5"
