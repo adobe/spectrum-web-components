@@ -205,8 +205,12 @@ export class InputSegments extends TextfieldBase {
 
     protected override renderField(): TemplateResult {
         return html`
-            ${this.renderStateIcons()}
+            ${this.renderStateIcons()} ${this.renderInputContent()}
+        `;
+    }
 
+    public renderInputContent(): TemplateResult {
+        return html`
             <div class="input">
                 <div
                     role="presentation"
@@ -243,11 +247,11 @@ export class InputSegments extends TextfieldBase {
 
     public renderEditableSegment(segment: Segment): TemplateResult {
         const isActive = !this.disabled && !this.readonly;
-
-        const isPlaceholderVisible = segment.value === undefined;
+        const usePlaceholder = segment.value === undefined;
 
         const segmentClasses: ClassInfo = {
-            'is-placeholder': isPlaceholderVisible,
+            'editable-segment': true,
+            'is-placeholder': usePlaceholder,
         };
 
         const segmentStyles: StyleInfo = {
@@ -257,10 +261,8 @@ export class InputSegments extends TextfieldBase {
         };
 
         /**
-         * TODO: Include ARIA attributes for editable segments
-         * TODO: Use `@input`/`@beforeinput` events to handle data input/content cleanup
-         * TODO: Move `handleKeydown()` call to a cache so that it doesn't cycle on the binding in each render pass
-         * TODO: Rename `handleKeydown()` to match the new events used
+         * TODO: Include/review ARIA attributes for editable segments
+         * TODO: Move `handle` functions call to a cache so that it doesn't cycle on the binding in each render pass
          */
         return html`
             <div
@@ -268,15 +270,21 @@ export class InputSegments extends TextfieldBase {
                 contenteditable=${ifDefined(isActive ? true : undefined)}
                 inputmode=${ifDefined(isActive ? 'numeric' : undefined)}
                 tabindex=${ifDefined(isActive ? '0' : undefined)}
-                class="editable-segment ${classMap(segmentClasses)}"
+                class=${classMap(segmentClasses)}
                 style=${styleMap(segmentStyles)}
                 data-testid=${segment.type}
                 @keydown=${(event: KeyboardEvent) => {
                     this.handleKeydown(segment, event);
                 }}
+                @beforeinput=${(event: InputEvent) => {
+                    this.handleBeforeInput(segment, event);
+                }}
+                @input=${(event: InputEvent) => {
+                    this.handleInputEvent(segment, event);
+                }}
             >
                 ${when(
-                    isPlaceholderVisible,
+                    usePlaceholder,
                     () => html`
                         <span aria-hidden="true" class="placeholder">
                             ${segment.placeholder}
@@ -289,31 +297,31 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Indicates the parent component when a segment is focused, this way we can apply all styles to the "fake" input
+     * Indicates the parent component when a segment is focused, this way we can apply all styles to the “fake” input
      * (wrapper) as if it were a standard input
      */
-    public handleFocusIn(): void {
+    protected handleFocusIn(): void {
         super.onFocus();
     }
 
     /**
      * Indicates the parent component when a segment is blurred, this way we can remove all styles that were applied to
-     * the "fake" input (wrapper) while one of the segments was focused
+     * the “fake” input (wrapper) while one of the segments was focused
      */
-    public handleFocusOut(): void {
+    protected handleFocusOut(): void {
         super.onBlur();
     }
 
     /**
      * Detects the pressed key and performs the correct action accordingly
      *
-     * @param segment - Segment on which the event was fired
-     * @param event - Event details
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
      */
-    public handleKeydown(segment: Segment, event: KeyboardEvent): void {
+    protected handleKeydown(segment: Segment, event: KeyboardEvent): void {
         switch (event.code) {
             case 'ArrowUp': {
-                this.incrementValue(segment);
+                this.incrementValue(segment, event);
                 break;
             }
             case 'ArrowRight': {
@@ -321,65 +329,153 @@ export class InputSegments extends TextfieldBase {
                 break;
             }
             case 'ArrowDown': {
-                this.decrementValue(segment);
+                this.decrementValue(segment, event);
                 break;
             }
             case 'ArrowLeft': {
                 this.focusPreviousSegment(event);
                 break;
             }
-            default: {
-                // To determine what character corresponds with the key event, we use the `KeyboardEvent.key` property
-                const key = event.key;
-                const isNumberKey = this.numberParser.isValidPartialNumber(key);
-                const isClearKey = ['Backspace', 'Delete'].includes(key);
-                const isAllowedKey = ['Tab'].includes(key);
+        }
 
-                if (isNumberKey) {
-                    this.handleTypedValue(segment, event);
-                }
+        // The “AM/PM” segment value can be changed by pressing the “A” (for “AM”) or “P” (for “PM”) keys
+        if (segment.type === 'dayPeriod') {
+            if (event.code === 'KeyA') {
+                this.setAmPmSegmentValue(AM);
+                this.valueChanged(segment, event);
+            }
 
-                if (isClearKey) {
-                    this.handleClear(segment);
-                }
-
-                if (isNumberKey || isClearKey || !isAllowedKey) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
+            if (event.code === 'KeyP') {
+                this.setAmPmSegmentValue(PM);
+                this.valueChanged(segment, event);
             }
         }
     }
 
     /**
-     * Sets new segment value after user types some number
+     * When the `input` event is triggered, we can use the `beforeinput` event to execute some things before
      *
-     * @param segment - The segment being changed
-     * @param event - Event details
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
      */
-    public handleTypedValue(segment: Segment, event: KeyboardEvent): void {
-        const details = this.extractDetails(segment);
+    protected handleBeforeInput(segment: Segment, event: InputEvent): void {
+        switch (event.inputType) {
+            case 'deleteContentBackward':
+            case 'deleteContentForward':
+                event.preventDefault();
+                this.clearContent(segment, event);
+                break;
 
-        if (details === undefined) {
+            case 'insertParagraph': // “Enter” key
+            case 'insertLineBreak': // Shift + “Enter” keys
+                event.preventDefault();
+                break;
+        }
+    }
+
+    /**
+     * Sets new segment value after the user types something
+     *
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
+     */
+    protected handleInputEvent(segment: Segment, event: InputEvent): void {
+        const details = this.extractDetails(segment);
+        const data: string | null = event.data;
+
+        if (details === undefined || data === null) {
             return;
         }
 
-        const typedValue = this.numberParser.parse(event.key);
+        if (
+            data === ' ' || // Space is considered “valid number” by the following validations... 🤦🏻‍♂️
+            !this.numberParser.isValidPartialNumber(data) ||
+            isNaN(Number(data))
+        ) {
+            this.updateContent(segment, event);
+            return;
+        }
+
+        const typedValue = this.numberParser.parse(data);
         const isAmPmHour = this.is12HourClock && segment.type === 'hour';
 
         segment.value = isAmPmHour
             ? this.getNewValueForAmPmHourSegment(details, typedValue)
             : this.getNewValueForOtherSegments(details, typedValue);
 
-        this.valueChanged(segment);
+        this.valueChanged(segment, event);
+    }
+
+    /**
+     * Increments the segment value respecting the minimum and maximum limits
+     *
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
+     */
+    protected incrementValue(segment: Segment, event: KeyboardEvent): void {
+        const min = segment.minValue;
+        const max = segment.maxValue;
+
+        if (min === undefined || max === undefined) {
+            return;
+        }
+
+        if (segment.value === undefined) {
+            segment.value =
+                segment.type === 'year' ? this.currentDateTime.year : min;
+        } else if (segment.type === 'dayPeriod') {
+            segment.value = this.toggleAmPm(segment.value);
+        } else {
+            segment.value += 1;
+
+            if (segment.value > max) {
+                segment.value = min;
+            }
+        }
+
+        this.valueChanged(segment, event);
+    }
+
+    /**
+     * Decrements the segment value respecting the minimum and maximum limits
+     *
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
+     */
+    protected decrementValue(segment: Segment, event: KeyboardEvent): void {
+        const min = segment.minValue;
+        const max = segment.maxValue;
+
+        if (min === undefined || max === undefined) {
+            return;
+        }
+
+        if (segment.value === undefined) {
+            segment.value =
+                segment.type === 'year' ? this.currentDateTime.year : max;
+        } else if (segment.type === 'dayPeriod') {
+            segment.value = this.toggleAmPm(segment.value);
+        } else {
+            segment.value -= 1;
+
+            if (segment.value < min) {
+                segment.value = max;
+            }
+        }
+
+        this.valueChanged(segment, event);
     }
 
     /**
      * Sets the new segment value after the user clears the content
      *
-     * @param segment - The segment being changed
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
      */
-    public handleClear(segment: Segment): void {
+    protected clearContent(
+        segment: Segment,
+        event: InputEvent | KeyboardEvent
+    ): void {
         const details = this.extractDetails(segment);
 
         if (details?.value === undefined) {
@@ -415,16 +511,441 @@ export class InputSegments extends TextfieldBase {
             (newValue !== undefined && this.numberParser.parse(newValue)) ||
             undefined;
 
-        this.valueChanged(segment);
+        this.valueChanged(segment, event);
+    }
+
+    /**
+     * After defining the new segment value, it formats the values that will be displayed on the screen and prepares the
+     * object that will be emitted by the component, if it is ready/defined
+     *
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
+     */
+    protected valueChanged(
+        segment: Segment,
+        event: InputEvent | KeyboardEvent
+    ): void {
+        if (this.is12HourClock && segment.type === 'dayPeriod') {
+            this.updateHour();
+        }
+
+        const hasDay = isNumber(this.daySegment?.value);
+        const hasMonth = isNumber(this.monthSegment?.value);
+
+        if (
+            segment.type === 'month' ||
+            (segment.type === 'day' && hasMonth) ||
+            (segment.type === 'year' && hasDay && hasMonth)
+        ) {
+            this.updateDay();
+        }
+
+        this.formatValue(segment);
+        this.updateContent(segment, event);
+        this.setNewDateTime();
+        this.emitNewDateTime();
+    }
+
+    /**
+     * Sets the new date/time object according to the configuration parameters and if the minimum required values for
+     * each type (date only, time only or date and time together) were defined
+     */
+    protected setNewDateTime(): void {
+        this.newDateTime = undefined;
+
+        // If none of the date/time segments are being used, there is nothing to do here
+        if (!this.includeDate && !this.includeTime) {
+            return;
+        }
+
+        const date = this.getDateFromSegments();
+        const time = this.getTimeFromSegments();
+
+        // When only date segments are being used
+        if (this.includeDate && !this.includeTime) {
+            if (date !== undefined) {
+                this.newDateTime = this.dateToCalendarDateTime(date);
+            }
+
+            return;
+        }
+
+        if (time !== undefined) {
+            this.newDateTime = this.dateToCalendarDateTime(time);
+        }
+
+        // If date segments are being used, we need to change the date part to use the value of these segments
+        if (this.includeDate && date !== undefined) {
+            const dateCalendar = this.dateToCalendarDateTime(date);
+
+            this.newDateTime = this.newDateTime?.set({
+                year: dateCalendar.year,
+                month: dateCalendar.month,
+                day: dateCalendar.day,
+            });
+        }
+    }
+
+    /**
+     * Emits the new value for date/time if it is already defined
+     */
+    protected emitNewDateTime(): void {
+        const dateTime = this.newDateTime
+            ? this.newDateTime.toDate(this.timeZone)
+            : undefined;
+
+        this.dispatchEvent(
+            new CustomEvent('change', {
+                bubbles: true,
+                composed: true,
+                detail: dateTime,
+            })
+        );
+    }
+
+    /**
+     * The parts returned by the `formatToParts()` function of `Intl.DateTimeFormat` have only two properties, `type`
+     * and `value`, but we need more information for each segment, so we convert it to the type we need
+     *
+     * @param part - Part/segment to be “translated” (mapped)
+     */
+    protected mapToSegment(part: Intl.DateTimeFormatPart): Segment {
+        const type = part.type;
+        const formatted = part.value;
+
+        if (type === 'literal') {
+            return {
+                type,
+                formatted,
+            };
+        }
+
+        const { value, minValue, maxValue } = this.getValueAndLimits(type);
+        const placeholder = this.getPlaceholder(type, part.value);
+
+        const segment: Segment = {
+            type,
+            formatted,
+            ...(value !== undefined && { value }),
+            ...(minValue !== undefined && { minValue }),
+            ...(maxValue !== undefined && { maxValue }),
+            ...(placeholder !== undefined && { placeholder }),
+        };
+
+        this.formatValue(segment);
+
+        return segment;
+    }
+
+    /**
+     * Extracts the segment details, validating that the limits have been defined. The value currently assigned to the
+     * segment remains optional
+     *
+     * @param segment - The segment to extract the details
+     */
+    protected extractDetails(segment: Segment): SegmentDetails | undefined {
+        const min = segment.minValue;
+        const max = segment.maxValue;
+
+        if (min === undefined || max === undefined) {
+            return undefined;
+        }
+
+        return {
+            value: segment.value,
+            minValue: min,
+            maxValue: max,
+        };
+    }
+
+    /**
+     * For the hour segment whose clock format is 12 hours, we need to perform some checks before defining what will be
+     * the new value associated with the segment. This is necessary because the time the user sees might not match the
+     * value we need to store in the segment
+     *
+     * For example, if “10” is the value displayed in the field, the actual value could be “22” if it's PM, so we need
+     * to identify when we have to change the “actual value”
+     *
+     * @param details - Segment value and limits
+     * @param typedValue - The value typed by the user
+     */
+    protected getNewValueForAmPmHourSegment(
+        details: SegmentDetails,
+        typedValue: number
+    ): number {
+        const isAmPmHour = true;
+
+        let newValue = this.mergePreviousValueWithTypedValue(
+            details,
+            typedValue,
+            isAmPmHour
+        );
+
+        const min = details.minValue;
+        const max = details.maxValue;
+        const isPM = this.isPM(min);
+
+        if (isPM && newValue !== min && newValue > maxHourAM) {
+            newValue = this.numberParser.parse(String(newValue).slice(1));
+        } else if (newValue > max) {
+            const useMinHourAM = !isPM && newValue === PM;
+
+            newValue = useMinHourAM
+                ? minHourAM
+                : this.useTypedValueOrMax(typedValue, max);
+        }
+
+        if (isPM && newValue !== min) {
+            newValue += PM;
+        }
+
+        return newValue;
+    }
+
+    /**
+     * Defines the new value that will be associated with the segment, with the exception of the hour segment for
+     * 12-hour clocks, whose value is defined in another method
+     *
+     * @param details - Segment value and limits
+     * @param typedValue - The value typed by the user
+     */
+    protected getNewValueForOtherSegments(
+        details: SegmentDetails,
+        typedValue: number
+    ): number {
+        let newValue = this.mergePreviousValueWithTypedValue(
+            details,
+            typedValue
+        );
+
+        const min = details.minValue;
+        const max = details.maxValue;
+
+        if (String(newValue).length > String(max).length) {
+            newValue = this.numberParser.parse(String(newValue).slice(1));
+        }
+
+        if (newValue < min) {
+            newValue = this.useTypedValueOrMin(typedValue, min);
+        } else if (newValue > max) {
+            newValue = this.useTypedValueOrMax(typedValue, max);
+        }
+
+        return newValue;
+    }
+
+    /**
+     * If the segment has a `value`, it defines the text used in the UI formatted according to the locale
+     *
+     * @param segment - Segment to format the value
+     */
+    protected formatValue(segment: Segment): void {
+        if (segment.value === undefined) {
+            return;
+        }
+
+        let year = this.yearSegment?.value ?? this.currentDateTime.year;
+        let month = this.monthSegment?.value ?? this.currentDateTime.month;
+        let day = this.daySegment?.value ?? this.currentDateTime.day;
+        let hour = this.hourSegment?.value ?? this.currentDateTime.hour;
+        let minute = this.minuteSegment?.value ?? this.currentDateTime.minute;
+        let second = this.secondSegment?.value ?? this.currentDateTime.second;
+
+        switch (segment.type) {
+            case 'year':
+                year = segment.value;
+                break;
+            case 'month':
+                month = segment.value;
+                break;
+            case 'day':
+                day = segment.value;
+                break;
+            case 'hour':
+                hour = segment.value;
+                break;
+            case 'minute':
+                minute = segment.value;
+                break;
+            case 'second':
+                second = segment.value;
+                break;
+        }
+
+        /**
+         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
+         * an unexpected way. For example, when typing “2”, the year would be formatted as “1902”, but we keep it as it
+         * is being displayed on the screen. If the user wants to enter the year “1902”, he will enter number by number
+         */
+        if (segment.type === 'year') {
+            segment.formatted = String(year);
+            return;
+        }
+
+        const date = this.getDate(year, month, day);
+
+        if (!date) {
+            return;
+        }
+
+        const options: Intl.DateTimeFormatOptions = {
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: '2-digit',
+            second: '2-digit',
+        };
+
+        date.setHours(hour);
+        date.setMinutes(minute);
+        date.setSeconds(second);
+
+        const formatted = new DateFormatter(this.locale, options)
+            .formatToParts(date)
+            .find((part) => part.type === segment.type)?.value;
+
+        let padMaxLength = 2;
+
+        if (segment.type === 'hour' && this.is12HourClock) {
+            padMaxLength = 1;
+        } else if (segment.type === 'dayPeriod') {
+            padMaxLength = 0;
+        }
+
+        segment.formatted = formatted?.padStart(padMaxLength, '0');
     }
 
     /**
      * Returns data from the editable segment that corresponds to the given type
      *
-     * @param type - Segment type
+     * @param type - Type of segment
      */
     protected segment(type: EditableSegmentType): Segment | undefined {
         return this.segments.find((segment) => segment.type === type);
+    }
+
+    /**
+     * Indicates whether the hour entered is PM or not
+     *
+     * @param hour - The hour to check
+     */
+    protected isPM(hour: number): boolean {
+        return hour >= PM;
+    }
+
+    /**
+     * Returns the corresponding “modifier” (0 for “AM” and 12 for “PM”) for the given hour
+     *
+     * @param hour - The hour to identify the modifier
+     */
+    protected getAmPmModifier(hour: number): typeof AM | typeof PM {
+        return this.isPM(hour) ? PM : AM;
+    }
+
+    /**
+     * Checks if the date is valid by parsing the time. Invalid dates return `NaN` for times of invalid dates
+     *
+     * @param date - `Date` object to validate
+     */
+    protected isValidTime(date: Date): boolean {
+        return !isNaN(date.getTime());
+    }
+
+    /**
+     * Checks if the time has been defined according to the granularity type
+     */
+    protected hasTime(): boolean {
+        const hour = this.hourSegment?.value;
+        const minute = this.minuteSegment?.value;
+        const second = this.secondSegment?.value;
+
+        const isHour = this.timeGranularity === 'hour';
+        const isMinute = this.timeGranularity === 'minute';
+        const isSecond = this.timeGranularity === 'second';
+
+        return (
+            (isHour && isNumber(hour)) ||
+            (isMinute && isNumber(hour) && isNumber(minute)) ||
+            (isSecond && isNumber(hour) && isNumber(minute) && isNumber(second))
+        );
+    }
+
+    /**
+     * Converts an object of type `Date` to `CalendarDateTime`. The month must be incremented by 1 to create a new
+     * `CalendarDateTime`, as it uses months ranging from 1 (January) to 12 (December), as opposed to `Date`, whose
+     * months range from 0 (January) to 11 ( December)
+     *
+     * @param date - `Date` object to “convert”
+     */
+    protected dateToCalendarDateTime(date: Date): CalendarDateTime {
+        return new CalendarDateTime(
+            date.getFullYear(),
+            date.getMonth() + 1,
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        );
+    }
+
+    /**
+     * Returns a `Date` type object using information extracted from a `CalendarDateTime` type object. The month must be
+     * decremented by 1 because the `Date` object uses months ranging from 0 (January) to 11 (December)
+     *
+     * @param year - Year that will be used to create the new `Date`
+     * @param month - Month (1 to 12) that will be used to create the new `Date`
+     * @param day - Day that will be used to create the new `Date`
+     */
+    protected getDate(
+        year: number | undefined,
+        month: number | undefined,
+        day: number | undefined
+    ): Date | undefined {
+        return isNumber(year) && isNumber(month) && isNumber(day)
+            ? new Date(year, month - 1, day)
+            : undefined;
+    }
+
+    /**
+     * Returns a `Date` object using the current values of the segments that make up the date, if they are filled
+     */
+    protected getDateFromSegments(): Date | undefined {
+        return this.getDate(
+            this.yearSegment?.value,
+            this.monthSegment?.value,
+            this.daySegment?.value
+        );
+    }
+
+    /**
+     * Returns a `Date` object using the current values of the segments that make up the time, if they are filled. As it
+     * is not possible to have a `Date` object without an associated date, we use the current date defined internally
+     * instead of using the date defined in the date segments
+     */
+    protected getTimeFromSegments(): Date | undefined {
+        if (!this.hasTime()) {
+            return undefined;
+        }
+
+        const hour = this.hourSegment?.value;
+        const minute = this.minuteSegment?.value;
+        const second = this.secondSegment?.value;
+
+        const dateTime = this.currentDateTime.toDate(this.timeZone);
+
+        if (isNumber(hour)) {
+            dateTime.setHours(hour);
+        }
+
+        if (isNumber(minute)) {
+            dateTime.setMinutes(minute);
+        }
+
+        if (isNumber(second)) {
+            dateTime.setSeconds(second);
+        }
+
+        return dateTime;
     }
 
     /**
@@ -462,7 +983,7 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * * Defines the number parser using the defined locale
+     * Defines the number parser using the defined locale
      */
     private setNumberParser(): void {
         this.numberParser = new NumberParser(this.locale, {
@@ -492,94 +1013,6 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Sets the new date/time object according to the configuration parameters and if the minimum required values for
-     * each type (date only, time only or date and time together) were defined
-     */
-    private setNewDateTime(): void {
-        this.newDateTime = undefined;
-
-        // If none of the date/time segments are being used, there is nothing to do here
-        if (!this.includeDate && !this.includeTime) {
-            return;
-        }
-
-        let year = this.yearSegment?.value;
-        let month = this.monthSegment?.value;
-        let day = this.daySegment?.value;
-
-        // When only date segments are being used
-        if (this.includeDate && !this.includeTime) {
-            if (isNumber(year) && isNumber(month) && isNumber(day)) {
-                this.newDateTime = new CalendarDateTime(year, month, day);
-            }
-
-            return;
-        }
-
-        // When only time segments are being used, we need to set the date based on the current date
-        if (!this.includeDate) {
-            year = this.currentDateTime.year;
-            month = this.currentDateTime.month;
-            day = this.currentDateTime.day;
-        }
-
-        const hour = this.hourSegment?.value;
-        const minute = this.minuteSegment?.value;
-        const second = this.secondSegment?.value;
-
-        const isHour = this.timeGranularity === 'hour';
-        const isMinute = this.timeGranularity === 'minute';
-        const isSecond = this.timeGranularity === 'second';
-
-        const hasTime =
-            (isHour && isNumber(hour)) ||
-            (isMinute && isNumber(hour) && isNumber(minute)) ||
-            (isSecond &&
-                isNumber(hour) &&
-                isNumber(minute) &&
-                isNumber(second));
-
-        if (isNumber(year) && isNumber(month) && isNumber(day) && hasTime) {
-            this.newDateTime = new CalendarDateTime(
-                year,
-                month,
-                day,
-                hour,
-                minute,
-                second
-            );
-        }
-    }
-
-    /**
-     * Checks if the date is valid by parsing the time. Invalid dates return `NaN` for times of invalid dates
-     *
-     * @param date - `Date` object to validate
-     */
-    private isValidTime(date: Date): boolean {
-        return !isNaN(date.getTime());
-    }
-
-    /**
-     * Converts an object of type `Date` to `CalendarDateTime`
-     *
-     * @param date - `Date` object to "convert"
-     */
-    private dateToCalendarDateTime(date: Date): CalendarDateTime {
-        return new CalendarDateTime(
-            date.getFullYear(),
-
-            // The month to create a new `CalendarDateTime` cannot be a zero-based index, unlike `Date`
-            date.getMonth() + 1,
-
-            date.getDate(),
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds()
-        );
-    }
-
-    /**
      * Creates the segments that will be used by the input
      */
     private setSegments(): void {
@@ -594,113 +1027,6 @@ export class InputSegments extends TextfieldBase {
             .formatToParts(dateTime)
             .filter((part) => segmentTypes.includes(part.type))
             .map((part) => this.mapToSegment(part));
-    }
-
-    /**
-     * The parts returned by the `formatToParts()` function have only two properties, `type` and `value`, but we need
-     * more information for each segment, so we convert it to the type we need
-     *
-     * @param part - Part/segment to be "translated" (mapped)
-     */
-    private mapToSegment(part: Intl.DateTimeFormatPart): Segment {
-        const type = part.type;
-        const formatted = part.value;
-        const placeholder = this.getPlaceholder(type, part.value);
-        const { value, minValue, maxValue } = this.getValueAndLimits(type);
-
-        const segment: Segment = {
-            type,
-            formatted,
-            ...(placeholder !== undefined && { placeholder }),
-            ...(value !== undefined && { value }),
-            ...(minValue !== undefined && { minValue }),
-            ...(maxValue !== undefined && { maxValue }),
-        };
-
-        if (part.type !== 'literal') {
-            this.formatValue(segment);
-        }
-
-        return segment;
-    }
-
-    /**
-     * If the segment has a `value`, it defines the text used in the UI formatted according to the locale
-     *
-     * @param segment - Segment to be updated
-     */
-    private formatValue(segment: Segment): void {
-        if (segment.value === undefined) {
-            return;
-        }
-
-        const options: Intl.DateTimeFormatOptions = {};
-
-        const year = this.yearSegment?.value ?? this.currentDateTime.year;
-        const month = this.monthSegment?.value ?? this.currentDateTime.month;
-        const day = this.daySegment?.value ?? this.currentDateTime.day;
-
-        // The hour can be changed if we are formatting the "dayPeriod" segment
-        let hour = this.hourSegment?.value ?? this.currentDateTime.hour;
-
-        const minute = this.minuteSegment?.value ?? this.currentDateTime.minute;
-        const second = this.secondSegment?.value ?? this.currentDateTime.second;
-
-        /**
-         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
-         * an unexpected way. For example, when typing "2", the year would be formatted as "1902", but we keep it as it
-         * is being displayed on the screen. If the user wants to enter the year "1902", he will enter number by number
-         */
-        if (segment.type === 'year') {
-            segment.formatted = String(year);
-            return;
-        }
-
-        let padMaxLength = 2;
-
-        switch (segment.type) {
-            case 'month': {
-                options.month = '2-digit';
-                break;
-            }
-            case 'day': {
-                options.day = '2-digit';
-                break;
-            }
-            case 'hour': {
-                if (this.is12HourClock) {
-                    padMaxLength = 1;
-                }
-
-                options.hour = 'numeric';
-                break;
-            }
-            case 'minute': {
-                options.minute = '2-digit';
-                break;
-            }
-            case 'second': {
-                options.second = '2-digit';
-                break;
-            }
-            case 'dayPeriod': {
-                hour = (segment.value || 0) + 1;
-                options.hour = 'numeric';
-                padMaxLength = 0;
-                break;
-            }
-        }
-
-        /**
-         * As we use `CalendarDateTime`, we need to subtract 1 from the month before creating a new `Date` object,
-         * as this uses zero-based months, and `CalendarDateTime` does not
-         */
-        const date = new Date(year, month - 1, day, hour, minute, second);
-        const formatted = new DateFormatter(this.locale, options)
-            .formatToParts(date)
-            .find((part) => part.type === segment.type)?.value;
-
-        segment.formatted = formatted?.padStart(padMaxLength, '0');
     }
 
     /**
@@ -723,45 +1049,6 @@ export class InputSegments extends TextfieldBase {
             default:
                 return '––';
         }
-    }
-
-    /**
-     * Extracts the segment details, validating that the limits have been defined. The value currently assigned to the
-     * segment remains optional
-     *
-     * @param segment - The segment to extract the details
-     */
-    private extractDetails(segment: Segment): SegmentDetails | undefined {
-        const min = segment.minValue;
-        const max = segment.maxValue;
-
-        if (min === undefined || max === undefined) {
-            return undefined;
-        }
-
-        return {
-            value: segment.value,
-            minValue: min,
-            maxValue: max,
-        };
-    }
-
-    /**
-     * Indicates whether the hour entered is PM or not
-     *
-     * @param hour - The hour to check
-     */
-    private isPM(hour: number): boolean {
-        return hour >= PM;
-    }
-
-    /**
-     * Returns the corresponding "modifier" (0 for "AM" and 12 for "PM") for the given hour
-     *
-     * @param hour - The hour to identify the modifier
-     */
-    private getAmPmModifier(hour: number): typeof AM | typeof PM {
-        return this.isPM(hour) ? PM : AM;
     }
 
     /**
@@ -810,7 +1097,7 @@ export class InputSegments extends TextfieldBase {
                 currentValue = this.currentDateTime[type];
                 break;
             case 'dayPeriod':
-                // To identify the current value of "AM/PM", we use the value of the hour, not the day period itself
+                // To identify the current value of “AM/PM”, we use the value of the hour, not the day period itself
                 previousValue =
                     this.hourSegment?.value &&
                     this.getAmPmModifier(this.hourSegment.value);
@@ -897,70 +1184,23 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * Increments the segment value respecting the minimum and maximum limits
-     *
-     * @param segment - The segment being changed
-     */
-    private incrementValue(segment: Segment): void {
-        const min = segment.minValue;
-        const max = segment.maxValue;
-
-        if (min === undefined || max === undefined) {
-            return;
-        }
-
-        if (segment.value === undefined) {
-            segment.value =
-                segment.type === 'year' ? this.currentDateTime.year : min;
-        } else if (segment.type === 'dayPeriod') {
-            segment.value = this.toggleDayPeriod(segment.value);
-        } else {
-            segment.value += 1;
-
-            if (segment.value > max) {
-                segment.value = min;
-            }
-        }
-
-        this.valueChanged(segment);
-    }
-
-    /**
-     * Decrements the segment value respecting the minimum and maximum limits
-     *
-     * @param segment - The segment being changed
-     */
-    private decrementValue(segment: Segment): void {
-        const min = segment.minValue;
-        const max = segment.maxValue;
-
-        if (min === undefined || max === undefined) {
-            return;
-        }
-
-        if (segment.value === undefined) {
-            segment.value =
-                segment.type === 'year' ? this.currentDateTime.year : max;
-        } else if (segment.type === 'dayPeriod') {
-            segment.value = this.toggleDayPeriod(segment.value);
-        } else {
-            segment.value -= 1;
-
-            if (segment.value < min) {
-                segment.value = max;
-            }
-        }
-
-        this.valueChanged(segment);
-    }
-
-    /**
-     * Switches the value of the `dayPeriod` segment from `AM` to `PM` or vice versa
+     * Switches the value of the AM/PM segment from `AM` to `PM` or vice versa
      *
      * @param value - Current value of segment `dayPeriod`
      */
-    private toggleDayPeriod(value: number): typeof AM | typeof PM {
+    private toggleAmPm(value: number): typeof AM | typeof PM {
         return value === AM ? PM : AM;
+    }
+
+    /**
+     * Changes the value of the AM/PM segment to use the new value
+     *
+     * @param newValue - New value for the segment `dayPeriod`
+     */
+    private setAmPmSegmentValue(newValue: typeof AM | typeof PM): void {
+        if (this.amPmSegment) {
+            this.amPmSegment.value = newValue;
+        }
     }
 
     /**
@@ -969,7 +1209,7 @@ export class InputSegments extends TextfieldBase {
      */
     private updateHour(): void {
         if (!this.hourSegment || !this.amPmSegment) {
-            this.resetHourAndDayPeriod();
+            this.resetHourAndAmPm();
             return;
         }
 
@@ -995,16 +1235,16 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * When the day period is cleared, we need to reset the min and max values of the day period and hour segments to
-     * their initial values
+     * When the “AM/PM” is cleared, we need to reset the min and max values of the AM/PM and hour segments to their
+     * initial values
      */
-    private resetHourAndDayPeriod(): void {
+    private resetHourAndAmPm(): void {
         if (this.amPmSegment) {
-            const dayPeriod = this.getValueAndLimits('dayPeriod');
+            const amPm = this.getValueAndLimits('dayPeriod');
 
-            this.amPmSegment.value = dayPeriod.value;
-            this.amPmSegment.minValue = dayPeriod.minValue;
-            this.amPmSegment.maxValue = dayPeriod.maxValue;
+            this.amPmSegment.value = amPm.value;
+            this.amPmSegment.minValue = amPm.minValue;
+            this.amPmSegment.maxValue = amPm.maxValue;
 
             if (this.amPmSegment.value === undefined) {
                 this.amPmSegment.formatted = this.amPmSegment.placeholder;
@@ -1055,44 +1295,6 @@ export class InputSegments extends TextfieldBase {
         ) {
             this.daySegment.value = this.daySegment.maxValue;
             this.formatValue(this.daySegment);
-        }
-    }
-
-    /**
-     * After defining the new segment value, it formats the values that will be displayed on the screen and prepares the
-     * object that will be emitted by the component, if it is ready/defined
-     *
-     * @param segment - The segment that was changed
-     */
-    private valueChanged(segment: Segment): void {
-        if (this.is12HourClock && segment.type === 'dayPeriod') {
-            this.updateHour();
-        }
-
-        const hasDay = isNumber(this.daySegment?.value);
-        const hasMonth = isNumber(this.monthSegment?.value);
-
-        if (
-            segment.type === 'month' ||
-            (segment.type === 'day' && hasMonth) ||
-            (segment.type === 'year' && hasDay && hasMonth)
-        ) {
-            this.updateDay();
-        }
-
-        this.formatValue(segment);
-        this.setNewDateTime();
-        this.requestUpdate();
-
-        if (this.newDateTime) {
-            this.dispatchEvent(
-                new CustomEvent('change', {
-                    bubbles: true,
-                    composed: true,
-                    cancelable: true,
-                    detail: this.newDateTime.toDate(this.timeZone),
-                })
-            );
         }
     }
 
@@ -1148,85 +1350,34 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * For the hour segment whose clock format is 12 hours, we need to perform some checks before defining what will be
-     * the new value associated with the segment. This is necessary because the time the user sees might not match the
-     * value we need to store in the segment
+     * To define the content of elements with the `contenteditable` attribute with Lit we bind to the `.innerText`
+     * property of the element instead of using string interpolation
      *
-     * For example, if "10" is the value displayed in the field, the actual value could be "22" if it's PM, so we need
-     * to identify when we have to change the "actual value"
-     *
-     * @param details - Segment value and limits
-     * @param typedValue - The value typed by the user
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
      */
-    private getNewValueForAmPmHourSegment(
-        details: SegmentDetails,
-        typedValue: number
-    ): number {
-        const isAmPmHour = true;
+    private updateContent(
+        segment: Segment,
+        event: InputEvent | KeyboardEvent
+    ): void {
+        const segmentEl = event.target as HTMLElement;
 
-        let newValue = this.mergePreviousValueWithTypedValue(
-            details,
-            typedValue,
-            isAmPmHour
-        );
+        if (segmentEl) {
+            const content =
+                segment.value !== undefined
+                    ? segment.formatted
+                    : segment.placeholder;
 
-        const min = details.minValue;
-        const max = details.maxValue;
-        const isPM = this.isPM(min);
+            segmentEl.innerText = content ?? '';
 
-        if (isPM && newValue !== min && newValue > maxHourAM) {
-            newValue = this.numberParser.parse(String(newValue).slice(1));
-        } else if (newValue > max) {
-            const useMinHourAM = !isPM && newValue === PM;
-
-            newValue = useMinHourAM
-                ? minHourAM
-                : this.useTypedValueOrMax(typedValue, max);
+            this.requestUpdate();
         }
-
-        if (isPM && newValue !== min) {
-            newValue += PM;
-        }
-
-        return newValue;
-    }
-
-    /**
-     * Defines the new value that will be associated with the segment, with the exception of the hour segment for
-     * 12-hour clocks, whose value is defined in another method
-     *
-     * @param details - Segment value and limits
-     * @param typedValue - The value typed by the user
-     */
-    private getNewValueForOtherSegments(
-        details: SegmentDetails,
-        typedValue: number
-    ): number {
-        let newValue = this.mergePreviousValueWithTypedValue(
-            details,
-            typedValue
-        );
-
-        const min = details.minValue;
-        const max = details.maxValue;
-
-        if (String(newValue).length > String(max).length) {
-            newValue = this.numberParser.parse(String(newValue).slice(1));
-        }
-
-        if (newValue < min) {
-            newValue = this.useTypedValueOrMin(typedValue, min);
-        } else if (newValue > max) {
-            newValue = this.useTypedValueOrMax(typedValue, max);
-        }
-
-        return newValue;
     }
 
     /**
      * Focuses on the next editable segment, if any
      *
-     * @param event - Event details
+     * @param event - Triggered event details
      */
     private focusNextSegment(event: KeyboardEvent): void {
         this.focusSegment(event.target as HTMLDivElement, 'next');
@@ -1235,7 +1386,7 @@ export class InputSegments extends TextfieldBase {
     /**
      * Focuses on the previous editable segment, if any
      *
-     * @param event - Event details
+     * @param event - Triggered event details
      */
     private focusPreviousSegment(event: KeyboardEvent): void {
         this.focusSegment(event.target as HTMLDivElement, 'previous');
@@ -1244,7 +1395,7 @@ export class InputSegments extends TextfieldBase {
     /**
      * Focuses the segment according to the direction, if there is one to focus on
      *
-     * @param segment - Segment that is currently focused
+     * @param segment - Segment on which the event was triggered (the segment being changed)
      * @param elementToFocus - Defines which element will be focused: is it the previous one or the next one?
      */
     private focusSegment(
