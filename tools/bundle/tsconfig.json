@@ -65,7 +65,6 @@
         { "path": "../../packages/textfield" },
         { "path": "../theme" },
         { "path": "../../packages/thumbnail" },
-        { "path": "../../packages/time-field" },
         { "path": "../../packages/toast" },
         { "path": "../../packages/tooltip" },
         { "path": "../../packages/top-nav" },

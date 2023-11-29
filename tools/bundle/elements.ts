@@ -90,7 +90,6 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
-import '@spectrum-web-components/time-field/sp-time-field.js';
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/top-nav/sp-top-nav.js';
