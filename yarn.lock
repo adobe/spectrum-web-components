@@ -7171,100 +7171,8 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
-"@spectrum-web-components/action-button@^0.39.3":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/action-button/-/action-button-0.39.4.tgz#d3ccde3fc712166915c1fc7064d2bde4a965dfec"
-  integrity sha512-5Yadxx3XS7vdlMFpaC1W1E4pmMnhIuvOmJ9YrsRuBcT1MruDnB+RYvi7wPT76fX8/1DwueJ4HHm/V3D9Bvi2ow==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-    "@spectrum-web-components/button" "^0.39.4"
-    "@spectrum-web-components/icon" "^0.39.4"
-    "@spectrum-web-components/icons-ui" "^0.39.4"
-    "@spectrum-web-components/shared" "^0.39.4"
-
-"@spectrum-web-components/base@^0.39.3", "@spectrum-web-components/base@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/base/-/base-0.39.4.tgz#3ec751b616078b4ec9df35b827169d1db9700f0d"
-  integrity sha512-JtiNPtOnlgSdWcq3yeLEi/l1YjfFblMtH2Z65Neue6POjkvTkNw7jyoHyhBBQNqLkyal7WMnz1oyoJo8No2OQQ==
-  dependencies:
-    lit "^2.5.0"
-
-"@spectrum-web-components/button@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/button/-/button-0.39.4.tgz#37b49f9902376d65d50b74ad6de3995bbd34fabc"
-  integrity sha512-bzinYdNZ7Oupt1kStOIUE0ZRGWre2l2x+q2hkYvNssfHfqEGc7Sz+nMLRvQexg8mTz73p3hjKvRf/G/vdvbMYw==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-    "@spectrum-web-components/clear-button" "^0.39.4"
-    "@spectrum-web-components/close-button" "^0.39.4"
-    "@spectrum-web-components/icon" "^0.39.4"
-    "@spectrum-web-components/icons-ui" "^0.39.4"
-    "@spectrum-web-components/shared" "^0.39.4"
-
-"@spectrum-web-components/clear-button@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/clear-button/-/clear-button-0.39.4.tgz#b70711a4f9e752b2cc492f82aaa737a59878d472"
-  integrity sha512-rjdOQdPjGaUx3zUUOsMQBNmeS1I/EhePvJMpEGZrkdmlVBmv6ieDtNrer42ZcEgK1YcEGcQUtVVWDt6GY4dBfw==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-
-"@spectrum-web-components/close-button@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/close-button/-/close-button-0.39.4.tgz#9d9d4def84ce62cc9411ad2189cdedb0c55e6ce0"
-  integrity sha512-duHYDB1HC0tZoZC5vLxOgzNl91rMjO8axrWiH7YLrFEwO3gZqP+oPFlEF+VVuGJsWVfG+3jixIvMVnkMDbPRag==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
   version "0.40.2"
-
-"@spectrum-web-components/icon@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/icon/-/icon-0.39.4.tgz#00ceddf2f5d99198c8bc3fc15f7b8d661756f184"
-  integrity sha512-dL1kkCUBCzKb99elUPW+LFQP2NHBONhPGXwTByixH6quSLOTn41WPzA0DHqFALb9UAZ21NCzf1ui44hzhDmw3Q==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-    "@spectrum-web-components/iconset" "^0.39.4"
-
-"@spectrum-web-components/icons-ui@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/icons-ui/-/icons-ui-0.39.4.tgz#7e7b45b81761b4b096f6b1c4afb029edb2e5844b"
-  integrity sha512-qK03mH3/OKSgQXXzNh8CTCStuhSWxj/kqml3/oZBhjNtStsEth8dSEY5HO4vMvcG64B4cQCurHFvloO2+8ohCA==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-    "@spectrum-web-components/icon" "^0.39.4"
-    "@spectrum-web-components/iconset" "^0.39.4"
-
-"@spectrum-web-components/icons-workflow@^0.39.3":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/icons-workflow/-/icons-workflow-0.39.4.tgz#9b45e2159fb07437f6b04d682fd651113b866b30"
-  integrity sha512-m6lq3cXcVAiOHMUFqH71LNjDsXDbyRPfLiidaw5grUOCBToG65yjoJGPaKeRUv6p/hfTzJoUkRlhGyeZlZalxA==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-    "@spectrum-web-components/icon" "^0.39.4"
-
-"@spectrum-web-components/iconset@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/iconset/-/iconset-0.39.4.tgz#74afa1cdd2ed019c8d48bfa27344032db3a095a7"
-  integrity sha512-ctiST/I9l83KiuYSAEnHfgDoeguQeqPBvszM6hHtl5QF/5ubFLLpHVu4SMXiKBS3wE7HQz7lPuL9ofe2nClbkQ==
-  dependencies:
-    "@spectrum-web-components/base" "^0.39.4"
-
-"@spectrum-web-components/reactive-controllers@^0.39.3":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/reactive-controllers/-/reactive-controllers-0.39.4.tgz#9d213badd64923ed54980eec1b179f3da69258e1"
-  integrity sha512-gDE+pl+6PCnvNYVFFS0/mp2piPotgcyotjcA0A+CDFoQaShWiMQiQ0ryEC/eVDyxVFjoTRsnHrmsYqIMMgncGA==
-  dependencies:
-    lit "^2.5.0"
-
-"@spectrum-web-components/shared@^0.39.4":
-  version "0.39.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/shared/-/shared-0.39.4.tgz#49fcfde33e276c771c8cf625cf26d037c03ba46d"
-  integrity sha512-vFW078f/mHoQB38rgfJD4KP8jYnshdSCUlAJt6v9QO5UwV4DpJTsWRrAqeM8RHB0R0KH1E+cSF4Al5uM6+6nCA==
-  dependencies:
-    "@lit-labs/observers" "^2.0.0"
-    "@spectrum-web-components/base" "^0.39.4"
-    focus-visible "^5.1.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.5.0"
@@ -11966,6 +11874,11 @@ caniuse-lite@^1.0.30001503:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001516.tgz#621b1be7d85a8843ee7d210fd9d87b52e3daab3a"
   integrity sha512-Wmec9pCBY8CWbmI4HsjBeQLqDTqV91nFVR83DnZpYyRnPI1wePDsTg0bGLPC5VU/3OIZV1fmxEea1b+tFKe86g==
 
+caniuse-lite@^1.0.30001517:
+  version "1.0.30001565"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001565.tgz#a528b253c8a2d95d2b415e11d8b9942acc100c4f"
+  integrity sha512-xrE//a3O7TP0vaJ8ikzkD2c2NgcVUvsEe2IvFTntV4Yd1Z9FVzh+gW+enX96L0psrbaFMcVcH2l90xNuGDWc8w==
+
 caniuse-lite@^1.0.30001520:
   version "1.0.30001524"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001524.tgz#1e14bce4f43c41a7deaeb5ebfe86664fe8dadb80"
@@ -14289,10 +14202,10 @@ electron-to-chromium@^1.4.431:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.463.tgz#8eb04355f24fef5c8097661d14e143f6d8554055"
   integrity sha512-fT3hvdUWLjDbaTGzyOjng/CQhQJSQP8ThO3XZAoaxHvHo2kUXiRQVMj9M235l8uDFiNPsPa6KHT1p3RaR6ugRw==
 
-electron-to-chromium@^1.4.535:
-  version "1.4.576"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.576.tgz#0c6940fdc0d60f7e34bd742b29d8fa847c9294d1"
-  integrity sha512-yXsZyXJfAqzWk1WKryr0Wl0MN2D47xodPvEEwlVePBnhU5E7raevLQR+E6b9JAD3GfL/7MbAL9ZtWQQPcLx7wA==
+electron-to-chromium@^1.4.477, electron-to-chromium@^1.4.535:
+  version "1.4.596"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.596.tgz#6752d1aa795d942d49dfc5d3764d6ea283fab1d7"
+  integrity sha512-zW3zbZ40Icb2BCWjm47nxwcFGYlIgdXkAx85XDO7cyky9J4QQfq8t0W19/TLZqq3JPQXtlv8BPIGmfa9Jb4scg==
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
