@@ -69,7 +69,8 @@
         "@spectrum-web-components/reactive-controllers": "^0.40.0"
     },
     "devDependencies": {
-        "@spectrum-css/calendar": "^4.0.9"
+        "@spectrum-css/calendar": "^4.0.9",
+        "@spectrum-web-components/story-decorator": "^0.40.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
