@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Features
+
+-   **textfield:** added name attribute to textfield ([#3752](https://github.com/adobe/spectrum-web-components/issues/3752)) ([593005a](https://github.com/adobe/spectrum-web-components/commit/593005a8892139beb9ece9342b51a2b43d63cef3))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/switch
+
 ## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
 
 **Note:** Version bump only for package @spectrum-web-components/switch

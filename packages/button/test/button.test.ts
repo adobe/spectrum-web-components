@@ -84,7 +84,7 @@ describe('Button', () => {
     it('loads default only icon', async () => {
         const el = await fixture<Button>(
             html`
-                <sp-button label="Button">
+                <sp-button label="Button" icon-only>
                     <svg slot="icon"></svg>
                 </sp-button>
             `

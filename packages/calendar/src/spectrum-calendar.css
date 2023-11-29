@@ -184,7 +184,6 @@ governing permissions and limitations under the License.
         --mod-calendar-day-width,
         var(--spectrum-calendar-day-width)
     );
-    padding: 0;
     padding: var(
         --mod-calendar-day-padding,
         var(--spectrum-calendar-day-padding)

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **button:** support [icon-only] delivery ([#3716](https://github.com/adobe/spectrum-web-components/issues/3716)) ([e236a50](https://github.com/adobe/spectrum-web-components/commit/e236a50d8e51da0d019758f744e1a1a8a9370b1c))
+-   **field-group:** apply role when none present ([3616199](https://github.com/adobe/spectrum-web-components/commit/36161997825b77b3a31a4090e273c12329be9d8c))
+-   **number-field:** update display value on scroll and arrow up/down ([fc59a18](https://github.com/adobe/spectrum-web-components/commit/fc59a18c73bb9b63f319d006713a5b5d15778cca))
+-   **overlay:** ensure manual overlays persist through interactions outside of their subtree ([#3788](https://github.com/adobe/spectrum-web-components/issues/3788)) ([ef5617f](https://github.com/adobe/spectrum-web-components/commit/ef5617f81b205b8bcf0a79e2b8a810cc65f13c3d))
+-   **split-view:** expand accessible attribute usage and HCM delivery ([cb7c71f](https://github.com/adobe/spectrum-web-components/commit/cb7c71f988df48aceef129665fdf432d5bcef3b0))
+-   **tags:** make the 'delete' event cancelable ([#3778](https://github.com/adobe/spectrum-web-components/issues/3778)) ([d9afd41](https://github.com/adobe/spectrum-web-components/commit/d9afd4183f85dfdfdd759236c3f77f7e7841b7c0))
+
+### Features
+
+-   **textfield:** added name attribute to textfield ([#3752](https://github.com/adobe/spectrum-web-components/issues/3752)) ([593005a](https://github.com/adobe/spectrum-web-components/commit/593005a8892139beb9ece9342b51a2b43d63cef3))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **action-bar:** allow "close" event to be cancelled ([17cf55e](https://github.com/adobe/spectrum-web-components/commit/17cf55e5117d632e612e2055c77f6fcc4dadbe4c))
+-   **infield-button:** add infield-button package ([057b885](https://github.com/adobe/spectrum-web-components/commit/057b885276f3d5dcbe32bab5ab36a2bb82334bc3))
+-   **overlay:** add delay resolution from overlaid content ([#3748](https://github.com/adobe/spectrum-web-components/issues/3748)) ([5c4f1f6](https://github.com/adobe/spectrum-web-components/commit/5c4f1f6f87cac60cb1884f59aa29d256f7baabb8))
+-   **overlay:** calculate more transforms ([6538a45](https://github.com/adobe/spectrum-web-components/commit/6538a45a036f60c4efce4c3ed3d1d6f2782a188e))
+-   **overlay:** place longpress helper content in a more accessible, less layout affecting location ([dd12c23](https://github.com/adobe/spectrum-web-components/commit/dd12c2346142a107ee9c7824410dff5ae660e574))
+-   support numeric IDs when resolving elements ([f62bf0d](https://github.com/adobe/spectrum-web-components/commit/f62bf0d24191ef47a4d7f9172c40570e052808a2))
+-   **table:** update row selection aria ([6c8c706](https://github.com/adobe/spectrum-web-components/commit/6c8c70688c1df59b6e7a7a9cbf562b7171e710c1))
+-   **top-nav:** default to role="navigation", sprout aria-label when "label" applied ([bbcea4a](https://github.com/adobe/spectrum-web-components/commit/bbcea4a65d1e3c0053962777ee3482a22572f193))
+
 ## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
 
 ### Bug Fixes

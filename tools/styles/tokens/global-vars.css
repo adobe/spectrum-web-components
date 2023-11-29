@@ -96,8 +96,6 @@
     --spectrum-color-loupe-drop-shadow-color: var(
         --spectrum-transparent-black-300
     );
-    --spectrum-color-loupe-drop-shadow-y: 2px;
-    --spectrum-color-loupe-drop-shadow-blur: 8px;
     --spectrum-color-loupe-inner-border: var(--spectrum-transparent-black-200);
     --spectrum-color-loupe-outer-border: var(--spectrum-white);
     --spectrum-card-selection-background-color: var(--spectrum-gray-100);
@@ -305,6 +303,8 @@
     --spectrum-color-loupe-bottom-to-color-handle: 12px;
     --spectrum-color-loupe-outer-border-width: var(--spectrum-border-width-200);
     --spectrum-color-loupe-inner-border-width: 1px;
+    --spectrum-color-loupe-drop-shadow-y: 2px;
+    --spectrum-color-loupe-drop-shadow-blur: 8px;
     --spectrum-card-minimum-width: 100px;
     --spectrum-card-preview-minimum-height: 130px;
     --spectrum-card-selection-background-size: 40px;

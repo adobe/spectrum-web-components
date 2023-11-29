@@ -342,6 +342,34 @@ describe('Textfield', () => {
             : null;
         expect(input).to.not.be.null;
     });
+    it('handles `name` attribute', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield placeholder="Enter your name"></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        expect(el.name).to.be.undefined;
+
+        el.setAttribute('name', 'test');
+        expect(el.name).to.be.equal('test');
+    });
+    it('handles `name` attribute with multiline', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    name="name"
+                    placeholder="Enter your name"
+                    multiline
+                ></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('textarea')
+            : null;
+        expect(input?.name).to.equal('name');
+    });
     it('valid - multiline', async () => {
         const el = await litFixture<Textfield>(
             html`

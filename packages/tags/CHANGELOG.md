@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **tags:** make the 'delete' event cancelable ([#3778](https://github.com/adobe/spectrum-web-components/issues/3778)) ([d9afd41](https://github.com/adobe/spectrum-web-components/commit/d9afd4183f85dfdfdd759236c3f77f7e7841b7c0))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/tags
+
 ## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
 
 **Note:** Version bump only for package @spectrum-web-components/tags
