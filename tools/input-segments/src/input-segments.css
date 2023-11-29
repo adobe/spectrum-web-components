@@ -29,6 +29,7 @@ governing permissions and limitations under the License.
     display: inline-block;
     height: 100%;
     color: var(--spectrum-textfield-text-color-default);
+    line-height: normal;
 }
 
 .editable-segment {
