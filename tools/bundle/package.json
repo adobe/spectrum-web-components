@@ -83,6 +83,7 @@
         "@spectrum-web-components/color-loupe": "^0.40.0",
         "@spectrum-web-components/color-slider": "^0.40.0",
         "@spectrum-web-components/color-wheel": "^0.40.0",
+        "@spectrum-web-components/date-time-picker": "^0.0.1",
         "@spectrum-web-components/dialog": "^0.40.0",
         "@spectrum-web-components/divider": "^0.40.0",
         "@spectrum-web-components/dropzone": "^0.40.0",
