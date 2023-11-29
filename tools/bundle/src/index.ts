@@ -63,7 +63,6 @@ export * from '@spectrum-web-components/tags';
 export * from '@spectrum-web-components/textfield';
 export * from '@spectrum-web-components/theme';
 export * from '@spectrum-web-components/thumbnail';
-export * from '@spectrum-web-components/time-field';
 export * from '@spectrum-web-components/toast';
 export * from '@spectrum-web-components/tooltip';
 export * from '@spectrum-web-components/top-nav';

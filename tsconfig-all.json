@@ -78,7 +78,6 @@
         { "path": "packages/tags" },
         { "path": "packages/textfield" },
         { "path": "packages/thumbnail" },
-        { "path": "packages/time-field" },
         { "path": "packages/toast" },
         { "path": "packages/tooltip" },
         { "path": "packages/top-nav" },
