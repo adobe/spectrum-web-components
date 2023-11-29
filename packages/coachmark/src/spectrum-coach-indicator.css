@@ -220,13 +220,13 @@ governing permissions and limitations under the License.
             )
     );
 }
-:host([variant='light']) .ring {
+:host([static='white']) .ring {
     border-color: var(
         --mod-coach-indicator-ring-light-color,
         var(--spectrum-coach-indicator-ring-light-color)
     );
 }
-:host([variant='dark']) .ring {
+:host([static='black']) .ring {
     border-color: var(
         --mod-coach-indicator-ring-dark-color,
         var(--spectrum-coach-indicator-ring-dark-color)

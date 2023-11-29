@@ -33,10 +33,10 @@ const config = {
                 ),
                 ...converter.enumerateAttributes(
                     [
-                        ['spectrum-CoachIndicator--dark', 'dark'],
-                        ['spectrum-CoachIndicator--light', 'light'],
+                        ['spectrum-CoachIndicator--dark', 'black'],
+                        ['spectrum-CoachIndicator--light', 'white'],
                     ],
-                    'variant'
+                    'static'
                 ),
             ],
         },

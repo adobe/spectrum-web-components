@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -30,7 +31,10 @@ export class CoachIndicator extends SpectrumElement {
     public quiet = false;
 
     @property({ reflect: true })
-    public variant: 'dark' | 'light' | '' = '';
+    public static?: 'white' | 'black';
+
+    @property({ reflect: true })
+    public variant?: 'white' | 'black';
 
     protected override render(): TemplateResult {
         return html`
@@ -38,5 +42,15 @@ export class CoachIndicator extends SpectrumElement {
             <div class="ring"></div>
             <div class="ring"></div>
         `;
+    }
+
+    protected override updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (
+            changes.has('variant') &&
+            (this.variant || typeof changes.get('variant'))
+        ) {
+            this.static = this.variant;
+        }
     }
 }
