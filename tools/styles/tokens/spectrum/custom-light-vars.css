@@ -21,6 +21,9 @@
         --spectrum-blue-800-rgb
     ); /* var(--spectrum-accent-color-800);*/
 
+    /* Drop Indicator color rgb */
+    --spectrum-dropindicator-color: var(--spectrum-blue-800);
+
     --spectrum-calendar-day-background-color-selected: rgba(
         var(--spectrum-blue-900-rgb),
         0.1
@@ -55,7 +58,9 @@
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-800);
     --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
     --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
+
     --spectrum-well-border-color: var(--spectrum-black-rgb);
+
     --spectrum-steplist-current-marker-color-key-focus: var(
         --spectrum-blue-800
     );
@@ -82,4 +87,22 @@
         --spectrum-magenta-1100
     );
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
+
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-900
+    );
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
+
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-assetlist-item-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
 }

@@ -48,10 +48,6 @@
         --spectrum-spacing-100
     );
 
-    --spectrum-sidenav-heading-top-margin: 24px; /* TODO replace with var(--spectrum-side-navigation-item-to-header); once token is updated */
-    --spectrum-sidenav-heading-bottom-margin: 8px; /* TODO replace with var(--spectrum-side-navigation-item-to-header); once token is added */
-    --spectrum-sidenav-bottom-to-label: 8px; /* TODO replace with updated var(--spectrum-component-bottom-to-text-100); */
-
     --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
     --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
 
@@ -77,8 +73,9 @@
         --spectrum-spacing-400
     );
     --spectrum-treeview-indicator-inset-block-start: 5px;
-    --spectrum-dialog-confirm-entry-animation-distance: 20px;
+    --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 0px;
 
+    --spectrum-dialog-confirm-entry-animation-distance: 20px;
     --spectrum-dialog-confirm-hero-height: 128px;
     --spectrum-dialog-confirm-border-radius: 4px;
     --spectrum-dialog-confirm-title-text-size: 18px;
@@ -105,4 +102,14 @@
     --spectrum-dial-controls-margin: 8px;
     --spectrum-dial-label-gap-y: 5px;
     --spectrum-dial-label-container-top-to-text: 4px;
+
+    --spectrum-assetcard-focus-ring-border-radius: 8px;
+    --spectrum-assetcard-selectionindicator-margin: 12px;
+    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xs);
+    --spectrum-assetcard-header-content-font-size: var(
+        --spectrum-heading-size-xs
+    );
+    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-s);
+
+    --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
 }
