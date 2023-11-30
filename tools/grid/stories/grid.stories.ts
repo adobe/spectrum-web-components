@@ -162,6 +162,30 @@ export const sized = (
 ): TemplateResult => {
     const items = generateItems(1000);
 
+    function handleMediaChange(): void {
+        let width = document.body.offsetWidth * 0.4;
+        const height = 300;
+        if (matchMedium.matches) {
+            width = 300;
+        } else if (matchLarge.matches) {
+            width = 400;
+        }
+        (document.querySelector('sp-grid') as Grid).itemSize = {
+            width,
+            height,
+        };
+    }
+
+    const matchSmall = window.matchMedia('(max-width: 600px)');
+    const matchMedium = window.matchMedia(
+        '(min-width: 601px) and (max-width: 1200px)'
+    );
+    const matchLarge = window.matchMedia('(min-width: 1201px)');
+
+    matchSmall.addEventListener('change', handleMediaChange);
+    matchMedium.addEventListener('change', handleMediaChange);
+    matchLarge.addEventListener('change', handleMediaChange);
+
     return html`
         <h1>Random before content that is focusable</h1>
         <input id="first-input" />
