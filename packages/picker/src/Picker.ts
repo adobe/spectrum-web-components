@@ -43,7 +43,7 @@ import type {
     MenuItem,
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
-import { Placement } from '@spectrum-web-components/overlay';
+import { OverlayTypes, Placement } from '@spectrum-web-components/overlay';
 import {
     IS_MOBILE,
     MatchMediaController,
@@ -109,6 +109,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @property()
     public placement: Placement = 'bottom-start';
+
+    @property()
+    public overlayType: OverlayTypes = 'auto';
 
     @property({ type: Boolean, reflect: true })
     public quiet = false;
@@ -393,7 +396,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .offset=${0}
                 ?open=${this.open}
                 .placement=${this.isMobile.matches ? undefined : this.placement}
-                type=${this.isMobile.matches ? 'modal' : 'auto'}
+                type=${this.isMobile.matches ? 'modal' : this.overlayType}
                 .receivesFocus=${'true'}
                 @beforetoggle=${(
                     event: Event & {
