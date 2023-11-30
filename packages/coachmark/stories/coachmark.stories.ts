@@ -12,14 +12,13 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import type { MediaType } from '../src/CoachmarkItem.js';
-import '@spectrum-web-components/coachmark/sp-coachmark-popover.js';
+import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import { cave, gif } from './images.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type { Placement } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+
 export default {
     title: 'Coachmark',
     component: 'sp-coachmark',
@@ -66,15 +65,17 @@ type Properties = {
 };
 
 export const Default = (props: Properties): TemplateResult => {
-    const { open = true, placement, triggerInteraction } = props;
+    const { open = true } = props;
 
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@hover"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover
+            <sp-coachmark
                 ?open=${open}
                 currentstep="2"
                 totalsteps="8"
@@ -90,47 +91,45 @@ export const Default = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark-popover>
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            </sp-coachmark>
+        </sp-overlay>
     `;
 };
 
 export const single = (props: Properties): TemplateResult => {
-    const { open = true, placement, triggerInteraction } = props;
+    const { open = true } = props;
 
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@hover"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover ?open=${open} primary-cta="Ok">
+            <sp-coachmark ?open=${open} primary-cta="Ok">
                 <div slot="title">A single coachmark</div>
                 <div slot="content">
                     This is a Coachmark with nothing but text in it. Kind of
                     lonely in here.
                 </div>
-            </sp-coachmark-popover>
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            </sp-coachmark>
+        </sp-overlay>
     `;
 };
 
 export const Clickable = (props: Properties): TemplateResult => {
-    const {
-        open = true,
-        placement = 'right-start',
-        triggerInteraction = 'click',
-    } = props;
+    const { open = true } = props;
 
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@click"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover
+            <sp-coachmark
                 ?open=${open}
                 currentstep="2"
                 totalsteps="8"
@@ -146,26 +145,22 @@ export const Clickable = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark-popover>
-
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            </sp-coachmark>
+        </sp-overlay>
     `;
 };
 export const withImage = (props: Properties): TemplateResult => {
-    const {
-        open = true,
-        placement = 'right-start',
-        triggerInteraction = 'hover',
-    } = props;
+    const { open = true } = props;
 
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@hover"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover
+            <sp-coachmark
                 ?open=${open}
                 src=${cave}
                 media-type="image"
@@ -183,27 +178,23 @@ export const withImage = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark-popover>
-
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            </sp-coachmark>
+        </sp-overlay>
     `;
 };
 
 export const withGif = (props: Properties): TemplateResult => {
-    const {
-        open = true,
-        placement = 'right-start',
-        triggerInteraction = 'hover',
-    } = props;
+    const { open = true } = props;
 
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@hover"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover
+            <sp-coachmark
                 ?open=${open}
                 src=${gif}
                 media-type="image"
@@ -221,10 +212,8 @@ export const withGif = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark-popover>
-
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            </sp-coachmark>
+        </sp-overlay>
     `;
 };
 
@@ -233,19 +222,16 @@ withGif.swc_vrt = {
 };
 
 export const withKeys = (props: Properties): TemplateResult => {
-    const {
-        open = true,
-        placement = 'right-start',
-        modifierKeys = ['⇧ Shift', '⌘'],
-        triggerInteraction = 'hover',
-    } = props;
+    const { open = true, modifierKeys = ['⇧ Shift', '⌘'] } = props;
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@hover"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover
+            <sp-coachmark
                 ?open=${open}
                 currentstep="2"
                 totalsteps="8"
@@ -262,25 +248,22 @@ export const withKeys = (props: Properties): TemplateResult => {
                     <sp-menu-item>Skip tour</sp-menu-item>
                     <sp-menu-item>Restart tour</sp-menu-item>
                 </sp-action-menu>
-            </sp-coachmark-popover>
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            </sp-coachmark>
+        </sp-overlay>
     `;
 };
 
 export const withShortCut = (props: Properties): TemplateResult => {
-    const {
-        open = true,
-        placement = 'right-start',
-        triggerInteraction = 'hover',
-    } = props;
+    const { open = true } = props;
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@hover"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover
+            <sp-coachmark
                 ?open=${open}
                 primary-cta="Ok"
                 shortcut-key="L"
@@ -289,9 +272,8 @@ export const withShortCut = (props: Properties): TemplateResult => {
                     description:
                         'This is a Coachmark with nothing but text in it. Kind of lonely in here',
                 }}
-            ></sp-coachmark-popover>
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            ></sp-coachmark>
+        </sp-overlay>
     `;
 };
 
@@ -299,18 +281,16 @@ export const actionButtons = (
     props: Properties,
     args: StoryArgs = {}
 ): TemplateResult => {
-    const {
-        open = true,
-        placement = 'right-start',
-        triggerInteraction = 'hover',
-    } = props;
+    const { open = true } = props;
     return html`
-        <sp-coachmark
+        <sp-coach-indicator id="trigger"></sp-coach-indicator>
+        <sp-overlay
+            trigger="trigger@hover"
+            placement="right"
+            .receivesFocus=${'false'}
             ?open=${open}
-            placement=${ifDefined(placement)}
-            .triggerInteraction=${triggerInteraction}
         >
-            <sp-coachmark-popover
+            <sp-coachmark
                 ?open=${open}
                 primary-cta="Next"
                 secondary-cta="Previous"
@@ -332,8 +312,7 @@ export const actionButtons = (
                     );
                     handleSecondary(args);
                 }}
-            ></sp-coachmark-popover>
-            <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-        </sp-coachmark>
+            ></sp-coachmark>
+        </sp-overlay>
     `;
 };

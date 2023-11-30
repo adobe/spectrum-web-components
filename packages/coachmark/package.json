@@ -37,10 +37,6 @@
             "development": "./src/CoachmarkItem.dev.js",
             "default": "./src/CoachmarkItem.js"
         },
-        "./src/CoachmarkPopover.js": {
-            "development": "./src/CoachmarkPopover.dev.js",
-            "default": "./src/CoachmarkPopover.js"
-        },
         "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
         "./src/coachmark.css.js": "./src/coachmark.css.js",
         "./src/index.js": {
@@ -54,10 +50,6 @@
         "./sp-coach-indicator.js": {
             "development": "./sp-coach-indicator.dev.js",
             "default": "./sp-coach-indicator.js"
-        },
-        "./sp-coachmark-popover.js": {
-            "development": "./sp-coachmark-popover.dev.js",
-            "default": "./sp-coachmark-popover.js"
         }
     },
     "scripts": {
