@@ -270,6 +270,7 @@ export class InputSegments extends TextfieldBase {
                 contenteditable=${ifDefined(isActive ? true : undefined)}
                 inputmode=${ifDefined(isActive ? 'numeric' : undefined)}
                 tabindex=${ifDefined(isActive ? '0' : undefined)}
+                aria-hidden=${ifDefined(usePlaceholder ? 'true' : undefined)}
                 class=${classMap(segmentClasses)}
                 style=${styleMap(segmentStyles)}
                 data-testid=${segment.type}
@@ -282,17 +283,12 @@ export class InputSegments extends TextfieldBase {
                 @input=${(event: InputEvent) => {
                     this.handleInputEvent(segment, event);
                 }}
-            >
-                ${when(
+                .innerText=${when(
                     usePlaceholder,
-                    () => html`
-                        <span aria-hidden="true" class="placeholder">
-                            ${segment.placeholder}
-                        </span>
-                    `,
-                    () => segment.formatted
+                    () => segment.placeholder ?? '',
+                    () => segment.formatted ?? ''
                 )}
-            </div>
+            ></div>
         `;
     }
 
