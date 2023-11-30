@@ -390,7 +390,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
-                .offset=${0}
+                .offset=${1}
                 ?open=${this.open}
                 .placement=${this.isMobile.matches ? undefined : this.placement}
                 type="auto"
