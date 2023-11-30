@@ -12,18 +12,17 @@
 yarn add @spectrum-web-components/coachmark
 ```
 
-Import the side effectful registration of `<sp-coachmark-popover>` & `<sp-coachmark>` via:
+Import the side effectful registration of `<sp-coachmark>` via:
 
 ```
-import '@spectrum-web-components/coachmark/sp-coachmark-popover.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 
 ```
 
-When looking to leverage the `Coachmark` or `CoachmarkPopover` base classes as a type and/or for extension purposes, do so via:
+When looking to leverage the `Coachmark` base classe as a type and/or for extension purposes, do so via:
 
 ```
-import { CoachmarkPopover, Coachmark } from '@spectrum-web-components/coachmark';
+import { Coachmark } from '@spectrum-web-components/coachmark';
 ```
 
 ## Example
@@ -34,21 +33,17 @@ Coachmark can take a `placement`, an `offset`, and a
 `triggerInteraction`, similar to the [Overlay](https://opensource.adobe.com/spectrum-web-components/components/overlay/).
 
 ```html
-<sp-coachmark placement="right" open>
-    <sp-coachmark-popover
-        open
-        currentstep="2"
-        totalsteps="8"
-        primary-cta="Next"
-        secondary-cta="Previous"
-    >
-        <div slot="title">Coachmark with Text Only</div>
-        <div slot="content">
-            This is a Coachmark with nothing but text in it. Kind of lonely in
-            here.
-        </div>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+<sp-coachmark
+    open
+    currentstep="2"
+    totalsteps="8"
+    primary-cta="Next"
+    secondary-cta="Previous"
+>
+    <div slot="title">Coachmark with Text Only</div>
+    <div slot="content">
+        This is a Coachmark with nothing but text in it. Kind of lonely in here.
+    </div>
 </sp-coachmark>
 ```
 
@@ -57,25 +52,21 @@ Coachmark can take a `placement`, an `offset`, and a
 Coach marks can include an `ActionMenu`, which appears at the top right of the coach mark. The `ActionMenu` should only include ways to interact with the coach mark tour as a whole, with options like “Skip tour” or “Restart tour.”
 
 ```html
-<sp-coachmark placement="right" open>
-    <sp-coachmark-popover
-        open
-        currentstep="2"
-        totalsteps="8"
-        primary-cta="Next"
-        secondary-cta="Previous"
-    >
-        <div slot="title">Coachmark with Text Only</div>
-        <div slot="content">
-            This is a Coachmark with nothing but text in it. Kind of lonely in
-            here.
-        </div>
-        <sp-action-menu placement="bottom-end" quiet slot="actions">
-            <sp-menu-item>Skip tour</sp-menu-item>
-            <sp-menu-item>Restart tour</sp-menu-item>
-        </sp-action-menu>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+<sp-coachmark
+    open
+    currentstep="2"
+    totalsteps="8"
+    primary-cta="Next"
+    secondary-cta="Previous"
+>
+    <div slot="title">Coachmark with Text Only</div>
+    <div slot="content">
+        This is a Coachmark with nothing but text in it. Kind of lonely in here.
+    </div>
+    <sp-action-menu placement="bottom-end" quiet slot="actions">
+        <sp-menu-item>Skip tour</sp-menu-item>
+        <sp-menu-item>Restart tour</sp-menu-item>
+    </sp-action-menu>
 </sp-coachmark>
 ```
 
@@ -83,33 +74,29 @@ Coach marks can include an `ActionMenu`, which appears at the top right of the c
 
 User action-dependent coachmarks are designed to guide users based on their interactions within your application. In such cases, there is no "Next Step" button, as the coachmark progresses when the user takes a specific action. This allows users to learn by doing, rather than simply reading instructions. The coachmark remains until the user performs the required action or takes an alternative route in the tour, such as skipping, restarting, or moving back to a previous step.
 
-Inside the `<sp-coachmark>`, add the content and instructions for the coachmark in the `<sp-coachmark-popover>`. You can also define primary and secondary CTA buttons for user interaction.
+Inside the `<sp-coachmark>`, add the content and instructions for the coachmark in the `<sp-coachmark>`. You can also define primary and secondary CTA buttons for user interaction.
 
 Event Handling:
 The primary and secondary CTA buttons within the coachmark popover can be configured to dispatch events when clicked.
 
 ```html
-<sp-coachmark placement="right" open>
-    <sp-coachmark-popover
-        open
-        currentstep="2"
-        totalsteps="8"
-        primary-cta="Asset added"
-        secondary-cta="Previous"
-        @primary="${this.handleConfirm}"
-        @secondary="${this.handleCancel}"
-    >
-        <div slot="title">Coachmark with user action</div>
-        <div slot="content">
-            This is a Coachmark with nothing but text in it. Kind of lonely in
-            here.
-        </div>
-        <sp-action-menu placement="bottom-end" quiet slot="actions">
-            <sp-menu-item>Skip tour</sp-menu-item>
-            <sp-menu-item>Restart tour</sp-menu-item>
-        </sp-action-menu>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+<sp-coachmark
+    open
+    currentstep="2"
+    totalsteps="8"
+    primary-cta="Asset added"
+    secondary-cta="Previous"
+    @primary="${this.handleConfirm}"
+    @secondary="${this.handleCancel}"
+>
+    <div slot="title">Coachmark with user action</div>
+    <div slot="content">
+        This is a Coachmark with nothing but text in it. Kind of lonely in here.
+    </div>
+    <sp-action-menu placement="bottom-end" quiet slot="actions">
+        <sp-menu-item>Skip tour</sp-menu-item>
+        <sp-menu-item>Restart tour</sp-menu-item>
+    </sp-action-menu>
 </sp-coachmark>
 ```
 
@@ -124,24 +111,21 @@ Media Types allowed: `Images & Gifs`
 ### Image
 
 ```html
-<sp-coachmark placement="right" open>
-    <sp-coachmark-popover
-        currentstep="2"
-        totalsteps="8"
-        open
-        primary-cta="Next"
-        secondary-cta="Previous"
-        src="https://picsum.photos/id/237/200/300"
-        media-type="image"
-    >
-        <div slot="title">Coachmark with 16:9 image</div>
-        <div slot="content">This is a Coachmark with some description</div>
-        <sp-action-menu placement="bottom-end" quiet slot="actions">
-            <sp-menu-item>Skip tour</sp-menu-item>
-            <sp-menu-item>Restart tour</sp-menu-item>
-        </sp-action-menu>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+<sp-coachmark
+    currentstep="2"
+    totalsteps="8"
+    open
+    primary-cta="Next"
+    secondary-cta="Previous"
+    src="https://picsum.photos/id/237/200/300"
+    media-type="image"
+>
+    <div slot="title">Coachmark with 16:9 image</div>
+    <div slot="content">This is a Coachmark with some description</div>
+    <sp-action-menu placement="bottom-end" quiet slot="actions">
+        <sp-menu-item>Skip tour</sp-menu-item>
+        <sp-menu-item>Restart tour</sp-menu-item>
+    </sp-action-menu>
 </sp-coachmark>
 ```
 
@@ -150,23 +134,20 @@ Media Types allowed: `Images & Gifs`
 A custom media can also be added via `<slot name="cover-photo"></slot>`
 
 ```html
-<sp-coachmark placement="right" open>
-    <sp-coachmark-popover
-        currentstep="2"
-        totalsteps="8"
-        open
-        primary-cta="Next"
-        secondary-cta="Previous"
-    >
-        <div slot="title">Coachmark with 16:9 image</div>
-        <div slot="content">This is a Coachmark with some description</div>
-        <img slot="asset" src="https://picsum.photos/id/237/200/300" alt="" />
-        <sp-action-menu placement="bottom-end" quiet slot="actions">
-            <sp-menu-item>Skip tour</sp-menu-item>
-            <sp-menu-item>Restart tour</sp-menu-item>
-        </sp-action-menu>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
+<sp-coachmark
+    currentstep="2"
+    totalsteps="8"
+    open
+    primary-cta="Next"
+    secondary-cta="Previous"
+>
+    <div slot="title">Coachmark with 16:9 image</div>
+    <div slot="content">This is a Coachmark with some description</div>
+    <img slot="asset" src="https://picsum.photos/id/237/200/300" alt="" />
+    <sp-action-menu placement="bottom-end" quiet slot="actions">
+        <sp-menu-item>Skip tour</sp-menu-item>
+        <sp-menu-item>Restart tour</sp-menu-item>
+    </sp-action-menu>
 </sp-coachmark>
 ```
 
@@ -178,8 +159,7 @@ The `shortcutKey` is the primary key used to trigger an interaction and are typi
 `modifierKeys` are an array of `string`s that represent alternate keys that can be pressed, like `Shift`, `Alt`, `Cmd`, etc.
 
 ```html-live
-<sp-coachmark placement="right" open>
-    <sp-coachmark-popover
+    <sp-coachmark
         open
         currentstep="2"
         totalsteps="8"
@@ -191,9 +171,7 @@ The `shortcutKey` is the primary key used to trigger an interaction and are typi
             <sp-menu-item>Skip tour</sp-menu-item>
             <sp-menu-item>Restart tour</sp-menu-item>
         </sp-action-menu>
-    </sp-coachmark-popover>
-    <sp-coach-indicator slot="trigger"></sp-coach-indicator>
-</sp-coachmark>
+    </sp-coachmark>
 <script type="module">
     const initCoachMark = () => {
         const coachmark = document.querySelector('#coachmark-keys');
