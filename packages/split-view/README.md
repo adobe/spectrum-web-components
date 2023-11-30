@@ -43,7 +43,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
     primary-min="50"
     secondary-min="50"
     primary-size="100"
-    label
+    label="Resize the horizontal panels"
 >
     <div>
         <h1>Left panel</h1>
@@ -65,7 +65,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 ### Horizontal Resizable & Collapsible
 
 ```html
-<sp-split-view resizable label>
+<sp-split-view resizable label="Resize the horizontal collapsible panels">
     <div>
         <h1>Left panel</h1>
         <p>
@@ -101,7 +101,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
     primary-min="50"
     primary-max="150"
     secondary-min="50"
-    label
+    label="Resize the vertical panels"
 >
     <div>
         <h1>Top panel</h1>
@@ -123,7 +123,12 @@ import { SplitView } from '@spectrum-web-components/split-view';
 ### Vertical Resizable & Collapsible
 
 ```html
-<sp-split-view vertical resizable style="height: 300px;" label>
+<sp-split-view
+    vertical
+    resizable
+    style="height: 300px;"
+    label="Resize the vertical collapsible panels"
+>
     <div>
         <h1>Top panel</h1>
         <p>

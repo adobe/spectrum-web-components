@@ -184,7 +184,7 @@ export class SplitView extends SpectrumElement {
                     )) as boolean,
         };
         const label =
-            this.label || this.resizable ? 'Resize the panels' : undefined;
+            this.label || (this.resizable ? 'Resize the panels' : undefined);
 
         return html`
             <slot
