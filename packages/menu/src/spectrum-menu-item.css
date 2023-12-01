@@ -544,7 +544,6 @@ governing permissions and limitations under the License.
         --mod-menu-item-description-font-size,
         var(--spectrum-menu-item-description-font-size)
     );
-    -webkit-hyphens: auto;
     hyphens: auto;
     line-height: var(
         --mod-menu-item-description-line-height,
@@ -557,7 +556,6 @@ governing permissions and limitations under the License.
     overflow-wrap: break-word;
 }
 #label {
-    -webkit-hyphens: auto;
     hyphens: auto;
     overflow-wrap: break-word;
 }
