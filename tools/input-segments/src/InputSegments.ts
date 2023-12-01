@@ -392,12 +392,13 @@ export class InputSegments extends TextfieldBase {
             return;
         }
 
+        const isDate = dateSegmentTypes.includes(segment.type);
         const typedValue = this.numberParser.parse(data);
         const isAmPmHour = this.is12HourClock && segment.type === 'hour';
 
         segment.value = isAmPmHour
             ? this.getNewValueForAmPmHourSegment(details, typedValue)
-            : this.getNewValueForOtherSegments(details, typedValue);
+            : this.getNewValueForOtherSegments(details, typedValue, isDate);
 
         this.valueChanged(segment, event);
     }
@@ -521,8 +522,12 @@ export class InputSegments extends TextfieldBase {
         segment: Segment,
         event: InputEvent | KeyboardEvent
     ): void {
-        if (this.is12HourClock && segment.type === 'dayPeriod') {
-            this.updateHour();
+        if (this.is12HourClock) {
+            if (segment.type === 'hour') {
+                this.updateAmPm();
+            } else if (segment.type === 'dayPeriod') {
+                this.updateHour();
+            }
         }
 
         const hasDay = isNumber(this.daySegment?.value);
@@ -704,15 +709,21 @@ export class InputSegments extends TextfieldBase {
      *
      * @param details - Segment value and limits
      * @param typedValue - The value typed by the user
+     * @param isDateSegment - Indicates if it is a date segment
      */
     protected getNewValueForOtherSegments(
         details: SegmentDetails,
-        typedValue: number
-    ): number {
+        typedValue: number,
+        isDateSegment: boolean
+    ): number | undefined {
         let newValue = this.mergePreviousValueWithTypedValue(
             details,
             typedValue
         );
+
+        if (isDateSegment && newValue === 0) {
+            return undefined;
+        }
 
         const min = details.minValue;
         const max = details.maxValue;
@@ -731,7 +742,14 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
-     * If the segment has a `value`, it defines the text used in the UI formatted according to the locale
+     * If the segment has a `value`, it defines the text used in the UI formatted according to the locale. At this
+     * moment we are formatting the value of a specific segment, but it is not possible to generate a valid Date object
+     * with just one piece of information (day, month, year, etc.), so we need to define a "base date" to be used
+     * together with the value of the segment.
+     *
+     * For example, if the current segment is the day segment, but the month and year segment have not yet been defined,
+     * we need to choose a month and a year to be used in composing the date that will be used in formatting, after all,
+     * there is no day without a month and a year.
      *
      * @param segment - Segment to format the value
      */
@@ -740,22 +758,28 @@ export class InputSegments extends TextfieldBase {
             return;
         }
 
+        // We always use the first day of a month unless a specific day is specified
+        let day = this.daySegment?.value ?? 1;
+
+        // We always use the first month of the year unless a specific month is specified
+        let month =
+            this.monthSegment?.value ??
+            getMinimumMonthInYear(this.currentDateTime);
+
         let year = this.yearSegment?.value ?? this.currentDateTime.year;
-        let month = this.monthSegment?.value ?? this.currentDateTime.month;
-        let day = this.daySegment?.value ?? this.currentDateTime.day;
         let hour = this.hourSegment?.value ?? this.currentDateTime.hour;
         let minute = this.minuteSegment?.value ?? this.currentDateTime.minute;
         let second = this.secondSegment?.value ?? this.currentDateTime.second;
 
         switch (segment.type) {
-            case 'year':
-                year = segment.value;
+            case 'day':
+                day = segment.value;
                 break;
             case 'month':
                 month = segment.value;
                 break;
-            case 'day':
-                day = segment.value;
+            case 'year':
+                year = segment.value;
                 break;
             case 'hour':
                 hour = segment.value;
@@ -765,6 +789,9 @@ export class InputSegments extends TextfieldBase {
                 break;
             case 'second':
                 second = segment.value;
+                break;
+            case 'dayPeriod':
+                hour = (segment.value ?? 0) + 1;
                 break;
         }
 
@@ -776,6 +803,20 @@ export class InputSegments extends TextfieldBase {
         if (segment.type === 'year') {
             segment.formatted = String(year);
             return;
+        }
+
+        /**
+         * If the day being formatted is February 29th but the year segment has not yet been filled, we need to use a
+         * leap year to allow the 29th to remain, otherwise, if we use the current year and it is not a leap year, the
+         * day that would be displayed would be March 1st, as February 29th would not exist and JavaScript “moves” the
+         * day to the next day. As this year is only used to format the day and month, we use the year 2000 as the "base
+         * year" for formatting
+         */
+        if (
+            !this.yearSegment?.value &&
+            (['day', 'month'] as typeof dateSegmentTypes).includes(segment.type)
+        ) {
+            year = 2000;
         }
 
         const date = this.getDate(year, month, day);
@@ -1048,6 +1089,16 @@ export class InputSegments extends TextfieldBase {
     }
 
     /**
+     * If the defined month is February but we don't yet have the year defined, we use 29 as the max limit, as we have
+     * no way of knowing whether it is a leap year or not until the year segment is filled
+     */
+    private getFebruaryMaxValue(): number | undefined {
+        return this.monthSegment?.value === 2 && !this.yearSegment?.value
+            ? 29
+            : undefined;
+    }
+
+    /**
      * Checks whether the segment being created or updated will have a value or not by checking the following order:
      *
      * 1. Did the segment already have a previously defined value? If yes, use it
@@ -1135,15 +1186,34 @@ export class InputSegments extends TextfieldBase {
                     ),
                     value,
                 };
-            case 'day':
+            case 'day': {
+                let max = this.currentDateTime.calendar.getDaysInMonth(
+                    this.currentDateTime
+                );
+
+                /**
+                 * If we do not yet have a month defined by the user, we use the highest possible number as a maximum
+                 * limit. When the month is set, if the day is outside the allowed range, it will be corrected
+                 * automatically
+                 */
+                if (!this.monthSegment?.value) {
+                    max = 31;
+                }
+
+                // Check whether the maximum possible limit for the month of February should be used
+                const febMaxValue = this.getFebruaryMaxValue();
+
+                if (isNumber(febMaxValue)) {
+                    max = febMaxValue;
+                }
+
                 return {
                     minValue: getMinimumDayInMonth(this.currentDateTime),
-                    maxValue: this.currentDateTime.calendar.getDaysInMonth(
-                        this.currentDateTime
-                    ),
+                    maxValue: max,
                     value,
                 };
-            case 'hour':
+            }
+            case 'hour': {
                 let min = 0;
                 let max = 23;
 
@@ -1161,6 +1231,7 @@ export class InputSegments extends TextfieldBase {
                     maxValue: max,
                     value,
                 };
+            }
             case 'minute':
             case 'second':
                 return {
@@ -1197,6 +1268,23 @@ export class InputSegments extends TextfieldBase {
         if (this.amPmSegment) {
             this.amPmSegment.value = newValue;
         }
+    }
+
+    private updateAmPm(): void {
+        if (!this.hourSegment || !this.amPmSegment) {
+            this.resetHourAndAmPm();
+            return;
+        }
+
+        // If there is no hour or if AM/PM is already set, there is nothing to do
+        if (
+            this.hourSegment.value === undefined ||
+            this.amPmSegment.value !== undefined
+        ) {
+            return;
+        }
+
+        this.amPmSegment.value = this.getAmPmModifier(this.hourSegment.value);
     }
 
     /**
@@ -1284,6 +1372,13 @@ export class InputSegments extends TextfieldBase {
         );
 
         this.daySegment.maxValue = lastDayOfMonth.day;
+
+        // Check whether the maximum possible limit for the month of February should be used
+        const febMaxValue = this.getFebruaryMaxValue();
+
+        if (isNumber(febMaxValue)) {
+            this.daySegment.maxValue = febMaxValue;
+        }
 
         if (
             isNumber(this.daySegment.value) &&
