@@ -128,6 +128,10 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         this.treatment = quiet ? 'outline' : 'fill';
     }
 
+    public get quiet(): boolean {
+        return this.treatment === 'outline';
+    }
+
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         // There is no Spectrum design context for an `<sp-button>` without a variant

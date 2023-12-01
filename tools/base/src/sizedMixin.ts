@@ -47,7 +47,7 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
     } = {}
 ): T & Constructor<SizedElementInterface> {
     class SizedElement extends constructor {
-        @property({ type: String, reflect: true })
+        @property({ type: String })
         public get size(): ElementSize {
             return this._size || defaultSize;
         }

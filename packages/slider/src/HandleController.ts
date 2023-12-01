@@ -95,7 +95,7 @@ export class HandleController {
 
     public inputForHandle(handle: SliderHandle): HTMLInputElement | undefined {
         if (this.handles.has(handle.handleName)) {
-            const { input } = this.getHandleElements(handle);
+            const { input } = this.getHandleElements(handle) || {};
             return input;
         }
         /* c8 ignore next 2 */
@@ -161,8 +161,9 @@ export class HandleController {
     public get focusElement(): HTMLElement {
         const { input } = this.getActiveHandleElements();
         if (
-            this.host.editable &&
-            !(input as InputWithModel).model.handle.dragging
+            !input ||
+            (this.host.editable &&
+                !(input as InputWithModel).model.handle.dragging)
         ) {
             return this.host.numberField;
         }
