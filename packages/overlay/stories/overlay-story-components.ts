@@ -344,3 +344,35 @@ declare global {
         'popover-content': PopoverContent;
     }
 }
+
+export default class TransientHover extends LitElement {
+    @property()
+    open = false;
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-button variant="primary" id="triggerButton">
+                Button popover
+            </sp-button>
+            <sp-overlay
+                type="auto"
+                trigger="triggerButton@click"
+                @sp-opened=${() => {
+                    this.open = true;
+                }}
+            >
+                <sp-popover>My Popover</sp-popover>
+            </sp-overlay>
+
+            ${!this.open
+                ? html`
+                      <sp-overlay trigger="triggerButton@hover" type="hint">
+                          <sp-tooltip placement="right">My tooltip</sp-tooltip>
+                      </sp-overlay>
+                  `
+                : html``}
+        `;
+    }
+}
+
+customElements.define('transient-hover', TransientHover);

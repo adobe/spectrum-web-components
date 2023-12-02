@@ -504,6 +504,8 @@ export class Overlay extends OverlayFeatures {
 
     protected bindEvents(): void {
         if (!this.hasNonVirtualTrigger) return;
+        // Clean up listeners if they've already been bound
+        this.abortController?.abort();
         this.abortController = new AbortController();
         const nextTriggerElement = this.triggerElement as HTMLElement;
         switch (this.triggerInteraction) {
@@ -583,7 +585,9 @@ export class Overlay extends OverlayFeatures {
         );
     }
 
-    protected manageTriggerElement(triggerElement: HTMLElement | null): void {
+    protected manageTriggerElement(
+        triggerElement: HTMLElement | undefined
+    ): void {
         if (triggerElement) {
             this.unbindEvents();
             this.releaseAriaDescribedby();
@@ -928,13 +932,17 @@ export class Overlay extends OverlayFeatures {
                 | 'hover'
                 | undefined;
         }
-        const oldTrigger = this.triggerElement as HTMLElement;
+        // Merge multiple possible calls to manageTriggerElement().
+        let oldTrigger: HTMLElement | false | undefined = false;
         if (changes.has(elementResolverUpdatedSymbol)) {
+            oldTrigger = this.triggerElement as HTMLElement;
             this.triggerElement = this.elementResolver.element;
-            this.manageTriggerElement(oldTrigger);
         }
         if (changes.has('triggerElement')) {
-            this.manageTriggerElement(changes.get('triggerElement'));
+            oldTrigger = changes.get('triggerElement');
+        }
+        if (oldTrigger !== false) {
+            this.manageTriggerElement(oldTrigger);
         }
     }
 
