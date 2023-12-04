@@ -168,22 +168,19 @@ governing permissions and limitations under the License.
     );
     cursor: default;
 }
-::slotted(:not([slot])).focus-visible,
-::slotted(:not([slot])):focus {
+::slotted(:not([slot])).focus-visible {
     color: var(
         --highcontrast-tabs-color-key-focus,
         var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
     );
 }
-::slotted(:not([slot])):focus,
 ::slotted(:not([slot])):focus-visible {
     color: var(
         --highcontrast-tabs-color-key-focus,
         var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
     );
 }
-::slotted(:not([slot])).focus-visible:before,
-::slotted(:not([slot])):focus:before {
+::slotted(:not([slot])).focus-visible:before {
     border-color: var(
         --highcontrast-tabs-focus-indicator-color,
         var(
@@ -192,8 +189,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-::slotted(:not([slot])):focus-visible:before,
-::slotted(:not([slot])):focus:before {
+::slotted(:not([slot])):focus-visible:before {
     border-color: var(
         --highcontrast-tabs-focus-indicator-color,
         var(
