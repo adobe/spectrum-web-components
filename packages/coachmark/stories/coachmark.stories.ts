@@ -72,7 +72,7 @@ export const Default = (props: Properties): TemplateResult => {
         <sp-overlay
             trigger="trigger@hover"
             placement="right"
-            .receivesFocus=${'false'}
+            type="hint"
             ?open=${open}
         >
             <sp-coachmark

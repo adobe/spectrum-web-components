@@ -1,6 +1,6 @@
 ## Description
 
-`sp-coachmark` is a temporary message that educates users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour.
+`<sp-coachmark>` is a temporary message that educates users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour.
 
 ### Usage
 
@@ -19,7 +19,7 @@ import '@spectrum-web-components/coachmark/sp-coachmark.js';
 
 ```
 
-When looking to leverage the `Coachmark` base classe as a type and/or for extension purposes, do so via:
+When looking to leverage the `Coachmark` base class as a type and/or for extension purposes, do so via:
 
 ```
 import { Coachmark } from '@spectrum-web-components/coachmark';
@@ -49,7 +49,7 @@ Coachmark can take a `placement`, an `offset`, and a
 
 ## Using Action Menu
 
-Coach marks can include an `ActionMenu`, which appears at the top right of the coach mark. The `ActionMenu` should only include ways to interact with the coach mark tour as a whole, with options like “Skip tour” or “Restart tour.”
+Coach marks can include an `<sp-action-menu>`, which appears at the top right of the coach mark. The `<sp-action-menu>` should only include ways to interact with the coach mark tour as a whole, with options like “Skip tour” or “Restart tour.”
 
 ```html
 <sp-coachmark
@@ -76,7 +76,8 @@ User action-dependent coachmarks are designed to guide users based on their inte
 
 Inside the `<sp-coachmark>`, add the content and instructions for the coachmark in the `<sp-coachmark>`. You can also define primary and secondary CTA buttons for user interaction.
 
-Event Handling:
+**Event Handling:**
+
 The primary and secondary CTA buttons within the coachmark popover can be configured to dispatch events when clicked.
 
 ```html
