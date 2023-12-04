@@ -6840,10 +6840,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/calendar/-/calendar-4.0.20.tgz#e3abe39f796ec11020af68d1e19cc2c5e2ade46a"
   integrity sha512-HLG2F2ZZrn4YKUnsZ5ce862XBwBJb5wXGRti0nZNj8sy+jHESSCsl91HEjdVfZnsStGehVMgFe/avUD/+me//w==
 
-"@spectrum-css/card@^6.1.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-6.2.0.tgz#b207b0f61a940618f06b76f3e0fb608f939b28af"
-  integrity sha512-vY4BJpuDBr8IF7GlrQU5WqYttH8MaxSc7M/bCEJNC4SM/pFkLOLTb6jtXf8S2oSo8JYGcW/+GEIDuaed5sjjkA==
+"@spectrum-css/card@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-6.2.1.tgz#8a6d5906483e9b2fd5e3debbc9d61ffee0ec53a0"
+  integrity sha512-piawqolhedkdudq6TOB1PopRvFtFkaOWiDGlscPaHLGD4DsmLSmlFp6YRl/AmmD6vnPQs+mq/EUmNFamzUroAQ==
 
 "@spectrum-css/checkbox@^7.0.11":
   version "7.0.11"
@@ -6905,10 +6905,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.25.tgz#9d15c4f9cac1837499bec3a57e41c7ea44a5f831"
   integrity sha512-9eXYHLGLSSL1c7d9IbxN0irBA3qqfqygilw+wuaOuIhg0V7gBzH5fw6h81Zev3nWNZnOW2eAjfOXi+QJde0lXg==
 
-"@spectrum-css/dropzone@^5.0.29":
-  version "5.0.29"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.29.tgz#009554fc8290271d5f65685b748914839da1f6cb"
-  integrity sha512-RsdQNRiZWMuswfH8jDsFJ92qHQemcNaLaDhqvOqGyjI8zSrijPL6TEDpfUWjuLDqtr95foAQJv1bbjXTYCKZEg==
+"@spectrum-css/dropzone@^5.0.30":
+  version "5.0.30"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.30.tgz#ff541a3dce29b1172a1975ae9ab3bb4886746d70"
+  integrity sha512-2nV9/YfRoCnImMx2fthiZByg3F+rITr012s/RhyAXnWm+BNEYssCW4q7kWEhQjRouIu5bD4jvv0CavtKYATdmA==
 
 "@spectrum-css/expressvars@^3.0.9":
   version "3.0.9"
@@ -7055,10 +7055,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-5.0.5.tgz#8940fc28dcb1af3c4dbab3c4da1dad04068a3852"
   integrity sha512-AZ4OiNTIwlwgK1p79SFAH2CR+l5s/LUJ0FrrnQHj2UCbTtF5ZPfMedKMevVf39jnBMDv9YjU6bNAKaO0v+ykeg==
 
-"@spectrum-css/tabs@^4.0.17":
-  version "4.0.17"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-4.0.17.tgz#e3b3d37b2e808f7ebf0f614e861c87fba60d41e2"
-  integrity sha512-tqsdJyqJX7EB+6nCY7gp4OMh/EpSKPWfCkDKY9hfbsxcpF4Zm9U4ZeVFGICJzlrWyd7ltlwN+JRmjF0fbV+HCg==
+"@spectrum-css/tabs@^4.0.26":
+  version "4.0.26"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-4.0.26.tgz#334cb3335a0bb84b20547145cc24cb5c4f8e0cb0"
+  integrity sha512-gBcOcV1jFY2ZSsz7Z5woYBSCC62oUbZLElLyG/wy4p7XnvfUvQqfMn1Jt1YV7b4HizMTwfrSUNmhW9Ym4JIsaQ==
 
 "@spectrum-css/tag@^8.0.6":
   version "8.0.6"
@@ -7070,10 +7070,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-4.0.9.tgz#a25e83dfca8d5c8dd9cc452638bb876f5a63d16f"
   integrity sha512-K7Scw8NbW+nzLCkKjf1sIWZLjYbfMwJ3OP7Xi1zbpqtXBX3x/nX0oH1GzgUoR7Pdc4PAIKLOPpNThhxVj60O0Q==
 
-"@spectrum-css/textfield@^6.0.20":
-  version "6.0.20"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-6.0.20.tgz#627e926faf73b1da0de8d35a1453e8e272299ff0"
-  integrity sha512-eBU3bolIz690JLmf8a3M4Fo5dDPNFNowY1rIEeovZYCR6T4WMl3fqFpRpRuWC2Y9+X3OGoKYExfTog/FF+wIlg==
+"@spectrum-css/textfield@^6.0.29":
+  version "6.0.29"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-6.0.29.tgz#65f8dbfc526c78d26358af1c2336ebdc8db80dd5"
+  integrity sha512-3dtWWyOCTb0TIwtDw9urVQYBX05uXMrfupU+odigcKbT+IuQIlYAJgagZWeTSCdZH4mA+C/P6YGRvgVh4Z7K4Q==
 
 "@spectrum-css/thumbnail@^5.0.7":
   version "5.0.7"
