@@ -174,7 +174,6 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         changedProperties: PropertyValues<this>
     ): void {
         super.willUpdate(changedProperties);
-
         if (changedProperties.has('pending')) {
             if (this.pending) {
                 this.pendingCooldown = window.setTimeout(() => {
@@ -183,10 +182,10 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         this.setAttribute('aria-label', this.pendingLabel);
                     }
                 }, 1000);
-            } else {
+            } else if (this.pending === false && this.isPending) {
                 window.clearTimeout(this.pendingCooldown);
                 this.isPending = false;
-                this.removeAttribute('aria-label');
+                this.setAttribute('aria-label', this.label || '');
             }
         }
     }
