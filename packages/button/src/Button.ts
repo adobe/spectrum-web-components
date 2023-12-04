@@ -203,16 +203,18 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
-            ${when(
-                this.isPending,
-                () => html`
+            ${when(this.isPending, () => {
+                import(
+                    '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+                );
+                return html`
                     <sp-progress-circle
                         indeterminate
                         static="white"
                         size="s"
                     ></sp-progress-circle>
-                `
-            )}
+                `;
+            })}
         `;
     }
 }
