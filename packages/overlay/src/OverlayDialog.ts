@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { ReactiveElement } from 'lit';
+import type { SpectrumElement } from '@spectrum-web-components/base';
 import {
     firstFocusableIn,
     firstFocusableSlottedIn,
@@ -26,10 +26,11 @@ import {
     guaranteedAllTransitionend,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
+import { userFocusableSelector } from '@spectrum-web-components/shared';
 
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
-): T & Constructor<ReactiveElement> {
+): T & Constructor<SpectrumElement> {
     class OverlayWithDialog extends constructor {
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
@@ -75,6 +76,9 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     if (!targetOpenState) {
                         // Show/focus workflow when opening _only_.
                         return;
+                    }
+                    if (el.matches(userFocusableSelector)) {
+                        focusEl = el;
                     }
                     focusEl = focusEl || firstFocusableIn(el);
                     if (!focusEl) {

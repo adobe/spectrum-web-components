@@ -13,7 +13,7 @@ import {
     firstFocusableIn,
     firstFocusableSlottedIn,
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
-import { ReactiveElement } from 'lit';
+import type { SpectrumElement } from '@spectrum-web-components/base';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import {
     Constructor,
@@ -28,10 +28,25 @@ import {
     overlayTimer,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
+import { userFocusableSelector } from '@spectrum-web-components/shared';
+
+function isOpen(el: HTMLElement): boolean {
+    let popoverOpen = false;
+    try {
+        popoverOpen = el.matches(':popover-open');
+        // eslint-disable-next-line no-empty
+    } catch (error) {}
+    let open = false;
+    try {
+        open = el.matches(':open');
+        // eslint-disable-next-line no-empty
+    } catch (error) {}
+    return popoverOpen || open;
+}
 
 export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T
-): T & Constructor<ReactiveElement> {
+): T & Constructor<SpectrumElement> {
     class OverlayWithPopover extends constructor {
         protected override async manageDelay(
             targetOpenState: boolean
@@ -48,16 +63,37 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             }
         }
 
+        /**
+         * A popover should be hidden _after_ it is no longer on top-layer because
+         * the position metrics will have changed from when it was originally positioned.
+         */
         private async shouldHidePopover(
             targetOpenState: boolean
         ): Promise<void> {
             if (targetOpenState && this.open !== targetOpenState) {
                 return;
             }
-            // When in a parent Overlay, this Overlay may need to position itself
-            // while closing in due to the parent _also_ closing which means the
-            // location can no longer rely on "top layer over transform" math.
-            await this.placementController.resetOverlayPosition();
+            const update = async ({
+                newState,
+            }: { newState?: string } = {}): Promise<void> => {
+                if (newState === 'open') {
+                    return;
+                }
+                // When in a parent Overlay, this Overlay may need to position itself
+                // while closing in due to the parent _also_ closing which means the
+                // location can no longer rely on "top layer over transform" math.
+                await this.placementController.resetOverlayPosition();
+            };
+            if (!isOpen(this.dialogEl)) {
+                // The means the Overlay was closed from the outside, it is already off of top-layer
+                // so we need to position it in regards to this new state.
+                update();
+                return;
+            }
+            // `toggle` is an async event, so it's possible for this handler to run a frame late
+            this.dialogEl.addEventListener('toggle', update as EventListener, {
+                once: true,
+            });
         }
 
         private async shouldShowPopover(
@@ -113,6 +149,9 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                 }
                 if (!targetOpenState) {
                     return;
+                }
+                if (el.matches(userFocusableSelector)) {
+                    focusEl = el;
                 }
                 focusEl = focusEl || firstFocusableIn(el);
                 if (focusEl) {
@@ -181,21 +220,8 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                     if (this.open !== targetOpenState) {
                         return;
                     }
-                    let popoverOpen = false;
-                    try {
-                        popoverOpen = this.dialogEl.matches(':popover-open');
-                        // eslint-disable-next-line no-empty
-                    } catch (error) {}
-                    let open = false;
-                    try {
-                        open = this.dialogEl.matches(':open');
-                        // eslint-disable-next-line no-empty
-                    } catch (error) {}
-                    if (
-                        targetOpenState !== true &&
-                        (popoverOpen || open) &&
-                        this.isConnected
-                    ) {
+                    const open = isOpen(this.dialogEl);
+                    if (targetOpenState !== true && open && this.isConnected) {
                         this.dialogEl.addEventListener(
                             'beforetoggle',
                             () => {

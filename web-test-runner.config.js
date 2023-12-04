@@ -16,7 +16,7 @@ import {
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
-    chromiumWithFlags,
+    chromiumWithMemoryTooling,
     configuredVisualRegressionPlugin,
     firefox,
     packages,
@@ -26,6 +26,7 @@ import {
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
 import rollupCommonjs from '@rollup/plugin-commonjs';
+import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
@@ -38,6 +39,7 @@ export default {
         }),
         sendKeysPlugin(),
         sendMousePlugin(),
+        grantPermissionsPlugin(),
         a11ySnapshotPlugin(),
         configuredVisualRegressionPlugin(),
         json({}),
@@ -52,6 +54,13 @@ export default {
                 }
             },
         },
+        {
+            name: 'measureUserAgentSpecificMemory-plugin',
+            transform(context) {
+                context.set('Cross-Origin-Opener-Policy', 'same-origin');
+                context.set('Cross-Origin-Embedder-Policy', 'credentialless');
+            },
+        },
     ],
     mimeTypes: {
         '**/*.json': 'js',
@@ -61,8 +70,6 @@ export default {
     },
     http2: true,
     protocol: 'https:',
-    concurrency: 4,
-    concurrentBrowsers: 1,
     testsFinishTimeout: 60000,
     coverageConfig: {
         report: true,
@@ -71,29 +78,28 @@ export default {
             'packages/*/stories/*',
             'packages/icons-ui/**',
             'packages/icons-workflow/**',
-            // The following file is no longer used in Chrome where coverage is calculated.
             'test/**',
             '**/test/**',
             'tools/*/stories/*',
-            'tools/shared/src/focus-visible.*',
             'tools/styles/**',
             '**/node_modules/**',
-            // The following are WIP removals for the Overlay API update
-            '**/ActiveOverlay.*',
-            '**/overlay-stack.*',
-            '**/overlay-utils.*',
-            '**/OverlayPopover.*',
+            // The following files are not used in Chrome where coverage is calculated.
+            '**/OverlayNoPopover.*',
+            'tools/shared/src/focus-visible.*',
+            // Deprecated
+            'packages/icons/**',
         ],
         threshold: {
             statements: 98.5,
             branches: 95.5,
-            functions: 96.5,
+            functions: 97,
             lines: 98.5,
         },
     },
     testFramework: {
         config: {
-            timeout: 3000,
+            timeout: 5000,
+            retries: 1,
         },
     },
     groups: [
@@ -129,9 +135,12 @@ export default {
                 'packages/split-button/test/*.test.js',
                 'packages/tooltip/test/*.test.js',
             ],
-            browsers: [chromium, chromiumWithFlags, firefox, webkit],
+            browsers: [chromium, firefox, webkit],
+        },
+        {
+            name: 'unit-ci',
         },
     ],
     group: 'unit',
-    browsers: [chromium, firefox, webkit],
+    browsers: [firefox, chromiumWithMemoryTooling, webkit],
 };

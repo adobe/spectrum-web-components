@@ -215,7 +215,7 @@ governing permissions and limitations under the License.
         --mod-statuslight-line-height,
         var(--spectrum-statuslight-line-height)
     );
-    min-height: var(
+    min-block-size: var(
         --mod-statuslight-height,
         var(--spectrum-statuslight-height)
     );

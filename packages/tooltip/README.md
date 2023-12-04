@@ -46,8 +46,7 @@ Tooltips can be top, bottom, left, or right.
 By default, Tooltip provides styling without behavior.
 You must combine it with an [Overlay Trigger](https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#%22hover%22-content-only) in order to manage its overlay behavior.
 
-You can instead apply the `self-managed` attribute for this common case,
-which automaticaly binds to the parent element's hover interaction:
+You can use the tooltip as the descendant of an interactive element, such as [Action Button](https://opensource.adobe.com/spectrum-web-components/components/action-button/), by applying the `self-managed` attribute which automatically binds the Tooltip to its first interactive ancestor element's focus/hover interactions:
 
 ```html
 <sp-action-button>
@@ -58,6 +57,21 @@ which automaticaly binds to the parent element's hover interaction:
 
 This is especially useful when inserting an intermediate `<overlay-trigger>` would interfere with
 parent/child relationships, such as between `<sp-action-group>` and `<sp-action-button>`.
+
+Note that an interactive element is an element that can receive focus during tab navigation, such as `sp-action-button`, `sp-action-menu`, `sp-field-label` etc.
+
+Given that tooltip is not focusable by itself, it would not show up during tab navigation. Thus a tooltip would not be accessible if used with a non-interactive element, such as `<sp-icon-*>`.
+
+The correct way to make it accessible would be to wrap it under an interactive element, such as `sp-action-button`:
+
+```html
+<sp-action-button size="s">
+    <sp-icon-info></sp-icon-info>
+    <sp-tooltip self-managed placement="right">
+        Display something here
+    </sp-tooltip>
+</sp-action-button>
+```
 
 ## Variants
 

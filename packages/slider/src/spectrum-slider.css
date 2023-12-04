@@ -476,9 +476,9 @@ governing permissions and limitations under the License.
         --mod-slider-handle-size,
         var(--spectrum-slider-handle-size)
     );
-    left: 50%;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
     position: absolute;
-    top: 50%;
     transform: translate(-50%, -50%);
     transition: box-shadow
             var(
@@ -948,12 +948,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-@media (forced-colors: active) {
-    :host([disabled]) #ramp + .handle {
-        fill: ButtonFace;
-        background-color: ButtonFace;
-    }
-}
 :host([disabled]) #ramp path {
     fill: var(
         --highcontrast-slider-ramp-track-color-disabled,
@@ -1009,6 +1003,10 @@ governing permissions and limitations under the License.
         --spectrum-slider-label-text-color: CanvasText;
         --spectrum-slider-label-text-color-disabled: GrayText;
         --spectrum-slider-ramp-handle-border-color-active: ButtonText;
+    }
+    :host([disabled]) #ramp + .handle {
+        fill: ButtonFace;
+        background-color: ButtonFace;
     }
 }
 :host {

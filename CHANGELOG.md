@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **button:** support [icon-only] delivery ([#3716](https://github.com/adobe/spectrum-web-components/issues/3716)) ([e236a50](https://github.com/adobe/spectrum-web-components/commit/e236a50d8e51da0d019758f744e1a1a8a9370b1c))
+-   **field-group:** apply role when none present ([3616199](https://github.com/adobe/spectrum-web-components/commit/36161997825b77b3a31a4090e273c12329be9d8c))
+-   **number-field:** update display value on scroll and arrow up/down ([fc59a18](https://github.com/adobe/spectrum-web-components/commit/fc59a18c73bb9b63f319d006713a5b5d15778cca))
+-   **overlay:** ensure manual overlays persist through interactions outside of their subtree ([#3788](https://github.com/adobe/spectrum-web-components/issues/3788)) ([ef5617f](https://github.com/adobe/spectrum-web-components/commit/ef5617f81b205b8bcf0a79e2b8a810cc65f13c3d))
+-   **split-view:** expand accessible attribute usage and HCM delivery ([cb7c71f](https://github.com/adobe/spectrum-web-components/commit/cb7c71f988df48aceef129665fdf432d5bcef3b0))
+-   **tags:** make the 'delete' event cancelable ([#3778](https://github.com/adobe/spectrum-web-components/issues/3778)) ([d9afd41](https://github.com/adobe/spectrum-web-components/commit/d9afd4183f85dfdfdd759236c3f77f7e7841b7c0))
+
+### Features
+
+-   **textfield:** added name attribute to textfield ([#3752](https://github.com/adobe/spectrum-web-components/issues/3752)) ([593005a](https://github.com/adobe/spectrum-web-components/commit/593005a8892139beb9ece9342b51a2b43d63cef3))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **action-bar:** allow "close" event to be cancelled ([17cf55e](https://github.com/adobe/spectrum-web-components/commit/17cf55e5117d632e612e2055c77f6fcc4dadbe4c))
+-   **infield-button:** add infield-button package ([057b885](https://github.com/adobe/spectrum-web-components/commit/057b885276f3d5dcbe32bab5ab36a2bb82334bc3))
+-   **overlay:** add delay resolution from overlaid content ([#3748](https://github.com/adobe/spectrum-web-components/issues/3748)) ([5c4f1f6](https://github.com/adobe/spectrum-web-components/commit/5c4f1f6f87cac60cb1884f59aa29d256f7baabb8))
+-   **overlay:** calculate more transforms ([6538a45](https://github.com/adobe/spectrum-web-components/commit/6538a45a036f60c4efce4c3ed3d1d6f2782a188e))
+-   **overlay:** place longpress helper content in a more accessible, less layout affecting location ([dd12c23](https://github.com/adobe/spectrum-web-components/commit/dd12c2346142a107ee9c7824410dff5ae660e574))
+-   support numeric IDs when resolving elements ([f62bf0d](https://github.com/adobe/spectrum-web-components/commit/f62bf0d24191ef47a4d7f9172c40570e052808a2))
+-   **table:** update row selection aria ([6c8c706](https://github.com/adobe/spectrum-web-components/commit/6c8c70688c1df59b6e7a7a9cbf562b7171e710c1))
+-   **top-nav:** default to role="navigation", sprout aria-label when "label" applied ([bbcea4a](https://github.com/adobe/spectrum-web-components/commit/bbcea4a65d1e3c0053962777ee3482a22572f193))
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+### Bug Fixes
+
+-   **grid:** plug a mememory leak from the render process ([4414bd9](https://github.com/adobe/spectrum-web-components/commit/4414bd960d7695b98b283c90f7233b3ce047401a))
+-   **number-field:** prevent over excited "change" events ([7b93724](https://github.com/adobe/spectrum-web-components/commit/7b937241151cad5cfc9e5a03fa70c4b70ac0cbea))
+-   update deps graph, fix imports ([f633005](https://github.com/adobe/spectrum-web-components/commit/f633005e26bff640615f157b54830bfb0677d682))
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+### Bug Fixes
+
+-   **menu:** conditionally access slots for their assigned content ([#3717](https://github.com/adobe/spectrum-web-components/issues/3717)) ([c045822](https://github.com/adobe/spectrum-web-components/commit/c04582216c67051fa6c78f27b299a9fdfd076597))
+-   **overlay:** allow overlay to persist on hover ([#3706](https://github.com/adobe/spectrum-web-components/issues/3706)) ([7707040](https://github.com/adobe/spectrum-web-components/commit/77070405fdb0d6a2bca5d5e33fe03a856f1cef6c))
+-   update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+### Bug Fixes
+
+-   **action-button:** allow change events to bubble and pierce shadowdom ([#3614](https://github.com/adobe/spectrum-web-components/issues/3614)) ([3f76e04](https://github.com/adobe/spectrum-web-components/commit/3f76e04fb71ad263e067838050bd550c009b1a69))
+-   **alert-dialog:** use resize observer in place of page resize event for content measurement work ([b963813](https://github.com/adobe/spectrum-web-components/commit/b963813156489370f0b0fa4390cb0df0891070c9))
+-   **grid:** grid focusgroup fix on mutationObserver ([#3684](https://github.com/adobe/spectrum-web-components/issues/3684)) ([5d47db5](https://github.com/adobe/spectrum-web-components/commit/5d47db52b99ccd1cc58d9044781f3f1e38744bd6))
+-   **menu:** allow `change` events to be direct ([#3689](https://github.com/adobe/spectrum-web-components/issues/3689)) ([b2cd3da](https://github.com/adobe/spectrum-web-components/commit/b2cd3da1384c577f27f604c42847953bb7121cb2))
+-   **number-field:** handle negative numbers ([#3673](https://github.com/adobe/spectrum-web-components/issues/3673)) ([62553dd](https://github.com/adobe/spectrum-web-components/commit/62553dd437efb89b42372553adfdf95fc0be7496))
+-   **number-field:** update number-field value on pressing "enter" ([#3638](https://github.com/adobe/spectrum-web-components/issues/3638)) ([649eb2f](https://github.com/adobe/spectrum-web-components/commit/649eb2f5dd9e0d08bb18f640565b34e908c5b518))
+-   **progress-circle,toast,tooltip:** ensure complete dependency graph ([#3701](https://github.com/adobe/spectrum-web-components/issues/3701)) ([a5dfada](https://github.com/adobe/spectrum-web-components/commit/a5dfada0578afd5d5065d0fb7a44eb557979d292))
+-   **slider:** ensure z-index in Express theme ([c0cc655](https://github.com/adobe/spectrum-web-components/commit/c0cc655bd834188e26850309d71fbd0fb63ee7f5))
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **action-menu:** stack a "label-only" slot on top of the others to allow no icon menu buttons ([6b5817d](https://github.com/adobe/spectrum-web-components/commit/6b5817d34ff664ce0855f84165306731875e48a3))
+-   **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
+-   **base:** add re-export of lit/directive.js ([#3616](https://github.com/adobe/spectrum-web-components/issues/3616)) ([d2e237f](https://github.com/adobe/spectrum-web-components/commit/d2e237fe0fedf12ffe5fdcb726fdf31601409cb9))
+-   **base:** introduce static version property for component class ([#3582](https://github.com/adobe/spectrum-web-components/issues/3582)) ([e7e2b76](https://github.com/adobe/spectrum-web-components/commit/e7e2b769d21dc0317c3d38d02ee327b019871055))
+-   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+-   **menu:** allow Menu elements to be controlled ([74ed7fb](https://github.com/adobe/spectrum-web-components/commit/74ed7fb7d593199c333392f89c4827fcb8248cab))
+-   **menu:** manage deeply slotted menu items and initial focus ([7f9ad69](https://github.com/adobe/spectrum-web-components/commit/7f9ad69282b6e740efb04fa2933d3163164259c7))
+-   opacity checkerboard inclusion order ([#3651](https://github.com/adobe/spectrum-web-components/issues/3651)) ([4f417dc](https://github.com/adobe/spectrum-web-components/commit/4f417dc046d7d80d3c32e6286c71ee0311cf8a98))
+-   **overlay:** allow "receives-focus" to target the root of an overlay ([#3658](https://github.com/adobe/spectrum-web-components/issues/3658)) ([0db1025](https://github.com/adobe/spectrum-web-components/commit/0db10258d84409d364b5e1bad57e71683de93fea))
+-   **overlay:** ensure position when closing overlays over the top-layer ([55fab0d](https://github.com/adobe/spectrum-web-components/commit/55fab0d49047c64849ed9c8001b79b793440da48))
+-   **overlay:** reduce circular dependencies ([25eeb71](https://github.com/adobe/spectrum-web-components/commit/25eeb7138b19ba0c1a6543d1f37c4e8cea2cdbd6))
+-   **picker,split-button:** include "tooltip" slot in the main button ([699b8af](https://github.com/adobe/spectrum-web-components/commit/699b8af2612f2dab8f7c65b9c105844f6feaa6ed))
+-   **shared:** scope querySelector to direct children, like slots are ([515eaee](https://github.com/adobe/spectrum-web-components/commit/515eaee4ec8522f0389f967420f75cbf3545b58c))
+-   **slider:** add t-shirt sizing ([24dac78](https://github.com/adobe/spectrum-web-components/commit/24dac789239bc154e97b3062fa4a91b2174f685e))
+
+### Features
+
+-   **color-slider:** migrate to core tokens ([#3507](https://github.com/adobe/spectrum-web-components/issues/3507)) ([96d0d40](https://github.com/adobe/spectrum-web-components/commit/96d0d40419e9f0b2d1ed77528dc062b1e62aeea5))
+-   **meter:** add "variant" (coalescing various boolean attributes) and remove "over-background" attributes ([#3514](https://github.com/adobe/spectrum-web-components/issues/3514)) ([40e5f8a](https://github.com/adobe/spectrum-web-components/commit/40e5f8ae476a590bb3df52d7281f76f5908b8672))
+-   **table:** migrate to core tokens ([#3441](https://github.com/adobe/spectrum-web-components/issues/3441)) ([b866bab](https://github.com/adobe/spectrum-web-components/commit/b866bab30a56da1474d533221afd3ed536c31871))
+-   **underlay:** use core tokens ([9c555ab](https://github.com/adobe/spectrum-web-components/commit/9c555ab6afba738e8ac34ccda196d4775e97e30d))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 ### Bug Fixes

@@ -16,7 +16,8 @@ governing permissions and limitations under the License.
     --spectrum-actiongroup-border-radius-reset: 0;
     --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
 }
-:host([size='s']) {
+:host([size='s']),
+:host([size='xs']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-75
     );
@@ -42,6 +43,12 @@ governing permissions and limitations under the License.
 }
 ::slotted(*) {
     flex-shrink: 0;
+}
+::slotted(.focus-visible) {
+    z-index: 3;
+}
+::slotted(:focus-visible) {
+    z-index: 3;
 }
 :host(:not([vertical]):not([compact])) ::slotted(*) {
     flex-shrink: 0;

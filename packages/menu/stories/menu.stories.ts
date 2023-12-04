@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import { Menu } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -57,7 +58,14 @@ export const Default = (): TemplateResult => {
 
 export const singleSelect = (): TemplateResult => {
     return html`
-        <sp-menu selects="single">
+        <sp-menu
+            selects="single"
+            @change=${({
+                target: { value },
+            }: Event & { target: Menu }): void => {
+                navigator.clipboard.writeText(value);
+            }}
+        >
             <sp-menu-item selected>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>
@@ -68,7 +76,14 @@ export const singleSelect = (): TemplateResult => {
         </sp-menu>
 
         <sp-popover open>
-            <sp-menu selects="single">
+            <sp-menu
+                selects="single"
+                @change=${({
+                    target: { value },
+                }: Event & { target: Menu }): void => {
+                    navigator.clipboard.writeText(value);
+                }}
+            >
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item selected>Feather...</sp-menu-item>
@@ -105,6 +120,39 @@ export const multipleSelect = (): TemplateResult => {
             </sp-menu>
         </sp-popover>
     `;
+};
+
+export const controlled = (): TemplateResult => {
+    const forceSelection = (event: Event & { target: Menu }): void => {
+        event.target.updateComplete.then(() => {
+            event.target.selected = ['Select and Mask...'];
+        });
+    };
+    return html`
+        <p>
+            This Menu will default to a
+            <code>selected</code>
+            value of
+            <code>[ 'Feather...', 'Save Selection' ]</code>
+            but then on any subsequent interaction be forced to a
+            <code>selected</code>
+            value of
+            <code>[ 'Select and Mask...' ]</code>
+            .
+        </p>
+        <sp-menu selects="multiple" @change=${forceSelection}>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item selected>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item selected>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-menu>
+    `;
+};
+controlled.swc_vrt = {
+    skip: true,
 };
 
 export const menuItemWithDescription = (): TemplateResult => {

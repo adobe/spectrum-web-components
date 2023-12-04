@@ -15,6 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/picker/sp-picker.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
@@ -124,6 +125,46 @@ export const Default = (args: StoryArgs): TemplateResult => {
             .
         </p>
     `;
+};
+
+export const tooltip = (args: StoryArgs): TemplateResult => {
+    const { open, ...rest } = args;
+    return html`
+        <sp-field-label for="picker-1">Where do you live?</sp-field-label>
+        <sp-picker
+            id="picker-1"
+            @change=${handleChange(args)}
+            label="Select a Country with a very long label, too long, in fact"
+            ${spreadProps(rest)}
+        >
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+            <sp-tooltip
+                slot="tooltip"
+                ?open=${open}
+                self-managed
+                placement="right"
+            >
+                This Picker wants to know where you live.
+            </sp-tooltip>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+tooltip.args = {
+    open: true,
 };
 
 export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
@@ -329,8 +370,11 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 clear: left;
                 margin-bottom: 15px;
             }
+            .backdrop-filter-test {
+                backdrop-filter: saturate(80%);
+            }
         </style>
-        <fieldset>
+        <fieldset class="backdrop-filter-test">
             <sp-field-label for="picker-open">
                 Where do you live?
             </sp-field-label>

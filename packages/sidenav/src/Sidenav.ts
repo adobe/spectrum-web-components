@@ -23,7 +23,7 @@ import sidenavStyles from './sidenav.css.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export interface SidenavSelectDetail {
     value: string;

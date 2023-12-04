@@ -53,6 +53,7 @@ import { PlacementController } from './PlacementController.js';
 import styles from './overlay.css.js';
 
 const LONGPRESS_DURATION = 300;
+const HOVER_DELAY = 300;
 
 type LongpressEvent = {
     source: 'pointer' | 'keyboard';
@@ -94,7 +95,15 @@ export class Overlay extends OverlayFeatures {
      * provided that option.
      */
     @property({ type: Boolean })
-    override delayed = false;
+    override get delayed(): boolean {
+        return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
+    }
+
+    override set delayed(delayed: boolean) {
+        this._delayed = delayed;
+    }
+
+    private _delayed = false;
 
     @query('.dialog')
     override dialogEl!: HTMLDialogElement & {
@@ -146,6 +155,7 @@ export class Overlay extends OverlayFeatures {
         'null';
 
     private longressTimeout!: ReturnType<typeof setTimeout>;
+    private hoverTimeout?: ReturnType<typeof setTimeout>;
 
     /**
      * The `offset` property accepts either a single number, to
@@ -450,7 +460,7 @@ export class Overlay extends OverlayFeatures {
                 );
             }
         }
-        if (!this.open) {
+        if (!this.open && this.type !== 'hint') {
             // If the focus remains inside of the overlay or
             // a slotted descendent of the overlay you need to return
             // focus back to the trigger.
@@ -562,6 +572,11 @@ export class Overlay extends OverlayFeatures {
             options
         );
         this.addEventListener(
+            'pointerenter',
+            this.handleOverlayPointerenter,
+            options
+        );
+        this.addEventListener(
             'pointerleave',
             this.handleOverlayPointerleave,
             options
@@ -606,7 +621,21 @@ export class Overlay extends OverlayFeatures {
         const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
         longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
         longpressDescription.slot = 'longpress-describedby-descriptor';
-        trigger.insertAdjacentElement('afterend', longpressDescription);
+        const triggerParent = trigger.getRootNode() as HTMLElement;
+        const overlayParent = this.getRootNode() as HTMLElement;
+        // Manage the placement of the helper element in an accessible place with
+        // the lowest chance of negatively affecting the layout of the page.
+        if (triggerParent === overlayParent) {
+            // Trigger and Overlay in same DOM tree...
+            // Append helper element to Overlay.
+            this.append(longpressDescription);
+        } else {
+            // If Trigger in <body>, hide helper
+            longpressDescription.hidden = !('host' in triggerParent);
+            // Trigger and Overlay in different DOM tree, Trigger in shadow tree...
+            // Insert helper element after Trigger.
+            trigger.insertAdjacentElement('afterend', longpressDescription);
+        }
 
         const releaseLongpressDescribedby = conditionAttributeWithId(
             trigger,
@@ -789,44 +818,30 @@ export class Overlay extends OverlayFeatures {
     private pointerentered = false;
 
     protected handlePointerenter = (): void => {
+        if (this.hoverTimeout) {
+            clearTimeout(this.hoverTimeout);
+            delete this.hoverTimeout;
+        }
         if (this.disabled) return;
         this.open = true;
         this.pointerentered = true;
     };
 
-    protected handlePointerleave = (event: PointerEvent): void => {
-        if (
-            this === event.relatedTarget ||
-            this.contains(event.relatedTarget as Node) ||
-            [...this.children].find((child) => {
-                if (child.localName !== 'slot') {
-                    return false;
-                }
-                return (child as HTMLSlotElement)
-                    .assignedElements({ flatten: true })
-                    .find((el) => {
-                        return (
-                            el === event.relatedTarget ||
-                            el.contains(event.relatedTarget as Node)
-                        );
-                    });
-            })
-        ) {
-            return;
+    // set a timeout once the pointer enters and the overlay is shown
+    // give the user time to enter the overlay
+
+    protected handleOverlayPointerenter = (): void => {
+        if (this.hoverTimeout) {
+            clearTimeout(this.hoverTimeout);
+            delete this.hoverTimeout;
         }
+    };
+
+    protected handlePointerleave = (): void => {
         this.doPointerleave();
     };
 
-    protected handleOverlayPointerleave = (event: PointerEvent): void => {
-        if (
-            this.triggerElement === event.relatedTarget ||
-            (this.hasNonVirtualTrigger &&
-                (this.triggerElement as HTMLElement).contains(
-                    event.relatedTarget as Node
-                ))
-        ) {
-            return;
-        }
+    protected handleOverlayPointerleave = (): void => {
         this.doPointerleave();
     };
 
@@ -834,7 +849,10 @@ export class Overlay extends OverlayFeatures {
         this.pointerentered = false;
         const triggerElement = this.triggerElement as HTMLElement;
         if (this.focusedin && triggerElement.matches(':focus-visible')) return;
-        this.open = false;
+
+        this.hoverTimeout = setTimeout(() => {
+            this.open = false;
+        }, HOVER_DELAY);
     }
 
     protected handleLongpress = (): void => {

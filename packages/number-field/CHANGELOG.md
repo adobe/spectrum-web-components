@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **number-field:** update display value on scroll and arrow up/down ([fc59a18](https://github.com/adobe/spectrum-web-components/commit/fc59a18c73bb9b63f319d006713a5b5d15778cca))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **infield-button:** add infield-button package ([057b885](https://github.com/adobe/spectrum-web-components/commit/057b885276f3d5dcbe32bab5ab36a2bb82334bc3))
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+### Bug Fixes
+
+-   **number-field:** prevent over excited "change" events ([7b93724](https://github.com/adobe/spectrum-web-components/commit/7b937241151cad5cfc9e5a03fa70c4b70ac0cbea))
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+### Bug Fixes
+
+-   **number-field:** handle negative numbers ([#3673](https://github.com/adobe/spectrum-web-components/issues/3673)) ([62553dd](https://github.com/adobe/spectrum-web-components/commit/62553dd437efb89b42372553adfdf95fc0be7496))
+-   **number-field:** update number-field value on pressing "enter" ([#3638](https://github.com/adobe/spectrum-web-components/issues/3638)) ([649eb2f](https://github.com/adobe/spectrum-web-components/commit/649eb2f5dd9e0d08bb18f640565b34e908c5b518))
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 ### Bug Fixes

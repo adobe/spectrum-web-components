@@ -54,6 +54,17 @@ describe('Switch', () => {
 
         expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
     });
+    it('has name attribute', async () => {
+        const el = await fixture<Switch>(
+            html`
+                <sp-switch>Not Checked</sp-switch>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el.hasAttribute('name'));
+    });
     it('loads `checked` switch accessibly', async () => {
         const el = await fixture<Switch>(
             html`
@@ -77,7 +88,7 @@ describe('Switch', () => {
         `);
         expect(el.checked).to.be.true;
 
-        el.focusElement.click();
+        el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;

@@ -137,3 +137,7 @@ governing permissions and limitations under the License.
     padding: 0;
     margin: 0;
 }
+
+:host([label-visibility='none']) #track {
+    align-self: flex-end;
+}

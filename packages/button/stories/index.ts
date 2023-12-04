@@ -100,6 +100,7 @@ export interface Properties {
     href?: string;
     target?: '_blank' | '_parent' | '_self' | '_top';
     warning?: boolean;
+    iconOnly?: boolean;
 }
 
 export const makeOverBackground =
@@ -138,6 +139,7 @@ export function renderButton(properties: Properties): TemplateResult {
                 target=${ifDefined(properties.target)}
                 ?warning=${properties.warning}
                 ?pending=${!!properties.pending}
+                ?icon-only=${properties.iconOnly}
             >
                 ${properties.content || 'Click Me'}
             </sp-button>
@@ -167,6 +169,22 @@ export function renderButtonSet(properties: Properties): TemplateResult {
     return html`
         ${renderButton(properties)} ${renderButton(disabled)}
         ${renderButton(icon)}
+    `;
+}
+
+export function renderIconButtonSet(properties: Properties): TemplateResult {
+    const disabled = Object.assign({}, properties, {
+        iconOnly: true,
+        disabled: true,
+    });
+    const iconOnly = Object.assign({}, properties, {
+        iconOnly: true,
+        content: html`
+            <sp-icon-help slot="icon"></sp-icon-help>
+        `,
+    });
+    return html`
+        ${renderButton(iconOnly)} ${renderButton(disabled)}
     `;
 }
 
@@ -202,6 +220,17 @@ export const renderWithIcon = (props: Properties): TemplateResult => {
                 `,
             })}
         </div>
+    `;
+};
+
+export const renderWithIconOnly = (props: Properties): TemplateResult => {
+    return html`
+        ${renderIconButtonSet({
+            ...props,
+            content: html`
+                <sp-icon-help slot="icon"></sp-icon-help>
+            `,
+        })}
     `;
 };
 

@@ -13,6 +13,15 @@ governing permissions and limitations under the License.
 @import url('./spectrum-icon.css');
 
 :host {
+    --spectrum-icon-size-xxs: var(
+        --spectrum-alias-workflow-icon-size-xxs,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-icon-size-xs: var(
+        --spectrum-alias-workflow-icon-size-xs,
+        var(--spectrum-global-dimension-size-175)
+    );
+
     height: var(
         --spectrum-icon-tshirt-size-height,
         var(
@@ -27,6 +36,16 @@ governing permissions and limitations under the License.
             var(--spectrum-global-dimension-size-225)
         )
     );
+}
+
+:host([size='xxs']) {
+    height: var(--spectrum-icon-size-xxs);
+    width: var(--spectrum-icon-size-xxs);
+}
+
+:host([size='xs']) {
+    height: var(--spectrum-icon-size-xs);
+    width: var(--spectrum-icon-size-xs);
 }
 
 #container {

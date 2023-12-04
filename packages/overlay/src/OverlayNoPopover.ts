@@ -13,7 +13,7 @@ import {
     firstFocusableIn,
     firstFocusableSlottedIn,
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
-import { ReactiveElement } from 'lit';
+import type { SpectrumElement } from '@spectrum-web-components/base';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import {
     Constructor,
@@ -28,10 +28,11 @@ import {
     overlayTimer,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
+import { userFocusableSelector } from '@spectrum-web-components/shared';
 
 export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T
-): T & Constructor<ReactiveElement> {
+): T & Constructor<SpectrumElement> {
     class OverlayWithNoPopover extends constructor {
         protected override async managePopoverOpen(): Promise<void> {
             await this.managePosition();
@@ -80,6 +81,9 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
                 }
                 if (targetOpenState !== true) {
                     return;
+                }
+                if (el.matches(userFocusableSelector)) {
+                    focusEl = el;
                 }
                 focusEl = focusEl || firstFocusableIn(el);
                 if (focusEl) {

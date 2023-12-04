@@ -28,7 +28,8 @@ import {
     pageUpEvent,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
+import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 
 describe('Tags', () => {
     testForLitDevWarnings(
@@ -176,6 +177,74 @@ describe('Tags', () => {
 
         tag1.blur();
     });
+
+    it('handles focus when Tag is deleted', async () => {
+        const el = await fixture<Tags>(
+            html`
+                <sp-tags>
+                    <sp-tag deletable id="t1">Tag 1</sp-tag>
+                    <sp-tag deletable id="t2">Tag 2</sp-tag>
+                    <sp-tag deletable id="t3">Tag 3</sp-tag>
+                    <sp-tag deletable id="t4">Tag 4</sp-tag>
+                    <sp-tag deletable id="t5">Tag 5</sp-tag>
+                </sp-tags>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const tag1 = el.querySelector('sp-tag#t1') as Tag;
+        const tag2 = el.querySelector('sp-tag#t2') as Tag;
+        const tag3 = el.querySelector('sp-tag#t3') as Tag;
+        const tag4 = el.querySelector('sp-tag#t4') as Tag;
+        const tag5 = el.querySelector('sp-tag#t5') as Tag;
+
+        tag1.focus();
+        await elementUpdated(el);
+
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(document.activeElement === tag2).to.be.true;
+
+        await sendKeys({
+            press: 'Delete',
+        });
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(document.activeElement === tag3).to.be.true;
+
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(document.activeElement === tag5).to.be.true;
+
+        await sendKeys({
+            press: 'Delete',
+        });
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(document.activeElement === tag4).to.be.true;
+    });
+
     it('will not focus [disabled] children', async () => {
         const el = await fixture<Tags>(
             html`
@@ -288,12 +357,12 @@ describe('Tags', () => {
         const tagA = tagset2.querySelector('sp-tag:nth-child(1)') as Tag;
         const tagB = tagset2.querySelector('sp-tag:nth-child(2)') as Tag;
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Tab',
         });
         expect(document.activeElement === tag1).to.be.true;
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Tab',
         });
         expect(document.activeElement === tagA).to.be.true;

@@ -58,7 +58,7 @@ export class ActionBar extends SpectrumElement {
      *
      * @param {String} variant
      */
-    @property({ type: String, reflect: true })
+    @property({ type: String })
     public set variant(variant: string) {
         if (variant === this.variant) {
             return;
@@ -84,6 +84,8 @@ export class ActionBar extends SpectrumElement {
         const applyDefault = this.dispatchEvent(
             new Event('close', {
                 bubbles: true,
+                composed: true,
+                cancelable: true,
             })
         );
 

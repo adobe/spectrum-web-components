@@ -31,6 +31,7 @@ import {
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import { tooltipDescriptionAndPlacement } from '../stories/action-menu.stories';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
@@ -304,6 +305,22 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(button).to.have.attribute('aria-expanded', 'true');
             expect(button).to.have.attribute('aria-controls', 'menu');
         });
+        it('has attribute aria-describedby', async () => {
+            const name = 'sp-picker';
+            const description = 'Rendering a Picker';
+
+            const el = await fixture(html`
+                <sp-action-menu label=${name}>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <span slot="description">${description}</span>
+                </sp-action-menu>
+            `);
+
+            await elementUpdated(el);
+
+            await findDescribedNode(name, description);
+        });
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
 
@@ -386,10 +403,22 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             ).to.be.true;
         });
         it('allows top-level selection state to change', async () => {
+            let selected = true;
+            const handleChange = (
+                event: Event & { target: ActionMenu }
+            ): void => {
+                if (event.target.value === 'test') {
+                    selected = !selected;
+
+                    event.target.updateComplete.then(() => {
+                        event.target.value = selected ? 'test' : '';
+                    });
+                }
+            };
             const root = await styledFixture<ActionMenu>(html`
-                <sp-action-menu label="More Actions">
+                <sp-action-menu label="More Actions" @change=${handleChange}>
                     <sp-menu-item>One</sp-menu-item>
-                    <sp-menu-item selected id="root-selected-item">
+                    <sp-menu-item selected value="test" id="root-selected-item">
                         Two
                     </sp-menu-item>
                     <sp-menu-item id="item-with-submenu">
@@ -411,12 +440,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const selectedItem = root.querySelector(
                 '#root-selected-item'
             ) as MenuItem;
-            let selected = true;
-
-            selectedItem.addEventListener('click', () => {
-                selected = !selected;
-                selectedItem.selected = selected;
-            });
 
             expect(unselectedItem.textContent).to.include('One');
             expect(unselectedItem.selected).to.be.false;

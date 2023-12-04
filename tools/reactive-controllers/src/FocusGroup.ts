@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import type { ReactiveController, ReactiveElement } from 'lit';
-import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 type DirectionTypes = 'horizontal' | 'vertical' | 'both' | 'grid';
 export type FocusGroupConfig<T> = {
@@ -39,6 +38,7 @@ export class FocusGroupController<T extends HTMLElement>
     implements ReactiveController
 {
     protected cachedElements?: T[];
+    private mutationObserver: MutationObserver;
 
     get currentIndex(): number {
         if (this._currentIndex === -1) {
@@ -113,6 +113,8 @@ export class FocusGroupController<T extends HTMLElement>
     // and the first rendered element.
     offset = 0;
 
+    recentlyConnected = false;
+
     constructor(
         host: ReactiveElement,
         {
@@ -124,14 +126,8 @@ export class FocusGroupController<T extends HTMLElement>
             listenerScope,
         }: FocusGroupConfig<T> = { elements: () => [] }
     ) {
-        new MutationController(host, {
-            config: {
-                childList: true,
-                subtree: true,
-            },
-            callback: () => {
-                this.handleItemMutation();
-            },
+        this.mutationObserver = new MutationObserver(() => {
+            this.handleItemMutation();
         });
         this.host = host;
         this.host.addController(this);
@@ -196,8 +192,16 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     clearElementCache(offset = 0): void {
+        this.mutationObserver.disconnect();
         delete this.cachedElements;
         this.offset = offset;
+        requestAnimationFrame(() => {
+            this.elements.forEach((element) => {
+                this.mutationObserver.observe(element, {
+                    attributes: true,
+                });
+            });
+        });
     }
 
     setCurrentIndexCircularly(diff: number): void {
@@ -333,10 +337,23 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     hostConnected(): void {
+        this.recentlyConnected = true;
         this.addEventListeners();
     }
 
     hostDisconnected(): void {
+        this.mutationObserver.disconnect();
         this.removeEventListeners();
+    }
+
+    hostUpdated(): void {
+        if (this.recentlyConnected) {
+            this.recentlyConnected = false;
+            this.elements.forEach((element) => {
+                this.mutationObserver.observe(element, {
+                    attributes: true,
+                });
+            });
+        }
     }
 }

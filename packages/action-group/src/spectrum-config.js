@@ -41,6 +41,7 @@ const config = {
                 converter.classToHost('spectrum-ActionGroup--sizeM'),
                 ...converter.enumerateAttributes(
                     [
+                        ['spectrum-ActionGroup--sizeXS', 'xs'],
                         ['spectrum-ActionGroup--sizeS', 's'],
                         ['spectrum-ActionGroup--sizeL', 'l'],
                         ['spectrum-ActionGroup--sizeXL', 'xl'],
@@ -90,7 +91,7 @@ const config = {
                 {
                     find: [
                         builder.class('spectrum-ActionGroup-item'),
-                        builder.class('focus-ring'),
+                        builder.pseudoClass('focus-visible'),
                     ],
                     replace: [
                         {

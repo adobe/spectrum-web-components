@@ -57,6 +57,7 @@ const chevronClass = {
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
+export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
@@ -375,6 +376,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-chevron100>
+                <slot aria-hidden="true" name="tooltip" id="tooltip"></slot>
             `,
         ];
     }
@@ -416,6 +418,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
+    protected get renderDescriptionSlot(): TemplateResult {
+        return html`
+            <div id=${DESCRIPTION_ID}>
+                <slot name="description"></slot>
+            </div>
+        `;
+    }
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
@@ -424,11 +433,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 id="focus-helper"
                 tabindex="${this.focused || this.open ? '-1' : '0'}"
                 @focus=${this.handleHelperFocus}
+                aria-describedby=${DESCRIPTION_ID}
             ></span>
             <button
-                aria-haspopup="true"
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
+                aria-describedby="tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
+                aria-haspopup="true"
                 aria-labelledby="icon label applied-label"
                 id="button"
                 class="button"
@@ -445,7 +456,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             >
                 ${this.buttonContent}
             </button>
-            ${this.renderMenu}
+            ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
     }
 
@@ -535,7 +546,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
-    protected hasOpened = false;
+    protected hasRenderedOverlay = false;
 
     protected get renderMenu(): TemplateResult {
         const menu = html`
@@ -556,8 +567,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>
         `;
-        this.hasOpened = this.hasOpened || this.open || !!this.deprecatedMenu;
-        if (this.hasOpened) {
+        this.hasRenderedOverlay =
+            this.hasRenderedOverlay ||
+            this.focused ||
+            this.open ||
+            !!this.deprecatedMenu;
+        if (this.hasRenderedOverlay) {
             return this.renderOverlay(menu);
         }
         return menu;
@@ -680,6 +695,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  * @element sp-picker
  *
  * @slot label - The placeholder content for the Picker
+ * @slot description - The description content for the Picker
+ * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
@@ -701,23 +718,19 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-        if (code === 'ArrowUp' || code === 'ArrowDown') {
-            this.toggle(true);
-            return;
-        }
         if (!code.startsWith('Arrow') || this.readonly) {
             return;
         }
-        event.preventDefault();
         if (code === 'ArrowUp' || code === 'ArrowDown') {
             this.toggle(true);
             return;
         }
+        event.preventDefault();
         const selectedIndex = this.selectedItem
             ? this.menuItems.indexOf(this.selectedItem)
             : -1;
         // use a positive offset to find the first non-disabled item when no selection is available.
-        const nextOffset = !this.value || code === 'ArrowRight' ? 1 : -1;
+        const nextOffset = selectedIndex < 0 || code === 'ArrowRight' ? 1 : -1;
         let nextIndex = selectedIndex + nextOffset;
         while (
             this.menuItems[nextIndex] &&

@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **base:** add re-export of lit/directive.js ([#3616](https://github.com/adobe/spectrum-web-components/issues/3616)) ([d2e237f](https://github.com/adobe/spectrum-web-components/commit/d2e237fe0fedf12ffe5fdcb726fdf31601409cb9))
+-   **base:** introduce static version property for component class ([#3582](https://github.com/adobe/spectrum-web-components/issues/3582)) ([e7e2b76](https://github.com/adobe/spectrum-web-components/commit/e7e2b769d21dc0317c3d38d02ee327b019871055))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 **Note:** Version bump only for package @spectrum-web-components/base

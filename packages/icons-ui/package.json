@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons-ui",
-    "version": "0.38.0",
+    "version": "0.40.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,12 +44,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.38.0",
-        "@spectrum-web-components/icon": "^0.38.0",
-        "@spectrum-web-components/iconset": "^0.38.0"
+        "@spectrum-web-components/base": "^0.40.0",
+        "@spectrum-web-components/icon": "^0.40.0",
+        "@spectrum-web-components/iconset": "^0.40.0"
     },
     "devDependencies": {
-        "@spectrum-css/icon": "^3.0.50",
+        "@spectrum-css/icon": "^4.0.3",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fast-glob": "^3.2.12",

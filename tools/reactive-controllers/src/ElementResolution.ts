@@ -46,6 +46,14 @@ export class ElementResolutionController implements ReactiveController {
 
     private _selector = '';
 
+    get selectorAsId(): string {
+        return this.selector.slice(1);
+    }
+
+    get selectorIsId(): boolean {
+        return !!this.selector && this.selector.startsWith('#');
+    }
+
     constructor(
         host: ReactiveElement,
         { selector }: { selector: string } = { selector: '' }
@@ -68,8 +76,8 @@ export class ElementResolutionController implements ReactiveController {
                     [...mutation.removedNodes].includes(this.element);
                 const matchingElementAdded =
                     !!this.selector &&
-                    ([...mutation.addedNodes] as HTMLElement[]).some((el) =>
-                        el?.matches?.(this.selector)
+                    ([...mutation.addedNodes] as HTMLElement[]).some(
+                        this.elementIsSelected
                     );
                 needsResolution =
                     needsResolution ||
@@ -81,7 +89,7 @@ export class ElementResolutionController implements ReactiveController {
                     mutation.target === this.element;
                 const attributeChangedOnMatchingElement =
                     !!this.selector &&
-                    (mutation.target as HTMLElement).matches(this.selector);
+                    this.elementIsSelected(mutation.target as HTMLElement);
                 needsResolution =
                     needsResolution ||
                     attributeChangedOnCurrentElement ||
@@ -113,11 +121,19 @@ export class ElementResolutionController implements ReactiveController {
             return;
         }
 
-        const parent = this.host.getRootNode() as HTMLElement;
-        this.element = parent.querySelector(this.selector) as HTMLElement;
+        const parent = this.host.getRootNode() as ShadowRoot;
+        this.element = this.selectorIsId
+            ? (parent.getElementById(this.selectorAsId) as HTMLElement)
+            : (parent.querySelector(this.selector) as HTMLElement);
     }
 
     private releaseElement(): void {
         this.element = null;
     }
+
+    private elementIsSelected = (el: HTMLElement): boolean => {
+        return this.selectorIsId
+            ? el?.id === this.selectorAsId
+            : el?.matches?.(this.selector);
+    };
 }

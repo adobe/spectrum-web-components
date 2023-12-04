@@ -22,6 +22,8 @@ import { makeOverBackground } from '../../button/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
+import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import { Menu } from '@spectrum-web-components/menu';
 
 export default {
     component: 'sp-action-menu',
@@ -153,7 +155,7 @@ interface StoryArgs {
     quiet?: boolean;
     staticValue?: 'white' | 'black' | undefined;
     tooltipDescription?: string | 'none';
-    tooltipPlacement?: string | 'none';
+    tooltipPlacement?: Placement;
 }
 
 const Template = (args: StoryArgs = {}): TemplateResult =>
@@ -190,7 +192,10 @@ export const labelOnly = ({
         ?disabled=${disabled}
         ?open=${open}
         size=${size}
-        @change="${changeHandler}"
+        @change=${(event: Event & { target: Menu }): void => {
+            navigator.clipboard.writeText(event.target.value);
+            changeHandler(event);
+        }}
         .selects=${selects ? selects : undefined}
         value=${selected ? 'Select Inverse' : ''}
     >
@@ -228,7 +233,7 @@ tooltipDescriptionAndPlacement.args = {
     tooltipDescription: 'Your tooltip string here',
     visibleLabel: '',
     tooltipPlacement: 'bottom',
-};
+} as StoryArgs;
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {

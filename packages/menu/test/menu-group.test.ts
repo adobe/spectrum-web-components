@@ -23,10 +23,20 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { complexSlotted } from '../stories/menu-group.stories.js';
+import { ComplexSlottedGroup, ComplexSlottedMenu } from '../stories/index.js';
+import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
     return menu.childItems.filter(
         (item: MenuItem) => item.menuData.selectionRoot === menu
+    );
+};
+
+const focusableItems = (menu: Menu | MenuGroup): MenuItem[] => {
+    return menu.childItems.filter(
+        (item: MenuItem) => item.menuData.focusRoot === menu
     );
 };
 
@@ -388,5 +398,69 @@ describe('Menu group', () => {
         expect(inheritItem2.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
+    });
+    it('manages complex slotted menu items', async () => {
+        const el = await fixture<ComplexSlottedMenu>(complexSlotted());
+
+        await waitUntil(
+            () => focusableItems(el.menu).length == 12,
+            `expected outer menu to manage 12 items, ${
+                el.menu.localName
+            } manages ${focusableItems(el.menu).length}`
+        );
+
+        const items: Record<string, MenuItem> = {};
+        items.i2 = el.querySelector('#i-2') as MenuItem;
+        items.i8 = el.querySelector('#i-8') as MenuItem;
+        items.i9 = el.querySelector('#i-9') as MenuItem;
+        items.i3 = el.renderRoot.querySelector('#i-3') as MenuItem;
+        items.i5 = el.renderRoot.querySelector('#i-5') as MenuItem;
+        items.i6 = el.renderRoot.querySelector('#i-6') as MenuItem;
+        items.i7 = el.renderRoot.querySelector('#i-7') as MenuItem;
+        const group = el.renderRoot.querySelector(
+            '#group'
+        ) as ComplexSlottedGroup;
+        items.i1 = group.renderRoot.querySelector('#i-1') as MenuItem;
+        items.i4 = group.renderRoot.querySelector('#i-4') as MenuItem;
+        items.i10 = group.renderRoot.querySelector('#i-10') as MenuItem;
+        items.i11 = group.renderRoot.querySelector('#i-11') as MenuItem;
+        items.i12 = group.renderRoot.querySelector('#i-12') as MenuItem;
+
+        const rect = items.i9.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await elementUpdated(items.i9);
+
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
+        await elementUpdated(items.i9);
+        expect(items.i9.focused).to.be.true;
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        let i = 9;
+        const count = Object.keys(items).length + 1;
+        while (!items.i9.focused) {
+            i = Math.max(1, (i + 1 + count) % count);
+            await elementUpdated(items[`i${i}`]);
+            expect(items[`i${i}`].focused, `i${i} should be focused`).to.be
+                .true;
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+        }
     });
 });

@@ -3,14 +3,14 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.30.0
+            - image: mcr.microsoft.com/playwright:v1.37.1
         resource_class: large
         environment:
             NODE_ENV: development
 parameters:
     current_golden_images_hash:
         type: string
-        default: 6872683e2c47918e89c8c73a15367ca97b15b38e
+        default: d8be48bd925210181c3ec6933abbc3aade090bcb
     wireit_cache_name:
         type: string
         default: wireit
@@ -20,7 +20,7 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - restore_cache:
                   keys:
                       - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
@@ -30,7 +30,8 @@ commands:
             - save_cache:
                   paths:
                       - ~/.cache/yarn
-                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - ~/.cache/ms-playwright
+                  key: v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
                       - .wireit
@@ -151,41 +152,36 @@ jobs:
                   path: /root/project/results/
             - store_artifacts:
                   path: coverage
-            - run:
-                  name: Are there changes?
-                  command: git diff --exit-code
-
-    test-chromium-flags:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium-flags.js --group unit
-            - store_test_results:
-                  path: /root/project/results/
-            - store_artifacts:
-                  path: coverage
-            - run:
-                  name: Are there changes?
-                  command: git diff --exit-code
 
     test-firefox:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
                   name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group unit
+                  command: |
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
-            - run:
-                  name: Are there changes?
-                  command: git diff-files
 
     test-webkit:
+        executor: node
+        parallelism: 5
+
+        steps:
+            - downstream
+            - run:
+                  name: Run tests
+                  command: |
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+            - store_test_results:
+                  path: /root/project/results/
+
+    lint:
         executor: node
 
         steps:
@@ -195,13 +191,8 @@ jobs:
                   command: yarn lint
             - run: yarn analyze
             - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group unit
-            - store_test_results:
-                  path: /root/project/results/
-            - run:
                   name: Are there changes?
-                  command: git diff-files
+                  command: git diff-files --exit-code
 
     preview-docs:
         executor: node
@@ -313,9 +304,9 @@ workflows:
     build:
         jobs:
             - test-chromium
-            - test-chromium-flags
             - test-firefox
             - test-webkit
+            - lint
             - hcm-visual:
                   filters:
                       branches:

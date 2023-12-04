@@ -31,6 +31,7 @@ import {
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 describe('Menu', () => {
     it('renders empty', async () => {
@@ -164,6 +165,38 @@ describe('Menu', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+
+    it('has a "value" that can be copied during "change" events', async function () {
+        if (isWebKit()) {
+            this.skip();
+        }
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu
+                    selects="single"
+                    @change=${({
+                        target: { value },
+                    }: Event & { target: Menu }): void => {
+                        navigator.clipboard.writeText(value);
+                    }}
+                >
+                    <sp-menu-item>Not Selected</sp-menu-item>
+                    <sp-menu-item selected>Selected</sp-menu-item>
+                    <sp-menu-item id="other">Other</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const otherItem = el.querySelector('#other') as MenuItem;
+        otherItem.click();
+
+        await elementUpdated(el);
+
+        const clipboardText = await navigator.clipboard.readText();
+        expect(clipboardText).to.equal('Other');
     });
 
     it('renders w/ hrefs', async () => {
@@ -510,5 +543,50 @@ describe('Menu', () => {
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
         expect(el.value).to.equal('Second');
         expect(el.selectedItems.length).to.equal(1);
+    });
+    it('can be controlled to manage a single togglable selection', async () => {
+        const toggleSingleSelected = (
+            event: Event & { target: Menu }
+        ): void => {
+            event.preventDefault();
+            const selected: string[] = [];
+            if (event.target.selected.length) {
+                selected.push(event.target.selected.at(-1) as string);
+            }
+            event.target.updateComplete.then(() => {
+                event.target.selected = selected;
+            });
+        };
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu selects="multiple" @change=${toggleSingleSelected}>
+                    <sp-menu-item value="1">First</sp-menu-item>
+                    <sp-menu-item value="2">Second</sp-menu-item>
+                    <sp-menu-item value="3">Third</sp-menu-item>
+                </sp-menu>
+            `
+        );
+        expect(el.selected).to.deep.equal([]);
+
+        const items = [...el.querySelectorAll('[value]')] as MenuItem[];
+
+        items[0].click();
+        await nextFrame();
+        await nextFrame();
+
+        items[0].click();
+        await nextFrame();
+        await nextFrame();
+        expect(el.selected).to.deep.equal([]);
+
+        items[1].click();
+        await nextFrame();
+        await nextFrame();
+        expect(el.selected).to.deep.equal(['2']);
+
+        items[2].click();
+        await nextFrame();
+        await nextFrame();
+        expect(el.selected).to.deep.equal(['3']);
     });
 });

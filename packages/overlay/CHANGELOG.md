@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **overlay:** ensure manual overlays persist through interactions outside of their subtree ([#3788](https://github.com/adobe/spectrum-web-components/issues/3788)) ([ef5617f](https://github.com/adobe/spectrum-web-components/commit/ef5617f81b205b8bcf0a79e2b8a810cc65f13c3d))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **overlay:** add delay resolution from overlaid content ([#3748](https://github.com/adobe/spectrum-web-components/issues/3748)) ([5c4f1f6](https://github.com/adobe/spectrum-web-components/commit/5c4f1f6f87cac60cb1884f59aa29d256f7baabb8))
+-   **overlay:** calculate more transforms ([6538a45](https://github.com/adobe/spectrum-web-components/commit/6538a45a036f60c4efce4c3ed3d1d6f2782a188e))
+-   **overlay:** place longpress helper content in a more accessible, less layout affecting location ([dd12c23](https://github.com/adobe/spectrum-web-components/commit/dd12c2346142a107ee9c7824410dff5ae660e574))
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+### Bug Fixes
+
+-   **overlay:** allow overlay to persist on hover ([#3706](https://github.com/adobe/spectrum-web-components/issues/3706)) ([7707040](https://github.com/adobe/spectrum-web-components/commit/77070405fdb0d6a2bca5d5e33fe03a856f1cef6c))
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **overlay:** allow "receives-focus" to target the root of an overlay ([#3658](https://github.com/adobe/spectrum-web-components/issues/3658)) ([0db1025](https://github.com/adobe/spectrum-web-components/commit/0db10258d84409d364b5e1bad57e71683de93fea))
+-   **overlay:** ensure position when closing overlays over the top-layer ([55fab0d](https://github.com/adobe/spectrum-web-components/commit/55fab0d49047c64849ed9c8001b79b793440da48))
+-   **overlay:** reduce circular dependencies ([25eeb71](https://github.com/adobe/spectrum-web-components/commit/25eeb7138b19ba0c1a6543d1f37c4e8cea2cdbd6))
+
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 ### Bug Fixes

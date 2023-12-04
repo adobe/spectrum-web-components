@@ -190,7 +190,6 @@ export default async () => {
                         revision: `${Date.now()}`,
                     },
                 ],
-                mode: 'production',
             })
         );
     }

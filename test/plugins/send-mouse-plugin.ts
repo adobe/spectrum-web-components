@@ -40,8 +40,8 @@ export function sendMousePlugin() {
                         step.options = step.options || {};
                         if (step.position) {
                             await page.mouse[step.type](
-                                step.position[0],
-                                step.position[1],
+                                Math.round(step.position[0]),
+                                Math.round(step.position[1]),
                                 step.options
                             );
                         } else {
