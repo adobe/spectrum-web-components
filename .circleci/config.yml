@@ -192,7 +192,7 @@ jobs:
             - run: yarn analyze
             - run:
                   name: Are there changes?
-                  command: git diff-files
+                  command: git diff-files --exit-code
 
     preview-docs:
         executor: node
