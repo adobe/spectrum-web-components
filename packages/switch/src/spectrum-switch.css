@@ -654,15 +654,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([disabled]) #input ~ #label {
-    color: var(
-        --highcontrast-switch-label-color-disabled,
-        var(
-            --mod-switch-label-color-disabled,
-            var(--spectrum-switch-label-color-disabled)
-        )
-    );
-}
 :host([disabled][checked]) #input + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-disabled,
@@ -681,7 +672,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([disabled][checked]) #input ~ #label {
+:host([disabled]) #input ~ #label {
     color: var(
         --highcontrast-switch-label-color-disabled,
         var(
@@ -699,6 +690,8 @@ governing permissions and limitations under the License.
         --highcontrast-switch-label-color-disabled: GrayText;
         --highcontrast-switch-handle-background-color: ButtonFace;
         --highcontrast-switch-handle-border-color-default: ButtonText;
+        --highcontrast-switch-handle-border-color-hover: Highlight;
+        --highcontrast-switch-handle-border-color-down: Highlight;
         --highcontrast-switch-handle-border-color-focus: Highlight;
         --highcontrast-switch-handle-border-color-disabled: Highlight;
         --highcontrast-switch-handle-border-color-selected-default: Highlight;
@@ -711,8 +704,6 @@ governing permissions and limitations under the License.
         --highcontrast-switch-background-color-selected-down: Highlight;
         --highcontrast-switch-background-color-selected-focus: Highlight;
         --highcontrast-switch-background-color-selected-disabled: Highlight;
-        --highcontrast-switch-handle-border-color-hover: Highlight;
-        --highcontrast-switch-handle-border-color-down: Highlight;
         --highcontrast-switch-focus-indicator-color: ButtonText;
         forced-color-adjust: none;
     }
