@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/styles",
-    "version": "0.40.0",
+    "version": "0.40.1",
     "publishConfig": {
         "access": "public"
     },
@@ -104,7 +104,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.0"
+        "@spectrum-web-components/base": "^0.40.1"
     },
     "devDependencies": {
         "@spectrum-css/commons": "^8.0.0",
