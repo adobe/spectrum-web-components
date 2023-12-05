@@ -35,8 +35,8 @@ Coachmark can take a `placement`, an `offset`, and a
 ```html
 <sp-coachmark
     open
-    currentstep="2"
-    totalsteps="8"
+    current-step="2"
+    total-steps="8"
     primary-cta="Next"
     secondary-cta="Previous"
 >
@@ -54,8 +54,8 @@ Coach marks can include an `<sp-action-menu>`, which appears at the top right of
 ```html
 <sp-coachmark
     open
-    currentstep="2"
-    totalsteps="8"
+    current-step="2"
+    total-steps="8"
     primary-cta="Next"
     secondary-cta="Previous"
 >
@@ -83,8 +83,8 @@ The primary and secondary CTA buttons within the coachmark popover can be config
 ```html
 <sp-coachmark
     open
-    currentstep="2"
-    totalsteps="8"
+    current-step="2"
+    total-steps="8"
     primary-cta="Asset added"
     secondary-cta="Previous"
     @primary="${this.handleConfirm}"
@@ -113,8 +113,8 @@ Media Types allowed: `Images & Gifs`
 
 ```html
 <sp-coachmark
-    currentstep="2"
-    totalsteps="8"
+    current-step="2"
+    total-steps="8"
     open
     primary-cta="Next"
     secondary-cta="Previous"
@@ -136,8 +136,8 @@ A custom media can also be added via `<slot name="cover-photo"></slot>`
 
 ```html
 <sp-coachmark
-    currentstep="2"
-    totalsteps="8"
+    current-step="2"
+    total-steps="8"
     open
     primary-cta="Next"
     secondary-cta="Previous"
@@ -162,8 +162,8 @@ The `shortcutKey` is the primary key used to trigger an interaction and are typi
 ```html-live
     <sp-coachmark
         open
-        currentstep="2"
-        totalsteps="8"
+        current-step="2"
+        total-steps="8"
         primary-cta="Next"
         secondary-cta="Previous"
         id="coachmark-keys"

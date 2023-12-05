@@ -77,8 +77,8 @@ export const Default = (props: Properties): TemplateResult => {
         >
             <sp-coachmark
                 ?open=${open}
-                currentstep="2"
-                totalsteps="8"
+                current-step="2"
+                total-steps="8"
                 primary-cta="Next"
                 secondary-cta="Previous"
             >
@@ -131,8 +131,8 @@ export const Clickable = (props: Properties): TemplateResult => {
         >
             <sp-coachmark
                 ?open=${open}
-                currentstep="2"
-                totalsteps="8"
+                current-step="2"
+                total-steps="8"
                 primary-cta="Next"
                 secondary-cta="Previous"
             >
@@ -166,8 +166,8 @@ export const withImage = (props: Properties): TemplateResult => {
                 media-type="image"
                 primary-cta="Next"
                 secondary-cta="Previous"
-                currentstep="2"
-                totalsteps="8"
+                current-step="2"
+                total-steps="8"
             >
                 <div slot="title">Coachmark with Media</div>
                 <div slot="content">
@@ -200,8 +200,8 @@ export const withGif = (props: Properties): TemplateResult => {
                 media-type="image"
                 primary-cta="Next"
                 secondary-cta="Previous"
-                currentstep="2"
-                totalsteps="8"
+                current-step="2"
+                total-steps="8"
             >
                 <div slot="title">Coachmark with GIF</div>
                 <div slot="content">
@@ -233,8 +233,8 @@ export const withKeys = (props: Properties): TemplateResult => {
         >
             <sp-coachmark
                 ?open=${open}
-                currentstep="2"
-                totalsteps="8"
+                current-step="2"
+                total-steps="8"
                 primary-cta="Next"
                 secondary-cta="Previous"
                 .modifierKeys=${modifierKeys}

@@ -78,10 +78,10 @@ export class Coachmark extends LikeAnchor(Popover) {
     @property()
     public asset?: 'file' | 'folder';
 
-    @property({ type: Number })
+    @property({ type: Number, attribute: 'current-step' })
     public currentStep?: number;
 
-    @property({ type: Number })
+    @property({ type: Number, attribute: 'total-steps' })
     public totalSteps?: number;
 
     @property({ type: Boolean })

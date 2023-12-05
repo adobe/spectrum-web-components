@@ -95,8 +95,8 @@ describe('Coachmark', () => {
         const el = await fixture<Coachmark>(
             html`
                 <sp-coachmark
-                    currentStep="2"
-                    totalSteps="8"
+                    current-step="2"
+                    total-steps="8"
                     primary-cta="Next"
                     secondary-cta="Previous"
                 >
@@ -157,7 +157,7 @@ describe('Coachmark', () => {
     it('loads step when total step count is greater than 1', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark totalSteps="5" currentStep="2">
+                <sp-coachmark total-steps="5" current-step="2">
                     <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
@@ -179,7 +179,7 @@ describe('Coachmark', () => {
     it('doesnt load pagination count(steps) when total step count is less then 2', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark totalSteps="1">
+                <sp-coachmark total-steps="1">
                     <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
@@ -198,7 +198,7 @@ describe('Coachmark', () => {
     it('loads primary button with text "Ok" for a single coachmark', async () => {
         const el = await fixture<Coachmark>(
             html`
-                <sp-coachmark totalSteps="1" primary-cta="Ok">
+                <sp-coachmark total-steps="1" primary-cta="Ok">
                     <div slot="title">Try playing with a pixel brush</div>
                     <sp-action-menu slot="actions" placement="bottom-end" quiet>
                         <sp-menu-item>Skip tour</sp-menu-item>
@@ -215,12 +215,12 @@ describe('Coachmark', () => {
         expect(okayButton).to.not.be.null;
         expect(okayButton?.textContent?.trim()).to.equal('Ok');
     });
-    it('loads primary button with text "Next" and secondary button with "Previous" if totalSteps is greater than 1', async () => {
+    it('loads primary button with text "Next" and secondary button with "Previous" if total-steps is greater than 1', async () => {
         const el = await fixture<Coachmark>(
             html`
                 <sp-coachmark
-                    totalSteps="4"
-                    currentStep="2"
+                    total-steps="4"
+                    current-step="2"
                     secondary-cta="Previous"
                     primary-cta="Next"
                 >
@@ -250,8 +250,8 @@ describe('Coachmark', () => {
         const modifierKeys = ['⇧ Shift', '⌘'];
         const el = await fixture<Coachmark>(html`
             <sp-coachmark
-                currentstep="2"
-                totalsteps="8"
+                current-step="2"
+                total-steps="8"
                 open
                 shortcut-key="Z"
                 .modifierKeys=${modifierKeys}
@@ -280,8 +280,8 @@ describe('Coachmark', () => {
     it('renders content with image asset', async () => {
         const el = await fixture<Coachmark>(html`
             <sp-coachmark
-                currentstep="2"
-                totalsteps="8"
+                current-step="2"
+                total-steps="8"
                 open
                 media-type="image"
                 src="https://picsum.photos/id/237/200/300"
