@@ -87,8 +87,8 @@ The primary and secondary CTA buttons within the coachmark popover can be config
     total-steps="8"
     primary-cta="Asset added"
     secondary-cta="Previous"
-    @primary="${this.handleConfirm}"
-    @secondary="${this.handleCancel}"
+    @primary="${() => this.handleConfirm()}"
+    @secondary="${() => this.handleCancel()}"
 >
     <div slot="title">Coachmark with user action</div>
     <div slot="content">
