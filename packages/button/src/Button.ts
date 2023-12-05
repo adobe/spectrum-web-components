@@ -56,30 +56,15 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
     protected pendingCooldown = -1;
 
-    constructor() {
-        super();
-        this.addEventListener(
-            'click',
-            (event: Event): void | boolean => {
-                if (this.pending) {
-                    event.preventDefault();
-                    event.stopImmediatePropagation();
-                    event.stopPropagation();
-                    return false;
-                }
-            },
-            {
-                capture: true,
-            }
-        );
-    }
-
+    // isPending represents the state of the button being in a pending state
+    // This also helps us show the progress circle and update the aria-label when the button is in pending state
     @property({ type: Boolean, reflect: true, attribute: 'is-pending' })
     public isPending = false;
 
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
+    // pending is the property that consumers can use to set the button into a pending state
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
 
@@ -210,7 +195,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                     <sp-progress-circle
                         indeterminate
                         static="white"
-                        size="s"
+                        size=${this.size}
                     ></sp-progress-circle>
                 `;
             })}

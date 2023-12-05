@@ -22,21 +22,9 @@ governing permissions and limitations under the License.
     }
 }
 
-::slotted([slot='icon']) {
-    inset: unset;
-}
-
-#container {
-    position: relative;
-    display: flex;
-}
-
-sp-progress-circle {
-    display: none;
-}
-
 :host([pending][is-pending]) {
     cursor: default;
+    pointer-events: none;
 }
 
 :host([pending][is-pending]) sp-progress-circle {
