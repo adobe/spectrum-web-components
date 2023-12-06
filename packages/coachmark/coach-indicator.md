@@ -1,6 +1,6 @@
 ## Description
 
-`sp-coach-indicator` show the connection between an object and its explanation in a touring mode — for example, the source of coach mark in an onboarding tour.
+`<sp-coach-indicator>` show the connection between an object and its explanation in a touring mode — for example, the source of coach mark in an onboarding tour.
 
 ### Usage
 

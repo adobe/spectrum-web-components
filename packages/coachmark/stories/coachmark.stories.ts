@@ -33,18 +33,6 @@ type StoryArgs = {
     onSecondary?: (event: Event) => void;
 };
 
-const handlePrimary =
-    ({ onPrimary }: StoryArgs) =>
-    (event: Event) => {
-        if (onPrimary) onPrimary(event);
-    };
-
-const handleSecondary =
-    ({ onSecondary }: StoryArgs) =>
-    (event: Event) => {
-        if (onSecondary) onSecondary(event);
-    };
-
 type Properties = {
     open?: boolean;
     placement?: Placement;
@@ -59,7 +47,6 @@ type Properties = {
     triggerInteraction: 'click' | 'hover' | 'longpress';
     currentStep?: number;
     totalSteps?: number;
-    hasActionMenu?: boolean;
     primaryCTA?: string;
     secondaryCTA?: string;
 };
@@ -300,17 +287,17 @@ export const actionButtons = (
                     description:
                         'This is a Coachmark with nothing but text in it. Kind of lonely in here',
                 }}
-                @primary=${({ target }: Event & { target: HTMLElement }) => {
-                    target.dispatchEvent(
+                @primary=${(event: Event & { target: HTMLElement }) => {
+                    event.target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
                     );
-                    handlePrimary(args);
+                    args.onPrimary?.(event);
                 }}
-                @secondary=${({ target }: Event & { target: HTMLElement }) => {
-                    target.dispatchEvent(
+                @secondary=${(event: Event & { target: HTMLElement }) => {
+                    event.target.dispatchEvent(
                         new Event('close', { bubbles: true, composed: true })
                     );
-                    handleSecondary(args);
+                    args.onSecondary?.(event);
                 }}
             ></sp-coachmark>
         </sp-overlay>

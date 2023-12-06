@@ -80,15 +80,14 @@ Inside the `<sp-coachmark>`, add the content and instructions for the coachmark 
 
 The primary and secondary CTA buttons within the coachmark popover can be configured to dispatch events when clicked.
 
-```html
+```html-live
 <sp-coachmark
+    id="coachmark-action"
     open
     current-step="2"
     total-steps="8"
     primary-cta="Asset added"
     secondary-cta="Previous"
-    @primary="${() => this.handleConfirm()}"
-    @secondary="${() => this.handleCancel()}"
 >
     <div slot="title">Coachmark with user action</div>
     <div slot="content">
@@ -99,7 +98,29 @@ The primary and secondary CTA buttons within the coachmark popover can be config
         <sp-menu-item>Restart tour</sp-menu-item>
     </sp-action-menu>
 </sp-coachmark>
+<script type="module">
+    const initCoachMark = () => {
+        const coachmark = document.querySelector('#coachmark-action');
+        coachmark.addEventListener('primary', () => console.log('primary call to action'));
+        coachmark.addEventListener('secondary', () => console.log('secondary call to action'));
+
+    };
+    customElements.whenDefined('sp-coachmark').then(() => {
+                initCoachMark();
+    });
+</script>
 ```
+
+<script type="module">
+    const initCoachMark = () => {
+        const coachmark = document.querySelector('#coachmark-action');
+        coachmark.addEventListener('primary', () => console.log('primary call to action'));
+        coachmark.addEventListener('secondary', () => console.log('secondary call to action'));
+    };
+    customElements.whenDefined('sp-coachmark').then(() => {
+                initCoachMark();
+    });
+</script>
 
 ## Using Images, GIFs
 

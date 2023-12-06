@@ -20,7 +20,6 @@ export type CoachmarkItem = {
     mediaType?: string;
     currentStep?: number;
     totalSteps?: number;
-    hasActionMenu?: boolean;
     primaryCTA?: string;
     secondaryCTA?: string;
 };

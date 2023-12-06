@@ -6932,10 +6932,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-4.0.12.tgz#4c1ccc9f9d9a02b59ad693257a5685a30c50ed19"
   integrity sha512-p2bbFZ7Dao4543Q9vkWTeO0+1NSSn3WBrXB5yGFwQ+W2UJ4PU9aOft1l7W+0iKY1JnBTI5CPEyaNOYxD/D2cCA==
 
-"@spectrum-css/popover@^6.0.77":
-  version "6.0.77"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.77.tgz#a05e41572a27c26467b7434b47eac4a134604d27"
-  integrity sha512-Ddb0Q+0dszhCn3bNsNTjeY6sp+IuPPBuSW+CdNdJGibIej1vE98jRYBSPDs4gyFDY0hINMhD8EnyTWuVaSWu8g==
+"@spectrum-css/popover@^6.0.83":
+  version "6.0.83"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-6.0.83.tgz#eadb80ffa3e95fd9577730caf746a67f43888703"
+  integrity sha512-/jH8sLKfWy9yTgrv9acq4HhvyU3Xvw+6O3cPj32qf7OZcg5wMhMqK39SZvO5xsoffqn5FVE0eiED+raLG8TepQ==
 
 "@spectrum-css/progressbar@^3.0.73":
   version "3.0.80"
@@ -7073,7 +7073,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.40.0"
+  version "0.40.1"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.5.0"

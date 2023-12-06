@@ -51,6 +51,13 @@ export class CoachIndicator extends SpectrumElement {
             (this.variant || typeof changes.get('variant'))
         ) {
             this.static = this.variant;
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "variant" attribute/property of <${this.localName}> have been deprecated. Use "static" with any of the same values instead. "variant" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed'
+                );
+            }
         }
     }
 }

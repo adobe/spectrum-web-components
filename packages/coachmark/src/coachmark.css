@@ -12,6 +12,14 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-coachmark.css');
 
+:host {
+    /** custom to coachmark should be removed once keys component is developed by CSS **/
+    --spectrum-coachmark-dimension-size-175: 14px;
+    --spectrum-coachmark-dimension-size-200: 16px;
+    --spectrum-coachmark-dimension-size-100: 8px;
+    --spectrum-coachmark-dimension-size-50: 4px;
+}
+
 /* These css needs to be added from css team once the keys component is created */
 .keyboard-shortcut {
     align-items: center;
@@ -23,20 +31,17 @@ governing permissions and limitations under the License.
     display: inline-flex;
     flex-flow: row;
     justify-content: center;
-    min-width: var(
-        --spectrum-badge-min-width,
-        var(--spectrum-global-dimension-size-225)
-    );
-    padding-block: var(--spectrum-global-dimension-size-50);
-    padding-inline: var(--spectrum-global-dimension-size-100);
+    min-width: var(--spectrum-badge-min-width);
+    padding-block: var(--spectrum-coachmark-dimension-size-50);
+    padding-inline: var(--spectrum-coachmark-dimension-size-100);
 }
 
 .keys {
     align-items: center;
-    column-gap: var(--spectrum-global-dimension-size-50);
+    column-gap: var(--spectrum-coachmark-dimension-size-50);
     display: flex;
     flex-flow: wrap;
-    row-gap: var(--spectrum-global-dimension-size-175);
+    row-gap: var(--spectrum-coachmark-dimension-size-175);
     font-family: var(
         --mod-body-sans-serif-font-family,
         var(--spectrum-body-sans-serif-font-family)
@@ -47,8 +52,8 @@ governing permissions and limitations under the License.
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    row-gap: var(--spectrum-global-dimension-size-175);
-    column-gap: var(--spectrum-global-dimension-size-200);
+    row-gap: var(--spectrum-coachmark-dimension-size-175);
+    column-gap: var(--spectrum-coachmark-dimension-size-200);
 }
 
 .static-item {

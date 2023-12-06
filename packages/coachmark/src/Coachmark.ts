@@ -24,7 +24,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { join } from 'lit/directives/join.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Placement } from '@spectrum-web-components/overlay';
 import { MediaType } from './CoachmarkItem.js';
 import type { CoachmarkItem } from './CoachmarkItem.js';
@@ -58,7 +57,7 @@ export class Coachmark extends LikeAnchor(Popover) {
     };
 
     @property({ type: Number })
-    public offset = 6;
+    public offset = 0;
 
     @property({ attribute: 'shortcut-key' })
     private shortcutKey?: string;
@@ -83,9 +82,6 @@ export class Coachmark extends LikeAnchor(Popover) {
 
     @property({ type: Number, attribute: 'total-steps' })
     public totalSteps?: number;
-
-    @property({ type: Boolean })
-    public hasActionMenu = true;
 
     @property({ type: String, attribute: 'primary-cta' })
     primaryCTA?: string;
@@ -179,7 +175,7 @@ export class Coachmark extends LikeAnchor(Popover) {
                 <slot name="content"></slot>
             `;
         return html`
-            <div>${unsafeHTML(this.content?.description)}</div>
+            <div>${this.content?.description}</div>
         `;
     }
 
@@ -194,6 +190,7 @@ export class Coachmark extends LikeAnchor(Popover) {
         this.dispatchEvent(
             new Event('primary', {
                 bubbles: true,
+                composed: true,
             })
         );
     }
@@ -202,6 +199,7 @@ export class Coachmark extends LikeAnchor(Popover) {
         this.dispatchEvent(
             new Event('secondary', {
                 bubbles: true,
+                composed: true,
             })
         );
     }
