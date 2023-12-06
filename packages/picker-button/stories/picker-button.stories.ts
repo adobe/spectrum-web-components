@@ -39,6 +39,9 @@ customIcon.args = {
 export const invalid = (args: StoryArgs): TemplateResult => Template(args);
 invalid.args = { invalid: true };
 
+export const quiet = (args: StoryArgs): TemplateResult => Template(args);
+quiet.args = { quiet: true };
+
 export const label = (args: StoryArgs): TemplateResult => Template(args);
 label.args = { label: true };
 
