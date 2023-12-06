@@ -31,6 +31,5 @@ import { DateTimePicker } from '@spectrum-web-components/date-time-picker';
 
 -   Enable "receives-focus" when calendar is navigable via keyboard
 -   Review border applied to `<sp-picker-button>` when field is invalid
--   Review field styles when using large scale
 -   Complete documentation
 -   Add/Review unit tests

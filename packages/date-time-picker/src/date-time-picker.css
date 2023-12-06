@@ -20,6 +20,16 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-border-width)
             )
     );
+
+    inline-size: calc(
+        20ch +
+            (
+                var(
+                        --mod-textfield-icon-size-invalid,
+                        var(--spectrum-textfield-icon-size-invalid)
+                    ) * 3
+            ) + var(--mod-textfield-height, var(--spectrum-textfield-height))
+    );
 }
 
 :host([valid]) #textfield .icon,
