@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/shared",
-    "version": "0.40.0",
+    "version": "0.40.1",
     "publishConfig": {
         "access": "public"
     },
@@ -97,7 +97,7 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.40.0",
+        "@spectrum-web-components/base": "^0.40.1",
         "focus-visible": "^5.1.0"
     },
     "types": "./src/index.d.ts",

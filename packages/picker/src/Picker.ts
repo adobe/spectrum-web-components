@@ -393,7 +393,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .offset=${0}
                 ?open=${this.open}
                 .placement=${this.isMobile.matches ? undefined : this.placement}
-                type="auto"
+                .type=${this.isMobile.matches ? 'modal' : 'auto'}
                 .receivesFocus=${'true'}
                 @beforetoggle=${(
                     event: Event & {
