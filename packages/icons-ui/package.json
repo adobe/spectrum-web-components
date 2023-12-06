@@ -26,7 +26,7 @@
         "./package.json": "./package.json"
     },
     "scripts": {
-        "build": "node ./bin/build @spectrum-css/icon/medium"
+        "build": "node ./bin/build @adobe/spectrum-css-ui-icons/dist/medium"
     },
     "files": [
         "**/*.d.ts",
@@ -49,7 +49,7 @@
         "@spectrum-web-components/iconset": "^0.40.2"
     },
     "devDependencies": {
-        "@spectrum-css/icon": "^4.0.3",
+        "@adobe/spectrum-css-ui-icons": "^1.0.0",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fast-glob": "^3.2.12",

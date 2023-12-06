@@ -327,7 +327,7 @@
             "command": "yarn workspace @spectrum-web-components/icons-ui build",
             "files": [
                 "packages/icons-ui/bin/build.js",
-                "node_modules/@spectrum-css/icon/medium/**.svg"
+                "node_modules/@adobe/spectrum-css-ui-icons/dist/medium/**.svg"
             ],
             "output": [
                 "packages/icons-ui/**/*.ts",
