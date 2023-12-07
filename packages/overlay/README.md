@@ -169,6 +169,10 @@ When a `triggerElement` is present, either through an ID reference established v
     -   **if you have a `placement` but not a `triggerElement`** the `<sp-overlay>` will not be positioned due to their being nothing for the `plaement` to reference when so doing
 -   **if no `placement` is available** the content will not be placed with the expectation that the content itself or the consuming application will handle placement of the overlaid content. This is commonly what will happen for `type="modal"` and `type="page"` overlays as they are likely meant to cover the entire screen, whether visibly (via an `<sp-underlay>`, an element that includes one, or similar) or figuratively (as when modal content is not delivered with a backdrop or scrim).
 
+Additionally, a new behavior has been introduced to `<sp-overlay>`:
+
+-   **if a `open` is true**, the slotted shadow element of `<sp-overlay>` will receive an `open` attribute whenever the overlay is opened. This behavior is particularly useful when you want to add an `open` attribute to the slotted shadow element dynamically.
+
 ### Type
 
 The `type` of an Overlay outlines a number of things about the interaction model within which is works.
