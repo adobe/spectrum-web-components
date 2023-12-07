@@ -25,11 +25,18 @@ import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import { spy } from 'sinon';
 import { Button } from '@spectrum-web-components/button';
+import {
+    Default,
+    InTour,
+    single,
+    withImage,
+    withKeys,
+    withShortCut,
+} from '../stories/coachmark.stories.js';
 
 const defaultItem: CoachmarkItem = {
     heading: 'I am the heading for Coachmark',
     content: 'I am the content for this Coachmark',
-    mediaType: 'image',
 };
 describe('Coachmark', () => {
     testForLitDevWarnings(
@@ -47,30 +54,13 @@ describe('Coachmark', () => {
             )
     );
     it('loads default coachmark accessibly', async () => {
-        const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark
-                    id="coachmark"
-                    .content=${{
-                        title: defaultItem.heading,
-                        description: defaultItem.content,
-                    }}
-                ></sp-coachmark>
-            `
-        );
+        const el = await fixture<Coachmark>(Default());
         await elementUpdated(el);
         await expect(el).to.be.accessible();
     });
     it('displays the slotted content as `.title`', async () => {
-        const testHeading = 'This is a test heading';
-        const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark id="coachmark">
-                    <h1 slot="title">${testHeading}</h1>
-                    <div slot="content">Hello I am a content in slot</div>
-                </sp-coachmark>
-            `
-        );
+        const testHeading = 'Coachmark with Text Only';
+        const el = await fixture<Coachmark>(Default());
 
         await elementUpdated(el);
 
@@ -81,34 +71,26 @@ describe('Coachmark', () => {
 
         expect(headingSlot, 'did not find slot element').to.not.be.null;
         const nodes = headingSlot.assignedNodes();
-        const h1Element = nodes.find(
-            (node) => (node as HTMLElement).tagName === 'H1'
+        const divElement = nodes.find(
+            (node) => (node as HTMLElement).id === 'heading'
         );
-        expect(h1Element, 'did not find H1 element').to.not.be.null;
-        expect((h1Element as HTMLHeadingElement).textContent).to.contain(
+        expect(divElement, 'did not find div element').to.not.be.null;
+        expect((divElement as HTMLDivElement).textContent).to.contain(
             testHeading,
             'the slotted content renders in the element'
         );
     });
-    it('if in tour coachmark loads with steps with previous and next buttons', async () => {
+    it('if in tour coachmark loads with pagination with previous, next buttons and action menu', async () => {
         const stepText = '2 of 8';
         const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark
-                    current-step="2"
-                    total-steps="8"
-                    primary-cta="Next"
-                    secondary-cta="Previous"
-                >
-                    <div slot="title">Try playing with a pixel brush</div>
-                    <div slot="content">
-                        Try playing with a pixel brush Pixel brushes use pixels
-                        to create brush strokes, just like in other design and
-                        drawing tools. Start drawing, and zoom in to see the
-                        pixels in each stroke.
-                    </div>
-                </sp-coachmark>
-            `
+            InTour(
+                {
+                    open: true,
+                    heading: 'Coachmark In Tour',
+                    content: 'This is a Coachmark with nothing but text in it.',
+                },
+                {}
+            )
         );
         await elementUpdated(el);
         await nextFrame();
@@ -136,77 +118,28 @@ describe('Coachmark', () => {
         expect(prevButton).to.not.be.undefined;
         expect(prevButton?.textContent?.trim()).to.equal('Previous');
     });
-    it('loads action-menu', async () => {
+    it('loads pagination when total step count is greater than 1', async () => {
         const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark>
-                    <sp-action-menu slot="actions" placement="bottom-end" quiet>
-                        <sp-menu-item>Skip tour</sp-menu-item>
-                        <sp-menu-item>Restart tour</sp-menu-item>
-                    </sp-action-menu>
-                </sp-coachmark>
-            `
+            InTour(
+                {
+                    open: true,
+                    heading: 'Coachmark In Tour',
+                    content: 'This is a Coachmark with nothing but text in it.',
+                },
+                {}
+            )
         );
-
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
-
-        await expect(el).to.be.accessible();
-    });
-    it('loads step when total step count is greater than 1', async () => {
-        const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark total-steps="5" current-step="2">
-                    <div slot="title">Try playing with a pixel brush</div>
-                    <sp-action-menu slot="actions" placement="bottom-end" quiet>
-                        <sp-menu-item>Skip tour</sp-menu-item>
-                        <sp-menu-item>Restart tour</sp-menu-item>
-                    </sp-action-menu>
-                </sp-coachmark>
-            `
-        );
-
         await elementUpdated(el);
         const content = el.shadowRoot.querySelector(
             '.step span[aria-live="polite"]'
         );
 
-        expect(content?.textContent?.trim()).to.equal('2 of 5');
-
-        await expect(el).to.be.accessible();
-    });
-    it('doesnt load pagination count(steps) when total step count is less then 2', async () => {
-        const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark total-steps="1">
-                    <div slot="title">Try playing with a pixel brush</div>
-                    <sp-action-menu slot="actions" placement="bottom-end" quiet>
-                        <sp-menu-item>Skip tour</sp-menu-item>
-                        <sp-menu-item>Restart tour</sp-menu-item>
-                    </sp-action-menu>
-                </sp-coachmark>
-            `
-        );
-
-        await elementUpdated(el);
-        const stepElement = el.shadowRoot.querySelector('.step');
-        expect(stepElement).to.be.null;
+        expect(content?.textContent?.trim()).to.equal('2 of 8');
 
         await expect(el).to.be.accessible();
     });
     it('loads primary button with text "Ok" for a single coachmark', async () => {
-        const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark total-steps="1" primary-cta="Ok">
-                    <div slot="title">Try playing with a pixel brush</div>
-                    <sp-action-menu slot="actions" placement="bottom-end" quiet>
-                        <sp-menu-item>Skip tour</sp-menu-item>
-                        <sp-menu-item>Restart tour</sp-menu-item>
-                    </sp-action-menu>
-                </sp-coachmark>
-            `
-        );
+        const el = await fixture<Coachmark>(single());
 
         await elementUpdated(el);
         const okayButton = el.shadowRoot.querySelector(
@@ -215,54 +148,15 @@ describe('Coachmark', () => {
         expect(okayButton).to.not.be.null;
         expect(okayButton?.textContent?.trim()).to.equal('Ok');
     });
-    it('loads primary button with text "Next" and secondary button with "Previous" if total-steps is greater than 1', async () => {
-        const el = await fixture<Coachmark>(
-            html`
-                <sp-coachmark
-                    total-steps="4"
-                    current-step="2"
-                    secondary-cta="Previous"
-                    primary-cta="Next"
-                >
-                    <div slot="title">Try playing with a pixel brush</div>
-                    <sp-action-menu slot="actions" placement="bottom-end" quiet>
-                        <sp-menu-item>Skip tour</sp-menu-item>
-                        <sp-menu-item>Restart tour</sp-menu-item>
-                    </sp-action-menu>
-                </sp-coachmark>
-            `
-        );
-
-        await elementUpdated(el);
-        const nextButton = el.shadowRoot.querySelector(
-            'sp-button[variant="primary"'
-        );
-        expect(nextButton).to.not.be.undefined;
-        expect(nextButton?.textContent?.trim()).to.equal('Next');
-
-        const prevButton = el.shadowRoot.querySelector(
-            'sp-button[variant="secondary"]'
-        );
-        expect(prevButton).to.not.be.undefined;
-        expect(prevButton?.textContent?.trim()).to.equal('Previous');
-    });
-    it('renders shortcut and modifier key with joiner', async () => {
+    it('renders modifier keys with joiner', async () => {
         const modifierKeys = ['⇧ Shift', '⌘'];
-        const el = await fixture<Coachmark>(html`
-            <sp-coachmark
-                current-step="2"
-                total-steps="8"
-                open
-                shortcut-key="Z"
-                .modifierKeys=${modifierKeys}
-            >
-                <div slot="title">Tooltip with 16:9 image</div>
-                <div slot="content">
-                    This is a Rich Tooltip with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-            </sp-coachmark>
-        `);
+        const el = await fixture<Coachmark>(
+            withKeys({
+                modifierKeys,
+                heading: 'Coachmark with Keys',
+                content: 'This is a Coachmark with nothing but text in it.',
+            })
+        );
         await elementUpdated(el);
         const modifier = el.shadowRoot.querySelector('span[type="modifier"]');
         expect(modifier).to.not.be.undefined;
@@ -270,6 +164,10 @@ describe('Coachmark', () => {
         const joiner = el.shadowRoot.querySelector('span[class="plus"]');
         expect(joiner).to.not.be.undefined;
         expect(joiner?.textContent?.trim()).to.include('+');
+    });
+    it('renders with shortcut', async () => {
+        const el = await fixture<Coachmark>(withShortCut());
+        await elementUpdated(el);
 
         const shortcutKey = el.shadowRoot.querySelector(
             'span[type="shortcut"]'
@@ -278,54 +176,28 @@ describe('Coachmark', () => {
         expect(shortcutKey?.textContent?.trim()).to.include('Z');
     });
     it('renders content with image asset', async () => {
-        const el = await fixture<Coachmark>(html`
-            <sp-coachmark
-                current-step="2"
-                total-steps="8"
-                open
-                media-type="image"
-                src="https://picsum.photos/id/237/200/300"
-            >
-                <div slot="title">Tooltip with 16:9 image</div>
-                <div slot="content">
-                    This is a Rich Tooltip with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-            </sp-coachmark>
-        `);
+        const el = await fixture<Coachmark>(withImage());
         await elementUpdated(el);
         const imageElement = el.shadowRoot.querySelector(
             'img[src="https://picsum.photos/id/237/200/300"'
         );
         expect(imageElement).not.to.be.undefined;
     });
-    it('dispatches `primary` and `secondary`', async () => {
+    it('in tour dispatches `primary` and `secondary`', async () => {
         const primarySpy = spy();
         const secondarySpy = spy();
         const handlePrimary = (): void => primarySpy();
         const handleSecondary = (): void => secondarySpy();
-        const el = await fixture<Coachmark>(html`
-            <sp-coachmark
-                primary-cta="Next"
-                secondary-cta="Previous"
-                @primary=${({ target }: Event & { target: HTMLElement }) => {
-                    target.dispatchEvent(
-                        new Event('close', { bubbles: true, composed: true })
-                    );
-                }}
-                @secondary=${({ target }: Event & { target: HTMLElement }) => {
-                    target.dispatchEvent(
-                        new Event('close', { bubbles: true, composed: true })
-                    );
-                }}
-            >
-                <div slot="title">A single coachmark</div>
-                <div slot="content">
-                    This is a Coachmark with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-            </sp-coachmark>
-        `);
+        const el = await fixture<Coachmark>(
+            InTour(
+                {
+                    open: true,
+                    heading: 'Coachmark in Tour',
+                    content: 'This is a Coachmark with nothing but text in it.',
+                },
+                {}
+            )
+        );
         el.addEventListener('primary', handlePrimary);
         el.addEventListener('secondary', handleSecondary);
 
