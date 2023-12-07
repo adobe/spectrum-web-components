@@ -195,7 +195,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                     <sp-progress-circle
                         indeterminate
                         static="white"
-                        size=${this.size}
+                        label=${this.pendingLabel + 'progress circle'}
                     ></sp-progress-circle>
                 `;
             })}
