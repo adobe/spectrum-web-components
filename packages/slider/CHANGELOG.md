@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **slider:** align editable slider when no label provided ([#3816](https://github.com/adobe/spectrum-web-components/issues/3816)) ([a5f4900](https://github.com/adobe/spectrum-web-components/commit/a5f49009d4acc1e8c5403a08b127769e18bda56c))
+
 # [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

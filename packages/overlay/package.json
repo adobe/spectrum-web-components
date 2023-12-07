@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/overlay",
-    "version": "0.40.0",
+    "version": "0.40.1",
     "publishConfig": {
         "access": "public"
     },
@@ -128,11 +128,11 @@
     "dependencies": {
         "@floating-ui/dom": "^1.5.3",
         "@floating-ui/utils": "^0.1.6",
-        "@spectrum-web-components/action-button": "^0.40.0",
-        "@spectrum-web-components/base": "^0.40.0",
-        "@spectrum-web-components/reactive-controllers": "^0.40.0",
-        "@spectrum-web-components/shared": "^0.40.0",
-        "@spectrum-web-components/theme": "^0.40.0"
+        "@spectrum-web-components/action-button": "^0.40.1",
+        "@spectrum-web-components/base": "^0.40.1",
+        "@spectrum-web-components/reactive-controllers": "^0.40.1",
+        "@spectrum-web-components/shared": "^0.40.1",
+        "@spectrum-web-components/theme": "^0.40.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

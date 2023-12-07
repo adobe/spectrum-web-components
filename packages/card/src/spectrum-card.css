@@ -155,12 +155,13 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
-:host(:focus),
-:host([focused]) {
+:host(.focus-visible) {
     outline: none;
 }
-:host(:focus):after,
-:host([focused]):after {
+:host(:focus-visible) {
+    outline: none;
+}
+:host(.focus-visible):after {
     border-color: var(
         --mod-card-focus-indicator-color,
         var(--spectrum-card-focus-indicator-color)
@@ -170,10 +171,35 @@ governing permissions and limitations under the License.
         var(--spectrum-card-focus-indicator-width)
     );
 }
-:host(:focus) #cover-photo,
-:host(:focus) #preview,
-:host([focused]) #cover-photo,
-:host([focused]) #preview {
+:host(:focus-visible):after {
+    border-color: var(
+        --mod-card-focus-indicator-color,
+        var(--spectrum-card-focus-indicator-color)
+    );
+    border-width: var(
+        --mod-card-focus-indicator-width,
+        var(--spectrum-card-focus-indicator-width)
+    );
+}
+:host(.focus-visible) #cover-photo,
+:host(.focus-visible) #preview {
+    border-start-end-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(
+                --mod-card-focus-indicator-width,
+                var(--spectrum-card-focus-indicator-width)
+            )
+    );
+    border-start-start-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(
+                --mod-card-focus-indicator-width,
+                var(--spectrum-card-focus-indicator-width)
+            )
+    );
+}
+:host(:focus-visible) #cover-photo,
+:host(:focus-visible) #preview {
     border-start-end-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
             var(

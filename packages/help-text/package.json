@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/help-text",
-    "version": "0.40.0",
+    "version": "0.40.1",
     "publishConfig": {
         "access": "public"
     },
@@ -77,8 +77,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.0",
-        "@spectrum-web-components/icons-workflow": "^0.40.0"
+        "@spectrum-web-components/base": "^0.40.1",
+        "@spectrum-web-components/icons-workflow": "^0.40.1"
     },
     "devDependencies": {
         "@spectrum-css/helptext": "^4.0.54"

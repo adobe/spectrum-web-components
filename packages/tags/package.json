@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tags",
-    "version": "0.40.0",
+    "version": "0.40.1",
     "publishConfig": {
         "access": "public"
     },
@@ -66,10 +66,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.0",
-        "@spectrum-web-components/button": "^0.40.0",
-        "@spectrum-web-components/reactive-controllers": "^0.40.0",
-        "@spectrum-web-components/shared": "^0.40.0"
+        "@spectrum-web-components/base": "^0.40.1",
+        "@spectrum-web-components/button": "^0.40.1",
+        "@spectrum-web-components/reactive-controllers": "^0.40.1",
+        "@spectrum-web-components/shared": "^0.40.1"
     },
     "devDependencies": {
         "@spectrum-css/tag": "^8.0.6",
