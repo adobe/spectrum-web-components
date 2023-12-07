@@ -55,31 +55,43 @@ export const Default = (props: Properties): TemplateResult => {
     const { open = true } = props;
 
     return html`
-        <sp-coach-indicator id="trigger"></sp-coach-indicator>
-        <sp-overlay
-            trigger="trigger@hover"
-            placement="right"
-            type="hint"
+        <sp-coachmark
             ?open=${open}
+            current-step="2"
+            total-steps="8"
+            primary-cta="Next"
+            secondary-cta="Previous"
         >
-            <sp-coachmark
-                ?open=${open}
-                current-step="2"
-                total-steps="8"
-                primary-cta="Next"
-                secondary-cta="Previous"
-            >
-                <div slot="title">Coachmark with Text Only</div>
-                <div slot="content">
-                    This is a Coachmark with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-                <sp-action-menu placement="bottom-end" quiet slot="actions">
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
-            </sp-coachmark>
-        </sp-overlay>
+            <div slot="title">Coachmark with Text Only</div>
+            <div slot="content">
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
+            </div>
+        </sp-coachmark>
+    `;
+};
+
+export const withActionMenu = (props: Properties): TemplateResult => {
+    const { open = true } = props;
+
+    return html`
+        <sp-coachmark
+            ?open=${open}
+            current-step="2"
+            total-steps="8"
+            primary-cta="Next"
+            secondary-cta="Previous"
+        >
+            <div slot="title">Coachmark with Text Only</div>
+            <div slot="content">
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
+            </div>
+            <sp-action-menu placement="bottom-end" quiet slot="actions">
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
+        </sp-coachmark>
     `;
 };
 
@@ -87,21 +99,13 @@ export const single = (props: Properties): TemplateResult => {
     const { open = true } = props;
 
     return html`
-        <sp-coach-indicator id="trigger"></sp-coach-indicator>
-        <sp-overlay
-            trigger="trigger@hover"
-            placement="right"
-            .receivesFocus=${'false'}
-            ?open=${open}
-        >
-            <sp-coachmark ?open=${open} primary-cta="Ok">
-                <div slot="title">A single coachmark</div>
-                <div slot="content">
-                    This is a Coachmark with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-            </sp-coachmark>
-        </sp-overlay>
+        <sp-coachmark ?open=${open} primary-cta="Ok">
+            <div slot="title">A single coachmark</div>
+            <div slot="content">
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
+            </div>
+        </sp-coachmark>
     `;
 };
 
@@ -128,15 +132,12 @@ export const Clickable = (props: Properties): TemplateResult => {
                     This is a Coachmark with nothing but text in it. Kind of
                     lonely in here.
                 </div>
-                <sp-action-menu placement="bottom-end" quiet slot="actions">
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
             </sp-coachmark>
         </sp-overlay>
     `;
 };
-export const withImage = (props: Properties): TemplateResult => {
+
+export const TriggerOnHover = (props: Properties): TemplateResult => {
     const { open = true } = props;
 
     return html`
@@ -149,24 +150,40 @@ export const withImage = (props: Properties): TemplateResult => {
         >
             <sp-coachmark
                 ?open=${open}
-                src=${cave}
-                media-type="image"
-                primary-cta="Next"
-                secondary-cta="Previous"
                 current-step="2"
                 total-steps="8"
+                primary-cta="Next"
+                secondary-cta="Previous"
             >
-                <div slot="title">Coachmark with Media</div>
+                <div slot="title">Coachmark with Text Only</div>
                 <div slot="content">
                     This is a Coachmark with nothing but text in it. Kind of
                     lonely in here.
                 </div>
-                <sp-action-menu placement="bottom-end" quiet slot="actions">
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
             </sp-coachmark>
         </sp-overlay>
+    `;
+};
+
+export const withImage = (props: Properties): TemplateResult => {
+    const { open = true } = props;
+
+    return html`
+        <sp-coachmark
+            ?open=${open}
+            src=${cave}
+            media-type="image"
+            primary-cta="Next"
+            secondary-cta="Previous"
+            current-step="2"
+            total-steps="8"
+        >
+            <div slot="title">Coachmark with Media</div>
+            <div slot="content">
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
+            </div>
+        </sp-coachmark>
     `;
 };
 
@@ -174,33 +191,21 @@ export const withGif = (props: Properties): TemplateResult => {
     const { open = true } = props;
 
     return html`
-        <sp-coach-indicator id="trigger"></sp-coach-indicator>
-        <sp-overlay
-            trigger="trigger@hover"
-            placement="right"
-            .receivesFocus=${'false'}
+        <sp-coachmark
             ?open=${open}
+            src=${gif}
+            media-type="image"
+            primary-cta="Next"
+            secondary-cta="Previous"
+            current-step="2"
+            total-steps="8"
         >
-            <sp-coachmark
-                ?open=${open}
-                src=${gif}
-                media-type="image"
-                primary-cta="Next"
-                secondary-cta="Previous"
-                current-step="2"
-                total-steps="8"
-            >
-                <div slot="title">Coachmark with GIF</div>
-                <div slot="content">
-                    This is a Coachmark with nothing but text in it. Kind of
-                    lonely in here.
-                </div>
-                <sp-action-menu placement="bottom-end" quiet slot="actions">
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
-            </sp-coachmark>
-        </sp-overlay>
+            <div slot="title">Coachmark with GIF</div>
+            <div slot="content">
+                This is a Coachmark with nothing but text in it. Kind of lonely
+                in here.
+            </div>
+        </sp-coachmark>
     `;
 };
 
@@ -211,56 +216,35 @@ withGif.swc_vrt = {
 export const withKeys = (props: Properties): TemplateResult => {
     const { open = true, modifierKeys = ['⇧ Shift', '⌘'] } = props;
     return html`
-        <sp-coach-indicator id="trigger"></sp-coach-indicator>
-        <sp-overlay
-            trigger="trigger@hover"
-            placement="right"
-            .receivesFocus=${'false'}
+        <sp-coachmark
             ?open=${open}
-        >
-            <sp-coachmark
-                ?open=${open}
-                current-step="2"
-                total-steps="8"
-                primary-cta="Next"
-                secondary-cta="Previous"
-                .modifierKeys=${modifierKeys}
-                .content=${{
-                    title: 'I am a Coachmark with keys',
-                    description:
-                        'This is a Coachmark with nothing but text in it. Kind of lonely in here',
-                }}
-            >
-                <sp-action-menu placement="bottom-end" quiet slot="actions">
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
-                </sp-action-menu>
-            </sp-coachmark>
-        </sp-overlay>
+            current-step="2"
+            total-steps="8"
+            primary-cta="Next"
+            secondary-cta="Previous"
+            .modifierKeys=${modifierKeys}
+            .content=${{
+                title: 'I am a Coachmark with keys',
+                description:
+                    'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+            }}
+        ></sp-coachmark>
     `;
 };
 
 export const withShortCut = (props: Properties): TemplateResult => {
     const { open = true } = props;
     return html`
-        <sp-coach-indicator id="trigger"></sp-coach-indicator>
-        <sp-overlay
-            trigger="trigger@hover"
-            placement="right"
-            .receivesFocus=${'false'}
+        <sp-coachmark
             ?open=${open}
-        >
-            <sp-coachmark
-                ?open=${open}
-                primary-cta="Ok"
-                shortcut-key="L"
-                .content=${{
-                    title: 'Coachmark with Shortcut',
-                    description:
-                        'This is a Coachmark with nothing but text in it. Kind of lonely in here',
-                }}
-            ></sp-coachmark>
-        </sp-overlay>
+            primary-cta="Ok"
+            shortcut-key="L"
+            .content=${{
+                title: 'Coachmark with Shortcut',
+                description:
+                    'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+            }}
+        ></sp-coachmark>
     `;
 };
 
@@ -270,36 +254,28 @@ export const actionButtons = (
 ): TemplateResult => {
     const { open = true } = props;
     return html`
-        <sp-coach-indicator id="trigger"></sp-coach-indicator>
-        <sp-overlay
-            trigger="trigger@hover"
-            placement="right"
-            .receivesFocus=${'false'}
+        <sp-coachmark
             ?open=${open}
-        >
-            <sp-coachmark
-                ?open=${open}
-                primary-cta="Next"
-                secondary-cta="Previous"
-                shortcut-key="L"
-                .content=${{
-                    title: 'Coachmark with Shortcut',
-                    description:
-                        'This is a Coachmark with nothing but text in it. Kind of lonely in here',
-                }}
-                @primary=${(event: Event & { target: HTMLElement }) => {
-                    event.target.dispatchEvent(
-                        new Event('close', { bubbles: true, composed: true })
-                    );
-                    args.onPrimary?.(event);
-                }}
-                @secondary=${(event: Event & { target: HTMLElement }) => {
-                    event.target.dispatchEvent(
-                        new Event('close', { bubbles: true, composed: true })
-                    );
-                    args.onSecondary?.(event);
-                }}
-            ></sp-coachmark>
-        </sp-overlay>
+            primary-cta="Next"
+            secondary-cta="Previous"
+            shortcut-key="L"
+            .content=${{
+                title: 'Coachmark with Shortcut',
+                description:
+                    'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+            }}
+            @primary=${(event: Event & { target: HTMLElement }) => {
+                event.target.dispatchEvent(
+                    new Event('close', { bubbles: true, composed: true })
+                );
+                args.onPrimary?.(event);
+            }}
+            @secondary=${(event: Event & { target: HTMLElement }) => {
+                event.target.dispatchEvent(
+                    new Event('close', { bubbles: true, composed: true })
+                );
+                args.onSecondary?.(event);
+            }}
+        ></sp-coachmark>
     `;
 };
