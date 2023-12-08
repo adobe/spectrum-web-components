@@ -10,8 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-date-time-picker.js';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { DateTimePicker } from '../src/DateTimePicker.js';
+import { Default } from '../stories/date-time-picker.stories.js';
 
 describe('DateTimePicker', () => {
-    // TODO: add unit tests
+    testForLitDevWarnings(async () => await fixture<DateTimePicker>(Default()));
+
+    it('loads default date-time picker accessibly', async () => {
+        const el = await fixture<DateTimePicker>(Default());
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
 });
