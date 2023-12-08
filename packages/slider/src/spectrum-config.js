@@ -115,6 +115,14 @@ const config = {
                     'tickLabel'
                 ),
                 converter.classToClass('spectrum-Slider-ticks', 'ticks'),
+                converter.classToClass(
+                    'spectrum-Slider-trackContainer',
+                    'trackContainer'
+                ),
+                converter.classToClass(
+                    'spectrum-Slider-handleContainer',
+                    'handleContainer'
+                ),
                 converter.classToClass('spectrum-Slider-track', 'track'),
                 converter.classToClass('is-focused', 'handle-highlight'),
                 converter.classToClass('is-dragged', 'dragging'),
