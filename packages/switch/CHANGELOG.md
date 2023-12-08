@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Performance Improvements
+
+-   **checkbox:** refactor architecture for more rendering perf and DOM element count ([7c2277f](https://github.com/adobe/spectrum-web-components/commit/7c2277f1a21e2e886678c3a3ad1d454cbd6637e0))
+
 # [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
 
 ### Features

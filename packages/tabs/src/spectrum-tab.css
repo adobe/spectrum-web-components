@@ -111,22 +111,19 @@ governing permissions and limitations under the License.
 :host([disabled]) #item-label {
     cursor: default;
 }
-:host(.focus-visible),
-:host(:focus) {
+:host(.focus-visible) {
     color: var(
         --highcontrast-tabs-color-key-focus,
         var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
     );
 }
-:host(:focus),
 :host(:focus-visible) {
     color: var(
         --highcontrast-tabs-color-key-focus,
         var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
     );
 }
-:host(.focus-visible):before,
-:host(:focus):before {
+:host(.focus-visible):before {
     border-color: var(
         --highcontrast-tabs-focus-indicator-color,
         var(
@@ -135,7 +132,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:focus):before,
 :host(:focus-visible):before {
     border-color: var(
         --highcontrast-tabs-focus-indicator-color,

@@ -821,3 +821,13 @@ custom-vars-viewer:not(:defined) {
     display: block;
     height: 494px;
 }
+
+docs-page:not(:defined) {
+    background-color: var(--spectrum-global-color-gray-50);
+    color: var(--spectrum-global-color-gray-800);
+}
+
+sp-link:not(:defined) {
+    color: var(--spectrum-accent-content-color-default);
+    text-decoration: underline;
+}

@@ -47,6 +47,12 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-start-to-content-with-icon-third-level: var(
         --spectrum-side-navigation-with-icon-third-level-edge-to-text
     );
+    --spectrum-sidenav-heading-top-margin: var(
+        --spectrum-side-navigation-item-to-header
+    );
+    --spectrum-sidenav-heading-bottom-margin: var(
+        --spectrum-side-navigation-header-to-item
+    );
     --spectrum-sidenav-background-disabled: transparent;
     --spectrum-sidenav-background-default: transparent;
     --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
@@ -151,9 +157,15 @@ governing permissions and limitations under the License.
         --mod-sidenav-header-line-height,
         var(--spectrum-sidenav-header-line-height)
     );
-    margin-block-end: var(--spectrum-sidenav-heading-bottom-margin);
+    margin-block-end: var(
+        --mod-sidenav-heading-bottom-margin,
+        var(--spectrum-sidenav-heading-bottom-margin)
+    );
     margin-block-start: calc(
-        var(--spectrum-sidenav-heading-top-margin) - var(--spectrum-sidenav-gap)
+        var(
+                --mod-sidenav-heading-top-margin,
+                var(--spectrum-sidenav-heading-top-margin)
+            ) - var(--mod-sidenav-gap, var(--spectrum-sidenav-gap))
     );
     padding-inline: var(
         --mod-sidenav-inline-padding,

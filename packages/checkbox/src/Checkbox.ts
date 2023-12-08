@@ -16,10 +16,12 @@ import {
     html,
     PropertyValues,
     SizedMixin,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { CheckboxBase } from './CheckboxBase.js';
+import { CheckboxMixin } from './CheckboxMixin.js';
+import checkboxStyles from './checkbox.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark200.js';
@@ -28,62 +30,77 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
-import checkboxStyles from './checkbox.css.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 
 const checkmarkIcon = {
-    s: html`
-        <sp-icon-checkmark75
-            id="checkmark"
-            class="spectrum-Icon spectrum-UIIcon-Checkmark75"
-        ></sp-icon-checkmark75>
-    `,
-    m: html`
-        <sp-icon-checkmark100
-            id="checkmark"
-            class="spectrum-Icon spectrum-UIIcon-Checkmark100"
-        ></sp-icon-checkmark100>
-    `,
-    l: html`
-        <sp-icon-checkmark200
-            id="checkmark"
-            class="spectrum-Icon spectrum-UIIcon-Checkmark200"
-        ></sp-icon-checkmark200>
-    `,
-    xl: html`
-        <sp-icon-checkmark300
-            id="checkmark"
-            class="spectrum-Icon spectrum-UIIcon-Checkmark300"
-        ></sp-icon-checkmark300>
-    `,
+    s: () => {
+        return html`
+            <sp-icon-checkmark75
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark75"
+            ></sp-icon-checkmark75>
+        `;
+    },
+    m: () => {
+        return html`
+            <sp-icon-checkmark100
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark100"
+            ></sp-icon-checkmark100>
+        `;
+    },
+    l: () => {
+        return html`
+            <sp-icon-checkmark200
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark200"
+            ></sp-icon-checkmark200>
+        `;
+    },
+    xl: () => {
+        return html`
+            <sp-icon-checkmark300
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark300"
+            ></sp-icon-checkmark300>
+        `;
+    },
 };
 
 const dashIcon = {
-    s: html`
-        <sp-icon-dash75
-            id="partialCheckmark"
-            class="spectrum-Icon spectrum-UIIcon-Dash75"
-        ></sp-icon-dash75>
-    `,
-    m: html`
-        <sp-icon-dash100
-            id="partialCheckmark"
-            class="spectrum-Icon spectrum-UIIcon-Dash100"
-        ></sp-icon-dash100>
-    `,
-    l: html`
-        <sp-icon-dash200
-            id="partialCheckmark"
-            class="spectrum-Icon spectrum-UIIcon-Dash200"
-        ></sp-icon-dash200>
-    `,
-    xl: html`
-        <sp-icon-dash300
-            id="partialCheckmark"
-            class="spectrum-Icon spectrum-UIIcon-Dash300"
-        ></sp-icon-dash300>
-    `,
+    s: () => {
+        return html`
+            <sp-icon-dash75
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash75"
+            ></sp-icon-dash75>
+        `;
+    },
+    m: () => {
+        return html`
+            <sp-icon-dash100
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash100"
+            ></sp-icon-dash100>
+        `;
+    },
+    l: () => {
+        return html`
+            <sp-icon-dash200
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash200"
+            ></sp-icon-dash200>
+        `;
+    },
+    xl: () => {
+        return html`
+            <sp-icon-dash300
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash300"
+            ></sp-icon-dash300>
+        `;
+    },
 };
 
 /**
@@ -91,9 +108,20 @@ const dashIcon = {
  * @slot - content to display as the label for the Checkbox
  * @fires change - Announces a change in the `checked` property of a Checkbox
  */
-export class Checkbox extends SizedMixin(CheckboxBase, {
+export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     noDefaultSize: true,
 }) {
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
+    /**
+     * Disable this control. It will not receive focus or events
+     */
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 
@@ -103,8 +131,28 @@ export class Checkbox extends SizedMixin(CheckboxBase, {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    @property({ reflect: true, type: Number, attribute: 'tabindex' })
+    public override tabIndex = 0;
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        if (this.hasAttribute('autofocus')) {
+            this.updateComplete.then(() => {
+                this.focus();
+            });
+        }
+    }
+
     public static override get styles(): CSSResultArray {
         return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
+    }
+
+    public override click(): void {
+        if (this.disabled) {
+            return;
+        }
+
+        this.inputElement?.click();
     }
 
     public override handleChange(): void {
@@ -116,8 +164,12 @@ export class Checkbox extends SizedMixin(CheckboxBase, {
         return html`
             ${super.render()}
             <span id="box">
-                ${checkmarkIcon[this.size as DefaultElementSize]}
-                ${dashIcon[this.size as DefaultElementSize]}
+                ${this.checked
+                    ? checkmarkIcon[this.size as DefaultElementSize]()
+                    : html``}
+                ${this.indeterminate
+                    ? dashIcon[this.size as DefaultElementSize]()
+                    : html``}
             </span>
             <label id="label" for="input"><slot></slot></label>
         `;
@@ -125,15 +177,28 @@ export class Checkbox extends SizedMixin(CheckboxBase, {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (
+            changes.has('disabled') &&
+            (typeof changes.get('disabled') !== 'undefined' || this.disabled)
+        ) {
+            if (this.disabled) {
+                this.inputElement.tabIndex = this.tabIndex;
+                this.tabIndex = -1;
+            } else {
+                this.tabIndex = this.inputElement.tabIndex;
+                this.inputElement.removeAttribute('tabindex');
+            }
+            this.inputElement.disabled = this.disabled;
+        }
+        if (changes.has('indeterminate')) {
+            this.inputElement.indeterminate = this.indeterminate;
+        }
         if (changes.has('invalid')) {
             if (this.invalid) {
                 this.inputElement.setAttribute('aria-invalid', 'true');
             } else {
                 this.inputElement.removeAttribute('aria-invalid');
             }
-        }
-        if (changes.has('indeterminate')) {
-            this.inputElement.indeterminate = this.indeterminate;
         }
     }
 }

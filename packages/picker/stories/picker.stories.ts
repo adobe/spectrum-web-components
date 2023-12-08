@@ -459,6 +459,58 @@ export const readonly = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
+class CustomPickerReady extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+    }
+
+    handleTriggerOpened = async (): Promise<void> => {
+        await nextFrame();
+
+        const picker = document.querySelector('#picker-state') as Picker;
+        picker.addEventListener('sp-opened', this.handlePickerOpen);
+        picker.open = true;
+    };
+
+    handlePickerOpen = async (): Promise<void> => {
+        const picker = document.querySelector('#picker-state') as Picker;
+        const actions = [nextFrame, picker.updateComplete];
+
+        await Promise.all(actions);
+
+        this.ready(true);
+    };
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('complex-picker-ready', CustomPickerReady);
+
+const customPickerDecorator = (story: () => TemplateResult): TemplateResult => {
+    return html`
+        ${story()}
+        <custom-picker-ready></custom-picker-ready>
+    `;
+};
+
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';
     return html`
@@ -494,6 +546,8 @@ export const custom = (args: StoryArgs): TemplateResult => {
         </p>
     `;
 };
+
+custom.decorators = [customPickerDecorator];
 
 custom.args = {
     open: true,

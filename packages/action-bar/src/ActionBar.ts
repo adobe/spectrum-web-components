@@ -58,7 +58,7 @@ export class ActionBar extends SpectrumElement {
      *
      * @param {String} variant
      */
-    @property({ type: String, reflect: true })
+    @property({ type: String })
     public set variant(variant: string) {
         if (variant === this.variant) {
             return;

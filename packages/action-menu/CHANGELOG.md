@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **action-menu:** allow tray to display full width ([31415e4](https://github.com/adobe/spectrum-web-components/commit/31415e4ebe6b5369775074e52ed92fcd6b70c932))
+
 # [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

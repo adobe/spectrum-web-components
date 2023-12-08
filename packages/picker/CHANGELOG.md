@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **picker:** ensure menu placement in mobile ([#3835](https://github.com/adobe/spectrum-web-components/issues/3835)) ([4aba1c6](https://github.com/adobe/spectrum-web-components/commit/4aba1c6094e45481dec428fcc95fb4148f62dbc9))
+
 # [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
 
 **Note:** Version bump only for package @spectrum-web-components/picker
