@@ -41,6 +41,8 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 </sp-overlay>
 ```
 
+When a `<sp-overlay>` element is opened, it will pass that state to its direct children elements as the property `open`, which it will set to `true`. Elements should react to this by initiating any transition between closed and open that they see fit. Similarly, `open` will be set to `false` when the `<sp-overlay>` element is closed.
+
 ### Action bar
 
 ```html
@@ -168,10 +170,6 @@ When a `triggerElement` is present, either through an ID reference established v
     -   **if an `offset` is also available** the `<sp-overlay>` will distance itself from the `triggerElement` in accordance with the value of the `offset`
     -   **if you have a `placement` but not a `triggerElement`** the `<sp-overlay>` will not be positioned due to their being nothing for the `plaement` to reference when so doing
 -   **if no `placement` is available** the content will not be placed with the expectation that the content itself or the consuming application will handle placement of the overlaid content. This is commonly what will happen for `type="modal"` and `type="page"` overlays as they are likely meant to cover the entire screen, whether visibly (via an `<sp-underlay>`, an element that includes one, or similar) or figuratively (as when modal content is not delivered with a backdrop or scrim).
-
-Additionally, a new behavior has been introduced to `<sp-overlay>`:
-
--   **if a `open` is true**, the slotted shadow element of `<sp-overlay>` will receive an `open` attribute whenever the overlay is opened. This behavior is particularly useful when you want to add an `open` attribute to the slotted shadow element dynamically.
 
 ### Type
 
