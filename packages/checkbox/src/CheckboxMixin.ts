@@ -29,6 +29,7 @@ export interface CheckboxElement {
     handleChange(): void;
     inputElement: HTMLInputElement;
     name?: string;
+    readonly?: boolean;
 }
 
 export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
