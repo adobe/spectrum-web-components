@@ -115,6 +115,18 @@ export default {
                 type: 'boolean',
             },
         },
+        emphasized: {
+            name: 'emphasized',
+            type: { name: 'boolean', required: false },
+            description: 'Emphasized variant of action Button',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
         staticValue: {
             name: 'static',
             type: { name: 'string', required: false },
@@ -139,6 +151,7 @@ export default {
         disabled: false,
         open: false,
         quiet: false,
+        emphasized: false,
         tooltipDescription: '',
         tooltipPlacement: 'bottom',
         static: undefined,
@@ -153,6 +166,7 @@ interface StoryArgs {
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
+    emphasized?: boolean;
     staticValue?: 'white' | 'black' | undefined;
     tooltipDescription?: string | 'none';
     tooltipPlacement?: Placement;
@@ -180,6 +194,11 @@ quiet.args = {
     quiet: true,
 };
 
+export const emphasized = (args: StoryArgs = {}): TemplateResult =>
+    Template(args);
+emphasized.args = {
+    emphasized: true,
+};
 export const labelOnly = ({
     changeHandler = (() => undefined) as (event: Event) => void,
     disabled = false,
