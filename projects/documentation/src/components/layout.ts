@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     LitElement,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -45,7 +46,6 @@ import './code-example.js';
 import { copyText } from './copy-to-clipboard.js';
 
 import layoutStyles from './layout.css';
-import { nothing } from 'lit-html';
 import {
     DARK_MODE,
     IS_MOBILE,

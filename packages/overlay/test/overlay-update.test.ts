@@ -23,6 +23,9 @@ describe('sp-update-overlays event', () => {
             '[label="Other things"]'
         ) as AccordionItem;
 
+        el.content = 'click';
+        await elementUpdated(el);
+
         const height0 = container.getBoundingClientRect().height;
 
         const opened = oneEvent(el, 'sp-opened');

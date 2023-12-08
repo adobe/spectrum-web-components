@@ -26,6 +26,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
 import { Placement } from '@floating-ui/dom';
 import { OverlayTypes } from '../src/overlay-types.js';
 import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
+import './overlay-story-components.js';
 
 export default {
     title: 'Overlay Element',
@@ -586,4 +587,12 @@ export const actionGroupWithFilters = ({
             </sp-popover>
         </sp-overlay>
     `;
+};
+
+// Test #3795 in browser
+export const transientHover = (): TemplateResult => html`
+    <transient-hover></transient-hover>
+`;
+transientHover.swc_vrt = {
+    skip: true,
 };

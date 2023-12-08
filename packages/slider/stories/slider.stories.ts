@@ -373,6 +373,32 @@ export const editableCustom = (args: StoryArgs = {}): TemplateResult => {
 
 editableCustom.decorators = [editableDecorator];
 
+export const editableWithoutVisibleLabels = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableWithoutVisibleLabels.args = {
+    labelVisibility: 'none',
+};
+
 export const hideStepper = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">

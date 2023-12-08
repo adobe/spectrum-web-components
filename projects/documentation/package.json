@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.40.0",
+    "version": "0.40.1",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -22,11 +22,11 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^0.40.0",
-        "@spectrum-web-components/custom-vars-viewer": "^0.40.0"
+        "@spectrum-web-components/bundle": "^0.40.1",
+        "@spectrum-web-components/custom-vars-viewer": "^0.40.1"
     },
     "devDependencies": {
-        "@11ty/eleventy": "^2.0.0",
+        "@11ty/eleventy": "^2.0.1",
         "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
         "@fullhuman/postcss-purgecss": "^5.0.0",
         "@open-wc/building-rollup": "^3.0.2",
@@ -41,22 +41,22 @@
         "@web/rollup-plugin-copy": "^0.4.1",
         "@web/rollup-plugin-html": "^2.0.1",
         "alex": "^10.0.0",
-        "esbuild-plugin-lit-css": "^2.0.0",
+        "esbuild-plugin-lit-css": "^2.0.5",
         "lunr": "^2.3.9",
         "markdown-it-anchor": "^8.4.1",
         "markdown-it-for-inline": "^0.1.1",
-        "postcss-cli": "^10.0.0",
+        "postcss-cli": "^10.1.0",
         "posthtml": "^0.16.6",
         "posthtml-attrs-parser": "^0.1.1",
         "posthtml-match-helper": "^1.0.3",
-        "prismjs": "^1.26.0",
+        "prismjs": "^1.29.0",
         "rimraf": "^5.0.1",
         "rollup": "^3.27.2",
         "rollup-plugin-lit-css": "^4.0.1",
         "rollup-plugin-minify-html-literals": "^1.2.6",
         "rollup-plugin-styles": "^4.0.0",
         "rollup-plugin-visualizer": "^5.9.2",
-        "rollup-plugin-workbox": "^8.0.1",
+        "rollup-plugin-workbox": "^8.1.0",
         "wireit": "^0.14.1"
     },
     "sideEffects": [
@@ -103,28 +103,40 @@
             ],
             "clean": "if-file-deleted",
             "output": [
-                "_site/**/*.html"
+                "_site/**/*.html",
+                "_site/favicon.ico",
+                "_site/favicon.svg",
+                "_site/404.html",
+                "_site/serviceWorker.js",
+                "_site/images/**/*",
+                "_site/manifest.webmanifest"
             ]
         },
         "build:move-css": {
             "command": "mkdir -p _site/src/components/ && cp src/components/*.css _site/src/components/",
             "files": [
-                "./src/components/!(style|fonts).css"
+                "./src/components/*.css",
+                "!./src/components/style.css",
+                "!./src/components/fonts.css"
             ],
             "output": [
-                "./_site/src/components/!(style|fonts).css"
+                "./_site/src/components/*.css",
+                "!./_site/src/components/style.css",
+                "!./_site/src/components/fonts.css"
             ],
             "clean": "if-file-deleted"
         },
         "build:postcss": {
             "command": "postcss src/components/{styles,fonts}.css -d _site/ --config src/postcss.config.cjs",
             "files": [
-                "./src/components/{styles,fonts}.css",
+                "./src/components/styles.css",
+                "./src/components/fonts.css",
                 "src/postcss.config.cjs",
                 "_site/**/*.html"
             ],
             "output": [
-                "_site/src/components/{styles,fonts}.css"
+                "./_site/src/components/styles.css",
+                "./_site/src/components/fonts.css"
             ],
             "clean": "if-file-deleted",
             "dependencies": [
@@ -153,6 +165,7 @@
                 "./scripts/build-search-index.js"
             ],
             "output": [
+                "_site/src/searchIndex.json",
                 "dist/searchIndex.json"
             ]
         },
@@ -164,6 +177,7 @@
                 "./scripts/build-search-index.js"
             ],
             "output": [
+                "_site/src/searchIndex.json",
                 "dist/searchIndex.json"
             ]
         },

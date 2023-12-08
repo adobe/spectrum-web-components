@@ -169,6 +169,16 @@ When a `triggerElement` is present, either through an ID reference established v
     -   **if you have a `placement` but not a `triggerElement`** the `<sp-overlay>` will not be positioned due to their being nothing for the `plaement` to reference when so doing
 -   **if no `placement` is available** the content will not be placed with the expectation that the content itself or the consuming application will handle placement of the overlaid content. This is commonly what will happen for `type="modal"` and `type="page"` overlays as they are likely meant to cover the entire screen, whether visibly (via an `<sp-underlay>`, an element that includes one, or similar) or figuratively (as when modal content is not delivered with a backdrop or scrim).
 
+### Type
+
+The `type` of an Overlay outlines a number of things about the interaction model within which is works.
+
+-   `'modal'` Overlays are opened with the `showModal()` method on a `<dialog>` element, which causes the Overlay to accept focus and trap the tab stop within the content of said Overlay.
+-   `'page'` Overlays will act in a similar manner to a `'modal'` Overlay, however they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
+-   `'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ to place interactive content within this type of Overlay.
+-   `'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus but will close when losing that focus, or when interacting with other parts of the page.
+-   `'manual'` Overlays act much like `"auto"` Overlays, but do not close when losing focus or interacting with other parts of the page. When a `"manual"` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.
+
 ### Events
 
 When fully open the `<sp-overlay>` element will dispatch the `sp-opened` event, and when fully closed the `sp-closed` event will be dispatched. "Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` or `transitioncancel` event. Keep in mind the following:

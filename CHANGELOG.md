@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **action-menu:** allow tray to display full width ([31415e4](https://github.com/adobe/spectrum-web-components/commit/31415e4ebe6b5369775074e52ed92fcd6b70c932))
+-   **overlay:** ensure events are only bound once ([abe57ce](https://github.com/adobe/spectrum-web-components/commit/abe57cedcc18a309f3acf1b664bfa561f13b4f8f))
+-   **picker:** ensure menu placement in mobile ([#3835](https://github.com/adobe/spectrum-web-components/issues/3835)) ([4aba1c6](https://github.com/adobe/spectrum-web-components/commit/4aba1c6094e45481dec428fcc95fb4148f62dbc9))
+-   **slider:** align editable slider when no label provided ([#3816](https://github.com/adobe/spectrum-web-components/issues/3816)) ([a5f4900](https://github.com/adobe/spectrum-web-components/commit/a5f49009d4acc1e8c5403a08b127769e18bda56c))
+-   **tabs:** prevent vertical scrolling in overflow tabs ([eb0592f](https://github.com/adobe/spectrum-web-components/commit/eb0592f87c1f52fe34745af030331060b3641a59))
+
+### Performance Improvements
+
+-   **checkbox:** refactor architecture for more rendering perf and DOM element count ([7c2277f](https://github.com/adobe/spectrum-web-components/commit/7c2277f1a21e2e886678c3a3ad1d454cbd6637e0))
+
 # [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
 
 ### Bug Fixes

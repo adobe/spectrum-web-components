@@ -40,6 +40,10 @@ governing permissions and limitations under the License.
     justify-content: var(--swc-tabs-list-justify-content);
 }
 
+:host([disabled]) #list {
+    pointer-events: none;
+}
+
 :host([disabled]) #list #selection-indicator {
     background-color: var(
         --mod-tabs-color-disabled,
@@ -49,10 +53,6 @@ governing permissions and limitations under the License.
 
 :host([disabled]) ::slotted(sp-tab) {
     color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
-}
-
-:host([disabled]) #list {
-    pointer-events: none;
 }
 
 /*
@@ -70,8 +70,9 @@ governing permissions and limitations under the License.
 }
 
 :host([dir][direction='horizontal']) #list.scroll {
-    overflow-x: auto;
     scrollbar-width: none;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 :host([dir][direction='horizontal']) #list.scroll::-webkit-scrollbar {
