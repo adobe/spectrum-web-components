@@ -41,6 +41,8 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 </sp-overlay>
 ```
 
+When a `<sp-overlay>` element is opened, it will pass that state to its direct children elements as the property `open`, which it will set to `true`. Elements should react to this by initiating any transition between closed and open that they see fit. Similarly, `open` will be set to `false` when the `<sp-overlay>` element is closed.
+
 ### Action bar
 
 ```html
