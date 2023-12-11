@@ -11,7 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import { ReactiveElement } from 'lit';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    PropertyValues,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import {
     property,
     query,
@@ -78,6 +82,19 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
                     @change=${this.handleChange}
                 />
             `;
+        }
+
+        protected override updated(changes: PropertyValues): void {
+            super.updated(changes);
+            if (
+                changes.has('readonly') &&
+                (typeof changes.get('readonly') !== 'undefined' ||
+                    this.readonly)
+            ) {
+                if (this.readonly) {
+                    this.inputElement.disabled = this.readonly;
+                }
+            }
         }
     }
     return MixedElement;
