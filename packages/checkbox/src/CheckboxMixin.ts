@@ -91,9 +91,7 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
                 (typeof changes.get('readonly') !== 'undefined' ||
                     this.readonly)
             ) {
-                if (this.readonly) {
-                    this.inputElement.disabled = this.readonly;
-                }
+                this.inputElement.disabled = this.readonly;
             }
         }
     }
