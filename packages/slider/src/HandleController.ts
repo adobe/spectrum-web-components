@@ -495,6 +495,7 @@ export class HandleController {
             }%`,
             right: 'auto',
             'z-index': zIndex.toString(),
+            'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(--spectrum-slider-handle-border-color))`,
         };
         const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
         return html`
