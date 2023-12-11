@@ -493,10 +493,8 @@ export class HandleController {
             [this.host.isLTR ? 'left' : 'right']: `${
                 model.normalizedValue * 100
             }%`,
+            right: 'auto',
             'z-index': zIndex.toString(),
-            // Allow setting background per-handle
-            'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,
-            'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(--spectrum-slider-handle-border-color))`,
         };
         const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
         return html`
