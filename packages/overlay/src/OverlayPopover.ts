@@ -138,9 +138,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             }
             let focusEl = null as HTMLElement | null;
             const start = (el: OpenableElement, index: number) => (): void => {
-                if (typeof el.open !== 'undefined') {
-                    el.open = targetOpenState;
-                }
+                el.open = targetOpenState;
                 if (index === 0) {
                     const event = targetOpenState
                         ? BeforetoggleOpenEvent

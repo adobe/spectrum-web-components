@@ -70,9 +70,7 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
                 if (targetOpenState !== this.open) {
                     return;
                 }
-                if (typeof el.open !== 'undefined') {
-                    el.open = targetOpenState;
-                }
+                el.open = targetOpenState;
                 if (index === 0) {
                     const event = targetOpenState
                         ? BeforetoggleOpenEvent
