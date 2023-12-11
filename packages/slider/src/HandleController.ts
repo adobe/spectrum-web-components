@@ -493,7 +493,6 @@ export class HandleController {
             [this.host.isLTR ? 'left' : 'right']: `${
                 model.normalizedValue * 100
             }%`,
-            right: 'auto',
             'z-index': zIndex.toString(),
             ...(isMultiHandle && {
                 'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,
