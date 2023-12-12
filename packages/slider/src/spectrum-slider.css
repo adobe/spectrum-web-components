@@ -616,7 +616,7 @@ governing permissions and limitations under the License.
     );
     z-index: 0;
 }
-.ticks ~ .spectrum-Slider-handleContainer .handle {
+.ticks ~ .handleContainer .handle {
     background: var(
         --mod-slider-ticks-handle-background-color,
         var(--spectrum-slider-ticks-handle-background-color)
@@ -713,14 +713,14 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Slider-handleContainer,
-.spectrum-Slider-trackContainer {
+.handleContainer,
+.trackContainer {
     inline-size: calc(100% + var(--spectrum-slider-handle-size));
     inset-block-start: 0;
     margin-inline-start: calc(var(--spectrum-slider-handle-size) / 2 * -1);
     position: absolute;
 }
-.spectrum-Slider-trackContainer {
+.trackContainer {
     block-size: var(
         --mod-slider-control-height,
         var(--spectrum-slider-control-height)
