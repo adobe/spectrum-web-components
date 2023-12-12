@@ -56,11 +56,6 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
     protected pendingCooldown = -1;
 
-    // isPending represents the state of the button being in a pending state
-    // This also helps us show the progress circle and update the aria-label when the button is in pending state
-    @property({ type: Boolean, reflect: true, attribute: 'is-pending' })
-    public isPending = false;
-
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
@@ -69,7 +64,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     public pending = false;
 
     public override click(): void {
-        if (this.isPending) {
+        if (this.pending) {
             return;
         }
         super.click();
@@ -163,14 +158,14 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
             if (this.pending) {
                 this.pendingCooldown = window.setTimeout(() => {
                     if (!this.disabled) {
-                        this.isPending = true;
                         this.setAttribute('aria-label', this.pendingLabel);
+                        this.setAttribute('is-pending', '');
                     }
                 }, 1000);
-            } else if (this.pending === false && this.isPending) {
+            } else if (this.pending === false) {
                 window.clearTimeout(this.pendingCooldown);
-                this.isPending = false;
                 this.setAttribute('aria-label', this.label || '');
+                this.removeAttribute('is-pending');
             }
         }
     }
@@ -187,7 +182,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
-            ${when(this.isPending, () => {
+            ${when(this.pending, () => {
                 import(
                     '@spectrum-web-components/progress-circle/sp-progress-circle.js'
                 );
@@ -195,7 +190,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                     <sp-progress-circle
                         indeterminate
                         static="white"
-                        label=${this.pendingLabel + 'progress circle'}
+                        aria-hidden="true"
                     ></sp-progress-circle>
                 `;
             })}

@@ -27,6 +27,10 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
+sp-progress-circle {
+    display: none;
+}
+
 :host([pending][is-pending]) sp-progress-circle {
     display: block;
     position: absolute;

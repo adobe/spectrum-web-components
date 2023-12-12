@@ -551,10 +551,14 @@ describe('Button', () => {
         await elementUpdated(el);
         el.pending = true;
 
-        await waitUntil(() => el.isPending, 'button is in pending state', {
-            interval: 200,
-            timeout: 1400,
-        });
+        await waitUntil(
+            () => el.hasAttribute('is-pending'),
+            'button is in pending state',
+            {
+                interval: 200,
+                timeout: 1400,
+            }
+        );
 
         await elementUpdated(el);
 
@@ -572,7 +576,6 @@ describe('Button', () => {
             '`Pending Button` is the label text'
         ).to.not.be.null;
 
-        expect(el.isPending).to.be.true;
         expect(el.pending).to.be.true;
 
         // remove pending state
@@ -594,7 +597,6 @@ describe('Button', () => {
             '`Button` is the label text'
         ).to.not.be.null;
 
-        expect(el.isPending).to.be.false;
         expect(el.pending).to.be.false;
     });
     describe('deprecated variants and attributes', () => {
