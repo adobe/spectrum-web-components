@@ -45,6 +45,7 @@ Open `tsconfig-all.json`, find "references", and add an entry for your package (
 
 Include a listing for your package in `bundle/elements.ts` and `bundle/src/index.js`. Then, confirm that your new package is already listed in `tools/bundle/package.json`. The `bundle` package makes it possible to build demo projects with _all_ of the components from the library registered in a single place, and is also leveraged for ease of component consumption in the documentation site build.
 
+-   In `bundle/tsconfig.json`, please add a listing for your new package to the `"references"` field, e.g. `{ "path": "../../packages/spectrum-pattern" },`. This will ensure the types of your new package are built before the `bundle` package is built.
 -   In `bundle/elements.ts`, please add any, and all (if your package registers more than one element), element registration files to the imports there in, e.g. `import '@spectrum-web-components/spectrum-pattern/sp-spectrum-pattern.js';`.
 -   In `bundle/src/index.js`, please add an export for your new packages default entry, e.g. `export * from '@spectrum-web-components/spectrum-pattern';`, so that any classes exported from your package can be imported from this location.
 
