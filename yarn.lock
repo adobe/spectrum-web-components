@@ -6853,9 +6853,9 @@
   integrity sha512-bFk3Z4hMbAF+K7z3AXcY6de4N3YwB6h1hbkD2CjOqx6PPm9lMX9yO0st2jrlHoPxVdzcRo9kuTaME7r0CiVW5A==
 
 "@spectrum-css/divider@^2.1.25":
-  version "2.1.25"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.25.tgz#9d15c4f9cac1837499bec3a57e41c7ea44a5f831"
-  integrity sha512-9eXYHLGLSSL1c7d9IbxN0irBA3qqfqygilw+wuaOuIhg0V7gBzH5fw6h81Zev3nWNZnOW2eAjfOXi+QJde0lXg==
+  version "2.1.35"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.35.tgz#000b61b78eda922fca61f4b0ab4e8a3f855e526f"
+  integrity sha512-OVEL2DbZpwrRHuNZ4WpbLCYuVPv5u0tfj1RndGK1qls/F8FggF9709XqTfifvcQdhRKWjr93LV12IF2W24JwxA==
 
 "@spectrum-css/dropzone@^5.0.30":
   version "5.0.30"
