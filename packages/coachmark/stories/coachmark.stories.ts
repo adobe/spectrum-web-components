@@ -120,7 +120,7 @@ export const single = (): TemplateResult => {
     `;
 };
 
-export const Clickable = (props: Properties): TemplateResult => {
+export const TriggerOnClick = (props: Properties): TemplateResult => {
     const { open = true } = props;
 
     return html`

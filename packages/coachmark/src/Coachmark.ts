@@ -204,70 +204,74 @@ export class Coachmark extends LikeAnchor(Popover) {
         );
     }
 
+    private renderSecondaryButton = (): TemplateResult => {
+        return html`
+            <sp-button
+                treatment="outline"
+                variant="secondary"
+                @click=${this.handleSecondaryCTA}
+            >
+                ${this.secondaryCTA}
+            </sp-button>
+        `;
+    };
+
+    private renderPrimaryButton = (): TemplateResult => {
+        return html`
+            <sp-button
+                size="s"
+                treatment="outline"
+                variant="primary"
+                @click=${this.handlePrimaryCTA}
+            >
+                ${this.primaryCTA}
+            </sp-button>
+        `;
+    };
+
+    private renderSecondaryButtonMobile = (): TemplateResult => {
+        return html`
+            <sp-button
+                variant="secondary"
+                treatment="outline"
+                icon-only
+                aria-label="previous"
+                @click=${this.handleSecondaryCTA}
+            >
+                <sp-icon-chevron200
+                    size="s"
+                    class="spectrum-UIIcon-ChevronLeft75"
+                    slot="icon"
+                ></sp-icon-chevron200>
+            </sp-button>
+        `;
+    };
+
+    private renderPrimaryButtonMobile = (): TemplateResult => {
+        return html`
+            <sp-button
+                size="s"
+                treatment="outline"
+                variant="primary"
+                @click=${this.handlePrimaryCTA}
+            >
+                ${this.primaryCTA}
+            </sp-button>
+        `;
+    };
+
     protected renderButtons(): TemplateResult {
         return html`
             <sp-button-group class="spectrum-ButtonGroup buttongroup">
-                ${when(
-                    this.secondaryCTA,
-                    () => html`
-                        <sp-button
-                            treatment="outline"
-                            variant="secondary"
-                            @click=${this.handleSecondaryCTA}
-                        >
-                            ${this.secondaryCTA}
-                        </sp-button>
-                    `
-                )}
-                ${when(
-                    this.primaryCTA,
-                    () => html`
-                        <sp-button
-                            size="s"
-                            treatment="outline"
-                            variant="primary"
-                            @click=${this.handlePrimaryCTA}
-                        >
-                            ${this.primaryCTA}
-                        </sp-button>
-                    `
-                )}
+                ${when(this.secondaryCTA, this.renderSecondaryButton)}
+                ${when(this.primaryCTA, this.renderPrimaryButton)}
             </sp-button-group>
             <sp-button-group
                 class="spectrum-ButtonGroup buttongroup-mobile"
                 size="s"
             >
-                ${when(
-                    this.secondaryCTA,
-                    () => html`
-                        <sp-button
-                            variant="secondary"
-                            treatment="outline"
-                            icon-only
-                            aria-label="previous"
-                            @click=${this.handleSecondaryCTA}
-                        >
-                            <sp-icon-chevron200
-                                size="s"
-                                class="spectrum-UIIcon-ChevronLeft75"
-                                slot="icon"
-                            ></sp-icon-chevron200>
-                        </sp-button>
-                    `
-                )}
-                ${when(
-                    this.primaryCTA,
-                    () => html`
-                        <sp-button
-                            size="s"
-                            treatment="outline"
-                            variant="primary"
-                            @click=${this.handlePrimaryCTA}
-                        >
-                            ${this.primaryCTA}
-                        </sp-button>
-                    `
-                )}
+                ${when(this.secondaryCTA, this.renderSecondaryButtonMobile)}
+                ${when(this.primaryCTA, this.renderPrimaryButtonMobile)}
             </sp-button-group>
         `;
     }
