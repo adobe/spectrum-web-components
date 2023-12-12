@@ -162,7 +162,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         this.setAttribute('is-pending', '');
                     }
                 }, 1000);
-            } else if (this.pending === false) {
+            } else if (this.pending === false && this.pendingCooldown !== -1) {
                 window.clearTimeout(this.pendingCooldown);
                 this.setAttribute('aria-label', this.label || '');
                 this.removeAttribute('is-pending');
