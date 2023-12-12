@@ -350,12 +350,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
-
+        const handleItems = [
+            { id: 'handles', html: this.handleController.render() },
+        ];
         const trackItems = [
             { id: 'track0', html: this.renderTrackSegment(...segments[0]) },
             { id: 'ramp', html: this.renderRamp() },
-            { id: 'ticks', html: this.renderTicks() },
-            { id: 'handles', html: this.handleController.render() },
             ...segments.slice(1).map(([start, end], index) => ({
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
@@ -375,11 +375,21 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 })}
             >
                 <div id="controls">
-                    ${repeat(
-                        trackItems,
-                        (item) => item.id,
-                        (item) => item.html
-                    )}
+                    ${this.renderTicks()}
+                    <div class="trackContainer">
+                        ${repeat(
+                            trackItems,
+                            (item) => item.id,
+                            (item) => item.html
+                        )}
+                    </div>
+                    <div class="handleContainer">
+                        ${repeat(
+                            handleItems,
+                            (item) => item.id,
+                            (item) => item.html
+                        )}
+                    </div>
                 </div>
             </div>
         `;
