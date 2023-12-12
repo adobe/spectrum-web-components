@@ -21,6 +21,9 @@ import {
 
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import {
     LitElement,
     SpectrumElement,
@@ -124,6 +127,36 @@ describe('ActionGroup', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('loads action-group with action-menu accessibly', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group>
+                    <sp-action-button>Button 1</sp-action-button>
+                    <sp-action-button>Longer Button 2</sp-action-button>
+                    <sp-action-button>Short 3</sp-action-button>
+                    <sp-action-menu label="More Actions">
+                        <sp-menu-item>One</sp-menu-item>
+                        <sp-menu-item>Two</sp-menu-item>
+                        <sp-menu-item>Three</sp-menu-item>
+                        <sp-menu-item>
+                            Select some items
+                            <sp-menu slot="submenu" selects="multiple">
+                                <sp-menu-item>A</sp-menu-item>
+                                <sp-menu-item selected>B</sp-menu-item>
+                                <sp-menu-item>C</sp-menu-item>
+                            </sp-menu>
+                        </sp-menu-item>
+                    </sp-action-menu>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+
     testForLitDevWarnings(
         async () =>
             await fixture<ActionGroup>(

@@ -20,6 +20,9 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
 
 export default {
@@ -156,6 +159,29 @@ function displaySelectionState(): void {
 
 export const Default = (args: Properties): TemplateResult =>
     renderButtons(args);
+
+export const HasActionMenuAsChild = (args: Properties): TemplateResult => {
+    return html`
+        <sp-action-group ${spreadProps(args)}>
+            <sp-action-button>Button 1</sp-action-button>
+            <sp-action-button>Longer Button 2</sp-action-button>
+            <sp-action-button>Short 3</sp-action-button>
+            <sp-action-menu label="More Actions">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item>Three</sp-menu-item>
+                <sp-menu-item>
+                    Select some items
+                    <sp-menu slot="submenu" selects="multiple">
+                        <sp-menu-item>A</sp-menu-item>
+                        <sp-menu-item selected>B</sp-menu-item>
+                        <sp-menu-item>C</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-action-menu>
+        </sp-action-group>
+    `;
+};
 
 export const selectsSingle = (args: Properties): TemplateResult => {
     requestAnimationFrame(displaySelectionState);
