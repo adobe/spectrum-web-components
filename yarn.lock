@@ -6858,9 +6858,9 @@
   integrity sha512-bFk3Z4hMbAF+K7z3AXcY6de4N3YwB6h1hbkD2CjOqx6PPm9lMX9yO0st2jrlHoPxVdzcRo9kuTaME7r0CiVW5A==
 
 "@spectrum-css/divider@^2.1.25":
-  version "2.1.25"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.25.tgz#9d15c4f9cac1837499bec3a57e41c7ea44a5f831"
-  integrity sha512-9eXYHLGLSSL1c7d9IbxN0irBA3qqfqygilw+wuaOuIhg0V7gBzH5fw6h81Zev3nWNZnOW2eAjfOXi+QJde0lXg==
+  version "2.1.35"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.1.35.tgz#000b61b78eda922fca61f4b0ab4e8a3f855e526f"
+  integrity sha512-OVEL2DbZpwrRHuNZ4WpbLCYuVPv5u0tfj1RndGK1qls/F8FggF9709XqTfifvcQdhRKWjr93LV12IF2W24JwxA==
 
 "@spectrum-css/dropzone@^5.0.30":
   version "5.0.30"
@@ -14514,9 +14514,9 @@ eslint-config-airbnb-base@^15.0.0:
     semver "^6.3.0"
 
 eslint-config-prettier@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-9.0.0.tgz#eb25485946dd0c66cd216a46232dc05451518d1f"
-  integrity sha512-IcJsTkJae2S35pRsRAwoCE+925rJJStOdkKnLVgtE+tEpqU0EVVM7OqrwxqgptKdX29NUwC82I5pXsGFIgSevw==
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-9.1.0.tgz#31af3d94578645966c082fcb71a5846d3c94867f"
+  integrity sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==
 
 eslint-formatter-pretty@^5.0.0:
   version "5.0.0"
@@ -15163,9 +15163,9 @@ fast-glob@^2.2.6:
     micromatch "^3.1.10"
 
 fast-glob@^3.1.1, fast-glob@^3.2.11, fast-glob@^3.2.12, fast-glob@^3.2.2, fast-glob@^3.2.9, fast-glob@^3.3.0:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.1.tgz#784b4e897340f3dbbef17413b3f11acf03c874c4"
-  integrity sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.2.tgz#a904501e57cfdd2ffcded45e99a54fef55e46129"
+  integrity sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==
   dependencies:
     "@nodelib/fs.stat" "^2.0.2"
     "@nodelib/fs.walk" "^1.2.3"
@@ -27570,9 +27570,9 @@ strtok3@^7.0.0:
     peek-readable "^5.0.0"
 
 style-loader@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-3.3.1.tgz#057dfa6b3d4d7c7064462830f9113ed417d38575"
-  integrity sha512-GPcQ+LDJbrcxHORTRes6Jy2sfvK2kS6hpSfI/fXhPt+spVzxF6LJ1dHLN9zIGmVaaP044YKaIatFaufENRiDoQ==
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-3.3.3.tgz#bba8daac19930169c0c9c96706749a597ae3acff"
+  integrity sha512-53BiGLXAcll9maCYtZi2RCQZKa8NQQai5C4horqKyRmHj9H7QmcUyucrH+4KW/gBQbXM2AsB0axoEcFZPlfPcw==
 
 style-search@^0.1.0:
   version "0.1.0"
