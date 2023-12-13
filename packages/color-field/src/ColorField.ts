@@ -12,16 +12,17 @@ governing permissions and limitations under the License.
 import {
     //CSSResultArray,
     html,
-    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+
+import { TextfieldBase } from '@spectrum-web-components/textfield';
 
 //import styles from './color-field.css.js';
 
 /**
  * @element sp-color-field
  */
-export class ColorField extends SpectrumElement {
+export class ColorField extends TextfieldBase {
     // public static override get styles(): CSSResultArray {
     //     return [styles];
     // }
