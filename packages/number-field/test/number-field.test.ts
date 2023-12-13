@@ -903,6 +903,34 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
         });
+        it('constrains ArrowUp usage', async () => {
+            expect(el.value).to.equal(10);
+            el.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            expect(el.focusElement.value).to.equal('10');
+            await sendKeys({ press: 'Shift+ArrowUp' });
+            expect(el.focusElement.value).to.equal('10');
+        });
+        it('constrains pointer usage', async () => {
+            expect(el.value).to.equal(10);
+            const buttonUp = el.shadowRoot.querySelector(
+                '.step-up'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition: [number, number] = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: buttonUpPosition,
+                    },
+                ],
+            });
+            expect(el.value).to.equal(10);
+        });
         it('validates on commit', async () => {
             el.focus();
             await sendKeys({ type: '15' });
@@ -992,6 +1020,14 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
+            el.focus();
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ type: '-2000' });
+            await sendKeys({ press: 'Enter' });
+            expect(el.formattedValue).to.equal('10');
+            expect(el.valueAsString).to.equal('10');
+            expect(el.value).to.equal(10);
         });
         it('dispatches onchange on setting min value', async () => {
             el.value = 15;
@@ -1061,6 +1097,45 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
+        });
+        it('constrains ArrowDown usage', async () => {
+            el.min = 0;
+            el.value = 0;
+            expect(el.value).to.equal(0);
+            el.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+            await sendKeys({ press: 'Shift+ArrowDown' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+        });
+        it('constrains pointer usage', async () => {
+            el.min = 0;
+            el.value = 0;
+            await elementUpdated(el);
+            expect(el.value).to.equal(0);
+            const buttonDown = el.shadowRoot.querySelector(
+                '.step-down'
+            ) as HTMLElement;
+            const buttonDownRect = buttonDown.getBoundingClientRect();
+            const buttonDownPosition: [number, number] = [
+                buttonDownRect.x + buttonDownRect.width / 2,
+                buttonDownRect.y + buttonDownRect.height / 2,
+            ];
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: buttonDownPosition,
+                    },
+                ],
+            });
+            await elementUpdated(el);
+            expect(el.value).to.equal(0);
         });
         it('validates on commit', async () => {
             el.focus();
