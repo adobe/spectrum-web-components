@@ -13,13 +13,23 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { DateTimePicker } from '../src/DateTimePicker.js';
-import { Default } from '../stories/date-time-picker.stories.js';
+import { html } from 'lit';
 
 describe('DateTimePicker', () => {
-    testForLitDevWarnings(async () => await fixture<DateTimePicker>(Default()));
-
-    it('loads default date-time picker accessibly', async () => {
-        const el = await fixture<DateTimePicker>(Default());
+    testForLitDevWarnings(
+        async () =>
+            await fixture<DateTimePicker>(
+                html`
+                    <sp-date-time-picker></sp-date-time-picker>
+                `
+            )
+    );
+    it('loads default sp-date-time-picker accessibly', async () => {
+        const el = await fixture<DateTimePicker>(
+            html`
+                <sp-date-time-picker></sp-date-time-picker>
+            `
+        );
 
         await elementUpdated(el);
 
