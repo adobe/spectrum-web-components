@@ -274,7 +274,11 @@ describe('Checkbox', () => {
 
         expect(el.checked).to.be.true;
     });
-
+    it('should recognize readonly property', async () => {
+        const el: Checkbox = await fixture('<sp-checkbox></sp-checkbox>');
+        expect(el.readonly).to.not.throw;
+        expect(el.readonly).to.be.a('boolean');
+    });
     it('maintains its value when [readonly]', async () => {
         const el = await fixture<Checkbox>(html`
             <sp-checkbox id="checkbox0" checked readonly>Component</sp-checkbox>
