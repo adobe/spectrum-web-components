@@ -24,11 +24,13 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import { Menu } from '@spectrum-web-components/menu';
+import { ActionMenu } from '../src/ActionMenu';
 
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
     argTypes: {
+        onChange: { action: 'change' },
         disabled: {
             name: 'disabled',
             type: { name: 'boolean', required: false },
@@ -326,8 +328,16 @@ export const controlled = (): TemplateResult => {
     `;
 };
 
-export const groups = (): TemplateResult => html`
-    <sp-action-menu open>
+export const groups = ({
+    onChange,
+}: {
+    onChange(value: string): void;
+}): TemplateResult => html`
+    <sp-action-menu
+        @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
+            onChange(value)}
+        open
+    >
         <sp-menu-group id="cms">
             <span slot="header">cms</span>
             <sp-menu-item value="updateAllSiteContent">
