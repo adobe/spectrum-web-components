@@ -59,6 +59,8 @@ dialog:modal {
 }
 
 :host(:not([open])) .dialog {
+    display: none;
+
     --sp-overlay-open: false;
 }
 
