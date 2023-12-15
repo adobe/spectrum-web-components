@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     nothing,
+    PropertyValues,
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -38,7 +39,7 @@ import { SliderHandle } from './SliderHandle.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import type { NumberFormatter } from '@internationalized/number';
 
-export const variants = ['filled', 'offset', 'ramp', 'range', 'tick'];
+export const variants = ['filled', 'ramp', 'range', 'tick'];
 
 /**
  * @element sp-slider
@@ -163,6 +164,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    @property({ type: Boolean, reflect: true, attribute: 'fill-start' })
+    public fillStart = false;
+
     /**
      * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
      */
@@ -183,9 +187,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     @query('#track')
     public track!: HTMLDivElement;
-
-    private rangeLength = this.max - this.min;
-    private centerPoint = this.rangeLength / 2 + this.min;
 
     public override get numberFormat(): NumberFormatter {
         return this.getNumberFormat();
@@ -354,34 +355,37 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
+    private rangeLength = this.max - this.min;
+    private _startingPoint: number | undefined;
+
     private getOffsetWidth(start: number, end: number): number {
-        const distance = end > start ? end - start : start - end;
+        const distance = (end > start ? end - start : start - end) * 100;
         return (distance / this.rangeLength) * 100;
     }
 
     private getOffsetPosition(v: number): number {
-        const val = ((v - this.min) / this.rangeLength) * 100;
+        const val = ((v * 100 - this.min) / this.rangeLength) * 100;
         return val;
     }
 
     private renderFillOffset(): TemplateResult {
-        if (this.variant !== 'offset') {
+        if (!this.fillStart) {
             return html``;
         }
         return html`
             <div
                 class=${`fill ${
-                    !!(this.value * 100 > this.centerPoint) ? 'offset' : ''
+                    !!(this.value > this._startingPoint) ? 'offset' : ''
                 }`}
                 style=${styleMap({
                     [this.dir === 'rtl' ? 'right' : 'left']: `${
-                        this.value * 100 > this.centerPoint
-                            ? this.getOffsetPosition(this.centerPoint)
-                            : this.getOffsetPosition(this.value * 100)
+                        this.value > this._startingPoint
+                            ? this.getOffsetPosition(this._startingPoint)
+                            : this.getOffsetPosition(this.value)
                     }%`,
                     width: `${this.getOffsetWidth(
-                        this.value * 100,
-                        this.centerPoint
+                        this._startingPoint,
+                        this.value
                     )}%`,
                 })}
             ></div>
@@ -499,5 +503,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         }
         await this.handleController.handleUpdatesComplete();
         return complete;
+    }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+        if (changes.has('value') && changes.has('fillStart')) {
+            this._startingPoint = Number(this.value) + Number(this.min);
+        }
     }
 }

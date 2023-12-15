@@ -157,7 +157,7 @@ export const FilledOffset = (args: StoryArgs = {}): TemplateResult => {
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
                 max="1"
-                variant="offset"
+                fill-start
                 min="0"
                 value=".5"
                 step="0.01"
