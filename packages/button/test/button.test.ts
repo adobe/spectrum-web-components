@@ -552,7 +552,7 @@ describe('Button', () => {
         el.pending = true;
 
         await waitUntil(
-            () => el.hasAttribute('is-pending'),
+            () => el.hasAttribute('pending'),
             'button is in pending state',
             {
                 interval: 200,

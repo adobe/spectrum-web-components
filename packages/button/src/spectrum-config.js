@@ -44,9 +44,9 @@ const config = {
                 /**
                  * HACK!
                  * This relies on the fact that spectrum-css is using both `&:disabled` and `&.is-disabled` in the selectors
-                 * for disabled states. We're using the class based selector here to also emit a `is-pending` selector.
+                 * for disabled states. We're using the class based selector here to also emit a `pending` selector.
                  */
-                converter.classToAttribute('is-disabled', 'is-pending'),
+                // converter.classToAttribute('is-disabled', 'pending'),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.pseudoToAttribute('active', 'active'),
                 converter.classToAttribute(
