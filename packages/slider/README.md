@@ -91,6 +91,28 @@ import { Slider } from '@spectrum-web-components/slider';
 ></sp-slider>
 ```
 
+### Filled Offset
+
+```html
+<sp-slider
+    label="Slider Label"
+    max="1"
+    variant="offset"
+    min="0"
+    value=".5"
+    step="0.01"
+></sp-slider>
+<sp-slider
+    label="Slider Label"
+    max="1"
+    variant="offset"
+    min="0"
+    value=".5"
+    step="0.01"
+    disabled
+></sp-slider>
+```
+
 ### Tick
 
 ```html

@@ -38,7 +38,7 @@ import { SliderHandle } from './SliderHandle.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import type { NumberFormatter } from '@internationalized/number';
 
-export const variants = ['filled', 'ramp', 'range', 'tick'];
+export const variants = ['filled', 'offset', 'ramp', 'range', 'tick'];
 
 /**
  * @element sp-slider
@@ -90,6 +90,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     @property()
     public type = '';
+
+    @property({ reflect: true })
+    public override dir!: 'ltr' | 'rtl';
 
     @property({ type: String })
     public set variant(variant: string) {
@@ -180,6 +183,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     @query('#track')
     public track!: HTMLDivElement;
+
+    private rangeLength = this.max - this.min;
+    private centerPoint = this.rangeLength / 2 + this.min;
 
     public override get numberFormat(): NumberFormatter {
         return this.getNumberFormat();
@@ -348,6 +354,40 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
+    private getOffsetWidth(start: number, end: number): number {
+        const distance = end > start ? end - start : start - end;
+        return (distance / this.rangeLength) * 100;
+    }
+
+    private getOffsetPosition(v: number): number {
+        const val = ((v - this.min) / this.rangeLength) * 100;
+        return val;
+    }
+
+    private renderFillOffset(): TemplateResult {
+        if (this.variant !== 'offset') {
+            return html``;
+        }
+        return html`
+            <div
+                class=${`fill ${
+                    !!(this.value * 100 > this.centerPoint) ? 'offset' : ''
+                }`}
+                style=${styleMap({
+                    [this.dir === 'rtl' ? 'right' : 'left']: `${
+                        this.value * 100 > this.centerPoint
+                            ? this.getOffsetPosition(this.centerPoint)
+                            : this.getOffsetPosition(this.value * 100)
+                    }%`,
+                    width: `${this.getOffsetWidth(
+                        this.value * 100,
+                        this.centerPoint
+                    )}%`,
+                })}
+            ></div>
+        `;
+    }
+
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
         const handleItems = [
@@ -360,6 +400,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
             })),
+            { id: 'fill', html: this.renderFillOffset() },
         ];
 
         return html`
@@ -438,8 +479,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         const size = end - start;
         const styles: StyleInfo = {
             width: `${size * 100}%`,
-            '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
-            '--spectrum-slider-track-segment-position': `${start * 100}%`,
+            ...(this.handleController.size > 1 && {
+                '--spectrum-slider-track-background-size': `${
+                    (1 / size) * 100
+                }%`,
+                '--spectrum-slider-track-segment-position': `${start * 100}%`,
+            }),
         };
         return styles;
     }

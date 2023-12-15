@@ -132,6 +132,46 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const Filled = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                variant="filled"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Slider Label
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const FilledOffset = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                variant="offset"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Slider label
+            </sp-slider>
+        </div>
+    `;
+};
+
 export const autofocus = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
