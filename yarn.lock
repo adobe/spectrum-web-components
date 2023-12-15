@@ -6797,10 +6797,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-6.2.1.tgz#8a6d5906483e9b2fd5e3debbc9d61ffee0ec53a0"
   integrity sha512-piawqolhedkdudq6TOB1PopRvFtFkaOWiDGlscPaHLGD4DsmLSmlFp6YRl/AmmD6vnPQs+mq/EUmNFamzUroAQ==
 
-"@spectrum-css/checkbox@^7.0.11":
-  version "7.0.11"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-7.0.11.tgz#1dea027dce45b575c8cdde7b020aeba2207981fe"
-  integrity sha512-L7B/fHaMo9+zdjJROHsYMlxN4huPEnnJjTR/qDnA/0y46InGIBipNCDa514Li3gL61qMeMvJCiRW3W+cDXOpxw==
+"@spectrum-css/checkbox@^8.0.3":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-8.0.3.tgz#d03088d5091a0b401bdc9938e625bf47244b924d"
+  integrity sha512-E4XIDl/nx16Z1ITdjgIbe9d2cgSVCzS5l31NJmzHzwnR9LK11j72FnOjclXmVTmaTQa9vkaS6InC0hOaROrxvg==
 
 "@spectrum-css/clearbutton@^5.0.5":
   version "5.0.12"

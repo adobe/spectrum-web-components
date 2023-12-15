@@ -700,6 +700,10 @@ governing permissions and limitations under the License.
     position: relative;
 }
 #box:before {
+    block-size: var(
+        --mod-checkbox-control-size,
+        var(--spectrum-checkbox-control-size)
+    );
     border-color: var(
         --highcontrast-checkbox-color-default,
         var(
@@ -720,7 +724,7 @@ governing permissions and limitations under the License.
     content: '';
     display: block;
     forced-color-adjust: none;
-    height: var(
+    inline-size: var(
         --mod-checkbox-control-size,
         var(--spectrum-checkbox-control-size)
     );
@@ -737,10 +741,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-animation-duration)
             )
             ease-in-out;
-    width: var(
-        --mod-checkbox-control-size,
-        var(--spectrum-checkbox-control-size)
-    );
     z-index: 0;
 }
 #box:after {
@@ -756,7 +756,8 @@ governing permissions and limitations under the License.
     );
     content: '';
     display: block;
-    inset: 0;
+    inset-block: 0;
+    inset-inline: 0;
     margin: var(
         --mod-checkbox-focus-indicator-gap,
         var(--spectrum-checkbox-focus-indicator-gap)
