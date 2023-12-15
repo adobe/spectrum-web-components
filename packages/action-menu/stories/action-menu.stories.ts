@@ -19,6 +19,8 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionMenuMarkup } from './';
 import { makeOverBackground } from '../../button/stories/index.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
@@ -221,6 +223,7 @@ export const selects = (args: StoryArgs = {}): TemplateResult =>
 selects.args = {
     open: true,
 };
+selects.decorators = [isOverlayOpen];
 
 export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
@@ -363,3 +366,5 @@ export const groups = ({
         </sp-menu-group>
     </sp-action-menu>
 `;
+
+groups.decorators = [isOverlayOpen];

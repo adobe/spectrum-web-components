@@ -13,6 +13,8 @@ import { TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 import { ActionMenuMarkup } from './';
 
 export default {
@@ -23,15 +25,19 @@ export default {
 export const s = (): TemplateResult => ActionMenuMarkup({ size: 's' });
 export const sOpen = (): TemplateResult =>
     ActionMenuMarkup({ size: 's', open: true });
+sOpen.decorators = [isOverlayOpen];
 
 export const m = (): TemplateResult => ActionMenuMarkup({ size: 'm' });
 export const mOpen = (): TemplateResult =>
     ActionMenuMarkup({ size: 'm', open: true });
+mOpen.decorators = [isOverlayOpen];
 
 export const l = (): TemplateResult => ActionMenuMarkup({ size: 'l' });
 export const lOpen = (): TemplateResult =>
     ActionMenuMarkup({ size: 'l', open: true });
+lOpen.decorators = [isOverlayOpen];
 
 export const XL = (): TemplateResult => ActionMenuMarkup({ size: 'xl' });
 export const XLOpen = (): TemplateResult =>
     ActionMenuMarkup({ size: 'xl', open: true });
+XLOpen.decorators = [isOverlayOpen];
