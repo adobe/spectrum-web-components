@@ -340,6 +340,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         const labelClasses = {
             'visually-hidden': this.icons === 'only' && !!this.value,
             placeholder: !this.value,
+            label: true,
         };
         const appliedLabel = this.appliedLabel || this.label;
         return [
