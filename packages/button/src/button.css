@@ -42,7 +42,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes update-button-styles {
+@keyframes update-pending-button-styles {
     100% {
         background-color: var(
             --highcontrast-button-background-color-disabled,
@@ -71,7 +71,7 @@ governing permissions and limitations under the License.
 :host([pending]:not([disabled])) {
     cursor: default;
     pointer-events: none;
-    animation: update-button-styles 0s var(--pending-delay, 1s) forwards;
+    animation: update-pending-button-styles 0s var(--pending-delay, 1s) forwards;
 }
 
 sp-progress-circle {
