@@ -399,7 +399,7 @@ describe('Menu group', () => {
         expect(subInheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
     });
-    it('manages complex slotted menu items', async () => {
+    it('manages complex slotted menu items', async function () {
         const el = await fixture<ComplexSlottedMenu>(complexSlotted());
 
         await waitUntil(
@@ -409,6 +409,7 @@ describe('Menu group', () => {
             } manages ${focusableItems(el.menu).length}`
         );
 
+        const menu = el.menu;
         const items: Record<string, MenuItem> = {};
         items.i2 = el.querySelector('#i-2') as MenuItem;
         items.i8 = el.querySelector('#i-8') as MenuItem;
@@ -455,12 +456,15 @@ describe('Menu group', () => {
         const count = Object.keys(items).length + 1;
         while (!items.i9.focused) {
             i = Math.max(1, (i + 1 + count) % count);
+            await elementUpdated(menu);
             await elementUpdated(items[`i${i}`]);
             expect(items[`i${i}`].focused, `i${i} should be focused`).to.be
                 .true;
             await sendKeys({
                 press: 'ArrowDown',
             });
+            await elementUpdated(menu);
+            await elementUpdated(items[`i${i}`]);
         }
     });
 });

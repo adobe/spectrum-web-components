@@ -310,7 +310,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
         this.addEventListener('click', this.handleClick);
         this.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('blur', this.handleBlur);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
     }
@@ -380,10 +380,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public handleFocusin(event: FocusEvent): void {
-        const wasOrContainedRelatedTarget = elementIsOrContains(
-            this,
-            event.relatedTarget as Node
-        );
         if (
             this.childItems.some(
                 (childItem) => childItem.menuData.focusRoot !== this
@@ -397,10 +393,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const selectionRoot =
             this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
             this;
-        if (
-            activeElement !== selectionRoot ||
-            (!wasOrContainedRelatedTarget && event.target !== this)
-        ) {
+        if (activeElement !== selectionRoot || event.target !== this) {
             selectionRoot.focus({ preventScroll: true });
             if (activeElement && this.focusedItemIndex === 0) {
                 const offset = this.childItems.findIndex(
@@ -416,7 +409,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener('keydown', this.handleKeydown);
     }
 
-    public handleFocusout(event: FocusEvent): void {
+    public handleBlur(event: FocusEvent): void {
         if (elementIsOrContains(this, event.relatedTarget as Node)) {
             return;
         }
@@ -593,10 +586,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public handleKeydown(event: KeyboardEvent): void {
-        const isNotThisOrDirectChild =
-            event.target !== this &&
-            this !== (event.target as HTMLElement).parentElement;
-        if (isNotThisOrDirectChild || event.defaultPrevented) {
+        if (event.defaultPrevented) {
             return;
         }
         const lastFocusedItem = this.childItems[this.focusedItemIndex];
@@ -639,11 +629,23 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
         }
         if (code === 'Space' || code === 'Enter') {
-            this.childItems[this.focusedItemIndex]?.click();
+            const childItem = this.childItems[this.focusedItemIndex];
+            if (
+                childItem &&
+                childItem.menuData.selectionRoot === event.target
+            ) {
+                childItem.click();
+            }
             return;
         }
         if (code === 'ArrowDown' || code === 'ArrowUp') {
-            this.navigateWithinMenu(event);
+            const childItem = this.childItems[this.focusedItemIndex];
+            if (
+                childItem &&
+                childItem.menuData.selectionRoot === event.target
+            ) {
+                this.navigateWithinMenu(event);
+            }
             return;
         }
         this.navigateBetweenRelatedMenus(event);

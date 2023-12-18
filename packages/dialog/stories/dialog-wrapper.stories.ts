@@ -22,7 +22,8 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { landscape } from './images.js';
-import { overlayTriggerDecorator } from './index.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 import type { DialogWrapper } from '@spectrum-web-components/dialog';
 
 export default {
@@ -251,7 +252,7 @@ export const form = (
     `;
 };
 
-form.decorators = [overlayTriggerDecorator];
+form.decorators = [isOverlayOpen];
 
 export const longContent = (
     args: StoryArgs = {},
@@ -372,7 +373,7 @@ export const longContent = (
     `;
 };
 
-longContent.decorators = [overlayTriggerDecorator];
+longContent.decorators = [isOverlayOpen];
 
 export const wrapperDismissableUnderlayError = (
     args: StoryArgs = {},
@@ -568,7 +569,7 @@ export const tooltips = (
     `;
 };
 
-tooltips.decorators = [overlayTriggerDecorator];
+tooltips.decorators = [isOverlayOpen];
 
 export const lazyHero = ({ src }: { src: string }): TemplateResult => {
     const handleOpened = (): void => {
