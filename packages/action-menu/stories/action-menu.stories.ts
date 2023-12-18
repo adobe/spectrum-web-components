@@ -19,16 +19,20 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionMenuMarkup } from './';
 import { makeOverBackground } from '../../button/stories/index.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import { Menu } from '@spectrum-web-components/menu';
+import { ActionMenu } from '../src/ActionMenu';
 
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
     argTypes: {
+        onChange: { action: 'change' },
         disabled: {
             name: 'disabled',
             type: { name: 'boolean', required: false },
@@ -219,6 +223,7 @@ export const selects = (args: StoryArgs = {}): TemplateResult =>
 selects.args = {
     open: true,
 };
+selects.decorators = [isOverlayOpen];
 
 export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
@@ -326,8 +331,16 @@ export const controlled = (): TemplateResult => {
     `;
 };
 
-export const groups = (): TemplateResult => html`
-    <sp-action-menu open>
+export const groups = ({
+    onChange,
+}: {
+    onChange(value: string): void;
+}): TemplateResult => html`
+    <sp-action-menu
+        @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
+            onChange(value)}
+        open
+    >
         <sp-menu-group id="cms">
             <span slot="header">cms</span>
             <sp-menu-item value="updateAllSiteContent">
@@ -353,3 +366,5 @@ export const groups = (): TemplateResult => html`
         </sp-menu-group>
     </sp-action-menu>
 `;
+
+groups.decorators = [isOverlayOpen];
