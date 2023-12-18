@@ -369,7 +369,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
 
     private renderFillOffset(): TemplateResult {
-        if (!this.fillStart) {
+        if (!this.fillStart || !this._startingPoint) {
             return html``;
         }
         return html`
