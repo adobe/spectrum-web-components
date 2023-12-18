@@ -647,7 +647,7 @@ describe('Menu w/ groups [selects]', () => {
         expect(groupA.value).to.equal('');
         expect(groupB.value).to.equal('');
     });
-    it('manages focus', async () => {
+    it('manages focus', async function () {
         await elementUpdated(groupA);
         await elementUpdated(groupB);
         const input = document.createElement('input');
