@@ -57,7 +57,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     public _buttons: ActionButton[] = [];
 
-    protected _buttonSelector = 'sp-action-button';
+    protected _buttonSelector = 'sp-action-button, sp-action-menu, sp-picker';
     protected _actionMenuSelector = 'sp-action-menu';
 
     constructor() {
@@ -411,18 +411,16 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         const buttons = assignedElements.reduce((acc: unknown[], el) => {
             if (el.matches(this._buttonSelector)) {
                 acc.push(el);
-            } else if (el.matches(this._actionMenuSelector)) {
-                const button = el.shadowRoot?.querySelector(
-                    this._buttonSelector
-                );
-                if (button) {
-                    acc.push(button);
-                }
             } else {
                 const buttonDescendents = Array.from(
                     el.querySelectorAll(`:scope > ${this._buttonSelector}`)
                 );
                 acc.push(...buttonDescendents);
+
+                // const button = el.focusElement as ActionButton;
+                // if (button) {
+                //     acc.push(button);
+                // }
             }
             return acc;
         }, []);
