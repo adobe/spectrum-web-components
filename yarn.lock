@@ -6883,10 +6883,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-4.0.7.tgz#3dbb46ee914e14b5b0f388015552f06bbabb35fe"
   integrity sha512-QV6vGOqwZVs0KTERPKQwIRuNTFB/Uey7UpEycii1bJPu2pyb+0efGKgPjtGTtze1xWLbskn/oTA11RSFvw/DjA==
 
-"@spectrum-css/coachmark@^5.0.67":
-  version "5.0.67"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.67.tgz#ec16c52ef5cac7f9e17e1a5405baf264e0c9787d"
-  integrity sha512-Qd1TSwU2993fRGLZvjy6oJaX95Tr5KAONN9QVcV4/GgHbV0BXX5hvgQbop1p7wK0fwTtvkHVg6cErTWo37lZ9Q==
+"@spectrum-css/coachmark@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-6.0.1.tgz#9bd08e893af0d8c245a6611680111ff896b37192"
+  integrity sha512-3byRCp1ScfP02RUHmg+R5n+q7L/8qpXzQm6hj3vHG9QXh27Cig5Zh1KTxOEq0WvchhrzDd+W5pVeHWQoNHbTig==
 
 "@spectrum-css/colorarea@^4.0.41":
   version "4.0.45"
@@ -7139,7 +7139,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.40.1"
+  version "0.40.2"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.5.0"
