@@ -264,9 +264,9 @@ export class Tooltip extends SpectrumElement {
             import('@spectrum-web-components/overlay/sp-overlay.js');
             return html`
                 <sp-overlay
+                    ?open=${this.open && !this.disabled}
                     ?delayed=${this.delayed}
                     ?disabled=${this.disabled}
-                    ?open=${this.open}
                     offset=${this.offset}
                     .placement=${this.placement}
                     type="hint"
