@@ -7119,9 +7119,9 @@
   integrity sha512-8D9ELCsT6Ps1dPRN14IPO2iVD79CzXux1cmXpB09g6ShMa8cu64fSK9MeyuGmkEj3z0Za7S4JDkToqjYTApldQ==
 
 "@spectrum-css/tray@^2.1.12":
-  version "2.1.12"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.1.12.tgz#c9852fd0ba7bc2f9fa4f9568a9fed65db3816aa2"
-  integrity sha512-Ylxuanf5MSIzpoLYv1owSOPg0XTzBUgfrnBRDg5xc/dzEJBeQJthr5LWVBOO7+uLjworAbSZSW7d8nLla25pPQ==
+  version "2.1.22"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.1.22.tgz#44f4c09330b9c1dd190b822e00a5e479f2830e36"
+  integrity sha512-Ip2Crt7v13/R+s5pWsw7Dvs9Enz4kq36EKzkkIq9NuHR0ciJqoN/XJ6RlO1P9d441AZVifk29C1dRIy56kUGQQ==
 
 "@spectrum-css/typography@^5.0.40":
   version "5.0.44"
@@ -7139,7 +7139,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.40.1"
+  version "0.40.2"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.5.0"

@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    bottom: 0;
     display: flex;
     inline-size: 100%;
+    inset-block-end: 0;
     inset-inline-start: 0;
     justify-content: center;
     position: fixed;
