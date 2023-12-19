@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import rollupJson from '@rollup/plugin-json';
 import { mergeConfigs } from '@web/dev-server';
 import { fromRollup } from '@web/dev-server-rollup';
+import rollupCommonjs from '@rollup/plugin-commonjs';
 import { watchSWC } from '../web-test-runner.utils.js';
 
 /** @type { import('storybook-builder-wds').StorybookConfigWds } */
@@ -52,6 +53,18 @@ const config = {
     rollupFinal(config) {
         // add a new plugin to the build
         config.plugins.push(rollupJson());
+        config.plugins.push(
+            rollupCommonjs({
+                requireReturnsDefault: 'preferred',
+                include: [
+                    '**/node_modules/react-dom/**/*.js',
+                    '**/node_modules/react/**/*.js',
+                    '**/node_modules/memoizerific/**/*.js',
+                    '**/node_modules/lodash/**/*.js',
+                    '**/node_modules/@storybook/blocks/**/*.js',
+                ],
+            })
+        );
         return config;
     },
 };

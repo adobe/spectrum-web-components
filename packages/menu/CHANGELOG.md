@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **menu:** support navigating to and selecting Menu Items in Menu Groups ([8469ab2](https://github.com/adobe/spectrum-web-components/commit/8469ab235bf4049b7ce9fca008494df1cde012a7))
+
 ## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

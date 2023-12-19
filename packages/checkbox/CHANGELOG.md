@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **checkbox:** add missing readonly prop ([#3859](https://github.com/adobe/spectrum-web-components/issues/3859)) ([35b5649](https://github.com/adobe/spectrum-web-components/commit/35b56490e9c03dccbb852935caf51bc52f922143))
+
 ## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
 
 ### Performance Improvements

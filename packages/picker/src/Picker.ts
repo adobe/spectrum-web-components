@@ -324,7 +324,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             return content;
         }
         return html`
-            <slot name="label">
+            <slot name="label" id="label">
                 <span
                     aria-hidden=${ifDefined(
                         this.appliedLabel ? undefined : 'true'
@@ -340,6 +340,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         const labelClasses = {
             'visually-hidden': this.icons === 'only' && !!this.value,
             placeholder: !this.value,
+            label: true,
         };
         const appliedLabel = this.appliedLabel || this.label;
         return [
@@ -347,7 +348,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 <span id="icon" ?hidden=${this.icons === 'none'}>
                     ${this.selectedItemContent.icon}
                 </span>
-                <span id="label" class=${classMap(labelClasses)}>
+                <span
+                    id=${ifDefined(
+                        this.value && this.selectedItem ? 'label' : undefined
+                    )}
+                    class=${classMap(labelClasses)}
+                >
                     ${this.renderLabelContent(this.selectedItemContent.content)}
                 </span>
                 ${this.value && this.selectedItem
