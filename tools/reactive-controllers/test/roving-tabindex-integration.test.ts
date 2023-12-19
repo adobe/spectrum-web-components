@@ -13,9 +13,13 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import { ActionGroup } from '@spectrum-web-components/action-group';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { html } from '@spectrum-web-components/base';
@@ -73,6 +77,33 @@ const createTabs = async (): Promise<Tabs> => {
     );
     await elementUpdated(tabs);
     return tabs;
+};
+
+const createGroup = async (): Promise<ActionGroup> => {
+    const group = await fixture<ActionGroup>(
+        html`
+            <sp-action-group>
+                <sp-action-button>Button 1</sp-action-button>
+                <sp-action-button>Longer Button 2</sp-action-button>
+                <sp-action-button>Short 3</sp-action-button>
+                <sp-action-menu label="More Actions">
+                    <sp-menu-item>One</sp-menu-item>
+                    <sp-menu-item>Two</sp-menu-item>
+                    <sp-menu-item>Three</sp-menu-item>
+                    <sp-menu-item>
+                        Select some items
+                        <sp-menu slot="submenu" selects="multiple">
+                            <sp-menu-item>A</sp-menu-item>
+                            <sp-menu-item selected>B</sp-menu-item>
+                            <sp-menu-item>C</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-action-menu>
+            </sp-action-group>
+        `
+    );
+    await elementUpdated(group);
+    return group;
 };
 
 describe('Action Group inside of Tabs', () => {
@@ -173,5 +204,68 @@ describe('Action Group inside of Tabs', () => {
 
         expect(document.activeElement === tab2).to.be.false;
         expect(actionGroup1.contains(document.activeElement)).to.be.true;
+    });
+});
+
+describe('Action Menu inside of Action Group', () => {
+    it('accurately manages the tabindex of all the elements', async () => {
+        const el = await createGroup();
+        const actionButton1 = el.querySelector(
+            'sp-action-button:nth-child(1)'
+        ) as ActionButton;
+        const actionButton2 = el.querySelector(
+            'sp-action-button:nth-child(2)'
+        ) as ActionButton;
+        const actionButton3 = el.querySelector(
+            'sp-action-button:nth-child(3)'
+        ) as ActionButton;
+        const actionMenu = el.querySelector('sp-action-menu') as ActionMenu;
+
+        el.focus();
+        expect(document.activeElement === actionButton1).to.be.true;
+
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+
+        expect(document.activeElement === actionButton2).to.be.true;
+
+        // expect the focused element to have a tabindex of 0 and everyone else to be -1
+        expect(actionButton2.tabIndex).to.equal(0);
+        expect(actionButton1.tabIndex).to.equal(-1);
+        expect(actionButton3.tabIndex).to.equal(-1);
+        expect(actionMenu.tabIndex).to.equal(-1);
+
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+
+        expect(document.activeElement === actionButton3).to.be.true;
+
+        // expect the focused element to have a tabindex of 0 and everyone else to be -1
+        expect(actionButton3.tabIndex).to.equal(0);
+        expect(actionButton2.tabIndex).to.equal(-1);
+        expect(actionButton1.tabIndex).to.equal(-1);
+        expect(actionMenu.tabIndex).to.equal(-1);
+
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+
+        expect(document.activeElement === actionMenu).to.be.true;
+
+        // expect the action-button inside of the shadow root of the action-menu to have a tabindex of 0 and everyone else to be -1
+        expect(actionButton3.tabIndex).to.equal(-1);
+        expect(actionButton2.tabIndex).to.equal(-1);
+        expect(actionButton1.tabIndex).to.equal(-1);
+        expect(actionMenu.shadowRoot?.querySelector('sp-action-button')).to
+            .exist;
+        expect(
+            (
+                actionMenu.shadowRoot?.querySelector(
+                    'sp-action-button'
+                ) as ActionButton
+            ).tabIndex
+        ).to.equal(0);
     });
 });

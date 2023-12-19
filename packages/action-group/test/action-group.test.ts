@@ -132,7 +132,7 @@ describe('ActionGroup', () => {
         await expect(el).to.be.accessible();
     });
 
-    it.only('loads action-group with action-menu accessibly', async () => {
+    it('loads action-group with action-menu accessibly', async () => {
         const el = await fixture<ActionGroup>(
             HasActionMenuAsChild({ label: 'Action Group' })
         );

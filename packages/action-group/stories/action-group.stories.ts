@@ -23,7 +23,6 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/picker/sp-picker.js';
 import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
 
 export default {
