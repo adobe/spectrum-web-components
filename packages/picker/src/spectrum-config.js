@@ -54,7 +54,7 @@ const config = {
                 ),
                 converter.classToClass('spectrum-Picker-icon', 'icon'),
                 converter.classToId('spectrum-Picker-trigger', 'button'),
-                converter.classToId('spectrum-Picker-label', 'label'),
+                converter.classToClass('spectrum-Picker-label', 'label'),
                 converter.classToId('spectrum-Picker-popover', 'popover'),
                 {
                     expandSelector: true,
