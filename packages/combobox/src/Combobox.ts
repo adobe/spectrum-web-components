@@ -384,12 +384,8 @@ export class Combobox extends Textfield {
                     ? 'focus-visible is-keyboardFocused'
                     : ''}"
                 ?focused=${this.focused}
-            >
-                <sp-icon-chevron100
-                    slot="icon"
-                    class="spectrum-UIIcon-ChevronDown100 icon"
-                ></sp-icon-chevron100>
-            </sp-picker-button>
+                size=${this.size}
+            ></sp-picker-button>
             <sp-overlay
                 ?open=${this.open}
                 .triggerElement=${this.input}
@@ -411,6 +407,7 @@ export class Combobox extends Textfield {
                         id="listbox-menu"
                         role="listbox"
                         style="min-width: ${width}px;"
+                        size=${this.size}
                     >
                         <!-- <sp-menu-item id="test-1">Test 1</sp-menu-item>
                         <sp-menu-item id="test-2">Test 2</sp-menu-item>
