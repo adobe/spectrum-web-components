@@ -35,6 +35,7 @@ import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -101,6 +102,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @query('sp-overlay')
     protected overlayElement!: Overlay;
+
+    protected tooltipEl?: Tooltip;
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
@@ -319,6 +322,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     _selectedItemContent?: MenuItemChildren;
 
+    protected handleTooltipSlotchange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.tooltipEl = event.target.assignedElements()[0] as
+            | Tooltip
+            | undefined;
+    }
+
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
             return content;
@@ -382,7 +393,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-chevron100>
-                <slot aria-hidden="true" name="tooltip" id="tooltip"></slot>
+                <slot
+                    aria-hidden="true"
+                    name="tooltip"
+                    id="tooltip"
+                    @slotchange=${this.handleTooltipSlotchange}
+                ></slot>
             `,
         ];
     }
@@ -436,6 +452,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
+        if (this.tooltipEl) {
+            this.tooltipEl.disabled = this.open;
+        }
         return html`
             <span
                 id="focus-helper"

@@ -1605,20 +1605,12 @@ export function runPickerTests(): void {
         expect(openedSpy.calledOnce).to.be.true;
         expect(closedSpy.calledOnce).to.be.false;
 
-        // const openedEvent = openedSpy
-        //     .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
-        // expect(openedEvent.detail.interaction).to.equal('modal');
-
         const closed = oneEvent(el, 'sp-closed');
         el.open = false;
         await closed;
         await elementUpdated(el);
 
         expect(closedSpy.calledOnce).to.be.true;
-
-        // const closedEvent = closedSpy
-        //     .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
-        // expect(closedEvent.detail.interaction).to.equal('modal');
     });
     it('closes tooltip on button blur', async () => {
         const test = await styledFixture(html`

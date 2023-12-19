@@ -75,6 +75,7 @@
         "@spectrum-web-components/popover": "^0.40.2",
         "@spectrum-web-components/reactive-controllers": "^0.40.2",
         "@spectrum-web-components/shared": "^0.40.2",
+        "@spectrum-web-components/tooltip": "^0.40.2",
         "@spectrum-web-components/tray": "^0.40.2"
     },
     "devDependencies": {
