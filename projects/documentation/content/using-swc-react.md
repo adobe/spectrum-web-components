@@ -7,7 +7,7 @@ slug: getstarted-react-wrapper
 
 # Using React Wrappers for Spectrum Web Components
 
-swc-react is a collection of React wrapper components for the Spectrum Web Components (SWC) library, enabling you to use SWC in your React applications with ease. It relies on the [`@lit-labs/react`](https://github.com/lit/lit/tree/main/packages/labs/react) package to provide seamless integration between React and the SWC library.
+swc-react is a collection of React wrapper components for the Spectrum Web Components (SWC) library, enabling you to use SWC in your React applications with ease. It relies on the [`@lit/react`](https://github.com/lit/lit/tree/main/packages/react) package to provide seamless integration between React and the SWC library.
 
 ## Table of Contents
 
@@ -17,14 +17,15 @@ swc-react is a collection of React wrapper components for the Spectrum Web Compo
     - [Importing Components](#importing-components)
     - [Theming](#theming)
     - [Event Handling and Type Definitions](#event-handling-and-type-definitions)
-3. [API Reference](#api-reference)
-4. [FAQs](#faqs)
-5. [Troubleshooting](#troubleshooting)
-6. [Contributing](#contributing)
+3. [Using Next.js Wrapper Components](#using-next.js-wrapper-components)
+4. [API Reference](#api-reference)
+5. [FAQs](#faqs)
+6. [Troubleshooting](#troubleshooting)
+7. [Contributing](#contributing)
 
 ## Introduction
 
-The swc-react wrapper library aims to make it easy for developers to use the Spectrum Web Components (SWC) library in their React applications. The SWC library provides a set of reusable Web Components built following the [Spectrum Design Language](https://spectrum.adobe.com/) guidelines. swc-react relies on the [`@lit-labs/react`](https://github.com/lit/lit/tree/main/packages/labs/react) package to provide React components that correspond to the Web Components in the SWC library.
+The swc-react wrapper library aims to make it easy for developers to use the Spectrum Web Components (SWC) library in their React applications. The SWC library provides a set of reusable Web Components built following the [Spectrum Design Language](https://spectrum.adobe.com/) guidelines. swc-react relies on the [`@lit/react`](https://github.com/lit/lit/tree/main/packages/react) package to provide React components that correspond to the Web Components in the SWC library.
 
 With swc-react, developers can utilize SWC components in their React applications just like native React components, with added support for React synthetic events. However, the `onChange` synthetic event for form elements is an exception, and you can refer to this [GitHub issue](https://github.com/facebook/react/issues/19846) for more details.
 
@@ -129,13 +130,57 @@ function App() {
 export default App;
 ```
 
-### API Reference
+## Using Next.js Wrapper Components
+
+### Introduction to Next.js Wrappers
+
+The Next.js component wrappers in `@swc-react/*` are specially designed for use with Next.js applications. These wrappers cater to Next.js's static content exports functionality, allowing for more streamlined and efficient integration. For detailed information on Next.js static exports, visit [Next.js documentation](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
+
+### Usage
+
+Using the Next.js wrapper is similar to the standard `@swc-react/*` wrapper components. The key difference lies in referencing a different file within the `@swc-react/*` wrapper package. Here's an example using the Button component:
+
+```jsx
+import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { Button } from '@swc-react/button/next.js';
+import { ButtonType } from '@swc-react/button';
+
+function App() {
+    const [count, setCount] = useState(0);
+    return (
+        <div className="App">
+            <Button
+                variant="primary"
+                onClick={(e: MouseEvent<ButtonType>) => {
+                    console.log(e.currentTarget.variant);
+                    console.log(e.currentTarget.size);
+                    setCount((count) => count + 1);
+                }}
+            >
+                Count is {count}
+            </Button>
+        </div>
+    );
+}
+
+export default App;
+```
+
+This example demonstrates the ease of integrating SWC components with Next.js. By simply changing the import path, you can leverage the power of Next.js's static export functionality alongside the rich UI components provided by SWC.
+
+### Limitations
+
+Currently, the Next.js wrappers in @swc-react/\* face a specific limitation:
+
+1. The React useRef hook is incompatible with the Next.js wrapper. This issue stems from challenges in integrating React's ref mechanism with custom elements within the Next.js environment. For detailed insights and potential workarounds, refer to the discussions in [lit#2951](https://github.com/lit/lit/issues/2951) and [next.js#40769](https://github.com/vercel/next.js/issues/40769). It's advisable to explore these resources for understanding the limitations and identifying alternative approaches.
+
+## API Reference
 
 swc-react is a collection of wrapper components designed to make Spectrum Web Components (SWC) work like native React components in a React application. As these components serve as a bridge between React and SWC, their properties and event names are directly derived from the corresponding SWC components.
 
 For detailed information on the properties and event names of each component, please refer to the official documentation for the corresponding SWC component. This will provide you with the most accurate and up-to-date information on the usage and behavior of each component within the SWC library.
 
-### FAQs
+## FAQs
 
 **1. How many SWC components does swc-react support?**
 
@@ -153,9 +198,9 @@ To view the source of swc-react wrappers, first set up your local development en
 
 Every time there is a successful release of the SWC library, it automatically triggers a release for the swc-react wrapper components. These corresponding components share the same version number as their SWC counterparts.
 
-**5. Is the @lit-labs/react library stable enough for production use, considering it's still a lab project?**
+**5. Is the @lit/react library stable enough for production use, considering it's still a lab project?**
 
-The @lit-labs/react library has been in development for over three years. swc-react isn't the only project that relies on it; the next-generation [VMware Clarity component library](https://github.com/vmware-clarity) also uses it to integrate its core Lit-based Web Components with popular frameworks like React and Angular. For more details, you can check their [repository](https://github.com/vmware-clarity/core/tree/main/projects/react).
+The @lit/react library has been in development for over three years. swc-react isn't the only project that relies on it; the next-generation [VMware Clarity component library](https://github.com/vmware-clarity) also uses it to integrate its core Lit-based Web Components with popular frameworks like React and Angular. For more details, you can check their [repository](https://github.com/vmware-clarity/core/tree/main/projects/react).
 
 **6. Why was a custom code generator built instead of using the official Google Lit project code-gen tool, @lit-labs/gen-wrapper-react?**
 
@@ -165,7 +210,7 @@ The [@lit-labs/gen-wrapper-react](https://github.com/lit/lit/tree/main/packages/
 
 Yes, every swc-react wrapper component is wrapped using React.forwardRef. The returned ref will point to the SWC host custom element, allowing you to manipulate it as needed.
 
-### Troubleshooting
+## Troubleshooting
 
 **1. Error: "sp-xxx has already been used with this registry"**
 

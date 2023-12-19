@@ -53,6 +53,8 @@ export class FocusGroupController<T extends HTMLElement>
 
     private _currentIndex = -1;
 
+    private prevIndex = -1;
+
     get direction(): DirectionTypes {
         return this._direction();
     }
@@ -149,7 +151,6 @@ export class FocusGroupController<T extends HTMLElement>
             'object',
             this._listenerScope
         );
-        // console.log(this.host, this.elements);
     }
     /*  In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
         Then we are checking if the deleted element was the focused one before the deletion if so then we need to proceed else we casn return;
@@ -188,7 +189,8 @@ export class FocusGroupController<T extends HTMLElement>
             focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
-            // console.log('heree....', focusElement);
+            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            focusElement.tabIndex = 0;
             focusElement.focus(options);
         }
     }
@@ -209,6 +211,7 @@ export class FocusGroupController<T extends HTMLElement>
     setCurrentIndexCircularly(diff: number): void {
         const { length } = this.elements;
         let steps = length;
+        this.prevIndex = this.currentIndex;
         // start at a possibly not 0 index
         let nextIndex = (length + this.currentIndex + diff) % length;
         while (
@@ -252,11 +255,11 @@ export class FocusGroupController<T extends HTMLElement>
             targetIndex = this.elements.indexOf(el);
             return targetIndex !== -1;
         });
+        this.prevIndex = this.currentIndex;
         this.currentIndex = targetIndex > -1 ? targetIndex : this.currentIndex;
     };
 
     handleFocusout = (event: FocusEvent): void => {
-        // console.log('handleFocusout', event);
         if (this.isRelatedTargetAnElement(event)) {
             this.hostNoLongerContainsFocus();
         }
@@ -282,6 +285,7 @@ export class FocusGroupController<T extends HTMLElement>
             return;
         }
         let diff = 0;
+        this.prevIndex = this.currentIndex;
         switch (event.code) {
             case 'ArrowRight':
                 diff += 1;

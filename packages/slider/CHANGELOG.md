@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **slider:** update handle alignment and color application ([#3860](https://github.com/adobe/spectrum-web-components/issues/3860)) ([bed73c0](https://github.com/adobe/spectrum-web-components/commit/bed73c03827766fc9802840795df2b43be4f090a))
+
 ## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
 
 ### Bug Fixes

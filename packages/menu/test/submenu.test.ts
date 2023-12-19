@@ -329,7 +329,7 @@ describe('Submenu', () => {
             await elementUpdated(el);
 
             let opened = oneEvent(rootItem, 'sp-opened');
-            sendKeys({
+            await sendKeys({
                 press: testData.openKey,
             });
             await opened;
@@ -341,7 +341,7 @@ describe('Submenu', () => {
             ).to.be.true;
 
             let closed = oneEvent(rootItem, 'sp-closed');
-            sendKeys({
+            await sendKeys({
                 press: testData.closeKey,
             });
             await closed;
@@ -353,7 +353,7 @@ describe('Submenu', () => {
             ).to.be.true;
 
             opened = oneEvent(rootItem, 'sp-opened');
-            sendKeys({
+            await sendKeys({
                 press: testData.openKey,
             });
             await opened;
@@ -363,16 +363,15 @@ describe('Submenu', () => {
             await sendKeys({
                 press: 'ArrowDown',
             });
+            await elementUpdated(submenu);
             await elementUpdated(submenuItem);
-            await nextFrame();
-            await nextFrame();
 
             expect(submenu.getAttribute('aria-activedescendant')).to.equal(
                 submenuItem.id
             );
 
             closed = oneEvent(rootItem, 'sp-closed');
-            sendKeys({
+            await sendKeys({
                 press: 'Enter',
             });
             await closed;

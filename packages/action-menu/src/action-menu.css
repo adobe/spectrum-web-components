@@ -84,7 +84,3 @@ governing permissions and limitations under the License.
     ); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
    * .spectrum-ActionButton-icon:only-child */
 }
-
-:host([focused]) #button {
-    background-color: red;
-}

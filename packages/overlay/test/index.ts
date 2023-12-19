@@ -34,18 +34,6 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { isWebKit } from '@spectrum-web-components/shared';
 
-function pressKey(code: string): void {
-    const up = new KeyboardEvent('keyup', {
-        bubbles: true,
-        cancelable: true,
-        key: code,
-        code,
-    });
-    document.dispatchEvent(up);
-}
-
-const pressSpace = (): void => pressKey('Space');
-
 export const runOverlayTriggerTests = (type: string): void => {
     describe(`Overlay Trigger - ${type}`, () => {
         describe('open/close', () => {
@@ -99,6 +87,9 @@ export const runOverlayTriggerTests = (type: string): void => {
                                                     class="options-popover-content"
                                                 >
                                                     Another Popover
+                                                    <sp-button>
+                                                        Does nothing
+                                                    </sp-button>
                                                 </sp-dialog>
                                             </sp-popover>
                                         </overlay-trigger>
@@ -429,6 +420,20 @@ export const runOverlayTriggerTests = (type: string): void => {
                     'inner click content available at point'
                 ).to.be.true;
 
+                // Why does this make the test pass in Chromium? 🤷🏻‍♂️
+                await sendKeys({
+                    press: 'Space',
+                });
+
+                expect(
+                    await isOnTopLayer(this.outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(this.innerClickContent),
+                    'inner click content available at point'
+                ).to.be.true;
+
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
                 await sendKeys({
                     press: 'Escape',
@@ -475,7 +480,10 @@ export const runOverlayTriggerTests = (type: string): void => {
                     'inner click content available at point'
                 ).to.be.true;
 
-                pressSpace();
+                // Why does this make the test pass in Chromium? 🤷🏻‍♂️
+                await sendKeys({
+                    press: 'Space',
+                });
 
                 expect(
                     await isOnTopLayer(this.outerClickContent),
@@ -696,7 +704,10 @@ export const runOverlayTriggerTests = (type: string): void => {
         });
         describe('System interactions', () => {
             afterEach(async () => {
-                const triggers = document.querySelectorAll('overlay-trigger');
+                const triggers =
+                    document.querySelectorAll<OverlayTrigger>(
+                        'overlay-trigger'
+                    );
                 const closes: Promise<CustomEvent<unknown>>[] = [];
                 triggers.forEach((trigger) => {
                     if (trigger.open) {

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,15 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import { SplitButton } from '@spectrum-web-components/split-button';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { Overlay } from '@spectrum-web-components/overlay';
 
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
-class OpenSplitButtonReady extends HTMLElement {
+class IsOverlayOpen extends HTMLElement {
     ready!: (value: boolean | PromiseLike<boolean>) => void;
 
     constructor() {
@@ -31,15 +31,22 @@ class OpenSplitButtonReady extends HTMLElement {
     async setup(): Promise<void> {
         await nextFrame();
 
-        const button = document.querySelector(`sp-split-button`) as SplitButton;
-        button.addEventListener(
-            'sp-opened',
-            () => {
-                this.ready(true);
-            },
-            { once: true }
-        );
+        document.addEventListener('sp-opened', this.handleOpened);
     }
+
+    handleOpened = async (event: Event): Promise<void> => {
+        const overlay = event.target as Overlay;
+        const actions = [nextFrame(), overlay.updateComplete];
+
+        await Promise.all(actions);
+        // Focus happens _after_ `sp-opened` by at least two frames.
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        this.ready(true);
+    };
 
     private readyPromise: Promise<boolean> = Promise.resolve(false);
 
@@ -48,13 +55,11 @@ class OpenSplitButtonReady extends HTMLElement {
     }
 }
 
-customElements.define('open-split-button-ready', OpenSplitButtonReady);
+customElements.define('is-overlay-open', IsOverlayOpen);
 
-export const openSplitButtonDecorator = (
-    story: () => TemplateResult
-): TemplateResult => {
+export const isOverlayOpen = (story: () => TemplateResult): TemplateResult => {
     return html`
         ${story()}
-        <open-split-button-ready></open-split-button-ready>
+        <is-overlay-open></is-overlay-open>
     `;
 };

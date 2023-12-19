@@ -144,16 +144,6 @@ describe('ActionGroup', () => {
         await nextFrame();
         await nextFrame();
 
-        // console.log('el: ', el);
-        // console.log(
-        //     'actionmenu shadow: ',
-        //     el.querySelector('sp-action-menu')?.shadowRoot
-        // );
-        // console.log(
-        //     'picker shadow: ',
-        //     el.querySelector('sp-picker')?.shadowRoot
-        // );
-
         await expect(el).to.be.accessible();
     });
 

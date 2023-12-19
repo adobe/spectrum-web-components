@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import { ElementSizes, TemplateResult } from '@spectrum-web-components/base';
 import { args, argTypes, renderSplitButtonSet, splitbutton } from './index.js';
 import type { Properties } from './index.js';
-import { openSplitButtonDecorator } from './helpers.js';
-import './helpers.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 
 import '@spectrum-web-components/split-button/sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -47,4 +47,4 @@ export const XL = (args: Properties): TemplateResult =>
 XL.args = { size: ElementSizes.xl };
 export const open = (args: Properties): TemplateResult => splitbutton(args);
 open.args = { open: true };
-open.decorators = [openSplitButtonDecorator];
+open.decorators = [isOverlayOpen];

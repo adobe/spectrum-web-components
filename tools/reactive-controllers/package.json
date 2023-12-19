@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/reactive-controllers",
-    "version": "0.40.1",
+    "version": "0.40.2",
     "publishConfig": {
         "access": "public"
     },

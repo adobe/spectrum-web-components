@@ -151,7 +151,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (tabIndex === null) {
             this.focusElement.removeAttribute('tabindex');
         } else {
-            this.focusElement.tabIndex = tabIndex;
+            this.focusElement.setAttribute('tabindex', '' + tabIndex);
         }
     }
 
