@@ -14,6 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { ComboboxOption } from '..';
 import '../sp-combobox.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
 
 export default {
     title: 'Combobox/Sizes',
@@ -58,21 +59,25 @@ export const s = (args: StoryArgs): TemplateResult =>
 
 export const sOpen = (args: StoryArgs): TemplateResult =>
     combobox({ ...args, open: true, size: 's' });
+sOpen.decorators = [isOverlayOpen];
 
 export const m = (args: StoryArgs): TemplateResult =>
     combobox({ ...args, size: 'm' });
 
 export const mOpen = (args: StoryArgs): TemplateResult =>
     combobox({ ...args, open: true, size: 'm' });
+mOpen.decorators = [isOverlayOpen];
 
 export const l = (args: StoryArgs): TemplateResult =>
     combobox({ ...args, size: 'l' });
 
 export const lOpen = (args: StoryArgs): TemplateResult =>
     combobox({ ...args, open: true, size: 'l' });
+lOpen.decorators = [isOverlayOpen];
 
 export const xL = (args: StoryArgs): TemplateResult =>
     combobox({ ...args, size: 'xl' });
 
 export const XLOpen = (args: StoryArgs): TemplateResult =>
     combobox({ ...args, open: true, size: 'xl' });
+XLOpen.decorators = [isOverlayOpen];
