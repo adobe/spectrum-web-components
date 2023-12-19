@@ -6959,9 +6959,9 @@
   integrity sha512-SV1UQJtmBg1JJ4zzgcFqqpFZZzVvJhNNJvM34PUWdHnj4YjUKGIxSCaqdEFl0LguNcgjSM3Be2P5ZNVkjwcMUA==
 
 "@spectrum-css/illustratedmessage@^6.0.29":
-  version "6.0.29"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-6.0.29.tgz#37fbf7d7fa394ee4314f4bc0e8391d120a9369bd"
-  integrity sha512-xtA33zkjO6HL+YN7vNL7V/Q/WVaZF3QbG+B4/p92NSDpCqF3Rwp74WEv4pailpUtMP+DxgxoUWEqDqOOHb5WeQ==
+  version "6.0.31"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-6.0.31.tgz#93ccd0d4758dc1a134919340e59907729f55c19c"
+  integrity sha512-EAAzluCPBOPzfDaSTOZvJgT5g4EzMuJfkod76OViJaDRBLdWAcfU69cs6UQuNNBjVdWBNPvgCMemgr0aHDyuZQ==
 
 "@spectrum-css/infieldbutton@^4.0.1":
   version "4.0.1"
@@ -7139,7 +7139,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.40.1"
+  version "0.40.2"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.5.0"
