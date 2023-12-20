@@ -57,12 +57,13 @@ export default {
 };
 
 interface Properties {
+    delayed?: boolean;
+    disabled?: boolean;
     open?: boolean;
     placement?: Placement;
     variant?: string;
     text?: string;
     offset?: number;
-    delayed?: boolean;
 }
 
 export const Default = ({
@@ -310,6 +311,7 @@ export const selfManaged = ({
     open,
     offset,
     delayed,
+    disabled,
 }: Properties): TemplateResult => html`
     ${overlayStyles}
     <sp-action-button class="self-managed">
@@ -319,7 +321,8 @@ export const selfManaged = ({
             placement=${placement}
             offset=${offset}
             ?delayed=${delayed}
-            open=${open}
+            ?disabled=${disabled}
+            ?open=${open}
         >
             Add paragraph text by dragging the Text tool on the canvas to use
             this feature
@@ -331,12 +334,18 @@ selfManaged.args = {
     open: true,
     offset: 6,
     delayed: false,
+    disabled: false,
 };
 selfManaged.argTypes = {
     delayed: {
         name: 'delayed',
         type: { name: 'boolean', required: false },
         description: 'Whether to manage the tooltip with the warmup timer',
+    },
+    disabled: {
+        name: 'disabled',
+        type: { name: 'boolean', required: false },
+        description: 'Whether the Tooltip is active and can be displayed',
     },
     offset: {
         name: 'offset',

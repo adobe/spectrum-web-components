@@ -122,11 +122,11 @@ governing permissions and limitations under the License.
 }
 @media screen and (orientation: landscape) {
     .tray {
-        border-top-left-radius: var(
+        border-start-end-radius: var(
             --mod-tray-corner-radius,
             var(--spectrum-tray-corner-radius)
         );
-        border-top-right-radius: var(
+        border-start-start-radius: var(
             --mod-tray-corner-radius,
             var(--spectrum-tray-corner-radius)
         );
