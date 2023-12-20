@@ -376,7 +376,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.theme}
                         @change=${this.updateTheme}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                         <sp-menu-item value="express">
@@ -393,7 +392,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.color}
                         @change=${this.updateColor}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="lightest">Lightest</sp-menu-item>
                         <sp-menu-item value="light">Light</sp-menu-item>
@@ -409,7 +407,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.scale}
                         @change=${this.updateScale}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="medium">Medium</sp-menu-item>
                         <sp-menu-item value="large">Large</sp-menu-item>
@@ -425,7 +422,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.dir}
                         @change=${this.updateDirection}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="ltr">LTR</sp-menu-item>
                         <sp-menu-item value="rtl">RTL</sp-menu-item>

@@ -119,6 +119,22 @@ export class Tooltip extends SpectrumElement {
     }
 
     /**
+     * A Tooltip that is `delayed` will its Overlay wait until a warm-up period of
+     * 1000ms has completed before opening. Once the warmup period has completed, all
+     * subsequent Overlays will open immediately. When no Overlays are opened, a
+     * cooldown period of 1000ms will begin. Once the cooldown has completed, the next
+     * Overlay to be opened will be subject to the warm-up period if provided that option.
+     */
+    @property({ type: Boolean })
+    delayed = false;
+
+    /**
+     * Whether to prevent a self-managed Tooltip from responding to user input.
+     */
+    @property({ type: Boolean })
+    disabled = false;
+
+    /**
      * Automatically bind to the parent element of the assigned `slot` or the parent element of the `sp-tooltip`.
      * Without this, you must provide your own `overlay-trigger`.
      */
@@ -248,7 +264,9 @@ export class Tooltip extends SpectrumElement {
             import('@spectrum-web-components/overlay/sp-overlay.js');
             return html`
                 <sp-overlay
-                    ?open=${this.open}
+                    ?open=${this.open && !this.disabled}
+                    ?delayed=${this.delayed}
+                    ?disabled=${this.disabled}
                     offset=${this.offset}
                     .placement=${this.placement}
                     type="hint"

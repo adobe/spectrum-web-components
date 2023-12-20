@@ -79,7 +79,10 @@ export class ActionMenu extends ObserveSlotPresence(
                       `}
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
                 <slot name="label-only"></slot>
-                <slot name="tooltip"></slot>
+                <slot
+                    name="tooltip"
+                    @slotchange=${this.handleTooltipSlotchange}
+                ></slot>
             `,
         ];
     }

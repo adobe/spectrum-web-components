@@ -105,3 +105,7 @@ sp-menu {
     width: 1px;
     white-space: nowrap;
 }
+
+sp-overlay:not(:defined) {
+    display: none;
+}
