@@ -32,13 +32,7 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 Coachmark can take a `placement` and an `offset` similar to the [Overlay](https://opensource.adobe.com/spectrum-web-components/components/overlay/).
 
 ```html
-<sp-coachmark
-    open
-    current-step="2"
-    total-steps="8"
-    primary-cta="Next"
-    secondary-cta="Previous"
->
+<sp-coachmark open>
     <div slot="title">Coachmark with Text Only</div>
     <div slot="content">
         This is a Coachmark with nothing but text in it. Kind of lonely in here.

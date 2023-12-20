@@ -196,24 +196,58 @@ export const TriggerOnHover = (props: Properties): TemplateResult => {
 
 export const withImage = (): TemplateResult => {
     return html`
-        <sp-coachmark open src=${cave} media-type="image" primary-cta="Ok">
+        <sp-coachmark
+            open
+            src=${cave}
+            media-type="image"
+            primary-cta="Next"
+            secondary-cta="Previous"
+            current-step="2"
+            total-steps="8"
+        >
             <div slot="title">Coachmark with Media</div>
             <div slot="content">
                 This is a Coachmark with nothing but text in it. Kind of lonely
                 in here.
             </div>
+            <sp-action-menu
+                placement="bottom-end"
+                quiet
+                slot="actions"
+                label="More Actions"
+            >
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
         </sp-coachmark>
     `;
 };
 
 export const withGif = (): TemplateResult => {
     return html`
-        <sp-coachmark open src=${gif} media-type="image" primary-cta="Ok">
+        <sp-coachmark
+            open
+            src=${gif}
+            media-type="image"
+            primary-cta="Next"
+            secondary-cta="Previous"
+            current-step="2"
+            total-steps="8"
+        >
             <div slot="title">Coachmark with GIF</div>
             <div slot="content">
                 This is a Coachmark with nothing but text in it. Kind of lonely
                 in here.
             </div>
+            <sp-action-menu
+                placement="bottom-end"
+                quiet
+                slot="actions"
+                label="More Actions"
+            >
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
         </sp-coachmark>
     `;
 };
@@ -231,13 +265,26 @@ export const withKeys = (props: Properties): TemplateResult => {
     return html`
         <sp-coachmark
             open
-            primary-cta="Ok"
             .modifierKeys=${modifierKeys}
             .content=${{
                 title: heading,
                 description: content,
             }}
-        ></sp-coachmark>
+            primary-cta="Next"
+            secondary-cta="Previous"
+            current-step="2"
+            total-steps="8"
+        >
+            <sp-action-menu
+                placement="bottom-end"
+                quiet
+                slot="actions"
+                label="More Actions"
+            >
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
+        </sp-coachmark>
     `;
 };
 
@@ -245,13 +292,26 @@ export const withShortCut = (): TemplateResult => {
     return html`
         <sp-coachmark
             open
-            primary-cta="Ok"
+            primary-cta="Next"
+            secondary-cta="Previous"
+            current-step="2"
+            total-steps="8"
             shortcut-key="Z"
             .content=${{
-                title: 'Coachmark with Shortcut',
+                title: 'Coachmark Shortcut',
                 description:
                     'This is a Coachmark with nothing but text in it. Kind of lonely in here',
             }}
-        ></sp-coachmark>
+        >
+            <sp-action-menu
+                placement="bottom-end"
+                quiet
+                slot="actions"
+                label="More Actions"
+            >
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
+        </sp-coachmark>
     `;
 };
