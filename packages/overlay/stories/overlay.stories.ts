@@ -1424,10 +1424,13 @@ export const virtualElementDeclaratively = (
         const overlay = document.querySelector(
             'sp-overlay:not([open])'
         ) as Overlay;
-        overlay.triggerElement.updateBoundingClientRect(
-            event.clientX,
-            event.clientY
-        );
+
+        if (overlay.triggerElement instanceof VirtualTrigger) {
+            overlay.triggerElement.updateBoundingClientRect(
+                event.clientX,
+                event.clientY
+            );
+        }
         overlay.willPreventClose = true;
         overlay.open = true;
     };
