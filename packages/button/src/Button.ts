@@ -167,6 +167,8 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (changedProperties.has('disabled')) {
             if (this.pending && !this.disabled) {
                 this.setAttribute('aria-label', this.pendingLabel);
+            } else if (this.pending && this.disabled) {
+                this.setAttribute('aria-label', this.label || '');
             }
         }
     }
