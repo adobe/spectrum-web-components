@@ -419,3 +419,36 @@ export const selfManagedFieldLabel = (): TemplateResult => html`
         <sp-textfield id="input"></sp-textfield>
     </div>
 `;
+
+export const draggable = (): TemplateResult => {
+    const handleDragStart = (event: DragEvent): void => {
+        event.dataTransfer?.setDragImage(
+            event.target as HTMLElement,
+            event.offsetX,
+            event.offsetY
+        );
+    };
+    return html`
+        <sp-button>
+            A simple button that should not be included in the DragImage
+        </sp-button>
+        <div
+            draggable="true"
+            id="draggableElement"
+            @dragstart=${handleDragStart}
+            style="margin-top: 16px; cursor: move; padding: 24px; border: red 1px solid;"
+        >
+            <p>Click and drag me to show DragImage</p>
+            <sp-action-button>
+                Action Button with self managed tooltip
+                <sp-tooltip self-managed placement="bottom">
+                    My Tooltip
+                </sp-tooltip>
+            </sp-action-button>
+        </div>
+    `;
+};
+
+draggable.swc_vrt = {
+    skip: true,
+};
