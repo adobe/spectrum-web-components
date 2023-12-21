@@ -195,6 +195,9 @@ describe('Overlay Trigger - Longpress', () => {
             await elementUpdated(this.el);
             this.el.append(button);
             await elementUpdated(this.el);
+            // Inject synthetic wait to afford for late replacement of <sp-action-button> with <button>
+            await nextFrame();
+            await nextFrame();
 
             let open = oneEvent(this.el, 'sp-opened');
             const rect = button.getBoundingClientRect();

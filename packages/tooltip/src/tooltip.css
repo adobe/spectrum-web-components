@@ -70,3 +70,7 @@ governing permissions and limitations under the License.
     clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
     left: 100%;
 }
+
+sp-overlay:not(:defined) {
+    display: none;
+}
