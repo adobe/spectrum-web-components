@@ -123,6 +123,7 @@ export const timeGranularity = (args: StoryArgs = {}): TemplateResult => {
     args = {
         ...args,
         timeGranularity: args.timeGranularity,
+        selectedDateTime: new Date(2021, 10, 2, 16, 1, 54),
     };
 
     return renderDateTimePicker(
