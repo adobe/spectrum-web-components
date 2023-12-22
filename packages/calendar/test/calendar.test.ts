@@ -105,7 +105,7 @@ describe('Calendar', () => {
 
         await elementUpdated(el);
 
-        const nextBtn = el.shadowRoot.querySelector<HTMLElement>(
+        const prevBtn = el.shadowRoot.querySelector<HTMLElement>(
             '[data-test-id="prev-btn"]'
         );
 
@@ -113,7 +113,7 @@ describe('Calendar', () => {
             '[data-test-id="calendar-title"]'
         );
 
-        nextBtn?.click();
+        prevBtn?.click();
         await elementUpdated(el);
 
         expect(monthYear?.innerHTML).to.contain('January 2022');
