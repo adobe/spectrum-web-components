@@ -162,6 +162,7 @@ export class Calendar extends SpectrumElement {
                     class="spectrum-Calendar-title"
                     aria-live="assertive"
                     aria-atomic="true"
+                    data-test-id="calendar-title"
                 >
                     ${monthAndYear}
                 </div>
@@ -176,6 +177,7 @@ export class Calendar extends SpectrumElement {
                     aria-label="Previous"
                     title="Previous"
                     class="spectrum-Calendar-prevMonth"
+                    data-test-id="prev-btn"
                     ?disabled=${this.disabled}
                     @click=${this.handlePreviousMonth}
                 >
@@ -196,6 +198,7 @@ export class Calendar extends SpectrumElement {
                     aria-label="Next"
                     title="Next"
                     class="spectrum-Calendar-nextMonth"
+                    data-test-id="next-btn"
                     ?disabled=${this.disabled}
                     @click=${this.handleNextMonth}
                 >
