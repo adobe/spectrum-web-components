@@ -15,6 +15,7 @@ import '../sp-calendar.js';
 import { Calendar } from '..';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { CalendarDate } from '@internationalized/date';
+import { spy } from 'sinon';
 
 describe('Calendar', () => {
     testForLitDevWarnings(
@@ -117,5 +118,23 @@ describe('Calendar', () => {
         await elementUpdated(el);
 
         expect(monthYear?.innerHTML).to.contain('January 2022');
+    });
+
+    it('should call "@change" event', async () => {
+        const changeSpy = spy();
+        const currentDate = new CalendarDate(2022, 2, 20);
+        const selectedDay = new CalendarDate(2022, 2, 3);
+        const el = await fixture<Calendar>(
+            html`
+                <sp-calendar .currentDate=${currentDate}></sp-calendar>
+            `
+        );
+
+        el.addEventListener('change', changeSpy);
+        el.handleDayClick(selectedDay);
+
+        await elementUpdated(el);
+
+        expect(changeSpy).to.be.calledOnce;
     });
 });
