@@ -163,7 +163,7 @@
         "gunzip-maybe": "^1.4.2",
         "husky": "^8.0.3",
         "latest-version": "^7.0.0",
-        "lerna": "^6.6.2",
+        "lerna": "^8.0.1",
         "lightningcss": "^1.19.0",
         "lit": "^2.5.0",
         "lit-analyzer": "^1.2.1",
