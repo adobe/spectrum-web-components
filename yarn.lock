@@ -7009,9 +7009,9 @@
   integrity sha512-0gWstKiRHkFPMK5djemxCiANE/UBIFrzX7D/w/P1S0Rw3n0SA5fklog5iYJE6OvN0TsXebHi3Uu1A6KkEPZYFA==
 
 "@spectrum-css/progresscircle@^2.0.65":
-  version "2.0.70"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-2.0.70.tgz#047f4d216956f4a2b442bb5a57064403f7490772"
-  integrity sha512-OUdLPUFaARiHVHjtwXOZFxYQv8Y1Htkhf0687z7qEC8/y8kVXB5cWfVoKaylSGut3PvVWGLokLtbEzCY/UF33w==
+  version "2.0.75"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-2.0.75.tgz#3e176573ec5f613c41f78387619039cc649fce6a"
+  integrity sha512-IV9Y3RkPfpdi/G1qC/TdPpai0NDIsncvpNy8TrsxsAeEl3YUe0JjINXmC/22inJKtMv2j1FatJWqpk3A4fR8NQ==
 
 "@spectrum-css/quickaction@^3.0.83":
   version "3.0.87"
