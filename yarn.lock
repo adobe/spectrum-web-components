@@ -6864,9 +6864,9 @@
   integrity sha512-RG5kSuZtDwh01HcaBD2N541sXdMcd18sTbU13EQpMtoWCi5YwWMqmz1JnfVUx6FwQZZY1ys3KdRY4tL+MMC+lw==
 
 "@spectrum-css/card@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-6.2.1.tgz#8a6d5906483e9b2fd5e3debbc9d61ffee0ec53a0"
-  integrity sha512-piawqolhedkdudq6TOB1PopRvFtFkaOWiDGlscPaHLGD4DsmLSmlFp6YRl/AmmD6vnPQs+mq/EUmNFamzUroAQ==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-6.2.2.tgz#fdc0ac0531985dcce08612bcd4c53d0653c7d416"
+  integrity sha512-w5HehdODHzVO4j5HYkcVRd55Nfp0of9zPu6yRqxZACF9Glnp06Ef/MzLF+XrpuSqXl4jg52ZOENAwrdjWwcFLw==
 
 "@spectrum-css/checkbox@^8.0.3":
   version "8.0.3"
