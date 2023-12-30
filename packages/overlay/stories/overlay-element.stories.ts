@@ -63,12 +63,15 @@ export default {
     },
 };
 
+type WrapperStyleType = 'will-change' | 'container-type';
+
 type Properties = {
     delayed: boolean;
     interaction: 'click' | 'hover' | 'longpress';
     open?: boolean;
     placement?: Placement;
     receivesFocus: 'true' | 'false' | 'auto';
+    style?: WrapperStyleType;
     type?: OverlayTypes;
 };
 
@@ -78,12 +81,23 @@ const Template = ({
     placement,
     type,
     delayed,
+    style,
 }: Properties): TemplateResult => html`
-    <style>
-        .wrapper {
-            will-change: transform;
-        }
-    </style>
+    ${style === 'will-change'
+        ? html`
+              <style>
+                  .wrapper {
+                      will-change: transform;
+                  }
+              </style>
+          `
+        : html`
+              <style>
+                  .wrapper {
+                      container-type: size;
+                  }
+              </style>
+          `}
     <div class="wrapper">
         <sp-action-button id="trigger">Open the overlay</sp-action-button>
         <sp-overlay
@@ -117,6 +131,7 @@ export const modal = (args: Properties): TemplateResult => Template(args);
 modal.args = {
     interaction: 'click',
     placement: 'right',
+    style: 'will-change',
     type: 'modal',
 };
 
@@ -146,6 +161,7 @@ export const click = (args: Properties): TemplateResult => Template(args);
 click.args = {
     interaction: 'click',
     placement: 'right',
+    style: 'container-type' as WrapperStyleType,
     type: 'auto',
 };
 
@@ -153,12 +169,14 @@ export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
     interaction: 'hover',
     placement: 'right',
+    style: 'will-change',
 };
 
 export const longpress = (args: Properties): TemplateResult => Template(args);
 longpress.args = {
     interaction: 'longpress',
     placement: 'right',
+    style: 'container-type',
     type: 'auto',
 };
 
