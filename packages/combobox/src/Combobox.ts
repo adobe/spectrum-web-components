@@ -449,9 +449,6 @@ export class Combobox extends Textfield {
                 this.focused = false;
             }
         });
-        this.updateComplete.then(() => {
-            this.availableOptions = this.options || this.optionEls;
-        });
     }
 
     private _returnItems = (): void => {
@@ -503,6 +500,9 @@ export class Combobox extends Textfield {
             ) {
                 (this.activeDescendent as MenuItem).focused = true;
             }
+        }
+        if (changed.has('options') || changed.has('optionEls')) {
+            this.availableOptions = this.options || this.optionEls;
         }
     }
 
