@@ -21,10 +21,11 @@ import {
 
 import '../sp-combobox.js';
 import '../sp-combobox-item.js';
-import { Combobox, ComboboxItem, ComboboxOption } from '..';
-import { TestableCombobox } from './combobox.test.js';
+import { Combobox, ComboboxOption } from '..';
+import { TestableCombobox } from './index.js';
 import { SpectrumElement, TemplateResult } from '@spectrum-web-components/base';
 import { customElement } from '@spectrum-web-components/base/src/decorators.js';
+import { MenuItem } from '@spectrum-web-components/menu';
 
 const options: ComboboxOption[] = [
     { id: 'thing1', value: 'Abc Thing 1' },
@@ -50,7 +51,6 @@ export class TestEl extends SpectrumElement {
         return html`
             <sp-combobox>
                 <slot></slot>
-                <slot slot="option" name="option"></slot>
             </sp-combobox>
         `;
     }
@@ -71,19 +71,21 @@ describe('Combobox Data', () => {
             html`
                 <sp-combobox>
                     Combobox Test
-                    <sp-combobox-item id="pineapple">
-                        Pineapple
-                    </sp-combobox-item>
-                    <sp-combobox-item id="yuzu">Yuzu</sp-combobox-item>
-                    <sp-combobox-item id="kumquat">Kumquat</sp-combobox-item>
-                    <sp-combobox-item id="lychee">Lychee</sp-combobox-item>
-                    <sp-combobox-item id="durian">Durian</sp-combobox-item>
+                    <sp-menu-item id="pineapple">Pineapple</sp-menu-item>
+                    <sp-menu-item id="yuzu">Yuzu</sp-menu-item>
+                    <sp-menu-item id="kumquat">Kumquat</sp-menu-item>
+                    <sp-menu-item id="lychee">Lychee</sp-menu-item>
+                    <sp-menu-item id="durian">Durian</sp-menu-item>
                 </sp-combobox>
             `
         );
         await elementUpdated(el);
 
-        expect(el.options).to.deep.equal([
+        const processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+        expect(processedOptions).to.deep.equal([
             {
                 id: 'pineapple',
                 value: 'Pineapple',
@@ -113,9 +115,9 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-combobox-item id=${option.id}>
+                            <sp-menu-item id=${option.id}>
                                 ${option.value}
-                            </sp-combobox-item>
+                            </sp-menu-item>
                         `;
                     })}
                 </sp-combobox>
@@ -123,22 +125,31 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        expect(el.options).to.deep.equal(options);
+        let processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
             id: 'another-option',
             value: 'Another Option',
         };
 
-        const item = document.createElement('sp-combobox-item');
+        const item = document.createElement('sp-menu-item');
         item.id = newOption.id;
         item.textContent = newOption.value;
         el.append(item);
 
         await elementUpdated(el);
-        await nextFrame();
 
-        expect(el.options).to.deep.equal([...options, newOption]);
+        processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal([...options, newOption]);
     });
     it('accepts updated value as html', async () => {
         const el = await fixture<TestableCombobox>(
@@ -147,9 +158,9 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-combobox-item id=${option.id}>
+                            <sp-menu-item id=${option.id}>
                                 ${option.value}
-                            </sp-combobox-item>
+                            </sp-menu-item>
                         `;
                     })}
                 </sp-combobox>
@@ -157,7 +168,12 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        expect(el.options).to.deep.equal(options);
+        let processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
             id: 'another-option',
@@ -165,17 +181,24 @@ describe('Combobox Data', () => {
         };
 
         const option1 = el.querySelector(
-            'sp-combobox-item:first-of-type'
-        ) as ComboboxItem;
+            'sp-menu-item:first-of-type'
+        ) as MenuItem;
         option1.textContent = newOption.value;
 
         await elementUpdated(el);
-        await nextFrame();
 
         const newOptions = options.slice();
         newOptions[0].value = newOption.value;
 
-        expect(el.options).to.deep.equal(newOptions);
+        await nextFrame();
+        await nextFrame();
+
+        processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(newOptions);
     });
     it('accepts updated id as html', async () => {
         const el = await fixture<TestableCombobox>(
@@ -184,9 +207,9 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-combobox-item id=${option.id}>
+                            <sp-menu-item id=${option.id}>
                                 ${option.value}
-                            </sp-combobox-item>
+                            </sp-menu-item>
                         `;
                     })}
                 </sp-combobox>
@@ -194,7 +217,12 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        expect(el.options).to.deep.equal(options);
+        let processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
             id: 'another-option',
@@ -202,17 +230,24 @@ describe('Combobox Data', () => {
         };
 
         const option1 = el.querySelector(
-            'sp-combobox-item:first-of-type'
-        ) as ComboboxItem;
+            'sp-menu-item:first-of-type'
+        ) as MenuItem;
         option1.id = newOption.id;
 
         await elementUpdated(el);
-        await nextFrame();
 
         const newOptions = options.slice();
         newOptions[0].id = newOption.id;
 
-        expect(el.options).to.deep.equal(newOptions);
+        await nextFrame();
+        await nextFrame();
+
+        processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(newOptions);
     });
     it('accepts replacement options as html', async () => {
         const el = await fixture<TestableCombobox>(
@@ -221,9 +256,9 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-combobox-item id=${option.id}>
+                            <sp-menu-item id=${option.id}>
                                 ${option.value}
-                            </sp-combobox-item>
+                            </sp-menu-item>
                         `;
                     })}
                 </sp-combobox>
@@ -231,7 +266,12 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        expect(el.options).to.deep.equal(options);
+        let processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
             id: 'another-option',
@@ -239,22 +279,29 @@ describe('Combobox Data', () => {
         };
 
         const option1 = el.querySelector(
-            'sp-combobox-item:first-of-type'
-        ) as ComboboxItem;
+            'sp-menu-item:first-of-type'
+        ) as MenuItem;
         option1.remove();
-        const item = document.createElement('sp-combobox-item');
+        const item = document.createElement('sp-menu-item');
         item.id = newOption.id;
         item.textContent = newOption.value;
         el.insertAdjacentElement('afterbegin', item);
 
         await elementUpdated(el);
-        await nextFrame();
 
         const newOptions = options.slice();
         newOptions[0].id = newOption.id;
         newOptions[0].value = newOption.value;
 
-        expect(el.options).to.deep.equal(newOptions);
+        await nextFrame();
+        await nextFrame();
+
+        processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(options);
     });
     it('accepts options through slots', async () => {
         const test = await fixture<TestableCombobox>(
@@ -263,9 +310,9 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-combobox-item id=${option.id}>
+                            <sp-menu-item id=${option.id}>
                                 ${option.value}
-                            </sp-combobox-item>
+                            </sp-menu-item>
                         `;
                     })}
                 </combobox-slot-test-el>
@@ -275,20 +322,27 @@ describe('Combobox Data', () => {
         await elementUpdated(test);
         await elementUpdated(el);
 
-        await waitUntil(() => !!el.options?.length);
+        await waitUntil(() => {
+            return !!el.optionEls?.length;
+        });
 
-        expect(el.options).to.deep.equal(options);
+        const processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(options);
     });
-    it('accepts adding through slots', async () => {
+    it('accepts adding through slots', async function () {
         const test = await fixture<TestableCombobox>(
             html`
                 <combobox-slot-test-el>
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-combobox-item id=${option.id}>
+                            <sp-menu-item id=${option.id}>
                                 ${option.value}
-                            </sp-combobox-item>
+                            </sp-menu-item>
                         `;
                     })}
                 </combobox-slot-test-el>
@@ -298,16 +352,23 @@ describe('Combobox Data', () => {
         await elementUpdated(test);
         await elementUpdated(el);
 
-        await waitUntil(() => !!el.options?.length);
+        await waitUntil(() => {
+            return !!el.optionEls?.length;
+        });
 
-        expect(el.options).to.deep.equal(options);
+        let processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+
+        expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
             id: 'another-option',
             value: 'Another Option',
         };
 
-        const item = document.createElement('sp-combobox-item');
+        const item = document.createElement('sp-menu-item');
         item.id = newOption.id;
         item.textContent = newOption.value;
         test.append(item);
@@ -315,6 +376,14 @@ describe('Combobox Data', () => {
         await elementUpdated(test);
         await elementUpdated(el);
 
-        expect(el.options).to.deep.equal([...options, newOption]);
+        await waitUntil(() => {
+            return el.availableOptions?.length === 5;
+        });
+
+        processedOptions = el.availableOptions.map(({ id, value }) => ({
+            id,
+            value,
+        }));
+        expect(processedOptions).to.deep.equal([...options, newOption]);
     });
 });
