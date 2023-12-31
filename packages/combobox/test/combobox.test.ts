@@ -24,7 +24,7 @@ import '../sp-combobox-item.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import type { Theme } from '@spectrum-web-components/theme';
-import { Combobox, ComboboxItem, ComboboxOption } from '..';
+import { ComboboxOption } from '..';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -40,11 +40,7 @@ import {
     findAccessibilityNode,
 } from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
-
-export type TestableCombobox = Combobox & {
-    activeDescendent: ComboboxOption;
-    availableOptions: ComboboxOption[];
-};
+import { TestableCombobox, testActiveElement } from './index.js';
 
 const comboboxFixture = async (): Promise<TestableCombobox> => {
     const options: ComboboxOption[] = [
@@ -65,17 +61,6 @@ const comboboxFixture = async (): Promise<TestableCombobox> => {
     const el = test.querySelector('sp-combobox') as unknown as TestableCombobox;
 
     return el;
-};
-
-export const testActiveElement = (
-    el: TestableCombobox,
-    testId: string
-): void => {
-    expect(el.activeDescendent?.id).to.equal(testId);
-    const activeElement = el.shadowRoot.querySelector(
-        `#${el.activeDescendent.id}-sr`
-    ) as ComboboxItem;
-    expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };
 
 describe('Combobox', () => {
