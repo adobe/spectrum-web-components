@@ -10,6 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { expect } from '@open-wc/testing';
+import { Combobox, ComboboxItem, ComboboxOption } from '..';
+
 export const countryList = [
     'Afghanistan',
     'Albania',
@@ -266,3 +269,19 @@ export const comboboxOptions = countryList.map((value, index) => ({
     id: index.toString(),
     value: value,
 }));
+
+export type TestableCombobox = Combobox & {
+    activeDescendent: ComboboxOption;
+    availableOptions: ComboboxOption[];
+};
+
+export const testActiveElement = (
+    el: TestableCombobox,
+    testId: string
+): void => {
+    expect(el.activeDescendent?.id).to.equal(testId);
+    const activeElement = el.shadowRoot.querySelector(
+        `#${el.activeDescendent.id}-sr`
+    ) as ComboboxItem;
+    expect(activeElement.getAttribute('aria-selected')).to.equal('true');
+};
