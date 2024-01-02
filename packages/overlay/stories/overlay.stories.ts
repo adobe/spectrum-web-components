@@ -229,7 +229,12 @@ export const Default = (args: Properties): TemplateResult => template(args);
 
 export const accordion = (): TemplateResult => {
     return html`
-        <overlay-trigger type="modal" placement="right">
+        <overlay-trigger type="modal" placement="top-start">
+            <style>
+                sp-button {
+                    margin-top: 70vh;
+                }
+            </style>
             <sp-button variant="primary" slot="trigger">
                 Open overlay w/ accordion
             </sp-button>
