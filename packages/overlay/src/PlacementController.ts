@@ -103,13 +103,22 @@ export class PlacementController implements ReactiveController {
         this.options = options;
         if (!target || !options) return;
 
-        const cleanup = autoUpdate(
+        const cleanupAncestorResize = autoUpdate(
+            options.trigger,
+            target,
+            this.closeForAncestorUpdate,
+            {
+                ancestorResize: false,
+                elementResize: false,
+                layoutShift: false,
+            }
+        );
+        const cleanupElementResize = autoUpdate(
             options.trigger,
             target,
             this.updatePlacement,
             {
-                elementResize: false,
-                layoutShift: false,
+                ancestorScroll: false,
             }
         );
         this.cleanup = () => {
@@ -126,23 +135,26 @@ export class PlacementController implements ReactiveController {
                     { once: true }
                 );
             });
-            cleanup();
+            cleanupAncestorResize();
+            cleanupElementResize();
         };
     }
 
     allowPlacementUpdate = false;
 
-    updatePlacement = (): void => {
+    closeForAncestorUpdate = (): void => {
         if (
             !this.allowPlacementUpdate &&
             this.options.type !== 'modal' &&
             this.cleanup
         ) {
             this.target.dispatchEvent(new Event('close', { bubbles: true }));
-            return;
         }
-        this.computePlacement();
         this.allowPlacementUpdate = false;
+    };
+
+    updatePlacement = (): void => {
+        this.computePlacement();
     };
 
     async computePlacement(): Promise<void> {
@@ -196,7 +208,6 @@ export class PlacementController implements ReactiveController {
                     Object.assign(target.style, {
                         maxWidth: `${Math.floor(availableWidth)}px`,
                         maxHeight: appliedHeight,
-                        height: appliedHeight,
                     });
                 },
             }),
@@ -228,10 +239,12 @@ export class PlacementController implements ReactiveController {
 
         target.setAttribute('actual-placement', placement);
         this.host.elements?.forEach((element) => {
-            this.originalPlacements.set(
-                element,
-                element.getAttribute('placement') as Placement
-            );
+            if (!this.originalPlacements.has(element)) {
+                this.originalPlacements.set(
+                    element,
+                    element.getAttribute('placement') as Placement
+                );
+            }
             element.setAttribute('placement', placement);
         });
 

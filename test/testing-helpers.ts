@@ -136,7 +136,7 @@ export function ignoreResizeObserverLoopError(
         globalErrorHandler = window.onerror;
         addEventListener('error', (error) => {
             console.error('Uncaught global error:', error);
-            if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
+            if (error.message?.match?.(/ResizeObserver loop/)) {
                 return;
             } else {
                 globalErrorHandler?.(error);

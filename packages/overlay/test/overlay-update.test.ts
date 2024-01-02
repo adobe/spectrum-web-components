@@ -13,9 +13,13 @@ import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 import { AccordionItem } from '@spectrum-web-components/accordion/src/AccordionItem.js';
 import { OverlayTrigger } from '../src/OverlayTrigger.js';
 import { accordion } from '../stories/overlay.stories.js';
-import { fixture } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    ignoreResizeObserverLoopError,
+} from '../../../test/testing-helpers.js';
 
 describe('sp-update-overlays event', () => {
+    ignoreResizeObserverLoopError(before, after);
     it('updates overlay height', async () => {
         const el = await fixture<OverlayTrigger>(accordion());
         const container = el.querySelector('sp-popover') as HTMLElement;
