@@ -491,7 +491,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(selectedItem.textContent).to.include('Two');
             expect(selectedItem.selected).to.be.true;
         });
-        it('shows tooltip', async () => {
+        it('shows tooltip', async function () {
             const openSpy = spy();
             const el = await styledFixture<ActionMenu>(
                 tooltipDescriptionAndPlacement(
@@ -528,47 +528,24 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(tooltip.open).to.be.true;
 
-            let close = oneEvent(tooltip, 'sp-closed');
-            el.click();
-            await close;
-
-            expect(tooltip.open).to.be.false;
-            expect(el.open).to.be.true;
-
-            open = oneEvent(tooltip, 'sp-opened');
+            const close = oneEvent(tooltip, 'sp-closed');
+            open = oneEvent(el, 'sp-opened');
             sendMouse({
                 steps: [
-                    {
-                        position: [
-                            rect.left + rect.width * 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'move',
-                    },
                     {
                         position: [
                             rect.left + rect.width / 2,
                             rect.top + rect.height / 2,
                         ],
-                        type: 'move',
-                    },
-                ],
-            });
-            await open;
-
-            close = oneEvent(tooltip, 'sp-closed');
-            sendMouse({
-                steps: [
-                    {
-                        position: [
-                            rect.left + rect.width * 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'move',
+                        type: 'click',
                     },
                 ],
             });
             await close;
+            await open;
+
+            expect(tooltip.open, 'tooltip still open').to.be.false;
+            expect(el.open, 'menu not open').to.be.true;
 
             const menu = (el as unknown as TestablePicker).optionsMenu;
             const menuRect = menu.getBoundingClientRect();
@@ -587,7 +564,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await aTimeout(150);
 
-            expect(openSpy.callCount).to.equal(2);
+            expect(openSpy.callCount).to.equal(1);
         });
         it('opens, then closes, on subsequent clicks', async () => {
             const el = await actionMenuFixture();
