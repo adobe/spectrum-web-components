@@ -32,6 +32,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import { isWebKit } from '@spectrum-web-components/shared';
 
@@ -160,7 +161,7 @@ describe('Submenu', () => {
         expect(rootChanged.withArgs('Has submenu').calledOnce, 'root changed')
             .to.be.true;
     });
-    it('closes deep tree on selection', async () => {
+    it('closes deep tree on selection', async function () {
         const rootChanged = spy();
         const submenuChanged = spy();
         const subSubmenuChanged = spy();
@@ -239,11 +240,11 @@ describe('Submenu', () => {
         const item2BoundingRect = item2.getBoundingClientRect();
 
         opened = oneEvent(item2, 'sp-opened');
-        // Click the submenu item to open a submenu
+        // Move to the submenu item to open a submenu
         sendMouse({
             steps: [
                 {
-                    type: 'click',
+                    type: 'move',
                     position: [
                         item2BoundingRect.left + item2BoundingRect.width / 2,
                         item2BoundingRect.top + item2BoundingRect.height / 2,
@@ -257,7 +258,18 @@ describe('Submenu', () => {
 
         const closed = oneEvent(rootItem, 'sp-closed');
         // click to select and close
-        itemC.click();
+        const itemCBoundingRect = itemC.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        itemCBoundingRect.left + itemCBoundingRect.width / 2,
+                        itemCBoundingRect.top + itemCBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
         await closed;
 
         expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be

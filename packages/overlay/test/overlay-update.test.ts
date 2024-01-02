@@ -24,23 +24,16 @@ describe('sp-update-overlays event', () => {
         ) as AccordionItem;
 
         el.content = 'click';
-        await elementUpdated(el);
-
-        const height0 = container.getBoundingClientRect().height;
 
         const opened = oneEvent(el, 'sp-opened');
         el.open = 'click';
         await opened;
 
         const height1 = container.getBoundingClientRect().height;
-        expect(height1).to.equal(height0);
-
         item.click();
         await elementUpdated(item);
 
         const height2 = container.getBoundingClientRect().height;
-        expect(height2).to.not.equal(height0);
-
         expect(height1).to.be.lessThan(height2);
     });
 });

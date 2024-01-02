@@ -491,7 +491,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(selectedItem.textContent).to.include('Two');
             expect(selectedItem.selected).to.be.true;
         });
-        it('shows tooltip', async () => {
+        it('shows tooltip', async function () {
             const openSpy = spy();
             const el = await styledFixture<ActionMenu>(
                 tooltipDescriptionAndPlacement(
@@ -512,7 +512,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await elementUpdated(overlay);
 
             expect(overlay.triggerElement === el.button).to.be.true;
-            const open = oneEvent(tooltip, 'sp-opened');
+            let open = oneEvent(tooltip, 'sp-opened');
             sendMouse({
                 steps: [
                     {
@@ -529,7 +529,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(tooltip.open).to.be.true;
 
             const close = oneEvent(tooltip, 'sp-closed');
-            await sendMouse({
+            open = oneEvent(el, 'sp-opened');
+            sendMouse({
                 steps: [
                     {
                         position: [
@@ -541,9 +542,10 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 ],
             });
             await close;
+            await open;
 
-            expect(tooltip.open).to.be.false;
-            expect(el.open).to.be.true;
+            expect(tooltip.open, 'tooltip still open').to.be.false;
+            expect(el.open, 'menu not open').to.be.true;
 
             const menu = (el as unknown as TestablePicker).optionsMenu;
             const menuRect = menu.getBoundingClientRect();

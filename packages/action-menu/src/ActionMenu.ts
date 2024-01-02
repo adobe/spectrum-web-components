@@ -88,6 +88,9 @@ export class ActionMenu extends ObserveSlotPresence(
     }
 
     protected override render(): TemplateResult {
+        if (this.tooltipEl) {
+            this.tooltipEl.disabled = this.open;
+        }
         return html`
             <sp-action-button
                 aria-describedby=${DESCRIPTION_ID}
