@@ -7128,6 +7128,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.44.tgz#8741691bba8d8035158b60343e480b737c57868a"
   integrity sha512-2vZwF0Hj9XUPomb0hhG8T6+qjUG3/dPkqYX9j3RA8D/zgwqDATqnkU0v7weRGTq8KWrGN9C1GK7a7V+GRjkM8w==
 
+"@spectrum-css/ui-icons@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/ui-icons/-/ui-icons-1.1.0.tgz#cd3e36c63b4a586366c8b9624438455013e306e3"
+  integrity sha512-1p6ksMSPdFUHXj5BiAE8XF1WnmqHTCG54AGOBLRWgUYwoaKMSYdAo9ArmUzF4HWWzKJWJG2u5pL9nB5NmlJPlw==
+
 "@spectrum-css/underlay@^3.0.3":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-3.0.6.tgz#9fac662925e81e06633078936f7fcd4b923e7ea1"

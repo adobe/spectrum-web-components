@@ -61,6 +61,8 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
 
+    private cachedAriaLabel: string | null = null;
+
     public override click(): void {
         if (this.pending) {
             return;
@@ -152,23 +154,32 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         changedProperties: PropertyValues<this>
     ): void {
         super.willUpdate(changedProperties);
+
         if (changedProperties.has('pending')) {
-            if (this.pending) {
+            if (
+                this.pending &&
+                this.pendingLabel !== this.getAttribute('aria-label')
+            ) {
                 if (!this.disabled) {
+                    this.cachedAriaLabel = this.getAttribute('aria-label');
                     this.setAttribute('aria-label', this.pendingLabel);
                 }
-            } else if (
-                changedProperties.get('pending') !== undefined &&
-                !this.pending
-            ) {
-                this.setAttribute('aria-label', this.label || '');
+            } else if (this.cachedAriaLabel) {
+                this.setAttribute('aria-label', this.cachedAriaLabel);
             }
         }
+
         if (changedProperties.has('disabled')) {
-            if (this.pending && !this.disabled) {
-                this.setAttribute('aria-label', this.pendingLabel);
-            } else if (this.pending && this.disabled) {
-                this.setAttribute('aria-label', this.label || '');
+            if (!this.disabled) {
+                if (
+                    this.pending &&
+                    this.pendingLabel !== this.getAttribute('aria-label')
+                ) {
+                    this.cachedAriaLabel = this.getAttribute('aria-label');
+                    this.setAttribute('aria-label', this.pendingLabel);
+                }
+            } else if (this.disabled && this.cachedAriaLabel) {
+                this.setAttribute('aria-label', this.cachedAriaLabel);
             }
         }
     }
@@ -179,6 +190,14 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         // apply one manually when a consumer has not applied one themselves.
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
+        }
+    }
+
+    protected override updated(changed: PropertyValues): void {
+        super.updated(changed);
+
+        if (this.cachedAriaLabel === null) {
+            this.cachedAriaLabel = this.getAttribute('label') || null;
         }
     }
 
