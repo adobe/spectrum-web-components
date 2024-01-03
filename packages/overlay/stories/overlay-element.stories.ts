@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -19,6 +20,7 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
@@ -63,12 +65,15 @@ export default {
     },
 };
 
+type WrapperStyleType = 'will-change' | 'container-type';
+
 type Properties = {
     delayed: boolean;
     interaction: 'click' | 'hover' | 'longpress';
     open?: boolean;
     placement?: Placement;
     receivesFocus: 'true' | 'false' | 'auto';
+    style?: WrapperStyleType;
     type?: OverlayTypes;
 };
 
@@ -78,12 +83,23 @@ const Template = ({
     placement,
     type,
     delayed,
+    style,
 }: Properties): TemplateResult => html`
-    <style>
-        .wrapper {
-            will-change: transform;
-        }
-    </style>
+    ${style === 'will-change'
+        ? html`
+              <style>
+                  .wrapper {
+                      will-change: transform;
+                  }
+              </style>
+          `
+        : html`
+              <style>
+                  .wrapper {
+                      container-type: size;
+                  }
+              </style>
+          `}
     <div class="wrapper">
         <sp-action-button id="trigger">Open the overlay</sp-action-button>
         <sp-overlay
@@ -93,21 +109,23 @@ const Template = ({
             placement=${ifDefined(placement)}
             offset="-10"
         >
-            <sp-popover dialog ?delayed=${delayed}>
-                <p>
-                    Content goes here.
-                    ${type === 'modal' || type === 'page'
-                        ? html`
-                              Or, a link,
-                              <sp-link
-                                  href="https://opensource.adobe.com/spectrum-web-components"
-                              >
-                                  Spectrum Web Components
-                              </sp-link>
-                              .
-                          `
-                        : ''}
-                </p>
+            <sp-popover ?delayed=${delayed}>
+                <sp-dialog size="s" no-divider>
+                    <p>
+                        Content goes here.
+                        ${type === 'modal' || type === 'page'
+                            ? html`
+                                  Or, a link,
+                                  <sp-link
+                                      href="https://opensource.adobe.com/spectrum-web-components"
+                                  >
+                                      Spectrum Web Components
+                                  </sp-link>
+                                  .
+                              `
+                            : ''}
+                    </p>
+                </sp-dialog>
             </sp-popover>
         </sp-overlay>
     </div>
@@ -117,6 +135,7 @@ export const modal = (args: Properties): TemplateResult => Template(args);
 modal.args = {
     interaction: 'click',
     placement: 'right',
+    style: 'will-change',
     type: 'modal',
 };
 
@@ -146,11 +165,42 @@ export const click = (args: Properties): TemplateResult => Template(args);
 click.args = {
     interaction: 'click',
     placement: 'right',
+    style: 'container-type' as WrapperStyleType,
     type: 'auto',
 };
 
 export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
+    interaction: 'hover',
+    placement: 'right',
+    style: 'will-change',
+};
+
+export const hoverTooltip = ({
+    interaction,
+    open,
+    placement,
+    type,
+}: Properties): TemplateResult => html`
+    <style>
+        .wrapper {
+            will-change: transform;
+        }
+    </style>
+    <div class="wrapper">
+        <sp-action-button id="trigger">Open the overlay</sp-action-button>
+        <sp-overlay
+            ?open=${open}
+            trigger="trigger@${interaction}"
+            type=${ifDefined(type)}
+            placement=${ifDefined(placement)}
+            offset="-10"
+        >
+            <sp-tooltip>Tooltip goes here.</sp-tooltip>
+        </sp-overlay>
+    </div>
+`;
+hoverTooltip.args = {
     interaction: 'hover',
     placement: 'right',
 };
@@ -159,6 +209,7 @@ export const longpress = (args: Properties): TemplateResult => Template(args);
 longpress.args = {
     interaction: 'longpress',
     placement: 'right',
+    style: 'container-type',
     type: 'auto',
 };
 
@@ -183,7 +234,11 @@ export const receivesFocus = ({
         placement=${ifDefined(placement)}
         .receivesFocus=${receivesFocus}
     >
-        <a href="https://example.com">Click Content</a>
+        <sp-popover>
+            <sp-dialog size="s" no-divider>
+                <a href="https://example.com">Click Content</a>
+            </sp-dialog>
+        </sp-popover>
     </sp-overlay>
 `;
 receivesFocus.args = {
@@ -240,13 +295,17 @@ export const all = ({ delayed }: Properties): TemplateResult => html`
         Open the overlay
     </sp-action-button>
     <sp-overlay trigger="trigger@click" type="auto" placement="right">
-        <sp-popover dialog>Click content</sp-popover>
+        <sp-popover>
+            <sp-dialog size="s" no-divider>Click content</sp-dialog>
+        </sp-popover>
     </sp-overlay>
     <sp-overlay ?delayed=${delayed} trigger="trigger@hover" type="hint">
         <sp-tooltip>Hover content</sp-tooltip>
     </sp-overlay>
     <sp-overlay trigger="trigger@longpress" type="auto" placement="right">
-        <sp-popover dialog>Longpress content</sp-popover>
+        <sp-popover>
+            <sp-dialog size="s" no-divider>Longpress content</sp-dialog>
+        </sp-popover>
     </sp-overlay>
 `;
 

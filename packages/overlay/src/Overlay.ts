@@ -883,7 +883,6 @@ export class Overlay extends OverlayFeatures {
     }
 
     public override manuallyKeepOpen(): void {
-        super.manuallyKeepOpen();
         this.open = true;
         this.placementController.allowPlacementUpdate = true;
         this.manageOpen(false);
