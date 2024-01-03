@@ -17,12 +17,14 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import {
     shiftTabEvent,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 type TestableButtonType = {
@@ -346,7 +348,6 @@ describe('Button', () => {
                     href="test_url"
                     target="_blank"
                     aria-label="test"
-                    label="clickable"
                     pending-label="Pending Button"
                 >
                     Click me
@@ -376,6 +377,56 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el.getAttribute('aria-label')).to.equal('test');
     });
+
+    it('updates pending label accessibly', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url" target="_blank">Button</sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        el.pending = true;
+        await elementUpdated(el);
+
+        await nextFrame();
+
+        type NamedNode = { name: string };
+        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            children: NamedNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Pending'
+            ),
+            '`Pending` is the label text'
+        ).to.not.be.null;
+
+        expect(el.pending).to.be.true;
+
+        // remove pending state
+        el.pending = false;
+        await elementUpdated(el);
+
+        await nextFrame();
+
+        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            children: NamedNode[];
+        };
+
+        // check label returns to previous value
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Button'
+            ),
+            '`Button` is the label text'
+        ).to.not.be.null;
+
+        expect(el.pending).to.be.false;
+    });
+
     it('manages tabIndex while disabled', async () => {
         const el = await fixture<Button>(
             html`

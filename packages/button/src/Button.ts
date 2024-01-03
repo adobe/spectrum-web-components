@@ -154,7 +154,6 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         changedProperties: PropertyValues<this>
     ): void {
         super.willUpdate(changedProperties);
-
         if (changedProperties.has('pending')) {
             if (
                 this.pending &&
@@ -166,20 +165,24 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 }
             } else if (this.cachedAriaLabel) {
                 this.setAttribute('aria-label', this.cachedAriaLabel);
+            } else if (this.cachedAriaLabel === '') {
+                this.removeAttribute('aria-label');
             }
         }
 
         if (changedProperties.has('disabled')) {
-            if (!this.disabled) {
-                if (
-                    this.pending &&
-                    this.pendingLabel !== this.getAttribute('aria-label')
-                ) {
+            if (
+                !this.disabled &&
+                this.pendingLabel !== this.getAttribute('aria-label')
+            ) {
+                if (this.pending) {
                     this.cachedAriaLabel = this.getAttribute('aria-label');
                     this.setAttribute('aria-label', this.pendingLabel);
                 }
-            } else if (this.disabled && this.cachedAriaLabel) {
+            } else if (this.cachedAriaLabel) {
                 this.setAttribute('aria-label', this.cachedAriaLabel);
+            } else if (this.cachedAriaLabel == '') {
+                this.removeAttribute('aria-label');
             }
         }
     }
@@ -197,7 +200,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         super.updated(changed);
 
         if (this.cachedAriaLabel === null) {
-            this.cachedAriaLabel = this.getAttribute('label') || null;
+            this.cachedAriaLabel = this.getAttribute('label') || '';
         }
     }
 
