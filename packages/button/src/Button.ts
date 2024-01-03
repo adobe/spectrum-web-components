@@ -150,43 +150,6 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         return this.treatment === 'outline';
     }
 
-    protected override willUpdate(
-        changedProperties: PropertyValues<this>
-    ): void {
-        super.willUpdate(changedProperties);
-        if (changedProperties.has('pending')) {
-            if (
-                this.pending &&
-                this.pendingLabel !== this.getAttribute('aria-label')
-            ) {
-                if (!this.disabled) {
-                    this.cachedAriaLabel = this.getAttribute('aria-label');
-                    this.setAttribute('aria-label', this.pendingLabel);
-                }
-            } else if (this.cachedAriaLabel) {
-                this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (this.cachedAriaLabel === '') {
-                this.removeAttribute('aria-label');
-            }
-        }
-
-        if (changedProperties.has('disabled')) {
-            if (
-                !this.disabled &&
-                this.pendingLabel !== this.getAttribute('aria-label')
-            ) {
-                if (this.pending) {
-                    this.cachedAriaLabel = this.getAttribute('aria-label');
-                    this.setAttribute('aria-label', this.pendingLabel);
-                }
-            } else if (this.cachedAriaLabel) {
-                this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (this.cachedAriaLabel == '') {
-                this.removeAttribute('aria-label');
-            }
-        }
-    }
-
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         // There is no Spectrum design context for an `<sp-button>` without a variant
@@ -199,16 +162,38 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
 
-        // Cache the aria-label from the label attribute if it exists
-        // cachedAriaLabel equals to '' if the component has no label
-        if (this.cachedAriaLabel === null) {
-            this.cachedAriaLabel = this.getAttribute('label') || '';
+        if (changed.has('pending')) {
+            if (
+                this.pending &&
+                this.pendingLabel !== this.getAttribute('aria-label')
+            ) {
+                if (!this.disabled) {
+                    this.cachedAriaLabel =
+                        this.getAttribute('aria-label') || '';
+                    this.setAttribute('aria-label', this.pendingLabel);
+                }
+            } else if (!this.pending && this.cachedAriaLabel) {
+                this.setAttribute('aria-label', this.cachedAriaLabel);
+            } else if (!this.pending && this.cachedAriaLabel === '') {
+                this.removeAttribute('aria-label');
+            }
         }
 
-        // If the button had the pending attribute set before it was upgraded the aria-label get overwritten in ButtonBase updated
-        // This ensures that the pendingLabel is set as the aria-label if the pending attribute is set before the button is upgraded
-        if (this.pending && !this.disabled) {
-            this.setAttribute('aria-label', this.pendingLabel);
+        if (changed.has('disabled')) {
+            if (
+                !this.disabled &&
+                this.pendingLabel !== this.getAttribute('aria-label')
+            ) {
+                if (this.pending) {
+                    this.cachedAriaLabel =
+                        this.getAttribute('aria-label') || '';
+                    this.setAttribute('aria-label', this.pendingLabel);
+                }
+            } else if (this.disabled && this.cachedAriaLabel) {
+                this.setAttribute('aria-label', this.cachedAriaLabel);
+            } else if (this.disabled && this.cachedAriaLabel == '') {
+                this.removeAttribute('aria-label');
+            }
         }
     }
 
