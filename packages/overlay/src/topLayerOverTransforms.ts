@@ -85,6 +85,14 @@ export const topLayerOverTransforms = (): Middleware => ({
                     css.transform !== 'none' ||
                     // the `translate` property
                     css.translate !== 'none' ||
+                    // the `containerType` property
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    (css.containerType
+                        ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          css.containerType !== 'normal'
+                        : false) ||
                     // the `backdropFilter` property
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
