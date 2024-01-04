@@ -61,7 +61,7 @@
         "@spectrum-web-components/opacity-checkerboard": "^0.40.2"
     },
     "devDependencies": {
-        "@spectrum-css/colorloupe": "^4.1.18"
+        "@spectrum-css/colorloupe": "^4.1.28"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

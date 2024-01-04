@@ -90,10 +90,6 @@ dialog:modal {
     position: static;
 }
 
-::slotted(sp-tooltip) {
-    --swc-tooltip-margin: 0;
-}
-
 /**
  * Offset the transition displacement from the trigger edge by
  * padding the equivelent distance off of the opposite edge.

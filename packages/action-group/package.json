@@ -64,7 +64,7 @@
         "@spectrum-web-components/reactive-controllers": "^0.40.2"
     },
     "devDependencies": {
-        "@spectrum-css/actiongroup": "^4.0.7"
+        "@spectrum-css/actiongroup": "^4.1.9"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

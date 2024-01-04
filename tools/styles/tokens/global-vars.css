@@ -106,8 +106,12 @@
     --spectrum-coach-mark-pagination-color: var(--spectrum-gray-600);
     --spectrum-color-handle-inner-border-color: var(--spectrum-black);
     --spectrum-color-handle-inner-border-opacity: 0.42;
+    --spectrum-color-handle-outer-border-color: var(--spectrum-black);
     --spectrum-color-handle-outer-border-opacity: var(
         --spectrum-color-handle-inner-border-opacity
+    );
+    --spectrum-color-handle-drop-shadow-color: var(
+        --spectrum-drop-shadow-color
     );
     --spectrum-floating-action-button-drop-shadow-color: var(
         --spectrum-transparent-black-300

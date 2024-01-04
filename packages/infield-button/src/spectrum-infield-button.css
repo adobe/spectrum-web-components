@@ -48,6 +48,7 @@ governing permissions and limitations under the License.
     --spectrum-infield-button-icon-color-key-focus: var(
         --spectrum-neutral-content-color-key-focus
     );
+    --spectrum-infield-button-fill-justify-content: center;
 }
 :host([disabled]) {
     --mod-infield-button-background-color: var(
@@ -296,28 +297,24 @@ governing permissions and limitations under the License.
         var(--spectrum-infield-button-icon-color-down)
     );
 }
-:host(.focus-visible) .fill,
-:host(:focus) .fill {
+:host(.focus-visible) .fill {
     background-color: var(
         --mod-infield-button-background-color-key-focus,
         var(--spectrum-infield-button-background-color-key-focus)
     );
 }
-:host(:focus) .fill,
 :host(:focus-visible) .fill {
     background-color: var(
         --mod-infield-button-background-color-key-focus,
         var(--spectrum-infield-button-background-color-key-focus)
     );
 }
-:host(.focus-visible) ::slotted(*),
-:host(:focus) ::slotted(*) {
+:host(.focus-visible) ::slotted(*) {
     color: var(
         --mod-infield-button-icon-color-key-focus,
         var(--spectrum-infield-button-icon-color-key-focus)
     );
 }
-:host(:focus) ::slotted(*),
 :host(:focus-visible) ::slotted(*) {
     color: var(
         --mod-infield-button-icon-color-key-focus,
@@ -327,7 +324,10 @@ governing permissions and limitations under the License.
 .fill {
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: var(
+        --mod-infield-button-fill-justify-content,
+        var(--spectrum-infield-button-fill-justify-content)
+    );
     transition: border-color var(--spectrum-global-animation-duration-100)
         ease-in-out;
 }
@@ -422,6 +422,20 @@ governing permissions and limitations under the License.
     );
 }
 :host([block='end']) .fill {
+    border-block-end-width: var(
+        --mod-infield-button-stacked-bottom-border-block-end-width,
+        var(
+            --mod-infield-button-border-width,
+            var(--spectrum-infield-button-border-width)
+        )
+    );
+    border-end-end-radius: var(
+        --mod-infield-button-stacked-bottom-border-radius-end-end,
+        var(
+            --mod-infield-button-border-radius,
+            var(--spectrum-infield-button-border-radius)
+        )
+    );
     border-end-start-radius: var(
         --mod-infield-button-stacked-bottom-border-radius-end-start,
         var(--spectrum-infield-button-stacked-bottom-border-radius-end-start)

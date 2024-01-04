@@ -34,14 +34,13 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult,
     dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await fixture<Theme>(html`
-        <sp-theme dir=${dir} scale="medium" color="dark">
+        <sp-theme dir=${dir} scale="medium" color="light">
             ${story}
             <style>
                 sp-theme {
@@ -547,7 +546,7 @@ describe('Submenu', () => {
         });
         await closed;
     });
-    it('continues to open when mousing between menu item and submenu', async () => {
+    it('continues to open when mousing between menu item and submenu', async function () {
         const clickSpy = spy();
         const el = await styledFixture<Menu>(
             html`
@@ -593,6 +592,13 @@ describe('Submenu', () => {
                 },
             ],
         });
+        // Wait for the overlay system to position the submenu before measuring it's position and moving to it.
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         await nextFrame();
         await nextFrame();
         const subItemBoundingRect = subItem.getBoundingClientRect();
@@ -845,10 +851,6 @@ describe('Submenu', () => {
     });
 
     it('closes back to the first overlay without a `root` when clicking away', async function () {
-        if (isWebKit()) {
-            // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
-            this.skip();
-        }
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
@@ -979,10 +981,6 @@ describe('Submenu', () => {
     });
 
     it('closes decendent menus when Menu Item in ancestor is clicked', async function () {
-        if (isWebKit()) {
-            // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
-            this.skip();
-        }
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
