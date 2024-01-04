@@ -104,7 +104,7 @@ export class Combobox extends Textfield {
         this.focusElement.click();
     }
 
-    public onComboboxKeydown(event: KeyboardEvent): void {
+    public handleComboboxKeydown(event: KeyboardEvent): void {
         if (event.altKey && event.code === 'ArrowDown') {
             this.open = true;
         } else if (event.code === 'ArrowDown') {
@@ -217,7 +217,7 @@ export class Combobox extends Textfield {
         Overlay.update();
     }
 
-    public onComboboxInput({
+    public handleComboboxInput({
         target,
     }: Event & { target: HTMLInputElement }): void {
         // Element data.
@@ -310,7 +310,8 @@ export class Combobox extends Textfield {
     protected override onBlur(event: FocusEvent): void {
         if (
             event.relatedTarget &&
-            this.contains(event.relatedTarget as HTMLElement)
+            (this.contains(event.relatedTarget as HTMLElement) ||
+                this.shadowRoot.contains(event.relatedTarget as HTMLElement))
         ) {
             return;
         }
@@ -335,8 +336,8 @@ export class Combobox extends Textfield {
                 autocomplete="off"
                 @click=${this.toggleOpen}
                 ?focused=${this.focused || this.open}
-                @input=${this.onComboboxInput}
-                @keydown=${this.onComboboxKeydown}
+                @input=${this.handleComboboxInput}
+                @keydown=${this.handleComboboxKeydown}
                 id="input"
                 class="input"
                 role="combobox"
@@ -422,6 +423,10 @@ export class Combobox extends Textfield {
                                         id="${option.id}"
                                         ?focused=${this.activeDescendent?.id ===
                                         option.id}
+                                        aria-selected=${this.activeDescendent
+                                            ?.id === option.id
+                                            ? 'true'
+                                            : 'false'}
                                         .value=${option.value}
                                     >
                                         ${option.value}
@@ -483,7 +488,7 @@ export class Combobox extends Textfield {
         if (changed.has('open')) {
             this.manageListOverlay();
         }
-        if (!this.focused) {
+        if (!this.focused && this.open) {
             this.open = false;
         }
         if (changed.has('value')) {
