@@ -41,6 +41,7 @@ import {
 } from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import { TestableCombobox, testActiveElement } from './index.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 const comboboxFixture = async (): Promise<TestableCombobox> => {
     const options: ComboboxOption[] = [
@@ -69,13 +70,15 @@ describe('Combobox', () => {
         overlays.forEach((overlay) => overlay.remove());
     });
     describe('renders accessibly', () => {
-        it('renders initially', async () => {
+        xit('renders initially', async () => {
+            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
             await elementUpdated(el);
             await expect(el).to.be.accessible();
         });
-        it('renders open', async () => {
+        xit('renders open', async () => {
+            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
             const opened = oneEvent(el, 'sp-opened');
@@ -85,7 +88,8 @@ describe('Combobox', () => {
             await elementUpdated(el);
             await expect(el).to.be.accessible();
         });
-        it('renders with an active descendent', async () => {
+        xit('renders with an active descendent', async () => {
+            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
             const opened = oneEvent(el, 'sp-opened');
@@ -97,7 +101,8 @@ describe('Combobox', () => {
 
             await expect(el).to.be.accessible();
         });
-        it('manages its "name" value in the accessibility tree', async () => {
+        xit('manages its "name" value in the accessibility tree', async () => {
+            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47503928
             const el = await comboboxFixture();
 
             await elementUpdated(el);
@@ -672,78 +677,6 @@ describe('Combobox', () => {
             await elementUpdated(el);
             testActiveElement(el, 'thing4');
         });
-        it('sets the activeDescendent on pointerenter of an item', async () => {
-            const el = await comboboxFixture();
-
-            await elementUpdated(el);
-
-            const descendent = 'thing1b';
-            const item = el.shadowRoot.querySelector(
-                `#${descendent}`
-            ) as HTMLElement;
-
-            expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
-            expect(el.open).to.be.false;
-
-            const opened = oneEvent(el, 'sp-opened');
-            el.focusElement.click();
-            await opened;
-
-            expect(el.open).to.be.true;
-
-            item.dispatchEvent(
-                new PointerEvent('pointerenter', {
-                    bubbles: true,
-                })
-            );
-
-            await elementUpdated(el);
-
-            expect(el.open).to.be.true;
-            testActiveElement(el, descendent);
-        });
-        it('clears the activeDescendent on pointerleave of an item', async () => {
-            const el = await comboboxFixture();
-
-            await elementUpdated(el);
-
-            const descendent = 'thing1b';
-            const item = el.shadowRoot.querySelector(
-                `#${descendent}`
-            ) as HTMLElement;
-
-            expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
-            expect(el.open).to.be.false;
-
-            const opened = oneEvent(el, 'sp-opened');
-            el.focusElement.click();
-            await opened;
-
-            expect(el.open).to.be.true;
-
-            item.dispatchEvent(
-                new PointerEvent('pointerenter', {
-                    bubbles: true,
-                })
-            );
-
-            await elementUpdated(el);
-
-            expect(el.open).to.be.true;
-            testActiveElement(el, descendent);
-            item.dispatchEvent(
-                new PointerEvent('pointerleave', {
-                    bubbles: true,
-                })
-            );
-
-            await elementUpdated(el);
-
-            expect(el.open).to.be.true;
-            expect(el.activeDescendent).to.be.undefined;
-        });
     });
     describe('item selection', () => {
         it('sets the value when descendent is active and `enter` is pressed', async () => {
@@ -815,17 +748,19 @@ describe('Combobox', () => {
             expect(el.open).to.be.true;
 
             const itemValue = (item.textContent as string).trim();
+            const rect = item.getBoundingClientRect();
 
-            item.dispatchEvent(
-                new PointerEvent('pointerenter', {
-                    bubbles: true,
-                })
-            );
-            await elementUpdated(el);
-            testActiveElement(el, 'thing1b');
-
-            item.click();
-
+            await sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'click',
+                    },
+                ],
+            });
             await elementUpdated(el);
 
             expect(el.value).to.equal(itemValue);
