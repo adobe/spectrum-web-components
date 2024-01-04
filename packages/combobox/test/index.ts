@@ -281,7 +281,7 @@ export const testActiveElement = (
 ): void => {
     expect(el.activeDescendent?.id).to.equal(testId);
     const activeElement = el.shadowRoot.querySelector(
-        `#${el.activeDescendent.id}-sr`
+        `#${el.activeDescendent.id}`
     ) as ComboboxItem;
     expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };
