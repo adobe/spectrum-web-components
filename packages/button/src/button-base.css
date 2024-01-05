@@ -75,6 +75,7 @@ slot[name='icon']::slotted(img) {
     --spectrum-ui-icon-tshirt-size-width: var(
         --spectrum-alias-ui-icon-cornertriangle-size-75
     );
+    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-s);
 }
 
 :host([size='m']) {
@@ -90,6 +91,7 @@ slot[name='icon']::slotted(img) {
     --spectrum-ui-icon-tshirt-size-width: var(
         --spectrum-alias-ui-icon-cornertriangle-size-100
     );
+    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-m);
 }
 
 :host([size='l']) {
@@ -105,6 +107,7 @@ slot[name='icon']::slotted(img) {
     --spectrum-ui-icon-tshirt-size-width: var(
         --spectrum-alias-ui-icon-cornertriangle-size-200
     );
+    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-l);
 }
 
 :host([size='xl']) {
@@ -120,4 +123,5 @@ slot[name='icon']::slotted(img) {
     --spectrum-ui-icon-tshirt-size-width: var(
         --spectrum-alias-ui-icon-cornertriangle-size-300
     );
+    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-xl);
 }
