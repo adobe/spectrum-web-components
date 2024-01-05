@@ -146,6 +146,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     public set quiet(quiet: boolean) {
         this.treatment = quiet ? 'outline' : 'fill';
     }
+
     public get quiet(): boolean {
         return this.treatment === 'outline';
     }
