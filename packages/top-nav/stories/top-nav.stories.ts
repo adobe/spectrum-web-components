@@ -64,14 +64,15 @@ export const Default = (): TemplateResult => {
 };
 
 export const Selected = (): TemplateResult => {
-    const { href } = location;
+    let { href } = location;
+    href = href.replace(location.search, '');
     /**
      * The location's `href` is leveraged as the value of "Page 3" here
      * so that within the default Storybook UI there can be a `href` attribute
      * driven "selection" that ensures the delivery of a visible selection.
      */
     return html`
-        <sp-top-nav>
+        <sp-top-nav ignore-url-parts="search">
             <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
             <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
                 Page 1
