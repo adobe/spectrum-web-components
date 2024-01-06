@@ -83,21 +83,32 @@ import { Slider } from '@spectrum-web-components/slider';
 ### Filled
 
 ```html
-<sp-slider label="Slider Label" variant="filled"></sp-slider>
+<sp-slider
+    label="Slider Label"
+    max="1"
+    variant="filled"
+    min="0"
+    value=".5"
+    step="0.01"
+></sp-slider>
 <sp-slider
     label="Slider Label - Disabled"
+    max="1"
     variant="filled"
+    min="0"
+    value=".5"
+    step="0.01"
     disabled
 ></sp-slider>
 ```
 
-### Filled Offset
+### Filled Offset with only fill-start
 
 ```html
 <sp-slider
     label="Slider Label"
     max="1"
-    variant="offset"
+    fill-start
     min="0"
     value=".5"
     step="0.01"
@@ -105,13 +116,57 @@ import { Slider } from '@spectrum-web-components/slider';
 <sp-slider
     label="Slider Label"
     max="1"
-    variant="offset"
+    fill-start
     min="0"
     value=".5"
     step="0.01"
     disabled
 ></sp-slider>
 ```
+
+### Filled Offset with fill-start value
+
+```html-live
+<sp-slider
+    id="fill-start-slider"
+    label="Slider Label"
+    max="1"
+    min="0"
+    value=".7"
+    step="0.1"
+></sp-slider>
+<sp-slider
+    label="Slider Label"
+    max="1"
+    min="0"
+    value=".7"
+    step="0.1"
+    disabled
+></sp-slider>
+<script type="module">
+    const initSlider = async () => {
+        const slider = document.querySelector('#fill-start-slider');
+        slider.fillStart = 0.3
+    };
+    customElements.whenDefined('code-example').then(() => {
+            customElements.whenDefined('sp-slider').then(() => {
+                initSlider();
+            });
+        });
+</script>
+```
+
+<script type="module">
+    const initSlider = async () => {
+        const slider = document.querySelector('#fill-start-slider');
+        slider.fillStart = 0.3
+    };
+    customElements.whenDefined('code-example').then(() => {
+            customElements.whenDefined('sp-slider').then(() => {
+                initSlider();
+            });
+        }); 
+</script>
 
 ### Tick
 
