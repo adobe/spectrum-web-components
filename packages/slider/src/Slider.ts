@@ -167,6 +167,8 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property({ type: Boolean, reflect: true, attribute: 'fill-start' })
     public fillStart = false;
 
+    @property({ type: Number })
+    public fillStartPoint: number | undefined;
     /**
      * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
      */
@@ -355,37 +357,54 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    private rangeLength = this.max - this.min;
-    private _startingPoint: number | undefined;
+    private _cachedValue: number | undefined;
 
-    private getOffsetWidth(start: number, end: number): number {
-        const distance = (end > start ? end - start : start - end) * 100;
-        return (distance / this.rangeLength) * 100;
+    /**
+     * @description calculates the fill width
+     * @param fillStartValue
+     * @param currentValue
+     * @param cachedValue
+     * @returns
+     */
+    private getOffsetWidth(
+        fillStartValue: number,
+        currentValue: number,
+        cachedValue: number
+    ): number {
+        const distance =
+            fillStartValue === cachedValue
+                ? Math.abs(currentValue - fillStartValue)
+                : Math.abs(
+                      Math.min(currentValue, cachedValue) - fillStartValue
+                  );
+
+        return (distance / (this.max - this.min)) * 100;
     }
 
     private getOffsetPosition(v: number): number {
-        const val = ((v * 100 - this.min) / this.rangeLength) * 100;
+        const val = ((v - this.min) / (this.max - this.min)) * 100;
         return val;
     }
 
     private renderFillOffset(): TemplateResult {
-        if (!this.fillStart || !this._startingPoint) {
+        if (!this.fillStart || !this.fillStartPoint || !this._cachedValue) {
             return html``;
         }
         return html`
             <div
                 class=${`fill ${
-                    !!(this.value > this._startingPoint) ? 'offset' : ''
+                    !!(this.value > this.fillStartPoint) ? 'offset' : ''
                 }`}
                 style=${styleMap({
                     [this.dir === 'rtl' ? 'right' : 'left']: `${
-                        this.value > this._startingPoint
-                            ? this.getOffsetPosition(this._startingPoint)
+                        this.value > this.fillStartPoint
+                            ? this.getOffsetPosition(this.fillStartPoint)
                             : this.getOffsetPosition(this.value)
                     }%`,
                     width: `${this.getOffsetWidth(
-                        this._startingPoint,
-                        this.value
+                        this.fillStartPoint,
+                        this.value,
+                        this._cachedValue
                     )}%`,
                 })}
             ></div>
@@ -508,7 +527,14 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('value') && changes.has('fillStart')) {
-            this._startingPoint = Number(this.value) + Number(this.min);
+            this._cachedValue = Number(this.value);
+            if (typeof this.fillStart === 'number') {
+                this.fillStartPoint = this.fillStart;
+            } else {
+                this.fillStartPoint =
+                    (Number(this.max) - Number(this.min)) / 2 +
+                    Number(this.min);
+            }
         }
     }
 }

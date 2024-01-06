@@ -152,7 +152,7 @@ export const Filled = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const FilledOffset = (args: StoryArgs = {}): TemplateResult => {
+export const withOnlyFillStart = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -170,6 +170,29 @@ export const FilledOffset = (args: StoryArgs = {}): TemplateResult => {
             </sp-slider>
         </div>
     `;
+};
+
+export const withFillStartValue = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".7"
+                step="0.1"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Slider label
+            </sp-slider>
+        </div>
+    `;
+};
+
+withFillStartValue.args = {
+    fillStart: 0.3,
 };
 
 export const autofocus = (args: StoryArgs = {}): TemplateResult => {
