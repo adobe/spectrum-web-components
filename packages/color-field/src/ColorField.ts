@@ -29,28 +29,58 @@ export class ColorField extends TextfieldBase {
         return [TextfieldBase.styles];
     }
 
-    /*public get value(): string {
-        return this.inputElement.value;
-    }*/
-
-    /*protected handleInput(_event: Event): void {
-        if (this.allowedKeys && this.inputElement.value) {
-            const rgbaRegex = /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(\d*(?:\.\d+)?)\)$/i;
-            if (rgbaRegex.test(this.inputElement.value)) {
-                // Input value is in rgba format
-                //console.log("valid value")
-            } else {
-                // Input value is not in rgba format
-                //console.log("invalid value");
-            }
+    public override set value(value: string) {
+        if (value === this.value) {
+            return;
         }
+        const oldValue = this._value;
+        this._value = value;
+        this.requestUpdate('value', oldValue);
+    }
 
-    }*/
+    public override get value(): string {
+        return this._value;
+    }
+
+    protected override _value = '';
 
     protected override render(): TemplateResult {
         return html`
             <sp-color-handle size="m" color="${this.value}"></sp-color-handle>
             ${super.render()}
         `;
+    }
+
+    protected override checkValidity(): boolean {
+        let validity = super.checkValidity();
+        //console.log(this);
+
+        if (this.inputElement.value) {
+            const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+            const rgbaRegex =
+                /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(\d*(?:\.\d+)?)\)$/i;
+            if (
+                rgbaRegex.test(this.inputElement.value) ||
+                hexColorRegex.test(this.inputElement.value)
+            ) {
+                // Input value is in rgba format
+                //console.log("valid value");
+                validity = true;
+                this.valid = validity;
+                const colorHandle =
+                    this.shadowRoot?.querySelector('sp-color-handle');
+                colorHandle?.setAttribute('color', this.inputElement.value);
+                //console.log(this.valid,"hi");
+            } else {
+                // Input value is not in rgba format
+                //console.log("invalid value");
+                validity = false;
+                this.valid = validity;
+                //console.log(this.valid,"hi");
+            }
+            this.valid = validity;
+            this.invalid = !validity;
+        }
+        return validity;
     }
 }
