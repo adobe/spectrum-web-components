@@ -229,7 +229,12 @@ export const Default = (args: Properties): TemplateResult => template(args);
 
 export const accordion = (): TemplateResult => {
     return html`
-        <overlay-trigger type="modal" placement="right">
+        <overlay-trigger type="modal" placement="top-start">
+            <style>
+                sp-button {
+                    margin-top: 70vh;
+                }
+            </style>
             <sp-button variant="primary" slot="trigger">
                 Open overlay w/ accordion
             </sp-button>
@@ -568,13 +573,13 @@ export const deep = (): TemplateResult => html`
         <sp-popover slot="click-content" direction="bottom" tip>
             <sp-dialog size="s" no-divider>
                 <sp-action-button>
-                    <sp-tooltip self-managed placement="bottom" offset="0">
+                    <sp-tooltip self-managed placement="bottom">
                         My Tooltip 1
                     </sp-tooltip>
                     A
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-tooltip self-managed placement="bottom" offset="0">
+                    <sp-tooltip self-managed placement="bottom">
                         My Tooltip 1
                     </sp-tooltip>
                     B

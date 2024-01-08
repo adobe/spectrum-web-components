@@ -21,3 +21,72 @@ governing permissions and limitations under the License.
         border-color: highlight;
     }
 }
+
+@keyframes show-progress-circle {
+    0% {
+        visibility: hidden;
+    }
+
+    100% {
+        visibility: visible;
+    }
+}
+
+@keyframes hide-icons-label {
+    0% {
+        visibility: visible;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+}
+
+@keyframes update-pending-button-styles {
+    100% {
+        background-color: var(
+            --highcontrast-button-background-color-disabled,
+            var(
+                --mod-button-background-color-disabled,
+                var(--spectrum-button-background-color-disabled)
+            )
+        );
+        border-color: var(
+            --highcontrast-button-border-color-disabled,
+            var(
+                --mod-button-border-color-disabled,
+                var(--spectrum-button-border-color-disabled)
+            )
+        );
+        color: var(
+            --highcontrast-button-content-color-disabled,
+            var(
+                --mod-button-content-color-disabled,
+                var(--spectrum-button-content-color-disabled)
+            )
+        );
+    }
+}
+
+:host([pending]:not([disabled])) {
+    cursor: default;
+    pointer-events: none;
+    animation: update-pending-button-styles 0s var(--pending-delay, 1s) forwards;
+}
+
+sp-progress-circle {
+    display: block;
+    visibility: hidden;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+:host([pending]:not([disabled])) sp-progress-circle {
+    animation: show-progress-circle 0s var(--pending-delay, 1s) forwards;
+}
+
+:host([pending]:not([disabled])) slot[name='icon'],
+:host([pending]:not([disabled])) #label {
+    animation: hide-icons-label 0s var(--pending-delay, 1s) forwards;
+}

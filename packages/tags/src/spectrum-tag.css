@@ -517,7 +517,9 @@ governing permissions and limitations under the License.
         --mod-tag-focus-ring-thickness,
         var(--spectrum-tag-focus-ring-thickness)
     );
-    bottom: calc(
+    content: '';
+    display: inline-block;
+    inset-block-end: calc(
         var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
             var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
             var(
@@ -525,9 +527,23 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-focus-ring-thickness)
             )
     );
-    content: '';
-    display: inline-block;
-    left: calc(
+    inset-block-start: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+    inset-inline-end: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+    inset-inline-start: calc(
         var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
             var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
             var(
@@ -537,22 +553,6 @@ governing permissions and limitations under the License.
     );
     pointer-events: none;
     position: absolute;
-    right: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
-    top: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
 }
 :host(:focus-visible):after,
 :host([focused]):after {
@@ -570,7 +570,9 @@ governing permissions and limitations under the License.
         --mod-tag-focus-ring-thickness,
         var(--spectrum-tag-focus-ring-thickness)
     );
-    bottom: calc(
+    content: '';
+    display: inline-block;
+    inset-block-end: calc(
         var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
             var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
             var(
@@ -578,9 +580,23 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-focus-ring-thickness)
             )
     );
-    content: '';
-    display: inline-block;
-    left: calc(
+    inset-block-start: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+    inset-inline-end: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+    inset-inline-start: calc(
         var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
             var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
             var(
@@ -590,22 +606,6 @@ governing permissions and limitations under the License.
     );
     pointer-events: none;
     position: absolute;
-    right: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
-    top: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
 }
 :host([selected]) {
     background-color: var(

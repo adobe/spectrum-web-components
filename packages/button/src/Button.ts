@@ -12,12 +12,15 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
+    html,
     PropertyValues,
     SizedMixin,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
 export type ButtonStatics = 'white' | 'black';
@@ -49,6 +52,22 @@ export type ButtonTreatments = 'fill' | 'outline';
 export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
+    }
+
+    @property({ type: String, attribute: 'pending-label' })
+    public pendingLabel = 'Pending';
+
+    // pending is the property that consumers can use to set the button into a pending state
+    @property({ type: Boolean, reflect: true, attribute: true })
+    public pending = false;
+
+    private cachedAriaLabel: string | null = null;
+
+    public override click(): void {
+        if (this.pending) {
+            return;
+        }
+        super.click();
     }
 
     /**
@@ -139,5 +158,61 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
+    }
+
+    protected override updated(changed: PropertyValues): void {
+        super.updated(changed);
+
+        if (changed.has('pending')) {
+            if (
+                this.pending &&
+                this.pendingLabel !== this.getAttribute('aria-label')
+            ) {
+                if (!this.disabled) {
+                    this.cachedAriaLabel =
+                        this.getAttribute('aria-label') || '';
+                    this.setAttribute('aria-label', this.pendingLabel);
+                }
+            } else if (!this.pending && this.cachedAriaLabel) {
+                this.setAttribute('aria-label', this.cachedAriaLabel);
+            } else if (!this.pending && this.cachedAriaLabel === '') {
+                this.removeAttribute('aria-label');
+            }
+        }
+
+        if (changed.has('disabled')) {
+            if (
+                !this.disabled &&
+                this.pendingLabel !== this.getAttribute('aria-label')
+            ) {
+                if (this.pending) {
+                    this.cachedAriaLabel =
+                        this.getAttribute('aria-label') || '';
+                    this.setAttribute('aria-label', this.pendingLabel);
+                }
+            } else if (this.disabled && this.cachedAriaLabel) {
+                this.setAttribute('aria-label', this.cachedAriaLabel);
+            } else if (this.disabled && this.cachedAriaLabel == '') {
+                this.removeAttribute('aria-label');
+            }
+        }
+    }
+
+    protected override renderButton(): TemplateResult {
+        return html`
+            ${this.buttonContent}
+            ${when(this.pending, () => {
+                import(
+                    '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+                );
+                return html`
+                    <sp-progress-circle
+                        indeterminate
+                        static="white"
+                        aria-hidden="true"
+                    ></sp-progress-circle>
+                `;
+            })}
+        `;
     }
 }

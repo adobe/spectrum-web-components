@@ -103,7 +103,7 @@ Every icons can be customized via the following options:
 
 ### Extended use cases
 
-The default exports of this package are pre-wrapped via `setCustomTemplateLiteralTag` in the `html` template tag from `lit-html`, and work liek the following::
+The default exports of this package are pre-wrapped via `setCustomTemplateLiteralTag` in the `html` template tag from `lit-html`, and work like the following::
 
 ```js
 import { AbcIcon } from '@spectrum-web-components/icons-workflow';

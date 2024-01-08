@@ -529,6 +529,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+:host .is-disabled,
 :host([disabled]) {
     background-color: var(
         --highcontrast-button-background-color-disabled,

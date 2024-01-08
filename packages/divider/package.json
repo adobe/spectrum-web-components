@@ -60,7 +60,7 @@
         "@spectrum-web-components/base": "^0.40.2"
     },
     "devDependencies": {
-        "@spectrum-css/divider": "^2.1.25"
+        "@spectrum-css/divider": "^2.1.35"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

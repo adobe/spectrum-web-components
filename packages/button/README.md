@@ -285,15 +285,31 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ## States
 
-In addition to the variant, `<sp-button>` elements have a disabled state visual state
-which can be applied by adding the attribute `disabled`. All `<sp-button>`
-variants support this. In addition to affectng the visual state, the `disabled`
-attribute prevents focus and disallows `click` events.
+In addition to the variant, `<sp-button>` elements support two different visual states, disabled and pending, which can be applied by adding the attribute `disabled` or `pending` respectively. All `<sp-button>` variants support these states.
+
+### Disabled
+
+While disabled, `<sp-button>` elements will not respond to click events and will appear faded.
 
 ```html
 <sp-button-group>
     <sp-button variant="primary">Normal</sp-button>
     <sp-button variant="primary" disabled>Disabled</sp-button>
+</sp-button-group>
+```
+
+### Pending
+
+While in pending state, `<sp-button>` elements will not respond to click events and will appear faded with an indeterminent `<sp-progress-circle>`.
+`<sp-button>` elements label and icon will be hidden while in pending state.
+
+Note: `pending` state of the `<sp-button>` element is applied after 1s delay to avoid flashing the pending state for quick actions.
+You can override the delay by adding custom css var `--pending-delay` to your css.
+
+```html
+<sp-button-group>
+    <sp-button variant="primary">Normal</sp-button>
+    <sp-button variant="primary" pending>Pending</sp-button>
 </sp-button-group>
 ```
 

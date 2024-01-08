@@ -284,7 +284,7 @@ class ActionGroupTooltips extends SpectrumElement {
                             ></rect>
                         </svg>
                     </sp-icon>
-                    <sp-tooltip self-managed placement="bottom" offset="0">
+                    <sp-tooltip self-managed placement="bottom">
                         Left align
                     </sp-tooltip>
                 </sp-action-button>
@@ -341,7 +341,7 @@ class ActionGroupTooltips extends SpectrumElement {
                             ></rect>
                         </svg>
                     </sp-icon>
-                    <sp-tooltip self-managed placement="bottom" offset="0">
+                    <sp-tooltip self-managed placement="bottom">
                         Center align
                     </sp-tooltip>
                 </sp-action-button>
@@ -398,7 +398,7 @@ class ActionGroupTooltips extends SpectrumElement {
                             ></rect>
                         </svg>
                     </sp-icon>
-                    <sp-tooltip self-managed placement="bottom" offset="0">
+                    <sp-tooltip self-managed placement="bottom">
                         Right align
                     </sp-tooltip>
                 </sp-action-button>
