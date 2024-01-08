@@ -10,11 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    //CSSResultArray,
+    CSSResultArray,
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
 
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 
 //import styles from './color-field.css.js';
@@ -23,13 +25,32 @@ import { TextfieldBase } from '@spectrum-web-components/textfield';
  * @element sp-color-field
  */
 export class ColorField extends TextfieldBase {
-    // public static override get styles(): CSSResultArray {
-    //     return [styles];
-    // }
+    public static override get styles(): CSSResultArray {
+        return [TextfieldBase.styles];
+    }
+
+    /*public get value(): string {
+        return this.inputElement.value;
+    }*/
+
+    /*protected handleInput(_event: Event): void {
+        if (this.allowedKeys && this.inputElement.value) {
+            const rgbaRegex = /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(\d*(?:\.\d+)?)\)$/i;
+            if (rgbaRegex.test(this.inputElement.value)) {
+                // Input value is in rgba format
+                //console.log("valid value")
+            } else {
+                // Input value is not in rgba format
+                //console.log("invalid value");
+            }
+        }
+
+    }*/
 
     protected override render(): TemplateResult {
         return html`
-            Markup goes here
+            <sp-color-handle size="m" color="${this.value}"></sp-color-handle>
+            ${super.render()}
         `;
     }
 }

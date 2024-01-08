@@ -19,7 +19,26 @@
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
-    "exports": {},
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/ColorField.js": {
+            "development": "./src/ColorField.dev.js",
+            "default": "./src/ColorField.js"
+        },
+        "./src/color-field.css.js": "./src/color-field.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-color-field.js": {
+            "development": "./sp-color-field.dev.js",
+            "default": "./sp-color-field.js"
+        }
+    },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
