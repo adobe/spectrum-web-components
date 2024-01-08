@@ -33,3 +33,4 @@ import { DateTimePicker } from '@spectrum-web-components/date-time-picker';
 -   Complete documentation
 -   Add/Review unit tests
 -   Review https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-datepicker/ - we likely want this to trap the tab order.
+-   Load dependencies lazily when possible
