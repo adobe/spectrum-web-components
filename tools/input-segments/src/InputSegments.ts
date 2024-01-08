@@ -182,20 +182,20 @@ export class InputSegments extends TextfieldBase {
         let createSegments = false;
 
         if (changedProperties.has(languageResolverUpdatedSymbol)) {
-            createSegments = true;
-
-            this.setFormatter();
             this.setNumberParser();
+        }
+
+        if (
+            changedProperties.has(languageResolverUpdatedSymbol) ||
+            changedProperties.has('timeGranularity')
+        ) {
+            createSegments = true;
+            this.setFormatter();
         }
 
         if (changedProperties.has('selectedDateTime')) {
             createSegments = true;
-
             this.setCurrentDateTime();
-        }
-
-        if (changedProperties.has('timeGranularity')) {
-            createSegments = true;
         }
 
         if (createSegments) {
