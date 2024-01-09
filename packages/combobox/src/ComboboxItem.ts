@@ -58,12 +58,6 @@ export class ComboboxItem extends SpectrumElement {
             (this.getRootNode() as ShadowRoot).host?.localName === 'sp-combobox'
         ) {
             return;
-
-            /*
-            <sp-combobox>
-                <sp-combobox-item slot="option"></sp-combobox-item>
-            </sp-combobox>
-            */
         }
         this.slot = 'option';
     }
