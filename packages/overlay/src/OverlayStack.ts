@@ -20,6 +20,8 @@ class OverlayStack {
 
     private pointerdownPath?: EventTarget[];
 
+    private lastOverlay?: Overlay;
+
     private root: HTMLElement = document.body;
 
     stack: Overlay[] = [];
@@ -49,6 +51,7 @@ class OverlayStack {
      */
     handlePointerdown = (event: Event): void => {
         this.pointerdownPath = event.composedPath();
+        this.lastOverlay = this.stack.at(-1);
     };
 
     /**
@@ -64,9 +67,20 @@ class OverlayStack {
         // pointer during the course of the interaction.
         const composedPath = this.pointerdownPath;
         this.pointerdownPath = undefined;
-        const nonAncestorOverlays = this.stack.filter((overlay) => {
+        const lastIndex = this.stack.length - 1;
+        const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
-                (el) => el === overlay || el === overlay?.triggerElement
+                (el) =>
+                    // The Overlay is in the stack
+                    el === overlay ||
+                    // The Overlay trigger is in the stack and the Overlay is a "hint"
+                    (el === overlay?.triggerElement &&
+                        'hint' === overlay?.type) ||
+                    // The last Overlay in the stack is not the last Overlay at `pointerdown` time and has a
+                    // `triggerInteraction` of "longpress", meaning it was opened by this poitner interaction
+                    (i === lastIndex &&
+                        overlay !== this.lastOverlay &&
+                        overlay.triggerInteraction === 'longpress')
             );
             return (
                 !inStack &&
@@ -95,13 +109,13 @@ class OverlayStack {
 
     private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'Escape') return;
+        if (!this.stack.length) return;
         const last = this.stack.at(-1);
         if (last?.type === 'page') {
             event.preventDefault();
             return;
         }
         if (supportsPopover) return;
-        if (!this.stack.length) return;
 
         if (!last) return;
         this.closeOverlay(last);
