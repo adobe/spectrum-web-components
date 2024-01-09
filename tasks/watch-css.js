@@ -16,7 +16,7 @@ import chokidar from 'chokidar';
 import debounce from 'debounce';
 import { processCSS } from './css-tools.js';
 
-const debounceProcessCSS = debounce.debounce(processCSS, 200);
+const debounceProcessCSS = debounce(processCSS, 200);
 
 // One-liner for current directory
 chokidar
