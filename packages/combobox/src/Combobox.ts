@@ -35,6 +35,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { Textfield } from '@spectrum-web-components/textfield';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
@@ -93,6 +94,8 @@ export class Combobox extends Textfield {
      **/
     @property({ type: Array })
     public optionEls: MenuItem[] = [];
+
+    protected tooltipEl?: Tooltip;
 
     // { value: "String thing", id: "string1" }
     public override focus(): void {
@@ -163,6 +166,14 @@ export class Combobox extends Textfield {
                 childList: true,
             });
         });
+    }
+
+    protected handleTooltipSlotchange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.tooltipEl = event.target.assignedElements()[0] as
+            | Tooltip
+            | undefined;
     }
 
     public setOptionsFromSlottedItems(): void {
@@ -337,6 +348,9 @@ export class Combobox extends Textfield {
 
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
+        if (this.tooltipEl) {
+            this.tooltipEl.disabled = this.open;
+        }
         return html`
             ${super.render()}
             <sp-picker-button
@@ -367,7 +381,7 @@ export class Combobox extends Textfield {
                 >
                     <sp-menu
                         @change=${this.handleMenuChange}
-                        tabindex="0"
+                        tabindex="-1"
                         aria-labelledby="label"
                         id="listbox-menu"
                         role="listbox"
@@ -401,6 +415,12 @@ export class Combobox extends Textfield {
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
+            <slot
+                aria-hidden="true"
+                name="tooltip"
+                id="tooltip"
+                @slotchange=${this.handleTooltipSlotchange}
+            ></slot>
         `;
     }
 
