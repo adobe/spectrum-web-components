@@ -35,6 +35,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { Textfield } from '@spectrum-web-components/textfield';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
@@ -47,6 +48,7 @@ export type ComboboxOption = {
 
 /**
  * @element sp-combobox
+ * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
@@ -93,6 +95,8 @@ export class Combobox extends Textfield {
      **/
     @property({ type: Array })
     public optionEls: MenuItem[] = [];
+
+    protected tooltipEl?: Tooltip;
 
     // { value: "String thing", id: "string1" }
     public override focus(): void {
@@ -165,6 +169,14 @@ export class Combobox extends Textfield {
         });
     }
 
+    protected handleTooltipSlotchange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.tooltipEl = event.target.assignedElements()[0] as
+            | Tooltip
+            | undefined;
+    }
+
     public setOptionsFromSlottedItems(): void {
         const elements = this.optionSlot.assignedElements({
             flatten: true,
@@ -223,24 +235,17 @@ export class Combobox extends Textfield {
         this.open = true;
     }
 
-    public handleListPointerenter(event: PointerEvent): void {
-        const descendent = event
-            .composedPath()
-            .find((el) => typeof (el as MenuItem).value !== 'undefined');
-        if (descendent) this.activeDescendent = descendent as MenuItem;
-    }
-
-    public handleListPointerleave(): void {
-        this.activeDescendent = undefined;
-    }
-
-    public handleMenuChange(event: PointerEvent & { target: Menu }): void {
+    protected handleMenuChange(event: PointerEvent & { target: Menu }): void {
         const { target } = event;
         this.value = target.selected[0];
         event.preventDefault();
         this.open = false;
         this._returnItems();
         this.focus();
+    }
+
+    public handleClosed(): void {
+        this.open = false;
     }
 
     public handleOpened(): void {
@@ -259,16 +264,6 @@ export class Combobox extends Textfield {
             this.filterAvailableOptions();
         }
         return super.shouldUpdate(changed);
-    }
-
-    private positionListbox(): void {
-        const targetRect = this.overlay.getBoundingClientRect();
-        const rootRect = this.getBoundingClientRect();
-        this.listbox.style.transform = `translate(${
-            targetRect.x - rootRect.x
-        }px, ${targetRect.y - rootRect.y}px)`;
-        this.listbox.style.height = `${targetRect.height}px`;
-        this.listbox.style.maxHeight = `${targetRect.height}px`;
     }
 
     protected override onBlur(event: FocusEvent): void {
@@ -308,9 +303,7 @@ export class Combobox extends Textfield {
                 type="text"
                 .value=${live(this.displayValue)}
                 tabindex="0"
-                @sp-closed=${() => {
-                    this.open = false;
-                }}
+                @sp-closed=${this.handleClosed}
                 @sp-opened=${this.handleOpened}
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
@@ -337,6 +330,9 @@ export class Combobox extends Textfield {
 
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
+        if (this.tooltipEl) {
+            this.tooltipEl.disabled = this.open;
+        }
         return html`
             ${super.render()}
             <sp-picker-button
@@ -367,7 +363,7 @@ export class Combobox extends Textfield {
                 >
                     <sp-menu
                         @change=${this.handleMenuChange}
-                        tabindex="0"
+                        tabindex="-1"
                         aria-labelledby="label"
                         id="listbox-menu"
                         role="listbox"
@@ -401,6 +397,12 @@ export class Combobox extends Textfield {
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
+            <slot
+                aria-hidden="true"
+                name="tooltip"
+                id="tooltip"
+                @slotchange=${this.handleTooltipSlotchange}
+            ></slot>
         `;
     }
 
@@ -436,9 +438,6 @@ export class Combobox extends Textfield {
         }
         if (!this.focused && this.open) {
             this.open = false;
-        }
-        if (changed.has('value')) {
-            if (this.overlay && this.open) this.positionListbox();
         }
         if (changed.has('activeDescendent')) {
             if (changed.get('activeDescendent')) {
