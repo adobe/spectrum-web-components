@@ -13,14 +13,14 @@ governing permissions and limitations under the License.
 import {
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 
-import '../sp-combobox.js';
-import '../sp-combobox-item.js';
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/combobox/sp-combobox-item.js';
+import { fixture } from '../../../test/testing-helpers.js';
 import { Combobox, ComboboxOption } from '..';
 import { TestableCombobox } from './index.js';
 import { SpectrumElement, TemplateResult } from '@spectrum-web-components/base';

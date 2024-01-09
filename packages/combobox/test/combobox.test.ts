@@ -13,17 +13,13 @@ governing permissions and limitations under the License.
 import {
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 
-import '../sp-combobox.js';
-import '../sp-combobox-item.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import type { Theme } from '@spectrum-web-components/theme';
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/combobox/sp-combobox-item.js';
 import { ComboboxOption } from '..';
 import {
     arrowDownEvent,
@@ -32,16 +28,20 @@ import {
     endEvent,
     enterEvent,
     escapeEvent,
+    fixture,
     homeEvent,
 } from '../../../test/testing-helpers.js';
 import {
     a11ySnapshot,
     executeServerCommand,
     findAccessibilityNode,
+    sendKeys,
 } from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import { TestableCombobox, testActiveElement } from './index.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { withTooltip } from '../stories/combobox.stories.js';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 const comboboxFixture = async (): Promise<TestableCombobox> => {
     const options: ComboboxOption[] = [
@@ -51,15 +51,11 @@ const comboboxFixture = async (): Promise<TestableCombobox> => {
         { id: 'thing4', value: 'Efg Thing 4' },
     ];
 
-    const test = await fixture<Theme>(
+    const el = await fixture<TestableCombobox>(
         html`
-            <sp-theme theme="spectrum" color="light" scale="medium">
-                <sp-combobox .options=${options}>Combobox</sp-combobox>
-            </sp-theme>
+            <sp-combobox .options=${options}>Combobox</sp-combobox>
         `
     );
-
-    const el = test.querySelector('sp-combobox') as unknown as TestableCombobox;
 
     return el;
 };
@@ -975,5 +971,49 @@ describe('Combobox', () => {
             expect(el.activeDescendent).to.be.undefined;
             expect(el.open).to.be.true;
         });
+    });
+
+    it('closes tooltip on button blur', async () => {
+        const el = await fixture<TestableCombobox>(withTooltip());
+        await elementUpdated(el);
+        const input1 = document.createElement('input');
+        const input2 = document.createElement('input');
+        const tooltipEl = el.querySelector('sp-tooltip') as Tooltip;
+        el.insertAdjacentElement('beforebegin', input1);
+        el.insertAdjacentElement('afterend', input2);
+        input1.focus();
+        expect(document.activeElement === input1).to.be.true;
+        const tooltipOpened = oneEvent(el, 'sp-opened');
+        await sendKeys({
+            press: 'Tab',
+        });
+        await tooltipOpened;
+        expect(
+            document.activeElement === el,
+            `Actually, ${document.activeElement?.localName}`
+        ).to.be.true;
+        expect(tooltipEl.open).to.be.true;
+        expect(el.open).to.be.false;
+        expect(el.focused).to.be.true;
+
+        const menuOpen = oneEvent(el, 'sp-opened');
+        const tooltipClosed = oneEvent(el, 'sp-closed');
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await menuOpen;
+        await tooltipClosed;
+        expect(document.activeElement === el).to.be.true;
+        expect(tooltipEl.open).to.be.false;
+        expect(el.open).to.be.true;
+
+        const menuClosed = oneEvent(el, 'sp-closed');
+        await sendKeys({
+            press: 'Tab',
+        });
+        await menuClosed;
+        expect(document.activeElement === el).to.be.false;
+        expect(tooltipEl.open).to.be.false;
+        expect(el.open).to.be.false;
     });
 });

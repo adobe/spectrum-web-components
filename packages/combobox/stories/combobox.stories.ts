@@ -13,8 +13,9 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { ComboboxOption } from '..';
-import '../sp-combobox.js';
-import '../sp-combobox-item.js';
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/combobox/sp-combobox-item.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 export default {
     title: 'Combobox',
@@ -156,6 +157,28 @@ export const kerningLightDOM = (): TemplateResult => {
                     </sp-menu-item>
                 `
             )}
+        </sp-combobox>
+    `;
+};
+
+export const withTooltip = (): TemplateResult => {
+    return html`
+        <sp-combobox
+            .autocomplete=${'none'}
+            id="combobox-6"
+            label="Kerning"
+            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+        >
+            ${optionsL.map(
+                (option) => html`
+                    <sp-menu-item id=${option.id} value=${option.value}>
+                        ${option.value}
+                    </sp-menu-item>
+                `
+            )}
+            <sp-tooltip slot="tooltip" self-managed placement="right" open>
+                Kerning
+            </sp-tooltip>
         </sp-combobox>
     `;
 };
