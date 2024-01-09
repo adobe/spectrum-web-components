@@ -234,24 +234,17 @@ export class Combobox extends Textfield {
         this.open = true;
     }
 
-    public handleListPointerenter(event: PointerEvent): void {
-        const descendent = event
-            .composedPath()
-            .find((el) => typeof (el as MenuItem).value !== 'undefined');
-        if (descendent) this.activeDescendent = descendent as MenuItem;
-    }
-
-    public handleListPointerleave(): void {
-        this.activeDescendent = undefined;
-    }
-
-    public handleMenuChange(event: PointerEvent & { target: Menu }): void {
+    protected handleMenuChange(event: PointerEvent & { target: Menu }): void {
         const { target } = event;
         this.value = target.selected[0];
         event.preventDefault();
         this.open = false;
         this._returnItems();
         this.focus();
+    }
+
+    public handleClosed(): void {
+        this.open = false;
     }
 
     public handleOpened(): void {
@@ -270,16 +263,6 @@ export class Combobox extends Textfield {
             this.filterAvailableOptions();
         }
         return super.shouldUpdate(changed);
-    }
-
-    private positionListbox(): void {
-        const targetRect = this.overlay.getBoundingClientRect();
-        const rootRect = this.getBoundingClientRect();
-        this.listbox.style.transform = `translate(${
-            targetRect.x - rootRect.x
-        }px, ${targetRect.y - rootRect.y}px)`;
-        this.listbox.style.height = `${targetRect.height}px`;
-        this.listbox.style.maxHeight = `${targetRect.height}px`;
     }
 
     protected override onBlur(event: FocusEvent): void {
@@ -319,9 +302,7 @@ export class Combobox extends Textfield {
                 type="text"
                 .value=${live(this.displayValue)}
                 tabindex="0"
-                @sp-closed=${() => {
-                    this.open = false;
-                }}
+                @sp-closed=${this.handleClosed}
                 @sp-opened=${this.handleOpened}
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
@@ -456,9 +437,6 @@ export class Combobox extends Textfield {
         }
         if (!this.focused && this.open) {
             this.open = false;
-        }
-        if (changed.has('value')) {
-            if (this.overlay && this.open) this.positionListbox();
         }
         if (changed.has('activeDescendent')) {
             if (changed.get('activeDescendent')) {
