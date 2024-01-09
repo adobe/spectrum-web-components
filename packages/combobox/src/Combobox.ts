@@ -153,12 +153,9 @@ export class Combobox extends Textfield {
      * Convert the flattened array of assigned elements of `slot[name='option']` to
      * an array of `ComboboxOptions` for use in rendering options in the shadow DOM.s
      **/
-    public onSlotchange(): void {
+    public handleSlotchange(): void {
         this.setOptionsFromSlottedItems();
         this.itemObserver.disconnect();
-        // const comboboxItems = this.optionSlot.assignedElements({
-        //     flatten: true,
-        // }) as ComboboxItem[];
         this.optionEls.map((item) => {
             this.itemObserver.observe(item, {
                 attributes: true,
@@ -246,29 +243,8 @@ export class Combobox extends Textfield {
         this.focus();
     }
 
-    // public onOverlayScroll = (): void => {
-    //     const overlayMenu = this.overlay.children[0] as HTMLElement;
-    //     const menu = this.listbox.children[0] as HTMLElement;
-    //     menu.scroll(overlayMenu.scrollLeft, overlayMenu.scrollTop);
-    // };
-
-    public onOpened(): void {
-        // this.overlayObserver.observe(
-        //     this.overlay.parentElement as HTMLElement,
-        //     {
-        //         attributes: true,
-        //         // attributeFilter: [ "style" ],
-        //     }
-        // );
-        // const menu = this.overlay.children[0] as HTMLElement;
-        // menu.addEventListener('scroll', this.onOverlayScroll);
-        // this.overlay.addEventListener(
-        //     'transitionend',
-        //     () => {
-        //         this.positionListbox();
-        //     },
-        //     { once: true }
-        // );
+    public handleOpened(): void {
+        // Do stuff here?
     }
 
     public toggleOpen(): void {
@@ -284,18 +260,6 @@ export class Combobox extends Textfield {
         }
         return super.shouldUpdate(changed);
     }
-
-    // private positionListboxFromEntries(_entries: MutationRecord[]): void {
-    //     this.positionListbox();
-    //     this.overlay.addEventListener(
-    //         'transitionend',
-    //         () => {
-    //             if (!this.open) return;
-    //             this.positionListbox();
-    //         },
-    //         { once: true }
-    //     );
-    // }
 
     private positionListbox(): void {
         const targetRect = this.overlay.getBoundingClientRect();
@@ -347,7 +311,7 @@ export class Combobox extends Textfield {
                 @sp-closed=${() => {
                     this.open = false;
                 }}
-                @sp-opened=${this.onOpened}
+                @sp-opened=${this.handleOpened}
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
                 aria-label=${ifDefined(this.label || this.placeholder)}
@@ -410,10 +374,6 @@ export class Combobox extends Textfield {
                         style="min-width: ${width}px;"
                         size=${this.size}
                     >
-                        <!-- <sp-menu-item id="test-1">Test 1</sp-menu-item>
-                        <sp-menu-item id="test-2">Test 2</sp-menu-item>
-                        <slot id="o3-slot" name="o3-slot" @slotchange=${this
-                            .onSlotchange}></slot> -->
                         ${repeat(
                             this.availableOptions,
                             (option) => option.id,
@@ -434,7 +394,10 @@ export class Combobox extends Textfield {
                                 `;
                             }
                         )}
-                        <slot hidden @slotchange=${this.onSlotchange}></slot>
+                        <slot
+                            hidden
+                            @slotchange=${this.handleSlotchange}
+                        ></slot>
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
@@ -463,24 +426,7 @@ export class Combobox extends Textfield {
     protected async manageListOverlay(): Promise<void> {
         if (this.open) {
             this.focused = true;
-            // this._returnItems = await openOverlay(
-            //     this.shadowRoot.querySelector('#input') as HTMLElement,
-            //     'click',
-            //     this.overlay,
-            //     {
-            //         offset: 0,
-            //         placement: 'bottom-start',
-            //         receivesFocus: 'false',
-            //     }
-            // );
             this.focus();
-        } else {
-            // this._returnItems();
-            // this._returnItems = () => {
-            //     return;
-            // };
-            // this.overlayObserver.disconnect();
-            // this.overlay.removeEventListener('scroll', this.onOverlayScroll);
         }
     }
 
@@ -527,11 +473,6 @@ export class Combobox extends Textfield {
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        // if (!this.overlayObserver) {
-        //     this.overlayObserver = new MutationObserver(
-        //         this.positionListboxFromEntries.bind(this)
-        //     );
-        // }
         if (!this.itemObserver) {
             this.itemObserver = new MutationObserver(
                 this.setOptionsFromSlottedItems.bind(this)
@@ -540,43 +481,10 @@ export class Combobox extends Textfield {
     }
 
     public override disconnectedCallback(): void {
-        // this.overlayObserver.disconnect();
         this.itemObserver.disconnect();
         this.open = false;
         super.disconnectedCallback();
     }
 
-    // private overlayObserver!: MutationObserver;
     private itemObserver!: MutationObserver;
 }
-
-/**
- * 
-    <sp-combobox>
-        #shadow-root
-    this.shadowRoot.querySelector('#listbox').children;
-    this.shadowRoot.querySelectorAll('li');
-            <div class="spectrum-Textfield spectrum-InputGroup-textfield">
-                <input type="text" placeholder="Type here" name="field" value="" class="spectrum-Textfield-input spectrum-InputGroup-input">
-            </div>
-            <button class="spectrum-Picker spectrum-Picker--sizeM spectrum-InputGroup-button" tabindex="-1" aria-haspopup="true">
-                <svg class="spectrum-Icon spectrum-UIIcon-ChevronDown100 spectrum-Picker-menuIcon spectrum-InputGroup-icon" focusable="false" aria-hidden="true">
-                    <use xlink:href="#spectrum-css-icon-Chevron100" />
-                </svg>
-            </button>
-    </sp-conbobox>
- * 
- */
-
-/**
- *
- * Public API
- * popover requirement
- *
- * Aria-Spectrum consumption
- *
- * visual delivery - Spectrum CSS
- *
- *
- * does test:watch build the plugins correctly?
- */
