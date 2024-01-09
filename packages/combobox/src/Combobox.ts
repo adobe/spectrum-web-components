@@ -48,6 +48,7 @@ export type ComboboxOption = {
 
 /**
  * @element sp-combobox
+ * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
