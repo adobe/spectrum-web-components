@@ -56,9 +56,6 @@ export class Coachmark extends LikeAnchor(Popover) {
         imageAlt?: string;
     };
 
-    @property({ type: Number })
-    public offset = 0;
-
     @property({ attribute: 'shortcut-key' })
     private shortcutKey?: string;
 
