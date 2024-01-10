@@ -30,11 +30,7 @@ import { LanguageResolutionController } from '@spectrum-web-components/reactive-
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './meter.css.js';
 
-export const meterVariants = [
-    'positive',
-    'notice',
-    'negative',
-];
+export const meterVariants = ['positive', 'notice', 'negative'];
 
 export type MeterVariants = typeof meterVariants[number];
 

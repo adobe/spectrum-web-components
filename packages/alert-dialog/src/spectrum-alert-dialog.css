@@ -65,11 +65,11 @@ governing permissions and limitations under the License.
     display: flex;
     inline-size: -moz-fit-content;
     inline-size: fit-content;
+    max-block-size: inherit;
     max-inline-size: var(
         --mod-alert-dialog-max-width,
         var(--spectrum-alert-dialog-max-width)
     );
-    max-height: inherit;
     min-inline-size: var(
         --mod-alert-dialog-min-width,
         var(--spectrum-alert-dialog-min-width)
@@ -90,7 +90,7 @@ governing permissions and limitations under the License.
         --mod-alert-dialog-icon-size,
         var(--spectrum-alert-dialog-icon-size)
     );
-    margin-left: var(
+    margin-inline-start: var(
         --mod-alert-dialog-title-to-icon,
         var(--spectrum-alert-dialog-title-to-icon)
     );

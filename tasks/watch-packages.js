@@ -15,7 +15,7 @@ import { buildPackage, watchFiles } from './ts-tools.js';
 import chokidar from 'chokidar';
 import debounce from 'debounce';
 
-const debounceBuildTSFiles = debounce.debounce(buildPackage, 200);
+const debounceBuildTSFiles = debounce(buildPackage, 200);
 
 const watchTS = async () => {
     const files = await watchFiles();
