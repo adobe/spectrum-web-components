@@ -46,16 +46,18 @@ export class ColorField extends TextfieldBase {
 
     protected override render(): TemplateResult {
         return html`
-            <sp-color-handle size="m" color="${this.value}"></sp-color-handle>
+            <sp-color-handle size="m" color=""></sp-color-handle>
             ${super.render()}
         `;
     }
 
-    protected override checkValidity(): boolean {
+    public override checkValidity(): boolean {
         let validity = super.checkValidity();
         //console.log(this);
 
         if (this.inputElement.value) {
+            const colorHandle =
+                this.shadowRoot?.querySelector('sp-color-handle');
             const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
             const rgbaRegex =
                 /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(\d*(?:\.\d+)?)\)$/i;
@@ -64,19 +66,15 @@ export class ColorField extends TextfieldBase {
                 hexColorRegex.test(this.inputElement.value)
             ) {
                 // Input value is in rgba format
-                //console.log("valid value");
                 validity = true;
                 this.valid = validity;
-                const colorHandle =
-                    this.shadowRoot?.querySelector('sp-color-handle');
                 colorHandle?.setAttribute('color', this.inputElement.value);
                 //console.log(this.valid,"hi");
             } else {
-                // Input value is not in rgba format
-                //console.log("invalid value");
+                // Input value is not in rgba | Hex format
                 validity = false;
                 this.valid = validity;
-                //console.log(this.valid,"hi");
+                colorHandle?.setAttribute('color', '');
             }
             this.valid = validity;
             this.invalid = !validity;
