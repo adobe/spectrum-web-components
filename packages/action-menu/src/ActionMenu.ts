@@ -107,7 +107,6 @@ export class ActionMenu extends ObserveSlotPresence(
                 @blur=${this.handleButtonBlur}
                 @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
-                @click=${this.handleButtonClick}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,

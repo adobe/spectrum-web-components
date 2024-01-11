@@ -17,17 +17,13 @@ import {
     aTimeout,
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
+import { fixture } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
-import { Theme } from '@spectrum-web-components/theme';
-import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -35,55 +31,11 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 
-async function styledFixture<T extends Element>(
-    story: TemplateResult,
-    dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
-): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme dir=${dir} scale="medium" color="light">
-            ${story}
-            <style>
-                sp-theme {
-                    --spectrum-global-animation-duration-100: 50ms;
-                    --spectrum-global-animation-duration-200: 50ms;
-                    --spectrum-global-animation-duration-300: 50ms;
-                    --spectrum-global-animation-duration-400: 50ms;
-                    --spectrum-global-animation-duration-500: 50ms;
-                    --spectrum-global-animation-duration-600: 50ms;
-                    --spectrum-global-animation-duration-700: 50ms;
-                    --spectrum-global-animation-duration-800: 50ms;
-                    --spectrum-global-animation-duration-900: 50ms;
-                    --spectrum-global-animation-duration-1000: 50ms;
-                    --spectrum-global-animation-duration-2000: 50ms;
-                    --spectrum-global-animation-duration-4000: 50ms;
-                    --spectrum-animation-duration-0: 50ms;
-                    --spectrum-animation-duration-100: 50ms;
-                    --spectrum-animation-duration-200: 50ms;
-                    --spectrum-animation-duration-300: 50ms;
-                    --spectrum-animation-duration-400: 50ms;
-                    --spectrum-animation-duration-500: 50ms;
-                    --spectrum-animation-duration-600: 50ms;
-                    --spectrum-animation-duration-700: 50ms;
-                    --spectrum-animation-duration-800: 50ms;
-                    --spectrum-animation-duration-900: 50ms;
-                    --spectrum-animation-duration-1000: 50ms;
-                    --spectrum-animation-duration-2000: 50ms;
-                    --spectrum-animation-duration-4000: 50ms;
-                    --spectrum-coachmark-animation-indicator-ring-duration: 50ms;
-                    --swc-test-duration: 1ms;
-                }
-            </style>
-        </sp-theme>
-    `);
-    document.documentElement.dir = dir;
-    return test.children[0] as T;
-}
-
 describe('Submenu', () => {
     it('selects - pointer', async () => {
         const rootChanged = spy();
         const submenuChanged = spy();
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu
                     @change=${(event: Event & { target: Menu }) => {
@@ -121,7 +73,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.false;
 
         const opened = oneEvent(rootItem, 'sp-opened');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -142,7 +94,7 @@ describe('Submenu', () => {
         const item2BoundingRect = item2.getBoundingClientRect();
 
         const closed = oneEvent(rootItem, 'sp-closed');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'click',
@@ -155,8 +107,10 @@ describe('Submenu', () => {
         });
         await closed;
 
-        expect(submenuChanged.withArgs('Two').calledOnce, 'submenu changed').to
-            .be.true;
+        expect(
+            submenuChanged.withArgs('Two').calledOnce,
+            `submenu changed ${submenuChanged.callCount} times`
+        ).to.be.true;
         expect(rootChanged.withArgs('Has submenu').calledOnce, 'root changed')
             .to.be.true;
     });
@@ -164,7 +118,7 @@ describe('Submenu', () => {
         const rootChanged = spy();
         const submenuChanged = spy();
         const subSubmenuChanged = spy();
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu
                     @change=${(event: Event & { target: Menu }) => {
@@ -219,7 +173,7 @@ describe('Submenu', () => {
 
         let opened = oneEvent(rootItem, 'sp-opened');
         // Hover the root menu item to open a submenu
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -240,7 +194,7 @@ describe('Submenu', () => {
 
         opened = oneEvent(item2, 'sp-opened');
         // Move to the submenu item to open a submenu
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -298,7 +252,7 @@ describe('Submenu', () => {
         it(`selects - keyboard: ${testData.dir}`, async function () {
             const rootChanged = spy();
             const submenuChanged = spy();
-            const el = await styledFixture<Menu>(
+            const el = await fixture<Menu>(
                 html`
                     <sp-menu
                         id="base"
@@ -397,7 +351,7 @@ describe('Submenu', () => {
         });
     });
     it('closes on `pointerleave`', async () => {
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu>
                     <sp-menu-item class="root">
@@ -424,7 +378,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.false;
 
         const opened = oneEvent(rootItem, 'sp-opened');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -442,7 +396,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.true;
 
         const closed = oneEvent(rootItem, 'sp-closed');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -460,7 +414,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.false;
     });
     it('stays open when mousing off menu item and back again', async () => {
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu>
                     <sp-menu-item class="root">
@@ -531,7 +485,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.true;
 
         const closed = oneEvent(rootItem, 'sp-closed');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -548,7 +502,7 @@ describe('Submenu', () => {
     });
     it('continues to open when mousing between menu item and submenu', async function () {
         const clickSpy = spy();
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu>
                     <sp-menu-item class="root">
@@ -623,7 +577,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.true;
 
         const closed = oneEvent(rootItem, 'sp-closed');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'click',
@@ -642,7 +596,7 @@ describe('Submenu', () => {
     });
     it('stays open when mousing between menu item and submenu', async () => {
         const clickSpy = spy();
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu>
                     <sp-menu-item class="root">
@@ -712,7 +666,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.true;
 
         const closed = oneEvent(rootItem, 'sp-closed');
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'click',
@@ -730,7 +684,7 @@ describe('Submenu', () => {
         expect(clickSpy.callCount).to.equal(1);
     });
     it('not opens if disabled', async () => {
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu>
                     <sp-menu-item disabled class="root">
@@ -756,7 +710,7 @@ describe('Submenu', () => {
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
         expect(rootItem.open).to.be.false;
 
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -775,7 +729,7 @@ describe('Submenu', () => {
         expect(rootItem.open).to.be.false;
     });
     it('closes all decendent submenus when closing a ancestor menu', async () => {
-        const el = await styledFixture<ActionMenu>(html`
+        const el = await fixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
                 <sp-menu-group role="none" id="group">
@@ -851,7 +805,7 @@ describe('Submenu', () => {
     });
 
     it('closes back to the first overlay without a `root` when clicking away', async function () {
-        const el = await styledFixture<ActionMenu>(html`
+        const el = await fixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
                 <sp-menu-group role="none">
@@ -916,7 +870,7 @@ describe('Submenu', () => {
             oneEvent(rootMenu1, 'sp-closed'),
             oneEvent(el, 'sp-closed'),
         ]);
-        sendMouse({
+        await sendMouse({
             steps: [
                 {
                     type: 'click',
@@ -928,7 +882,7 @@ describe('Submenu', () => {
     });
 
     it('closes decendent menus when Menu Item in ancestor without a submenu is pointerentered', async () => {
-        const el = await styledFixture<ActionMenu>(html`
+        const el = await fixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
                 <sp-menu-group role="none">
@@ -981,7 +935,7 @@ describe('Submenu', () => {
     });
 
     it('closes decendent menus when Menu Item in ancestor is clicked', async function () {
-        const el = await styledFixture<ActionMenu>(html`
+        const el = await fixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
                 <sp-menu-group role="none">
@@ -1022,6 +976,7 @@ describe('Submenu', () => {
                 </sp-menu-group>
             </sp-action-menu>
         `);
+        await nextFrame();
         await nextFrame();
 
         const rootMenu1 = el.querySelector('#submenu-item-1') as MenuItem;
@@ -1077,7 +1032,7 @@ describe('Submenu', () => {
                 },
             ],
         });
-        const el = await styledFixture<Menu>(
+        const el = await fixture<Menu>(
             html`
                 <sp-menu>
                     <sp-menu-item class="root-1">
