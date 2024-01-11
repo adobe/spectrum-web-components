@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-color-field.js';
-import { ColorField } from '..';
+//import '../sp-color-field.js';
+import '@spectrum-web-components/color-field/sp-color-field.js';
+import { ColorField } from '@spectrum-web-components/color-field';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorField', () => {
