@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/button",
-    "version": "0.40.2",
+    "version": "0.40.3",
     "publishConfig": {
         "access": "public"
     },
@@ -82,12 +82,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.2",
-        "@spectrum-web-components/clear-button": "^0.40.2",
-        "@spectrum-web-components/close-button": "^0.40.2",
-        "@spectrum-web-components/icon": "^0.40.2",
-        "@spectrum-web-components/icons-ui": "^0.40.2",
-        "@spectrum-web-components/shared": "^0.40.2"
+        "@spectrum-web-components/base": "^0.40.3",
+        "@spectrum-web-components/clear-button": "^0.40.3",
+        "@spectrum-web-components/close-button": "^0.40.3",
+        "@spectrum-web-components/icon": "^0.40.3",
+        "@spectrum-web-components/icons-ui": "^0.40.3",
+        "@spectrum-web-components/shared": "^0.40.3"
     },
     "devDependencies": {
         "@spectrum-css/button": "^11.0.18"
