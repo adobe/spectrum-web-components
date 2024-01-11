@@ -813,7 +813,8 @@ describe('sp-overlay', () => {
 
                 const opened = oneEvent(el, 'sp-opened');
                 el.open = true;
-                await opened;
+                let { overlay } = await opened;
+                expect(el === overlay).to.be.true;
 
                 await sendMouse({
                     steps: [
@@ -830,7 +831,8 @@ describe('sp-overlay', () => {
 
                 const closed = oneEvent(el, 'sp-closed');
                 el.open = false;
-                await closed;
+                ({ overlay } = await closed);
+                expect(el === overlay).to.be.true;
 
                 expect(el.open).to.be.false;
             });

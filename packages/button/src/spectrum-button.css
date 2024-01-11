@@ -66,6 +66,8 @@ governing permissions and limitations under the License.
 }
 :host:after {
     display: block;
+    inset-block: 0;
+    inset-inline: 0;
     margin: calc(
         var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -1
     );
@@ -106,11 +108,11 @@ governing permissions and limitations under the License.
     --spectrum-button-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-button-border-width: var(--spectrum-border-width-200);
     --spectrum-button-line-height: 1.2;
+    --spectrum-button-focus-ring-gap: var(--spectrum-focus-indicator-gap);
     --spectrum-button-focus-ring-border-radius: calc(
         var(--spectrum-button-border-radius) +
             var(--spectrum-button-focus-ring-gap)
     );
-    --spectrum-button-focus-ring-gap: var(--spectrum-focus-indicator-gap);
     --spectrum-button-focus-ring-thickness: var(
         --spectrum-focus-indicator-thickness
     );
@@ -527,6 +529,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+:host .is-disabled,
 :host([disabled]) {
     background-color: var(
         --highcontrast-button-background-color-disabled,

@@ -51,6 +51,15 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     @property({ type: String })
     public label = '';
 
+    /**
+     * A space separated list of part of the URL to ignore when matching
+     * for the "selected" Top Nav Item. Currently supported values are
+     * `hash` and `search`, which will remove the `#hash` and
+     * `?search=value` respectively.
+     */
+    @property({ attribute: 'ignore-url-parts' })
+    public ignoreURLParts = '';
+
     @property()
     public selectionIndicatorStyle = noSelectionStyle;
 
@@ -118,9 +127,15 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         this.items = this.slotEl
             .assignedElements({ flatten: true })
             .filter((el) => el.localName === 'sp-top-nav-item') as TopNavItem[];
-        const selectedChild = this.items.find(
-            (item) => item.value === window.location.href
-        );
+        let { href } = window.location;
+        const ignoredURLParts = this.ignoreURLParts.split(' ');
+        if (ignoredURLParts.includes('hash')) {
+            href = href.replace(window.location.hash, '');
+        }
+        if (ignoredURLParts.includes('search')) {
+            href = href.replace(window.location.search, '');
+        }
+        const selectedChild = this.items.find((item) => item.value === href);
         if (selectedChild) {
             this.selectTarget(selectedChild);
         } else {

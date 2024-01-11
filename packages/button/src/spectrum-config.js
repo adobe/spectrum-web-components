@@ -39,9 +39,14 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Button--quiet'),
                 converter.classToAttribute('spectrum-Button--emphasized'),
-                converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-focused', 'focused'),
+                /**
+                 * HACK!
+                 * This relies on the fact that spectrum-css is using both `&:disabled` and `&.is-disabled` in the selectors
+                 * for disabled states. We're using the class based selector here to also emit a `pending` selector.
+                 */
+                // converter.classToAttribute('is-disabled', 'pending'),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.pseudoToAttribute('active', 'active'),
                 converter.classToAttribute(

@@ -85,11 +85,11 @@ function genPackageJson(
             "${dependencyPkgName}"
         ],
         "dependencies": {
-            "@lit-labs/react": "^1.1.1",
+            "@lit/react": "^1.0.2",
             "${dependencyPkgName}": "^${dependencyPkgVersion}"
         },
         "peerDependencies": {
-            "next": "~13.4",
+            "next": "~13.4 || ~14.0",
         },
         "peerDependenciesMeta": {
             "next": {
@@ -219,9 +219,9 @@ governing permissions and limitations under the License.
 */
 
 import * as React from 'react';
-import { createComponent } from '@lit-labs/react';${
+import { createComponent } from '@lit/react';${
         reactComponents.flatMap((component) => component.events).length > 0
-            ? "\nimport type { EventName } from '@lit-labs/react';"
+            ? "\nimport type { EventName } from '@lit/react';"
             : ''
     }
 ${componentImports.reduce((pre, cur) => pre + cur + '\n', '')}
@@ -401,7 +401,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { createComponent } from '@lit-labs/react';
+import { createComponent } from '@lit/react';
 import * as React from 'react';
   
 import { ${component} as ${componentAliasName} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';

@@ -47,7 +47,7 @@ governing permissions and limitations under the License.
 }
 
 .dialog:not([is-visible]) {
-    translate: -999em -999em !important;
+    display: none;
 }
 
 .dialog:focus {
@@ -83,14 +83,11 @@ dialog:modal {
 
 ::slotted(*) {
     pointer-events: auto;
+    visibility: visible !important;
 }
 
 ::slotted(sp-popover) {
     position: static;
-}
-
-::slotted(sp-tooltip) {
-    --swc-tooltip-margin: 0;
 }
 
 /**

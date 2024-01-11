@@ -32,15 +32,15 @@ import { sendKeys } from '@web/test-runner-commands';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult,
     dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await fixture<Theme>(html`
-        <sp-theme dir=${dir} scale="medium" color="dark">
+        <sp-theme dir=${dir} scale="medium" color="light">
             ${story}
             <style>
                 sp-theme {
@@ -160,7 +160,7 @@ describe('Submenu', () => {
         expect(rootChanged.withArgs('Has submenu').calledOnce, 'root changed')
             .to.be.true;
     });
-    it('closes deep tree on selection', async () => {
+    it('closes deep tree on selection', async function () {
         const rootChanged = spy();
         const submenuChanged = spy();
         const subSubmenuChanged = spy();
@@ -239,11 +239,11 @@ describe('Submenu', () => {
         const item2BoundingRect = item2.getBoundingClientRect();
 
         opened = oneEvent(item2, 'sp-opened');
-        // Click the submenu item to open a submenu
+        // Move to the submenu item to open a submenu
         sendMouse({
             steps: [
                 {
-                    type: 'click',
+                    type: 'move',
                     position: [
                         item2BoundingRect.left + item2BoundingRect.width / 2,
                         item2BoundingRect.top + item2BoundingRect.height / 2,
@@ -257,7 +257,18 @@ describe('Submenu', () => {
 
         const closed = oneEvent(rootItem, 'sp-closed');
         // click to select and close
-        itemC.click();
+        const itemCBoundingRect = itemC.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        itemCBoundingRect.left + itemCBoundingRect.width / 2,
+                        itemCBoundingRect.top + itemCBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
         await closed;
 
         expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
@@ -329,7 +340,7 @@ describe('Submenu', () => {
             await elementUpdated(el);
 
             let opened = oneEvent(rootItem, 'sp-opened');
-            sendKeys({
+            await sendKeys({
                 press: testData.openKey,
             });
             await opened;
@@ -341,7 +352,7 @@ describe('Submenu', () => {
             ).to.be.true;
 
             let closed = oneEvent(rootItem, 'sp-closed');
-            sendKeys({
+            await sendKeys({
                 press: testData.closeKey,
             });
             await closed;
@@ -353,7 +364,7 @@ describe('Submenu', () => {
             ).to.be.true;
 
             opened = oneEvent(rootItem, 'sp-opened');
-            sendKeys({
+            await sendKeys({
                 press: testData.openKey,
             });
             await opened;
@@ -363,16 +374,15 @@ describe('Submenu', () => {
             await sendKeys({
                 press: 'ArrowDown',
             });
+            await elementUpdated(submenu);
             await elementUpdated(submenuItem);
-            await nextFrame();
-            await nextFrame();
 
             expect(submenu.getAttribute('aria-activedescendant')).to.equal(
                 submenuItem.id
             );
 
             closed = oneEvent(rootItem, 'sp-closed');
-            sendKeys({
+            await sendKeys({
                 press: 'Enter',
             });
             await closed;
@@ -536,7 +546,7 @@ describe('Submenu', () => {
         });
         await closed;
     });
-    it('continues to open when mousing between menu item and submenu', async () => {
+    it('continues to open when mousing between menu item and submenu', async function () {
         const clickSpy = spy();
         const el = await styledFixture<Menu>(
             html`
@@ -582,6 +592,13 @@ describe('Submenu', () => {
                 },
             ],
         });
+        // Wait for the overlay system to position the submenu before measuring it's position and moving to it.
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         await nextFrame();
         await nextFrame();
         const subItemBoundingRect = subItem.getBoundingClientRect();
@@ -834,10 +851,6 @@ describe('Submenu', () => {
     });
 
     it('closes back to the first overlay without a `root` when clicking away', async function () {
-        if (isWebKit()) {
-            // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
-            this.skip();
-        }
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
@@ -968,10 +981,6 @@ describe('Submenu', () => {
     });
 
     it('closes decendent menus when Menu Item in ancestor is clicked', async function () {
-        if (isWebKit()) {
-            // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
-            this.skip();
-        }
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>

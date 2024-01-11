@@ -265,7 +265,4 @@
     --spectrum-dialog-confirm-description-text-size: var(
         --spectrum-global-dimension-font-size-75
     );
-    --spectrum-dialog-confirm-padding: var(
-        --spectrum-global-dimension-static-size-300
-    );
 }
