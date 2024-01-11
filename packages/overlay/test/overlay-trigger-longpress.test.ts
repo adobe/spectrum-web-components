@@ -56,7 +56,9 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content).to.not.be.null;
             expect(this.content.open).to.be.false;
 
+            const open = oneEvent(this.el, 'sp-opened');
             this.trigger.focus();
+            await open;
         });
         it('opens/closes for `Space`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
@@ -134,7 +136,7 @@ describe('Overlay Trigger - Longpress', () => {
         });
         it('opens/closes for `longpress`', async function () {
             expect(this.trigger.holdAffordance).to.be.true;
-            let open = oneEvent(this.el, 'sp-opened');
+            const open = oneEvent(this.el, 'sp-opened');
             const rect = this.trigger.getBoundingClientRect();
             await sendMouse({
                 steps: [
@@ -150,12 +152,6 @@ describe('Overlay Trigger - Longpress', () => {
                     },
                 ],
             });
-            // Hover content opens, first.
-            await open;
-            await nextFrame();
-            await nextFrame();
-            open = oneEvent(this.el, 'sp-opened');
-            // Then, the longpress content opens.
             await open;
             await nextFrame();
             await nextFrame();
@@ -186,15 +182,39 @@ describe('Overlay Trigger - Longpress', () => {
             expect(await isOnTopLayer(this.content)).to.be.false;
             expect(this.content.open, 'closes for `pointerdown`').to.be.false;
         });
+    });
+    describe('opens/closes for `longpress`', () => {
+        beforeEach(async function () {
+            this.el = await fixture<OverlayTrigger>(longpress());
+            this.trigger = this.el.querySelector(
+                'sp-action-button'
+            ) as ActionButton;
+            this.tooltip = this.el.querySelector(
+                '[slot="hover-content"]'
+            ) as Tooltip;
+            this.content = this.el.querySelector(
+                '[slot="longpress-content"]'
+            ) as Popover;
+
+            expect(this.trigger).to.not.be.null;
+            expect(this.content).to.not.be.null;
+            expect(this.content.open).to.be.false;
+        });
         it('opens/closes for `longpress` with Button', async function () {
-            this.tooltip.placement = 'bottom-start';
             await elementUpdated(this.tooltip);
             const button = document.createElement('sp-button');
             button.slot = 'trigger';
-            this.trigger.remove();
+            button.textContent = 'Longpress button';
+            this.trigger.replaceWith(button);
             await elementUpdated(this.el);
-            this.el.append(button);
-            await elementUpdated(this.el);
+            await elementUpdated(button);
+            // Inject synthetic wait to afford for late replacement of <sp-action-button> with <sp-button>
+            await waitUntil(() => {
+                const localName = (
+                    this.el as unknown as { targetContent: HTMLElement[] }
+                ).targetContent[0].localName;
+                return localName === 'sp-button';
+            });
 
             let open = oneEvent(this.el, 'sp-opened');
             const rect = button.getBoundingClientRect();

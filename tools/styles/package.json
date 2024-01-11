@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/styles",
-    "version": "0.40.1",
+    "version": "0.40.2",
     "publishConfig": {
         "access": "public"
     },
@@ -104,13 +104,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.1"
+        "@spectrum-web-components/base": "^0.40.2"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^8.0.0",
+        "@spectrum-css/commons": "^9.0.1",
         "@spectrum-css/expressvars": "^3.0.9",
-        "@spectrum-css/tokens": "^13.0.4",
-        "@spectrum-css/typography": "^5.0.40",
+        "@spectrum-css/tokens": "13.0.5",
+        "@spectrum-css/typography": "^5.0.50",
         "@spectrum-css/vars": "^9.0.8"
     },
     "customElements": "custom-elements.json",

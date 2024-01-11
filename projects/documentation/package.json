@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.40.1",
+    "version": "0.40.2",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -22,8 +22,8 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^0.40.1",
-        "@spectrum-web-components/custom-vars-viewer": "^0.40.1"
+        "@spectrum-web-components/bundle": "^0.40.2",
+        "@spectrum-web-components/custom-vars-viewer": "^0.40.2"
     },
     "devDependencies": {
         "@11ty/eleventy": "^2.0.1",
@@ -37,15 +37,15 @@
         "@toycode/markdown-it-class": "^1.2.4",
         "@types/lunr": "^2.3.3",
         "@types/prismjs": "^1.16.6",
-        "@web/dev-server": "^0.3.6",
-        "@web/rollup-plugin-copy": "^0.4.1",
-        "@web/rollup-plugin-html": "^2.0.1",
+        "@web/dev-server": "^0.4.1",
+        "@web/rollup-plugin-copy": "^0.5.1",
+        "@web/rollup-plugin-html": "^2.1.2",
         "alex": "^10.0.0",
         "esbuild-plugin-lit-css": "^2.0.5",
         "lunr": "^2.3.9",
         "markdown-it-anchor": "^8.4.1",
         "markdown-it-for-inline": "^0.1.1",
-        "postcss-cli": "^10.1.0",
+        "postcss-cli": "^11.0.0",
         "posthtml": "^0.16.6",
         "posthtml-attrs-parser": "^0.1.1",
         "posthtml-match-helper": "^1.0.3",

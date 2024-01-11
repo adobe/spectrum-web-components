@@ -50,3 +50,7 @@ governing permissions and limitations under the License.
     width: max-content;
     max-width: 100%;
 }
+
+:host([no-wrap]) #label {
+    display: block;
+}

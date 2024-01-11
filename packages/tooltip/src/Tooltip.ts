@@ -19,6 +19,7 @@ import {
 import {
     property,
     query,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type {
@@ -117,6 +118,22 @@ export class Tooltip extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [tooltipStyles];
     }
+
+    /**
+     * A Tooltip that is `delayed` will its Overlay wait until a warm-up period of
+     * 1000ms has completed before opening. Once the warmup period has completed, all
+     * subsequent Overlays will open immediately. When no Overlays are opened, a
+     * cooldown period of 1000ms will begin. Once the cooldown has completed, the next
+     * Overlay to be opened will be subject to the warm-up period if provided that option.
+     */
+    @property({ type: Boolean })
+    delayed = false;
+
+    /**
+     * Whether to prevent a self-managed Tooltip from responding to user input.
+     */
+    @property({ type: Boolean })
+    disabled = false;
 
     /**
      * Automatically bind to the parent element of the assigned `slot` or the parent element of the `sp-tooltip`.
@@ -230,6 +247,29 @@ export class Tooltip extends SpectrumElement {
         return triggerElement;
     }
 
+    @state()
+    private dependenciesLoaded = false;
+    private dependenciesToLoad: Record<string, boolean> = {};
+
+    private trackDependency(dependency: string, flag?: boolean): void {
+        const loaded =
+            !!customElements.get(dependency) ||
+            this.dependenciesToLoad[dependency] ||
+            !!flag;
+        if (!loaded) {
+            customElements.whenDefined(dependency).then(() => {
+                this.trackDependency(dependency, true);
+            });
+        }
+        this.dependenciesToLoad = {
+            ...this.dependenciesToLoad,
+            [dependency]: loaded,
+        };
+        this.dependenciesLoaded = Object.values(this.dependenciesToLoad).every(
+            (loaded) => loaded
+        );
+    }
+
     override render(): TemplateResult {
         const tooltip = html`
             <sp-tooltip-openable
@@ -245,10 +285,15 @@ export class Tooltip extends SpectrumElement {
             </sp-tooltip-openable>
         `;
         if (this.selfManaged) {
+            this.trackDependency('sp-overlay');
             import('@spectrum-web-components/overlay/sp-overlay.js');
             return html`
                 <sp-overlay
-                    ?open=${this.open}
+                    ?open=${this.open &&
+                    !this.disabled &&
+                    this.dependenciesLoaded}
+                    ?delayed=${this.delayed}
+                    ?disabled=${this.disabled}
                     offset=${this.offset}
                     .placement=${this.placement}
                     type="hint"

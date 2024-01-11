@@ -16,7 +16,7 @@ import chokidar from 'chokidar';
 import debounce from 'debounce';
 import { processREADME } from './copy-component-docs.js';
 
-const debounceProcessREADME = debounce.debounce(processREADME, 200);
+const debounceProcessREADME = debounce(processREADME, 200);
 
 // One-liner for current directory
 chokidar

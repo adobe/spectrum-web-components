@@ -319,7 +319,9 @@ export class NumberField extends TextfieldBase {
         if (isNaN(this.value)) {
             value = min;
         }
+        value = this.valueWithLimits(value);
 
+        this.requestUpdate();
         this._value = this.validateInput(value);
         this.inputElement.value = value.toString();
 
@@ -474,15 +476,22 @@ export class NumberField extends TextfieldBase {
         this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
     }
 
-    private validateInput(value: number): number {
-        const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
-        value *= signMultiplier;
+    private valueWithLimits(nextValue: number): number {
+        let value = nextValue;
         if (typeof this.min !== 'undefined') {
             value = Math.max(this.min, value);
         }
         if (typeof this.max !== 'undefined') {
             value = Math.min(this.max, value);
         }
+        return value;
+    }
+
+    private validateInput(value: number): number {
+        value = this.valueWithLimits(value);
+        const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
+        value *= signMultiplier;
+
         // Step shouldn't validate when 0...
         if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;

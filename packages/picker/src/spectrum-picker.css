@@ -547,7 +547,7 @@ governing permissions and limitations under the License.
 #button:active:after {
     border-color: #0000;
 }
-#button:active.placeholder #label {
+#button:active.placeholder .label {
     color: var(
         --highcontrast-picker-font-color-default,
         var(
@@ -674,70 +674,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([open]) #button {
-    background-color: var(
-        --highcontrast-picker-background-default-open,
-        var(
-            --mod-picker-background-color-default-open,
-            var(--spectrum-picker-background-color-default-open)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-default-open,
-        var(
-            --mod-picker-border-default-open,
-            var(--spectrum-picker-border-color-default-open)
-        )
-    );
-    color: var(
-        --highcontrast-picker-font-color-default-open,
-        var(
-            --mod-picker-font-color-default-open,
-            var(--spectrum-picker-font-color-default-open)
-        )
-    );
-}
-:host([open]) #button:hover {
-    background-color: var(
-        --highcontrast-picker-background-color-hover-open,
-        var(
-            --mod-picker-background-color-hover-open,
-            var(--spectrum-picker-background-color-hover-open)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-hover-open,
-        var(
-            --mod-picker-border-color-hover-open,
-            var(--spectrum-picker-border-color-hover-open)
-        )
-    );
-    color: var(
-        --highcontrast-picker-font-color-default,
-        var(
-            --mod-picker-font-color-hover-open,
-            var(--spectrum-picker-font-color-hover-open)
-        )
-    );
-}
-:host([open]) #button:hover .picker {
-    color: var(
-        --highcontrast-picker-icon-color-hover-open,
-        var(
-            --mod-picker-icon-color-hover-open,
-            var(--spectrum-picker-icon-color-hover-open)
-        )
-    );
-}
-:host([open]) #button .picker {
-    color: var(
-        --highcontrast-picker-icon-color-default-open,
-        var(
-            --mod-picker-icon-color-default-open,
-            var(--spectrum-picker-icon-color-default-open)
-        )
-    );
-}
 :host([invalid]) #button {
     border-color: var(
         --highcontrast-picker-border-color-error-default,
@@ -858,8 +794,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-#button:disabled #label.placeholder,
-:host([disabled]) #button #label.placeholder {
+#button:disabled .label.placeholder,
+:host([disabled]) #button .label.placeholder {
     color: var(
         --highcontrast-picker-font-color-disabled,
         var(
@@ -875,6 +811,70 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-spacing-text-to-icon)
     );
 }
+:host([open]) #button {
+    background-color: var(
+        --highcontrast-picker-background-default-open,
+        var(
+            --mod-picker-background-color-default-open,
+            var(--spectrum-picker-background-color-default-open)
+        )
+    );
+    border-color: var(
+        --highcontrast-picker-border-color-default-open,
+        var(
+            --mod-picker-border-default-open,
+            var(--spectrum-picker-border-color-default-open)
+        )
+    );
+    color: var(
+        --highcontrast-picker-font-color-default-open,
+        var(
+            --mod-picker-font-color-default-open,
+            var(--spectrum-picker-font-color-default-open)
+        )
+    );
+}
+:host([open]) #button:hover {
+    background-color: var(
+        --highcontrast-picker-background-color-hover-open,
+        var(
+            --mod-picker-background-color-hover-open,
+            var(--spectrum-picker-background-color-hover-open)
+        )
+    );
+    border-color: var(
+        --highcontrast-picker-border-color-hover-open,
+        var(
+            --mod-picker-border-color-hover-open,
+            var(--spectrum-picker-border-color-hover-open)
+        )
+    );
+    color: var(
+        --highcontrast-picker-font-color-default,
+        var(
+            --mod-picker-font-color-hover-open,
+            var(--spectrum-picker-font-color-hover-open)
+        )
+    );
+}
+:host([open]) #button:hover .picker {
+    color: var(
+        --highcontrast-picker-icon-color-hover-open,
+        var(
+            --mod-picker-icon-color-hover-open,
+            var(--spectrum-picker-icon-color-hover-open)
+        )
+    );
+}
+:host([open]) #button .picker {
+    color: var(
+        --highcontrast-picker-icon-color-default-open,
+        var(
+            --mod-picker-icon-color-default-open,
+            var(--spectrum-picker-icon-color-default-open)
+        )
+    );
+}
 :host([quiet]) #button {
     inline-size: auto;
     min-inline-size: 0;
@@ -887,7 +887,7 @@ governing permissions and limitations under the License.
 :host([quiet][disabled]) #button:focus-visible {
     border-color: #0000;
 }
-#label {
+.label {
     flex: auto;
     font-size: var(--mod-picker-font-size, var(--spectrum-picker-font-size));
     font-weight: var(
@@ -914,7 +914,7 @@ governing permissions and limitations under the License.
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-#label.placeholder {
+.label.placeholder {
     color: var(
         --highcontrast-picker-font-color-default,
         var(
@@ -937,7 +937,7 @@ governing permissions and limitations under the License.
         )
         ease-in-out;
 }
-#label.placeholder:hover {
+.label.placeholder:hover {
     color: var(
         --highcontrast-picker-font-color-default,
         var(
@@ -946,7 +946,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#label.placeholder:active {
+.label.placeholder:active {
     color: var(
         --highcontrast-picker-font-color-default,
         var(
@@ -1030,7 +1030,7 @@ governing permissions and limitations under the License.
             var(--mod-picker-border-width, var(--spectrum-picker-border-width))
     );
 }
-#label ~ .picker {
+.label ~ .picker {
     margin-inline-start: var(
         --mod-picker-spacing-text-to-icon,
         var(--spectrum-picker-spacing-text-to-icon)

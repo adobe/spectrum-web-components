@@ -49,7 +49,6 @@ import {
     ignoreResizeObserverLoopError,
     fixture as styledFixture,
 } from '../../../test/testing-helpers.js';
-import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -96,7 +95,7 @@ export function runPickerTests(): void {
         return test.querySelector('sp-picker') as Picker;
     };
     describe('accessibility model', () => {
-        it('accessible with "<sp-field-label>"', async () => {
+        it('accessible with "<sp-field-label>"', async function () {
             const test = await fixture<HTMLDivElement>(html`
                 <div>
                     ${Default({
@@ -182,7 +181,7 @@ export function runPickerTests(): void {
                 '`name` is the the selected item text plus the label text'
             ).to.not.be.null;
         });
-        it('accessible with "label" slot', async () => {
+        it('accessible with "label" slot', async function () {
             const test = await fixture<HTMLDivElement>(html`
                 <div>
                     ${slottedLabel({
@@ -215,19 +214,6 @@ export function runPickerTests(): void {
             snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
                 children: NamedNode[];
             };
-
-            if (isFirefox()) {
-                // Firefox does not surface slotted content into this aria-labelledby reference made by Picker
-                // negative test to fail when conditions change
-                expect(
-                    findAccessibilityNode<NamedNode>(
-                        snapshot,
-                        (node) => node.name === 'Select Inverse'
-                    ),
-                    '`name` is the the selected item text without label test'
-                ).to.not.be.null;
-                return;
-            }
 
             expect(
                 findAccessibilityNode<NamedNode>(
@@ -1619,20 +1605,12 @@ export function runPickerTests(): void {
         expect(openedSpy.calledOnce).to.be.true;
         expect(closedSpy.calledOnce).to.be.false;
 
-        // const openedEvent = openedSpy
-        //     .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
-        // expect(openedEvent.detail.interaction).to.equal('modal');
-
         const closed = oneEvent(el, 'sp-closed');
         el.open = false;
         await closed;
         await elementUpdated(el);
 
         expect(closedSpy.calledOnce).to.be.true;
-
-        // const closedEvent = closedSpy
-        //     .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
-        // expect(closedEvent.detail.interaction).to.equal('modal');
     });
     it('closes tooltip on button blur', async () => {
         const test = await styledFixture(html`

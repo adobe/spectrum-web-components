@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **number-field:** validate min/max in more contexts ([2328a62](https://github.com/adobe/spectrum-web-components/commit/2328a62daaf9491cdc5de4f46ab422e54c57bc3f))
+
 ## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field
