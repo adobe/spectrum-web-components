@@ -218,8 +218,8 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public screenshot = screenshot;
 
-    @property()
-    public locale: typeof locales[number] = defaultLocale;
+    @property({ reflect: true })
+    public override lang: typeof locales[number] = defaultLocale;
 
     @queryAsync('sp-theme')
     private themeRoot!: Theme;
@@ -274,7 +274,7 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     private updateLocale({ target }: Event & { target: Picker }): void {
-        this.locale = target.value as typeof locales[number];
+        this.lang = target.value as typeof locales[number];
     }
 
     protected handleKeydown(event: KeyboardEvent): void {
@@ -297,7 +297,7 @@ export class StoryDecorator extends SpectrumElement {
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
-                lang=${this.locale}
+                lang=${this.lang}
                 part="container"
                 @keydown=${this.handleKeydown}
             >
@@ -432,7 +432,7 @@ export class StoryDecorator extends SpectrumElement {
                 label="Locale"
                 placement="top"
                 quiet
-                .value=${this.locale}
+                .value=${this.lang}
                 @change=${this.updateLocale}
             >
                 ${locales.map(
