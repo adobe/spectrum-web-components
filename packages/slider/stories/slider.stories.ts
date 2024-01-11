@@ -180,6 +180,7 @@ export const withFillStartValue = (args: StoryArgs = {}): TemplateResult => {
                 min="0"
                 value=".7"
                 step="0.1"
+                fill-start="0.3"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
@@ -189,10 +190,6 @@ export const withFillStartValue = (args: StoryArgs = {}): TemplateResult => {
             </sp-slider>
         </div>
     `;
-};
-
-withFillStartValue.args = {
-    fillStart: 0.3,
 };
 
 export const autofocus = (args: StoryArgs = {}): TemplateResult => {

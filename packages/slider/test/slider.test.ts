@@ -854,6 +854,8 @@ describe('Slider', () => {
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
+        expect(el.shadowRoot.querySelector('.fill') as HTMLDivElement).to.not
+            .exist;
         expect(el.values).to.deep.equal({ value: 10 });
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;

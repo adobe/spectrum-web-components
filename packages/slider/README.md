@@ -126,7 +126,7 @@ import { Slider } from '@spectrum-web-components/slider';
 
 ### Filled Offset with fill-start value
 
-```html-live
+```html
 <sp-slider
     id="fill-start-slider"
     label="Slider Label"
@@ -134,6 +134,7 @@ import { Slider } from '@spectrum-web-components/slider';
     min="0"
     value=".7"
     step="0.1"
+    fill-start="0.25"
 ></sp-slider>
 <sp-slider
     label="Slider Label"
@@ -141,32 +142,10 @@ import { Slider } from '@spectrum-web-components/slider';
     min="0"
     value=".7"
     step="0.1"
+    fill-start="0.25"
     disabled
 ></sp-slider>
-<script type="module">
-    const initSlider = async () => {
-        const slider = document.querySelector('#fill-start-slider');
-        slider.fillStart = 0.3
-    };
-    customElements.whenDefined('code-example').then(() => {
-            customElements.whenDefined('sp-slider').then(() => {
-                initSlider();
-            });
-        });
-</script>
 ```
-
-<script type="module">
-    const initSlider = async () => {
-        const slider = document.querySelector('#fill-start-slider');
-        slider.fillStart = 0.3
-    };
-    customElements.whenDefined('code-example').then(() => {
-            customElements.whenDefined('sp-slider').then(() => {
-                initSlider();
-            });
-        }); 
-</script>
 
 ### Tick
 
