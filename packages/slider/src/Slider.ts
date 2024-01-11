@@ -537,10 +537,8 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             return (Number(this.max) - Number(this.min)) / 2 + Number(this.min);
         }
     }
-
-    protected override updated(changes: PropertyValues<this>): void {
-        super.updated(changes);
-        if (changes.has('value') && changes.has('fillStart')) {
+    protected override willUpdate(changed: PropertyValues): void {
+        if (changed.has('value') && changed.has('fillStart')) {
             this._cachedValue = Number(this.value);
         }
     }
