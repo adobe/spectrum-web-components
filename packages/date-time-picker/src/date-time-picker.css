@@ -10,21 +10,42 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 :host {
-    inline-size: calc(
-        20ch +
-            (
-                var(
-                        --mod-textfield-icon-size-invalid,
-                        var(--spectrum-textfield-icon-size-invalid)
-                    ) * 3
-            ) + var(--mod-textfield-height, var(--spectrum-textfield-height))
+    --status-icon-size: var(
+        --mod-textfield-icon-size-invalid,
+        var(--spectrum-textfield-icon-size-invalid)
     );
+    --picker-button-size: var(
+        --mod-textfield-height,
+        var(--spectrum-textfield-height)
+    );
+    --input-spacing: var(
+        --mod-textfield-spacing-inline,
+        var(--spectrum-textfield-spacing-inline)
+    );
+    --input-border: var(
+        --mod-textfield-border-width,
+        var(--spectrum-textfield-border-width)
+    );
+
+    inline-size: auto;
 }
 
 :host([valid]) #textfield .icon,
 :host([invalid]) #textfield .icon {
     position: relative;
     inset: initial;
+}
+
+:host .input,
+:host([quiet]) .input,
+:host([valid]) .input,
+:host([invalid]) .input,
+:host([quiet][valid]) #textfield .input,
+:host([quiet][invalid]) #textfield .input {
+    padding-inline-end: calc(
+        var(--status-icon-size) + var(--picker-button-size) +
+            (var(--input-spacing) - var(--input-border)) * 2
+    );
 }
 
 .picker {
@@ -35,16 +56,7 @@ governing permissions and limitations under the License.
     align-items: center;
     justify-content: flex-end;
     height: 100%;
-    gap: calc(
-        var(
-                --mod-textfield-spacing-inline,
-                var(--spectrum-textfield-spacing-inline)
-            ) -
-            var(
-                --mod-textfield-border-width,
-                var(--spectrum-textfield-border-width)
-            )
-    );
+    gap: calc(var(--input-spacing) - var(--input-border));
 }
 
 .popover {

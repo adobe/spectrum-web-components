@@ -10,11 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
+    css,
+    CSSResult,
     html,
     nothing,
     render,
     TemplateResult,
+    unsafeCSS,
 } from '@spectrum-web-components/base';
+import {
+    ifDefined,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import { TimeGranularity } from '@spectrum-web-components/input-segments/src/types.js';
 import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
 
@@ -80,12 +87,24 @@ interface SpreadStoryArgs {
 const renderDateTimePicker = (
     title: string,
     args: StoryArgs = {},
-    content: TemplateResult | typeof nothing = nothing
+    content: TemplateResult | typeof nothing = nothing,
+    id: string | undefined = undefined,
+    styles: CSSResult | typeof nothing = nothing
 ): TemplateResult => {
     const story = html`
+        ${when(
+            styles,
+            () => html`
+                <style>
+                    ${styles}
+                </style>
+            `
+        )}
+
         <h1>${title}</h1>
         <hr />
         <sp-date-time-picker
+            id=${ifDefined(id)}
             ...=${spreadProps(args as SpreadStoryArgs)}
             @change=${args.onChange}
         >
@@ -311,4 +330,23 @@ export const customIcon = (args: StoryArgs = {}): TemplateResult => {
     `;
 
     return renderDateTimePicker('Custom icon', args, content);
+};
+
+export const customWidth = (args: StoryArgs = {}): TemplateResult[] => {
+    return ['100%', '50%', '350px', 'auto'].map((width, index) => {
+        const id = `date-time-picker--${index}`;
+        const styles = css`
+            sp-date-time-picker#${unsafeCSS(id)} {
+                inline-size: ${unsafeCSS(width)};
+            }
+        `;
+
+        return renderDateTimePicker(
+            `Custom width: ${width}`,
+            args,
+            undefined,
+            id,
+            styles
+        );
+    });
 };
