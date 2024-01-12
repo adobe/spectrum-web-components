@@ -186,7 +186,22 @@ export const withFillStartValue = (args: StoryArgs = {}): TemplateResult => {
                 .formatOptions=${{ style: 'percent' }}
                 ...=${spreadProps(args)}
             >
-                Slider label
+                Value Greater than Fill Start
+            </sp-slider>
+        </div>
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="20"
+                min="0"
+                value="5"
+                step="1"
+                fill-start="15"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                ...=${spreadProps(args)}
+            >
+                Value Less than Fill Start
             </sp-slider>
         </div>
     `;

@@ -129,7 +129,16 @@ import { Slider } from '@spectrum-web-components/slider';
 ```html
 <sp-slider
     id="fill-start-slider"
-    label="Slider Label"
+    label="Fill Start greater than Value"
+    max="1"
+    min="0"
+    value=".3"
+    step="0.1"
+    fill-start="0.7"
+></sp-slider>
+<sp-slider
+    id="fill-start-slider"
+    label="Fill Start less than Value"
     max="1"
     min="0"
     value=".7"
