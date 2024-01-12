@@ -41,37 +41,25 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
+[dir='ltr'] .editable-segment {
+    text-align: start;
+}
+
 .literal-segment {
     white-space: pre;
     user-select: none;
 }
 
-[dir='ltr'] .editable-segment {
-    text-align: start;
-}
-
-.is-placeholder {
-    font-style: italic;
-}
-
-.is-placeholder:lang(ja),
-.is-placeholder:lang(ko),
-.is-placeholder:lang(zh) {
-    font-style: normal;
-}
-
-.editable-segment.is-placeholder,
-.editable-segment.is-placeholder + .literal-segment {
+.is-placeholder,
+.is-placeholder + .literal-segment {
     color: var(--spectrum-gray-500);
 }
 
-.editable-segment.is-placeholder .placeholder {
-    height: auto;
-    visibility: visible;
+.is-placeholder:not(:is(:lang(ja), :lang(ko), :lang(zh))) {
+    font-style: italic;
 }
 
-.editable-segment:focus,
-.editable-segment:focus .placeholder {
+.editable-segment:focus {
     color: var(--spectrum-white);
     background-color: var(--spectrum-accent-background-color-default);
 }
@@ -80,7 +68,6 @@ governing permissions and limitations under the License.
  * Hide selection because there is no way to avoid it entirely in Firefox
  * https://bugzilla.mozilla.org/show_bug.cgi?id=1742153
  */
-.editable-segment::selection,
-.placeholder::selection {
+.editable-segment::selection {
     background-color: transparent;
 }

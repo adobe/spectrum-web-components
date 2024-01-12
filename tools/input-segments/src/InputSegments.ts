@@ -211,6 +211,7 @@ export class InputSegments extends TextfieldBase {
 
     protected renderSegmentText(segment: Segment): string {
         const usePlaceholder = segment.value === undefined;
+
         return when(
             usePlaceholder,
             () => segment.placeholder ?? '',
