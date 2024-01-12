@@ -74,7 +74,7 @@ export class DateTimePicker extends InputSegments {
 
                 <sp-picker-button
                     ?open=${this.open}
-                    ?quiet=${this.quiet}
+                    ?quiet=${this.quiet || this.readonly}
                     ?invalid=${this.invalid}
                     ?disabled=${isDisabled}
                     @click=${this.showPicker}
