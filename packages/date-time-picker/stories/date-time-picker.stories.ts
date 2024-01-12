@@ -23,7 +23,6 @@ import { spreadProps } from '../../../test/lit-helpers.js';
 import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/theme/sp-theme.js';
 
 export default {
     title: 'Date∕Time Picker',

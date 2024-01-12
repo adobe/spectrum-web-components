@@ -9,14 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { CalendarDate } from '@internationalized/date';
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/calendar/sp-calendar.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import { CalendarDate } from '@internationalized/date';
 
 export default {
     title: 'Calendar',
