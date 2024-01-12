@@ -36,4 +36,101 @@ describe('ColorField', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('validates rgba color values', async () => {
+        const el = await fixture<ColorField>(
+            html`
+                <sp-color-field></sp-color-field>
+            `
+        );
+
+        el.value = 'rgba(255, 0, 0, 1)';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = 'rgba(255, 0, 0, 0.5)';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = 'rgba(255, 0, 0)';
+
+        expect(el.checkValidity()).to.be.false;
+    });
+
+    it('validates hex color values', async () => {
+        const el = await fixture<ColorField>(
+            html`
+                <sp-color-field></sp-color-field>
+            `
+        );
+
+        el.value = '#ff0000';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = '#f00';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = '#ff00';
+        expect(el.checkValidity()).to.be.false;
+    });
+
+    it('validates hsl color values', async () => {
+        const el = await fixture<ColorField>(
+            html`
+                <sp-color-field></sp-color-field>
+            `
+        );
+
+        el.value = 'hsl(120, 100%, 50%)';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = 'hsl(120, 50%, 50%)';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = 'hsl(120, 50%)';
+        expect(el.checkValidity()).to.be.false;
+    });
+
+    it('validates hsv color values', async () => {
+        const el = await fixture<ColorField>(
+            html`
+                <sp-color-field></sp-color-field>
+            `
+        );
+
+        el.value = 'hsv(120, 100%, 50%)';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = 'hsv(120, 50%, 50%)';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = 'hsv(120, 50%)';
+        expect(el.checkValidity()).to.be.false;
+    });
+
+    it('renders color handle when devMode is true', async () => {
+        const el = await fixture<ColorField>(
+            html`
+                <sp-color-field></sp-color-field>
+            `
+        );
+
+        el.devMode = true;
+        await elementUpdated(el);
+
+        const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
+        expect(colorHandle).to.not.be.null;
+    });
+
+    it('does not render color handle when devMode is false', async () => {
+        const el = await fixture<ColorField>(
+            html`
+                <sp-color-field></sp-color-field>
+            `
+        );
+
+        el.devMode = false;
+        await elementUpdated(el);
+
+        const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
+        expect(colorHandle).to.be.null;
+    });
 });

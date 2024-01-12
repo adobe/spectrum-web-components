@@ -15,6 +15,8 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { TinyColor } from '@ctrl/tinycolor';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
@@ -28,6 +30,9 @@ export class ColorField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
         return [TextfieldBase.styles];
     }
+
+    @property({ type: Boolean, reflect: true })
+    public devMode = false;
 
     public override set value(value: string) {
         if (value === this.value) {
@@ -44,32 +49,51 @@ export class ColorField extends TextfieldBase {
 
     protected override _value = '';
 
+    public renderColorHandle(): TemplateResult {
+        return this.devMode
+            ? html`
+                  <sp-color-handle size="m" color=""></sp-color-handle>
+              `
+            : html``;
+    }
+
     protected override render(): TemplateResult {
         return html`
-            <sp-color-handle size="m" color=""></sp-color-handle>
-            ${super.render()}
+            ${super.render()} ${this.renderColorHandle()}
         `;
     }
 
     public override checkValidity(): boolean {
         let validity = super.checkValidity();
-        //console.log(this);
-
-        if (this.inputElement.value) {
+        if (this.value) {
             const colorHandle =
                 this.shadowRoot?.querySelector('sp-color-handle');
             const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
             const rgbaRegex =
-                /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(\d*(?:\.\d+)?)\)$/i;
+                /^rgba\(\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(1|0(\.\d+)?)\s*\)$/i;
+            const rgbColorRegex =
+                /^rgb\(\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*\)$/i;
+            const hsvColorRegex =
+                /^hsv\(\s*(360|3[0-5]\d|[12]?\d{1,2})\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*\)$/i;
+            const hslColorRegex =
+                /^hsl\(\s*(360|3[0-5]\d|[12]?\d{1,2})\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*\)$/i;
+            const cmykColorRegex =
+                /^cmyk\(\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*\)$/i;
             if (
-                rgbaRegex.test(this.inputElement.value) ||
-                hexColorRegex.test(this.inputElement.value)
+                rgbaRegex.test(this.value) ||
+                rgbColorRegex.test(this.value) ||
+                hexColorRegex.test(this.value) ||
+                cmykColorRegex.test(this.value) ||
+                hsvColorRegex.test(this.value) ||
+                hslColorRegex.test(this.value)
             ) {
                 // Input value is in rgba format
                 validity = true;
                 this.valid = validity;
-                colorHandle?.setAttribute('color', this.inputElement.value);
-                //console.log(this.valid,"hi");
+                colorHandle?.setAttribute(
+                    'color',
+                    new TinyColor(this.value).toRgbString()
+                );
             } else {
                 // Input value is not in rgba | Hex format
                 validity = false;

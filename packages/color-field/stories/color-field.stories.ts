@@ -20,6 +20,6 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-color-field></sp-color-field>
+        <sp-color-field devMode="true"></sp-color-field>
     `;
 };
