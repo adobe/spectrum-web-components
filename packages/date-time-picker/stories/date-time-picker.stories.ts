@@ -32,6 +32,28 @@ export default {
             handles: ['onChange'],
         },
     },
+    argTypes: {
+        valid: {
+            control: 'boolean',
+            table: {
+                defaultValue: {
+                    summary: false,
+                },
+            },
+        },
+        invalid: {
+            control: 'boolean',
+            table: {
+                defaultValue: {
+                    summary: false,
+                },
+            },
+        },
+    },
+    args: {
+        valid: false,
+        invalid: false,
+    },
 };
 
 const timeGranularities: TimeGranularity[] = ['hour', 'minute', 'second'];
@@ -220,12 +242,9 @@ export const valid = (args: StoryArgs = {}): TemplateResult => {
 };
 
 valid.argTypes = {
-    valid: {
-        control: 'boolean',
+    invalid: {
         table: {
-            defaultValue: {
-                summary: false,
-            },
+            disable: true,
         },
     },
 };
@@ -239,12 +258,9 @@ export const invalid = (args: StoryArgs = {}): TemplateResult => {
 };
 
 invalid.argTypes = {
-    invalid: {
-        control: 'boolean',
+    valid: {
         table: {
-            defaultValue: {
-                summary: false,
-            },
+            disable: true,
         },
     },
 };
