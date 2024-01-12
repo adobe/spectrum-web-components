@@ -66,14 +66,14 @@ describe('Combobox', () => {
         overlays.forEach((overlay) => overlay.remove());
     });
     describe('renders accessibly', () => {
-        xit('renders initially', async () => {
+        it('renders initially', async () => {
             // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
             await elementUpdated(el);
             await expect(el).to.be.accessible();
         });
-        xit('renders open', async () => {
+        it('renders open', async () => {
             // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
@@ -84,7 +84,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
             await expect(el).to.be.accessible();
         });
-        xit('renders with an active descendent', async () => {
+        it('renders with an active descendent', async () => {
             // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
@@ -97,7 +97,7 @@ describe('Combobox', () => {
 
             await expect(el).to.be.accessible();
         });
-        xit('manages its "name" value in the accessibility tree', async () => {
+        it('manages its "name" value in the accessibility tree', async () => {
             // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47503928
             const el = await comboboxFixture();
 

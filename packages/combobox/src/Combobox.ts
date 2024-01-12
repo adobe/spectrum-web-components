@@ -19,6 +19,7 @@ import {
 import {
     property,
     query,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
     ifDefined,
@@ -61,14 +62,14 @@ export class Combobox extends Textfield {
     @property({ attribute: false })
     public activeDescendent?: ComboboxOption | MenuItem;
 
+    @state()
+    override appliedLabel?: string;
+
     @property({ attribute: false })
     public availableOptions: (ComboboxOption | MenuItem)[] = [];
 
     @property()
     public ariaAutocomplete: 'list' | 'none' = 'none';
-
-    @property({ attribute: 'label-position' })
-    public labelPosition: 'inline-start' | undefined;
 
     /**
      * Whether the listbox is visible.
@@ -277,6 +278,35 @@ export class Combobox extends Textfield {
         super.onBlur(event);
     }
 
+    protected renderAppliedLabel(): TemplateResult {
+        /**
+         * appliedLabel corresponds to `<label for="...">`, which is overriden
+         * if user adds the `label` attribute manually to `<sp-combobox>`.
+         **/
+        const appliedLabel = this.label || this.appliedLabel;
+
+        return html`
+            ${this.value
+                ? html`
+                      <span
+                          aria-hidden="true"
+                          class="visually-hidden"
+                          id="applied-label"
+                      >
+                          ${appliedLabel}
+                      </span>
+                      <slot name="label" id="label">
+                          <span class="visually-hidden" aria-hidden="true">
+                              ${this.value}
+                          </span>
+                      </slot>
+                  `
+                : html`
+                      <span hidden id="applied-label">${appliedLabel}</span>
+                  `}
+        `;
+    }
+
     protected override renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
@@ -290,8 +320,11 @@ export class Combobox extends Textfield {
                 aria-controls=${ifDefined(
                     this.open ? 'listbox-menu' : undefined
                 )}
+                aria-describedby=${this.helpTextId}
                 aria-expanded="${this.open ? 'true' : 'false'}"
-                aria-labelledby="label"
+                aria-label=${ifDefined(this.label || this.appliedLabel)}
+                aria-labelledby="applied-label label"
+                aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
                 ?focused=${this.focused || this.open}
@@ -306,9 +339,6 @@ export class Combobox extends Textfield {
                 @sp-closed=${this.handleClosed}
                 @sp-opened=${this.handleOpened}
                 type=${this.type}
-                aria-describedby=${this.helpTextId}
-                aria-label=${ifDefined(this.label || this.placeholder)}
-                aria-invalid=${ifDefined(this.invalid || undefined)}
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
                 )}
@@ -316,7 +346,6 @@ export class Combobox extends Textfield {
                     this.minlength > -1 ? this.minlength : undefined
                 )}
                 pattern=${ifDefined(this.pattern)}
-                placeholder=${ifDefined(this.placeholder)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
                 @focus=${this.onFocus}
@@ -328,11 +357,16 @@ export class Combobox extends Textfield {
         `;
     }
 
+    applyFocusElementLabel = (value?: string): void => {
+        this.appliedLabel = value;
+    };
+
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
+
         return html`
             ${super.render()}
             <sp-picker-button
@@ -403,6 +437,7 @@ export class Combobox extends Textfield {
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
+            ${this.renderAppliedLabel()}
             <slot
                 aria-hidden="true"
                 name="tooltip"
