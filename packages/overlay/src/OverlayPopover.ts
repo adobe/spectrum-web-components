@@ -15,16 +15,13 @@ import {
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import type { SpectrumElement } from '@spectrum-web-components/base';
 import { VirtualTrigger } from './VirtualTrigger.js';
-import {
-    Constructor,
-    OpenableElement,
-    OverlayOpenCloseDetail,
-} from './overlay-types.js';
+import { Constructor, OpenableElement } from './overlay-types.js';
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
     nextFrame,
+    OverlayStateEvent,
     overlayTimer,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
@@ -173,10 +170,9 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                         : 'sp-closed';
                     if (index > 0) {
                         el.dispatchEvent(
-                            new CustomEvent<OverlayOpenCloseDetail>(eventName, {
-                                bubbles: false,
-                                composed: false,
-                                detail: { interaction: this.type },
+                            new OverlayStateEvent(eventName, this, {
+                                interaction: this.type,
+                                publish: false,
                             })
                         );
                         return;
@@ -189,28 +185,23 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                         const hasVirtualTrigger =
                             this.triggerElement instanceof VirtualTrigger;
                         this.dispatchEvent(
-                            new Event(eventName, {
-                                bubbles: hasVirtualTrigger,
-                                composed: hasVirtualTrigger,
+                            new OverlayStateEvent(eventName, this, {
+                                interaction: this.type,
+                                publish: hasVirtualTrigger,
                             })
                         );
                         el.dispatchEvent(
-                            new CustomEvent<OverlayOpenCloseDetail>(eventName, {
-                                bubbles: false,
-                                composed: false,
-                                detail: { interaction: this.type },
+                            new OverlayStateEvent(eventName, this, {
+                                interaction: this.type,
+                                publish: false,
                             })
                         );
                         if (this.triggerElement && !hasVirtualTrigger) {
                             (this.triggerElement as HTMLElement).dispatchEvent(
-                                new CustomEvent<OverlayOpenCloseDetail>(
-                                    eventName,
-                                    {
-                                        bubbles: true,
-                                        composed: true,
-                                        detail: { interaction: this.type },
-                                    }
-                                )
+                                new OverlayStateEvent(eventName, this, {
+                                    interaction: this.type,
+                                    publish: true,
+                                })
                             );
                         }
                         this.state = targetOpenState ? 'opened' : 'closed';
