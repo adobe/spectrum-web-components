@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **top-nav:** allow consumers to "ignore-url-parts" or "search" or "hash" ([#3923](https://github.com/adobe/spectrum-web-components/issues/3923)) ([83bf70b](https://github.com/adobe/spectrum-web-components/commit/83bf70b7751d2f5b4ab617480bdb8b6252b3b2c6))
+
 ## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
 
 **Note:** Version bump only for package @spectrum-web-components/top-nav
