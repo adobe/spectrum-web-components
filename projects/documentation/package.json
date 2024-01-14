@@ -206,6 +206,7 @@
             "files": [
                 "../../packages/**/*.md",
                 "../../tools/**/*.md",
+                "custom-elements.json",
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"
             ],
