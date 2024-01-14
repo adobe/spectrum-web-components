@@ -120,7 +120,3 @@ with standard `<a>` [rules](https://developer.mozilla.org/en-US/docs/Web/HTML/El
 ```html
 This is a <sp-link download="myfile.txt" href="#">download link</sp-link>.
 ```
-
-## Accessibility
-
-Links are accessible by default, rendered in HTML using the `<a>` element. The correct aria roles will automatically be applied.
