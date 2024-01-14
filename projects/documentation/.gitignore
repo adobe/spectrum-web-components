@@ -3,6 +3,7 @@
 
 // eleventy build directory
 _site
+!.eleventy.js
 
 // extraced component docs
 content/components
