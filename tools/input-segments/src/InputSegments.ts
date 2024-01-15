@@ -789,28 +789,43 @@ export class InputSegments extends TextfieldBase {
         let minute = this.minuteSegment?.value ?? this.currentDateTime.minute;
         let second = this.secondSegment?.value ?? this.currentDateTime.second;
 
+        let padMaxLength = 2;
+
         switch (segment.type) {
-            case 'day':
+            case 'day': {
                 day = segment.value;
                 break;
-            case 'month':
+            }
+            case 'month': {
                 month = segment.value;
                 break;
-            case 'year':
+            }
+            case 'year': {
                 year = segment.value;
                 break;
-            case 'hour':
+            }
+            case 'hour': {
                 hour = segment.value;
+
+                if (this.is12HourClock) {
+                    padMaxLength = 1;
+                }
+
                 break;
-            case 'minute':
+            }
+            case 'minute': {
                 minute = segment.value;
                 break;
-            case 'second':
+            }
+            case 'second': {
                 second = segment.value;
                 break;
-            case 'dayPeriod':
+            }
+            case 'dayPeriod': {
                 hour = (segment.value ?? 0) + 1;
+                padMaxLength = 0;
                 break;
+            }
         }
 
         /**
@@ -843,6 +858,10 @@ export class InputSegments extends TextfieldBase {
             return;
         }
 
+        date.setHours(hour);
+        date.setMinutes(minute);
+        date.setSeconds(second);
+
         const options: Intl.DateTimeFormatOptions = {
             month: '2-digit',
             day: '2-digit',
@@ -851,21 +870,9 @@ export class InputSegments extends TextfieldBase {
             second: '2-digit',
         };
 
-        date.setHours(hour);
-        date.setMinutes(minute);
-        date.setSeconds(second);
-
         const formatted = new DateFormatter(this.locale, options)
             .formatToParts(date)
             .find((part) => part.type === segment.type)?.value;
-
-        let padMaxLength = 2;
-
-        if (segment.type === 'hour' && this.is12HourClock) {
-            padMaxLength = 1;
-        } else if (segment.type === 'dayPeriod') {
-            padMaxLength = 0;
-        }
 
         segment.formatted = formatted?.padStart(padMaxLength, '0');
     }
