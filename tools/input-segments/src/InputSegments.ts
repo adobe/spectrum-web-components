@@ -271,6 +271,21 @@ export class InputSegments extends TextfieldBase {
         };
 
         /**
+         * When dealing with tags that have the `contenteditable` attribute, it is recommended that the tag content be
+         * inserted using the `.innerText` property instead of using string interpolation:
+         *
+         * https://lit.dev/docs/templates/expressions/#invalid-locations:~:text=bind%20to%20the%20.innerText
+         *
+         * Although this is just a Lit recommendation (as described in the documentation itself, "beware"), we have
+         * identified that the use of `.innerText` here is mandatory.
+         *
+         * We use the `input` event to define the content of the segment, and there are moments when we want to cancel
+         * the default action of a key typed by the user (for example, when the user types a letter in which only
+         * numbers are accepted), however, the `input` event action cannot be cancelled with `event.preventDefault()`,
+         * and because of this, if we try to use string interpolation, it will break the references to the DOM that Lit
+         * uses to dynamically update the content, but this problem does not occur when we bind to the `.innerText`
+         * property.
+         *
          * TODO: Include/review ARIA attributes for editable segments
          * TODO: Move `handle` functions call to a cache so that it doesn't cycle on the binding in each render pass
          */
