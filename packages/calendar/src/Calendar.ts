@@ -89,8 +89,8 @@ export class Calendar extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     padded = false;
 
-    @property({ attribute: false })
-    currentDate!: CalendarDate;
+    @state()
+    private currentDate!: CalendarDate;
 
     @state()
     private minDate!: CalendarDate;
@@ -314,12 +314,13 @@ export class Calendar extends SpectrumElement {
                 class="spectrum-Calendar-tableCell"
                 title=${currentDayTitle}
                 tabindex=${ifDefined(!isOutsideMonth ? '-1' : undefined)}
-                aria-disabled=${isOutsideMonth || this.disabled}
+                aria-disabled=${isOutsideMonth || isDisabled}
                 aria-selected=${isSelected}
             >
                 <span
                     role="presentation"
                     class=${classMap(dayClasses)}
+                    data-test-id="calendar-day"
                     @click=${() => this.handleDayClick(calendarDate)}
                 >
                     ${this.formatNumber(calendarDate.day)}

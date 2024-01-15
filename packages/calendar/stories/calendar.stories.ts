@@ -9,7 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { CalendarDate } from '@internationalized/date';
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
 
@@ -28,7 +27,6 @@ export default {
 };
 
 type ComponentArgs = {
-    currentDate?: CalendarDate;
     selectedDate?: Date;
     min?: Date;
     max?: Date;
@@ -48,13 +46,11 @@ const renderCalendar = (
     title: string,
     args: StoryArgs = {}
 ): TemplateResult => {
-    const currentDate = new CalendarDate(2023, 11, 17);
     const story = html`
         <h1>${title}</h1>
         <hr />
         <sp-calendar
             ...=${spreadProps(args as SpreadStoryArgs)}
-            .currentDate=${currentDate}
             @change=${args.onChange}
         ></sp-calendar>
     `;
@@ -97,25 +93,47 @@ export const selectedDate = (args: StoryArgs = {}): TemplateResult => {
 };
 
 export const minimumDate = (args: StoryArgs = {}): TemplateResult => {
-    const minimumDate = new Date(2023, 10, 12);
+    const today = new Date();
+    const lastMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() - 1,
+        today.getDate()
+    );
+
+    const formatted = Intl.DateTimeFormat(defaultLocale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(lastMonth);
 
     args = {
         ...args,
-        min: minimumDate,
+        min: lastMonth,
     };
 
-    return renderCalendar(`Minimum Date: ${minimumDate.toDateString()}`, args);
+    return renderCalendar(`Minimum Date: ${formatted}`, args);
 };
 
 export const maximumDate = (args: StoryArgs = {}): TemplateResult => {
-    const maxDate = new Date(2023, 10, 23);
+    const today = new Date();
+    const nextMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate()
+    );
+
+    const formatted = Intl.DateTimeFormat(defaultLocale, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(nextMonth);
 
     args = {
         ...args,
-        max: maxDate,
+        max: nextMonth,
     };
 
-    return renderCalendar(`Maximum Date: ${maxDate.toDateString()}`, args);
+    return renderCalendar(`Maximum Date: ${formatted}`, args);
 };
 
 export const disabled = (args: StoryArgs = {}): TemplateResult => {
