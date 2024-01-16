@@ -152,7 +152,7 @@ export const Filled = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const withOnlyFillStart = (args: StoryArgs = {}): TemplateResult => {
+export const FillStart = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -172,7 +172,7 @@ export const withOnlyFillStart = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const withFillStartValue = (args: StoryArgs = {}): TemplateResult => {
+export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider

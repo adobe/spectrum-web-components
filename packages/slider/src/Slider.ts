@@ -372,43 +372,26 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         let distance: number;
         if (fillStartValue === cachedValue) {
             distance = Math.abs(currentValue - fillStartValue);
-        } else if (fillStartValue < cachedValue) {
-            distance = Math.abs(
-                Math.min(currentValue, cachedValue) - fillStartValue
-            );
         } else {
-            distance = Math.abs(
-                Math.max(currentValue, cachedValue) - fillStartValue
-            );
+            distance = Math.abs(currentValue - fillStartValue);
         }
         return (distance / (this.max - this.min)) * 100;
     }
 
-    private getOffsetPosition(
-        fillStartValue: number,
-        currentValue: number,
-        cachedValue: number
-    ): number {
-        let offsetValue: number;
-        if (fillStartValue > cachedValue) {
-            offsetValue =
-                this.value > fillStartValue
-                    ? fillStartValue
-                    : Math.max(currentValue, cachedValue);
-        } else {
-            offsetValue =
-                this.value > fillStartValue ? fillStartValue : this.value;
-        }
-        return ((offsetValue - this.min) / (this.max - this.min)) * 100;
+    /**
+     * @description calculates the fill width starting point to fill width
+     * @param value
+     */
+    private getOffsetPosition(value: number): number {
+        return ((value - this.min) / (this.max - this.min)) * 100;
     }
 
     private fillStyles(cachedValue: number): StyleInfo {
         const position = this.dir === 'rtl' ? 'right' : 'left';
-        const offsetPosition = this.getOffsetPosition(
-            this.fillStartPoint,
-            this.value,
-            cachedValue
-        );
+        const offsetPosition =
+            this.value > this.fillStartPoint
+                ? this.getOffsetPosition(this.fillStartPoint)
+                : this.getOffsetPosition(this.value);
         const offsetWidth = this.getOffsetWidth(
             this.fillStartPoint,
             this.value,
