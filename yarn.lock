@@ -2689,10 +2689,10 @@
   dependencies:
     conventional-changelog-conventionalcommits "^5.0.0"
 
-"@commitlint/config-lerna-scopes@^17.2.1":
-  version "17.7.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-lerna-scopes/-/config-lerna-scopes-17.7.0.tgz#aaffd59705c4de3bdd02aa489ae00d1a186a3346"
-  integrity sha512-fMIDgStYnCTYjGLqPM7UO1YQk1gdskforUUeOSqYrx58810K8xHnZoJu7T8WEkw5mx3yUJ2FuEPAfmk/7w6pvQ==
+"@commitlint/config-lerna-scopes@^18.4.4":
+  version "18.4.4"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-lerna-scopes/-/config-lerna-scopes-18.4.4.tgz#e8a00e5041d1c880dc0fa623655a2fabd69fade6"
+  integrity sha512-wV4co3x9rN/9T1tl1TMvJOVo0yMq/SUZ3K3zYWBsGdNBwm5cJMvi0nbk4eGzYb8tYy95/0KCHX8m8Nax3gUNng==
   dependencies:
     "@lerna/project" "^6.0.0"
     glob "^8.0.3"
@@ -16075,18 +16075,7 @@ glob@7.1.4:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^10.0.0, glob@^10.2.5:
-  version "10.3.3"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-10.3.3.tgz#8360a4ffdd6ed90df84aa8d52f21f452e86a123b"
-  integrity sha512-92vPiMb/iqpmEgsOoIDvTjc50wf9CCCvMzsi6W0JLPeUKE8TWP1a73PgqSrqy7iAZxaSD1YdzU7QZR5LF51MJw==
-  dependencies:
-    foreground-child "^3.1.0"
-    jackspeak "^2.0.3"
-    minimatch "^9.0.1"
-    minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
-    path-scurry "^1.10.1"
-
-glob@^10.2.2:
+glob@^10.0.0, glob@^10.2.2, glob@^10.2.5:
   version "10.3.4"
   resolved "https://registry.yarnpkg.com/glob/-/glob-10.3.4.tgz#c85c9c7ab98669102b6defda76d35c5b1ef9766f"
   integrity sha512-6LFElP3A+i/Q8XQKEvZjkEWEOTgAIALR9AO2rwT8bgPhDd1anmqDJDZ6lLddI4ehxxxR1S5RIqKe1uapMQfYaQ==
