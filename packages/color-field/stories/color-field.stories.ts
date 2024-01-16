@@ -23,3 +23,21 @@ export const Default = (): TemplateResult => {
         <sp-color-field devMode="true"></sp-color-field>
     `;
 };
+
+export const DevMode = (): TemplateResult => {
+    return html`
+        <sp-color-field devMode="true"></sp-color-field>
+    `;
+};
+
+export const WrongInput = (): TemplateResult => {
+    return html`
+        <sp-color-field value="not a color"></sp-color-field>
+    `;
+};
+
+export const RightInput = (): TemplateResult => {
+    return html`
+        <sp-color-field value="#ff0000"></sp-color-field>
+    `;
+};
