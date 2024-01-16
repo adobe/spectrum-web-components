@@ -11,10 +11,11 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/color-field/sp-color-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
+import '../sp-color-field.js';
 
 export default {
     component: 'sp-color-field',
