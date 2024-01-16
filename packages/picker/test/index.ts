@@ -524,6 +524,53 @@ export function runPickerTests(): void {
             expect(el.open).to.be.true;
             expect(firstItem.focused, 'still not visually focused').to.be.false;
         });
+        it('opens and selects in a single pointer button interaction', async () => {
+            await nextFrame();
+            await nextFrame();
+            const thirdItem = el.querySelector(
+                'sp-menu-item:nth-of-type(3)'
+            ) as MenuItem;
+            const boundingRect = el.button.getBoundingClientRect();
+
+            expect(el.value).to.not.equal(thirdItem.value);
+            const opened = oneEvent(el, 'sp-opened');
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
+            await opened;
+
+            const thirdItemRect = thirdItem.getBoundingClientRect();
+            const closed = oneEvent(el, 'sp-closed');
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            thirdItemRect.x + thirdItemRect.width / 2,
+                            thirdItemRect.y + thirdItemRect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+            await closed;
+
+            expect(el.open).to.be.false;
+            expect(el.value).to.equal(thirdItem.value);
+        });
         it('opens/closes multiple times', async () => {
             expect(el.open).to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
@@ -623,10 +670,9 @@ export function runPickerTests(): void {
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
             ) as MenuItem;
-            const button = el.button as HTMLButtonElement;
 
             const opened = oneEvent(el, 'sp-opened');
-            button.click();
+            el.click();
             await opened;
 
             expect(el.open).to.be.true;
@@ -648,10 +694,9 @@ export function runPickerTests(): void {
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
             ) as MenuItem;
-            const button = el.button as HTMLButtonElement;
 
             let opened = oneEvent(el, 'sp-opened');
-            button.click();
+            el.click();
             await opened;
 
             expect(el.open).to.be.true;
@@ -667,7 +712,7 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('option-2');
 
             opened = oneEvent(el, 'sp-opened');
-            button.click();
+            el.click();
             await opened;
 
             expect(el.open).to.be.true;
@@ -710,10 +755,9 @@ export function runPickerTests(): void {
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
             ) as MenuItem;
-            const button = el.button as HTMLButtonElement;
 
             const opened = oneEvent(el, 'sp-opened');
-            button.click();
+            el.click();
             await opened;
 
             expect(el.open).to.be.true;
@@ -743,10 +787,9 @@ export function runPickerTests(): void {
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
             ) as MenuItem;
-            const button = el.button as HTMLButtonElement;
 
             const opened = oneEvent(el, 'sp-opened');
-            button.click();
+            el.click();
             await opened;
             await elementUpdated(el);
 
@@ -1129,9 +1172,7 @@ export function runPickerTests(): void {
 
             await elementUpdated(el);
 
-            const button = el.button as HTMLButtonElement;
-
-            button.click();
+            el.click();
             await elementUpdated(el);
 
             expect(el.open).to.be.false;
@@ -1355,7 +1396,7 @@ export function runPickerTests(): void {
                 ) as MenuItem;
 
                 const opened = oneEvent(el, 'sp-opened');
-                el.button.click();
+                el.click();
                 await opened;
 
                 expect(el.open).to.be.true;

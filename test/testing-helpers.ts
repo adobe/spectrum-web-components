@@ -227,12 +227,45 @@ export async function isInteractive(
 }
 
 export async function fixture<T extends Element>(
-    story: TemplateResult
+    story: TemplateResult,
+    dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
         <sp-theme theme="spectrum" scale="medium" color="light">
             ${story}
+            <style>
+                sp-theme {
+                    --spectrum-global-animation-duration-100: 50ms;
+                    --spectrum-global-animation-duration-200: 50ms;
+                    --spectrum-global-animation-duration-300: 50ms;
+                    --spectrum-global-animation-duration-400: 50ms;
+                    --spectrum-global-animation-duration-500: 50ms;
+                    --spectrum-global-animation-duration-600: 50ms;
+                    --spectrum-global-animation-duration-700: 50ms;
+                    --spectrum-global-animation-duration-800: 50ms;
+                    --spectrum-global-animation-duration-900: 50ms;
+                    --spectrum-global-animation-duration-1000: 50ms;
+                    --spectrum-global-animation-duration-2000: 50ms;
+                    --spectrum-global-animation-duration-4000: 50ms;
+                    --spectrum-animation-duration-0: 50ms;
+                    --spectrum-animation-duration-100: 50ms;
+                    --spectrum-animation-duration-200: 50ms;
+                    --spectrum-animation-duration-300: 50ms;
+                    --spectrum-animation-duration-400: 50ms;
+                    --spectrum-animation-duration-500: 50ms;
+                    --spectrum-animation-duration-600: 50ms;
+                    --spectrum-animation-duration-700: 50ms;
+                    --spectrum-animation-duration-800: 50ms;
+                    --spectrum-animation-duration-900: 50ms;
+                    --spectrum-animation-duration-1000: 50ms;
+                    --spectrum-animation-duration-2000: 50ms;
+                    --spectrum-animation-duration-4000: 50ms;
+                    --spectrum-coachmark-animation-indicator-ring-duration: 50ms;
+                    --swc-test-duration: 1ms;
+                }
+            </style>
         </sp-theme>
     `);
+    document.documentElement.dir = dir;
     return test.children[0] as T;
 }
