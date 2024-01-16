@@ -15,6 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ComboboxOption } from '..';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/combobox/sp-combobox-item.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 export default {
@@ -22,50 +23,52 @@ export default {
     component: 'sp-combobox',
 };
 
+const optionsA: ComboboxOption[] = [
+    { id: 'thing1', value: 'Abc Thing 1' },
+    { id: 'thing1a', value: 'Bde Thing 2' },
+    { id: 'thing1b', value: 'Bef Thing 3' },
+    { id: 'thing4', value: 'Efg Thing 4' },
+    { id: 'athing1', value: 'Abc Thing 1' },
+    { id: 'athing1a', value: 'Bde Thing 2' },
+    { id: 'athing1b', value: 'Bef Thing 3' },
+    { id: 'athing4', value: 'Efg Thing 4' },
+];
+
+const optionsB: ComboboxOption[] = [
+    { id: 'o1', value: 'Aaaaaaaaaaaaa' },
+    { id: 'o2', value: 'Abaaaaaaaaaaa' },
+    { id: 'o3', value: 'Abcaaaaaaaaaa' },
+    { id: 'o4', value: 'Abcdaaaaaaaaa' },
+    { id: 'o5', value: 'Abcdeaaaaaaaa' },
+    { id: 'o6', value: 'Abcdefaaaaaaa' },
+    { id: 'o7', value: 'Abcdefgaaaaaa' },
+    { id: 'o8', value: 'Abcdefghaaaaa' },
+    { id: 'o9', value: 'Abcdefghiaaaa' },
+    { id: 'o10', value: 'Abcdefghijaaa' },
+    { id: 'o11', value: 'Abcdefghijkaa' },
+    { id: 'o12', value: 'Abcdefghijkla' },
+    { id: 'o13', value: 'Abcdefghijklm' },
+];
+
 export const Default = (): TemplateResult => {
-    const options: ComboboxOption[] = [
-        { id: 'thing1', value: 'Abc Thing 1' },
-        { id: 'thing1a', value: 'Bde Thing 2' },
-        { id: 'thing1b', value: 'Bef Thing 3' },
-        { id: 'thing4', value: 'Efg Thing 4' },
-        { id: 'athing1', value: 'Abc Thing 1' },
-        { id: 'athing1a', value: 'Bde Thing 2' },
-        { id: 'athing1b', value: 'Bef Thing 3' },
-        { id: 'athing4', value: 'Efg Thing 4' },
-    ];
     return html`
         <sp-field-label for="combobox-1" style="margin-block-start: 100vh;">
             Things
         </sp-field-label>
         <sp-combobox
             id="combobox-1"
-            .options=${options}
+            .options=${optionsA}
             style="margin-block-end: 100vh;"
         ></sp-combobox>
     `;
 };
 
 export const matches = (): TemplateResult => {
-    const options: ComboboxOption[] = [
-        { id: 'o1', value: 'Aaaaaaaaaaaaa' },
-        { id: 'o2', value: 'Abaaaaaaaaaaa' },
-        { id: 'o3', value: 'Abcaaaaaaaaaa' },
-        { id: 'o4', value: 'Abcdaaaaaaaaa' },
-        { id: 'o5', value: 'Abcdeaaaaaaaa' },
-        { id: 'o6', value: 'Abcdefaaaaaaa' },
-        { id: 'o7', value: 'Abcdefgaaaaaa' },
-        { id: 'o8', value: 'Abcdefghaaaaa' },
-        { id: 'o9', value: 'Abcdefghiaaaa' },
-        { id: 'o10', value: 'Abcdefghijaaa' },
-        { id: 'o11', value: 'Abcdefghijkaa' },
-        { id: 'o12', value: 'Abcdefghijkla' },
-        { id: 'o13', value: 'Abcdefghijklm' },
-    ];
     return html`
         <sp-field-label for="combobox-2">Things</sp-field-label>
         <sp-combobox
             id="combobox-2"
-            .options=${options}
+            .options=${optionsB}
             autocomplete="list"
         ></sp-combobox>
     `;
@@ -180,5 +183,22 @@ export const withTooltip = (): TemplateResult => {
                 Kerning
             </sp-tooltip>
         </sp-combobox>
+    `;
+};
+
+export const withFieldLabel = (): TemplateResult => {
+    return html`
+        <sp-field-label for="combobox-7">Pick something</sp-field-label>
+        <sp-combobox id="combobox-7" .options=${optionsA}></sp-combobox>
+    `;
+};
+
+export const withLabelAttribute = (): TemplateResult => {
+    return html`
+        <sp-combobox
+            id="combobox-7"
+            label="Pick something"
+            .options=${optionsA}
+        ></sp-combobox>
     `;
 };

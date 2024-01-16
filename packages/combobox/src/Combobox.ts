@@ -357,10 +357,6 @@ export class Combobox extends Textfield {
         `;
     }
 
-    applyFocusElementLabel = (value?: string): void => {
-        this.appliedLabel = value;
-    };
-
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
         if (this.tooltipEl) {
@@ -371,8 +367,10 @@ export class Combobox extends Textfield {
             ${super.render()}
             <sp-picker-button
                 aria-controls="listbox-menu"
+                aria-describedby=${this.helpTextId}
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-labelledby="label"
+                aria-label=${ifDefined(this.label || this.appliedLabel)}
+                aria-labelledby="applied-label label"
                 @click=${this.toggleOpen}
                 tabindex="-1"
                 class="button ${this.focused
@@ -446,6 +444,10 @@ export class Combobox extends Textfield {
             ></slot>
         `;
     }
+
+    applyFocusElementLabel = (value?: string): void => {
+        this.appliedLabel = value;
+    };
 
     protected override firstUpdated(changed: PropertyValues<this>): void {
         super.firstUpdated(changed);
