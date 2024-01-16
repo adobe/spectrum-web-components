@@ -14,13 +14,25 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '../sp-color-field.js';
 
 export default {
-    title: 'Color Field',
     component: 'sp-color-field',
+    title: 'Color Field',
 };
 
 export const Default = (): TemplateResult => {
     return html`
         <sp-color-field devMode="true"></sp-color-field>
+    `;
+};
+
+export const Quiet = (): TemplateResult => {
+    return html`
+        <sp-color-field quiet value="#ff0000"></sp-color-field>
+    `;
+};
+
+export const Disabled = (): TemplateResult => {
+    return html`
+        <sp-color-field disabled value="#ff0000"></sp-color-field>
     `;
 };
 
