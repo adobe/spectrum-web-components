@@ -1307,7 +1307,25 @@ export function runPickerTests(): void {
             await expect(el).to.be.accessible();
         });
     });
-    describe('deprecated', () => {
+    describe('Dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(async () => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+            if (el.open) {
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                await closed;
+            }
+        });
+
         const pickerFixture = async (): Promise<Picker> => {
             const test = await fixture<Picker>(
                 html`
@@ -1338,16 +1356,40 @@ export function runPickerTests(): void {
 
             return test.querySelector('sp-picker') as Picker;
         };
-        describe('Dev mode', () => {
+        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+            el = await fixture<Picker>(html`
+                <sp-picker>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                </sp-picker>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('accessible'),
+                'confirm accessibility-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-picker',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
+        describe('deprecated', () => {
             it('warns in Dev Mode of deprecated `<sp-menu>` usage', async () => {
-                const consoleWarnStub = stub(console, 'warn');
                 el = await pickerFixture();
                 await elementUpdated(el);
 
                 expect(consoleWarnStub.called).to.be.true;
                 const spyCall = consoleWarnStub.getCall(0);
                 expect(
-                    spyCall.args.at(0).includes('<sp-menu>'),
+                    (spyCall.args.at(0) as string).includes('<sp-menu>'),
                     'confirm <sp-menu>-centric message'
                 ).to.be.true;
                 expect(
@@ -1360,12 +1402,6 @@ export function runPickerTests(): void {
                         level: 'deprecation',
                     },
                 });
-                consoleWarnStub.restore();
-                if (el.open) {
-                    const closed = oneEvent(el, 'sp-closed');
-                    el.open = false;
-                    await closed;
-                }
             });
         });
         describe('Dev mode ignored', () => {
