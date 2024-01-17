@@ -12,5 +12,6 @@
         "tools/**/*.d.ts": { "when": "$(basename).ts" },
         "**/*.test-vrt.ts": true
     },
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "lit-plugin.strict": true
 }
