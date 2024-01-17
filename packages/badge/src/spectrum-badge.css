@@ -199,7 +199,6 @@ governing permissions and limitations under the License.
 :host {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    font-smoothing: subpixel-antialiased;
     background: var(
         --mod-badge-background-color-default,
         var(--spectrum-badge-background-color-default)

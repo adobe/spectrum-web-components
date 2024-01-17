@@ -14,7 +14,6 @@ import {
     aTimeout,
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     oneEvent,
@@ -26,8 +25,8 @@ import { spy } from 'sinon';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
+    fixture,
     ignoreResizeObserverLoopError,
-    fixture as styledFixture,
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import { tooltipDescriptionAndPlacement } from '../stories/action-menu.stories';
@@ -297,13 +296,66 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const el = await actionMenuFixture();
 
             const button = el.button as HTMLButtonElement;
+            expect(button).to.have.attribute('aria-haspopup', 'true');
+            expect(button).to.not.have.attribute('aria-expanded', 'true');
+            expect(button).to.not.have.attribute('aria-controls', 'menu');
 
-            button.click();
+            el.click();
             await elementUpdated(el);
             expect(el.open).to.be.true;
             expect(button).to.have.attribute('aria-haspopup', 'true');
             expect(button).to.have.attribute('aria-expanded', 'true');
             expect(button).to.have.attribute('aria-controls', 'menu');
+        });
+        it('opens and selects in a single pointer button interaction', async () => {
+            const el = await actionMenuFixture();
+            const thirdItem = el.querySelector(
+                'sp-menu-item:nth-of-type(3)'
+            ) as MenuItem;
+            const boundingRect = el.button.getBoundingClientRect();
+
+            expect(el.value).to.not.equal(thirdItem.value);
+            const opened = oneEvent(el, 'sp-opened');
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
+            await opened;
+
+            const thirdItemRect = thirdItem.getBoundingClientRect();
+            const closed = oneEvent(el, 'sp-closed');
+            let selected = '';
+            el.addEventListener('change', (event: Event) => {
+                selected = (event.target as ActionMenu).value;
+            });
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            thirdItemRect.x + thirdItemRect.width / 2,
+                            thirdItemRect.y + thirdItemRect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+            await closed;
+
+            expect(el.open).to.be.false;
+            expect(selected).to.equal(thirdItem.value);
         });
         it('has attribute aria-describedby', async () => {
             const name = 'sp-picker';
@@ -324,9 +376,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
 
-            const button = el.button as HTMLButtonElement;
-
-            button.click();
+            el.click();
             await elementUpdated(el);
             expect(el.open).to.be.true;
         });
@@ -415,7 +465,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                     });
                 }
             };
-            const root = await styledFixture<ActionMenu>(html`
+            const root = await fixture<ActionMenu>(html`
                 <sp-action-menu label="More Actions" @change=${handleChange}>
                     <sp-menu-item>One</sp-menu-item>
                     <sp-menu-item selected value="test" id="root-selected-item">
@@ -491,9 +541,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(selectedItem.textContent).to.include('Two');
             expect(selectedItem.selected).to.be.true;
         });
-        it('shows tooltip', async () => {
+        it('shows tooltip', async function () {
             const openSpy = spy();
-            const el = await styledFixture<ActionMenu>(
+            const el = await fixture<ActionMenu>(
                 tooltipDescriptionAndPlacement(
                     tooltipDescriptionAndPlacement.args
                 )
@@ -513,7 +563,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(overlay.triggerElement === el.button).to.be.true;
             let open = oneEvent(tooltip, 'sp-opened');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
                         position: [
@@ -528,47 +578,24 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(tooltip.open).to.be.true;
 
-            let close = oneEvent(tooltip, 'sp-closed');
-            el.click();
-            await close;
-
-            expect(tooltip.open).to.be.false;
-            expect(el.open).to.be.true;
-
-            open = oneEvent(tooltip, 'sp-opened');
-            sendMouse({
+            const close = oneEvent(tooltip, 'sp-closed');
+            open = oneEvent(el, 'sp-opened');
+            await sendMouse({
                 steps: [
-                    {
-                        position: [
-                            rect.left + rect.width * 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'move',
-                    },
                     {
                         position: [
                             rect.left + rect.width / 2,
                             rect.top + rect.height / 2,
                         ],
-                        type: 'move',
-                    },
-                ],
-            });
-            await open;
-
-            close = oneEvent(tooltip, 'sp-closed');
-            sendMouse({
-                steps: [
-                    {
-                        position: [
-                            rect.left + rect.width * 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'move',
+                        type: 'click',
                     },
                 ],
             });
             await close;
+            await open;
+
+            expect(tooltip.open, 'tooltip still open').to.be.false;
+            expect(el.open, 'menu not open').to.be.true;
 
             const menu = (el as unknown as TestablePicker).optionsMenu;
             const menuRect = menu.getBoundingClientRect();
@@ -587,14 +614,18 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await aTimeout(150);
 
-            expect(openSpy.callCount).to.equal(2);
+            expect(openSpy.callCount).to.equal(1);
         });
-        it('opens, then closes, on subsequent clicks', async () => {
+        it('opens, then closes, on subsequent clicks', async function () {
+            this.retries(0);
             const el = await actionMenuFixture();
             const rect = el.getBoundingClientRect();
 
+            await nextFrame();
+            await nextFrame();
+
             const open = oneEvent(el, 'sp-opened');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
                         position: [
@@ -612,7 +643,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.true;
 
             const close = oneEvent(el, 'sp-closed');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
                         position: [

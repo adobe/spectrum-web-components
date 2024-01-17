@@ -16,12 +16,13 @@ import { Menu, MenuGroup, MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,
-    fixture,
     html,
+    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { fixture } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Menu [selects]', () => {
@@ -38,26 +39,23 @@ describe('Menu [selects]', () => {
             `
         );
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
+        await Promise.all(options.map((option) => option.updateComplete));
+        await nextFrame();
+        await nextFrame();
     });
     describe('fires `change` events', async () => {
         it('on browser clicks', async () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
-                        type: 'move',
+                        type: 'click',
                         position: [
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
                     },
                 ],
             });
@@ -165,26 +163,23 @@ describe('Menu [selects] w/ group', () => {
             `
         );
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
+        await Promise.all(options.map((option) => option.updateComplete));
+        await nextFrame();
+        await nextFrame();
     });
     describe('fires `change` events', async () => {
         it('on browser clicks', async () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
-                        type: 'move',
+                        type: 'click',
                         position: [
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
                     },
                 ],
             });
@@ -293,26 +288,23 @@ describe('Menu w/ group [selects]', () => {
         );
         group = el.querySelector('sp-menu-group') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
+        await Promise.all(options.map((option) => option.updateComplete));
+        await nextFrame();
+        await nextFrame();
     });
     describe('fires `change` events', async () => {
         it('on browser clicks', async () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(group, 'change');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
-                        type: 'move',
+                        type: 'click',
                         position: [
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
                     },
                 ],
             });
@@ -430,6 +422,9 @@ describe('Menu w/ groups [selects]', () => {
         groupA = el.querySelector('sp-menu-group:first-child') as MenuGroup;
         groupB = el.querySelector('sp-menu-group:last-child') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
+        await Promise.all(options.map((option) => option.updateComplete));
+        await nextFrame();
+        await nextFrame();
     });
     describe('fires `change` events', async () => {
         it('on browser clicks', async () => {
@@ -439,20 +434,14 @@ describe('Menu w/ groups [selects]', () => {
             expect(groupA.value).to.equal('');
             expect(groupB.value).to.equal('');
             let change = oneEvent(el, 'change');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
-                        type: 'move',
+                        type: 'click',
                         position: [
                             boundingRectA.x + boundingRectA.width / 2,
                             boundingRectA.y + boundingRectA.height / 2,
                         ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
                     },
                 ],
             });
@@ -462,20 +451,14 @@ describe('Menu w/ groups [selects]', () => {
             expect(groupB.value).to.equal('');
             change = oneEvent(el, 'change');
             const boundingRectB = item1b.getBoundingClientRect();
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
-                        type: 'move',
+                        type: 'click',
                         position: [
                             boundingRectB.x + boundingRectB.width / 2,
                             boundingRectB.y + boundingRectB.height / 2,
                         ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
                     },
                 ],
             });

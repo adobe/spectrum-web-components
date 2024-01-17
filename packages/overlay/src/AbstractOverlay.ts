@@ -19,6 +19,7 @@ import type {
     OverlayState,
     OverlayTypes,
     Placement,
+    TriggerInteractions,
     TriggerInteractionsV1,
 } from './overlay-types.js';
 import type { Overlay } from './Overlay.js';
@@ -51,6 +52,43 @@ export class BeforetoggleOpenEvent extends Event {
             bubbles: false,
             composed: false,
         });
+    }
+}
+
+export class OverlayStateEvent extends Event {
+    detail!: {
+        interaction: string;
+        reason?: 'external-click';
+    };
+
+    constructor(
+        type: string,
+        public overlay: HTMLElement,
+        {
+            publish,
+            interaction,
+            reason,
+        }: {
+            publish?: boolean;
+            interaction: TriggerInteractions;
+            reason?: 'external-click';
+        }
+    ) {
+        super(type, {
+            bubbles: publish,
+            composed: publish,
+        });
+        this.detail = {
+            interaction,
+            reason,
+        };
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-open': OverlayStateEvent;
+        'sp-close': OverlayStateEvent;
     }
 }
 

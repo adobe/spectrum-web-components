@@ -65,7 +65,6 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
-        --highcontrast-avatar-color-opacity-disabled: 1;
         --highcontrast-avatar-focus-indicator-color: CanvasText;
     }
 }
@@ -220,7 +219,7 @@ governing permissions and limitations under the License.
     position: absolute;
 }
 .link {
-    outline: none;
+    outline: solid #0000;
 }
 .image {
     block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));

@@ -35,6 +35,7 @@ import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -102,6 +103,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-overlay')
     protected overlayElement!: Overlay;
 
+    protected tooltipEl?: Tooltip;
+
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      * @attr
@@ -148,13 +151,24 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.focused = true;
     }
 
+    public override click(): void {
+        if (this.disabled) {
+            return;
+        }
+
+        this.toggle();
+    }
+
     public handleButtonBlur(): void {
         this.focused = false;
     }
 
     protected preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
 
-    protected handleButtonPointerdown(): void {
+    protected handleButtonPointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            return;
+        }
         this.preventNextToggle = 'maybe';
         const cleanup = (): void => {
             document.removeEventListener('pointerup', cleanup);
@@ -167,6 +181,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // Ensure that however the pointer goes up we do `cleanup()`.
         document.addEventListener('pointerup', cleanup);
         document.addEventListener('pointercancel', cleanup);
+        this.handleButtonClick();
     }
 
     protected handleButtonFocus(event: FocusEvent): void {
@@ -180,7 +195,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
-    protected handleButtonClick(): void {
+    protected handleButtonClick = (): void => {
         if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
             return;
         }
@@ -188,7 +203,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             return;
         }
         this.toggle();
-    }
+    };
 
     public override focus(options?: FocusOptions): void {
         super.focus(options);
@@ -319,6 +334,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     _selectedItemContent?: MenuItemChildren;
 
+    protected handleTooltipSlotchange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.tooltipEl = event.target.assignedElements()[0] as
+            | Tooltip
+            | undefined;
+    }
+
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
             return content;
@@ -382,7 +405,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-chevron100>
-                <slot aria-hidden="true" name="tooltip" id="tooltip"></slot>
+                <slot
+                    aria-hidden="true"
+                    name="tooltip"
+                    id="tooltip"
+                    @slotchange=${this.handleTooltipSlotchange}
+                ></slot>
             `,
         ];
     }
@@ -392,15 +420,20 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
+        const container = this.renderContainer(menu);
+        this.trackDependency('sp-overlay');
         import('@spectrum-web-components/overlay/sp-overlay.js');
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
-                ?open=${this.open}
+                ?open=${this.open && this.dependenciesLoaded}
                 .placement=${this.isMobile.matches ? undefined : this.placement}
                 .type=${this.isMobile.matches ? 'modal' : 'auto'}
                 .receivesFocus=${'true'}
+                .willPreventClose=${this.preventNextToggle !== 'no' &&
+                this.open &&
+                this.dependenciesLoaded}
                 @beforetoggle=${(
                     event: Event & {
                         target: Overlay;
@@ -419,7 +452,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     }
                 }}
             >
-                ${this.renderContainer(menu)}
+                ${container}
             </sp-overlay>
         `;
     }
@@ -434,6 +467,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
+        if (this.tooltipEl) {
+            this.tooltipEl.disabled = this.open;
+        }
         return html`
             <span
                 id="focus-helper"
@@ -452,7 +488,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 @blur=${this.handleButtonBlur}
                 @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
-                @click=${this.handleButtonClick}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
@@ -487,6 +522,26 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
         if (window.__swc.DEBUG) {
+            if (
+                !this.label &&
+                !this.getAttribute('aria-label') &&
+                !this.getAttribute('aria-labelledby') &&
+                !this.appliedLabel
+            ) {
+                window.__swc.warn(
+                    this,
+                    '<sp-picker> needs one of the following to be accessible:',
+                    'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+                    {
+                        type: 'accessibility',
+                        issues: [
+                            'an <sp-field-label> element with a `for` attribute referencing the `id` of the `<sp-picker>`, or',
+                            'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                            'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                        ],
+                    }
+                );
+            }
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
@@ -521,6 +576,29 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
+    @state()
+    private dependenciesLoaded = false;
+    private dependenciesToLoad: Record<string, boolean> = {};
+
+    private trackDependency(dependency: string, flag?: boolean): void {
+        const loaded =
+            !!customElements.get(dependency) ||
+            this.dependenciesToLoad[dependency] ||
+            !!flag;
+        if (!loaded) {
+            customElements.whenDefined(dependency).then(() => {
+                this.trackDependency(dependency, true);
+            });
+        }
+        this.dependenciesToLoad = {
+            ...this.dependenciesToLoad,
+            [dependency]: loaded,
+        };
+        this.dependenciesLoaded = Object.values(this.dependenciesToLoad).every(
+            (loaded) => loaded
+        );
+    }
+
     protected renderContainer(menu: TemplateResult): TemplateResult {
         const accessibleMenu = html`
             ${this.dismissHelper} ${menu} ${this.dismissHelper}
@@ -528,6 +606,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // @todo: test in mobile
         /* c8 ignore next 11 */
         if (this.isMobile.matches) {
+            this.trackDependency('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');
             return html`
                 <sp-tray
@@ -539,6 +618,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 </sp-tray>
             `;
         }
+        this.trackDependency('sp-popover');
         import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-popover
@@ -670,19 +750,25 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (this.enterKeydownOn) {
             event.preventDefault();
             return;
-        } else {
-            this.addEventListener(
-                'keyup',
-                (keyupEvent: KeyboardEvent) => {
-                    if (keyupEvent.code !== 'Enter') {
-                        return;
-                    }
-                    this.enterKeydownOn = null;
-                },
-                { once: true }
-            );
         }
-        this.enterKeydownOn = this.enterKeydownOn || event.target;
+        this.enterKeydownOn = event.target;
+        if (this.enterKeydownOn === this.button) {
+            this.button.addEventListener('click', this.handleButtonClick);
+        }
+        this.addEventListener(
+            'keyup',
+            (keyupEvent: KeyboardEvent) => {
+                if (keyupEvent.code !== 'Enter') {
+                    return;
+                }
+                this.enterKeydownOn = null;
+                this.button.removeEventListener(
+                    'click',
+                    this.handleButtonClick
+                );
+            },
+            { once: true }
+        );
     };
 
     public override connectedCallback(): void {

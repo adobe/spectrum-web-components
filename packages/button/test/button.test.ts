@@ -17,12 +17,14 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import {
     shiftTabEvent,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 type TestableButtonType = {
@@ -104,7 +106,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el.getAttribute('role')).to.equal('button');
 
-        el.href = '#';
+        el.setAttribute('href', '#');
 
         await elementUpdated(el);
         expect(el.getAttribute('role')).to.equal('link');
@@ -272,6 +274,159 @@ describe('Button', () => {
 
         expect(el.hasAttribute('aria-disabled'), 'finally not').to.be.false;
     });
+    it('manages aria-label from disabled state', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button
+                    href="test_url"
+                    target="_blank"
+                    label="clickable"
+                    disabled
+                    pending-label="Pending Button"
+                >
+                    Click me
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-label')).to.equal('clickable');
+
+        // button set to pending while disabled and the aria-label should stay the same
+        el.pending = true;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('clickable');
+
+        // button set to enabled while pending is true and the aria-label should update
+        el.disabled = false;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Pending Button');
+
+        // pending is removed and the aria-label should be back to the original
+        el.pending = false;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('clickable');
+    });
+
+    it('manages aria-label from pending state', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button
+                    href="test_url"
+                    target="_blank"
+                    label="clickable"
+                    pending
+                >
+                    Click me
+                </sp-button>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Pending');
+
+        // button set to disabled while pending is true and the aria-label should be original
+        el.disabled = true;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('clickable');
+
+        // pending is removed and the aria-label should not change as the button is disabled
+        el.pending = false;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('clickable');
+
+        // button is enabled and the aria-label should not change
+        el.disabled = false;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('clickable');
+    });
+
+    it('manages aria-label set from outside', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button
+                    href="test_url"
+                    target="_blank"
+                    aria-label="test"
+                    pending-label="Pending Button"
+                >
+                    Click me
+                </sp-button>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('test');
+
+        // button set to pending and aria-label should update
+        el.pending = true;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Pending Button');
+
+        // button set to disabled while pending and aria-label should update
+        el.disabled = true;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('test');
+
+        // button set to enabled while pending and aria-label should update
+        el.disabled = false;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Pending Button');
+
+        // pending removed and aria-label should update
+        el.pending = false;
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('test');
+    });
+
+    it('updates pending label accessibly', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url" target="_blank">Button</sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        el.pending = true;
+        await elementUpdated(el);
+
+        await nextFrame();
+
+        type NamedNode = { name: string };
+        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            children: NamedNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Pending'
+            ),
+            '`Pending` is the label text'
+        ).to.not.be.null;
+
+        expect(el.pending).to.be.true;
+
+        // remove pending state
+        el.pending = false;
+        await elementUpdated(el);
+
+        await nextFrame();
+
+        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            children: NamedNode[];
+        };
+
+        // check label returns to previous value
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Button'
+            ),
+            '`Button` is the label text'
+        ).to.not.be.null;
+
+        expect(el.pending).to.be.false;
+    });
+
     it('manages tabIndex while disabled', async () => {
         const el = await fixture<Button>(
             html`

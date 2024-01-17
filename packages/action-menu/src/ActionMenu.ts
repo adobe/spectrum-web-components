@@ -79,12 +79,18 @@ export class ActionMenu extends ObserveSlotPresence(
                       `}
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
                 <slot name="label-only"></slot>
-                <slot name="tooltip"></slot>
+                <slot
+                    name="tooltip"
+                    @slotchange=${this.handleTooltipSlotchange}
+                ></slot>
             `,
         ];
     }
 
     protected override render(): TemplateResult {
+        if (this.tooltipEl) {
+            this.tooltipEl.disabled = this.open;
+        }
         return html`
             <sp-action-button
                 aria-describedby=${DESCRIPTION_ID}
@@ -101,7 +107,6 @@ export class ActionMenu extends ObserveSlotPresence(
                 @blur=${this.handleButtonBlur}
                 @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
-                @click=${this.handleButtonClick}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
