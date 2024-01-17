@@ -139,7 +139,7 @@ export const Filled = (args: StoryArgs = {}): TemplateResult => {
                 max="1"
                 variant="filled"
                 min="0"
-                value=".5"
+                value=".7"
                 step="0.01"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}

@@ -366,15 +366,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
      */
     private getOffsetWidth(
         fillStartValue: number,
-        currentValue: number,
-        cachedValue: number
+        currentValue: number
     ): number {
-        let distance: number;
-        if (fillStartValue === cachedValue) {
-            distance = Math.abs(currentValue - fillStartValue);
-        } else {
-            distance = Math.abs(currentValue - fillStartValue);
-        }
+        const distance = Math.abs(currentValue - fillStartValue);
         return (distance / (this.max - this.min)) * 100;
     }
 
@@ -386,7 +380,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         return ((value - this.min) / (this.max - this.min)) * 100;
     }
 
-    private fillStyles(cachedValue: number): StyleInfo {
+    private fillStyles(): StyleInfo {
         const position = this.dir === 'rtl' ? 'right' : 'left';
         const offsetPosition =
             this.value > this.fillStartPoint
@@ -394,8 +388,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 : this.getOffsetPosition(this.value);
         const offsetWidth = this.getOffsetWidth(
             this.fillStartPoint,
-            this.value,
-            cachedValue
+            this.value
         );
         const styles: StyleInfo = {
             [position]: `${offsetPosition}%`,
@@ -414,7 +407,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                     fill: true,
                     offset: this.value > this.fillStartPoint,
                 })}
-                style=${styleMap(this.fillStyles(this._cachedValue))}
+                style=${styleMap(this.fillStyles())}
             ></div>
         `;
     }
