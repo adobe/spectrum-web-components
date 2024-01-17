@@ -64,30 +64,12 @@ export class ColorField extends TextfieldBase {
     }
 
     public override checkValidity(): boolean {
+        if (!this.value) this.valid = this.invalid = false;
         let validity = super.checkValidity();
         if (this.value) {
             const colorHandle =
                 this.shadowRoot?.querySelector('sp-color-handle');
-            const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-            const rgbaRegex =
-                /^rgba\(\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(1|0(\.\d+)?)\s*\)$/i;
-            const rgbColorRegex =
-                /^rgb\(\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*,\s*(2[0-4]\d|25[0-5]|[01]?\d{1,2})\s*\)$/i;
-            const hsvColorRegex =
-                /^hsv\(\s*(360|3[0-5]\d|[12]?\d{1,2})\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*\)$/i;
-            const hslColorRegex =
-                /^hsl\(\s*(360|3[0-5]\d|[12]?\d{1,2})\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*\)$/i;
-            const cmykColorRegex =
-                /^cmyk\(\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*,\s*(100|[1-9]?\d)%\s*\)$/i;
-            if (
-                rgbaRegex.test(this.value) ||
-                rgbColorRegex.test(this.value) ||
-                hexColorRegex.test(this.value) ||
-                cmykColorRegex.test(this.value) ||
-                hsvColorRegex.test(this.value) ||
-                hslColorRegex.test(this.value)
-            ) {
-                // Input value is in rgba format
+            if (new TinyColor(this.value).isValid) {
                 validity = true;
                 this.valid = validity;
                 colorHandle?.setAttribute(

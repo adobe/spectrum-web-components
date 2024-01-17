@@ -30,6 +30,12 @@ export const Quiet = (): TemplateResult => {
     `;
 };
 
+export const ReadOnly = (): TemplateResult => {
+    return html`
+        <sp-color-field readonly value="#ff0000"></sp-color-field>
+    `;
+};
+
 export const Disabled = (): TemplateResult => {
     return html`
         <sp-color-field disabled value="#ff0000"></sp-color-field>

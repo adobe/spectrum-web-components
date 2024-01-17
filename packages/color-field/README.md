@@ -37,6 +37,22 @@ When devMode is true, the color handle will be rendered. This is useful for deve
 <sp-color-field devMode="true"></sp-color-field>
 ```
 
+### Read Only
+
+A readonly color field
+
+```html
+<sp-color-field readonly value="#ffff00"></sp-color-field>
+```
+
+### Quiet
+
+A readonly color field
+
+```html
+<sp-color-field quiet value="#ffff00"></sp-color-field>
+```
+
 ### Wrong Input
 
 If the input value is not a valid color, the sp-color-field will not accept it. The input field will be cleared.
