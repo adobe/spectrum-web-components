@@ -18,7 +18,6 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { TinyColor } from '@ctrl/tinycolor';
 import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 
 //import styles from './color-field.css.js';
@@ -58,6 +57,15 @@ export class ColorField extends TextfieldBase {
     }
 
     protected override render(): TemplateResult {
+        if (this.devMode) {
+            import('@spectrum-web-components/color-handle/sp-color-handle.js')
+                .then(() => {
+                    // Do Nothing
+                })
+                .catch((error) => {
+                    console.error(`Error loading module: ${error}`);
+                });
+        }
         return html`
             ${super.render()} ${this.renderColorHandle()}
         `;
