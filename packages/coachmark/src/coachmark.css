@@ -24,9 +24,8 @@ governing permissions and limitations under the License.
 .keyboard-shortcut {
     align-items: center;
     background-color: var(--spectrum-gray-200);
-    border: var(--spectrum-alias-border-size-thin) solid
-        var(--spectrum-gray-200);
-    border-radius: var(--spectrum-alias-border-radius-regular);
+    border: var(--spectrum-border-width-100) solid var(--spectrum-gray-200);
+    border-radius: var(--spectrum-component-edge-to-visual-only-75);
     color: var(--spectrum-gray-800);
     display: inline-flex;
     flex-flow: row;

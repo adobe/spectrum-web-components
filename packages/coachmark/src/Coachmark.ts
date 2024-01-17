@@ -34,6 +34,8 @@ import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 
 /**
  * @element sp-coachmark
+ * @fires primary - Announces that the "primary" button has been clicked.
+ * @fires secondary - Announces that the "secondary" button has been clicked.
  * @slot cover-photo - This is the cover photo for Default and Quiet Coachmark
  * @slot heading - HTML content to be listed as the heading
  * @slot description - A description of the card

@@ -1,6 +1,6 @@
 ## Description
 
-`<sp-coach-indicator>` show the connection between an object and its explanation in a touring mode — for example, the source of coach mark in an onboarding tour.
+`<sp-coach-indicator>` show the connection between an object and its explanation in a touring mode — for example, the source of <sp-coachmark> in an onboarding tour.
 
 ### Usage
 
@@ -23,7 +23,11 @@ When looking to leverage the `CoachIndicator` base class as a type and/or for ex
 import { CoachIndicator } from '@spectrum-web-components/coach-indicator';
 ```
 
-## Standard
+## Variants
+
+<sp-tabs selected="standard" auto label="Variant Options">
+<sp-tab value="standard">Standard</sp-tab>
+<sp-tab-panel value="standard">
 
 ```html
 <sp-coach-indicator></sp-coach-indicator>
@@ -31,10 +35,15 @@ import { CoachIndicator } from '@spectrum-web-components/coach-indicator';
 <sp-coach-indicator variant="light"></sp-coach-indicator>
 ```
 
-## Quiet
+</sp-tab-panel>
+<sp-tab value="quiet">Quiet</sp-tab>
+<sp-tab-panel value="quiet">
 
 ```html
 <sp-coach-indicator quiet></sp-coach-indicator>
 <sp-coach-indicator quiet variant="dark"></sp-coach-indicator>
 <sp-coach-indicator quiet variant="light"></sp-coach-indicator>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
