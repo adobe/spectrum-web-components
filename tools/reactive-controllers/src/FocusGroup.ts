@@ -239,14 +239,23 @@ export class FocusGroupController<T extends HTMLElement>
         this.focused = false;
     }
 
-    isRelatedTargetAnElement(event: FocusEvent): boolean {
+    isRelatedTargetOrContainAnElement(event: FocusEvent): boolean {
         const relatedTarget = event.relatedTarget as null | Element;
-        return !this.elements.includes(relatedTarget as T);
+
+        const isRelatedTargetAnElement = this.elements.includes(
+            relatedTarget as T
+        );
+        const isRelatedTargetContainedWithinElements = this.elements.some(
+            (el) => el.contains(relatedTarget)
+        );
+        return !(
+            isRelatedTargetAnElement || isRelatedTargetContainedWithinElements
+        );
     }
 
     handleFocusin = (event: FocusEvent): void => {
         if (!this.isEventWithinListenerScope(event)) return;
-        if (this.isRelatedTargetAnElement(event)) {
+        if (this.isRelatedTargetOrContainAnElement(event)) {
             this.hostContainsFocus();
         }
         const path = event.composedPath() as T[];
@@ -260,7 +269,7 @@ export class FocusGroupController<T extends HTMLElement>
     };
 
     handleFocusout = (event: FocusEvent): void => {
-        if (this.isRelatedTargetAnElement(event)) {
+        if (this.isRelatedTargetOrContainAnElement(event)) {
             this.hostNoLongerContainsFocus();
         }
     };

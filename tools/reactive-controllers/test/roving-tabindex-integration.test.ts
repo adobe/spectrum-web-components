@@ -269,3 +269,48 @@ describe('Action Menu inside of Action Group', () => {
         ).to.equal(0);
     });
 });
+
+describe('tabIndex is cached properly', () => {
+    it('cache is managed properly', async () => {
+        const menuEl = await fixture<ActionMenu>(
+            html`
+                <sp-action-menu label="More Actions">
+                    <sp-menu-item>One</sp-menu-item>
+                    <sp-menu-item>Two</sp-menu-item>
+                    <sp-menu-item>Three</sp-menu-item>
+                </sp-action-menu>
+            `
+        );
+
+        expect(menuEl.tabIndex).to.equal(0);
+        expect(menuEl.focusElement?.tabIndex).to.equal(0);
+
+        menuEl.tabIndex = 1;
+
+        await elementUpdated(menuEl);
+
+        expect(menuEl.tabIndex).to.equal(1);
+        expect(menuEl.focusElement?.tabIndex).to.equal(1);
+
+        menuEl.disabled = true;
+
+        await elementUpdated(menuEl);
+
+        expect(menuEl.tabIndex).to.equal(-1);
+        expect(menuEl.focusElement?.tabIndex).to.equal(-1);
+
+        menuEl.tabIndex = 2;
+
+        await elementUpdated(menuEl);
+
+        expect(menuEl.tabIndex).to.equal(-1);
+        expect(menuEl.focusElement?.tabIndex).to.equal(-1);
+
+        menuEl.disabled = false;
+
+        await elementUpdated(menuEl);
+
+        expect(menuEl.tabIndex).to.equal(2);
+        expect(menuEl.focusElement?.tabIndex).to.equal(2);
+    });
+});

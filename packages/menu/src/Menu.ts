@@ -589,6 +589,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (event.defaultPrevented) {
             return;
         }
+
+        // Prevent handling of keydown events from the parent component
+        event.preventDefault();
+
         const lastFocusedItem = this.childItems[this.focusedItemIndex];
         if (lastFocusedItem) {
             lastFocusedItem.focused = true;
