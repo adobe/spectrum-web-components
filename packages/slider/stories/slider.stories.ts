@@ -132,6 +132,81 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const Filled = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                variant="filled"
+                min="0"
+                value=".7"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Slider Label
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const FillStart = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                fill-start
+                min="0"
+                value=".7"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Slider label
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".7"
+                step="0.1"
+                fill-start="0.3"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Value Greater than Fill Start
+            </sp-slider>
+        </div>
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="20"
+                min="0"
+                value="5"
+                step="1"
+                fill-start="15"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                ...=${spreadProps(args)}
+            >
+                Value Less than Fill Start
+            </sp-slider>
+        </div>
+    `;
+};
+
 export const autofocus = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">

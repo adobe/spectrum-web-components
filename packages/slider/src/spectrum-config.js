@@ -99,7 +99,6 @@ const config = {
                 },
                 converter.classToId('spectrum-Slider-buffer', 'buffer'),
                 converter.classToId('spectrum-Slider-controls', 'controls'),
-                converter.classToId('spectrum-Slider-fill', 'fill'),
                 converter.classToId('spectrum-Slider-label', 'label'),
                 converter.classToId(
                     'spectrum-Slider-labelContainer',
@@ -110,6 +109,8 @@ const config = {
                 converter.classToClass('spectrum-Slider-handle', 'handle'),
                 converter.classToClass('spectrum-Slider-input', 'input'),
                 converter.classToClass('spectrum-Slider-tick', 'tick'),
+                converter.classToClass('spectrum-Slider-fill--right', 'offset'),
+                converter.classToClass('spectrum-Slider-fill', 'fill'),
                 converter.classToClass(
                     'spectrum-Slider-tickLabel',
                     'tickLabel'

@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     nothing,
+    PropertyValues,
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -91,6 +92,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property()
     public type = '';
 
+    @property({ reflect: true })
+    public override dir!: 'ltr' | 'rtl';
+
     @property({ type: String })
     public set variant(variant: string) {
         const oldVariant = this.variant;
@@ -159,6 +163,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
+
+    @property({ type: Number, reflect: true, attribute: 'fill-start' })
+    public fillStart?: number | boolean;
 
     /**
      * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
@@ -348,6 +355,61 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
+    private _cachedValue: number | undefined;
+    private centerPoint: number | undefined;
+
+    /**
+     * @description calculates the fill width
+     * @param fillStartValue
+     * @param currentValue
+     * @param cachedValue
+     * @returns
+     */
+    private getOffsetWidth(
+        fillStartValue: number,
+        currentValue: number
+    ): number {
+        const distance = Math.abs(currentValue - fillStartValue);
+        return (distance / (this.max - this.min)) * 100;
+    }
+
+    /**
+     * @description calculates the fill width starting point to fill width
+     * @param value
+     */
+    private getOffsetPosition(value: number): number {
+        return ((value - this.min) / (this.max - this.min)) * 100;
+    }
+
+    private fillStyles(centerPoint: number): StyleInfo {
+        const position = this.dir === 'rtl' ? 'right' : 'left';
+        const offsetPosition =
+            this.value > centerPoint
+                ? this.getOffsetPosition(centerPoint)
+                : this.getOffsetPosition(this.value);
+        const offsetWidth = this.getOffsetWidth(centerPoint, this.value);
+        const styles: StyleInfo = {
+            [position]: `${offsetPosition}%`,
+            width: `${offsetWidth}%`,
+        };
+        return styles;
+    }
+
+    private renderFillOffset(): TemplateResult {
+        if (!this._cachedValue || !this.centerPoint) {
+            return html``;
+        }
+        return html`
+            <div
+                class=${classMap({
+                    fill: true,
+                    offset: this.value > this.centerPoint,
+                })}
+                style=${styleMap(this.fillStyles(this.centerPoint))}
+            ></div>
+        `;
+    }
+
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
         const handleItems = [
@@ -360,6 +422,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
             })),
+            { id: 'fill', html: this.renderFillOffset() },
         ];
 
         return html`
@@ -438,8 +501,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         const size = end - start;
         const styles: StyleInfo = {
             width: `${size * 100}%`,
-            '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
-            '--spectrum-slider-track-segment-position': `${start * 100}%`,
+            ...(this.handleController.size > 1 && {
+                '--spectrum-slider-track-background-size': `${
+                    (1 / size) * 100
+                }%`,
+                '--spectrum-slider-track-segment-position': `${start * 100}%`,
+            }),
         };
         return styles;
     }
@@ -454,5 +521,18 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         }
         await this.handleController.handleUpdatesComplete();
         return complete;
+    }
+
+    protected override willUpdate(changed: PropertyValues): void {
+        if (changed.has('value') && changed.has('fillStart')) {
+            this._cachedValue = Number(this.value);
+            if (this.fillStart) {
+                this.centerPoint = Number(this.fillStart);
+            } else {
+                this.centerPoint =
+                    (Number(this.max) - Number(this.min)) / 2 +
+                    Number(this.min);
+            }
+        }
     }
 }
