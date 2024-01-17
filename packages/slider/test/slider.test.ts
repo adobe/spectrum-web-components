@@ -844,16 +844,53 @@ describe('Slider', () => {
         expect(el.variant).to.equal('tick');
         expect(el.getAttribute('variant')).to.equal('tick');
     });
-    it('renders div[class="fill"] when fill-start', async () => {
+    it('renders fill from the centerPoint of the track when fill-start has no value', async () => {
         const el = await fixture<Slider>(
             html`
-                <sp-slider max="100" fill-start min="0" value="10"></sp-slider>
+                <sp-slider
+                    max="20"
+                    fill-start
+                    min="0"
+                    value="10"
+                    step="1"
+                ></sp-slider>
             `
         );
 
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('50%');
+        expect(fillElement.style.width).to.equal('0%');
+        expect(el.values).to.deep.equal({ value: 10 });
+    });
+    it('renders fill from fill-start point', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    max="100"
+                    fill-start="15"
+                    min="0"
+                    value="10"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('10%');
+        expect(fillElement.style.width).to.equal('5%');
         expect(el.values).to.deep.equal({ value: 10 });
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
@@ -889,7 +926,6 @@ describe('Slider', () => {
         await nextFrame();
 
         expect(el.value).to.equal(24);
-        expect(el.shadowRoot.querySelector('.fill') as HTMLDivElement).to.exist;
     });
     it('has a `focusElement`', async () => {
         const el = await fixture<Slider>(

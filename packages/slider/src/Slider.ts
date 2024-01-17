@@ -356,6 +356,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
 
     private _cachedValue: number | undefined;
+    private centerPoint: number | undefined;
 
     /**
      * @description calculates the fill width
@@ -380,16 +381,13 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         return ((value - this.min) / (this.max - this.min)) * 100;
     }
 
-    private fillStyles(): StyleInfo {
+    private fillStyles(centerPoint: number): StyleInfo {
         const position = this.dir === 'rtl' ? 'right' : 'left';
         const offsetPosition =
-            this.value > this.fillStartPoint
-                ? this.getOffsetPosition(this.fillStartPoint)
+            this.value > centerPoint
+                ? this.getOffsetPosition(centerPoint)
                 : this.getOffsetPosition(this.value);
-        const offsetWidth = this.getOffsetWidth(
-            this.fillStartPoint,
-            this.value
-        );
+        const offsetWidth = this.getOffsetWidth(centerPoint, this.value);
         const styles: StyleInfo = {
             [position]: `${offsetPosition}%`,
             width: `${offsetWidth}%`,
@@ -398,16 +396,16 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
 
     private renderFillOffset(): TemplateResult {
-        if (!this._cachedValue) {
+        if (!this._cachedValue || !this.centerPoint) {
             return html``;
         }
         return html`
             <div
                 class=${classMap({
                     fill: true,
-                    offset: this.value > this.fillStartPoint,
+                    offset: this.value > this.centerPoint,
                 })}
-                style=${styleMap(this.fillStyles())}
+                style=${styleMap(this.fillStyles(this.centerPoint))}
             ></div>
         `;
     }
@@ -525,16 +523,16 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         return complete;
     }
 
-    private get fillStartPoint(): number {
-        if (this.fillStart) {
-            return Number(this.fillStart);
-        } else {
-            return (Number(this.max) - Number(this.min)) / 2 + Number(this.min);
-        }
-    }
     protected override willUpdate(changed: PropertyValues): void {
         if (changed.has('value') && changed.has('fillStart')) {
             this._cachedValue = Number(this.value);
+            if (this.fillStart) {
+                this.centerPoint = Number(this.fillStart);
+            } else {
+                this.centerPoint =
+                    (Number(this.max) - Number(this.min)) / 2 +
+                    Number(this.min);
+            }
         }
     }
 }
