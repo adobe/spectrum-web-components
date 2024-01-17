@@ -59,6 +59,42 @@ governing permissions and limitations under the License.
     gap: calc(var(--input-spacing) - var(--input-border));
 }
 
+.picker-button[invalid] {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-default
+    );
+}
+
+.picker-button[invalid]:focus {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-focus
+    );
+}
+
+.picker-button[invalid]:focus-visible {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-keyboard-focus
+    );
+}
+
+.picker-button[invalid]:hover {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-hover
+    );
+}
+
+.picker-button[invalid]:focus:hover {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-focus-hover
+    );
+}
+
+:host([invalid]:hover) .picker-button[invalid] {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-hover
+    );
+}
+
 .popover {
     overflow-y: auto;
 }

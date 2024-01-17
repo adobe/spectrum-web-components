@@ -73,6 +73,7 @@ export class DateTimePicker extends InputSegments {
                 ${this.renderStateIcons()}
 
                 <sp-picker-button
+                    class="picker-button"
                     ?open=${this.open}
                     ?quiet=${this.quiet || this.readonly}
                     ?invalid=${this.invalid}

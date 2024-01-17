@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { DateTimePicker } from '../src/DateTimePicker.js';
-import { html } from 'lit';
 
 describe('DateTimePicker', () => {
     testForLitDevWarnings(
@@ -24,6 +24,7 @@ describe('DateTimePicker', () => {
                 `
             )
     );
+
     it('loads default sp-date-time-picker accessibly', async () => {
         const el = await fixture<DateTimePicker>(
             html`
