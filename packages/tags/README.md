@@ -1,6 +1,6 @@
 ## Description
 
-`sp-tags` and `sp-tag` elements allow users to categorize content. They can represent keywords or people, and are grouped to describe an item or a search request.
+`<sp-tags>` elements contain a collection of `<sp-tag>` elements and allow users to categorize content. They can represent keywords or people, and are grouped to describe an item or a search request.
 
 ### Usage
 
@@ -78,64 +78,6 @@ import {
         <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>
     <sp-tag disabled>
-        Tag 3
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-    </sp-tag>
-</sp-tags>
-```
-
-### Deletable
-
-Use the `deletable` attribute to signify `sp-tags` elements that can be removed. The tags will only be focusable and deletable when they have the `deletable` and non-disabled attribute.
-
-```html-live
-<sp-tags>
-    <sp-tag deletable>Tag 1</sp-tag>
-    <sp-tag invalid deletable>Tag 2</sp-tag>
-    <sp-tag disabled deletable>Tag 3</sp-tag>
-</sp-tags>
-```
-
-```html-live
-<sp-tags>
-    <sp-tag deletable>
-        Tag 1
-        <sp-avatar
-            slot="avatar"
-            label="Tag 1"
-            src=https://picsum.photos/500/500
-        ></sp-avatar>
-    </sp-tag>
-    <sp-tag invalid deletable>
-        Tag 2
-        <sp-avatar
-            slot="avatar"
-            label="Tag 1"
-            src=https://picsum.photos/500/500
-        ></sp-avatar>
-    </sp-tag>
-    <sp-tag disabled deletable>
-        Tag 3
-        <sp-avatar
-            slot="avatar"
-            label="Tag 1"
-            src=https://picsum.photos/500/500
-        ></sp-avatar>
-    </sp-tag>
-</sp-tags>
-```
-
-```html-live
-<sp-tags>
-    <sp-tag deletable>
-        Tag 1
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-    </sp-tag>
-    <sp-tag invalid deletable>
-        Tag 2
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-    </sp-tag>
-    <sp-tag disabled deletable>
         Tag 3
         <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>

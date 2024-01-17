@@ -151,13 +151,24 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.focused = true;
     }
 
+    public override click(): void {
+        if (this.disabled) {
+            return;
+        }
+
+        this.toggle();
+    }
+
     public handleButtonBlur(): void {
         this.focused = false;
     }
 
     protected preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
 
-    protected handleButtonPointerdown(): void {
+    protected handleButtonPointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            return;
+        }
         this.preventNextToggle = 'maybe';
         const cleanup = (): void => {
             document.removeEventListener('pointerup', cleanup);
@@ -170,6 +181,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // Ensure that however the pointer goes up we do `cleanup()`.
         document.addEventListener('pointerup', cleanup);
         document.addEventListener('pointercancel', cleanup);
+        this.handleButtonClick();
     }
 
     protected handleButtonFocus(event: FocusEvent): void {
@@ -183,7 +195,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
-    protected handleButtonClick(): void {
+    protected handleButtonClick = (): void => {
         if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
             return;
         }
@@ -191,7 +203,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             return;
         }
         this.toggle();
-    }
+    };
 
     public override focus(options?: FocusOptions): void {
         super.focus(options);
@@ -419,6 +431,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .placement=${this.isMobile.matches ? undefined : this.placement}
                 .type=${this.isMobile.matches ? 'modal' : 'auto'}
                 .receivesFocus=${'true'}
+                .willPreventClose=${this.preventNextToggle !== 'no' &&
+                this.open &&
+                this.dependenciesLoaded}
                 @beforetoggle=${(
                     event: Event & {
                         target: Overlay;
@@ -473,7 +488,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 @blur=${this.handleButtonBlur}
                 @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
-                @click=${this.handleButtonClick}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
@@ -508,6 +522,26 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
         if (window.__swc.DEBUG) {
+            if (
+                !this.label &&
+                !this.getAttribute('aria-label') &&
+                !this.getAttribute('aria-labelledby') &&
+                !this.appliedLabel
+            ) {
+                window.__swc.warn(
+                    this,
+                    '<sp-picker> needs one of the following to be accessible:',
+                    'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+                    {
+                        type: 'accessibility',
+                        issues: [
+                            'an <sp-field-label> element with a `for` attribute referencing the `id` of the `<sp-picker>`, or',
+                            'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                            'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                        ],
+                    }
+                );
+            }
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
@@ -716,19 +750,25 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (this.enterKeydownOn) {
             event.preventDefault();
             return;
-        } else {
-            this.addEventListener(
-                'keyup',
-                (keyupEvent: KeyboardEvent) => {
-                    if (keyupEvent.code !== 'Enter') {
-                        return;
-                    }
-                    this.enterKeydownOn = null;
-                },
-                { once: true }
-            );
         }
-        this.enterKeydownOn = this.enterKeydownOn || event.target;
+        this.enterKeydownOn = event.target;
+        if (this.enterKeydownOn === this.button) {
+            this.button.addEventListener('click', this.handleButtonClick);
+        }
+        this.addEventListener(
+            'keyup',
+            (keyupEvent: KeyboardEvent) => {
+                if (keyupEvent.code !== 'Enter') {
+                    return;
+                }
+                this.enterKeydownOn = null;
+                this.button.removeEventListener(
+                    'click',
+                    this.handleButtonClick
+                );
+            },
+            { once: true }
+        );
     };
 
     public override connectedCallback(): void {

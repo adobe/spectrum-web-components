@@ -106,7 +106,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el.getAttribute('role')).to.equal('button');
 
-        el.href = '#';
+        el.setAttribute('href', '#');
 
         await elementUpdated(el);
         expect(el.getAttribute('role')).to.equal('link');

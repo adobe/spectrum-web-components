@@ -45,7 +45,10 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<LikeAnchorInterface> {
     class LikeAnchorElement extends constructor {
-        @property({ reflect: true })
+        /**
+         * Causes the browser to treat the linked URL as a download.
+         */
+        @property()
         public download?: string;
 
         /**
@@ -55,13 +58,36 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
         @property()
         public label?: string;
 
-        @property({ reflect: true })
+        /**
+         * The URL that the hyperlink points to.
+         */
+        @property()
         public href?: string;
 
-        @property({ reflect: true })
+        /**
+         * Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).
+         */
+        @property()
         public target?: '_blank' | '_parent' | '_self' | '_top';
 
-        @property({ reflect: true })
+        /**
+         * How much of the referrer to send when following the link.
+         */
+        @property()
+        public referrerpolicy?:
+            | 'no-referrer'
+            | 'no-referrer-when-downgrade'
+            | 'origin'
+            | 'origin-when-cross-origin'
+            | 'same-origin'
+            | 'strict-origin'
+            | 'strict-origin-when-cross-origin'
+            | 'unsafe-url';
+
+        /**
+         * The relationship of the linked URL as space-separated link types.
+         */
+        @property()
         public rel?: string;
 
         public renderAnchor({
@@ -85,6 +111,7 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
                     aria-labelledby=${ifDefined(labelledby)}
                     aria-hidden=${ifDefined(ariaHidden ? 'true' : undefined)}
                     tabindex=${ifDefined(tabindex)}
+                    referrerpolicy=${ifDefined(this.referrerpolicy)}
                     rel=${ifDefined(this.rel)}
                 >${anchorContent}</a>`;
         }
