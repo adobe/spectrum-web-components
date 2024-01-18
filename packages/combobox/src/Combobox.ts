@@ -367,6 +367,12 @@ export class Combobox extends Textfield {
                         aria-labelledby="label"
                         id="listbox-menu"
                         role="listbox"
+                        selects=${ifDefined(
+                            this.autocomplete === 'none' ? 'single' : undefined
+                        )}
+                        .selected=${this.autocomplete === 'none'
+                            ? [this.value]
+                            : []}
                         style="min-width: ${width}px;"
                         size=${this.size}
                     >
