@@ -20,7 +20,7 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-color-field devMode="true"></sp-color-field>
+        <sp-color-field></sp-color-field>
     `;
 };
 
@@ -42,9 +42,9 @@ export const Disabled = (): TemplateResult => {
     `;
 };
 
-export const DevMode = (): TemplateResult => {
+export const viewColor = (): TemplateResult => {
     return html`
-        <sp-color-field devMode="true"></sp-color-field>
+        <sp-color-field viewColor="true"></sp-color-field>
     `;
 };
 

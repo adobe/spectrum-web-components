@@ -31,7 +31,7 @@ export class ColorField extends TextfieldBase {
     }
 
     @property({ type: Boolean, reflect: true })
-    public devMode = false;
+    public viewColor = false;
 
     public override set value(value: string) {
         if (value === this.value) {
@@ -49,7 +49,7 @@ export class ColorField extends TextfieldBase {
     protected override _value = '';
 
     public renderColorHandle(): TemplateResult {
-        return this.devMode
+        return this.viewColor
             ? html`
                   <sp-color-handle size="m" color=""></sp-color-handle>
               `
@@ -57,14 +57,8 @@ export class ColorField extends TextfieldBase {
     }
 
     protected override render(): TemplateResult {
-        if (this.devMode) {
-            import('@spectrum-web-components/color-handle/sp-color-handle.js')
-                .then(() => {
-                    // Do Nothing
-                })
-                .catch((error) => {
-                    console.error(`Error loading module: ${error}`);
-                });
+        if (this.viewColor) {
+            import('@spectrum-web-components/color-handle/sp-color-handle.js');
         }
         return html`
             ${super.render()} ${this.renderColorHandle()}
@@ -72,7 +66,6 @@ export class ColorField extends TextfieldBase {
     }
 
     public override checkValidity(): boolean {
-        if (!this.value) this.valid = this.invalid = false;
         let validity = super.checkValidity();
         if (this.value) {
             const colorHandle =
@@ -92,6 +85,8 @@ export class ColorField extends TextfieldBase {
             }
             this.valid = validity;
             this.invalid = !validity;
+        } else {
+            this.valid = this.invalid = false;
         }
         return validity;
     }

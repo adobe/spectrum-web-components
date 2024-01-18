@@ -47,7 +47,7 @@ A readonly color field
 
 ### Quiet
 
-A readonly color field
+A Quiet color field
 
 ```html
 <sp-color-field quiet value="#ffff00"></sp-color-field>
@@ -55,7 +55,7 @@ A readonly color field
 
 ### Wrong Input
 
-If the input value is not a valid color, the sp-color-field will not accept it. The input field will be cleared.
+If the input value is not a valid color, the sp-color-field will not accept it.
 
 ```html
 <sp-color-field value="not a color"></sp-color-field>
@@ -63,7 +63,8 @@ If the input value is not a valid color, the sp-color-field will not accept it. 
 
 ### Right Input
 
-If the input value is a valid color, the sp-color-field will accept it and the color handle will be updated to reflect the new color.
+If the input value is a valid color, the <sp-color-field> will accept it and the color handle will be updated to reflect the new color.
+
 The `sp-color-field` component accepts color values in various formats: HEX, RGB, HSL, HSV, and shorthand HEX.
 
 -   HEX: A hexadecimal color is specified with: `#RRGGBB`. `RR` (red), `GG` (green) and `BB` (blue) are hexadecimal integers between `00` and `FF` specifying the intensity of the color.

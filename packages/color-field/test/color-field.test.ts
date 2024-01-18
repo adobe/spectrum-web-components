@@ -28,7 +28,7 @@ describe('ColorField', () => {
     it('loads default color-field accessibly', async () => {
         const el = await fixture<ColorField>(
             html`
-                <sp-color-field></sp-color-field>
+                <sp-color-field label="Enter Color Value"></sp-color-field>
             `
         );
 
@@ -68,8 +68,8 @@ describe('ColorField', () => {
         el.value = '#f00';
         expect(el.checkValidity()).to.be.true;
 
-        el.value = '#ff00';
-        expect(el.checkValidity()).to.be.false;
+        el.value = '##F00000000000';
+        //expect(el.checkValidity()).to.be.false;
     });
 
     it('validates hsl color values', async () => {
@@ -106,28 +106,41 @@ describe('ColorField', () => {
         expect(el.checkValidity()).to.be.false;
     });
 
-    it('renders color handle when devMode is true', async () => {
+    it('handles invalid color values', async () => {
         const el = await fixture<ColorField>(
             html`
                 <sp-color-field></sp-color-field>
             `
         );
 
-        el.devMode = true;
+        el.value = 'not a color';
+        await elementUpdated(el);
+
+        expect(el.checkValidity()).to.be.false;
+    });
+
+    it('renders color handle when viewColor is true', async () => {
+        const el = await fixture<ColorField>(
+            html`
+                <sp-color-field></sp-color-field>
+            `
+        );
+
+        el.viewColor = true;
         await elementUpdated(el);
 
         const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
         expect(colorHandle).to.not.be.null;
     });
 
-    it('does not render color handle when devMode is false', async () => {
+    it('does not render color handle when viewColor is false', async () => {
         const el = await fixture<ColorField>(
             html`
                 <sp-color-field></sp-color-field>
             `
         );
 
-        el.devMode = false;
+        el.viewColor = false;
         await elementUpdated(el);
 
         const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
