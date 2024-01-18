@@ -86,7 +86,7 @@ describe('Combobox', () => {
             const test = await fixture<HTMLDivElement>(html`
                 <div>${withFieldLabel()}</div>
             `);
-            const el = test.querySelector('sp-combobox') as Combobox;
+            const el = test.querySelector('sp-combobox') as unknown as Combobox;
 
             await elementUpdated(el);
 
@@ -96,7 +96,7 @@ describe('Combobox', () => {
             const test = await fixture<HTMLDivElement>(html`
                 <div>${withFieldLabel()}</div>
             `);
-            const el = test.querySelector('sp-combobox') as Combobox;
+            const el = test.querySelector('sp-combobox') as unknown as Combobox;
             const name = 'Pick something';
             const webkitName = 'Pick something Bde Thing 2';
             type NamedNode = { name: string; role: string; value?: string };
