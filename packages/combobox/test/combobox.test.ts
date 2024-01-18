@@ -31,6 +31,7 @@ import {
     fixture,
     homeEvent,
 } from '../../../test/testing-helpers.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     a11ySnapshot,
     executeServerCommand,
@@ -40,12 +41,12 @@ import {
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import { TestableCombobox, testActiveElement } from './index.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import {
-    withFieldLabel,
-    withLabelAttribute,
-    withTooltip,
-} from '../stories/combobox.stories.js';
+import { withFieldLabel, withTooltip } from '../stories/combobox.stories.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
+
+const isWebKit =
+    /AppleWebKit/.test(window.navigator.userAgent) &&
+    !/Chrome/.test(window.navigator.userAgent);
 
 const comboboxFixture = async (): Promise<TestableCombobox> => {
     const options: ComboboxOption[] = [
@@ -57,7 +58,9 @@ const comboboxFixture = async (): Promise<TestableCombobox> => {
 
     const el = await fixture<TestableCombobox>(
         html`
-            <sp-combobox .options=${options}>Combobox</sp-combobox>
+            <sp-combobox label="Combobox" .options=${options}>
+                Combobox
+            </sp-combobox>
         `
     );
 
@@ -70,26 +73,151 @@ describe('Combobox', () => {
         overlays.forEach((overlay) => overlay.remove());
     });
     describe('renders accessibly', () => {
-        it('is accessible with <sp-field-label>', async () => {
-            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
+        it('renders accessibly with `label` attribute', async () => {
+            const el = await comboboxFixture();
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            await elementUpdated(el);
+            await expect(el).to.be.accessible();
+        });
+        it('renders accessibly with <sp-field-label>', async () => {
             const test = await fixture<HTMLDivElement>(html`
                 <div>${withFieldLabel()}</div>
             `);
             const el = test.querySelector('sp-combobox') as Combobox;
+
             await elementUpdated(el);
 
             await expect(el).to.be.accessible();
         });
-        it('is accessible with `label` attribute', async () => {
+        it('manages its "name" value with <sp-field-label>', async () => {
             const test = await fixture<HTMLDivElement>(html`
-                <div>${withLabelAttribute()}</div>
+                <div>${withFieldLabel()}</div>
             `);
             const el = test.querySelector('sp-combobox') as Combobox;
+            const name = 'Pick something';
+            const webkitName = 'Pick something Bde Thing 2';
+            type NamedNode = { name: string; role: string; value?: string };
 
             await elementUpdated(el);
-            await expect(el).to.be.accessible();
+
+            let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            // gating it this way is the only way I could get ALL the tests to pass on all browsers
+            if (isWebKit) {
+                // findDescribedNode() doesn't work for the initial state of the test
+                const a11yNodeWebkit = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name === webkitName &&
+                        !node.value &&
+                        node.role === 'combobox'
+                );
+                expect(a11yNodeWebkit, '`name` is null on WebKit').to.be.null;
+
+                el.value = 'Bde Thing 2';
+                await elementUpdated(el);
+
+                await findDescribedNode(webkitName, el.value);
+            } else {
+                let a11yNode = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name === name &&
+                        !node.value &&
+                        node.role === 'combobox'
+                );
+
+                expect(a11yNode, '`name` is the label text').to.not.be.null;
+
+                el.value = 'Bde Thing 2';
+                await elementUpdated(el);
+
+                snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                    children: NamedNode[];
+                };
+
+                a11yNode = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name === name &&
+                        node.value === 'Bde Thing 2' &&
+                        node.role === 'combobox'
+                );
+
+                expect(
+                    a11yNode,
+                    '`name` is the the selected item text plus the label text'
+                ).to.not.be.null;
+            }
         });
-        xit('renders accessibly by default', async () => {
+        it('manages its "name" value in the accessibility tree', async () => {
+            const el = await comboboxFixture();
+
+            const name = 'Combobox';
+            const webkitName = 'Combobox Bde Thing 2';
+            type NamedNode = { name: string; role: string; value?: string };
+
+            await elementUpdated(el);
+
+            let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            // gating it this way is the only way I could get ALL the tests to pass on all browsers
+            if (isWebKit) {
+                // findDescribedNode() doesn't work for the initial state of the test
+                const a11yNodeWebkit = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name === webkitName &&
+                        !node.value &&
+                        node.role === 'combobox'
+                );
+                expect(a11yNodeWebkit, '`name` is null on WebKit').to.be.null;
+
+                el.value = 'Bde Thing 2';
+                await elementUpdated(el);
+
+                await findDescribedNode(webkitName, el.value);
+            } else {
+                let a11yNode = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name === name &&
+                        !node.value &&
+                        node.role === 'combobox'
+                );
+
+                expect(a11yNode, '`name` is the label text').to.not.be.null;
+
+                el.value = 'Bde Thing 2';
+                await elementUpdated(el);
+
+                snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                    children: NamedNode[];
+                };
+
+                a11yNode = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name === name &&
+                        node.value === 'Bde Thing 2' &&
+                        node.role === 'combobox'
+                );
+
+                expect(
+                    a11yNode,
+                    '`name` is the the selected item text plus the label text'
+                ).to.not.be.null;
+            }
+        });
+
+        it('renders open', async () => {
             // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
@@ -100,18 +228,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
             await expect(el).to.be.accessible();
         });
-        xit('renders open', async () => {
-            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
-            const el = await comboboxFixture();
-
-            const opened = oneEvent(el, 'sp-opened');
-            el.open = true;
-            await opened;
-
-            await elementUpdated(el);
-            await expect(el).to.be.accessible();
-        });
-        xit('renders with an active descendent', async () => {
+        it('renders with an active descendent', async () => {
             // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
             const el = await comboboxFixture();
 
@@ -123,44 +240,6 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             await expect(el).to.be.accessible();
-        });
-        it('manages its "name" value in the accessibility tree', async () => {
-            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47503928
-            const el = await comboboxFixture();
-
-            await elementUpdated(el);
-            type NamedNode = { name: string; role: string; value?: string };
-            let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-                children: NamedNode[];
-            };
-
-            expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) =>
-                        node.name === 'Combobox' &&
-                        !node.value &&
-                        node.role === 'combobox'
-                ),
-                '`name` is the label text'
-            ).to.not.be.null;
-
-            el.value = 'Bde Thing 2';
-            await elementUpdated(el);
-            snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-                children: NamedNode[];
-            };
-
-            expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) =>
-                        node.name === 'Combobox' &&
-                        node.value === 'Bde Thing 2' &&
-                        node.role === 'combobox'
-                ),
-                '`name` is the label text plus the selected item text'
-            ).to.not.be.null;
         });
         it('manages aria-activedescendant', async () => {
             type ActiveDescendentFindableNode = {
