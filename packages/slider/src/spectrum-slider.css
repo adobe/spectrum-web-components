@@ -207,7 +207,7 @@ governing permissions and limitations under the License.
         var(--spectrum-slider-control-height)
     );
 }
-#fill,
+.fill,
 .track {
     block-size: var(
         --mod-slider-track-fill-thickness,
@@ -237,7 +237,7 @@ governing permissions and limitations under the License.
     position: absolute;
     z-index: 1;
 }
-#fill:before,
+.fill:before,
 .track:before {
     block-size: 100%;
     border-end-end-radius: 0;
@@ -303,7 +303,7 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-track-middle-handleoffset)
         );
 }
-#fill {
+.fill {
     margin-inline-start: 0;
     padding-block: 0;
     padding-inline-end: 0;
@@ -315,7 +315,7 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
     );
 }
-.spectrum-Slider-fill--right {
+.offset {
     padding-block: 0;
     padding-inline-end: calc(
         var(
@@ -737,7 +737,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#fill:before {
+.fill:before {
     background: var(
         --highcontrast-slider-track-fill-color,
         var(
@@ -929,7 +929,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([disabled]) #fill:before {
+:host([disabled]) .fill:before {
     background: var(
         --highcontrast-slider-track-fill-color-disabled,
         var(
