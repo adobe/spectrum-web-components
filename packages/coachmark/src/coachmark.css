@@ -25,7 +25,7 @@ governing permissions and limitations under the License.
     align-items: center;
     background-color: var(--spectrum-gray-200);
     border: var(--spectrum-text-underline-gap) solid var(--spectrum-gray-200);
-    border-radius: var(--spectrum-component-edge-to-visual-only-75);
+    border-radius: var(--spectrum-spacing-75);
     color: var(--spectrum-gray-800);
     display: inline-flex;
     flex-flow: row;
