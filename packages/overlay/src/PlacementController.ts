@@ -267,13 +267,20 @@ export class PlacementController implements ReactiveController {
         }
     }
 
-    public resetOverlayPosition = (): void => {
-        if (!this.target || !this.options) return;
-
+    public clearOverlayPosition(): void {
+        if (!this.target) {
+            return;
+        }
         this.target.style.removeProperty('max-height');
-        this.target.style.removeProperty('height');
+        this.target.style.removeProperty('max-width');
         this.initialHeight = undefined;
         this.isConstrained = false;
+    }
+
+    public resetOverlayPosition = (): void => {
+        if (!this.target || !this.options) return;
+        this.clearOverlayPosition();
+
         // force paint
         this.host.offsetHeight;
         this.computePlacement();
