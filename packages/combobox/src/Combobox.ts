@@ -57,7 +57,7 @@ export class Combobox extends Textfield {
     }
 
     /**
-     * The currently active ComboboxItem descendent, when available.
+     * The currently active ComboboxItem descendant, when available.
      */
     @property({ attribute: false })
     public activeDescendant?: ComboboxOption | MenuItem;
@@ -115,7 +115,7 @@ export class Combobox extends Textfield {
         } else if (event.code === 'ArrowDown') {
             event.preventDefault();
             this.open = true;
-            this.activateNextDescendent();
+            this.activateNextDescendant();
             const activeEl = this.querySelector(
                 `#${(this.activeDescendant as ComboboxOption).id}`
             ) as HTMLElement;
@@ -125,7 +125,7 @@ export class Combobox extends Textfield {
         } else if (event.code === 'ArrowUp') {
             event.preventDefault();
             this.open = true;
-            this.activatePreviousDescendent();
+            this.activatePreviousDescendant();
             const activeEl = this.querySelector(
                 `#${(this.activeDescendant as ComboboxOption).id}`
             ) as HTMLElement;
@@ -138,7 +138,7 @@ export class Combobox extends Textfield {
             }
             this.open = false;
         } else if (event.code === 'Enter') {
-            this.selectDescendent();
+            this.selectDescendant();
             this.open = false;
         } else if (event.code === 'Home') {
             this.focusElement.setSelectionRange(0, 0);
@@ -186,7 +186,7 @@ export class Combobox extends Textfield {
         this.optionEls = elements;
     }
 
-    public activateNextDescendent(): void {
+    public activateNextDescendant(): void {
         const activeIndex = !this.activeDescendant
             ? -1
             : this.availableOptions.indexOf(this.activeDescendant);
@@ -196,7 +196,7 @@ export class Combobox extends Textfield {
         this.activeDescendant = this.availableOptions[nextActiveIndex];
     }
 
-    public activatePreviousDescendent(): void {
+    public activatePreviousDescendant(): void {
         const activeIndex = !this.activeDescendant
             ? 0
             : this.availableOptions.indexOf(this.activeDescendant);
@@ -206,7 +206,7 @@ export class Combobox extends Textfield {
         this.activeDescendant = this.availableOptions[previousActiveIndex];
     }
 
-    public selectDescendent(): void {
+    public selectDescendant(): void {
         if (!this.activeDescendant) {
             return;
         }
@@ -219,9 +219,9 @@ export class Combobox extends Textfield {
         }
         const valueLowerCase = this.value.toLowerCase();
         this.availableOptions = (this.options || this.optionEls).filter(
-            (descendent) => {
-                const descendentValueLowerCase = descendent.value.toLowerCase();
-                return descendentValueLowerCase.startsWith(valueLowerCase);
+            (descendant) => {
+                const descendantValueLowerCase = descendant.value.toLowerCase();
+                return descendantValueLowerCase.startsWith(valueLowerCase);
             }
         );
         Overlay.update();
@@ -505,9 +505,9 @@ export class Combobox extends Textfield {
             '#listbox'
         ) as HTMLUListElement;
         if (list) {
-            const descendents = [...list.children] as ComboboxItem[];
+            const descendants = [...list.children] as ComboboxItem[];
             await Promise.all(
-                descendents.map((descendent) => descendent.updateComplete)
+                descendants.map((descendant) => descendant.updateComplete)
             );
         }
         return complete;
