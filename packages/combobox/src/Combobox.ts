@@ -60,7 +60,7 @@ export class Combobox extends Textfield {
      * The currently active ComboboxItem descendent, when available.
      */
     @property({ attribute: false })
-    public activeDescendent?: ComboboxOption | MenuItem;
+    public activeDescendant?: ComboboxOption | MenuItem;
 
     @state()
     override appliedLabel?: string;
@@ -117,7 +117,7 @@ export class Combobox extends Textfield {
             this.open = true;
             this.activateNextDescendent();
             const activeEl = this.querySelector(
-                `#${(this.activeDescendent as ComboboxOption).id}`
+                `#${(this.activeDescendant as ComboboxOption).id}`
             ) as HTMLElement;
             if (activeEl) {
                 activeEl.scrollIntoView({ block: 'nearest' });
@@ -127,7 +127,7 @@ export class Combobox extends Textfield {
             this.open = true;
             this.activatePreviousDescendent();
             const activeEl = this.querySelector(
-                `#${(this.activeDescendent as ComboboxOption).id}`
+                `#${(this.activeDescendant as ComboboxOption).id}`
             ) as HTMLElement;
             if (activeEl) {
                 activeEl.scrollIntoView({ block: 'nearest' });
@@ -142,15 +142,15 @@ export class Combobox extends Textfield {
             this.open = false;
         } else if (event.code === 'Home') {
             this.focusElement.setSelectionRange(0, 0);
-            this.activeDescendent = undefined;
+            this.activeDescendant = undefined;
         } else if (event.code === 'End') {
             const { length } = this.value;
             this.focusElement.setSelectionRange(length, length);
-            this.activeDescendent = undefined;
+            this.activeDescendant = undefined;
         } else if (event.code === 'ArrowLeft') {
-            this.activeDescendent = undefined;
+            this.activeDescendant = undefined;
         } else if (event.code === 'ArrowRight') {
-            this.activeDescendent = undefined;
+            this.activeDescendant = undefined;
         }
     }
 
@@ -187,30 +187,30 @@ export class Combobox extends Textfield {
     }
 
     public activateNextDescendent(): void {
-        const activeIndex = !this.activeDescendent
+        const activeIndex = !this.activeDescendant
             ? -1
-            : this.availableOptions.indexOf(this.activeDescendent);
+            : this.availableOptions.indexOf(this.activeDescendant);
         const nextActiveIndex =
             (this.availableOptions.length + activeIndex + 1) %
             this.availableOptions.length;
-        this.activeDescendent = this.availableOptions[nextActiveIndex];
+        this.activeDescendant = this.availableOptions[nextActiveIndex];
     }
 
     public activatePreviousDescendent(): void {
-        const activeIndex = !this.activeDescendent
+        const activeIndex = !this.activeDescendant
             ? 0
-            : this.availableOptions.indexOf(this.activeDescendent);
+            : this.availableOptions.indexOf(this.activeDescendant);
         const previousActiveIndex =
             (this.availableOptions.length + activeIndex - 1) %
             this.availableOptions.length;
-        this.activeDescendent = this.availableOptions[previousActiveIndex];
+        this.activeDescendant = this.availableOptions[previousActiveIndex];
     }
 
     public selectDescendent(): void {
-        if (!this.activeDescendent) {
+        if (!this.activeDescendant) {
             return;
         }
-        this.value = this.activeDescendent.value;
+        this.value = this.activeDescendant.value;
     }
 
     public filterAvailableOptions(): void {
@@ -232,7 +232,7 @@ export class Combobox extends Textfield {
     }: Event & { target: HTMLInputElement }): void {
         // Element data.
         this.value = target.value;
-        this.activeDescendent = undefined;
+        this.activeDescendant = undefined;
         this.open = true;
     }
 
@@ -259,7 +259,7 @@ export class Combobox extends Textfield {
 
     protected override shouldUpdate(changed: PropertyValues<this>): boolean {
         if (changed.has('open') && !this.open) {
-            this.activeDescendent = undefined;
+            this.activeDescendant = undefined;
         }
         if (changed.has('value')) {
             this.filterAvailableOptions();
@@ -312,8 +312,8 @@ export class Combobox extends Textfield {
             ${this.renderStateIcons()}
             <input
                 aria-activedescendant=${ifDefined(
-                    this.activeDescendent
-                        ? `${this.activeDescendent.id}`
+                    this.activeDescendant
+                        ? `${this.activeDescendant.id}`
                         : undefined
                 )}
                 aria-autocomplete=${this.ariaAutocomplete}
@@ -415,9 +415,9 @@ export class Combobox extends Textfield {
                                 return html`
                                     <sp-menu-item
                                         id="${option.id}"
-                                        ?focused=${this.activeDescendent?.id ===
+                                        ?focused=${this.activeDescendant?.id ===
                                         option.id}
-                                        aria-selected=${this.activeDescendent
+                                        aria-selected=${this.activeDescendant
                                             ?.id === option.id
                                             ? 'true'
                                             : 'false'}
@@ -482,16 +482,16 @@ export class Combobox extends Textfield {
         if (!this.focused && this.open) {
             this.open = false;
         }
-        if (changed.has('activeDescendent')) {
-            if (changed.get('activeDescendent')) {
-                (changed.get('activeDescendent') as MenuItem).focused = false;
+        if (changed.has('activeDescendant')) {
+            if (changed.get('activeDescendant')) {
+                (changed.get('activeDescendant') as MenuItem).focused = false;
             }
             if (
-                this.activeDescendent &&
-                typeof (this.activeDescendent as MenuItem).focused !==
+                this.activeDescendant &&
+                typeof (this.activeDescendant as MenuItem).focused !==
                     'undefined'
             ) {
-                (this.activeDescendent as MenuItem).focused = true;
+                (this.activeDescendant as MenuItem).focused = true;
             }
         }
         if (changed.has('options') || changed.has('optionEls')) {

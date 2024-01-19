@@ -271,7 +271,7 @@ export const comboboxOptions = countryList.map((value, index) => ({
 }));
 
 export type TestableCombobox = Combobox & {
-    activeDescendent: ComboboxOption;
+    activeDescendant: ComboboxOption;
     availableOptions: ComboboxOption[];
 };
 
@@ -279,9 +279,9 @@ export const testActiveElement = (
     el: TestableCombobox,
     testId: string
 ): void => {
-    expect(el.activeDescendent?.id).to.equal(testId);
+    expect(el.activeDescendant?.id).to.equal(testId);
     const activeElement = el.shadowRoot.querySelector(
-        `#${el.activeDescendent.id}`
+        `#${el.activeDescendant.id}`
     ) as ComboboxItem;
     expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };
