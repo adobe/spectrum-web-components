@@ -16,6 +16,7 @@ import { ComboboxOption } from '..';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/combobox/sp-combobox-item.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 export default {
@@ -200,5 +201,17 @@ export const withLabelAttribute = (): TemplateResult => {
             label="Pick something"
             .options=${optionsA}
         ></sp-combobox>
+    `;
+};
+
+export const withHelpText = (): TemplateResult => {
+    return html`
+        <sp-combobox
+            id="combobox-7"
+            label="Pick something"
+            .options=${optionsB}
+        >
+            <sp-help-text slot="help-text">Howdy!</sp-help-text>
+        </sp-combobox>
     `;
 };

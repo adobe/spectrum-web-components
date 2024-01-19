@@ -18,7 +18,7 @@ import { Combobox, ComboboxOption } from '..';
 import { arrowDownEvent, fixture } from '../../../test/testing-helpers.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import { TestableCombobox } from './index.js';
-import { withFieldLabel } from '../stories/combobox.stories.js';
+import { withFieldLabel, withHelpText } from '../stories/combobox.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
 
 const isWebKit =
@@ -61,6 +61,16 @@ describe('Combobox accessibility', () => {
     it('renders accessibly with <sp-field-label>', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${withFieldLabel()}</div>
+        `);
+        const el = test.querySelector('sp-combobox') as unknown as Combobox;
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('renders accessibly with <sp-field-label>', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${withHelpText()}</div>
         `);
         const el = test.querySelector('sp-combobox') as unknown as Combobox;
 
