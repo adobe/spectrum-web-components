@@ -164,11 +164,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     protected preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
+    private pointerdownState = false;
 
     protected handleButtonPointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             return;
         }
+        this.pointerdownState = this.open;
         this.preventNextToggle = 'maybe';
         const cleanup = (): void => {
             document.removeEventListener('pointerup', cleanup);
@@ -181,7 +183,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // Ensure that however the pointer goes up we do `cleanup()`.
         document.addEventListener('pointerup', cleanup);
         document.addEventListener('pointercancel', cleanup);
-        this.handleButtonClick();
+        this.handleActivate();
     }
 
     protected handleButtonFocus(event: FocusEvent): void {
@@ -195,15 +197,20 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
-    protected handleButtonClick = (): void => {
+    protected handleActivate(event?: Event): void {
         if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
             return;
         }
         if (this.preventNextToggle === 'yes') {
             return;
         }
+        if (event?.type === 'click' && this.open !== this.pointerdownState) {
+            // When activation comes from a `click` event ensure that the `pointerup`
+            // event didn't already toggle the Picker state before doing so.
+            return;
+        }
         this.toggle();
-    };
+    }
 
     public override focus(options?: FocusOptions): void {
         super.focus(options);
@@ -237,6 +244,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
             return;
         }
+        event.stopPropagation();
         event.preventDefault();
         this.toggle(true);
     };
@@ -486,6 +494,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 id="button"
                 class="button"
                 @blur=${this.handleButtonBlur}
+                @click=${this.handleActivate}
                 @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
                 @keydown=${{
@@ -752,20 +761,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             return;
         }
         this.enterKeydownOn = event.target;
-        if (this.enterKeydownOn === this.button) {
-            this.button.addEventListener('click', this.handleButtonClick);
-        }
         this.addEventListener(
             'keyup',
-            (keyupEvent: KeyboardEvent) => {
+            async (keyupEvent: KeyboardEvent) => {
                 if (keyupEvent.code !== 'Enter') {
                     return;
                 }
                 this.enterKeydownOn = null;
-                this.button.removeEventListener(
-                    'click',
-                    this.handleButtonClick
-                );
             },
             { once: true }
         );
@@ -815,6 +817,7 @@ export class Picker extends PickerBase {
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {
             this.toggle(true);
+            event.preventDefault();
             return;
         }
         event.preventDefault();
