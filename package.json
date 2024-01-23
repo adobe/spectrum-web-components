@@ -95,7 +95,7 @@
     "dependencies": {},
     "devDependencies": {
         "@commitlint/cli": "^18.4.4",
-        "@commitlint/config-conventional": "^17.0.0",
+        "@commitlint/config-conventional": "^18.5.0",
         "@commitlint/config-lerna-scopes": "^18.4.4",
         "@custom-elements-manifest/analyzer": "^0.9.0",
         "@lit/react": "^1.0.2",
