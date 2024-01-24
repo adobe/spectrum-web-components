@@ -44,6 +44,132 @@ Overlay.open(
 
 Keep in mind that a changing DOM tree is likely to alter the relationship between existing content. Without proper care this can negatively effect the CSS that you have applied to existing content. DOM events and DOM selection methods can also perform differently than expected as the tree shape changes.
 
+## Context menu example
+
+```html-live
+<style>
+    #root {
+        position: relative;
+        width: 100%;
+        height: 20vh;
+        background-color: var(--spectrum-global-color-gray-100);
+        border: 1px solid var(--spectrum-global-color-gray-400);
+    }
+</style>
+
+<div id="root"></div>
+
+<script type="module">
+
+    import { html } from '@spectrum-web-components/base';
+    import { render } from 'lit-html';
+    import { VirtualTrigger, openOverlay } from '@spectrum-web-components/overlay';
+
+    const contextMenuTemplate = () => html`
+          <sp-popover
+            style="width:300px;"
+            @change=${(event) => {
+                    event.target.dispatchEvent(
+                    new Event('close', { bubbles: true })
+                );
+            }}
+        >
+            <sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Select All</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item disabled>Copy</sp-menu-item>
+                <sp-menu-item disabled>Cut</sp-menu-item>
+                <sp-menu-item disabled>Paste</sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
+
+    const init = () => {
+        const appRoot = document.querySelector('#root');
+        appRoot.addEventListener('contextmenu', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const source = event.composedPath()[0];
+            const { id } = source;
+            const trigger = event.target;
+            const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
+            const fragment = document.createDocumentFragment();
+            render(contextMenuTemplate(), fragment);
+            const popover = fragment.querySelector('sp-popover');
+
+            const overlay = await openOverlay(popover, {
+                trigger: virtualTrigger,
+                placement: 'right-start',
+                offset: 0,
+                notImmediatelyClosable: true,
+                type: 'auto',
+            });
+            trigger.insertAdjacentElement('afterend', overlay);
+
+        });
+    }
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+```
+
+<script type="module">
+
+    import { html } from '@spectrum-web-components/base';
+    import { render } from 'lit-html';    
+    import { VirtualTrigger, openOverlay } from '@spectrum-web-components/overlay';
+
+    const contextMenuTemplate = () => html`
+        <sp-popover 
+            style="width:300px;"
+            @change=${(event) => {
+                    event.target.dispatchEvent(
+                    new Event('close', { bubbles: true })
+                );
+            }}
+        >
+            <sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Select All</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item disabled>Copy</sp-menu-item>
+                <sp-menu-item disabled>Cut</sp-menu-item>
+                <sp-menu-item disabled>Paste</sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
+
+    const init = () => {
+        const appRoot = document.querySelector('#root');
+        appRoot.addEventListener('contextmenu', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const source = event.composedPath()[0];
+            const { id } = source;
+            const trigger = event.target;
+            const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
+            const fragment = document.createDocumentFragment();
+            render(contextMenuTemplate(), fragment);
+            const popover = fragment.querySelector('sp-popover');
+
+            const overlay = await openOverlay(popover, {
+                trigger: virtualTrigger,
+                placement: 'right-start',
+                offset: 0,
+                notImmediatelyClosable: true,
+                type: 'auto',
+            });
+            trigger.insertAdjacentElement('afterend', overlay);
+
+        });
+    }
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+
 ## OverlayOptions
 
 When leveraging `Overlay.open()`, you can provide an optional second argument of `OverlayOptions`, with the following type:
@@ -83,6 +209,8 @@ Some Overlays will always be passed focus (e.g. modal or page Overlays). When th
 ### trigger
 
 The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
+
+-   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
 
 ### type
 
