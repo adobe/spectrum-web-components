@@ -15,6 +15,9 @@ governing permissions and limitations under the License.
 :host {
     display: inline-flex;
     vertical-align: top;
+
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
 }
 
 :host([dir]) {
@@ -62,66 +65,27 @@ slot[name='icon']::slotted(img) {
     display: contents;
 }
 
-:host([size='s']) {
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-s
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-s
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75
-    );
-    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-s);
+:host([size='xs']) {
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-50);
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 
-:host([size='m']) {
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-m
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-m
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-100
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-100
-    );
-    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-m);
+:host([size='s']) {
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
 :host([size='l']) {
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-l
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-l
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-200
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-200
-    );
-    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-l);
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-200);
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
 }
 
 :host([size='xl']) {
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-xl
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-xl
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-300
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-300
-    );
-    --mod-progress-circle-size: var(--spectrum-alias-workflow-icon-size-xl);
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-300);
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
+}
+
+:host([size='xxl']) {
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-400);
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
 }

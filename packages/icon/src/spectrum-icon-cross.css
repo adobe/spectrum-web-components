@@ -12,30 +12,23 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-UIIcon-Cross75 {
-    height: var(--spectrum-alias-ui-icon-cross-size-75);
-    width: var(--spectrum-alias-ui-icon-cross-size-75);
+    --spectrum-icon-size: var(--spectrum-cross-icon-size-75);
 }
 .spectrum-UIIcon-Cross100 {
-    height: var(--spectrum-alias-ui-icon-cross-size-100);
-    width: var(--spectrum-alias-ui-icon-cross-size-100);
+    --spectrum-icon-size: var(--spectrum-cross-icon-size-100);
 }
 .spectrum-UIIcon-Cross200 {
-    height: var(--spectrum-alias-ui-icon-cross-size-200);
-    width: var(--spectrum-alias-ui-icon-cross-size-200);
+    --spectrum-icon-size: var(--spectrum-cross-icon-size-200);
 }
 .spectrum-UIIcon-Cross300 {
-    height: var(--spectrum-alias-ui-icon-cross-size-300);
-    width: var(--spectrum-alias-ui-icon-cross-size-300);
+    --spectrum-icon-size: var(--spectrum-cross-icon-size-300);
 }
 .spectrum-UIIcon-Cross400 {
-    height: var(--spectrum-alias-ui-icon-cross-size-400);
-    width: var(--spectrum-alias-ui-icon-cross-size-400);
+    --spectrum-icon-size: var(--spectrum-cross-icon-size-400);
 }
 .spectrum-UIIcon-Cross500 {
-    height: var(--spectrum-alias-ui-icon-cross-size-500);
-    width: var(--spectrum-alias-ui-icon-cross-size-500);
+    --spectrum-icon-size: var(--spectrum-cross-icon-size-500);
 }
 .spectrum-UIIcon-Cross600 {
-    height: var(--spectrum-alias-ui-icon-cross-size-600);
-    width: var(--spectrum-alias-ui-icon-cross-size-600);
+    --spectrum-icon-size: var(--spectrum-cross-icon-size-600);
 }

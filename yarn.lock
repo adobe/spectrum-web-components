@@ -6631,10 +6631,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-7.1.0.tgz#b515d66b00512a8d4345124d50adab352fca4686"
   integrity sha512-D/uFkP8Nb4+XNZSQckwKnKoWC8jc4qiEzJgeCe+k+CswJgEQFU3PK4ZO3/vfVycxr9xfDe+nUimM4FYl26ebSg==
 
-"@spectrum-css/actionbutton@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-5.2.0.tgz#ee9cce7a8fd0e882a15002da7b813d6b483017c5"
-  integrity sha512-b0ZANN9Fg4r7ONQ86gVaZjiACUkEhDiKC27Zw5F93hSE5863T+jfK9utHhSPn7isEhTQmNeBisjEr/RwuXLCiA==
+"@spectrum-css/actionbutton@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-5.2.1.tgz#bcd3dc132e3dae84c5a736fc1de469ed8b4bce69"
+  integrity sha512-cbezKR1GhLkg7KKc6Wo2Qpb2oyzNZ69MlehjMrbG+aZ4kKp8gHHW3wV/zyBqppKlNkftafVurxhHnH8zo451yg==
 
 "@spectrum-css/actiongroup@^4.2.0":
   version "4.2.0"
@@ -6731,10 +6731,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-3.1.0.tgz#c765fa896eaad6e446e859f045df43c0586d31af"
   integrity sha512-vPSy6FiCc5oMQ9QDjSgXUwATZfgCog97zaB+w1M/urBwKNsXWXeZe4p+jENVC5g0TKq6uZwYaLFrDP2ot5yIdw==
 
-"@spectrum-css/combobox@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.0.tgz#593a4ed56f6b4ccbbd25cc734c433ca69a86d1bd"
-  integrity sha512-1W3tE0+4/TR9GL+WGcSDIp0nNrSrG4Yl+NDm/4Th0sTuUeU9vR09/ehW837lLJj9FblecDiXVbuRw/AJmX5kUw==
+"@spectrum-css/combobox@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.1.tgz#e80977797f893578c15a65ee79fa0663c5293971"
+  integrity sha512-tU7Z5f+N6NUaMe7t3VJtBurClg1FUQvn9edI+etlVZ1rvXpNUbnWnVH2vKU+5Su/MDkmX0df6ISSJ3g6yvL5VA==
 
 "@spectrum-css/commons@^9.1.0":
   version "9.1.0"
@@ -6776,10 +6776,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-4.1.0.tgz#6359a55d5d6b6e0e6595a005bf106aabd6599389"
   integrity sha512-JuIVcH8EFalJxlIz3YAxVKmT4vbXpxNakzpHpAVgYeyilHh+9Kz4z/zOGNBRpPd+UVPOUVIoAh6U6C3EKZ57sA==
 
-"@spectrum-css/icon@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-5.1.0.tgz#61a0d5368600ad790e340e7af01be3e26c854607"
-  integrity sha512-sPUyZ8tmB4ETQZAuk8KnMvTAdLxVh1sGj4xYIh0fta5JNAcm1UWQKK6J5Ns097ZPPcXTVeKjZas29PHBNQ+kLA==
+"@spectrum-css/icon@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-6.0.0.tgz#14632e75a03af62cfd630ee9beed6cfdf169ab6f"
+  integrity sha512-hcaNq+ux88T6Z8wXrx5ayoF4r0RorfR2RGcSkHAgHCeS5CeirVShkaWC6jpJdYTTPt+gZIA0PJ2542b6VktT7g==
 
 "@spectrum-css/illustratedmessage@^6.1.0":
   version "6.1.0"
@@ -6811,15 +6811,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/opacitycheckerboard/-/opacitycheckerboard-1.1.1.tgz#0b86256cde20091182e4632ea3ffab4e54525418"
   integrity sha512-rhr27YQUSsW9B0MO8LqMYUGQ7hBu5UmouvA6FEdRJr+DgFKZOB2W/bFZv69w9sbi3kdrH0WmsUFXQmpWLGDDMw==
 
-"@spectrum-css/picker@^7.2.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-7.2.0.tgz#0c9823b2d589a880eb61ce4c66924d6f763a41f2"
-  integrity sha512-CE6hVrDWy93vNAakfMD4KnmJOS8bZaJ+3ekRlU50eoO/ybhEQj7TzH6Htj0CQ5S5JN4/lWbbX2wMFm4CkDMtbg==
+"@spectrum-css/picker@^7.2.1":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-7.2.1.tgz#6919afffb08e05dd8814c01c7dde7471c7b30e40"
+  integrity sha512-8c9d0+4Dl7mPBnGQGM1yFw9eBsFqH10dgTdLIh5CCrAmck15SiDEYb/lbFBaQCzKU5zn45PdYX8Dqbp47t0RLQ==
 
-"@spectrum-css/pickerbutton@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-4.1.0.tgz#4b5df72edd113000263a96516ec03c9647b23f67"
-  integrity sha512-4HNjxsRlrui9WzGBpAMohwBSQEjfpt+S3UX03nF3U/I6r21qGqOs4RnnMtrCPcijZqgKu3K+SwmON9JT/mCiAw==
+"@spectrum-css/pickerbutton@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-4.1.1.tgz#cbbc1c5762db8ad09b70bc54d061f5db25bd0e26"
+  integrity sha512-p62t+sCPIUGuBx4o9RLtgQsCZmbIG9KL+LrXDCpVSHjozSEDfTwZDmd4suvpc+IESdT9I+1QjDwE52+6gk9UxA==
 
 "@spectrum-css/popover@^6.2.0":
   version "6.2.0"

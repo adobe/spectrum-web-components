@@ -411,14 +411,6 @@ governing permissions and limitations under the License.
         --spectrum-progress-circle-thickness-small
     );
 }
-.spectrum-ProgressCircle--medium {
-    --spectrum-progress-circle-size: var(
-        --spectrum-progress-circle-size-medium
-    );
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-medium
-    );
-}
 :host([size='l']) {
     --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
     --spectrum-progress-circle-thickness: var(
