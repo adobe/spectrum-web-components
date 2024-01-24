@@ -17,10 +17,13 @@ import {
     fixture,
     html,
     nextFrame,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 
 import { ActionButton } from '@spectrum-web-components/action-button';
+import { MenuItem } from '@spectrum-web-components/menu';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -145,6 +148,189 @@ describe('ActionGroup', () => {
         await nextFrame();
 
         await expect(el).to.be.accessible();
+    });
+
+    it('action-group with action-menu manages tabIndex correctly while using keyboard', async () => {
+        const el = await fixture<ActionGroup>(
+            HasActionMenuAsChild({ label: 'Action Group' })
+        );
+
+        await elementUpdated(el);
+
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        // press Tab to focus into the action-group
+        await sendKeys({ press: 'Tab' });
+
+        await elementUpdated(el);
+
+        // expect the first button to be focused
+        expect(document.activeElement?.id).to.equal('first');
+
+        // expect all the elements of the focus group to have a tabIndex of -1
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+
+        // navigate to the action-menu using the arrow keys
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
+
+        await elementUpdated(el);
+
+        // expect the action-menu to be focused
+        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+
+        // press Enter to open the action-menu
+        await sendKeys({ press: 'Enter' });
+
+        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
+        await elementUpdated(el.children[3]);
+        await opened;
+
+        // expect the first menu item to be focused
+        const firstMenuItem = el.querySelector('#first-menu-item') as MenuItem;
+        expect(firstMenuItem?.focused).to.be.true;
+
+        // navigate to the fourth menu item using the arrow keys
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
+
+        // press Enter to select the fourth menu item
+        await sendKeys({ press: 'Enter' });
+
+        await elementUpdated(el.children[3]);
+
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        // expect the second submenu item to be focused
+        const secondSubMenuItem = el.querySelector(
+            '#second-sub-menu-item'
+        ) as MenuItem;
+        expect(secondSubMenuItem?.focused).to.be.true;
+
+        // press Enter to select the second submenu item
+        await sendKeys({ press: 'Enter' });
+
+        const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
+        await elementUpdated(el.children[3]);
+
+        await closed;
+
+        // expect the action-menu to be focused
+        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+    });
+
+    it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
+        const el = await fixture<ActionGroup>(
+            HasActionMenuAsChild({ label: 'Action Group' })
+        );
+
+        await elementUpdated(el);
+
+        await aTimeout(500);
+
+        // get the bounding box of the first button
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const rect = firstButton.getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        await aTimeout(500);
+
+        // expect all the elements of the focus group to have a tabIndex of -1
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+
+        // click outside the action-group and it should loose focus and update the tabIndexes
+        sendMouse({
+            steps: [
+                {
+                    position: [0, 0],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        await aTimeout(500);
+
+        // expect the first button to have a tabIndex of 0 and everything else to have a tabIndex of -1
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+
+        // get the bounding box of the action-menu
+        const actionMenu = el.querySelector('#action-menu') as ActionMenu;
+        const actionMenuRect = actionMenu.getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        actionMenuRect.left + actionMenuRect.width / 2,
+                        actionMenuRect.top + actionMenuRect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+
+        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
+        await opened;
+
+        // expect the first menu item to be focused
+        const firstMenuItem = el.querySelector('#first-menu-item') as MenuItem;
+        expect(firstMenuItem?.focused).to.be.true;
+
+        // get the bounding box of the first menu item and click it
+        const firstMenuItemRect = firstMenuItem.getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        firstMenuItemRect.left + firstMenuItemRect.width / 2,
+                        firstMenuItemRect.top + firstMenuItemRect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+
+        const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
+        await closed;
+
+        // expect the action-group to be focused again
+        // so the action-menu should have a tabIndex of 0 and everything else to have a tabIndex of -1
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(0);
     });
 
     testForLitDevWarnings(

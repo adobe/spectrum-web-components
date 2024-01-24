@@ -163,19 +163,21 @@ export const Default = (args: Properties): TemplateResult =>
 export const HasActionMenuAsChild = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group ${spreadProps(args)}>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-            <sp-action-menu label="More Actions">
-                <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item>Two</sp-menu-item>
-                <sp-menu-item>Three</sp-menu-item>
-                <sp-menu-item>
+            <sp-action-button id="first">Button 1</sp-action-button>
+            <sp-action-button id="second">Longer Button 2</sp-action-button>
+            <sp-action-button id="third">Short 3</sp-action-button>
+            <sp-action-menu label="More Actions" id="action-menu">
+                <sp-menu-item id="first-menu-item">One</sp-menu-item>
+                <sp-menu-item id="second-menu-item">Two</sp-menu-item>
+                <sp-menu-item id="third-menu-item">Three</sp-menu-item>
+                <sp-menu-item id="fourth-menu-item">
                     Select some items
                     <sp-menu slot="submenu" selects="multiple">
-                        <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected>B</sp-menu-item>
-                        <sp-menu-item>C</sp-menu-item>
+                        <sp-menu-item id="first-sub-menu-item">A</sp-menu-item>
+                        <sp-menu-item selected id="second-sub-menu-item">
+                            B
+                        </sp-menu-item>
+                        <sp-menu-item id="third-sub-menu-item">C</sp-menu-item>
                     </sp-menu>
                 </sp-menu-item>
             </sp-action-menu>
