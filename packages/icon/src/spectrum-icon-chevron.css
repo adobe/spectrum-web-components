@@ -11,79 +11,108 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-UIIcon-ChevronDown100,
-.spectrum-UIIcon-ChevronDown200,
-.spectrum-UIIcon-ChevronDown300,
-.spectrum-UIIcon-ChevronDown400,
-.spectrum-UIIcon-ChevronDown50,
-.spectrum-UIIcon-ChevronDown500,
-.spectrum-UIIcon-ChevronDown75 {
+.spectrum-UIIcon-ChevronRight50 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
+}
+.spectrum-UIIcon-ChevronRight75 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+}
+.spectrum-UIIcon-ChevronRight100 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+}
+.spectrum-UIIcon-ChevronRight200 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+}
+.spectrum-UIIcon-ChevronRight300 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+}
+.spectrum-UIIcon-ChevronRight400 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+}
+.spectrum-UIIcon-ChevronRight500 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+}
+.spectrum-UIIcon-ChevronDown50 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
     transform: rotate(90deg);
 }
-.spectrum-UIIcon-ChevronLeft100,
-.spectrum-UIIcon-ChevronLeft200,
-.spectrum-UIIcon-ChevronLeft300,
-.spectrum-UIIcon-ChevronLeft400,
-.spectrum-UIIcon-ChevronLeft50,
-.spectrum-UIIcon-ChevronLeft500,
-.spectrum-UIIcon-ChevronLeft75 {
+.spectrum-UIIcon-ChevronDown75 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ChevronDown100 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ChevronDown200 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ChevronDown300 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ChevronDown400 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ChevronDown500 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ChevronLeft50 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
     transform: rotate(180deg);
 }
-.spectrum-UIIcon-ChevronUp100,
-.spectrum-UIIcon-ChevronUp200,
-.spectrum-UIIcon-ChevronUp300,
-.spectrum-UIIcon-ChevronUp400,
-.spectrum-UIIcon-ChevronUp50,
-.spectrum-UIIcon-ChevronUp500,
-.spectrum-UIIcon-ChevronUp75 {
+.spectrum-UIIcon-ChevronLeft75 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ChevronLeft100 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ChevronLeft200 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ChevronLeft300 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ChevronLeft400 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ChevronLeft500 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ChevronUp50 {
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
     transform: rotate(270deg);
 }
-.spectrum-UIIcon-ChevronDown50,
-.spectrum-UIIcon-ChevronLeft50,
-.spectrum-UIIcon-ChevronRight50,
-.spectrum-UIIcon-ChevronUp50 {
-    height: var(--spectrum-icon-chevron-size-50);
-    width: var(--spectrum-icon-chevron-size-50);
-}
-.spectrum-UIIcon-ChevronDown75,
-.spectrum-UIIcon-ChevronLeft75,
-.spectrum-UIIcon-ChevronRight75,
 .spectrum-UIIcon-ChevronUp75 {
-    height: var(--spectrum-alias-ui-icon-chevron-size-75);
-    width: var(--spectrum-alias-ui-icon-chevron-size-75);
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ChevronDown100,
-.spectrum-UIIcon-ChevronLeft100,
-.spectrum-UIIcon-ChevronRight100,
 .spectrum-UIIcon-ChevronUp100 {
-    height: var(--spectrum-alias-ui-icon-chevron-size-100);
-    width: var(--spectrum-alias-ui-icon-chevron-size-100);
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ChevronDown200,
-.spectrum-UIIcon-ChevronLeft200,
-.spectrum-UIIcon-ChevronRight200,
 .spectrum-UIIcon-ChevronUp200 {
-    height: var(--spectrum-alias-ui-icon-chevron-size-200);
-    width: var(--spectrum-alias-ui-icon-chevron-size-200);
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ChevronDown300,
-.spectrum-UIIcon-ChevronLeft300,
-.spectrum-UIIcon-ChevronRight300,
 .spectrum-UIIcon-ChevronUp300 {
-    height: var(--spectrum-alias-ui-icon-chevron-size-300);
-    width: var(--spectrum-alias-ui-icon-chevron-size-300);
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ChevronDown400,
-.spectrum-UIIcon-ChevronLeft400,
-.spectrum-UIIcon-ChevronRight400,
 .spectrum-UIIcon-ChevronUp400 {
-    height: var(--spectrum-alias-ui-icon-chevron-size-400);
-    width: var(--spectrum-alias-ui-icon-chevron-size-400);
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ChevronDown500,
-.spectrum-UIIcon-ChevronLeft500,
-.spectrum-UIIcon-ChevronRight500,
 .spectrum-UIIcon-ChevronUp500 {
-    height: var(--spectrum-alias-ui-icon-chevron-size-500);
-    width: var(--spectrum-alias-ui-icon-chevron-size-500);
+    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+    transform: rotate(270deg);
 }
