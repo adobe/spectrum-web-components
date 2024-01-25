@@ -20,6 +20,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
+import { Theme } from '@spectrum-web-components/theme';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
@@ -53,6 +54,12 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
     noDefaultSize: true,
 }) {
+    public static override finalizeStyles(
+        styles: CSSResultArray
+    ): CSSResultArray {
+        return [...styles, ...Theme.getComponentFragments('ActionButton')];
+    }
+
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, cornerTriangleStyles];
     }
