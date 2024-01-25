@@ -197,7 +197,7 @@ governing permissions and limitations under the License.
 }
 :host([mixed-value]) .mixedValueIcon {
     color: var(--spectrum-swatch-dash-icon-color);
-    visibility: visible;
+    display: block;
 }
 :host([nothing]) .fill {
     background-color: var(--spectrum-picked-color, transparent);
@@ -224,7 +224,7 @@ governing permissions and limitations under the License.
     transform: rotate(-25deg);
 }
 :host([disabled]) .disabledIcon {
-    visibility: visible;
+    display: block;
 }
 :host:before {
     border-color: var(
@@ -327,8 +327,8 @@ governing permissions and limitations under the License.
 }
 .disabledIcon,
 .mixedValueIcon {
+    display: none;
     pointer-events: none;
-    visibility: hidden;
 }
 .disabledIcon {
     stroke: var(

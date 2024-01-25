@@ -160,6 +160,29 @@ const config = {
                     ],
                 },
                 {
+                    find: [builder.class('spectrum-Menu-itemLabel--truncate')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'attribute',
+                                        name: 'no-wrap',
+                                    },
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('label'),
+                        },
+                    ],
+                },
+                {
                     collapseSelector: true,
                     find: {
                         type: 'pseudo-class',
