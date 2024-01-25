@@ -81,10 +81,13 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         ): CSSResult | CSSResultArray {
             const componentFragments = Theme.getComponentFragments(this.name);
             if (componentFragments === undefined) {
-                return [styles].flat(2);
+                return ReactiveElement.finalizeStyles(styles);
             }
 
-            return [...[styles].flat(2), ...componentFragments];
+            return [
+                ...ReactiveElement.finalizeStyles(styles),
+                ...componentFragments,
+            ];
         }
 
         /**
