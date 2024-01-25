@@ -43,14 +43,20 @@ governing permissions and limitations under the License.
 }
 .folderBackground {
     fill: var(
-        --spectrum-asset-folder-background-color,
-        var(--spectrum-global-color-gray-300)
+        --highcontrast-asset-folder-background-color,
+        var(
+            --spectrum-asset-folder-background-color,
+            var(--spectrum-global-color-gray-300)
+        )
     );
 }
 .fileBackground {
     fill: var(
-        --spectrum-asset-file-background-color,
-        var(--spectrum-global-color-gray-50)
+        --highcontrast-asset-file-background-color,
+        var(
+            --spectrum-asset-file-background-color,
+            var(--spectrum-global-color-gray-50)
+        )
     );
 }
 .fileOutline,
@@ -59,4 +65,10 @@ governing permissions and limitations under the License.
         --spectrum-asset-icon-outline-color,
         var(--spectrum-global-color-gray-500)
     );
+}
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-asset-folder-background-color: currentColor;
+        --highcontrast-asset-file-background-color: currentColor;
+    }
 }
