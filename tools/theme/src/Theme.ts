@@ -509,8 +509,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         fragments.push(styles);
     }
 
-    static getComponentFragments(name: ComponentName): CSSResultGroup[] {
-        return Theme.fragmentsByComponent.get(name) ?? [];
+    static getComponentFragments(
+        name: ComponentName
+    ): CSSResultGroup[] | undefined {
+        return Theme.fragmentsByComponent.get(name);
     }
 
     static registerThemeFragment(

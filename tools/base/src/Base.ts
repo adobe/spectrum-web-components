@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { Theme } from '@spectrum-web-components/theme';
 import { LitElement, ReactiveElement } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
 type ThemeRoot = HTMLElement & {
@@ -71,6 +72,20 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          * @private
          */
         public override dir!: 'ltr' | 'rtl';
+
+        /**
+         * @private
+         */
+        public static override finalizeStyles(
+            styles: CSSResultArray
+        ): CSSResultArray {
+            const componentFragments = Theme.getComponentFragments(this.name);
+            if (componentFragments === undefined) {
+                return styles;
+            }
+
+            return [...[styles].flat(Infinity), ...componentFragments];
+        }
 
         /**
          * @private
