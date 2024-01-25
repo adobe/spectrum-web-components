@@ -109,6 +109,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@spectrum-web-components/theme": "^0.40.3",
         "lit": "^2.5.0"
     },
     "types": "./src/index.d.ts",

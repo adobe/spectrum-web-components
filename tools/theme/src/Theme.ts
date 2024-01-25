@@ -10,11 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    CSSResult,
-    CSSResultGroup,
-    supportsAdoptingStyleSheets,
-} from '@spectrum-web-components/base';
+import { CSSResult, CSSResultGroup, supportsAdoptingStyleSheets } from 'lit';
 
 declare global {
     interface Window {
