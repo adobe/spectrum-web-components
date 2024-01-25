@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { Theme } from '@spectrum-web-components/theme';
-import { LitElement, ReactiveElement } from 'lit';
+import { CSSResult, CSSResultArray, LitElement, ReactiveElement } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
@@ -76,15 +76,19 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         /**
          * @private
          */
-        public static override finalizeStyles(
-            styles: CSSResultArray
-        ): CSSResultArray {
+        public static finalizeStyles(
+            styles: CSSResult | CSSResultArray
+        ): CSSResult | CSSResultArray {
             const componentFragments = Theme.getComponentFragments(this.name);
             if (componentFragments === undefined) {
                 return styles;
             }
 
-            return [...[styles].flat(Infinity), ...componentFragments];
+            if (Array.isArray(styles)) {
+                return [...styles, ...componentFragments];
+            } else {
+                return [styles, ...componentFragments];
+            }
         }
 
         /**
