@@ -326,11 +326,11 @@ describe('ActionGroup', () => {
         await closed;
 
         // expect the action-group to be focused again
-        // so the action-menu should have a tabIndex of 0 and everything else to have a tabIndex of -1
+        // so all its elements would have a tabIndex of -1
         expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(0);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
     });
 
     testForLitDevWarnings(
