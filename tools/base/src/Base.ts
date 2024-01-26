@@ -11,7 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import { Theme } from '@spectrum-web-components/theme';
-import { CSSResult, CSSResultArray, LitElement, ReactiveElement } from 'lit';
+import {
+    CSSResult,
+    LitElement,
+    ReactiveElement,
+    supportsAdoptingStyleSheets,
+} from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
@@ -67,28 +72,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          */
         public override shadowRoot!: ShadowRoot;
         private _dirParent?: HTMLElement;
+        private _stylesAdopted = false;
 
         /**
          * @private
          */
         public override dir!: 'ltr' | 'rtl';
-
-        /**
-         * @private
-         */
-        public static finalizeStyles(
-            styles: CSSResult | CSSResultArray
-        ): CSSResult | CSSResultArray {
-            const componentFragments = Theme.getComponentFragments(this.name);
-            if (componentFragments === undefined) {
-                return ReactiveElement.finalizeStyles(styles);
-            }
-
-            return [
-                ...ReactiveElement.finalizeStyles(styles),
-                ...componentFragments,
-            ];
-        }
 
         /**
          * @private
@@ -144,6 +133,28 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             }
         }
 
+        protected adoptStyles(): void {
+            const componentFragments = Theme.getComponentFragments(
+                this.constructor.name
+            );
+            if (componentFragments !== undefined) {
+                if (supportsAdoptingStyleSheets) {
+                    for (const style of componentFragments) {
+                        this.shadowRoot.adoptedStyleSheets.push(
+                            (style as CSSResult).styleSheet as CSSStyleSheet
+                        );
+                    }
+                } else {
+                    componentFragments.forEach((s) => {
+                        const style = document.createElement('style');
+                        style.textContent = (s as CSSResult).cssText;
+                        this.shadowRoot.appendChild(style);
+                    });
+                }
+            }
+            this._stylesAdopted = true;
+        }
+
         public override connectedCallback(): void {
             if (!this.hasAttribute('dir')) {
                 let dirParent = ((this as HTMLElement).assignedSlot ||
@@ -183,6 +194,10 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 this._dirParent = dirParent as HTMLElement;
             }
             super.connectedCallback();
+
+            if (!this._stylesAdopted) {
+                this.adoptStyles();
+            }
         }
 
         public override disconnectedCallback(): void {
