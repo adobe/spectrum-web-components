@@ -15,8 +15,12 @@ import { elementUpdated, expect, html, oneEvent } from '@open-wc/testing';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/combobox/sp-combobox-item.js';
 import { Combobox, ComboboxOption } from '..';
-import { arrowDownEvent, fixture } from '../../../test/testing-helpers.js';
-import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import { fixture } from '../../../test/testing-helpers.js';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+} from '@web/test-runner-commands';
 import { TestableCombobox } from './index.js';
 import { withFieldLabel, withHelpText } from '../stories/combobox.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
@@ -45,10 +49,6 @@ const comboboxFixture = async (): Promise<TestableCombobox> => {
 };
 
 describe('Combobox accessibility', () => {
-    afterEach(() => {
-        const overlays = document.querySelectorAll('active-overlay');
-        overlays.forEach((overlay) => overlay.remove());
-    });
     it('renders accessibly with `label` attribute', async () => {
         const el = await comboboxFixture();
         const opened = oneEvent(el, 'sp-opened');
@@ -68,7 +68,7 @@ describe('Combobox accessibility', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('renders accessibly with <sp-field-label>', async () => {
+    it('renders accessibly with <sp-help-text>', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${withHelpText()}</div>
         `);
@@ -192,18 +192,6 @@ describe('Combobox accessibility', () => {
         await elementUpdated(el);
         await expect(el).to.be.accessible();
     });
-    it('renders with an active descendent', async () => {
-        const el = await comboboxFixture();
-
-        const opened = oneEvent(el, 'sp-opened');
-        el.open = true;
-        await opened;
-
-        el.activeDescendant = el.availableOptions[0];
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
     it('manages aria-activedescendant', async () => {
         // a11ySnapshot does not track the aria-activedescendant, hence querySelecting
         const el = await comboboxFixture();
@@ -214,7 +202,9 @@ describe('Combobox accessibility', () => {
         el.focus();
         await elementUpdated(el);
 
-        el.focusElement.dispatchEvent(arrowDownEvent());
+        await sendKeys({
+            press: 'ArrowDown',
+        });
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.not.be.undefined;
@@ -224,8 +214,10 @@ describe('Combobox accessibility', () => {
         const activeDescendant = el.shadowRoot.querySelector(
             '#thing1'
         ) as MenuItem;
+
         expect(activeDescendant.focused).to.be.true;
         expect(el.focused).to.be.true;
+        await expect(el).to.be.accessible();
     });
     it('manages aria-selected', async () => {
         const el = await comboboxFixture();
@@ -253,7 +245,9 @@ describe('Combobox accessibility', () => {
         el.focus();
         await elementUpdated(el);
 
-        el.focusElement.dispatchEvent(arrowDownEvent());
+        await sendKeys({
+            press: 'ArrowDown',
+        });
         await elementUpdated(el);
 
         expect(el.activeDescendant.id).to.equal('thing1');
