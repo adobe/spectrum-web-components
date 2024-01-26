@@ -72,7 +72,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          */
         public override shadowRoot!: ShadowRoot;
         private _dirParent?: HTMLElement;
-        private _stylesAdopted = false;
+        private _componentFragmentsAdopted = false;
 
         /**
          * @private
@@ -133,7 +133,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             }
         }
 
-        protected adoptStyles(): void {
+        protected adoptComponentFragments(): void {
             const componentFragments = Theme.getComponentFragments(
                 this.constructor.name
             );
@@ -152,7 +152,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                     });
                 }
             }
-            this._stylesAdopted = true;
+            this._componentFragmentsAdopted = true;
         }
 
         public override connectedCallback(): void {
@@ -195,8 +195,8 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             }
             super.connectedCallback();
 
-            if (!this._stylesAdopted) {
-                this.adoptStyles();
+            if (!this._componentFragmentsAdopted) {
+                this.adoptComponentFragments();
             }
         }
 
