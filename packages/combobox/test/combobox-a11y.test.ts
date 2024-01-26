@@ -14,39 +14,16 @@ import { elementUpdated, expect, html, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/combobox/sp-combobox-item.js';
-import { Combobox, ComboboxOption } from '..';
+import { Combobox } from '..';
 import { fixture } from '../../../test/testing-helpers.js';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { TestableCombobox } from './index.js';
+import { comboboxFixture, isWebKit } from './index.js';
 import { withFieldLabel, withHelpText } from '../stories/combobox.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-
-const isWebKit =
-    /AppleWebKit/.test(window.navigator.userAgent) &&
-    !/Chrome/.test(window.navigator.userAgent);
-
-const comboboxFixture = async (): Promise<TestableCombobox> => {
-    const options: ComboboxOption[] = [
-        { id: 'thing1', value: 'Abc Thing 1' },
-        { id: 'thing1a', value: 'Bde Thing 2' },
-        { id: 'thing1b', value: 'Bef Thing 3' },
-        { id: 'thing4', value: 'Efg Thing 4' },
-    ];
-
-    const el = await fixture<TestableCombobox>(
-        html`
-            <sp-combobox label="Combobox" .options=${options}>
-                Combobox
-            </sp-combobox>
-        `
-    );
-
-    return el;
-};
 
 describe('Combobox accessibility', () => {
     it('renders accessibly with `label` attribute', async () => {
@@ -84,7 +61,7 @@ describe('Combobox accessibility', () => {
         `);
         const el = test.querySelector('sp-combobox') as unknown as Combobox;
         const name = 'Pick something';
-        const webkitName = 'Pick something Bde Thing 2';
+        const webkitName = 'Pick something Banana';
         type NamedNode = { name: string; role: string; value?: string };
 
         await elementUpdated(el);
@@ -101,7 +78,7 @@ describe('Combobox accessibility', () => {
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
 
-        el.value = 'Bde Thing 2';
+        el.value = 'Banana';
         await elementUpdated(el);
 
         snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
@@ -113,7 +90,7 @@ describe('Combobox accessibility', () => {
                 snapshot,
                 (node) =>
                     node.name === webkitName &&
-                    node.value === 'Bde Thing 2' &&
+                    node.value === 'Banana' &&
                     node.role === 'combobox'
             );
             expect(a11yNode, '`name` is null on WebKit').to.not.be.null;
@@ -122,7 +99,7 @@ describe('Combobox accessibility', () => {
                 snapshot,
                 (node) =>
                     node.name === name &&
-                    node.value === 'Bde Thing 2' &&
+                    node.value === 'Banana' &&
                     node.role === 'combobox'
             );
             expect(
@@ -135,7 +112,7 @@ describe('Combobox accessibility', () => {
         const el = await comboboxFixture();
 
         const name = 'Combobox';
-        const webkitName = 'Combobox Bde Thing 2';
+        const webkitName = 'Combobox Banana';
         type NamedNode = { name: string; role: string; value?: string };
 
         await elementUpdated(el);
@@ -152,7 +129,7 @@ describe('Combobox accessibility', () => {
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
 
-        el.value = 'Bde Thing 2';
+        el.value = 'Banana';
         await elementUpdated(el);
 
         snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
@@ -164,7 +141,7 @@ describe('Combobox accessibility', () => {
                 snapshot,
                 (node) =>
                     node.name === webkitName &&
-                    node.value === 'Bde Thing 2' &&
+                    node.value === 'Banana' &&
                     node.role === 'combobox'
             );
             expect(a11yNode, '`name` is null on WebKit').to.not.be.null;
@@ -173,7 +150,7 @@ describe('Combobox accessibility', () => {
                 snapshot,
                 (node) =>
                     node.name === name &&
-                    node.value === 'Bde Thing 2' &&
+                    node.value === 'Banana' &&
                     node.role === 'combobox'
             );
             expect(
@@ -208,11 +185,11 @@ describe('Combobox accessibility', () => {
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.not.be.undefined;
-        expect(el.activeDescendant.id).to.equal('thing1');
+        expect(el.activeDescendant.id).to.equal('apple');
 
         // aria-activedescendant should keep the combobox focused even when navigating the menu
         const activeDescendant = el.shadowRoot.querySelector(
-            '#thing1'
+            '#apple'
         ) as MenuItem;
 
         expect(activeDescendant.focused).to.be.true;
@@ -250,7 +227,7 @@ describe('Combobox accessibility', () => {
         });
         await elementUpdated(el);
 
-        expect(el.activeDescendant.id).to.equal('thing1');
+        expect(el.activeDescendant.id).to.equal('apple');
         snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
             children: SelectedNode[];
         };
