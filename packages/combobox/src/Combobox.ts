@@ -320,7 +320,7 @@ export class Combobox extends Textfield {
                 aria-controls=${ifDefined(
                     this.open ? 'listbox-menu' : undefined
                 )}
-                aria-describedby=${this.helpTextId}
+                aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
                 aria-labelledby="applied-label label"
@@ -367,7 +367,7 @@ export class Combobox extends Textfield {
             ${super.render()}
             <sp-picker-button
                 aria-controls="listbox-menu"
-                aria-describedby=${this.helpTextId}
+                aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
                 aria-labelledby="applied-label label"
