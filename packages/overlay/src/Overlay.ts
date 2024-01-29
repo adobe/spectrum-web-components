@@ -957,6 +957,9 @@ export class Overlay extends OverlayFeatures {
                 this.placementController.resetOverlayPosition();
             }
         }
+        if (changes.has('state') && this.state === 'closed') {
+            this.placementController.clearOverlayPosition();
+        }
     }
 
     protected renderContent(): TemplateResult {

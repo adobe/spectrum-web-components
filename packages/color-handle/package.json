@@ -62,7 +62,7 @@
         "@spectrum-web-components/opacity-checkerboard": "^0.40.3"
     },
     "devDependencies": {
-        "@spectrum-css/colorhandle": "^7.0.17"
+        "@spectrum-css/colorhandle": "^7.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

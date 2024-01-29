@@ -95,10 +95,12 @@
         "build:eleventy": {
             "command": "eleventy --config=.eleventy.cjs --incremental --quiet",
             "dependencies": [
-                "copy-docs"
+                {
+                    "script": "copy-docs"
+                }
             ],
             "files": [
-                "./content/**/*.md",
+                "./content/**/*",
                 "./.eleventy.cjs"
             ],
             "clean": "if-file-deleted",
@@ -205,8 +207,9 @@
             "command": "node scripts/copy-component-docs.js",
             "files": [
                 "../../packages/**/*.md",
+                "../../packages/**/*.ts",
                 "../../tools/**/*.md",
-                "custom-elements.json",
+                "../../tools/**/*.ts",
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"
             ],

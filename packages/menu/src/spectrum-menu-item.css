@@ -113,7 +113,7 @@ governing permissions and limitations under the License.
 }
 :host {
     display: grid;
-    grid-template: '. chevronAreaCollapsible . iconArea sectionHeadingArea . . .' 1fr 'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn' '. . . . descriptionArea . . .' '. . . . submenuArea . . .' / auto auto auto auto 1fr auto auto auto;
+    grid-template: '. chevronAreaCollapsible . headingIconArea sectionHeadingArea . . .' 1fr 'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn' '. . . . descriptionArea . . .' '. . . . submenuArea . . .' / auto auto auto auto 1fr auto auto auto;
 }
 #label {
     grid-area: submenuItemLabelArea;
@@ -407,6 +407,15 @@ governing permissions and limitations under the License.
     align-self: start;
     grid-area: iconArea;
 }
+.spectrum-Menu-item--collapsible ::slotted([slot='icon']) {
+    grid-area: headingIconArea;
+}
+:host .is-selectableMultiple {
+    align-items: start;
+}
+.is-selectableMultiple .spectrum-Menu-itemCheckbox {
+    grid-area: iconArea;
+}
 .checkmark {
     align-self: start;
     grid-area: checkmarkArea;
@@ -415,7 +424,6 @@ governing permissions and limitations under the License.
     grid-area: selectedArea;
 }
 #label {
-    align-items: flex-start;
     color: var(
         --highcontrast-menu-item-color-default,
         var(
@@ -423,7 +431,6 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-item-label-content-color-default)
         )
     );
-    display: flex;
     font-size: var(
         --mod-menu-item-label-font-size,
         var(--spectrum-menu-item-label-font-size)

@@ -500,6 +500,45 @@ export function runPickerTests(): void {
                 'finally, not visually focused'
             );
         });
+        it('opens with visible focus on a menu item on `Space`', async function () {
+            const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+            await elementUpdated(el);
+
+            expect(firstItem.focused, 'should not visually focused').to.be
+                .false;
+
+            el.focus();
+            await elementUpdated(el);
+            const opened = oneEvent(el, 'sp-opened');
+            await sendKeys({ press: 'ArrowRight' });
+            await sendKeys({ press: 'ArrowLeft' });
+            await sendKeys({ press: 'Space' });
+            await opened;
+
+            expect(el.open).to.be.true;
+            expect(firstItem.focused, 'should be visually focused').to.be.true;
+
+            const closed = oneEvent(el, 'sp-closed');
+            await sendKeys({
+                press: 'Escape',
+            });
+            await closed;
+
+            expect(el.open).to.be.false;
+            expect(
+                document.activeElement === el,
+                `focused ${document.activeElement?.localName} instead of back on Picker`
+            ).to.be.true;
+            expect(
+                el.shadowRoot.activeElement === el.button,
+                `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
+            ).to.be.true;
+            await waitUntil(
+                () => !firstItem.focused,
+                'finally, not visually focused'
+            );
+        });
         it('opens, on click, without visible focus on a menu item', async () => {
             await nextFrame();
             await nextFrame();
