@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **overlay:** clean position data on close ([edac590](https://github.com/adobe/spectrum-web-components/commit/edac59003ecc1af8dc4aa91c00c9593e8792e63f))
+
 ## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
 
 ### Bug Fixes
