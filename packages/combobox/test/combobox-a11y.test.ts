@@ -16,13 +16,18 @@ import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/combobox/sp-combobox-item.js';
 import { Combobox } from '..';
 import { fixture } from '../../../test/testing-helpers.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
 import { comboboxFixture, isWebKit } from './index.js';
-import { withFieldLabel, withHelpText } from '../stories/combobox.stories.js';
+import {
+    withFieldLabel,
+    withHelpText,
+    withTooltip,
+} from '../stories/combobox.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
 
 describe('Combobox accessibility', () => {
@@ -158,6 +163,16 @@ describe('Combobox accessibility', () => {
                 '`name` is the the selected item text plus the label text'
             ).to.not.be.null;
         }
+    });
+    it('manages its "description" value with slotted <sp-tooltip>', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${withTooltip()}</div>
+        `);
+        const el = test.querySelector('sp-combobox') as unknown as Combobox;
+        const tooltipText = 'This combobox has a tooltip.';
+
+        await elementUpdated(el);
+        await findDescribedNode(el.label, tooltipText);
     });
     it('renders open', async () => {
         const el = await comboboxFixture();
