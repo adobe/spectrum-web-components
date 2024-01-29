@@ -31,7 +31,7 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const matches = (): TemplateResult => {
+export const listAutocomplete = (): TemplateResult => {
     return html`
         <sp-field-label for="combobox-2">Where do you live?</sp-field-label>
         <sp-combobox
@@ -42,7 +42,7 @@ export const matches = (): TemplateResult => {
     `;
 };
 
-export const kerning = (): TemplateResult => {
+export const noAutocomplete = (): TemplateResult => {
     return html`
         <sp-field-label side-aligned="start" for="combobox-3">
             Fruit
@@ -66,7 +66,7 @@ export const kerning = (): TemplateResult => {
     `;
 };
 
-export const kerningLightDOM = (): TemplateResult => {
+export const lightDOM = (): TemplateResult => {
     return html`
         <sp-field-label side-aligned="start" for="combobox-5">
             Fruit
@@ -108,7 +108,7 @@ export const withTooltip = (): TemplateResult => {
         <sp-combobox
             .autocomplete=${'none'}
             id="combobox-6"
-            label="Kerning"
+            label="Combobox with tooltip"
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
         >
             ${countries.map(
@@ -119,7 +119,7 @@ export const withTooltip = (): TemplateResult => {
                 `
             )}
             <sp-tooltip slot="tooltip" self-managed placement="right" open>
-                Kerning
+                This combobox has a tooltip.
             </sp-tooltip>
         </sp-combobox>
     `;

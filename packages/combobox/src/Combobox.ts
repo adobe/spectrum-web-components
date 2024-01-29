@@ -396,7 +396,8 @@ export class Combobox extends Textfield {
                     <sp-menu
                         @change=${this.handleMenuChange}
                         tabindex="-1"
-                        aria-labelledby="label"
+                        aria-labelledby="label applied-label"
+                        aria-label=${ifDefined(this.label || this.appliedLabel)}
                         id="listbox-menu"
                         role="listbox"
                         selects=${ifDefined(
