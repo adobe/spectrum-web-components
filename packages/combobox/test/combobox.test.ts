@@ -10,17 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    elementUpdated,
-    expect,
-    html,
-    nextFrame,
-    oneEvent,
-} from '@open-wc/testing';
+import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/combobox/sp-combobox-item.js';
-import { ComboboxOption } from '..';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -31,233 +24,18 @@ import {
     fixture,
     homeEvent,
 } from '../../../test/testing-helpers.js';
-import {
-    a11ySnapshot,
-    executeServerCommand,
-    findAccessibilityNode,
-    sendKeys,
-} from '@web/test-runner-commands';
+import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
-import { TestableCombobox, testActiveElement } from './index.js';
+import {
+    comboboxFixture,
+    TestableCombobox,
+    testActiveElement,
+} from './index.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { withTooltip } from '../stories/combobox.stories.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
-const comboboxFixture = async (): Promise<TestableCombobox> => {
-    const options: ComboboxOption[] = [
-        { id: 'thing1', value: 'Abc Thing 1' },
-        { id: 'thing1a', value: 'Bde Thing 2' },
-        { id: 'thing1b', value: 'Bef Thing 3' },
-        { id: 'thing4', value: 'Efg Thing 4' },
-    ];
-
-    const el = await fixture<TestableCombobox>(
-        html`
-            <sp-combobox .options=${options}>Combobox</sp-combobox>
-        `
-    );
-
-    return el;
-};
-
 describe('Combobox', () => {
-    afterEach(() => {
-        const overlays = document.querySelectorAll('active-overlay');
-        overlays.forEach((overlay) => overlay.remove());
-    });
-    describe('renders accessibly', () => {
-        xit('renders initially', async () => {
-            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
-            const el = await comboboxFixture();
-
-            await elementUpdated(el);
-            await expect(el).to.be.accessible();
-        });
-        xit('renders open', async () => {
-            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
-            const el = await comboboxFixture();
-
-            const opened = oneEvent(el, 'sp-opened');
-            el.open = true;
-            await opened;
-
-            await elementUpdated(el);
-            await expect(el).to.be.accessible();
-        });
-        xit('renders with an active descendent', async () => {
-            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47504310
-            const el = await comboboxFixture();
-
-            const opened = oneEvent(el, 'sp-opened');
-            el.open = true;
-            await opened;
-
-            el.activeDescendent = el.availableOptions[0];
-            await elementUpdated(el);
-
-            await expect(el).to.be.accessible();
-        });
-        xit('manages its "name" value in the accessibility tree', async () => {
-            // Address via https://github.com/orgs/adobe/projects/48/views/2?pane=issue&itemId=47503928
-            const el = await comboboxFixture();
-
-            await elementUpdated(el);
-            type NamedNode = { name: string; role: string; value?: string };
-            let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-                children: NamedNode[];
-            };
-
-            expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) =>
-                        node.name === 'Combobox' &&
-                        !node.value &&
-                        node.role === 'combobox'
-                ),
-                '`name` is the label text'
-            ).to.not.be.null;
-
-            el.value = 'Bde Thing 2';
-            await elementUpdated(el);
-            snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-                children: NamedNode[];
-            };
-
-            expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) =>
-                        node.name === 'Combobox' &&
-                        node.value === 'Bde Thing 2' &&
-                        node.role === 'combobox'
-                ),
-                '`name` is the label text plus the selected item text'
-            ).to.not.be.null;
-        });
-        it('manages aria-activedescendant', async () => {
-            type ActiveDescendentFindableNode = {
-                name: string;
-                role: string;
-                value?: string;
-                activedescendent?: boolean;
-                expanded?: boolean;
-            };
-            type ActiveNodeWithChildren = ActiveDescendentFindableNode & {
-                children: ActiveDescendentFindableNode[];
-            };
-            const el = await comboboxFixture();
-            await elementUpdated(el);
-
-            let snapshot = (await a11ySnapshot(
-                {}
-            )) as unknown as ActiveNodeWithChildren;
-            expect(el.activeDescendent).to.be.undefined;
-            el.click();
-            await elementUpdated(el);
-            el.focus();
-            el.focusElement.dispatchEvent(arrowDownEvent());
-            await elementUpdated(el);
-            expect(el.activeDescendent.id).to.equal('thing1');
-            expect(
-                findAccessibilityNode<ActiveDescendentFindableNode>(
-                    snapshot,
-                    (node) => !!node.activedescendent
-                )
-            ).to.be.null;
-            snapshot = (await a11ySnapshot(
-                {}
-            )) as unknown as ActiveNodeWithChildren;
-            const activeDescendent = findAccessibilityNode(
-                snapshot,
-                (node) => node.role === 'combobox'
-            );
-            // Doesn't actually test active descendent yet.
-            expect(activeDescendent).to.not.be.null;
-        });
-        it('manages aria-selected', async () => {
-            const el = await comboboxFixture();
-
-            await elementUpdated(el);
-
-            type SelectedNode = { selected?: boolean };
-            let snapshot = (await a11ySnapshot(
-                {}
-            )) as unknown as SelectedNode & { children: SelectedNode[] };
-
-            expect(
-                findAccessibilityNode<SelectedNode>(
-                    snapshot,
-                    (node) => !!node.selected
-                )
-            ).to.be.null;
-
-            const opened = oneEvent(el, 'sp-opened');
-            el.click();
-            await opened;
-            await elementUpdated(el);
-            expect(el.open).to.be.true;
-
-            el.focus();
-            await elementUpdated(el);
-
-            el.focusElement.dispatchEvent(arrowDownEvent());
-            await elementUpdated(el);
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-
-            expect(el.activeDescendent.id).to.equal('thing1');
-            snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
-                children: SelectedNode[];
-            };
-            expect(
-                findAccessibilityNode<SelectedNode>(
-                    snapshot,
-                    (node) => !!node.selected
-                ),
-                JSON.stringify(snapshot, null, '  ')
-            ).to.not.be.null;
-        });
-        it('manages aria-expanded', async () => {
-            const el = await comboboxFixture();
-
-            await elementUpdated(el);
-
-            type ExpandedNode = { expanded?: boolean };
-            let snapshot = (await a11ySnapshot(
-                {}
-            )) as unknown as ExpandedNode & { children: ExpandedNode[] };
-
-            expect(
-                findAccessibilityNode<ExpandedNode>(
-                    snapshot,
-                    (node) => !!node.expanded
-                )
-            ).to.be.null;
-
-            el.click();
-            await elementUpdated(el);
-            expect(el.open).to.be.true;
-
-            snapshot = (await a11ySnapshot({})) as unknown as ExpandedNode & {
-                children: ExpandedNode[];
-            };
-            expect(
-                findAccessibilityNode<ExpandedNode>(
-                    snapshot,
-                    (node) => !!node.expanded
-                )
-            ).to.not.be.null;
-        });
-    });
-    it('loads with list closed', async () => {
-        const el = await comboboxFixture();
-
-        await elementUpdated(el);
-
-        expect(el.open).to.be.false;
-    });
     describe('manages focus', () => {
         it('responds to focus()', async () => {
             const el = await comboboxFixture();
@@ -299,7 +77,7 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.open).to.be.true;
-            expect(el.activeDescendent).to.not.be.undefined;
+            expect(el.activeDescendant).to.not.be.undefined;
         });
         it('opens on Alt+ArrowDown', async () => {
             const el = await comboboxFixture();
@@ -313,7 +91,7 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.open).to.be.true;
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
         });
         it('opens on ArrowUp', async () => {
             const el = await comboboxFixture();
@@ -353,13 +131,13 @@ describe('Combobox', () => {
             await elementUpdated(el);
             expect(el.open).to.be.true;
         });
-        it('moves the carat/removes activeDescendent on ArrowLeft', async () => {
+        it('moves the carat/removes activeDescendant on ArrowLeft', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
 
             el.open = true;
-            el.value = 'Abc Thing 1';
+            el.value = 'Apple';
             await elementUpdated(el);
 
             el.focusElement.setSelectionRange(4, 4);
@@ -369,7 +147,7 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowDownEvent());
             await elementUpdated(el);
 
-            testActiveElement(el, 'thing1');
+            testActiveElement(el, 'apple');
             expect(el.open).to.be.true;
 
             await executeServerCommand('send-keys', {
@@ -378,16 +156,16 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.focusElement.selectionStart).to.equal(3);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.true;
         });
-        it('moves the carat/removes activeDescendent on ArrowRight', async () => {
+        it('moves the carat/removes activeDescendant on ArrowRight', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
 
             el.open = true;
-            el.value = 'Abc Thing 1';
+            el.value = 'Apple';
             await elementUpdated(el);
 
             el.focusElement.setSelectionRange(1, 1);
@@ -397,7 +175,7 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowDownEvent());
             await elementUpdated(el);
 
-            testActiveElement(el, 'thing1');
+            testActiveElement(el, 'apple');
             expect(el.open).to.be.true;
 
             await executeServerCommand('send-keys', {
@@ -406,7 +184,7 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.focusElement.selectionStart).to.equal(2);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.true;
         });
         it('moves carat to 0 with Home key', async () => {
@@ -415,7 +193,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             el.open = true;
-            el.value = 'Abc Thing 1';
+            el.value = 'Apple';
 
             await elementUpdated(el);
             el.focusElement.focus();
@@ -427,14 +205,14 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowDownEvent());
             await elementUpdated(el);
 
-            testActiveElement(el, 'thing1');
+            testActiveElement(el, 'apple');
             expect(el.open).to.be.true;
 
             el.focusElement.dispatchEvent(homeEvent());
             await elementUpdated(el);
             expect(el.focusElement.selectionStart, 'start 2').to.equal(0);
             expect(el.focusElement.selectionEnd, 'end 2').to.equal(0);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.shadowRoot.querySelector('[aria-selected="true"]')).to.be
                 .null;
             expect(el.open).to.be.true;
@@ -445,7 +223,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             el.open = true;
-            el.value = 'Abc Thing 1';
+            el.value = 'Apple';
             await elementUpdated(el);
 
             el.focusElement.focus();
@@ -457,14 +235,14 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowDownEvent());
             await elementUpdated(el);
 
-            expect(el.activeDescendent.id).to.equal('thing1');
+            expect(el.activeDescendant.id).to.equal('apple');
             expect(el.open).to.be.true;
 
             el.focusElement.dispatchEvent(endEvent());
             await elementUpdated(el);
-            expect(el.focusElement.selectionStart, 'start 2').to.equal(11);
-            expect(el.focusElement.selectionEnd, 'end 2').to.equal(11);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.focusElement.selectionStart, 'start 2').to.equal(5);
+            expect(el.focusElement.selectionEnd, 'end 2').to.equal(5);
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.true;
         });
         it('closes on Escape', async () => {
@@ -567,45 +345,45 @@ describe('Combobox', () => {
         });
     });
     describe('manage active decendent', () => {
-        it('sets activeDescendent to first descendent on ArrowDown', async () => {
+        it('sets activeDescendant to first descendent on ArrowDown', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
 
             el.focusElement.focus();
             el.focusElement.dispatchEvent(arrowDownEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing1');
+            testActiveElement(el, 'apple');
         });
-        it('updates activeDescendent on ArrowDown', async () => {
+        it('updates activeDescendant on ArrowDown', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
 
             el.focusElement.focus();
             el.focusElement.dispatchEvent(arrowDownEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing1');
+            testActiveElement(el, 'apple');
             el.focusElement.dispatchEvent(arrowDownEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing1a');
+            testActiveElement(el, 'banana');
         });
-        it('cycles activeDescendent on ArrowDown', async () => {
+        it('cycles activeDescendant on ArrowDown', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
 
             el.focusElement.focus();
             el.focusElement.dispatchEvent(arrowDownEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing1');
+            testActiveElement(el, 'apple');
             el.focusElement.dispatchEvent(arrowDownEvent());
 
             await elementUpdated(el);
@@ -618,47 +396,47 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowDownEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing1');
+            testActiveElement(el, 'durian');
         });
-        it('sets activeDescendent to last descendent on ArrowUp', async () => {
+        it('sets activeDescendant to last descendent on ArrowUp', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
 
             el.focusElement.focus();
             el.focusElement.dispatchEvent(arrowUpEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing4');
+            testActiveElement(el, 'persimmon');
         });
-        it('updates activeDescendent on ArrowUp', async () => {
+        it('updates activeDescendant on ArrowUp', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
 
             el.focusElement.focus();
             el.focusElement.dispatchEvent(arrowUpEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing4');
+            testActiveElement(el, 'persimmon');
             el.focusElement.dispatchEvent(arrowUpEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing1b');
+            testActiveElement(el, 'pear');
         });
-        it('cycles activeDescendent on ArrowUp', async () => {
+        it('cycles activeDescendant on ArrowUp', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
 
             el.focusElement.focus();
             el.focusElement.dispatchEvent(arrowUpEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing4');
+            testActiveElement(el, 'persimmon');
             el.focusElement.dispatchEvent(arrowUpEvent());
 
             await elementUpdated(el);
@@ -671,7 +449,7 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowUpEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing4');
+            testActiveElement(el, 'mango');
         });
     });
     describe('item selection', () => {
@@ -680,7 +458,7 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
 
             el.focusElement.focus();
@@ -694,13 +472,13 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowDownEvent());
 
             await elementUpdated(el);
-            testActiveElement(el, 'thing1a');
+            testActiveElement(el, 'banana');
             el.focusElement.dispatchEvent(enterEvent());
 
             await elementUpdated(el);
             expect(el.open).to.be.false;
-            expect(el.activeDescendent).to.be.undefined;
-            expect(el.value).to.equal('Bde Thing 2');
+            expect(el.activeDescendant).to.be.undefined;
+            expect(el.value).to.equal('Banana');
             expect(el.focusElement.value).to.equal(el.value);
         });
         it('does not set the value when `enter` is pressed and no active descendent', async () => {
@@ -708,7 +486,7 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
@@ -716,13 +494,13 @@ describe('Combobox', () => {
             await opened;
 
             expect(el.open).to.be.true;
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
 
             el.focusElement.dispatchEvent(enterEvent());
 
             await elementUpdated(el);
             expect(el.open).to.be.false;
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.value).to.equal('');
             expect(el.focusElement.value).to.equal(el.value);
         });
@@ -731,10 +509,10 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
 
-            const item = el.shadowRoot.querySelector('#thing1b') as HTMLElement;
+            const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
 
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
@@ -761,17 +539,17 @@ describe('Combobox', () => {
 
             expect(el.value).to.equal(itemValue);
             expect(el.open).to.be.false;
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
         });
         it('sets the value when an item is clicked programatically', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
 
-            const item = el.shadowRoot.querySelector('#thing1b') as HTMLElement;
+            const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
 
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
@@ -788,7 +566,7 @@ describe('Combobox', () => {
 
             expect(el.value).to.equal(itemValue);
             expect(el.open).to.be.false;
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
         });
     });
     describe('responds to value changes', () => {
@@ -797,7 +575,7 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
 
             el.focus();
@@ -825,16 +603,16 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
-            expect(el.availableOptions.length).equal(4);
+            expect(el.availableOptions.length).equal(12);
 
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
 
             await executeServerCommand('send-keys', {
-                press: 'g',
+                press: 'z',
             });
 
             expect(el.open).to.be.true;
@@ -847,40 +625,40 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
-            expect(el.availableOptions.length).equal(4);
-            expect(el.options?.length).equal(4);
+            expect(el.availableOptions.length).equal(12);
+            expect(el.options?.length).equal(12);
             let items = [
                 ...el.shadowRoot.querySelectorAll('#listbox sp-menu-item'),
             ];
-            expect(items.length).to.equal(4);
+            expect(items.length).to.equal(12);
 
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
 
             await executeServerCommand('send-keys', {
-                press: 'B',
+                press: 'C',
             });
 
             await elementUpdated(el);
             expect(el.open).to.be.true;
-            expect(el.value).to.equal('B');
+            expect(el.value).to.equal('C');
             expect(el.availableOptions.length).equal(2);
-            expect(el.options?.length).equal(4);
+            expect(el.options?.length).equal(12);
             items = [
                 ...el.shadowRoot.querySelectorAll('#listbox sp-menu-item'),
             ];
             expect(items.length).to.equal(2);
 
             await executeServerCommand('send-keys', {
-                press: 'D',
+                press: 'O',
             });
 
             await elementUpdated(el);
             expect(el.open).to.be.true;
-            expect(el.value).to.equal('BD');
+            expect(el.value).to.equal('CO');
             expect(el.availableOptions.length).equal(1);
             items = [
                 ...el.shadowRoot.querySelectorAll('#listbox sp-menu-item'),
@@ -892,21 +670,21 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
-            expect(el.availableOptions.length).equal(4);
+            expect(el.availableOptions.length).equal(12);
 
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
 
-            el.value = 'B';
+            el.value = 'L';
 
             await elementUpdated(el);
             expect(el.open).to.be.true;
             expect(el.availableOptions.length).equal(2);
 
-            el.value = 'Bd';
+            el.value = 'Le';
 
             await elementUpdated(el);
             expect(el.open).to.be.true;
@@ -916,10 +694,10 @@ describe('Combobox', () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
-            el.value = 'Bde Thing 2';
+            el.value = 'Banana';
             await elementUpdated(el);
 
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
             expect(el.availableOptions.length).equal(1);
 
@@ -929,14 +707,14 @@ describe('Combobox', () => {
             await opened;
             await elementUpdated(el);
 
-            expect(el.activeDescendent?.value).to.equal(el.value);
+            expect(el.activeDescendant?.value).to.equal(el.value);
         });
         it('deactives descendent on input', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
             expect(el.value).to.equal('');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
 
             el.focus();
@@ -950,7 +728,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             expect(el.value).to.equal('B');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.true;
 
             el.focusElement.dispatchEvent(arrowDownEvent());
@@ -959,16 +737,16 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             expect(el.value).to.equal('B');
-            testActiveElement(el, 'thing1b');
+            testActiveElement(el, 'banana');
             expect(el.open).to.be.true;
 
             await executeServerCommand('send-keys', {
-                press: 'd',
+                press: 'o',
             });
             await elementUpdated(el);
 
-            expect(el.value).to.equal('Bd');
-            expect(el.activeDescendent).to.be.undefined;
+            expect(el.value).to.equal('Bo');
+            expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.true;
         });
     });
