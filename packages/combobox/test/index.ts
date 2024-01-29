@@ -10,8 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect } from '@open-wc/testing';
+import { expect, fixture } from '@open-wc/testing';
+import { html } from '@open-wc/testing';
 import { Combobox, ComboboxItem, ComboboxOption } from '..';
+import { fruits } from '../stories/index.js';
 
 export const countryList = [
     'Afghanistan',
@@ -265,23 +267,39 @@ export const countryList = [
     'Åland Islands',
 ];
 
-export const comboboxOptions = countryList.map((value, index) => ({
+export const benchmarkOptions = countryList.map((value, index) => ({
     id: index.toString(),
     value: value,
 }));
 
 export type TestableCombobox = Combobox & {
-    activeDescendent: ComboboxOption;
+    activeDescendant: ComboboxOption;
     availableOptions: ComboboxOption[];
+};
+
+export const comboboxFixture = async (): Promise<TestableCombobox> => {
+    const el = await fixture<TestableCombobox>(
+        html`
+            <sp-combobox label="Combobox" .options=${fruits}>
+                Combobox
+            </sp-combobox>
+        `
+    );
+
+    return el;
 };
 
 export const testActiveElement = (
     el: TestableCombobox,
     testId: string
 ): void => {
-    expect(el.activeDescendent?.id).to.equal(testId);
+    expect(el.activeDescendant?.id).to.equal(testId);
     const activeElement = el.shadowRoot.querySelector(
-        `#${el.activeDescendent.id}`
+        `#${el.activeDescendant.id}`
     ) as ComboboxItem;
     expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };
+
+export const isWebKit =
+    /AppleWebKit/.test(window.navigator.userAgent) &&
+    !/Chrome/.test(window.navigator.userAgent);

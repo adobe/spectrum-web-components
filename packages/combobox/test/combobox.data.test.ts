@@ -20,30 +20,14 @@ import {
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/combobox/sp-combobox-item.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import { fixture } from '../../../test/testing-helpers.js';
-import { Combobox, ComboboxOption } from '..';
-import { TestableCombobox } from './index.js';
+import { Combobox } from '..';
+import { comboboxFixture, TestableCombobox } from './index.js';
 import { SpectrumElement, TemplateResult } from '@spectrum-web-components/base';
 import { customElement } from '@spectrum-web-components/base/src/decorators.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-
-const options: ComboboxOption[] = [
-    { id: 'thing1', value: 'Abc Thing 1' },
-    { id: 'thing1a', value: 'Bde Thing 2' },
-    { id: 'thing1b', value: 'Bef Thing 3' },
-    { id: 'thing4', value: 'Efg Thing 4' },
-];
-
-const comboboxFixture = async (): Promise<TestableCombobox> => {
-    const el = await fixture<TestableCombobox>(
-        html`
-            <sp-combobox .options=${options}>Combobox Test</sp-combobox>
-        `
-    );
-    await elementUpdated(el);
-
-    return el;
-};
+import { fruits } from '../stories/index.js';
 
 @customElement('combobox-slot-test-el')
 export class TestEl extends SpectrumElement {
@@ -55,6 +39,8 @@ export class TestEl extends SpectrumElement {
         `;
     }
 }
+
+const options = fruits;
 
 describe('Combobox Data', () => {
     afterEach(() => {
@@ -377,7 +363,7 @@ describe('Combobox Data', () => {
         await elementUpdated(el);
 
         await waitUntil(() => {
-            return el.availableOptions?.length === 5;
+            return el.availableOptions?.length === 13;
         });
 
         processedOptions = el.availableOptions.map(({ id, value }) => ({
