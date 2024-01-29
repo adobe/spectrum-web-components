@@ -44,7 +44,49 @@ Overlay.open(
 
 Keep in mind that a changing DOM tree is likely to alter the relationship between existing content. Without proper care this can negatively effect the CSS that you have applied to existing content. DOM events and DOM selection methods can also perform differently than expected as the tree shape changes.
 
-## Context menu example
+## OverlayOptions
+
+When leveraging `Overlay.open()`, you can provide an optional second argument of `OverlayOptions`, with the following type:
+
+```ts
+type OverlayOptions = {
+    delayed?: boolean;
+    notImmediatelyCloseable?: boolean;
+    offset?: number | [number, number];
+    placement?: Placement;
+    receivesFocus?: 'auto' | 'true' | 'false';
+    trigger?: HTMLElement | VirtualTrigger;
+    type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
+};
+```
+
+### delayed
+
+An Overlay that is `delayed` will wait until a warm-up period of 1000ms has completed before opening. Once the warmup period has completed, all subsequent Overlays will open immediately. When no Overlays are opened, a cooldown period of 1000ms will begin. Once the cooldown has completed, the next Overlay to be opened will be subject to the warm-up period if provided that option.
+
+### notImmediatelyCloseable
+
+When an Overlay is `notImmediatelyCloseable` that means that the first interaction that would lead to the closure of the Overlay in question will be ignored. This is useful when working with non-"click" mouse interactions, like `contextmenu`, where the trigger event (e.g. `contextmenu`) occurs _before_ an event that would close said overlay (e.g. `pointerup`).
+
+### offset
+
+The `offset` property accepts either a single number, to define the offset of the Overlay along the main axis from the trigger, or 2-tuple, to define the offset along the main axis and the cross axis. This option has no effect when there is no trigger element.
+
+### placement
+
+A `placement` of `"auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"` will instruct the Overlay where to place itself in relationship to the trigger element.
+
+### receivesFocus
+
+Some Overlays will always be passed focus (e.g. modal or page Overlays). When this is not true, the `receivesFocus` option will inform the API whether to attempt to pass focus into the Overlay once it is open. `'true'` will pass focus, `'false'` will not (when possible), and `"auto"` (the default), will make a decision based on the `type` of the Overlay.
+
+### trigger
+
+The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
+
+-   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
+
+### Using a virtual trigger
 
 ```html-live
 <style>
@@ -57,6 +99,7 @@ Keep in mind that a changing DOM tree is likely to alter the relationship betwee
     }
 </style>
 
+<p>Right click anywhere in bounded rectangle to open the menu</p>
 <div id="root"></div>
 
 <script type="module">
@@ -169,48 +212,6 @@ Keep in mind that a changing DOM tree is likely to alter the relationship betwee
     }
     document.addEventListener('DOMContentLoaded', init);
 </script>
-
-## OverlayOptions
-
-When leveraging `Overlay.open()`, you can provide an optional second argument of `OverlayOptions`, with the following type:
-
-```ts
-type OverlayOptions = {
-    delayed?: boolean;
-    notImmediatelyCloseable?: boolean;
-    offset?: number | [number, number];
-    placement?: Placement;
-    receivesFocus?: 'auto' | 'true' | 'false';
-    trigger?: HTMLElement | VirtualTrigger;
-    type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
-};
-```
-
-### delayed
-
-An Overlay that is `delayed` will wait until a warm-up period of 1000ms has completed before opening. Once the warmup period has completed, all subsequent Overlays will open immediately. When no Overlays are opened, a cooldown period of 1000ms will begin. Once the cooldown has completed, the next Overlay to be opened will be subject to the warm-up period if provided that option.
-
-### notImmediatelyCloseable
-
-When an Overlay is `notImmediatelyCloseable` that means that the first interaction that would lead to the closure of the Overlay in question will be ignored. This is useful when working with non-"click" mouse interactions, like `contextmenu`, where the trigger event (e.g. `contextmenu`) occurs _before_ an event that would close said overlay (e.g. `pointerup`).
-
-### offset
-
-The `offset` property accepts either a single number, to define the offset of the Overlay along the main axis from the trigger, or 2-tuple, to define the offset along the main axis and the cross axis. This option has no effect when there is no trigger element.
-
-### placement
-
-A `placement` of `"auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"` will instruct the Overlay where to place itself in relationship to the trigger element.
-
-### receivesFocus
-
-Some Overlays will always be passed focus (e.g. modal or page Overlays). When this is not true, the `receivesFocus` option will inform the API whether to attempt to pass focus into the Overlay once it is open. `'true'` will pass focus, `'false'` will not (when possible), and `"auto"` (the default), will make a decision based on the `type` of the Overlay.
-
-### trigger
-
-The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
-
--   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
 
 ### type
 
