@@ -19,10 +19,8 @@ import {
 } from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
-import '@spectrum-web-components/combobox/sp-combobox-item.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { fixture } from '../../../test/testing-helpers.js';
-import { Combobox } from '..';
 import { comboboxFixture, TestableCombobox } from './index.js';
 import { SpectrumElement, TemplateResult } from '@spectrum-web-components/base';
 import { customElement } from '@spectrum-web-components/base/src/decorators.js';
@@ -290,7 +288,7 @@ describe('Combobox Data', () => {
         expect(processedOptions).to.deep.equal(options);
     });
     it('accepts options through slots', async () => {
-        const test = await fixture<TestableCombobox>(
+        const test = await fixture<SpectrumElement>(
             html`
                 <combobox-slot-test-el>
                     Combobox Test
@@ -304,7 +302,9 @@ describe('Combobox Data', () => {
                 </combobox-slot-test-el>
             `
         );
-        const el = test.shadowRoot.querySelector('sp-combobox') as Combobox;
+        const el = test.shadowRoot.querySelector(
+            'sp-combobox'
+        ) as unknown as TestableCombobox;
         await elementUpdated(test);
         await elementUpdated(el);
 
@@ -320,7 +320,7 @@ describe('Combobox Data', () => {
         expect(processedOptions).to.deep.equal(options);
     });
     it('accepts adding through slots', async function () {
-        const test = await fixture<TestableCombobox>(
+        const test = await fixture<SpectrumElement>(
             html`
                 <combobox-slot-test-el>
                     Combobox Test
@@ -334,7 +334,9 @@ describe('Combobox Data', () => {
                 </combobox-slot-test-el>
             `
         );
-        const el = test.shadowRoot.querySelector('sp-combobox') as Combobox;
+        const el = test.shadowRoot.querySelector(
+            'sp-combobox'
+        ) as unknown as TestableCombobox;
         await elementUpdated(test);
         await elementUpdated(el);
 

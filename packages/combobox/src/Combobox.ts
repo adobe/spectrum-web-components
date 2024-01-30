@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
+    type SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -26,9 +27,6 @@ import {
     live,
     repeat,
 } from '@spectrum-web-components/base/src/directives.js';
-import '../sp-combobox-item.js';
-import { ComboboxItem } from './ComboboxItem.js';
-import { Overlay } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -59,17 +57,11 @@ export class Combobox extends Textfield {
     /**
      * The currently active ComboboxItem descendant, when available.
      */
-    @property({ attribute: false })
-    public activeDescendant?: ComboboxOption | MenuItem;
+    @state()
+    private activeDescendant?: ComboboxOption | MenuItem;
 
     @state()
-    override appliedLabel?: string;
-
-    @property({ attribute: false })
-    public availableOptions: (ComboboxOption | MenuItem)[] = [];
-
-    @property()
-    public ariaAutocomplete: 'list' | 'none' = 'none';
+    private availableOptions: (ComboboxOption | MenuItem)[] = [];
 
     /**
      * Whether the listbox is visible.
@@ -78,15 +70,10 @@ export class Combobox extends Textfield {
     public open = false;
 
     @query('slot:not([name])')
-    public optionSlot!: HTMLSlotElement;
-
-    @query('#listbox')
-    public listbox!: HTMLDivElement;
+    private optionSlot!: HTMLSlotElement;
 
     @query('#input')
-    public input!: HTMLInputElement;
-
-    public overlay!: HTMLDivElement;
+    private input!: HTMLInputElement;
 
     @property({ type: Array })
     public options?: ComboboxOption[];
@@ -94,12 +81,11 @@ export class Combobox extends Textfield {
     /**
      * The array of the children of the combobox, ie ComboboxItems.
      **/
-    @property({ type: Array })
-    public optionEls: MenuItem[] = [];
+    @state()
+    protected optionEls: MenuItem[] = [];
 
-    protected tooltipEl?: Tooltip;
+    private tooltipEl?: Tooltip;
 
-    // { value: "String thing", id: "string1" }
     public override focus(): void {
         this.focusElement.focus();
     }
@@ -224,7 +210,6 @@ export class Combobox extends Textfield {
                 return descendantValueLowerCase.startsWith(valueLowerCase);
             }
         );
-        Overlay.update();
     }
 
     public handleComboboxInput({
@@ -257,7 +242,9 @@ export class Combobox extends Textfield {
         this.open = !this.open;
     }
 
-    protected override shouldUpdate(changed: PropertyValues<this>): boolean {
+    protected override shouldUpdate(
+        changed: PropertyValues<this & { optionEls: MenuItem[] }>
+    ): boolean {
         if (changed.has('open') && !this.open) {
             this.activeDescendant = undefined;
         }
@@ -316,7 +303,9 @@ export class Combobox extends Textfield {
                         ? `${this.activeDescendant.id}`
                         : undefined
                 )}
-                aria-autocomplete=${this.ariaAutocomplete}
+                aria-autocomplete=${ifDefined(
+                    this.autocomplete as 'list' | 'none'
+                )}
                 aria-controls=${ifDefined(
                     this.open ? 'listbox-menu' : undefined
                 )}
@@ -327,7 +316,6 @@ export class Combobox extends Textfield {
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
-                ?focused=${this.focused || this.open}
                 @input=${this.handleComboboxInput}
                 @keydown=${this.handleComboboxKeydown}
                 id="input"
@@ -450,11 +438,10 @@ export class Combobox extends Textfield {
         this.appliedLabel = value;
     };
 
-    protected override firstUpdated(changed: PropertyValues<this>): void {
+    protected override firstUpdated(
+        changed: PropertyValues<this & { optionEls: MenuItem[] }>
+    ): void {
         super.firstUpdated(changed);
-        this.overlay = this.shadowRoot.querySelector(
-            '#overlay'
-        ) as HTMLDivElement;
         this.addEventListener('focusout', (event: FocusEvent) => {
             const isMenuItem =
                 event.relatedTarget &&
@@ -476,7 +463,11 @@ export class Combobox extends Textfield {
         }
     }
 
-    protected override updated(changed: PropertyValues<this>): void {
+    protected override updated(
+        changed: PropertyValues<
+            this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
+        >
+    ): void {
         if (changed.has('open')) {
             this.manageListOverlay();
         }
@@ -506,7 +497,7 @@ export class Combobox extends Textfield {
             '#listbox'
         ) as HTMLUListElement;
         if (list) {
-            const descendants = [...list.children] as ComboboxItem[];
+            const descendants = [...list.children] as SpectrumElement[];
             await Promise.all(
                 descendants.map((descendant) => descendant.updateComplete)
             );

@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import { ComboboxOption } from '..';
-import '../sp-combobox.js';
+import { ComboboxOption } from '@spectrum-web-components/combobox';
+import '@spectrum-web-components/combobox/sp-combobox.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 
 export default {

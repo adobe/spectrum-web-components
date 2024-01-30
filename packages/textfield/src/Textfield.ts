@@ -53,7 +53,7 @@ export class TextfieldBase extends ManageHelpText(
     }
 
     @state()
-    appliedLabel?: string;
+    protected appliedLabel?: string;
 
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';

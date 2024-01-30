@@ -13,8 +13,7 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, html, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
-import '@spectrum-web-components/combobox/sp-combobox-item.js';
-import { Combobox } from '..';
+import { Combobox } from '@spectrum-web-components/combobox';
 import { fixture } from '../../../test/testing-helpers.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {

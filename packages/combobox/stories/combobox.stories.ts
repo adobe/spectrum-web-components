@@ -14,7 +14,6 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { countries, fruits } from './index.js';
 import '@spectrum-web-components/combobox/sp-combobox.js';
-import '@spectrum-web-components/combobox/sp-combobox-item.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';

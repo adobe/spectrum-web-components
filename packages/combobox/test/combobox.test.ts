@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
-import '@spectrum-web-components/combobox/sp-combobox-item.js';
 import {
     arrowDownEvent,
     arrowLeftEvent,
