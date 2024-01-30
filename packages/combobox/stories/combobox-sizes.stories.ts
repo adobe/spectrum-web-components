@@ -15,6 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ComboboxOption } from '@spectrum-web-components/combobox';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 
 export default {
     title: 'Combobox/Sizes',
@@ -34,14 +35,14 @@ const combobox = ({
     size: 's' | 'm' | 'l' | 'xl';
 }): TemplateResult => {
     const options: ComboboxOption[] = [
-        { id: 'thing1', value: 'Abc Thing 1' },
-        { id: 'thing1a', value: 'Bde Thing 2' },
-        { id: 'thing1b', value: 'Bef Thing 3' },
-        { id: 'thing4', value: 'Efg Thing 4' },
-        { id: 'athing1', value: 'Abc Thing 1' },
-        { id: 'athing1a', value: 'Bde Thing 2' },
-        { id: 'athing1b', value: 'Bef Thing 3' },
-        { id: 'athing4', value: 'Efg Thing 4' },
+        { value: 'thing1', itemText: 'Abc Thing 1' },
+        { value: 'thing1a', itemText: 'Bde Thing 2' },
+        { value: 'thing1b', itemText: 'Bef Thing 3' },
+        { value: 'thing4', itemText: 'Efg Thing 4' },
+        { value: 'athing1', itemText: 'Abc Thing 1' },
+        { value: 'athing1a', itemText: 'Bde Thing 2' },
+        { value: 'athing1b', itemText: 'Bef Thing 3' },
+        { value: 'athing4', itemText: 'Efg Thing 4' },
     ];
     return html`
         <sp-field-label size=${size} for="combobox-1">Things</sp-field-label>

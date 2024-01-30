@@ -41,12 +41,13 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 
 export type ComboboxOption = {
-    id: string;
     value: string;
+    itemText: string;
 };
 
 /**
  * @element sp-combobox
+ * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
 export class Combobox extends Textfield {
@@ -103,7 +104,7 @@ export class Combobox extends Textfield {
             this.open = true;
             this.activateNextDescendant();
             const activeEl = this.querySelector(
-                `#${(this.activeDescendant as ComboboxOption).id}`
+                `#${(this.activeDescendant as ComboboxOption).value}`
             ) as HTMLElement;
             if (activeEl) {
                 activeEl.scrollIntoView({ block: 'nearest' });
@@ -113,7 +114,7 @@ export class Combobox extends Textfield {
             this.open = true;
             this.activatePreviousDescendant();
             const activeEl = this.querySelector(
-                `#${(this.activeDescendant as ComboboxOption).id}`
+                `#${(this.activeDescendant as ComboboxOption).value}`
             ) as HTMLElement;
             if (activeEl) {
                 activeEl.scrollIntoView({ block: 'nearest' });
@@ -196,7 +197,7 @@ export class Combobox extends Textfield {
         if (!this.activeDescendant) {
             return;
         }
-        this.value = this.activeDescendant.value;
+        this.value = this.activeDescendant.itemText;
     }
 
     public filterAvailableOptions(): void {
@@ -223,7 +224,11 @@ export class Combobox extends Textfield {
 
     protected handleMenuChange(event: PointerEvent & { target: Menu }): void {
         const { target } = event;
-        this.value = target.selected[0];
+        const value = target.selected[0];
+        const selected = (this.options || this.optionEls).find(
+            (item) => item.value === value
+        );
+        this.value = selected?.itemText || '';
         event.preventDefault();
         this.open = false;
         this._returnItems();
@@ -300,7 +305,7 @@ export class Combobox extends Textfield {
             <input
                 aria-activedescendant=${ifDefined(
                     this.activeDescendant
-                        ? `${this.activeDescendant.id}`
+                        ? `${this.activeDescendant.value}`
                         : undefined
                 )}
                 aria-autocomplete=${ifDefined(
@@ -399,20 +404,20 @@ export class Combobox extends Textfield {
                     >
                         ${repeat(
                             this.availableOptions,
-                            (option) => option.id,
+                            (option) => option.value,
                             (option) => {
                                 return html`
                                     <sp-menu-item
-                                        id="${option.id}"
-                                        ?focused=${this.activeDescendant?.id ===
-                                        option.id}
+                                        id="${option.value}"
+                                        ?focused=${this.activeDescendant
+                                            ?.value === option.value}
                                         aria-selected=${this.activeDescendant
-                                            ?.id === option.id
+                                            ?.value === option.value
                                             ? 'true'
                                             : 'false'}
                                         .value=${option.value}
                                     >
-                                        ${option.value}
+                                        ${option.itemText}
                                     </sp-menu-item>
                                 `;
                             }

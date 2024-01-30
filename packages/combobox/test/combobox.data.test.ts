@@ -55,40 +55,42 @@ describe('Combobox Data', () => {
             html`
                 <sp-combobox>
                     Combobox Test
-                    <sp-menu-item id="pineapple">Pineapple</sp-menu-item>
-                    <sp-menu-item id="yuzu">Yuzu</sp-menu-item>
-                    <sp-menu-item id="kumquat">Kumquat</sp-menu-item>
-                    <sp-menu-item id="lychee">Lychee</sp-menu-item>
-                    <sp-menu-item id="durian">Durian</sp-menu-item>
+                    <sp-menu-item value="pineapple">Pineapple</sp-menu-item>
+                    <sp-menu-item value="yuzu">Yuzu</sp-menu-item>
+                    <sp-menu-item value="kumquat">Kumquat</sp-menu-item>
+                    <sp-menu-item value="lychee">Lychee</sp-menu-item>
+                    <sp-menu-item value="durian">Durian</sp-menu-item>
                 </sp-combobox>
             `
         );
         await elementUpdated(el);
 
-        const processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
-            value,
-        }));
+        const processedOptions = el.availableOptions.map(
+            ({ value, itemText }) => ({
+                value,
+                itemText,
+            })
+        );
         expect(processedOptions).to.deep.equal([
             {
-                id: 'pineapple',
-                value: 'Pineapple',
+                value: 'pineapple',
+                itemText: 'Pineapple',
             },
             {
-                id: 'yuzu',
-                value: 'Yuzu',
+                value: 'yuzu',
+                itemText: 'Yuzu',
             },
             {
-                id: 'kumquat',
-                value: 'Kumquat',
+                value: 'kumquat',
+                itemText: 'Kumquat',
             },
             {
-                id: 'lychee',
-                value: 'Lychee',
+                value: 'lychee',
+                itemText: 'Lychee',
             },
             {
-                id: 'durian',
-                value: 'Durian',
+                value: 'durian',
+                itemText: 'Durian',
             },
         ]);
     });
@@ -99,8 +101,8 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-menu-item id=${option.id}>
-                                ${option.value}
+                            <sp-menu-item value=${option.value}>
+                                ${option.itemText}
                             </sp-menu-item>
                         `;
                     })}
@@ -109,28 +111,30 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        let processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
-            value,
-        }));
+        let processedOptions = el.availableOptions.map(
+            ({ value, itemText }) => ({
+                value,
+                itemText,
+            })
+        );
 
         expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
-            id: 'another-option',
-            value: 'Another Option',
+            value: 'another-option',
+            itemText: 'Another Option',
         };
 
         const item = document.createElement('sp-menu-item');
-        item.id = newOption.id;
-        item.textContent = newOption.value;
+        item.value = newOption.value;
+        item.textContent = newOption.itemText;
         el.append(item);
 
         await elementUpdated(el);
 
-        processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
+        processedOptions = el.availableOptions.map(({ value, itemText }) => ({
             value,
+            itemText,
         }));
 
         expect(processedOptions).to.deep.equal([...options, newOption]);
@@ -142,8 +146,8 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-menu-item id=${option.id}>
-                                ${option.value}
+                            <sp-menu-item value=${option.value}>
+                                ${option.itemText}
                             </sp-menu-item>
                         `;
                     })}
@@ -152,34 +156,37 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        let processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
-            value,
-        }));
+        let processedOptions = el.availableOptions.map(
+            ({ value, itemText }) => ({
+                value,
+                itemText,
+            })
+        );
 
         expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
-            id: 'another-option',
-            value: 'Another Option',
+            value: 'another-option',
+            itemText: 'Another Option',
         };
 
         const option1 = el.querySelector(
             'sp-menu-item:first-of-type'
         ) as MenuItem;
-        option1.textContent = newOption.value;
+        option1.textContent = newOption.itemText;
 
         await elementUpdated(el);
 
         const newOptions = options.slice();
         newOptions[0].value = newOption.value;
+        newOptions[0].itemText = newOption.itemText;
 
         await nextFrame();
         await nextFrame();
 
-        processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
+        processedOptions = el.availableOptions.map(({ value, itemText }) => ({
             value,
+            itemText,
         }));
 
         expect(processedOptions).to.deep.equal(newOptions);
@@ -191,8 +198,8 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-menu-item id=${option.id}>
-                                ${option.value}
+                            <sp-menu-item value=${option.value}>
+                                ${option.itemText}
                             </sp-menu-item>
                         `;
                     })}
@@ -201,34 +208,36 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        let processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
-            value,
-        }));
+        let processedOptions = el.availableOptions.map(
+            ({ value, itemText }) => ({
+                value,
+                itemText,
+            })
+        );
 
         expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
-            id: 'another-option',
-            value: 'Another Option',
+            value: 'another-option',
+            itemText: 'Another Option',
         };
 
         const option1 = el.querySelector(
             'sp-menu-item:first-of-type'
         ) as MenuItem;
-        option1.id = newOption.id;
+        option1.value = newOption.value;
 
         await elementUpdated(el);
 
         const newOptions = options.slice();
-        newOptions[0].id = newOption.id;
+        newOptions[0].value = newOption.value;
 
         await nextFrame();
         await nextFrame();
 
-        processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
+        processedOptions = el.availableOptions.map(({ value, itemText }) => ({
             value,
+            itemText,
         }));
 
         expect(processedOptions).to.deep.equal(newOptions);
@@ -240,8 +249,8 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-menu-item id=${option.id}>
-                                ${option.value}
+                            <sp-menu-item value=${option.value}>
+                                ${option.itemText}
                             </sp-menu-item>
                         `;
                     })}
@@ -250,16 +259,18 @@ describe('Combobox Data', () => {
         );
         await elementUpdated(el);
 
-        let processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
-            value,
-        }));
+        let processedOptions = el.availableOptions.map(
+            ({ value, itemText }) => ({
+                value,
+                itemText,
+            })
+        );
 
         expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
-            id: 'another-option',
-            value: 'Another Option',
+            value: 'another-option',
+            itemText: 'Another Option',
         };
 
         const option1 = el.querySelector(
@@ -267,22 +278,22 @@ describe('Combobox Data', () => {
         ) as MenuItem;
         option1.remove();
         const item = document.createElement('sp-menu-item');
-        item.id = newOption.id;
-        item.textContent = newOption.value;
+        item.value = newOption.value;
+        item.textContent = newOption.itemText;
         el.insertAdjacentElement('afterbegin', item);
 
         await elementUpdated(el);
 
         const newOptions = options.slice();
-        newOptions[0].id = newOption.id;
         newOptions[0].value = newOption.value;
+        newOptions[0].itemText = newOption.itemText;
 
         await nextFrame();
         await nextFrame();
 
-        processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
+        processedOptions = el.availableOptions.map(({ value, itemText }) => ({
             value,
+            itemText,
         }));
 
         expect(processedOptions).to.deep.equal(options);
@@ -294,8 +305,8 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-menu-item id=${option.id}>
-                                ${option.value}
+                            <sp-menu-item value=${option.value}>
+                                ${option.itemText}
                             </sp-menu-item>
                         `;
                     })}
@@ -312,10 +323,12 @@ describe('Combobox Data', () => {
             return !!el.optionEls?.length;
         });
 
-        const processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
-            value,
-        }));
+        const processedOptions = el.availableOptions.map(
+            ({ value, itemText }) => ({
+                value,
+                itemText,
+            })
+        );
 
         expect(processedOptions).to.deep.equal(options);
     });
@@ -326,8 +339,8 @@ describe('Combobox Data', () => {
                     Combobox Test
                     ${options.map((option) => {
                         return html`
-                            <sp-menu-item id=${option.id}>
-                                ${option.value}
+                            <sp-menu-item value=${option.value}>
+                                ${option.itemText}
                             </sp-menu-item>
                         `;
                     })}
@@ -344,21 +357,23 @@ describe('Combobox Data', () => {
             return !!el.optionEls?.length;
         });
 
-        let processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
-            value,
-        }));
+        let processedOptions = el.availableOptions.map(
+            ({ value, itemText }) => ({
+                value,
+                itemText,
+            })
+        );
 
         expect(processedOptions).to.deep.equal(options);
 
         const newOption = {
-            id: 'another-option',
-            value: 'Another Option',
+            value: 'another-option',
+            itemText: 'Another Option',
         };
 
         const item = document.createElement('sp-menu-item');
-        item.id = newOption.id;
-        item.textContent = newOption.value;
+        item.value = newOption.value;
+        item.textContent = newOption.itemText;
         test.append(item);
 
         await elementUpdated(test);
@@ -368,9 +383,9 @@ describe('Combobox Data', () => {
             return el.availableOptions?.length === 13;
         });
 
-        processedOptions = el.availableOptions.map(({ id, value }) => ({
-            id,
+        processedOptions = el.availableOptions.map(({ value, itemText }) => ({
             value,
+            itemText,
         }));
         expect(processedOptions).to.deep.equal([...options, newOption]);
     });

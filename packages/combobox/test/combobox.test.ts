@@ -33,6 +33,7 @@ import {
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { withTooltip } from '../stories/combobox.stories.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
+import { MenuItem } from '@spectrum-web-components/menu';
 
 describe('Combobox', () => {
     describe('manages focus', () => {
@@ -234,7 +235,7 @@ describe('Combobox', () => {
             el.focusElement.dispatchEvent(arrowDownEvent());
             await elementUpdated(el);
 
-            expect(el.activeDescendant.id).to.equal('apple');
+            expect(el.activeDescendant.value).to.equal('apple');
             expect(el.open).to.be.true;
 
             el.focusElement.dispatchEvent(endEvent());
@@ -545,7 +546,9 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
 
-            const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
+            const item = el.shadowRoot.querySelector(
+                '[value="cherry"]'
+            ) as MenuItem;
 
             expect(el.value).to.equal('');
             expect(el.activeDescendant).to.be.undefined;
@@ -557,7 +560,7 @@ describe('Combobox', () => {
 
             expect(el.open).to.be.true;
 
-            const itemValue = (item.textContent as string).trim();
+            const itemValue = item.itemText;
 
             item.click();
 
@@ -706,7 +709,7 @@ describe('Combobox', () => {
             await opened;
             await elementUpdated(el);
 
-            expect(el.activeDescendant?.value).to.equal(el.value);
+            expect(el.activeDescendant?.itemText).to.equal(el.value);
         });
         it('deactives descendent on input', async () => {
             const el = await comboboxFixture();

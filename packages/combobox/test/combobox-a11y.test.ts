@@ -199,7 +199,7 @@ describe('Combobox accessibility', () => {
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.not.be.undefined;
-        expect(el.activeDescendant.id).to.equal('apple');
+        expect(el.activeDescendant.value).to.equal('apple');
 
         // aria-activedescendant should keep the combobox focused even when navigating the menu
         const activeDescendant = el.shadowRoot.querySelector(
@@ -241,7 +241,7 @@ describe('Combobox accessibility', () => {
         });
         await elementUpdated(el);
 
-        expect(el.activeDescendant.id).to.equal('apple');
+        expect(el.activeDescendant.value).to.equal('apple');
         snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
             children: SelectedNode[];
         };

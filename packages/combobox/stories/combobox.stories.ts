@@ -17,6 +17,7 @@ import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
     title: 'Combobox',
@@ -77,8 +78,8 @@ export const lightDOM = (): TemplateResult => {
         >
             ${fruits.map(
                 (fruit) => html`
-                    <sp-menu-item id=${fruit.id} value=${fruit.value}>
-                        ${fruit.value}
+                    <sp-menu-item id=${fruit.value} value=${fruit.value}>
+                        ${fruit.itemText}
                     </sp-menu-item>
                 `
             )}
@@ -93,8 +94,8 @@ export const lightDOM = (): TemplateResult => {
         >
             ${countries.map(
                 (country) => html`
-                    <sp-menu-item id=${country.id} value=${country.value}>
-                        ${country.value}
+                    <sp-menu-item id=${country.value} value=${country.value}>
+                        ${country.itemText}
                     </sp-menu-item>
                 `
             )}
@@ -112,8 +113,8 @@ export const withTooltip = (): TemplateResult => {
         >
             ${countries.map(
                 (option) => html`
-                    <sp-menu-item id=${option.id} value=${option.value}>
-                        ${option.value}
+                    <sp-menu-item id=${option.value} value=${option.value}>
+                        ${option.itemText}
                     </sp-menu-item>
                 `
             )}
