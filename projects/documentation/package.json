@@ -129,15 +129,23 @@
             "clean": "if-file-deleted"
         },
         "build:postcss": {
-            "command": "postcss src/components/{styles,fonts}.css -d _site/ --config src/postcss.config.cjs",
+            "command": "postcss src/components/{styles,fonts,medium,large,light,dark}.css -d _site/ --config src/postcss.config.cjs",
             "files": [
                 "./src/components/styles.css",
+                "./src/components/medium.css",
+                "./src/components/large.css",
+                "./src/components/light.css",
+                "./src/components/dark.css",
                 "./src/components/fonts.css",
                 "src/postcss.config.cjs",
                 "_site/**/*.html"
             ],
             "output": [
                 "./_site/src/components/styles.css",
+                "./_site/src/components/medium.css",
+                "./_site/src/components/large.css",
+                "./_site/src/components/light.css",
+                "./_site/src/components/dark.css",
                 "./_site/src/components/fonts.css"
             ],
             "clean": "if-file-deleted",
