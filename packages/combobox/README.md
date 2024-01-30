@@ -23,25 +23,84 @@ When looking to leverage the `Combobox` base class as a type and/or for extensio
 import { Combobox } from '@spectrum-web-components/combobox';
 ```
 
-## Examples
+## Sizes
 
-<!--- what is the most minimal example possible? are any of the attributes required? -->
-<!--- Each example in the RFC includes a prepended sp-field-label. Is that required, even with the "label" attr? -->
-<!-- https://combobox--spectrum-web-components.netlify.app/storybook/?path=/story/combobox--default is empty -->
+<sp-tabs selected="m" auto label="Size Attribute Options">
+
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
-<sp-combobox>
+<sp-combobox label="Color">
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
 
-### Options Array
+</sp-tab-panel>
+
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-combobox label="Color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-combobox label="Color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-combobox label="Color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+
+</sp-tabs>
+
+## Labeling
+
+A combobox must be labeled. Either provide an accessible label via the `label` attribute, or render a visible label via `<sp-field-label>`:
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+## Providing options
+
+Combobox options are presented as a popup menu. Menu items can be provided via markup as `<sp-menu-item>` children, or by assigning an array to the `options` property of an `<sp-combobox>`.
+
+### Options property
 
 Instead of providing `<sp-menu-item>` children, you can assign an array of `ComboboxOptions` to the `options` property, and `<sp-combobox>` will create matching menu items:
-
-<!--- Why does ComboboxOptions have "id" and "value" rather than "value" and "label" to match <option> & provide a data-value and a render-value? -->
 
 ```html
 <sp-combobox id="colors"></sp-combobox>
@@ -55,7 +114,7 @@ Instead of providing `<sp-menu-item>` children, you can assign an array of `Comb
 </script>
 ```
 
-### Dynamic Items
+### Dynamic options
 
 When you update the `options` property or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents. For example, using [Lit](https://lit.dev/):
 
@@ -69,19 +128,12 @@ this.colorOptions = [...this.colorOptions, { id: 'purple', value: 'Purple' }];
 
 ## Autocomplete
 
-<!--- Should there be an option to make matching case-sensitive? -->
-<!--- Should there be an option to allow matching anywhere in a string rather than the beginning? -->
-
 The text in an `<sp-combobox>` is editable, and the string the user has typed in will become the `value` of the combobox unless the user selects a different value in the popup menu.
 
--   `autocomplete="none"`: the suggested popup menu items will remain the same regardless of the currently-input value.
+-   `autocomplete="none"`: the suggested popup menu items will remain the same regardless of the currently-input value. Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
 -   `autocomplete="list"`: the popup menu items are filtered to only those completing the currently-input value.
 
-Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
-
 ## Focus and Accessibility
-
-<!--- Opening then closing the popup menu should focus the text input of the combobox, right? -->
 
 The combobox supports both mouse and keyboard navigation. Mobile behavior is currently unspecified.
 
