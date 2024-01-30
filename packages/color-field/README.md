@@ -34,7 +34,7 @@ import { ColorField } from '@spectrum-web-components/color-field';
 When devMode is true, the color handle will be rendered. This is useful for development and debugging purposes.
 
 ```html
-<sp-color-field devMode="true"></sp-color-field>
+<sp-color-field viewColor="true"></sp-color-field>
 ```
 
 ### Read Only
