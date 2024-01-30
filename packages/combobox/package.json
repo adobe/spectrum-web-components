@@ -29,19 +29,10 @@
             "development": "./src/Combobox.dev.js",
             "default": "./src/Combobox.js"
         },
-        "./src/ComboboxItem.js": {
-            "development": "./src/ComboboxItem.dev.js",
-            "default": "./src/ComboboxItem.js"
-        },
-        "./src/combobox-item.css.js": "./src/combobox-item.css.js",
         "./src/combobox.css.js": "./src/combobox.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
-        },
-        "./sp-combobox-item.js": {
-            "development": "./sp-combobox-item.dev.js",
-            "default": "./sp-combobox-item.js"
         },
         "./sp-combobox.js": {
             "development": "./sp-combobox.dev.js",

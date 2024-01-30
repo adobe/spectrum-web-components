@@ -13,8 +13,7 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, html, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
-import '@spectrum-web-components/combobox/sp-combobox-item.js';
-import { Combobox } from '..';
+import { Combobox } from '@spectrum-web-components/combobox';
 import { fixture } from '../../../test/testing-helpers.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
@@ -200,7 +199,7 @@ describe('Combobox accessibility', () => {
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.not.be.undefined;
-        expect(el.activeDescendant.id).to.equal('apple');
+        expect(el.activeDescendant.value).to.equal('apple');
 
         // aria-activedescendant should keep the combobox focused even when navigating the menu
         const activeDescendant = el.shadowRoot.querySelector(
@@ -242,7 +241,7 @@ describe('Combobox accessibility', () => {
         });
         await elementUpdated(el);
 
-        expect(el.activeDescendant.id).to.equal('apple');
+        expect(el.activeDescendant.value).to.equal('apple');
         snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
             children: SelectedNode[];
         };
