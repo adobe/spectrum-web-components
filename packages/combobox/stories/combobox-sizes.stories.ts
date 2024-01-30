@@ -37,6 +37,7 @@ const combobox = ({
     return html`
         <sp-field-label size=${size} for="combobox-1">Things</sp-field-label>
         <sp-combobox
+            autocomplete="list"
             id="combobox-1"
             .options=${fruits}
             ?open=${open}
