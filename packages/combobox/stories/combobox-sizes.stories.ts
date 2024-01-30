@@ -12,9 +12,10 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import { ComboboxOption } from '..';
-import '../sp-combobox.js';
+import '@spectrum-web-components/combobox/sp-combobox.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import { fruits } from './index.js';
 
 export default {
     title: 'Combobox/Sizes',
@@ -33,21 +34,11 @@ const combobox = ({
     open: boolean;
     size: 's' | 'm' | 'l' | 'xl';
 }): TemplateResult => {
-    const options: ComboboxOption[] = [
-        { id: 'thing1', value: 'Abc Thing 1' },
-        { id: 'thing1a', value: 'Bde Thing 2' },
-        { id: 'thing1b', value: 'Bef Thing 3' },
-        { id: 'thing4', value: 'Efg Thing 4' },
-        { id: 'athing1', value: 'Abc Thing 1' },
-        { id: 'athing1a', value: 'Bde Thing 2' },
-        { id: 'athing1b', value: 'Bef Thing 3' },
-        { id: 'athing4', value: 'Efg Thing 4' },
-    ];
     return html`
         <sp-field-label size=${size} for="combobox-1">Things</sp-field-label>
         <sp-combobox
             id="combobox-1"
-            .options=${options}
+            .options=${fruits}
             ?open=${open}
             size=${size}
         ></sp-combobox>

@@ -1,5 +1,4 @@
 {
     "./src/*": "./src/*",
-    "./sp-combobox-item.js": "./sp-combobox-item.js",
     "./sp-combobox.js": "./sp-combobox.js"
 }

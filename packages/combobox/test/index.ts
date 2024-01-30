@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { expect, fixture } from '@open-wc/testing';
 import { html } from '@open-wc/testing';
-import { Combobox, ComboboxItem, ComboboxOption } from '..';
+import { ComboboxOption } from '@spectrum-web-components/combobox';
+import { MenuItem } from '@spectrum-web-components/menu';
 import { fruits } from '../stories/index.js';
 
 export const countryList = [
@@ -272,9 +273,16 @@ export const benchmarkOptions = countryList.map((value, index) => ({
     value: value,
 }));
 
-export type TestableCombobox = Combobox & {
+export type TestableCombobox = HTMLElement & {
     activeDescendant: ComboboxOption;
     availableOptions: ComboboxOption[];
+    focused: boolean;
+    focusElement: HTMLInputElement;
+    open: boolean;
+    optionEls: MenuItem[];
+    options: ComboboxOption[];
+    shadowRoot: ShadowRoot;
+    value: string;
 };
 
 export const comboboxFixture = async (): Promise<TestableCombobox> => {
@@ -293,10 +301,10 @@ export const testActiveElement = (
     el: TestableCombobox,
     testId: string
 ): void => {
-    expect(el.activeDescendant?.id).to.equal(testId);
+    expect(el.activeDescendant?.value).to.equal(testId);
     const activeElement = el.shadowRoot.querySelector(
-        `#${el.activeDescendant.id}`
-    ) as ComboboxItem;
+        `#${el.activeDescendant.value}`
+    ) as HTMLElement;
     expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };
 
