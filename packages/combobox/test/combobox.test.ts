@@ -331,17 +331,39 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
 
+            const input = el.shadowRoot.querySelector(
+                'input'
+            ) as HTMLInputElement;
+            expect(el.shadowRoot.activeElement).to.not.equal(input);
+
             const opened = oneEvent(el.focusElement, 'sp-opened');
             el.open = true;
             await opened;
             expect(el.open).to.be.true;
+            expect(el.shadowRoot.activeElement).to.equal(input);
 
             const closed = oneEvent(el.focusElement, 'sp-closed');
-            button.click();
+            const rect = button.getBoundingClientRect();
+            // required to test that focus remains with the <input>,
+            // since button.click() doesn't allow the button to steal focus
+            await sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'click',
+                    },
+                ],
+            });
             await closed;
 
             await elementUpdated(el);
             expect(el.open).to.be.false;
+
+            // closing the popup menu should leave the textfield's input focused
+            expect(el.shadowRoot.activeElement).to.equal(input);
         });
     });
     describe('manage active decendent', () => {
