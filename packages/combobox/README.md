@@ -26,12 +26,11 @@ import { Combobox } from '@spectrum-web-components/combobox';
 ## Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
-
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
 ```html
-<sp-combobox label="Color">
+<sp-combobox size="s" label="Color">
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -39,12 +38,11 @@ import { Combobox } from '@spectrum-web-components/combobox';
 ```
 
 </sp-tab-panel>
-
 <sp-tab value="m">Medium</sp-tab>
 <sp-tab-panel value="m">
 
 ```html
-<sp-combobox label="Color">
+<sp-combobox size="m" label="Color">
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -52,12 +50,11 @@ import { Combobox } from '@spectrum-web-components/combobox';
 ```
 
 </sp-tab-panel>
-
 <sp-tab value="l">Large</sp-tab>
 <sp-tab-panel value="l">
 
 ```html
-<sp-combobox label="Color">
+<sp-combobox size="l" label="Color">
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -65,12 +62,11 @@ import { Combobox } from '@spectrum-web-components/combobox';
 ```
 
 </sp-tab-panel>
-
 <sp-tab value="xl">Extra Large</sp-tab>
 <sp-tab-panel value="xl">
 
 ```html
-<sp-combobox label="Color">
+<sp-combobox size="xl" label="Color">
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -78,12 +74,13 @@ import { Combobox } from '@spectrum-web-components/combobox';
 ```
 
 </sp-tab-panel>
-
 </sp-tabs>
 
 ## Labeling
 
-A combobox must be labeled. Either provide an accessible label via the `label` attribute, or render a visible label via `<sp-field-label>`:
+A combobox must be labeled.
+Typically, you should render a visible label via `<sp-field-label>`.
+For exceptional cases, provide an accessible label via the `label` attribute.
 
 ```html
 <sp-field-label for="color">Color</sp-field-label>
@@ -102,15 +99,15 @@ Combobox options are presented as a popup menu. Menu items can be provided via m
 
 Instead of providing `<sp-menu-item>` children, you can assign an array of `ComboboxOptions` to the `options` property, and `<sp-combobox>` will create matching menu items:
 
-```html
-<sp-combobox id="colors"></sp-combobox>
+```html-no-demo
+<sp-combobox id="color" label="Color"></sp-combobox>
 
 <script>
-    document.getElementById('colors').options = {[
-        { id: "red", value: "Red" },
-        { id: "green", value: "Green" },
-        { id: "blue", value: "Blue" }
-    ]};
+    document.getElementById('color').options = [
+        { value: "red", itemText: "Red" },
+        { value: "green", itemText: "Green" },
+        { value: "blue", itemText: "Blue" }
+    ];
 </script>
 ```
 
@@ -118,20 +115,34 @@ Instead of providing `<sp-menu-item>` children, you can assign an array of `Comb
 
 When you update the `options` property or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents. For example, using [Lit](https://lit.dev/):
 
-```html
-<sp-combobox .options="${this.colorOptions}"></sp-combobox>
-```
+```ts
+render() {
+    return html`<sp-combobox label="Color" .options=${this.colorOptions}></sp-combobox>`;
+}
 
-```js
-this.colorOptions = [...this.colorOptions, { id: 'purple', value: 'Purple' }];
+mutate() {
+    this.colorOptions = [
+        ...this.colorOptions,
+        { value: 'purple', itemText: 'Purple' }
+    ];
+}
 ```
 
 ## Autocomplete
 
 The text in an `<sp-combobox>` is editable, and the string the user has typed in will become the `value` of the combobox unless the user selects a different value in the popup menu.
 
--   `autocomplete="none"`: the suggested popup menu items will remain the same regardless of the currently-input value. Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
--   `autocomplete="list"`: the popup menu items are filtered to only those completing the currently-input value.
+### None
+
+`autocomplete="none"`
+
+The suggested popup menu items will remain the same regardless of the currently-input value. Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
+
+### List
+
+`autocomplete="list"`
+
+The popup menu items are filtered to only those completing the currently-input value.
 
 ## Focus and Accessibility
 
