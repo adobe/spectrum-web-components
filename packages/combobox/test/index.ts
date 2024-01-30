@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { expect, fixture } from '@open-wc/testing';
 import { html } from '@open-wc/testing';
 import { ComboboxOption } from '@spectrum-web-components/combobox';
+import '@spectrum-web-components/combobox/sp-combobox.js';
 import { MenuItem } from '@spectrum-web-components/menu';
 import { fruits } from '../stories/index.js';
 
@@ -269,8 +270,8 @@ export const countryList = [
 ];
 
 export const benchmarkOptions = countryList.map((value, index) => ({
-    id: index.toString(),
-    value: value,
+    value: index.toString(),
+    itemText: value,
 }));
 
 export type TestableCombobox = HTMLElement & {
@@ -288,7 +289,11 @@ export type TestableCombobox = HTMLElement & {
 export const comboboxFixture = async (): Promise<TestableCombobox> => {
     const el = await fixture<TestableCombobox>(
         html`
-            <sp-combobox label="Combobox" .options=${fruits}>
+            <sp-combobox
+                .autocomplete=${'list'}
+                label="Combobox"
+                .options=${fruits}
+            >
                 Combobox
             </sp-combobox>
         `

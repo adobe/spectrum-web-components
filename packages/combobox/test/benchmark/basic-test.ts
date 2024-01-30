@@ -17,8 +17,5 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 import { benchmarkOptions } from '../index.js';
 
 measureFixtureCreation(html`
-    <sp-combobox
-        .autocomplete=${'none'}
-        .options=${benchmarkOptions}
-    ></sp-combobox>
+    <sp-combobox .options=${benchmarkOptions}></sp-combobox>
 `);
