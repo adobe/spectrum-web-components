@@ -96,6 +96,15 @@ export class Combobox extends Textfield {
         this.focusElement.click();
     }
 
+    private scrollToActiveDescendant(): void {
+        const activeEl = this.shadowRoot.querySelector(
+            `#${this.activeDescendant?.value}`
+        ) as HTMLElement;
+        if (activeEl) {
+            activeEl.scrollIntoView({ block: 'nearest' });
+        }
+    }
+
     public handleComboboxKeydown(event: KeyboardEvent): void {
         if (event.altKey && event.code === 'ArrowDown') {
             this.open = true;
@@ -103,22 +112,12 @@ export class Combobox extends Textfield {
             event.preventDefault();
             this.open = true;
             this.activateNextDescendant();
-            const activeEl = this.querySelector(
-                `#${(this.activeDescendant as ComboboxOption).value}`
-            ) as HTMLElement;
-            if (activeEl) {
-                activeEl.scrollIntoView({ block: 'nearest' });
-            }
+            this.scrollToActiveDescendant();
         } else if (event.code === 'ArrowUp') {
             event.preventDefault();
             this.open = true;
             this.activatePreviousDescendant();
-            const activeEl = this.querySelector(
-                `#${(this.activeDescendant as ComboboxOption).value}`
-            ) as HTMLElement;
-            if (activeEl) {
-                activeEl.scrollIntoView({ block: 'nearest' });
-            }
+            this.scrollToActiveDescendant();
         } else if (event.code === 'Escape') {
             if (!this.open) {
                 this.value = '';
