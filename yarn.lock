@@ -3123,10 +3123,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-3.0.0.tgz#798622546b63847e82389e473fd67f2707d82247"
   integrity sha512-hBI9tfBtuPIi885ZsZ32IMEU/5nlZH/KOVYJCOh7gyMxaVLGmLedYqFN6Ui1LXkI8JlC8IsuC0rF0btcRZKd5g==
 
-"@ctrl/tinycolor@^3.3.3":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.1.tgz#75b4c27948c81e88ccd3a8902047bcd797f38d32"
-  integrity sha512-ej5oVy6lykXsvieQtqZxCOaLT+xD4+QNarq78cIYISHmZXshCvROLudpQN3lfL8G0NL7plMSSK+zlyvCaIJ4Iw==
+"@ctrl/tinycolor@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-4.0.3.tgz#c56d96ef0d7be598cf68d1ab53f990849a79f5b4"
+  integrity sha512-e9nEVehVJwkymQpkGhdSNzLT2Lr9UTTby+JePq4Z2SxBbOQjY7pLgSouAaXvfaGQVSAaY0U4eJdwfSDmCbItcw==
 
 "@custom-elements-manifest/analyzer@^0.9.0":
   version "0.9.0"
