@@ -61,6 +61,9 @@ export class Combobox extends Textfield {
     @state()
     private activeDescendant?: ComboboxOption | MenuItem;
 
+    @property({ type: String })
+    public override autocomplete: 'list' | 'none' = 'none';
+
     @state()
     private availableOptions: (ComboboxOption | MenuItem)[] = [];
 

@@ -50,7 +50,6 @@ export const noAutocomplete = (): TemplateResult => {
         <sp-combobox
             id="combobox-3"
             .options=${fruits}
-            .autocomplete=${'none'}
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
         ></sp-combobox>
         <sp-field-label side-aligned="start" for="combobox-4">
@@ -59,9 +58,7 @@ export const noAutocomplete = (): TemplateResult => {
         <sp-combobox
             id="combobox-4"
             .options=${countries}
-            .autocomplete=${'none'}
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-            label-position="inline-start"
         ></sp-combobox>
     `;
 };
@@ -72,7 +69,6 @@ export const lightDOM = (): TemplateResult => {
             Fruit
         </sp-field-label>
         <sp-combobox
-            .autocomplete=${'none'}
             id="combobox-5"
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
         >
@@ -88,7 +84,6 @@ export const lightDOM = (): TemplateResult => {
             Countries
         </sp-field-label>
         <sp-combobox
-            .autocomplete=${'none'}
             id="combobox-6"
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
         >
@@ -106,7 +101,6 @@ export const lightDOM = (): TemplateResult => {
 export const withTooltip = (): TemplateResult => {
     return html`
         <sp-combobox
-            .autocomplete=${'none'}
             id="combobox-6"
             label="Combobox with tooltip"
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
