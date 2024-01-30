@@ -247,6 +247,7 @@ export class Combobox extends Textfield {
 
     public toggleOpen(): void {
         this.open = !this.open;
+        this.inputElement.focus();
     }
 
     protected override shouldUpdate(
