@@ -15,7 +15,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/slider/sp-slider.js';
-import { html, TemplateResult } from 'lit';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Color } from '../src/index.js';
 
 export default {

@@ -45,7 +45,6 @@ type FragmentType = 'color' | 'scale' | 'theme' | 'core' | 'app';
 type SettableFragmentTypes = 'color' | 'scale' | 'theme';
 type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
-export type ComponentFragmentMap = Map<ComponentTagName, CSSResultGroup[]>;
 export type Color =
     | 'light'
     | 'lightest'
@@ -70,8 +69,6 @@ const ColorValues = [
     'darkest-express',
 ];
 type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
-type ComponentTagName = string;
-
 export interface ThemeData {
     color?: Color;
     scale?: Scale;
@@ -95,7 +92,6 @@ export interface ProvideLang {
  */
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
-    private static fragmentsByComponent: ComponentFragmentMap = new Map();
     private static defaultFragments: Set<FragmentName> = new Set(['spectrum']);
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
@@ -498,24 +494,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
-    }
-
-    static registerComponentFragment(
-        name: ComponentTagName,
-        styles: CSSResultGroup
-    ): void {
-        const lowerName = name.toLowerCase();
-        const fragments = Theme.fragmentsByComponent.get(lowerName) ?? [];
-        if (fragments.length === 0) {
-            Theme.fragmentsByComponent.set(lowerName, fragments);
-        }
-        fragments.push(styles);
-    }
-
-    static getComponentFragments(
-        name: ComponentTagName
-    ): CSSResultGroup[] | undefined {
-        return Theme.fragmentsByComponent.get(name.toLowerCase());
     }
 
     static registerThemeFragment(

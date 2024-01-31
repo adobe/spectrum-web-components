@@ -149,36 +149,6 @@ describe('App styles', () => {
             Theme as unknown as TestableThemeConstructor
         ).themeFragmentsByKind.delete('app');
     });
-
-    it('set and gets theme fragments with case-insensitivity', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="light"></sp-theme>
-            `
-        );
-
-        await elementUpdated(el);
-
-        Theme.registerComponentFragment(
-            'sP-AcTionButTon',
-            css`
-                :host {
-                    background-color: orange;
-                }
-            `
-        );
-        await elementUpdated(el);
-
-        const fragments = Theme.getComponentFragments('SP-ACTION-button');
-        expect(fragments, 'Fragments for sp-action-button').to.exist;
-
-        if (fragments) {
-            expect(
-                fragments.length,
-                'Number of fragments for sp-action-button'
-            ).to.equal(1);
-        }
-    });
 });
 
 describe('Setting attributes', () => {

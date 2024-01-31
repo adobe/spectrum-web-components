@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Theme } from '@spectrum-web-components/theme';
 import {
     CSSResult,
+    CSSResultGroup,
     LitElement,
     ReactiveElement,
     supportsAdoptingStyleSheets,
@@ -34,6 +34,29 @@ export interface SpectrumInterface {
     isLTR: boolean;
     hasVisibleFocusInTree(): boolean;
     dir: 'ltr' | 'rtl';
+}
+type ComponentTagName = string;
+
+export type ComponentFragmentMap = Map<ComponentTagName, CSSResultGroup[]>;
+
+const fragmentsByComponent: ComponentFragmentMap = new Map();
+
+export function registerComponentFragment(
+    name: ComponentTagName,
+    styles: CSSResultGroup
+): void {
+    const lowerName = name.toLowerCase();
+    const fragments = fragmentsByComponent.get(lowerName) ?? [];
+    if (fragments.length === 0) {
+        fragmentsByComponent.set(lowerName, fragments);
+    }
+    fragments.push(styles);
+}
+
+export function getComponentFragments(
+    name: ComponentTagName
+): CSSResultGroup[] | undefined {
+    return fragmentsByComponent.get(name.toLowerCase());
 }
 
 const observedForElements: Set<HTMLElement> = new Set();
@@ -134,9 +157,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         }
 
         protected adoptComponentFragments(): void {
-            const componentFragments = Theme.getComponentFragments(
-                this.tagName
-            );
+            const componentFragments = getComponentFragments(this.tagName);
             if (componentFragments !== undefined) {
                 if (supportsAdoptingStyleSheets) {
                     for (const style of componentFragments) {

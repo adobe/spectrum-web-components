@@ -8,11 +8,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { SpectrumElement } from '@spectrum-web-components/base';
+import {
+    getComponentFragments,
+    registerComponentFragment,
+    SpectrumElement,
+} from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { css } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
-import { Theme } from '@spectrum-web-components/theme';
 
 class DirElement extends SpectrumElement {}
 
@@ -38,8 +41,28 @@ describe('Base', () => {
     it('has a static VERSION property', () => {
         expect(DirElement.VERSION).to.equal(version);
     });
-    it('fetches registered Component Fragments for a given element', async () => {
-        Theme.registerComponentFragment(
+    it('set and gets theme fragments with case-insensitivity', async () => {
+        registerComponentFragment(
+            'sP-AcTionButTon',
+            css`
+                :host {
+                    background-color: orange;
+                }
+            `
+        );
+
+        const fragments = getComponentFragments('SP-ACTION-button');
+        expect(fragments, 'Fragments for sp-action-button').to.exist;
+
+        if (fragments) {
+            expect(
+                fragments.length,
+                'Number of fragments for sp-action-button'
+            ).to.equal(1);
+        }
+    });
+    it('adopts registered Component Fragments for a given element', async () => {
+        registerComponentFragment(
             'dir-element',
             css`
                 :host {
@@ -56,6 +79,5 @@ describe('Base', () => {
         await elementUpdated(el);
 
         expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(1);
-        //el.shadowRoot.adoptedStyleSheets[0].cssRules[0]
     });
 });

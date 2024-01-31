@@ -14,9 +14,9 @@ import { css, html, TemplateResult } from '@spectrum-web-components/base';
 import type { Properties } from './index.js';
 import { renderButton } from './index.js';
 
-import { Theme } from '@spectrum-web-components/theme';
+import { registerComponentFragment } from '@spectrum-web-components/base';
 
-Theme.registerComponentFragment(
+registerComponentFragment(
     'sp-action-button',
     css`
         :host {
