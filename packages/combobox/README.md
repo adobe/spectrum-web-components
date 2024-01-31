@@ -93,7 +93,8 @@ For exceptional cases, provide an accessible label via the `label` attribute.
 
 ## Providing options
 
-Combobox options are presented as a popup menu. Menu items can be provided via markup as `<sp-menu-item>` children, or by assigning an array to the `options` property of an `<sp-combobox>`.
+Combobox options are presented as a popup menu.
+Menu items can be provided via markup as `<sp-menu-item>` children, or by assigning an array to the `options` property of an `<sp-combobox>`.
 
 ### Options property
 
@@ -113,7 +114,8 @@ Instead of providing `<sp-menu-item>` children, you can assign an array of `Comb
 
 ### Dynamic options
 
-When you update the `options` property or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents. For example, using [Lit](https://lit.dev/):
+When you replace the `options` Array, or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents.
+For example, using [Lit](https://lit.dev/):
 
 ```ts
 render() {
@@ -136,7 +138,8 @@ The text in an `<sp-combobox>` is editable, and the string the user has typed in
 
 `autocomplete="none"`
 
-The suggested popup menu items will remain the same regardless of the currently-input value. Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
+The suggested popup menu items will remain the same regardless of the currently-input value.
+Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
 
 ### List
 
@@ -146,13 +149,14 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ## Focus and Accessibility
 
-The combobox supports both mouse and keyboard navigation. Mobile behavior is currently unspecified.
+The combobox supports both mouse and keyboard navigation.
+Mobile behavior is currently unspecified.
 
 When an `<sp-combobox>` is focused, pressing the down arrow moves focus to the first menu item in the popup menu.
 The up and down arrows then move between available menu items.
 
-The escape key dismisses the popup menu if open. Otherwise, it clears the combobox's textfield.
+The escape key dismisses the popup menu if open.
+Otherwise, it clears the combobox's textfield.
 
 The enter key sets the `value` of the focused `<sp-combobox>`.
-If the popup menu is open, the value is set to the `value` of the selected menu item,
-returning focus back to the combobox's textfield.
+If the popup menu is open, the value is set to the `value` of the selected menu item, returning focus back to the combobox's textfield.
