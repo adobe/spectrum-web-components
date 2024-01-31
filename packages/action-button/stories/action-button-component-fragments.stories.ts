@@ -17,7 +17,7 @@ import { renderButton } from './index.js';
 import { Theme } from '@spectrum-web-components/theme';
 
 Theme.registerComponentFragment(
-    'ActionButton',
+    'sp-action-button',
     css`
         :host {
             --mod-actionbutton-background-color-default: orange;

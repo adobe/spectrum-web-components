@@ -135,7 +135,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 
         protected adoptComponentFragments(): void {
             const componentFragments = Theme.getComponentFragments(
-                this.constructor.name
+                this.tagName
             );
             if (componentFragments !== undefined) {
                 if (supportsAdoptingStyleSheets) {
