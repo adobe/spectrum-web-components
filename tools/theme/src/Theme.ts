@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResult,
     CSSResultGroup,
+    registerComponentFragment,
     supportsAdoptingStyleSheets,
 } from '@spectrum-web-components/base';
 import { version } from '@spectrum-web-components/base/src/version.js';
@@ -496,6 +497,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             });
         }
     }
+
+    static registerComponentFragment = registerComponentFragment;
 
     static registerThemeFragment(
         name: FragmentName,
