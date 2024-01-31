@@ -253,8 +253,15 @@ This overlay type does not accept focus and does not interfere with the user's i
 `'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus but will close when losing that focus, or when interacting with other parts of the page.
 
 ```html
+<style>
+    sp-toast {
+        position: fixed;
+        top: 1em;
+        right: 1em;
+    }
+</style>
 <sp-button id="trigger">open auto</sp-button>
-<sp-overlay trigger="trigger@click" type="auto" placement="bottom">
+<sp-overlay trigger="trigger@click" type="auto">
     <sp-toast variant="info">
         This is information that you should read.
     </sp-toast>
@@ -268,11 +275,18 @@ This overlay type does not accept focus and does not interfere with the user's i
 Note: When a `'manual'` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.
 
 ```html
+<style>
+    .chat-container {
+        position: fixed;
+        bottom: 1em;
+        left: 1em;
+    }
+</style>
 <sp-button id="trigger">open manual</sp-button>
 <sp-overlay trigger="trigger@click" type="manual">
-    <sp-popover>
+    <sp-popover class="chat-container">
         <sp-dialog dismissable>
-            <h2>Chat window</h2>
+            <span slot="heading">Chat Window</span>
             <sp-textfield placeholder="Enter your message"></sp-textfield>
             <sp-action-button>Send</sp-action-button>
         </sp-dialog>
