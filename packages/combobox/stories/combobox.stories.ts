@@ -10,7 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import { countries, fruits } from './index.js';
 import '@spectrum-web-components/combobox/sp-combobox.js';
@@ -18,6 +22,10 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { Combobox, ComboboxOption } from '../src/Combobox.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { query, state } from '@spectrum-web-components/base/src/decorators.js';
+import { live } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
     title: 'Combobox',
@@ -143,5 +151,49 @@ export const withHelpText = (): TemplateResult => {
                 These are fruits found in the game "Animal Crossing: New Leaf".
             </sp-help-text>
         </sp-combobox>
+    `;
+};
+
+class ControlledCombo extends LitElement {
+    static ages: ComboboxOption[] = Array.from({ length: 76 - 55 }, (_, n) => {
+        const age = `${n + 55}`;
+        return { value: age, itemText: age };
+    });
+
+    @state()
+    private value = {
+        raw: '',
+        validated: `${ControlledCombo.ages[0].itemText}`,
+    };
+
+    @query('#age')
+    private combobox!: Combobox;
+
+    override render(): TemplateResult {
+        return html`
+            <sp-field-label for="age">
+                Retirement age (try entering a non-number)
+            </sp-field-label>
+            <sp-combobox
+                id="age"
+                .options=${ControlledCombo.ages}
+                .value=${live(this.value.validated)}
+                @change=${this.onChange}
+            ></sp-combobox>
+        `;
+    }
+
+    private onChange(): void {
+        this.value = {
+            raw: this.combobox.value,
+            validated: this.combobox.value.replace(/\D/g, '') || '55',
+        };
+    }
+}
+defineElement('controlled-combo', ControlledCombo);
+
+export const controlled = (): TemplateResult => {
+    return html`
+        <controlled-combo></controlled-combo>
     `;
 };
