@@ -52,6 +52,108 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 
 When a `<sp-overlay>` element is opened, it will pass that state to its direct children elements as the property `open`, which it will set to `true`. Elements should react to this by initiating any transition between closed and open that they see fit. Similarly, `open` will be set to `false` when the `<sp-overlay>` element is closed.
 
+### Action Bar
+
+```html
+<style>
+    .overlay-demo-popover sp-action-group {
+        padding: var(--spectrum-actiongroup-vertical-spacing-regular);
+    }
+    #overlay-demo {
+        position: static;
+    }
+    #overlay-demo:not(:defined),
+    #overlay-demo *:not(:defined) {
+        display: none;
+    }
+</style>
+<sp-popover id="overlay-demo" class="overlay-demo-popover" open>
+    <sp-action-group vertical quiet emphasized selects="single">
+        <sp-action-button id="trigger-1" hold-affordance>
+            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-2" hold-affordance>
+            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+        </sp-action-button>
+        <sp-action-button id="trigger-3" hold-affordance>
+            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+        </sp-action-button>
+    </sp-action-group>
+    <sp-overlay trigger="trigger-1@hover" type="hint">
+        <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+        trigger="trigger-1@longpress"
+        type="auto"
+        placement="right-start"
+    >
+        <sp-popover class="overlay-demo-popover" tip>
+            <sp-action-group vertical quiet>
+                <sp-action-button>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-polygon-select
+                        slot="icon"
+                    ></sp-icon-polygon-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                </sp-action-button>
+            </sp-action-group>
+        </sp-popover>
+    </sp-overlay>
+    <sp-overlay trigger="trigger-2@hover" type="hint">
+        <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+        trigger="trigger-2@longpress"
+        type="auto"
+        placement="right-start"
+    >
+        <sp-popover class="overlay-demo-popover" tip>
+            <sp-action-group vertical quiet>
+                <sp-action-button>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-polygon-select
+                        slot="icon"
+                    ></sp-icon-polygon-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                </sp-action-button>
+            </sp-action-group>
+        </sp-popover>
+    </sp-overlay>
+    <sp-overlay trigger="trigger-3@hover" type="hint">
+        <sp-tooltip>Hover</sp-tooltip>
+    </sp-overlay>
+    <sp-overlay
+        trigger="trigger-3@longpress"
+        type="auto"
+        placement="right-start"
+    >
+        <sp-popover class="overlay-demo-popover" tip>
+            <sp-action-group vertical quiet>
+                <sp-action-button>
+                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-polygon-select
+                        slot="icon"
+                    ></sp-icon-polygon-select>
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                </sp-action-button>
+            </sp-action-group>
+        </sp-popover>
+    </sp-overlay>
+</sp-popover>
+```
+
 ## API
 
 ```ts
@@ -91,7 +193,7 @@ They should be used when you need to ensure that the user has interacted with th
 ```html
 <sp-button id="trigger">open modal</sp-button>
 <sp-overlay trigger="trigger@click" type="modal">
-    <sp-dialog-wrapper headline="Signin form" dismissable>
+    <sp-dialog-wrapper headline="Signin form" dismissable underlay>
         <p>I am a modal type overlay.</p>
         <sp-field-label>Enter your email</sp-field-label>
         <sp-textfield placeholder="test@gmail.com"></sp-textfield>
@@ -152,7 +254,7 @@ This overlay type does not accept focus and does not interfere with the user's i
 
 ```html
 <sp-button id="trigger">open auto</sp-button>
-<sp-overlay trigger="trigger@click" type="auto">
+<sp-overlay trigger="trigger@click" type="auto" placement="bottom">
     <sp-toast variant="info">
         This is information that you should read.
     </sp-toast>
