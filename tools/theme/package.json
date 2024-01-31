@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/theme",
-    "version": "0.40.3",
+    "version": "0.40.4",
     "publishConfig": {
         "access": "public"
     },

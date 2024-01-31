@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/alert-dialog",
-    "version": "0.40.3",
+    "version": "0.40.4",
     "publishConfig": {
         "access": "public"
     },
@@ -58,15 +58,15 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.40.3",
-        "@spectrum-web-components/button": "^0.40.3",
-        "@spectrum-web-components/button-group": "^0.40.3",
-        "@spectrum-web-components/divider": "^0.40.3",
-        "@spectrum-web-components/icons-workflow": "^0.40.3",
-        "@spectrum-web-components/shared": "^0.40.3"
+        "@spectrum-web-components/base": "^0.40.4",
+        "@spectrum-web-components/button": "^0.40.4",
+        "@spectrum-web-components/button-group": "^0.40.4",
+        "@spectrum-web-components/divider": "^0.40.4",
+        "@spectrum-web-components/icons-workflow": "^0.40.4",
+        "@spectrum-web-components/shared": "^0.40.4"
     },
     "devDependencies": {
-        "@spectrum-css/alertdialog": "^1.0.16"
+        "@spectrum-css/alertdialog": "^1.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

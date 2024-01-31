@@ -187,6 +187,18 @@ governing permissions and limitations under the License.
         transparent
     );
 }
+@media (forced-colors: active) {
+    :host(.focus-visible):not(:disabled),
+    :host(:hover):not(:disabled),
+    :host:active:not(:disabled) {
+        --highcontrast-infield-button-border-color: Highlight;
+    }
+    :host(:focus-visible):not(:disabled),
+    :host(:hover):not(:disabled),
+    :host:active:not(:disabled) {
+        --highcontrast-infield-button-border-color: Highlight;
+    }
+}
 :host {
     align-items: center;
     background-color: #0000;
@@ -214,8 +226,11 @@ governing permissions and limitations under the License.
     );
     block-size: 100%;
     border-color: var(
-        --mod-infield-button-border-color,
-        var(--spectrum-infield-button-border-color)
+        --highcontrast-infield-button-border-color,
+        var(
+            --mod-infield-button-border-color,
+            var(--spectrum-infield-button-border-color)
+        )
     );
     border-end-end-radius: var(
         --mod-infield-button-border-radius,
@@ -296,6 +311,12 @@ governing permissions and limitations under the License.
         --mod-infield-button-icon-color-down,
         var(--spectrum-infield-button-icon-color-down)
     );
+}
+:host(.focus-visible) {
+    outline: none;
+}
+:host(:focus-visible) {
+    outline: none;
 }
 :host(.focus-visible) .fill {
     background-color: var(

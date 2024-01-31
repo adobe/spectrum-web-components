@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResult, CSSResultGroup, supportsAdoptingStyleSheets } from 'lit';
+import {
+    CSSResult,
+    CSSResultGroup,
+    supportsAdoptingStyleSheets,
+} from '@spectrum-web-components/base';
+import { version } from '@spectrum-web-components/base/src/version.js';
 
 declare global {
     interface Window {
@@ -94,6 +99,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private static defaultFragments: Set<FragmentName> = new Set(['spectrum']);
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
+    static VERSION = version;
 
     static get observedAttributes(): string[] {
         return ['color', 'scale', 'theme', 'lang', 'dir'];

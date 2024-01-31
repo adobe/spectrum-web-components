@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/progress-circle",
-    "version": "0.40.3",
+    "version": "0.40.4",
     "publishConfig": {
         "access": "public"
     },
@@ -57,11 +57,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.3",
-        "@spectrum-web-components/shared": "^0.40.3"
+        "@spectrum-web-components/base": "^0.40.4",
+        "@spectrum-web-components/shared": "^0.40.4"
     },
     "devDependencies": {
-        "@spectrum-css/progresscircle": "^2.0.75"
+        "@spectrum-css/progresscircle": "^2.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

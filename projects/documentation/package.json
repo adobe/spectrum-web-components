@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.40.3",
+    "version": "0.40.4",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -22,8 +22,8 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^0.40.3",
-        "@spectrum-web-components/custom-vars-viewer": "^0.40.3"
+        "@spectrum-web-components/bundle": "^0.40.4",
+        "@spectrum-web-components/custom-vars-viewer": "^0.40.4"
     },
     "devDependencies": {
         "@11ty/eleventy": "^2.0.1",
@@ -95,10 +95,12 @@
         "build:eleventy": {
             "command": "eleventy --config=.eleventy.cjs --incremental --quiet",
             "dependencies": [
-                "copy-docs"
+                {
+                    "script": "copy-docs"
+                }
             ],
             "files": [
-                "./content/**/*.md",
+                "./content/**/*",
                 "./.eleventy.cjs"
             ],
             "clean": "if-file-deleted",
@@ -127,15 +129,23 @@
             "clean": "if-file-deleted"
         },
         "build:postcss": {
-            "command": "postcss src/components/{styles,fonts}.css -d _site/ --config src/postcss.config.cjs",
+            "command": "postcss src/components/{styles,fonts,medium,large,light,dark}.css -d _site/ --config src/postcss.config.cjs",
             "files": [
                 "./src/components/styles.css",
+                "./src/components/medium.css",
+                "./src/components/large.css",
+                "./src/components/light.css",
+                "./src/components/dark.css",
                 "./src/components/fonts.css",
                 "src/postcss.config.cjs",
                 "_site/**/*.html"
             ],
             "output": [
                 "./_site/src/components/styles.css",
+                "./_site/src/components/medium.css",
+                "./_site/src/components/large.css",
+                "./_site/src/components/light.css",
+                "./_site/src/components/dark.css",
                 "./_site/src/components/fonts.css"
             ],
             "clean": "if-file-deleted",
@@ -205,8 +215,9 @@
             "command": "node scripts/copy-component-docs.js",
             "files": [
                 "../../packages/**/*.md",
+                "../../packages/**/*.ts",
                 "../../tools/**/*.md",
-                "custom-elements.json",
+                "../../tools/**/*.ts",
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"
             ],

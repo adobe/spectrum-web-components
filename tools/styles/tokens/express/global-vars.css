@@ -1127,6 +1127,7 @@
         --spectrum-accent-color-1000
     );
 }
+
 :host,
 :root {
     --system-spectrum-search-border-radius: calc(
