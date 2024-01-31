@@ -10,7 +10,9 @@ governing permissions and limitations under the License.
 */
 import { SpectrumElement } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { css } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
+import { Theme } from '@spectrum-web-components/theme';
 
 class DirElement extends SpectrumElement {}
 
@@ -35,5 +37,25 @@ describe('Base', () => {
     });
     it('has a static VERSION property', () => {
         expect(DirElement.VERSION).to.equal(version);
+    });
+    it('fetches registered Component Fragments for a given element', async () => {
+        Theme.registerComponentFragment(
+            'dir-element',
+            css`
+                :host {
+                    background-color: orange;
+                }
+            `
+        );
+        const el = await fixture<DirElement>(
+            html`
+                <dir-element></dir-element>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(1);
+        //el.shadowRoot.adoptedStyleSheets[0].cssRules[0]
     });
 });
