@@ -94,8 +94,8 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
         position: relative;
         width: 100%;
         height: 20vh;
-        background-color: var(--spectrum-global-color-gray-100);
-        border: 1px solid var(--spectrum-global-color-gray-400);
+        background-color: var(--spectrum-gray-100);
+        border: 1px solid var(--spectrum-gray-400);
     }
 </style>
 
