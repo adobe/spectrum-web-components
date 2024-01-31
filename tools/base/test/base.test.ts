@@ -43,7 +43,7 @@ describe('Base', () => {
     });
     it('set and gets theme fragments with case-insensitivity', async () => {
         registerComponentFragment(
-            'sP-AcTionButTon',
+            'sP-AcTion-ButTon',
             css`
                 :host {
                     background-color: orange;
