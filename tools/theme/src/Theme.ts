@@ -69,6 +69,7 @@ const ColorValues = [
     'darkest-express',
 ];
 type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
+
 export interface ThemeData {
     color?: Color;
     scale?: Scale;
