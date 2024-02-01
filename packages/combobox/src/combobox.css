@@ -21,6 +21,11 @@ governing permissions and limitations under the License.
     flex-wrap: nowrap;
 }
 
+:host([readonly]) sp-picker-button {
+    visibility: hidden;
+    pointer-events: none;
+}
+
 sp-field-label {
     display: block;
     width: 100%;

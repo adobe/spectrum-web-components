@@ -79,6 +79,9 @@ export class Combobox extends Textfield {
     @query('#input')
     private input!: HTMLInputElement;
 
+    /**
+     * An array of options to present in the Menu provided while typing into the input
+     */
     @property({ type: Array })
     public options?: ComboboxOption[];
 
@@ -109,6 +112,9 @@ export class Combobox extends Textfield {
     }
 
     public handleComboboxKeydown(event: KeyboardEvent): void {
+        if (this.readonly) {
+            return;
+        }
         if (event.altKey && event.code === 'ArrowDown') {
             this.open = true;
         } else if (event.code === 'ArrowDown') {
@@ -215,11 +221,8 @@ export class Combobox extends Textfield {
         );
     }
 
-    public handleComboboxInput({
-        target,
-    }: Event & { target: HTMLInputElement }): void {
-        // Element data.
-        this.value = target.value;
+    public override handleInput(event: Event): void {
+        super.handleInput(event);
         this.activeDescendant = undefined;
         this.open = true;
     }
@@ -246,6 +249,10 @@ export class Combobox extends Textfield {
     }
 
     public toggleOpen(): void {
+        if (this.readonly) {
+            this.open = false;
+            return;
+        }
         this.open = !this.open;
         this.inputElement.focus();
     }
@@ -324,7 +331,6 @@ export class Combobox extends Textfield {
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
-                @input=${this.handleComboboxInput}
                 @keydown=${this.handleComboboxKeydown}
                 id="input"
                 class="input"
@@ -334,7 +340,6 @@ export class Combobox extends Textfield {
                 tabindex="0"
                 @sp-closed=${this.handleClosed}
                 @sp-opened=${this.handleOpened}
-                type=${this.type}
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
                 )}
@@ -372,6 +377,7 @@ export class Combobox extends Textfield {
                 class="button ${this.focused
                     ? 'focus-visible is-keyboardFocused'
                     : ''}"
+                ?disabled=${this.disabled}
                 ?focused=${this.focused}
                 size=${this.size}
             ></sp-picker-button>

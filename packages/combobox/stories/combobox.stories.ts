@@ -39,6 +39,34 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const disabled = (): TemplateResult => {
+    return html`
+        <sp-field-label for="combobox-disabled">
+            Where do you live?
+        </sp-field-label>
+        <sp-combobox
+            disabled
+            id="combobox-disabled"
+            .options=${countries}
+            value="Azerbaijan"
+        ></sp-combobox>
+    `;
+};
+
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-field-label for="combobox-readonly">
+            Where do you live?
+        </sp-field-label>
+        <sp-combobox
+            readonly
+            id="combobox-readonly"
+            .options=${countries}
+            value="Solomon Islands"
+        ></sp-combobox>
+    `;
+};
+
 export const listAutocomplete = (): TemplateResult => {
     return html`
         <sp-field-label for="combobox-2">Where do you live?</sp-field-label>
