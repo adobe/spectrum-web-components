@@ -341,27 +341,46 @@ export class HandleController {
 
     private _activePointerEventData!: DataFromPointerEvent | undefined;
 
+    /**
+     * @description check for defaultvalue(value) property in sp-slider and reset on double click on sliderHandle
+     * @param event
+     */
+    public handleDoubleClick(event: PointerEvent): void {
+        const { input } = this.extractDataFromEvent(event);
+        if (input.model.handle?.defaultValue) {
+            input.model.handle.value = input.model.handle.defaultValue;
+            this.dispatchChangeEvent(input, input.model.handle);
+            this.requestUpdate();
+        }
+    }
+
+    private clickTimer: number | null = null;
+
     public handlePointerdown(event: PointerEvent): void {
-        const { resolvedInput, model } = this.extractDataFromEvent(event);
-        if (!model || this.host.disabled || event.button !== 0) {
-            event.preventDefault();
-            return;
+        if (this.checkForDoubleClick()) {
+            this.handleDoubleClick(event);
+        } else {
+            const { resolvedInput, model } = this.extractDataFromEvent(event);
+            if (!model || this.host.disabled || event.button !== 0) {
+                event.preventDefault();
+                return;
+            }
+            this.host.track.setPointerCapture(event.pointerId);
+            this.updateBoundingRect();
+            if (event.pointerType === 'mouse') {
+                this.host.labelEl.click();
+            }
+            this.draggingHandle = model.handle;
+            model.handle.dragging = true;
+            this.activateHandle(model.name);
+            if (resolvedInput) {
+                // When the input is resolved forward the pointer event to
+                // `handlePointermove` in order to update the value/UI becuase
+                // the pointer event was on the track not a handle
+                this.handlePointermove(event);
+            }
+            this.requestUpdate();
         }
-        this.host.track.setPointerCapture(event.pointerId);
-        this.updateBoundingRect();
-        if (event.pointerType === 'mouse') {
-            this.host.labelEl.click();
-        }
-        this.draggingHandle = model.handle;
-        model.handle.dragging = true;
-        this.activateHandle(model.name);
-        if (resolvedInput) {
-            // When the input is resolved forward the pointer event to
-            // `handlePointermove` in order to update the value/UI becuase
-            // the pointer event was on the track not a handle
-            this.handlePointermove(event);
-        }
-        this.requestUpdate();
     }
 
     public handlePointerup(event: PointerEvent): void {
@@ -436,6 +455,24 @@ export class HandleController {
         const input = event.target as InputWithModel;
         input.model.handle.highlight = true;
         this.requestUpdate();
+    };
+
+    /**
+     * @description method to check whether a click or double click on slider Handle
+     * @returns boolean
+     */
+    private checkForDoubleClick = (): boolean => {
+        if (this.clickTimer !== null) {
+            clearTimeout(this.clickTimer);
+            this.clickTimer = null;
+            return true;
+        }
+
+        this.clickTimer = setTimeout(() => {
+            this.clickTimer = null;
+        }, 300);
+
+        return false;
     };
 
     private dispatchChangeEvent(

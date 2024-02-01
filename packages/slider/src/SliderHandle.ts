@@ -73,6 +73,7 @@ const MaxConverter = {
  */
 export class SliderHandle extends Focusable {
     public handleController?: HandleController;
+    public defaultValue: number | undefined;
 
     public get handleName(): string {
         return this.name;

@@ -362,7 +362,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
      * @description calculates the fill width
      * @param fillStartValue
      * @param currentValue
-     * @param cachedValue
      * @returns
      */
     private getOffsetWidth(
@@ -546,6 +545,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                     (Number(this.max) - Number(this.min)) / 2 +
                     Number(this.min);
             }
+        }
+    }
+
+    protected override firstUpdated(changes: PropertyValues): void {
+        if (changes.has('value')) {
+            this.defaultValue = Number(this.value);
         }
     }
 }
