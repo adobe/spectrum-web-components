@@ -1,5 +1,7 @@
 ## Description
 
+`sp-color-field` components are text boxes that allow users to input custom color values. Various decorations can be displayed around the color-field. It also has an attribute named `viewColor`, which allows users to see the color that has been entered into the field.
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-field?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-field)
@@ -29,7 +31,7 @@ import { ColorField } from '@spectrum-web-components/color-field';
 <sp-color-field></sp-color-field>
 ```
 
-### devMode
+### viewColor
 
 When devMode is true, the color handle will be rendered. This is useful for development and debugging purposes.
 
