@@ -318,6 +318,10 @@ export class ColorController {
         this.setColor(this._previousColor);
     }
 
+    public isValidColor(color: ColorValue): boolean {
+        return new TinyColor(color).isValid;
+    }
+
     private _format: { format: string; isString: boolean } = {
         format: '',
         isString: false,

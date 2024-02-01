@@ -9,27 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
-//import '../sp-color-field.js';
-import '@spectrum-web-components/color-field/sp-color-field.js';
-import { ColorField } from '@spectrum-web-components/color-field';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Template } from '../stories/template.js';
 
 describe('ColorField', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<ColorField>(
-                html`
-                    <sp-color-field></sp-color-field>
-                `
-            )
-    );
+    testForLitDevWarnings(async () => await fixture<ColorField>(Template({})));
     it('loads default color-field accessibly', async () => {
         const el = await fixture<ColorField>(
-            html`
-                <sp-color-field label="Enter Color Value"></sp-color-field>
-            `
+            Template({ label: 'Enter color value' })
         );
 
         await elementUpdated(el);
@@ -38,11 +27,7 @@ describe('ColorField', () => {
     });
 
     it('validates rgba color values', async () => {
-        const el = await fixture<ColorField>(
-            html`
-                <sp-color-field></sp-color-field>
-            `
-        );
+        const el = await fixture<ColorField>(Template({}));
 
         el.value = 'rgba(255, 0, 0, 1)';
         expect(el.checkValidity()).to.be.true;
@@ -56,11 +41,7 @@ describe('ColorField', () => {
     });
 
     it('validates hex color values', async () => {
-        const el = await fixture<ColorField>(
-            html`
-                <sp-color-field></sp-color-field>
-            `
-        );
+        const el = await fixture<ColorField>(Template({}));
 
         el.value = '#ff0000';
         expect(el.checkValidity()).to.be.true;
@@ -73,11 +54,7 @@ describe('ColorField', () => {
     });
 
     it('validates hsl color values', async () => {
-        const el = await fixture<ColorField>(
-            html`
-                <sp-color-field></sp-color-field>
-            `
-        );
+        const el = await fixture<ColorField>(Template({}));
 
         el.value = 'hsl(120, 100%, 50%)';
         expect(el.checkValidity()).to.be.true;
@@ -90,11 +67,7 @@ describe('ColorField', () => {
     });
 
     it('validates hsv color values', async () => {
-        const el = await fixture<ColorField>(
-            html`
-                <sp-color-field></sp-color-field>
-            `
-        );
+        const el = await fixture<ColorField>(Template({}));
 
         el.value = 'hsv(120, 100%, 50%)';
         expect(el.checkValidity()).to.be.true;
@@ -107,11 +80,7 @@ describe('ColorField', () => {
     });
 
     it('handles invalid color values', async () => {
-        const el = await fixture<ColorField>(
-            html`
-                <sp-color-field></sp-color-field>
-            `
-        );
+        const el = await fixture<ColorField>(Template({}));
 
         el.value = 'not a color';
         await elementUpdated(el);
@@ -120,11 +89,7 @@ describe('ColorField', () => {
     });
 
     it('renders color handle when viewColor is true', async () => {
-        const el = await fixture<ColorField>(
-            html`
-                <sp-color-field></sp-color-field>
-            `
-        );
+        const el = await fixture<ColorField>(Template({}));
 
         el.viewColor = true;
         await elementUpdated(el);
@@ -134,11 +99,7 @@ describe('ColorField', () => {
     });
 
     it('does not render color handle when viewColor is false', async () => {
-        const el = await fixture<ColorField>(
-            html`
-                <sp-color-field></sp-color-field>
-            `
-        );
+        const el = await fixture<ColorField>(Template({}));
 
         el.viewColor = false;
         await elementUpdated(el);

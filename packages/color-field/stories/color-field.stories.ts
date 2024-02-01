@@ -9,53 +9,44 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-
+import { TemplateResult } from '@spectrum-web-components/base';
 import '../sp-color-field.js';
+import { Template } from './template.js';
 
 export default {
     component: 'sp-color-field',
     title: 'Color Field',
 };
 
-export const Default = (): TemplateResult => {
-    return html`
-        <sp-color-field></sp-color-field>
-    `;
-};
+export const Default = (): TemplateResult => Template({});
 
-export const Quiet = (): TemplateResult => {
-    return html`
-        <sp-color-field quiet value="#ff0000"></sp-color-field>
-    `;
-};
+export const Quiet = (): TemplateResult =>
+    Template({
+        quiet: true,
+    });
 
-export const ReadOnly = (): TemplateResult => {
-    return html`
-        <sp-color-field readonly value="#ff0000"></sp-color-field>
-    `;
-};
+export const ReadOnly = (): TemplateResult =>
+    Template({
+        readonly: true,
+        value: 'rgb(255,255,255)',
+    });
 
-export const Disabled = (): TemplateResult => {
-    return html`
-        <sp-color-field disabled value="#ff0000"></sp-color-field>
-    `;
-};
+export const Disabled = (): TemplateResult =>
+    Template({
+        disabled: true,
+    });
 
-export const viewColor = (): TemplateResult => {
-    return html`
-        <sp-color-field viewColor="true"></sp-color-field>
-    `;
-};
+export const viewColor = (): TemplateResult =>
+    Template({
+        viewColor: true,
+    });
 
-export const WrongInput = (): TemplateResult => {
-    return html`
-        <sp-color-field value="not a color"></sp-color-field>
-    `;
-};
+export const WrongInput = (): TemplateResult =>
+    Template({
+        value: 'apple',
+    });
 
-export const RightInput = (): TemplateResult => {
-    return html`
-        <sp-color-field value="#ff0000"></sp-color-field>
-    `;
-};
+export const RightInput = (): TemplateResult =>
+    Template({
+        value: '#a8323a',
+    });

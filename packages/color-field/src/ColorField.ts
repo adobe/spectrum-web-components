@@ -20,8 +20,6 @@ import { TinyColor } from '@ctrl/tinycolor';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 
-//import styles from './color-field.css.js';
-
 /**
  * @element sp-color-field
  */
@@ -51,7 +49,12 @@ export class ColorField extends TextfieldBase {
     public renderColorHandle(): TemplateResult {
         return this.viewColor
             ? html`
-                  <sp-color-handle size="m" color=""></sp-color-handle>
+                  <sp-color-handle
+                      size="m"
+                      color="${new TinyColor(this.value).isValid
+                          ? new TinyColor(this.value).toRgbString()
+                          : ''}"
+                  ></sp-color-handle>
               `
             : html``;
     }
@@ -68,25 +71,8 @@ export class ColorField extends TextfieldBase {
     public override checkValidity(): boolean {
         let validity = super.checkValidity();
         if (this.value) {
-            const colorHandle =
-                this.shadowRoot?.querySelector('sp-color-handle');
-            if (new TinyColor(this.value).isValid) {
-                validity = true;
-                this.valid = validity;
-                colorHandle?.setAttribute(
-                    'color',
-                    new TinyColor(this.value).toRgbString()
-                );
-            } else {
-                // Input value is not in rgba | Hex format
-                validity = false;
-                this.valid = validity;
-                colorHandle?.setAttribute('color', '');
-            }
-            this.valid = validity;
+            this.valid = validity = new TinyColor(this.value).isValid;
             this.invalid = !validity;
-        } else {
-            this.valid = this.invalid = false;
         }
         return validity;
     }
