@@ -354,8 +354,6 @@ export class HandleController {
         }
     }
 
-    private clickTimer: number | null = null;
-
     public handlePointerdown(event: PointerEvent): void {
         if (this.checkForDoubleClick()) {
             this.handleDoubleClick(event);
@@ -457,6 +455,7 @@ export class HandleController {
         this.requestUpdate();
     };
 
+    private clickTimer: number | NodeJS.Timeout | null = null;
     /**
      * @description method to check whether a click or double click on slider Handle
      * @returns boolean
