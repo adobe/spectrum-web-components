@@ -104,8 +104,7 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
 
 <script type="module">
 
-    import { html } from '@spectrum-web-components/base';
-    import { render } from 'lit-html';
+    import { html, render } from '@spectrum-web-components/base';
     import { VirtualTrigger, openOverlay } from '@spectrum-web-components/overlay';
 
     const contextMenuTemplate = () => html`
@@ -151,17 +150,32 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
                 type: 'auto',
             });
             trigger.insertAdjacentElement('afterend', overlay);
-
         });
     }
-    document.addEventListener('DOMContentLoaded', init);
+    function waitForElement(selector) {
+        return new Promise(resolve => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+            const observer = new MutationObserver(mutations => {
+                if (document.querySelector(selector)) {
+                    resolve(document.querySelector(selector));
+                    observer.disconnect();
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    }
+
+    waitForElement('#root').then(() => {
+        init();
+    });
 </script>
 ```
 
 <script type="module">
 
-    import { html } from '@spectrum-web-components/base';
-    import { render } from 'lit-html';    
+    import { html, render } from '@spectrum-web-components/base';   
     import { VirtualTrigger, openOverlay } from '@spectrum-web-components/overlay';
 
     const contextMenuTemplate = () => html`
@@ -207,10 +221,26 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
                 type: 'auto',
             });
             trigger.insertAdjacentElement('afterend', overlay);
-
         });
     }
-    document.addEventListener('DOMContentLoaded', init);
+    function waitForElement(selector) {
+        return new Promise(resolve => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+            const observer = new MutationObserver(mutations => {
+                if (document.querySelector(selector)) {
+                    resolve(document.querySelector(selector));
+                    observer.disconnect();
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    }
+
+    waitForElement('#root').then(() => {
+        init();
+    });
 </script>
 
 ### type
