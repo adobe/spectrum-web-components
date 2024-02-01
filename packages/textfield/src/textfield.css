@@ -26,6 +26,10 @@ governing permissions and limitations under the License.
     resize: none;
 }
 
+:host([disabled]:focus-visible) {
+    outline: none;
+}
+
 #textfield {
     inline-size: 100%;
 }
