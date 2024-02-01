@@ -197,3 +197,6 @@ export const controlled = (): TemplateResult => {
         <controlled-combo></controlled-combo>
     `;
 };
+controlled.swc_vrt = {
+    skip: true,
+};
