@@ -145,3 +145,7 @@ governing permissions and limitations under the License.
 :host([label-visibility='none']) #track {
     align-self: flex-end;
 }
+
+.fill {
+    z-index: 2;
+}
