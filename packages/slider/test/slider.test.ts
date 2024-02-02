@@ -1612,4 +1612,71 @@ describe('Slider', () => {
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
     });
+    it('resets to default value on double click after moving pointer', async () => {
+        let pointerId = -1;
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    max="1"
+                    fill-start
+                    min="0"
+                    value=".7"
+                    step="0.01"
+                    style="width: 100px"
+                ></sp-slider>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.value, 'initial').to.equal(0.7);
+        expect(pointerId).to.equal(-1);
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        el.track.setPointerCapture = (id: number) => (pointerId = id);
+        el.track.releasePointerCapture = (id: number) => (pointerId = id);
+
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: 0,
+                cancelable: true,
+                composed: true,
+                bubbles: true,
+            })
+        );
+
+        await elementUpdated(el);
+        await nextFrame();
+
+        handle.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: 0,
+                cancelable: true,
+                button: 0,
+                composed: true,
+                bubbles: true,
+            })
+        );
+
+        handle.dispatchEvent(new PointerEvent('pointerup'));
+
+        await new Promise((resolve) => setTimeout(resolve, 300));
+
+        handle.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: 0,
+                cancelable: true,
+                button: 0,
+                composed: true,
+                bubbles: true,
+            })
+        );
+
+        handle.dispatchEvent(new PointerEvent('pointerup'));
+
+        await elementUpdated(el);
+        await nextFrame();
+
+        expect(
+            el.value,
+            'reset to default value on double click after moving pointer'
+        ).to.equal(0.7);
+    });
 });
