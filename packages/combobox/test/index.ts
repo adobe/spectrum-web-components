@@ -276,6 +276,7 @@ export const benchmarkOptions = countryList.map((value, index) => ({
 
 export type TestableCombobox = HTMLElement & {
     activeDescendant: ComboboxOption;
+    autocomplete: 'none' | 'list';
     availableOptions: ComboboxOption[];
     focused: boolean;
     focusElement: HTMLInputElement;

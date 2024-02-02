@@ -79,6 +79,8 @@ export class Combobox extends Textfield {
     @query('#input')
     private input!: HTMLInputElement;
 
+    private itemValue = '';
+
     /**
      * An array of options to present in the Menu provided while typing into the input
      */
@@ -215,8 +217,8 @@ export class Combobox extends Textfield {
         const valueLowerCase = this.value.toLowerCase();
         this.availableOptions = (this.options || this.optionEls).filter(
             (descendant) => {
-                const descendantValueLowerCase = descendant.value.toLowerCase();
-                return descendantValueLowerCase.startsWith(valueLowerCase);
+                const itemTextLowerCase = descendant.itemText.toLowerCase();
+                return itemTextLowerCase.startsWith(valueLowerCase);
             }
         );
     }
@@ -265,6 +267,10 @@ export class Combobox extends Textfield {
         }
         if (changed.has('value')) {
             this.filterAvailableOptions();
+            this.itemValue =
+                this.availableOptions.find(
+                    (option) => option.itemText === this.value
+                )?.value ?? '';
         }
         return super.shouldUpdate(changed);
     }
@@ -405,8 +411,9 @@ export class Combobox extends Textfield {
                         selects=${ifDefined(
                             this.autocomplete === 'none' ? 'single' : undefined
                         )}
-                        .selected=${this.autocomplete === 'none'
-                            ? [this.value]
+                        .selected=${this.autocomplete === 'none' &&
+                        this.itemValue
+                            ? [this.itemValue]
                             : []}
                         style="min-width: ${width}px;"
                         size=${this.size}

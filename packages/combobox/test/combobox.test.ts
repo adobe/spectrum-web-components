@@ -34,6 +34,7 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { withTooltip } from '../stories/combobox.stories.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { MenuItem } from '@spectrum-web-components/menu';
+import { countries } from '../stories/index.js';
 
 describe('Combobox', () => {
     describe('manages focus', () => {
@@ -594,6 +595,31 @@ describe('Combobox', () => {
         });
     });
     describe('responds to value changes', () => {
+        it('applies a visible selection based on `itemText`', async () => {
+            const el = await comboboxFixture();
+            el.autocomplete = 'none';
+            el.options = countries;
+            await elementUpdated(el);
+
+            let selected = el.shadowRoot.querySelector('[selected]');
+            expect(selected).to.be.null;
+
+            el.value = 'af';
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            selected = el.shadowRoot.querySelector('[selected]');
+            expect(selected).to.be.null;
+
+            el.value = 'Algeria';
+            await elementUpdated(el);
+
+            selected = el.shadowRoot.querySelector('[selected]');
+            expect(selected).to.not.be.null;
+        });
         it('sets the value when descendent is active and `enter` is pressed', async () => {
             const el = await comboboxFixture();
 
