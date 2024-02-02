@@ -119,10 +119,24 @@ tags:
 - ${componentName}
 ---
 ${
-    tag.attributes && tag.attributes.length
+    tag.attributes &&
+    tag.attributes.length &&
+    tag.members &&
+    tag.members.length &&
+    tag.attributes.filter((attribute) => {
+        const member = tag.members.find((member) => {
+            return member.name === attribute.name;
+        });
+        return member?.privacy === 'public';
+    }).length
         ? buildTable(
               'Attributes and Properties',
-              tag.attributes,
+              tag.attributes.filter((attribute) => {
+                  const member = tag.members.find((member) => {
+                      return member.name === attribute.name;
+                  });
+                  return member?.privacy === 'public';
+              }),
               ['Property', 'Attribute', 'Type', 'Default', 'Description'],
               [
                   (attribute) => `<code>${attribute.fieldName || ''}</code>`,
