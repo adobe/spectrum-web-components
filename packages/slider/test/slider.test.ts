@@ -154,6 +154,7 @@ describe('Slider', () => {
                 composed: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;
@@ -168,8 +169,8 @@ describe('Slider', () => {
                 composed: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
-
         expect(el.dragging, 'it is dragging 1').to.be.true;
         expect(pointerId, '2').to.equal(1);
 
@@ -196,6 +197,7 @@ describe('Slider', () => {
                 composed: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
 
         expect(el.dragging, 'it is dragging 2').to.be.true;
@@ -243,6 +245,7 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
 
         expect(pointerId).to.equal(-1);
@@ -259,6 +262,7 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
 
         expect(pointerId).to.equal(4);
@@ -320,6 +324,7 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;
@@ -337,6 +342,7 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
 
         expect(pointerId).to.equal(-1);
@@ -580,6 +586,7 @@ describe('Slider', () => {
                 bubbles: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
         await nextFrame();
         handle.dispatchEvent(
@@ -633,6 +640,7 @@ describe('Slider', () => {
                 bubbles: true,
             })
         );
+        await new Promise((resolve) => setTimeout(resolve, 300));
         await elementUpdated(el);
         handle.dispatchEvent(
             new PointerEvent('pointermove', {

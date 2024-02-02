@@ -88,6 +88,21 @@ export class HandleController {
         }
         return result;
     }
+    private clickTimer: number | NodeJS.Timeout | null = null;
+
+    public get isDoubleClick(): boolean {
+        if (this.clickTimer !== null) {
+            clearTimeout(this.clickTimer);
+            this.clickTimer = null;
+            return true;
+        }
+
+        this.clickTimer = setTimeout(() => {
+            this.clickTimer = null;
+        }, 300);
+
+        return false;
+    }
 
     public get size(): number {
         return this.handles.size;
@@ -355,7 +370,7 @@ export class HandleController {
     }
 
     public handlePointerdown(event: PointerEvent): void {
-        if (this.checkForDoubleClick()) {
+        if (this.isDoubleClick) {
             this.handleDoubleClick(event);
         } else {
             const { resolvedInput, model } = this.extractDataFromEvent(event);
@@ -453,25 +468,6 @@ export class HandleController {
         const input = event.target as InputWithModel;
         input.model.handle.highlight = true;
         this.requestUpdate();
-    };
-
-    private clickTimer: number | NodeJS.Timeout | null = null;
-    /**
-     * @description method to check whether a click or double click on slider Handle
-     * @returns boolean
-     */
-    private checkForDoubleClick = (): boolean => {
-        if (this.clickTimer !== null) {
-            clearTimeout(this.clickTimer);
-            this.clickTimer = null;
-            return true;
-        }
-
-        this.clickTimer = setTimeout(() => {
-            this.clickTimer = null;
-        }, 300);
-
-        return false;
     };
 
     private dispatchChangeEvent(
