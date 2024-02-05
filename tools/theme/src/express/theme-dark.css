@@ -12,4 +12,5 @@ governing permissions and limitations under the License.
 
 @import url('@spectrum-web-components/styles/express/theme-dark.css');
 @import url('@spectrum-web-components/styles/tokens/dark-vars.css');
+@import url('@spectrum-web-components/styles/tokens/spectrum/custom-dark-vars.css');
 @import url('@spectrum-web-components/styles/tokens/express/custom-dark-vars.css');
