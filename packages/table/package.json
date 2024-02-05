@@ -123,7 +123,7 @@
         "@spectrum-web-components/icons-ui": "^0.40.4"
     },
     "devDependencies": {
-        "@spectrum-css/table": "^5.1.0"
+        "@spectrum-css/table": "^5.1.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

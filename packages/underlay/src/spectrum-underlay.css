@@ -12,18 +12,25 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-overlay-animation-distance: 6px;
-    --spectrum-overlay-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --spectrum-overlay-animation-duration-opened: var(
-        --spectrum-animation-duration-0
-    );
     opacity: 0;
     pointer-events: none;
-    transition: transform var(--spectrum-overlay-animation-duration) ease-in-out,
-        opacity var(--spectrum-overlay-animation-duration) ease-in-out,
-        visibility 0s linear var(--spectrum-overlay-animation-duration);
+    transition: transform
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        opacity
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        visibility 0s linear
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            );
     visibility: hidden;
 }
 :host([open]) {
@@ -31,7 +38,7 @@ governing permissions and limitations under the License.
     pointer-events: auto;
     transition-delay: var(
         --mod-overlay-animation-duration-opened,
-        var(--spectrum-overlay-animation-duration-opened)
+        var(--spectrum-animation-duration-0, 0s)
     );
     visibility: visible;
 }

@@ -173,6 +173,10 @@ governing permissions and limitations under the License.
         var(--spectrum-table-thumbnail-size)
     );
 }
+:host([dir='rtl']),
+[dir='rtl'] :host {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+}
 :host([size='s']) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-100);
     --spectrum-table-header-top-to-text: var(
@@ -546,6 +550,15 @@ governing permissions and limitations under the License.
         --highcontrast-table-selected-row-background-color: Highlight;
         --highcontrast-table-selected-row-text-color: HighlightText;
         --highcontrast-table-selected-row-text-color-default: HighlightText;
+    }
+    @supports (color: SelectedItem) {
+        :host {
+            --highcontrast-table-selected-row-background-color: SelectedItem;
+            --highcontrast-table-selected-row-text-color: SelectedItemText;
+            --highcontrast-table-selected-row-text-color-default: SelectedItemText;
+        }
+    }
+    :host {
         --highcontrast-table-selected-row-background-color-focus: Highlight;
         --highcontrast-table-selected-row-text-color-focus: HighlightText;
         --highcontrast-table-row-background-color-hover: Highlight;
@@ -554,13 +567,6 @@ governing permissions and limitations under the License.
         --highcontrast-table-section-header-background-color: CanvasText;
         --highcontrast-table-focus-indicator-color: Highlight;
         --highcontrast-table-transition-duration: 0;
-    }
-    @supports (color: SelectedItem) {
-        :host {
-            --highcontrast-table-selected-row-background-color: SelectedItem;
-            --highcontrast-table-selected-row-text-color: SelectedItemText;
-            --highcontrast-table-selected-row-text-color-default: SelectedItemText;
-        }
     }
 }
 :host:not(.spectrum-Table-scroller) {

@@ -1497,9 +1497,6 @@
     --spectrum-alias-clearbutton-border-radius: var(
         --spectrum-global-dimension-size-50
     );
-    --spectrum-alias-combobox-quiet-button-offset-x: var(
-        --spectrum-global-dimension-size-100
-    );
     --spectrum-alias-percent-50: 50%;
     --spectrum-alias-percent-70: 70%;
     --spectrum-alias-percent-100: 100%;

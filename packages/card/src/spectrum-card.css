@@ -66,8 +66,6 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-thickness
     );
     --spectrum-card-selected-background-opacity: 0.1;
-    --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
-    --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
 }
 :host([variant='gallery']),
 :host([variant='quiet']) {
@@ -92,6 +90,10 @@ governing permissions and limitations under the License.
         --spectrum-card-background-color-hover-quiet,
         var(--spectrum-gray-300)
     );
+}
+:host {
+    --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
+    --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
 }
 :host {
     background-color: var(
@@ -756,24 +758,19 @@ governing permissions and limitations under the License.
         --mod-card-background-color,
         var(--spectrum-card-background-color)
     );
-    border-end-end-radius: 0;
-    border-end-start-radius: var(
-        --mod-card-corner-radius,
-        var(--spectrum-card-corner-radius)
-    );
-    border-inline-end: var(
-            --mod-card-border-width,
-            var(--spectrum-card-border-width)
-        )
-        solid transparent;
     border-color: var(
         --mod-card-border-color,
         var(--spectrum-card-border-color)
     );
+    border-end-end-radius: 0;
+    border-end-start-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    );
     border-start-end-radius: 0;
-    border-start-start-radius: var(
-        --mod-card-corner-radius,
-        var(--spectrum-card-corner-radius)
+    border-start-start-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(--mod-card-border-width, var(--spectrum-card-border-width))
     );
     display: flex;
     flex-shrink: 0;

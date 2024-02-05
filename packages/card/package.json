@@ -67,7 +67,7 @@
         "@spectrum-web-components/styles": "^0.40.4"
     },
     "devDependencies": {
-        "@spectrum-css/card": "^6.3.0"
+        "@spectrum-css/card": "^6.3.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
