@@ -189,14 +189,17 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host(.focus-visible):not(:disabled),
-    :host(:hover):not(:disabled),
     :host:active:not(:disabled) {
         --highcontrast-infield-button-border-color: Highlight;
     }
     :host(:focus-visible):not(:disabled),
-    :host(:hover):not(:disabled),
     :host:active:not(:disabled) {
         --highcontrast-infield-button-border-color: Highlight;
+    }
+    @media (hover: hover) {
+        :host(:hover):not(:disabled) {
+            --highcontrast-infield-button-border-color: Highlight;
+        }
     }
 }
 :host {
@@ -288,17 +291,19 @@ governing permissions and limitations under the License.
 :host([disabled]) {
     cursor: auto;
 }
-:host(:hover) .fill {
-    background-color: var(
-        --mod-infield-button-background-color-hover,
-        var(--spectrum-infield-button-background-color-hover)
-    );
-}
-:host(:hover) ::slotted(*) {
-    color: var(
-        --mod-infield-button-icon-color-hover,
-        var(--spectrum-infield-button-icon-color-hover)
-    );
+@media (hover: hover) {
+    :host(:hover) .fill {
+        background-color: var(
+            --mod-infield-button-background-color-hover,
+            var(--spectrum-infield-button-background-color-hover)
+        );
+    }
+    :host(:hover) ::slotted(*) {
+        color: var(
+            --mod-infield-button-icon-color-hover,
+            var(--spectrum-infield-button-icon-color-hover)
+        );
+    }
 }
 :host:active .fill {
     background-color: var(

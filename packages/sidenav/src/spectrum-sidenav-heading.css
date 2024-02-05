@@ -97,6 +97,13 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
+}
+#list:lang(ja),
+#list:lang(ko),
+#list:lang(zh) {
+    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
+}
+#list {
     --spectrum-sidenav-top-level-font-family: var(
         --spectrum-sans-font-family-stack
     );
@@ -104,18 +111,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-header-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
-    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
-    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
-    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-}
-#list:lang(ja),
-#list:lang(ko),
-#list:lang(zh) {
-    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
 }
 #list:lang(ja),
 #list:lang(ko),
@@ -123,6 +118,15 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-line-height: var(
         --spectrum-cjk-line-height-100
     );
+}
+#list {
+    --spectrum-sidenav-header-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
+    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
+    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
+    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
 }
 #list:lang(ja),
 #list:lang(ko),

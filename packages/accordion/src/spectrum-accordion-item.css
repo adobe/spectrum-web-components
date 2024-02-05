@@ -213,22 +213,6 @@ governing permissions and limitations under the License.
         var(--spectrum-accordion-item-header-color-default)
     );
 }
-#header:hover {
-    background-color: var(
-        --mod-accordion-background-color-hover,
-        var(--spectrum-accordion-background-color-hover)
-    );
-    color: var(
-        --mod-accordion-item-header-color-hover,
-        var(--spectrum-accordion-item-header-color-hover)
-    );
-}
-#header:hover + .iconContainer {
-    color: var(
-        --mod-accordion-item-header-color-hover,
-        var(--spectrum-accordion-item-header-color-hover)
-    );
-}
 #header.focus-visible {
     background-color: var(
         --mod-accordion-background-color-key-focus,
@@ -297,15 +281,8 @@ governing permissions and limitations under the License.
         var(--spectrum-accordion-item-header-color-down)
     );
 }
-:host([open]) #header:hover {
-    background-color: var(
-        --mod-accordion-background-color-hover,
-        var(--spectrum-accordion-background-color-hover)
-    );
-}
 :host([disabled]) #header,
-:host([disabled]) #header.focus-visible,
-:host([disabled]) #header:hover {
+:host([disabled]) #header.focus-visible {
     background-color: #0000;
     color: var(
         --mod-accordion-item-header-disabled-color,
@@ -313,13 +290,43 @@ governing permissions and limitations under the License.
     );
 }
 :host([disabled]) #header,
-:host([disabled]) #header:focus-visible,
-:host([disabled]) #header:hover {
+:host([disabled]) #header:focus-visible {
     background-color: #0000;
     color: var(
         --mod-accordion-item-header-disabled-color,
         var(--spectrum-accordion-item-header-disabled-color)
     );
+}
+@media (hover: hover) {
+    #header:hover {
+        background-color: var(
+            --mod-accordion-background-color-hover,
+            var(--spectrum-accordion-background-color-hover)
+        );
+        color: var(
+            --mod-accordion-item-header-color-hover,
+            var(--spectrum-accordion-item-header-color-hover)
+        );
+    }
+    #header:hover + .iconContainer {
+        color: var(
+            --mod-accordion-item-header-color-hover,
+            var(--spectrum-accordion-item-header-color-hover)
+        );
+    }
+    :host([open]) #header:hover {
+        background-color: var(
+            --mod-accordion-background-color-hover,
+            var(--spectrum-accordion-background-color-hover)
+        );
+    }
+    :host([disabled]) #header:hover {
+        background-color: #0000;
+        color: var(
+            --mod-accordion-item-header-disabled-color,
+            var(--spectrum-accordion-item-header-disabled-color)
+        );
+    }
 }
 :host([disabled]) #header + .iconContainer {
     color: var(

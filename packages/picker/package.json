@@ -79,7 +79,7 @@
         "@spectrum-web-components/tray": "^0.40.4"
     },
     "devDependencies": {
-        "@spectrum-css/picker": "^7.1.0"
+        "@spectrum-css/picker": "^7.2.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

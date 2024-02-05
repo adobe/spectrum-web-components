@@ -168,23 +168,25 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-button-padding)
     );
 }
-.root:hover .spectrum-PickerButton-fill {
-    background-color: var(
-        --mod-picker-button-background-color-hover,
-        var(--spectrum-picker-button-background-color-hover)
-    );
-}
-.root:hover .spectrum-PickerButton-label {
-    color: var(
-        --mod-picker-button-font-color-hover,
-        var(--spectrum-picker-button-font-color-hover)
-    );
-}
-.root:hover .spectrum-PickerButton-icon {
-    color: var(
-        --mod-picker-button-icon-color-hover,
-        var(--spectrum-picker-button-icon-color-hover)
-    );
+@media (hover: hover) {
+    .root:hover .spectrum-PickerButton-fill {
+        background-color: var(
+            --mod-picker-button-background-color-hover,
+            var(--spectrum-picker-button-background-color-hover)
+        );
+    }
+    .root:hover .spectrum-PickerButton-label {
+        color: var(
+            --mod-picker-button-font-color-hover,
+            var(--spectrum-picker-button-font-color-hover)
+        );
+    }
+    .root:hover .spectrum-PickerButton-icon {
+        color: var(
+            --mod-picker-button-icon-color-hover,
+            var(--spectrum-picker-button-icon-color-hover)
+        );
+    }
 }
 :host([active]) .root .spectrum-PickerButton-fill,
 :host([open]) .root .spectrum-PickerButton-fill {
