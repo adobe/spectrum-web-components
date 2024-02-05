@@ -152,23 +152,11 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
             trigger.insertAdjacentElement('afterend', overlay);
         });
     }
-    function waitForElement(selector) {
-        return new Promise(resolve => {
-            if (document.querySelector(selector)) {
-                return resolve(document.querySelector(selector));
-            }
-            const observer = new MutationObserver(mutations => {
-                if (document.querySelector(selector)) {
-                    resolve(document.querySelector(selector));
-                    observer.disconnect();
-                }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-        });
-    }
 
-    waitForElement('#root').then(() => {
-        init();
+    customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            init();
+        });
     });
 </script>
 ```
@@ -223,23 +211,11 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
             trigger.insertAdjacentElement('afterend', overlay);
         });
     }
-    function waitForElement(selector) {
-        return new Promise(resolve => {
-            if (document.querySelector(selector)) {
-                return resolve(document.querySelector(selector));
-            }
-            const observer = new MutationObserver(mutations => {
-                if (document.querySelector(selector)) {
-                    resolve(document.querySelector(selector));
-                    observer.disconnect();
-                }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-        });
-    }
 
-    waitForElement('#root').then(() => {
-        init();
+    customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            init();
+        });
     });
 </script>
 
