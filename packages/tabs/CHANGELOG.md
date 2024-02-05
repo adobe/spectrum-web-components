@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **tabs:** account for the indicator bar in the overflow decorator ([f4a8744](https://github.com/adobe/spectrum-web-components/commit/f4a8744ed5cb38608ae856539ce7c34ca212b3d4))
+
 ## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

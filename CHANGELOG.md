@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **button:** use larger icons in Close Button ([c4aa02c](https://github.com/adobe/spectrum-web-components/commit/c4aa02c8a1c6456f8d9805ba02d74c7e4ecefaa3))
+-   **combobox:** add combobox pattern ([#3894](https://github.com/adobe/spectrum-web-components/issues/3894)) ([47d7d71](https://github.com/adobe/spectrum-web-components/commit/47d7d71bc9e17b67452d45b9495c970dac15ff89)), closes [#3887](https://github.com/adobe/spectrum-web-components/issues/3887)
+-   **menu:** process ":active" styles ([7917583](https://github.com/adobe/spectrum-web-components/commit/79175833e8121cef1419b547802721324472965d))
+-   **slider:** reimplement gradient slider track application ([a10b91e](https://github.com/adobe/spectrum-web-components/commit/a10b91ed168ba58f02349e05e1c49898e8686206))
+-   **tabs:** account for the indicator bar in the overflow decorator ([f4a8744](https://github.com/adobe/spectrum-web-components/commit/f4a8744ed5cb38608ae856539ce7c34ca212b3d4))
+-   **theme:** expose version property ([#3978](https://github.com/adobe/spectrum-web-components/issues/3978)) ([d42bb71](https://github.com/adobe/spectrum-web-components/commit/d42bb710fab1857dabad80b982ad046a41251569))
+-   **theme:** include custom Spectrum color tokens in Express color tokens ([370a1f1](https://github.com/adobe/spectrum-web-components/commit/370a1f1df67dba51fd1110a5e850a8600f5a03dd))
+
 ## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
 
 ### Bug Fixes

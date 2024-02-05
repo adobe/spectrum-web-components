@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/picker-button",
-    "version": "0.40.4",
+    "version": "0.40.5",
     "publishConfig": {
         "access": "public"
     },
@@ -57,11 +57,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.4",
-        "@spectrum-web-components/button": "^0.40.4",
-        "@spectrum-web-components/icon": "^0.40.4",
-        "@spectrum-web-components/icons-ui": "^0.40.4",
-        "@spectrum-web-components/shared": "^0.40.4"
+        "@spectrum-web-components/base": "^0.40.5",
+        "@spectrum-web-components/button": "^0.40.5",
+        "@spectrum-web-components/icon": "^0.40.5",
+        "@spectrum-web-components/icons-ui": "^0.40.5",
+        "@spectrum-web-components/shared": "^0.40.5"
     },
     "devDependencies": {
         "@spectrum-css/pickerbutton": "^4.1.0"

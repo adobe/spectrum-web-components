@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/eslint-plugin",
-    "version": "0.40.4",
+    "version": "0.40.5",
     "private": true,
     "main": "index.js"
 }
