@@ -15,16 +15,19 @@ governing permissions and limitations under the License.
     :host(.focus-visible)
         .spectrum-Table-checkbox
         .spectrum-Checkbox-box:before,
-    :host(:hover) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
     :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
     }
     :host(:focus-visible)
         .spectrum-Table-checkbox
         .spectrum-Checkbox-box:before,
-    :host(:hover) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
     :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
+    }
+    @media (hover: hover) {
+        :host(:hover) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
+            outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
+        }
     }
     :host([drop-target]),
     :host([drop-target]) .spectrum-Table-body,
@@ -149,7 +152,6 @@ governing permissions and limitations under the License.
     outline: 0;
 }
 :host(.focus-visible),
-:host(:hover),
 :host([focused]) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-row-text-color-hover
@@ -166,7 +168,6 @@ governing permissions and limitations under the License.
     );
 }
 :host(:focus-visible),
-:host(:hover),
 :host([focused]) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-row-text-color-hover
@@ -209,7 +210,6 @@ governing permissions and limitations under the License.
     );
 }
 :host([selected].focus-visible),
-:host([selected]:hover),
 :host([selected][focused]) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-selected-row-text-color-focus
@@ -222,7 +222,6 @@ governing permissions and limitations under the License.
     );
 }
 :host([selected]:focus-visible),
-:host([selected]:hover),
 :host([selected][focused]) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-selected-row-text-color-focus
@@ -379,18 +378,6 @@ governing permissions and limitations under the License.
     );
     text-align: start;
 }
-.spectrum-Table-row--sectionHeader:hover {
-    --highcontrast-table-row-text-color: var(
-        --highcontrast-table-section-header-text-color
-    );
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-section-header-background-color,
-        var(
-            --mod-table-section-header-background-color,
-            var(--spectrum-table-section-header-background-color)
-        )
-    );
-}
 :host {
     display: table-row;
 }
@@ -473,6 +460,46 @@ governing permissions and limitations under the License.
 }
 :host([hidden]) .spectrum-Table-row--collapsible {
     display: none;
+}
+@media (hover: hover) {
+    :host([selected]:hover) {
+        --highcontrast-table-row-text-color: var(
+            --highcontrast-table-selected-row-text-color-focus
+        );
+        --highcontrast-table-icon-color: var(
+            --highcontrast-table-selected-row-text-color-focus
+        );
+        --spectrum-table-cell-background-color: var(
+            --spectrum-table-selected-cell-background-color-focus
+        );
+    }
+    :host(:hover) {
+        --highcontrast-table-row-text-color: var(
+            --highcontrast-table-row-text-color-hover
+        );
+        --highcontrast-table-icon-color: var(
+            --highcontrast-table-row-text-color-hover
+        );
+        --spectrum-table-cell-background-color: var(
+            --highcontrast-table-row-background-color-hover,
+            var(
+                --mod-table-row-background-color-hover,
+                var(--spectrum-table-row-background-color-hover)
+            )
+        );
+    }
+    .spectrum-Table-row--sectionHeader:hover {
+        --highcontrast-table-row-text-color: var(
+            --highcontrast-table-section-header-text-color
+        );
+        --spectrum-table-cell-background-color: var(
+            --highcontrast-table-section-header-background-color,
+            var(
+                --mod-table-section-header-background-color,
+                var(--spectrum-table-section-header-background-color)
+            )
+        );
+    }
 }
 .spectrum-Table-row--thumbnail {
     --table-thumbnail-cell-block-spacing: var(

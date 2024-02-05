@@ -109,7 +109,7 @@
     "devDependencies": {
         "@spectrum-css/commons": "^9.1.0",
         "@spectrum-css/expressvars": "^3.0.9",
-        "@spectrum-css/tokens": "^13.0.9",
+        "@spectrum-css/tokens": "^13.1.0",
         "@spectrum-css/typography": "^5.1.0",
         "@spectrum-css/vars": "^9.0.8"
     },

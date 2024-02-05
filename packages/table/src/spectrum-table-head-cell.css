@@ -104,15 +104,6 @@ governing permissions and limitations under the License.
 :host([sortable]) {
     cursor: var(--mod-table-cursor-header-sortable, pointer);
 }
-:host([sortable]:hover) {
-    --spectrum-table-icon-color: var(
-        --highcontrast-table-icon-color-focus,
-        var(
-            --mod-table-icon-color-hover,
-            var(--spectrum-table-icon-color-hover)
-        )
-    );
-}
 :host([sortable][active]) {
     --spectrum-table-icon-color: var(
         --highcontrast-table-icon-color-focus,
@@ -128,15 +119,6 @@ governing permissions and limitations under the License.
         var(
             --mod-table-icon-color-focus,
             var(--spectrum-table-icon-color-focus)
-        )
-    );
-}
-:host([sortable]:focus):hover {
-    --spectrum-table-icon-color: var(
-        --highcontrast-table-icon-color-focus,
-        var(
-            --mod-table-icon-color-focus-hover,
-            var(--spectrum-table-icon-color-focus-hover)
         )
     );
 }
@@ -244,4 +226,24 @@ governing permissions and limitations under the License.
             --highcontrast-table-border-color,
             var(--mod-table-border-color, var(--spectrum-table-border-color))
         );
+}
+@media (hover: hover) {
+    :host([sortable]:hover) {
+        --spectrum-table-icon-color: var(
+            --highcontrast-table-icon-color-focus,
+            var(
+                --mod-table-icon-color-hover,
+                var(--spectrum-table-icon-color-hover)
+            )
+        );
+    }
+    :host([sortable]:focus):hover {
+        --spectrum-table-icon-color: var(
+            --highcontrast-table-icon-color-focus,
+            var(
+                --mod-table-icon-color-focus-hover,
+                var(--spectrum-table-icon-color-focus-hover)
+            )
+        );
+    }
 }
