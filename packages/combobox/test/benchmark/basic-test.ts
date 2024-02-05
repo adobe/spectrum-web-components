@@ -16,6 +16,11 @@ import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 import { benchmarkOptions } from '../index.js';
 
-measureFixtureCreation(html`
-    <sp-combobox .options=${benchmarkOptions}></sp-combobox>
-`);
+measureFixtureCreation(
+    html`
+        <sp-combobox .options=${benchmarkOptions}></sp-combobox>
+    `,
+    {
+        numRenders: 10,
+    }
+);
