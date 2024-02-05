@@ -487,13 +487,15 @@ governing permissions and limitations under the License.
                             --mod-table-thumbnail-size,
                             var(--spectrum-table-thumbnail-size)
                         ) -
-                        var(
-                            --mod-table-row-line-height,
-                            var(--spectrum-table-row-line-height)
-                        ) *
-                        var(
-                            --mod-table-header-font-size,
-                            var(--spectrum-table-row-font-size)
+                        (
+                            var(
+                                    --mod-table-row-line-height,
+                                    var(--spectrum-table-row-line-height)
+                                ) *
+                                var(
+                                    --mod-table-header-font-size,
+                                    var(--spectrum-table-row-font-size)
+                                )
                         )
                 ) / 2
         )

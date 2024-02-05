@@ -1024,6 +1024,17 @@
 
 :host,
 :root {
+    --system-spectrum-combobox-border-color-default: var(--spectrum-gray-400);
+    --system-spectrum-combobox-border-color-hover: var(--spectrum-gray-500);
+    --system-spectrum-combobox-border-color-focus: var(--spectrum-gray-900);
+    --system-spectrum-combobox-border-color-focus-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-combobox-border-color-key-focus: var(--spectrum-gray-900);
+}
+
+:host,
+:root {
     --system-spectrum-infieldbutton-spectrum-infield-button-border-width: 0;
     --system-spectrum-infieldbutton-spectrum-infield-button-border-color: transparent;
     --system-spectrum-infieldbutton-spectrum-infield-button-border-radius: var(
@@ -1072,6 +1083,7 @@
     --system-spectrum-picker-border-color-hover-open: transparent;
     --system-spectrum-picker-border-color-active: transparent;
     --system-spectrum-picker-border-color-key-focus: transparent;
+    --system-spectrum-picker-border-width: 0px;
 }
 
 :host,

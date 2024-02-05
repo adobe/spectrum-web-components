@@ -782,7 +782,7 @@ governing permissions and limitations under the License.
     color: var(
         --highcontrast-checkbox-background-color-default,
         var(
-            --mode-checkbox-checkmark-color,
+            --mod-checkbox-checkmark-color,
             var(--spectrum-checkbox-checkmark-color)
         )
     );

@@ -28,6 +28,10 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
 }
+:host([dir='rtl']),
+[dir='rtl'] :host {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+}
 :host([size='s']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-small);
@@ -400,12 +404,10 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
-:host([dir='rtl']) #ramp svg {
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-}
 #ramp svg {
     block-size: 100%;
     inline-size: 100%;
+    transform: var(--spectrum-logical-rotation);
 }
 .handle {
     block-size: var(
@@ -856,7 +858,7 @@ governing permissions and limitations under the License.
 }
 :host([variant='range']) .track:not(:first-of-type):not(:last-of-type):before {
     background: var(
-        --highcontrast-slider-track-fill-color,
+        --highcontrast-slider-track-fill-icolor,
         var(
             --mod-slider-track-fill-color,
             var(--spectrum-slider-track-fill-color)

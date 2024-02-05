@@ -19,10 +19,16 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     cursor: pointer;
     font-family: var(
-        --mod-sans-font-family-stack,
-        var(--spectrum-sans-font-family-stack)
+        --mod-button-font-family,
+        var(
+            --mod-sans-font-family-stack,
+            var(--spectrum-sans-font-family-stack)
+        )
     );
-    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
+    line-height: var(
+        --mod-button-line-height,
+        var(--mod-line-height-100, var(--spectrum-line-height-100))
+    );
     margin: 0;
     overflow: visible;
     -webkit-text-decoration: none;
@@ -30,26 +36,38 @@ governing permissions and limitations under the License.
     text-transform: none;
     transition: background
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         border-color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         box-shadow
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out;
     -webkit-user-select: none;

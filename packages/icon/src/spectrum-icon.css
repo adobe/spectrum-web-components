@@ -15,10 +15,12 @@ governing permissions and limitations under the License.
     fill: currentColor;
     color: var(--mod-icon-color, inherit);
     display: inline-block;
-    pointer-events: none;
 }
 :host(:not(:root)) {
     overflow: hidden;
+}
+:host {
+    pointer-events: none;
 }
 @media (forced-colors: active) {
     :host {
@@ -26,19 +28,10 @@ governing permissions and limitations under the License.
     }
 }
 :host {
-    --spectrum-icon-size-s: var(
-        --spectrum-alias-workflow-icon-size-s,
-        var(--spectrum-global-dimension-size-200)
-    );
-    --spectrum-icon-size-m: var(
-        --spectrum-alias-workflow-icon-size-m,
-        var(--spectrum-global-dimension-size-225)
-    );
+    --spectrum-icon-size-s: var(--spectrum-alias-workflow-icon-size-s);
+    --spectrum-icon-size-m: var(--spectrum-alias-workflow-icon-size-m);
     --spectrum-icon-size-l: var(--spectrum-alias-workflow-icon-size-l);
-    --spectrum-icon-size-xl: var(
-        --spectrum-alias-workflow-icon-size-xl,
-        var(--spectrum-global-dimension-size-275)
-    );
+    --spectrum-icon-size-xl: var(--spectrum-alias-workflow-icon-size-xl);
     --spectrum-icon-size-xxl: var(--spectrum-global-dimension-size-400);
 }
 :host([size='s']) {

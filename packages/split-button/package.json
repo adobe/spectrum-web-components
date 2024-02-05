@@ -72,7 +72,7 @@
         "@spectrum-web-components/popover": "^0.40.4"
     },
     "devDependencies": {
-        "@spectrum-css/splitbutton": "^7.0.3"
+        "@spectrum-css/splitbutton": "^8.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
