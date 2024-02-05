@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, html, oneEvent } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    html,
+    nextFrame,
+    oneEvent,
+} from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { Combobox } from '@spectrum-web-components/combobox';
@@ -21,7 +27,7 @@ import {
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { comboboxFixture, isWebKit } from './index.js';
+import { comboboxFixture, isWebKit } from './helpers.js';
 import {
     withFieldLabel,
     withHelpText,
@@ -205,6 +211,11 @@ describe('Combobox accessibility', () => {
         const activeDescendant = el.shadowRoot.querySelector(
             '#apple'
         ) as MenuItem;
+
+        await elementUpdated(activeDescendant);
+        // Menu Item association with a Menu happens outside of the update lifecycle
+        await nextFrame();
+        await nextFrame();
 
         expect(activeDescendant.focused).to.be.true;
         expect(el.focused).to.be.true;

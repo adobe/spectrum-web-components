@@ -29,7 +29,7 @@ import {
     comboboxFixture,
     TestableCombobox,
     testActiveElement,
-} from './index.js';
+} from './helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { withTooltip } from '../stories/combobox.stories.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -532,8 +532,6 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
 
-            const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
-
             expect(el.value).to.equal('');
             expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
@@ -541,6 +539,9 @@ describe('Combobox', () => {
             const opened = oneEvent(el, 'sp-opened');
             el.focusElement.click();
             await opened;
+
+            const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
+            await elementUpdated(item);
 
             expect(el.open).to.be.true;
 
@@ -569,10 +570,6 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
 
-            const item = el.shadowRoot.querySelector(
-                '[value="cherry"]'
-            ) as MenuItem;
-
             expect(el.value).to.equal('');
             expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.false;
@@ -580,6 +577,11 @@ describe('Combobox', () => {
             const opened = oneEvent(el, 'sp-opened');
             el.focusElement.click();
             await opened;
+
+            const item = el.shadowRoot.querySelector(
+                '[value="cherry"]'
+            ) as MenuItem;
+            await elementUpdated(item);
 
             expect(el.open).to.be.true;
 
@@ -679,14 +681,16 @@ describe('Combobox', () => {
             expect(el.open).to.be.false;
             expect(el.availableOptions.length).equal(12);
             expect(el.options?.length).equal(12);
-            let items = [
-                ...el.shadowRoot.querySelectorAll('#listbox sp-menu-item'),
-            ];
-            expect(items.length).to.equal(12);
 
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
+
+            let items = [
+                ...el.shadowRoot.querySelectorAll('#listbox sp-menu-item'),
+            ];
+            expect(items.length).to.equal(12);
+            await Promise.all(items.map((item) => elementUpdated(item)));
 
             await executeServerCommand('send-keys', {
                 press: 'C',

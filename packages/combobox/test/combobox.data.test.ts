@@ -21,7 +21,7 @@ import {
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { fixture } from '../../../test/testing-helpers.js';
-import { comboboxFixture, TestableCombobox } from './index.js';
+import { comboboxFixture, TestableCombobox } from './helpers.js';
 import { SpectrumElement, TemplateResult } from '@spectrum-web-components/base';
 import { customElement } from '@spectrum-web-components/base/src/decorators.js';
 import { MenuItem } from '@spectrum-web-components/menu';

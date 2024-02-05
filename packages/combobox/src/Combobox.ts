@@ -76,6 +76,9 @@ export class Combobox extends Textfield {
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
 
+    @state()
+    overlayOpen = false;
+
     @query('#input')
     private input!: HTMLInputElement;
 
@@ -244,6 +247,7 @@ export class Combobox extends Textfield {
 
     public handleClosed(): void {
         this.open = false;
+        this.overlayOpen = false;
     }
 
     public handleOpened(): void {
@@ -262,8 +266,12 @@ export class Combobox extends Textfield {
     protected override shouldUpdate(
         changed: PropertyValues<this & { optionEls: MenuItem[] }>
     ): boolean {
-        if (changed.has('open') && !this.open) {
-            this.activeDescendant = undefined;
+        if (changed.has('open')) {
+            if (!this.open) {
+                this.activeDescendant = undefined;
+            } else {
+                this.overlayOpen = true;
+            }
         }
         if (changed.has('value')) {
             this.filterAvailableOptions();
@@ -418,26 +426,29 @@ export class Combobox extends Textfield {
                         style="min-width: ${width}px;"
                         size=${this.size}
                     >
-                        ${repeat(
-                            this.availableOptions,
-                            (option) => option.value,
-                            (option) => {
-                                return html`
-                                    <sp-menu-item
-                                        id="${option.value}"
-                                        ?focused=${this.activeDescendant
-                                            ?.value === option.value}
-                                        aria-selected=${this.activeDescendant
-                                            ?.value === option.value
-                                            ? 'true'
-                                            : 'false'}
-                                        .value=${option.value}
-                                    >
-                                        ${option.itemText}
-                                    </sp-menu-item>
-                                `;
-                            }
-                        )}
+                        ${this.overlayOpen
+                            ? repeat(
+                                  this.availableOptions,
+                                  (option) => option.value,
+                                  (option) => {
+                                      return html`
+                                          <sp-menu-item
+                                              id="${option.value}"
+                                              ?focused=${this.activeDescendant
+                                                  ?.value === option.value}
+                                              aria-selected=${this
+                                                  .activeDescendant?.value ===
+                                              option.value
+                                                  ? 'true'
+                                                  : 'false'}
+                                              .value=${option.value}
+                                          >
+                                              ${option.itemText}
+                                          </sp-menu-item>
+                                      `;
+                                  }
+                              )
+                            : html``}
                         <slot
                             hidden
                             @slotchange=${this.handleSlotchange}
