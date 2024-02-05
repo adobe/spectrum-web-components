@@ -6,7 +6,7 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 
 # Requirements
 
--   NodeJS >= 14.15.3
+-   NodeJS >= 18.17.0
 -   Typescript
 -   Browsers with Custom Elements V1 and Shadow DOM support, e.g. Chrome, Firefox, Safari, Edge (79+)
     -   Or appropriate [polyfills](https://github.com/webcomponents/webcomponentsjs) in older browsers.
