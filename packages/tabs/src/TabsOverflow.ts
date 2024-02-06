@@ -48,6 +48,9 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     compact = false;
 
+    @property({ type: Boolean, reflect: true })
+    autoscroll = false;
+
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
@@ -75,7 +78,9 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         });
     }
 
-    protected override firstUpdated(changes: PropertyValues): void {
+    protected override async firstUpdated(
+        changes: PropertyValues
+    ): Promise<void> {
         super.firstUpdated(changes);
         // enable scroll event
         const [tabs] = this.scrollContent;
@@ -83,6 +88,10 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
             tabs.enableTabsScroll = true;
         }
         this.resizeController.observe(this.overflowContainer);
+
+        if (this.autoscroll) {
+            tabs.scrollToSelected();
+        }
     }
 
     private async _handleSlotChange(): Promise<void> {
