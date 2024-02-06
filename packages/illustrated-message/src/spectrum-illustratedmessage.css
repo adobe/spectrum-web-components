@@ -89,8 +89,6 @@ governing permissions and limitations under the License.
     text-align: center;
 }
 #illustration {
-    fill: currentColor;
-    stroke: currentColor;
     color: var(
         --highcontrast-illustrated-message-illustration-color,
         var(
@@ -98,14 +96,14 @@ governing permissions and limitations under the License.
             var(--spectrum-illustrated-message-illustration-color)
         )
     );
+    fill: currentColor;
+    stroke: currentColor;
     margin-block-end: var(
         --mod-illustrated-message-title-to-heading,
         var(--spectrum-illustrated-message-title-to-heading)
     );
 }
 .spectrum-IllustratedMessage-accent {
-    fill: currentColor;
-    stroke: currentColor;
     color: var(
         --highcontrast-illustrated-message-illustration-accent-color,
         var(
@@ -113,6 +111,8 @@ governing permissions and limitations under the License.
             var(--spectrum-illustrated-message-illustration-accent-color)
         )
     );
+    fill: currentColor;
+    stroke: currentColor;
 }
 #heading {
     color: var(

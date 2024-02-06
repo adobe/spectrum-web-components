@@ -432,6 +432,7 @@ governing permissions and limitations under the License.
         forced-color-adjust: preserve-parent-color;
     }
     :host {
+        forced-color-adjust: none;
         --highcontrast-sidenav-content-disabled-color: GrayText;
         --highcontrast-sidenav-focus-ring-color: Highlight;
         --highcontrast-sidenav-content-color-default-selected: SelectedItemText;
@@ -446,6 +447,5 @@ governing permissions and limitations under the License.
         --highcontrast-sidenav-top-level-font-color: ButtonText;
         --highcontrast-sidenav-content-color-default: ButtonText;
         --highcontrast-sidenav-content-color-down: HighlightText;
-        forced-color-adjust: none;
     }
 }

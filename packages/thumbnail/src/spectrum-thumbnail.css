@@ -321,11 +321,11 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
+        forced-color-adjust: none;
         --highcontrast-thumbnail-border-color-selected: Highlight;
         --highcontrast-thumbnail-focus-indicator-color: Highlight;
         --highcontrast-thumbnail-border-color: CanvasText;
         --highcontrast-thumbnail-layer-border-color-inner: Canvas;
         --highcontrast-thumbnail-layer-border-color-outer: CanvasText;
-        forced-color-adjust: none;
     }
 }

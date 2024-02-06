@@ -84,11 +84,7 @@ governing permissions and limitations under the License.
     );
 }
 :host {
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
     box-sizing: border-box;
-    color: var(--spectrum-fieldlabel-color);
-    display: block;
     font-size: var(
         --mod-fieldlabel-font-size,
         var(--spectrum-fieldlabel-font-size)
@@ -113,6 +109,10 @@ governing permissions and limitations under the License.
             --mod-field-label-bottom-to-text,
             var(--spectrum-fieldlabel-bottom-to-text)
         );
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    color: var(--spectrum-fieldlabel-color);
+    display: block;
     padding-inline: 0;
 }
 :host(:lang(ja)),

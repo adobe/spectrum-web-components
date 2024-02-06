@@ -571,9 +571,9 @@ governing permissions and limitations under the License.
     padding-inline-start: 0;
 }
 #value {
-    font-feature-settings: 'tnum';
     cursor: default;
     flex-grow: 0;
+    font-feature-settings: 'tnum';
     margin-inline-start: var(
         --mod-slider-label-margin-start,
         var(--spectrum-slider-label-margin-start)

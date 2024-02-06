@@ -69,18 +69,18 @@ governing permissions and limitations under the License.
     }
 }
 :host {
-    -webkit-user-drag: none;
     block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
     border-radius: var(
         --mod-avatar-border-radius,
         var(--spectrum-avatar-border-radius)
     );
-    border-width: 0;
-    display: inline-block;
     inline-size: var(
         --mod-avatar-inline-size,
         var(--spectrum-avatar-inline-size)
     );
+    -webkit-user-drag: none;
+    border-width: 0;
+    display: inline-block;
     opacity: var(
         --mod-avatar-color-opacity,
         var(--spectrum-avatar-color-opacity)
