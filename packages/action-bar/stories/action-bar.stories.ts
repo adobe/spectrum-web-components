@@ -19,24 +19,17 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 
+import { Template } from './template.js';
+
 export default {
     title: 'Action Bar',
     component: 'sp-action-bar',
 };
 
-export const Default = (): TemplateResult => {
-    return html`
-        <sp-action-bar open>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-button slot="buttons" label="More">
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
-};
+export const Default = (): TemplateResult =>
+    Template({
+        open: true,
+    });
 
 export const emphasized = (): TemplateResult => {
     return html`
