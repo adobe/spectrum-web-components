@@ -89,7 +89,3 @@ governing permissions and limitations under the License.
 :host([tip][placement]) #tip {
     height: auto;
 }
-
-:host([open]) {
-    overflow: hidden;
-}

@@ -19,10 +19,11 @@ governing permissions and limitations under the License.
      * rather than over write so we continue to get new values from Spectrum CSS
      * if they are provided in the future.
      **/
-    --swc-overlay-animation-distance: var(
+
+    /* --swc-overlay-animation-distance: var(
         --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
-    );
+    ); */
 }
 
 .dialog {
