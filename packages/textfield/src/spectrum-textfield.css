@@ -876,18 +876,10 @@ governing permissions and limitations under the License.
 }
 .input:disabled,
 :host([disabled]) #textfield .input {
-    -webkit-text-fill-color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
     background-color: var(
         --mod-textfield-background-color-disabled,
         var(--spectrum-textfield-background-color-disabled)
     );
-    border-color: #0000;
     color: var(
         --highcontrast-textfield-text-color-disabled,
         var(
@@ -895,6 +887,14 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-disabled)
         )
     );
+    -webkit-text-fill-color: var(
+        --highcontrast-textfield-text-color-disabled,
+        var(
+            --mod-textfield-text-color-disabled,
+            var(--spectrum-textfield-text-color-disabled)
+        )
+    );
+    border-color: #0000;
     opacity: 1;
     resize: none;
 }
@@ -1073,18 +1073,10 @@ governing permissions and limitations under the License.
         );
     }
     :host([disabled]) #textfield:hover .input {
-        -webkit-text-fill-color: var(
-            --highcontrast-textfield-text-color-disabled,
-            var(
-                --mod-textfield-text-color-disabled,
-                var(--spectrum-textfield-text-color-disabled)
-            )
-        );
         background-color: var(
             --mod-textfield-background-color-disabled,
             var(--spectrum-textfield-background-color-disabled)
         );
-        border-color: #0000;
         color: var(
             --highcontrast-textfield-text-color-disabled,
             var(
@@ -1092,6 +1084,14 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-text-color-disabled)
             )
         );
+        -webkit-text-fill-color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
+        border-color: #0000;
         opacity: 1;
         resize: none;
     }

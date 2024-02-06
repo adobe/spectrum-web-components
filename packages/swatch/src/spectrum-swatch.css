@@ -331,13 +331,6 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 .disabledIcon {
-    stroke: var(
-        --highcontrast-swatch-disabled-icon-color,
-        var(
-            --mod-swatch-disabled-icon-color,
-            var(--spectrum-swatch-disabled-icon-color)
-        )
-    );
     color: var(
         --highcontrast-swatch-disabled-icon-color,
         var(
@@ -345,8 +338,15 @@ governing permissions and limitations under the License.
             var(--spectrum-swatch-disabled-icon-color)
         )
     );
-    position: relative;
     z-index: 2;
+    stroke: var(
+        --highcontrast-swatch-disabled-icon-color,
+        var(
+            --mod-swatch-disabled-icon-color,
+            var(--spectrum-swatch-disabled-icon-color)
+        )
+    );
+    position: relative;
 }
 .disabledIcon path:first-child {
     fill: var(

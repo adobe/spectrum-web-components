@@ -197,6 +197,10 @@ governing permissions and limitations under the License.
     }
 }
 :host {
+    cursor: default;
+    inline-size: auto;
+    min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
+    vertical-align: middle;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     background: var(
@@ -212,12 +216,8 @@ governing permissions and limitations under the License.
         --mod-badge-label-icon-color,
         var(--spectrum-badge-label-icon-color)
     );
-    cursor: default;
     display: inline-flex;
-    inline-size: auto;
-    min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
     position: relative;
-    vertical-align: middle;
 }
 :host([variant='neutral']) {
     background: var(

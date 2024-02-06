@@ -179,9 +179,9 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host([dir]) {
+        forced-color-adjust: none;
         --highcontrast-statuslight-content-color-default: CanvasText;
         --highcontrast-statuslight-subdued-content-color-default: CanvasText;
-        forced-color-adjust: none;
     }
     :host:before {
         border: var(
@@ -238,6 +238,19 @@ governing permissions and limitations under the License.
     );
 }
 :host:before {
+    block-size: var(
+        --mod-statuslight-dot-size,
+        var(--spectrum-statuslight-dot-size)
+    );
+    border-radius: var(
+        --mod-statuslight-corner-radius,
+        var(--spectrum-statuslight-corner-radius)
+    );
+    content: '';
+    inline-size: var(
+        --mod-statuslight-dot-size,
+        var(--spectrum-statuslight-dot-size)
+    );
     --spectrum-statuslight-spacing-computed-top-to-dot: calc(
         var(
                 --mod-statuslight-spacing-top-to-dot,
@@ -249,23 +262,10 @@ governing permissions and limitations under the License.
             )
     );
     -ms-high-contrast-adjust: none;
-    block-size: var(
-        --mod-statuslight-dot-size,
-        var(--spectrum-statuslight-dot-size)
-    );
-    border-radius: var(
-        --mod-statuslight-corner-radius,
-        var(--spectrum-statuslight-corner-radius)
-    );
-    content: '';
     display: inline-block;
     flex-grow: 0;
     flex-shrink: 0;
     forced-color-adjust: none;
-    inline-size: var(
-        --mod-statuslight-dot-size,
-        var(--spectrum-statuslight-dot-size)
-    );
     margin-block-start: var(--spectrum-statuslight-spacing-computed-top-to-dot);
     margin-inline-end: var(
         --mod-statuslight-spacing-dot-to-label,

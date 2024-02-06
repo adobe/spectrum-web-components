@@ -668,6 +668,15 @@ governing permissions and limitations under the License.
     );
 }
 #box {
+    block-size: var(
+        --mod-checkbox-control-size,
+        var(--spectrum-checkbox-control-size)
+    );
+    box-sizing: border-box;
+    inline-size: var(
+        --mod-checkbox-control-size,
+        var(--spectrum-checkbox-control-size)
+    );
     --spectrum-checkbox-spacing: calc(
         var(--mod-checkbox-height, var(--spectrum-checkbox-height)) -
             var(
@@ -676,18 +685,9 @@ governing permissions and limitations under the License.
             )
     );
     align-items: center;
-    block-size: var(
-        --mod-checkbox-control-size,
-        var(--spectrum-checkbox-control-size)
-    );
-    box-sizing: border-box;
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
-    inline-size: var(
-        --mod-checkbox-control-size,
-        var(--spectrum-checkbox-control-size)
-    );
     justify-content: center;
     margin: calc(
             var(--mod-checkbox-spacing, var(--spectrum-checkbox-spacing)) / 2
