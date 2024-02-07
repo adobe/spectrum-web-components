@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-let url = '/';
+export let url = '/';
 
 switch (process.env.CONTEXT) {
     case 'production':
@@ -25,10 +25,9 @@ switch (process.env.CONTEXT) {
         break;
 }
 
-module.exports = {
-    name: 'Spectrum Web Components',
-    shortDesc:
-        'Spectrum Web Components provide interface components as custom elements to help teams work more efficiently and to make applications more consistent.',
-    url,
-    WATCH_MODE: process.env.WATCH_MODE,
-};
+export const name = 'Spectrum Web Components';
+
+export const shortDesc =
+    'Spectrum Web Components provide interface components as custom elements to help teams work more efficiently and to make applications more consistent.';
+
+export const WATCH_MODE = process.env.WATCH_MODE;

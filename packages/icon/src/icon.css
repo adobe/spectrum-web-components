@@ -13,39 +13,19 @@ governing permissions and limitations under the License.
 @import url('./spectrum-icon.css');
 
 :host {
-    --spectrum-icon-size-xxs: var(
-        --spectrum-alias-workflow-icon-size-xxs,
-        var(--spectrum-global-dimension-size-150)
+    --spectrum-icon-size: inherit;
+    --spectrum-icon-inline-size: var(
+        --mod-icon-inline-size,
+        var(--mod-icon-size, var(--_spectrum-icon-size))
     );
-    --spectrum-icon-size-xs: var(
-        --spectrum-alias-workflow-icon-size-xs,
-        var(--spectrum-global-dimension-size-175)
+    --spectrum-icon-block-size: var(
+        --mod-icon-block-size,
+        var(--mod-icon-size, var(--_spectrum-icon-size))
     );
-
-    height: var(
-        --spectrum-icon-tshirt-size-height,
-        var(
-            --spectrum-alias-workflow-icon-size,
-            var(--spectrum-global-dimension-size-225)
-        )
+    --_spectrum-icon-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-100)
     );
-    width: var(
-        --spectrum-icon-tshirt-size-width,
-        var(
-            --spectrum-alias-workflow-icon-size,
-            var(--spectrum-global-dimension-size-225)
-        )
-    );
-}
-
-:host([size='xxs']) {
-    height: var(--spectrum-icon-size-xxs);
-    width: var(--spectrum-icon-size-xxs);
-}
-
-:host([size='xs']) {
-    height: var(--spectrum-icon-size-xs);
-    width: var(--spectrum-icon-size-xs);
 }
 
 #container {
@@ -67,4 +47,46 @@ svg,
     ::slotted(*) {
         forced-color-adjust: auto;
     }
+}
+
+:host([size='xxs']) {
+    --_spectrum-icon-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-xxs)
+    );
+}
+
+:host([size='xs']) {
+    --_spectrum-icon-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-50)
+    );
+}
+
+:host([size='s']) {
+    --_spectrum-icon-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-75)
+    );
+}
+
+:host([size='l']) {
+    --_spectrum-icon-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-200)
+    );
+}
+
+:host([size='xl']) {
+    --_spectrum-icon-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-300)
+    );
+}
+
+:host([size='xxl']) {
+    --_spectrum-icon-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-xxl)
+    );
 }

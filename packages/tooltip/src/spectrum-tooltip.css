@@ -101,16 +101,14 @@ governing permissions and limitations under the License.
         border: 1px solid #0000;
     }
     #tip {
+        forced-color-adjust: none;
         --highcontrast-tooltip-background-color-default: CanvasText;
         --highcontrast-tooltip-background-color-informative: CanvasText;
         --highcontrast-tooltip-background-color-positive: CanvasText;
         --highcontrast-tooltip-background-color-negative: CanvasText;
-        forced-color-adjust: none;
     }
 }
 #tooltip {
-    -webkit-font-smoothing: antialiased;
-    align-items: center;
     background-color: var(
         --highcontrast-tooltip-background-color-default,
         var(
@@ -128,8 +126,6 @@ governing permissions and limitations under the License.
         --mod-tooltip-content-color,
         var(--spectrum-tooltip-content-color)
     );
-    display: inline-flex;
-    flex-direction: row;
     font-size: var(--mod-tooltip-font-size, var(--spectrum-tooltip-font-size));
     font-weight: var(
         --mod-tooltip-font-weight,
@@ -149,9 +145,13 @@ governing permissions and limitations under the License.
         --mod-tooltip-spacing-inline,
         var(--spectrum-tooltip-spacing-inline)
     );
-    position: relative;
     vertical-align: top;
     word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    position: relative;
 }
 :host(:lang(ja)) #tooltip,
 :host(:lang(ko)) #tooltip,

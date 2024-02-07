@@ -508,14 +508,6 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
     );
 }
 .spectrum-Menu-backIcon {
-    fill: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
     margin-block: var(
         --mod-menu-back-icon-margin-block,
         var(--spectrum-menu-back-icon-margin)
@@ -523,5 +515,13 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
     margin-inline: var(
         --mod-menu-back-icon-margin-inline,
         var(--spectrum-menu-back-icon-margin)
+    );
+    fill: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
     );
 }

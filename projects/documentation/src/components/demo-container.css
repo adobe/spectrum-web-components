@@ -1,0 +1,10 @@
+:host([scrollable]) {
+    overflow: auto;
+    place-content: start center !important;
+}
+
+.wrapper {
+    width: max-content;
+    margin: 0 auto;
+    max-width: 580px;
+}

@@ -9,9 +9,34 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+import syntaxHighlight from '@11ty/eleventy-plugin-syntaxhighlight';
+import markdownIt from 'markdown-it';
+import markdownItAnchors from 'markdown-it-anchor';
 
-module.exports = function (eleventyConfig) {
+const packageVersion = async function (packageName) {
+    let packageJSON = {};
+    try {
+        packageJSON = await import(
+            `../../packages/${packageName}/package.json`,
+            {
+                assert: { type: 'json' },
+            }
+        ).then((packageDefault) => packageDefault.default);
+    } catch (e) {
+        try {
+            packageJSON = await import(
+                `../../tools/${packageName}/package.json`,
+                {
+                    assert: { type: 'json' },
+                }
+            ).then((packageDefault) => packageDefault.default);
+        } catch (e) {}
+    }
+    return packageJSON.version;
+};
+
+export default function (eleventyConfig) {
+    eleventyConfig.addShortcode('packageVersion', packageVersion);
     eleventyConfig.addNunjucksGlobal('WATCH_MODE', process.env.WATCH_MODE);
     eleventyConfig.setUseGitIgnore(false);
     eleventyConfig.addPassthroughCopy('./content/favicon.ico');
@@ -30,8 +55,6 @@ module.exports = function (eleventyConfig) {
         codeTag: 'pre',
     });
 
-    let markdownIt = require('markdown-it');
-    let markdownItAnchors = require('markdown-it-anchor');
     let options = {
         html: true,
     };
@@ -167,4 +190,4 @@ module.exports = function (eleventyConfig) {
         templateFormats: ['njk', 'md', 'css', 'yml'],
         htmlTemplateEngine: 'njk',
     };
-};
+}

@@ -329,11 +329,11 @@ governing permissions and limitations under the License.
     );
 }
 .clear-button {
+    box-sizing: border-box;
+    color: currentColor;
     --mod-clear-button-width: fit-content;
     --spectrum-clearbutton-fill-size: fit-content;
     --spectrum-clearbutton-fill-background-color: transparent;
-    box-sizing: border-box;
-    color: currentColor;
     margin-inline-end: calc(
         var(
                 --mod-tag-clear-button-spacing-inline-end,
@@ -1011,6 +1011,7 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
+        forced-color-adjust: none;
         --highcontrast-tag-border-color: ButtonText;
         --highcontrast-tag-border-color-hover: ButtonText;
         --highcontrast-tag-border-color-active: ButtonText;
@@ -1024,7 +1025,6 @@ governing permissions and limitations under the License.
         --highcontrast-tag-content-color-active: ButtonText;
         --highcontrast-tag-content-color-focus: ButtonText;
         --highcontrast-tag-focus-ring-color: Highlight;
-        forced-color-adjust: none;
     }
     :host([selected]) {
         --highcontrast-tag-border-color-selected: Highlight;

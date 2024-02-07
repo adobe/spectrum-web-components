@@ -12,34 +12,26 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-UIIcon-Checkmark50 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-50);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-50);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-50);
 }
 .spectrum-UIIcon-Checkmark75 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-75);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-75);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-75);
 }
 .spectrum-UIIcon-Checkmark100 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-100);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-100);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-100);
 }
 .spectrum-UIIcon-Checkmark200 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-200);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-200);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-200);
 }
 .spectrum-UIIcon-Checkmark300 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-300);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-300);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-300);
 }
 .spectrum-UIIcon-Checkmark400 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-400);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-400);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-400);
 }
 .spectrum-UIIcon-Checkmark500 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-500);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-500);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-500);
 }
 .spectrum-UIIcon-Checkmark600 {
-    height: var(--spectrum-alias-ui-icon-checkmark-size-600);
-    width: var(--spectrum-alias-ui-icon-checkmark-size-600);
+    --spectrum-icon-size: var(--spectrum-checkmark-icon-size-600);
 }

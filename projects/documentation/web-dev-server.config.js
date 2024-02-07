@@ -10,6 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { fromRollup } from '@web/dev-server-rollup';
+import rollupAlias from '@rollup/plugin-alias';
+
+const alias = fromRollup(rollupAlias);
+
 export default {
     open: true,
     watch: true,
@@ -19,4 +24,14 @@ export default {
     },
     // in a monorepo you need to set the root dir to resolve modules
     rootDir: '_site',
+    plugins: [
+        alias({
+            entries: [
+                {
+                    find: '@swc-packages-internal',
+                    replacement: '/__wds-outside-root__/3/packages',
+                },
+            ],
+        }),
+    ],
 };

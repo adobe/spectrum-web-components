@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .checkmark {
+    display: var(
+        --mod-menu-checkmark-display,
+        var(--spectrum-menu-checkmark-display)
+    );
     fill: var(
         --highcontrast-menu-checkmark-icon-color-default,
         var(
@@ -26,10 +30,6 @@ governing permissions and limitations under the License.
             --mod-menu-checkmark-icon-color-default,
             var(--spectrum-menu-checkmark-icon-color-default)
         )
-    );
-    display: var(
-        --mod-menu-checkmark-display,
-        var(--spectrum-menu-checkmark-display)
     );
     opacity: 1;
 }
@@ -152,14 +152,6 @@ governing permissions and limitations under the License.
     );
 }
 .spectrum-Menu-backIcon {
-    fill: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
     margin-block: var(
         --mod-menu-back-icon-margin-block,
         var(--spectrum-menu-back-icon-margin)
@@ -167,5 +159,13 @@ governing permissions and limitations under the License.
     margin-inline: var(
         --mod-menu-back-icon-margin-inline,
         var(--spectrum-menu-back-icon-margin)
+    );
+    fill: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
     );
 }

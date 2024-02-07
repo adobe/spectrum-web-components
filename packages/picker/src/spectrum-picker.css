@@ -12,12 +12,8 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    align-items: center;
     -webkit-appearance: button;
     cursor: pointer;
-    display: inline-flex;
     font-family: var(
         --mod-button-font-family,
         var(
@@ -25,16 +21,10 @@ governing permissions and limitations under the License.
             var(--spectrum-sans-font-family-stack)
         )
     );
-    justify-content: center;
     line-height: var(
         --mod-button-line-height,
         var(--mod-line-height-100, var(--spectrum-line-height-100))
     );
-    margin: 0;
-    overflow: visible;
-    position: relative;
-    -webkit-text-decoration: none;
-    text-decoration: none;
     text-transform: none;
     transition: background
             var(
@@ -75,6 +65,16 @@ governing permissions and limitations under the License.
     -webkit-user-select: none;
     user-select: none;
     vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0;
+    overflow: visible;
+    position: relative;
+    -webkit-text-decoration: none;
+    text-decoration: none;
 }
 #button::-moz-focus-inner {
     border: 0;

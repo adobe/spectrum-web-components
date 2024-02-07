@@ -471,10 +471,6 @@ governing permissions and limitations under the License.
         --mod-stepper-border-radius,
         var(--spectrum-stepper-border-radius)
     );
-    border-start-end-radius: var(
-        --mod-stepper-border-radius,
-        var(--spectrum-stepper-border-radius)
-    );
     border-style: var(
         --mod-stepper-buttons-border-style,
         var(--spectrum-stepper-buttons-border-style)
@@ -487,6 +483,10 @@ governing permissions and limitations under the License.
         )
     );
     border-inline-start-width: 0;
+    border-start-end-radius: var(
+        --mod-stepper-border-radius,
+        var(--spectrum-stepper-border-radius)
+    );
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

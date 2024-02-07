@@ -66,28 +66,28 @@ governing permissions and limitations under the License.
         --spectrum-quickactions-background-color,
         var(--spectrum-alias-background-color-quickactions)
     );
+    block-size: var(
+        --spectrum-quickactions-height,
+        var(--spectrum-global-dimension-size-500)
+    );
     border-radius: var(
         --spectrum-quickactions-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
     box-sizing: border-box;
     display: inline-flex;
-    height: var(
-        --spectrum-quickactions-height,
-        var(--spectrum-global-dimension-size-500)
-    );
     justify-content: center;
-    padding: var(
-            --spectrum-quickactions-padding-y,
-            var(--spectrum-global-dimension-size-50)
-        )
-        var(
-            --spectrum-quickactions-padding-x,
-            var(--spectrum-global-dimension-size-50)
-        );
+    padding-block: var(
+        --spectrum-quickactions-padding-y,
+        var(--spectrum-global-dimension-size-50)
+    );
+    padding-inline: var(
+        --spectrum-quickactions-padding-x,
+        var(--spectrum-global-dimension-size-50)
+    );
 }
 [name='action'] + ::slotted([slot='action']) {
-    margin-left: var(
+    margin-inline-start: var(
         --spectrum-quickactions-button-gap-x,
         var(--spectrum-global-dimension-size-100)
     );
@@ -99,7 +99,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([text-only]) [name='action'] + ::slotted([slot='action']) {
-    margin-left: var(
+    margin-inline-start: var(
         --spectrum-quickactions-text-button-gap-x,
         var(--spectrum-global-dimension-size-50)
     );

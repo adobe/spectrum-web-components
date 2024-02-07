@@ -25,7 +25,6 @@ import {
     size,
 } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
-import { topLayerOverTransforms } from './topLayerOverTransforms.js';
 import type { OpenableElement } from './overlay-types.js';
 import type { Overlay } from './Overlay.js';
 
@@ -220,7 +219,6 @@ export class PlacementController implements ReactiveController {
                       }),
                   ]
                 : []),
-            topLayerOverTransforms(),
         ];
         const { x, y, placement, middlewareData } = await computePosition(
             options.trigger,

@@ -147,7 +147,6 @@ governing permissions and limitations under the License.
     );
 }
 .content {
-    -webkit-overflow-scrolling: touch;
     color: var(
         --mod-alert-dialog-body-color,
         var(--spectrum-alert-dialog-body-color)
@@ -172,6 +171,7 @@ governing permissions and limitations under the License.
         --mod-alert-dialog-body-line-height,
         var(--spectrum-alert-dialog-body-line-height)
     );
+    -webkit-overflow-scrolling: touch;
     margin: 0;
     margin-block-end: var(
         --mod-alert-dialog-description-to-buttons,

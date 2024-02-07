@@ -41,6 +41,15 @@ governing permissions and limitations under the License.
     }
 }
 :host {
+    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
+    cursor: default;
+    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
+    min-inline-size: var(
+        --mod-colorwheel-min-width,
+        var(--spectrum-colorwheel-min-width)
+    );
+    -webkit-user-select: none;
+    user-select: none;
     --track-width: var(
         --mod-colorwheel-track-width,
         var(--spectrum-colorwheel-track-width)
@@ -49,17 +58,8 @@ governing permissions and limitations under the License.
         --mod-colorwheel-border-width,
         var(--spectrum-colorwheel-border-width)
     );
-    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
-    cursor: default;
     display: block;
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
-    min-inline-size: var(
-        --mod-colorwheel-min-width,
-        var(--spectrum-colorwheel-min-width)
-    );
     position: relative;
-    -webkit-user-select: none;
-    user-select: none;
 }
 :host([focused]) {
     z-index: 2;
