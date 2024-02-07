@@ -1,0 +1,10 @@
+{
+    "ci": {
+        "collect": {
+            "numberOfRuns": 1,
+            "settings": {
+                "configPath": "./lighthouse-config.cjs"
+            }
+        }
+    }
+}
