@@ -11,43 +11,26 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tree-view-item.css');
-@import url('./spectrum-tree-view-item-link.css');
 
 :host {
     display: list-item;
-    list-style: none;
+
+    --spectrum-logical-rotation: ;
 }
 
-::slotted(sp-tree-view) {
-    /* .spectrum-TreeView .spectrum-TreeView */
-    position: static;
-    height: 0;
-    visibility: hidden;
+:host([hidden]) {
+    display: none;
 }
 
-:host([dir='ltr']) ::slotted(sp-tree-view) {
-    /* [dir=ltr] .spectrum-TreeView .spectrum-TreeView */
-    padding-left: var(--spectrum-global-dimension-size-200);
+.link > * {
+    position: relative;
 }
 
-:host([dir='rtl']) ::slotted(sp-tree-view) {
-    /* [dir=rtl] .spectrum-TreeView .spectrum-TreeView */
-    padding-right: var(--spectrum-global-dimension-size-200);
-}
-
-:host([disabled]) {
-    pointer-events: none;
-}
-
-:host([disabled]) #indicator {
-    pointer-events: none !important;
-}
-
-.link:before {
-    border-radius: var(--spectrum-treeview-item-border-radius);
-    border-width: var(--spectrum-treeview-item-border-size);
-}
-
-::slotted([slot='icon']) {
-    z-index: 1;
+:host([open]) ::slotted([slot='children']) {
+    padding-inline-start: var(
+        --mod-treeview-item-indentation,
+        var(--spectrum-treeview-item-indentation)
+    );
+    margin-block: 0;
+    position: initial;
 }

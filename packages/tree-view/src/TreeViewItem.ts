@@ -28,11 +28,10 @@ import {
     ObserveSlotPresence,
 } from '@spectrum-web-components/shared';
 import type { Thumbnail } from '@spectrum-web-components/thumbnail';
-import { TreeView } from './TreeView';
+import { TreeView } from './TreeView.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import treeViewItemStyles from './tree-view-item.css.js';
-import treeViewItemLabelStyles from './tree-view-label.css.js';
 
 export interface TreeViewItemToggleSelectDetail {
     multiselect: boolean;
@@ -42,7 +41,9 @@ export interface TreeViewItemToggleSelectDetail {
 /**
  * @element sp-tree-view-item
  * @slot icon - The icon that appears on the left of the label
- * @slot - The label
+ * @slot thumbnail - The thumbnail that appears on the left of the label
+ * @slot - The label text to provide to a consumer
+ * @slot children - The sp-tree-view child that contains the child items for this item
  * @attr {Boolean} disabled - Disable an item by preventing selection and focus.
  * @attr {Boolean} drop-target - Adds styling around an item to identify it as a dropzone.
  * @attr {Boolean} can-open - In a flat tree, this attribute can be used to identify hierarchical, parent tree-items.
@@ -59,12 +60,12 @@ export class TreeViewItem extends ObserveSlotPresence(
     '[slot="thumbnail"]'
 ) {
     public static override get styles(): CSSResultArray {
-        return [treeViewItemStyles, treeViewItemLabelStyles, chevronStyles];
+        return [treeViewItemStyles, chevronStyles];
     }
 
     @queryAssignedNodes({
         slot: 'thumbnail',
-        flatten: true
+        flatten: true,
     })
     private assignedThumbnails!: NodeListOf<Thumbnail>;
 

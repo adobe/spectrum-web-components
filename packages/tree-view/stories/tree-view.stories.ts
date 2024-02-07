@@ -16,9 +16,9 @@ import { thumbnail } from '../../thumbnail/stories/images.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-layers.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-document.js';
-import '../sp-tree-view.js';
-import '../sp-tree-view-item.js';
-import '../sp-tree-view-heading.js';
+import '@spectrum-web-components/tree-view/sp-tree-view.js';
+import '@spectrum-web-components/tree-view/sp-tree-view-item.js';
+import '@spectrum-web-components/tree-view/sp-tree-view-heading.js';
 
 export default {
     component: 'sp-tree-view',
@@ -246,19 +246,19 @@ export const thumbnails = (): TemplateResult => {
     return html`
         <sp-tree-view>
             <sp-tree-view-item open>
-                <sp-thumbnail slot="thumbnail">
+                <sp-thumbnail slot="thumbnail" size="200">
                     <img src=${thumbnail} alt="Woman crouching" />
                 </sp-thumbnail>
                 Composition
                 <sp-tree-view slot="children">
                     <sp-tree-view-item>
-                        <sp-thumbnail slot="thumbnail">
+                        <sp-thumbnail slot="thumbnail" size="200">
                             <img src=${thumbnail} alt="Woman crouching" />
                         </sp-thumbnail>
                         Flowers
                     </sp-tree-view-item>
                     <sp-tree-view-item>
-                        <sp-thumbnail slot="thumbnail">
+                        <sp-thumbnail slot="thumbnail" size="200">
                             <img src=${thumbnail} alt="Woman crouching" />
                         </sp-thumbnail>
                         Figure
@@ -273,19 +273,19 @@ export const thumbnailsQuiet = (): TemplateResult => {
     return html`
         <sp-tree-view quiet>
             <sp-tree-view-item open>
-                <sp-thumbnail slot="thumbnail">
+                <sp-thumbnail slot="thumbnail" size="200">
                     <img src=${thumbnail} alt="Woman crouching" />
                 </sp-thumbnail>
                 Composition
                 <sp-tree-view slot="children" quiet>
                     <sp-tree-view-item>
-                        <sp-thumbnail slot="thumbnail">
+                        <sp-thumbnail slot="thumbnail" size="200">
                             <img src=${thumbnail} alt="Woman crouching" />
                         </sp-thumbnail>
                         Flowers
                     </sp-tree-view-item>
                     <sp-tree-view-item>
-                        <sp-thumbnail slot="thumbnail">
+                        <sp-thumbnail slot="thumbnail" size="200">
                             <img src=${thumbnail} alt="Woman crouching" />
                         </sp-thumbnail>
                         Figure

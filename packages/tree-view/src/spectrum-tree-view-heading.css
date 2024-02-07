@@ -11,13 +11,23 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    font-weight: var(--spectrum-treeview-heading-font-weight);
-    padding: var(--spectrum-treeview-item-padding-left)
-        var(--spectrum-treeview-item-padding-top)
-        var(--spectrum-treeview-item-padding-right)
-        var(--spectrum-treeview-item-padding-bottom);
+:host(:not(:first-child)) {
+    margin-block-start: var(
+        --mod-treeview-section-spacing,
+        var(--spectrum-treeview-section-spacing)
+    );
 }
-:host:not(:first-child) {
-    margin-top: var(--spectrum-global-dimension-size-200);
+:host {
+    color: var(
+        --highcontrast-treeview-heading-color,
+        var(--mod-treeview-heading-color, inherit)
+    );
+    font-weight: var(
+        --mod-treeview-heading-font-weight,
+        var(--spectrum-treeview-heading-font-weight)
+    );
+    padding-block-end: var(
+        --mod-treeview-heading-bottom-to-text,
+        var(--spectrum-treeview-heading-bottom-to-text)
+    );
 }

@@ -29,6 +29,9 @@ const config = {
             fileName: 'tree-view',
             components: [
                 converter.classToHost(),
+                converter.classToAttribute('spectrum-TreeView--quiet'),
+                converter.classToAttribute('spectrum-TreeView--detached'),
+
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-TreeView--sizeM'),
                 ...converter.enumerateAttributes(
@@ -66,6 +69,8 @@ const config = {
                 builder.class('spectrum-TreeView-itemIcon'),
                 builder.class('spectrum-TreeView-itemThumbnail'),
                 builder.class('spectrum-TreeView-heading'),
+                builder.class('spectrum-TreeView-section'),
+                builder.class('spectrum-TreeView-item-indent8'),
                 ...Array(10)
                     .fill('')
                     .map((item, index) =>
@@ -79,84 +84,41 @@ const config = {
             inPackage: '@spectrum-css/treeview',
             outPackage: 'tree-view',
             fileName: 'tree-view-heading',
-            components: [converter.classToHost('spectrum-TreeView-heading')],
-            excludeByComponents: [
-                builder.class('spectrum-TreeView'),
-                builder.class('spectrum-TreeView--sizeS'),
-                builder.class('spectrum-TreeView--sizeM'),
-                builder.class('spectrum-TreeView--sizeL'),
-                builder.class('spectrum-TreeView--sizeXL'),
-                builder.class('spectrum-TreeView-item'),
-                builder.class('spectrum-TreeView-itemLabel'),
-                builder.class('spectrum-TreeView-itemLink'),
-                builder.class('spectrum-TreeView-itemIndicator'),
-                builder.class('spectrum-TreeView-itemIcon'),
-                builder.class('spectrum-TreeView-itemThumbnail'),
-                ...Array(10)
-                    .fill('')
-                    .map((item, index) =>
-                        builder.class(
-                            `spectrum-TreeView-item--indent${index + 1}`
-                        )
-                    ),
-            ],
-        },
-        {
-            inPackage: '@spectrum-css/treeview',
-            outPackage: 'tree-view',
-            fileName: 'tree-view-item-label',
-            components: [converter.classToHost('spectrum-TreeView-itemLabel')],
-            excludeByComponents: [
-                builder.class('spectrum-TreeView'),
-                builder.class('spectrum-TreeView--sizeS'),
-                builder.class('spectrum-TreeView--sizeM'),
-                builder.class('spectrum-TreeView--sizeL'),
-                builder.class('spectrum-TreeView--sizeXL'),
-                builder.class('spectrum-TreeView-item'),
-                builder.class('spectrum-TreeView-itemLink'),
-                builder.class('spectrum-TreeView-itemIndicator'),
-                builder.class('spectrum-TreeView-itemIcon'),
-                builder.class('spectrum-TreeView-itemThumbnail'),
-                builder.class('spectrum-TreeView-heading'),
-                ...Array(10)
-                    .fill('')
-                    .map((item, index) =>
-                        builder.class(
-                            `spectrum-TreeView-item--indent${index + 1}`
-                        )
-                    ),
-            ],
-        },
-        {
-            inPackage: '@spectrum-css/treeview',
-            outPackage: 'tree-view',
-            fileName: 'tree-view-item-link',
             components: [
-                converter.classToClass(
-                    'spectrum-TreeView--thumbnail',
-                    'has-thumbnail'
-                ),
+                converter.classToHost('spectrum-TreeView-heading'),
                 {
+                    // .spectrum-TreeView-section:not(:first-child)
                     find: [
-                        builder.combinator(' '),
-                        builder.class('spectrum-TreeView-itemLink'),
-                        builder.pseudoElement('before'),
+                        builder.class('spectrum-TreeView-section'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [[builder.pseudoClass('first-child')]],
+                        },
                     ],
                     replace: [
                         {
-                            replace: builder.pseudoElement('before'),
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'not',
+                                        selectors: [
+                                            [
+                                                builder.pseudoClass(
+                                                    'first-child'
+                                                ),
+                                            ],
+                                        ],
+                                    },
+                                ],
+                            },
                         },
                     ],
                     collapseSelector: true,
                 },
-                {
-                    find: [
-                        builder.combinator(' '),
-                        builder.class('spectrum-TreeView-itemLink'),
-                    ],
-                    replace: [],
-                    collapseSelector: true,
-                },
             ],
             excludeByComponents: [
                 builder.class('spectrum-TreeView'),
@@ -170,7 +132,10 @@ const config = {
                 builder.class('spectrum-TreeView-itemIndicator'),
                 builder.class('spectrum-TreeView-itemIcon'),
                 builder.class('spectrum-TreeView-itemThumbnail'),
-                builder.class('spectrum-TreeView-heading'),
+                builder.class('spectrum-TreeView--quiet'),
+                builder.class('spectrum-TreeView--thumbnail'),
+                builder.class('spectrum-TreeView--detached'),
+                builder.class('spectrum-TreeView-item-indent8'),
                 ...Array(10)
                     .fill('')
                     .map((item, index) =>
@@ -178,20 +143,6 @@ const config = {
                             `spectrum-TreeView-item--indent${index + 1}`
                         )
                     ),
-            ],
-            includeByWholeSelector: [
-                // .spectrum-TreeView--thumbnail .spectrum-TreeView-itemLink
-                [
-                    builder.class('spectrum-TreeView--thumbnail'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-TreeView-itemLink'),
-                ],
-                [
-                    builder.class('spectrum-TreeView--thumbnail'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-TreeView-itemLink'),
-                    builder.pseudoElement('before'),
-                ],
             ],
         },
         {
@@ -209,6 +160,10 @@ const config = {
                     'spectrum-TreeView-itemIndicator',
                     'indicator'
                 ),
+                {
+                    find: builder.class('spectrum-TreeView-item-indent8'),
+                    replace: builder.attribute('indent', '8'),
+                },
                 ...converter.enumerateAttributes(
                     Array(10)
                         .fill('')
@@ -285,6 +240,20 @@ const config = {
                     ],
                     collapseSelector: true,
                 },
+                {
+                    find: [
+                        // .spectrum-TreeView--thumbnail .spectrum-TreeView-itemThumbnail
+                        builder.class('spectrum-TreeView--thumbnail'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-TreeView-itemThumbnail'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.slotted('thumbnail'),
+                        },
+                    ],
+                    collapseSelector: true,
+                },
             ],
             excludeByComponents: [
                 builder.class('spectrum-TreeView'),
@@ -296,6 +265,10 @@ const config = {
                 builder.class('spectrum-TreeView-heading'),
                 builder.class('spectrum-TreeView--quiet'),
                 builder.class('spectrum-TreeView--standalone'),
+                builder.class('spectrum-TreeView--quiet'),
+                builder.class('spectrum-TreeView--thumbnail'),
+                builder.class('spectrum-TreeView--detached'),
+                builder.class('spectrum-TreeView-section'),
             ],
             excludeByWholeSelector: [
                 [
@@ -313,6 +286,12 @@ const config = {
                 ],
             ],
             includeByWholeSelector: [
+                [
+                    // .spectrum-TreeView--thumbnail .spectrum-TreeView-itemThumbnail
+                    builder.class('spectrum-TreeView--thumbnail'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-TreeView-itemThumbnail'),
+                ],
                 [
                     // .spectrum-TreeView-item.is-open>.spectrum-TreeView
                     builder.class('spectrum-TreeView-item'),

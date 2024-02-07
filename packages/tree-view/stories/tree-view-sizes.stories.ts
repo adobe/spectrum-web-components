@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-tree-view.js';
-import '../sp-tree-view-item.js';
+import '@spectrum-web-components/tree-view/sp-tree-view.js';
+import '@spectrum-web-components/tree-view/sp-tree-view-item.js';
 
 export default {
     component: 'sp-tree-view',

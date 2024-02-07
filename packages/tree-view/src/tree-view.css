@@ -11,33 +11,3 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tree-view.css');
-
-:host([standalone]) {
-    --spectrum-treeview-item-border-radius: var(
-        --spectrum-alias-border-radius-regular
-    );
-    --spectrum-treeview-item-border-size: var(
-        --spectrum-global-dimension-static-size-25
-    );
-}
-
-:host([quiet]) {
-    --spectrum-treeview-item-background-color-selected: var(
-        --spectrum-treeview-item-background-color-quiet-selected
-    );
-    --spectrum-treeview-item-border-color-key-focus: transparent;
-}
-
-:host([quiet]) ::slotted(sp-tree-view-item:focus-within) {
-    --spectrum-treeview-item-border-color-key-focus: var(
-        --spectrum-alias-focus-color
-    );
-}
-
-:host([size='s']) {
-    --spectrum-treeview-item-text-padding-bottom: 0px;
-}
-
-:host([size='l']) {
-    --spectrum-treeview-item-text-padding-top: 0px;
-}

@@ -79,6 +79,7 @@ const tokenPackages = [
     'toast',
     'tooltip',
     'tray',
+    'treeview',
     'underlay',
 ];
 

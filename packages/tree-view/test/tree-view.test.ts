@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-tree-view.js';
-import '../sp-tree-view-item.js';
-import { TreeView, TreeViewItem } from '../';
+import '@spectrum-web-components/tree-view/sp-tree-view.js';
+import '@spectrum-web-components/tree-view/sp-tree-view-item.js';
+import { TreeView, TreeViewItem } from '@spectrum-web-components/tree-view';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 

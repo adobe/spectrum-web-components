@@ -6946,10 +6946,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.2.0.tgz#f253ef79e8eb8e1e2b7ed721fced9c49d090ab2a"
   integrity sha512-FkEt08iKJNsI2Mfi0JYJ0r4k2YqpUNRWYy/xDPSveyMNbBNlypIBxswwcHXQTcT1E/awVxcm3hlrbAEV/BloDQ==
 
-"@spectrum-css/treeview@^6.0.18":
-  version "6.0.18"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/treeview/-/treeview-6.0.18.tgz#21e7fe75b1c9fa90e4f7db3f2be8c8f592d67354"
-  integrity sha512-cytJXRU/KxVPOTvR0XDvZDvC6BY67Suv1CY4mkcF9msH1utDF0We8GTcFeUsgqQBCk91olIt1pMsbwaVAvmq4w==
+"@spectrum-css/treeview@^9.2.2":
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/treeview/-/treeview-9.2.2.tgz#1b2bb6403c7855dbad9bfc61e6cfd98853fbb3a5"
+  integrity sha512-zMXB0+SLbBCalbHf9ZfZexafhCSQJhRXc2UNdf04vvl9H8z0beUkBN6+/oUhbjo/bgLHIj5Z14S5FjSIQiC5wA==
 
 "@spectrum-css/typography@^5.1.0":
   version "5.1.0"

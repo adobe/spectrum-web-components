@@ -43,7 +43,6 @@
         },
         "./src/tree-view-heading.css.js": "./src/tree-view-heading.css.js",
         "./src/tree-view-item.css.js": "./src/tree-view-item.css.js",
-        "./src/tree-view-label.css.js": "./src/tree-view-label.css.js",
         "./src/tree-view.css.js": "./src/tree-view.css.js",
         "./sp-tree-view-heading.js": {
             "development": "./sp-tree-view-heading.dev.js",
@@ -79,7 +78,7 @@
         "@spectrum-web-components/thumbnail": "^0.40.5"
     },
     "devDependencies": {
-        "@spectrum-css/treeview": "^6.0.18"
+        "@spectrum-css/treeview": "^9.2.2"
     },
     "types": "src/index.d.ts",
     "customElements": "custom-elements.json",

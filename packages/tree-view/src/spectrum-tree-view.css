@@ -12,246 +12,226 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-treeview-heading-font-weight: var(
-        --spectrum-global-font-weight-bold,
-        700
+    --spectrum-treeview-line-height: var(--spectrum-line-height-200);
+    --spectrum-treeview-margin-block: 1em;
+    --spectrum-treeview-font-size: var(--spectrum-font-size-100);
+    --spectrum-treeview-item-min-block-size: var(
+        --spectrum-component-height-100
     );
-    --spectrum-treeview-item-hover-offset: var(
-        --spectrum-global-dimension-size-25
+    --spectrum-treeview-item-indentation: var(
+        --spectrum-treeview-item-indentation-medium
     );
-    --spectrum-treeview-item-border-size-selected: var(
-        --spectrum-alias-border-size-thin,
-        var(--spectrum-global-dimension-static-size-10)
+    --spectrum-treeview-item-padding-inline-start: var(
+        --spectrum-component-height-100
     );
+    --spectrum-treeview-item-padding-inline-end: var(
+        --spectrum-component-edge-to-text-100
+    );
+    --spectrum-treeview-section-spacing: var(
+        --spectrum-treeview-item-indentation-medium
+    );
+    --spectrum-treeview-heading-font-weight: var(--spectrum-bold-font-weight);
+    --spectrum-treeview-heading-bottom-to-text: var(
+        --spectrum-component-edge-to-text-100
+    );
+    --spectrum-treeview-item-border-size: var(--spectrum-border-width-200);
+    --spectrum-treeview-item-border-size-selected: 1px;
+    --spectrum-treeview-item-border-radius: 0px;
+    --spectrum-treeview-item-border-color-selected: var(--spectrum-blue-800);
+    --spectrum-treeview-item-border-color-focus: var(--spectrum-blue-700);
+    --spectrum-treeview-item-background-color-hover: var(--spectrum-gray-200);
+    --spectrum-treeview-item-background-color-focus: var(--spectrum-gray-200);
+    --spectrum-treeview-item-border-color-quiet-selected: transparent;
+    --spectrum-treeview-item-icon-gap: var(--spectrum-text-to-visual-75);
+    --spectrum-treeview-item-icon-color: var(--spectrum-gray-700);
+    --spectrum-treeview-item-icon-color-hover: var(--spectrum-gray-900);
+    --spectrum-treeview-item-icon-color-focus: var(--spectrum-gray-900);
+    --spectrum-treeview-item-icon-color-selected: var(--spectrum-gray-900);
+    --spectrum-treeview-item-icon-color-disabled: var(
+        --spectrum-disabled-content-color
+    );
+    --spectrum-treeview-item-text-color: var(
+        --spectrum-neutral-content-color-default
+    );
+    --spectrum-treeview-item-text-color-selected: var(--spectrum-gray-900);
+    --spectrum-treeview-item-text-color-disabled: var(--spectrum-gray-500);
+    --spectrum-treeview-item-text-color-focus: var(--spectrum-gray-900);
+    --spectrum-treeview-item-text-color-hover: var(--spectrum-gray-900);
+    --spectrum-treeview-indicator-margin-inline-start: calc(
+        var(--spectrum-component-height-100) * -1
+    );
+    --spectrum-treeview-indicator-padding: var(
+        --spectrum-disclosure-indicator-top-to-disclosure-icon-medium
+    );
+    --spectrum-treeview-item-min-block-size-thumbnail-offset: var(
+        --spectrum-treeview-item-min-block-size-thumbnail-offset-medium,
+        0px
+    );
+    --spectrum-treeview-indicator-animation-duration: var(
+        --spectrum-animation-duration-100
+    );
+}
+:host([dir='rtl']),
+[dir='rtl'] :host {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 :host([size='s']) {
-    --spectrum-treeview-item-text-padding-top: var(
-        --spectrum-treeview-s-item-text-padding-top,
-        var(--spectrum-global-dimension-static-size-50)
+    --spectrum-treeview-font-size: var(--spectrum-font-size-75);
+    --spectrum-treeview-item-min-block-size: var(
+        --spectrum-component-height-75
     );
     --spectrum-treeview-item-indentation: var(
-        --spectrum-treeview-s-item-indentation,
-        var(--spectrum-global-dimension-size-150)
+        --spectrum-treeview-item-indentation-small
     );
-    --spectrum-treeview-item-min-height: var(
-        --spectrum-treeview-s-item-min-height,
-        var(--spectrum-global-dimension-size-300)
+    --spectrum-treeview-heading-bottom-to-text: var(
+        --spectrum-component-edge-to-text-75
     );
-    --spectrum-treeview-item-border-radius: var(
-        --spectrum-treeview-s-item-border-radius,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-item-padding-inline-start: var(
+        --spectrum-component-height-75
     );
-    --spectrum-treeview-item-padding-left: var(
-        --spectrum-treeview-s-item-padding-left,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-indicator-margin-inline-start: calc(
+        var(--spectrum-component-height-75) * -1
     );
-    --spectrum-treeview-item-padding-right: var(
-        --spectrum-treeview-s-item-padding-right,
-        var(--spectrum-global-dimension-size-115)
+    --spectrum-treeview-item-padding-inline-end: var(
+        --spectrum-component-edge-to-text-75
     );
-    --spectrum-treeview-item-padding-top: var(
-        --spectrum-treeview-s-item-padding-top,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-indicator-padding: var(
+        --spectrum-disclosure-indicator-top-to-disclosure-icon-small
     );
-    --spectrum-treeview-item-padding-bottom: var(
-        --spectrum-treeview-s-item-padding-bottom,
-        var(--spectrum-global-dimension-static-size-0)
-    );
-    --spectrum-treeview-item-border-size: var(
-        --spectrum-treeview-s-item-border-size,
-        var(--spectrum-global-dimension-static-size-25)
-    );
-    --spectrum-treeview-item-affordance-size: var(
-        --spectrum-treeview-s-item-affordance-size,
-        var(--spectrum-global-dimension-size-300)
-    );
-    --spectrum-treeview-s-item-icon-gap: var(
-        --spectrum-global-dimension-size-85
-    );
-}
-:host {
-    --spectrum-treeview-item-text-padding-top: var(
-        --spectrum-treeview-m-item-text-padding-top,
-        var(--spectrum-global-dimension-size-75)
-    );
-    --spectrum-treeview-item-text-padding-bottom: var(
-        --spectrum-treeview-m-item-text-padding-bottom,
-        var(--spectrum-global-dimension-size-115)
-    );
-    --spectrum-treeview-item-indentation: var(
-        --spectrum-treeview-m-item-indentation,
-        var(--spectrum-global-dimension-size-200)
-    );
-    --spectrum-treeview-item-min-height: var(
-        --spectrum-treeview-m-item-min-height,
-        var(--spectrum-global-dimension-size-300)
-    );
-    --spectrum-treeview-item-border-radius: var(
-        --spectrum-treeview-m-item-border-radius,
-        var(--spectrum-global-dimension-static-size-0)
-    );
-    --spectrum-treeview-item-padding-left: var(
-        --spectrum-treeview-m-item-padding-left,
-        var(--spectrum-global-dimension-static-size-0)
-    );
-    --spectrum-treeview-item-padding-right: var(
-        --spectrum-treeview-m-item-padding-right,
-        var(--spectrum-global-dimension-size-150)
-    );
-    --spectrum-treeview-item-padding-top: var(
-        --spectrum-treeview-m-item-padding-top,
-        var(--spectrum-global-dimension-static-size-0)
-    );
-    --spectrum-treeview-item-padding-bottom: var(
-        --spectrum-treeview-m-item-padding-bottom,
-        var(--spectrum-global-dimension-static-size-0)
-    );
-    --spectrum-treeview-item-border-size: var(
-        --spectrum-treeview-m-item-border-size,
-        var(--spectrum-global-dimension-static-size-25)
-    );
-    --spectrum-treeview-item-affordance-size: var(
-        --spectrum-treeview-m-item-affordance-size,
-        var(--spectrum-global-dimension-size-400)
-    );
+    --spectrum-treeview-item-min-block-size-thumbnail-offset: 6px;
 }
 :host([size='l']) {
-    --spectrum-treeview-item-text-padding-bottom: var(
-        --spectrum-treeview-l-item-text-padding-bottom,
-        var(--spectrum-global-dimension-size-130)
-    );
+    --spectrum-treeview-font-size: var(--spectrum-font-size-200);
     --spectrum-treeview-item-indentation: var(
-        --spectrum-treeview-l-item-indentation,
-        var(--spectrum-global-dimension-size-250)
+        --spectrum-treeview-item-indentation-large
     );
-    --spectrum-treeview-item-min-height: var(
-        --spectrum-treeview-l-item-min-height,
-        var(--spectrum-global-dimension-size-400)
+    --spectrum-treeview-item-min-block-size: var(
+        --spectrum-component-height-200
     );
-    --spectrum-treeview-item-border-radius: var(
-        --spectrum-treeview-l-item-border-radius,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-heading-bottom-to-text: var(
+        --spectrum-component-edge-to-text-200
     );
-    --spectrum-treeview-item-padding-left: var(
-        --spectrum-treeview-l-item-padding-left,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-item-padding-inline-start: var(
+        --spectrum-component-height-200
     );
-    --spectrum-treeview-item-padding-right: var(
-        --spectrum-treeview-l-item-padding-right,
-        var(--spectrum-global-dimension-size-185)
+    --spectrum-treeview-indicator-margin-inline-start: calc(
+        var(--spectrum-component-height-200) * -1
     );
-    --spectrum-treeview-item-padding-top: var(
-        --spectrum-treeview-l-item-padding-top,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-item-padding-inline-end: var(
+        --spectrum-component-edge-to-text-200
     );
-    --spectrum-treeview-item-padding-bottom: var(
-        --spectrum-treeview-l-item-padding-bottom,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-indicator-padding: var(
+        --spectrum-disclosure-indicator-top-to-disclosure-icon-large
     );
-    --spectrum-treeview-item-border-size: var(
-        --spectrum-treeview-l-item-border-size,
-        var(--spectrum-global-dimension-static-size-25)
-    );
-    --spectrum-treeview-item-affordance-size: var(
-        --spectrum-treeview-l-item-affordance-size,
-        var(--spectrum-global-dimension-size-500)
-    );
+    --spectrum-treeview-item-min-block-size-thumbnail-offset: 0px;
 }
 :host([size='xl']) {
-    --spectrum-treeview-item-text-padding-top: var(
-        --spectrum-treeview-xl-item-text-padding-top,
-        var(--spectrum-global-dimension-size-150)
-    );
-    --spectrum-treeview-item-text-padding-bottom: var(
-        --spectrum-treeview-xl-item-text-padding-bottom,
-        var(--spectrum-global-dimension-size-175)
-    );
+    --spectrum-treeview-font-size: var(--spectrum-font-size-300);
     --spectrum-treeview-item-indentation: var(
-        --spectrum-treeview-xl-item-indentation,
-        var(--spectrum-global-dimension-size-300)
+        --spectrum-treeview-item-indentation-extra-large
     );
-    --spectrum-treeview-item-min-height: var(
-        --spectrum-treeview-xl-item-min-height,
-        var(--spectrum-global-dimension-size-500)
+    --spectrum-treeview-item-min-block-size: var(
+        --spectrum-component-height-300
     );
-    --spectrum-treeview-item-border-radius: var(
-        --spectrum-treeview-xl-item-border-radius,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-heading-bottom-to-text: var(
+        --spectrum-component-edge-to-text-300
     );
-    --spectrum-treeview-item-padding-left: var(
-        --spectrum-treeview-xl-item-padding-left,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-item-padding-inline-start: var(
+        --spectrum-component-height-300
     );
-    --spectrum-treeview-item-padding-right: var(
-        --spectrum-treeview-xl-item-padding-right,
-        var(--spectrum-global-dimension-size-225)
+    --spectrum-treeview-indicator-margin-inline-start: calc(
+        var(--spectrum-component-height-300) * -1
     );
-    --spectrum-treeview-item-padding-top: var(
-        --spectrum-treeview-xl-item-padding-top,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-item-padding-inline-end: var(
+        --spectrum-component-edge-to-text-300
     );
-    --spectrum-treeview-item-padding-bottom: var(
-        --spectrum-treeview-xl-item-padding-bottom,
-        var(--spectrum-global-dimension-static-size-0)
+    --spectrum-treeview-indicator-padding: var(
+        --spectrum-disclosure-indicator-top-to-disclosure-icon-extra-large
     );
-    --spectrum-treeview-item-border-size: var(
-        --spectrum-treeview-xl-item-border-size,
-        var(--spectrum-global-dimension-static-size-25)
+    --spectrum-treeview-item-min-block-size-thumbnail-offset: 0px;
+}
+:host([quiet]) {
+    --mod-treeview-item-background-color-selected: var(
+        --highcontrast-treeview-item-background-color-selected,
+        var(
+            --mod-treeview-item-background-color-quiet-selected,
+            var(--spectrum-treeview-item-background-color-quiet-selected)
+        )
     );
-    --spectrum-treeview-item-affordance-size: var(
-        --spectrum-treeview-xl-item-affordance-size,
-        var(--spectrum-global-dimension-size-600)
+    --mod-treeview-item-border-color-selected: var(
+        --highcontrast-treeview-item-border-color-selected,
+        var(--mod-treeview-item-border-color-selected-quiet, transparent)
     );
+}
+.spectrum-TreeView--thumbnail {
+    --mod-treeview-item-min-block-size: var(
+        --mod-treeview-item-min-block-size-thumbnail,
+        calc(
+            var(--spectrum-treeview-item-min-block-size) +
+                var(--spectrum-treeview-item-min-block-size-thumbnail-offset)
+        )
+    );
+}
+:host([detached]) {
+    --mod-treeview-item-border-radius: var(
+        --mod-treeview-item-border-radius-detached,
+        var(--spectrum-corner-radius-100)
+    );
+}
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-treeview-item-background-color-selected: Highlight;
+        --highcontrast-treeview-item-border-color-selected: Highlight;
+        --highcontrast-treeview-item-text-color-selected: HighlightText;
+        --highcontrast-treeview-item-icon-color-selected: HighlightText;
+        --highcontrast-treeview-item-icon-color: LinkText;
+        --highcontrast-treeview-item-text-color: LinkText;
+        --highcontrast-treeview-item-background-color-focus: Highlight;
+        --highcontrast-treeview-item-text-color-focus: HighlightText;
+        --highcontrast-treeview-item-border-color-focus: CanvasText;
+        --highcontrast-treeview-item-icon-color-focus: HighlightText;
+        --highcontrast-treeview-item-background-color-disabled: Canvas;
+        --highcontrast-treeview-item-text-color-disabled: GrayText;
+        --highcontrast-treeview-item-icon-color-disabled: GrayText;
+        --highcontrast-treeview-heading-color: CanvasText;
+    }
+    @supports (color: SelectedItem) {
+        :host {
+            --highcontrast-treeview-item-background-color-selected: SelectedItem;
+            --highcontrast-treeview-item-border-color-selected: SelectedItem;
+            --highcontrast-treeview-item-text-color-selected: SelectedItemText;
+            --highcontrast-treeview-item-icon-color-selected: SelectedItemText;
+        }
+    }
 }
 :host {
     display: block;
+    font-size: var(
+        --mod-treeview-font-size,
+        var(--spectrum-treeview-font-size)
+    );
+    line-height: var(
+        --mod-treeview-line-height,
+        var(--spectrum-treeview-line-height)
+    );
     list-style: none;
+    margin-block: var(
+        --mod-treeview-margin-block,
+        var(--spectrum-treeview-margin-block)
+    );
     outline: none;
     padding: 0;
     position: relative;
     -webkit-user-select: none;
     user-select: none;
 }
-:host([dir='ltr']) ::slotted(sp-tree-view) {
-    padding-left: var(--spectrum-treeview-item-indentation);
-}
-:host([dir='rtl']) ::slotted(sp-tree-view) {
-    padding-right: var(--spectrum-treeview-item-indentation);
-}
 ::slotted(sp-tree-view) {
-    height: 0;
+    block-size: 0;
+    display: none;
+    margin-block: 0;
+    padding-inline-start: var(
+        --mod-treeview-item-indentation,
+        var(--spectrum-treeview-item-indentation)
+    );
     position: static;
-    visibility: hidden;
-}
-:host {
-    --spectrum-treeview-item-background-color-selected: var(
-        --spectrum-alias-highlight-selected
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: var(
-        --spectrum-alias-highlight-hover
-    );
-    --spectrum-treeview-item-icon-color: var(
-        --spectrum-alias-icon-color,
-        var(--spectrum-global-color-gray-700)
-    );
-    --spectrum-treeview-item-icon-color-hover: var(
-        --spectrum-alias-icon-color-hover,
-        var(--spectrum-global-color-gray-900)
-    );
-    --spectrum-treeview-item-icon-color-focus: var(
-        --spectrum-alias-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
-    );
-    --spectrum-treeview-item-icon-color-selected: var(
-        --spectrum-alias-icon-color-selected-neutral,
-        var(--spectrum-global-color-gray-900)
-    );
-    --spectrum-treeview-item-icon-color-disabled: var(
-        --spectrum-alias-icon-color-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
-    --spectrum-treeview-m-item-text-color-selected: var(
-        --spectrum-alias-text-color-selected-neutral,
-        var(--spectrum-global-color-gray-900)
-    );
 }

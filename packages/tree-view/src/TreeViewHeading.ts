@@ -18,7 +18,6 @@ import {
 } from '@spectrum-web-components/base';
 
 import treeViewHeadingStyles from './tree-view-heading.css.js';
-import treeViewLabelStyles from './tree-view-label.css.js';
 
 /**
  * @slot - The label
@@ -26,7 +25,7 @@ import treeViewLabelStyles from './tree-view-label.css.js';
 
 export class TreeViewHeading extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [treeViewHeadingStyles, treeViewLabelStyles];
+        return [treeViewHeadingStyles];
     }
 
     protected override render(): TemplateResult {

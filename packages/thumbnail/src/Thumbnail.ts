@@ -43,7 +43,7 @@ const defaultSize = validSizes[6];
 /**
  * @element sp-thumbnail
  *
- * @slot image - image element to present in the Thumbnail
+ * @slot - image element to present in the Thumbnail
  */
 
 export class Thumbnail extends SpectrumElement {

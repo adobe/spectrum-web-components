@@ -128,11 +128,7 @@ export class TreeView extends SizedMixin(Focusable) {
             const childLevel = (child.indent || 0) + 1;
             if (childLevel <= parentLevel) break;
 
-            if (open && child.parent?.open) {
-                child.removeAttribute('hidden');
-            } else {
-                child.setAttribute('hidden', 'true');
-            }
+            child.toggleAttribute('hidden', !(open && child.parent?.open));
         }
     }
 
