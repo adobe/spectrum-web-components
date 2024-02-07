@@ -3,7 +3,7 @@
         "collect": {
             "settings": {
                 "onlyCategories": ["performance"],
-                "onlyAudits": ["works-offline"]
+                "onlyAudits": ["dom-size"]
             }
         }
     }
