@@ -2,11 +2,12 @@
     "ci": {
         "collect": {
             "settings": {
-                "onlyCategories": ["performance", "accessibility"]
+                "onlyCategories": ["performance", "accessibility"],
+                "onlyAudits": ["dom-size"]
             }
         },
         "assert": {
-            "preset": "lighthouse:no-pwa",
+            "preset": "lighthouse:recommended",
             "assertions": {
                 "categories:performance": ["warn", { "minScore": 0.9 }],
                 "categories:accessibility": ["warn", { "minScore": 1 }]
