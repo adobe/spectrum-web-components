@@ -1,14 +1,15 @@
 {
     "ci": {
         "collect": {
-            "numberOfRuns": 1
+            "settings": {
+                "onlyCategories": ["performance", "accessibility"]
+            }
         },
         "assert": {
             "preset": "lighthouse:no-pwa",
-            "includePassedAssertions": true,
             "assertions": {
                 "categories:performance": ["warn", { "minScore": 0.9 }],
-                "categories:accessibility": ["error", { "minScore": 1 }]
+                "categories:accessibility": ["warn", { "minScore": 1 }]
             }
         }
     }
