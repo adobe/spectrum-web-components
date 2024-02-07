@@ -18,6 +18,10 @@ governing permissions and limitations under the License.
     --spectrum-coachmark-dimension-size-200: 16px;
     --spectrum-coachmark-dimension-size-100: 8px;
     --spectrum-coachmark-dimension-size-50: 4px;
+
+    /** remove once font fixes are done from css team **/
+
+    --spectrum-coachmark-content-font-family: var(--spectrum-font-family);
 }
 
 /* These css needs to be added from css team once the keys component is created */
