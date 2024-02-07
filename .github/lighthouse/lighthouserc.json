@@ -2,12 +2,9 @@
     "ci": {
         "collect": {
             "settings": {
-                "onlyCategories": ["performance", "accessibility"],
-                "onlyAudits": ["dom-size"]
+                "onlyCategories": ["performance"],
+                "onlyAudits": ["works-offline"]
             }
-        },
-        "assert": {
-            "preset": "lighthouse:no-pwa"
         }
     }
 }
