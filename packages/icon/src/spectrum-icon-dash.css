@@ -12,34 +12,26 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-UIIcon-Dash50 {
-    height: var(--spectrum-alias-ui-icon-dash-size-50);
-    width: var(--spectrum-alias-ui-icon-dash-size-50);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-50);
 }
 .spectrum-UIIcon-Dash75 {
-    height: var(--spectrum-alias-ui-icon-dash-size-75);
-    width: var(--spectrum-alias-ui-icon-dash-size-75);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-75);
 }
 .spectrum-UIIcon-Dash100 {
-    height: var(--spectrum-alias-ui-icon-dash-size-100);
-    width: var(--spectrum-alias-ui-icon-dash-size-100);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-100);
 }
 .spectrum-UIIcon-Dash200 {
-    height: var(--spectrum-alias-ui-icon-dash-size-200);
-    width: var(--spectrum-alias-ui-icon-dash-size-200);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-200);
 }
 .spectrum-UIIcon-Dash300 {
-    height: var(--spectrum-alias-ui-icon-dash-size-300);
-    width: var(--spectrum-alias-ui-icon-dash-size-300);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-300);
 }
 .spectrum-UIIcon-Dash400 {
-    height: var(--spectrum-alias-ui-icon-dash-size-400);
-    width: var(--spectrum-alias-ui-icon-dash-size-400);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-400);
 }
 .spectrum-UIIcon-Dash500 {
-    height: var(--spectrum-alias-ui-icon-dash-size-500);
-    width: var(--spectrum-alias-ui-icon-dash-size-500);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-500);
 }
 .spectrum-UIIcon-Dash600 {
-    height: var(--spectrum-alias-ui-icon-dash-size-600);
-    width: var(--spectrum-alias-ui-icon-dash-size-600);
+    --spectrum-icon-size: var(--spectrum-dash-icon-size-600);
 }

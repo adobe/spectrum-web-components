@@ -712,33 +712,6 @@ governing permissions and limitations under the License.
 .input:lang(zh)::-moz-placeholder {
     font-style: normal;
 }
-#textfield:hover .input,
-.input:hover {
-    border-color: var(
-        --highcontrast-textfield-border-color-hover,
-        var(
-            --mod-textfield-border-color-hover,
-            var(--spectrum-textfield-border-color-hover)
-        )
-    );
-    color: var(
-        --highcontrast-textfield-text-color-hover,
-        var(
-            --mod-textfield-text-color-hover,
-            var(--spectrum-textfield-text-color-hover)
-        )
-    );
-}
-#textfield:hover .input::placeholder,
-.input:hover::placeholder {
-    color: var(
-        --highcontrast-textfield-text-color-hover,
-        var(
-            --mod-textfield-text-color-hover,
-            var(--spectrum-textfield-text-color-hover)
-        )
-    );
-}
 .input:focus,
 :host([focused]) .input {
     border-color: var(
@@ -766,33 +739,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-.input:focus:hover,
-:host([focused]) .input:hover {
-    border-color: var(
-        --highcontrast-textfield-border-color-focus-hover,
-        var(
-            --mod-textfield-border-color-focus-hover,
-            var(--spectrum-textfield-border-color-focus-hover)
-        )
-    );
-    color: var(
-        --highcontrast-textfield-text-color-focus-hover,
-        var(
-            --mod-textfield-text-color-focus-hover,
-            var(--spectrum-textfield-text-color-focus-hover)
-        )
-    );
-}
-.input:focus:hover::placeholder,
-:host([focused]) .input:hover::placeholder {
-    color: var(
-        --highcontrast-textfield-text-color-focus-hover,
-        var(
-            --mod-textfield-text-color-focus-hover,
-            var(--spectrum-textfield-text-color-focus-hover)
-        )
-    );
-}
 :host([focused]) .input {
     border-color: var(
         --highcontrast-textfield-border-color-keyboard-focus,
@@ -808,6 +754,17 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-keyboard-focus)
         )
     );
+}
+:host([focused]) .input::placeholder {
+    color: var(
+        --highcontrast-textfield-text-color-keyboard-focus,
+        var(
+            --mod-textfield-text-color-keyboard-focus,
+            var(--spectrum-textfield-text-color-keyboard-focus)
+        )
+    );
+}
+:host([focused]) .input {
     outline: var(
             --mod-textfield-focus-indicator-width,
             var(--spectrum-textfield-focus-indicator-width)
@@ -823,15 +780,6 @@ governing permissions and limitations under the License.
     outline-offset: var(
         --mod-textfield-focus-indicator-gap,
         var(--spectrum-textfield-focus-indicator-gap)
-    );
-}
-:host([focused]) .input::placeholder {
-    color: var(
-        --highcontrast-textfield-text-color-keyboard-focus,
-        var(
-            --mod-textfield-text-color-keyboard-focus,
-            var(--spectrum-textfield-text-color-keyboard-focus)
-        )
     );
 }
 :host([valid]) .input {
@@ -895,16 +843,6 @@ governing permissions and limitations under the License.
             )
     );
 }
-:host([invalid]) .input:hover,
-:host([invalid]:hover) .input {
-    border-color: var(
-        --highcontrast-textfield-border-color-invalid-hover,
-        var(
-            --mod-textfield-border-color-invalid-hover,
-            var(--spectrum-textfield-border-color-invalid-hover)
-        )
-    );
-}
 :host([invalid]) .input:focus,
 :host([invalid]:focus) .input,
 :host([invalid][focused]) .input {
@@ -913,17 +851,6 @@ governing permissions and limitations under the License.
         var(
             --mod-textfield-border-color-invalid-focus,
             var(--spectrum-textfield-border-color-invalid-focus)
-        )
-    );
-}
-:host([invalid]) .input:focus:hover,
-:host([invalid]:focus) .input:hover,
-:host([invalid][focused]) .input:hover {
-    border-color: var(
-        --highcontrast-textfield-border-color-invalid-focus-hover,
-        var(
-            --mod-textfield-border-color-invalid-focus-hover,
-            var(--spectrum-textfield-border-color-invalid-focus-hover)
         )
     );
 }
@@ -948,20 +875,11 @@ governing permissions and limitations under the License.
     );
 }
 .input:disabled,
-:host([disabled]) #textfield .input,
-:host([disabled]) #textfield:hover .input {
-    -webkit-text-fill-color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
+:host([disabled]) #textfield .input {
     background-color: var(
         --mod-textfield-background-color-disabled,
         var(--spectrum-textfield-background-color-disabled)
     );
-    border-color: #0000;
     color: var(
         --highcontrast-textfield-text-color-disabled,
         var(
@@ -969,12 +887,19 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-disabled)
         )
     );
+    -webkit-text-fill-color: var(
+        --highcontrast-textfield-text-color-disabled,
+        var(
+            --mod-textfield-text-color-disabled,
+            var(--spectrum-textfield-text-color-disabled)
+        )
+    );
+    border-color: #0000;
     opacity: 1;
     resize: none;
 }
 .input:disabled::placeholder,
-:host([disabled]) #textfield .input::placeholder,
-:host([disabled]) #textfield:hover .input::placeholder {
+:host([disabled]) #textfield .input::placeholder {
     color: var(
         --highcontrast-textfield-text-color-disabled,
         var(
@@ -1005,8 +930,7 @@ governing permissions and limitations under the License.
     resize: none;
 }
 .input:disabled,
-:host([quiet][disabled]) .input,
-:host([quiet][disabled]:hover) .input {
+:host([quiet][disabled]) .input {
     background-color: #0000;
     border-color: var(
         --mod-textfield-border-color-disabled,
@@ -1021,8 +945,7 @@ governing permissions and limitations under the License.
     );
 }
 .input:disabled::placeholder,
-:host([quiet][disabled]) .input::placeholder,
-:host([quiet][disabled]:hover) .input::placeholder {
+:host([quiet][disabled]) .input::placeholder {
     color: var(
         --highcontrast-textfield-text-color-disabled,
         var(
@@ -1032,8 +955,7 @@ governing permissions and limitations under the License.
     );
 }
 .input:read-only,
-:host([readonly]) #textfield .input,
-:host([readonly]) #textfield:hover .input {
+:host([readonly]) #textfield .input {
     background-color: #0000;
     border-color: #0000;
     color: var(
@@ -1046,8 +968,7 @@ governing permissions and limitations under the License.
     outline: none;
 }
 .input:read-only::placeholder,
-:host([readonly]) #textfield .input::placeholder,
-:host([readonly]) #textfield:hover .input::placeholder {
+:host([readonly]) #textfield .input::placeholder {
     background-color: #0000;
     color: var(
         --highcontrast-textfield-text-color-readonly,
@@ -1056,6 +977,160 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-readonly)
         )
     );
+}
+@media (hover: hover) {
+    #textfield:hover .input::placeholder,
+    .input:hover::placeholder {
+        color: var(
+            --highcontrast-textfield-text-color-hover,
+            var(
+                --mod-textfield-text-color-hover,
+                var(--spectrum-textfield-text-color-hover)
+            )
+        );
+    }
+    .input:focus:hover,
+    :host([focused]) .input:hover {
+        border-color: var(
+            --highcontrast-textfield-border-color-focus-hover,
+            var(
+                --mod-textfield-border-color-focus-hover,
+                var(--spectrum-textfield-border-color-focus-hover)
+            )
+        );
+        color: var(
+            --highcontrast-textfield-text-color-focus-hover,
+            var(
+                --mod-textfield-text-color-focus-hover,
+                var(--spectrum-textfield-text-color-focus-hover)
+            )
+        );
+    }
+    .input:focus:hover::placeholder,
+    :host([focused]) .input:hover::placeholder {
+        color: var(
+            --highcontrast-textfield-text-color-focus-hover,
+            var(
+                --mod-textfield-text-color-focus-hover,
+                var(--spectrum-textfield-text-color-focus-hover)
+            )
+        );
+    }
+    :host([invalid]) .input:focus:hover,
+    :host([invalid]:focus) .input:hover,
+    :host([invalid][focused]) .input:hover {
+        border-color: var(
+            --highcontrast-textfield-border-color-invalid-focus-hover,
+            var(
+                --mod-textfield-border-color-invalid-focus-hover,
+                var(--spectrum-textfield-border-color-invalid-focus-hover)
+            )
+        );
+    }
+    :host([disabled]) #textfield:hover .input::placeholder {
+        color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
+    }
+    :host([quiet][disabled]:hover) .input::placeholder {
+        color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
+    }
+    #textfield:hover .input,
+    .input:hover {
+        border-color: var(
+            --highcontrast-textfield-border-color-hover,
+            var(
+                --mod-textfield-border-color-hover,
+                var(--spectrum-textfield-border-color-hover)
+            )
+        );
+        color: var(
+            --highcontrast-textfield-text-color-hover,
+            var(
+                --mod-textfield-text-color-hover,
+                var(--spectrum-textfield-text-color-hover)
+            )
+        );
+    }
+    :host([invalid]) .input:hover,
+    :host([invalid]:hover) .input {
+        border-color: var(
+            --highcontrast-textfield-border-color-invalid-hover,
+            var(
+                --mod-textfield-border-color-invalid-hover,
+                var(--spectrum-textfield-border-color-invalid-hover)
+            )
+        );
+    }
+    :host([disabled]) #textfield:hover .input {
+        background-color: var(
+            --mod-textfield-background-color-disabled,
+            var(--spectrum-textfield-background-color-disabled)
+        );
+        color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
+        -webkit-text-fill-color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
+        border-color: #0000;
+        opacity: 1;
+        resize: none;
+    }
+    :host([quiet][disabled]:hover) .input {
+        background-color: #0000;
+        border-color: var(
+            --mod-textfield-border-color-disabled,
+            var(--spectrum-textfield-border-color-disabled)
+        );
+        color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
+    }
+    :host([readonly]) #textfield:hover .input {
+        background-color: #0000;
+        border-color: #0000;
+        color: var(
+            --highcontrast-textfield-text-color-readonly,
+            var(
+                --mod-textfield-text-color-readonly,
+                var(--spectrum-textfield-text-color-readonly)
+            )
+        );
+        outline: none;
+    }
+    :host([readonly]) #textfield:hover .input::placeholder {
+        background-color: #0000;
+        color: var(
+            --highcontrast-textfield-text-color-readonly,
+            var(
+                --mod-textfield-text-color-readonly,
+                var(--spectrum-textfield-text-color-readonly)
+            )
+        );
+    }
 }
 .spectrum-Textfield--sideLabel {
     grid-template-columns: auto auto auto;

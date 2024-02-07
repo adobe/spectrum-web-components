@@ -76,6 +76,7 @@ const config = {
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-active', 'active'),
+                converter.pseudoToAttribute('active', 'active'),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),

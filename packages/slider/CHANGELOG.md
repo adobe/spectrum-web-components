@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **slider:** reimplement gradient slider track application ([a10b91e](https://github.com/adobe/spectrum-web-components/commit/a10b91ed168ba58f02349e05e1c49898e8686206))
+
 ## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
 
 ### Bug Fixes

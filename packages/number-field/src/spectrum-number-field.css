@@ -121,24 +121,11 @@ governing permissions and limitations under the License.
     );
     --mod-textfield-icon-spacing-inline-start-invalid: 0;
 }
-:host([invalid]:hover) #textfield {
-    --mod-infield-button-border-color: var(
-        --mod-stepper-border-color-hover-invalid,
-        var(--spectrum-negative-border-color-hover)
-    );
-}
 :host([invalid]) #textfield:focus,
 :host([invalid][focused]) #textfield {
     --mod-infield-button-border-color: var(
         --mod-stepper-border-color-focus-invalid,
         var(--spectrum-stepper-border-color-focus-invalid)
-    );
-}
-:host([invalid]:hover) #textfield:focus,
-:host([invalid][focused]:hover) #textfield {
-    --mod-infield-button-border-color: var(
-        --mod-stepper-border-color-focus-hover-invalid,
-        var(--spectrum-stepper-border-color-focus-hover-invalid)
     );
 }
 :host([invalid]) #textfield.focus-visible,
@@ -181,25 +168,6 @@ governing permissions and limitations under the License.
     border-inline-end-width: 0;
     border-start-end-radius: 0;
 }
-:host(:hover) #textfield:not(.is-disabled, .is-invalid) {
-    --mod-infield-button-border-color: var(
-        --highcontrast-stepper-border-color-hover,
-        var(
-            --mod-stepper-buttons-border-color-hover,
-            var(--spectrum-stepper-buttons-border-color-hover)
-        )
-    );
-}
-:host(:hover:not([disabled])) #textfield .buttons,
-:host(:hover:not([disabled])) #textfield .input {
-    border-color: var(
-        --highcontrast-stepper-border-color-hover,
-        var(
-            --mod-stepper-border-color-hover,
-            var(--spectrum-stepper-border-color-hover)
-        )
-    );
-}
 #textfield:focus,
 :host([focused]) #textfield {
     --mod-infield-button-border-color: var(
@@ -223,28 +191,6 @@ governing permissions and limitations under the License.
         var(
             --mod-stepper-border-color-focus,
             var(--spectrum-stepper-border-color-focus)
-        )
-    );
-}
-:host(:hover) #textfield:focus,
-:host([focused]:hover) #textfield {
-    --mod-infield-button-border-color: var(
-        --highcontrast-stepper-border-color-focus-hover,
-        var(
-            --mod-stepper-buttons-border-color-focus-hover,
-            var(--spectrum-stepper-buttons-border-color-focus-hover)
-        )
-    );
-}
-:host(:hover) #textfield:focus .buttons,
-:host(:hover) #textfield:focus .input,
-:host([focused]:hover) #textfield .buttons,
-:host([focused]:hover) #textfield .input {
-    border-color: var(
-        --highcontrast-stepper-border-color-focus-hover,
-        var(
-            --mod-stepper-border-color-focus-hover,
-            var(--spectrum-stepper-border-color-focus-hover)
         )
     );
 }
@@ -389,18 +335,6 @@ governing permissions and limitations under the License.
 :host([quiet]) #textfield .input {
     background-color: #0000;
 }
-:host([quiet]:hover:not([disabled])) #textfield {
-    --mod-infield-button-border-color: var(
-        --highcontrast-stepper-border-color-hover,
-        var(
-            --mod-stepper-border-color-hover,
-            var(--spectrum-stepper-border-color-hover)
-        )
-    );
-}
-:host([quiet]:hover:not([disabled])) #textfield .buttons {
-    background-color: #0000;
-}
 :host([quiet]) #textfield:focus,
 :host([quiet][focused]) #textfield {
     --mod-infield-button-border-color: var(
@@ -408,16 +342,6 @@ governing permissions and limitations under the License.
         var(
             --mod-stepper-border-color-focus,
             var(--spectrum-stepper-border-color-focus)
-        )
-    );
-}
-:host([quiet]:hover) #textfield:focus,
-:host([quiet][focused]:hover) #textfield {
-    --mod-infield-button-border-color: var(
-        --highcontrast-stepper-border-color-focus-hover,
-        var(
-            --mod-stepper-border-color-focus-hover,
-            var(--spectrum-stepper-border-color-focus-hover)
         )
     );
 }
@@ -440,14 +364,92 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([quiet][keyboard-focused]:hover) #textfield {
-    --mod-infield-button-border-color: var(
-        --highcontrast-stepper-border-color-hover,
-        var(
-            --mod-stepper-border-color-hover,
-            var(--spectrum-stepper-border-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([invalid]:hover) #textfield:focus,
+    :host([invalid][focused]:hover) #textfield {
+        --mod-infield-button-border-color: var(
+            --mod-stepper-border-color-focus-hover-invalid,
+            var(--spectrum-stepper-border-color-focus-hover-invalid)
+        );
+    }
+    :host(:hover) #textfield:focus .buttons,
+    :host(:hover) #textfield:focus .input,
+    :host([focused]:hover) #textfield .buttons,
+    :host([focused]:hover) #textfield .input {
+        border-color: var(
+            --highcontrast-stepper-border-color-focus-hover,
+            var(
+                --mod-stepper-border-color-focus-hover,
+                var(--spectrum-stepper-border-color-focus-hover)
+            )
+        );
+    }
+    :host([invalid]:hover) #textfield {
+        --mod-infield-button-border-color: var(
+            --mod-stepper-border-color-hover-invalid,
+            var(--spectrum-negative-border-color-hover)
+        );
+    }
+    :host(:hover:not([disabled])) #textfield .buttons,
+    :host(:hover:not([disabled])) #textfield .input {
+        border-color: var(
+            --highcontrast-stepper-border-color-hover,
+            var(
+                --mod-stepper-border-color-hover,
+                var(--spectrum-stepper-border-color-hover)
+            )
+        );
+    }
+    :host(:hover) #textfield:focus,
+    :host([focused]:hover) #textfield {
+        --mod-infield-button-border-color: var(
+            --highcontrast-stepper-border-color-focus-hover,
+            var(
+                --mod-stepper-buttons-border-color-focus-hover,
+                var(--spectrum-stepper-buttons-border-color-focus-hover)
+            )
+        );
+    }
+    :host(:hover) #textfield:not(.is-disabled, .is-invalid) {
+        --mod-infield-button-border-color: var(
+            --highcontrast-stepper-border-color-hover,
+            var(
+                --mod-stepper-buttons-border-color-hover,
+                var(--spectrum-stepper-buttons-border-color-hover)
+            )
+        );
+    }
+    :host([quiet]:hover:not([disabled])) #textfield {
+        --mod-infield-button-border-color: var(
+            --highcontrast-stepper-border-color-hover,
+            var(
+                --mod-stepper-border-color-hover,
+                var(--spectrum-stepper-border-color-hover)
+            )
+        );
+    }
+    :host([quiet]:hover:not([disabled])) #textfield .buttons {
+        background-color: #0000;
+    }
+    :host([quiet]:hover) #textfield:focus,
+    :host([quiet][focused]:hover) #textfield {
+        --mod-infield-button-border-color: var(
+            --highcontrast-stepper-border-color-focus-hover,
+            var(
+                --mod-stepper-border-color-focus-hover,
+                var(--spectrum-stepper-border-color-focus-hover)
+            )
+        );
+    }
+    :host([quiet][keyboard-focused]:hover) #textfield {
+        --mod-infield-button-border-color: var(
+            --highcontrast-stepper-border-color-hover,
+            var(
+                --mod-stepper-border-color-hover,
+                var(--spectrum-stepper-border-color-hover)
+            )
+        );
+    }
 }
 #textfield:before {
     content: '';
@@ -469,10 +471,6 @@ governing permissions and limitations under the License.
         --mod-stepper-border-radius,
         var(--spectrum-stepper-border-radius)
     );
-    border-start-end-radius: var(
-        --mod-stepper-border-radius,
-        var(--spectrum-stepper-border-radius)
-    );
     border-style: var(
         --mod-stepper-buttons-border-style,
         var(--spectrum-stepper-buttons-border-style)
@@ -485,6 +483,10 @@ governing permissions and limitations under the License.
         )
     );
     border-inline-start-width: 0;
+    border-start-end-radius: var(
+        --mod-stepper-border-radius,
+        var(--spectrum-stepper-border-radius)
+    );
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

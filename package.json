@@ -201,7 +201,7 @@
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
         "typescript": "^4.7.2",
-        "wireit": "^0.14.1",
+        "wireit": "^0.14.3",
         "yargs": "^17.2.1"
     },
     "wireit": {
@@ -249,7 +249,9 @@
                 "tools/**/*.ts",
                 "!tools/**/*.d.ts",
                 "tasks/esbuild-packages.js",
-                "tasks/ts-tools.js"
+                "tasks/ts-tools.js",
+                "packages/**/exports.json",
+                "tools/**/exports.json"
             ],
             "output": [
                 "packages/**/*.js",

@@ -143,8 +143,10 @@ governing permissions and limitations under the License.
 :host([compact]:not([quiet])) ::slotted([selected]) {
     z-index: 1;
 }
-:host([compact]:not([quiet])) ::slotted(:hover) {
-    z-index: 2;
+@media (hover: hover) {
+    :host([compact]:not([quiet])) ::slotted(:hover) {
+        z-index: 2;
+    }
 }
 :host([compact]:not([quiet])) ::slotted(.focus-visible) {
     z-index: 3;

@@ -9,26 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-let url = '/';
 
-switch (process.env.CONTEXT) {
-    case 'production':
-        url = process.env.URL;
-        break;
-    case 'deploy-preview':
-        url = process.env.DEPLOY_URL;
-        break;
-    case 'branch-deploy':
-        url = process.env.DEPLOY_PRIME_URL;
-        break;
-    default:
-        break;
+import { Combobox } from './src/Combobox.js';
+
+customElements.define('sp-combobox', Combobox);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-combobox': Combobox;
+    }
 }
-
-module.exports = {
-    name: 'Spectrum Web Components',
-    shortDesc:
-        'Spectrum Web Components provide interface components as custom elements to help teams work more efficiently and to make applications more consistent.',
-    url,
-    WATCH_MODE: process.env.WATCH_MODE,
-};

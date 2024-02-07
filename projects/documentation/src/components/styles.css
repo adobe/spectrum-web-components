@@ -921,3 +921,150 @@ sp-link:not(:defined) {
     color: var(--spectrum-accent-content-color-default);
     text-decoration: underline;
 }
+
+.demo-placement.with-demo {
+    display: grid;
+    grid-template-areas:
+        'demo'
+        'links';
+    gap: 16px;
+    grid-template-columns: 1fr max-content;
+}
+
+.demo-preview {
+    grid-area: demo;
+    border: 1px solid rgb(63, 63, 63);
+    border-radius: 6px;
+    display: grid;
+    place-content: center;
+    height: 200px;
+    grid-template-columns: 80%;
+}
+
+.demo-config {
+    grid-area: config;
+    border: 1px solid rgb(63, 63, 63);
+    border-radius: 6px;
+    max-height: 100px;
+    display: grid;
+    overflow: auto;
+    padding: calc(var(--spectrum-fieldgroup-margin) - 4px) 0
+        var(--spectrum-fieldgroup-margin) var(--spectrum-fieldgroup-margin);
+}
+
+.demo-config > div {
+    flex-basis: calc(20% - 16px);
+}
+
+.demo-config > div:nth-last-child(4):nth-of-type(1),
+.demo-config > div:nth-last-child(4):nth-of-type(1) ~ div {
+    max-width: calc(25% - 16px);
+}
+
+.demo-config > div:nth-last-child(3):nth-of-type(1),
+.demo-config > div:nth-last-child(3):nth-of-type(1) ~ div {
+    max-width: calc(33% - 16px);
+}
+
+.demo-config > div:nth-last-child(2):nth-of-type(1),
+.demo-config > div:nth-last-child(2):nth-of-type(1) ~ div {
+    max-width: calc(50% - 16px);
+}
+
+.demo-config sp-picker:not(:defined) {
+    display: none;
+}
+
+.usage-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 6px;
+}
+
+.demo-placement:not(.with-demo) sp-card {
+    flex-basis: 33%;
+}
+
+.demo-placement sp-card:not(:defined) {
+    border: 1px solid rgb(63, 63, 63);
+    border-radius: 6px;
+    height: 62px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.with-demo .usage-links {
+    grid-area: links;
+    flex-direction: column;
+}
+
+.with-demo sp-card {
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.demo-placement sp-field-group:not(:defined) {
+    padding: 12px 0 16px 16px;
+}
+
+.usage-links :is(h2, h3) {
+    all: unset;
+}
+
+.demo-placement sp-icon,
+.demo-placement sp-icon svg {
+    width: 36px;
+    height: 36px;
+}
+
+p:has([alt='See it on NPM!']) {
+    display: none;
+}
+
+@media screen and (min-width: 600px) {
+    .demo-placement.with-demo {
+        grid-template-areas:
+            'demo links'
+            'config config';
+        grid-template-rows: 218px;
+    }
+
+    .demo-placement.with-demo.with-controls {
+        grid-template-areas:
+            'demo links'
+            'config config';
+        grid-template-rows: 218px minmax(86px, auto);
+    }
+
+    .usage-links {
+        flex-direction: row;
+    }
+
+    .demo-preview {
+        height: auto;
+    }
+
+    .demo-placement sp-field-group {
+        display: flex;
+    }
+
+    .with-demo .usage-links {
+        width: 225px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .demo-config {
+        display: none;
+    }
+}
+
+@media (scripting: none) {
+    .demo-placement {
+        display: none;
+    }
+}

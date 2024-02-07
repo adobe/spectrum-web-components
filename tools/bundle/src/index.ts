@@ -28,6 +28,7 @@ export * from '@spectrum-web-components/color-handle';
 export * from '@spectrum-web-components/color-loupe';
 export * from '@spectrum-web-components/color-slider';
 export * from '@spectrum-web-components/color-wheel';
+export * from '@spectrum-web-components/combobox';
 export * from '@spectrum-web-components/dialog';
 export * from '@spectrum-web-components/divider';
 export * from '@spectrum-web-components/dropzone';

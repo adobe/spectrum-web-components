@@ -306,12 +306,19 @@ governing permissions and limitations under the License.
         var(--spectrum-drop-zone-content-top-to-text)
     );
 }
-.spectrum-DropZone-button:focus,
-.spectrum-DropZone-button:hover {
+.spectrum-DropZone-button:focus {
     background-color: var(
         --mod-drop-zone-content-background-color,
         var(--spectrum-drop-zone-content-background-color)
     );
+}
+@media (hover: hover) {
+    .spectrum-DropZone-button:hover {
+        background-color: var(
+            --mod-drop-zone-content-background-color,
+            var(--spectrum-drop-zone-content-background-color)
+        );
+    }
 }
 @media (forced-colors: active) {
     :host {

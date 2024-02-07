@@ -417,12 +417,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         ];
         const trackItems = [
             { id: 'track0', html: this.renderTrackSegment(...segments[0]) },
+            { id: 'fill', html: this.renderFillOffset() },
             { id: 'ramp', html: this.renderRamp() },
             ...segments.slice(1).map(([start, end], index) => ({
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
             })),
-            { id: 'fill', html: this.renderFillOffset() },
         ];
 
         return html`
@@ -501,12 +501,8 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         const size = end - start;
         const styles: StyleInfo = {
             width: `${size * 100}%`,
-            ...(this.handleController.size > 1 && {
-                '--spectrum-slider-track-background-size': `${
-                    (1 / size) * 100
-                }%`,
-                '--spectrum-slider-track-segment-position': `${start * 100}%`,
-            }),
+            '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
+            '--spectrum-slider-track-segment-position': `${start * 100}%`,
         };
         return styles;
     }

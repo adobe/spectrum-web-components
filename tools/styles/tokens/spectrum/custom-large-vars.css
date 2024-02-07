@@ -66,6 +66,9 @@
     --spectrum-well-border-radius: 5px;
 
     --spectrum-icon-chevron-size-50: 8px;
+    /* XXL and XXS icon sizes are not within the design spec and are planned to be deprecated in Spectrum 2. */
+    --spectrum-workflow-icon-size-xxl: 40px;
+    --spectrum-workflow-icon-size-xxs: 15px;
 
     --spectrum-treeview-item-indentation-medium: 20px;
     --spectrum-treeview-item-indentation-small: 15px;
@@ -111,4 +114,7 @@
     --spectrum-assetcard-content-font-size: var(--spectrum-body-size-xs);
 
     --spectrum-tooltip-animation-distance: 5px;
+
+    --spectrum-ui-icon-medium-display: none;
+    --spectrum-ui-icon-large-display: block;
 }

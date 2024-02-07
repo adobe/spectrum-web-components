@@ -12,52 +12,70 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    align-items: center;
     -webkit-appearance: button;
-    border-style: solid;
     box-sizing: border-box;
     cursor: pointer;
-    display: inline-flex;
     font-family: var(
-        --mod-sans-font-family-stack,
-        var(--spectrum-sans-font-family-stack)
+        --mod-button-font-family,
+        var(
+            --mod-sans-font-family-stack,
+            var(--spectrum-sans-font-family-stack)
+        )
     );
-    justify-content: center;
-    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
-    margin: 0;
-    overflow: visible;
-    -webkit-text-decoration: none;
-    text-decoration: none;
+    line-height: var(
+        --mod-button-line-height,
+        var(--mod-line-height-100, var(--spectrum-line-height-100))
+    );
     text-transform: none;
     transition: background
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         border-color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         box-shadow
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out;
     -webkit-user-select: none;
     user-select: none;
     vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    align-items: center;
+    border-style: solid;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0;
+    overflow: visible;
+    -webkit-text-decoration: none;
+    text-decoration: none;
 }
 :host(:focus) {
     outline: none;
@@ -107,6 +125,10 @@ governing permissions and limitations under the License.
         var(--spectrum-actionbutton-border-radius) +
             var(--spectrum-actionbutton-focus-indicator-gap)
     );
+}
+:host([dir='rtl']),
+[dir='rtl'] :host {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 :host([selected]) {
     --mod-actionbutton-background-color-default: var(
@@ -302,11 +324,11 @@ governing permissions and limitations under the License.
     );
 }
 @media (forced-colors: active) {
-    :host {
-        --highcontrast-actionbutton-focus-indicator-color: ButtonText;
-    }
     :host:after {
         forced-color-adjust: none;
+    }
+    :host {
+        --highcontrast-actionbutton-focus-indicator-color: ButtonText;
     }
     :host([selected]) {
         --highcontrast-actionbutton-background-color-default: Highlight;
@@ -389,28 +411,30 @@ governing permissions and limitations under the License.
     );
     position: relative;
 }
-:host(:hover) {
-    background-color: var(
-        --highcontrast-actionbutton-background-color-hover,
-        var(
-            --mod-actionbutton-background-color-hover,
-            var(--spectrum-actionbutton-background-color-hover)
-        )
-    );
-    border-color: var(
-        --highcontrast-actionbutton-border-color-hover,
-        var(
-            --mod-actionbutton-border-color-hover,
-            var(--spectrum-actionbutton-border-color-hover)
-        )
-    );
-    color: var(
-        --highcontrast-actionbutton-content-color-hover,
-        var(
-            --mod-actionbutton-content-color-hover,
-            var(--spectrum-actionbutton-content-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:hover) {
+        background-color: var(
+            --highcontrast-actionbutton-background-color-hover,
+            var(
+                --mod-actionbutton-background-color-hover,
+                var(--spectrum-actionbutton-background-color-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-actionbutton-border-color-hover,
+            var(
+                --mod-actionbutton-border-color-hover,
+                var(--spectrum-actionbutton-border-color-hover)
+            )
+        );
+        color: var(
+            --highcontrast-actionbutton-content-color-hover,
+            var(
+                --mod-actionbutton-content-color-hover,
+                var(--spectrum-actionbutton-content-color-hover)
+            )
+        );
+    }
 }
 :host(.focus-visible) {
     background-color: var(
@@ -559,9 +583,6 @@ governing permissions and limitations under the License.
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-:host([dir='rtl']) .hold-affordance {
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-}
 .hold-affordance {
     color: inherit;
     inset-block-end: calc(
@@ -585,6 +606,7 @@ governing permissions and limitations under the License.
             )
     );
     position: absolute;
+    transform: var(--spectrum-logical-rotation);
 }
 :host {
     transition: border-color

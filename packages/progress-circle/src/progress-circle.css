@@ -13,11 +13,68 @@ governing permissions and limitations under the License.
 @import url('./spectrum-progress-circle.css');
 
 :host {
+    block-size: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
+    inline-size: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
+
     --spectrum-progresscircle-m-over-background-track-fill-color: var(
         --spectrum-alias-track-fill-color-overbackground
+    );
+    --_spectrum-progress-circle-size: var(
+        --spectrum-progress-circle-size,
+        var(--spectrum-progress-circle-size-medium)
+    );
+}
+
+:host([size='s']) {
+    --_spectrum-progress-circle-size: var(
+        --spectrum-progress-circle-size,
+        var(--spectrum-progress-circle-size-small)
+    );
+}
+
+:host([size='l']) {
+    --_spectrum-progress-circle-size: var(
+        --spectrum-progress-circle-size,
+        var(--spectrum-progress-circle-size-large)
     );
 }
 
 slot {
     display: none;
+}
+
+.track {
+    block-size: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
+    border-radius: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
+    inline-size: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
+}
+
+.fill {
+    block-size: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
+    border-radius: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
+    inline-size: var(
+        --mod-progress-circle-size,
+        var(--_spectrum-progress-circle-size)
+    );
 }

@@ -69,29 +69,11 @@ governing permissions and limitations under the License.
     }
 }
 :host {
-    -webkit-font-smoothing: antialiased;
-    align-items: stretch;
-    background-color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
-    );
     border-radius: var(
         --mod-toast-corner-radius,
         var(--spectrum-toast-corner-radius)
     );
     box-sizing: border-box;
-    color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
-    );
-    display: inline-flex;
-    flex-direction: row;
     font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
     font-weight: var(
         --mod-toast-font-weight,
@@ -105,6 +87,24 @@ governing permissions and limitations under the License.
         --mod-toast-block-size,
         var(--spectrum-toast-block-size)
     );
+    -webkit-font-smoothing: antialiased;
+    align-items: stretch;
+    background-color: var(
+        --highcontrast-toast-background-color-default,
+        var(
+            --mod-toast-background-color-default,
+            var(--spectrum-toast-background-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-toast-background-color-default,
+        var(
+            --mod-toast-background-color-default,
+            var(--spectrum-toast-background-color-default)
+        )
+    );
+    display: inline-flex;
+    flex-direction: row;
     padding-inline-start: var(
         --mod-toast-spacing-start-edge-to-text-and-icon,
         var(--spectrum-toast-spacing-start-edge-to-text-and-icon)

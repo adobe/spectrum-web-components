@@ -84,10 +84,15 @@ governing permissions and limitations under the License.
                 var(
                         --mod-splitview-gripper-width,
                         var(--spectrum-splitview-gripper-width)
-                    ) + 2 *
-                    var(
-                        --mod-splitview-gripper-border-width-vertical,
-                        var(--spectrum-splitview-gripper-border-width-vertical)
+                    ) +
+                    (
+                        2 *
+                            var(
+                                --mod-splitview-gripper-border-width-vertical,
+                                var(
+                                    --spectrum-splitview-gripper-border-width-vertical
+                                )
+                            )
                     ) -
                     var(
                         --mod-splitview-gripper-width,
@@ -150,8 +155,7 @@ governing permissions and limitations under the License.
 #splitter.is-collapsed-end #gripper {
     inset-inline: auto 0;
 }
-:host([resizable]) #splitter.is-hovered,
-:host([resizable]) #splitter:hover {
+:host([resizable]) #splitter.is-hovered {
     background-color: var(
         --highcontrast-splitview-handle-background-color-hover,
         var(
@@ -160,8 +164,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([resizable]) #splitter.is-hovered #gripper,
-:host([resizable]) #splitter:hover #gripper {
+:host([resizable]) #splitter.is-hovered #gripper {
     border-color: var(
         --highcontrast-splitview-handle-background-color-hover,
         var(
@@ -170,8 +173,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([resizable]) #splitter.is-hovered #gripper:before,
-:host([resizable]) #splitter:hover #gripper:before {
+:host([resizable]) #splitter.is-hovered #gripper:before {
     background-color: var(
         --highcontrast-splitview-handle-background-color-hover,
         var(
@@ -179,6 +181,35 @@ governing permissions and limitations under the License.
             var(--spectrum-splitview-handle-background-color-hover)
         )
     );
+}
+@media (hover: hover) {
+    :host([resizable]) #splitter:hover {
+        background-color: var(
+            --highcontrast-splitview-handle-background-color-hover,
+            var(
+                --mod-splitview-handle-background-color-hover,
+                var(--spectrum-splitview-handle-background-color-hover)
+            )
+        );
+    }
+    :host([resizable]) #splitter:hover #gripper {
+        border-color: var(
+            --highcontrast-splitview-handle-background-color-hover,
+            var(
+                --mod-splitview-handle-background-color-hover,
+                var(--spectrum-splitview-handle-background-color-hover)
+            )
+        );
+    }
+    :host([resizable]) #splitter:hover #gripper:before {
+        background-color: var(
+            --highcontrast-splitview-handle-background-color-hover,
+            var(
+                --mod-splitview-handle-background-color-hover,
+                var(--spectrum-splitview-handle-background-color-hover)
+            )
+        );
+    }
 }
 :host([resizable]) #splitter.is-active,
 :host([resizable]) #splitter:active {
@@ -317,10 +348,15 @@ governing permissions and limitations under the License.
                 var(
                         --mod-splitview-gripper-width,
                         var(--spectrum-splitview-gripper-width)
-                    ) + 2 *
-                    var(
-                        --mod-splitview-gripper-border-width-vertical,
-                        var(--spectrum-splitview-gripper-border-width-vertical)
+                    ) +
+                    (
+                        2 *
+                            var(
+                                --mod-splitview-gripper-border-width-vertical,
+                                var(
+                                    --spectrum-splitview-gripper-border-width-vertical
+                                )
+                            )
                     ) -
                     var(
                         --mod-splitview-gripper-width,

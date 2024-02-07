@@ -381,8 +381,8 @@ export class NumberField extends TextfieldBase {
         this.addEventListener('wheel', this.onScroll, { passive: false });
     }
 
-    protected override onBlur(): void {
-        super.onBlur();
+    protected override onBlur(_event: FocusEvent): void {
+        super.onBlur(_event);
         this.keyboardFocused = !this.readonly && false;
         this.removeEventListener('wheel', this.onScroll);
     }

@@ -11,79 +11,108 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-UIIcon-ArrowDown100,
-.spectrum-UIIcon-ArrowDown200,
-.spectrum-UIIcon-ArrowDown300,
-.spectrum-UIIcon-ArrowDown400,
-.spectrum-UIIcon-ArrowDown500,
-.spectrum-UIIcon-ArrowDown600,
+.spectrum-UIIcon-ArrowRight75 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-75);
+}
+.spectrum-UIIcon-ArrowRight100 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-100);
+}
+.spectrum-UIIcon-ArrowRight200 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-200);
+}
+.spectrum-UIIcon-ArrowRight300 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-300);
+}
+.spectrum-UIIcon-ArrowRight400 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-400);
+}
+.spectrum-UIIcon-ArrowRight500 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-500);
+}
+.spectrum-UIIcon-ArrowRight600 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-600);
+}
 .spectrum-UIIcon-ArrowDown75 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-75);
     transform: rotate(90deg);
 }
-.spectrum-UIIcon-ArrowLeft100,
-.spectrum-UIIcon-ArrowLeft200,
-.spectrum-UIIcon-ArrowLeft300,
-.spectrum-UIIcon-ArrowLeft400,
-.spectrum-UIIcon-ArrowLeft500,
-.spectrum-UIIcon-ArrowLeft600,
+.spectrum-UIIcon-ArrowDown100 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-100);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ArrowDown200 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-200);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ArrowDown300 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-300);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ArrowDown400 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-400);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ArrowDown500 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-500);
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ArrowDown600 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-600);
+    transform: rotate(90deg);
+}
 .spectrum-UIIcon-ArrowLeft75 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-75);
     transform: rotate(180deg);
 }
-.spectrum-UIIcon-ArrowUp100,
-.spectrum-UIIcon-ArrowUp200,
-.spectrum-UIIcon-ArrowUp300,
-.spectrum-UIIcon-ArrowUp400,
-.spectrum-UIIcon-ArrowUp500,
-.spectrum-UIIcon-ArrowUp600,
+.spectrum-UIIcon-ArrowLeft100 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-100);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ArrowLeft200 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-200);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ArrowLeft300 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-300);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ArrowLeft400 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-400);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ArrowLeft500 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-500);
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ArrowLeft600 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-600);
+    transform: rotate(180deg);
+}
 .spectrum-UIIcon-ArrowUp75 {
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-75);
     transform: rotate(270deg);
 }
-.spectrum-UIIcon-ArrowDown75,
-.spectrum-UIIcon-ArrowLeft75,
-.spectrum-UIIcon-ArrowRight75,
-.spectrum-UIIcon-ArrowUp75 {
-    height: var(--spectrum-alias-ui-icon-arrow-size-75);
-    width: var(--spectrum-alias-ui-icon-arrow-size-75);
-}
-.spectrum-UIIcon-ArrowDown100,
-.spectrum-UIIcon-ArrowLeft100,
-.spectrum-UIIcon-ArrowRight100,
 .spectrum-UIIcon-ArrowUp100 {
-    height: var(--spectrum-alias-ui-icon-arrow-size-100);
-    width: var(--spectrum-alias-ui-icon-arrow-size-100);
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-100);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ArrowDown200,
-.spectrum-UIIcon-ArrowLeft200,
-.spectrum-UIIcon-ArrowRight200,
 .spectrum-UIIcon-ArrowUp200 {
-    height: var(--spectrum-alias-ui-icon-arrow-size-200);
-    width: var(--spectrum-alias-ui-icon-arrow-size-200);
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-200);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ArrowDown300,
-.spectrum-UIIcon-ArrowLeft300,
-.spectrum-UIIcon-ArrowRight300,
 .spectrum-UIIcon-ArrowUp300 {
-    height: var(--spectrum-alias-ui-icon-arrow-size-300);
-    width: var(--spectrum-alias-ui-icon-arrow-size-300);
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-300);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ArrowDown400,
-.spectrum-UIIcon-ArrowLeft400,
-.spectrum-UIIcon-ArrowRight400,
 .spectrum-UIIcon-ArrowUp400 {
-    height: var(--spectrum-alias-ui-icon-arrow-size-400);
-    width: var(--spectrum-alias-ui-icon-arrow-size-400);
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-400);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ArrowDown500,
-.spectrum-UIIcon-ArrowLeft500,
-.spectrum-UIIcon-ArrowRight500,
 .spectrum-UIIcon-ArrowUp500 {
-    height: var(--spectrum-alias-ui-icon-arrow-size-500);
-    width: var(--spectrum-alias-ui-icon-arrow-size-500);
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-500);
+    transform: rotate(270deg);
 }
-.spectrum-UIIcon-ArrowDown600,
-.spectrum-UIIcon-ArrowLeft600,
-.spectrum-UIIcon-ArrowRight600,
 .spectrum-UIIcon-ArrowUp600 {
-    height: var(--spectrum-alias-ui-icon-arrow-size-600);
-    width: var(--spectrum-alias-ui-icon-arrow-size-600);
+    --spectrum-icon-size: var(--spectrum-arrow-icon-size-600);
+    transform: rotate(270deg);
 }

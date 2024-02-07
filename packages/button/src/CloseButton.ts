@@ -19,37 +19,37 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from '@spectrum-web-components/close-button/src/close-button.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 import type { ButtonStatics } from './Button.js';
 
 const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`
-        <sp-icon-cross75
-            slot="icon"
-            class="icon spectrum-UIIcon-Cross75"
-        ></sp-icon-cross75>
-    `,
-    m: () => html`
-        <sp-icon-cross100
-            slot="icon"
-            class="icon spectrum-UIIcon-Cross100"
-        ></sp-icon-cross100>
-    `,
-    l: () => html`
         <sp-icon-cross200
             slot="icon"
             class="icon spectrum-UIIcon-Cross200"
         ></sp-icon-cross200>
     `,
-    xl: () => html`
+    m: () => html`
         <sp-icon-cross300
             slot="icon"
             class="icon spectrum-UIIcon-Cross300"
         ></sp-icon-cross300>
+    `,
+    l: () => html`
+        <sp-icon-cross400
+            slot="icon"
+            class="icon spectrum-UIIcon-Cross400"
+        ></sp-icon-cross400>
+    `,
+    xl: () => html`
+        <sp-icon-cross500
+            slot="icon"
+            class="icon spectrum-UIIcon-Cross500"
+        ></sp-icon-cross500>
     `,
 };
 

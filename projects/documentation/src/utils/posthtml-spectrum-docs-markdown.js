@@ -125,9 +125,10 @@ export default () =>
                 fn: (node) => {
                     if (
                         node.attrs &&
-                        node.attrs.class &&
-                        (/spectrum-Heading/.test(node.attrs.class) ||
-                            /logo/.test(node.attrs.class))
+                        (node.attrs.slot ||
+                            (node.attrs.class &&
+                                (/spectrum-Heading/.test(node.attrs.class) ||
+                                    /logo/.test(node.attrs.class))))
                     ) {
                         return node;
                     }
@@ -154,8 +155,9 @@ export default () =>
                 fn: (node) => {
                     if (
                         node.attrs &&
-                        node.attrs.class &&
-                        /spectrum-Heading/.test(node.attrs.class)
+                        (node.attrs.slot ||
+                            (node.attrs.class &&
+                                /spectrum-Heading/.test(node.attrs.class)))
                     ) {
                         return node;
                     }
@@ -186,8 +188,9 @@ export default () =>
                 fn: (node) => {
                     if (
                         node.attrs &&
-                        node.attrs.class &&
-                        /spectrum-Heading/.test(node.attrs.class)
+                        (node.attrs.slot ||
+                            (node.attrs.class &&
+                                /spectrum-Heading/.test(node.attrs.class)))
                     ) {
                         return node;
                     }

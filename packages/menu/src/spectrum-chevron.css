@@ -117,14 +117,6 @@ governing permissions and limitations under the License.
     );
 }
 .spectrum-Menu-backIcon {
-    fill: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
     margin-block: var(
         --mod-menu-back-icon-margin-block,
         var(--spectrum-menu-back-icon-margin)
@@ -132,5 +124,13 @@ governing permissions and limitations under the License.
     margin-inline: var(
         --mod-menu-back-icon-margin-inline,
         var(--spectrum-menu-back-icon-margin)
+    );
+    fill: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
     );
 }

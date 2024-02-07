@@ -12,49 +12,67 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     -webkit-appearance: button;
-    border-style: solid;
     box-sizing: border-box;
     cursor: pointer;
     font-family: var(
-        --mod-sans-font-family-stack,
-        var(--spectrum-sans-font-family-stack)
+        --mod-button-font-family,
+        var(
+            --mod-sans-font-family-stack,
+            var(--spectrum-sans-font-family-stack)
+        )
     );
-    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
-    margin: 0;
-    overflow: visible;
-    -webkit-text-decoration: none;
-    text-decoration: none;
+    line-height: var(
+        --mod-button-line-height,
+        var(--mod-line-height-100, var(--spectrum-line-height-100))
+    );
     text-transform: none;
     transition: background
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         border-color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         box-shadow
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out;
     -webkit-user-select: none;
     user-select: none;
     vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    border-style: solid;
+    margin: 0;
+    overflow: visible;
+    -webkit-text-decoration: none;
+    text-decoration: none;
 }
 :host(:focus) {
     outline: none;
@@ -323,21 +341,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:not([disabled]):hover) {
-    background-color: var(
-        --mod-closebutton-background-color-hover,
-        var(--spectrum-closebutton-background-color-hover)
-    );
-}
-:host(:not([disabled]):hover) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-hover,
-        var(
-            --mod-closebutton-icon-color-hover,
-            var(--spectrum-closebutton-icon-color-hover)
-        )
-    );
-}
 :host(:not([disabled])[active]) {
     background-color: var(
         --mod-closebutton-background-color-down,
@@ -428,25 +431,42 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([static='black']:not([disabled]):hover),
-:host([static='white']:not([disabled]):hover) {
-    background-color: var(
-        --highcontrast-closebutton-static-background-color-hover,
-        var(
-            --mod-closebutton-static-background-color-hover,
-            var(--spectrum-closebutton-static-background-color-hover)
-        )
-    );
-}
-:host([static='black']:not([disabled]):hover) .icon,
-:host([static='white']:not([disabled]):hover) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-default,
-        var(
-            --mod-closebutton-icon-color-default,
-            var(--spectrum-closebutton-icon-color-default)
-        )
-    );
+@media (hover: hover) {
+    :host(:not([disabled]):hover) .icon {
+        color: var(
+            --highcontrast-closebutton-icon-color-hover,
+            var(
+                --mod-closebutton-icon-color-hover,
+                var(--spectrum-closebutton-icon-color-hover)
+            )
+        );
+    }
+    :host(:not([disabled]):hover) {
+        background-color: var(
+            --mod-closebutton-background-color-hover,
+            var(--spectrum-closebutton-background-color-hover)
+        );
+    }
+    :host([static='black']:not([disabled]):hover),
+    :host([static='white']:not([disabled]):hover) {
+        background-color: var(
+            --highcontrast-closebutton-static-background-color-hover,
+            var(
+                --mod-closebutton-static-background-color-hover,
+                var(--spectrum-closebutton-static-background-color-hover)
+            )
+        );
+    }
+    :host([static='black']:not([disabled]):hover) .icon,
+    :host([static='white']:not([disabled]):hover) .icon {
+        color: var(
+            --highcontrast-closebutton-icon-color-default,
+            var(
+                --mod-closebutton-icon-color-default,
+                var(--spectrum-closebutton-icon-color-default)
+            )
+        );
+    }
 }
 :host([static='black']:not([disabled])[active]),
 :host([static='white']:not([disabled])[active]) {

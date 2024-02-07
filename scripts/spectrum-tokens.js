@@ -46,6 +46,7 @@ const tokenPackages = [
     'colorhandle',
     'colorloupe',
     'colorwheel',
+    'combobox',
     'divider',
     'dropzone',
     'fieldgroup',

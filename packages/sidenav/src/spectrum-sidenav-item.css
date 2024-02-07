@@ -97,6 +97,13 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
+}
+#list:lang(ja),
+#list:lang(ko),
+#list:lang(zh) {
+    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
+}
+#list {
     --spectrum-sidenav-top-level-font-family: var(
         --spectrum-sans-font-family-stack
     );
@@ -104,18 +111,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-header-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
-    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
-    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
-    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-}
-#list:lang(ja),
-#list:lang(ko),
-#list:lang(zh) {
-    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
 }
 #list:lang(ja),
 #list:lang(ko),
@@ -123,6 +118,15 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-line-height: var(
         --spectrum-cjk-line-height-100
     );
+}
+#list {
+    --spectrum-sidenav-header-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
+    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
+    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
+    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
 }
 #list:lang(ja),
 #list:lang(ko),
@@ -172,19 +176,6 @@ governing permissions and limitations under the License.
             --mod-sidenav-content-color-default-selected,
             var(--spectrum-sidenav-content-color-default-selected)
         )
-    );
-}
-:host([selected]) #item-link:hover {
-    background-color: var(
-        --highcontrast-sidenav-background-hover-selected,
-        var(
-            --mod-sidenav-background-hover-selected,
-            var(--spectrum-sidenav-background-hover-selected)
-        )
-    );
-    color: var(
-        --mod-sidenav-content-color-hover-selected,
-        var(--spectrum-sidenav-content-color-hover-selected)
     );
 }
 :host([selected]) #item-link:active {
@@ -323,21 +314,36 @@ governing permissions and limitations under the License.
         var(--spectrum-sidenav-icon-spacing)
     );
 }
-#item-link:hover {
-    background-color: var(
-        --highcontrast-sidenav-background-hover,
-        var(
-            --mod-sidenav-background-hover,
-            var(--spectrum-sidenav-background-hover)
-        )
-    );
-    color: var(
-        --highcontrast-sidenav-content-color-hover,
-        var(
-            --mod-sidenav-content-color-hover,
-            var(--spectrum-sidenav-content-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([selected]) #item-link:hover {
+        background-color: var(
+            --highcontrast-sidenav-background-hover-selected,
+            var(
+                --mod-sidenav-background-hover-selected,
+                var(--spectrum-sidenav-background-hover-selected)
+            )
+        );
+        color: var(
+            --mod-sidenav-content-color-hover-selected,
+            var(--spectrum-sidenav-content-color-hover-selected)
+        );
+    }
+    #item-link:hover {
+        background-color: var(
+            --highcontrast-sidenav-background-hover,
+            var(
+                --mod-sidenav-background-hover,
+                var(--spectrum-sidenav-background-hover)
+            )
+        );
+        color: var(
+            --highcontrast-sidenav-content-color-hover,
+            var(
+                --mod-sidenav-content-color-hover,
+                var(--spectrum-sidenav-content-color-hover)
+            )
+        );
+    }
 }
 #item-link:active {
     background-color: var(
@@ -426,6 +432,7 @@ governing permissions and limitations under the License.
         forced-color-adjust: preserve-parent-color;
     }
     :host {
+        forced-color-adjust: none;
         --highcontrast-sidenav-content-disabled-color: GrayText;
         --highcontrast-sidenav-focus-ring-color: Highlight;
         --highcontrast-sidenav-content-color-default-selected: SelectedItemText;
@@ -440,6 +447,5 @@ governing permissions and limitations under the License.
         --highcontrast-sidenav-top-level-font-color: ButtonText;
         --highcontrast-sidenav-content-color-default: ButtonText;
         --highcontrast-sidenav-content-color-down: HighlightText;
-        forced-color-adjust: none;
     }
 }
