@@ -1,9 +1,12 @@
 {
     "ci": {
         "collect": {
-            "numberOfRuns": 1,
-            "settings": {
-                "configPath": ".github/lighthouse/lighthouse-config.cjs"
+            "numberOfRuns": 1
+        },
+        "assert": {
+            "preset": "lighthouse:recommended",
+            "assertions": {
+                "render-blocking-resources": ["warn", { "numericValue": 0 }]
             }
         }
     }

@@ -97,8 +97,8 @@ jobs:
                   urls: |
                       ${{ steps.docsURL.outputs.docsURL }}
                   configPath: '.github/lighthouse/lighthouserc.json'
-                  uploadArtifacts: true # save results as an action artifacts
-                  temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+                  uploadArtifacts: true
+                  temporaryPublicStorage: true
     compare-firefox:
         name: Compare performance to latest release on Firefox
 
