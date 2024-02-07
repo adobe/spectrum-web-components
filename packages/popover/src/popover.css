@@ -12,8 +12,6 @@ governing permissions and limitations under the License.
 @import url('./spectrum-popover.css');
 
 :host {
-    --sp-popover-tip-size: 24px;
-
     min-width: min-content;
     max-height: 100%;
     max-width: 100%;
@@ -36,14 +34,9 @@ governing permissions and limitations under the License.
     right: auto;
 }
 
-.block {
-    width: 100%;
-    height: 50%;
-    display: block;
-}
-
+.block,
 .inline {
-    width: 50%;
+    width: 100%;
     height: 100%;
     display: block;
 }
