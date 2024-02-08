@@ -32,3 +32,7 @@ governing permissions and limitations under the License.
     transition-delay: 0s;
     visibility: visible;
 }
+
+.type {
+    display: block;
+}
