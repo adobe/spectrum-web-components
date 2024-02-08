@@ -4,8 +4,8 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/coach-indicator?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/coach-indicator)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/coach-indicator?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/coach-indicator)
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/coachmark?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/coachmark)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/coachmark?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/coachmark)
 
 ```
 yarn add @spectrum-web-components/coachmark
