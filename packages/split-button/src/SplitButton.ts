@@ -146,9 +146,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                     class="button trigger ${this.variant}"
                     @blur=${this.handleButtonBlur}
+                    @click=${this.handleActivate}
                     @pointerdown=${this.handleButtonPointerdown}
                     @focus=${this.handleButtonFocus}
-                    @click=${this.handleButtonClick}
                     @keydown=${{
                         handleEvent: this.handleEnterKeydown,
                         capture: true,

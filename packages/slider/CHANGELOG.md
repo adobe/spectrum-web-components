@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **slider:** reimplement gradient slider track application ([a10b91e](https://github.com/adobe/spectrum-web-components/commit/a10b91ed168ba58f02349e05e1c49898e8686206))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **slider:** add "fill-start" attribute/property and associated "variant="filled" visual delivery ([#3876](https://github.com/adobe/spectrum-web-components/issues/3876)) ([2c3e35e](https://github.com/adobe/spectrum-web-components/commit/2c3e35e858bbc10f162f719ada1356c516111050))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
 ## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
 
 ### Bug Fixes

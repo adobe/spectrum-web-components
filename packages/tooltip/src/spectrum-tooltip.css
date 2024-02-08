@@ -12,18 +12,25 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #tooltip {
-    --spectrum-overlay-animation-distance: 6px;
-    --spectrum-overlay-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --spectrum-overlay-animation-duration-opened: var(
-        --spectrum-animation-duration-0
-    );
     opacity: 0;
     pointer-events: none;
-    transition: transform var(--spectrum-overlay-animation-duration) ease-in-out,
-        opacity var(--spectrum-overlay-animation-duration) ease-in-out,
-        visibility 0s linear var(--spectrum-overlay-animation-duration);
+    transition: transform
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        opacity
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        visibility 0s linear
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            );
     visibility: hidden;
 }
 :host([open]) #tooltip {
@@ -31,7 +38,7 @@ governing permissions and limitations under the License.
     pointer-events: auto;
     transition-delay: var(
         --mod-overlay-animation-duration-opened,
-        var(--spectrum-overlay-animation-duration-opened)
+        var(--spectrum-animation-duration-0, 0s)
     );
     visibility: visible;
 }
@@ -94,16 +101,14 @@ governing permissions and limitations under the License.
         border: 1px solid #0000;
     }
     #tip {
+        forced-color-adjust: none;
         --highcontrast-tooltip-background-color-default: CanvasText;
         --highcontrast-tooltip-background-color-informative: CanvasText;
         --highcontrast-tooltip-background-color-positive: CanvasText;
         --highcontrast-tooltip-background-color-negative: CanvasText;
-        forced-color-adjust: none;
     }
 }
 #tooltip {
-    -webkit-font-smoothing: antialiased;
-    align-items: center;
     background-color: var(
         --highcontrast-tooltip-background-color-default,
         var(
@@ -121,8 +126,6 @@ governing permissions and limitations under the License.
         --mod-tooltip-content-color,
         var(--spectrum-tooltip-content-color)
     );
-    display: inline-flex;
-    flex-direction: row;
     font-size: var(--mod-tooltip-font-size, var(--spectrum-tooltip-font-size));
     font-weight: var(
         --mod-tooltip-font-weight,
@@ -142,9 +145,13 @@ governing permissions and limitations under the License.
         --mod-tooltip-spacing-inline,
         var(--spectrum-tooltip-spacing-inline)
     );
-    position: relative;
     vertical-align: top;
     word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    position: relative;
 }
 :host(:lang(ja)) #tooltip,
 :host(:lang(ko)) #tooltip,

@@ -263,6 +263,7 @@
     );
     --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-border-color-disabled: transparent;
 }
+
 :host,
 :root {
     --system-spectrum-actiongroup-gap-size-compact: 0;
@@ -1022,6 +1023,7 @@
     --system-spectrum-checkbox-control-color-down: var(--spectrum-gray-800);
     --system-spectrum-checkbox-control-color-focus: var(--spectrum-gray-700);
 }
+
 :host,
 :root {
     --system-spectrum-closebutton-background-color-default: transparent;
@@ -1034,6 +1036,17 @@
     --system-spectrum-closebutton-background-color-focus: var(
         --spectrum-gray-200
     );
+}
+
+:host,
+:root {
+    --system-spectrum-combobox-border-color-default: var(--spectrum-gray-500);
+    --system-spectrum-combobox-border-color-hover: var(--spectrum-gray-600);
+    --system-spectrum-combobox-border-color-focus: var(--spectrum-gray-500);
+    --system-spectrum-combobox-border-color-focus-hover: var(
+        --spectrum-gray-600
+    );
+    --system-spectrum-combobox-border-color-key-focus: var(--spectrum-gray-600);
 }
 
 :host,
@@ -1088,7 +1101,9 @@
     --system-spectrum-picker-border-color-hover-open: var(--spectrum-gray-600);
     --system-spectrum-picker-border-color-active: var(--spectrum-gray-700);
     --system-spectrum-picker-border-color-key-focus: var(--spectrum-gray-600);
+    --system-spectrum-picker-border-width: var(--spectrum-border-width-100);
 }
+
 :host,
 :root {
     --system-spectrum-pickerbutton-spectrum-picker-button-background-color: var(
@@ -1113,6 +1128,7 @@
         --spectrum-border-width-100
     );
 }
+
 :host,
 :root {
     --system-spectrum-popover-border-width: var(--spectrum-border-width-100);
@@ -1139,6 +1155,7 @@
         --spectrum-accent-color-1000
     );
 }
+
 :host,
 :root {
     --system-spectrum-search-border-radius: var(--spectrum-corner-radius-100);
@@ -1288,6 +1305,7 @@
 :root {
     --system-spectrum-tabs-font-weight: var(--spectrum-default-font-weight);
 }
+
 :host,
 :root {
     --system-spectrum-tag-border-color: var(--spectrum-gray-700);
@@ -1363,6 +1381,7 @@
         --spectrum-component-edge-to-visual-200
     );
 }
+
 :host,
 :root {
     --system-spectrum-textfield-border-color: var(--spectrum-gray-500);
@@ -1383,6 +1402,7 @@
         --spectrum-neutral-subdued-background-color-default
     );
 }
+
 :host,
 :root {
     --system-spectrum-tooltip-backgound-color-default-neutral: var(

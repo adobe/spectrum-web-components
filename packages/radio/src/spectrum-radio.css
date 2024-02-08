@@ -171,33 +171,6 @@ governing permissions and limitations under the License.
     position: relative;
     vertical-align: top;
 }
-:host(:hover) #button:before {
-    border-color: var(
-        --highcontrast-radio-button-border-color-hover,
-        var(
-            --mod-radio-button-border-color-hover,
-            var(--spectrum-radio-button-border-color-hover)
-        )
-    );
-}
-:host([checked]:hover) #input + #button:before {
-    border-color: var(
-        --highcontrast-radio-button-checked-border-color-hover,
-        var(
-            --mod-radio-button-checked-border-color-hover,
-            var(--spectrum-radio-button-checked-border-color-hover)
-        )
-    );
-}
-:host(:hover) #label {
-    color: var(
-        --highcontrast-radio-neutral-content-color-hover,
-        var(
-            --mod-radio-neutral-content-color-hover,
-            var(--spectrum-radio-neutral-content-color-hover)
-        )
-    );
-}
 :host(:active) #button:before {
     border-color: var(
         --highcontrast-radio-button-border-color-down,
@@ -348,14 +321,43 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized][checked]:hover) #input + #button:before {
-    border-color: var(
-        --highcontrast-radio-emphasized-accent-color-hover,
-        var(
-            --mod-radio-emphasized-accent-color-hover,
-            var(--spectrum-radio-emphasized-accent-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:hover) #button:before {
+        border-color: var(
+            --highcontrast-radio-button-border-color-hover,
+            var(
+                --mod-radio-button-border-color-hover,
+                var(--spectrum-radio-button-border-color-hover)
+            )
+        );
+    }
+    :host([checked]:hover) #input + #button:before {
+        border-color: var(
+            --highcontrast-radio-button-checked-border-color-hover,
+            var(
+                --mod-radio-button-checked-border-color-hover,
+                var(--spectrum-radio-button-checked-border-color-hover)
+            )
+        );
+    }
+    :host(:hover) #label {
+        color: var(
+            --highcontrast-radio-neutral-content-color-hover,
+            var(
+                --mod-radio-neutral-content-color-hover,
+                var(--spectrum-radio-neutral-content-color-hover)
+            )
+        );
+    }
+    :host([emphasized][checked]:hover) #input + #button:before {
+        border-color: var(
+            --highcontrast-radio-emphasized-accent-color-hover,
+            var(
+                --mod-radio-emphasized-accent-color-hover,
+                var(--spectrum-radio-emphasized-accent-color-hover)
+            )
+        );
+    }
 }
 :host([emphasized]:active[checked]) #input + #button:before {
     border-color: var(

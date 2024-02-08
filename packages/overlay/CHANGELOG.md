@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **overlay:** clean position data on close ([edac590](https://github.com/adobe/spectrum-web-components/commit/edac59003ecc1af8dc4aa91c00c9593e8792e63f))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **overlay:** automatically reposition overlay when the contents resize ([83be807](https://github.com/adobe/spectrum-web-components/commit/83be807996ace4609486cc9d3bbf1723b3a531ad))
+-   **overlay:** move closed overlays to "display: none" ([fc0278b](https://github.com/adobe/spectrum-web-components/commit/fc0278b917759ed58c3ac62a6e962633914481c0))
+-   **overlay:** normalize popover toggling between native and synthetic [popover] usage ([26fa692](https://github.com/adobe/spectrum-web-components/commit/26fa6925f7f88959ba4d969c882daf7cb881c2d4))
+-   **overlay:** support positioning overlays within parents leveraging container-type rules ([21044b3](https://github.com/adobe/spectrum-web-components/commit/21044b3c8b5bed0af02f836b6ee6796554a90325))
+-   **overlay:** surface "overlay" property to "sp-opened" and "sp-closed" events ([957f8e9](https://github.com/adobe/spectrum-web-components/commit/957f8e9b42f5ad4672fe128fc42693d0065bb2d5))
+
 ## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

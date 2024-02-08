@@ -237,25 +237,10 @@ governing permissions and limitations under the License.
     margin-block: auto;
     position: absolute;
 }
-#textfield:hover .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-hover,
-        var(--mod-search-color-hover, var(--spectrum-search-color-hover))
-    );
-}
 #textfield.is-focused .icon-search {
     --spectrum-search-color: var(
         --highcontrast-search-color-focus,
         var(--mod-search-color-focus, var(--spectrum-search-color-focus))
-    );
-}
-#textfield.is-focused:hover .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-focus,
-        var(
-            --mod-search-color-focus-hover,
-            var(--spectrum-search-color-focus-hover)
-        )
     );
 }
 #textfield.is-keyboardFocused .icon-search {
@@ -267,15 +252,46 @@ governing permissions and limitations under the License.
         )
     );
 }
-#textfield.is-disabled .icon-search,
-#textfield.is-disabled:hover .icon-search {
+#textfield.is-disabled .icon-search {
     --spectrum-search-color: var(
         --highcontrast-search-color-disabled,
         var(--mod-search-color-disabled, var(--spectrum-search-color-disabled))
     );
 }
+@media (hover: hover) {
+    #textfield:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-hover,
+            var(--mod-search-color-hover, var(--spectrum-search-color-hover))
+        );
+    }
+    #textfield.is-focused:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-focus,
+            var(
+                --mod-search-color-focus-hover,
+                var(--spectrum-search-color-focus-hover)
+            )
+        );
+    }
+    #textfield.is-disabled:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-disabled,
+            var(
+                --mod-search-color-disabled,
+                var(--spectrum-search-color-disabled)
+            )
+        );
+    }
+}
 .input {
     -webkit-appearance: none;
+}
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+.input {
     block-size: var(--mod-search-block-size, var(--spectrum-search-block-size));
     font-style: var(--mod-search-font-style, var(--spectrum-search-font-style));
     line-height: var(
@@ -290,10 +306,6 @@ governing permissions and limitations under the License.
         var(--mod-search-top-to-text, var(--spectrum-search-top-to-text)) -
             var(--mod-search-border-width, var(--spectrum-search-border-width))
     );
-}
-.input::-webkit-search-cancel-button,
-.input::-webkit-search-decoration {
-    -webkit-appearance: none;
 }
 :host(:not([quiet])) #textfield .icon-search {
     inset-inline-start: var(

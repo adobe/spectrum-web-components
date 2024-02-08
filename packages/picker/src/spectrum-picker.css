@@ -12,62 +12,77 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    align-items: center;
     -webkit-appearance: button;
     cursor: pointer;
-    display: inline-flex;
     font-family: var(
-        --mod-sans-font-family-stack,
-        var(--spectrum-sans-font-family-stack)
+        --mod-button-font-family,
+        var(
+            --mod-sans-font-family-stack,
+            var(--spectrum-sans-font-family-stack)
+        )
     );
-    justify-content: center;
-    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
-    margin: 0;
-    overflow: visible;
-    position: relative;
-    -webkit-text-decoration: none;
-    text-decoration: none;
+    line-height: var(
+        --mod-button-line-height,
+        var(--mod-line-height-100, var(--spectrum-line-height-100))
+    );
     text-transform: none;
     transition: background
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         border-color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         box-shadow
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out;
     -webkit-user-select: none;
     user-select: none;
     vertical-align: top;
-}
-#button:focus {
-    outline: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0;
+    overflow: visible;
+    position: relative;
+    -webkit-text-decoration: none;
+    text-decoration: none;
 }
 #button::-moz-focus-inner {
     border: 0;
     margin-block: -2px;
     padding: 0;
 }
-#button:disabled {
-    cursor: default;
+#button:focus {
+    outline: none;
 }
 :host {
     --spectrum-picker-font-size: var(--spectrum-font-size-100);
@@ -122,6 +137,8 @@ governing permissions and limitations under the License.
     --spectrum-picker-spacing-edge-to-disclosure-icon-quiet: var(
         --spectrum-picker-end-edge-to-disclousure-icon-quiet
     );
+}
+:host {
     --spectrum-picker-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -313,48 +330,32 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
-        --highcontrast-picker-focus-indicator-color: CanvasText;
-        --highcontrast-picker-border-color-default: ButtonText;
-        --highcontrast-picker-border-color-active: ButtonText;
-        --highcontrast-picker-border-color-key-focus: Highlight;
-        --highcontrast-picker-border-color-error-default-open: ButtonText;
-        --highcontrast-picker-border-color-error-hover: ButtonText;
-        --highcontrast-picker-border-color-error-active: ButtonText;
-        --highcontrast-picker-font-color-default: ButtonText;
-        --highcontrast-picker-font-color-default-open: ButtonText;
-        --highcontrast-picker-font-color-key-focus: ButtonText;
-        --highcontrast-picker-font-color-disabled: GrayText;
-        --highcontrast-picker-background-color-default: Background;
-        --highcontrast-picker-background-color-disabled: Background;
-        --highcontrast-picker-icon-color-default: ButtonText;
-        --highcontrast-picker-icon-color-default-open: ButtonText;
-        --highcontrast-picker-icon-color-hover: ButtonText;
-        --highcontrast-picker-icon-color-hover-open: ButtonText;
-        --highcontrast-picker-icon-color-key-focus: Highlight;
-        --highcontrast-picker-icon-color-error-default: ButtonText;
+        --highcontrast-picker-focus-indicator-color: Highlight;
+        --highcontrast-picker-border-color-default: ButtonBorder;
+        --highcontrast-picker-border-color-hover: Highlight;
+        --highcontrast-picker-border-color-disabled: GrayText;
+        --highcontrast-picker-content-color-default: ButtonText;
+        --highcontrast-picker-content-color-disabled: GrayText;
+        --highcontrast-picker-background-color: ButtonFace;
     }
-    #button:disabled,
-    :host([disabled]) #button {
-        border-color: GrayText;
-        border-width: var(
-            --mod-picker-border-width,
-            var(--spectrum-picker-border-width)
-        );
+    #button.focus-visible,
+    #button.is-keyboardFocused {
+        --highcontrast-picker-border-color-hover: ButtonText;
     }
-    :host([quiet]) #button.focus-visible,
-    :host([quiet][focused]) #button {
+    #button.is-keyboardFocused,
+    #button:focus-visible {
+        --highcontrast-picker-border-color-hover: ButtonText;
+    }
+    #button:after {
         forced-color-adjust: none;
-        outline: 0;
     }
-    :host([quiet]) #button:focus-visible,
-    :host([quiet][focused]) #button {
+    #button .label {
         forced-color-adjust: none;
-        outline: 0;
     }
 }
 #button {
     background-color: var(
-        --highcontrast-picker-background-color-default,
+        --highcontrast-picker-background-color,
         var(
             --mod-picker-background-color-default,
             var(--spectrum-picker-background-color-default)
@@ -379,7 +380,7 @@ governing permissions and limitations under the License.
     );
     box-sizing: border-box;
     color: var(
-        --highcontrast-picker-font-color-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-default,
             var(--spectrum-picker-font-color-default)
@@ -496,48 +497,16 @@ governing permissions and limitations under the License.
     pointer-events: none;
     position: absolute;
 }
-#button:hover {
-    background-color: var(
-        --highcontrast-picker-background-color-default,
-        var(
-            --mod-picker-background-color-hover,
-            var(--spectrum-picker-background-color-hover)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-default,
-        var(
-            --mod-picker-border-color-hover,
-            var(--spectrum-picker-border-color-hover)
-        )
-    );
-    color: var(
-        --highcontrast-picker-font-color-default,
-        var(
-            --mod-picker-font-color-hover,
-            var(--spectrum-picker-font-color-hover)
-        )
-    );
-}
-#button:hover .picker {
-    color: var(
-        --highcontrast-picker-icon-color-hover,
-        var(
-            --mod-picker-icon-color-hover,
-            var(--spectrum-picker-icon-color-hover)
-        )
-    );
-}
 #button:active {
     background-color: var(
-        --highcontrast-picker-background-active,
+        --highcontrast-picker-background-color,
         var(
             --mod-picker-background-color-active,
             var(--spectrum-picker-background-color-active)
         )
     );
     border-color: var(
-        --highcontrast-picker-border-color-active,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-active,
             var(--spectrum-picker-border-color-active)
@@ -549,7 +518,7 @@ governing permissions and limitations under the License.
 }
 #button:active.placeholder .label {
     color: var(
-        --highcontrast-picker-font-color-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-active,
             var(--spectrum-picker-font-color-active)
@@ -557,27 +526,23 @@ governing permissions and limitations under the License.
     );
 }
 #button.focus-visible,
-:host([focused]) #button {
+#button.is-keyboardFocused {
     background-color: var(
-        --highcontrast-picker-background-color-default,
+        --highcontrast-picker-background-color,
         var(
             --mod-picker-background-color-key-focus,
             var(--spectrum-picker-background-color-key-focus)
         )
     );
     border-color: var(
-        --highcontrast-picker-border-color-key-focus,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-color-key-focus,
             var(--spectrum-picker-border-color-key-focus)
         )
     );
-    border-width: var(
-        --mod-picker-border-width,
-        var(--spectrum-picker-border-width)
-    );
     color: var(
-        --highcontrast-picker-font-color-key-focus,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-key-focus,
             var(--spectrum-picker-font-color-key-focus)
@@ -585,28 +550,24 @@ governing permissions and limitations under the License.
     );
     outline: none;
 }
-#button:focus-visible,
-:host([focused]) #button {
+#button.is-keyboardFocused,
+#button:focus-visible {
     background-color: var(
-        --highcontrast-picker-background-color-default,
+        --highcontrast-picker-background-color,
         var(
             --mod-picker-background-color-key-focus,
             var(--spectrum-picker-background-color-key-focus)
         )
     );
     border-color: var(
-        --highcontrast-picker-border-color-key-focus,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-color-key-focus,
             var(--spectrum-picker-border-color-key-focus)
         )
     );
-    border-width: var(
-        --mod-picker-border-width,
-        var(--spectrum-picker-border-width)
-    );
     color: var(
-        --highcontrast-picker-font-color-key-focus,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-key-focus,
             var(--spectrum-picker-font-color-key-focus)
@@ -615,7 +576,7 @@ governing permissions and limitations under the License.
     outline: none;
 }
 #button.focus-visible:after,
-:host([focused]) #button:after {
+#button.is-keyboardFocused:after {
     border-color: var(
         --highcontrast-picker-focus-indicator-color,
         var(
@@ -624,8 +585,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-#button:focus-visible:after,
-:host([focused]) #button:after {
+#button.is-keyboardFocused:after,
+#button:focus-visible:after {
     border-color: var(
         --highcontrast-picker-focus-indicator-color,
         var(
@@ -635,19 +596,19 @@ governing permissions and limitations under the License.
     );
 }
 #button.focus-visible.placeholder,
-:host([focused]) #button.placeholder {
+#button.is-keyboardFocused.placeholder {
     color: var(
-        --highcontrast-picker-font-color-key-focus,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-key-focus,
             var(--spectrum-picker-font-color-key-focus)
         )
     );
 }
-#button:focus-visible.placeholder,
-:host([focused]) #button.placeholder {
+#button.is-keyboardFocused.placeholder,
+#button:focus-visible.placeholder {
     color: var(
-        --highcontrast-picker-font-color-key-focus,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-key-focus,
             var(--spectrum-picker-font-color-key-focus)
@@ -655,93 +616,75 @@ governing permissions and limitations under the License.
     );
 }
 #button.focus-visible .picker,
-:host([focused]) #button .picker {
+#button.is-keyboardFocused .picker {
     color: var(
-        --highcontrast-picker-icon-color-key-focus,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-icon-color-key-focus,
             var(--spectrum-picker-icon-color-key-focus)
         )
     );
 }
-#button:focus-visible .picker,
-:host([focused]) #button .picker {
+#button.is-keyboardFocused .picker,
+#button:focus-visible .picker {
     color: var(
-        --highcontrast-picker-icon-color-key-focus,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-icon-color-key-focus,
             var(--spectrum-picker-icon-color-key-focus)
         )
     );
 }
-:host([invalid]) #button {
+:host([invalid]) #button:not(:disabled, .is-disabled) {
     border-color: var(
-        --highcontrast-picker-border-color-error-default,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-color-error-default,
             var(--spectrum-picker-border-color-error-default)
         )
     );
 }
-:host([invalid]) #button .validation-icon {
+:host([invalid]) #button:not(:disabled, .is-disabled) .validation-icon {
     color: var(
-        --highcontrast-picker-icon-color-error-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-icon-color-error,
             var(--spectrum-picker-icon-color-error)
         )
     );
 }
-:host([invalid]) #button:hover {
+:host([invalid]) #button:not(:disabled, .is-disabled):active {
     border-color: var(
-        --highcontrast-picker-border-color-error-hover,
-        var(
-            --mod-picker-border-color-error-hover,
-            var(--spectrum-picker-border-color-error-hover)
-        )
-    );
-}
-:host([invalid]) #button:active {
-    border-color: var(
-        --highcontrast-picker-border-color-error-active,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-color-error-active,
             var(--spectrum-picker-border-color-error-active)
         )
     );
 }
-:host([invalid][open]) #button {
+:host([invalid][open]) #button:not(:disabled, .is-disabled) {
     border-color: var(
-        --highcontrast-picker-border-color-error-default-open,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-color-error-default-open,
             var(--spectrum-picker-border-color-error-default-open)
         )
     );
 }
-:host([invalid][open]) #button:hover {
+:host([invalid]) #button:not(:disabled, .is-disabled).focus-visible,
+:host([invalid]) #button:not(:disabled, .is-disabled).is-keyboardFocused {
     border-color: var(
-        --highcontrast-picker-border-color-error-hover-open,
-        var(
-            --mod-picker-border-color-error-hover-open,
-            var(--spectrum-picker-border-color-error-hover-open)
-        )
-    );
-}
-:host([invalid]) #button.focus-visible,
-:host([invalid][focused]) #button {
-    border-color: var(
-        --highcontrast-picker-border-color-error-default,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-color-error-key-focus,
             var(--spectrum-picker-border-color-error-key-focus)
         )
     );
 }
-:host([invalid]) #button:focus-visible,
-:host([invalid][focused]) #button {
+:host([invalid]) #button:not(:disabled, .is-disabled).is-keyboardFocused,
+:host([invalid]) #button:not(:disabled, .is-disabled):focus-visible {
     border-color: var(
-        --highcontrast-picker-border-color-error-default,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-color-error-key-focus,
             var(--spectrum-picker-border-color-error-key-focus)
@@ -750,7 +693,7 @@ governing permissions and limitations under the License.
 }
 #button.is-loading .picker {
     color: var(
-        --highcontrast-picker-icon-color-disabled,
+        --highcontrast-picker-content-color-disabled,
         var(
             --mod-picker-icon-color-disabled,
             var(--spectrum-picker-icon-color-disabled)
@@ -760,19 +703,15 @@ governing permissions and limitations under the License.
 #button:disabled,
 :host([disabled]) #button {
     background-color: var(
-        --highcontrast-picker-background-color-disabled,
+        --highcontrast-picker-background-color,
         var(
             --mod-picker-background-color-disabled,
             var(--spectrum-picker-background-color-disabled)
         )
     );
-    border-color: #0000;
-    border-width: var(
-        --mod-picker-border-width,
-        var(--spectrum-picker-border-width)
-    );
+    border-color: var(--highcontrast-picker-border-color-disabled, transparent);
     color: var(
-        --highcontrast-picker-font-color-disabled,
+        --highcontrast-picker-content-color-disabled,
         var(
             --mod-picker-font-color-disabled,
             var(--spectrum-picker-font-color-disabled)
@@ -787,7 +726,7 @@ governing permissions and limitations under the License.
 :host([disabled]) #button .picker,
 :host([disabled]) #button .validation-icon {
     color: var(
-        --highcontrast-picker-icon-color-disabled,
+        --highcontrast-picker-content-color-disabled,
         var(
             --mod-picker-icon-color-disabled,
             var(--spectrum-picker-icon-color-disabled)
@@ -797,7 +736,7 @@ governing permissions and limitations under the License.
 #button:disabled .label.placeholder,
 :host([disabled]) #button .label.placeholder {
     color: var(
-        --highcontrast-picker-font-color-disabled,
+        --highcontrast-picker-content-color-disabled,
         var(
             --mod-picker-font-color-disabled,
             var(--spectrum-picker-font-color-disabled)
@@ -811,81 +750,37 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-spacing-text-to-icon)
     );
 }
-:host([open]) #button {
+:host([open]) #button:not(.spectrum-Picker--quiet) {
     background-color: var(
-        --highcontrast-picker-background-default-open,
+        --highcontrast-picker-background-color,
         var(
             --mod-picker-background-color-default-open,
             var(--spectrum-picker-background-color-default-open)
         )
     );
     border-color: var(
-        --highcontrast-picker-border-color-default-open,
+        --highcontrast-picker-border-color-default,
         var(
             --mod-picker-border-default-open,
             var(--spectrum-picker-border-color-default-open)
         )
     );
     color: var(
-        --highcontrast-picker-font-color-default-open,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-default-open,
             var(--spectrum-picker-font-color-default-open)
         )
     );
 }
-:host([open]) #button:hover {
-    background-color: var(
-        --highcontrast-picker-background-color-hover-open,
-        var(
-            --mod-picker-background-color-hover-open,
-            var(--spectrum-picker-background-color-hover-open)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-hover-open,
-        var(
-            --mod-picker-border-color-hover-open,
-            var(--spectrum-picker-border-color-hover-open)
-        )
-    );
+:host([open]) #button:not(.spectrum-Picker--quiet) .picker {
     color: var(
-        --highcontrast-picker-font-color-default,
-        var(
-            --mod-picker-font-color-hover-open,
-            var(--spectrum-picker-font-color-hover-open)
-        )
-    );
-}
-:host([open]) #button:hover .picker {
-    color: var(
-        --highcontrast-picker-icon-color-hover-open,
-        var(
-            --mod-picker-icon-color-hover-open,
-            var(--spectrum-picker-icon-color-hover-open)
-        )
-    );
-}
-:host([open]) #button .picker {
-    color: var(
-        --highcontrast-picker-icon-color-default-open,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-icon-color-default-open,
             var(--spectrum-picker-icon-color-default-open)
         )
     );
-}
-:host([quiet]) #button {
-    inline-size: auto;
-    min-inline-size: 0;
-}
-:host([quiet]) #button:disabled.focus-visible,
-:host([quiet][disabled]) #button.focus-visible {
-    border-color: #0000;
-}
-:host([quiet]) #button:disabled:focus-visible,
-:host([quiet][disabled]) #button:focus-visible {
-    border-color: #0000;
 }
 .label {
     flex: auto;
@@ -916,7 +811,7 @@ governing permissions and limitations under the License.
 }
 .label.placeholder {
     color: var(
-        --highcontrast-picker-font-color-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-default,
             var(--spectrum-picker-font-color-default)
@@ -937,18 +832,9 @@ governing permissions and limitations under the License.
         )
         ease-in-out;
 }
-.label.placeholder:hover {
-    color: var(
-        --highcontrast-picker-font-color-default,
-        var(
-            --mod-picker-font-color-hover,
-            var(--spectrum-picker-font-color-hover)
-        )
-    );
-}
 .label.placeholder:active {
     color: var(
-        --highcontrast-picker-font-color-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-active,
             var(--spectrum-picker-font-color-active)
@@ -957,7 +843,7 @@ governing permissions and limitations under the License.
 }
 .picker {
     color: var(
-        --highcontrast-picker-icon-color-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-icon-color-default,
             var(--spectrum-picker-icon-color-default)
@@ -984,7 +870,7 @@ governing permissions and limitations under the License.
 }
 .picker:active {
     color: var(
-        --highcontrast-picker-icon-color-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-icon-color-active,
             var(--spectrum-picker-icon-color-active)
@@ -1037,22 +923,24 @@ governing permissions and limitations under the License.
     );
 }
 :host([quiet]) #button {
-    background-color: #0000;
+    background-color: var(--highcontrast-picker-background-color, transparent);
     border: none;
     border-radius: 0;
     color: var(
-        --highcontrast-picker-font-color-default,
+        --highcontrast-picker-content-color-default,
         var(
             --mod-picker-font-color-default,
             var(--spectrum-picker-font-color-default)
         )
     );
+    inline-size: auto;
     margin-block-start: calc(
         var(
                 --mod-picker-spacing-label-to-picker-quiet,
                 var(--spectrum-picker-spacing-label-to-picker-quiet)
             ) + 1px
     );
+    min-inline-size: 0;
     padding-inline: var(
         --mod-picker-spacing-edge-to-text-quiet,
         var(--spectrum-picker-spacing-edge-to-text-quiet)
@@ -1074,19 +962,115 @@ governing permissions and limitations under the License.
     border: none;
     inline-size: auto;
 }
-:host([quiet]) #button:hover {
-    background-color: #0000;
+@media (hover: hover) {
+    #button:hover .picker {
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-icon-color-hover,
+                var(--spectrum-picker-icon-color-hover)
+            )
+        );
+    }
+    :host([invalid]) #button:not(:disabled, .is-disabled):hover {
+        border-color: var(
+            --highcontrast-picker-border-color-hover,
+            var(
+                --mod-picker-border-color-error-hover,
+                var(--spectrum-picker-border-color-error-hover)
+            )
+        );
+    }
+    :host([invalid][open]) #button:not(:disabled, .is-disabled):hover {
+        border-color: var(
+            --highcontrast-picker-border-color-hover,
+            var(
+                --mod-picker-border-color-error-hover-open,
+                var(--spectrum-picker-border-color-error-hover-open)
+            )
+        );
+    }
+    :host([open]) #button:not(.spectrum-Picker--quiet):hover .picker {
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-icon-color-hover-open,
+                var(--spectrum-picker-icon-color-hover-open)
+            )
+        );
+    }
+    .label.placeholder:hover {
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-font-color-hover,
+                var(--spectrum-picker-font-color-hover)
+            )
+        );
+    }
+    #button:hover {
+        background-color: var(
+            --highcontrast-picker-background-color,
+            var(
+                --mod-picker-background-color-hover,
+                var(--spectrum-picker-background-color-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-picker-border-color-hover,
+            var(
+                --mod-picker-border-color-hover,
+                var(--spectrum-picker-border-color-hover)
+            )
+        );
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-font-color-hover,
+                var(--spectrum-picker-font-color-hover)
+            )
+        );
+    }
+    :host([open]) #button:not(.spectrum-Picker--quiet):hover {
+        background-color: var(
+            --highcontrast-picker-background-color,
+            var(
+                --mod-picker-background-color-hover-open,
+                var(--spectrum-picker-background-color-hover-open)
+            )
+        );
+        border-color: var(
+            --highcontrast-picker-border-color-hover,
+            var(
+                --mod-picker-border-color-hover-open,
+                var(--spectrum-picker-border-color-hover-open)
+            )
+        );
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-font-color-hover-open,
+                var(--spectrum-picker-font-color-hover-open)
+            )
+        );
+    }
+    :host([quiet]) #button:hover {
+        background-color: var(
+            --highcontrast-picker-background-color,
+            transparent
+        );
+    }
 }
 :host([quiet]) #button.focus-visible,
-:host([quiet][focused]) #button {
-    background-color: #0000;
+:host([quiet]) #button.is-keyboardFocused {
+    background-color: var(--highcontrast-picker-background-color, transparent);
 }
-:host([quiet]) #button:focus-visible,
-:host([quiet][focused]) #button {
-    background-color: #0000;
+:host([quiet]) #button.is-keyboardFocused,
+:host([quiet]) #button:focus-visible {
+    background-color: var(--highcontrast-picker-background-color, transparent);
 }
 :host([quiet]) #button.focus-visible:after,
-:host([quiet][focused]) #button:after {
+:host([quiet]) #button.is-keyboardFocused:after {
     border: none;
     border-radius: 0;
     box-shadow: 0
@@ -1116,8 +1100,8 @@ governing permissions and limitations under the License.
         )
         0;
 }
-:host([quiet]) #button:focus-visible:after,
-:host([quiet][focused]) #button:after {
+:host([quiet]) #button.is-keyboardFocused:after,
+:host([quiet]) #button:focus-visible:after {
     border: none;
     border-radius: 0;
     box-shadow: 0
@@ -1149,11 +1133,11 @@ governing permissions and limitations under the License.
 }
 :host([quiet]) #button:active,
 :host([quiet][open]) #button {
-    background-color: #0000;
+    background-color: var(--highcontrast-picker-background-color, transparent);
 }
 :host([quiet]) #button:disabled,
 :host([quiet][disabled]) #button {
-    background-color: #0000;
+    background-color: var(--highcontrast-picker-background-color, transparent);
 }
 .spectrum-Picker--sideLabel {
     display: inline-flex;
@@ -1196,4 +1180,5 @@ governing permissions and limitations under the License.
     --spectrum-picker-border-color-key-focus: var(
         --system-spectrum-picker-border-color-key-focus
     );
+    --spectrum-picker-border-width: var(--system-spectrum-picker-border-width);
 }

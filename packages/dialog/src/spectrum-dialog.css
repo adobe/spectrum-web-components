@@ -203,8 +203,8 @@ governing permissions and limitations under the License.
     );
 }
 .content {
-    -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
     color: var(
         --mod-dialog-confirm-description-text-color,
         var(--spectrum-dialog-confirm-description-text-color)

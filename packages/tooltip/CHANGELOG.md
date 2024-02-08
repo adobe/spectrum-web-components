@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/tooltip
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/tooltip
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **overlay:** move closed overlays to "display: none" ([fc0278b](https://github.com/adobe/spectrum-web-components/commit/fc0278b917759ed58c3ac62a6e962633914481c0))
+-   **picker:** force close slotted Tooltip elements with disabled when Menu openes ([82c8f12](https://github.com/adobe/spectrum-web-components/commit/82c8f129d8a378f51ca083c4020a15b3cbde1fe7))
+-   **tooltip:** surface "delayed" and "disabled" functionality ([#3882](https://github.com/adobe/spectrum-web-components/issues/3882)) ([ae9fcd2](https://github.com/adobe/spectrum-web-components/commit/ae9fcd2d742ae507c9dcd6c11478a1c8b13d1fc0))
+
 ## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
 
 **Note:** Version bump only for package @spectrum-web-components/tooltip

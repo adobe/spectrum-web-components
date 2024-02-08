@@ -334,8 +334,10 @@ governing permissions and limitations under the License.
 }
 #switch:after {
     border-radius: calc(
-        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) +
-            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap))
+        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
+            2 +
+            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
+            2
     );
     content: '';
     display: block;
@@ -381,97 +383,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover) #input + #switch:before {
-    border-color: var(
-        --highcontrast-switch-handle-border-color-hover,
-        var(
-            --mod-switch-handle-border-color-hover,
-            var(--spectrum-switch-handle-border-color-hover)
-        )
-    );
-    box-shadow: none;
-}
-:host(:hover) #input ~ #label {
-    color: var(
-        --highcontrast-switch-label-color-hover,
-        var(
-            --mod-switch-label-color-hover,
-            var(--spectrum-switch-label-color-hover)
-        )
-    );
-}
-:host([checked]:hover) #input:enabled + #switch {
-    background-color: var(
-        --highcontrast-switch-background-color-selected-hover,
-        var(
-            --mod-switch-background-color-selected-hover,
-            var(--spectrum-switch-background-color-selected-hover)
-        )
-    );
-}
-:host([checked]:hover) #input:enabled + #switch:before {
-    border-color: var(
-        --highcontrast-switch-handle-border-color-selected-hover,
-        var(
-            --mod-switch-handle-border-color-selected-hover,
-            var(--spectrum-switch-handle-border-color-selected-hover)
-        )
-    );
-}
-:host([disabled]:hover) #input + #switch {
-    background-color: var(
-        --highcontrast-switch-background-color-disabled,
-        var(
-            --mod-switch-background-color-disabled,
-            var(--spectrum-switch-background-color-disabled)
-        )
-    );
-}
-:host([disabled]:hover) #input + #switch:before {
-    border-color: var(
-        --highcontrast-switch-handle-border-color-disabled,
-        var(
-            --mod-switch-handle-border-color-disabled,
-            var(--spectrum-switch-handle-border-color-disabled)
-        )
-    );
-}
-:host([disabled]:hover) #input ~ #label {
-    color: var(
-        --highcontrast-switch-label-color-disabled,
-        var(
-            --mod-switch-label-color-disabled,
-            var(--spectrum-switch-label-color-disabled)
-        )
-    );
-}
-:host([disabled][checked]:hover) #input + #switch {
-    background-color: var(
-        --highcontrast-switch-background-color-selected-disabled,
-        var(
-            --mod-switch-background-color-selected-disabled,
-            var(--spectrum-switch-background-color-selected-disabled)
-        )
-    );
-}
-:host([disabled][checked]:hover) #input + #switch:before {
-    border-color: var(
-        --highcontrast-switch-handle-border-color-disabled,
-        var(
-            --mod-switch-handle-border-color-disabled,
-            var(--spectrum-switch-handle-border-color-disabled)
-        )
-    );
-}
-:host([disabled][checked]:hover) #input ~ #label {
-    color: var(
-        --highcontrast-switch-label-color-disabled,
-        var(
-            --mod-switch-label-color-disabled,
-            var(--spectrum-switch-label-color-disabled)
-        )
-    );
-}
 :host(:active) #input + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-down,
@@ -508,8 +419,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input.focus-visible + #switch:after,
-:host(:hover) #input.focus-visible + #switch:after {
+#input.focus-visible + #switch:after {
     box-shadow: 0 0 0
         var(
             --mod-switch-focus-indicator-thickness,
@@ -523,8 +433,7 @@ governing permissions and limitations under the License.
             )
         );
 }
-#input:focus-visible + #switch:after,
-:host(:hover) #input:focus-visible + #switch:after {
+#input:focus-visible + #switch:after {
     box-shadow: 0 0 0
         var(
             --mod-switch-focus-indicator-thickness,
@@ -538,8 +447,7 @@ governing permissions and limitations under the License.
             )
         );
 }
-#input.focus-visible + #switch:before,
-:host(:hover) #input.focus-visible + #switch:before {
+#input.focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-focus,
         var(
@@ -548,8 +456,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input:focus-visible + #switch:before,
-:host(:hover) #input:focus-visible + #switch:before {
+#input:focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-focus,
         var(
@@ -558,8 +465,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([checked]) #input.focus-visible + #switch,
-:host([checked]:hover) #input.focus-visible + #switch {
+:host([checked]) #input.focus-visible + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-focus,
         var(
@@ -568,8 +474,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([checked]) #input:focus-visible + #switch,
-:host([checked]:hover) #input:focus-visible + #switch {
+:host([checked]) #input:focus-visible + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-focus,
         var(
@@ -578,8 +483,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([checked]) #input.focus-visible + #switch:before,
-:host([checked]:hover) #input.focus-visible + #switch:before {
+:host([checked]) #input.focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-focus,
         var(
@@ -588,8 +492,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([checked]) #input:focus-visible + #switch:before,
-:host([checked]:hover) #input:focus-visible + #switch:before {
+:host([checked]) #input:focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-focus,
         var(
@@ -598,8 +501,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input.focus-visible ~ #label,
-:host(:hover) #input.focus-visible ~ #label {
+#input.focus-visible ~ #label {
     color: var(
         --highcontrast-switch-label-color-focus,
         var(
@@ -608,8 +510,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input:focus-visible ~ #label,
-:host(:hover) #input:focus-visible ~ #label {
+#input:focus-visible ~ #label {
     color: var(
         --highcontrast-switch-label-color-focus,
         var(
@@ -617,6 +518,199 @@ governing permissions and limitations under the License.
             var(--spectrum-switch-label-color-focus)
         )
     );
+}
+@media (hover: hover) {
+    :host([disabled][checked]:hover) #input + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-disabled,
+            var(
+                --mod-switch-handle-border-color-disabled,
+                var(--spectrum-switch-handle-border-color-disabled)
+            )
+        );
+    }
+    :host([disabled]:hover) #input + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-disabled,
+            var(
+                --mod-switch-handle-border-color-disabled,
+                var(--spectrum-switch-handle-border-color-disabled)
+            )
+        );
+    }
+    :host([disabled][checked]:hover) #input + #switch {
+        background-color: var(
+            --highcontrast-switch-background-color-selected-disabled,
+            var(
+                --mod-switch-background-color-selected-disabled,
+                var(--spectrum-switch-background-color-selected-disabled)
+            )
+        );
+    }
+    :host([disabled][checked]:hover) #input ~ #label {
+        color: var(
+            --highcontrast-switch-label-color-disabled,
+            var(
+                --mod-switch-label-color-disabled,
+                var(--spectrum-switch-label-color-disabled)
+            )
+        );
+    }
+    :host([checked]:hover) #input.focus-visible + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-selected-focus,
+            var(
+                --mod-switch-handle-border-color-selected-focus,
+                var(--spectrum-switch-handle-border-color-selected-focus)
+            )
+        );
+    }
+    :host([checked]:hover) #input:focus-visible + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-selected-focus,
+            var(
+                --mod-switch-handle-border-color-selected-focus,
+                var(--spectrum-switch-handle-border-color-selected-focus)
+            )
+        );
+    }
+    :host(:hover) #input + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-hover,
+            var(
+                --mod-switch-handle-border-color-hover,
+                var(--spectrum-switch-handle-border-color-hover)
+            )
+        );
+        box-shadow: none;
+    }
+    :host([checked]:hover) #input:enabled + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-selected-hover,
+            var(
+                --mod-switch-handle-border-color-selected-hover,
+                var(--spectrum-switch-handle-border-color-selected-hover)
+            )
+        );
+    }
+    :host([disabled]:hover) #input + #switch {
+        background-color: var(
+            --highcontrast-switch-background-color-disabled,
+            var(
+                --mod-switch-background-color-disabled,
+                var(--spectrum-switch-background-color-disabled)
+            )
+        );
+    }
+    :host([disabled]:hover) #input ~ #label {
+        color: var(
+            --highcontrast-switch-label-color-disabled,
+            var(
+                --mod-switch-label-color-disabled,
+                var(--spectrum-switch-label-color-disabled)
+            )
+        );
+    }
+    :host(:hover) #input.focus-visible + #switch:after {
+        box-shadow: 0 0 0
+            var(
+                --mod-switch-focus-indicator-thickness,
+                var(--spectrum-switch-focus-indicator-thickness)
+            )
+            var(
+                --highcontrast-switch-focus-indicator-color,
+                var(
+                    --mod-switch-focus-indicator-color,
+                    var(--spectrum-switch-focus-indicator-color)
+                )
+            );
+    }
+    :host(:hover) #input:focus-visible + #switch:after {
+        box-shadow: 0 0 0
+            var(
+                --mod-switch-focus-indicator-thickness,
+                var(--spectrum-switch-focus-indicator-thickness)
+            )
+            var(
+                --highcontrast-switch-focus-indicator-color,
+                var(
+                    --mod-switch-focus-indicator-color,
+                    var(--spectrum-switch-focus-indicator-color)
+                )
+            );
+    }
+    :host(:hover) #input.focus-visible + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-focus,
+            var(
+                --mod-switch-handle-border-color-focus,
+                var(--spectrum-switch-handle-border-color-focus)
+            )
+        );
+    }
+    :host(:hover) #input:focus-visible + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-focus,
+            var(
+                --mod-switch-handle-border-color-focus,
+                var(--spectrum-switch-handle-border-color-focus)
+            )
+        );
+    }
+    :host([checked]:hover) #input.focus-visible + #switch {
+        background-color: var(
+            --highcontrast-switch-background-color-selected-focus,
+            var(
+                --mod-switch-background-color-selected-focus,
+                var(--spectrum-switch-background-color-selected-focus)
+            )
+        );
+    }
+    :host([checked]:hover) #input:focus-visible + #switch {
+        background-color: var(
+            --highcontrast-switch-background-color-selected-focus,
+            var(
+                --mod-switch-background-color-selected-focus,
+                var(--spectrum-switch-background-color-selected-focus)
+            )
+        );
+    }
+    :host(:hover) #input ~ #label {
+        color: var(
+            --highcontrast-switch-label-color-hover,
+            var(
+                --mod-switch-label-color-hover,
+                var(--spectrum-switch-label-color-hover)
+            )
+        );
+    }
+    :host([checked]:hover) #input:enabled + #switch {
+        background-color: var(
+            --highcontrast-switch-background-color-selected-hover,
+            var(
+                --mod-switch-background-color-selected-hover,
+                var(--spectrum-switch-background-color-selected-hover)
+            )
+        );
+    }
+    :host(:hover) #input.focus-visible ~ #label {
+        color: var(
+            --highcontrast-switch-label-color-focus,
+            var(
+                --mod-switch-label-color-focus,
+                var(--spectrum-switch-label-color-focus)
+            )
+        );
+    }
+    :host(:hover) #input:focus-visible ~ #label {
+        color: var(
+            --highcontrast-switch-label-color-focus,
+            var(
+                --mod-switch-label-color-focus,
+                var(--spectrum-switch-label-color-focus)
+            )
+        );
+    }
 }
 :host([checked]) #input + #switch {
     background-color: var(
@@ -683,6 +777,7 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
+        forced-color-adjust: none;
         --highcontrast-switch-label-color-default: ButtonText;
         --highcontrast-switch-label-color-hover: ButtonText;
         --highcontrast-switch-label-color-down: ButtonText;
@@ -705,21 +800,22 @@ governing permissions and limitations under the License.
         --highcontrast-switch-background-color-selected-focus: Highlight;
         --highcontrast-switch-background-color-selected-disabled: Highlight;
         --highcontrast-switch-focus-indicator-color: ButtonText;
-        forced-color-adjust: none;
     }
     #input:not(:checked) + #switch {
         box-shadow: inset 0 0 0 1px ButtonText;
     }
-    :host(:hover) #input:not(:checked) + #switch {
-        box-shadow: inset 0 0 0 1px Highlight;
-    }
-    :host([disabled][checked]:hover) #input + #switch {
-        background-color: GrayText;
-        box-shadow: inset 0 0 0 1px GrayText;
-    }
-    :host([disabled][checked]:hover) #input + #switch:before {
-        background-color: ButtonFace;
-        border-color: GrayText;
+    @media (hover: hover) {
+        :host(:hover) #input:not(:checked) + #switch {
+            box-shadow: inset 0 0 0 1px Highlight;
+        }
+        :host([disabled][checked]:hover) #input + #switch {
+            background-color: GrayText;
+            box-shadow: inset 0 0 0 1px GrayText;
+        }
+        :host([disabled][checked]:hover) #input + #switch:before {
+            background-color: ButtonFace;
+            border-color: GrayText;
+        }
     }
     :host([disabled]) #input:not(:checked) + #switch {
         background-color: ButtonFace;

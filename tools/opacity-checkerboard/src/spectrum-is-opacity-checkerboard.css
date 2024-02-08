@@ -52,8 +52,6 @@ governing permissions and limitations under the License.
                     var(--spectrum-opacity-checkerboard-size)
                 ) * 2
         );
-    block-size: 100%;
-    inline-size: 100%;
 }
 @media (forced-colors: active) {
     :host {

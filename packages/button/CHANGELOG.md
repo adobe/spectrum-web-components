@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **button:** use larger icons in Close Button ([c4aa02c](https://github.com/adobe/spectrum-web-components/commit/c4aa02c8a1c6456f8d9805ba02d74c7e4ecefaa3))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **shared:** update and expand attribute coverage in likeAnchor ([5cb5f1d](https://github.com/adobe/spectrum-web-components/commit/5cb5f1d67c3afe4d62941632d65177a2cd8804c6))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **button:** adds pending button, fixes [#3162](https://github.com/adobe/spectrum-web-components/issues/3162) ([#3163](https://github.com/adobe/spectrum-web-components/issues/3163)) ([71254ec](https://github.com/adobe/spectrum-web-components/commit/71254ec2b29f18e62a9a2e5285ca8c35273d8d43))
+
 ## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
 
 **Note:** Version bump only for package @spectrum-web-components/button

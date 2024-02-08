@@ -26,6 +26,7 @@ import legacyStyles from './switch-legacy.css.js';
  * @element sp-switch
  *
  * @slot - text label of the Switch
+ * @fires change - Announces a change in the `checked` property of a Switch
  */
 export class Switch extends SizedMixin(CheckboxBase) {
     public static override get styles(): CSSResultArray {

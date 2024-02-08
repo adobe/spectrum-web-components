@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **button:** use larger icons in Close Button ([c4aa02c](https://github.com/adobe/spectrum-web-components/commit/c4aa02c8a1c6456f8d9805ba02d74c7e4ecefaa3))
+-   **combobox:** add combobox pattern ([#3894](https://github.com/adobe/spectrum-web-components/issues/3894)) ([47d7d71](https://github.com/adobe/spectrum-web-components/commit/47d7d71bc9e17b67452d45b9495c970dac15ff89)), closes [#3887](https://github.com/adobe/spectrum-web-components/issues/3887)
+-   **menu:** process ":active" styles ([7917583](https://github.com/adobe/spectrum-web-components/commit/79175833e8121cef1419b547802721324472965d))
+-   **slider:** reimplement gradient slider track application ([a10b91e](https://github.com/adobe/spectrum-web-components/commit/a10b91ed168ba58f02349e05e1c49898e8686206))
+-   **tabs:** account for the indicator bar in the overflow decorator ([f4a8744](https://github.com/adobe/spectrum-web-components/commit/f4a8744ed5cb38608ae856539ce7c34ca212b3d4))
+-   **theme:** expose version property ([#3978](https://github.com/adobe/spectrum-web-components/issues/3978)) ([d42bb71](https://github.com/adobe/spectrum-web-components/commit/d42bb710fab1857dabad80b982ad046a41251569))
+-   **theme:** include custom Spectrum color tokens in Express color tokens ([370a1f1](https://github.com/adobe/spectrum-web-components/commit/370a1f1df67dba51fd1110a5e850a8600f5a03dd))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **overlay:** clean position data on close ([edac590](https://github.com/adobe/spectrum-web-components/commit/edac59003ecc1af8dc4aa91c00c9593e8792e63f))
+-   **picker,action-menu,split-button:** update interaction model ([#3935](https://github.com/adobe/spectrum-web-components/issues/3935)) ([bae7d52](https://github.com/adobe/spectrum-web-components/commit/bae7d527e513d2588267c62cc70f5e1c1289f903))
+-   **shared:** update and expand attribute coverage in likeAnchor ([5cb5f1d](https://github.com/adobe/spectrum-web-components/commit/5cb5f1d67c3afe4d62941632d65177a2cd8804c6))
+-   **slider:** add "fill-start" attribute/property and associated "variant="filled" visual delivery ([#3876](https://github.com/adobe/spectrum-web-components/issues/3876)) ([2c3e35e](https://github.com/adobe/spectrum-web-components/commit/2c3e35e858bbc10f162f719ada1356c516111050))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **button:** adds pending button, fixes [#3162](https://github.com/adobe/spectrum-web-components/issues/3162) ([#3163](https://github.com/adobe/spectrum-web-components/issues/3163)) ([71254ec](https://github.com/adobe/spectrum-web-components/commit/71254ec2b29f18e62a9a2e5285ca8c35273d8d43))
+-   **overlay:** automatically reposition overlay when the contents resize ([83be807](https://github.com/adobe/spectrum-web-components/commit/83be807996ace4609486cc9d3bbf1723b3a531ad))
+-   **overlay:** move closed overlays to "display: none" ([fc0278b](https://github.com/adobe/spectrum-web-components/commit/fc0278b917759ed58c3ac62a6e962633914481c0))
+-   **overlay:** normalize popover toggling between native and synthetic [popover] usage ([26fa692](https://github.com/adobe/spectrum-web-components/commit/26fa6925f7f88959ba4d969c882daf7cb881c2d4))
+-   **overlay:** support positioning overlays within parents leveraging container-type rules ([21044b3](https://github.com/adobe/spectrum-web-components/commit/21044b3c8b5bed0af02f836b6ee6796554a90325))
+-   **overlay:** surface "overlay" property to "sp-opened" and "sp-closed" events ([957f8e9](https://github.com/adobe/spectrum-web-components/commit/957f8e9b42f5ad4672fe128fc42693d0065bb2d5))
+-   **picker:** force close slotted Tooltip elements with disabled when Menu openes ([82c8f12](https://github.com/adobe/spectrum-web-components/commit/82c8f129d8a378f51ca083c4020a15b3cbde1fe7))
+-   **picker:** prevent the Menu opening until required dependencies are loaded ([55e6174](https://github.com/adobe/spectrum-web-components/commit/55e617497477f2627982f877743f1635e32ee583))
+-   **tooltip:** surface "delayed" and "disabled" functionality ([#3882](https://github.com/adobe/spectrum-web-components/issues/3882)) ([ae9fcd2](https://github.com/adobe/spectrum-web-components/commit/ae9fcd2d742ae507c9dcd6c11478a1c8b13d1fc0))
+-   **top-nav:** allow consumers to "ignore-url-parts" or "search" or "hash" ([#3923](https://github.com/adobe/spectrum-web-components/issues/3923)) ([83bf70b](https://github.com/adobe/spectrum-web-components/commit/83bf70b7751d2f5b4ab617480bdb8b6252b3b2c6))
+
 ## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
 
 ### Bug Fixes

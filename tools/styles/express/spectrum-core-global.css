@@ -1533,9 +1533,6 @@
     --spectrum-alias-clearbutton-border-radius: var(
         --spectrum-global-dimension-size-150
     );
-    --spectrum-alias-combobox-quiet-button-offset-x: var(
-        --spectrum-global-dimension-size-50
-    );
     --spectrum-alias-focus-ring-gap-small: var(
         --spectrum-global-dimension-static-size-25
     );

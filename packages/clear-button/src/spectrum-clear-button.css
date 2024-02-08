@@ -139,20 +139,22 @@ governing permissions and limitations under the License.
     margin-block: 0;
     margin-inline: auto;
 }
-:host(:hover) {
-    color: var(
-        --highcontrast-clear-button-icon-color-hover,
-        var(
-            --mod-clear-button-icon-color-hover,
-            var(--spectrum-clear-button-icon-color-hover)
-        )
-    );
-}
-:host(:hover) .fill {
-    background-color: var(
-        --mod-clear-button-background-color-hover,
-        var(--spectrum-clear-button-background-color-hover)
-    );
+@media (hover: hover) {
+    :host(:hover) {
+        color: var(
+            --highcontrast-clear-button-icon-color-hover,
+            var(
+                --mod-clear-button-icon-color-hover,
+                var(--spectrum-clear-button-icon-color-hover)
+            )
+        );
+    }
+    :host(:hover) .fill {
+        background-color: var(
+            --mod-clear-button-background-color-hover,
+            var(--spectrum-clear-button-background-color-hover)
+        );
+    }
 }
 :host([active]) {
     color: var(

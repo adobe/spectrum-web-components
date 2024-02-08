@@ -309,6 +309,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
 
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('pointerup', this.handlePointerup);
         this.addEventListener('focusin', this.handleFocusin);
         this.addEventListener('blur', this.handleBlur);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
@@ -338,7 +339,24 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
+    private willSynthesizeClick = 0;
+
     private handleClick(event: Event): void {
+        if (this.willSynthesizeClick) {
+            cancelAnimationFrame(this.willSynthesizeClick);
+            return;
+        }
+        this.handlePointerBasedSelection(event);
+    }
+
+    private handlePointerup(event: Event): void {
+        this.willSynthesizeClick = requestAnimationFrame(() => {
+            event.target?.dispatchEvent(new Event('click'));
+        });
+        this.handlePointerBasedSelection(event);
+    }
+
+    private handlePointerBasedSelection(event: Event): void {
         const path = event.composedPath();
         const target = path.find((el) => {
             /* c8 ignore next 3 */
@@ -634,6 +652,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 childItem &&
                 childItem.menuData.selectionRoot === event.target
             ) {
+                event.preventDefault();
                 childItem.click();
             }
             return;

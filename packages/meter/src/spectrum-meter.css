@@ -358,9 +358,9 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     .track {
+        forced-color-adjust: none;
         --highcontrast-progressbar-fill-color: ButtonText;
         --highcontrast-progressbar-track-color: ButtonFace;
         border: 1px solid ButtonText;
-        forced-color-adjust: none;
     }
 }

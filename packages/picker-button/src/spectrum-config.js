@@ -134,6 +134,7 @@ const config = {
             fileName: 'picker-button',
             components: [
                 converter.classToClass('spectrum-PickerButton', 'root'),
+                converter.classToAttribute('is-focused', 'focused'),
                 {
                     find: [builder.pseudoClass('focus')],
                     replace: [

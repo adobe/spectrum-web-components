@@ -89,11 +89,13 @@ governing permissions and limitations under the License.
     pointer-events: none;
     position: absolute;
 }
-:host(:hover) {
-    color: var(
-        --highcontrast-tabs-color-hover,
-        var(--mod-tabs-color-hover, var(--spectrum-tabs-color-hover))
-    );
+@media (hover: hover) {
+    :host(:hover) {
+        color: var(
+            --highcontrast-tabs-color-hover,
+            var(--mod-tabs-color-hover, var(--spectrum-tabs-color-hover))
+        );
+    }
 }
 :host([selected]) {
     color: var(

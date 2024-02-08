@@ -133,16 +133,16 @@ governing permissions and limitations under the License.
         )
     );
 }
+:host([dir='rtl']),
+[dir='rtl'] :host {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+}
 :host:lang(ja),
 :host:lang(ko),
 :host:lang(zh) {
     --spectrum-accordion-item-header-line-height: var(
         --spectrum-cjk-line-height-100
     );
-}
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
     --spectrum-accordion-item-content-line-height: var(
         --spectrum-cjk-line-height-100
     );

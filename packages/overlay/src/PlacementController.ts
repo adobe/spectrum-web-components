@@ -25,7 +25,6 @@ import {
     size,
 } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
-import { topLayerOverTransforms } from './topLayerOverTransforms.js';
 import type { OpenableElement } from './overlay-types.js';
 import type { Overlay } from './Overlay.js';
 
@@ -220,7 +219,6 @@ export class PlacementController implements ReactiveController {
                       }),
                   ]
                 : []),
-            topLayerOverTransforms(),
         ];
         const { x, y, placement, middlewareData } = await computePosition(
             options.trigger,
@@ -267,13 +265,20 @@ export class PlacementController implements ReactiveController {
         }
     }
 
-    public resetOverlayPosition = (): void => {
-        if (!this.target || !this.options) return;
-
+    public clearOverlayPosition(): void {
+        if (!this.target) {
+            return;
+        }
         this.target.style.removeProperty('max-height');
-        this.target.style.removeProperty('height');
+        this.target.style.removeProperty('max-width');
         this.initialHeight = undefined;
         this.isConstrained = false;
+    }
+
+    public resetOverlayPosition = (): void => {
+        if (!this.target || !this.options) return;
+        this.clearOverlayPosition();
+
         // force paint
         this.host.offsetHeight;
         this.computePlacement();

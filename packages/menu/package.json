@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/menu",
-    "version": "0.40.2",
+    "version": "0.40.5",
     "publishConfig": {
         "access": "public"
     },
@@ -85,17 +85,17 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/action-button": "^0.40.2",
-        "@spectrum-web-components/base": "^0.40.2",
-        "@spectrum-web-components/divider": "^0.40.2",
-        "@spectrum-web-components/icon": "^0.40.2",
-        "@spectrum-web-components/icons-ui": "^0.40.2",
-        "@spectrum-web-components/overlay": "^0.40.2",
-        "@spectrum-web-components/popover": "^0.40.2",
-        "@spectrum-web-components/shared": "^0.40.2"
+        "@spectrum-web-components/action-button": "^0.40.5",
+        "@spectrum-web-components/base": "^0.40.5",
+        "@spectrum-web-components/divider": "^0.40.5",
+        "@spectrum-web-components/icon": "^0.40.5",
+        "@spectrum-web-components/icons-ui": "^0.40.5",
+        "@spectrum-web-components/overlay": "^0.40.5",
+        "@spectrum-web-components/popover": "^0.40.5",
+        "@spectrum-web-components/shared": "^0.40.5"
     },
     "devDependencies": {
-        "@spectrum-css/menu": "^5.2.1"
+        "@spectrum-css/menu": "^6.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

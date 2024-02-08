@@ -81,3 +81,7 @@ sp-button {
 ::slotted(sp-menu) {
     display: none;
 }
+
+sp-overlay:not(:defined) {
+    display: none;
+}

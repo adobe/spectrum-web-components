@@ -42,6 +42,22 @@ a:focus {
     ); /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
 }
 
+#item-label {
+    margin-block: 0;
+    padding-block-end: var(
+        --mod-tabs-bottom-to-text,
+        var(--spectrum-tabs-bottom-to-text)
+    );
+    padding-block-start: var(
+        --mod-tabs-top-to-text,
+        var(--spectrum-tabs-top-to-text)
+    );
+}
+
+slot {
+    pointer-events: none;
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-tabs-focus-indicator-color: canvastext;
