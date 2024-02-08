@@ -9,6 +9,23 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './Coachmark.js';
-export * from './CoachIndicator.js';
-export * from './CoachmarkItem.js';
+
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+
+export default {
+    title: 'CoachIndicator',
+    component: 'sp-coach-indicator',
+};
+
+export const Default = (): TemplateResult => {
+    return html`
+        <sp-coach-indicator></sp-coach-indicator>
+    `;
+};
+
+export const quiet = (): TemplateResult => {
+    return html`
+        <sp-coach-indicator quiet></sp-coach-indicator>
+    `;
+};
