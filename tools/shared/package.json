@@ -73,6 +73,10 @@
             "development": "./src/platform.dev.js",
             "default": "./src/platform.js"
         },
+        "./src/random-id.js": {
+            "development": "./src/random-id.dev.js",
+            "default": "./src/random-id.js"
+        },
         "./src/reparent-children.js": {
             "development": "./src/reparent-children.dev.js",
             "default": "./src/reparent-children.js"

@@ -25,6 +25,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
@@ -372,7 +373,7 @@ export class MenuItem extends LikeAnchor(
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
-            this.id = `sp-menu-item-${crypto.randomUUID().slice(0, 8)}`;
+            this.id = `sp-menu-item-${randomID()}`;
         }
     }
 

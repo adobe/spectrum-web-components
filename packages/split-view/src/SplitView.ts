@@ -28,6 +28,7 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
@@ -251,9 +252,7 @@ export class SplitView extends SpectrumElement {
         }
         this.controlledEl = event.target.assignedElements()[0] as HTMLElement;
         if (this.controlledEl && !this.controlledEl.id) {
-            this.controlledEl.id = `${this.tagName.toLowerCase()}-${crypto
-                .randomUUID()
-                .slice(0, 8)}`;
+            this.controlledEl.id = `${this.tagName.toLowerCase()}-${randomID()}`;
             this.controlledElIDApplied = true;
         }
         this.enoughChildren = this.children.length > 1;
