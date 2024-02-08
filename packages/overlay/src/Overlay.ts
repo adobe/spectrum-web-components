@@ -34,6 +34,7 @@ import {
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import type {
     OpenableElement,
@@ -619,9 +620,7 @@ export class Overlay extends OverlayFeatures {
         }
 
         const longpressDescription = document.createElement('div');
-        longpressDescription.id = `longpress-describedby-descriptor-${crypto
-            .randomUUID()
-            .slice(0, 8)}`;
+        longpressDescription.id = `longpress-describedby-descriptor-${randomID()}`;
         const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
         longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
         longpressDescription.slot = 'longpress-describedby-descriptor';
@@ -685,9 +684,7 @@ export class Overlay extends OverlayFeatures {
             this.elementIds = this.elements.map((el) => el.id);
             const appliedIds = this.elements.map((el) => {
                 if (!el.id) {
-                    el.id = `${this.tagName.toLowerCase()}-helper-${crypto
-                        .randomUUID()
-                        .slice(0, 8)}`;
+                    el.id = `${this.tagName.toLowerCase()}-helper-${randomID()}`;
                 }
                 return el.id;
             });
@@ -911,9 +908,7 @@ export class Overlay extends OverlayFeatures {
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
-                `${this.tagName.toLowerCase()}-${crypto
-                    .randomUUID()
-                    .slice(0, 8)}`
+                `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
         if (
