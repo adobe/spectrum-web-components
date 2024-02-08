@@ -96,7 +96,7 @@ jobs:
               with:
                   urls: |
                       ${{ steps.docsURL.outputs.docsURL }}
-                  configPath: '.github/lighthouse/lighthouserc.cjs'
+                  configPath: '.github/lighthouse/lighthouserc.json'
                   uploadArtifacts: true
                   temporaryPublicStorage: true
     compare-firefox:
