@@ -8,19 +8,19 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/coach-indicator?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/coach-indicator)
 
 ```
-yarn add @spectrum-web-components/coach-indicator
+yarn add @spectrum-web-components/coachmark
 ```
 
 Import the side effectful registration of `<sp-coach-indicator>` via:
 
 ```
-import '@spectrum-web-components/coach-indicator/sp-coach-indicator.js';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 ```
 
 When looking to leverage the `CoachIndicator` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { CoachIndicator } from '@spectrum-web-components/coach-indicator';
+import { CoachIndicator } from '@spectrum-web-components/coachmark';
 ```
 
 ## Variants
