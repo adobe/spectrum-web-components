@@ -389,6 +389,12 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 clear: left;
                 margin-bottom: 15px;
             }
+            /* Enforce CSS stacking to test "transition-behavior: allow-discrete" */
+            /* Breaks the story in non-[popover] supporting browsers */
+            fieldset:nth-of-type(2) {
+                position: relative;
+                z-index: 2;
+            }
             .backdrop-filter-test {
                 backdrop-filter: saturate(80%);
             }

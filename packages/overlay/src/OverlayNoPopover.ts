@@ -126,6 +126,7 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
                         );
                     }
                     this.state = targetOpenState ? 'opened' : 'closed';
+                    this.returnFocus();
                     // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
                     await nextFrame();
                     await nextFrame();
