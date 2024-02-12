@@ -140,7 +140,7 @@ export const buildTachometerComment = () => {
 
 `)
         : '';
-    let comment = `# Tachometer results
+    let comment = `## Tachometer results
 `;
     if (firefoxBody) {
         [
