@@ -78,24 +78,18 @@ jobs:
             - name: Install dependencies
               run: yarn --frozen-lockfile
 
-            - name: Generate docs URL
-              id: docsURL
-              uses: actions/github-script@v6
-              with:
-                  script: |
-                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
-                      const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
-                      const urlRegex = /(https?:\/\/[^\s]+)/g;
-
-                      const docsURL = body.match(urlRegex)?.[0];
-                      core.setOutput('docsURL', docsURL);
+            - name: Extract branch name
+              shell: bash
+              run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+              id: extract_branch
 
             - name: Lighthouse CI Action
               id: lighthouse
               uses: treosh/lighthouse-ci-action@v11
               with:
                   urls: |
-                      ${{ steps.docsURL.outputs.docsURL }}
+                      https://${{ steps.extract_branch.outputs.branch }}--spectrum-web-components.netlify.app/
+                      https://main--spectrum-web-components.netlify.app/
                   configPath: '.github/lighthouse/lighthouserc.json'
                   uploadArtifacts: true
                   temporaryPublicStorage: true
