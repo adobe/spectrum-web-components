@@ -41,7 +41,7 @@ jobs:
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('# Branch Preview'));
+                        const priorComment = data.find(comment => comment.body.startsWith('## Branch preview') || comment.body.startsWith('# Branch Preview'));
                         if (priorComment) {
                           github.rest.issues.updateComment({
                             owner: context.repo.owner,
@@ -78,27 +78,52 @@ jobs:
             - name: Install dependencies
               run: yarn --frozen-lockfile
 
-            - name: Generate docs URL
-              id: docsURL
-              uses: actions/github-script@v6
-              with:
-                  script: |
-                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
-                      const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
-                      const urlRegex = /(https?:\/\/[^\s]+)/g;
-
-                      const docsURL = body.match(urlRegex)?.[0];
-                      core.setOutput('docsURL', docsURL);
+            - name: Extract branch name
+              shell: bash
+              run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+              id: extract_branch
 
             - name: Lighthouse CI Action
               id: lighthouse
               uses: treosh/lighthouse-ci-action@v11
               with:
-                  urls: |
-                      ${{ steps.docsURL.outputs.docsURL }}
                   configPath: '.github/lighthouse/lighthouserc.json'
-                  uploadArtifacts: true
+                  runs: 3
                   temporaryPublicStorage: true
+                  uploadArtifacts: true
+                  urls: |
+                      https://opensource.adobe.com/spectrum-web-components/
+                      https://main--spectrum-web-components.netlify.app/
+                      https://${{ steps.extract_branch.outputs.branch }}--spectrum-web-components.netlify.app/
+
+            - name: Post Results
+              uses: actions/github-script@v6
+              with:
+                  script: |
+                      const { buildLighthouseComment } = await import('${{ github.workspace }}/tasks/build-lighthouse-comment.js');
+                      const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }});
+                      github.rest.issues.listComments({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                      }).then(({data}) => {
+                        const priorComment = data.find(comment => comment.body.startsWith('## Lighthouse scores') || comment.body.startsWith('# Lighthouse Results'));
+                        if (priorComment) {
+                          github.rest.issues.updateComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            comment_id: priorComment.id,
+                            body
+                          });
+                        } else {
+                          github.rest.issues.createComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            issue_number: context.issue.number,
+                            body
+                          });
+                        }
+                      });
     compare-firefox:
         name: Compare performance to latest release on Firefox
 
@@ -221,7 +246,7 @@ jobs:
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('# Tachometer results'));
+                        const priorComment = data.find(comment => comment.body.startsWith('## Tachometer results') || comment.body.startsWith('# Tachometer results'));
                         if (priorComment) {
                           github.rest.issues.updateComment({
                             owner: context.repo.owner,
