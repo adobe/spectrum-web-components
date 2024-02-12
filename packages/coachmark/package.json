@@ -25,10 +25,19 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/CoachIndicator.js": {
+            "development": "./src/CoachIndicator.dev.js",
+            "default": "./src/CoachIndicator.js"
+        },
         "./src/Coachmark.js": {
             "development": "./src/Coachmark.dev.js",
             "default": "./src/Coachmark.js"
         },
+        "./src/CoachmarkItem.js": {
+            "development": "./src/CoachmarkItem.dev.js",
+            "default": "./src/CoachmarkItem.js"
+        },
+        "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
         "./src/coachmark.css.js": "./src/coachmark.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -37,6 +46,10 @@
         "./sp-coachmark.js": {
             "development": "./sp-coachmark.dev.js",
             "default": "./sp-coachmark.js"
+        },
+        "./sp-coach-indicator.js": {
+            "development": "./sp-coach-indicator.dev.js",
+            "default": "./sp-coach-indicator.js"
         }
     },
     "scripts": {
@@ -57,10 +70,19 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.40.5"
+        "@spectrum-web-components/asset": "^0.40.5",
+        "@spectrum-web-components/base": "^0.40.5",
+        "@spectrum-web-components/button": "^0.40.5",
+        "@spectrum-web-components/button-group": "^0.40.5",
+        "@spectrum-web-components/icon": "^0.40.5",
+        "@spectrum-web-components/icons-ui": "^0.40.5",
+        "@spectrum-web-components/quick-actions": "^0.40.5",
+        "@spectrum-web-components/reactive-controllers": "^0.40.5",
+        "@spectrum-web-components/shared": "^0.40.5"
     },
     "devDependencies": {
-        "@spectrum-css/coachmark": "^5.0.75"
+        "@spectrum-css/coachindicator": "1.0.0",
+        "@spectrum-css/coachmark": "6.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

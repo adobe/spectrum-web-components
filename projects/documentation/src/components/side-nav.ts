@@ -75,7 +75,7 @@ export class SideNav extends LitElement {
         return html`
             <sp-underlay
                 class="scrim"
-                @click=${this.toggle}
+                @close=${this.toggle}
                 ?open=${this.open}
             ></sp-underlay>
             <aside>

@@ -26,6 +26,7 @@ import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 import '@spectrum-web-components/color-area/sp-color-area.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';

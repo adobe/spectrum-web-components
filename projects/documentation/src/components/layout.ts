@@ -341,7 +341,7 @@ export class LayoutElement extends LitElement {
                       <sp-underlay
                           class="scrim"
                           ?open=${this.settings}
-                          @click=${this.toggleSettings}
+                          @close=${this.toggleSettings}
                           ?hidden=${!this.isNarrow}
                       ></sp-underlay>
                       <aside
