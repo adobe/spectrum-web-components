@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/toast/sp-toast.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-airplane.js';
+
 import { Toast, toastVariants } from '@spectrum-web-components/toast';
 import {
     elementUpdated,
@@ -322,5 +324,25 @@ describe('Toast', () => {
         expect(closeButton).to.exist;
 
         expect(closeButton.getAttribute('static')).to.equal('white');
+    });
+    it('renders custom icons', async () => {
+        const el = await fixture<Toast>(
+            html`
+                <sp-toast open>
+                    <sp-icon-airplane slot="icon"></sp-icon-airplane>
+                    Help text.
+                </sp-toast>
+            `
+        );
+
+        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+        const slotElement = renderRoot.querySelector(
+            'slot[name="icon"]'
+        ) as HTMLSlotElement;
+
+        expect(slotElement?.className).to.be.equal('type');
+
+        const icon = slotElement.assignedNodes()[0] as HTMLElement;
+        expect(icon.tagName).to.be.equal('SP-ICON-AIRPLANE');
     });
 });

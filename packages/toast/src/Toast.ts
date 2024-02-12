@@ -17,7 +17,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
@@ -122,31 +125,34 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         switch (variant) {
             case 'info':
                 return html`
-                    <slot name="icon" class="type">
+                    <div class="type">
                         <sp-icon-info label="Information"></sp-icon-info>
-                    </slot>
+                    </div>
                 `;
             case 'negative':
             case 'error': // deprecated
             case 'warning': // deprecated
                 return html`
-                    <slot name="icon" class="type">
+                    <div class="type">
                         <sp-icon-alert label="Error"></sp-icon-alert>
-                    </slot>
+                    </div>
                 `;
             case 'positive':
             case 'success': // deprecated
                 return html`
-                    <slot name="icon" class="type">
+                    <div class="type">
                         <sp-icon-checkmark-circle
                             label="Success"
                         ></sp-icon-checkmark-circle>
-                    </slot>
+                    </div>
                 `;
             default:
                 return html``;
         }
     }
+
+    @state()
+    private hasIcon = false;
 
     private countdownStart = 0;
     private nextCount = -1;
@@ -205,9 +211,24 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.open = false;
     }
 
+    private handleSlotChange(event: Event): void {
+        const slotElement = event.target as HTMLSlotElement;
+        if (slotElement.assignedNodes().length > 0) {
+            this.hasIcon = true;
+        } else {
+            this.hasIcon = false;
+        }
+    }
+
     protected override render(): TemplateResult {
         return html`
-            ${this.renderIcon(this.variant)}
+            <slot
+                @slotchange=${this.handleSlotChange}
+                name="icon"
+                class=${this.hasIcon ? 'type' : undefined}
+            >
+                ${this.renderIcon(this.variant)}
+            </slot>
             <div class="body" role="alert">
                 <div class="content">
                     <slot></slot>

@@ -14,6 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-airplane.js';
 
 import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -109,6 +110,23 @@ export const Negative = (args: Properties): TemplateResult =>
 
 export const Info = (args: Properties): TemplateResult =>
     variantDemo({ ...args, variant: 'info' });
+
+export const CustomIcon = (args: Properties): TemplateResult => {
+    return html`
+        <sp-toast variant="positive" ?open=${open}>
+            <sp-icon-airplane slot="icon"></sp-icon-airplane>
+            ${args.content}
+            <sp-button
+                slot="action"
+                static="white"
+                variant="secondary"
+                treatment="outline"
+            >
+                Undo
+            </sp-button>
+        </sp-toast>
+    `;
+};
 
 const overlayStyles = html`
     <style>
