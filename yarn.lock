@@ -5887,7 +5887,7 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@playwright/test@1.41.2", "@playwright/test@^1.41.2":
+"@playwright/test@^1.41.2":
   version "1.41.2"
   resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.41.2.tgz#bd9db40177f8fd442e16e14e0389d23751cdfc54"
   integrity sha512-qQB9h7KbibJzrDpkXkYvsmiDJK14FULCCZgEcoe2AvFAS64oCirWTwzTlAYEbKaRxWs5TFesE1Na6izMv3HfGg==
@@ -6861,10 +6861,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-4.2.0.tgz#078cafc2788f5f43ac070f28ccc70e58fd07fec7"
   integrity sha512-OTykAnooYpSVJRyeQi/pprcS/A2q8jqp+dlQOfHqkw5Zmyij3Qsv5qIjwzPwscfxwChuhla/hEI5aqyIuH3MYQ==
 
-"@spectrum-css/slider@^4.3.0":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-4.3.1.tgz#f1f97755d7d443eb89f596f46009d246ba787ea9"
-  integrity sha512-r5tYFuAGi5qom9rYD7hgG/CBA/PmNe4KGtf3GNyXv3+jVDQaFIgv2by7eNBsvBAhoKR7xB1u7rqHh/dTmfSobg==
+"@spectrum-css/slider@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-4.3.2.tgz#75d83230b81f3e54bc97f2c88298848bade538d8"
+  integrity sha512-mrq8d/9v8wn+UDOINkWQkYeJJi3BmH7w6Taj8l6fswBFFNQ89MtZ2jBJuwWs74hGaaletpYj0Y+kchNQ5LFgnA==
 
 "@spectrum-css/splitbutton@^8.1.0":
   version "8.1.0"
