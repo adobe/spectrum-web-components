@@ -148,6 +148,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public forceFocusVisible(): void {
+        if (this.disabled) {
+            return;
+        }
+
         this.focused = true;
     }
 

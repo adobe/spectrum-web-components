@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/picker/sp-picker.js';
-import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
@@ -24,6 +23,8 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
+import { handleChange, StoryArgs, Template } from './template.js';
+import { argTypes } from './args.js';
 
 export default {
     title: 'Picker',
@@ -36,30 +37,6 @@ export default {
     },
     argTypes: {
         onChange: { action: 'change' },
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
         open: {
             name: 'open',
             type: { name: 'boolean', required: false },
@@ -70,36 +47,9 @@ export default {
             },
             control: 'boolean',
         },
-        quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
+        ...argTypes,
     },
 };
-
-interface StoryArgs {
-    disabled?: boolean;
-    invalid?: boolean;
-    open?: boolean;
-    quiet?: boolean;
-    showText?: boolean;
-    onChange?: (val: string) => void;
-    [prop: string]: unknown;
-}
-
-const handleChange =
-    ({ onChange }: StoryArgs) =>
-    (event: Event): void => {
-        const picker = event.target as Picker;
-        if (onChange) onChange(picker.value);
-    };
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
@@ -127,6 +77,11 @@ export const Default = (args: StoryArgs): TemplateResult => {
             .
         </p>
     `;
+};
+
+export const disabled = (args: StoryArgs): TemplateResult => Template(args);
+disabled.args = {
+    disabled: true,
 };
 
 export const tooltip = (args: StoryArgs): TemplateResult => {
@@ -252,7 +207,7 @@ export const icons = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
@@ -280,7 +235,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
@@ -313,7 +268,7 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
@@ -343,7 +298,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"

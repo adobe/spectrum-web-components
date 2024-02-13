@@ -36,6 +36,10 @@ governing permissions and limitations under the License.
     min-width: 0;
 }
 
+:host([disabled]) {
+    pointer-events: none;
+}
+
 #button {
     width: 100%;
     min-width: 100%;

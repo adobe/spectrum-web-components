@@ -39,6 +39,7 @@ import {
 } from '@web/test-runner-commands';
 import {
     Default,
+    disabled,
     iconsOnly,
     noVisibleLabel,
     slottedLabel,
@@ -57,6 +58,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import type { Menu } from '@spectrum-web-components/menu';
 import { Tooltip } from '@spectrum-web-components/tooltip';
+import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 
 export type TestablePicker = { optionsMenu: Menu };
 
@@ -1773,5 +1775,58 @@ export function runPickerTests(): void {
         expect(document.activeElement === el).to.be.false;
         expect(tooltipEl.open).to.be.false;
         expect(el.open).to.be.false;
+    });
+    describe('disabled', function () {
+        beforeEach(async function () {
+            const test = await fixture(html`
+                <div>${disabled(disabled.args)}</div>
+            `);
+            this.label = test.querySelector('sp-field-label') as FieldLabel;
+            this.el = test.querySelector('sp-picker') as Picker;
+            await elementUpdated(this.elel);
+        });
+        it('does not recieve focus from an `<sp-field-label>`', async function () {
+            expect(this.el.disabled).to.be.true;
+            expect(this.el.focused).to.be.false;
+
+            this.label.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.focused).to.be.false;
+        });
+        it('does not open from `click()`', async function () {
+            expect(this.el.disabled).to.be.true;
+            expect(this.el.open).to.be.false;
+
+            this.el.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.open).to.be.false;
+        });
+        it('does not open from `sendMouse()`', async function () {
+            expect(this.el.disabled).to.be.true;
+            expect(this.el.open).to.be.false;
+
+            const boundingRect = this.el.button.getBoundingClientRect();
+
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            // Synthetic delay for "open" but not "sp-open" as it would never come.
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+
+            expect(this.el.open).to.be.false;
+        });
     });
 }
