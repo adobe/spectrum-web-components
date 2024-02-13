@@ -2,12 +2,11 @@ export default {
     extends: 'lighthouse:default',
     settings: {
         onlyCategories: [
-            // Excluded categories do not currently pass
-            // "accessibility",
-            // "best-practices",
+            'accessibility',
+            'best-practices',
             'performance',
-            // "pwa",
-            // "seo"
+            'pwa',
+            'seo',
         ],
         // Excluded audits do not currently pass
         // metrics/first-contentful-paint', 'metrics/largest-contentful-paint','metrics/first-meaningful-paint', 'metrics/speed-index', 'screenshot-thumbnails',

@@ -3,14 +3,14 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.41.0
+            - image: mcr.microsoft.com/playwright:v1.41.2
         resource_class: large
         environment:
             NODE_ENV: development
 parameters:
     current_golden_images_hash:
         type: string
-        default: b3d4f4383c3bab37cab6d7fd32b9c5c9d378b731
+        default: 544d1b8027472155a6a451074fdbf96a5b4bf304
     wireit_cache_name:
         type: string
         default: wireit
