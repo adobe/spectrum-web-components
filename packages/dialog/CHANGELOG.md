@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   **tray:** only allow "click" events when they "pointerdown"ed on the Underlay ([#4020](https://github.com/adobe/spectrum-web-components/issues/4020)) ([4f9aa4a](https://github.com/adobe/spectrum-web-components/commit/4f9aa4aac837fc56ab1876aa693bd9d82f0ba26f))
+
 ## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
 
 **Note:** Version bump only for package @spectrum-web-components/dialog
