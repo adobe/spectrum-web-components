@@ -28,6 +28,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.j
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import toastStyles from './toast.css.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export const toastVariants: ToastVariants[] = [
     'negative',
@@ -225,7 +226,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
             <slot
                 @slotchange=${this.handleSlotChange}
                 name="icon"
-                class=${this.hasIcon ? 'type' : undefined}
+                class=${ifDefined(this.hasIcon ? 'type' : undefined)}
             >
                 ${this.renderIcon(this.variant)}
             </slot>
