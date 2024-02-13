@@ -229,7 +229,9 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return {};
     }
 
-    private _waitForChildrenToUpdate(): Promise<boolean[]> {
+    override async getUpdateComplete(): Promise<boolean> {
+        const complete = await super.getUpdateComplete();
+
         const tabs = [...this.children] as Tab[];
         const tabUpdateCompletes = tabs.map((tab) => {
             if (typeof tab.updateComplete !== 'undefined') {
@@ -237,30 +239,9 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
             }
             return Promise.resolve(true);
         });
-        return Promise.all(tabUpdateCompletes);
-    }
 
-    protected override manageAutoFocus(): void {
-        this._waitForChildrenToUpdate().then(() => super.manageAutoFocus());
-    }
-
-    public scrollToSelected(): void {
-        this._waitForChildrenToUpdate().then(() => {
-            const selectedTab = this.querySelector(
-                `[role="tab"][value="${this.selected}"]`
-            ) as Tab;
-
-            // only if the selected tab is not visible
-            if (selectedTab && selectedTab.offsetLeft > this.clientWidth) {
-                // scroll it to the center of the container
-                this.scrollTabs(
-                    selectedTab.offsetLeft -
-                        this.clientWidth / 2 +
-                        selectedTab.clientWidth / 2,
-                    'instant'
-                );
-            }
-        });
+        await Promise.all(tabUpdateCompletes);
+        return complete;
     }
 
     protected managePanels({

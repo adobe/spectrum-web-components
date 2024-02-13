@@ -23,6 +23,7 @@ export interface OverflowProperties {
     size?: string;
     includeTabPanel?: boolean;
     compact?: boolean;
+    autoscroll?: boolean;
 }
 
 export const renderTabsOverflowExample = ({
@@ -31,6 +32,7 @@ export const renderTabsOverflowExample = ({
     size = 'm',
     includeTabPanel,
     compact,
+    autoscroll,
 }: OverflowProperties): TemplateResult => {
     return html`
         <style>
@@ -42,7 +44,11 @@ export const renderTabsOverflowExample = ({
             }
         </style>
         <div class="container">
-            <sp-tabs-overflow size=${size} ?compact=${compact}>
+            <sp-tabs-overflow
+                size=${size}
+                ?compact=${compact}
+                ?autoscroll=${autoscroll}
+            >
                 <sp-tabs size=${size} selected=${selected} ?compact=${compact}>
                     ${repeat(
                         new Array(count),
