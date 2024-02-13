@@ -14214,6 +14214,11 @@ esm-import-transformer@^3.0.2:
   dependencies:
     acorn "^8.11.2"
 
+esm-resolve@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/esm-resolve/-/esm-resolve-1.0.8.tgz#1a8121a85a914863463cf05883492e0a55b872d4"
+  integrity sha512-pzYHY8bf7uLpDuefGsI6JtHVS1J3N1uOkIEC36ejvvWhiiMr/xKBX4PrxCtsxeISJbCEMBLkPZvRwZNHgdwn5A==
+
 espree@^9.6.0, espree@^9.6.1:
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/espree/-/espree-9.6.1.tgz#a2a17b8e434690a5432f2f8018ce71d331a48c6f"

@@ -42,6 +42,7 @@
         "@web/rollup-plugin-html": "^2.1.2",
         "alex": "^10.0.0",
         "esbuild-plugin-lit-css": "^2.0.5",
+        "esm-resolve": "^1.0.8",
         "lunr": "^2.3.9",
         "markdown-it": "^14.0.0",
         "markdown-it-anchor": "^8.4.1",
@@ -129,7 +130,7 @@
             "clean": "if-file-deleted"
         },
         "build:postcss": {
-            "command": "postcss src/components/{styles,fonts,medium,large,light,dark}.css -d _site/ --config src/postcss.config.cjs",
+            "command": "node scripts/build-css.js --files=\"src/components/{styles,fonts,medium,large,light,dark}.css\"",
             "files": [
                 "./src/components/styles.css",
                 "./src/components/medium.css",
@@ -137,7 +138,7 @@
                 "./src/components/light.css",
                 "./src/components/dark.css",
                 "./src/components/fonts.css",
-                "src/postcss.config.cjs",
+                "scripts/build-css.js",
                 "_site/**/*.html"
             ],
             "output": [
