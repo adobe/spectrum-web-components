@@ -20,19 +20,39 @@ import { Tab, TabsOverflow } from '@spectrum-web-components/tabs';
 import { ActionButton } from '@spectrum-web-components/action-button';
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
-import { html, nothing } from '@spectrum-web-components/base';
+import {
+    ElementSize,
+    ElementSizes,
+    html,
+    nothing,
+} from '@spectrum-web-components/base';
 import { repeat } from 'lit/directives/repeat.js';
+import { stub } from 'sinon';
 
-const renderTabsOverflow = async (
-    count: number,
-    size: string,
-    includeTabPanel: boolean
-): Promise<HTMLDivElement> => {
+type OverflowProperties = {
+    count: number;
+    size: ElementSize;
+    includeTabPanel: boolean;
+    selected?: number;
+    autoscroll?: boolean;
+};
+
+const renderTabsOverflow = async ({
+    count,
+    size,
+    includeTabPanel,
+    selected = 1,
+    autoscroll = false,
+}: OverflowProperties): Promise<HTMLDivElement> => {
     const tabsContainer = await fixture<HTMLDivElement>(
         html`
             <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow>
-                    <sp-tabs size=${size} selected="1" enableTabsScroll=${true}>
+                <sp-tabs-overflow ?autoscroll=${autoscroll}>
+                    <sp-tabs
+                        size=${size}
+                        selected=${selected}
+                        ?enableTabsScroll=${true}
+                    >
                         ${repeat(
                             new Array(count),
                             (item) => item,
@@ -73,7 +93,7 @@ describe('TabsOverflow', () => {
         const el = await fixture<TabsOverflow>(
             html`
                 <sp-tabs-overflow>
-                    <sp-tabs size="m" selected="1" enableTabsScroll=${true}>
+                    <sp-tabs size="m" selected="1" ?enableTabsScroll=${true}>
                         <sp-tab label="Tab Item 1" value="1"></sp-tab>
                         <sp-tab label="Tab Item 2" value="2"></sp-tab>
                         <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
@@ -89,7 +109,11 @@ describe('TabsOverflow', () => {
     });
 
     it('show render left and right buttons in shadowDom', async () => {
-        const el = await renderTabsOverflow(20, 'l', true);
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+        });
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
             'sp-tabs-overflow'
@@ -105,7 +129,11 @@ describe('TabsOverflow', () => {
     });
 
     it('reflect proper sp-tab size', async () => {
-        const el = await renderTabsOverflow(20, 'm', true);
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.M,
+            includeTabPanel: true,
+        });
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
             'sp-tabs-overflow'
@@ -115,7 +143,11 @@ describe('TabsOverflow', () => {
     });
 
     it('should scroll when the button is clicked', async () => {
-        const el = await renderTabsOverflow(20, 'l', true);
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+        });
         await elementUpdated(el);
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
@@ -156,5 +188,22 @@ describe('TabsOverflow', () => {
         const slot = el.shadowRoot.querySelector('slot');
         const slotContent = slot?.assignedElements() || '';
         expect(slotContent[0].toString()).to.not.contains('Tabs');
+    });
+
+    it('should automatically bring the selected tab into view', async () => {
+        const spy = stub(HTMLElement.prototype, 'scrollIntoView');
+
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+            selected: 10,
+            autoscroll: true,
+        });
+        await elementUpdated(el);
+
+        expect(spy.called).to.be.true;
+        expect(spy.getCall(0).args[0]).to.deep.equal({ inline: 'center' });
+        spy.restore();
     });
 });
