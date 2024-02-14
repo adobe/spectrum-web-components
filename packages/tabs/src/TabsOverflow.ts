@@ -49,6 +49,9 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     compact = false;
 
+    /**
+     * When mounted, automatically bring the selected tab into viewport.
+     */
     @property({ type: Boolean, reflect: true })
     autoscroll = false;
 
@@ -93,7 +96,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                 const selectedTab = this.querySelector(
                     `[role="tab"][value="${tabs.selected}"]`
                 ) as Tab;
-                selectedTab.scrollIntoView({ inline: 'center' });
+                selectedTab?.scrollIntoView({ inline: 'center' });
             });
         }
     }
