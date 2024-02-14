@@ -450,7 +450,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 <div id="controls">
                     ${this.variant === 'tick'
                         ? html`
-                              ${this.renderTicks()}
+                              <!-- ${this.renderTicks()} -->
                               <div class="trackContainer">
                                   ${repeat(
                                       trackItems,
