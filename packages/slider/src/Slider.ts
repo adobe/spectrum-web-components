@@ -410,6 +410,15 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
+    private renderHandle(): TemplateResult {
+        if (this.variant === 'tick') {
+            return html``;
+        }
+        return html`
+            ${this.handleController.render()}
+        `;
+    }
+
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
         const handleItems = [
@@ -419,6 +428,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             { id: 'track0', html: this.renderTrackSegment(...segments[0]) },
             { id: 'fill', html: this.renderFillOffset() },
             { id: 'ramp', html: this.renderRamp() },
+            { id: 'handles', html: this.renderHandle() },
             ...segments.slice(1).map(([start, end], index) => ({
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
@@ -438,21 +448,31 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 })}
             >
                 <div id="controls">
-                    ${this.renderTicks()}
-                    <div class="trackContainer">
-                        ${repeat(
-                            trackItems,
-                            (item) => item.id,
-                            (item) => item.html
-                        )}
-                    </div>
-                    <div class="handleContainer">
-                        ${repeat(
-                            handleItems,
-                            (item) => item.id,
-                            (item) => item.html
-                        )}
-                    </div>
+                    ${this.variant === 'tick'
+                        ? html`
+                              ${this.renderTicks()}
+                              <div class="trackContainer">
+                                  ${repeat(
+                                      trackItems,
+                                      (item) => item.id,
+                                      (item) => item.html
+                                  )}
+                              </div>
+                              <div class="handleContainer">
+                                  ${repeat(
+                                      handleItems,
+                                      (item) => item.id,
+                                      (item) => item.html
+                                  )}
+                              </div>
+                          `
+                        : html`
+                              ${repeat(
+                                  trackItems,
+                                  (item) => item.id,
+                                  (item) => item.html
+                              )}
+                          `}
                 </div>
             </div>
         `;
