@@ -22,8 +22,8 @@ governing permissions and limitations under the License.
      **/
     max-inline-size: 100%;
     inline-size: var(
-        --spectrum-picker-width,
-        var(--spectrum-global-dimension-size-2400)
+        --mod-picker-inline-size,
+        var(--spectrum-picker-inline-size)
     );
     min-inline-size: calc(
         var(--spectrum-picker-minimum-width-multiplier) *

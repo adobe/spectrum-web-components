@@ -15,13 +15,22 @@ governing permissions and limitations under the License.
     pointer-events: none;
 
     /**
-     * duplicate --spectrum-overlay-animation-distance, which is out of scope
-     * rather than over write so we continue to get new values from Spectrum CSS
-     * if they are provided in the future.
+     * Duplicate --spectrum-overlay-animation-distance, which is out of scope.
+     * Currently is is statically `--spectrum-spacing-100` across a number of places
+     * so that is leveraged here as the default.
      **/
+    --swc-overlay-animation-distance: var(--spectrum-spacing-100);
+}
+
+/**
+ * :host(:has(...)) {} currently only work in Firefox and Safari
+ * Chromium will resolve to the default of 6px above. Tooltip leverages a scale custom
+ * value for this measurement, this adopts it where we can.
+ **/
+
+:host(:has(> sp-tooltip)) {
     --swc-overlay-animation-distance: var(
-        --spectrum-picker-m-texticon-popover-offset-y,
-        var(--spectrum-global-dimension-size-75)
+        --spectrum-tooltip-animation-distance
     );
 }
 
