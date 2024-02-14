@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-coach-indicator-animation-keyframe-0-scale: 1;
     --spectrum-coach-indicator-animation-keyframe-0-opacity: 0;
@@ -20,46 +21,53 @@ governing permissions and limitations under the License.
     --spectrum-coach-indicator-animation-keyframe-100-opacity: 0;
     --spectrum-coach-indicator-quiet-animation-keyframe-0-scale: 0.8;
 }
+
 @keyframes pulse {
     0% {
-        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
         -webkit-transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-0-scale)
         );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
     }
+
     50% {
-        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
         -webkit-transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-50-scale)
         );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
     }
-    to {
-        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
+
+    100% {
         -webkit-transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-100-scale)
         );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
     }
 }
+
 @keyframes pulse--quiet {
     0% {
-        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
         -webkit-transform: scale(
             var(--spectrum-coach-indicator-quiet-animation-keyframe-0-scale)
         );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
     }
+
     50% {
-        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
         -webkit-transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-50-scale)
         );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
     }
-    to {
-        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
+
+    100% {
         -webkit-transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-100-scale)
         );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
     }
 }
+
 :host {
     --spectrum-coach-indicator-ring-border-size: var(
         --spectrum-border-width-200
@@ -102,6 +110,7 @@ governing permissions and limitations under the License.
         --spectrum-coach-animation-indicator-ring-inner-delay-multiple
     );
 }
+
 :host([quiet]) {
     --mod-coach-indicator-min-inline-size: calc(
         var(
@@ -151,27 +160,46 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host {
-    block-size: var(
-        --mod-coach-indicator-block-size,
-        var(--spectrum-coach-indicator-block-size)
+    margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
+    min-inline-size: var(
+        --mod-coach-indicator-min-inline-size,
+        var(--spectrum-coach-indicator-min-inline-size)
+    );
+    min-block-size: var(
+        --mod-coach-indicator-min-block-size,
+        var(--spectrum-coach-indicator-min-block-size)
     );
     inline-size: var(
         --mod-coach-indicator-inline-size,
         var(--spectrum-coach-indicator-inline-size)
     );
-    margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
-    min-block-size: var(
-        --mod-coach-indicator-min-block-size,
-        var(--spectrum-coach-indicator-min-block-size)
-    );
-    min-inline-size: var(
-        --mod-coach-indicator-min-inline-size,
-        var(--spectrum-coach-indicator-min-inline-size)
+    block-size: var(
+        --mod-coach-indicator-block-size,
+        var(--spectrum-coach-indicator-block-size)
     );
     position: relative;
 }
+
 .ring {
+    border-style: solid;
+    border-width: var(
+        --mod-coach-indicator-ring-border-size,
+        var(--spectrum-coach-indicator-ring-border-size)
+    );
+    border-color: var(
+        --mod-coach-indicator-ring-default-color,
+        var(--spectrum-coach-indicator-ring-default-color)
+    );
+    inline-size: var(
+        --mod-coach-indicator-ring-inline-size,
+        var(--spectrum-coach-indicator-ring-inline-size)
+    );
+    block-size: var(
+        --mod-coach-indicator-ring-block-size,
+        var(--spectrum-coach-indicator-ring-block-size)
+    );
     animation: var(
             --mod-coach-indicator-animation-name,
             var(--spectrum-coach-indicator-animation-name)
@@ -181,25 +209,9 @@ governing permissions and limitations under the License.
             var(--spectrum-coach-animation-indicator-ring-duration)
         )
         linear infinite;
-    block-size: var(
-        --mod-coach-indicator-ring-block-size,
-        var(--spectrum-coach-indicator-ring-block-size)
-    );
-    border-color: var(
-        --mod-coach-indicator-ring-default-color,
-        var(--spectrum-coach-indicator-ring-default-color)
-    );
     border-radius: 50%;
-    border-style: solid;
-    border-width: var(
-        --mod-coach-indicator-ring-border-size,
-        var(--spectrum-coach-indicator-ring-border-size)
-    );
     display: block;
-    inline-size: var(
-        --mod-coach-indicator-ring-inline-size,
-        var(--spectrum-coach-indicator-ring-inline-size)
-    );
+    position: absolute;
     inset-block-start: var(
         --mod-coach-indicator-top,
         var(--spectrum-coach-indicator-top)
@@ -208,8 +220,8 @@ governing permissions and limitations under the License.
         --mod-coach-indicator-left,
         var(--spectrum-coach-indicator-left)
     );
-    position: absolute;
 }
+
 .ring:first-child {
     animation-delay: calc(
         var(
@@ -222,6 +234,7 @@ governing permissions and limitations under the License.
             )
     );
 }
+
 .ring:nth-child(2) {
     animation-delay: calc(
         var(
@@ -236,6 +249,7 @@ governing permissions and limitations under the License.
             )
     );
 }
+
 .ring:nth-child(3) {
     animation-delay: calc(
         var(
@@ -250,18 +264,21 @@ governing permissions and limitations under the License.
             )
     );
 }
+
 :host([static='white']) .ring {
     border-color: var(
         --mod-coach-indicator-ring-light-color,
         var(--spectrum-coach-indicator-ring-light-color)
     );
 }
+
 :host([static='black']) .ring {
     border-color: var(
         --mod-coach-indicator-ring-dark-color,
         var(--spectrum-coach-indicator-ring-dark-color)
     );
 }
+
 @media (prefers-reduced-motion: reduce) {
     .ring {
         animation: none;

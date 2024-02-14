@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-drop-zone-padding: var(--spectrum-spacing-400);
     --spectrum-drop-zone-illustration-to-heading: var(--spectrum-spacing-400);
@@ -162,32 +163,16 @@ governing permissions and limitations under the License.
         var(--spectrum-drop-zone-content-edge-to-text)
     );
 }
+
 :host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
+:host:lang(zh),
+:host:lang(ko) {
     --spectrum-drop-zone-heading-font-size: var(
         --spectrum-drop-zone-cjk-title-size
     );
 }
+
 :host {
-    background-color: var(
-        --mod-drop-zone-background-color,
-        var(--spectrum-drop-zone-background-color)
-    );
-    background-size: cover;
-    border-color: var(
-        --mod-drop-zone-border-color,
-        var(--spectrum-drop-zone-border-color)
-    );
-    border-radius: var(
-        --mod-drop-zone-corner-radius,
-        var(--spectrum-drop-zone-corner-radius)
-    );
-    border-style: var(--mod-drop-zone-border-style, dashed);
-    border-width: var(
-        --mod-drop-zone-border-width,
-        var(--spectrum-drop-zone-border-width)
-    );
     box-sizing: border-box;
     inline-size: var(--mod-drop-zone-width, var(--spectrum-drop-zone-width));
     padding: calc(
@@ -198,7 +183,26 @@ governing permissions and limitations under the License.
             )
     );
     text-align: center;
+    border-color: var(
+        --mod-drop-zone-border-color,
+        var(--spectrum-drop-zone-border-color)
+    );
+    border-width: var(
+        --mod-drop-zone-border-width,
+        var(--spectrum-drop-zone-border-width)
+    );
+    border-radius: var(
+        --mod-drop-zone-corner-radius,
+        var(--spectrum-drop-zone-corner-radius)
+    );
+    border-style: var(--mod-drop-zone-border-style, dashed);
+    background-size: cover;
+    background-color: var(
+        --mod-drop-zone-background-color,
+        var(--spectrum-drop-zone-background-color)
+    );
 }
+
 :host([dragged]) {
     --mod-drop-zone-border-style: var(
         --mod-drop-zone-border-style--dragged,
@@ -223,6 +227,7 @@ governing permissions and limitations under the License.
         var(--spectrum-drop-zone-illustration-color-hover)
     );
 }
+
 :host .is-filled {
     --mod-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
@@ -233,20 +238,11 @@ governing permissions and limitations under the License.
     );
     --mod-illustrated-message-display: none;
 }
+
 :host([dragged]) .is-filled {
     --mod-drop-zone-content-display: flex;
 }
-:host(.focus-visible) {
-    --mod-drop-zone-border-style: solid;
-    --spectrum-drop-zone-border-color: var(
-        --highcontrast-drop-zone-border-color-hover,
-        var(
-            --mod-drop-zone-border-color-hover,
-            var(--spectrum-drop-zone-border-color-hover)
-        )
-    );
-    outline: 0;
-}
+
 :host(:focus-visible) {
     --mod-drop-zone-border-style: solid;
     --spectrum-drop-zone-border-color: var(
@@ -258,60 +254,64 @@ governing permissions and limitations under the License.
     );
     outline: 0;
 }
+
 .spectrum-DropZone-content {
+    display: var(--mod-drop-zone-content-display, none);
+    z-index: 10;
+    justify-content: center;
     align-items: center;
     block-size: 100%;
-    display: var(--mod-drop-zone-content-display, none);
-    justify-content: center;
     position: relative;
-    z-index: 10;
 }
+
 .spectrum-DropZone-button {
-    background-color: var(
-        --mod-drop-zone-content-background-color,
-        var(--spectrum-drop-zone-content-background-color)
-    );
+    box-sizing: border-box;
     block-size: var(
         --mod-drop-zone-content-height,
         var(--spectrum-drop-zone-content-height)
-    );
-    border: none;
-    box-sizing: border-box;
-    font-family: var(
-        --mod-drop-zone-content-font-family,
-        var(--spectrum-drop-zone-content-font-family)
-    );
-    font-style: var(
-        --mod-drop-zone-content-font-style,
-        var(--spectrum-drop-zone-content-font-style)
-    );
-    font-weight: var(
-        --mod-drop-zone-content-font-weight,
-        var(--spectrum-drop-zone-content-font-weight)
-    );
-    line-height: var(
-        --mod-drop-zone-content-line-height,
-        var(--spectrum-drop-zone-content-line-height)
     );
     max-inline-size: var(
         --mod-drop-zone-content-max-width,
         var(--spectrum-drop-zone-content-max-width)
     );
-    padding-block-end: var(
-        --mod-drop-zone-content-bottom-to-text,
-        var(--spectrum-drop-zone-content-bottom-to-text)
+    background-color: var(
+        --mod-drop-zone-content-background-color,
+        var(--spectrum-drop-zone-content-background-color)
     );
+    font-family: var(
+        --mod-drop-zone-content-font-family,
+        var(--spectrum-drop-zone-content-font-family)
+    );
+    font-weight: var(
+        --mod-drop-zone-content-font-weight,
+        var(--spectrum-drop-zone-content-font-weight)
+    );
+    font-style: var(
+        --mod-drop-zone-content-font-style,
+        var(--spectrum-drop-zone-content-font-style)
+    );
+    line-height: var(
+        --mod-drop-zone-content-line-height,
+        var(--spectrum-drop-zone-content-line-height)
+    );
+    border: none;
     padding-block-start: var(
         --mod-drop-zone-content-top-to-text,
         var(--spectrum-drop-zone-content-top-to-text)
     );
+    padding-block-end: var(
+        --mod-drop-zone-content-bottom-to-text,
+        var(--spectrum-drop-zone-content-bottom-to-text)
+    );
 }
+
 .spectrum-DropZone-button:focus {
     background-color: var(
         --mod-drop-zone-content-background-color,
         var(--spectrum-drop-zone-content-background-color)
     );
 }
+
 @media (hover: hover) {
     .spectrum-DropZone-button:hover {
         background-color: var(
@@ -320,6 +320,7 @@ governing permissions and limitations under the License.
         );
     }
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-drop-zone-illustration-color: CanvasText;

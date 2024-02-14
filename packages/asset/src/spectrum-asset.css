@@ -11,36 +11,40 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
+    justify-content: center;
     align-items: center;
     block-size: 100%;
-    display: flex;
     inline-size: 100%;
-    justify-content: center;
+    display: flex;
 }
+
 ::slotted(*) {
-    max-block-size: 100%;
-    max-inline-size: 100%;
     object-fit: contain;
     transition: opacity var(--spectrum-global-animation-duration-100, 0.13s);
+    max-block-size: 100%;
+    max-inline-size: 100%;
 }
-.file,
-.folder {
-    block-size: 100%;
-    inline-size: 100%;
-    margin: var(
-        --spectrum-asset-icon-margin,
-        var(--spectrum-global-dimension-size-250)
+
+.folder,
+.file {
+    min-inline-size: var(
+        --spectrum-asset-icon-min-width,
+        var(--spectrum-global-dimension-size-600)
     );
     max-inline-size: var(
         --spectrum-asset-icon-max-width,
         var(--spectrum-global-dimension-static-size-1000)
     );
-    min-inline-size: var(
-        --spectrum-asset-icon-min-width,
-        var(--spectrum-global-dimension-size-600)
+    margin: var(
+        --spectrum-asset-icon-margin,
+        var(--spectrum-global-dimension-size-250)
     );
+    block-size: 100%;
+    inline-size: 100%;
 }
+
 .folderBackground {
     fill: var(
         --highcontrast-asset-folder-background-color,
@@ -50,6 +54,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 .fileBackground {
     fill: var(
         --highcontrast-asset-file-background-color,
@@ -59,13 +64,15 @@ governing permissions and limitations under the License.
         )
     );
 }
-.fileOutline,
-.folderOutline {
+
+.folderOutline,
+.fileOutline {
     fill: var(
         --spectrum-asset-icon-outline-color,
         var(--spectrum-global-color-gray-500)
     );
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-asset-folder-background-color: currentColor;

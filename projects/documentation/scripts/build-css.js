@@ -17,7 +17,6 @@ import { hideBin } from 'yargs/helpers';
 import path from 'path';
 import fs from 'fs-extra';
 import { fileURLToPath } from 'url';
-import buildResolver from 'esm-resolve';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectDir = path.resolve(__dirname, '..');

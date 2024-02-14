@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-progressbar-animation-ease-in-out-indeterminate: var(
         --spectrum-animation-ease-in-out
@@ -23,6 +24,7 @@ governing permissions and limitations under the License.
     --spectrum-progressbar-size-2400: 192px;
     --spectrum-progressbar-size-2500: 200px;
     --spectrum-progressbar-size-2800: 224px;
+    --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
     --spectrum-progressbar-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-progressbar-min-size: var(--spectrum-progress-bar-minimum-width);
     --spectrum-progressbar-max-size: var(--spectrum-progress-bar-maximum-width);
@@ -63,6 +65,7 @@ governing permissions and limitations under the License.
     --spectrum-meter-thickness-l: var(--spectrum-meter-thickness-large);
     --spectrum-meter-top-to-text: var(--spectrum-component-top-to-text);
 }
+
 :host([size='s']) {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2400);
     --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
@@ -73,6 +76,7 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-75
     );
 }
+
 :host {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2400);
     --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
@@ -83,6 +87,7 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-75
     );
 }
+
 :host([size='l']) {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2500);
     --spectrum-progressbar-font-size: var(--spectrum-font-size-100);
@@ -93,6 +98,7 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-200
     );
 }
+
 :host([size='xl']) {
     --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2800);
     --spectrum-progressbar-font-size: var(--spectrum-font-size-200);
@@ -103,6 +109,7 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-text-300
     );
 }
+
 .spectrum-Meter {
     --spectrum-progressbar-size-default: var(
         --mod-meter-inline-size,
@@ -117,6 +124,7 @@ governing permissions and limitations under the License.
         var(--spectrum-meter-min-width)
     );
 }
+
 :host([positive]) .spectrum-Meter .fill {
     background-color: var(
         --highcontrast-progressbar-fill-color,
@@ -126,6 +134,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([notice]) .spectrum-Meter .fill {
     background-color: var(
         --highcontrast-progressbar-fill-color,
@@ -135,6 +144,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([negative]) .spectrum-Meter .fill {
     background-color: var(
         --highcontrast-progressbar-fill-color,
@@ -144,19 +154,17 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host {
-    align-items: center;
-    display: inline-flex;
-    flex-flow: wrap;
     font-size: var(
         --mod-progressbar-font-size,
         var(--spectrum-progressbar-font-size)
     );
+    vertical-align: top;
     inline-size: var(
         --mod-progressbar-size-default,
         var(--spectrum-progressbar-size-default)
     );
-    justify-content: space-between;
     max-inline-size: var(
         --mod-progressbar-max-size,
         var(--spectrum-progressbar-max-size)
@@ -165,36 +173,42 @@ governing permissions and limitations under the License.
         --mod-progressbar-min-size,
         var(--spectrum-progressbar-min-size)
     );
+    flex-flow: wrap;
+    justify-content: space-between;
+    align-items: center;
+    display: inline-flex;
     position: relative;
-    vertical-align: top;
 }
+
 .label,
 .percentage {
+    text-align: start;
     line-height: var(
         --mod-progressbar-line-height,
         var(--spectrum-progressbar-line-height)
-    );
-    margin-block-end: var(
-        --mod-progressbar-spacing-label-to-progressbar,
-        var(--spectrum-progressbar-spacing-label-to-progressbar)
     );
     margin-block-start: var(
         --mod-progressbar-spacing-top-to-text,
         var(--spectrum-progressbar-spacing-top-to-text)
     );
-    text-align: start;
+    margin-block-end: var(
+        --mod-progressbar-spacing-label-to-progressbar,
+        var(--spectrum-progressbar-spacing-label-to-progressbar)
+    );
 }
+
 .label:lang(ja),
-.label:lang(ko),
 .label:lang(zh),
+.label:lang(ko),
 .percentage:lang(ja),
-.percentage:lang(ko),
-.percentage:lang(zh) {
+.percentage:lang(zh),
+.percentage:lang(ko) {
     line-height: var(
         --mod-progressbar-line-height-cjk,
         var(--spectrum-progressbar-line-height-cjk)
     );
 }
+
 .label,
 .percentage {
     color: var(
@@ -202,9 +216,11 @@ governing permissions and limitations under the License.
         var(--spectrum-progressbar-text-color)
     );
 }
+
 .label {
     flex: 1;
 }
+
 .percentage {
     align-self: flex-start;
     margin-inline-start: var(
@@ -212,7 +228,13 @@ governing permissions and limitations under the License.
         var(--spectrum-progressbar-spacing-label-to-text)
     );
 }
+
 .track {
+    block-size: var(
+        --mod-progressbar-thickness,
+        var(--spectrum-progressbar-thickness)
+    );
+    border-radius: var(--spectrum-progressbar-corner-radius);
     background-color: var(
         --highcontrast-progressbar-track-color,
         var(
@@ -220,18 +242,15 @@ governing permissions and limitations under the License.
             var(--spectrum-progressbar-track-color)
         )
     );
-    border-radius: var(--spectrum-progressbar-corner-radius);
     inline-size: 100%;
     overflow: hidden;
 }
-.fill,
-.track {
+
+.fill {
     block-size: var(
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
-}
-.fill {
     background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
@@ -242,23 +261,26 @@ governing permissions and limitations under the License.
     border: none;
     transition: width 1s;
 }
+
 :host([indeterminate]) .fill {
-    animation-timing-function: var(
-        --mod-progressbar-animation-ease-in-out-indeterminate,
-        var(--spectrum-progressbar-animation-ease-in-out-indeterminate)
-    );
     inline-size: var(
         --mod-progressbar-fill-size-indeterminate,
         var(--spectrum-progressbar-fill-size-indeterminate)
     );
-    position: relative;
+    animation-timing-function: var(
+        --mod-progressbar-animation-ease-in-out-indeterminate,
+        var(--spectrum-progressbar-animation-ease-in-out-indeterminate)
+    );
     will-change: transform;
+    position: relative;
 }
+
 :host([side-label]) {
-    display: inline-flex;
     flex-flow: row;
     justify-content: space-between;
+    display: inline-flex;
 }
+
 :host([side-label]) .track {
     flex: 1 1
         var(
@@ -266,6 +288,7 @@ governing permissions and limitations under the License.
             var(--spectrum-progressbar-size-default)
         );
 }
+
 :host([side-label]) .label {
     flex-grow: 0;
     margin-block-end: 0;
@@ -274,25 +297,28 @@ governing permissions and limitations under the License.
         var(--spectrum-progressbar-spacing-label-to-text)
     );
 }
+
 :host([side-label]) .percentage {
+    text-align: end;
+    order: 3;
     margin-block-end: 0;
     margin-inline-start: var(
         --mod-spacing-progressbar-label-to-text,
         var(--spectrum-progressbar-spacing-label-to-text)
     );
-    order: 3;
-    text-align: end;
 }
+
 :host([static='white']) .fill {
-    background-color: var(
-        --mod-progressbar-fill-color-white,
-        var(--spectrum-progressbar-fill-color-white)
-    );
     color: var(
         --mod-progressbar-label-and-value-white,
         var(--spectrum-progressbar-label-and-value-white)
     );
+    background-color: var(
+        --mod-progressbar-fill-color-white,
+        var(--spectrum-progressbar-fill-color-white)
+    );
 }
+
 :host([static='white']) .label,
 :host([static='white']) .percentage {
     color: var(
@@ -300,9 +326,11 @@ governing permissions and limitations under the License.
         var(--spectrum-progressbar-label-and-value-white)
     );
 }
+
 :host([static='white']) .track {
     background-color: var(--spectrum-progressbar-track-color-white);
 }
+
 :host([dir='ltr'][indeterminate]) .fill {
     animation: indeterminate-loop-ltr
         var(
@@ -311,6 +339,7 @@ governing permissions and limitations under the License.
         )
         infinite;
 }
+
 :host([dir='rtl'][indeterminate]) .fill {
     animation: indeterminate-loop-rtl
         var(
@@ -319,8 +348,9 @@ governing permissions and limitations under the License.
         )
         infinite;
 }
+
 @keyframes indeterminate-loop-ltr {
-    0% {
+    from {
         transform: translate(
             calc(
                 var(
@@ -330,6 +360,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     to {
         transform: translate(
             var(
@@ -339,8 +370,9 @@ governing permissions and limitations under the License.
         );
     }
 }
+
 @keyframes indeterminate-loop-rtl {
-    0% {
+    from {
         transform: translate(
             var(
                 --mod-progressbar-size-default,
@@ -348,6 +380,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     to {
         transform: translate(
             calc(
@@ -359,6 +392,7 @@ governing permissions and limitations under the License.
         );
     }
 }
+
 @media (forced-colors: active) {
     .track {
         forced-color-adjust: none;

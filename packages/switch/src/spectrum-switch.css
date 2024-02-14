@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-switch-label-color-default: var(
         --spectrum-neutral-content-color-default
@@ -56,11 +57,13 @@ governing permissions and limitations under the License.
         --spectrum-disabled-content-color
     );
 }
+
 :host([disabled]) {
     --spectrum-switch-label-color-default: var(
         --spectrum-disabled-content-color
     );
 }
+
 :host([emphasized]) {
     --spectrum-switch-background-color-selected-default: var(
         --spectrum-accent-color-900
@@ -87,6 +90,7 @@ governing permissions and limitations under the License.
         --spectrum-accent-color-1000
     );
 }
+
 :host([size='s']) {
     --spectrum-switch-min-height: var(--spectrum-component-height-75);
     --spectrum-switch-control-width: var(--spectrum-switch-control-width-small);
@@ -102,6 +106,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-switch-font-size: var(--spectrum-font-size-75);
 }
+
 :host {
     --spectrum-switch-min-height: var(--spectrum-component-height-100);
     --spectrum-switch-control-width: var(
@@ -121,6 +126,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-switch-font-size: var(--spectrum-font-size-100);
 }
+
 :host([size='l']) {
     --spectrum-switch-min-height: var(--spectrum-component-height-200);
     --spectrum-switch-control-width: var(--spectrum-switch-control-width-large);
@@ -138,6 +144,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-switch-font-size: var(--spectrum-font-size-200);
 }
+
 :host([size='xl']) {
     --spectrum-switch-min-height: var(--spectrum-component-height-300);
     --spectrum-switch-control-width: var(
@@ -157,27 +164,30 @@ governing permissions and limitations under the License.
     );
     --spectrum-switch-font-size: var(--spectrum-font-size-300);
 }
+
 :host {
-    align-items: flex-start;
-    display: inline-flex;
-    max-inline-size: 100%;
     min-block-size: var(--mod-switch-height, var(--spectrum-switch-min-height));
-    position: relative;
     vertical-align: top;
+    align-items: flex-start;
+    max-inline-size: 100%;
+    display: inline-flex;
+    position: relative;
 }
+
 #input {
-    block-size: 100%;
     box-sizing: border-box;
-    cursor: pointer;
-    inline-size: 100%;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    margin: 0;
     opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    block-size: 100%;
+    inline-size: 100%;
+    margin: 0;
     padding: 0;
     position: absolute;
-    z-index: 1;
+    inset-block-start: 0;
+    inset-inline-start: 0;
 }
+
 :host([dir='ltr'][checked]) #input + #switch:before {
     transform: translateX(
         calc(
@@ -188,6 +198,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([dir='rtl'][checked]) #input + #switch:before {
     transform: translateX(
         calc(
@@ -200,19 +211,18 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+:host([disabled]) #input,
 :host([disabled]) #input {
     cursor: default;
 }
-#input.focus-visible + #switch:after {
-    margin: calc(
-        var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -1
-    );
-}
+
 #input:focus-visible + #switch:after {
     margin: calc(
         var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -1
     );
 }
+
 #label {
     color: var(
         --highcontrast-switch-label-color-default,
@@ -221,42 +231,31 @@ governing permissions and limitations under the License.
             var(--spectrum-switch-label-color-default)
         )
     );
-    font-size: var(--mod-switch-font-size, var(--spectrum-switch-font-size));
-    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
-    margin-block-end: 0;
-    margin-block-start: var(
-        --mod-switch-spacing-top-to-label,
-        var(--spectrum-switch-spacing-top-to-label)
-    );
     margin-inline: var(
         --mod-switch-control-label-spacing,
         var(--spectrum-switch-control-label-spacing)
     );
+    font-size: var(--mod-switch-font-size, var(--spectrum-switch-font-size));
+    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     transition: color
         var(
             --mod-animation-duration-200,
             var(--spectrum-animation-duration-200)
         )
         ease-in-out;
+    margin-block-start: var(
+        --mod-switch-spacing-top-to-label,
+        var(--spectrum-switch-spacing-top-to-label)
+    );
+    margin-block-end: 0;
 }
+
 #switch {
-    block-size: var(
-        --mod-switch-control-height,
-        var(--spectrum-switch-control-height)
-    );
-    border-radius: calc(
-        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
-            2
-    );
     box-sizing: border-box;
-    display: inline-block;
-    flex-grow: 0;
-    flex-shrink: 0;
     inline-size: var(
         --mod-switch-control-width,
         var(--spectrum-switch-control-width)
     );
-    inset-inline: 0;
     margin-block: calc(
         var(--mod-switch-height, var(--spectrum-switch-min-height)) -
             var(
@@ -268,8 +267,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-switch-spacing-top-to-control)
             )
     );
-    margin-inline: 0;
-    position: relative;
+    vertical-align: middle;
     transition: background
             var(
                 --mod-animation-duration-100,
@@ -282,9 +280,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-in-out;
-    vertical-align: middle;
-}
-#switch:before {
     block-size: var(
         --mod-switch-control-height,
         var(--spectrum-switch-control-height)
@@ -293,18 +288,17 @@ governing permissions and limitations under the License.
         var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
             2
     );
-    border-style: solid;
-    border-width: var(--mod-border-width-200, var(--spectrum-border-width-200));
-    box-sizing: border-box;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-inline: 0;
+    display: inline-block;
+    position: relative;
+    inset-inline: 0;
+}
+
+#switch:before {
     content: '';
-    display: block;
-    inline-size: var(
-        --mod-switch-control-height,
-        var(--spectrum-switch-control-height)
-    );
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    position: absolute;
+    box-sizing: border-box;
     transition: background
             var(
                 --mod-animation-duration-100,
@@ -329,7 +323,26 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-in-out;
+    inline-size: var(
+        --mod-switch-control-height,
+        var(--spectrum-switch-control-height)
+    );
+    block-size: var(
+        --mod-switch-control-height,
+        var(--spectrum-switch-control-height)
+    );
+    border-width: var(--mod-border-width-200, var(--spectrum-border-width-200));
+    border-radius: calc(
+        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
+            2
+    );
+    border-style: solid;
+    display: block;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
 }
+
 #switch:after {
     border-radius: calc(
         var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
@@ -338,11 +351,6 @@ governing permissions and limitations under the License.
             2
     );
     content: '';
-    display: block;
-    inset-block: 0;
-    inset-inline: 0;
-    margin: 0;
-    position: absolute;
     transition: opacity
             var(
                 --mod-animation-duration-100,
@@ -355,7 +363,13 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-out;
+    margin: 0;
+    display: block;
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
 }
+
 #switch {
     background-color: var(
         --highcontrast-switch-background-color,
@@ -365,6 +379,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 #switch:before {
     background-color: var(
         --highcontrast-switch-handle-background-color,
@@ -381,6 +396,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host(:active) #input + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-down,
@@ -390,6 +406,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host(:active) #input ~ #label {
     color: var(
         --highcontrast-switch-label-color-down,
@@ -399,6 +416,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host(:active[checked]) #input:enabled + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-down,
@@ -408,6 +426,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host(:active[checked]) #input:enabled + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-down,
@@ -417,20 +436,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input.focus-visible + #switch:after {
-    box-shadow: 0 0 0
-        var(
-            --mod-switch-focus-indicator-thickness,
-            var(--spectrum-switch-focus-indicator-thickness)
-        )
-        var(
-            --highcontrast-switch-focus-indicator-color,
-            var(
-                --mod-switch-focus-indicator-color,
-                var(--spectrum-switch-focus-indicator-color)
-            )
-        );
-}
+
 #input:focus-visible + #switch:after {
     box-shadow: 0 0 0
         var(
@@ -445,15 +451,7 @@ governing permissions and limitations under the License.
             )
         );
 }
-#input.focus-visible + #switch:before {
-    border-color: var(
-        --highcontrast-switch-handle-border-color-focus,
-        var(
-            --mod-switch-handle-border-color-focus,
-            var(--spectrum-switch-handle-border-color-focus)
-        )
-    );
-}
+
 #input:focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-focus,
@@ -463,15 +461,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([checked]) #input.focus-visible + #switch {
-    background-color: var(
-        --highcontrast-switch-background-color-selected-focus,
-        var(
-            --mod-switch-background-color-selected-focus,
-            var(--spectrum-switch-background-color-selected-focus)
-        )
-    );
-}
+
 :host([checked]) #input:focus-visible + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-focus,
@@ -481,15 +471,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([checked]) #input.focus-visible + #switch:before {
-    border-color: var(
-        --highcontrast-switch-handle-border-color-selected-focus,
-        var(
-            --mod-switch-handle-border-color-selected-focus,
-            var(--spectrum-switch-handle-border-color-selected-focus)
-        )
-    );
-}
+
 :host([checked]) #input:focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-focus,
@@ -499,15 +481,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input.focus-visible ~ #label {
-    color: var(
-        --highcontrast-switch-label-color-focus,
-        var(
-            --mod-switch-label-color-focus,
-            var(--spectrum-switch-label-color-focus)
-        )
-    );
-}
+
 #input:focus-visible ~ #label {
     color: var(
         --highcontrast-switch-label-color-focus,
@@ -517,9 +491,12 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 @media (hover: hover) {
+    :host([disabled][checked]:hover) #input + #switch:before,
+    :host([disabled][checked]:hover) #input + #switch:before,
     :host([disabled]:hover) #input + #switch:before,
-    :host([disabled][checked]:hover) #input + #switch:before {
+    :host([disabled]:hover) #input + #switch:before {
         border-color: var(
             --highcontrast-switch-handle-border-color-disabled,
             var(
@@ -528,6 +505,8 @@ governing permissions and limitations under the License.
             )
         );
     }
+
+    :host([disabled][checked]:hover) #input + #switch,
     :host([disabled][checked]:hover) #input + #switch {
         background-color: var(
             --highcontrast-switch-background-color-selected-disabled,
@@ -537,6 +516,8 @@ governing permissions and limitations under the License.
             )
         );
     }
+
+    :host([disabled][checked]:hover) #input ~ #label,
     :host([disabled][checked]:hover) #input ~ #label {
         color: var(
             --highcontrast-switch-label-color-disabled,
@@ -546,15 +527,7 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([checked]:hover) #input.focus-visible + #switch:before {
-        border-color: var(
-            --highcontrast-switch-handle-border-color-selected-focus,
-            var(
-                --mod-switch-handle-border-color-selected-focus,
-                var(--spectrum-switch-handle-border-color-selected-focus)
-            )
-        );
-    }
+
     :host([checked]:hover) #input:focus-visible + #switch:before {
         border-color: var(
             --highcontrast-switch-handle-border-color-selected-focus,
@@ -564,6 +537,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host(:hover) #input + #switch:before {
         border-color: var(
             --highcontrast-switch-handle-border-color-hover,
@@ -574,6 +548,7 @@ governing permissions and limitations under the License.
         );
         box-shadow: none;
     }
+
     :host([checked]:hover) #input:enabled + #switch:before {
         border-color: var(
             --highcontrast-switch-handle-border-color-selected-hover,
@@ -583,6 +558,8 @@ governing permissions and limitations under the License.
             )
         );
     }
+
+    :host([disabled]:hover) #input + #switch,
     :host([disabled]:hover) #input + #switch {
         background-color: var(
             --highcontrast-switch-background-color-disabled,
@@ -592,6 +569,8 @@ governing permissions and limitations under the License.
             )
         );
     }
+
+    :host([disabled]:hover) #input ~ #label,
     :host([disabled]:hover) #input ~ #label {
         color: var(
             --highcontrast-switch-label-color-disabled,
@@ -601,20 +580,7 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host(:hover) #input.focus-visible + #switch:after {
-        box-shadow: 0 0 0
-            var(
-                --mod-switch-focus-indicator-thickness,
-                var(--spectrum-switch-focus-indicator-thickness)
-            )
-            var(
-                --highcontrast-switch-focus-indicator-color,
-                var(
-                    --mod-switch-focus-indicator-color,
-                    var(--spectrum-switch-focus-indicator-color)
-                )
-            );
-    }
+
     :host(:hover) #input:focus-visible + #switch:after {
         box-shadow: 0 0 0
             var(
@@ -629,15 +595,7 @@ governing permissions and limitations under the License.
                 )
             );
     }
-    :host(:hover) #input.focus-visible + #switch:before {
-        border-color: var(
-            --highcontrast-switch-handle-border-color-focus,
-            var(
-                --mod-switch-handle-border-color-focus,
-                var(--spectrum-switch-handle-border-color-focus)
-            )
-        );
-    }
+
     :host(:hover) #input:focus-visible + #switch:before {
         border-color: var(
             --highcontrast-switch-handle-border-color-focus,
@@ -647,15 +605,7 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([checked]:hover) #input.focus-visible + #switch {
-        background-color: var(
-            --highcontrast-switch-background-color-selected-focus,
-            var(
-                --mod-switch-background-color-selected-focus,
-                var(--spectrum-switch-background-color-selected-focus)
-            )
-        );
-    }
+
     :host([checked]:hover) #input:focus-visible + #switch {
         background-color: var(
             --highcontrast-switch-background-color-selected-focus,
@@ -665,6 +615,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host(:hover) #input ~ #label {
         color: var(
             --highcontrast-switch-label-color-hover,
@@ -674,6 +625,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host([checked]:hover) #input:enabled + #switch {
         background-color: var(
             --highcontrast-switch-background-color-selected-hover,
@@ -683,15 +635,7 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host(:hover) #input.focus-visible ~ #label {
-        color: var(
-            --highcontrast-switch-label-color-focus,
-            var(
-                --mod-switch-label-color-focus,
-                var(--spectrum-switch-label-color-focus)
-            )
-        );
-    }
+
     :host(:hover) #input:focus-visible ~ #label {
         color: var(
             --highcontrast-switch-label-color-focus,
@@ -702,6 +646,7 @@ governing permissions and limitations under the License.
         );
     }
 }
+
 :host([checked]) #input + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-default,
@@ -711,6 +656,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([checked]) #input + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-default,
@@ -720,6 +666,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+:host([disabled]) #input + #switch,
 :host([disabled]) #input + #switch {
     background-color: var(
         --highcontrast-switch-background-color-disabled,
@@ -729,6 +677,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+:host([disabled]) #input + #switch:before,
 :host([disabled]) #input + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-disabled,
@@ -738,6 +688,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+:host([disabled][checked]) #input + #switch,
 :host([disabled][checked]) #input + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-disabled,
@@ -747,6 +699,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+:host([disabled][checked]) #input + #switch:before,
 :host([disabled][checked]) #input + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-disabled,
@@ -756,6 +710,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+:host([disabled]) #input ~ #label,
 :host([disabled]) #input ~ #label {
     color: var(
         --highcontrast-switch-label-color-disabled,
@@ -765,6 +721,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 @media (forced-colors: active) {
     :host {
         forced-color-adjust: none;
@@ -791,42 +748,59 @@ governing permissions and limitations under the License.
         --highcontrast-switch-background-color-selected-disabled: Highlight;
         --highcontrast-switch-focus-indicator-color: ButtonText;
     }
+
     #input:not(:checked) + #switch {
         box-shadow: inset 0 0 0 1px ButtonText;
     }
+
     @media (hover: hover) {
         :host(:hover) #input:not(:checked) + #switch {
             box-shadow: inset 0 0 0 1px Highlight;
         }
+
+        :host([disabled][checked]:hover) #input + #switch,
         :host([disabled][checked]:hover) #input + #switch {
-            background-color: GrayText;
             box-shadow: inset 0 0 0 1px GrayText;
+            background-color: GrayText;
         }
+
+        :host([disabled][checked]:hover) #input + #switch:before,
         :host([disabled][checked]:hover) #input + #switch:before {
-            background-color: ButtonFace;
             border-color: GrayText;
+            background-color: ButtonFace;
         }
     }
+
+    :host([disabled]) #input:not(:checked) + #switch,
     :host([disabled]) #input:not(:checked) + #switch {
-        background-color: ButtonFace;
         box-shadow: inset 0 0 0 1px GrayText;
+        background-color: ButtonFace;
     }
+
+    :host([disabled]) #input:not(:checked) + #switch:before,
     :host([disabled]) #input:not(:checked) + #switch:before {
-        background-color: ButtonFace;
         border-color: GrayText;
+        background-color: ButtonFace;
     }
+
+    :host([disabled][checked]) #input + #switch,
     :host([disabled][checked]) #input + #switch {
-        background-color: GrayText;
         box-shadow: inset 0 0 0 1px GrayText;
+        background-color: GrayText;
     }
+
+    :host([disabled][checked]) #input + #switch:before,
     :host([disabled][checked]) #input + #switch:before {
-        background-color: ButtonFace;
         border-color: GrayText;
+        background-color: ButtonFace;
     }
+
+    :host([disabled]) #input ~ #label,
     :host([disabled]) #input ~ #label {
         color: GrayText;
     }
 }
+
 :host {
     --spectrum-switch-handle-border-color-default: var(
         --system-spectrum-switch-handle-border-color-default
