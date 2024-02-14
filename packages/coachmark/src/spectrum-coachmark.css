@@ -26,9 +26,7 @@ governing permissions and limitations under the License.
     --spectrum-coachmark-header-to-body: var(--spectrum-spacing-200);
     --spectrum-coachmark-body-to-footer: var(--spectrum-spacing-300);
     --spectrum-coachmark-title-color: var(--spectrum-heading-color);
-    --spectrum-coachmark-title-font-family: var(
-        --spectrum-heading-sans-serif-font-family-stack
-    );
+    --spectrum-coachmark-title-font-family: var(--spectrum-sans-serif-font);
     --spectrum-coachmark-title-font-style: var(
         --spectrum-heading-serif-font-style
     );
@@ -43,9 +41,7 @@ governing permissions and limitations under the License.
     --spectrum-coachmark-content-font-weight: var(
         --spectrum-body-sans-serif-font-weight
     );
-    --spectrum-coachmark-content-font-family: var(
-        --spectrum-body-sans-serif-font-family
-    );
+    --spectrum-coachmark-content-font-family: var(--spectrum-sans-serif-font);
     --spectrum-coachmark-content-font-style: var(
         --spectrum-body-sans-serif-font-style
     );
@@ -59,9 +55,7 @@ governing permissions and limitations under the License.
     --spectrum-coachmark-step-font-weight: var(
         --spectrum-body-medium-font-weight
     );
-    --spectrum-coachmark-step-font-family: var(
-        --spectrum-body-sans-serif-font-family
-    );
+    --spectrum-coachmark-step-font-family: var(--spectrum-sans-serif-font);
     --spectrum-coachmark-step-font-style: var(
         --spectrum-body-sans-serif-font-style
     );

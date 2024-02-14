@@ -6709,15 +6709,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-4.2.0.tgz#8ea4e797fa402487e10b03ca10577e02f3aa7402"
   integrity sha512-5qGNq+yBaPQdfaFkqTPGVhtCnsrl4OTkGjj1I5minP4XTsmHQBNBr0oW4zYlCzxP1pM5qPp7ipaUU1VgPBB9Ag==
 
-"@spectrum-css/coachindicator@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachindicator/-/coachindicator-1.0.0.tgz#4197866b7b8fb8d8d8d50f22a8608dae122835f6"
-  integrity sha512-YLnvbGfPdzTFJ6CYO7RDSAiemL28xZbFLAS6J2mEbhflbrHHpeN0H92QIzeHSdopS6SOOe8SbFOxZnvhursREA==
+"@spectrum-css/coachindicator@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachindicator/-/coachindicator-1.1.2.tgz#6bcc2a6d47cd8d981bfac3642408ddadc8991a62"
+  integrity sha512-4X//brwRUu4RHMGKS7jphhdNzhTjJNN5Zq2s9k02rwCayn1mConOam42AmkhDzsa7+AR7XaTQC96iTzwEBB//g==
 
-"@spectrum-css/coachmark@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-6.0.0.tgz#299af5c28054d98dc732560d53c9e1bba9804e54"
-  integrity sha512-Uk2ixffX6j6j3di6Ev6Vr+8xPIPcrkRnBO5spJ+nvVoBogzfY4Y5xtL0GJbeS5CMnJ/Vva+Kb5f7Wq9fqUIiZA==
+"@spectrum-css/coachmark@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-6.1.2.tgz#85d50f8002be4c63f4713aef97e86da7f4601d52"
+  integrity sha512-1mlRfodYeQfreQBcGacPhfhzBsNy3mZyrctgujvAH8SODft/MIL4G8iAxzyK3mN4HJNCFXdUW4kttIf0lz2gaA==
 
 "@spectrum-css/colorarea@^4.1.0":
   version "4.1.0"
