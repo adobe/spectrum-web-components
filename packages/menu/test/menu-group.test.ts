@@ -23,10 +23,20 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { complexSlotted } from '../stories/menu-group.stories.js';
+import { ComplexSlottedGroup, ComplexSlottedMenu } from '../stories/index.js';
+import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
     return menu.childItems.filter(
         (item: MenuItem) => item.menuData.selectionRoot === menu
+    );
+};
+
+const focusableItems = (menu: Menu | MenuGroup): MenuItem[] => {
+    return menu.childItems.filter(
+        (item: MenuItem) => item.menuData.focusRoot === menu
     );
 };
 
@@ -110,30 +120,45 @@ describe('Menu group', () => {
             html`
                 <sp-menu selects="single">
                     <sp-menu-item selected>First</sp-menu-item>
+                    <!-- 1 -->
                     <sp-menu-item>Second</sp-menu-item>
+                    <!-- 1 -->
                     <sp-menu-group id="mg-multi" selects="multiple">
                         <sp-menu-item selected>Multi1</sp-menu-item>
+                        <!-- 2 -->
                         <sp-menu-item>Multi2</sp-menu-item>
+                        <!-- 2 -->
                         <sp-menu-group id="mg-sub-inherit" selects="inherit">
                             <sp-menu-item>SubInherit1</sp-menu-item>
+                            <!-- 2 -->
                             <sp-menu-item>SubInherit2</sp-menu-item>
+                            <!-- 2 -->
                         </sp-menu-group>
                     </sp-menu-group>
                     <sp-menu-group id="mg-single" selects="single">
                         <sp-menu-item selected>Single1</sp-menu-item>
+                        <!-- 3 -->
                         <sp-menu-item>Single2</sp-menu-item>
+                        <!-- 3 -->
                     </sp-menu-group>
                     <sp-menu-group id="mg-none">
                         <sp-menu-item>Inherit1</sp-menu-item>
+                        <!-- - -->
                         <sp-menu-item>Inherit2</sp-menu-item>
+                        <!-- - -->
                     </sp-menu-group>
                     <sp-menu-group id="mg-inherit" selects="inherit">
                         <sp-menu-item>Inherit1</sp-menu-item>
+                        <!-- 1 -->
                         <sp-menu-item>Inherit2</sp-menu-item>
+                        <!-- 1 -->
                     </sp-menu-group>
                 </sp-menu>
             `
         );
+
+        // 1 & 3 should be menuitemradio
+        // 2 shouwl menuitemcheckbox
 
         await waitUntil(
             () => managedItems(el).length === 4,
@@ -257,6 +282,7 @@ describe('Menu group', () => {
         expect(el.selectedItems.length).to.equal(1);
 
         noneItem2.click();
+        await elementUpdated(el);
         await elementUpdated(noneGroup);
         await elementUpdated(noneItem2);
         expect(inheritItem1.selected).to.be.true;
@@ -268,8 +294,8 @@ describe('Menu group', () => {
         await elementUpdated(singleGroup);
         await elementUpdated(singleItem1);
         await elementUpdated(singleItem2);
-        expect(singleItem1.selected, 'first item not selected').to.be.false;
         expect(singleItem2.selected).to.be.true;
+        expect(singleItem1.selected, 'first item not selected').to.be.false;
         expect(inheritItem1.selected).to.be.true;
         expect(singleItem1.getAttribute('aria-checked')).to.equal('false');
         expect(singleItem2.getAttribute('aria-checked')).to.equal('true');
@@ -372,5 +398,73 @@ describe('Menu group', () => {
         expect(inheritItem2.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
+    });
+    it('manages complex slotted menu items', async function () {
+        const el = await fixture<ComplexSlottedMenu>(complexSlotted());
+
+        await waitUntil(
+            () => focusableItems(el.menu).length == 12,
+            `expected outer menu to manage 12 items, ${
+                el.menu.localName
+            } manages ${focusableItems(el.menu).length}`
+        );
+
+        const menu = el.menu;
+        const items: Record<string, MenuItem> = {};
+        items.i2 = el.querySelector('#i-2') as MenuItem;
+        items.i8 = el.querySelector('#i-8') as MenuItem;
+        items.i9 = el.querySelector('#i-9') as MenuItem;
+        items.i3 = el.renderRoot.querySelector('#i-3') as MenuItem;
+        items.i5 = el.renderRoot.querySelector('#i-5') as MenuItem;
+        items.i6 = el.renderRoot.querySelector('#i-6') as MenuItem;
+        items.i7 = el.renderRoot.querySelector('#i-7') as MenuItem;
+        const group = el.renderRoot.querySelector(
+            '#group'
+        ) as ComplexSlottedGroup;
+        items.i1 = group.renderRoot.querySelector('#i-1') as MenuItem;
+        items.i4 = group.renderRoot.querySelector('#i-4') as MenuItem;
+        items.i10 = group.renderRoot.querySelector('#i-10') as MenuItem;
+        items.i11 = group.renderRoot.querySelector('#i-11') as MenuItem;
+        items.i12 = group.renderRoot.querySelector('#i-12') as MenuItem;
+
+        const rect = items.i9.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await elementUpdated(items.i9);
+
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
+        await elementUpdated(items.i9);
+        expect(items.i9.focused).to.be.true;
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        let i = 9;
+        const count = Object.keys(items).length + 1;
+        while (!items.i9.focused) {
+            i = Math.max(1, (i + 1 + count) % count);
+            await elementUpdated(menu);
+            await elementUpdated(items[`i${i}`]);
+            expect(items[`i${i}`].focused, `i${i} should be focused`).to.be
+                .true;
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await elementUpdated(menu);
+            await elementUpdated(items[`i${i}`]);
+        }
     });
 });

@@ -14,60 +14,91 @@ governing permissions and limitations under the License.
 :host {
     opacity: 0;
     pointer-events: none;
-    transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
+    transition: transform
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
             ease-in-out,
-        opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        opacity
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
         visibility 0s linear
-            var(--spectrum-global-animation-duration-100, 0.13s);
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            );
     visibility: hidden;
 }
 :host([open]) {
     opacity: 1;
     pointer-events: auto;
-    transition-delay: 0s;
+    transition-delay: var(
+        --mod-overlay-animation-duration-opened,
+        var(--spectrum-animation-duration-0, 0s)
+    );
     visibility: visible;
 }
 :host {
-    --spectrum-dialog-confirm-background-entry-animation-delay: 0s;
-    --spectrum-dialog-confirm-background-exit-animation-ease: cubic-bezier(
-        0.5,
-        0,
-        1,
-        1
+    --spectrum-underlay-background-entry-animation-delay: var(
+        --spectrum-animation-duration-0
     );
-    --spectrum-dialog-confirm-background-entry-animation-ease: cubic-bezier(
-        0,
-        0,
-        0.4,
-        1
+    --spectrum-underlay-background-exit-animation-ease: var(
+        --spectrum-animation-ease-in
+    );
+    --spectrum-underlay-background-entry-animation-ease: var(
+        --spectrum-animation-ease-out
+    );
+    --spectrum-underlay-background-entry-animation-duration: var(
+        --spectrum-animation-duration-600
+    );
+    --spectrum-underlay-background-exit-animation-duration: var(
+        --spectrum-animation-duration-300
+    );
+    --spectrum-underlay-background-exit-animation-delay: var(
+        --spectrum-animation-duration-200
+    );
+    --spectrum-underlay-background-color: rgba(
+        var(--spectrum-black-rgb),
+        var(--spectrum-overlay-opacity)
     );
 }
 :host {
-    inset: 0;
+    background-color: var(
+        --mod-underlay-background-color,
+        var(--spectrum-underlay-background-color)
+    );
+    inset-block: 0;
+    inset-inline: 0;
     overflow: hidden;
     position: fixed;
     transition: opacity
             var(
-                --spectrum-dialog-confirm-background-exit-animation-duration,
-                var(--spectrum-global-animation-duration-300)
+                --mod-underlay-background-exit-animation-duration,
+                var(--spectrum-underlay-background-exit-animation-duration)
             )
             var(
-                --spectrum-dialog-confirm-background-exit-animation-ease,
-                var(--spectrum-global-animation-linear)
+                --mod-underlay-background-exit-animation-ease,
+                var(--spectrum-underlay-background-exit-animation-ease)
             )
             var(
-                --spectrum-dialog-confirm-background-exit-animation-delay,
-                var(--spectrum-global-animation-duration-200)
+                --mod-underlay-background-exit-animation-delay,
+                var(--spectrum-underlay-background-exit-animation-delay)
             ),
         visibility 0s linear
             calc(
                 var(
-                        --spectrum-dialog-confirm-background-exit-animation-delay,
-                        var(--spectrum-global-animation-duration-200)
+                        --mod-underlay-background-exit-animation-delay,
+                        var(--spectrum-underlay-background-exit-animation-delay)
                     ) +
                     var(
-                        --spectrum-dialog-confirm-background-exit-animation-duration,
-                        var(--spectrum-global-animation-duration-300)
+                        --mod-underlay-background-exit-animation-duration,
+                        var(
+                            --spectrum-underlay-background-exit-animation-duration
+                        )
                     )
             );
     z-index: 1;
@@ -75,18 +106,15 @@ governing permissions and limitations under the License.
 :host([open]) {
     transition: opacity
         var(
-            --spectrum-dialog-confirm-background-entry-animation-duration,
-            var(--spectrum-global-animation-duration-600)
+            --mod-underlay-background-entry-animation-duration,
+            var(--spectrum-underlay-background-entry-animation-duration)
         )
         var(
-            --spectrum-dialog-confirm-background-entry-animation-ease,
-            var(--spectrum-global-animation-linear)
+            --mod-underlay-background-entry-animation-ease,
+            var(--spectrum-underlay-background-entry-animation-ease)
         )
-        var(--spectrum-dialog-confirm-background-entry-animation-delay, 0s);
-}
-:host {
-    background: var(
-        --spectrum-dialog-confirm-overlay-background-color,
-        var(--spectrum-alias-background-color-modal-overlay)
-    );
+        var(
+            --mod-underlay-background-entry-animation-delay,
+            var(--spectrum-underlay-background-entry-animation-delay)
+        );
 }

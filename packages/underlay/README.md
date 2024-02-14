@@ -38,10 +38,7 @@ When leveraging an `<sp-underlay>` in conjunction with overlay content, place it
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1;
-        background: var(
-            --spectrum-dialog-confirm-background-color,
-            var(--spectrum-alias-background-color-default)
-        );
+        background: var(--spectrum-gray-100);
     }
 </style>
 

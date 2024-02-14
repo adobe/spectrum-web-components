@@ -3,6 +3,148 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **search:** add mod to remove clear button padding ([65168fe](https://github.com/adobe/spectrum-web-components/commit/65168fe546ca271cd68722f0c3f4a0be8d4a3253))
+
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **number-field,search,textfield:** add t-shirt sizes ([fda8f96](https://github.com/adobe/spectrum-web-components/commit/fda8f96b71b1447a8281f73d885c1c33ae74cfec))
+
+## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
+
+### Features
+
+-   **search:** use core tokens ([c62a7cd](https://github.com/adobe/spectrum-web-components/commit/c62a7cddae81b9767b0ce83117b790d9a7639547))
+
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Features
+
+-   **search,textfield:** use core tokens ([2ed5135](https://github.com/adobe/spectrum-web-components/commit/2ed51355c2787ac06274e763ea1eee7bfd0c9c72))
+
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   add tslib as dependency where needed ([78885d9](https://github.com/adobe/spectrum-web-components/commit/78885d9ca7192a053d3b380c338ad5570da474f9))
+-   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
+-   ensure CCX search visual delivery ([22b90b9](https://github.com/adobe/spectrum-web-components/commit/22b90b901071d8cdbee8a0f6ac2d6fe8acb6dbf0))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   normalize "event" and "error" argument names ([8d382cd](https://github.com/adobe/spectrum-web-components/commit/8d382cdac98282c886f23c4a8d6cf4910c4a606c))
+-   **search:** ensure "reset" surfaces "input" and "change" events ([d8204a9](https://github.com/adobe/spectrum-web-components/commit/d8204a9cf05605696cab02c1e47edb4fad36e9ed))
+-   **search:** prevent overflow content from going behind clear button ([956f947](https://github.com/adobe/spectrum-web-components/commit/956f947533fa37cdbd9852ad5ae8eb984e9965f6))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+-   use type="search" for nicer virtual keyboards ([c439eb3](https://github.com/adobe/spectrum-web-components/commit/c439eb3b5d0b9dbc628691a5215d65c936c3939e))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   add and use icons-ui package ([d9c3ab2](https://github.com/adobe/spectrum-web-components/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+-   conditionally load focus-visible polyfill ([6b5e5cf](https://github.com/adobe/spectrum-web-components/commit/6b5e5cf515f02ef14f072b7aee62feed7a83c281))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   **search:** adds sp-search element ([d484fc2](https://github.com/adobe/spectrum-web-components/commit/d484fc2848a08d52ebb1fc2064202a4288b6b4b3))
+-   **search:** introduce API to control form interactions ([42fac00](https://github.com/adobe/spectrum-web-components/commit/42fac00ac071e87f9f80ae45212ea469d4d05fb0))
+-   **search:** submit will bubble ([8014345](https://github.com/adobe/spectrum-web-components/commit/801434548576daf4c31dc99eb6972ea140c68943))
+-   **search:** support "quiet" variant ([d0f85f1](https://github.com/adobe/spectrum-web-components/commit/d0f85f18887731f80d26eaec84ae601f4e433196))
+-   **search:** update spectrum css input ([05d8131](https://github.com/adobe/spectrum-web-components/commit/05d813121075a96652b122c7bb9aafa375dc97ad))
+-   **search:** use Spectrum CSS ^3.0.0 ([7830ac0](https://github.com/adobe/spectrum-web-components/commit/7830ac0868e855145cee0922529a0f6d4d3e7f50))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
+### Reverts
+
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+## [0.12.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.12.15...@spectrum-web-components/search@0.12.16) (2023-04-24)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
 ## [0.12.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.12.14...@spectrum-web-components/search@0.12.15) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/search

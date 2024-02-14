@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, html } from '@open-wc/testing';
 import {
     arrowDownEvent,
     arrowDownKeyupEvent,
@@ -20,6 +20,7 @@ import {
     arrowRightKeyupEvent,
     arrowUpEvent,
     arrowUpKeyupEvent,
+    fixture,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
@@ -86,6 +87,7 @@ describe('ColorSlider', () => {
         await sendKeys({
             press: 'ArrowRight',
         });
+        await elementUpdated(el);
         expect(el.value).to.not.equal(value);
         await sendKeys({
             press: 'Tab',
@@ -119,12 +121,24 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        el.dispatchEvent(new FocusEvent('focusin'));
+        expect(el.focused).to.be.false;
+
+        await sendKeys({ press: 'Tab' });
         await elementUpdated(el);
 
         expect(el.focused).to.be.true;
 
-        el.dispatchEvent(new FocusEvent('focusout'));
+        el.blur();
+        await elementUpdated(el);
+
+        expect(el.focused).to.be.false;
+
+        el.dispatchEvent(new FocusEvent('focus'));
+        await elementUpdated(el);
+
+        expect(el.focused).to.be.true;
+
+        el.dispatchEvent(new FocusEvent('blur'));
         await elementUpdated(el);
 
         expect(el.focused).to.be.false;
@@ -205,6 +219,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         const input = el.focusElement;
 
@@ -215,7 +230,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -224,7 +243,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(4);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (4 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(4);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -233,7 +256,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -243,6 +270,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses in dir="rtl"', async () => {
         const el = await fixture<ColorSlider>(
@@ -264,7 +292,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowRightEvent());
         input.dispatchEvent(arrowRightKeyupEvent());
@@ -274,6 +306,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -282,7 +315,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (2 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(2);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -292,6 +329,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorSlider>(
@@ -303,6 +341,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
         el.focus();
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
 
         await sendKeys({
             down: 'Shift',
@@ -316,7 +355,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(20);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (20 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(20);
 
         await sendKeys({
             press: 'ArrowRight',
@@ -327,7 +370,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(40);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (40 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(40);
 
         await sendKeys({
             press: 'ArrowDown',
@@ -338,7 +385,11 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(20);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            (20 * 100) / 360,
+            0.000001
+        );
+        expect(el.value).to.equal(20);
 
         await sendKeys({
             press: 'ArrowLeft',
@@ -353,6 +404,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect(el.value).to.equal(0);
     });
     it('accepts pointer events', async () => {
         const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
@@ -491,7 +543,7 @@ describe('ColorSlider', () => {
             boundingClientRect.top + boundingClientRect.height / 2,
         ];
         const targetLocation: [number, number] = [
-            handleLocation[0] + 100,
+            handleLocation[0] + 105,
             handleLocation[1],
         ];
 
@@ -513,7 +565,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.value).to.be.within(187.4, 188.5);
+        expect(el.value).to.be.greaterThan(190);
 
         await sendMouse({
             steps: [
@@ -564,7 +616,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(47.91666666666667);
+        expect(el.sliderHandlePosition).to.equal(100 - 47.91666666666667);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -589,7 +641,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(53.125);
+        expect(el.sliderHandlePosition).to.equal(100 - 53.125);
     });
     it('accepts pointer events in dir="rtl"', async () => {
         document.documentElement.dir = 'rtl';
@@ -631,7 +683,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(52.083333333333336);
+        expect(el.sliderHandlePosition).to.equal(100 - 52.083333333333336);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -656,7 +708,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(46.875);
+        expect(el.sliderHandlePosition).to.equal(100 - 46.875);
     });
     const colorFormats: {
         name: string;

@@ -15,6 +15,7 @@ import {
     html,
     nothing,
     PropertyValues,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -42,64 +43,126 @@ export type TextfieldType = typeof textfieldTypes[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends ManageHelpText(Focusable) {
+export class TextfieldBase extends ManageHelpText(
+    SizedMixin(Focusable, {
+        noDefaultSize: true,
+    })
+) {
     public static override get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];
     }
 
+    @state()
+    protected appliedLabel?: string;
+
+    /**
+     * A regular expression outlining the keys that will be allowed to update the value of the form control.
+     */
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';
 
+    /**
+     * @private
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @query('.input')
+    @query('.input:not(#sizer)')
     protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
+    /**
+     * Whether the `value` held by the form control is invalid.
+     */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    /**
+     * A string applied via `aria-label` to the form control when a user visible label is not provided.
+     */
     @property()
     public label = '';
 
+    /**
+     * Name of the form control.
+     */
+    @property({ type: String, reflect: true })
+    public name: string | undefined;
+
+    /**
+     * Text that appears in the form control when it has no value set
+     */
     @property()
     public placeholder = '';
 
-    @property({ attribute: 'type', reflect: true })
-    private _type: TextfieldType = 'text';
-
     @state()
-    get type(): TextfieldType {
-        return textfieldTypes.find((t) => t === this._type) ?? 'text';
-    }
-
     set type(val: TextfieldType) {
         const prev = this._type;
         this._type = val;
         this.requestUpdate('type', prev);
     }
 
+    get type(): TextfieldType {
+        return textfieldTypes.find((t) => t === this._type) ?? 'text';
+    }
+
+    /**
+     * @private
+     * This binding allows for invalid value for `type` to still be reflected to the DOM
+     */
+    @property({ attribute: 'type', reflect: true })
+    private _type: TextfieldType = 'text';
+
+    /**
+     * Pattern the `value` must match to be valid
+     */
     @property()
     public pattern?: string;
 
+    /**
+     * Whether a form control delivered with the `multiline` attribute will change size to accomodate longer input
+     */
     @property({ type: Boolean, reflect: true })
     public grows = false;
 
+    /**
+     * Defines the maximum string length that the user can enter
+     */
     @property({ type: Number })
     public maxlength = -1;
 
+    /**
+     * Defines the minimum string length that the user can enter
+     */
     @property({ type: Number })
     public minlength = -1;
 
+    /**
+     * Whether the form control should accept a value longer than one line
+     */
     @property({ type: Boolean, reflect: true })
     public multiline = false;
 
+    /**
+     * Whether a user can interact with the value of the form control
+     */
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
+    /**
+     * The specific number of rows the form control should provide in the user interface
+     */
+    @property({ type: Number })
+    public rows = -1;
+
+    /**
+     * Whether the `value` held by the form control is valid.
+     */
     @property({ type: Boolean, reflect: true })
     public valid = false;
 
+    /**
+     * The value held by the form control
+     */
     @property({ type: String })
     public set value(value: string | number) {
         if (value === this.value) {
@@ -116,12 +179,21 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
 
     protected _value: string | number = '';
 
+    /**
+     * Whether to display the form control with no visible background
+     */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    /**
+     * Whether the form control will be found to be invalid when it holds no `value`
+     */
     @property({ type: Boolean, reflect: true })
     public required = false;
 
+    /**
+     * What form of assistance should be provided when attempting to supply a value to the form control
+     */
     @property({ type: String, reflect: true })
     public autocomplete?:
         | HTMLInputElement['autocomplete']
@@ -160,7 +232,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         this.inputElement.select();
     }
 
-    protected handleInput(): void {
+    protected handleInput(_event: Event): void {
         if (this.allowedKeys && this.inputElement.value) {
             const regExp = new RegExp(`^[${this.allowedKeys}]*$`, 'u');
             if (!regExp.test(this.inputElement.value)) {
@@ -191,7 +263,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         this.focused = !this.readonly && true;
     }
 
-    protected onBlur(): void {
+    protected onBlur(_event: FocusEvent): void {
         this.focused = !this.readonly && false;
     }
 
@@ -217,15 +289,20 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
 
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows && !this.quiet
+            ${this.grows && this.rows === -1
                 ? html`
-                      <div id="sizer">${this.value}&#8203;</div>
+                      <div id="sizer" class="input" aria-hidden="true">
+                          ${this.value}&#8203;
+                      </div>
                   `
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
+                name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label || this.placeholder}
+                aria-label=${this.label ||
+                this.appliedLabel ||
+                this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
@@ -234,6 +311,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
                 minlength=${ifDefined(
                     this.minlength > -1 ? this.minlength : undefined
                 )}
+                title=${this.invalid ? '' : nothing}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.displayValue}
@@ -244,6 +322,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
                 ?disabled=${this.disabled}
                 ?required=${this.required}
                 ?readonly=${this.readonly}
+                rows=${ifDefined(this.rows > -1 ? this.rows : undefined)}
                 autocomplete=${ifDefined(this.autocomplete)}
             ></textarea>
         `;
@@ -253,11 +332,15 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         return html`
             <!-- @ts-ignore -->
             <input
+                name=${ifDefined(this.name || undefined)}
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label || this.placeholder}
+                aria-label=${this.label ||
+                this.appliedLabel ||
+                this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
+                title=${this.invalid ? '' : nothing}
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
                 )}

@@ -12,48 +12,67 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     -webkit-appearance: button;
-    border-style: solid;
     box-sizing: border-box;
     cursor: pointer;
-    font-family: var(--mod-font-family-base, var(--spectrum-font-family-base));
-    line-height: var(
-        --mod-line-height-small,
-        var(--spectrum-line-height-small)
+    font-family: var(
+        --mod-button-font-family,
+        var(
+            --mod-sans-font-family-stack,
+            var(--spectrum-sans-font-family-stack)
+        )
     );
-    margin: 0;
-    overflow: visible;
-    text-decoration: none;
+    line-height: var(
+        --mod-button-line-height,
+        var(--mod-line-height-100, var(--spectrum-line-height-100))
+    );
     text-transform: none;
     transition: background
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         border-color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         color
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         box-shadow
             var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
+                --mod-button-animation-duration,
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out;
     -webkit-user-select: none;
     user-select: none;
     vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    border-style: solid;
+    margin: 0;
+    overflow: visible;
+    -webkit-text-decoration: none;
+    text-decoration: none;
 }
 :host(:focus) {
     outline: none;
@@ -95,10 +114,6 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
-    --spectrum-closebutton-height: var(--spectrum-component-height-100);
-    --spectrum-closebutton-width: var(--spectrum-closebutton-height);
-    --spectrum-closebutton-size: var(--spectrum-closebutton-size-400);
-    --spectrum-closebutton-border-radius: var(--spectrum-closebutton-size-400);
     --spectrum-closebutton-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -109,7 +124,7 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-size: var(--spectrum-closebutton-size-300);
     --spectrum-closebutton-border-radius: var(--spectrum-closebutton-size-300);
 }
-:host([size='m']) {
+:host {
     --spectrum-closebutton-height: var(--spectrum-component-height-100);
     --spectrum-closebutton-width: var(--spectrum-closebutton-height);
     --spectrum-closebutton-size: var(--spectrum-closebutton-size-400);
@@ -127,7 +142,7 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-size: var(--spectrum-closebutton-size-600);
     --spectrum-closebutton-border-radius: var(--spectrum-closebutton-size-600);
 }
-:host([variant='white']) {
+:host([static='white']) {
     --spectrum-closebutton-static-background-color-default: transparent;
     --spectrum-closebutton-static-background-color-hover: var(
         --spectrum-transparent-white-300
@@ -146,7 +161,7 @@ governing permissions and limitations under the License.
         --spectrum-static-white-focus-indicator-color
     );
 }
-:host([variant='black']) {
+:host([static='black']) {
     --spectrum-closebutton-static-background-color-default: transparent;
     --spectrum-closebutton-static-background-color-hover: var(
         --spectrum-transparent-black-300
@@ -175,28 +190,11 @@ governing permissions and limitations under the License.
         --highcontrast-closebutton-focus-indicator-color: ButtonText;
     }
     :host(.focus-visible):after {
-        border-radius: 100%;
-        box-shadow: 0 0 0
-            var(
-                --mod-closebutton-focus-indicator-thickness,
-                var(--spectrum-closebutton-focus-indicator-thickness)
-            )
-            var(
-                --highcontrast-closebutton-focus-indicator-color,
-                var(
-                    --mod-closebutton-focus-indicator-color,
-                    var(--spectrum-closebutton-focus-indicator-color)
-                )
-            );
-        content: '';
-        display: block;
         forced-color-adjust: none;
-        inset: 0;
         margin: var(
             --mod-closebutton-focus-indicator-gap,
             var(--spectrum-closebutton-focus-indicator-gap)
         );
-        position: absolute;
         transition: opacity
                 var(
                     --mod-closebutton-animation-duration,
@@ -211,28 +209,11 @@ governing permissions and limitations under the License.
                 ease-out;
     }
     :host(:focus-visible):after {
-        border-radius: 100%;
-        box-shadow: 0 0 0
-            var(
-                --mod-closebutton-focus-indicator-thickness,
-                var(--spectrum-closebutton-focus-indicator-thickness)
-            )
-            var(
-                --highcontrast-closebutton-focus-indicator-color,
-                var(
-                    --mod-closebutton-focus-indicator-color,
-                    var(--spectrum-closebutton-focus-indicator-color)
-                )
-            );
-        content: '';
-        display: block;
         forced-color-adjust: none;
-        inset: 0;
         margin: var(
             --mod-closebutton-focus-indicator-gap,
             var(--spectrum-closebutton-focus-indicator-gap)
         );
-        position: absolute;
         transition: opacity
                 var(
                     --mod-closebutton-animation-duration,
@@ -246,12 +227,12 @@ governing permissions and limitations under the License.
                 )
                 ease-out;
     }
-    :host([variant='black']) {
+    :host([static='black']) {
         --highcontrast-closebutton-static-background-color-default: ButtonFace;
         --highcontrast-closebutton-icon-color-default: Highlight;
         --highcontrast-closebutton-icon-color-disabled: GrayText;
     }
-    :host([variant='white']) {
+    :host([static='white']) {
         --highcontrast-closebutton-static-background-color-default: ButtonFace;
         --highcontrast-closebutton-icon-color-default: Highlight;
         --highcontrast-closebutton-icon-color-disabled: Highlight;
@@ -259,6 +240,11 @@ governing permissions and limitations under the License.
 }
 :host {
     align-items: center;
+    align-self: var(--mod-closebutton-align-self);
+    block-size: var(
+        --mod-closebutton-height,
+        var(--spectrum-closebutton-height)
+    );
     border-color: #0000;
     border-radius: var(
         --mod-closebutton-border-radius,
@@ -268,8 +254,13 @@ governing permissions and limitations under the License.
     color: inherit;
     display: inline-flex;
     flex-direction: row;
-    height: var(--mod-closebutton-height, var(--spectrum-closebutton-height));
+    inline-size: var(
+        --mod-closebutton-width,
+        var(--spectrum-closebutton-width)
+    );
     justify-content: center;
+    margin-block-start: var(--mod-closebutton-margin-top);
+    margin-inline: var(--mod-closebutton-margin-inline);
     padding: 0;
     position: relative;
     transition: border-color
@@ -278,7 +269,6 @@ governing permissions and limitations under the License.
             var(--spectrum-closebutton-animation-duration)
         )
         ease-in-out;
-    width: var(--mod-closebutton-width, var(--spectrum-closebutton-width));
 }
 :host:after {
     border-radius: calc(
@@ -289,7 +279,8 @@ governing permissions and limitations under the License.
             )
     );
     content: '';
-    inset: 0;
+    inset-block: 0;
+    inset-inline: 0;
     margin: calc(
         var(
                 --mod-closebutton-focus-indicator-gap,
@@ -307,9 +298,11 @@ governing permissions and limitations under the License.
 }
 :host(.focus-visible) {
     box-shadow: none;
+    outline: none;
 }
 :host(:focus-visible) {
     box-shadow: none;
+    outline: none;
 }
 :host(.focus-visible):after {
     box-shadow: 0 0 0
@@ -345,21 +338,6 @@ governing permissions and limitations under the License.
         var(
             --mod-closebutton-background-color-default,
             var(--spectrum-closebutton-background-color-default)
-        )
-    );
-}
-:host(:not([disabled]):hover) {
-    background-color: var(
-        --mod-closebutton-background-color-hover,
-        var(--spectrum-closebutton-background-color-hover)
-    );
-}
-:host(:not([disabled]):hover) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-hover,
-        var(
-            --mod-closebutton-icon-color-hover,
-            var(--spectrum-closebutton-icon-color-hover)
         )
     );
 }
@@ -443,8 +421,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled])),
-:host([variant='white']:not([disabled])) {
+:host([static='black']:not([disabled])),
+:host([static='white']:not([disabled])) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-default,
         var(
@@ -453,28 +431,45 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled]):hover),
-:host([variant='white']:not([disabled]):hover) {
-    background-color: var(
-        --highcontrast-closebutton-static-background-color-hover,
-        var(
-            --mod-closebutton-static-background-color-hover,
-            var(--spectrum-closebutton-static-background-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:not([disabled]):hover) .icon {
+        color: var(
+            --highcontrast-closebutton-icon-color-hover,
+            var(
+                --mod-closebutton-icon-color-hover,
+                var(--spectrum-closebutton-icon-color-hover)
+            )
+        );
+    }
+    :host(:not([disabled]):hover) {
+        background-color: var(
+            --mod-closebutton-background-color-hover,
+            var(--spectrum-closebutton-background-color-hover)
+        );
+    }
+    :host([static='black']:not([disabled]):hover),
+    :host([static='white']:not([disabled]):hover) {
+        background-color: var(
+            --highcontrast-closebutton-static-background-color-hover,
+            var(
+                --mod-closebutton-static-background-color-hover,
+                var(--spectrum-closebutton-static-background-color-hover)
+            )
+        );
+    }
+    :host([static='black']:not([disabled]):hover) .icon,
+    :host([static='white']:not([disabled]):hover) .icon {
+        color: var(
+            --highcontrast-closebutton-icon-color-default,
+            var(
+                --mod-closebutton-icon-color-default,
+                var(--spectrum-closebutton-icon-color-default)
+            )
+        );
+    }
 }
-:host([variant='black']:not([disabled]):hover) .icon,
-:host([variant='white']:not([disabled]):hover) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-default,
-        var(
-            --mod-closebutton-icon-color-default,
-            var(--spectrum-closebutton-icon-color-default)
-        )
-    );
-}
-:host([variant='black']:not([disabled])[active]),
-:host([variant='white']:not([disabled])[active]) {
+:host([static='black']:not([disabled])[active]),
+:host([static='white']:not([disabled])[active]) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-down,
         var(
@@ -483,8 +478,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled])[active]) .icon,
-:host([variant='white']:not([disabled])[active]) .icon {
+:host([static='black']:not([disabled])[active]) .icon,
+:host([static='white']:not([disabled])[active]) .icon {
     color: var(
         --highcontrast-closebutton-icon-color-default,
         var(
@@ -493,10 +488,10 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled]).focus-visible),
-:host([variant='black']:not([disabled])[focused]),
-:host([variant='white']:not([disabled]).focus-visible),
-:host([variant='white']:not([disabled])[focused]) {
+:host([static='black']:not([disabled]).focus-visible),
+:host([static='black']:not([disabled])[focused]),
+:host([static='white']:not([disabled]).focus-visible),
+:host([static='white']:not([disabled])[focused]) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-focus,
         var(
@@ -505,10 +500,10 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled]):focus-visible),
-:host([variant='black']:not([disabled])[focused]),
-:host([variant='white']:not([disabled]):focus-visible),
-:host([variant='white']:not([disabled])[focused]) {
+:host([static='black']:not([disabled]):focus-visible),
+:host([static='black']:not([disabled])[focused]),
+:host([static='white']:not([disabled]):focus-visible),
+:host([static='white']:not([disabled])[focused]) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-focus,
         var(
@@ -517,12 +512,12 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled]).focus-visible) .icon,
-:host([variant='black']:not([disabled]):focus) .icon,
-:host([variant='black']:not([disabled])[focused]) .icon,
-:host([variant='white']:not([disabled]).focus-visible) .icon,
-:host([variant='white']:not([disabled]):focus) .icon,
-:host([variant='white']:not([disabled])[focused]) .icon {
+:host([static='black']:not([disabled]).focus-visible) .icon,
+:host([static='black']:not([disabled]):focus) .icon,
+:host([static='black']:not([disabled])[focused]) .icon,
+:host([static='white']:not([disabled]).focus-visible) .icon,
+:host([static='white']:not([disabled]):focus) .icon,
+:host([static='white']:not([disabled])[focused]) .icon {
     color: var(
         --highcontrast-closebutton-icon-color-default,
         var(
@@ -531,12 +526,12 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled]):focus) .icon,
-:host([variant='black']:not([disabled]):focus-visible) .icon,
-:host([variant='black']:not([disabled])[focused]) .icon,
-:host([variant='white']:not([disabled]):focus) .icon,
-:host([variant='white']:not([disabled]):focus-visible) .icon,
-:host([variant='white']:not([disabled])[focused]) .icon {
+:host([static='black']:not([disabled]):focus) .icon,
+:host([static='black']:not([disabled]):focus-visible) .icon,
+:host([static='black']:not([disabled])[focused]) .icon,
+:host([static='white']:not([disabled]):focus) .icon,
+:host([static='white']:not([disabled]):focus-visible) .icon,
+:host([static='white']:not([disabled])[focused]) .icon {
     color: var(
         --highcontrast-closebutton-icon-color-default,
         var(
@@ -545,15 +540,15 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='black']:not([disabled])) .icon,
-:host([variant='white']:not([disabled])) .icon {
+:host([static='black']:not([disabled])) .icon,
+:host([static='white']:not([disabled])) .icon {
     color: var(
         --mod-closebutton-icon-color-default,
         var(--spectrum-closebutton-icon-color-default)
     );
 }
-:host([variant='black'][disabled]) .icon,
-:host([variant='white'][disabled]) .icon {
+:host([static='black'][disabled]) .icon,
+:host([static='white'][disabled]) .icon {
     color: var(
         --highcontrast-closebutton-icon-disabled,
         var(

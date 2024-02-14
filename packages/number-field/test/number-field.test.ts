@@ -15,10 +15,11 @@ import {
     aTimeout,
     elementUpdated,
     expect,
+    fixture,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
+import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import {
     currency,
@@ -36,7 +37,12 @@ import {
     indeterminatePlaceholder,
     NumberField,
 } from '@spectrum-web-components/number-field';
-import { sendKeys, setUserAgent } from '@web/test-runner-commands';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+    setUserAgent,
+} from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { clickBySelector, getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
@@ -45,13 +51,15 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('NumberField', () => {
     before(async () => {
-        if (polyfillCheck.shouldPolyfill()) {
-            await import('@formatjs/intl-numberformat/polyfill.js');
+        const shouldPolyfillEn = shouldPolyfill('en');
+        const shouldPolyfillFr = shouldPolyfill('fr');
+        if (shouldPolyfillEn || shouldPolyfillFr) {
+            await import('@formatjs/intl-numberformat/polyfill-force.js');
         }
-        if (
-            (Intl.NumberFormat as unknown as { polyfilled: boolean }).polyfilled
-        ) {
+        if (shouldPolyfillEn) {
             await import('@formatjs/intl-numberformat/locale-data/en.js');
+        }
+        if (shouldPolyfillFr) {
             await import('@formatjs/intl-numberformat/locale-data/fr.js');
         }
     });
@@ -65,9 +73,12 @@ describe('NumberField', () => {
     describe('receives input', () => {
         it('without language context', async () => {
             const el = await getElFrom(Default({ value: 1337 }));
+
+            el.size = 's';
             expect(el.formattedValue).to.equal('1,337');
             expect(el.valueAsString).to.equal('1337');
             expect(el.value).to.equal(1337);
+            expect(el.focusElement.value).to.equal('1,337');
             el.focus();
             await sendKeys({ type: '7331' });
             await elementUpdated(el);
@@ -76,6 +87,7 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('13,377,331');
             expect(el.valueAsString).to.equal('13377331');
             expect(el.value).to.equal(13377331);
+            expect(el.focusElement.value).to.equal('13,377,331');
         });
         it('with language context', async () => {
             const [languageContext] = createLanguageContext('fr');
@@ -84,9 +96,12 @@ describe('NumberField', () => {
                     ${Default({ value: 1337 })}
                 </div>
             `);
+
+            el.size = 'l';
             expect(el.formattedValue).to.equal('1 337');
             expect(el.valueAsString).to.equal('1337');
             expect(el.value).to.equal(1337);
+            expect(el.focusElement.value).to.equal('1 337');
             el.focus();
             await sendKeys({ type: '7331' });
             await elementUpdated(el);
@@ -95,6 +110,7 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('13 377 331');
             expect(el.valueAsString).to.equal('13377331');
             expect(el.value).to.equal(13377331);
+            expect(el.focusElement.value).to.equal('13 377 331');
         });
     });
     describe('Step', () => {
@@ -107,34 +123,58 @@ describe('NumberField', () => {
                     value: 5,
                 })
             );
+
+            el.size = 'xl';
             expect(el.value).to.equal(5);
             expect(el.formattedValue).to.equal('5');
             expect(el.valueAsString).to.equal('5');
+            expect(el.focusElement.value).to.equal('5');
+        });
+
+        it('supports both positive and negative decimal values', async () => {
+            const el = await getElFrom(
+                Default({
+                    step: 0.001,
+                    min: -10,
+                    max: 10,
+                    value: -2.4,
+                })
+            );
+
+            el.size = 'xl';
+            expect(el.value).to.equal(-2.4);
+            expect(el.valueAsString).to.equal('-2.4');
+            expect(el.focusElement.value).to.equal('-2.4');
         });
     });
     describe('Increments', () => {
         let el: NumberField;
+
         beforeEach(async () => {
             el = await getElFrom(Default({}));
             expect(el.value).to.be.NaN;
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
+            expect(el.focusElement.value).to.equal('');
         });
         it('via pointer, only "left" button', async () => {
-            await clickBySelector(el, '.stepUp', { button: 'middle' });
+            await clickBySelector(el, '.step-up', { button: 'middle' });
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
             expect(el.value).to.be.NaN;
+            expect(el.focusElement.value).to.equal('');
         });
         it('via pointer', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
-            await clickBySelector(el, '.stepUp');
+            expect(el.focusElement.value).to.equal('0');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('1');
             expect(el.valueAsString).to.equal('1');
             expect(el.value).to.equal(1);
+            expect(el.focusElement.value).to.equal('1');
         });
         it('via arrow up', async () => {
             el.focus();
@@ -144,11 +184,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             await sendKeys({ press: 'ArrowUp' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('1');
             expect(el.valueAsString).to.equal('1');
             expect(el.value).to.equal(1);
+            expect(el.focusElement.value).to.equal('1');
         });
         it('via arrow up (shift modified)', async () => {
             el.focus();
@@ -158,11 +200,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             await sendKeys({ press: 'Shift+ArrowUp' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
+            expect(el.focusElement.value).to.equal('10');
         });
         it('via arrow up (custom shift modified value)', async () => {
             el.focus();
@@ -174,11 +218,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             await sendKeys({ press: 'Shift+ArrowUp' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('15');
             expect(el.valueAsString).to.equal('15');
             expect(el.value).to.equal(15);
+            expect(el.focusElement.value).to.equal('15');
         });
         it('via scroll', async () => {
             el.focus();
@@ -189,11 +235,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             el.dispatchEvent(new WheelEvent('wheel', { deltaY: 100 }));
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('1');
             expect(el.valueAsString).to.equal('1');
             expect(el.value).to.equal(1);
+            expect(el.focusElement.value).to.equal('1');
         });
         it('via scroll (shift modified)', async () => {
             el.focus();
@@ -209,6 +257,7 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             el.dispatchEvent(
                 new WheelEvent('wheel', {
                     deltaX: 100,
@@ -219,31 +268,37 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
+            expect(el.focusElement.value).to.equal('10');
         });
     });
     describe('Decrements', () => {
         let el: NumberField;
+
         beforeEach(async () => {
             el = await getElFrom(Default({}));
             expect(el.value).to.be.NaN;
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
+            expect(el.focusElement.value).to.equal('');
         });
         it('via pointer, only "left" button', async () => {
-            await clickBySelector(el, '.stepDown', { button: 'middle' });
+            await clickBySelector(el, '.step-down', { button: 'middle' });
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
             expect(el.value).to.be.NaN;
+            expect(el.focusElement.value).to.equal('');
         });
         it('via pointer', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
-            await clickBySelector(el, '.stepDown');
+            expect(el.focusElement.value).to.equal('0');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('-1');
             expect(el.valueAsString).to.equal('-1');
             expect(el.value).to.equal(-1);
+            expect(el.focusElement.value).to.equal('-1');
         });
         it('via arrow down', async () => {
             el.focus();
@@ -253,11 +308,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('-1');
             expect(el.valueAsString).to.equal('-1');
             expect(el.value).to.equal(-1);
+            expect(el.focusElement.value).to.equal('-1');
         });
         it('via arrow down (shift modified)', async () => {
             el.focus();
@@ -267,11 +324,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             await sendKeys({ press: 'Shift+ArrowDown' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('-10');
             expect(el.valueAsString).to.equal('-10');
             expect(el.value).to.equal(-10);
+            expect(el.focusElement.value).to.equal('-10');
         });
         it('via arrow up (custom shift modified value)', async () => {
             el.focus();
@@ -283,11 +342,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             await sendKeys({ press: 'Shift+ArrowDown' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('-15');
             expect(el.valueAsString).to.equal('-15');
             expect(el.value).to.equal(-15);
+            expect(el.focusElement.value).to.equal('-15');
         });
         it('via scroll', async () => {
             el.focus();
@@ -298,11 +359,13 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             el.dispatchEvent(new WheelEvent('wheel', { deltaY: -100 }));
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('-1');
             expect(el.valueAsString).to.equal('-1');
             expect(el.value).to.equal(-1);
+            expect(el.focusElement.value).to.equal('-1');
         });
         it('via scroll (shift modified)', async () => {
             el.focus();
@@ -318,6 +381,7 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
+            expect(el.focusElement.value).to.equal('0');
             el.dispatchEvent(
                 new WheelEvent('wheel', {
                     deltaX: -100,
@@ -328,6 +392,7 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('-10');
             expect(el.valueAsString).to.equal('-10');
             expect(el.value).to.equal(-10);
+            expect(el.focusElement.value).to.equal('-10');
         });
     });
     describe('dispatched events', () => {
@@ -344,6 +409,16 @@ describe('NumberField', () => {
             el.addEventListener('change', (event: Event) => {
                 changeSpy((event.target as NumberField)?.value);
             });
+        });
+        it('except when changing `value` from the outside', async () => {
+            el.focus();
+            await elementUpdated(el);
+            expect(el.focused).to.be.true;
+            el.value = 51;
+            expect(changeSpy.callCount).to.equal(0);
+            await elementUpdated(el);
+            el.value = 52;
+            expect(changeSpy.callCount).to.equal(0);
         });
         it('via scroll', async () => {
             el.focus();
@@ -437,17 +512,17 @@ describe('NumberField', () => {
             expect(el.value).to.equal(50);
         });
         it('one input/one change for each click', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(inputSpy.callCount).to.equal(1);
             expect(changeSpy.callCount).to.equal(1);
             expect(el.value).to.equal(51);
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(2);
             expect(el.value).to.equal(50);
         });
         it('click with modifier key', async () => {
-            let target = el.shadowRoot.querySelector('.stepUp') as HTMLElement;
+            let target = el.shadowRoot.querySelector('.step-up') as HTMLElement;
             const stepUpRect = target.getBoundingClientRect();
             const options = {
                 bubbles: true,
@@ -477,7 +552,7 @@ describe('NumberField', () => {
             expect(inputSpy.callCount).to.equal(1);
             expect(changeSpy.callCount).to.equal(1);
             expect(el.value).to.equal(60);
-            target = el.shadowRoot.querySelector('.stepDown') as HTMLElement;
+            target = el.shadowRoot.querySelector('.step-down') as HTMLElement;
             const stepDownRect = target.getBoundingClientRect();
             options.clientX = stepDownRect.x + 1;
             options.clientY = stepDownRect.y + 1;
@@ -491,7 +566,7 @@ describe('NumberField', () => {
         });
         it('many input, but one change', async () => {
             const buttonUp = el.shadowRoot.querySelector(
-                '.stepUp'
+                '.step-up'
             ) as HTMLElement;
             const buttonUpRect = buttonUp.getBoundingClientRect();
             const buttonUpPosition: [number, number] = [
@@ -499,7 +574,73 @@ describe('NumberField', () => {
                 buttonUpRect.y + buttonUpRect.height / 2,
             ];
             const buttonDown = el.shadowRoot.querySelector(
-                '.stepDown'
+                '.step-down'
+            ) as HTMLElement;
+            const buttonDownRect = buttonDown.getBoundingClientRect();
+            const buttonDownPosition: [number, number] = [
+                buttonDownRect.x + buttonDownRect.width / 2,
+                buttonDownRect.y + buttonDownRect.height / 2,
+            ];
+            sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonUpPosition,
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(51);
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(0);
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(52);
+            expect(inputSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(0);
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(53);
+            expect(inputSpy.callCount).to.equal(3);
+            expect(changeSpy.callCount).to.equal(0);
+            sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonDownPosition,
+                    },
+                ],
+            });
+            let framesToWait = FRAMES_PER_CHANGE * 2;
+            while (framesToWait) {
+                // input is only processed onces per FRAMES_PER_CHANGE number of frames
+                framesToWait -= 1;
+                await nextFrame();
+            }
+            expect(inputSpy.callCount).to.equal(5);
+            expect(changeSpy.callCount).to.equal(0);
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+            expect(inputSpy.callCount).to.equal(5);
+            expect(changeSpy.callCount).to.equal(1);
+        });
+        it('no change in committed value - using buttons', async () => {
+            const buttonUp = el.shadowRoot.querySelector(
+                '.step-up'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition: [number, number] = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
+            const buttonDown = el.shadowRoot.querySelector(
+                '.step-down'
             ) as HTMLElement;
             const buttonDownRect = buttonDown.getBoundingClientRect();
             const buttonDownPosition: [number, number] = [
@@ -549,7 +690,10 @@ describe('NumberField', () => {
                 ],
             });
             expect(inputSpy.callCount).to.equal(4);
-            expect(changeSpy.callCount).to.equal(1);
+            expect(
+                changeSpy.callCount,
+                'value does not change from initial value so no "change" event is dispatched'
+            ).to.equal(0);
         });
     });
     it('accepts pointer interactions with the stepper UI', async () => {
@@ -559,14 +703,14 @@ describe('NumberField', () => {
         expect(el.formattedValue).to.equal('50');
         expect(el.valueAsString).to.equal('50');
         expect(el.value).to.equal(50);
-        const buttonUp = el.shadowRoot.querySelector('.stepUp') as HTMLElement;
+        const buttonUp = el.shadowRoot.querySelector('.step-up') as HTMLElement;
         const buttonUpRect = buttonUp.getBoundingClientRect();
         const buttonUpPosition: [number, number] = [
             buttonUpRect.x + buttonUpRect.width / 2,
             buttonUpRect.y + buttonUpRect.height / 2,
         ];
         const buttonDown = el.shadowRoot.querySelector(
-            '.stepDown'
+            '.step-down'
         ) as HTMLElement;
         const buttonDownRect = buttonDown.getBoundingClientRect();
         const buttonDownPosition: [number, number] = [
@@ -670,12 +814,12 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('45%');
             expect(el.valueAsString).to.equal('0.45');
             expect(el.value).to.equal(0.45);
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('44%');
             expect(el.valueAsString).to.equal('0.44');
             expect(el.value).to.equal(0.44);
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('45%');
             expect(el.valueAsString).to.equal('0.45');
@@ -715,13 +859,23 @@ describe('NumberField', () => {
         let el: NumberField;
         let lastInputValue = 0;
         let lastChangeValue = 0;
+        const inputSpy = spy();
+        const changeSpy = spy();
         beforeEach(async () => {
+            inputSpy.resetHistory();
+            changeSpy.resetHistory();
             el = await getElFrom(
                 Default({
                     max: 10,
                     value: 10,
-                    onInput: (value: number) => (lastInputValue = value),
-                    onChange: (value: number) => (lastChangeValue = value),
+                    onInput: (value: number) => {
+                        inputSpy(value);
+                        lastInputValue = value;
+                    },
+                    onChange: (value: number) => {
+                        changeSpy(value);
+                        lastChangeValue = value;
+                    },
                 })
             );
             expect(el.formattedValue).to.equal('10');
@@ -734,7 +888,10 @@ describe('NumberField', () => {
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(lastInputValue, 'last input value').to.equal(10);
-            expect(lastChangeValue, 'last change value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(
+                0,
+                'value does not change from initial value so no "change" event is dispatched'
+            );
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -744,6 +901,34 @@ describe('NumberField', () => {
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
+            expect(el.value).to.equal(10);
+        });
+        it('constrains ArrowUp usage', async () => {
+            expect(el.value).to.equal(10);
+            el.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            expect(el.focusElement.value).to.equal('10');
+            await sendKeys({ press: 'Shift+ArrowUp' });
+            expect(el.focusElement.value).to.equal('10');
+        });
+        it('constrains pointer usage', async () => {
+            expect(el.value).to.equal(10);
+            const buttonUp = el.shadowRoot.querySelector(
+                '.step-up'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition: [number, number] = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: buttonUpPosition,
+                    },
+                ],
+            });
             expect(el.value).to.equal(10);
         });
         it('validates on commit', async () => {
@@ -756,7 +941,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(10);
         });
         it('disabled `stepUp` button', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -768,18 +953,52 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('5');
             expect(el.value).to.equal(5);
         });
+        it('dispatches onchange on setting max value', async () => {
+            el.value = 5;
+            await elementUpdated(el);
+            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value).to.equal(5);
+            el.focus();
+            await sendKeys({
+                press: 'Backspace',
+            });
+            await sendKeys({
+                press: '1',
+            });
+            await sendKeys({
+                press: '5',
+            });
+            await sendKeys({
+                press: 'Enter',
+            });
+            await elementUpdated(el);
+            expect(el.value).to.equal(10);
+            expect(inputSpy.callCount).to.equal(3);
+            expect(changeSpy.callCount).to.equal(1);
+            expect(lastChangeValue, 'last change value').to.equal(10);
+        });
     });
     describe('min', () => {
         let el: NumberField;
         let lastInputValue = 0;
         let lastChangeValue = 0;
+        const inputSpy = spy();
+        const changeSpy = spy();
         beforeEach(async () => {
+            inputSpy.resetHistory();
+            changeSpy.resetHistory();
             el = await getElFrom(
                 Default({
                     min: 10,
                     value: 10,
-                    onInput: (value: number) => (lastInputValue = value),
-                    onChange: (value: number) => (lastChangeValue = value),
+                    onInput: (value: number) => {
+                        inputSpy(value);
+                        lastInputValue = value;
+                    },
+                    onChange: (value: number) => {
+                        changeSpy(value);
+                        lastChangeValue = value;
+                    },
                 })
             );
             expect(el.formattedValue).to.equal('10');
@@ -794,10 +1013,45 @@ describe('NumberField', () => {
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(lastInputValue, 'last input value').to.equal(10);
-            expect(lastChangeValue, 'last change value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(
+                0,
+                'value does not change from initial value so no "change" event is dispatched'
+            );
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
+            el.focus();
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ type: '-2000' });
+            await sendKeys({ press: 'Enter' });
+            expect(el.formattedValue).to.equal('10');
+            expect(el.valueAsString).to.equal('10');
+            expect(el.value).to.equal(10);
+        });
+        it('dispatches onchange on setting min value', async () => {
+            el.value = 15;
+            await elementUpdated(el);
+            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value).to.equal(15);
+            el.focus();
+            await sendKeys({
+                press: 'Backspace',
+            });
+            await sendKeys({
+                press: 'Backspace',
+            });
+            await sendKeys({
+                press: '5',
+            });
+            await sendKeys({
+                press: 'Enter',
+            });
+            await elementUpdated(el);
+            expect(el.value).to.equal(10);
+            expect(inputSpy.callCount).to.equal(3);
+            expect(changeSpy.callCount).to.equal(1);
+            expect(lastChangeValue, 'last change value').to.equal(10);
         });
         xit('manages `inputMode` in iPhone', async () => {
             // setUserAgent is not currently supported by Playwright
@@ -844,6 +1098,45 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
         });
+        it('constrains ArrowDown usage', async () => {
+            el.min = 0;
+            el.value = 0;
+            expect(el.value).to.equal(0);
+            el.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+            await sendKeys({ press: 'Shift+ArrowDown' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+        });
+        it('constrains pointer usage', async () => {
+            el.min = 0;
+            el.value = 0;
+            await elementUpdated(el);
+            expect(el.value).to.equal(0);
+            const buttonDown = el.shadowRoot.querySelector(
+                '.step-down'
+            ) as HTMLElement;
+            const buttonDownRect = buttonDown.getBoundingClientRect();
+            const buttonDownPosition: [number, number] = [
+                buttonDownRect.x + buttonDownRect.width / 2,
+                buttonDownRect.y + buttonDownRect.height / 2,
+            ];
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: buttonDownPosition,
+                    },
+                ],
+            });
+            await elementUpdated(el);
+            expect(el.value).to.equal(0);
+        });
         it('validates on commit', async () => {
             el.focus();
             await sendKeys({ press: '0' });
@@ -854,7 +1147,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(100);
         });
         it('disabled `stepDown` button', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -894,13 +1187,13 @@ describe('NumberField', () => {
             expect(el.value).to.equal(5);
         });
         it('step up via pointer', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('15');
             expect(el.valueAsString).to.equal('15');
             expect(el.value).to.equal(15);
         });
         it('step down via pointer', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             expect(el.formattedValue).to.equal('5');
             expect(el.valueAsString).to.equal('5');
             expect(el.value).to.equal(5);
@@ -1101,10 +1394,10 @@ describe('NumberField', () => {
                 (el as unknown as { displayValue: string }).displayValue
             ).to.equal('101');
         });
-        it('starts from `value` on click `.stepUp`', async () => {
+        it('starts from `value` on click `.step-up`', async () => {
             el.focus();
             await elementUpdated(el);
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('101');
             expect(el.valueAsString).to.equal('101');
@@ -1141,10 +1434,10 @@ describe('NumberField', () => {
                 (el as unknown as { displayValue: string }).displayValue
             ).to.equal('99');
         });
-        it('starts from `value` on click `.stepDown`', async () => {
+        it('starts from `value` on click `.step-down`', async () => {
             el.focus();
             await elementUpdated(el);
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('99');
             expect(el.valueAsString).to.equal('99');
@@ -1164,8 +1457,8 @@ describe('NumberField', () => {
     });
     it('removes the stepper UI with [hide-stepper]', async () => {
         const el = await getElFrom(Default({ hideStepper: true }));
-        const stepUp = el.shadowRoot.querySelector('.stepUp');
-        const stepDown = el.shadowRoot.querySelector('.stepDown');
+        const stepUp = el.shadowRoot.querySelector('.step-up');
+        const stepDown = el.shadowRoot.querySelector('.step-down');
         expect(stepUp).to.be.null;
         expect(stepDown).to.be.null;
     });
@@ -1203,10 +1496,10 @@ describe('NumberField', () => {
             el.dispatchEvent(new WheelEvent('wheel', { deltaY: -1 }));
         });
         it('prevents increment via stepper button', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
         });
         it('prevents decrement via stepper button', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
         });
     });
     describe('Readonly', () => {
@@ -1243,10 +1536,46 @@ describe('NumberField', () => {
             el.dispatchEvent(new WheelEvent('wheel', { deltaY: -1 }));
         });
         it('prevents increment via stepper button', async () => {
-            await clickBySelector(el, '.stepUp');
+            await clickBySelector(el, '.step-up');
         });
         it('prevents decrement via stepper button', async () => {
-            await clickBySelector(el, '.stepDown');
+            await clickBySelector(el, '.step-down');
+        });
+    });
+    describe('accessibility model', () => {
+        it('buttons have proper label', async () => {
+            await fixture<HTMLDivElement>(html`
+                <div>
+                    ${Default({
+                        onChange: () => {
+                            return;
+                        },
+                    })}
+                </div>
+            `);
+
+            type NamedNode = { name: string };
+            const snapshot = (await a11ySnapshot(
+                {}
+            )) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Increase Enter a number'
+                ),
+                '`name` is the label text'
+            ).to.not.be.null;
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Decrease Enter a number'
+                ),
+                '`name` is the label text'
+            ).to.not.be.null;
         });
     });
 });

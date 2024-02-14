@@ -25,6 +25,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
@@ -393,6 +394,11 @@ describe('Sidenav', () => {
     it('focuses the child anchor not the root when [tabindex=-1]', async () => {
         const el = await fixture<SideNav>(manageTabIndex());
 
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
         await elementUpdated(el);
         const firstItem = el.querySelector(
             '[value="Section 0"]'
@@ -405,17 +411,21 @@ describe('Sidenav', () => {
         await sendMouse({
             steps: [
                 {
-                    type: 'move',
-                    position: [firstRect.x + 2, firstRect.y + 2],
-                },
-                {
-                    type: 'down',
+                    type: 'click',
+                    position: [
+                        firstRect.x + firstRect.width / 2,
+                        firstRect.y + firstRect.height / 2,
+                    ],
                 },
             ],
         });
         await elementUpdated(el);
 
-        expect(firstItem.focusElement.matches(':focus')).to.be.true;
+        expect(firstItem.matches(':focus'), 'root has focus').to.be.true;
+        expect(
+            firstItem.focusElement.matches(':focus'),
+            'child has more precise focus'
+        ).to.be.true;
     });
     it('manage tab index through shadow DOM', async () => {
         class SideNavTestEl extends LitElement {

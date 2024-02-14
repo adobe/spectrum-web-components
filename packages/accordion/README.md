@@ -74,3 +74,274 @@ import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
     </sp-accordion-item>
 </sp-accordion>
 ```
+
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-accordion size="s">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-accordion size="m">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-accordion size="l">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-accordion size="xl">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+## Density
+
+The `density` property, when applied, accepts the values of `compact` or `spacious`.
+
+### Compact
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-accordion density="compact" size="s">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-accordion density="compact" size="m">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-accordion density="compact" size="l">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-accordion density="compact" size="xl">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+### Spacious
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-accordion density="spacious" size="s">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-accordion density="spacious" size="m">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-accordion density="spacious" size="l">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-accordion density="spacious" size="xl">
+    <sp-accordion-item label="Heading 1">
+        <div>Item 1</div>
+    </sp-accordion-item>
+    <sp-accordion-item disabled label="Heading 2">
+        <div>Item 2</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 3">
+        <div>Item 3</div>
+    </sp-accordion-item>
+    <sp-accordion-item label="Heading 4">
+        <div>Item 4</div>
+    </sp-accordion-item>
+</sp-accordion>
+```
+
+</sp-tab-panel>
+</sp-tabs>

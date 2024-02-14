@@ -17,7 +17,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 measureFixtureCreation(html`
     <sp-illustrated-message
         heading="Drag and Drop Your File"
-        description="This message has italics"
+        description="Additional descriptive text"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"

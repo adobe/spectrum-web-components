@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -37,13 +38,18 @@ import {
 import styles from './field-label.css.js';
 
 type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
+type Labelable = Focusable & {
+    applyFocusElementLabel?: (label?: string) => void;
+};
 
 /**
  * @element sp-field-label
  *
  * @slot - text content of the label
  */
-export class FieldLabel extends SizedMixin(SpectrumElement) {
+export class FieldLabel extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     public static override get styles(): CSSResultArray {
         return [styles, asteriskIconStyles];
     }
@@ -71,7 +77,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
     @property({ type: String, reflect: true, attribute: 'side-aligned' })
     public sideAligned?: 'start' | 'end';
 
-    private target?: HTMLElement;
+    private target?: Labelable;
 
     private handleClick(event: Event): void {
         if (!this.target || this.disabled || event.defaultPrevented) return;
@@ -89,31 +95,34 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
 
     private resolvedElement = new ElementResolutionController(this);
 
-    private addTarget(target: Focusable): void {
-        this.target = target.focusElement || target;
-        const targetParent = this.target.getRootNode() as HTMLElement;
-        if (targetParent === (this.getRootNode() as HTMLElement)) {
-            conditionAttributeWithId(this.target, 'aria-labelledby', [this.id]);
-        } else {
-            this.target.setAttribute('aria-label', this.labelText);
-        }
-    }
-
-    private removeTarget(): void {
+    private applyTargetLabel(target?: Labelable): void {
+        // Apply new target when provided
+        this.target = target || this.target;
         if (this.target) {
-            const targetParent = this.target.getRootNode() as HTMLElement;
-            if (targetParent === (this.getRootNode() as HTMLElement)) {
-                conditionAttributeWithoutId(this.target, 'aria-labelledby', [
-                    this.id,
-                ]);
+            // When target is available add or remove label information
+            // depending on the value of `apply`.
+            const applyLabel = this.target.applyFocusElementLabel;
+            const focusable = this.target.focusElement || this.target;
+            const targetParent = focusable.getRootNode() as HTMLElement;
+            if (typeof applyLabel !== 'undefined') {
+                applyLabel(this.labelText);
+            } else if (targetParent === (this.getRootNode() as HTMLElement)) {
+                const conditionAttribute = target
+                    ? conditionAttributeWithId
+                    : conditionAttributeWithoutId;
+                conditionAttribute(focusable, 'aria-labelledby', [this.id]);
             } else {
-                this.target.removeAttribute('aria-label');
+                if (target) {
+                    focusable.setAttribute('aria-label', this.labelText);
+                } else {
+                    focusable.removeAttribute('aria-label');
+                }
             }
         }
     }
 
     private async manageTarget(): Promise<void> {
-        this.removeTarget();
+        this.applyTargetLabel();
         const target = this.resolvedElement.element as Focusable;
         if (!target) {
             this.target = target;
@@ -125,7 +134,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         if (typeof target.updateComplete !== 'undefined') {
             await target.updateComplete;
         }
-        this.addTarget(target);
+        this.applyTargetLabel(target);
     }
 
     private get labelText(): string {
@@ -149,7 +158,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
                               class="required-icon spectrum-UIIcon-Asterisk100"
                           ></sp-icon-asterisk100>
                       `
-                    : html``}
+                    : nothing}
             </label>
         `;
     }

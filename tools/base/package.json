@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/base",
-    "version": "0.7.5",
+    "version": "0.40.5",
     "publishConfig": {
         "access": "public"
     },
@@ -37,6 +37,14 @@
             "development": "./src/decorators.dev.js",
             "default": "./src/decorators.js"
         },
+        "./src/define-element.js": {
+            "development": "./src/define-element.dev.js",
+            "default": "./src/define-element.js"
+        },
+        "./src/directive.js": {
+            "development": "./src/directive.dev.js",
+            "default": "./src/directive.js"
+        },
         "./src/directives.js": {
             "development": "./src/directives.dev.js",
             "default": "./src/directives.js"
@@ -57,6 +65,7 @@
             "development": "./src/streaming-listener.dev.js",
             "default": "./src/streaming-listener.js"
         },
+        "./src/version.js": "./src/version.js",
         "./condition-attribute-with-id.js": {
             "development": "./condition-attribute-with-id.dev.js",
             "default": "./condition-attribute-with-id.js"
@@ -68,6 +77,10 @@
         "./directives.js": {
             "development": "./directives.dev.js",
             "default": "./directives.js"
+        },
+        "./directive.js": {
+            "development": "./directive.dev.js",
+            "default": "./directive.js"
         },
         "./html.js": {
             "development": "./html.dev.js",

@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-import '../sp-swatch.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
 import type {
     SwatchBorder,
     SwatchRounding,
@@ -99,6 +99,10 @@ export const Default = (args: Properties): TemplateResult => template(args);
 export const gradient = (args: Properties): TemplateResult => template(args);
 gradient.args = {
     color: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+};
+export const opacity = (args: Properties): TemplateResult => template(args);
+opacity.args = {
+    color: 'rgba(255, 0, 0, 0.3)',
 };
 export const mixedValue = (args: Properties): TemplateResult => template(args);
 mixedValue.args = {

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-picker.css';
+@import url('./spectrum-picker.css');
 
 :host {
     display: inline-flex;
@@ -20,9 +20,15 @@ governing permissions and limitations under the License.
      * .spectrum-Picker
      * Move width management to :host
      **/
-    max-width: 100%;
-    width: var(--spectrum-picker-width);
-    min-width: var(--spectrum-picker-min-width);
+    max-inline-size: 100%;
+    inline-size: var(
+        --spectrum-picker-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+    min-inline-size: calc(
+        var(--spectrum-picker-minimum-width-multiplier) *
+            var(--mod-picker-block-size, var(--spectrum-picker-block-size))
+    );
 }
 
 :host([quiet]) {
@@ -84,13 +90,21 @@ governing permissions and limitations under the License.
     user-select: inherit;
 }
 
-sp-popover {
-    display: none;
-}
-
 .picker,
 .validation-icon {
     flex-shrink: 0;
+}
+
+sp-overlay {
+    pointer-events: none;
+}
+
+sp-menu {
+    pointer-events: initial;
+}
+
+:host > sp-menu {
+    display: none;
 }
 
 /**
@@ -105,6 +119,10 @@ sp-popover {
         --spectrum-picker-placeholder-text-color-key-focus,
         var(--spectrum-alias-placeholder-text-color-hover)
     );
+}
+
+#label.visually-hidden ~ .picker {
+    margin-inline-start: auto;
 }
 
 :host([focused]:not([quiet])) #button .picker {
@@ -128,10 +146,6 @@ sp-popover {
     white-space: nowrap;
 }
 
-:host([dir='ltr']) #label.visually-hidden + .picker {
-    margin-left: auto;
-}
-
-:host([dir='rtl']) #label.visually-hidden + .picker {
-    margin-right: auto;
+sp-overlay:not(:defined) {
+    display: none;
 }

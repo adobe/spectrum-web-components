@@ -30,7 +30,9 @@ import {
     ColorValue,
     HSL,
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
+import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 import styles from './color-slider.css.js';
 
 /**
@@ -41,8 +43,11 @@ import styles from './color-slider.css.js';
  */
 export class ColorSlider extends Focusable {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [opacityCheckerBoardStyles, styles];
     }
+
+    @property({ type: String, reflect: true })
+    public override dir!: 'ltr' | 'rtl';
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
@@ -58,6 +63,8 @@ export class ColorSlider extends Focusable {
 
     @property({ type: Boolean, reflect: true })
     public vertical = false;
+
+    private languageResolver = new LanguageResolutionController(this);
 
     private colorController = new ColorController(this, {
         /* c8 ignore next 3 */
@@ -138,11 +145,13 @@ export class ColorSlider extends Focusable {
         }
         event.preventDefault();
 
+        const range = 360;
+        const mult = 100 / range;
         this.sliderHandlePosition = Math.min(
             100,
-            Math.max(0, this.sliderHandlePosition + delta)
+            Math.max(0, this.sliderHandlePosition + delta * mult)
         );
-        this.value = 360 * (this.sliderHandlePosition / 100);
+        this.value = Math.min(100, Math.max(0, this.value + delta));
         this.colorController.applyColorFromState();
 
         if (delta != 0) {
@@ -189,11 +198,11 @@ export class ColorSlider extends Focusable {
         this.input.focus();
     }
 
-    private handleFocusin(): void {
+    private handleFocus(): void {
         this.focused = true;
     }
 
-    private handleFocusout(): void {
+    private handleBlur(): void {
         if (this._pointerDown) {
             return;
         }
@@ -270,7 +279,8 @@ export class ColorSlider extends Focusable {
         const size = this.vertical ? rect.height : rect.width;
 
         const percent = Math.max(0, Math.min(1, (offset - minOffset) / size));
-        const sliderHandlePosition = 100 * percent;
+        const sliderHandlePosition =
+            this.vertical || !this.isLTR ? 100 - 100 * percent : 100 * percent;
 
         return sliderHandlePosition;
     }
@@ -286,7 +296,7 @@ export class ColorSlider extends Focusable {
     }
 
     private get handlePositionStyles(): string {
-        return `${this.vertical ? 'top' : 'left'}: ${
+        return `${this.vertical ? 'inset-block-end' : 'inset-inline-start'}: ${
             this.sliderHandlePosition
         }%`;
     }
@@ -294,7 +304,7 @@ export class ColorSlider extends Focusable {
     protected override render(): TemplateResult {
         return html`
             <div
-                class="checkerboard"
+                class="opacity-checkerboard checkerboard"
                 role="presentation"
                 @pointerdown=${this.handleGradientPointerdown}
             >
@@ -302,7 +312,7 @@ export class ColorSlider extends Focusable {
                     class="gradient"
                     role="presentation"
                     style="background: linear-gradient(to ${this.vertical
-                        ? 'bottom'
+                        ? 'top'
                         : 'right'}, var(--sp-color-slider-gradient, var(--sp-color-slider-gradient-fallback)));"
                 >
                     <slot name="gradient"></slot>
@@ -319,7 +329,10 @@ export class ColorSlider extends Focusable {
                 ${streamingListener({
                     start: ['pointerdown', this.handlePointerdown],
                     streamInside: ['pointermove', this.handlePointermove],
-                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                    end: [
+                        ['pointerup', 'pointercancel', 'pointerleave'],
+                        this.handlePointerup,
+                    ],
                 })}
             ></sp-color-handle>
             <input
@@ -327,9 +340,23 @@ export class ColorSlider extends Focusable {
                 class="slider"
                 min="0"
                 max="360"
+                aria-orientation=${ifDefined(
+                    this.vertical ? 'vertical' : undefined
+                )}
+                orient=${ifDefined(this.vertical ? 'vertical' : undefined)}
                 step=${this.step}
                 aria-label=${this.label}
                 .value=${String(this.value)}
+                aria-valuetext=${`${new Intl.NumberFormat(
+                    this.languageResolver.language,
+                    {
+                        maximumFractionDigits: 0,
+                        minimumIntegerDigits: 1,
+                        style: 'unit',
+                        unit: 'degree',
+                        unitDisplay: 'narrow',
+                    }
+                ).format(this.value)}`}
                 @input=${this.handleInput}
                 @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
@@ -340,7 +367,7 @@ export class ColorSlider extends Focusable {
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
-        this.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('focus', this.handleFocus);
+        this.addEventListener('blur', this.handleBlur);
     }
 }

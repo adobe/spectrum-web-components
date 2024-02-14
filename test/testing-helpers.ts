@@ -10,21 +10,46 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect } from '@open-wc/testing';
-import { stub } from 'sinon';
+import {
+    elementUpdated,
+    expect,
+    nextFrame,
+    fixture as owcFixture,
+} from '@open-wc/testing';
+import { html } from '@spectrum-web-components/base';
+import { SinonStub, spy, stub } from 'sinon';
 import type { HookFunction } from 'mocha';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import { Theme } from '@spectrum-web-components/theme';
+import { TemplateResult } from '@spectrum-web-components/base';
+
+import { sendMouse } from './plugins/browser.js';
 
 export async function testForLitDevWarnings(
     fixture: () => Promise<HTMLElement>
 ): Promise<void> {
-    it('does not emit Lit Dev Mode warnings', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        const el = await fixture();
+    describe('lit dev mode', () => {
+        let consoleWarnStub!: SinonStub;
+        before(() => {
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            consoleWarnStub.restore();
+        });
+        it('does not emit warnings', async () => {
+            const el = await fixture();
 
-        await elementUpdated(el);
+            await elementUpdated(el);
 
-        expect(consoleWarnStub.called).to.be.false;
-        consoleWarnStub.restore();
+            expect(
+                consoleWarnStub.called,
+                consoleWarnStub.getCall(0)?.args.join(', ')
+            ).to.be.false;
+        });
     });
 }
 
@@ -111,7 +136,7 @@ export function ignoreResizeObserverLoopError(
         globalErrorHandler = window.onerror;
         addEventListener('error', (error) => {
             console.error('Uncaught global error:', error);
-            if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
+            if (error.message?.match?.(/ResizeObserver loop/)) {
                 return;
             } else {
                 globalErrorHandler?.(error);
@@ -121,4 +146,126 @@ export function ignoreResizeObserverLoopError(
     after(function () {
         window.onerror = globalErrorHandler as OnErrorEventHandler;
     });
+}
+
+export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
+    let resolve!: (isFound: boolean) => void;
+    const found = new Promise<boolean>((res) => (resolve = res));
+    const queryEvent = new Event('on-top-layer-event', {
+        composed: true,
+        bubbles: true,
+    });
+    element.addEventListener(queryEvent.type, (event: Event) => {
+        const closestDialog = ([...event.composedPath()] as HTMLElement[]).find(
+            (el) => {
+                return (
+                    el.classList?.contains('dialog') &&
+                    el.part?.contains('dialog')
+                );
+            }
+        );
+        if (!closestDialog) {
+            resolve(false);
+            return;
+        }
+        let popoverOpen = false;
+        try {
+            popoverOpen = closestDialog.matches(':popover-open');
+        } catch (error) {}
+        let open = false;
+        try {
+            open = closestDialog.matches(':open');
+        } catch (error) {}
+        let modal = false;
+        try {
+            modal = closestDialog.matches(':modal');
+        } catch (error) {}
+        let polyfill = false;
+        if (!popoverOpen && !open && !modal) {
+            const style = getComputedStyle(closestDialog);
+            polyfill =
+                style.getPropertyValue('--sp-overlay-open') === 'true' &&
+                style.getPropertyValue('position') === 'fixed';
+        }
+        resolve(popoverOpen || open || modal || polyfill);
+    });
+    element.dispatchEvent(queryEvent);
+    return found;
+}
+
+export async function isInteractive(
+    el: HTMLElement,
+    position = 'center'
+): Promise<boolean> {
+    const clickSpy = spy();
+    el.addEventListener(
+        'click',
+        () => {
+            clickSpy();
+        },
+        { once: true }
+    );
+    await nextFrame();
+    await nextFrame();
+    const clientRect = el.getBoundingClientRect();
+    const points: Record<string, [number, number]> = {
+        center: [
+            clientRect.left + clientRect.width / 2,
+            clientRect.top + clientRect.height / 2,
+        ],
+        'top-left': [clientRect.left + 10, clientRect.top + 2],
+    };
+    await sendMouse({
+        steps: [
+            {
+                type: 'click',
+                position: points[position],
+            },
+        ],
+    });
+    return clickSpy.callCount === 1;
+}
+
+export async function fixture<T extends Element>(
+    story: TemplateResult,
+    dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
+): Promise<T> {
+    const test = await owcFixture<Theme>(html`
+        <sp-theme theme="spectrum" scale="medium" color="light">
+            ${story}
+            <style>
+                sp-theme {
+                    --spectrum-global-animation-duration-100: 50ms;
+                    --spectrum-global-animation-duration-200: 50ms;
+                    --spectrum-global-animation-duration-300: 50ms;
+                    --spectrum-global-animation-duration-400: 50ms;
+                    --spectrum-global-animation-duration-500: 50ms;
+                    --spectrum-global-animation-duration-600: 50ms;
+                    --spectrum-global-animation-duration-700: 50ms;
+                    --spectrum-global-animation-duration-800: 50ms;
+                    --spectrum-global-animation-duration-900: 50ms;
+                    --spectrum-global-animation-duration-1000: 50ms;
+                    --spectrum-global-animation-duration-2000: 50ms;
+                    --spectrum-global-animation-duration-4000: 50ms;
+                    --spectrum-animation-duration-0: 50ms;
+                    --spectrum-animation-duration-100: 50ms;
+                    --spectrum-animation-duration-200: 50ms;
+                    --spectrum-animation-duration-300: 50ms;
+                    --spectrum-animation-duration-400: 50ms;
+                    --spectrum-animation-duration-500: 50ms;
+                    --spectrum-animation-duration-600: 50ms;
+                    --spectrum-animation-duration-700: 50ms;
+                    --spectrum-animation-duration-800: 50ms;
+                    --spectrum-animation-duration-900: 50ms;
+                    --spectrum-animation-duration-1000: 50ms;
+                    --spectrum-animation-duration-2000: 50ms;
+                    --spectrum-animation-duration-4000: 50ms;
+                    --spectrum-coachmark-animation-indicator-ring-duration: 50ms;
+                    --swc-test-duration: 1ms;
+                }
+            </style>
+        </sp-theme>
+    `);
+    document.documentElement.dir = dir;
+    return test.children[0] as T;
 }

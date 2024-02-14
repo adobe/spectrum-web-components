@@ -43,6 +43,16 @@ export default {
                     ],
                     hoist: false,
                 },
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Textfield--sizeM'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Textfield--sizeS', 's'],
+                        ['spectrum-Textfield--sizeL', 'l'],
+                        ['spectrum-Textfield--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
                 converter.classToClass(
                     'spectrum-Textfield-validationIcon',
                     'icon'
@@ -51,8 +61,13 @@ export default {
                     'spectrum-Textfield-icon',
                     'icon-workflow'
                 ),
+                converter.classToClass('spectrum-Search-icon', 'icon-search'),
                 converter.classToAttribute('spectrum-Textfield--multiline'),
                 converter.classToAttribute('spectrum-Textfield--quiet'),
+                converter.classToAttribute(
+                    'spectrum-Textfield--grows',
+                    'grows'
+                ),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-keyboardFocused', 'focused'),
                 converter.classToAttribute('is-valid', 'valid'),

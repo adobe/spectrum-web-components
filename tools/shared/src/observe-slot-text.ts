@@ -14,7 +14,7 @@ import {
     property,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { MutationController } from '@lit-labs/observers/mutation_controller.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 const assignedNodesList = Symbol('assignedNodes');
 
@@ -31,8 +31,13 @@ export interface SlotTextObservingInterface {
 
 export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     constructor: T,
-    slotName?: string
+    slotName?: string,
+    excludedSelectors: string[] = []
 ): T & Constructor<SlotTextObservingInterface> {
+    const notExcluded = (el: HTMLElement) => (selector: string) => {
+        return el.matches(selector);
+    };
+
     class SlotTextObservingElement
         extends constructor
         implements SlotTextObservingInterface
@@ -60,15 +65,19 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
 
-        @queryAssignedNodes(slotName, true)
+        @queryAssignedNodes({
+            slot: slotName,
+            flatten: true,
+        })
         private [assignedNodesList]!: NodeListOf<HTMLElement>;
 
         public manageTextObservedSlot(): void {
             if (!this[assignedNodesList]) return;
             const assignedNodes = [...this[assignedNodesList]].filter(
-                (node) => {
-                    if ((node as HTMLElement).tagName) {
-                        return true;
+                (currentNode) => {
+                    const node = currentNode as HTMLElement;
+                    if (node.tagName) {
+                        return !excludedSelectors.some(notExcluded(node));
                     }
                     return node.textContent ? node.textContent.trim() : false;
                 }
@@ -79,12 +88,19 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         protected override update(changedProperties: PropertyValues): void {
             if (!this.hasUpdated) {
                 const { childNodes } = this;
-                const textNodes = [...childNodes].filter((node) => {
-                    if ((node as HTMLElement).tagName) {
-                        return slotName
-                            ? (node as HTMLElement).getAttribute('slot') ===
-                                  slotName
-                            : !(node as HTMLElement).hasAttribute('slot');
+                const textNodes = [...childNodes].filter((currentNode) => {
+                    const node = currentNode as HTMLElement;
+                    if (node.tagName) {
+                        const excluded = excludedSelectors.some(
+                            notExcluded(node)
+                        );
+                        return !excluded
+                            ? // This pass happens at element upgrade and before slot rendering.
+                              // Confirm it would exisit in a targeted slot if there was one supplied.
+                              slotName
+                                ? node.getAttribute('slot') === slotName
+                                : !node.hasAttribute('slot')
+                            : false;
                     }
                     return node.textContent ? node.textContent.trim() : false;
                 });

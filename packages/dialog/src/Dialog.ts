@@ -15,47 +15,23 @@ import {
     html,
     nothing,
     PropertyValues,
-    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { classMap } from '@spectrum-web-components/base/src/directives.js';
-import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import {
-    FocusVisiblePolyfillMixin,
-    ObserveSlotPresence,
-} from '@spectrum-web-components/shared';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 
 import styles from './dialog.css.js';
 import type { CloseButton } from '@spectrum-web-components/button';
-
-let appliedIds = 0;
-
-function gatherAppliedIdsFromSlottedChildren(
-    slot: HTMLSlotElement,
-    idBase: string
-): string[] {
-    const assignedElements = slot.assignedElements();
-    const ids: string[] = [];
-    assignedElements.forEach((el) => {
-        if (el.id) {
-            ids.push(el.id);
-        } else {
-            const id = idBase + `-${appliedIds++}`;
-            el.id = id;
-            ids.push(id);
-        }
-    });
-    return ids;
-}
+import { AlertDialog } from '@spectrum-web-components/alert-dialog/src/AlertDialog.js';
+import { classMap } from '@spectrum-web-components/base/src/directives.js';
 
 /**
  * @element sp-dialog
@@ -67,22 +43,17 @@ function gatherAppliedIdsFromSlottedChildren(
  * @slot button - Button elements addressed to this slot may be placed below the content when not delivered in a fullscreen mode
  * @fires close - Announces that the dialog has been closed.
  */
-export class Dialog extends FocusVisiblePolyfillMixin(
-    ObserveSlotPresence(SpectrumElement, [
-        '[slot="hero"]',
-        '[slot="footer"]',
-        '[slot="button"]',
-    ])
-) {
+export class Dialog extends ObserveSlotPresence(AlertDialog, [
+    '[slot="hero"]',
+    '[slot="footer"]',
+    '[slot="button"]',
+]) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     @query('.close-button')
     closeButton?: CloseButton;
-
-    @query('.content')
-    private contentElement!: HTMLDivElement;
 
     @property({ type: Boolean, reflect: true })
     public error = false;
@@ -98,6 +69,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         return this.getSlotContentPresence('[slot="button"]');
     }
 
+    /* c8 ignore next 3 */
     protected get hasHero(): boolean {
         return this.getSlotContentPresence('[slot="hero"]');
     }
@@ -127,20 +99,6 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         `;
     }
 
-    protected renderHeading(): TemplateResult {
-        return html`
-            <slot name="heading" @slotchange=${this.onHeadingSlotchange}></slot>
-        `;
-    }
-
-    protected renderContent(): TemplateResult {
-        return html`
-            <div class="content">
-                <slot @slotchange=${this.onContentSlotChange}></slot>
-            </div>
-        `;
-    }
-
     protected renderFooter(): TemplateResult {
         return html`
             <div class="footer">
@@ -149,7 +107,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         `;
     }
 
-    protected renderButtons(): TemplateResult {
+    protected override renderButtons(): TemplateResult {
         const classes = {
             'button-group': true,
             'button-group--noFooter': !this.hasFooter,
@@ -195,15 +153,6 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         `;
     }
 
-    public shouldManageTabOrderForScrolling = (): void => {
-        const { offsetHeight, scrollHeight } = this.contentElement;
-        if (offsetHeight < scrollHeight) {
-            this.contentElement.tabIndex = 0;
-        } else {
-            this.contentElement.removeAttribute('tabindex');
-        }
-    };
-
     protected override shouldUpdate(changes: PropertyValues): boolean {
         if (changes.has('mode') && !!this.mode) {
             this.dismissable = false;
@@ -217,83 +166,5 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'dialog');
-    }
-
-    static instanceCount = 0;
-    private labelledbyId = `sp-dialog-label-${Dialog.instanceCount++}`;
-    private conditionLabelledby?: () => void;
-    private conditionDescribedby?: () => void;
-
-    private onHeadingSlotchange({
-        target,
-    }: Event & { target: HTMLSlotElement }): void {
-        if (this.conditionLabelledby) {
-            this.conditionLabelledby();
-            delete this.conditionLabelledby;
-        }
-        const ids = gatherAppliedIdsFromSlottedChildren(
-            target,
-            this.labelledbyId
-        );
-        if (ids.length) {
-            this.conditionLabelledby = conditionAttributeWithId(
-                this,
-                'aria-labelledby',
-                ids
-            );
-        }
-    }
-
-    private describedbyId = `sp-dialog-description-${Dialog.instanceCount++}`;
-
-    protected onContentSlotChange({
-        target,
-    }: Event & { target: HTMLSlotElement }): void {
-        if (this.conditionDescribedby) {
-            this.conditionDescribedby();
-            delete this.conditionDescribedby;
-        }
-        const ids = gatherAppliedIdsFromSlottedChildren(
-            target,
-            this.describedbyId
-        );
-        if (ids.length && ids.length < 4) {
-            this.conditionDescribedby = conditionAttributeWithId(
-                this,
-                'aria-describedby',
-                ids
-            );
-        } else if (!ids.length) {
-            const idProvided = !!this.id;
-            if (!idProvided) this.id = this.describedbyId;
-            const conditionDescribedby = conditionAttributeWithId(
-                this,
-                'aria-describedby',
-                this.id
-            );
-            this.conditionDescribedby = () => {
-                conditionDescribedby();
-                if (!idProvided) {
-                    this.removeAttribute('id');
-                }
-            };
-        }
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.tabIndex = 0;
-        window.addEventListener(
-            'resize',
-            this.shouldManageTabOrderForScrolling
-        );
-    }
-
-    public override disconnectedCallback(): void {
-        window.removeEventListener(
-            'resize',
-            this.shouldManageTabOrderForScrolling
-        );
-        super.disconnectedCallback();
     }
 }

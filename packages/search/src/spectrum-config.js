@@ -32,10 +32,20 @@ const config = {
                 converter.classToId('spectrum-Search', 'textfield'),
                 converter.classToClass('spectrum-Search-input', 'input'),
                 converter.classToClass('spectrum-Icon', 'icon'),
-                converter.classToClass('spectrum-Search-icon', 'icon'),
+                converter.classToClass('spectrum-Search-icon', 'icon-search'),
                 converter.classToAttribute('spectrum-Search--quiet', 'quiet'),
                 converter.classToId('spectrum-Search-clearButton', 'button'),
                 converter.classToId('spectrum-Search-textfield', 'textfield'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Search--sizeM'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Search--sizeS', 's'],
+                        ['spectrum-Search--sizeL', 'l'],
+                        ['spectrum-Search--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
                 {
                     find: {
                         type: 'pseudo-class',

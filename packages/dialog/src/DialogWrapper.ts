@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -21,7 +22,8 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 
-import '../sp-dialog.js';
+// Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import { DialogBase } from './DialogBase.js';
 import { Dialog } from './Dialog.js';
 
@@ -140,7 +142,7 @@ export class DialogWrapper extends DialogBase {
                               )}
                           />
                       `
-                    : html``}
+                    : nothing}
                 ${this.headline
                     ? html`
                           <h2
@@ -150,13 +152,13 @@ export class DialogWrapper extends DialogBase {
                               ${this.headline}
                           </h2>
                       `
-                    : html``}
+                    : nothing}
                 <slot></slot>
                 ${this.footer
                     ? html`
                           <div slot="footer">${this.footer}</div>
                       `
-                    : html``}
+                    : nothing}
                 ${this.cancelLabel
                     ? html`
                           <sp-button
@@ -168,7 +170,7 @@ export class DialogWrapper extends DialogBase {
                               ${this.cancelLabel}
                           </sp-button>
                       `
-                    : html``}
+                    : nothing}
                 ${this.secondaryLabel
                     ? html`
                           <sp-button
@@ -180,7 +182,7 @@ export class DialogWrapper extends DialogBase {
                               ${this.secondaryLabel}
                           </sp-button>
                       `
-                    : html``}
+                    : nothing}
                 ${this.confirmLabel
                     ? html`
                           <sp-button
@@ -191,7 +193,7 @@ export class DialogWrapper extends DialogBase {
                               ${this.confirmLabel}
                           </sp-button>
                       `
-                    : html``}
+                    : nothing}
             </sp-dialog>
         `;
     }

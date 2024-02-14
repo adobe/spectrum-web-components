@@ -29,7 +29,9 @@ import buttonStyles from './button-base.css.js';
  * @slot - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
  */
-export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable)) {
+export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
+    'sp-overlay,sp-tooltip',
+]) {
     public static override get styles(): CSSResultArray {
         return [buttonStyles];
     }
@@ -188,7 +190,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable)) {
 
     private manageAnchor(): void {
         if (this.href && this.href.length > 0) {
-            if (this.getAttribute('role') === 'button') {
+            if (
+                !this.hasAttribute('role') ||
+                this.getAttribute('role') === 'button'
+            ) {
                 this.setAttribute('role', 'link');
             }
             this.removeEventListener('click', this.shouldProxyClick);
@@ -206,7 +211,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable)) {
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex')) {
-            this.tabIndex = 0;
+            this.setAttribute('tabindex', '0');
         }
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);

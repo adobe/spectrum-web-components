@@ -15,13 +15,9 @@ import {
     ifDefined,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-import { MutationController } from '@lit-labs/observers/mutation_controller.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import { Slider } from './Slider.js';
-import {
-    Controller,
-    SliderHandle,
-    SliderNormalization,
-} from './SliderHandle.js';
+import { SliderHandle, SliderNormalization } from './SliderHandle.js';
 
 interface HandleReference {
     handle: HTMLElement;
@@ -61,7 +57,7 @@ export interface HandleValueDictionary {
     [key: string]: number;
 }
 
-export class HandleController implements Controller {
+export class HandleController {
     private host!: Slider;
     private handles: Map<string, SliderHandle> = new Map();
     private model: ModelValue[] = [];
@@ -99,7 +95,7 @@ export class HandleController implements Controller {
 
     public inputForHandle(handle: SliderHandle): HTMLInputElement | undefined {
         if (this.handles.has(handle.handleName)) {
-            const { input } = this.getHandleElements(handle);
+            const { input } = this.getHandleElements(handle) || {};
             return input;
         }
         /* c8 ignore next 2 */
@@ -145,7 +141,13 @@ export class HandleController implements Controller {
     public formattedValueForHandle(model: ModelValue): string {
         const { handle } = model;
         const numberFormat = handle.numberFormat ?? this.host.numberFormat;
-        return handle.getAriaHandleText(model.value, numberFormat);
+        const _forcedUnit =
+            handle._forcedUnit === ''
+                ? this.host._forcedUnit
+                : handle._forcedUnit;
+        return (
+            handle.getAriaHandleText(model.value, numberFormat) + _forcedUnit
+        );
     }
 
     public get formattedValues(): Map<string, string> {
@@ -159,8 +161,9 @@ export class HandleController implements Controller {
     public get focusElement(): HTMLElement {
         const { input } = this.getActiveHandleElements();
         if (
-            this.host.editable &&
-            !(input as InputWithModel).model.handle.dragging
+            !input ||
+            (this.host.editable &&
+                !(input as InputWithModel).model.handle.dragging)
         ) {
             return this.host.numberField;
         }
@@ -491,9 +494,10 @@ export class HandleController implements Controller {
                 model.normalizedValue * 100
             }%`,
             'z-index': zIndex.toString(),
-            // Allow setting background per-handle
-            'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-default-background-color))`,
-            'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(-spectrum-slider-handle-default-border-color))`,
+            ...(isMultiHandle && {
+                'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,
+                'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(--spectrum-slider-handle-border-color))`,
+            }),
         };
         const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
         return html`
@@ -531,7 +535,7 @@ export class HandleController implements Controller {
     public render(): TemplateResult[] {
         this.clearHandleComponentCache();
         return this.model.map((model, index) => {
-            const zIndex = this.handleOrder.indexOf(model.name) + 1;
+            const zIndex = this.handleOrder.indexOf(model.name) + 2;
             return this.renderHandle(
                 model,
                 index,

@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -31,6 +32,7 @@ import '@spectrum-web-components/asset/sp-asset.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import '@spectrum-web-components/divider/sp-divider.js';
 import cardStyles from './card.css.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
 import detailStyles from '@spectrum-web-components/styles/detail.js';
@@ -55,6 +57,7 @@ export class Card extends LikeAnchor(
         ]),
         {
             validSizes: ['s', 'm'],
+            noDefaultSize: true,
         }
     )
 ) {
@@ -220,6 +223,11 @@ export class Card extends LikeAnchor(
             <sp-asset id="preview" variant=${ifDefined(this.asset)}>
                 <slot name="preview"></slot>
             </sp-asset>
+            ${this.variant !== 'quiet' && !this.horizontal
+                ? html`
+                      <sp-divider size="s"></sp-divider>
+                  `
+                : nothing}
         `;
     }
 
@@ -228,6 +236,11 @@ export class Card extends LikeAnchor(
             <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
                 <slot name="cover-photo"></slot>
             </sp-asset>
+            ${this.variant !== 'quiet' && !this.horizontal
+                ? html`
+                      <sp-divider size="s"></sp-divider>
+                  `
+                : nothing}
         `;
     }
 
@@ -259,12 +272,13 @@ export class Card extends LikeAnchor(
 
     protected override render(): TemplateResult {
         return html`
+            ${this.renderImage()}
             <div class="body">
                 <div class="header">
                     ${this.renderHeading}
                     ${this.variant === 'gallery'
                         ? this.renderSubtitleAndDescription
-                        : html``}
+                        : nothing}
                     ${this.variant !== 'quiet' || this.size !== 's'
                         ? html`
                               <div
@@ -274,7 +288,7 @@ export class Card extends LikeAnchor(
                                   <slot name="actions"></slot>
                               </div>
                           `
-                        : html``}
+                        : nothing}
                 </div>
                 ${this.variant !== 'gallery'
                     ? html`
@@ -282,20 +296,19 @@ export class Card extends LikeAnchor(
                               ${this.renderSubtitleAndDescription}
                           </div>
                       `
-                    : html``}
+                    : nothing}
             </div>
             ${this.href
                 ? this.renderAnchor({
                       id: 'like-anchor',
                       labelledby: 'heading',
                   })
-                : html``}
+                : nothing}
             ${this.variant === 'standard'
                 ? html`
                       <slot name="footer"></slot>
                   `
-                : html``}
-            ${this.renderImage()}
+                : nothing}
             ${this.toggles
                 ? html`
                       <sp-quick-actions
@@ -310,7 +323,7 @@ export class Card extends LikeAnchor(
                           ></sp-checkbox>
                       </sp-quick-actions>
                   `
-                : html``}
+                : nothing}
             ${this.variant === 'quiet' && this.size === 's'
                 ? html`
                       <sp-quick-actions
@@ -320,7 +333,7 @@ export class Card extends LikeAnchor(
                           <slot name="actions"></slot>
                       </sp-quick-actions>
                   `
-                : html``}
+                : nothing}
         `;
     }
 

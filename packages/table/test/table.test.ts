@@ -17,49 +17,25 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 
-import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import type { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
-import type { Table, TableCheckboxCell } from '@spectrum-web-components/table';
+import type {
+    Table,
+    TableCheckboxCell,
+    TableHead,
+} from '@spectrum-web-components/table';
 import { elements } from '../stories/table-elements.stories.js';
 import { spy } from 'sinon';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import { styledFixture } from './helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
-
-async function styledFixture<T extends Element>(
-    story: TemplateResult
-): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme theme="classic" scale="medium" color="light">
-            ${story}
-        </sp-theme>
-    `);
-    return test.children[0] as T;
-}
+ignoreResizeObserverLoopError(before, after);
 
 describe('Table', () => {
     it('loads default table accessibly', async () => {
@@ -266,5 +242,45 @@ describe('Table', () => {
         expect(el.selected).to.deep.equal([]);
         expect(tableHeadCheckboxCell.checkbox.checked).to.be.false;
         expect(tableHeadCheckboxCell.checkbox.indeterminate).to.be.false;
+    });
+
+    it('can be headerless', async () => {
+        const el = await fixture<Table>(html`
+            <sp-table>
+                <sp-table-body style="height: 120px">
+                    <sp-table-row value="row1">
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row2">
+                        <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row3">
+                        <sp-table-cell>Row Item Charlie</sp-table-cell>
+                        <sp-table-cell>Row Item Charlie</sp-table-cell>
+                        <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row4">
+                        <sp-table-cell>Row Item Delta</sp-table-cell>
+                        <sp-table-cell>Row Item Delta</sp-table-cell>
+                        <sp-table-cell>Row Item Delta</sp-table-cell>
+                    </sp-table-row>
+                    <sp-table-row value="row5">
+                        <sp-table-cell>Row Item Echo</sp-table-cell>
+                        <sp-table-cell>Row Item Echo</sp-table-cell>
+                        <sp-table-cell>Row Item Echo</sp-table-cell>
+                    </sp-table-row>
+                </sp-table-body>
+            </sp-table>
+        `);
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        const tableHead = el.querySelector('sp-table-head') as TableHead;
+        expect(tableHead).to.not.exist;
+        const tableRows = el.querySelectorAll('sp-table-row');
+        expect(tableRows.length).to.equal(5);
     });
 });

@@ -123,13 +123,6 @@ Disabled.args = {
     disabled: true,
 };
 
-export const labelBelow = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-radio label-below ${spreadProps(args)}>Radio</sp-radio>
-    `;
-};
-labelBelow.storyName = 'Label below';
-
 const values = {
     first: 1,
     second: 2,
@@ -155,17 +148,6 @@ export const horizontalGroup = (): TemplateResult => {
             <sp-radio value="second">Option 2</sp-radio>
             <sp-radio value="third">Option 3</sp-radio>
             <sp-radio value="fourth">Option 4</sp-radio>
-        </sp-radio-group>
-    `;
-};
-
-export const horizontalLabelBelowGroup = (): TemplateResult => {
-    return html`
-        <sp-radio-group horizontal selected="first" name="group-example">
-            <sp-radio value="first" label-below>Option 1</sp-radio>
-            <sp-radio value="second" label-below>Option 2</sp-radio>
-            <sp-radio value="third" label-below>Option 3</sp-radio>
-            <sp-radio value="fourth" label-below>Option 4</sp-radio>
         </sp-radio-group>
     `;
 };

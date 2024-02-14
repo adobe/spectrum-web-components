@@ -13,6 +13,7 @@
         { "path": "../icon" },
         { "path": "../icons-ui" },
         { "path": "../icons-workflow" },
-        { "path": "../popover" }
+        { "path": "../popover" },
+        { "path": "../tooltip" }
     ]
 }

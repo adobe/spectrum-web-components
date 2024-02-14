@@ -51,6 +51,7 @@ export type LongpressEvent = {
  */
 export class ActionButton extends SizedMixin(ButtonBase, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, cornerTriangleStyles];
@@ -84,6 +85,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     public toggles = false;
 
     @property({ reflect: true })
+    public static?: 'white' | 'black';
+
+    @property({ reflect: true })
     public variant?: 'white' | 'black';
 
     @property({ type: String })
@@ -113,7 +117,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     constructor() {
         super();
         this.addEventListener('click', this.onClick);
-        this.addEventListener('pointerdown', this.onPointerdown);
     }
 
     private onClick = (): void => {
@@ -124,6 +127,8 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         if (!applyDefault) {
@@ -131,10 +136,13 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }
     };
 
-    private onPointerdown(event: PointerEvent): void {
+    private handlePointerdownHoldAffordance(event: PointerEvent): void {
         if (event.button !== 0) return;
-        this.addEventListener('pointerup', this.onPointerup);
-        this.addEventListener('pointercancel', this.onPointerup);
+        this.addEventListener('pointerup', this.handlePointerupHoldAffordance);
+        this.addEventListener(
+            'pointercancel',
+            this.handlePointerupHoldAffordance
+        );
         LONGPRESS_TIMEOUT = setTimeout(() => {
             this.dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
@@ -148,10 +156,16 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }, LONGPRESS_DURATION);
     }
 
-    private onPointerup(): void {
+    private handlePointerupHoldAffordance(): void {
         clearTimeout(LONGPRESS_TIMEOUT);
-        this.removeEventListener('pointerup', this.onPointerup);
-        this.removeEventListener('pointercancel', this.onPointerup);
+        this.removeEventListener(
+            'pointerup',
+            this.handlePointerupHoldAffordance
+        );
+        this.removeEventListener(
+            'pointercancel',
+            this.handlePointerupHoldAffordance
+        );
     }
 
     /**
@@ -210,7 +224,13 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         const isButton = this.role === 'button';
-        const canBePressed = isButton && (this.selected || this.toggles);
+        const canBePressed =
+            isButton &&
+            (this.selected || this.toggles) &&
+            !(
+                this.hasAttribute('aria-haspopup') &&
+                this.hasAttribute('aria-expanded')
+            );
         if (changes.has('selected') || changes.has('role')) {
             // When role !== 'button' then the Action Button is within
             // an Action Group that manages selects which means the
@@ -224,6 +244,43 @@ export class ActionButton extends SizedMixin(ButtonBase, {
             } else {
                 // When !this.toggles the lack of "aria-pressed" is inconsequential.
                 this.removeAttribute('aria-pressed');
+                if (
+                    isButton &&
+                    this.toggles &&
+                    this.hasAttribute('aria-expanded')
+                ) {
+                    this.setAttribute(
+                        'aria-expanded',
+                        this.selected ? 'true' : 'false'
+                    );
+                }
+            }
+        }
+        if (
+            changes.has('variant') &&
+            (this.variant || typeof changes.get('variant'))
+        ) {
+            this.static = this.variant;
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "variant" attribute/property of <${this.localName}> have been deprecated. Use "static" with any of the same values instead. "variant" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed'
+                );
+            }
+        }
+        if (changes.has('holdAffordance')) {
+            if (this.holdAffordance) {
+                this.addEventListener(
+                    'pointerdown',
+                    this.handlePointerdownHoldAffordance
+                );
+            } else {
+                this.removeEventListener(
+                    'pointerdown',
+                    this.handlePointerdownHoldAffordance
+                );
+                this.handlePointerupHoldAffordance();
             }
         }
     }

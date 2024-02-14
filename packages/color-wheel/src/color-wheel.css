@@ -10,19 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-color-wheel.css';
+@import url('./spectrum-color-wheel.css');
 
 :host {
     touch-action: none;
-
-    --track-width: var(
-        --mod-colorwheel-track-width,
-        var(--spectrum-colorwheel-track-width)
-    );
-    --border-width: var(
-        --mod-colorwheel-border-width,
-        var(--spectrum-colorwheel-border-width)
-    );
 }
 
 :host(:focus) {
@@ -45,4 +36,9 @@ governing permissions and limitations under the License.
     position: relative;
     inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
     z-index: 0;
+}
+
+:host([dir='rtl']) .wheel,
+:host([dir='rtl']) ::slotted([slot='gradient']) {
+    transform: scaleX(-1);
 }

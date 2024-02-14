@@ -99,29 +99,17 @@ const processCSSData = async (
     // possible selectors to replace
     const selector1 =
         identifier == ':root ' ? identifier : `.spectrum--${identifier}`;
-    // The trailing space differentiates between `.spectrum:lang()` and `.spectrum {}`.
-    const selector2 = '.spectrum ';
 
     // new selector values
     const shadowSelector = ':root,\n:host';
 
     if (data.indexOf(selector1) >= 0) {
         result = result.replace(selector1, shadowSelector);
-    } else if (data.indexOf(selector2) >= 0) {
-        result = result.replace(/\.spectrum /g, shadowSelector);
-        result = result.replace(
-            `.spectrum--medium,
-.spectrum--large`,
-            shadowSelector
-        );
-        result = result.replace(
-            `.spectrum--darkest,
-.spectrum--dark,
-.spectrum--light,
-.spectrum--lightest`,
-            shadowSelector
-        );
     }
+    result = result.replaceAll(
+        /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?(?={)/g,
+        shadowSelector
+    );
 
     const plugins = postCSSPlugins();
     if (usedVariables) {
@@ -137,7 +125,6 @@ const processCSSData = async (
         })
         .then((output) => output.css);
 
-    result = result.replace(selector2, shadowSelector);
     return result;
 };
 
@@ -148,34 +135,9 @@ const processCSS = async (
     from,
     usedVariables = undefined
 ) => {
-    return new Promise((res) => {
-        fs.readFile(srcPath, 'utf8', async function (error, data) {
-            if (error) {
-                return console.log(error);
-            }
-
-            let result = await processCSSData(
-                data,
-                identifier,
-                from,
-                usedVariables
-            );
-            fs.writeFileSync(dstPath, result, 'utf8');
-            res();
-        });
-    });
-};
-
-// For fonts.css we need to combine 2 source files into 1
-const processMultiSourceCSS = async (srcPaths, dstPath, identifier) => {
-    let result = '';
-
-    for (const srcPath of srcPaths) {
-        let data = fs.readFileSync(srcPath, 'utf8');
-        result = `${result}\n${await processCSSData(data, identifier)}`;
-    }
-
-    fs.writeFile(dstPath, result, 'utf8');
+    const data = fs.readFileSync(srcPath, 'utf8');
+    const result = await processCSSData(data, identifier, from, usedVariables);
+    fs.writeFileSync(dstPath, result, 'utf8');
 };
 
 // where is spectrum-css?
@@ -204,24 +166,18 @@ const spectrumPaths = [
 ];
 
 // sources to use from spectrum-css
-const themes = [
-    'lightest',
-    'light',
-    'dark',
-    'darkest',
-    /*'middark', 'midlight'*/
-];
+const themes = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const cores = ['global'];
 const processes = [];
 
 const foundVars = await findUsedVars();
 
-spectrumPaths.forEach(async (spectrumPath, i) => {
+spectrumPaths.forEach((spectrumPath, i) => {
     const packageDir = ['styles'];
     const isExpress = i === 1;
     if (isExpress) packageDir.push('express');
-    themes.forEach(async (theme) => {
+    themes.forEach((theme) => {
         if (isExpress && ['lightest', 'darkest'].includes(theme)) return;
         const srcPath = path.join(spectrumPath, `spectrum-${theme}.css`);
         const dstPath = path.resolve(
@@ -235,10 +191,10 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
         );
 
         console.log(`processing theme ${srcPath}`);
-        processes.push(await processCSS(srcPath, dstPath, theme));
+        processes.push(processCSS(srcPath, dstPath, theme));
     });
 
-    scales.forEach(async (scale) => {
+    scales.forEach((scale) => {
         const srcPath = path.join(spectrumPath, `spectrum-${scale}.css`);
         const dstPath = path.resolve(
             path.join(
@@ -251,11 +207,11 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
         );
         console.log(`processing scale  ${srcPath}`);
         processes.push(
-            await processCSS(srcPath, dstPath, scale, undefined, foundVars)
+            processCSS(srcPath, dstPath, scale, undefined, foundVars)
         );
     });
 
-    cores.forEach(async (core) => {
+    cores.forEach((core) => {
         const srcPath = path.join(spectrumPath, `spectrum-${core}.css`);
         const dstPath = path.resolve(
             path.join(
@@ -267,7 +223,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
             )
         );
         console.log(`processing core ${srcPath}`);
-        processes.push(await processCSS(srcPath, dstPath, core));
+        processes.push(processCSS(srcPath, dstPath, core));
     });
 });
 
@@ -287,53 +243,10 @@ async function processSpectrumVars() {
             path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
         );
         console.log(`processing typography`);
-        processes.push(await processCSS(srcPath, dstPath, 'typography'));
+        processes.push(processCSS(srcPath, dstPath, 'typography'));
     }
 
-    {
-        // Typography
-        const typographyPath = path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'typography'
-        );
-
-        // Commons
-        const commonsPath = path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'commons'
-        );
-
-        // typography.css
-        {
-            const srcPath = path.join(typographyPath, 'dist', 'index-vars.css');
-            const dstPath = path.resolve(
-                path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
-            );
-            console.log(`processing typography`);
-            processes.push(await processCSS(srcPath, dstPath, 'typography'));
-        }
-
-        // fonts.css (2 sources so a little tricky)
-        {
-            // const srcPath1 = path.join(commonsPath, 'fonts.css');
-            const srcPath2 = path.join(typographyPath, 'font.css');
-            const dstPath = path.resolve(
-                path.join(__dirname, '..', 'tools', 'styles', 'fonts.css')
-            );
-            console.log(`processing fonts from commons & typography`);
-            processes.push(
-                processMultiSourceCSS([srcPath2], dstPath, ':root ')
-            );
-        }
-    }
-
-    Promise.all(processes).then(() => {
+    await Promise.all(processes).then(() => {
         console.log(
             `Spectrum Vars processed. ${removedVariableDeclarations} Custom Property declarations were removed as unused.`
         );

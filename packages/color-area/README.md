@@ -59,8 +59,8 @@ An `<sp-color-area>`’s height and width can be customized appropriately for it
 ```html
 <sp-color-area
     style="
-        width: var(--spectrum-global-dimension-size-900); 
-        height: var(--spectrum-global-dimension-size-900)"
+        width: 72px; 
+        height: 72px"
 ></sp-color-area>
 ```
 

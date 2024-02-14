@@ -91,6 +91,29 @@ const config = {
                     ],
                 },
                 {
+                    expandSelector: true,
+                    find: [builder.class('spectrum-Tabs--vertical-right')],
+                    replace: [
+                        {
+                            replace: builder.attribute(
+                                'direction',
+                                'vertical-right',
+                                'prefix'
+                            ),
+                            hoist: true,
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('list'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                    ],
+                },
+                {
                     collapseSelector: true,
                     find: [
                         builder.class('spectrum-Tabs-item'),
@@ -249,15 +272,17 @@ const config = {
             outPackage: 'tabs',
             fileName: 'tabs-sizes',
             components: [
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Tabs--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Tabs--sizeS', 's'],
-                        ['spectrum-Tabs--sizeM', 'm'],
                         ['spectrum-Tabs--sizeL', 'l'],
                         ['spectrum-Tabs--sizeXL', 'xl'],
                     ],
                     'size'
                 ),
+                converter.classToId('spectrum-Tabs', 'list'),
             ],
             requireComponentPresence: [
                 {

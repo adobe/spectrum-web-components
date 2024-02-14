@@ -32,7 +32,7 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
     <sp-progress-bar
         size="s"
@@ -48,7 +48,7 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
     <sp-progress-bar
         size="m"
@@ -64,7 +64,7 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
     <sp-progress-bar
         size="l"
@@ -80,7 +80,7 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
     <sp-progress-bar
         size="xl"
@@ -101,7 +101,7 @@ When a progress bar needs to be placed on top of a colored background, use the o
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-alias-background-color-modal-overlay);"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-transparent-black-400);"
 >
     <sp-progress-bar
         label="Loaded a large amount"
@@ -117,7 +117,7 @@ A progress bar can be either determinate or indeterminate as signified by `[inde
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
     <sp-progress-bar
         aria-label="Loaded an unclear amount"
@@ -134,7 +134,7 @@ A progress bar can be delivered with its labeling displayed above its visual ind
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
     <sp-progress-bar
         side-label

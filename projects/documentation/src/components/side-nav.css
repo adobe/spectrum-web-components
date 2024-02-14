@@ -32,18 +32,29 @@ aside {
         top: 0;
         left: 0;
         transition: transform
-            var(
-                --spectrum-dialog-confirm-background-entry-animation-duration,
-                var(--spectrum-global-animation-duration-600)
-            )
-            cubic-bezier(0, 0, 0.4, 1);
+                var(
+                    --spectrum-dialog-confirm-background-entry-animation-duration,
+                    var(--spectrum-global-animation-duration-600)
+                )
+                cubic-bezier(0, 0, 0.4, 1),
+            visibility 0s linear var(--spectrum-global-animation-duration-600);
         transform: translateX(-100%);
         z-index: 10;
         min-height: 100vh;
+        visibility: hidden;
+    }
+
+    [dir='rtl'] + aside {
+        right: 0;
+        left: auto;
+        transform: translateX(100%);
+        visibility: hidden;
     }
 
     :host([open]) aside {
         transform: translateX(0);
+        visibility: visible;
+        transition-delay: 0s, 0s;
     }
 
     .scrim {

@@ -3,6 +3,126 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **button:** adds pending button, fixes [#3162](https://github.com/adobe/spectrum-web-components/issues/3162) ([#3163](https://github.com/adobe/spectrum-web-components/issues/3163)) ([71254ec](https://github.com/adobe/spectrum-web-components/commit/71254ec2b29f18e62a9a2e5285ca8c35273d8d43))
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+### Bug Fixes
+
+-   update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Features
+
+-   **meter:** add "variant" (coalescing various boolean attributes) and remove "over-background" attributes ([#3514](https://github.com/adobe/spectrum-web-components/issues/3514)) ([40e5f8a](https://github.com/adobe/spectrum-web-components/commit/40e5f8ae476a590bb3df52d7281f76f5908b8672))
+
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **meter, progress-bar, progress-circle:** use innerText when label is not provided ([#3483](https://github.com/adobe/spectrum-web-components/issues/3483)) ([59358c7](https://github.com/adobe/spectrum-web-components/commit/59358c7ada3283e2fdb08793d4c4160dcfe7aee2))
+-   **meter:** added role meter progressbar in meter component ([#3459](https://github.com/adobe/spectrum-web-components/issues/3459)) ([d2eccef](https://github.com/adobe/spectrum-web-components/commit/d2eccef6de8a1c7a0f09bcae9618b4aff2109edd))
+
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+### Bug Fixes
+
+-   **meter,progress-bar:** add i18n to progress delivery ([c7e4020](https://github.com/adobe/spectrum-web-components/commit/c7e4020dc3120f7e6e366bcc89dd523dea3ba821))
+
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   address a11y issues raised by updating our dependencies ([4f06477](https://github.com/adobe/spectrum-web-components/commit/4f0647782eea7fdd85560e1bcb2f8b892f30bc33))
+-   **meter:** remove comment ([27687ec](https://github.com/adobe/spectrum-web-components/commit/27687eca42f37cd06f3ae5a18910b632215a5c6a))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use ObserveSlotText mixin to prevent white space from overriding label attribute ([610fb4b](https://github.com/adobe/spectrum-web-components/commit/610fb4b5b392b7e3673c7d46bf8f9f5f79f27ca9))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/adobe/spectrum-web-components/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   **meter:** add meter pattern ([fa092ba](https://github.com/adobe/spectrum-web-components/commit/fa092ba915a2fe6320cd9bdbe33055a9e41eee87))
+-   **meter:** update spectrum css input ([683bb1a](https://github.com/adobe/spectrum-web-components/commit/683bb1a769483c50eeceb245730e8efbf2ec7442))
+-   **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
+
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/meter@0.8.3...@spectrum-web-components/meter@0.8.4) (2023-04-24)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
 ## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/meter@0.8.2...@spectrum-web-components/meter@0.8.3) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/meter

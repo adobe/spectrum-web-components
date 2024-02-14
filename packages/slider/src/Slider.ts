@@ -13,6 +13,9 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
+    PropertyValues,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -44,7 +47,10 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
  * @slot - text label for the Slider
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
-export class Slider extends ObserveSlotText(SliderHandle, '') {
+export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
+    noDefaultSize: true,
+    validSizes: ['s', 'm', 'l', 'xl'],
+}) {
     public static override get styles(): CSSResultArray {
         return [sliderStyles];
     }
@@ -86,6 +92,9 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     @property()
     public type = '';
 
+    @property({ reflect: true })
+    public override dir!: 'ltr' | 'rtl';
+
     @property({ type: String })
     public set variant(variant: string) {
         const oldVariant = this.variant;
@@ -123,8 +132,8 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     ) => {
         const valueArray = [...values.values()];
         if (valueArray.length === 2)
-            return `${valueArray[0]}${this._forcedUnit} - ${valueArray[1]}${this._forcedUnit}`;
-        return valueArray.join(`${this._forcedUnit}, `) + this._forcedUnit;
+            return `${valueArray[0]} - ${valueArray[1]}`;
+        return valueArray.join(', ');
     };
 
     public override get ariaValueText(): string {
@@ -154,6 +163,9 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
+
+    @property({ type: Number, reflect: true, attribute: 'fill-start' })
+    public fillStart?: number | boolean;
 
     /**
      * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
@@ -202,6 +214,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           min=${this.min}
                           max=${this.max}
                           step=${this.step}
+                          size=${this.size}
                           value=${this.value}
                           ?hide-stepper=${this.hideStepper}
                           ?disabled=${this.disabled}
@@ -211,7 +224,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           @change=${this.handleNumberChange}
                       ></sp-number-field>
                   `
-                : html``}
+                : nothing}
         `;
     }
 
@@ -250,20 +263,25 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                         ? 'number-field'
                         : this.handleController.activeHandleInputId}
                     @click=${this.handleLabelClick}
+                    size=${this.size}
                 >
-                    ${this.slotHasContent ? html`` : this.label}
+                    ${this.slotHasContent ? nothing : this.label}
                     <slot>${this.label}</slot>
                 </sp-field-label>
-                <output
+                <sp-field-label
                     class=${classMap({
                         'visually-hidden': valueLabelVisible,
                     })}
-                    id="value"
-                    aria-live="off"
-                    for="input"
+                    ?disabled=${this.disabled}
+                    for=${this.editable
+                        ? 'number-field'
+                        : this.handleController.activeHandleInputId}
+                    size=${this.size}
                 >
-                    ${this.ariaValueText}
-                </output>
+                    <output id="value" aria-live="off" for="input">
+                        ${this.ariaValueText}
+                    </output>
+                </sp-field-label>
             </div>
         `;
     }
@@ -316,7 +334,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                                           ${i * tickStep + this.min}
                                       </div>
                                   `
-                                : html``}
+                                : nothing}
                         </div>
                     `
                 )}
@@ -337,14 +355,70 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         `;
     }
 
+    private _cachedValue: number | undefined;
+    private centerPoint: number | undefined;
+
+    /**
+     * @description calculates the fill width
+     * @param fillStartValue
+     * @param currentValue
+     * @param cachedValue
+     * @returns
+     */
+    private getOffsetWidth(
+        fillStartValue: number,
+        currentValue: number
+    ): number {
+        const distance = Math.abs(currentValue - fillStartValue);
+        return (distance / (this.max - this.min)) * 100;
+    }
+
+    /**
+     * @description calculates the fill width starting point to fill width
+     * @param value
+     */
+    private getOffsetPosition(value: number): number {
+        return ((value - this.min) / (this.max - this.min)) * 100;
+    }
+
+    private fillStyles(centerPoint: number): StyleInfo {
+        const position = this.dir === 'rtl' ? 'right' : 'left';
+        const offsetPosition =
+            this.value > centerPoint
+                ? this.getOffsetPosition(centerPoint)
+                : this.getOffsetPosition(this.value);
+        const offsetWidth = this.getOffsetWidth(centerPoint, this.value);
+        const styles: StyleInfo = {
+            [position]: `${offsetPosition}%`,
+            width: `${offsetWidth}%`,
+        };
+        return styles;
+    }
+
+    private renderFillOffset(): TemplateResult {
+        if (!this._cachedValue || !this.centerPoint) {
+            return html``;
+        }
+        return html`
+            <div
+                class=${classMap({
+                    fill: true,
+                    offset: this.value > this.centerPoint,
+                })}
+                style=${styleMap(this.fillStyles(this.centerPoint))}
+            ></div>
+        `;
+    }
+
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
-
+        const handleItems = [
+            { id: 'handles', html: this.handleController.render() },
+        ];
         const trackItems = [
             { id: 'track0', html: this.renderTrackSegment(...segments[0]) },
+            { id: 'fill', html: this.renderFillOffset() },
             { id: 'ramp', html: this.renderRamp() },
-            { id: 'ticks', html: this.renderTicks() },
-            { id: 'handles', html: this.handleController.render() },
             ...segments.slice(1).map(([start, end], index) => ({
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
@@ -357,15 +431,28 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                 ${streamingListener({
                     start: ['pointerdown', this.handlePointerdown],
                     streamInside: ['pointermove', this.handlePointermove],
-                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                    end: [
+                        ['pointerup', 'pointercancel', 'pointerleave'],
+                        this.handlePointerup,
+                    ],
                 })}
             >
                 <div id="controls">
-                    ${repeat(
-                        trackItems,
-                        (item) => item.id,
-                        (item) => item.html
-                    )}
+                    ${this.renderTicks()}
+                    <div class="trackContainer">
+                        ${repeat(
+                            trackItems,
+                            (item) => item.id,
+                            (item) => item.html
+                        )}
+                    </div>
+                    <div class="handleContainer">
+                        ${repeat(
+                            handleItems,
+                            (item) => item.id,
+                            (item) => item.html
+                        )}
+                    </div>
                 </div>
             </div>
         `;
@@ -430,5 +517,18 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         }
         await this.handleController.handleUpdatesComplete();
         return complete;
+    }
+
+    protected override willUpdate(changed: PropertyValues): void {
+        if (changed.has('value') && changed.has('fillStart')) {
+            this._cachedValue = Number(this.value);
+            if (this.fillStart) {
+                this.centerPoint = Number(this.fillStart);
+            } else {
+                this.centerPoint =
+                    (Number(this.max) - Number(this.min)) / 2 +
+                    Number(this.min);
+            }
+        }
     }
 }

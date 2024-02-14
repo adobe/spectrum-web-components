@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
+import defineElementPlugin from './scripts/define-element-plugin.js';
 
 export default {
     globs: [
@@ -18,6 +19,7 @@ export default {
         '**/overlay-trigger.ts',
         '**/src/[A-Z]*.ts',
         '**/src/elements/[A-Z]*.ts',
+        '**/tools/shared/src/*.ts',
     ],
     exclude: [
         '**/*.d.ts',
@@ -29,5 +31,5 @@ export default {
     outdir: '.',
     litelement: true,
     packagejson: false,
-    plugins: [moduleFileExtensionsPlugin()],
+    plugins: [moduleFileExtensionsPlugin(), defineElementPlugin()],
 };

@@ -10,24 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-accordion-item.css';
+@import url('./spectrum-accordion-item.css');
 
 :host {
-    --spectrum-accordion-item-header-height: 46px;
-}
-
-/**
- * What follows are styles working around: https://github.com/adobe/spectrum-css/issues/1033
- */
-#indicator {
-    /* .spectrum-Accordion-itemIndicator */
-    top: calc(
-        50% -
-            var(
-                --spectrum-accordion-icon-height,
-                var(--spectrum-global-dimension-size-125)
-            ) / 2
-    );
+    display: block;
 }
 
 #heading {
@@ -36,24 +22,9 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-#header {
-    /* .spectrum-Accordion-itemHeader */
-    min-height: calc(
-        100% -
-            var(
-                --spectrum-accordion-item-border-size,
-                var(--spectrum-alias-border-size-thin)
-            )
-    );
-}
-
-:host([open]) > #header:after {
-    /* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeader:after */
-    height: calc(
-        100% -
-            var(
-                --spectrum-accordion-item-border-size,
-                var(--spectrum-alias-border-size-thin)
-            )
+:host([disabled]) #heading .indicator {
+    color: var(
+        --mod-accordion-item-header-disabled-color,
+        var(--spectrum-accordion-item-header-disabled-color)
     );
 }

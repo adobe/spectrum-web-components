@@ -27,8 +27,8 @@ import {
     classMap,
     ifDefined,
 } from '@spectrum-web-components/base/src/directives.js';
-import { IntersectionController } from '@lit-labs/observers/intersection_controller.js';
-import { ResizeController } from '@lit-labs/observers/resize_controller.js';
+import { IntersectionController } from '@lit-labs/observers/intersection-controller.js';
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { Tab } from './Tab.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
@@ -74,7 +74,7 @@ export const ScaledIndicator = {
  *
  * @fires change - The selected Tab child has changed.
  */
-export class Tabs extends SizedMixin(Focusable) {
+export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [tabSizes, tabStyles, ScaledIndicator.baseStyles()];
     }
@@ -183,8 +183,7 @@ export class Tabs extends SizedMixin(Focusable) {
             });
             return firstFocusableElement ? focusInIndex : -1;
         },
-        direction: () =>
-            this.direction === 'horizontal' ? 'horizontal' : 'vertical',
+        direction: () => 'both',
         elementEnterAction: (el) => {
             if (!this.auto) return;
 

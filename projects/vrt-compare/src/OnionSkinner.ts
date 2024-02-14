@@ -23,7 +23,10 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 export class OnionSkinner extends SpectrumElement {
     @property({ type: Number }) public onionLevel = 0.5;
 
-    @queryAssignedNodes('', true)
+    @queryAssignedNodes({
+        slot: '',
+        flatten: true,
+    })
     private assignments!: NodeListOf<HTMLImageElement>;
 
     private leftThumbnail?: HTMLImageElement;

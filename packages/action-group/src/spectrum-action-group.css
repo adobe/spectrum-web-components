@@ -16,28 +16,15 @@ governing permissions and limitations under the License.
     --spectrum-actiongroup-border-radius-reset: 0;
     --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
 }
-:host([size='s']) {
+:host([size='s']),
+:host([size='xs']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-75
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
-:host([size='m']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-}
-:host([size='l']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-}
+:host,
+:host([size='l']),
 :host([size='xl']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-100
@@ -56,6 +43,12 @@ governing permissions and limitations under the License.
 }
 ::slotted(*) {
     flex-shrink: 0;
+}
+::slotted(.focus-visible) {
+    z-index: 3;
+}
+::slotted(:focus-visible) {
+    z-index: 3;
 }
 :host(:not([vertical]):not([compact])) ::slotted(*) {
     flex-shrink: 0;
@@ -86,7 +79,7 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 :host([compact]:not([quiet])) ::slotted(:first-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: var(
+    --mod-actionbutton-focus-indicator-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
         )
@@ -109,7 +102,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])) ::slotted(:not(:first-child)) {
-    --spectrum-actionbutton-focus-ring-border-radius: 0px;
+    --mod-actionbutton-focus-indicator-border-radius: 0px;
     margin-inline-end: var(
         --mod-actiongroup-horizontal-spacing-compact,
         var(--spectrum-actiongroup-horizontal-spacing-compact)
@@ -120,7 +113,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])) ::slotted(:last-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: 0px
+    --mod-actionbutton-focus-indicator-border-radius: 0px
         var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
@@ -150,8 +143,10 @@ governing permissions and limitations under the License.
 :host([compact]:not([quiet])) ::slotted([selected]) {
     z-index: 1;
 }
-:host([compact]:not([quiet])) ::slotted(:hover) {
-    z-index: 2;
+@media (hover: hover) {
+    :host([compact]:not([quiet])) ::slotted(:hover) {
+        z-index: 2;
+    }
 }
 :host([compact]:not([quiet])) ::slotted(.focus-visible) {
     z-index: 3;
@@ -172,7 +167,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])[vertical]) ::slotted(:first-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: var(
+    --mod-actionbutton-focus-indicator-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
         )
@@ -221,7 +216,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([compact]:not([quiet])[vertical]) ::slotted(:last-child) {
-    --spectrum-actionbutton-focus-ring-border-radius: 0px 0px
+    --mod-actionbutton-focus-indicator-border-radius: 0px 0px
         var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)

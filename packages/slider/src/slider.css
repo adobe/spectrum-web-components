@@ -10,23 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-slider.css';
-
-:host {
-    --spectrum-slider-handle-default-background-color: var(
-        --spectrum-slider-m-handle-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    --spectrum-slider-handle-default-border-color: var(
-        --spectrum-slider-m-handle-border-color,
-        var(--spectrum-global-color-gray-700)
-    );
-}
-
-sp-field-label {
-    padding-top: 0;
-    padding-bottom: 0;
-}
+@import url('./spectrum-slider.css');
 
 /*
  * Removes blue outline from :host when it is being focused.
@@ -43,7 +27,7 @@ sp-field-label {
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:
-        'label .'
+        'label number'
         'slider number';
 }
 
@@ -57,26 +41,8 @@ sp-field-label {
 
 :host([editable]) sp-number-field {
     grid-area: number;
-
-    --spectrum-stepper-width: var(
-        --spectrum-slider-editable-number-field-width,
-        var(--spectrum-global-dimension-size-1000)
-    );
-}
-
-:host([hide-stepper]) sp-number-field {
-    --spectrum-stepper-width: var(
-        --spectrum-slider-editable-number-field-width,
-        var(--spectrum-global-dimension-size-900)
-    );
-}
-
-:host([editable][dir='ltr']) sp-number-field {
-    margin-left: var(--spectrum-global-dimension-size-200);
-}
-
-:host([editable][dir='rtl']) sp-number-field {
-    margin-right: var(--spectrum-global-dimension-size-200);
+    align-self: flex-end;
+    margin-inline-start: var(--spectrum-global-dimension-size-200);
 }
 
 :host([editable]) output {
@@ -124,6 +90,10 @@ sp-field-label {
     transform: translate(50%, 0);
 }
 
+:host([dir='rtl']) .handle:before {
+    transform: translate(50%, -50%);
+}
+
 /*
  * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
  * waits to be addressed at the Spectrum CSS level.
@@ -133,47 +103,12 @@ sp-field-label {
     background-size: var(--spectrum-slider-track-background-size) !important;
 }
 
-:host([dir='ltr']) .track:before {
-    background: var(
-        --spectrum-slider-m-track-color,
-        var(
-            --spectrum-slider-track-color,
-            var(--spectrum-global-color-gray-300)
-        )
-    );
-}
-
-:host([dir='rtl']) .track:before {
-    /* .spectrum-Slider-track:before */
-    background: var(
-        --spectrum-slider-m-track-color,
-        var(
-            --spectrum-slider-track-color-rtl,
-            var(
-                --spectrum-slider-track-color,
-                var(--spectrum-global-color-gray-300)
-            )
-        )
-    );
-}
-
 :host([dir='ltr']) .track:last-of-type:before {
     background-position: 100%;
 }
 
 :host([dir='rtl']) .track:first-of-type:before {
     background-position: 100%;
-}
-
-.track:not(:first-of-type, :last-of-type) {
-    padding-left: calc(
-        var(--spectrum-slider-handle-width) / 2 +
-            var(--spectrum-slider-track-handleoffset)
-    ) !important;
-    padding-right: calc(
-        var(--spectrum-slider-handle-width) / 2 +
-            var(--spectrum-slider-track-handleoffset)
-    ) !important;
 }
 
 :host([dir='ltr']) .track:not(:first-of-type, :last-of-type) {
@@ -205,4 +140,12 @@ sp-field-label {
 :host([label-visibility='none']) #label-container {
     padding: 0;
     margin: 0;
+}
+
+:host([label-visibility='none']) #track {
+    align-self: flex-end;
+}
+
+.fill {
+    z-index: 2;
 }

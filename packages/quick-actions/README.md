@@ -28,7 +28,7 @@ import { QuickActions } from '@spectrum-web-components/quick-actions';
 
 ```html
 <div
-    style="padding: 2em; background-color: var(--spectrum-quickactions-overlay-color, var(--spectrum-alias-background-color-quickactions-overlay));"
+    style="padding: 2em; background-color: var(--spectrum-transparent-black-300);"
 >
     <sp-quick-actions opened>
         <sp-action-button quiet label="Info">
@@ -50,7 +50,7 @@ When the buttons have text only, be sure to include the `text-only` attribute to
 
 ```html
 <div
-    style="padding: 2em; background-color: var(--spectrum-quickactions-overlay-color, var(--spectrum-alias-background-color-quickactions-overlay));"
+    style="padding: 2em; background-color: var(--spectrum-transparent-black-300);"
 >
     <sp-quick-actions opened text-only>
         <sp-action-button quiet>Edit</sp-action-button>

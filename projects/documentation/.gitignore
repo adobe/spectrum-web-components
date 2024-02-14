@@ -1,8 +1,7 @@
-// build tools
-!/scripts/*.js
-
 // eleventy build directory
 _site
+!.eleventy.js
+!content/_data/site.js
 
 // extraced component docs
 content/components

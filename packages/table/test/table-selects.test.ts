@@ -28,7 +28,6 @@ import type {
     TableCheckboxCell,
     TableRow,
 } from '@spectrum-web-components/table';
-
 import {
     elements,
     noSelectsSpecified,
@@ -36,25 +35,9 @@ import {
     selectsSingle,
 } from '../stories/table-elements.stories.js';
 import { spy } from 'sinon';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
+ignoreResizeObserverLoopError(before, after);
 
 describe('Table Selects', () => {
     it('selects items not initially visible in the <sp-table-body>', async () => {
@@ -137,6 +120,7 @@ describe('Table Selects', () => {
 
         expect(rowTwoCheckbox.checked).to.be.false;
         expect(rowTwo.selected).to.be.false;
+        expect(rowTwo.getAttribute('aria-selected')).to.equal('false');
         expect(el.selected.length).to.equal(0);
     });
     it('ignores unexpected `change` events', async () => {
@@ -189,6 +173,8 @@ describe('Table Selects', () => {
             'sp-table-checkbox-cell'
         ) as TableCheckboxCell;
 
+        expect(rowTwo.getAttribute('aria-selected')).to.equal('false');
+
         const rowThree = el.querySelector('.row3') as TableRow;
         const rowThreeCheckbox = rowThree.querySelector(
             'sp-table-checkbox-cell'
@@ -199,6 +185,7 @@ describe('Table Selects', () => {
 
         expect(rowTwoCheckbox.checked).to.be.true;
         expect(el.selected).to.deep.equal(['row2']);
+        expect(rowTwo.getAttribute('aria-selected')).to.equal('true');
 
         rowThreeCheckbox.checkbox.click();
         await elementUpdated(el);

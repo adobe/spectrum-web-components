@@ -92,19 +92,16 @@ const config = {
                     hoist: true,
                 },
                 converter.classToHost(),
-                converter.classToAttribute(
-                    'spectrum-Radio--labelBelow',
-                    'label-below'
-                ),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.pseudoToAttribute('checked', 'checked'),
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-readOnly', 'readonly'),
                 converter.classToAttribute('spectrum-Radio--emphasized'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Radio--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Radio--sizeS', 's'],
-                        ['spectrum-Radio--sizeM', 'm'],
                         ['spectrum-Radio--sizeL', 'l'],
                         ['spectrum-Radio--sizeXL', 'xl'],
                     ],

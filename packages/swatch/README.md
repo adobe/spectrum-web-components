@@ -180,7 +180,7 @@ The `color` attribute/property determines the color value that the `<sp-swatch>`
 <sp-swatch-group>
     <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
     <sp-swatch color="orange"></sp-swatch>
-    <sp-swatch color="var(--spectrum-global-color-magenta-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -192,10 +192,7 @@ The `disabled` attribute/property determines prevents interaction on the `<sp-sw
 <sp-swatch-group>
     <sp-swatch disabled color="rgb(255 0 0 / 0.7)"></sp-swatch>
     <sp-swatch disabled color="orange"></sp-swatch>
-    <sp-swatch
-        disabled
-        color="var(--spectrum-global-color-magenta-500)"
-    ></sp-swatch>
+    <sp-swatch disabled color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -204,12 +201,14 @@ The `disabled` attribute/property determines prevents interaction on the `<sp-sw
 The `mixed-value` attribute and `mixedValue` property outline when an `<sp-swatch>` element represents more than one color.
 
 ```html
-<sp-swatch-group>
+<sp-swatch-group selects="multiple">
     <sp-swatch mixed-value></sp-swatch>
     <sp-swatch mixed-value rounding="full"></sp-swatch>
     <sp-swatch mixed-value shape="rectangle"></sp-swatch>
 </sp-swatch-group>
 ```
+
+Please note that the `aria-checked="mixed"` value only applies when the swatch is in a group with `selects="multiple"`
 
 ### Nothing
 

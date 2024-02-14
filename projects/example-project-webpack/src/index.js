@@ -14,8 +14,11 @@ governing permissions and limitations under the License.
 // import './styles.css';
 
 // import the components we'll use in this page
-import '@spectrum-web-components/button/sp-button';
-import '@spectrum-web-components/field-label/sp-field-label';
-import '@spectrum-web-components/picker/sp-picker';
-import '@spectrum-web-components/menu/sp-menu';
-import '@spectrum-web-components/menu/sp-menu-item';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/scale-medium.js';
+import '@spectrum-web-components/theme/theme-light.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';

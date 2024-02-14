@@ -15,6 +15,20 @@ import { Switch } from '@spectrum-web-components/switch';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
+function inputForSwitch(checkbox: Switch): HTMLInputElement {
+    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
+}
+
+function labelForSwitch(checkbox: Switch): HTMLLabelElement {
+    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    const labelEl = checkbox.shadowRoot.querySelector('label');
+    if (!labelEl) {
+        throw new Error('Failed to find label in shadowRoot');
+    }
+    return labelEl;
+}
+
 describe('Switch', () => {
     testForLitDevWarnings(
         async () =>
@@ -34,6 +48,22 @@ describe('Switch', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForSwitch(el);
+        const inputEl = inputForSwitch(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+    });
+    it('has name attribute', async () => {
+        const el = await fixture<Switch>(
+            html`
+                <sp-switch>Not Checked</sp-switch>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el.hasAttribute('name'));
     });
     it('loads `checked` switch accessibly', async () => {
         const el = await fixture<Switch>(
@@ -45,6 +75,11 @@ describe('Switch', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForSwitch(el);
+        const inputEl = inputForSwitch(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
     });
 
     it('maintains its value when [readonly]', async () => {
@@ -53,7 +88,7 @@ describe('Switch', () => {
         `);
         expect(el.checked).to.be.true;
 
-        el.focusElement.click();
+        el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;

@@ -31,7 +31,7 @@ import { SidenavItem } from '@spectrum-web-components/sidenav';
     <sp-sidenav-item
         value="Docs"
         label="Docs"
-        href="/components/SideNav"
+        href="/components/sidenav"
     ></sp-sidenav-item>
 </sp-sidenav>
 ```
@@ -39,14 +39,18 @@ import { SidenavItem } from '@spectrum-web-components/sidenav';
 ## Multi-level
 
 ```html
-<sp-sidenav>
+<sp-sidenav variant="multilevel">
     <sp-sidenav-item value="Styles" label="Styles" expanded>
-        <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
-        <sp-sidenav-item value="Grid" label="Grid" expanded>
-            <sp-sidenav-item value="Layout" label="Layout"></sp-sidenav-item>
-            <sp-sidenav-item value="Responsive" label="Responsive"></sp-sidenav-item>
+        <sp-sidenav-item value="Color" label="Color">
         </sp-sidenav-item>
-        <sp-sidenav-item value="Typography" label="Typography"></sp-sidenav-item>
+        <sp-sidenav-item value="Grid" label="Grid" expanded>
+            <sp-sidenav-item value="Layout" label="Layout">
+            </sp-sidenav-item>
+            <sp-sidenav-item value="Responsive" label="Responsive">
+            </sp-sidenav-item>
+        </sp-sidenav-item>
+        <sp-sidenav-item value="Typography" label="Typography">
+        </sp-sidenav-item>
     </sp-sidenav-item>
 </sp-sidenav-itm>
 ```

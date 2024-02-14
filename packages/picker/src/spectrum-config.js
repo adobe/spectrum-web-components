@@ -35,10 +35,11 @@ const config = {
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('is-focused', 'focused'),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Picker--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Picker--sizeS', 's'],
-                        ['spectrum-Picker--sizeM', 'm'],
                         ['spectrum-Picker--sizeL', 'l'],
                         ['spectrum-Picker--sizeXL', 'xl'],
                     ],
@@ -53,7 +54,7 @@ const config = {
                 ),
                 converter.classToClass('spectrum-Picker-icon', 'icon'),
                 converter.classToId('spectrum-Picker-trigger', 'button'),
-                converter.classToId('spectrum-Picker-label', 'label'),
+                converter.classToClass('spectrum-Picker-label', 'label'),
                 converter.classToId('spectrum-Picker-popover', 'popover'),
                 {
                     expandSelector: true,

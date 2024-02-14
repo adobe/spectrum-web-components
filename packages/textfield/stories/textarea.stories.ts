@@ -94,6 +94,18 @@ export const grows = (): TemplateResult => html`
     ></sp-textfield>
 `;
 
+export const growsQuiet = (): TemplateResult => html`
+    <sp-field-label for="story">Enter your life story...</sp-field-label>
+    <sp-textfield
+        multiline
+        id="story"
+        value="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+        grows
+        quiet
+        placeholder="Enter your life story"
+    ></sp-textfield>
+`;
+
 export const growsEmpty = (): TemplateResult => html`
     <sp-field-label for="empty">
         This textfield hasn't been used yet
@@ -172,4 +184,52 @@ export const sized = (): TemplateResult => html`
             Even empty Textfield display correctly while waiting for content.
         </sp-help-text>
     </sp-textfield>
+`;
+
+export const with5Rows = (): TemplateResult => html`
+    <sp-field-label for="predefinedRows">
+        Enter your life story with very long words...
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        id="predefinedRows"
+        value="Line 1
+Line 2
+Line 3
+Line 4
+Line 5"
+        placeholder="Enter your life story"
+        rows="5"
+    ></sp-textfield>
+`;
+
+export const rowsDefeatsGrows = (): TemplateResult => html`
+    <sp-field-label for="predefinedRows">
+        Enter your life story with very long words...
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        grows
+        id="predefinedRows"
+        value="Line 1
+Line 2
+Line 3
+Line 4
+Line 5"
+        placeholder="Enter your life story"
+        rows="3"
+    ></sp-textfield>
+`;
+
+export const with1Row = (): TemplateResult => html`
+    <sp-field-label for="predefinedRows">
+        Enter your life story with very long words...
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        id="predefinedRows"
+        value="Line 1"
+        placeholder="Enter your life story"
+        rows="1"
+    ></sp-textfield>
 `;

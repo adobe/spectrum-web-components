@@ -25,7 +25,7 @@ import {
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { stub } from 'sinon';
+import { spy, stub } from 'sinon';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
@@ -382,6 +382,70 @@ describe('Slider', () => {
         expect(el.value).to.equal(0);
     });
 
+    it('dispatches `input` of the animation frame', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    value="50"
+                    style="width: 100px"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount, 'start clean').to.equal(0);
+        expect(changeSpy.callCount, 'start clean').to.equal(0);
+
+        let frames = 0;
+        let shouldCountFrames = true;
+        const countFrames = (): void => {
+            if (!shouldCountFrames) return;
+            frames += 1;
+            requestAnimationFrame(countFrames);
+        };
+        countFrames();
+        type Steps = {
+            type: 'move';
+            position: [number, number];
+        }[];
+        const toRight: Steps = [...Array(51).keys()].map((i) => ({
+            type: 'move',
+            position: [9 + i, 30],
+        }));
+        const toLeft: Steps = toRight.slice(0, -1).reverse();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [9, 30],
+                },
+                {
+                    type: 'down',
+                },
+                ...toRight,
+                ...toLeft,
+                {
+                    type: 'up',
+                },
+            ],
+        });
+        shouldCountFrames = false;
+
+        expect(
+            inputSpy.callCount,
+            'should not have more "input"s than frames'
+        ).to.lte(frames);
+        expect(changeSpy.callCount, 'only one change').to.equal(1);
+    });
+
     it('manages RTL when min != 0', async () => {
         const el = await fixture<Slider>(
             html`
@@ -517,6 +581,7 @@ describe('Slider', () => {
             })
         );
         await elementUpdated(el);
+        await nextFrame();
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: 58,
@@ -526,6 +591,7 @@ describe('Slider', () => {
             })
         );
         await elementUpdated(el);
+        await nextFrame();
 
         expect(el.value, 'first pointerdown').to.equal(50);
         expect(el.dragging, 'is dragging').to.be.true;
@@ -542,6 +608,7 @@ describe('Slider', () => {
             })
         );
         await elementUpdated(el);
+        await nextFrame();
 
         expect(el.value, 'first pointermove').to.equal(0);
 
@@ -576,6 +643,7 @@ describe('Slider', () => {
             })
         );
         await elementUpdated(el);
+        await nextFrame();
 
         expect(el.value, 'second pointerdown').to.equal(50);
         expect(el.dragging, 'is dragging').to.be.true;
@@ -591,6 +659,7 @@ describe('Slider', () => {
             })
         );
         await elementUpdated(el);
+        await nextFrame();
 
         expect(el.value, 'second pointermove').to.equal(0);
 
@@ -639,7 +708,7 @@ describe('Slider', () => {
             ],
         });
 
-        await nextFrame();
+        await elementUpdated(el);
 
         expect(el.highlight, 'with no highlight').to.be.false;
         expect(el.dragging, 'dragging').to.be.true;
@@ -657,6 +726,7 @@ describe('Slider', () => {
             ],
         });
         await inputEvent;
+        await nextFrame();
 
         expect(el.value).to.equal(8);
 
@@ -773,6 +843,89 @@ describe('Slider', () => {
 
         expect(el.variant).to.equal('tick');
         expect(el.getAttribute('variant')).to.equal('tick');
+    });
+    it('renders fill from the centerPoint of the track when fill-start has no value', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    max="20"
+                    fill-start
+                    min="0"
+                    value="10"
+                    step="1"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('50%');
+        expect(fillElement.style.width).to.equal('0%');
+        expect(el.values).to.deep.equal({ value: 10 });
+    });
+    it('renders fill from fill-start point', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    max="100"
+                    fill-start="15"
+                    min="0"
+                    value="10"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('10%');
+        expect(fillElement.style.width).to.equal('5%');
+        expect(el.values).to.deep.equal({ value: 10 });
+
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        const handleBoundingRect = handle.getBoundingClientRect();
+        const position: [number, number] = [
+            handleBoundingRect.x + handleBoundingRect.width / 2,
+            handleBoundingRect.y + handleBoundingRect.height / 2,
+        ];
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position,
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        200,
+                        handleBoundingRect.y + handleBoundingRect.height + 100,
+                    ],
+                },
+            ],
+        });
+        await nextFrame();
+
+        expect(el.value).to.equal(24);
     });
     it('has a `focusElement`', async () => {
         const el = await fixture<Slider>(
@@ -915,6 +1068,89 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(input.getAttribute('aria-valuetext')).to.equal('50');
+    });
+    it('supports units not included in Intl.NumberFormatOptions', async () => {
+        let el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    value="50"
+                    min="0"
+                    max="100"
+                    format-options='{"style": "unit", "unit": "px"}'
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const input = el.focusElement as HTMLInputElement;
+        await elementUpdated(el);
+
+        expect(input.getAttribute('aria-valuetext')).to.equal('50px');
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    value="5"
+                    step="1"
+                    min="0"
+                    max="255"
+                    format-options='{"style": "unit", "unit": "px"}'
+                >
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="5"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="250"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        let shadowRoot = el.shadowRoot as ShadowRoot;
+        expect(shadowRoot.querySelector('input#input-0[aria-valuetext="5px"]'))
+            .to.exist;
+        expect(
+            shadowRoot.querySelector('input#input-1[aria-valuetext="250px"]')
+        ).to.exist;
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider value="5" step="1" min="0" max="255">
+                    <sp-slider-handle
+                        slot="handle"
+                        name="min"
+                        label="Minimum"
+                        value="5"
+                        format-options='{"style": "unit", "unit": "px"}'
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="max"
+                        label="Maximum"
+                        value="250"
+                        format-options='{"style": "unit", "unit": "px"}'
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        shadowRoot = el.shadowRoot as ShadowRoot;
+        expect(shadowRoot.querySelector('input#input-0[aria-valuetext="5px"]'))
+            .to.exist;
+        expect(
+            shadowRoot.querySelector('input#input-1[aria-valuetext="250px"]')
+        ).to.exist;
     });
     it('accepts min/max/value in the same timing', async () => {
         const el = await fixture<Slider>(

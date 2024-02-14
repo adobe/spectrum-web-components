@@ -38,6 +38,12 @@ const convertSize = (size) => [
                     selectors: [builder.attribute('size', size)],
                 },
             },
+            {
+                replace: builder.combinator(' '),
+            },
+            {
+                replace: builder.class('root'),
+            },
         ],
     },
     {
@@ -128,6 +134,7 @@ const config = {
             fileName: 'picker-button',
             components: [
                 converter.classToClass('spectrum-PickerButton', 'root'),
+                converter.classToAttribute('is-focused', 'focused'),
                 {
                     find: [builder.pseudoClass('focus')],
                     replace: [

@@ -15,13 +15,15 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/picker/sp-picker.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import { states } from './states.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 
 export default {
     title: 'Picker',
@@ -119,13 +121,104 @@ export const Default = (args: StoryArgs): TemplateResult => {
             label="Select a Country with a very long label, too long, in fact"
             ${spreadProps(args)}
         >
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select Inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save Selection</sp-menu-item>
-            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+
+export const tooltip = (args: StoryArgs): TemplateResult => {
+    const { open, ...rest } = args;
+    return html`
+        <sp-field-label for="picker-1">Where do you live?</sp-field-label>
+        <sp-picker
+            id="picker-1"
+            @change=${handleChange(args)}
+            label="Select a Country with a very long label, too long, in fact"
+            ${spreadProps(rest)}
+        >
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+            <sp-tooltip
+                slot="tooltip"
+                ?open=${open}
+                self-managed
+                placement="right"
+            >
+                This Picker wants to know where you live.
+            </sp-tooltip>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+tooltip.args = {
+    open: true,
+};
+tooltip.decorators = [isOverlayOpen];
+
+export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-picker
+            @change=${handleChange(args)}
+            label="Where do you live?"
+            ${spreadProps(args)}
+        >
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+
+export const slottedLabel = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-picker @change=${handleChange(args)} ${spreadProps(args)}>
+            <span slot="label">Where do you live?</span>
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
         </sp-picker>
         <p>This is some text.</p>
         <p>This is some text.</p>
@@ -223,6 +316,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
 iconsNone.args = {
     open: true,
 };
+iconsNone.decorators = [isOverlayOpen];
 
 export const iconValue = (args: StoryArgs): TemplateResult => {
     return html`
@@ -282,6 +376,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
 iconsOnly.args = {
     open: true,
 };
+iconsOnly.decorators = [isOverlayOpen];
 
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`
@@ -291,8 +386,11 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 clear: left;
                 margin-bottom: 15px;
             }
+            .backdrop-filter-test {
+                backdrop-filter: saturate(80%);
+            }
         </style>
-        <fieldset>
+        <fieldset class="backdrop-filter-test">
             <sp-field-label for="picker-open">
                 Where do you live?
             </sp-field-label>
@@ -309,7 +407,6 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
                 <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
                 <sp-menu-item>Save Selection</sp-menu-item>
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-picker>
@@ -334,6 +431,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
 Open.args = {
     open: true,
 };
+Open.decorators = [isOverlayOpen];
 
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
@@ -351,7 +449,6 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
             <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
             <sp-menu-item value="item-3">Feather...</sp-menu-item>
             <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item value="item-5">Save Selection</sp-menu-item>
             <sp-menu-item disabled value="item-6">Make Work Path</sp-menu-item>
         </sp-picker>
@@ -373,7 +470,6 @@ export const readonly = (args: StoryArgs): TemplateResult => {
             <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
             <sp-menu-item value="item-3">Feather...</sp-menu-item>
             <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item value="item-5">Save Selection</sp-menu-item>
             <sp-menu-item disabled value="item-6">Make Work Path</sp-menu-item>
         </sp-picker>
@@ -416,6 +512,11 @@ export const custom = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+custom.args = {
+    open: true,
+};
+custom.decorators = [isOverlayOpen];
+
 export const Loading = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-loading">
@@ -432,13 +533,8 @@ export const Loading = (args: StoryArgs): TemplateResult => {
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>
             <sp-menu-item>Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item>Save Selection</sp-menu-item>
             <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-picker>
     `;
-};
-
-custom.args = {
-    open: true,
 };

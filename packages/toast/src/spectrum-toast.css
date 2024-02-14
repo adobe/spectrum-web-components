@@ -12,13 +12,14 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-toast-font-weight: var(--spectrum-font-weight-regular);
+    --spectrum-toast-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-toast-font-size: var(--spectrum-font-size-100);
     --spectrum-toast-corner-radius: var(--spectrum-corner-radius-100);
     --spectrum-toast-block-size: var(--spectrum-toast-height);
+    --spectrum-toast-max-inline-size: var(--spectrum-toast-maximum-width);
     --spectrum-toast-border-width: var(--spectrum-border-width-100);
     --spectrum-toast-line-height: var(--spectrum-line-height-100);
-    --spectrum-toast-line-height-cjk: var(--spectrum-line-height-cjk-100);
+    --spectrum-toast-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-toast-spacing-icon-to-text: var(--spectrum-text-to-visual-100);
     --spectrum-toast-spacing-start-edge-to-text-and-icon: var(
         --spectrum-spacing-300
@@ -68,6 +69,24 @@ governing permissions and limitations under the License.
     }
 }
 :host {
+    border-radius: var(
+        --mod-toast-corner-radius,
+        var(--spectrum-toast-corner-radius)
+    );
+    box-sizing: border-box;
+    font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
+    font-weight: var(
+        --mod-toast-font-weight,
+        var(--spectrum-toast-font-weight)
+    );
+    max-inline-size: var(
+        --mod-toast-max-inline-size,
+        var(--spectrum-toast-max-inline-size)
+    );
+    min-block-size: var(
+        --mod-toast-block-size,
+        var(--spectrum-toast-block-size)
+    );
     -webkit-font-smoothing: antialiased;
     align-items: stretch;
     background-color: var(
@@ -77,11 +96,6 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-background-color-default)
         )
     );
-    border-radius: var(
-        --mod-toast-corner-radius,
-        var(--spectrum-toast-corner-radius)
-    );
-    box-sizing: border-box;
     color: var(
         --highcontrast-toast-background-color-default,
         var(
@@ -91,12 +105,6 @@ governing permissions and limitations under the License.
     );
     display: inline-flex;
     flex-direction: row;
-    font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
-    font-weight: var(
-        --mod-toast-font-weight,
-        var(--spectrum-toast-font-weight)
-    );
-    min-block-size: var(--spectrum-toast-block-size);
     padding-inline-start: var(
         --mod-toast-spacing-start-edge-to-text-and-icon,
         var(--spectrum-toast-spacing-start-edge-to-text-and-icon)
@@ -316,10 +324,9 @@ governing permissions and limitations under the License.
     );
 }
 :host([dir='ltr']) .body ::slotted([slot='action']) {
-    margin-left: auto;
+    margin-inline-start: auto;
 }
 :host([dir='rtl']) .body ::slotted([slot='action']) {
-    margin-right: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)

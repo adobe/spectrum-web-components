@@ -16,7 +16,7 @@ import { back } from './images';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
 
-const sizes = ['s', 'm', 'l', 'xl', 'xxl'];
+const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
 
 export default {
     component: 'sp-icon',
@@ -56,6 +56,32 @@ export const imageIcon = (): TemplateResult => {
 };
 
 imageIcon.storyName = 'Image Icon';
+
+export const imageIconSrcError = (): TemplateResult => {
+    const invalidImgSrc = 'invalid-image-src';
+    const error = (): void => {
+        console.error('Invalid sp-icon src provided');
+    };
+
+    return html`
+        ${sizes.map(
+            (size) => html`
+                <sp-icon
+                    label="Back"
+                    size=${size}
+                    src=${invalidImgSrc}
+                    @error=${error}
+                ></sp-icon>
+            `
+        )}
+    `;
+};
+
+imageIconSrcError.storyName = 'Image Icon src invalid error';
+
+imageIconSrcError.swc_vrt = {
+    skip: true,
+};
 
 export const svgIcon = (): TemplateResult => {
     return html`

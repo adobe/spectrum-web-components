@@ -24,7 +24,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
 
@@ -47,6 +47,22 @@ describe('ActionButton', () => {
         expect(el.textContent).to.include('Button');
         await expect(el).to.be.accessible();
     });
+    it('gardens "value" as a property', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button>Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.hasAttribute('value')).to.be.false;
+        el.value = 'Value';
+        await elementUpdated(el);
+        expect(el.hasAttribute('value')).to.be.true;
+        el.value = '';
+        await elementUpdated(el);
+        expect(el.hasAttribute('value')).to.be.false;
+    });
     it('loads [hold-affordance]', async () => {
         const el = await fixture<ActionButton>(
             html`
@@ -59,7 +75,50 @@ describe('ActionButton', () => {
         expect(el.textContent).to.include('Button');
         await expect(el).to.be.accessible();
     });
-    it('maintains a `size` attribute', async () => {
+    it('manages a `tabindex`', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button>Button</sp-action-button>
+            `
+        );
+
+        expect(el.tabIndex).to.equal(0);
+        expect(el.disabled).to.be.false;
+
+        el.setAttribute('tabindex', '-1');
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.disabled).to.be.false;
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.disabled).to.be.true;
+
+        el.disabled = false;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.disabled).to.be.false;
+    });
+    it('manages a `size` attribute', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button size="xl">Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.size).to.equal('xl');
+        expect(el.getAttribute('size')).to.equal('xl');
+        el.removeAttribute('size');
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
+    });
+    it('does not apply a default `size` attribute', async () => {
         const el = await fixture<ActionButton>(
             html`
                 <sp-action-button>Button</sp-action-button>
@@ -68,11 +127,7 @@ describe('ActionButton', () => {
 
         await elementUpdated(el);
         expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
-        el.removeAttribute('size');
-        await elementUpdated(el);
-        expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
     });
     it('dispatches `longpress` events when [hold-affordance]', async () => {
         const longpressSpy = spy();
@@ -206,5 +261,87 @@ describe('ActionButton', () => {
         expect(el.toggles).to.be.true;
         expect(el.selected).to.be.true;
         expect(button.getAttribute('aria-pressed')).to.equal('true');
+    });
+    it('toggles [aria-haspopup][aria-expanded]', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button
+                    toggles
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    Button
+                </sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        const button = el.focusElement;
+
+        expect(el.toggles).to.be.true;
+        expect(el.selected).to.be.false;
+        expect(button).not.to.have.attribute('aria-pressed');
+        expect(button).to.have.attribute('aria-haspopup', 'true');
+        expect(button).to.have.attribute('aria-expanded', 'false');
+
+        el.focus();
+        await sendKeys({
+            press: 'Space',
+        });
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.true;
+        expect(el.selected).to.be.true;
+        expect(button).not.to.have.attribute('aria-pressed');
+        expect(button).to.have.attribute('aria-haspopup', 'true');
+        expect(button).to.have.attribute('aria-expanded', 'true');
+
+        el.addEventListener('change', (event: Event) => event.preventDefault());
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.true;
+        expect(el.selected).to.be.true;
+        expect(button).not.to.have.attribute('aria-pressed');
+        expect(button).to.have.attribute('aria-haspopup', 'true');
+        expect(button).to.have.attribute('aria-expanded', 'true');
+    });
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('warns that `variant` is deprecated', async () => {
+            const el = await fixture<ActionButton>(
+                html`
+                    <sp-action-button variant="white">Button</sp-action-button>
+                `
+            );
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('"variant"'),
+                'confirm variant-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-action-button',
+                    type: 'api',
+                    level: 'default',
+                },
+            });
+        });
     });
 });

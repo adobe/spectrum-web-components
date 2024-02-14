@@ -101,6 +101,7 @@ async function main() {
             `${projectDir}/projects/documentation/content/migrations/*.md`,
             `${projectDir}/projects/documentation/content/getting-started.md`,
             `${projectDir}/projects/documentation/content/dev-mode.md`,
+            `${projectDir}/projects/documentation/content/registry-conflicts.md`,
         ],
         {
             ignore: ['**/node_modules/**'],

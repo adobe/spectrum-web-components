@@ -20,7 +20,7 @@ describe('Avatar', () => {
                 html`
                     <sp-avatar
                         label="Shantanu Narayen"
-                        src="https://place.dog/500/500"
+                        src="https://picsum.photos/500/500"
                     ></sp-avatar>
                 `
             )
@@ -30,7 +30,22 @@ describe('Avatar', () => {
             html`
                 <sp-avatar
                     label="Shantanu Narayen"
-                    src="https://place.dog/500/500"
+                    src="https://picsum.photos/500/500"
+                ></sp-avatar>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads accessibly with [href]', async () => {
+        const el = await fixture<Avatar>(
+            html`
+                <sp-avatar
+                    label="Shantanu Narayen"
+                    src="https://picsum.photos/500/500"
+                    href="https://adobe.com"
                 ></sp-avatar>
             `
         );
@@ -44,7 +59,7 @@ describe('Avatar', () => {
             html`
                 <sp-avatar
                     label="Shantanu Narayen"
-                    src="https://place.dog/500/500"
+                    src="https://picsum.photos/500/500"
                 ></sp-avatar>
             `
         );
@@ -58,13 +73,19 @@ describe('Avatar', () => {
         await elementUpdated(el);
 
         expect(el.size).to.equal(100);
+
+        el.setAttribute('size', '600');
+
+        await elementUpdated(el);
+
+        expect(el.size).to.equal(600);
     });
     it('loads with everything set', async () => {
         const el = await fixture<Avatar>(
             html`
                 <sp-avatar
                     label="Shantanu Narayen"
-                    src="https://place.dog/500/500"
+                    src="https://picsum.photos/500/500"
                 ></sp-avatar>
             `
         );
@@ -80,7 +101,7 @@ describe('Avatar', () => {
     it('loads with no label', async () => {
         const el = await fixture<Avatar>(
             html`
-                <sp-avatar src="https://place.dog/500/500"></sp-avatar>
+                <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
             `
         );
 
@@ -97,7 +118,7 @@ describe('Avatar', () => {
                 html`
                     <sp-avatar
                         label="Shantanu Narayen"
-                        src="https://place.dog/500/500"
+                        src="https://picsum.photos/500/500"
                         tabindex="0"
                     ></sp-avatar>
                 `

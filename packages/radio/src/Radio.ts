@@ -27,7 +27,6 @@ import radioStyles from './radio.css.js';
  * @element sp-radio
  *
  * @slot - text label of the Radio button
- * @attr label-below - Moves the label below the radio button
  * @attr invalid - Uses the invalid style
  * @attr disabled - Uses the disabled style
  * @attr checked - Represents when the input is checked
@@ -36,7 +35,8 @@ import radioStyles from './radio.css.js';
  * @fires change - When the input is interacted with and its state is changed
  */
 export class Radio extends SizedMixin(
-    FocusVisiblePolyfillMixin(SpectrumElement)
+    FocusVisiblePolyfillMixin(SpectrumElement),
+    { noDefaultSize: true }
 ) {
     public static override get styles(): CSSResultArray {
         return [radioStyles];
@@ -148,7 +148,7 @@ export class Radio extends SizedMixin(
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');
             } else {
-                this.removeAttribute('aria-disabeld');
+                this.removeAttribute('aria-disabled');
             }
         }
     }

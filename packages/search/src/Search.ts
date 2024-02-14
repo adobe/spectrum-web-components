@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -108,7 +109,7 @@ export class Search extends Textfield {
                 @keydown=${this.handleKeydown}
             >
                 <sp-icon-magnify
-                    class="icon magnifier icon-workflow"
+                    class="icon magnifier icon-workflow icon-search"
                 ></sp-icon-magnify>
                 ${super.renderField()}
                 ${this.value
@@ -118,10 +119,11 @@ export class Search extends Textfield {
                               label="Reset"
                               tabindex="-1"
                               type="reset"
+                              size=${ifDefined(this.size)}
                               @keydown=${stopPropagation}
                           ></sp-clear-button>
                       `
-                    : html``}
+                    : nothing}
             </form>
         `;
     }

@@ -32,7 +32,13 @@ export const readonly = (): TemplateResult => {
 
 export const Indeterminate = (): TemplateResult => {
     return html`
-        <sp-checkbox indeterminate>Checkbox</sp-checkbox>
+        <sp-checkbox indeterminate>
+            Checkbox, indeterminate, not checked
+        </sp-checkbox>
+        <br />
+        <sp-checkbox indeterminate checked>
+            Checkbox, indeterminate, checked
+        </sp-checkbox>
     `;
 };
 

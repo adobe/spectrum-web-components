@@ -20,10 +20,10 @@ jobs:
 
             - uses: actions/checkout@v3
 
-            - name: Setup Node 16
+            - name: Setup Node 18
               uses: actions/setup-node@v3
               with:
-                  node-version: '16'
+                  node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -41,7 +41,73 @@ jobs:
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('# Branch Preview'));
+                        const priorComment = data.find(comment => comment.body.startsWith('## Branch preview') || comment.body.startsWith('# Branch Preview'));
+                        if (priorComment) {
+                          github.rest.issues.updateComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            comment_id: priorComment.id,
+                            body
+                          });
+                        } else {
+                          github.rest.issues.createComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            issue_number: context.issue.number,
+                            body
+                          });
+                        }
+                      });
+    lighthouse:
+        name: Lighthouse CI
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            - uses: actions/checkout@v3
+
+            - name: Setup Node 18
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Extract branch name
+              shell: bash
+              run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+              id: extract_branch
+
+            - name: Lighthouse CI Action
+              id: lighthouse
+              uses: treosh/lighthouse-ci-action@v11
+              with:
+                  configPath: '.github/lighthouse/lighthouserc.json'
+                  runs: 3
+                  temporaryPublicStorage: true
+                  uploadArtifacts: true
+                  urls: |
+                      https://opensource.adobe.com/spectrum-web-components/
+                      https://main--spectrum-web-components.netlify.app/
+                      https://${{ steps.extract_branch.outputs.branch }}--spectrum-web-components.netlify.app/
+
+            - name: Post Results
+              uses: actions/github-script@v6
+              with:
+                  script: |
+                      const { buildLighthouseComment } = await import('${{ github.workspace }}/tasks/build-lighthouse-comment.js');
+                      const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }});
+                      github.rest.issues.listComments({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                      }).then(({data}) => {
+                        const priorComment = data.find(comment => comment.body.startsWith('## Lighthouse scores') || comment.body.startsWith('# Lighthouse Results'));
                         if (priorComment) {
                           github.rest.issues.updateComment({
                             owner: context.repo.owner,
@@ -73,10 +139,10 @@ jobs:
 
             - uses: actions/checkout@v3
 
-            - name: Setup Node 16
+            - name: Setup Node 18
               uses: actions/setup-node@v3
               with:
-                  node-version: '16'
+                  node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -114,10 +180,10 @@ jobs:
 
             - uses: actions/checkout@v3
 
-            - name: Setup Node 16
+            - name: Setup Node 18
               uses: actions/setup-node@v3
               with:
-                  node-version: '16'
+                  node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -154,10 +220,10 @@ jobs:
 
             - uses: actions/checkout@v3
 
-            - name: Setup Node 16
+            - name: Setup Node 18
               uses: actions/setup-node@v3
               with:
-                  node-version: '16'
+                  node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -180,7 +246,7 @@ jobs:
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('# Tachometer results'));
+                        const priorComment = data.find(comment => comment.body.startsWith('## Tachometer results') || comment.body.startsWith('# Tachometer results'));
                         if (priorComment) {
                           github.rest.issues.updateComment({
                             owner: context.repo.owner,

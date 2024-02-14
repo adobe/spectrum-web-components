@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-card.css';
+@import url('./spectrum-card.css');
 
 :host([href]:not([href=''])) {
     cursor: pointer;
@@ -43,18 +43,12 @@ slot[name='description'] {
     );
 }
 
-#preview,
-#cover-photo {
-    overflow: hidden;
-    order: -1;
-}
-
 #preview + #cover-photo {
     display: none;
 }
 
-#preview ::slotted(*),
-#cover-photo ::slotted(*) {
+#cover-photo ::slotted(*),
+:host(:not([variant='quiet'])) #preview ::slotted(*) {
     width: 100%;
     display: block;
 
@@ -72,6 +66,10 @@ slot[name='description'] {
     width: auto;
 }
 
+:host([horizontal]) sp-asset {
+    height: inherit;
+}
+
 sp-quick-actions {
     z-index: 1;
 }
@@ -87,4 +85,9 @@ sp-quick-actions {
 .subtitle {
     /* Override until https://github.com/adobe/spectrum-css/issues/1054 is fixed */
     text-transform: none;
+}
+
+:host:before,
+:host:after {
+    pointer-events: none;
 }

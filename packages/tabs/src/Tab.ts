@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
@@ -73,9 +74,9 @@ export class Tab extends FocusVisiblePolyfillMixin(
                 ? html`
                       <slot name="icon"></slot>
                   `
-                : html``}
+                : nothing}
             <label id="item-label" ?hidden=${!this.hasLabel}>
-                ${this.slotHasContent ? html`` : this.label}
+                ${this.slotHasContent ? nothing : this.label}
                 <slot>${this.label}</slot>
             </label>
         `;

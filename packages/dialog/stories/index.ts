@@ -12,36 +12,20 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-function nextFrame(): Promise<void> {
-    return new Promise((res) => requestAnimationFrame(() => res()));
-}
-
-class OverlayTriggerReady extends HTMLElement {
+class CountdownWatcher extends HTMLElement {
     ready!: (value: boolean | PromiseLike<boolean>) => void;
 
-    constructor() {
-        super();
+    connectedCallback(): void {
+        (this.previousElementSibling as HTMLElement).addEventListener(
+            'countdown-complete',
+            () => {
+                this.ready(true);
+            }
+        );
         this.readyPromise = new Promise((res) => {
             this.ready = res;
-            this.setup();
         });
     }
-
-    async setup(): Promise<void> {
-        await nextFrame();
-
-        const overlay = document.querySelector(
-            `overlay-trigger`
-        ) as HTMLElement;
-        overlay.addEventListener('sp-opened', this.handleTriggerOpened);
-    }
-
-    handleTriggerOpened = async (): Promise<void> => {
-        await nextFrame();
-
-        this.ready(true);
-    };
-
     private readyPromise: Promise<boolean> = Promise.resolve(false);
 
     get updateComplete(): Promise<boolean> {
@@ -49,13 +33,13 @@ class OverlayTriggerReady extends HTMLElement {
     }
 }
 
-customElements.define('overlay-trigger-ready', OverlayTriggerReady);
+customElements.define('countdown-complete-watcher', CountdownWatcher);
 
-export const overlayTriggerDecorator = (
+export const disabledButtonDecorator = (
     story: () => TemplateResult
 ): TemplateResult => {
     return html`
         ${story()}
-        <overlay-trigger-ready></overlay-trigger-ready>
+        <countdown-complete-watcher></countdown-complete-watcher>
     `;
 };

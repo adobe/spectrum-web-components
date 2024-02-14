@@ -22,7 +22,6 @@ import {
     property,
     queryAsync,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -40,7 +39,6 @@ import {
     Theme,
     ThemeVariant,
 } from '@spectrum-web-components/theme';
-import { ActiveOverlay } from '@spectrum-web-components/overlay';
 import './types.js';
 
 const queryString = window.location.search;
@@ -90,35 +88,10 @@ const reduceMotionProperties = css`
     --spectrum-animation-duration-1000: 0ms;
     --spectrum-animation-duration-2000: 0ms;
     --spectrum-animation-duration-4000: 0ms;
+    --spectrum-animation-duration-6000: 0ms;
     --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
     --swc-test-duration: 1ms;
 `;
-
-ActiveOverlay.prototype.renderTheme = function (
-    content: TemplateResult
-): TemplateResult {
-    const { color, scale, theme, lang } = this.theme;
-    return html`
-        ${window.__swc_hack_knobs__.defaultReduceMotion
-            ? html`
-                  <style>
-                      sp-theme {
-                          ${reduceMotionProperties}
-                      }
-                  </style>
-              `
-            : html``}
-        <sp-theme
-            theme=${ifDefined(theme)}
-            color=${ifDefined(color)}
-            scale=${ifDefined(scale)}
-            lang=${ifDefined(lang)}
-            part="theme"
-        >
-            ${content}
-        </sp-theme>
-    `;
-};
 
 export class StoryDecorator extends SpectrumElement {
     static override get styles() {
@@ -269,7 +242,12 @@ export class StoryDecorator extends SpectrumElement {
 
     protected handleKeydown(event: KeyboardEvent): void {
         const path = event.composedPath();
-        const hasInput = path.some((node) => node instanceof HTMLInputElement);
+        const hasInput = path.some(
+            (node) =>
+                node instanceof HTMLInputElement ||
+                node instanceof HTMLTextAreaElement ||
+                !!(node as HTMLElement).isContentEditable
+        );
         if (hasInput) {
             event.stopPropagation();
         }
@@ -295,9 +273,16 @@ export class StoryDecorator extends SpectrumElement {
         target,
     }: Event & { target: HTMLSlotElement }): Promise<void> {
         this.ready = false;
-        const descendents = target.assignedElements({
+        const assignedElements = target.assignedElements({
             flatten: true,
         }) as SpectrumElement[];
+        const descendents = assignedElements;
+        assignedElements.forEach((descendent) => {
+            const gathered = [
+                ...(descendent.querySelectorAll('*') || []),
+            ] as SpectrumElement[];
+            descendents.push(...gathered);
+        });
         const litElementDescendents = descendents.filter(
             (el) =>
                 el.tagName.search('-') !== -1 &&

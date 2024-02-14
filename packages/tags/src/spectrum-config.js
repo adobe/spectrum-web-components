@@ -24,6 +24,26 @@ const converter = converterFor('spectrum-Tag');
 const config = {
     conversions: [
         {
+            inPackage: '@spectrum-css/taggroup',
+            outPackage: 'tags',
+            fileName: 'tags',
+            components: [
+                converter.classToHost('spectrum-TagGroup'),
+                {
+                    find: builder.class('spectrum-TagGroup-item'),
+                    replace: {
+                        type: 'pseudo-element',
+                        kind: 'slotted',
+                        selector: [
+                            {
+                                type: 'universal',
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+        {
             inPackage: '@spectrum-css/tag',
             outPackage: 'tags',
             fileName: 'tag',
@@ -46,10 +66,11 @@ const config = {
                     'spectrum-Tag--removable',
                     'deletable'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Tag--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Tag--sizeS', 's'],
-                        ['spectrum-Tag--sizeM', 'm'],
                         ['spectrum-Tag--sizeL', 'l'],
                     ],
                     'size'
@@ -59,9 +80,9 @@ const config = {
                     'clear-button'
                 ),
                 converter.classToClass('spectrum-ClearButton', 'clear-button'),
-                converter.classToClass('spectrum-Tags-itemLabel', 'label'),
+                converter.classToClass('spectrum-Tag-itemLabel', 'label'),
                 converter.classToSlotted('spectrum-Avatar', 'avatar'),
-                converter.classToSlotted('spectrum-Tags-itemIcon', 'icon'),
+                converter.classToSlotted('spectrum-Tag-itemIcon', 'icon'),
             ],
         },
     ],

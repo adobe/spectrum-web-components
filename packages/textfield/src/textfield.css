@@ -10,15 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-textfield.css';
+@import url('./spectrum-textfield.css');
 
 :host {
     display: inline-flex;
     flex-direction: column;
-    width: var(
-        --spectrum-alias-single-line-width,
-        var(--spectrum-global-dimension-size-2400)
-    );
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
 }
 
 :host([multiline]) {
@@ -29,8 +26,12 @@ governing permissions and limitations under the License.
     resize: none;
 }
 
+:host([disabled]:focus-visible) {
+    outline: none;
+}
+
 #textfield {
-    width: 100%;
+    inline-size: 100%;
 }
 
 #textfield,
@@ -39,7 +40,7 @@ textarea {
 }
 
 .input {
-    min-width: var(--spectrum-textfield-texticon-min-width);
+    min-inline-size: var(--spectrum-textfield-min-width);
 }
 
 :host([focused]) .input {
@@ -47,49 +48,24 @@ textarea {
     forced-color-adjust: var(--swc-test-forced-color-adjust);
 }
 
-:host([grows]) .input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    resize: none;
-    overflow: hidden;
+:host([grows]:not([quiet])) #textfield:after {
+    grid-area: unset;
+    min-block-size: calc(
+        var(
+                --mod-text-area-min-block-size,
+                var(--spectrum-text-area-min-block-size)
+            ) +
+            var(
+                --mod-textfield-focus-indicator-gap,
+                var(--spectrum-textfield-focus-indicator-gap)
+            ) * 2
+    );
 }
 
-:host([grows]) #sizer {
+#sizer {
+    block-size: auto;
     word-break: break-word;
-    white-space: pre-wrap;
-    box-sizing: border-box;
-    overflow-wrap: break-word;
-    border: var(--spectrum-textfield-texticon-border-size) solid;
-    border-radius: var(--spectrum-textfield-texticon-border-radius);
-    padding: var(--spectrum-textarea-padding-top)
-        var(--spectrum-textarea-padding-right)
-        var(--spectrum-textarea-padding-bottom)
-        calc(var(--spectrum-textarea-padding-left) - 1px);
-    text-indent: 0;
-    width: 100%;
-    vertical-align: top;
-    margin: 0;
-    overflow: visible;
-    font-family: var(--spectrum-textfield-texticon-text-font-family);
-    font-size: var(--spectrum-textfield-texticon-text-size);
-    line-height: var(--spectrum-textfield-texticon-text-line-height);
-    text-overflow: ellipsis;
-    transition: border-color
-            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out;
-    outline: none;
-    -webkit-appearance: none; /* stylelint-disable-line */
-    -moz-appearance: textfield; /* stylelint-disable-line */
-}
-
-:host([grows][quiet]) #sizer {
-    border-radius: var(--spectrum-textfield-quiet-texticon-border-radius);
-    border-width: 0 0 var(--spectrum-textfield-quiet-texticon-border-size) 0;
-    resize: none;
-    overflow-y: hidden;
+    opacity: 0;
 }
 
 .icon,
@@ -108,24 +84,26 @@ textarea {
             ease-in-out;
 }
 
-:host([multiline][focused]:not([quiet])) textarea,
-:host([multiline][focused]:not([quiet]):hover) textarea {
-    box-shadow: 0 0 0
-        calc(
-            0px +
-                var(
-                    --spectrum-textfield-m-texticon-focus-ring-border-width,
-                    var(--spectrum-alias-component-focusring-size)
-                )
-        )
-        var(
-            --spectrum-textfield-m-textonly-focus-ring-border-color-key-focus,
-            var(--spectrum-alias-focus-ring-color)
-        ) !important;
-}
-
 :host([multiline]:not([quiet])) #textfield:after {
     box-shadow: none;
+}
+
+:host([multiline][rows]) .input {
+    block-size: auto;
+    resize: none;
+}
+
+:host([multiline][rows='1']) .input {
+    min-block-size: auto;
+}
+
+:host([grows]:not([rows])) .input:not(#sizer) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    resize: none;
+    overflow: hidden;
 }
 
 /* restore specificity from the original Spectrum CSS */
@@ -140,5 +118,17 @@ textarea {
     border-color: var(
         --spectrum-textfield-m-quiet-texticon-border-color-disabled,
         var(--spectrum-alias-input-border-color-quiet-disabled)
+    );
+}
+
+/* :not selector not working with regex for process-spectrum so had to override here */
+:host([disabled]) #textfield .icon.icon-search,
+:host([readonly]) #textfield .icon.icon-search {
+    color: var(
+        --highcontrast-textfield-text-color-disabled,
+        var(
+            --mod-textfield-text-color-disabled,
+            var(--spectrum-textfield-text-color-disabled)
+        )
     );
 }

@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
@@ -78,14 +79,14 @@ export class TableHeadCell extends SpectrumElement {
     protected override render(): TemplateResult {
         const visiblySorted = this.sortable && !!this.sortDirection;
         return html`
-            <slot></slot>
             ${visiblySorted
                 ? html`
                       <sp-icon-arrow100
                           class="sortedIcon spectrum-UIIcon-ArrowDown100"
                       ></sp-icon-arrow100>
                   `
-                : html``}
+                : nothing}
+            <slot></slot>
         `;
     }
 

@@ -23,7 +23,19 @@ export default {
 const thumbnail = ({
     size,
 }: {
-    size: 'xxs' | 'xs' | 's' | 'm' | 'l';
+    size:
+        | '50'
+        | '75'
+        | '100'
+        | '200'
+        | '300'
+        | '400'
+        | '500'
+        | '600'
+        | '700'
+        | '800'
+        | '900'
+        | '1000';
 }): TemplateResult => {
     return html`
         <sp-thumbnail size=${size}>
@@ -32,12 +44,26 @@ const thumbnail = ({
     `;
 };
 
-export const XXS = (): TemplateResult => thumbnail({ size: 'xxs' });
+export const size50 = (): TemplateResult => thumbnail({ size: '50' });
 
-export const XS = (): TemplateResult => thumbnail({ size: 'xs' });
+export const size75 = (): TemplateResult => thumbnail({ size: '75' });
 
-export const s = (): TemplateResult => thumbnail({ size: 's' });
+export const size100 = (): TemplateResult => thumbnail({ size: '100' });
 
-export const m = (): TemplateResult => thumbnail({ size: 'm' });
+export const size200 = (): TemplateResult => thumbnail({ size: '200' });
 
-export const l = (): TemplateResult => thumbnail({ size: 'l' });
+export const size300 = (): TemplateResult => thumbnail({ size: '300' });
+
+export const size400 = (): TemplateResult => thumbnail({ size: '400' });
+
+export const size500 = (): TemplateResult => thumbnail({ size: '500' });
+
+export const size600 = (): TemplateResult => thumbnail({ size: '600' });
+
+export const size700 = (): TemplateResult => thumbnail({ size: '700' });
+
+export const size800 = (): TemplateResult => thumbnail({ size: '800' });
+
+export const size900 = (): TemplateResult => thumbnail({ size: '900' });
+
+export const size1000 = (): TemplateResult => thumbnail({ size: '1000' });

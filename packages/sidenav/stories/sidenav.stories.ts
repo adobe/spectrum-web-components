@@ -29,7 +29,7 @@ export const Default = ({
     onChange: () => void;
 }): TemplateResult => {
     return html`
-        <sp-sidenav @change=${onChange} value="Section 2">
+        <sp-sidenav @change=${onChange} value="Section 1">
             <sp-sidenav-item
                 value="Section 1"
                 label="Section 1"
@@ -39,7 +39,7 @@ export const Default = ({
                 value="Section 2"
                 label="Section 2"
             ></sp-sidenav-item>
-            <sp-sidenav-heading label="CATEGORY 1">
+            <sp-sidenav-heading label="Category 1">
                 <sp-sidenav-item
                     value="Section 3"
                     label="Section 3"
@@ -84,19 +84,52 @@ export const Multilevel = ({
 
 Multilevel.storyName = 'Multi-level';
 
+export const MultilevelSlotted = ({
+    onChange,
+}: {
+    onChange: () => void;
+}): TemplateResult => {
+    return html`
+        <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
+            <sp-sidenav-item value="foo">foo</sp-sidenav-item>
+            <sp-sidenav-item value="baz">
+                baz
+                <sp-sidenav-item value="2.1">2.1</sp-sidenav-item>
+                <sp-sidenav-item value="2.2">2.2</sp-sidenav-item>
+                <sp-sidenav-item value="2.3">
+                    2.3
+                    <sp-sidenav-item value="2.3.1">2.3.1</sp-sidenav-item>
+                    <sp-sidenav-item disabled value="2.3.2">
+                        2.3.2
+                    </sp-sidenav-item>
+                </sp-sidenav-item>
+            </sp-sidenav-item>
+            <sp-sidenav-item value="test">test</sp-sidenav-item>
+            <sp-sidenav-item value="hi">hi</sp-sidenav-item>
+        </sp-sidenav>
+    `;
+};
+
+MultilevelSlotted.storyName = 'Multi-level Slotted';
+
 export const levelsAndDisabled = (): TemplateResult => {
     return html`
         <sp-sidenav>
-            <sp-sidenav-heading label="CATEGORY 1">
-                <sp-sidenav-item value="Section 1">Section 1</sp-sidenav-item>
-                <sp-sidenav-item value="Section 2" disabled>
-                    Section 2
-                </sp-sidenav-item>
-                <sp-sidenav-item value="Section 3" expanded>
-                    Section 3
-                    <sp-sidenav-item value="Section 3a">
-                        Section 3a
-                    </sp-sidenav-item>
+            <sp-sidenav-heading label="Category 1">
+                <sp-sidenav-item
+                    value="Section 1"
+                    label="Section 1"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 2"
+                    label="Section 2"
+                    disabled
+                ></sp-sidenav-item>
+                <sp-sidenav-item value="Section 3" label="Section 3" expanded>
+                    <sp-sidenav-item
+                        value="Section 3a"
+                        label="Section 3a"
+                    ></sp-sidenav-item>
                 </sp-sidenav-item>
             </sp-sidenav-heading>
         </sp-sidenav>
@@ -106,7 +139,7 @@ export const levelsAndDisabled = (): TemplateResult => {
 export const manageTabIndex = (): TemplateResult => {
     return html`
         <sp-sidenav manage-tab-index>
-            <sp-sidenav-heading label="CATEGORY 1">
+            <sp-sidenav-heading label="Category 1">
                 <sp-sidenav-item
                     value="Section 0"
                     label="Section 0"
@@ -139,7 +172,7 @@ export const Hrefs = ({
 }): TemplateResult => {
     return html`
         <sp-sidenav @change=${onChange} value="current">
-            <sp-sidenav-heading label="GITHUB">
+            <sp-sidenav-heading label="Github">
                 <sp-sidenav-item
                     href=${window.location.href}
                     label="Current"

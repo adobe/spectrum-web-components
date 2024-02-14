@@ -3,6 +3,123 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+### Features
+
+-   **overlay:** ship Overlay API v2 ([67b5d1b](https://github.com/adobe/spectrum-web-components/commit/67b5d1b02e88dcb5b0b79b5a6c5ead92ad1a5aca))
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+### Bug Fixes
+
+-   **textfield:** add support for [grows] when [multiline] ([3b306d4](https://github.com/adobe/spectrum-web-components/commit/3b306d434d366ae826ecf7d47e20f7780eb74a28))
+
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.33.1](https://github.com/adobe/spectrum-web-components/compare/v0.33.0...v0.33.1) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Bug Fixes
+
+-   **action-group:** update application/management of "role" on group and buttons ([533873b](https://github.com/adobe/spectrum-web-components/commit/533873be83da30e032fbb89a993f5c4e0c1c8086)), closes [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221)
+
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+-   **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
+-   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+-   remove duplicate box-sizing style from storybook-decorator ([3f45dd7](https://github.com/adobe/spectrum-web-components/commit/3f45dd7fbdca6ffd4d811fd4805ad24b885ef09f))
+-   **story-decorator:** ensure reduce motion application in overlays ([3f1bc23](https://github.com/adobe/spectrum-web-components/commit/3f1bc23bb2e87dedd285915c034ea497a0271d07))
+-   **story-decorator:** use sp-field-label ([5992c98](https://github.com/adobe/spectrum-web-components/commit/5992c98024bbb9476a18c4a69a024968c05cac17))
+-   use typescript@^4.5 for "native" document.fonts typings ([a3e4aea](https://github.com/adobe/spectrum-web-components/commit/a3e4aea802c796e9029b2bc32f58639954db831b))
+
+### Features
+
+-   add support for Spectrum Express ([12bfe99](https://github.com/adobe/spectrum-web-components/commit/12bfe99570122514fa88ce1a4e4a1591bcc5aa70))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
+-   **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
+-   **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/adobe/spectrum-web-components/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
+-   **story-decorator:** ensure version ([dd39772](https://github.com/adobe/spectrum-web-components/commit/dd39772af363051c35126c369bb5a33a0c7853d9))
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.8.5...@spectrum-web-components/story-decorator@0.8.6) (2023-04-24)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
 ## [0.8.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.8.4...@spectrum-web-components/story-decorator@0.8.5) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

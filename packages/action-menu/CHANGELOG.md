@@ -3,6 +3,187 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **overlay:** clean position data on close ([edac590](https://github.com/adobe/spectrum-web-components/commit/edac59003ecc1af8dc4aa91c00c9593e8792e63f))
+-   **picker,action-menu,split-button:** update interaction model ([#3935](https://github.com/adobe/spectrum-web-components/issues/3935)) ([bae7d52](https://github.com/adobe/spectrum-web-components/commit/bae7d527e513d2588267c62cc70f5e1c1289f903))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **overlay:** move closed overlays to "display: none" ([fc0278b](https://github.com/adobe/spectrum-web-components/commit/fc0278b917759ed58c3ac62a6e962633914481c0))
+-   **picker:** force close slotted Tooltip elements with disabled when Menu openes ([82c8f12](https://github.com/adobe/spectrum-web-components/commit/82c8f129d8a378f51ca083c4020a15b3cbde1fe7))
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **menu:** support navigating to and selecting Menu Items in Menu Groups ([8469ab2](https://github.com/adobe/spectrum-web-components/commit/8469ab235bf4049b7ce9fca008494df1cde012a7))
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **action-menu:** allow tray to display full width ([31415e4](https://github.com/adobe/spectrum-web-components/commit/31415e4ebe6b5369775074e52ed92fcd6b70c932))
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+### Bug Fixes
+
+-   **menu:** allow `change` events to be direct ([#3689](https://github.com/adobe/spectrum-web-components/issues/3689)) ([b2cd3da](https://github.com/adobe/spectrum-web-components/commit/b2cd3da1384c577f27f604c42847953bb7121cb2))
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **action-menu:** stack a "label-only" slot on top of the others to allow no icon menu buttons ([6b5817d](https://github.com/adobe/spectrum-web-components/commit/6b5817d34ff664ce0855f84165306731875e48a3))
+-   **menu:** allow Menu elements to be controlled ([74ed7fb](https://github.com/adobe/spectrum-web-components/commit/74ed7fb7d593199c333392f89c4827fcb8248cab))
+-   **picker,split-button:** include "tooltip" slot in the main button ([699b8af](https://github.com/adobe/spectrum-web-components/commit/699b8af2612f2dab8f7c65b9c105844f6feaa6ed))
+
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+### Bug Fixes
+
+-   **action-menu,split-button:** ensure toggling the Menu closed completes ([2dd0f98](https://github.com/adobe/spectrum-web-components/commit/2dd0f9871a4d76a27f5d432ea2df230ab99cbdd1))
+-   **action-menu:** added static attribute support ([#3573](https://github.com/adobe/spectrum-web-components/issues/3573)) ([25889a8](https://github.com/adobe/spectrum-web-components/commit/25889a808d6dcf11779d5c716f1b7522050ddf2b))
+
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+### Features
+
+-   **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
+
+### Performance Improvements
+
+-   make lots of things lazy ([b8fa3ad](https://github.com/adobe/spectrum-web-components/commit/b8fa3ada062bf54bbb42e76ab156c716d5820c7c))
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+### Bug Fixes
+
+-   **action-menu:** add a slot for Tooltip content ([#3488](https://github.com/adobe/spectrum-web-components/issues/3488)) ([23cef3a](https://github.com/adobe/spectrum-web-components/commit/23cef3ad0393055a9285a0292667e657bd813c59))
+
+### Features
+
+-   **menu:** convert to core tokens ([#3254](https://github.com/adobe/spectrum-web-components/issues/3254)) ([da43540](https://github.com/adobe/spectrum-web-components/commit/da43540abcea3db75bf145194be800b61153ebe0))
+
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **action-button,action-menu,picker,split-button:** expand and update application of aria-\* attributes ([52c0156](https://github.com/adobe/spectrum-web-components/commit/52c015636d42f2baf1524446a0db9d5e5cfeb689))
+
+## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.33.1](https://github.com/adobe/spectrum-web-components/compare/v0.33.0...v0.33.1) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+-   **action-menu:** apply slot text observer pattern ([bbe6bb5](https://github.com/adobe/spectrum-web-components/commit/bbe6bb51caf62c51cff40e2e315c043f31bc6d00))
+-   **action-menu:** call super.firstUpdated for focus control ([88bad85](https://github.com/adobe/spectrum-web-components/commit/88bad85f2e6dbd5820bebd20f5d920704b7710d7))
+-   **action-menu:** fix 2510, unable to control top-level action-menu selection ([c9198c2](https://github.com/adobe/spectrum-web-components/commit/c9198c29c0f2f9be83d9e153147e5634c6c00b06))
+-   **action-menu:** never set item selected values when selects is undefined ([5237fdb](https://github.com/adobe/spectrum-web-components/commit/5237fdb30694364934e1cd30f3d9cf82efa2c5c5))
+-   **action-menu:** provide action menu size to action button ([b963f57](https://github.com/adobe/spectrum-web-components/commit/b963f5799ebd4ef8bba61cc57d6da668d2c8bf89))
+-   **action-menu:** spectrum adherence update ([6eb1860](https://github.com/adobe/spectrum-web-components/commit/6eb1860ca613a24c262a6551b221b409e4a28afc))
+-   **action-menu:** stop stripping selected state from submenu items ([968d1f2](https://github.com/adobe/spectrum-web-components/commit/968d1f26e4f075ad20dbaba07baf73d5a0c4d55c))
+-   analyze type errors, and add deprecated syntax tests ([b7e67a1](https://github.com/adobe/spectrum-web-components/commit/b7e67a103d5a3bb355a8ee4682ef9621d8d59872))
+-   code review feedback ([23b84fc](https://github.com/adobe/spectrum-web-components/commit/23b84fc4c3244716325e0be7abadab6c476d834a))
+-   css fixes for action-menu ([8c804c8](https://github.com/adobe/spectrum-web-components/commit/8c804c808695a889aebd6a2170aa9d42f904187a))
+-   ensure Action Menu Item with [href] close the menu ([6b3d87f](https://github.com/adobe/spectrum-web-components/commit/6b3d87f8c922df782432bca3ef93d21637bad78b))
+-   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   **menu:** ensure that Groups in Action Menus are rendered with the correct width ([a996a10](https://github.com/adobe/spectrum-web-components/commit/a996a1078bd3a00d3025f0eeadb39330bafdc26d))
+-   missed ActionMenu for type changes ([fa66d56](https://github.com/adobe/spectrum-web-components/commit/fa66d56ea2296270bcba87e62d12a7837d1c3417))
+-   normalize "event" and "error" argument names ([8d382cd](https://github.com/adobe/spectrum-web-components/commit/8d382cdac98282c886f23c4a8d6cf4910c4a606c))
+-   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+-   remove unused dependencies and imports ([fad4c9b](https://github.com/adobe/spectrum-web-components/commit/fad4c9b3316362b9285a240f64517b80b453835b))
+-   **shared:** fixes focus-visible types in test ([0dc7d68](https://github.com/adobe/spectrum-web-components/commit/0dc7d6822820bd6fdb53bc21f37b4f8eb55d2bfd))
+-   **shared:** further tweaks for test types ([ee45173](https://github.com/adobe/spectrum-web-components/commit/ee45173aec7d755b9fb7af2ef1cd93641de00117))
+-   slot documentation ([0ebd260](https://github.com/adobe/spectrum-web-components/commit/0ebd2609bad9e95ee24428cb2fa666d23bdb85f8))
+-   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-menu:** allow icon customization ([cffd49a](https://github.com/adobe/spectrum-web-components/commit/cffd49ac8f81be77b9bd378e3e249157a22efa74))
+-   **action-menu:** remove menu selection by default ([54d636f](https://github.com/adobe/spectrum-web-components/commit/54d636f0206e8fa7dd67a465de643e6dd9fc29cf))
+-   **action-menu:** update spectrum css input ([62a5065](https://github.com/adobe/spectrum-web-components/commit/62a50651a3c797598f8d76330e87f2824cdabbc5))
+-   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+-   **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/adobe/spectrum-web-components/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
+-   **dropdown:** open menu UI with overlay system ([9811eeb](https://github.com/adobe/spectrum-web-components/commit/9811eebc33d892da46752981f5bfa49c42ab1192))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   sets action-menu quiet to false by default, fixes [#3040](https://github.com/adobe/spectrum-web-components/issues/3040) ([8414cab](https://github.com/adobe/spectrum-web-components/commit/8414cab2ef916be40be9f624f485fb02184eec2b))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   track the associated Spectrum CSS package ([86b1be5](https://github.com/adobe/spectrum-web-components/commit/86b1be5d1d2b6e870049a8642dabc3520c359716))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/adobe/spectrum-web-components/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+### Reverts
+
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+## [0.16.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.16.1...@spectrum-web-components/action-menu@0.16.2) (2023-04-24)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
 ## [0.16.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.16.0...@spectrum-web-components/action-menu@0.16.1) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

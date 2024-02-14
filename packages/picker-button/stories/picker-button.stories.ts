@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { argTypes, StoryArgs, Template } from './index.js';
-import '../sp-picker-button.js';
+import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
 
@@ -29,7 +29,10 @@ active.args = { active: true };
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
     icon: html`
-        <sp-icon-add slot="icon"></sp-icon-add>
+        <sp-icon-add
+            slot="icon"
+            class="spectrum-PickerButton-icon spectrum-Icon"
+        ></sp-icon-add>
     `,
 };
 

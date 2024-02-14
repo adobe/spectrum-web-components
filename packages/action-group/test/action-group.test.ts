@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -20,7 +21,11 @@ import {
 
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import {
+    LitElement,
+    SpectrumElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionGroup } from '@spectrum-web-components/action-group';
@@ -35,6 +40,9 @@ import {
 } from '../../../test/testing-helpers';
 import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/action-group/sp-action-group.js';
+import { controlled } from '../stories/action-group-tooltip.stories.js';
+import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -143,8 +151,51 @@ describe('ActionGroup', () => {
 
         await expect(el).to.be.accessible();
         expect(el.getAttribute('aria-label')).to.equal('Default Group');
-        expect(el.hasAttribute('role')).to.be.false;
+        expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('button');
+    });
+    it('applies `static` attribute to its children', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group static="white">
+                    <sp-action-button id="first">First</sp-action-button>
+                    <sp-action-button id="second">Second</sp-action-button>
+                </sp-action-group>
+            `
+        );
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const secondButton = el.querySelector('#second') as ActionButton;
+
+        await elementUpdated(el);
+
+        expect(firstButton.static).to.equal('white');
+        expect(secondButton.static).to.equal('white');
+
+        el.static = undefined;
+
+        await elementUpdated(el);
+
+        expect(firstButton.static).to.be.undefined;
+        expect(secondButton.static).to.be.undefined;
+    });
+    it('manages "label"', async () => {
+        const testLabel = 'Testable action group';
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group label=${testLabel}>
+                    <sp-action-button id="first">First</sp-action-button>
+                    <sp-action-button id="second">Second</sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        expect(el.getAttribute('aria-label')).to.equal(testLabel);
+
+        el.label = '';
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
     });
     it('applies `quiet` attribute to its children', async () => {
         const el = await fixture<ActionGroup>(
@@ -318,7 +369,7 @@ describe('ActionGroup', () => {
         expect(el.getAttribute('aria-label')).to.equal(
             'Selects Multiple Group'
         );
-        expect(el.getAttribute('role')).to.equal('group');
+        expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('checkbox');
     });
     it('loads [selects="multiple"] action-group w/ selection accessibly', async () => {
@@ -481,6 +532,46 @@ describe('ActionGroup', () => {
                 el.selected.length === 2 &&
                 el.selected.includes('Second') &&
                 el.selected.includes('Third'),
+            'Updates value of `selected`'
+        );
+    });
+    it('consumes descendant `change` events when `[selects]`', async () => {
+        const changeSpy = spy();
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    @change=${() => changeSpy()}
+                    label="Selects Single Group"
+                    selects="single"
+                >
+                    <sp-action-button toggles value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button toggles value="second" selected>
+                        Second
+                    </sp-action-button>
+                    <sp-action-button toggles value="third" class="third">
+                        Third
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+        const thirdElement = el.querySelector('.third') as ActionButton;
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected.includes('second'));
+        expect(changeSpy.callCount).to.equal(0);
+
+        thirdElement.click();
+
+        await elementUpdated(el);
+
+        expect(thirdElement.selected, 'third child selected').to.be.true;
+        expect(changeSpy.callCount).to.equal(1);
+
+        await waitUntil(
+            () => el.selected.length === 1 && el.selected.includes('third'),
             'Updates value of `selected`'
         );
     });
@@ -684,6 +775,49 @@ describe('ActionGroup', () => {
         expect(secondButton.selected, 'second button selected').to.be.true;
     });
 
+    it('Clicking button event should bubble up from inner label to outer button element', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects Multiple Group"
+                    selects="multiple"
+                    .selected=${['first', 'second']}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(2);
+
+        const firstButtonEl = el.querySelector('.first') as ActionButton;
+        const firstSpanEl = firstButtonEl.shadowRoot.querySelector(
+            '#label'
+        ) as HTMLSpanElement;
+        const secondButtonEl = el.querySelector('.second') as ActionButton;
+
+        expect(firstButtonEl.selected, 'first button selected').to.be.true;
+        expect(secondButtonEl.selected, 'second button selected').to.be.true;
+
+        firstSpanEl.click(); // clicking inner span bubbles up and fires outer button click
+        await elementUpdated(el);
+
+        expect(firstButtonEl.selected, 'first button selected').to.be.false;
+        expect(secondButtonEl.selected, 'second button selected').to.be.true;
+
+        firstButtonEl.click(); // clicking outer action-button element fires own click event
+        await elementUpdated(el);
+
+        expect(firstButtonEl.selected, 'first button selected').to.be.true;
+        expect(secondButtonEl.selected, 'second button selected').to.be.true;
+    });
+
     it('only selects user-passed buttons if present in action-group while [selects="multiple"]', async () => {
         const el = await multipleSelectedActionGroup(['second', 'fourth']);
 
@@ -746,20 +880,54 @@ describe('ActionGroup', () => {
         );
 
         await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.selected.length).to.equal(2);
 
         const firstButton = el.querySelector('.first') as ActionButton;
         expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(firstButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            firstButton.getAttribute('aria-pressed'),
+            'first button aria-pressed'
+        ).to.eq('true');
+        expect(firstButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
 
         const secondButton = el.querySelector('.second') as ActionButton;
         expect(secondButton.selected, 'second button selected').to.be.true;
+        expect(secondButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            secondButton.getAttribute('aria-pressed'),
+            'second button aria-pressed'
+        ).to.eq('true');
+        expect(secondButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
 
         firstButton.click();
         await elementUpdated(el);
 
         expect(el.selected.length).to.equal(2);
         expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(firstButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            firstButton.getAttribute('aria-pressed'),
+            'first button aria-pressed'
+        ).to.eq('true');
+        expect(firstButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
+
         expect(secondButton.selected, 'second button selected').to.be.true;
+        expect(secondButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            secondButton.getAttribute('aria-pressed'),
+            'second button aria-pressed'
+        ).to.eq('true');
+        expect(secondButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
     });
 
     it('will not change .selected state if event is prevented while [selects="multiple"]', async () => {
@@ -889,8 +1057,32 @@ describe('ActionGroup', () => {
         expect(secondElement.selected, 'second child not selected').to.be.false;
     });
 
-    it('maintains a `size` attribute', async () => {
-        const el = await fixture<ActionGroup>(
+    it('manages a `size` attribute', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-group size="xl">
+                    <sp-action-button>Button</sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        const button = el.querySelector('sp-action-button') as ActionButton;
+
+        await elementUpdated(el);
+        expect(el.size).to.equal('xl');
+        expect(button.size).to.equal('xl');
+        expect(el.getAttribute('size')).to.equal('xl');
+        expect(button.getAttribute('size')).to.equal('xl');
+        el.removeAttribute('size');
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
+        expect(button.size).to.equal('m');
+        expect(button.getAttribute('size')).to.equal('m');
+    });
+
+    it('does not apply a default `size` attribute', async () => {
+        const el = await fixture<ActionButton>(
             html`
                 <sp-action-group>
                     <sp-action-button>Button</sp-action-button>
@@ -898,13 +1090,13 @@ describe('ActionGroup', () => {
             `
         );
 
+        const button = el.querySelector('sp-action-button') as ActionButton;
+
         await elementUpdated(el);
         expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
-        el.removeAttribute('size');
-        await elementUpdated(el);
-        expect(el.size).to.equal('m');
-        expect(el.getAttribute('size')).to.equal('m');
+        expect(button.size).to.equal('m');
+        expect(el.hasAttribute('size')).to.be.false;
+        expect(button.hasAttribute('size')).to.be.false;
     });
 
     it('will accept selected as a JSON string', async () => {
@@ -934,6 +1126,36 @@ describe('ActionGroup', () => {
         expect(secondElement.selected, 'second child selected').to.be.false;
     });
 
+    it('accepts role attribute override', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group role="group">
+                    <sp-action-button>Button</sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        // with a role of group, the role should not be overridden
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('group');
+
+        // setting selects to single should override role to radiogroup
+        el.setAttribute('selects', 'single');
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('radiogroup');
+
+        // setting selects to multiple should override role to toolbar
+        el.setAttribute('selects', 'multiple');
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('toolbar');
+
+        // by default, role should be toolbar
+        el.removeAttribute('role');
+        el.removeAttribute('selects');
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('toolbar');
+    });
+
     const acceptKeyboardInput = async (el: ActionGroup): Promise<void> => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
@@ -941,6 +1163,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Second');
 
+        thirdElement.focus();
         thirdElement.click();
 
         await elementUpdated(el);
@@ -1046,6 +1269,7 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
         expect(el.selected.length).to.equal(0);
 
+        thirdElement.focus();
         thirdElement.click();
 
         await elementUpdated(el);
@@ -1067,5 +1291,36 @@ describe('ActionGroup', () => {
 
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
+    });
+    it('processes `selects` correctly when mutations occur (because Overlays/Tooltips)', async () => {
+        const test = await fixture<SpectrumElement>(controlled());
+        const actionButtons = [
+            ...test.shadowRoot.querySelectorAll('sp-action-button'),
+        ] as ActionButton[];
+
+        expect(actionButtons[0].selected).to.be.true;
+        expect(actionButtons[1].selected).to.be.false;
+        expect(actionButtons[2].selected).to.be.false;
+
+        const changeSpy = spy();
+        test.addEventListener('change', () => changeSpy());
+        const rect = actionButtons[1].getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await aTimeout(500);
+
+        expect(actionButtons[0].selected).to.be.false;
+        expect(actionButtons[1].selected).to.be.true;
+        expect(actionButtons[2].selected).to.be.false;
     });
 });

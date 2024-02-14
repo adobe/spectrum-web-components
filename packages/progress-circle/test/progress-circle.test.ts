@@ -47,6 +47,17 @@ describe('ProgressCircle', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('accepts label from `slot`', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle role="progressbar">
+                Label From Slot
+            </sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-label')).to.equal('Label From Slot');
+    });
     it('accepts user `role`', async () => {
         const el = await fixture<ProgressCircle>(html`
             <sp-progress-circle

@@ -10,20 +10,53 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-search.css';
+@import url('./spectrum-search.css');
 
-:host([dir='ltr']) {
-    --spectrum-textfield-texticon-padding-right: var(
+:host {
+    --mod-textfield-spacing-inline: var(
         --spectrum-alias-infieldbutton-full-height-m
     );
-}
-
-:host([dir='rtl']) {
-    --spectrum-textfield-texticon-padding-left: var(
-        --spectrum-alias-infieldbutton-full-height-m
-    );
+    --mod-clear-button-padding: 0;
 }
 
 input::-webkit-search-cancel-button {
     display: none;
+}
+
+:host([size='xs']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
+}
+
+:host([size='s']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
+}
+
+:host([size='m']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
+}
+
+:host([size='l']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
+}
+
+:host([size='xl']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
+}
+
+:host([size='xxl']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
+}
+
+/**
+ * While overriding the need for `size="m"` in SWC, these values correct the
+ * cascade when attempting to delivery the Clear Button within the Search UI.
+ **/
+@media (forced-colors: active) {
+    sp-clear-button {
+        --spectrum-clearbutton-fill-background-color: transparent;
+        --spectrum-clearbutton-fill-background-color-disabled: transparent;
+        --spectrum-clearbutton-fill-background-color-down: transparent;
+        --spectrum-clearbutton-fill-background-color-hover: transparent;
+        --spectrum-clearbutton-fill-background-color-key-focus: transparent;
+    }
 }

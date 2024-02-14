@@ -19,9 +19,11 @@ import {
     queryAssignedNodes,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { Menu } from './Menu.js';
-import '../sp-menu.js';
+// Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+import '@spectrum-web-components/menu/sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
 /**
@@ -35,17 +37,12 @@ export class MenuGroup extends Menu {
         return [...super.styles, menuGroupStyles];
     }
 
-    private static instances = 0;
+    private headerId = '';
 
-    private headerId!: string;
-
-    public constructor() {
-        super();
-        MenuGroup.instances += 1;
-        this.headerId = `sp-menu-group-label-${MenuGroup.instances}`;
-    }
-
-    @queryAssignedNodes('header', true)
+    @queryAssignedNodes({
+        slot: 'header',
+        flatten: true,
+    })
     private headerElements!: NodeListOf<HTMLElement>;
 
     @state()
@@ -71,6 +68,8 @@ export class MenuGroup extends Menu {
                 this.headerElement.removeAttribute('id');
             }
             if (headerElement) {
+                this.headerId =
+                    this.headerId || `sp-menu-group-label-${randomID()}`;
                 const headerId = headerElement.id || this.headerId;
                 if (!headerElement.id) {
                     headerElement.id = headerId;
@@ -85,16 +84,10 @@ export class MenuGroup extends Menu {
 
     public override render(): TemplateResult {
         return html`
-            <span
-                class="header"
-                aria-hidden="true"
-                ?hidden=${!this.headerElement}
-            >
+            <span class="header" ?hidden=${!this.headerElement}>
                 <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
-            <sp-menu role="none">
-                <slot></slot>
-            </sp-menu>
+            <sp-menu ignore>${this.renderMenuItemSlot()}</sp-menu>
         `;
     }
 }

@@ -52,13 +52,14 @@ const config = {
                         ['spectrum-ActionButton--staticWhite', 'white'],
                         ['spectrum-ActionButton--staticBlack', 'black'],
                     ],
-                    'variant'
+                    'static'
                 ),
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-ActionButton--sizeM'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ActionButton--sizeXS', 'xs'],
                         ['spectrum-ActionButton--sizeS', 's'],
-                        ['spectrum-ActionButton--sizeM', 'm'],
                         ['spectrum-ActionButton--sizeL', 'l'],
                         ['spectrum-ActionButton--sizeXL', 'xl'],
                     ],

@@ -21,6 +21,7 @@ import {
     NumberFormatOptions,
     NumberFormatter,
 } from '@internationalized/number';
+import { HandleController } from './HandleController.js';
 
 export type HandleMin = number | 'previous';
 export type HandleMax = number | 'next';
@@ -29,13 +30,6 @@ export type HandleValues = {
     name: string;
     value: number;
 }[];
-
-export interface Controller {
-    inputForHandle(handle: SliderHandle): HTMLInputElement | undefined;
-    requestUpdate(): void;
-    setValueFromHandle(handle: SliderHandle): void;
-    handleHasChanged(handle: SliderHandle): void;
-}
 
 export type SliderNormalization = {
     toNormalized: (value: number, min: number, max: number) => number;
@@ -78,7 +72,7 @@ const MaxConverter = {
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
 export class SliderHandle extends Focusable {
-    public handleController?: Controller;
+    public handleController?: HandleController;
 
     public get handleName(): string {
         return this.name;
@@ -138,6 +132,7 @@ export class SliderHandle extends Focusable {
             if (this.value == null) {
                 if (!isNaN(max) && !isNaN(min)) {
                     this.value = max < min ? min : min + (max - min) / 2;
+                    this.handleController?.hostUpdate();
                 }
             }
         }

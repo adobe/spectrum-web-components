@@ -3,6 +3,113 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+-   opacity checkerboard inclusion order ([#3651](https://github.com/adobe/spectrum-web-components/issues/3651)) ([4f417dc](https://github.com/adobe/spectrum-web-components/commit/4f417dc046d7d80d3c32e6286c71ee0311cf8a98))
+
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+### Bug Fixes
+
+-   **color-loupe:** hide svg from screen readers ([#3318](https://github.com/adobe/spectrum-web-components/issues/3318)) ([01e75b7](https://github.com/adobe/spectrum-web-components/commit/01e75b7f0dbf1096976c290ad360534847781fee))
+
+## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Bug Fixes
+
+-   **color-handle,color-loupe:** accept updated CSS token names ([8c28f6d](https://github.com/adobe/spectrum-web-components/commit/8c28f6d002973bf7398f134ca4e73be8fee967dd))
+
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   **color-loupe:** add color-loupe pattern ([e2f0d15](https://github.com/adobe/spectrum-web-components/commit/e2f0d159714cc7998f15d9913b38128486f8b7fb))
+-   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.8...@spectrum-web-components/color-loupe@0.5.0) (2023-04-24)
+
+### Features
+
+-   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+
 ## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.7...@spectrum-web-components/color-loupe@0.4.8) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/color-loupe

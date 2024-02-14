@@ -169,4 +169,47 @@ describe('Menu item', () => {
         expect(el.value).to.equal('Selected Text');
         expect(el.hasAttribute('value')).to.be.false;
     });
+    it('assigns content to the description slot', async () => {
+        const el = await fixture<MenuItem>(
+            html`
+                <sp-menu-item selected>
+                    Menu Item Text
+                    <span slot="description">
+                        Description for the Menu-Item
+                    </span>
+                </sp-menu-item>
+            `
+        );
+        const descriptionElement = el.querySelector('span') as HTMLElement;
+        expect(descriptionElement.assignedSlot).to.not.be.null;
+    });
+    it('acualizes a submenu', async () => {
+        const test = await fixture<Menu>(
+            html`
+                <sp-menu>
+                    <sp-menu-item selected>Selected</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        const el = test.querySelector('sp-menu-item') as MenuItem;
+
+        expect(el.hasSubmenu).to.be.false;
+
+        const submenuItem = document.createElement('sp-menu-item');
+        const submenu = document.createElement('sp-menu');
+        submenuItem.textContent = 'Test Submenu Item';
+        submenu.slot = 'submenu';
+        submenu.append(submenuItem);
+
+        el.append(submenu);
+        await elementUpdated(el);
+
+        expect(el.hasSubmenu).to.be.true;
+
+        submenu.remove();
+        await elementUpdated(el);
+
+        expect(el.hasSubmenu).to.be.false;
+    });
 });

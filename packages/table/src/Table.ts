@@ -13,15 +13,17 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     render,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import '../sp-table-row.js';
-import '../sp-table-checkbox-cell.js';
-import '../sp-table-body.js';
+// Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table.css.js';
 import { TableBody } from './TableBody.js';
@@ -35,11 +37,10 @@ import {
     virtualizerRef,
 } from '@lit-labs/virtualizer/virtualize.js';
 import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
-
-interface Range {
-    first: number;
-    last: number;
-}
+import {
+    RangeChangedEvent,
+    VisibilityChangedEvent,
+} from '@lit-labs/virtualizer/events.js';
 
 export enum RowType {
     ITEM = 0,
@@ -50,19 +51,6 @@ export interface TableItem extends Record<string, unknown> {
     _$rowType$?: RowType;
 }
 
-export class RangeChangedEvent extends Event {
-    static eventName = 'rangeChanged';
-
-    first: number;
-    last: number;
-
-    constructor(range: Range) {
-        super(RangeChangedEvent.eventName, { bubbles: true });
-        this.first = range.first;
-        this.last = range.last;
-    }
-}
-
 /**
  * @element sp-table
  *
@@ -71,8 +59,8 @@ export class RangeChangedEvent extends Event {
  */
 
 export class Table extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm'],
-    defaultSize: 'm',
+    validSizes: ['s', 'm', 'l', 'xl'],
+    noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -108,7 +96,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                                   ?checked=${selected}
                               ></sp-table-checkbox-cell>
                           `
-                        : html``}
+                        : nothing}
                     ${fn(item, index)}
                 </sp-table-row>
             `;
@@ -156,6 +144,24 @@ export class Table extends SizedMixin(SpectrumElement, {
      */
     @property({ type: Boolean, reflect: true })
     public scroller = false;
+
+    /**
+     * Deliver the Table with additional visual emphasis to selected rows.
+     */
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
+    /**
+     * Display with "quiet" variant styles.
+     */
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
+    /**
+     * Changes the spacing around table cell content.
+     */
+    @property({ type: String, reflect: true })
+    public density?: 'compact' | 'spacious';
 
     private tableBody?: TableBody;
 
@@ -227,6 +233,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     protected manageSelects(): void {
         const checkboxes = this.querySelectorAll('sp-table-checkbox-cell');
         const checkbox = document.createElement('sp-table-checkbox-cell');
+
         if (!!this.selects) {
             let allSelected = false;
             if (this.isVirtualized) {
@@ -236,9 +243,11 @@ export class Table extends SizedMixin(SpectrumElement, {
             } else {
                 this.tableRows.forEach((row) => {
                     row.selected = this.selectedSet.has(row.value);
+                    // Create and initialize checkboxes in all rows within the table body.
                     if (!row.querySelector(':scope > sp-table-checkbox-cell')) {
                         const clonedCheckbox =
                             checkbox.cloneNode() as TableCheckboxCell;
+                        checkbox.emphasized = this.emphasized;
                         row.insertAdjacentElement('afterbegin', clonedCheckbox);
                         checkbox.checked = row.selected;
                     }
@@ -246,17 +255,21 @@ export class Table extends SizedMixin(SpectrumElement, {
                 allSelected = this.selected.length === this.tableRows.length;
             }
 
+            // Create and initialize table head checkbox cell.
             if (!this.tableHeadCheckboxCell) {
                 this.tableHeadCheckboxCell = document.createElement(
                     'sp-table-checkbox-cell'
                 ) as TableCheckboxCell;
-                this.tableHead.insertAdjacentElement(
+                this.tableHeadCheckboxCell.headCell = true;
+                this.tableHeadCheckboxCell.emphasized = this.emphasized;
+                this.tableHead?.insertAdjacentElement(
                     'afterbegin',
                     this.tableHeadCheckboxCell
                 );
             }
             this.manageHeadCheckbox(allSelected);
         } else {
+            // Remove all checkbox cells.
             checkboxes.forEach((box) => {
                 box.remove();
             });
@@ -311,28 +324,34 @@ export class Table extends SizedMixin(SpectrumElement, {
 
     protected manageCheckboxes(): void {
         if (!!this.selects) {
+            // Create and initialize table head checkbox cell.
             this.tableHeadCheckboxCell = document.createElement(
                 'sp-table-checkbox-cell'
-            );
-            const allSelected = this.selected.length === this.tableRows.length;
+            ) as TableCheckboxCell;
+            this.tableHeadCheckboxCell.headCell = true;
+            this.tableHeadCheckboxCell.emphasized = this.emphasized;
 
+            const allSelected = this.selected.length === this.tableRows.length;
             this.manageHeadCheckbox(allSelected);
 
-            this.tableHead.insertAdjacentElement(
+            this.tableHead?.insertAdjacentElement(
                 'afterbegin',
                 this.tableHeadCheckboxCell
             );
 
+            // Create and initialize checkboxes in all rows within the table body.
             this.tableRows.forEach((row) => {
                 const checkbox = document.createElement(
                     'sp-table-checkbox-cell'
                 );
+                checkbox.emphasized = this.emphasized;
                 row.insertAdjacentElement('afterbegin', checkbox);
                 row.selected = this.selectedSet.has(row.value);
                 checkbox.checked = row.selected;
             });
         } else {
-            this.tableHead.querySelector('sp-table-checkbox-cell')?.remove();
+            // Remove all checkbox cells.
+            this.tableHead?.querySelector('sp-table-checkbox-cell')?.remove();
             this.tableRows.forEach((row) => {
                 row.checkboxCells[0]?.remove();
                 if (this.selected.length) {
@@ -346,6 +365,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
 
         this.tableHeadCheckboxCell.selectsSingle = this.selects === 'single';
+        this.tableHeadCheckboxCell.emphasized = this.emphasized;
         this.tableHeadCheckboxCell.checked = allSelected;
         this.tableHeadCheckboxCell.indeterminate =
             this.selected.length > 0 && !allSelected;
@@ -469,6 +489,17 @@ export class Table extends SizedMixin(SpectrumElement, {
                 (event: RangeChangedEvent) => {
                     this.dispatchEvent(
                         new RangeChangedEvent({
+                            first: event.first,
+                            last: event.last,
+                        })
+                    );
+                }
+            );
+            this.tableBody.addEventListener(
+                'visibilityChanged',
+                (event: VisibilityChangedEvent) => {
+                    this.dispatchEvent(
+                        new VisibilityChangedEvent({
                             first: event.first,
                             last: event.last,
                         })

@@ -14,14 +14,15 @@ import {
     CSSResultArray,
     html,
     nothing,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import type {
-    OverlayDisplayQueryDetail,
-    Placement,
-} from '@spectrum-web-components/overlay/src/overlay-types.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import popoverStyles from './popover.css.js';
 
 /**
@@ -48,60 +49,46 @@ export class Popover extends SpectrumElement {
     public open = false;
 
     /**
-     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
+     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      * @attr
      */
     @property({ reflect: true })
-    public placement: Placement = 'none';
+    public placement?: Placement;
 
     @property({ type: Boolean, reflect: true })
     public tip = false;
 
+    @query('#tip')
+    public tipElement!: HTMLSpanElement;
+
     protected renderTip(): TemplateResult {
         return html`
-            <div id="tip">
-                <svg
-                    xmlns="http://www.w3.org/svg/2000"
-                    class="tip"
-                    viewBox="0 0 24 12"
-                >
-                    <path
-                        class="triangle"
-                        d="M 0.7071067811865476 0 L 11.414213562373096 10.707106781186548 L 22.121320343559645 0"
-                    ></path>
+            <div id="tip" aria-hidden="true">
+                <svg class="tip block" viewBox="0 -0.5 16 9">
+                    <path class="triangle" d="M-1,-1 8,8 17,-1"></path>
+                </svg>
+                <svg class="tip inline" viewBox="0 -0.5 9 16">
+                    <path class="triangle" d="M-1,-1 8,8 -1,17"></path>
                 </svg>
             </div>
         `;
     }
 
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.addEventListener(
-            'sp-overlay-query',
-            this.onOverlayQuery as EventListener
-        );
-    }
-
-    public override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.removeEventListener(
-            'sp-overlay-query',
-            this.onOverlayQuery as EventListener
-        );
-    }
-
-    public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
-        /* c8 ignore next */
-        if (!event.target) return;
-
-        const target = event.target as Node;
-        /* c8 ignore next */
-        if (target !== this) return;
-
-        const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;
-        if (tipElement) {
-            event.detail.overlayContentTipElement = tipElement;
+    protected override update(changes: PropertyValues): void {
+        if (window.__swc.DEBUG) {
+            if (changes.has('dialog') && this.dialog) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> no longer supports the "dialog" attribute. Please slot an <sp-dialog> element into the <${this.localName}> instead.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/popover/#dialog-popovers',
+                    {
+                        type: 'api',
+                        level: 'deprecation',
+                    }
+                );
+            }
         }
+        super.update(changes);
     }
 
     protected override render(): TemplateResult {

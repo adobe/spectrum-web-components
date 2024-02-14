@@ -34,8 +34,8 @@ import { Grid } from '@spectrum-web-components/grid';
     id="grid-demo"
     style="
         margin:
-            calc(-1 * var(--spectrum-global-dimension-size-400))
-            calc(-1 * var(--spectrum-global-dimension-size-500))
+            calc(-1 * var(--spectrum-spacing-500))
+            calc(-1 * var(--spectrum-spacing-600))
     "
 ></sp-grid>
 <script type="module">

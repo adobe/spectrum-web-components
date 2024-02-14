@@ -20,6 +20,7 @@ import {
     exampleDestinationTemplate,
     examplePartialTemplate,
 } from './component-template-parts.js';
+import { gatherUrls } from './gather-spectrum-urls.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -73,6 +74,12 @@ export async function processREADME(mdPath) {
         customElements,
         (declaration) => declaration.tagName === 'sp-' + componentName
     );
+    if (componentName === 'sp-overlay') {
+        tag = findDeclaration(
+            customElements,
+            (declaration) => declaration.name === 'OverlayBase'
+        );
+    }
     if (!tag) {
         tag = findDeclaration(
             customElements,
@@ -145,17 +152,62 @@ export async function processREADME(mdPath) {
     const body = fs.readFileSync(mdPath);
     fs.writeFileSync(
         exampleDestinationFile,
-        exampleDestinationTemplate(componentName, componentHeading, tagType, 
+        exampleDestinationTemplate(
+            componentName,
+            componentHeading,
+            tagType,
             parent,
-            packageName)
+            packageName
+        )
     );
     fs.writeFileSync(
         examplePartialFile,
         examplePartialTemplate(componentName, componentHeading, body)
     );
+    const hasArgs = fs.existsSync(
+        path.resolve(
+            __dirname,
+            '../../../packages',
+            packageName,
+            'stories',
+            'args.js'
+        )
+    );
+    const hasTemplate = fs.existsSync(
+        path.resolve(
+            __dirname,
+            '../../../packages',
+            packageName,
+            'stories',
+            'template.js'
+        )
+    );
+    /* eslint-disable prettier/prettier */
+    const data = `${
+        hasArgs
+            ? `import { argTypes } from '../../../../../packages/${packageName}/stories/args.js';
+
+`
+            : ''
+    }export default {
+    hasDemoControls: ${hasArgs},
+    hasDemoTemplate: ${hasTemplate},
+    ${hasArgs ? 'demoControls: Object.values(argTypes),' : ''}
+};
+`;
+    /* eslint-enable prettier/prettier */
+    fs.writeFileSync(
+        path.resolve(
+            destinationPath,
+            componentName,
+            `${componentName}.11tydata.js`
+        ),
+        data
+    );
 }
 
 async function main() {
+    gatherUrls();
     fs.mkdirSync(componentDestinationPath, { recursive: true });
     fs.mkdirSync(toolDestinationPath, { recursive: true });
     fs.mkdirSync(partialPath, { recursive: true });

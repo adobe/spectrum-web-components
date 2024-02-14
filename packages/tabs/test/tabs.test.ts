@@ -419,7 +419,6 @@ describe('Tabs', () => {
             .true;
 
         firstTab.dispatchEvent(arrowLeftEvent());
-        firstTab.dispatchEvent(arrowUpEvent());
 
         await elementUpdated(el);
         expect(document.activeElement === secondTab, 'Focus second tab').to.be
@@ -440,6 +439,18 @@ describe('Tabs', () => {
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
+
+        firstTab.dispatchEvent(arrowUpEvent());
+
+        await elementUpdated(el);
+        expect(document.activeElement === secondTab, 'Focus second tab').to.be
+            .true;
+
+        secondTab.dispatchEvent(arrowDownEvent());
+
+        await elementUpdated(el);
+        expect(document.activeElement === firstTab, 'Focus first tab').to.be
+            .true;
     });
 
     it('accepts keyboard based selection through shadow DOM', async () => {
@@ -481,7 +492,6 @@ describe('Tabs', () => {
         expect(activeElement === firstTab, 'Focus first tab').to.be.true;
 
         firstTab.dispatchEvent(arrowLeftEvent());
-        firstTab.dispatchEvent(arrowUpEvent());
 
         await elementUpdated(el);
         activeElement = rootNode.activeElement as Tab;
@@ -528,7 +538,6 @@ describe('Tabs', () => {
             .true;
 
         firstTab.dispatchEvent(arrowLeftEvent());
-        firstTab.dispatchEvent(arrowUpEvent());
 
         await elementUpdated(el);
         expect(document.activeElement === secondTab, 'Focus second tab').to.be
@@ -549,6 +558,16 @@ describe('Tabs', () => {
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
+
+        firstTab.dispatchEvent(arrowRightEvent());
+
+        await elementUpdated(el);
+        expect(document.activeElement === secondTab, 'Focus second tab').to.be
+            .true;
+
+        secondTab.dispatchEvent(arrowLeftEvent());
+        expect(document.activeElement === firstTab, 'Focus first tab').to.be
+            .true;
     });
     it('selects through slotted DOM', async () => {
         const el = await fixture<Tabs>(

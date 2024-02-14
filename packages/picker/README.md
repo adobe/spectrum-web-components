@@ -433,4 +433,4 @@ When given a `loading` attribute, an `<sp-picker>` will be delivered with an `<s
 
 ## Accessibility
 
-To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element.
+To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element. For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.

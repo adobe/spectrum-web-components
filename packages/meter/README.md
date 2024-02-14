@@ -63,16 +63,39 @@ import { Meter } from '@spectrum-web-components/meter';
 
 ## Variants
 
-### Over Background
+### Informative
 
-When a loader needs to be placed on top of a colored background, use the over background loader as signified by `[over-background]`. This loader uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
+By default, the informative variant can be used to represent a neutral or non-semantic value, such as the number of tutorials completed.
 
 ```html
-<div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-alias-background-color-modal-overlay);"
->
-    <sp-meter progress="42" over-background>Tasks Completed</sp-meter>
-</div>
+<sp-meter progress="50">Storage Space</sp-meter>
+```
+
+### Positive
+
+The positive variant can be used to represent a positive semantic value, such as when there’s a lot of space remaining.
+Use value `variant="positive"` to define a positive variant.
+
+```html
+<sp-meter variant="positive" progress="50">Storage Space</sp-meter>
+```
+
+### Notice
+
+The notice variant can be used to warn users about a situation that may need to be addressed soon, such as when space remaining is becoming limited.
+Use value `variant="notice"` to define a notice variant.
+
+```html
+<sp-meter variant="notice" progress="73">Storage Space</sp-meter>
+```
+
+### Negative
+
+The negative variant can be used to warn users about a critical situation that needs their urgent attention, such as when space remaining is becoming very limited.
+Use value `variant="negative"` to define a negative variant.
+
+```html
+<sp-meter variant="negative" progress="92">Storage Space</sp-meter>
 ```
 
 ### Side Label

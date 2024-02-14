@@ -41,6 +41,34 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-disabled', 'disabled'),
+                {
+                    exactSelector: true,
+                    find: [builder.class('spectrum-Slider--tick')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'attribute',
+                                        name: 'tick-labels',
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+                // Default to `size='m'` without needing the attribute
+                converter.classToHost('spectrum-Slider--sizeM'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Slider--sizeS', 's'],
+                        ['spectrum-Slider--sizeL', 'l'],
+                        ['spectrum-Slider--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Slider--color', 'color'],
@@ -51,9 +79,26 @@ const config = {
                     ],
                     'variant'
                 ),
+                {
+                    find: [
+                        builder.class('spectrum-Slider-labelContainer'),
+                        builder.combinator('+'),
+                        builder.class('spectrum-Slider-controls'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('label-container'),
+                        },
+                        {
+                            replace: builder.combinator('+'),
+                        },
+                        {
+                            replace: builder.id('track'),
+                        },
+                    ],
+                },
                 converter.classToId('spectrum-Slider-buffer', 'buffer'),
                 converter.classToId('spectrum-Slider-controls', 'controls'),
-                converter.classToId('spectrum-Slider-fill', 'fill'),
                 converter.classToId('spectrum-Slider-label', 'label'),
                 converter.classToId(
                     'spectrum-Slider-labelContainer',
@@ -64,11 +109,21 @@ const config = {
                 converter.classToClass('spectrum-Slider-handle', 'handle'),
                 converter.classToClass('spectrum-Slider-input', 'input'),
                 converter.classToClass('spectrum-Slider-tick', 'tick'),
+                converter.classToClass('spectrum-Slider-fill--right', 'offset'),
+                converter.classToClass('spectrum-Slider-fill', 'fill'),
                 converter.classToClass(
                     'spectrum-Slider-tickLabel',
                     'tickLabel'
                 ),
                 converter.classToClass('spectrum-Slider-ticks', 'ticks'),
+                converter.classToClass(
+                    'spectrum-Slider-trackContainer',
+                    'trackContainer'
+                ),
+                converter.classToClass(
+                    'spectrum-Slider-handleContainer',
+                    'handleContainer'
+                ),
                 converter.classToClass('spectrum-Slider-track', 'track'),
                 converter.classToClass('is-focused', 'handle-highlight'),
                 converter.classToClass('is-dragged', 'dragging'),

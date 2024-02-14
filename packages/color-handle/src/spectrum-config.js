@@ -28,7 +28,7 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-disabled', 'disabled'),
-                converter.classToClass('spectrum-ColorHandle-color'),
+                converter.classToClass('spectrum-ColorHandle-inner'),
             ],
         },
     ],

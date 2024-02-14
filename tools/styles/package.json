@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/styles",
-    "version": "0.23.3",
+    "version": "0.40.5",
     "publishConfig": {
         "access": "public"
     },
@@ -32,7 +32,6 @@
         "./all-medium-lightest.css": "./all-medium-lightest.css",
         "./core-global.css": "./core-global.css",
         "./express/core-global.css": "./express/core-global.css",
-        "./fonts.css": "./fonts.css",
         "./scale-large.css": "./scale-large.css",
         "./express/scale-large.css": "./express/scale-large.css",
         "./scale-medium.css": "./scale-medium.css",
@@ -105,14 +104,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.5"
+        "@spectrum-web-components/base": "^0.40.5"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^4.0.2",
-        "@spectrum-css/expressvars": "^2.0.3",
-        "@spectrum-css/tokens": "^7.0.0",
-        "@spectrum-css/typography": "^4.0.26",
-        "@spectrum-css/vars": "^8.0.3"
+        "@spectrum-css/commons": "^9.1.0",
+        "@spectrum-css/expressvars": "^3.0.9",
+        "@spectrum-css/tokens": "^13.1.0",
+        "@spectrum-css/typography": "^5.1.0",
+        "@spectrum-css/vars": "^9.0.8"
     },
     "customElements": "custom-elements.json",
     "sideEffects": [

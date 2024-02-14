@@ -10,12 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-table-checkbox-cell.css';
+@import url('./spectrum-table-checkbox-cell.css');
 
 :host {
     display: flex;
     align-items: center;
     flex: 0 1 0%;
+    border-radius: 0;
+    block-size: auto;
+}
+
+:host(:not([head-cell])),
+:host([head-cell]) {
+    display: flex;
+    block-size: auto;
+    inline-size: auto;
 }
 
 :host([selects-single]) sp-checkbox {

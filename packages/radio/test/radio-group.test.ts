@@ -641,7 +641,7 @@ describe('Radio Group - late children', () => {
         /**
          * In some cases (e.g. when wrapped in React components) will cause otherwise standard looking
          * DOM structures to add `<sp-radio>` children to `<sp-radio-group>` parents in a non-syncronous manner.
-         * 
+         *
          * This test emulates that render process to ensure that validation will still work as expect in that context.
          */
         const test = await fixture(html`
@@ -665,5 +665,34 @@ describe('Radio Group - late children', () => {
 
         expect(group.buttons.length).to.equal(4);
         expect(group.selected).to.equal('first');
+    });
+    it('emits change events on arrow key events', async () => {
+        const changeSpy = spy();
+        const onChange = (event: Event & { target: RadioGroup }): void => {
+            changeSpy(event.target.selected);
+        };
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group @change=${onChange}>
+                <sp-radio value="bulbasaur">Bulbasaur</sp-radio>
+                <sp-radio value="squirtle">Squirtle</sp-radio>
+                <sp-radio value="charmander">Charmander</sp-radio>
+            </sp-radio-group>
+        `);
+        const bulbasaur = el.querySelector('[value="bulbasaur"]') as Radio;
+        const squirtle = el.querySelector('[value="squirtle"]') as Radio;
+
+        bulbasaur.focus();
+        await elementUpdated(el);
+        expect(changeSpy.callCount).to.equal(0);
+
+        el.dispatchEvent(arrowRightEvent());
+        await elementUpdated(el);
+        expect(changeSpy.callCount).to.equal(1);
+        expect(document.activeElement === squirtle).to.be.true;
+
+        el.dispatchEvent(arrowLeftEvent());
+        await elementUpdated(el);
+        expect(changeSpy.callCount).to.equal(2);
+        expect(document.activeElement === bulbasaur).to.be.true;
     });
 });

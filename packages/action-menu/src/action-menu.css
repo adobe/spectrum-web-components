@@ -18,6 +18,10 @@ governing permissions and limitations under the License.
     min-width: 0;
 }
 
+:host > sp-menu {
+    display: none;
+}
+
 ::slotted([slot='icon']) {
     flex-shrink: 0;
 }
@@ -31,9 +35,7 @@ governing permissions and limitations under the License.
 }
 
 #popover {
-    width: auto;
     max-width: none;
-    display: none;
 }
 
 :host([dir='ltr']) ::slotted([slot='icon']),
@@ -81,4 +83,8 @@ governing permissions and limitations under the License.
             ) * -1
     ); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
    * .spectrum-ActionButton-icon:only-child */
+}
+
+sp-overlay:not(:defined) {
+    display: none;
 }

@@ -25,7 +25,6 @@ export default {
     component: 'sp-card',
     title: 'Card',
     args: {
-        size: 'm',
         horizontal: false,
     },
     argTypes: {
@@ -39,15 +38,6 @@ export default {
             control: {
                 type: 'boolean',
             },
-        },
-        size: {
-            name: 'size',
-            type: { name: 'string', required: false },
-            table: {
-                type: { summary: '"s" | "m"' },
-                defaultValue: { summary: 'm' },
-            },
-            control: { type: 'text' },
         },
     },
 };
@@ -63,8 +53,8 @@ export const Default = (args: StoryArgs): TemplateResult => {
         <sp-card
             heading="Card Heading"
             subheading="JPG"
-            size=${args.size}
             ?horizontal=${args.horizontal}
+            style="width: 200px;"
         >
             <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
             <div slot="footer">Footer</div>
@@ -79,9 +69,9 @@ export const href = (args: StoryArgs): TemplateResult => {
         <sp-card
             heading="Card Heading"
             subheading="JPG"
-            .size=${args.size}
             toggles
             ?horizontal=${args.horizontal}
+            style="width: 200px;"
             href="https://opensource.adobe.com/spectrum-web-components"
             @click=${(event: Event) => {
                 const composedTarget = event.composedPath()[0] as HTMLElement;
@@ -117,8 +107,8 @@ export const actions = (args: StoryArgs): TemplateResult => {
         <sp-card
             heading="Card Heading"
             subheading="JPG"
-            size=${args.size}
             ?horizontal=${args.horizontal}
+            style="width: 200px;"
         >
             <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
             <div slot="footer">Footer</div>
@@ -141,7 +131,6 @@ export const Gallery = (args: StoryArgs): TemplateResult => {
             variant="gallery"
             heading="Card Heading"
             subheading="JPG"
-            size=${args.size}
             ?horizontal=${args.horizontal}
         >
             <img
@@ -160,8 +149,8 @@ export const noPreviewImage = (args: StoryArgs): TemplateResult => {
         <sp-card
             heading="Card Heading"
             subheading="No preview image"
-            size=${args.size}
             ?horizontal=${args.horizontal}
+            style="width: 200px;"
         >
             <div slot="footer">Footer</div>
         </sp-card>
@@ -170,13 +159,13 @@ export const noPreviewImage = (args: StoryArgs): TemplateResult => {
 
 export const Quiet = (args: StoryArgs): TemplateResult => {
     return html`
-        <div style="width: 208px; height: 264px">
+        <div>
             <sp-card
                 variant="quiet"
                 heading="Card Heading"
                 subheading="JPG"
-                size=${args.size}
                 ?horizontal=${args.horizontal}
+                style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="description">10/15/18</div>
@@ -187,13 +176,13 @@ export const Quiet = (args: StoryArgs): TemplateResult => {
 
 export const quietFile = (args: StoryArgs): TemplateResult => {
     return html`
-        <div style="width: 208px; height: 264px">
+        <div>
             <sp-card
                 variant="quiet"
                 subheading="JPG"
                 asset="file"
-                size=${args.size}
                 ?horizontal=${args.horizontal}
+                style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="heading">File Name</div>
@@ -205,13 +194,13 @@ export const quietFile = (args: StoryArgs): TemplateResult => {
 
 export const quietFolder = (args: StoryArgs): TemplateResult => {
     return html`
-        <div style="width: 208px; height: 264px">
+        <div>
             <sp-card
                 variant="quiet"
                 subheading="JPG"
                 asset="folder"
-                size=${args.size}
                 ?horizontal=${args.horizontal}
+                style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="heading">Folder Name</div>
@@ -223,13 +212,13 @@ export const quietFolder = (args: StoryArgs): TemplateResult => {
 
 export const quietActions = (args: StoryArgs): TemplateResult => {
     return html`
-        <div style="width: 208px; height: 264px">
+        <div>
             <sp-card
                 variant="quiet"
                 heading="Card Heading"
                 subheading="JPG"
-                size=${args.size}
                 ?horizontal=${args.horizontal}
+                style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="description">10/15/18</div>
@@ -249,33 +238,9 @@ export const quietActions = (args: StoryArgs): TemplateResult => {
 
 quietActions.storyName = 'Quiet w/ Actions';
 
-export const small = (args: StoryArgs): TemplateResult => {
+export const Horizontal = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-card
-            style="--spectrum-card-title-padding-right: 0; --spectrum-card-title-padding-left: 0;"
-            size=${args.size}
-            ?horizontal=${args.horizontal}
-            heading="Card Heading"
-            subheading="JPG"
-        >
-            <img
-                slot="cover-photo"
-                src=${portrait}
-                alt="Demo Graphic"
-                style="width: 140px"
-            />
-            <div slot="footer">Footer</div>
-        </sp-card>
-    `;
-};
-small.args = {
-    size: 's',
-};
-
-export const smallHorizontal = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-card
-            size=${args.size}
             ?horizontal=${args.horizontal}
             heading="Card Heading"
             subheading="JPG"
@@ -287,15 +252,13 @@ export const smallHorizontal = (args: StoryArgs): TemplateResult => {
         </sp-card>
     `;
 };
-smallHorizontal.args = {
+Horizontal.args = {
     horizontal: true,
-    size: 's',
 };
 
-export const smallHorizontalWithHREF = (args: StoryArgs): TemplateResult => {
+export const horizontalWithHREF = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-card
-            .size=${args.size}
             ?horizontal=${args.horizontal}
             heading="Card Heading"
             subheading="JPG"
@@ -309,20 +272,20 @@ export const smallHorizontalWithHREF = (args: StoryArgs): TemplateResult => {
         </sp-card>
     `;
 };
-smallHorizontalWithHREF.args = {
+horizontalWithHREF.args = {
     horizontal: true,
-    size: 's',
 };
 
 export const smallQuiet = (args: StoryArgs): TemplateResult => {
     return html`
-        <div style="width: 115px">
+        <div>
             <sp-card
                 size=${args.size}
                 ?horizontal=${args.horizontal}
                 heading="Card Heading"
                 subheading="JPG"
                 variant="quiet"
+                style="width: 115px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="footer">Footer</div>
@@ -358,7 +321,6 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
                 --spectrum-card-body-header-height: auto;
                 --spectrum-alias-single-line-width: 100%;
             "
-            size=${args.size}
             ?horizontal=${args.horizontal}
         >
             <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />

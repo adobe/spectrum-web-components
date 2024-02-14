@@ -22,7 +22,9 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { landscape } from './images.js';
-import { overlayTriggerDecorator } from './index.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
+import type { DialogWrapper } from '@spectrum-web-components/dialog';
 
 export default {
     title: 'Dialog Wrapped',
@@ -72,6 +74,13 @@ export const wrapperLabeledHero = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
     return html`
+        <style>
+            sp-story-decorator {
+                inset: 0;
+                position: absolute;
+                overflow: hidden;
+            }
+        </style>
         <sp-dialog-wrapper
             ?open=${open}
             hero=${landscape}
@@ -105,11 +114,12 @@ export const wrapperDismissable = (
     return html`
         <sp-dialog-wrapper
             ?open=${open}
-            hero=${landscape}
+            .hero=${landscape}
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
             @close=${handleClose(args)}
             size="s"
+            tabindex="0"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -166,7 +176,6 @@ export const form = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >
@@ -243,7 +252,7 @@ export const form = (
     `;
 };
 
-form.decorators = [overlayTriggerDecorator];
+form.decorators = [isOverlayOpen];
 
 export const longContent = (
     args: StoryArgs = {},
@@ -253,7 +262,6 @@ export const longContent = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >
@@ -365,7 +373,7 @@ export const longContent = (
     `;
 };
 
-longContent.decorators = [overlayTriggerDecorator];
+longContent.decorators = [isOverlayOpen];
 
 export const wrapperDismissableUnderlayError = (
     args: StoryArgs = {},
@@ -531,7 +539,6 @@ export const tooltips = (
     return html`
         <overlay-trigger
             type="modal"
-            placement="none"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
         >
@@ -562,4 +569,77 @@ export const tooltips = (
     `;
 };
 
-tooltips.decorators = [overlayTriggerDecorator];
+tooltips.decorators = [isOverlayOpen];
+
+export const lazyHero = ({ src }: { src: string }): TemplateResult => {
+    const handleOpened = (): void => {
+        (document.querySelector('sp-dialog-wrapper') as DialogWrapper).hero =
+            src;
+    };
+    return html`
+        <overlay-trigger content="click" @sp-opened=${handleOpened}>
+            <sp-button slot="trigger">Toggle Dialog</sp-button>
+            <sp-dialog-wrapper
+                slot="click-content"
+                headline="Dialog title"
+                confirm-label="Primary"
+            >
+                <p>Content of the dialog</p>
+                <ol>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                    <li>
+                        Select the following checkbox to have the dialog close
+                        when clicking one of its buttons.
+                    </li>
+                </ol>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
+    `;
+};
+
+lazyHero.args = {
+    src: 'https://dummyimage.com/800x400/000/fff',
+};
+
+lazyHero.swc_vrt = {
+    skip: true,
+};

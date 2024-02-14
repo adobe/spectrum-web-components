@@ -26,8 +26,10 @@ import {
 import {
     property,
     query,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { WithSWCResizeObserver } from './types';
 
@@ -53,6 +55,9 @@ export class SplitView extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
+
+    @state()
+    public controlledEl?: HTMLElement;
 
     @property({ type: Boolean, reflect: true })
     public vertical = false;
@@ -179,8 +184,14 @@ export class SplitView extends SpectrumElement {
                         this.viewSize - this.splitterSize
                     )) as boolean,
         };
+        const label =
+            this.label || (this.resizable ? 'Resize the panels' : undefined);
+
         return html`
             <slot
+                id=${ifDefined(
+                    this.resizable ? this.controlledEl?.id : undefined
+                )}
                 @slotchange=${this.onContentSlotChange}
                 style="--spectrum-split-view-first-pane-size: ${this
                     .firstPaneSize}"
@@ -191,7 +202,17 @@ export class SplitView extends SpectrumElement {
                           id="splitter"
                           class=${classMap(splitterClasses)}
                           role="separator"
-                          aria-label=${ifDefined(this.label || undefined)}
+                          aria-controls=${ifDefined(
+                              this.resizable ? this.controlledEl?.id : undefined
+                          )}
+                          aria-label=${ifDefined(label)}
+                          aria-orientation=${this.vertical
+                              ? 'horizontal'
+                              : 'vertical'}
+                          aria-valuenow=${Math.round(
+                              (parseFloat(this.firstPaneSize) / this.viewSize) *
+                                  100
+                          )}
                           tabindex=${ifDefined(
                               this.resizable ? '0' : undefined
                           )}
@@ -213,14 +234,27 @@ export class SplitView extends SpectrumElement {
                               ? html`
                                     <div id="gripper"></div>
                                 `
-                              : html``}
+                              : nothing}
                       </div>
                   `
                 : nothing}
         `;
     }
 
-    private onContentSlotChange(): void {
+    private controlledElIDApplied = false;
+
+    private onContentSlotChange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        if (this.controlledEl && this.controlledElIDApplied) {
+            this.controlledEl.removeAttribute('id');
+            this.controlledElIDApplied = false;
+        }
+        this.controlledEl = event.target.assignedElements()[0] as HTMLElement;
+        if (this.controlledEl && !this.controlledEl.id) {
+            this.controlledEl.id = `${this.tagName.toLowerCase()}-${randomID()}`;
+            this.controlledElIDApplied = true;
+        }
         this.enoughChildren = this.children.length > 1;
         this.checkResize();
     }

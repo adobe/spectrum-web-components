@@ -32,17 +32,17 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const selected = (): TemplateResult => {
+export const focused = (): TemplateResult => {
     return html`
-        <sp-thumbnail selected>
+        <sp-thumbnail focused>
             <img src=${thumbnail} alt="Woman crouching" />
         </sp-thumbnail>
     `;
 };
 
-export const focused = (): TemplateResult => {
+export const disabled = (): TemplateResult => {
     return html`
-        <sp-thumbnail focused>
+        <sp-thumbnail disabled>
             <img src=${thumbnail} alt="Woman crouching" />
         </sp-thumbnail>
     `;
@@ -63,6 +63,22 @@ export const landscape = (): TemplateResult => {
                 src=${landscapeImage}
                 alt="Landscape with mountains and lake"
             />
+        </sp-thumbnail>
+    `;
+};
+
+export const layerSelected = (): TemplateResult => {
+    return html`
+        <sp-thumbnail layer selected>
+            <img src=${thumbnail} alt="Woman crouching" />
+        </sp-thumbnail>
+    `;
+};
+
+export const layer = (): TemplateResult => {
+    return html`
+        <sp-thumbnail layer>
+            <img src=${thumbnail} alt="Woman crouching" />
         </sp-thumbnail>
     `;
 };

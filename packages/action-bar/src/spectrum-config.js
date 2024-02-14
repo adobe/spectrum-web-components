@@ -28,6 +28,10 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('spectrum-ActionBar--flexible'),
+                converter.classToAttribute('spectrum-ActionBar--emphasized'),
+                converter.classToClass('spectrum-CloseButton', 'close-button'),
+                converter.classToClass('spectrum-ActionGroup', 'action-group'),
+                converter.classToClass('spectrum-FieldLabel', 'field-label'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ActionBar--sticky'],

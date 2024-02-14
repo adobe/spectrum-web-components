@@ -153,6 +153,7 @@ function displaySelectionState(): void {
         selectedDiv.textContent = `Selected: ${JSON.stringify(group.selected)}`;
     }
 }
+
 export const Default = (args: Properties): TemplateResult =>
     renderButtons(args);
 

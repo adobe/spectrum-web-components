@@ -29,34 +29,57 @@ const tokensRoot = path.join(
     '*.css'
 );
 
+/** @todo Could generate this from CSS packages that have @spectrum-css/tokens as a dependency */
 const tokenPackages = [
+    'accordion',
+    'actionbar',
     'actionbutton',
-    'avatar',
-    'checkbox',
-    'button',
-    'closebutton',
-    'helptext',
-    'radio',
-    'switch',
-    'statuslight',
-    'toast',
     'actiongroup',
-    'divider',
-    'fieldlabel',
-    'progresscircle',
+    'alertdialog',
+    'avatar',
+    'badge',
+    'button',
     'buttongroup',
+    'checkbox',
+    'closebutton',
+    'colorarea',
+    'colorhandle',
+    'colorloupe',
+    'colorwheel',
+    'combobox',
+    'divider',
+    'dropzone',
+    'fieldgroup',
+    'fieldlabel',
+    'helptext',
+    'illustratedmessage',
+    'infieldbutton',
+    'link',
+    'menu',
+    'picker',
+    'pickerbutton',
+    'popover',
+    'progressbar',
+    'progresscircle',
+    'radio',
+    'search',
+    'sidenav',
+    'slider',
+    'splitview',
+    'statuslight',
+    'stepper',
     'swatch',
     'swatchgroup',
-    'badge',
-    'fieldgroup',
-    'link',
+    'switch',
+    'table',
+    'tabs',
     'tag',
+    'textfield',
+    'thumbnail',
+    'toast',
     'tooltip',
     'tray',
-    'progressbar',
-    'picker',
-    'colorarea',
-    'colorwheel',
+    'underlay',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
@@ -71,34 +94,39 @@ const packagePaths = tokenPackages.map((packageName) => {
     );
 });
 
-const targetHost = (css) => {
-    css = css.replaceAll(/.spectrum {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--express {/g, ':host, :root {');
-    css = css.replaceAll(
-        /^.spectrum--light, .spectrum--lightest {/g,
-        ':host, :root {'
-    );
-    css = css.replaceAll(/.spectrum--dark {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--darkest {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--darkest {/g, ':host, :root {');
-    css = css.replaceAll(
-        /.spectrum--express.spectrum--medium {/g,
-        ':host, :root {'
-    );
-    css = css.replaceAll(
-        /.spectrum--express.spectrum--large {/g,
-        ':host, :root {'
-    );
-    css = css.replaceAll(/.spectrum--medium {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--large {/g, ':host, :root {');
+const spectrumThemeSelectorRegExp =
+    /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?\{/g;
+const importantCommentRegExp = /\/\*![^*]*\*+([^\/*][^*]*\*+)*\//g;
 
-    return css;
+const targetHost = (css) => {
+    /** @note Could use this regex to more permissive of class names */
+    // return css.replaceAll(/(?:\.spectrum(--[a-z]+,?(\n|\s)*)?)+ \{/g, ':host,\n:root {');
+
+    /**
+     * @note ...Or this to lock down expected class names
+     *
+     * A few helpful regex hints:
+     *   (?:...) - non-capturing group
+     *   \s - whitespace
+     *   \n - newline
+     *   (...)? - 0 or 1
+     *   \g - global
+     **/
+    return css.replaceAll(spectrumThemeSelectorRegExp, ':host,\n:root {');
+};
+
+const removeImporantComments = (css) => {
+    /**
+     * Spectrum CSS uses /*! comments that are "not" removable.
+     * These comments pile up in merged files, so we _need_ to remove them.
+     */
+    return css.replaceAll(importantCommentRegExp, '');
 };
 
 const processTokens = (srcPath) => {
     let css = fs.readFileSync(srcPath, 'utf8');
     const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
-    css = targetHost(css);
+    css = removeImporantComments(targetHost(css));
 
     fs.writeFileSync(
         path.join(__dirname, '..', 'tools', 'styles', 'tokens', fileName),
@@ -110,35 +138,42 @@ const processPackages = async (srcPath, index) => {
     const packageName = tokenPackages[index];
     const expressPath = path.join(srcPath, 'express.css');
     const spectrumPath = path.join(srcPath, 'spectrum.css');
-    let express = fs.readFileSync(expressPath, 'utf8');
-    let spectrum = fs.readFileSync(spectrumPath, 'utf8');
-    express = targetHost(express);
-    spectrum = targetHost(spectrum);
 
-    fs.appendFileSync(
-        path.join(
-            __dirname,
-            '..',
-            'tools',
-            'styles',
-            'tokens',
-            'express',
-            'global-vars.css'
-        ),
-        express
-    );
-    fs.appendFileSync(
-        path.join(
-            __dirname,
-            '..',
-            'tools',
-            'styles',
-            'tokens',
-            'spectrum',
-            'global-vars.css'
-        ),
-        spectrum
-    );
+    // check if expressPath exists
+    if (fs.existsSync(expressPath)) {
+        let express = fs.readFileSync(expressPath, 'utf8');
+        express = removeImporantComments(targetHost(express));
+        fs.appendFileSync(
+            path.join(
+                __dirname,
+                '..',
+                'tools',
+                'styles',
+                'tokens',
+                'express',
+                'global-vars.css'
+            ),
+            express
+        );
+    }
+
+    // check if spectrumPath exists
+    if (fs.existsSync(spectrumPath)) {
+        let spectrum = fs.readFileSync(spectrumPath, 'utf8');
+        spectrum = removeImporantComments(targetHost(spectrum));
+        fs.appendFileSync(
+            path.join(
+                __dirname,
+                '..',
+                'tools',
+                'styles',
+                'tokens',
+                'spectrum',
+                'global-vars.css'
+            ),
+            spectrum
+        );
+    }
 
     const varsPaths = path.join(
         __dirname,
@@ -148,9 +183,9 @@ const processPackages = async (srcPath, index) => {
         '**',
         '*.css'
     );
-    const varsRegExp = new RegExp(`\\s*--spectrum-${packageName}[^;]*;`, 'g');
+    const varsRegExp = new RegExp(`\\s*--spectrum-${packageName}[^;}]*;*`, 'g');
     const aliasRegExp = new RegExp(
-        `\\s*--spectrum-alias-${packageName}[^;]*;`,
+        `\\s*--spectrum-alias-${packageName}[^;}]*;*`,
         'g'
     );
     const varsWithoutTokens = await fg([varsPaths], {

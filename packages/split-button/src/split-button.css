@@ -10,7 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-split-button.css';
+@import url('./spectrum-split-button.css');
+
+:host > sp-menu {
+    display: none;
+}
 
 #button {
     --spectrum-splitbutton-flat-edge-padding: calc(
@@ -74,16 +78,10 @@ sp-button {
  * End workaround for SplitButton not natively supporting t-shirt sizes.
  */
 
-sp-popover {
-    display: none;
-}
-
 ::slotted(sp-menu) {
     display: none;
 }
 
-.more-medium {
-    width: 18px;
-    height: 18px;
-    margin: 1px -4px 0;
+sp-overlay:not(:defined) {
+    display: none;
 }

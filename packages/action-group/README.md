@@ -92,7 +92,7 @@ When a selection can be made, it is a good idea to supply the group of options w
 
 ### Single
 
-An `<sp-action-group selects="single">` will manage its `<sp-action-button>` children as "radio buttons" allowing the user to select a _single_ one of the buttons presented. The `<sp-action-button>` children will only be able to turn their `selected` value on while maintaining a single selection after an intial selection is made.
+An `<sp-action-group selects="single">` will manage its `<sp-action-button>` children as "radio buttons" allowing the user to select a _single_ one of the buttons presented. The `<sp-action-button>` children will only be able to turn their `selected` value on while maintaining a single selection after an initial selection is made.
 
 ```html
 <sp-action-group
@@ -117,7 +117,7 @@ An `<sp-action-group selects="single">` will manage its `<sp-action-button>` chi
 
 ### Multiple
 
-An `<sp-action-group selects="multiple">` will manage its `<sp-action-button>` children as "chekboxes" allowing the user to select a _multiple_ of the buttons presented. The `<sp-action-button>` children will toggle their `selected` value on and off when clicked sucessively.
+An `<sp-action-group selects="multiple">` will manage its `<sp-action-button>` children as "checkboxes" allowing the user to select a _multiple_ of the buttons presented. The `<sp-action-button>` children will toggle their `selected` value on and off when clicked successively.
 
 ```html
 <sp-action-group
@@ -348,4 +348,131 @@ The `justified` attribute will cause the `<sp-action-group>` element to fill the
         <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </sp-action-group>
+```
+
+## Accessibility
+
+The accessibility `role` for an `<sp-action-group>` element depends on the manner in which items are selected. By default, `<sp-action-group selects="single">` will have `role="radiogroup"`, because it manages its children as a "radio group", while `<sp-action-group>` or `<sp-action-group selects="multiple">` will have `role="toolbar"`, which makes sense for a group of buttons or checkboxes between which one can navigate using the arrow keys.
+
+When more than one `<sp-action-group>` elements are combined together with in a toolbar, the `role` attribute for `<sp-action-group>` or `<sp-action-group selects="multiple">` should be overwritten using `role="group"` or `role="presentation"`, so that toolbars are not nested, as demonstrated in the following example of a hypothetical toolbar for formatting text within a rich text editor:
+
+<script type="module">
+    import '@spectrum-web-components/divider/sp-divider.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-bold.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-italic.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-underline.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-align-left.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-align-center.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-align-justify.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-align-right.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-bulleted.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-text-numbered.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-paste.js';
+    import '@spectrum-web-components/icons-workflow/icons/sp-icon-cut.js';
+</script>
+
+```html
+<div
+    aria-label="Text Formatting"
+    role="toolbar"
+    style="height: 32px; display: flex; gap: 6px"
+>
+    <sp-action-group
+        aria-label="Text Style"
+        selects="multiple"
+        role="group"
+        compact
+        emphasized
+    >
+        <sp-action-button label="Bold" value="bold">
+            <sp-icon-text-bold slot="icon"></sp-icon-text-bold>
+        </sp-action-button>
+        <sp-action-button label="Italic" value="italic">
+            <sp-icon-text-italic slot="icon"></sp-icon-text-italic>
+        </sp-action-button>
+        <sp-action-button label="Underline" value="underline">
+            <sp-icon-text-underline slot="icon"></sp-icon-text-underline>
+        </sp-action-button>
+    </sp-action-group>
+    <sp-divider
+        size="s"
+        style="align-self: stretch; height: auto;"
+        vertical
+    ></sp-divider>
+    <sp-action-group
+        aria-label="Text Align"
+        selects="single"
+        compact
+        emphasized
+    >
+        <sp-action-button label="Left" value="left" selected>
+            <sp-icon-text-align-left slot="icon"></sp-icon-text-align-left>
+        </sp-action-button>
+        <sp-action-button label="Center" value="center">
+            <sp-icon-text-align-center slot="icon"></sp-icon-text-align-center>
+        </sp-action-button>
+        <sp-action-button label="Right" value="right">
+            <sp-icon-text-align-right slot="icon"></sp-icon-text-align-right>
+        </sp-action-button>
+        <sp-action-button label="Justify" value="justify">
+            <sp-icon-text-align-justify
+                slot="icon"
+            ></sp-icon-text-align-justify>
+        </sp-action-button>
+    </sp-action-group>
+    <sp-divider
+        size="s"
+        style="align-self: stretch; height: auto;"
+        vertical
+    ></sp-divider>
+    <sp-action-group
+        aria-label="List Style"
+        selects="multiple"
+        role="group"
+        compact
+        emphasized
+    >
+        <sp-action-button
+            label="Bulleted"
+            value="bulleted"
+            onclick="
+                /* makes mutually exclusive checkbox */
+                this.selected &&
+                    requestAnimationFrame(() => this.parentElement.selected = []);
+                this.parentElement.selected = [];
+            "
+        >
+            <sp-icon-text-bulleted slot="icon"></sp-icon-text-bulleted>
+        </sp-action-button>
+        <sp-action-button
+            label="Numbering"
+            value="numbering"
+            onclick="
+                /* makes mutually exclusive checkbox */
+                this.selected && 
+                    requestAnimationFrame(() => this.parentElement.selected = []);
+                this.parentElement.selected = [];
+            "
+        >
+            <sp-icon-text-numbered slot="icon"></sp-icon-text-numbered>
+        </sp-action-button>
+    </sp-action-group>
+    <sp-divider
+        size="s"
+        style="align-self: stretch; height: auto;"
+        vertical
+    ></sp-divider>
+    <sp-action-group role="presentation" compact>
+        <sp-action-button disabled label="Copy" value="copy">
+            <sp-icon-copy slot="icon"></sp-icon-copy>
+        </sp-action-button>
+        <sp-action-button disabled label="Paste" value="paste">
+            <sp-icon-paste slot="icon"></sp-icon-paste>
+        </sp-action-button>
+        <sp-action-button disabled label="Cut" value="cut">
+            <sp-icon-cut slot="icon"></sp-icon-cut>
+        </sp-action-button>
+    </sp-action-group>
+</div>
 ```

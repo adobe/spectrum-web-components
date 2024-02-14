@@ -15,6 +15,7 @@ import {
     CSSResultGroup,
     supportsAdoptingStyleSheets,
 } from '@spectrum-web-components/base';
+import { version } from '@spectrum-web-components/base/src/version.js';
 
 declare global {
     interface Window {
@@ -95,6 +96,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private static defaultFragments: Set<FragmentName> = new Set(['spectrum']);
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
+    static VERSION = version;
 
     static get observedAttributes(): string[] {
         return ['color', 'scale', 'theme', 'lang', 'dir'];

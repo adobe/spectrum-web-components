@@ -24,16 +24,65 @@ When looking to leverage the `Textfield` base class as a type and/or for extensi
 import { Textfield } from '@spectrum-web-components/textfield';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
-<sp-field-label for="story-0">Background</sp-field-label>
+<sp-field-label size="s" for="story-0-s">Background</sp-field-label>
 <sp-textfield
-    id="story-0"
+    size="s"
+    id="story-0-s"
     multiline
     placeholder="Enter your life story"
 ></sp-textfield>
 ```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-field-label for="story-0-m">Background</sp-field-label>
+<sp-textfield
+    id="story-0-m"
+    multiline
+    placeholder="Enter your life story"
+></sp-textfield>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-field-label size="l" for="story-0-l">Background</sp-field-label>
+<sp-textfield
+    size="l"
+    id="story-0-l"
+    multiline
+    placeholder="Enter your life story"
+></sp-textfield>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-field-label size="xl" for="story-0-xl">Background</sp-field-label>
+<sp-textfield
+    size="xl"
+    id="story-0-xl"
+    multiline
+    placeholder="Enter your life story"
+></sp-textfield>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 
@@ -81,9 +130,7 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 
 ### Grows
 
-By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element.
-
-Note: When leveraging the `quiet` attribute, the `grows` attribute does not effect the final delivery of the element.
+By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element.
 
 ```html
 <div style="display: flex; flex-wrap: wrap;">
@@ -93,7 +140,7 @@ Note: When leveraging the `quiet` attribute, the `grows` attribute does not effe
             id="story-4"
             multiline
             placeholder="Enter your name"
-            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element."
         ></sp-textfield>
     </div>
     <div>
@@ -103,7 +150,7 @@ Note: When leveraging the `quiet` attribute, the `grows` attribute does not effe
             grows
             multiline
             placeholder="Enter your name"
-            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element."
         ></sp-textfield>
     </div>
     <div>
@@ -113,7 +160,7 @@ Note: When leveraging the `quiet` attribute, the `grows` attribute does not effe
             grows
             multiline
             placeholder="Enter your name"
-            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accommodate the full content of the element."
             quiet
         ></sp-textfield>
     </div>

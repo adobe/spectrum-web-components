@@ -13,6 +13,8 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import {
     Slider,
     SliderHandle,
@@ -113,7 +115,7 @@ const handleHandleEvent =
 
 export const Default = (args: StoryArgs = {}): TemplateResult => {
     return html`
-        <div style="width: 500px; margin: 12px 20px;">
+        <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
                 max="1"
                 min="0"
@@ -126,6 +128,109 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
             >
                 Opacity
             </sp-slider>
+        </div>
+    `;
+};
+
+export const Filled = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                variant="filled"
+                min="0"
+                value=".7"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Slider Label
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const FillStart = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                fill-start
+                min="0"
+                value=".7"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Slider label
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".7"
+                step="0.1"
+                fill-start="0.3"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Value Greater than Fill Start
+            </sp-slider>
+        </div>
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="20"
+                min="0"
+                value="5"
+                step="1"
+                fill-start="15"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                ...=${spreadProps(args)}
+            >
+                Value Less than Fill Start
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const autofocus = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                autofocus
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const minimalDOM = (): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider>Opacity</sp-slider>
         </div>
     `;
 };
@@ -322,7 +427,7 @@ editable.decorators = [editableDecorator];
 export const editableCustom = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div
-            style="width: 500px; margin: 12px 20px; --spectrum-slider-editable-number-field-width: 150px;"
+            style="width: 500px; margin: 12px 20px; --mod-stepper-width: 150px;"
         >
             <sp-slider
                 editable
@@ -342,6 +447,32 @@ export const editableCustom = (args: StoryArgs = {}): TemplateResult => {
 };
 
 editableCustom.decorators = [editableDecorator];
+
+export const editableWithoutVisibleLabels = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableWithoutVisibleLabels.args = {
+    labelVisibility: 'none',
+};
 
 export const hideStepper = (args: StoryArgs = {}): TemplateResult => {
     return html`
@@ -368,12 +499,26 @@ hideStepper.decorators = [editableDecorator];
 
 export const Gradient = (args: StoryArgs = {}): TemplateResult => {
     return html`
+        <style>
+            sp-slider {
+                --mod-slider-track-color: linear-gradient(
+                    to right,
+                    red,
+                    green 100%
+                );
+            }
+            sp-slider[dir='rtl'] {
+                --mod-slider-track-color: linear-gradient(
+                    to left,
+                    red,
+                    green 100%
+                );
+            }
+        </style>
         <div
             style="
                 width: 500px;
                 margin: 12px 20px;
-                --spectrum-slider-track-color:linear-gradient(to right, red, green 100%);
-                --spectrum-slider-track-color-rtl:linear-gradient(to left, red, green 100%);
             "
         >
             <sp-slider
@@ -402,6 +547,13 @@ export const tick = (args: StoryArgs = {}): TemplateResult => {
             max="92"
             ...=${spreadProps(args)}
         ></sp-slider>
+        <sp-slider
+            label="Slider Label"
+            variant="tick"
+            min="0"
+            max="92"
+            ...=${spreadProps(args)}
+        ></sp-slider>
     `;
 };
 tick.args = {
@@ -411,6 +563,14 @@ tick.args = {
 
 export const tickLabels = (args: StoryArgs = {}): TemplateResult => {
     return html`
+        <sp-slider
+            label="Slider Label"
+            tick-labels
+            variant="tick"
+            min="50"
+            max="75"
+            ...=${spreadProps(args)}
+        ></sp-slider>
         <sp-slider
             label="Slider Label"
             tick-labels
@@ -462,18 +622,20 @@ export const Quiet = (args: StoryArgs = {}): TemplateResult => {
 
 export const inPopover = (args: StoryArgs = {}): TemplateResult => {
     return html`
-        <sp-popover open dialog style="min-width: 0">
-            <sp-slider
-                editable
-                hide-stepper
-                quiet
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Intensity"
-                ...=${spreadProps(args)}
-            ></sp-slider>
+        <sp-popover open style="min-width: 0">
+            <sp-dialog no-divider>
+                <sp-slider
+                    editable
+                    hide-stepper
+                    quiet
+                    value="5"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    label="Intensity"
+                    ...=${spreadProps(args)}
+                ></sp-slider>
+            </sp-dialog>
         </sp-popover>
     `;
 };
@@ -531,11 +693,13 @@ export const TwoHandles = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="min"
+                    label="Minimum"
                     value="5"
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="max"
+                    label="Maximum"
                     value="250"
                 ></sp-slider-handle>
             </sp-slider>
@@ -567,11 +731,13 @@ export const TwoHandlesPt = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="min"
+                    label="Minimum"
                     value="5"
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="max"
+                    label="Maximum"
                     value="250"
                 ></sp-slider-handle>
             </sp-slider>
@@ -593,19 +759,31 @@ export const ThreeHandlesPc = (args: StoryArgs = {}): TemplateResult => {
                 max="255"
                 @input=${handleHandleEvent(args)}
                 @change=${handleHandleEvent(args)}
-                .formatOptions=${{
-                    style: 'unit',
-                    unit: 'pc',
-                }}
+                .formatOptions=${{ style: 'unit', unit: 'pc' }}
                 ...=${spreadProps(args)}
             >
                 Output Levels
-                <sp-slider-handle slot="handle" value="5"></sp-slider-handle>
-                <sp-slider-handle slot="handle" value="133"></sp-slider-handle>
-                <sp-slider-handle slot="handle" value="250"></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    value="5"
+                    label="Low"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    value="133"
+                    label="Mid"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    value="250"
+                    label="High"
+                ></sp-slider-handle>
             </sp-slider>
         </div>
     `;
+};
+ThreeHandlesPc.args = {
+    variant: 'range',
 };
 
 export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
@@ -623,12 +801,14 @@ export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="low"
+                    label="Low"
                     value="5"
                     max="next"
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="mid"
+                    label="Mid"
                     value="100"
                     min="previous"
                     max="next"
@@ -636,6 +816,7 @@ export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="high"
+                    label="High"
                     value="250"
                     min="previous"
                 ></sp-slider-handle>
@@ -644,6 +825,7 @@ export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 ThreeHandlesOrdered.args = {
+    variant: 'range',
     tickStep: 10,
 };
 
@@ -775,12 +957,14 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="black"
+                    label="Black"
                     value=${values.black}
                     .normalization=${blackNormalization}
                 ></sp-slider-handle>
                 <sp-slider-handle
                     slot="handle"
                     name="gray"
+                    label="Gray"
                     value="0.215"
                     min="0"
                     max="1"
@@ -791,6 +975,7 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
                 <sp-slider-handle
                     slot="handle"
                     name="white"
+                    label="White"
                     value=${values.white}
                     .normalization=${whiteNormalization}
                 ></sp-slider-handle>
@@ -798,7 +983,8 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
         </div>
     `;
 };
-ThreeHandlesOrdered.args = {
+ThreeHandlesComplex.args = {
+    variant: 'range',
     tickStep: 10,
 };
 

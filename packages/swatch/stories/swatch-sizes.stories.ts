@@ -15,7 +15,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
-import '../sp-swatch.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
 
 export default {
     title: 'Swatch/Sizes',

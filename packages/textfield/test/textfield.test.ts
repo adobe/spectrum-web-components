@@ -18,7 +18,11 @@ import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
+import {
+    isFirefox,
+    isWebKit,
+} from '@spectrum-web-components/shared/src/platform.js';
+import { fixture } from '../../../test/testing-helpers.js';
 
 describe('Textfield', () => {
     testForLitDevWarnings(
@@ -117,23 +121,81 @@ describe('Textfield', () => {
             : null;
         expect(input).to.not.be.null;
     });
-    it('resizes by default', async () => {
+    it('multiline with rows', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    multiline
+                    rows="5"
+                ></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('textarea')
+            : null;
+        expect(input).to.not.be.null;
+        expect(input?.getAttribute('rows')).to.equal('5');
+    });
+    it('multiline with 1 row has smaller height than multiline without explicit rows', async () => {
+        const oneRowEl = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    multiline
+                    rows="1"
+                ></sp-textfield>
+            `
+        );
+        expect(oneRowEl).to.not.equal(undefined);
+        const oneRowTextarea = oneRowEl.shadowRoot
+            ? oneRowEl.shadowRoot.querySelector('textarea')
+            : null;
+        expect(oneRowTextarea).to.not.be.null;
+        expect(oneRowTextarea?.getAttribute('rows')).to.equal('1');
+
+        const defaultEL = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    multiline
+                ></sp-textfield>
+            `
+        );
+        expect(defaultEL).to.not.equal(undefined);
+        const defaultTextarea = oneRowEl.shadowRoot
+            ? defaultEL.shadowRoot.querySelector('textarea')
+            : null;
+        expect(defaultTextarea).to.not.be.null;
+        expect(defaultTextarea?.getAttribute('rows')).to.be.null;
+
+        const boundsDefaultElement = defaultTextarea?.getBoundingClientRect();
+        const boundsOneRowElement = oneRowTextarea?.getBoundingClientRect();
+        expect(boundsDefaultElement?.height).to.be.greaterThan(
+            boundsOneRowElement?.height ?? 0
+        );
+    });
+    it('multiline with rows does not resize', async () => {
         const el = await litFixture<Textfield>(
             html`
                 <sp-textfield
                     multiline
+                    rows="5"
                     label="No resize control"
                     placeholder="No resize control"
                 ></sp-textfield>
             `
         );
-        const startBounds = el.getBoundingClientRect();
-
+        // Resizing only effects the block size of the host rect, so measure the `focusElement` when resizing.
+        const sizedElement = (el as HTMLElement & { focusElement: HTMLElement })
+            .focusElement;
+        const startBounds = sizedElement.getBoundingClientRect();
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: [startBounds.right - 2, startBounds.bottom - 2],
+                    position: [startBounds.right - 6, startBounds.bottom - 6],
                 },
                 {
                     type: 'down',
@@ -148,9 +210,49 @@ describe('Textfield', () => {
             ],
         });
 
-        const endBounds = el.getBoundingClientRect();
-        expect(endBounds.width).to.be.greaterThan(startBounds.width);
+        const endBounds = sizedElement.getBoundingClientRect();
+        expect(endBounds.height).equals(startBounds.height);
+        expect(endBounds.width).equals(startBounds.width);
+    });
+    it('resizes by default', async function () {
+        if (isWebKit()) {
+            this.skip();
+        }
+        const el = await fixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    label="No resize control"
+                    placeholder="No resize control"
+                ></sp-textfield>
+            `
+        );
+        // Resizing only effects the block size of the host rect, so measure the `focusElement` when resizing.
+        const sizedElement = (el as HTMLElement & { focusElement: HTMLElement })
+            .focusElement;
+        const startBounds = sizedElement.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [startBounds.right - 6, startBounds.bottom - 6],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'move',
+                    position: [startBounds.right + 50, startBounds.bottom + 50],
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        const endBounds = sizedElement.getBoundingClientRect();
         expect(endBounds.height).to.be.greaterThan(startBounds.height);
+        expect(endBounds.width).to.be.greaterThan(startBounds.width);
     });
     it('accepts resize styling', async () => {
         const el = await litFixture<Textfield>(
@@ -204,6 +306,23 @@ describe('Textfield', () => {
             : null;
         expect(sizer).to.not.be.null;
     });
+    it('multiline with rows and grows does not grow', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    multiline
+                    grows
+                    rows="5"
+                ></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        const sizer = el.shadowRoot
+            ? el.shadowRoot.querySelector('#sizer')
+            : null;
+        expect(sizer).to.be.null;
+    });
     it('valid', async () => {
         const el = await litFixture<Textfield>(
             html`
@@ -222,6 +341,34 @@ describe('Textfield', () => {
             ? el.shadowRoot.querySelector('#valid')
             : null;
         expect(input).to.not.be.null;
+    });
+    it('handles `name` attribute', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield placeholder="Enter your name"></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        expect(el.name).to.be.undefined;
+
+        el.setAttribute('name', 'test');
+        expect(el.name).to.be.equal('test');
+    });
+    it('handles `name` attribute with multiline', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    name="name"
+                    placeholder="Enter your name"
+                    multiline
+                ></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('textarea')
+            : null;
+        expect(input?.name).to.equal('name');
     });
     it('valid - multiline', async () => {
         const el = await litFixture<Textfield>(
@@ -318,6 +465,41 @@ describe('Textfield', () => {
             ? el.shadowRoot.querySelector('#valid')
             : null;
         expect(input).to.not.be.null;
+    });
+    it('valid - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="^[\\d]+$"
+                    value="123"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#valid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.not.have.attribute('title');
+    });
+    it('valid - multiline - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    placeholder="Enter your number"
+                    pattern="^[\\d]+$"
+                    value="123"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#valid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.not.have.attribute('title');
     });
     it('valid - unicode', async () => {
         const el = await litFixture<Textfield>(
@@ -491,6 +673,43 @@ describe('Textfield', () => {
             ? el.shadowRoot.querySelector('#invalid')
             : null;
         expect(input).to.not.be.null;
+    });
+    it('invalid - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    type="url"
+                    value="invalid-email"
+                    invalid
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#invalid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.have.attribute('title');
+    });
+    it('invalid - multiline - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    placeholder="Enter your number"
+                    type="url"
+                    value="invalid-email"
+                    invalid
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot.querySelector('#invalid');
+        expect(input).to.not.be.null;
+        expect(el.focusElement).to.have.attribute('title');
     });
     it('invalid - multiline - boundary-type assertions', async () => {
         const el = await litFixture<Textfield>(

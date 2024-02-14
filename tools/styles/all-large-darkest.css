@@ -11,6 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import 'core-global.css';
-@import 'fonts.css';
+@import 'typography.css';
 @import 'theme-darkest.css';
 @import 'scale-large.css';

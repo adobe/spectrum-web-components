@@ -38,7 +38,6 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ```html
 <sp-split-button size="s">
-    Split Button
     <sp-menu-item>Option 1</sp-menu-item>
     <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
@@ -50,7 +49,6 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ```html
 <sp-split-button size="m">
-    Split Button
     <sp-menu-item>Option 1</sp-menu-item>
     <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>

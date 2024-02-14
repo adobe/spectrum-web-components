@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/shared",
-    "version": "0.15.6",
+    "version": "0.40.5",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,10 @@
             "development": "./src/focus-visible.dev.js",
             "default": "./src/focus-visible.js"
         },
+        "./src/focusable-selectors.js": {
+            "development": "./src/focusable-selectors.dev.js",
+            "default": "./src/focusable-selectors.js"
+        },
         "./src/focusable.js": {
             "development": "./src/focusable.dev.js",
             "default": "./src/focusable.js"
@@ -44,6 +48,10 @@
         "./src/get-deep-element-from-point.js": {
             "development": "./src/get-deep-element-from-point.dev.js",
             "default": "./src/get-deep-element-from-point.js"
+        },
+        "./src/get-label-from-slot.js": {
+            "development": "./src/get-label-from-slot.dev.js",
+            "default": "./src/get-label-from-slot.js"
         },
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -64,6 +72,10 @@
         "./src/platform.js": {
             "development": "./src/platform.dev.js",
             "default": "./src/platform.js"
+        },
+        "./src/random-id.js": {
+            "development": "./src/random-id.dev.js",
+            "default": "./src/random-id.js"
         },
         "./src/reparent-children.js": {
             "development": "./src/reparent-children.dev.js",
@@ -88,8 +100,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^1.0.1",
-        "@spectrum-web-components/base": "^0.7.5",
+        "@lit-labs/observers": "^2.0.0",
+        "@spectrum-web-components/base": "^0.40.5",
         "focus-visible": "^5.1.0"
     },
     "types": "./src/index.d.ts",

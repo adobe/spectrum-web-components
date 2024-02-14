@@ -113,17 +113,19 @@ class OverlayDrag extends LitElement {
         ) as HTMLElement;
         if (!this.targetElement) return;
 
-        this.targetElement.addEventListener('mousedown', (event) =>
-            this.onMouseDown(event)
+        this.targetElement.addEventListener(
+            'pointerdown',
+            (event: PointerEvent) => this.onMouseDown(event)
         );
 
         this.resetTargetPosition();
     }
 
-    private onMouseDown(event: MouseEvent): void {
+    private onMouseDown(event: PointerEvent): void {
         const target = event.target as HTMLElement;
         const parent = target.parentElement;
         if (!parent) return;
+        target.setPointerCapture(event.pointerId);
 
         const max = {
             x: parent.offsetWidth - target.offsetWidth,
@@ -152,13 +154,14 @@ class OverlayDrag extends LitElement {
             Overlay.update();
         };
 
-        const onMouseUp = (): void => {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
+        const onMouseUp = (event: PointerEvent): void => {
+            target.setPointerCapture(event.pointerId);
+            document.removeEventListener('pointermove', onMouseMove);
+            document.removeEventListener('pointerup', onMouseUp);
         };
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('pointermove', onMouseMove);
+        document.addEventListener('pointerup', onMouseUp);
     }
 
     public resetTargetPosition(): void {
@@ -286,23 +289,23 @@ class RecursivePopover extends LitElement {
                     Open Popover
                 </sp-button>
                 <sp-popover
-                    dialog
                     slot="click-content"
                     direction="${this.placement}"
                     tip
-                    open
                 >
-                    ${this.depth < MAX_DEPTH
-                        ? html`
-                              <recursive-popover
-                                  position="${this.placement}"
-                                  depth="${this.depth + 1}"
-                                  tabindex="0"
-                              ></recursive-popover>
-                          `
-                        : html`
-                              <div>Maximum Depth</div>
-                          `}
+                    <sp-dialog size="s" no-divider>
+                        ${this.depth < MAX_DEPTH
+                            ? html`
+                                  <recursive-popover
+                                      position="${this.placement}"
+                                      depth="${this.depth + 1}"
+                                      tabindex="0"
+                                  ></recursive-popover>
+                              `
+                            : html`
+                                  <div>Maximum Depth</div>
+                              `}
+                    </sp-dialog>
                 </sp-popover>
             </overlay-trigger>
         `;
@@ -319,13 +322,15 @@ export class PopoverContent extends LitElement {
 
     override render(): TemplateResult {
         return html`
-            <overlay-trigger>
+            <overlay-trigger type="modal" placement="bottom">
                 <sp-button slot="trigger">Open me</sp-button>
-                <sp-popover slot="click-content" direction="bottom" dialog>
-                    <p>This is all the content.</p>
-                    <p>This is all the content.</p>
-                    <p>This is all the content.</p>
-                    <p>This is all the content.</p>
+                <sp-popover slot="click-content" direction="bottom">
+                    <sp-dialog no-divider>
+                        <p>This is all the content.</p>
+                        <p>This is all the content.</p>
+                        <p>This is all the content.</p>
+                        <p>This is all the content.</p>
+                    </sp-dialog>
                 </sp-popover>
             </overlay-trigger>
         `;
@@ -339,3 +344,35 @@ declare global {
         'popover-content': PopoverContent;
     }
 }
+
+export default class TransientHover extends LitElement {
+    @property()
+    open = false;
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-button variant="primary" id="triggerButton">
+                Button popover
+            </sp-button>
+            <sp-overlay
+                type="auto"
+                trigger="triggerButton@click"
+                @sp-opened=${() => {
+                    this.open = true;
+                }}
+            >
+                <sp-popover>My Popover</sp-popover>
+            </sp-overlay>
+
+            ${!this.open
+                ? html`
+                      <sp-overlay trigger="triggerButton@hover" type="hint">
+                          <sp-tooltip placement="right">My tooltip</sp-tooltip>
+                      </sp-overlay>
+                  `
+                : html``}
+        `;
+    }
+}
+
+customElements.define('transient-hover', TransientHover);

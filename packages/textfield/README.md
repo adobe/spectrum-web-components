@@ -24,12 +24,58 @@ When looking to leverage the `Textfield` base class as a type and/or for extensi
 import { Textfield } from '@spectrum-web-components/textfield';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
-<sp-field-label for="name-0">Name</sp-field-label>
-<sp-textfield id="name-0" placeholder="Enter your name"></sp-textfield>
+<sp-field-label size="s" for="name-0-s">Name</sp-field-label>
+<sp-textfield
+    size="s"
+    id="name-0-s"
+    placeholder="Enter your name"
+></sp-textfield>
 ```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-field-label for="name-0-m">Name</sp-field-label>
+<sp-textfield id="name-0-m" placeholder="Enter your name"></sp-textfield>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-field-label size="l" for="name-0-l">Name</sp-field-label>
+<sp-textfield
+    size="l"
+    id="name-0-l"
+    placeholder="Enter your name"
+></sp-textfield>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-field-label size="xl" for="name-0-xl">Name</sp-field-label>
+<sp-textfield
+    size="xl"
+    id="name-0-xl"
+    placeholder="Enter your name"
+></sp-textfield>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 

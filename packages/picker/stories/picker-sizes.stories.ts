@@ -51,10 +51,12 @@ type StoryArgs = {
     onChange: (val: string) => void;
     invalid: boolean;
     loading: boolean;
+    open: false;
 };
 
 const picker = ({
     onChange,
+    open,
     size,
     loading,
     invalid,
@@ -63,6 +65,7 @@ const picker = ({
     size: 's' | 'm' | 'l' | 'xl';
     loading: boolean;
     invalid: boolean;
+    open: boolean;
 }): TemplateResult => {
     return html`
         <sp-field-label for="picker-${size}" size=${size}>
@@ -78,12 +81,12 @@ const picker = ({
             label="Select a Country with a very long label, too long, in fact"
             ?loading="${loading}"
             ?invalid="${invalid}"
+            ?open=${open}
         >
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>
             <sp-menu-item>Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
             <sp-menu-item>Save Selection</sp-menu-item>
             <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-picker>
@@ -93,11 +96,23 @@ const picker = ({
 export const s = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 's' });
 
+export const sOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 's' });
+
 export const m = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'm' });
+
+export const mOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 'm' });
 
 export const l = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'l' });
 
+export const lOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 'l' });
+
 export const XL = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'xl' });
+
+export const XLOpen = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, open: true, size: 'xl' });

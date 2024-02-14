@@ -22,7 +22,6 @@ governing permissions and limitations under the License.
     flex-direction: row;
 }
 .group {
-    align-items: top;
     display: flex;
     flex-flow: column wrap;
 }

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/checkbox",
-    "version": "0.14.13",
+    "version": "0.40.5",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,10 @@
             "development": "./src/CheckboxBase.dev.js",
             "default": "./src/CheckboxBase.js"
         },
+        "./src/CheckboxMixin.js": {
+            "development": "./src/CheckboxMixin.dev.js",
+            "default": "./src/CheckboxMixin.js"
+        },
         "./src/checkbox.css.js": "./src/checkbox.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -61,13 +65,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/icon": "^0.12.10",
-        "@spectrum-web-components/icons-ui": "^0.9.11",
-        "@spectrum-web-components/shared": "^0.15.6"
+        "@spectrum-web-components/base": "^0.40.5",
+        "@spectrum-web-components/icon": "^0.40.5",
+        "@spectrum-web-components/icons-ui": "^0.40.5",
+        "@spectrum-web-components/shared": "^0.40.5"
     },
     "devDependencies": {
-        "@spectrum-css/checkbox": "^6.0.2"
+        "@spectrum-css/checkbox": "^8.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

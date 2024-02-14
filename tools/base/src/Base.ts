@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, ReactiveElement } from 'lit';
+import { version } from '@spectrum-web-components/base/src/version.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -79,8 +80,34 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         }
 
         public hasVisibleFocusInTree(): boolean {
-            const activeElement = (this.getRootNode() as Document)
-                .activeElement as HTMLElement;
+            const getAncestors = (root: Document = document): HTMLElement[] => {
+                // eslint-disable-next-line @spectrum-web-components/document-active-element
+                let currentNode = root.activeElement as HTMLElement;
+                while (
+                    currentNode?.shadowRoot &&
+                    currentNode.shadowRoot.activeElement
+                ) {
+                    currentNode = currentNode.shadowRoot
+                        .activeElement as HTMLElement;
+                }
+                const ancestors: HTMLElement[] = currentNode
+                    ? [currentNode]
+                    : [];
+                while (currentNode) {
+                    const ancestor =
+                        currentNode.assignedSlot ||
+                        currentNode.parentElement ||
+                        (currentNode.getRootNode() as ShadowRoot)?.host;
+                    if (ancestor) {
+                        ancestors.push(ancestor as HTMLElement);
+                    }
+                    currentNode = ancestor as HTMLElement;
+                }
+                return ancestors;
+            };
+            const activeElement = getAncestors(
+                this.getRootNode() as Document
+            )[0];
             if (!activeElement) {
                 return false;
             }
@@ -157,7 +184,9 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     return SpectrumMixinElement;
 }
 
-export class SpectrumElement extends SpectrumMixin(LitElement) {}
+export class SpectrumElement extends SpectrumMixin(LitElement) {
+    static VERSION = version;
+}
 
 if (window.__swc.DEBUG) {
     const ignoreWarningTypes = {

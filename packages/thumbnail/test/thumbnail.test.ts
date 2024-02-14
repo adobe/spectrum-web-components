@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-thumbnail.js';
+import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import { Thumbnail } from '..';
 import { thumbnail } from '../stories/images.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
@@ -41,10 +41,10 @@ describe('Thumbnail', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('can be size `xxs`', async () => {
+    it('can be size `50`', async () => {
         const el = await fixture<Thumbnail>(
             html`
-                <sp-thumbnail size="xxs">
+                <sp-thumbnail size="50">
                     <img src=${thumbnail} alt="Woman crouching" />
                 </sp-thumbnail>
             `
@@ -52,7 +52,7 @@ describe('Thumbnail', () => {
 
         await elementUpdated(el);
 
-        expect(el.size).to.equal('xxs');
+        expect(el.size).to.equal('50');
     });
     it('accepts `background`', async () => {
         const el = await fixture<Thumbnail>(

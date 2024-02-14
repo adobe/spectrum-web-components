@@ -42,23 +42,9 @@ import {
 } from '../stories/table-virtualized.stories.js';
 import { makeItems, Properties, renderItem } from '../stories/index.js';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
-import { virtualizerRef } from '@lit-labs/virtualizer/virtualize.js';
-import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
-import { TemplateResult } from '@spectrum-web-components/base';
-import { Theme } from '@spectrum-web-components/theme';
+import { styledFixture, tableLayoutComplete } from './helpers.js';
 
 ignoreResizeObserverLoopError(before, after);
-
-async function styledFixture<T extends Element>(
-    story: TemplateResult
-): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme theme="classic" scale="medium" color="light">
-            ${story}
-        </sp-theme>
-    `);
-    return test.children[0] as T;
-}
 
 describe('Virtualized Table Selects', () => {
     it('selects and deselects all checkboxes in Virtualized Table when clicking the TableHeadCheckboxCell', async () => {
@@ -162,13 +148,12 @@ describe('Virtualized Table Selects', () => {
             `
         );
         const el = test.querySelector('sp-table') as Table;
+        const body = el.querySelector('sp-table-body') as TableBody;
 
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
+        await tableLayoutComplete(el);
 
         expect(el.selected, "'Row 50 selected").to.deep.equal(['49']);
 
-        const body = el.querySelector('sp-table-body') as unknown as TableBody;
         body.scrollTop = body.scrollHeight;
 
         await nextFrame();
@@ -177,6 +162,8 @@ describe('Virtualized Table Selects', () => {
         await elementUpdated(body);
 
         const lastRow = el.querySelector('[value="49"]') as TableRow;
+        expect(lastRow).to.not.be.null;
+
         const lastRowCheckboxCell = lastRow.querySelector(
             'sp-table-checkbox-cell'
         ) as TableCheckboxCell;
@@ -194,12 +181,8 @@ describe('Virtualized Table Selects', () => {
         );
         const el = test.querySelector('sp-table') as Table;
         el.selected = [];
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
-        const body = el.querySelector('sp-table-body') as unknown as {
-            [virtualizerRef]: Virtualizer;
-        };
-        await body[virtualizerRef].layoutComplete;
+
+        await tableLayoutComplete(el);
 
         const rowTwo = el.querySelector('[value="1"]') as TableRow;
         const rowTwoCheckbox = rowTwo.querySelector(
@@ -240,19 +223,15 @@ describe('Virtualized Table Selects', () => {
             `
         );
         const el = test.querySelector('sp-table') as Table;
+        const body = el.querySelector('sp-table-body') as TableBody;
 
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
+        await tableLayoutComplete(el);
 
         expect(el.selected).to.deep.equal(['0', '48']);
 
-        const body = el.querySelector('sp-table-body') as unknown as TableBody;
         body.scrollTop = body.scrollHeight;
 
-        await nextFrame();
-        await nextFrame();
-        await elementUpdated(el);
-        await elementUpdated(body);
+        await tableLayoutComplete(el);
 
         const unseenRow = el.querySelector('[value="48"]') as TableRow;
         expect(unseenRow).to.not.be.null;
@@ -275,12 +254,8 @@ describe('Virtualized Table Selects', () => {
         );
         const el = test.querySelector('sp-table') as Table;
         el.selected = [];
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
-        const body = el.querySelector('sp-table-body') as unknown as {
-            [virtualizerRef]: Virtualizer;
-        };
-        await body[virtualizerRef].layoutComplete;
+
+        await tableLayoutComplete(el);
 
         const rowTwo = el.querySelector('[value="2"]') as TableRow;
         const tableHeadCheckboxCell = el.querySelector(
@@ -317,12 +292,7 @@ describe('Virtualized Table Selects', () => {
         );
         const el = test.querySelector('sp-table') as Table;
         el.selected = ['1'];
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
-        const body = el.querySelector('sp-table-body') as unknown as {
-            [virtualizerRef]: Virtualizer;
-        };
-        await body[virtualizerRef].layoutComplete;
+        await tableLayoutComplete(el);
 
         const rowOne = el.querySelector('[value="1"]') as TableRow;
         const rowOneCheckboxCell = rowOne.querySelector(
@@ -353,12 +323,8 @@ describe('Virtualized Table Selects', () => {
     it('allows [selects] to be changed by the application', async () => {
         const test = await fixture<HTMLElement>(virtualized());
         const el = test.shadowRoot?.querySelector('sp-table') as Table;
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
-        const body = el.querySelector('sp-table-body') as unknown as {
-            [virtualizerRef]: Virtualizer;
-        };
-        await body[virtualizerRef].layoutComplete;
+
+        await tableLayoutComplete(el);
 
         expect(el.selects).to.be.undefined;
 
@@ -427,13 +393,10 @@ describe('Virtualized Table Selects', () => {
     it('selects a user-passed value for .selected array with no [selects] specified on Virtualized `<sp-table>`, but does not allow interaction afterwards', async () => {
         const test = await fixture<HTMLElement>(virtualized());
         const el = test.shadowRoot?.querySelector('sp-table') as Table;
+
         el.selected = ['0'];
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
-        const body = el.querySelector('sp-table-body') as unknown as {
-            [virtualizerRef]: Virtualizer;
-        };
-        await body[virtualizerRef].layoutComplete;
+
+        await tableLayoutComplete(el);
 
         expect(el.selected.length).to.equal(1);
 
@@ -458,9 +421,9 @@ describe('Virtualized Table Selects', () => {
             `
         );
         const el = test.querySelector('sp-table') as Table;
+        const body = el.querySelector('sp-table-body') as TableBody;
 
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
+        await tableLayoutComplete(el);
 
         const rowOne = el.querySelector('[value="0"]') as TableRow;
         const rowOneCheckboxCell = rowOne.querySelector(
@@ -471,7 +434,6 @@ describe('Virtualized Table Selects', () => {
         expect(rowOne.selected).to.be.true;
         expect(rowOneCheckboxCell.checkbox.checked).to.be.true;
 
-        const body = el.querySelector('sp-table-body') as unknown as TableBody;
         body.scrollTop = body.scrollHeight;
 
         await nextFrame();
@@ -500,12 +462,7 @@ describe('Virtualized Table Selects', () => {
         );
         const el = test.querySelector('sp-table') as Table;
 
-        await oneEvent(el, 'rangeChanged');
-        await elementUpdated(el);
-        const body = el.querySelector('sp-table-body') as unknown as {
-            [virtualizerRef]: Virtualizer;
-        };
-        await body[virtualizerRef].layoutComplete;
+        await tableLayoutComplete(el);
 
         const rowOne = el.querySelector('[value="0"]') as TableRow;
         const rowOneCheckboxCell = rowOne.querySelector(

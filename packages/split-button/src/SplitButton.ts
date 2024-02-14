@@ -47,6 +47,7 @@ export type SplitButtonTypes = 'field' | 'more';
  * @element sp-split-button
  *
  * @slot - menu items to be listed in the Button
+ * @slot tooltip - Tooltip to to be applied to the the main Button
  **/
 export class SplitButton extends SizedMixin(PickerBase) {
     public static override get styles(): CSSResultArray {
@@ -61,10 +62,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
      */
     @property({ reflect: true })
     public variant: ButtonVariants = 'accent';
-
-    public override get target(): HTMLButtonElement | this {
-        return this;
-    }
 
     @property({ type: String })
     public type: SplitButtonTypes = 'field';
@@ -83,10 +80,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
             return this.trigger;
         }
         return this.button;
-    }
-
-    protected override sizePopover(popover: HTMLElement): void {
-        popover.style.setProperty('min-width', `${this.offsetWidth}px`);
     }
 
     private passClick(): void {
@@ -109,6 +102,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 >
                     ${this.selectedItem?.itemText || ''}
                 </div>
+                <slot name="tooltip"></slot>
             `,
         ];
     }
@@ -121,9 +115,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 this.selects = 'single';
             }
         }
-        if (changes.has('value')) {
-            this.manageSplitButtonItems();
-        }
         super.update(changes);
     }
 
@@ -134,7 +125,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
         const buttons: TemplateResult[] = [
             html`
                 <sp-button
-                    aria-label=${ifDefined(this.label || undefined)}
+                    aria-label=${ifDefined(
+                        this.label || this.selectedItem?.itemText || undefined
+                    )}
                     id="button"
                     class="button ${this.variant}"
                     @click=${this.passClick}
@@ -150,12 +143,18 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 <sp-button
                     aria-haspopup="true"
                     aria-expanded=${this.open ? 'true' : 'false'}
+                    aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                     class="button trigger ${this.variant}"
-                    @blur=${this.onButtonBlur}
-                    @click=${this.onButtonClick}
-                    @focus=${this.onButtonFocus}
+                    @blur=${this.handleButtonBlur}
+                    @click=${this.handleActivate}
+                    @pointerdown=${this.handleButtonPointerdown}
+                    @focus=${this.handleButtonFocus}
+                    @keydown=${{
+                        handleEvent: this.handleEnterKeydown,
+                        capture: true,
+                    }}
                     ?disabled=${this.disabled}
-                    aria-label="More"
+                    aria-labelledby="button"
                     variant=${this.variant}
                     treatment=${treatment}
                     size=${this.size}
@@ -170,7 +169,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
                               ></sp-icon-chevron100>
                           `
                         : html`
-                              <sp-icon-more></sp-icon-more>
+                              <sp-icon-more
+                                  class="icon"
+                                  slot="icon"
+                              ></sp-icon-more>
                           `}
                 </sp-button>
             `,
@@ -179,8 +181,12 @@ export class SplitButton extends SizedMixin(PickerBase) {
             buttons.reverse();
         }
         return html`
-            ${buttons}
+            ${buttons} ${this.renderMenu}
         `;
+    }
+
+    protected override bindButtonKeydownListener(): void {
+        this.trigger.addEventListener('keydown', this.handleKeydown);
     }
 
     protected override async manageSelection(): Promise<void> {
@@ -190,7 +196,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
 
     private async manageSplitButtonItems(): Promise<void> {
         if (!this.menuItems.length) {
-            await this.updateComplete;
+            await this.optionsMenu.updateComplete;
             if (!this.menuItems.length) {
                 return;
             }

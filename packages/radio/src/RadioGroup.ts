@@ -34,7 +34,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })
     public name = '';
 
-    @queryAssignedNodes('')
+    @queryAssignedNodes()
     public defaultNodes!: Node[];
 
     public get buttons(): Radio[] {
@@ -52,7 +52,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
             });
         },
         elementEnterAction: (el: Radio) => {
-            this.selected = el.value;
+            this._setSelected(el.value);
         },
         elements: () => this.buttons,
         isFocusableElement: (el: Radio) => !el.disabled,

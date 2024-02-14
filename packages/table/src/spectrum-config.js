@@ -31,10 +31,13 @@ const config = {
             fileName: 'table',
             components: [
                 converter.classToHost(),
+                converter.classToAttribute('spectrum-Table--quiet'),
+                converter.classToAttribute('spectrum-Table--emphasized'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Table--sizeS', 's'],
-                        ['spectrum-Table--sizeM', 'm'],
+                        ['spectrum-Table--sizeL', 'l'],
+                        ['spectrum-Table--sizeXL', 'xl'],
                     ],
                     'size'
                 ),
@@ -101,16 +104,81 @@ const config = {
             outPackage: 'table',
             fileName: 'table-checkbox-cell',
             components: [
-                converterCell.classToHost('spectrum-Table-checkboxCell'),
-                converter.classToClass('spectrum-Table-checkbox'),
+                converterHeadCell.classToAttribute(
+                    'spectrum-Table-headCell',
+                    'head-cell'
+                ),
+                converter.classToAttribute('is-sortable', 'sortable'),
+                converter.classToAttribute('is-focused', 'focused'),
+                converter.pseudoToAttribute('active', 'active'),
+                {
+                    find: [builder.class('spectrum-Table-cell')],
+                    replace: [
+                        //:host(:not([head-cell]))
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'not',
+                                        selectors: [
+                                            [builder.attribute('head-cell')],
+                                        ],
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+                {
+                    find: [builder.class('spectrum-Table-checkboxCell')],
+                    replace: [
+                        //:host(:host) for increased specificity, to be higher than [head-cell] selectors.
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'host',
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+                {
+                    find: [builder.class('spectrum-Table-checkbox')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'type',
+                                name: 'sp-checkbox',
+                            },
+                        },
+                    ],
+                },
             ],
             excludeByComponents: [
                 builder.class('spectrum-Table'),
+                // Also include all Table-cell and Table-headCell classes.
+                // They are converted to selectors with or without the [head-cell] attribute.
                 {
                     type: 'class',
                     name: 'regex',
-                    regex: /spectrum-Table-(?!checkbox)/,
+                    regex: /spectrum-Table-(?!checkbox|headCell|cell)/,
                 },
+                builder.class('is-sortable'),
+                // Unneeded cell modifier classes (align*, collapsible, divider).
+                {
+                    type: 'class',
+                    regex: /spectrum-Table-cell--/,
+                    name: 'regex',
+                },
+                builder.element('div'),
             ],
         },
         {
@@ -125,6 +193,7 @@ const config = {
                     regex: /spectrum-Table-head$/,
                 },
             ],
+            excludeByComponents: [builder.attribute('role')],
         },
         {
             inPackage: '@spectrum-css/table',
@@ -168,9 +237,60 @@ const config = {
             fileName: 'table-row',
             components: [
                 converter.classToHost('spectrum-Table-row'),
+                {
+                    find: builder.pseudoClass('first-child'),
+                    replace: builder.pseudoClass('first-child'),
+                    hoist: true,
+                },
+                {
+                    find: builder.pseudoClass('last-child'),
+                    replace: builder.pseudoClass('last-child'),
+                    hoist: true,
+                },
+                converter.classToAttribute(
+                    'spectrum-Table-row--emphasized',
+                    'emphasized'
+                ),
                 converter.classToAttribute('is-drop-target', 'drop-target'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-focused', 'focused'),
+                converter.classToSlotted('spectrum-Table-cell'),
+                {
+                    find: [
+                        builder.class('spectrum-Table-cell'),
+                        builder.pseudoClass('first-child'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [builder.pseudoClass('first-child')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Table-cell'),
+                        builder.pseudoClass('last-child'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [builder.pseudoClass('last-child')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                    ],
+                },
             ],
             requireComponentPresence: [
                 {

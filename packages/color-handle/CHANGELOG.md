@@ -3,6 +3,123 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+### Bug Fixes
+
+-   update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
+
+## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+
+### Bug Fixes
+
+-   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+
+### Features
+
+-   **color-slider:** migrate to core tokens ([#3507](https://github.com/adobe/spectrum-web-components/issues/3507)) ([96d0d40](https://github.com/adobe/spectrum-web-components/commit/96d0d40419e9f0b2d1ed77528dc062b1e62aeea5))
+
+# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.33.0](https://github.com/adobe/spectrum-web-components/compare/v0.32.0...v0.33.0) (2023-06-08)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Bug Fixes
+
+-   **color-handle,color-loupe:** accept updated CSS token names ([8c28f6d](https://github.com/adobe/spectrum-web-components/commit/8c28f6d002973bf7398f134ca4e73be8fee967dd))
+
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+-   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+-   include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+-   leverage Color Controller to unify color interface across packages ([fb71690](https://github.com/adobe/spectrum-web-components/commit/fb7169066fd4f15aee594c463cc4cdbf7f550a5e))
+-   manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+-   prevent focus outline ([af2b077](https://github.com/adobe/spectrum-web-components/commit/af2b07704ae01409649be3ee1b45c15463cd9baf))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   **color-handle:** add color-handle pattern ([e3856d8](https://github.com/adobe/spectrum-web-components/commit/e3856d8894d91336d073c639b8fbc6f35d3d1276))
+-   **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
+-   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.9...@spectrum-web-components/color-handle@0.5.0) (2023-04-24)
+
+### Features
+
+-   **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
+-   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.8...@spectrum-web-components/color-handle@0.4.9) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/color-handle

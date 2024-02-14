@@ -22,8 +22,6 @@ import linkStyles from './link.css.js';
 
 /**
  * @element sp-link
- *
- * @attr over-background - uses over background styles or not
  */
 export class Link extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {

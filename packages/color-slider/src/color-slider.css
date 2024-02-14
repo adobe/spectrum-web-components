@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-color-slider.css';
+@import url('./spectrum-color-slider.css');
 
 :host {
     --sp-color-slider-gradient-fallback: rgb(255 0 0) 0%, rgb(255 255 0) 17%,
@@ -18,6 +18,15 @@ governing permissions and limitations under the License.
         rgb(255 0 255) 83%, rgb(255 0 0) 100%;
 
     touch-action: none;
+}
+
+:host([vertical]) .handle {
+    inset-block-start: unset;
+    inset-block-end: 0;
+}
+
+:host([vertical]) .slider {
+    appearance: slider-vertical;
 }
 
 :host(:focus) {

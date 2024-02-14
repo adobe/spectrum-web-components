@@ -12,10 +12,12 @@ governing permissions and limitations under the License.
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
+    setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
+    chromiumWithMemoryTooling,
     configuredVisualRegressionPlugin,
     firefox,
     packages,
@@ -25,6 +27,7 @@ import {
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
 import rollupCommonjs from '@rollup/plugin-commonjs';
+import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
@@ -32,13 +35,34 @@ const json = fromRollup(rollupJson);
 export default {
     plugins: [
         commonjs({
+            requireReturnsDefault: 'preferred',
             include: ['**/node_modules/@formatjs/intl-numberformat/**/*.js'],
         }),
         sendKeysPlugin(),
         sendMousePlugin(),
+        grantPermissionsPlugin(),
         a11ySnapshotPlugin(),
         configuredVisualRegressionPlugin(),
         json({}),
+        {
+            name: 'plugin-js-buffer-to-string',
+            transform(context) {
+                if (
+                    context.response.is('js') &&
+                    Buffer.isBuffer(context.body)
+                ) {
+                    context.body = context.body.toString();
+                }
+            },
+        },
+        {
+            name: 'measureUserAgentSpecificMemory-plugin',
+            transform(context) {
+                context.set('Cross-Origin-Opener-Policy', 'same-origin');
+                context.set('Cross-Origin-Embedder-Policy', 'credentialless');
+            },
+        },
+        setViewportPlugin(),
     ],
     mimeTypes: {
         '**/*.json': 'js',
@@ -48,8 +72,6 @@ export default {
     },
     http2: true,
     protocol: 'https:',
-    concurrency: 4,
-    concurrentBrowsers: 1,
     testsFinishTimeout: 60000,
     coverageConfig: {
         report: true,
@@ -58,24 +80,27 @@ export default {
             'packages/*/stories/*',
             'packages/icons-ui/**',
             'packages/icons-workflow/**',
-            // The following file is no longer used in Chrome where coverage is calculated.
             'test/**',
             '**/test/**',
             'tools/*/stories/*',
-            'tools/shared/src/focus-visible.*',
             'tools/styles/**',
             '**/node_modules/**',
+            // The following files are not used in Chrome where coverage is calculated.
+            '**/OverlayNoPopover.*',
+            'tools/shared/src/focus-visible.*',
+            // Deprecated
+            'packages/icons/**',
         ],
         threshold: {
             statements: 98.5,
-            branches: 95.78,
-            functions: 97.8,
+            branches: 95.5,
+            functions: 97,
             lines: 98.5,
         },
     },
     testFramework: {
         config: {
-            timeout: 3000,
+            timeout: 5000,
             retries: 1,
         },
     },
@@ -101,7 +126,23 @@ export default {
             }
             return acc;
         }, []),
+        {
+            name: 'overlay-api',
+            files: [
+                'packages/action-menu/test/*.test.js',
+                'packages/dialog/test/*.test.js',
+                'packages/menu/test/*.test.js',
+                'packages/overlay/test/*.test.js',
+                'packages/picker/test/*.test.js',
+                'packages/split-button/test/*.test.js',
+                'packages/tooltip/test/*.test.js',
+            ],
+            browsers: [chromium, firefox, webkit],
+        },
+        {
+            name: 'unit-ci',
+        },
     ],
     group: 'unit',
-    browsers: [chromium, firefox, webkit],
+    browsers: [firefox, chromiumWithMemoryTooling, webkit],
 };

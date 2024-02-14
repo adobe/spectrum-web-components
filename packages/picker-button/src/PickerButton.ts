@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import {
     CSSResultArray,
+    DefaultElementSize,
     html,
     SizedMixin,
     TemplateResult,
@@ -18,10 +19,18 @@ import {
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button/src/ButtonBase.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
 import styles from './picker-button.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+
+const chevronClass = {
+    s: 'spectrum-UIIcon-ChevronDown75',
+    m: 'spectrum-UIIcon-ChevronDown100',
+    l: 'spectrum-UIIcon-ChevronDown200',
+    xl: 'spectrum-UIIcon-ChevronDown300',
+};
 
 /**
  * @element sp-picker-button
@@ -30,7 +39,7 @@ export class PickerButton extends SizedMixin(
     ObserveSlotPresence(ButtonBase, '[slot="label"]')
 ) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [styles, chevronStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -59,9 +68,11 @@ export class PickerButton extends SizedMixin(
                         <slot name="label"></slot>
                     </span>
                     <slot name="icon">
-                        <sp-icon-chevron200
-                            class="spectrum-PickerButton-UIIcon spectrum-Icon spectrum-UIIcon-ChevronDown200"
-                        ></sp-icon-chevron200>
+                        <sp-icon-chevron100
+                            class="spectrum-PickerButton-icon spectrum-Icon ${chevronClass[
+                                this.size as DefaultElementSize
+                            ]}"
+                        ></sp-icon-chevron100>
                     </slot>
                 </div>
             </div>

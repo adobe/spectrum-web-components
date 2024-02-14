@@ -3,32 +3,35 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:focal
+            - image: mcr.microsoft.com/playwright:v1.41.2
         resource_class: large
         environment:
             NODE_ENV: development
 parameters:
     current_golden_images_hash:
         type: string
-        default: 10500edb351f4db403b24e1305a959910ef80e12
+        default: 544d1b8027472155a6a451074fdbf96a5b4bf304
+    wireit_cache_name:
+        type: string
+        default: wireit
 commands:
     downstream:
         steps:
             - checkout
             - restore_cache:
                   keys:
-                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - restore_cache:
                   keys:
-                      - v3b-wireit-{{ arch }}-{{ checksum "package.json" }}-
-                      - v3b-wireit-{{ arch }}-
+                      - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
             - save_cache:
                   paths:
                       - ~/.cache/yarn
-                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - ~/.cache/ms-playwright
+                  key: v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
                       - .wireit
@@ -64,6 +67,18 @@ commands:
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
+            - run:
+                  when: on_success
+                  name: Count current images
+                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+            # prevent removing regression tests without requiring a new golden cache
+            - run:
+                  when: on_success
+                  name: Fail if there are a different number of images...
+                  command: |
+                      echo $(cat count_start.txt)
+                      echo $(cat count_end.txt)
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
                   when: on_fail
@@ -87,18 +102,6 @@ commands:
                   command: |
                       rm -rf test/visual/screenshots-baseline
                       cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-            - run:
-                  when: on_success
-                  name: Count current images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_end.txt
-            # prevent removing regression tests without requiring a new golden cache
-            - run:
-                  when: on_success
-                  name: Fail if there are a different number of images...
-                  command: |
-                      echo $(cat count_start.txt)
-                      echo $(cat count_end.txt)
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
@@ -149,41 +152,36 @@ jobs:
                   path: /root/project/results/
             - store_artifacts:
                   path: coverage
-            - run:
-                  name: Are there changes?
-                  command: git diff --exit-code
-
-    test-chromium-flags:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium-flags.js --group unit
-            - store_test_results:
-                  path: /root/project/results/
-            - store_artifacts:
-                  path: coverage
-            - run:
-                  name: Are there changes?
-                  command: git diff --exit-code
 
     test-firefox:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
                   name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group unit
+                  command: |
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
-            - run:
-                  name: Are there changes?
-                  command: git diff-files
 
     test-webkit:
+        executor: node
+        parallelism: 5
+
+        steps:
+            - downstream
+            - run:
+                  name: Run tests
+                  command: |
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+            - store_test_results:
+                  path: /root/project/results/
+
+    lint:
         executor: node
 
         steps:
@@ -193,13 +191,8 @@ jobs:
                   command: yarn lint
             - run: yarn analyze
             - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group unit
-            - store_test_results:
-                  path: /root/project/results/
-            - run:
                   name: Are there changes?
-                  command: git diff-files
+                  command: git diff-files --exit-code
 
     preview-docs:
         executor: node
@@ -237,6 +230,18 @@ jobs:
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
+            - run:
+                  when: on_success
+                  name: Count current images
+                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+            # prevent removing regression tests without requiring a new golden cache
+            - run:
+                  when: on_success
+                  name: Fail if there are a different number of images...
+                  command: |
+                      echo $(cat count_start.txt)
+                      echo $(cat count_end.txt)
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
                   when: on_fail
@@ -260,18 +265,6 @@ jobs:
                   command: |
                       rm -rf test/visual/screenshots-baseline
                       cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-            - run:
-                  when: on_success
-                  name: Count current images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_end.txt
-            # prevent removing regression tests without requiring a new golden cache
-            - run:
-                  when: on_success
-                  name: Fail if there are a different number of images...
-                  command: |
-                      echo $(cat count_start.txt)
-                      echo $(cat count_end.txt)
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
@@ -311,9 +304,9 @@ workflows:
     build:
         jobs:
             - test-chromium
-            - test-chromium-flags
             - test-firefox
             - test-webkit
+            - lint
             - hcm-visual:
                   filters:
                       branches:

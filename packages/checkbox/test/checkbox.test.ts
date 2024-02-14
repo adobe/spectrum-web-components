@@ -22,10 +22,20 @@ import {
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
     return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
+}
+
+function labelForCheckbox(checkbox: Checkbox): HTMLLabelElement {
+    if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+    const labelEl = checkbox.shadowRoot.querySelector('label');
+    if (!labelEl) {
+        throw new Error('Failed to find label in shadowRoot');
+    }
+    return labelEl;
 }
 
 function labelNodeForCheckbox(checkbox: Checkbox): Node {
@@ -94,6 +104,34 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForCheckbox(el);
+        const inputEl = inputForCheckbox(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.false;
+
+        type NamedRoledAndCheckedNode = {
+            name: string;
+            role: string;
+            checked: boolean;
+        };
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as NamedRoledAndCheckedNode & {
+            children: NamedRoledAndCheckedNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedRoledAndCheckedNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'checkbox' &&
+                    !node.checked &&
+                    node.name === 'Not Checked'
+            ),
+            'Has a named and not checked "checkbox" element'
+        ).to.not.be.null;
     });
 
     it('loads `checked` checkbox accessibly', async () => {
@@ -106,18 +144,52 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForCheckbox(el);
+        const inputEl = inputForCheckbox(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+        expect(inputEl.checked).to.be.true;
+        expect(inputEl.indeterminate).to.be.false;
+
+        type NamedRoledAndCheckedNode = {
+            name: string;
+            role: string;
+            checked: boolean;
+        };
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as NamedRoledAndCheckedNode & {
+            children: NamedRoledAndCheckedNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedRoledAndCheckedNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'checkbox' &&
+                    node.checked &&
+                    node.name === 'Checked'
+            ),
+            'Has a named and checked "checkbox" element'
+        ).to.not.be.null;
     });
 
     it('is `invalid` checkbox accessibly', async () => {
         const el = await fixture<Checkbox>(
             html`
-                <sp-checkbox invalid>Invalid Checked</sp-checkbox>
+                <sp-checkbox invalid>Invalid Not Checked</sp-checkbox>
             `
         );
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        const labelEl = labelForCheckbox(el);
+        const inputEl = inputForCheckbox(el);
+
+        expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+        expect(inputEl).to.have.attribute('aria-invalid', 'true');
     });
 
     it('autofocuses', async () => {
@@ -166,6 +238,16 @@ describe('Checkbox', () => {
         expect(el.checked).to.be.true;
     });
 
+    it('has name attribute', () => {
+        let el = testFixture.querySelector('#checkbox0') as Checkbox;
+
+        el = testFixture.querySelector('#checkbox1') as Checkbox;
+        expect(el.hasAttribute('name'));
+        expect(el.name).to.be.undefined;
+        el.setAttribute('name', 'test');
+        expect(el.name).to.be.equal('test');
+    });
+
     it('handles click events', async () => {
         const el = testFixture.querySelector('#checkbox1') as Checkbox;
         expect(el.checked).to.be.true;
@@ -192,7 +274,11 @@ describe('Checkbox', () => {
 
         expect(el.checked).to.be.true;
     });
-
+    it('should recognize readonly property', async () => {
+        const el: Checkbox = await fixture('<sp-checkbox></sp-checkbox>');
+        expect(el.readonly).to.not.throw;
+        expect(el.readonly).to.be.a('boolean');
+    });
     it('maintains its value when [readonly]', async () => {
         const el = await fixture<Checkbox>(html`
             <sp-checkbox id="checkbox0" checked readonly>Component</sp-checkbox>
@@ -203,5 +289,110 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;
+    });
+
+    it('`indeterminate, checked` becomes `not checked` on click', async () => {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox checked .indeterminate=${true}>
+                indeterminate, checked
+            </sp-checkbox>
+        `);
+        expect(el.checked).to.be.true;
+        expect(el.indeterminate).to.be.true;
+
+        const inputEl = inputForCheckbox(el);
+        expect(inputEl.checked).to.be.true;
+        expect(inputEl.indeterminate).to.be.true;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.false;
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.false;
+    });
+
+    it('`indeterminate, not checked` becomes `checked` on click', async () => {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox .indeterminate=${true}>
+                indeterminate, checked
+            </sp-checkbox>
+        `);
+        expect(el.checked).to.be.false;
+        expect(el.indeterminate).to.be.true;
+
+        const inputEl = inputForCheckbox(el);
+        expect(inputEl.checked).to.be.false;
+        expect(inputEl.indeterminate).to.be.true;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+        expect(el.indeterminate).to.be.false;
+        expect(inputEl.checked).to.be.true;
+        expect(inputEl.indeterminate).to.be.false;
+    });
+
+    it('updates checkmark icons in response to size', async function () {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox checked>sizes checkbox</sp-checkbox>
+        `);
+
+        const getCheckmarkLocalName = (): string => {
+            return (el.shadowRoot.querySelector('#checkmark') as HTMLElement)
+                .localName;
+        };
+
+        expect(el.size).to.equal('m');
+        let checkmarkLocalname = getCheckmarkLocalName();
+        el.size = 's';
+        await elementUpdated(el);
+        expect(getCheckmarkLocalName()).to.not.equal(checkmarkLocalname);
+
+        checkmarkLocalname = getCheckmarkLocalName();
+        el.size = 'l';
+        await elementUpdated(el);
+        expect(getCheckmarkLocalName()).to.not.equal(checkmarkLocalname);
+
+        checkmarkLocalname = getCheckmarkLocalName();
+        el.size = 'xl';
+        await elementUpdated(el);
+        expect(getCheckmarkLocalName()).to.not.equal(checkmarkLocalname);
+    });
+
+    it('updates partialCheckmark icons in response to size', async function () {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox indeterminate>sizes checkbox</sp-checkbox>
+        `);
+
+        const getPartialCheckmarkLocalName = (): string => {
+            return (
+                el.shadowRoot.querySelector('#partialCheckmark') as HTMLElement
+            ).localName;
+        };
+
+        expect(el.size).to.equal('m');
+        let partialCheckmarkLocalname = getPartialCheckmarkLocalName();
+        el.size = 's';
+        await elementUpdated(el);
+        expect(getPartialCheckmarkLocalName()).to.not.equal(
+            partialCheckmarkLocalname
+        );
+
+        partialCheckmarkLocalname = getPartialCheckmarkLocalName();
+        el.size = 'l';
+        await elementUpdated(el);
+        expect(getPartialCheckmarkLocalName()).to.not.equal(
+            partialCheckmarkLocalname
+        );
+
+        partialCheckmarkLocalname = getPartialCheckmarkLocalName();
+        el.size = 'xl';
+        await elementUpdated(el);
+        expect(getPartialCheckmarkLocalName()).to.not.equal(
+            partialCheckmarkLocalname
+        );
     });
 });

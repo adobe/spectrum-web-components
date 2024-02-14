@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import { Menu } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -19,6 +20,9 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-export.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 
 export default {
@@ -54,7 +58,14 @@ export const Default = (): TemplateResult => {
 
 export const singleSelect = (): TemplateResult => {
     return html`
-        <sp-menu selects="single">
+        <sp-menu
+            selects="single"
+            @change=${({
+                target: { value },
+            }: Event & { target: Menu }): void => {
+                navigator.clipboard.writeText(value);
+            }}
+        >
             <sp-menu-item selected>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>
@@ -65,7 +76,14 @@ export const singleSelect = (): TemplateResult => {
         </sp-menu>
 
         <sp-popover open>
-            <sp-menu selects="single">
+            <sp-menu
+                selects="single"
+                @change=${({
+                    target: { value },
+                }: Event & { target: Menu }): void => {
+                    navigator.clipboard.writeText(value);
+                }}
+            >
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item selected>Feather...</sp-menu-item>
@@ -103,10 +121,106 @@ export const multipleSelect = (): TemplateResult => {
         </sp-popover>
     `;
 };
+
+export const controlled = (): TemplateResult => {
+    const forceSelection = (event: Event & { target: Menu }): void => {
+        event.target.updateComplete.then(() => {
+            event.target.selected = ['Select and Mask...'];
+        });
+    };
+    return html`
+        <p>
+            This Menu will default to a
+            <code>selected</code>
+            value of
+            <code>[ 'Feather...', 'Save Selection' ]</code>
+            but then on any subsequent interaction be forced to a
+            <code>selected</code>
+            value of
+            <code>[ 'Select and Mask...' ]</code>
+            .
+        </p>
+        <sp-menu selects="multiple" @change=${forceSelection}>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item selected>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item selected>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-menu>
+    `;
+};
+controlled.swc_vrt = {
+    skip: true,
+};
+
+export const menuItemWithDescription = (): TemplateResult => {
+    return html`
+        <sp-menu>
+            <sp-menu-item>
+                <sp-icon-export slot="icon"></sp-icon-export>
+                Quick export
+                <span slot="description">Share a snapshot</span>
+            </sp-menu-item>
+            <sp-menu-item>
+                <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                Open a copy
+                <span slot="description">Illustrator for iPad</span>
+            </sp-menu-item>
+            <sp-menu-item>
+                <sp-icon-share slot="icon"></sp-icon-share>
+                Share link
+                <span slot="description">Enable comments and download</span>
+            </sp-menu-item>
+        </sp-menu>
+
+        <sp-popover open>
+            <sp-menu selects="multiple">
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item selected>
+                    Select Inverse
+                    <span slot="description">Enable inverse selection</span>
+                </sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item selected>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>
+                    Make Work Path
+                    <span slot="description">Create a reusable work path</span>
+                </sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
+};
+
+export const selectsWithIcons = (): TemplateResult => {
+    return html`
+        <sp-popover open>
+            <sp-menu selects="single">
+                <sp-menu-item>
+                    <sp-icon-export slot="icon"></sp-icon-export>
+                    Quick export
+                </sp-menu-item>
+                <sp-menu-item selected>
+                    <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                    Open a copy
+                </sp-menu-item>
+                <sp-menu-item>
+                    <sp-icon-share slot="icon"></sp-icon-share>
+                    Share link
+                    <span slot="description">Enable comments and download</span>
+                </sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
+};
+
 export const headersAndIcons = (): TemplateResult => {
     return html`
         <sp-popover open>
-            <sp-menu>
+            <sp-menu selects="single">
                 <sp-menu-group>
                     <span slot="header">Section Heading</span>
                     <sp-menu-item>Action 1</sp-menu-item>
@@ -127,6 +241,13 @@ export const headersAndIcons = (): TemplateResult => {
                             slot="icon"
                         ></sp-icon-checkmark-circle>
                         Download
+                    </sp-menu-item>
+                    <sp-menu-item disabled>
+                        <sp-icon-checkmark-circle
+                            slot="icon"
+                        ></sp-icon-checkmark-circle>
+                        Share link
+                        <span slot="description">Enable comments</span>
                     </sp-menu-item>
                 </sp-menu-group>
             </sp-menu>

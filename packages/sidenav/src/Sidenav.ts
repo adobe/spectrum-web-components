@@ -23,6 +23,7 @@ import sidenavStyles from './sidenav.css.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export interface SidenavSelectDetail {
     value: string;
@@ -54,16 +55,29 @@ export class SideNav extends Focusable {
 
     rovingTabindexController = new RovingTabindexController<SideNavItem>(this, {
         focusInIndex: (elements: SideNavItem[]) => {
-            return elements.findIndex((el) => {
+            let parentSideNavItem: SideNavItem | undefined;
+            let index = elements.findIndex((el) => {
+                // If the selected item's parent is collapsed, save it for later.
+                if (el.value === this.value && this.isDisabledChild(el)) {
+                    parentSideNavItem = el.closest(
+                        'sp-sidenav-item:not([expanded])'
+                    ) as SideNavItem;
+                }
                 return this.value
                     ? !el.disabled &&
                           !this.isDisabledChild(el) &&
                           el.value === this.value
                     : !el.disabled && !this.isDisabledChild(el);
             });
+            // If the selected item's parent is collapsed, focus the collapsed parent.
+            if (index === -1 && parentSideNavItem) {
+                index = elements.findIndex((el) => el === parentSideNavItem);
+            }
+            return index;
         },
         direction: 'vertical',
-        elements: () => [...this.querySelectorAll('sp-sidenav-item')],
+        elements: () =>
+            [...this.querySelectorAll('sp-sidenav-item')] as SideNavItem[],
         isFocusableElement: (el: SideNavItem) =>
             !el.disabled && !this.isDisabledChild(el),
     });
@@ -79,6 +93,15 @@ export class SideNav extends Focusable {
      */
     @property({ reflect: true })
     public variant?: 'multilevel' = undefined;
+
+    /**
+     * An accessible label that describes the component,
+     * so that the side navigation can be distinguished
+     * from other navigation by screen reader users.
+     * It will be applied to aria-label, but not visually rendered.
+     */
+    @property({ reflect: true })
+    public label?: string | undefined = undefined;
 
     private handleSelect(
         event: CustomEvent<SidenavSelectDetail> & { target: SideNavItem }
@@ -161,11 +184,16 @@ export class SideNav extends Focusable {
 
     protected override render(): TemplateResult {
         return html`
-            <nav @sidenav-select=${this.handleSelect}>
-                <slot
-                    name="descendant"
-                    @slotchange=${this.handleSlotchange}
-                ></slot>
+            <nav
+                @sidenav-select=${this.handleSelect}
+                aria-label=${ifDefined(this.label)}
+            >
+                <div role="list">
+                    <slot
+                        name="descendant"
+                        @slotchange=${this.handleSlotchange}
+                    ></slot>
+                </div>
             </nav>
         `;
     }
