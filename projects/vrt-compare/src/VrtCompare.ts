@@ -386,6 +386,7 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
             }
             ::slotted(img) {
                 display: flex;
+                pointer-events: none;
             }
             sp-action-group[selects] {
                 margin-bottom: 1em;

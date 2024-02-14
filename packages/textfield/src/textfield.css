@@ -111,13 +111,17 @@ textarea {
 :host([disabled][quiet]) #textfield .input,
 :host([disabled][quiet]) #textfield:hover .input,
 :host([quiet]) .input :disabled {
-    background-color: var(
-        --spectrum-textfield-m-quiet-texticon-background-color-disabled,
-        var(--spectrum-alias-background-color-transparent)
-    );
+    background-color: #0000;
     border-color: var(
-        --spectrum-textfield-m-quiet-texticon-border-color-disabled,
-        var(--spectrum-alias-input-border-color-quiet-disabled)
+        --mod-textfield-border-color-disabled,
+        var(--spectrum-textfield-border-color-disabled)
+    );
+    color: var(
+        --highcontrast-textfield-text-color-disabled,
+        var(
+            --mod-textfield-text-color-disabled,
+            var(--spectrum-textfield-text-color-disabled)
+        )
     );
 }
 

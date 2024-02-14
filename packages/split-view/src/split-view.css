@@ -51,15 +51,11 @@ governing permissions and limitations under the License.
 }
 
 :host([resizable]) #splitter {
-    padding: 0 var(--spectrum-global-dimension-static-size-125);
-    margin: 0 calc(-1 * var(--spectrum-global-dimension-static-size-125));
     background-clip: content-box;
     cursor: ew-resize;
 }
 
 :host([vertical][resizable]) #splitter {
-    padding: var(--spectrum-global-dimension-static-size-125) 0;
-    margin: calc(-1 * var(--spectrum-global-dimension-static-size-125)) 0;
     background-clip: content-box;
     cursor: ns-resize;
 }
@@ -108,81 +104,4 @@ governing permissions and limitations under the License.
 :host([vertical][resizable][collapsible]) #splitter.is-resized-start,
 :host([vertical][resizable][collapsible]) #splitter.is-resized-end {
     cursor: ns-resize;
-}
-
-/**
- * Apply X offset to compensate adapted hover area (margin/padding) of splitter
- */
-:host([dir='ltr'][resizable]) #gripper {
-    left: calc(
-        var(--spectrum-global-dimension-static-size-125) +
-            (
-                var(
-                        --spectrum-dragbar-gripper-width,
-                        var(--spectrum-global-dimension-static-size-50)
-                    ) + 2 *
-                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
-                    var(
-                        --spectrum-dragbar-handle-width,
-                        var(--spectrum-global-dimension-static-size-25)
-                    )
-            ) / 2 * -1
-    );
-}
-
-/**
- * Apply X offset to compensate adapted hover area (margin/padding) of splitter
- */
-:host([dir='rtl'][resizable]) #gripper {
-    right: calc(
-        var(--spectrum-global-dimension-static-size-125) +
-            (
-                var(
-                        --spectrum-dragbar-gripper-width,
-                        var(--spectrum-global-dimension-static-size-50)
-                    ) + 2 *
-                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
-                    var(
-                        --spectrum-dragbar-handle-width,
-                        var(--spectrum-global-dimension-static-size-25)
-                    )
-            ) / 2 * -1
-    );
-}
-
-/**
- * Apply Y offset value to compensate adapted hover area (margin/padding) of splitter
- */
-:host([vertical][resizable]) #gripper {
-    margin-top: var(--spectrum-global-dimension-static-size-125);
-    left: 50%;
-    right: 50%;
-}
-
-:host([dir='ltr'][resizable]) #splitter.is-collapsed-start #gripper {
-    left: var(--spectrum-global-dimension-static-size-125);
-}
-
-:host([dir='rtl'][resizable]) #splitter.is-collapsed-start #gripper {
-    right: var(--spectrum-global-dimension-static-size-125);
-}
-
-:host([vertical][resizable]) #splitter.is-collapsed-start #gripper {
-    left: 50%;
-    right: 50%;
-}
-
-:host([dir='ltr'][resizable]) #splitter.is-collapsed-end #gripper {
-    left: var(--spectrum-global-dimension-static-size-25);
-}
-
-:host([dir='rtl'][resizable]) #splitter.is-collapsed-end #gripper {
-    right: var(--spectrum-global-dimension-static-size-25);
-}
-
-:host([vertical][resizable]) #splitter.is-collapsed-end #gripper {
-    margin-top: 0;
-    top: var(--spectrum-global-dimension-static-size-25);
-    left: 50%;
-    right: 50%;
 }

@@ -273,7 +273,7 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
             @change=${handleChange(args)}
             label="Pick an action"
             icons="only"
-            style="--spectrum-picker-width: 100px"
+            style="width: 100px"
             value="2"
         >
             <sp-menu-item value="1">
@@ -302,7 +302,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
-            style="--spectrum-picker-width: 100px"
+            style="width: 100px"
             value="3"
         >
             <sp-menu-item value="1">
