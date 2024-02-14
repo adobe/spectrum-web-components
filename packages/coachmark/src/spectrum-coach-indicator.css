@@ -70,6 +70,12 @@ governing permissions and limitations under the License.
     --spectrum-coach-indicator-min-block-size: calc(
         var(--spectrum-coach-indicator-ring-diameter) * 3
     );
+    --spectrum-coach-indicator-inline-size: var(
+        --spectrum-coach-indicator-min-inline-size
+    );
+    --spectrum-coach-indicator-block-size: var(
+        --spectrum-coach-indicator-min-block-size
+    );
     --spectrum-coach-indicator-ring-inline-size: var(
         --spectrum-coach-indicator-ring-diameter
     );
@@ -77,10 +83,12 @@ governing permissions and limitations under the License.
         --spectrum-coach-indicator-ring-diameter
     );
     --spectrum-coach-indicator-top: calc(
-        var(--spectrum-coach-indicator-ring-diameter) * 0.75
+        var(--spectrum-coach-indicator-block-size) / 3 -
+            var(--spectrum-coach-indicator-ring-border-size)
     );
     --spectrum-coach-indicator-left: calc(
-        var(--spectrum-coach-indicator-ring-diameter) * 0.75
+        var(--spectrum-coach-indicator-inline-size) / 3 -
+            var(--spectrum-coach-indicator-ring-border-size)
     );
     --spectrum-coach-animation-indicator-ring-duration: var(
         --spectrum-animation-duration-6000
@@ -107,6 +115,18 @@ governing permissions and limitations under the License.
                 var(--spectrum-coach-indicator-quiet-ring-diameter)
             ) * 2.75
     );
+    --mod-coach-indicator-inline-size: calc(
+        var(
+                --mod-coach-indicator-quiet-ring-diameter,
+                var(--spectrum-coach-indicator-quiet-ring-diameter)
+            ) * 2.75
+    );
+    --mod-coach-indicator-block-size: calc(
+        var(
+                --mod-coach-indicator-quiet-ring-diameter,
+                var(--spectrum-coach-indicator-quiet-ring-diameter)
+            ) * 2.75
+    );
     --mod-coach-indicator-ring-inline-size: var(
         --mod-coach-indicator-quiet-ring-diameter,
         var(--spectrum-coach-indicator-quiet-ring-diameter)
@@ -116,10 +136,12 @@ governing permissions and limitations under the License.
         var(--spectrum-coach-indicator-quiet-ring-diameter)
     );
     --mod-coach-indicator-top: calc(
-        var(--spectrum-coach-indicator-quiet-ring-diameter) * 0.75
+        var(--mod-coach-indicator-min-inline-size) / 3 -
+            var(--spectrum-coach-indicator-ring-border-size)
     );
     --mod-coach-indicator-left: calc(
-        var(--spectrum-coach-indicator-quiet-ring-diameter) * 0.75
+        var(--mod-coach-indicator-min-inline-size) / 3 -
+            var(--spectrum-coach-indicator-ring-border-size)
     );
     --mod-coach-indicator-animation-name: pulse--quiet;
     --mod-coach-indicator-inner-animation-delay-multiple: var(
@@ -130,6 +152,14 @@ governing permissions and limitations under the License.
     );
 }
 :host {
+    block-size: var(
+        --mod-coach-indicator-block-size,
+        var(--spectrum-coach-indicator-block-size)
+    );
+    inline-size: var(
+        --mod-coach-indicator-inline-size,
+        var(--spectrum-coach-indicator-inline-size)
+    );
     margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
     min-block-size: var(
         --mod-coach-indicator-min-block-size,
