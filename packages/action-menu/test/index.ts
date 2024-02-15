@@ -30,6 +30,7 @@ import {
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import {
+    controlled,
     iconOnly,
     tooltipDescriptionAndPlacement,
 } from '../stories/action-menu.stories.js';
@@ -584,6 +585,38 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(unselectedItem.selected).to.be.false;
             expect(selectedItem.textContent).to.include('Two');
             expect(selectedItem.selected).to.be.true;
+        });
+        it('does not change selected state by default', async function () {
+            const el = await fixture<ActionMenu>(controlled());
+            const item = el.querySelector(
+                'sp-menu-item[value="snap"]'
+            ) as MenuItem;
+
+            expect(item.selected).to.be.true;
+
+            const open = oneEvent(el, 'sp-opened');
+            const rect = el.getBoundingClientRect();
+            const menuClick = {
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ] as [number, number],
+                        type: 'click' as const,
+                    },
+                ],
+            };
+            await sendMouse(menuClick);
+            await open;
+
+            expect(item.selected).to.be.true;
+
+            const close = oneEvent(el, 'sp-closed');
+            await sendMouse(menuClick);
+            await close;
+
+            expect(item.selected).to.be.true;
         });
         it('shows tooltip', async function () {
             const openSpy = spy();
