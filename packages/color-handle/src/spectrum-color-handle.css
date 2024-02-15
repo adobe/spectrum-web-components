@@ -77,21 +77,12 @@ governing permissions and limitations under the License.
     display: block;
     inline-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));
     margin-block: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1 / 2
+        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1
     );
     margin-inline: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1 / 2
+        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1
     );
     position: absolute;
-    transition: all
-        var(
-            --mod-colorhandle-animation-duration,
-            var(--spectrum-colorhandle-animation-duration)
-        )
-        var(
-            --mod-colorhandle-animation-easing,
-            var(--spectrum-colorhandle-animation-easing)
-        );
     z-index: 1;
 }
 :host:after {
@@ -121,6 +112,17 @@ governing permissions and limitations under the License.
             ) / 2
     );
     position: absolute;
+}
+:host {
+    transition: all
+        var(
+            --mod-colorhandle-animation-duration,
+            var(--spectrum-colorhandle-animation-duration)
+        )
+        var(
+            --mod-colorhandle-animation-easing,
+            var(--spectrum-colorhandle-animation-easing)
+        );
 }
 :host(.focus-visible),
 :host([focused]) {

@@ -49,11 +49,6 @@ governing permissions and limitations under the License.
             var(--spectrum-heading-margin-bottom-multiplier)
     );
 }
-@media (forced-colors: active) {
-    .spectrum-Heading {
-        --highcontrast-heading-font-color: Text;
-    }
-}
 .spectrum-Heading--sizeXXS {
     --spectrum-heading-font-size: var(--spectrum-heading-size-xxs);
     --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxs);
@@ -596,11 +591,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-body-font-color: var(--spectrum-body-color);
 }
-@media (forced-colors: active) {
-    .spectrum-Body {
-        --highcontrast-body-font-color: Text;
-    }
-}
 .spectrum-Body--sizeXS {
     --spectrum-body-font-size: var(--spectrum-body-size-xs);
 }
@@ -818,11 +808,6 @@ governing permissions and limitations under the License.
             var(--spectrum-detail-margin-bottom-multiplier)
     );
     --spectrum-detail-font-color: var(--spectrum-detail-color);
-}
-@media (forced-colors: active) {
-    .spectrum-Detail {
-        --highcontrast-detail-font-color: Text;
-    }
 }
 .spectrum-Detail--sizeS {
     --spectrum-detail-font-size: var(--spectrum-detail-size-s);
@@ -1178,6 +1163,15 @@ governing permissions and limitations under the License.
     --spectrum-code-font-color: var(--spectrum-code-color);
 }
 @media (forced-colors: active) {
+    .spectrum-Heading {
+        --highcontrast-heading-font-color: Text;
+    }
+    .spectrum-Body {
+        --highcontrast-body-font-color: Text;
+    }
+    .spectrum-Detail {
+        --highcontrast-detail-font-color: Text;
+    }
     .spectrum-Code {
         --highcontrast-code-font-color: Text;
     }

@@ -61,7 +61,7 @@
         "@spectrum-web-components/opacity-checkerboard": "^0.41.0"
     },
     "devDependencies": {
-        "@spectrum-css/thumbnail": "^5.2.0"
+        "@spectrum-css/thumbnail": "^5.2.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

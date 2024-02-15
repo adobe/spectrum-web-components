@@ -24,11 +24,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-body-font-color: var(--spectrum-body-color);
 }
-@media (forced-colors: active) {
-    .spectrum-Body {
-        --highcontrast-body-font-color: Text;
-    }
-}
 .spectrum-Body--sizeXS {
     --spectrum-body-font-size: var(--spectrum-body-size-xs);
 }
@@ -248,4 +243,9 @@ governing permissions and limitations under the License.
         --mod-detail-serif-light-strong-emphasized-font-weight,
         var(--spectrum-detail-serif-light-strong-emphasized-font-weight)
     );
+}
+@media (forced-colors: active) {
+    .spectrum-Body {
+        --highcontrast-body-font-color: Text;
+    }
 }
