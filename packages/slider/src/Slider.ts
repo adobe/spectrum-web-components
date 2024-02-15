@@ -411,11 +411,8 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
 
     private renderHandle(): TemplateResult {
-        if (this.variant === 'tick') {
-            return html``;
-        }
         return html`
-            ${this.handleController.render()}
+            ${this.variant === 'tick' ? html`` : this.handleController.render()}
         `;
     }
 
