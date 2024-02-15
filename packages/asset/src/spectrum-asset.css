@@ -13,33 +13,33 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     align-items: center;
+    block-size: 100%;
     display: flex;
-    height: 100%;
+    inline-size: 100%;
     justify-content: center;
-    width: 100%;
 }
 ::slotted(*) {
-    max-height: 100%;
-    max-width: 100%;
+    max-block-size: 100%;
+    max-inline-size: 100%;
     object-fit: contain;
     transition: opacity var(--spectrum-global-animation-duration-100, 0.13s);
 }
 .file,
 .folder {
-    height: 100%;
+    block-size: 100%;
+    inline-size: 100%;
     margin: var(
         --spectrum-asset-icon-margin,
         var(--spectrum-global-dimension-size-250)
     );
-    max-width: var(
+    max-inline-size: var(
         --spectrum-asset-icon-max-width,
         var(--spectrum-global-dimension-static-size-1000)
     );
-    min-width: var(
+    min-inline-size: var(
         --spectrum-asset-icon-min-width,
         var(--spectrum-global-dimension-size-600)
     );
-    width: 100%;
 }
 .folderBackground {
     fill: var(

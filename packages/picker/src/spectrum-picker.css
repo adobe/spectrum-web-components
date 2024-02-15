@@ -107,7 +107,7 @@ governing permissions and limitations under the License.
         --spectrum-field-edge-to-text-quiet
     );
     --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
-        --spectrum-field-label-top-margin-medium
+        --spectrum-component-top-to-text-100
     );
     --spectrum-picker-spacing-label-to-picker: var(
         --spectrum-field-label-to-component
@@ -218,7 +218,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-font-size: var(--spectrum-font-size-75);
     --spectrum-picker-block-size: var(--spectrum-component-height-75);
     --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
-        --spectrum-field-label-top-margin-small
+        --spectrum-component-top-to-text-75
     );
     --spectrum-picker-spacing-top-to-text: var(
         --spectrum-component-top-to-text-75
@@ -256,7 +256,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-font-size: var(--spectrum-font-size-200);
     --spectrum-picker-block-size: var(--spectrum-component-height-200);
     --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
-        --spectrum-field-label-top-margin-large
+        --spectrum-component-top-to-text-200
     );
     --spectrum-picker-spacing-top-to-text: var(
         --spectrum-component-top-to-text-200
@@ -294,7 +294,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-font-size: var(--spectrum-font-size-300);
     --spectrum-picker-block-size: var(--spectrum-component-height-300);
     --spectrum-picker-spacing-top-to-text-side-label-quiet: var(
-        --spectrum-field-label-top-margin-extra-large
+        --spectrum-component-top-to-text-300
     );
     --spectrum-picker-spacing-top-to-text: var(
         --spectrum-component-top-to-text-300
@@ -947,9 +947,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([quiet]) #button.spectrum-Picker--sideLabel {
-    margin-block-start: calc(
-        var(--spectrum-picker-spacing-top-to-text-side-label-quiet) * -1
-    );
+    margin-block-start: 0;
 }
 :host([quiet]) #button .picker {
     margin-inline-end: var(
