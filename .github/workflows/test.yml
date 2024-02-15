@@ -87,6 +87,7 @@ jobs:
               id: lighthouse
               uses: treosh/lighthouse-ci-action@v11
               with:
+                  budgetPath: '.github/lighthouse/budgets.json'
                   configPath: '.github/lighthouse/lighthouserc.json'
                   runs: 3
                   temporaryPublicStorage: true
@@ -101,7 +102,7 @@ jobs:
               with:
                   script: |
                       const { buildLighthouseComment } = await import('${{ github.workspace }}/tasks/build-lighthouse-comment.js');
-                      const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }});
+                      const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }}, ${{ steps.lighthouse.outputs.assertionResults }});
                       github.rest.issues.listComments({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
