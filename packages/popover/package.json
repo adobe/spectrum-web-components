@@ -61,7 +61,7 @@
         "@spectrum-web-components/overlay": "^0.41.0"
     },
     "devDependencies": {
-        "@spectrum-css/popover": "^6.2.0"
+        "@spectrum-css/popover": "^6.2.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

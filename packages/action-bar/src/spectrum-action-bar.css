@@ -21,6 +21,15 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-item-counter-color: var(
         --spectrum-neutral-content-color-default
     );
+}
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+    --spectrum-actionbar-item-counter-line-height-cjk: var(
+        --spectrum-cjk-line-height-100
+    );
+}
+:host {
     --spectrum-actionbar-popover-background-color: var(--spectrum-gray-50);
     --spectrum-actionbar-popover-border-color: var(--spectrum-gray-400);
     --spectrum-actionbar-emphasized-background-color: var(
@@ -43,13 +52,6 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-shadow-vertical: var(--spectrum-drop-shadow-y);
     --spectrum-actionbar-shadow-blur: var(--spectrum-drop-shadow-blur);
     --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
-}
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
-    --spectrum-actionbar-item-counter-line-height-cjk: var(
-        --spectrum-cjk-line-height-100
-    );
 }
 @media (forced-colors: active) {
     :host {

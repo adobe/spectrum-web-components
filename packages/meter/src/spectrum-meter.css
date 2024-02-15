@@ -170,10 +170,6 @@ governing permissions and limitations under the License.
 }
 .label,
 .percentage {
-    color: var(
-        --mod-progressbar-text-color,
-        var(--spectrum-progressbar-text-color)
-    );
     line-height: var(
         --mod-progressbar-line-height,
         var(--spectrum-progressbar-line-height)
@@ -197,6 +193,13 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-progressbar-line-height-cjk,
         var(--spectrum-progressbar-line-height-cjk)
+    );
+}
+.label,
+.percentage {
+    color: var(
+        --mod-progressbar-text-color,
+        var(--spectrum-progressbar-text-color)
     );
 }
 .label {

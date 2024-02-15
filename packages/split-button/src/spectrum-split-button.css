@@ -65,54 +65,56 @@ governing permissions and limitations under the License.
     vertical-align: top;
 }
 #button {
-    border-bottom-left-radius: var(
+    border-end-end-radius: 0;
+    border-end-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-bottom-right-radius: 0;
-    border-top-left-radius: var(
+    border-start-end-radius: 0;
+    border-start-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-top-right-radius: 0;
-    margin-left: 0;
-    padding-left: var(--spectrum-splitbutton-round-edge-padding);
-    padding-right: var(--spectrum-splitbutton-flat-edge-padding);
+    margin-inline-start: 0;
+    padding-inline-end: var(--spectrum-splitbutton-flat-edge-padding);
+    padding-inline-start: var(--spectrum-splitbutton-round-edge-padding);
 }
 #button[variant='accent'] {
-    margin-right: var(
+    margin-inline-end: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    padding-right: var(--spectrum-splitbutton-cta-flat-edge-padding);
+    padding-inline-end: var(--spectrum-splitbutton-cta-flat-edge-padding);
 }
 #button:after {
-    border-bottom-right-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-top-right-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-end-end-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-start-end-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
 .trigger {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: var(
+    border-end-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-left-width: var(--spectrum-splitbutton-trigger-border-left);
-    border-top-left-radius: 0;
-    border-top-right-radius: var(
+    border-end-start-radius: 0;
+    border-inline-start-width: var(--spectrum-splitbutton-trigger-border-left);
+    border-start-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    margin-left: 0;
-    min-width: var(--spectrum-splitbutton-trigger-min-width);
-    padding-left: var(--spectrum-splitbutton-trigger-flat-edge-padding);
-    padding-right: var(--spectrum-splitbutton-trigger-round-edge-padding);
+    border-start-start-radius: 0;
+    margin-inline-start: 0;
+    min-inline-size: var(--spectrum-splitbutton-trigger-min-width);
+    padding-inline-end: var(--spectrum-splitbutton-trigger-round-edge-padding);
+    padding-inline-start: var(--spectrum-splitbutton-trigger-flat-edge-padding);
 }
 .trigger[variant='accent'] {
-    border-left-width: var(
+    border-inline-start-width: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    padding-left: var(--spectrum-splitbutton-cta-trigger-flat-edge-padding);
+    padding-inline-start: var(
+        --spectrum-splitbutton-cta-trigger-flat-edge-padding
+    );
 }
 .trigger.focus-visible {
     box-shadow: none;
@@ -121,12 +123,12 @@ governing permissions and limitations under the License.
     box-shadow: none;
 }
 .trigger:after {
-    border-bottom-left-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-top-left-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-end-start-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-start-start-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
 .icon {
     display: block;
-    margin-top: 1px;
+    margin-block-start: 1px;
 }
 #button,
 .trigger {
@@ -150,80 +152,84 @@ governing permissions and limitations under the License.
 .trigger.spectrum-Pagination-nextButton .spectrum-Icon {
     transform: var(--spectrum-logical-rotation);
 }
+#button .label + .spectrum-Icon {
+    margin-inline-start: var(--spectrum-splitbutton-icon-gap);
+}
 :host([left]) #button {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: var(
+    border-end-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-top-left-radius: 0;
-    border-top-right-radius: var(
+    border-end-start-radius: 0;
+    border-start-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    margin-left: var(--spectrum-spltibutton-margin-left);
-    margin-right: 0;
-    padding-left: var(--spectrum-splitbutton-flat-edge-padding);
-    padding-right: var(--spectrum-splitbutton-round-edge-padding);
+    border-start-start-radius: 0;
+    margin-inline-end: 0;
+    margin-inline-start: var(--spectrum-spltibutton-margin-left);
+    padding-inline-end: var(--spectrum-splitbutton-round-edge-padding);
+    padding-inline-start: var(--spectrum-splitbutton-flat-edge-padding);
 }
 :host([left]) #button:after {
-    border-bottom-left-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-bottom-right-radius: var(
+    border-end-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-top-left-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-top-right-radius: var(
+    border-end-start-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-start-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
+    border-start-start-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
 :host([left]) #button[variant='accent'] {
-    margin-left: var(
+    margin-inline-start: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    padding-left: var(--spectrum-splitbutton-cta-flat-edge-padding);
+    padding-inline-start: var(--spectrum-splitbutton-cta-flat-edge-padding);
 }
 :host([left]) .trigger {
-    border-bottom-left-radius: var(
+    border-end-end-radius: 0;
+    border-end-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-bottom-right-radius: 0;
-    border-left-width: var(
+    border-inline-end-width: var(--spectrum-splitbutton-trigger-border-left);
+    border-inline-start-width: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    border-right-width: var(--spectrum-splitbutton-trigger-border-left);
-    border-top-left-radius: var(
+    border-start-end-radius: 0;
+    border-start-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-top-right-radius: 0;
-    margin-right: 0;
-    padding-left: var(--spectrum-splitbutton-trigger-round-edge-padding);
-    padding-right: var(--spectrum-splitbutton-trigger-flat-edge-padding);
+    margin-inline-end: 0;
+    padding-inline-end: var(--spectrum-splitbutton-trigger-flat-edge-padding);
+    padding-inline-start: var(
+        --spectrum-splitbutton-trigger-round-edge-padding
+    );
 }
 :host([left]) .trigger:after {
-    border-bottom-left-radius: var(
+    border-end-end-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-end-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-bottom-right-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-top-left-radius: var(
+    border-start-end-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-start-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-top-right-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
 :host([left]) .trigger[variant='accent'] {
-    border-right-width: var(
+    border-inline-end-width: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    padding-right: var(--spectrum-splitbutton-cta-trigger-flat-edge-padding);
-}
-#button .label + .spectrum-Icon {
-    margin-left: var(--spectrum-splitbutton-icon-gap);
+    padding-inline-end: var(
+        --spectrum-splitbutton-cta-trigger-flat-edge-padding
+    );
 }
