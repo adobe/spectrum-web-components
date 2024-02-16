@@ -209,6 +209,16 @@ export const submenu = (): TemplateResult => {
                         <sp-menu-item>Upper East Side</sp-menu-item>
                     </sp-menu>
                 </sp-menu-item>
+                <sp-menu-item disabled>
+                    Queens
+                    <sp-menu disabled slot="submenu">
+                        <sp-menu-item>
+                            You shouldn't be able to see this!
+                        </sp-menu-item>
+                        <sp-menu-item>Forest Hills</sp-menu-item>
+                        <sp-menu-item>Jamaica</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
             </sp-menu-group>
         </sp-action-menu>
         <div>
