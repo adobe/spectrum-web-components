@@ -45,6 +45,9 @@ export class ActionMenu extends ObserveSlotPresence(
         return [actionMenuStyles];
     }
 
+    @property({ type: Boolean })
+    public unmanaged = false;
+
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
@@ -116,8 +119,37 @@ export class ActionMenu extends ObserveSlotPresence(
             >
                 ${this.buttonContent}
             </sp-action-button>
-            ${this.renderMenu} ${this.renderDescriptionSlot}
+            ${this.unmanaged ? this.renderUnmanagedMenu : this.renderMenu}
+            ${this.renderDescriptionSlot}
         `;
+    }
+
+    protected get renderUnmanagedMenu(): TemplateResult {
+        const menu = html`
+            <sp-menu
+                aria-labelledby="applied-label"
+                @change=${this.handleChange}
+                id="menu"
+                @keydown=${{
+                    handleEvent: this.handleEnterKeydown,
+                    capture: true,
+                }}
+                role=${this.listRole}
+                size=${this.size}
+                @sp-menu-item-added-or-updated=${this.shouldManageSelection}
+            >
+                <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
+            </sp-menu>
+        `;
+        this.hasRenderedOverlay =
+            this.hasRenderedOverlay ||
+            this.focused ||
+            this.open ||
+            !!this.deprecatedMenu;
+        if (this.hasRenderedOverlay) {
+            return this.renderOverlay(menu);
+        }
+        return menu;
     }
 
     protected override update(changedProperties: PropertyValues<this>): void {

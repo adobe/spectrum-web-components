@@ -320,6 +320,7 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
     return html`
         <sp-action-menu
             label="View"
+            unmanaged
             @change=${onChange}
             style=${ifDefined(
                 align === 'end' ? 'float: inline-end;' : undefined

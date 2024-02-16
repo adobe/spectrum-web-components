@@ -68,7 +68,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('#button')
     public button!: HTMLButtonElement;
 
-    private deprecatedMenu: Menu | null = null;
+    protected deprecatedMenu: Menu | null = null;
 
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
