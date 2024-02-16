@@ -211,7 +211,7 @@ export const submenu = (): TemplateResult => {
                 </sp-menu-item>
                 <sp-menu-item disabled>
                     Queens
-                    <sp-menu disabled slot="submenu">
+                    <sp-menu slot="submenu">
                         <sp-menu-item>
                             You shouldn't be able to see this!
                         </sp-menu-item>
