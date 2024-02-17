@@ -39,7 +39,8 @@ import {
     isIOS,
 } from '@spectrum-web-components/shared/src/platform.js';
 
-import styles from './color-area.css.js';
+import stylesDefault from './spectrum-color-area.min.css' with { type: 'css' };
+import stylesOveride from './color-area.min.css' with { type: 'css' };
 
 /**
  * @element sp-color-area
@@ -49,7 +50,7 @@ import styles from './color-area.css.js';
  */
 export class ColorArea extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: String, reflect: true })

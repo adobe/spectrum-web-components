@@ -19,7 +19,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
-import panelStyles from './tab-panel.css.js';
+import stylesDefault from './tab-panel.min.css' with { type: 'css' };
 
 /**
  * @element sp-tab-panel
@@ -27,7 +27,7 @@ import panelStyles from './tab-panel.css.js';
  * @slot - content of the Tab Panel
  */
 export class TabPanel extends SpectrumElement {
-    static override styles = [panelStyles];
+    static override styles = [stylesDefault];
 
     @property({ type: Boolean, reflect: true })
     public selected = false;

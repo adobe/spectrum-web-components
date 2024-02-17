@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+declare module '*.css';
+
 type ElementLocalName = string;
 
 type WarningType = 'default' | 'accessibility' | 'api';

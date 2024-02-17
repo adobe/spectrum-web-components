@@ -1,4 +1,6 @@
 {
     ".": "./src/close-button.css.js",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./src/close-button.min.css": "./src/close-button.min.css",
+    "./src/spectrum-close-button.min.css": "./src/spectrum-close-button.min.css"
 }

@@ -1,4 +1,6 @@
 {
     ".": "./src/opacity-checkerboard.css.js",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./src/is-opacity-checkerboard.min.css": "./src/is-opacity-checkerboard.min.css",
+    "./src/opacity-checkerboard.min.css": "./src/opacity-checkerboard.min.css"
 }

@@ -23,7 +23,11 @@
         ".": "./src/modal-wrapper.css.js",
         "./package.json": "./package.json",
         "./src/modal-wrapper.css.js": "./src/modal-wrapper.css.js",
-        "./src/modal.css.js": "./src/modal.css.js"
+        "./src/modal.css.js": "./src/modal.css.js",
+        "./src/modal-wrapper.min.css": "./src/modal-wrapper.min.css",
+        "./src/modal.min.css": "./src/modal.min.css",
+        "./src/spectrum-modal-wrapper.min.css": "./src/spectrum-modal-wrapper.min.css",
+        "./src/spectrum-modal.min.css": "./src/spectrum-modal.min.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

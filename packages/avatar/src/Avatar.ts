@@ -24,7 +24,8 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
-import avatarStyles from './avatar.css.js';
+import stylesDefault from './spectrum-avatar.min.css' with { type: 'css' };
+import stylesOveride from './avatar.min.css' with { type: 'css' };
 
 export type AvatarSize = 50 | 75 | 100 | 200 | 300 | 400 | 500 | 600 | 700;
 const validSizes: AvatarSize[] = [50, 75, 100, 200, 300, 400, 500, 600, 700];
@@ -35,7 +36,7 @@ const defaultSize = validSizes[2];
  */
 export class Avatar extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
-        return [avatarStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     @query('#link')

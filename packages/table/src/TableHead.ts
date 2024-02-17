@@ -19,7 +19,8 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { TableHeadCell } from './TableHeadCell.js';
 import { TableCheckboxCell } from './TableCheckboxCell.js';
 
-import styles from './table-head.css.js';
+import stylesDefault from './spectrum-table-head.min.css' with { type: 'css' };
+import stylesOveride from './table-head.min.css' with { type: 'css' };
 
 /**
  * @element sp-table-head
@@ -27,7 +28,7 @@ import styles from './table-head.css.js';
  */
 export class TableHead extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ reflect: true })

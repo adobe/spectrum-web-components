@@ -28,7 +28,7 @@ import type { BeforetoggleOpenEvent } from './events.js';
 import type { Overlay } from './Overlay.js';
 import type { OverlayTriggerInteractions } from './overlay-types';
 
-import overlayTriggerStyles from './overlay-trigger.css.js';
+import styles from './overlay-trigger.min.css' with { type: 'css' };
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
@@ -45,7 +45,7 @@ export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
  */
 export class OverlayTrigger extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [overlayTriggerStyles];
+        return [styles];
     }
 
     @property()

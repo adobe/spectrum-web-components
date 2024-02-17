@@ -21,9 +21,10 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.min.css' with { type: 'css' };
 
-import styles from './accordion-item.css.js';
+// import stylesDefault from './spectrum-accordion-item.min.css' with { type: 'css' };
+import stylesOveride from './accordion-item.min.css' with { type: 'css' };
 
 const chevronIcon: Record<string, () => TemplateResult> = {
     s: () => html`
@@ -69,7 +70,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles, chevronIconStyles];
+        return [stylesOveride, chevronIconStyles];
     }
 
     @property({ type: Boolean, reflect: true })

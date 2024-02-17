@@ -24,8 +24,9 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import actionMenuStyles from './action-menu.css.js';
 import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+
+import stylesOveride from './action-menu.min.css' with { type: 'css' };
 
 /**
  * @element sp-action-menu
@@ -43,7 +44,7 @@ export class ActionMenu extends ObserveSlotPresence(
     '[slot="label-only"]'
 ) {
     public static override get styles(): CSSResultArray {
-        return [actionMenuStyles];
+        return [stylesOveride];
     }
 
     @property({ type: String })

@@ -29,9 +29,10 @@ import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { Tabs } from './Tabs.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import tabSizes from './tabs-sizes.css.js';
-import styles from './tabs-overflow.css.js';
+
+import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.min.css' with { type: 'css' };
+import stylesDefault from './tabs-sizes.min.css' with { type: 'css' };
+import stylesOveride from './tabs-overflow.min.css' with { type: 'css' };
 
 interface TabsOverflowState {
     canScrollLeft: boolean;
@@ -42,7 +43,7 @@ interface TabsOverflowState {
  */
 export class TabsOverflow extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [chevronIconStyles, styles, tabSizes];
+        return [chevronIconStyles, stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

@@ -21,15 +21,17 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import styles from './table-checkbox-cell.css.js';
 import { Checkbox } from '@spectrum-web-components/checkbox';
+
+import stylesDefault from './spectrum-table-checkbox-cell.min.css' with { type: 'css' };
+import stylesOveride from './table-checkbox-cell.min.css' with { type: 'css' };
 
 /**
  * @element sp-table-checkbox-cell
  */
 export class TableCheckboxCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     /**

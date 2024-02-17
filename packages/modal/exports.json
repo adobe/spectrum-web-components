@@ -1,4 +1,8 @@
 {
     ".": "./src/modal-wrapper.css.js",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./src/modal-wrapper.min.css": "./src/modal-wrapper.min.css",
+    "./src/modal.min.css": "./src/modal.min.css",
+    "./src/spectrum-modal-wrapper.min.css": "./src/spectrum-modal-wrapper.min.css",
+    "./src/spectrum-modal.min.css": "./src/spectrum-modal.min.css"
 }

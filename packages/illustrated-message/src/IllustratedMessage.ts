@@ -18,9 +18,13 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import messageStyles from './illustrated-message.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
+import stylesBase from '@spectrum-web-components/styles/src/spectrum-base.min.css' with { type: 'css' };
+import stylesLang from '@spectrum-web-components/styles/src/spectrum-lang.min.css' with { type: 'css' };
+import stylesHeading from '@spectrum-web-components/styles/src/spectrum-heading.min.css' with { type: 'css' };
+import stylesBody from '@spectrum-web-components/styles/src/spectrum-body.min.css' with { type: 'css' };
+
+import stylesDefault from './spectrum-illustrated-message.min.css' with { type: 'css' };
+import stylesOveride from './illustrated-message.min.css' with { type: 'css' };
 
 /**
  * @element sp-illustrated-message
@@ -33,7 +37,14 @@ export class IllustratedMessage extends SpectrumElement {
     public static readonly is = 'sp-illustrated-message';
 
     public static override get styles(): CSSResultArray {
-        return [headingStyles, bodyStyles, messageStyles];
+        return [
+            stylesBase,
+            stylesLang,
+            stylesHeading,
+            stylesBody,
+            stylesDefault,
+            stylesOveride,
+        ];
     }
 
     @property()

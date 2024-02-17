@@ -65,7 +65,12 @@
         "./sp-tabs-overflow.js": {
             "development": "./sp-tabs-overflow.dev.js",
             "default": "./sp-tabs-overflow.js"
-        }
+        },
+        "./src/tabs-sizes.min.css": "./src/tabs-sizes.min.css",
+        "./src/tabs.min.css": "./src/tabs.min.css",
+        "./src/spectrum-tabs.min.css": "./src/spectrum-tabs.min.css",
+        "./src/spectrum-tab.min.css": "./src/spectrum-tab.min.css",
+        "./src/tab.min.css": "./src/tab.min.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

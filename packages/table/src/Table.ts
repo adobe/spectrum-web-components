@@ -25,7 +25,6 @@ import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import styles from './table.css.js';
 import { TableBody } from './TableBody.js';
 import type { TableCheckboxCell } from './TableCheckboxCell.js';
 import type { TableHead } from './TableHead.js';
@@ -41,6 +40,9 @@ import {
     RangeChangedEvent,
     VisibilityChangedEvent,
 } from '@lit-labs/virtualizer/events.js';
+
+import stylesDefault from './spectrum-table.min.css' with { type: 'css' };
+import stylesOveride from './table.min.css' with { type: 'css' };
 
 export enum RowType {
     ITEM = 0,
@@ -63,7 +65,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     get renderItem(): (

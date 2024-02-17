@@ -1,4 +1,14 @@
 {
     "./src/*": "./src/*",
-    "./sp-icon.js": "./sp-icon.js"
+    "./sp-icon.js": "./sp-icon.js",
+    "./src/spectrum-icon-arrow.min.css": "./src/spectrum-icon-arrow.min.css",
+    "./src/spectrum-icon-asterisk.min.css": "./src/spectrum-icon-asterisk.min.css",
+    "./src/spectrum-icon-checkmark.min.css": "./src/spectrum-icon-checkmark.min.css",
+    "./src/spectrum-icon-chevron.min.css": "./src/spectrum-icon-chevron.min.css",
+    "./src/spectrum-icon-corner-triangle.min.css": "./src/spectrum-icon-corner-triangle.min.css",
+    "./src/spectrum-icon-cross.min.css": "./src/spectrum-icon-cross.min.css",
+    "./src/spectrum-icon-dash.min.css": "./src/spectrum-icon-dash.min.css",
+    "./src/spectrum-icon-double-gripper.min.css": "./src/spectrum-icon-double-gripper.min.css",
+    "./src/spectrum-icon-single-gripper.min.css": "./src/spectrum-icon-single-gripper.min.css",
+    "./src/spectrum-icon-triple-gripper.min.css": "./src/spectrum-icon-triple-gripper.min.css"
 }

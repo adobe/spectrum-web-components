@@ -18,12 +18,14 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { StyledButton } from './StyledButton.js';
-import buttonStyles from '@spectrum-web-components/clear-button/src/clear-button.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
-import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
+
+import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.min.css' with { type: 'css' };
+import stylesDefault from '@spectrum-web-components/clear-button/src/spectrum-clear-button.min.css' with { type: 'css' };
+import stylesOveride from '@spectrum-web-components/clear-button/src/clear-button.min.css' with { type: 'css' };
 
 const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`
@@ -62,7 +64,12 @@ export class ClearButton extends SizedMixin(StyledButton, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles, crossMediumStyles];
+        return [
+            ...super.styles,
+            stylesDefault,
+            stylesOveride,
+            crossMediumStyles,
+        ];
     }
 
     /**

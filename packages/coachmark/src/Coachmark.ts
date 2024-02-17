@@ -17,8 +17,6 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
-import coachmarkStyles from './coachmark.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { join } from '@spectrum-web-components/base/src/directives.js';
@@ -30,6 +28,10 @@ import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-coachmark.min.css' with { type: 'css' };
+import stylesOveride from './coachmark.min.css' with { type: 'css' };
 
 /**
  * @element sp-coachmark
@@ -43,7 +45,7 @@ import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
  */
 export class Coachmark extends Popover {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, coachmarkStyles, chevronStyles];
+        return [...super.styles, stylesDefault, stylesOveride, chevronStyles];
     }
     @property({ type: Object })
     public item?: CoachmarkItem;

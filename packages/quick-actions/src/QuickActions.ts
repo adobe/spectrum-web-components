@@ -19,7 +19,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './quick-actions.css.js';
+import stylesDefault from './spectrum-quick-actions.min.css' with { type: 'css' };
+import stylesOveride from './quick-actions.min.css' with { type: 'css' };
 
 /**
  * @element sp-quick-actions
@@ -28,7 +29,7 @@ import styles from './quick-actions.css.js';
  */
 export class QuickActions extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

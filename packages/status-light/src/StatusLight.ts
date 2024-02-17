@@ -19,7 +19,9 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import statusLightStyles from './status-light.css.js';
+
+import stylesDefault from './spectrum-status-light.min.css' with { type: 'css' };
+import stylesOveride from './status-light.min.css' with { type: 'css' };
 
 /**
  * @element sp-status-light
@@ -30,7 +32,7 @@ export class StatusLight extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [statusLightStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     /**

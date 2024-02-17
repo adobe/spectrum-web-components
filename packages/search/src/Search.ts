@@ -27,7 +27,8 @@ import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
-import searchStyles from './search.css.js';
+import stylesDefault from './spectrum-search.min.css' with { type: 'css' };
+import stylesOveride from './search.min.css' with { type: 'css' };
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
@@ -40,7 +41,7 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
  */
 export class Search extends Textfield {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, searchStyles];
+        return [...super.styles, stylesDefault, stylesOveride];
     }
 
     @property()

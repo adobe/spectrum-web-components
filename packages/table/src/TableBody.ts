@@ -16,15 +16,17 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import styles from './table-body.css.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+
+import stylesDefault from './spectrum-table-body.min.css' with { type: 'css' };
+import stylesOveride from './table-body.min.css' with { type: 'css' };
 
 /**
  * @element sp-table-body
  */
 export class TableBody extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     constructor() {

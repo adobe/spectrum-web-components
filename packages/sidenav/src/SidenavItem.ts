@@ -24,7 +24,8 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import { SideNav, SidenavSelectDetail } from './Sidenav.js';
 
-import sidenavItemStyles from './sidenav-item.css.js';
+import stylesDefault from './spectrum-sidenav-item.min.css' with { type: 'css' };
+import stylesOveride from './sidenav-item.min.css' with { type: 'css' };
 
 /**
  * @element sp-sidenav-item
@@ -33,7 +34,7 @@ import sidenavItemStyles from './sidenav-item.css.js';
  */
 export class SideNavItem extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
-        return [sidenavItemStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property()

@@ -20,7 +20,8 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { Button } from '@spectrum-web-components/button';
 
-import styles from './button-group.css.js';
+import stylesDefault from './spectrum-button-group.min.css' with { type: 'css' };
+import stylesOveride from './button-group.min.css' with { type: 'css' };
 
 /**
  * @element sp-button-group
@@ -30,7 +31,7 @@ export class ButtonGroup extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

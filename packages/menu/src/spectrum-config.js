@@ -397,6 +397,7 @@ const config = {
             outPackage: 'menu',
             fileName: 'menu',
             excludeByComponents: [
+                builder.element('li'),
                 builder.class('spectrum-Menu-divider'),
                 builder.class('spectrum-menu-itemSelection'),
                 {

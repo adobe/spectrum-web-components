@@ -19,8 +19,9 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
-import switchStyles from './switch.css.js';
-import legacyStyles from './switch-legacy.css.js';
+
+import stylesDefault from './spectrum-switch.min.css' with { type: 'css' };
+import stylesOveride from './switch.min.css' with { type: 'css' };
 
 /**
  * @element sp-switch
@@ -30,12 +31,7 @@ import legacyStyles from './switch-legacy.css.js';
  */
 export class Switch extends SizedMixin(CheckboxBase) {
     public static override get styles(): CSSResultArray {
-        /* c8 ignore next 4 */
-        if (window.hasOwnProperty('ShadyDOM')) {
-            // Override some styles if we are using the web component polyfill
-            return [switchStyles, legacyStyles];
-        }
-        return [switchStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

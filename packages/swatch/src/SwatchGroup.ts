@@ -25,14 +25,15 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-
-import styles from './swatch-group.css.js';
 import type {
     Swatch,
     SwatchBorder,
     SwatchRounding,
     SwatchShape,
 } from './Swatch.js';
+
+import stylesDefault from './spectrum-swatch-group.min.css' with { type: 'css' };
+import stylesOveride from './swatch-group.min.css' with { type: 'css' };
 
 export type SwatchGroupSizes = Exclude<ElementSize, 'xxs' | 'xl' | 'xxl'>;
 export type SwatchSelects = 'single' | 'multiple' | undefined;
@@ -47,7 +48,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ reflect: true })

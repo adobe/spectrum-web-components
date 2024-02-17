@@ -36,8 +36,9 @@ import {
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
-import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
-import styles from './color-slider.css.js';
+import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-color-slider.min.css' with { type: 'css' };
+import stylesOveride from './color-slider.min.css' with { type: 'css' };
 
 /**
  * @element sp-color-slider
@@ -47,7 +48,7 @@ import styles from './color-slider.css.js';
  */
 export class ColorSlider extends Focusable {
     public static override get styles(): CSSResultArray {
-        return [opacityCheckerBoardStyles, styles];
+        return [opacityCheckerBoardStyles, stylesDefault, stylesOveride];
     }
 
     @property({ type: String, reflect: true })

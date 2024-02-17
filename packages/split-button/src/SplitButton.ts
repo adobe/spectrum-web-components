@@ -31,8 +31,10 @@ import { ButtonVariants } from '@spectrum-web-components/button';
 import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import styles from './split-button.css.js';
+
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-split-button.min.css' with { type: 'css' };
+import stylesOveride from './split-button.min.css' with { type: 'css' };
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -51,7 +53,7 @@ export type SplitButtonTypes = 'field' | 'more';
  **/
 export class SplitButton extends SizedMixin(PickerBase) {
     public static override get styles(): CSSResultArray {
-        return [styles, chevronStyles];
+        return [stylesDefault, stylesOveride, chevronStyles];
     }
 
     @property({ type: Boolean, reflect: true })

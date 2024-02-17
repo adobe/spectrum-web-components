@@ -18,14 +18,15 @@ import {
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
-import linkStyles from './link.css.js';
+import stylesDefault from './spectrum-link.min.css' with { type: 'css' };
+import stylesOveride from './link.min.css' with { type: 'css' };
 
 /**
  * @element sp-link
  */
 export class Link extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
-        return [linkStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     @query('#anchor')

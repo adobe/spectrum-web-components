@@ -23,7 +23,9 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
-import popoverStyles from './popover.css.js';
+
+import stylesDefault from './spectrum-popover.min.css' with { type: 'css' };
+import stylesOveride from './popover.min.css' with { type: 'css' };
 
 /**
  * @element sp-popover
@@ -32,7 +34,7 @@ import popoverStyles from './popover.css.js';
  */
 export class Popover extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [popoverStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     /**

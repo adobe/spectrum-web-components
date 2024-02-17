@@ -1,0 +1,17 @@
+diff --git a/node_modules/koa-node-resolve/lib/koa-module-specifier-transform.js b/node_modules/koa-node-resolve/lib/koa-module-specifier-transform.js
+index 10f380d..b153176 100644
+--- a/node_modules/koa-node-resolve/lib/koa-module-specifier-transform.js
++++ b/node_modules/koa-node-resolve/lib/koa-module-specifier-transform.js
+@@ -46,10 +46,12 @@ const defaultJSParser = (js) => parser_1.parse(js, {
+         'exportDefaultFrom',
+         'exportNamespaceFrom',
+         'importMeta',
++        ['importAttributes'],
+     ],
+ });
+ const defaultJSSerializer = (ast) => generator_1.default(ast, {
+     concise: false,
++    importAttributesKeyword: 'with',
+     jsescOption: {
+         quotes: 'single',
+     },

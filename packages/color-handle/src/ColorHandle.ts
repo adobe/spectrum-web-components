@@ -20,15 +20,17 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
-import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/is-opacity-checkerboard.css.js';
-import styles from './color-handle.css.js';
+
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/is-opacity-checkerboard.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-color-handle.min.css' with { type: 'css' };
+import stylesOveride from './color-handle.min.css' with { type: 'css' };
 
 /**
  * @element sp-color-handle
  */
 export class ColorHandle extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [opacityCheckerboardStyles, styles];
+        return [opacityCheckerboardStyles, stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

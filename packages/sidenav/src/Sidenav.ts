@@ -19,11 +19,13 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
-import sidenavStyles from './sidenav.css.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+
+import stylesDefault from './spectrum-sidenav.min.css' with { type: 'css' };
+import stylesOveride from './sidenav.min.css' with { type: 'css' };
 
 export interface SidenavSelectDetail {
     value: string;
@@ -38,7 +40,7 @@ export interface SidenavSelectDetail {
  */
 export class SideNav extends Focusable {
     public static override get styles(): CSSResultArray {
-        return [sidenavStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     private items = new Set<SideNavItem>();

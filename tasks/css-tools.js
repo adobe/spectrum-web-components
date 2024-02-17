@@ -62,5 +62,6 @@ export const processCSS = async (cssPath) => {
     });
     console.log(cssPath);
     wrappedCSS += wrapCSSResult(code);
+    fs.writeFileSync(cssPath.replace('.css', '.min.css'), code, 'utf-8');
     fs.writeFileSync(cssPath + '.ts', wrappedCSS, 'utf-8');
 };

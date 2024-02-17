@@ -21,7 +21,8 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
-import styles from './help-text.css.js';
+import stylesDefault from './spectrum-help-text.min.css' with { type: 'css' };
+import stylesOveride from './help-text.min.css' with { type: 'css' };
 
 type HelpTextVariants = 'neutral' | 'negative';
 
@@ -32,7 +33,7 @@ export class HelpText extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

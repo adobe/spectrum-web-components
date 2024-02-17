@@ -20,7 +20,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './divider.css.js';
+import stylesDefault from './spectrum-divider.min.css' with { type: 'css' };
+import stylesOveride from './divider.min.css' with { type: 'css' };
 
 /**
  * @element sp-divider
@@ -29,7 +30,10 @@ export class Divider extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
     noDefaultSize: true,
 }) {
-    public static override styles: CSSResultArray = [styles];
+    public static override styles: CSSResultArray = [
+        stylesDefault,
+        stylesOveride,
+    ];
 
     @property({ type: Boolean, reflect: true })
     public vertical = false;

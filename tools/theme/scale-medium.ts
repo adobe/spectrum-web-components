@@ -10,8 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import mediumStyles from './src/scale-medium.css.js';
+// import mediumSpectrum from '@spectrum-web-components/styles/spectrum-scale-medium.min.css' with { type: 'css' };
+import mediumStyles from '@spectrum-web-components/styles/scale-medium.min.css' with { type: 'css' };
+import mediumVars from '@spectrum-web-components/styles/tokens/medium-vars.min.css' with { type: 'css' };
+import mediumCustom from '@spectrum-web-components/styles/tokens/spectrum/custom-medium-vars.min.css' with { type: 'css' };
+import mediumSpectrumVars from '@spectrum-web-components/styles/tokens/spectrum/medium-vars.min.css' with { type: 'css' };
+// @import url('@spectrum-web-components/styles/scale-medium.css');
+// @import url('@spectrum-web-components/styles/tokens/medium-vars.css');
+// @import url('@spectrum-web-components/styles/tokens/spectrum/custom-medium-vars.css');
+// @import url('@spectrum-web-components/styles/tokens/spectrum/medium-vars.css');
 import { Theme } from './src/Theme.js';
 import './core.js';
 
-Theme.registerThemeFragment('medium', 'scale', mediumStyles);
+Theme.registerThemeFragment('medium', 'scale', [
+    // mediumSpectrum,
+    mediumStyles,
+    mediumVars,
+    mediumCustom,
+    mediumSpectrumVars,
+]);

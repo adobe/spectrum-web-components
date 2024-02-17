@@ -17,8 +17,10 @@ import {
     SpectrumElement,
 } from '@spectrum-web-components/base';
 
-import menuDividerStyles from './menu-divider.css.js';
-import dividerStyles from '@spectrum-web-components/divider/src/divider.css.js';
+import stylesDefault from './spectrum-menu-divider.min.css' with { type: 'css' };
+import stylesOveride from './menu-divider.min.css' with { type: 'css' };
+import dividerStylesDefault from '@spectrum-web-components/divider/src/spectrum-divider.min.css' with { type: 'css' };
+import dividerStylesOveride from '@spectrum-web-components/divider/src/divider.min.css' with { type: 'css' };
 
 /**
  * @element sp-menu-divider
@@ -27,7 +29,12 @@ export class MenuDivider extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
     public static override get styles(): CSSResultArray {
-        return [dividerStyles, menuDividerStyles];
+        return [
+            dividerStylesDefault,
+            dividerStylesOveride,
+            stylesDefault,
+            stylesOveride,
+        ];
     }
 
     protected override firstUpdated(changed: PropertyValues<this>): void {

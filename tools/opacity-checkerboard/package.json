@@ -23,7 +23,9 @@
         ".": "./src/opacity-checkerboard.css.js",
         "./package.json": "./package.json",
         "./src/is-opacity-checkerboard.css.js": "./src/is-opacity-checkerboard.css.js",
-        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
+        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js",
+        "./src/is-opacity-checkerboard.min.css": "./src/is-opacity-checkerboard.min.css",
+        "./src/opacity-checkerboard.min.css": "./src/opacity-checkerboard.min.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

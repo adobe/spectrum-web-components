@@ -22,7 +22,9 @@
     "exports": {
         ".": "./src/clear-button.css.js",
         "./package.json": "./package.json",
-        "./src/clear-button.css.js": "./src/clear-button.css.js"
+        "./src/clear-button.css.js": "./src/clear-button.css.js",
+        "./src/clear-button.min.css": "./src/clear-button.min.css",
+        "./src/spectrum-clear-button.min.css": "./src/spectrum-clear-button.min.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

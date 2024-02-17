@@ -19,11 +19,12 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import iconStyles from './icon.css.js';
+import stylesDefault from './spectrum-icon.min.css' with { type: 'css' };
+import stylesOveride from './icon.min.css' with { type: 'css' };
 
 export class IconBase extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [iconStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property()

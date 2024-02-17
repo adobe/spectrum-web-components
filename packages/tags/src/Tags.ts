@@ -22,7 +22,8 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
 
 import { Tag } from './Tag.js';
 
-import styles from './tags.css.js';
+import stylesDefault from './spectrum-tags.min.css' with { type: 'css' };
+import stylesOveride from './tags.min.css' with { type: 'css' };
 
 /**
  * @element sp-tags
@@ -31,7 +32,7 @@ import styles from './tags.css.js';
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @queryAssignedNodes()

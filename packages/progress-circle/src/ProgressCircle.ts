@@ -25,7 +25,8 @@ import {
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-import progressCircleStyles from './progress-circle.css.js';
+import stylesDefault from './spectrum-progress-circle.min.css' with { type: 'css' };
+import stylesOveride from './progress-circle.min.css' with { type: 'css' };
 
 /**
  * @element sp-progress-circle
@@ -34,7 +35,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
     public static override get styles(): CSSResultArray {
-        return [progressCircleStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

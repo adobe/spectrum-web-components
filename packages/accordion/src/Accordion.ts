@@ -26,7 +26,8 @@ import { FocusGroupController } from '@spectrum-web-components/reactive-controll
 
 import { AccordionItem } from './AccordionItem.js';
 
-import styles from './accordion.css.js';
+// import stylesDefault from './spectrum-accordion.min.css' with { type: 'css' };
+import stylesOveride from './accordion.min.css' with { type: 'css' };
 
 /**
  * @element sp-accordion
@@ -36,7 +37,7 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesOveride];
     }
 
     /**

@@ -23,7 +23,7 @@ const config = {
         {
             inPackage: '@spectrum-css/illustratedmessage',
             outPackage: 'illustrated-message',
-            fileName: 'illustratedmessage',
+            fileName: 'illustrated-message',
             components: [
                 converter.classToHost(),
                 converter.classToId('spectrum-IllustratedMessage-heading'),

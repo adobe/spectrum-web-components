@@ -18,9 +18,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 
-import styles from './thumbnail.css.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/is-opacity-checkerboard.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-thumbnail.min.css' with { type: 'css' };
+import stylesOveride from './thumbnail.min.css' with { type: 'css' };
 
 const validSizes = [
     '50',
@@ -36,7 +37,7 @@ const validSizes = [
     '900',
     '1000',
 ];
-export type ThumbnailSize = typeof validSizes[number];
+export type ThumbnailSize = (typeof validSizes)[number];
 
 const defaultSize = validSizes[6];
 
@@ -48,7 +49,7 @@ const defaultSize = validSizes[6];
 
 export class Thumbnail extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [opacityCheckerboardStyles, styles];
+        return [opacityCheckerboardStyles, stylesDefault, stylesOveride];
     }
 
     @property({ type: String, reflect: true })
@@ -67,7 +68,7 @@ export class Thumbnail extends SpectrumElement {
 
     public set size(value: ThumbnailSize) {
         const deprecatedSizes = ['xxs', 'xs', 's', 'm', 'l'];
-        type DeprecatedThumbnailSize = typeof deprecatedSizes[number];
+        type DeprecatedThumbnailSize = (typeof deprecatedSizes)[number];
         const managedSizes: Record<DeprecatedThumbnailSize, ThumbnailSize> = {
             xxs: '100',
             xs: '300',

@@ -24,7 +24,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
-import toastStyles from './toast.css.js';
+import stylesDefault from './spectrum-toast.min.css' with { type: 'css' };
+import stylesOveride from './toast.min.css' with { type: 'css' };
 
 export const toastVariants: ToastVariants[] = [
     'negative',
@@ -53,7 +54,7 @@ export type ToastVariants =
 
 export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [toastStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

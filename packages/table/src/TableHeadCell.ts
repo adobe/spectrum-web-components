@@ -20,8 +20,9 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
 
-import styles from './table-head-cell.css.js';
-import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.css.js';
+import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-table-head-cell.min.css' with { type: 'css' };
+import stylesOveride from './table-head-cell.min.css' with { type: 'css' };
 
 export type SortedEventDetails = {
     sortDirection: 'asc' | 'desc';
@@ -43,7 +44,7 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
  */
 export class TableHeadCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles, arrowStyles];
+        return [stylesDefault, stylesOveride, arrowStyles];
     }
 
     @property({ reflect: true })
