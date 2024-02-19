@@ -176,10 +176,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private pointerdownState = false;
 
     protected handleButtonPointerdown(event: PointerEvent): void {
-        if (this.pending) {
-            return;
-        }
-
         if (event.button !== 0) {
             return;
         }
@@ -211,10 +207,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     protected handleActivate(event?: Event): void {
-        if (this.pending) {
-            return;
-        }
-
         if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
             return;
         }
@@ -318,7 +310,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly) {
+        if (this.readonly || this.pending) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -430,6 +422,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         '@spectrum-web-components/progress-circle/sp-progress-circle.js'
                     );
                     return html`
+                        <span
+                            aria-hidden="true"
+                            class="visually-hidden"
+                            id="loader-label"
+                        >
+                            Loading
+                        </span>
                         <sp-progress-circle
                             size="s"
                             indeterminate
@@ -520,7 +519,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 aria-describedby="tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
-                aria-labelledby="icon label applied-label"
+                aria-labelledby="loader-label icon label applied-label"
                 id="button"
                 class="button"
                 @blur=${this.handleButtonBlur}
@@ -547,6 +546,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
+            this.open = false;
+        }
+        if (changes.has('pending') && this.pending) {
             this.open = false;
         }
         if (changes.has('value')) {
@@ -782,10 +784,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private enterKeydownOn: EventTarget | null = null;
 
     protected handleEnterKeydown = (event: KeyboardEvent): void => {
-        if (this.pending) {
-            return;
-        }
-
         if (event.code !== 'Enter') {
             return;
         }
@@ -846,11 +844,7 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-
-        if (this.pending) {
-            return;
-        }
-        if (!code.startsWith('Arrow') || this.readonly) {
+        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
             return;
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {

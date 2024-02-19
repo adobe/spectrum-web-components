@@ -122,7 +122,7 @@ sp-menu {
     margin-inline-start: auto;
 }
 
-:host([focused]:not([quiet])) #button .picker {
+:host([focused]:not([quiet], [pending])) #button .picker {
     /* .spectrum-Picker-trigger.focus-ring .spectrum-Picker-icon */
     color: var(
         --spectrum-picker-icon-color-key-focus,

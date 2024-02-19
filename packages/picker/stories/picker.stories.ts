@@ -458,13 +458,8 @@ export const readonly = (args: StoryArgs): TemplateResult => {
 export const pending = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-loading">Country</sp-field-label>
-        <sp-picker
-            id="picker-loading"
-            @change=${handleChange(args)}
-            ${spreadProps(args)}
-            pending
-        >
-            <span slot="label">Loading...</span>
+        <sp-picker id="picker-loading" ${spreadProps(args)}>
+            <span slot="label">Select an option...</span>
             <sp-menu-item value="item-1">Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>
@@ -473,6 +468,9 @@ export const pending = (args: StoryArgs): TemplateResult => {
             <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-picker>
     `;
+};
+pending.args = {
+    pending: true,
 };
 
 export const custom = (args: StoryArgs): TemplateResult => {
@@ -510,7 +508,6 @@ export const custom = (args: StoryArgs): TemplateResult => {
         </p>
     `;
 };
-
 custom.args = {
     open: true,
 };
