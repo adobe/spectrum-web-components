@@ -16,6 +16,28 @@ governing permissions and limitations under the License.
     --spectrum-badge-line-height: var(--spectrum-line-height-100);
     --spectrum-badge-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-badge-label-icon-color: var(--spectrum-white);
+}
+.spectrum-Badge--celery,
+.spectrum-Badge--chartreuse,
+.spectrum-Badge--orange,
+:host([variant='yellow']) {
+    --spectrum-badge-label-icon-color: var(--spectrum-black);
+}
+.spectrum-Badge--blue,
+.spectrum-Badge--cyan,
+.spectrum-Badge--gray,
+.spectrum-Badge--green,
+.spectrum-Badge--red,
+:host([variant='fuchsia']),
+:host([variant='indigo']),
+:host([variant='magenta']),
+:host([variant='purple']),
+:host([variant='seafoam']) {
+    --spectrum-badge-label-icon-color: var(
+        --spectrum-badge-label-icon-color-primary
+    );
+}
+:host {
     --spectrum-badge-background-color-default: var(
         --spectrum-neutral-subdued-background-color-default
     );
@@ -97,26 +119,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-badge-icon-only-spacing-horizontal: var(
         --spectrum-component-edge-to-visual-only-100
-    );
-}
-.spectrum-Badge--celery,
-.spectrum-Badge--chartreuse,
-.spectrum-Badge--orange,
-:host([variant='yellow']) {
-    --spectrum-badge-label-icon-color: var(--spectrum-black);
-}
-.spectrum-Badge--blue,
-.spectrum-Badge--cyan,
-.spectrum-Badge--gray,
-.spectrum-Badge--green,
-.spectrum-Badge--red,
-:host([variant='fuchsia']),
-:host([variant='indigo']),
-:host([variant='magenta']),
-:host([variant='purple']),
-:host([variant='seafoam']) {
-    --spectrum-badge-label-icon-color: var(
-        --spectrum-badge-label-icon-color-primary
     );
 }
 :host([size='s']) {

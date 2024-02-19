@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/picker/sp-picker.js';
-import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
@@ -24,6 +23,8 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
+import { handleChange, StoryArgs, Template } from './template.js';
+import { argTypes } from './args.js';
 
 export default {
     title: 'Picker',
@@ -35,6 +36,7 @@ export default {
         quiet: false,
     },
     argTypes: {
+        ...argTypes,
         onChange: { action: 'change' },
         disabled: {
             name: 'disabled',
@@ -60,8 +62,8 @@ export default {
                 type: 'boolean',
             },
         },
-        loading: {
-            name: 'loading',
+        pending: {
+            name: 'pending',
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
@@ -81,36 +83,8 @@ export default {
             },
             control: 'boolean',
         },
-        quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
     },
 };
-
-interface StoryArgs {
-    disabled?: boolean;
-    invalid?: boolean;
-    open?: boolean;
-    quiet?: boolean;
-    showText?: boolean;
-    onChange?: (val: string) => void;
-    [prop: string]: unknown;
-}
-
-const handleChange =
-    ({ onChange }: StoryArgs) =>
-    (event: Event): void => {
-        const picker = event.target as Picker;
-        if (onChange) onChange(picker.value);
-    };
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
@@ -138,6 +112,11 @@ export const Default = (args: StoryArgs): TemplateResult => {
             .
         </p>
     `;
+};
+
+export const disabled = (args: StoryArgs): TemplateResult => Template(args);
+disabled.args = {
+    disabled: true,
 };
 
 export const tooltip = (args: StoryArgs): TemplateResult => {
@@ -263,7 +242,7 @@ export const icons = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
@@ -291,7 +270,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
@@ -324,12 +303,12 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
             icons="only"
-            style="--spectrum-picker-width: 100px"
+            style="width: 100px"
             value="2"
         >
             <sp-menu-item value="1">
@@ -354,11 +333,11 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
-            style="--spectrum-picker-width: 100px"
+            style="width: 100px"
             value="3"
         >
             <sp-menu-item value="1">

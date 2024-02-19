@@ -29,11 +29,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-detail-font-color: var(--spectrum-detail-color);
 }
-@media (forced-colors: active) {
-    .spectrum-Detail {
-        --highcontrast-detail-font-color: Text;
-    }
-}
 .spectrum-Detail--sizeS {
     --spectrum-detail-font-size: var(--spectrum-detail-size-s);
 }
@@ -380,4 +375,9 @@ governing permissions and limitations under the License.
         --mod-detail-margin-start,
         var(--spectrum-detail-margin-start)
     );
+}
+@media (forced-colors: active) {
+    .spectrum-Detail {
+        --highcontrast-detail-font-color: Text;
+    }
 }

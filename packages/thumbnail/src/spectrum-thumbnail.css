@@ -91,11 +91,8 @@ governing permissions and limitations under the License.
     display: block;
     inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     margin: 0;
-    overflow: hidden;
     padding: 0;
     position: relative;
-    vertical-align: top;
-    z-index: 0;
 }
 :host:before {
     block-size: 100%;
@@ -204,6 +201,11 @@ governing permissions and limitations under the License.
     );
     overflow: hidden;
 }
+:host {
+    overflow: hidden;
+    vertical-align: top;
+    z-index: 0;
+}
 :host([layer]) {
     align-items: center;
     border-color: var(
@@ -252,16 +254,20 @@ governing permissions and limitations under the License.
 .layer-inner {
     block-size: calc(
         var(--spectrum-thumbnail-size) -
-            var(
-                --mod-thumbnail-layer-border-width-inner,
-                var(--spectrum-thumbnail-layer-border-width-inner)
+            (
+                var(
+                    --mod-thumbnail-layer-border-width-inner,
+                    var(--spectrum-thumbnail-layer-border-width-inner)
+                )
             ) * 2
     );
     inline-size: calc(
         var(--spectrum-thumbnail-size) -
-            var(
-                --mod-thumbnail-layer-border-width-inner,
-                var(--spectrum-thumbnail-layer-border-width-inner)
+            (
+                var(
+                    --mod-thumbnail-layer-border-width-inner,
+                    var(--spectrum-thumbnail-layer-border-width-inner)
+                )
             ) * 2
     );
     outline-color: var(

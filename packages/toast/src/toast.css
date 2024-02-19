@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 @import url('./spectrum-toast.css');
 
 :host {
-    --spectrum-overlay-animation-distance: 6px;
+    --spectrum-overlay-animation-distance: var(--spectrum-spacing-100);
     --spectrum-overlay-animation-duration: var(
         --spectrum-animation-duration-100
     );

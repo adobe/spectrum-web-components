@@ -51,13 +51,13 @@ slot[name='icon']::slotted(svg),
 slot[name='icon']::slotted(img) {
     fill: currentcolor;
     stroke: currentcolor;
-    height: var(
-        --spectrum-alias-workflow-icon-size-m,
-        var(--spectrum-global-dimension-size-225)
+    block-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-100)
     );
-    width: var(
-        --spectrum-alias-workflow-icon-size-m,
-        var(--spectrum-global-dimension-size-225)
+    inline-size: var(
+        --spectrum-icon-size,
+        var(--spectrum-workflow-icon-size-100)
     );
 }
 

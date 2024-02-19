@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   **slider:** high contrast improvements for filled track ([#3952](https://github.com/adobe/spectrum-web-components/issues/3952)) ([782560d](https://github.com/adobe/spectrum-web-components/commit/782560d98c3431c9f4467c4b93857133f30dc0d6))
+
 ## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
 
 ### Bug Fixes

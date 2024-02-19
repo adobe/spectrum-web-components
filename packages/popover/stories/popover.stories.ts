@@ -186,7 +186,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                             Click for ${placement}-start popover
                         </sp-button>
                         <sp-popover tip slot="click-content">
-                            <sp-dialog>
+                            <sp-dialog style="--mod-dialog-min-inline-size: 0;">
                                 <h2 slot="heading">
                                     Popover ${placement}-start
                                 </h2>

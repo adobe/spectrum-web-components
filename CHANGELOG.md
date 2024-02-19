@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   **popover:** correct tip delivery size ([#4018](https://github.com/adobe/spectrum-web-components/issues/4018)) ([4ff403e](https://github.com/adobe/spectrum-web-components/commit/4ff403e0d58c3014a7adedd6b22dd164e23cdfd2))
+-   **slider:** high contrast improvements for filled track ([#3952](https://github.com/adobe/spectrum-web-components/issues/3952)) ([782560d](https://github.com/adobe/spectrum-web-components/commit/782560d98c3431c9f4467c4b93857133f30dc0d6))
+-   support generating random IDs outside of secure contexts ([485a67c](https://github.com/adobe/spectrum-web-components/commit/485a67c5401094705b711350f8ee74182a6dd64b))
+-   **tray:** only allow "click" events when they "pointerdown"ed on the Underlay ([#4020](https://github.com/adobe/spectrum-web-components/issues/4020)) ([4f9aa4a](https://github.com/adobe/spectrum-web-components/commit/4f9aa4aac837fc56ab1876aa693bd9d82f0ba26f))
+
+### Features
+
+-   **coachmark:** rename "sp-coachmark" to "sp-coachmark-indicator", add "sp-coachmark" ([#3639](https://github.com/adobe/spectrum-web-components/issues/3639)) ([a94389c](https://github.com/adobe/spectrum-web-components/commit/a94389cac1a31e5f0b02b187c93fd3489dc0f40f))
+-   **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
+
+### Performance Improvements
+
+-   **combobox:** prevent initial list render and update tests to prove that reduces render time ([3dc5b1f](https://github.com/adobe/spectrum-web-components/commit/3dc5b1f77fbe9d5b20178a3641b0c73da0cdad35))
+
 ## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
 
 ### Bug Fixes

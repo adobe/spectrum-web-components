@@ -171,7 +171,7 @@ export const Modes = (): TemplateResult => {
                         slot="icon"
                         label="User avatar"
                         src=${avatar}
-                        style="--spectrum-avatar-small-width: var(--spectrum-global-dimension-size-300); --spectrum-avatar-small-height: var(--spectrum-global-dimension-size-300);"
+                        style="--mod-avatar-block-size: 100%; --mod-avatar-inline-size: 100%;"
                     ></sp-avatar>
                     <sp-menu-item>Profile</sp-menu-item>
                     <sp-menu-divider></sp-menu-divider>
