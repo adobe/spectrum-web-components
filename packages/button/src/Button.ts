@@ -199,6 +199,12 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     }
 
     protected override renderButton(): TemplateResult {
+        if (this.$spectrumVersion === 2) {
+            return html`
+                <h3>I am the spectrum2 button</h3>
+            `;
+        }
+
         return html`
             ${this.buttonContent}
             ${when(this.pending, () => {
