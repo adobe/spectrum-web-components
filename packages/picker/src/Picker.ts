@@ -24,6 +24,7 @@ import {
     ifDefined,
     StyleInfo,
     styleMap,
+    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
@@ -36,7 +37,6 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -85,7 +85,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public invalid = false;
 
     @property({ type: Boolean, reflect: true })
-    public loading = false;
+    public pending = false;
 
     @property()
     public label?: string;
@@ -172,6 +172,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private pointerdownState = false;
 
     protected handleButtonPointerdown(event: PointerEvent): void {
+        if (this.pending) {
+            return;
+        }
+
         if (event.button !== 0) {
             return;
         }
@@ -203,6 +207,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     protected handleActivate(event?: Event): void {
+        if (this.pending) {
+            return;
+        }
+
         if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
             return;
         }
@@ -406,22 +414,26 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid
+                ${this.invalid && !this.pending
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${this.loading
-                    ? html`
-                          <sp-progress-circle
-                              indeterminate
-                              aria-labelledby="label"
-                              aria-hidden="true"
-                          ></sp-progress-circle>
-                      `
-                    : nothing}
+                ${when(this.pending, () => {
+                    import(
+                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+                    );
+                    return html`
+                        <sp-progress-circle
+                            size="s"
+                            indeterminate
+                            aria-hidden="true"
+                            class="progress-circle"
+                        ></sp-progress-circle>
+                    `;
+                })}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize
@@ -766,6 +778,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private enterKeydownOn: EventTarget | null = null;
 
     protected handleEnterKeydown = (event: KeyboardEvent): void => {
+        if (this.pending) {
+            return;
+        }
+
         if (event.code !== 'Enter') {
             return;
         }
@@ -826,6 +842,10 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
+
+        if (this.pending) {
+            return;
+        }
         if (!code.startsWith('Arrow') || this.readonly) {
             return;
         }

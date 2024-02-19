@@ -32,6 +32,7 @@ const config = {
                 converter.classToId('spectrum-Picker', 'button'),
                 converter.classToAttribute('spectrum-Picker--quiet'),
                 converter.classToAttribute('is-disabled', 'disabled'),
+                converter.classToAttribute('is-loading', 'pending'),
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('is-focused', 'focused'),
@@ -47,6 +48,10 @@ const config = {
                 ),
                 converter.classToClass('spectrum-Picker-menuIcon', 'picker'),
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
+                converter.classToClass(
+                    'spectrum-ProgressCircle',
+                    'progress-circle'
+                ),
                 converter.classToClass('is-placeholder', 'placeholder'),
                 converter.classToClass(
                     'spectrum-Picker-validationIcon',

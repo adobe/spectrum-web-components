@@ -41,13 +41,6 @@ governing permissions and limitations under the License.
     --spectrum-picker-width: var(--spectrum-global-dimension-size-2400);
 }
 
-:host([loading]) sp-progress-circle {
-    margin-inline-start: var(
-        --mod-picker-spacing-text-to-alert-icon-inline-start,
-        var(--spectrum-picker-spacing-text-to-alert-icon-inline-start)
-    );
-}
-
 :host([size='s']) sp-progress-circle {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-progress-circle-thickness: var(

@@ -33,8 +33,8 @@ export default {
                 type: 'boolean',
             },
         },
-        loading: {
-            name: 'loading',
+        pending: {
+            name: 'pending',
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
@@ -50,7 +50,7 @@ export default {
 type StoryArgs = {
     onChange: (val: string) => void;
     invalid: boolean;
-    loading: boolean;
+    pending: boolean;
     open: false;
 };
 
@@ -58,12 +58,12 @@ const picker = ({
     onChange,
     open,
     size,
-    loading,
+    pending,
     invalid,
 }: {
     onChange: (val: string) => void;
     size: 's' | 'm' | 'l' | 'xl';
-    loading: boolean;
+    pending: boolean;
     invalid: boolean;
     open: boolean;
 }): TemplateResult => {
@@ -79,7 +79,7 @@ const picker = ({
                 onChange(picker.value);
             }}"
             label="Select a Country with a very long label, too long, in fact"
-            ?loading="${loading}"
+            ?pending="${pending}"
             ?invalid="${invalid}"
             ?open=${open}
         >

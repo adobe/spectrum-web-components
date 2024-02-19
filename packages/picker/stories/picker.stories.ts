@@ -476,6 +476,26 @@ export const readonly = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+export const pending = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-loading">Country</sp-field-label>
+        <sp-picker
+            id="picker-loading"
+            @change=${handleChange(args)}
+            ${spreadProps(args)}
+            pending
+        >
+            <span slot="label">Loading...</span>
+            <sp-menu-item value="item-1">Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-picker>
+    `;
+};
+
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';
     return html`
@@ -516,25 +536,3 @@ custom.args = {
     open: true,
 };
 custom.decorators = [isOverlayOpen];
-
-export const Loading = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="picker-loading">
-            Picker in loading state
-        </sp-field-label>
-        <sp-picker
-            id="picker-loading"
-            @change=${handleChange(args)}
-            ${spreadProps(args)}
-            loading
-        >
-            <span slot="label">Loading...</span>
-            <sp-menu-item value="item-1">Deselect</sp-menu-item>
-            <sp-menu-item>Select Inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and Mask...</sp-menu-item>
-            <sp-menu-item>Save Selection</sp-menu-item>
-            <sp-menu-item disabled>Make Work Path</sp-menu-item>
-        </sp-picker>
-    `;
-};

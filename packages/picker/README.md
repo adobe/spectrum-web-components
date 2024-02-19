@@ -393,41 +393,31 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 ```
 
-### Loading
+### Pending
 
-When given a `loading` attribute, an `<sp-picker>` will be delivered with an `<sp-progress-circle>` to visually outline that it is `loading` and it will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
+When in pending state, `<sp-picker>` elements will not respond to click events and be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
 
 ```html
 <sp-field-label for="picker-loading">Standard:</sp-field-label>
-<sp-picker
-    label="Select a Country with a very long label, too long in fact"
-    loading
-    id="picker-loading"
->
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item disabled>Make work path</sp-menu-item>
+<sp-picker id="picker-loading" label="Loading blending modes..." pending>
+    <sp-menu-item>Pass through</sp-menu-item>
+    <sp-menu-item>Normal</sp-menu-item>
+    <sp-menu-item>Multiply</sp-menu-item>
+    <sp-menu-item>Screen</sp-menu-item>
 </sp-picker>
 <br />
 <br />
 <sp-field-label for="picker-loading-quiet">Quiet:</sp-field-label>
 <sp-picker
-    label="Select a Country with a very long label, too long in fact"
-    loading
-    quiet
     id="picker-loading-quiet"
+    label="Loading blending modes..."
+    pending
+    quiet
 >
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item disabled>Make work path</sp-menu-item>
+    <sp-menu-item>Pass through</sp-menu-item>
+    <sp-menu-item>Normal</sp-menu-item>
+    <sp-menu-item>Multiply</sp-menu-item>
+    <sp-menu-item>Screen</sp-menu-item>
 </sp-picker>
 ```
 
