@@ -47,11 +47,7 @@ const renderTabsOverflow = async ({
         html`
             <div class="container" style="width: 200px; height: 150px;">
                 <sp-tabs-overflow ?autoscroll=${autoscroll}>
-                    <sp-tabs
-                        size=${size}
-                        selected=${selected}
-                        ?enableTabsScroll=${true}
-                    >
+                    <sp-tabs size=${size} selected=${selected}>
                         ${repeat(
                             new Array(count),
                             (item) => item,
@@ -92,7 +88,7 @@ describe('TabsOverflow', () => {
         const el = await fixture<TabsOverflow>(
             html`
                 <sp-tabs-overflow>
-                    <sp-tabs size="m" selected="1" ?enableTabsScroll=${true}>
+                    <sp-tabs size="m" selected="1">
                         <sp-tab label="Tab Item 1" value="1"></sp-tab>
                         <sp-tab label="Tab Item 2" value="2"></sp-tab>
                         <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
