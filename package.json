@@ -166,7 +166,7 @@
         "lerna": "^6.6.2",
         "lightningcss": "^1.19.0",
         "lit": "^2.5.0",
-        "lit-analyzer": "^1.2.1",
+        "lit-analyzer": "^2.0.3",
         "lit-html": "^2.4.0",
         "mocha-junit-reporter": "^2.0.2",
         "netlify-cli": "^15.9.0",
