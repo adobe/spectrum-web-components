@@ -31,3 +31,8 @@ updates:
                   - '@11ty/*'
                   - 'eleventy'
                   - 'eleventy-plugin-*'
+
+    - package-ecosystem: 'github-actions'
+      directory: '/'
+      schedule:
+          interval: 'monthly'
