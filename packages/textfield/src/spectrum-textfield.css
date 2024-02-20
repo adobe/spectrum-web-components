@@ -1027,15 +1027,7 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([disabled]) #textfield:hover .input::placeholder {
-        color: var(
-            --highcontrast-textfield-text-color-disabled,
-            var(
-                --mod-textfield-text-color-disabled,
-                var(--spectrum-textfield-text-color-disabled)
-            )
-        );
-    }
+    :host([disabled]) #textfield:hover .input::placeholder,
     :host([quiet][disabled]:hover) .input::placeholder {
         color: var(
             --highcontrast-textfield-text-color-disabled,

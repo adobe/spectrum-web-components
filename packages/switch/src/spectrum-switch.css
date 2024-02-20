@@ -285,12 +285,6 @@ governing permissions and limitations under the License.
     vertical-align: middle;
 }
 #switch:before {
-    box-sizing: border-box;
-    content: '';
-    display: block;
-    position: absolute;
-}
-#switch:before {
     block-size: var(
         --mod-switch-control-height,
         var(--spectrum-switch-control-height)
@@ -301,12 +295,16 @@ governing permissions and limitations under the License.
     );
     border-style: solid;
     border-width: var(--mod-border-width-200, var(--spectrum-border-width-200));
+    box-sizing: border-box;
+    content: '';
+    display: block;
     inline-size: var(
         --mod-switch-control-height,
         var(--spectrum-switch-control-height)
     );
     inset-block-start: 0;
     inset-inline-start: 0;
+    position: absolute;
     transition: background
             var(
                 --mod-animation-duration-100,
@@ -520,16 +518,8 @@ governing permissions and limitations under the License.
     );
 }
 @media (hover: hover) {
+    :host([disabled]:hover) #input + #switch:before,
     :host([disabled][checked]:hover) #input + #switch:before {
-        border-color: var(
-            --highcontrast-switch-handle-border-color-disabled,
-            var(
-                --mod-switch-handle-border-color-disabled,
-                var(--spectrum-switch-handle-border-color-disabled)
-            )
-        );
-    }
-    :host([disabled]:hover) #input + #switch:before {
         border-color: var(
             --highcontrast-switch-handle-border-color-disabled,
             var(

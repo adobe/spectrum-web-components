@@ -52,14 +52,12 @@ governing permissions and limitations under the License.
         26px - var(--spectrum-component-bottom-to-text-300)
     );
     --spectrum-dialog-confirm-divider-height: var(--spectrum-spacing-50);
-}
-:host {
     box-sizing: border-box;
     display: flex;
     inline-size: -moz-fit-content;
     inline-size: fit-content;
-    max-inline-size: 100%;
     max-height: inherit;
+    max-inline-size: 100%;
     min-inline-size: var(
         --mod-dialog-min-inline-size,
         var(--spectrum-dialog-min-inline-size)
@@ -379,7 +377,7 @@ governing permissions and limitations under the License.
     align-self: start;
     grid-area: buttonGroup;
 }
-@media screen and (max-width: 700px) {
+@media screen and (width <= 700px) {
     .grid {
         grid-template-areas: 'hero hero hero hero hero hero' '. . . . . .' '. heading heading heading heading .' '. header header header header .' '. divider divider divider divider .' '. content content content content .' '. footer footer buttonGroup buttonGroup .' '. . . . . .';
         grid-template-columns:

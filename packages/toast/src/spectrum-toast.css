@@ -327,6 +327,7 @@ governing permissions and limitations under the License.
     margin-inline-start: auto;
 }
 :host([dir='rtl']) .body ::slotted([slot='action']) {
+    margin-inline-end: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)

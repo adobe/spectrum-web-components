@@ -71,8 +71,6 @@ governing permissions and limitations under the License.
     --mod-popover-corner-radius: var(--spectrum-corner-radius-100);
     --mod-popover-content-area-spacing-vertical: 0;
     --mod-button-edge-to-visual-only: 9px;
-}
-:host {
     inline-size: var(--mod-coachmark-width, var(--spectrum-coachmark-width));
     max-inline-size: var(
         --mod-coachmark-max-width,

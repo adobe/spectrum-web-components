@@ -14,8 +14,6 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-tag-group-item-margin-block: var(--spectrum-spacing-75);
     --spectrum-tag-group-item-margin-inline: var(--spectrum-spacing-75);
-}
-:host {
     display: inline-flex;
     flex-wrap: wrap;
     list-style: none;
