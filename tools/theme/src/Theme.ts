@@ -55,8 +55,8 @@ export type Color =
     | 'dark-express'
     | 'darkest-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type ThemeVariant = 'spectrum' | 'express';
-const ThemeVariantValues = ['spectrum', 'express'];
+export type ThemeVariant = 'spectrum' | 'express' | 'spectrum2';
+const ThemeVariantValues = ['spectrum', 'express', 'spectrum2'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
 const ColorValues = [
     'light',
@@ -161,7 +161,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * The Spectrum theme that is applied to the content scoped to this `sp-theme` element.
      *
      * A value is requried.
-     * @type {"spectrum" | "express" | ""}
+     * @type {"spectrum" | "express" | "spectrum2" |  ""}
      * @attr
      */
     get theme(): ThemeVariant | '' {
@@ -443,6 +443,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     protected adoptStyles(): void {
+        this.trackedChildren.forEach((el) => {
+            el.$spectrumVersion = this._theme === 'spectrum2' ? 2 : 1;
+        });
+
         const styles = this.styles; // No test coverage on Edge
 
         // There are three separate cases here based on Shadow DOM support.

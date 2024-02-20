@@ -186,6 +186,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
+    protected $spectrumVersion = 1;
 }
 
 if (window.__swc.DEBUG) {
