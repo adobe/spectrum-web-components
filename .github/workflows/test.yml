@@ -14,11 +14,11 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
               with:
                   ref: main
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Setup Node 18
               uses: actions/setup-node@v3
@@ -62,11 +62,11 @@ jobs:
         name: Lighthouse CI
         runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   ref: main
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Setup Node 18
               uses: actions/setup-node@v3
@@ -134,11 +134,11 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   ref: main
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Setup Node 18
               uses: actions/setup-node@v3
@@ -175,11 +175,11 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   ref: main
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Setup Node 18
               uses: actions/setup-node@v3
@@ -215,11 +215,11 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   ref: main
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Setup Node 18
               uses: actions/setup-node@v3
