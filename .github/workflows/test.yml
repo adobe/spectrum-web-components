@@ -159,7 +159,7 @@ jobs:
               run: touch tachometer.ran.txt
 
             - name: Archive Firefox tachometer results
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: tachometer-results
                   path: |
@@ -198,7 +198,7 @@ jobs:
               run: touch tachometer.ran.txt
 
             - name: Archive Chrome tachometer results
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: tachometer-results
                   path: |
