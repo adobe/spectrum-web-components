@@ -149,15 +149,7 @@ governing permissions and limitations under the License.
 :host([side-aligned='end']) {
     text-align: end;
 }
-:host([disabled]) {
-    color: var(
-        --highcontrast-disabled-content-color,
-        var(
-            --mod-disabled-content-color,
-            var(--spectrum-disabled-content-color)
-        )
-    );
-}
+:host([disabled]),
 :host([disabled]) .required-icon {
     color: var(
         --highcontrast-disabled-content-color,

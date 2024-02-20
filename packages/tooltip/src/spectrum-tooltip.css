@@ -116,7 +116,6 @@ governing permissions and limitations under the License.
             var(--spectrum-tooltip-background-color-default)
         )
     );
-    block-size: auto;
     border-radius: var(
         --mod-tooltip-border-radius,
         var(--spectrum-tooltip-border-radius)
@@ -131,7 +130,6 @@ governing permissions and limitations under the License.
         --mod-tooltip-font-weight,
         var(--spectrum-tooltip-font-weight)
     );
-    inline-size: auto;
     line-height: var(
         --mod-tooltip-line-height,
         var(--spectrum-tooltip-line-height)
@@ -149,8 +147,10 @@ governing permissions and limitations under the License.
     word-break: break-word;
     -webkit-font-smoothing: antialiased;
     align-items: center;
+    block-size: auto;
     display: inline-flex;
     flex-direction: row;
+    inline-size: auto;
     position: relative;
 }
 :host(:lang(ja)) #tooltip,

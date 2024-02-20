@@ -118,9 +118,6 @@ governing permissions and limitations under the License.
 #label {
     grid-area: submenuItemLabelArea;
 }
-::slotted([slot='value']) {
-    grid-area: submenuItemValueArea;
-}
 :host(:focus),
 :host([focused]) {
     background-color: var(
