@@ -21536,7 +21536,7 @@ netlify@13.1.10, netlify@^13.1.10:
     p-wait-for "^4.0.0"
     qs "^6.9.6"
 
-next@^14.0.4:
+next@^14:
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/next/-/next-14.1.0.tgz#b31c0261ff9caa6b4a17c5af019ed77387174b69"
   integrity sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==
