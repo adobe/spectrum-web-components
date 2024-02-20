@@ -16,8 +16,6 @@ import fg from 'fast-glob';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { gatherDemoURLs as gatherPackageNames } from './gather-wcd-urls.js';
-import { gatherStorybookURLs } from './gather-storybook-urls.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectDir = path.resolve(__dirname, '..', '..', '..');
@@ -25,38 +23,16 @@ const targetDir = path.resolve(
     projectDir,
     'projects/documentation/content/_data'
 );
-const targetFile = path.resolve(targetDir, 'spectrumURLs.js');
+const targetFile = path.resolve(targetDir, 'storybookURLs.js');
 
-const packageNameCorrections = {
-    quickaction: 'quick-actions',
-    tag: 'tags',
-};
-
-export const gatherUrls = async () => {
-    const packageNames = await gatherPackageNames();
-    const flatPackageNames = packageNames.map((name) => name.replace('-', ''));
-    await gatherStorybookURLs(packageNames);
+export const gatherStorybookURLs = async (flatPackageNames) => {
     const links = {};
-    for (const readmePath of await fg([
-        `../../node_modules/@spectrum-css/**/metadata/*.yml`,
-    ])) {
-        const cssPackageName = readmePath.split('/').at(-3);
-        const packageName =
-            packageNames[
-                flatPackageNames.findIndex((name) => name === cssPackageName)
-            ] ||
-            packageNameCorrections[cssPackageName] ||
-            cssPackageName;
-        const readme = fs.readFileSync(readmePath, 'utf8');
-        if (readme === null) {
-            return;
-        }
-        const [url] =
-            readme.match(/https:\/\/spectrum.adobe.com\/[^\n|\)]+/) || [];
-        if (url) {
-            links[packageName] = url;
-        }
-    }
+
+    // Get the storybook URLs for each package
+    flatPackageNames.forEach((packageName) => {
+        const storybookURL = `https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/${packageName}/`;
+        links[packageName] = storybookURL;
+    });
 
     const data = `/*
 Copyright 2024 Adobe. All rights reserved.
