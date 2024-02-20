@@ -1302,14 +1302,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-syntax-import-assertions@^7.12.1", "@babel/plugin-syntax-import-assertions@^7.20.0":
-  version "7.22.5"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-assertions/-/plugin-syntax-import-assertions-7.22.5.tgz#07d252e2aa0bc6125567f742cd58619cb14dce98"
-  integrity sha512-rdV97N7KqsRzeNGoWUOK6yUsWarLjE5Su/Snk9IYPU9CwkWHs4t+rTGOvffTR8XGkJMTAdLfO0xVnXm8wugIJg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.22.5"
-
-"@babel/plugin-syntax-import-assertions@^7.23.3":
+"@babel/plugin-syntax-import-assertions@^7.12.1", "@babel/plugin-syntax-import-assertions@^7.20.0", "@babel/plugin-syntax-import-assertions@^7.23.3":
   version "7.23.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-assertions/-/plugin-syntax-import-assertions-7.23.3.tgz#9c05a7f592982aff1a2768260ad84bcd3f0c77fc"
   integrity sha512-lPgDSU+SJLK3xmFDTV2ZRQAiM7UuUjGidwBywFavObCiZc1BeAAcMtHJKUya92hPHO+at63JJPLygilZard8jw==
@@ -5543,9 +5536,9 @@
     picomatch "^2.2.2"
 
 "@open-wc/eslint-config@^12.0.0":
-  version "12.0.2"
-  resolved "https://registry.yarnpkg.com/@open-wc/eslint-config/-/eslint-config-12.0.2.tgz#45f5bd3488d0380e3e26f876a2df3979ab0521ca"
-  integrity sha512-hrPsrO5jYOS0E8jSEXN+MkLHIz0lbH01LYzJ305ERXZ8HYlNCSsywP4i1pGSrq6R5waHVt5DQtuHTIgPbXqEAg==
+  version "12.0.3"
+  resolved "https://registry.yarnpkg.com/@open-wc/eslint-config/-/eslint-config-12.0.3.tgz#d4d4229555f281a370675fd6841ff69fbbdfa5ac"
+  integrity sha512-170IUpOUW0bQsiOs+tBUaWQkU03fALzXuPIGK/PSSGyT2FkDpPkR7pK7UZUv0gI+3PT2qy7GuMkMZoHqsFlPoQ==
   dependencies:
     "@babel/eslint-parser" "^7.19.1"
     "@babel/plugin-syntax-import-assertions" "^7.20.0"
