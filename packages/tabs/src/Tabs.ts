@@ -15,6 +15,7 @@ import {
     CSSResult,
     CSSResultArray,
     html,
+    PropertyValueMap,
     PropertyValues,
     SizedMixin,
     TemplateResult,
@@ -123,6 +124,9 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @property({ attribute: false })
     public shouldAnimate = false;
+
+    @property({ attribute: false })
+    public shouldAutoscroll = false;
 
     @query('slot')
     private slotEl!: HTMLSlotElement;
@@ -242,6 +246,27 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
         await Promise.all(tabUpdateCompletes);
         return complete;
+    }
+
+    public scrollToSelection(): void {
+        if (this.enableTabsScroll && this.selected) {
+            this.updateComplete.then(() => {
+                const selectedTab = this.querySelector(
+                    `[role="tab"][value="${this.selected}"]`
+                ) as Tab;
+                selectedTab?.scrollIntoView();
+            });
+        }
+    }
+
+    protected override updated(
+        changedProperties: PropertyValueMap<this>
+    ): void {
+        super.updated(changedProperties);
+
+        if (changedProperties.has('selected') && this.shouldAutoscroll) {
+            this.scrollToSelection();
+        }
     }
 
     protected managePanels({

@@ -30,4 +30,5 @@ export const autoscroll = (args: OverflowProperties): TemplateResult => {
 autoscroll.args = {
     selected: 10,
     autoscroll: true,
+    includeTabPanel: true,
 };

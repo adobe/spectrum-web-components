@@ -16,7 +16,7 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
-import { Tab, TabsOverflow } from '@spectrum-web-components/tabs';
+import { Tab, Tabs, TabsOverflow } from '@spectrum-web-components/tabs';
 import { ActionButton } from '@spectrum-web-components/action-button';
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
@@ -27,7 +27,6 @@ import {
     nothing,
 } from '@spectrum-web-components/base';
 import { repeat } from 'lit/directives/repeat.js';
-import { stub } from 'sinon';
 
 type OverflowProperties = {
     count: number;
@@ -191,19 +190,32 @@ describe('TabsOverflow', () => {
     });
 
     it('should automatically bring the selected tab into view', async () => {
-        const spy = stub(HTMLElement.prototype, 'scrollIntoView');
-
         const el = await renderTabsOverflow({
             count: 20,
             size: ElementSizes.L,
-            includeTabPanel: true,
+            includeTabPanel: false,
             selected: 10,
             autoscroll: true,
         });
         await elementUpdated(el);
 
-        expect(spy.called).to.be.true;
-        expect(spy.getCall(0).args[0]).to.deep.equal({ inline: 'center' });
-        spy.restore();
+        // Grab the list of tabs.
+        const tabsEl = el.querySelector('sp-tabs') as Tabs;
+
+        // Grab the coordonates of the selected tab.
+        const selectedTab = tabsEl.querySelector(
+            `[role="tab"][value="10"]`
+        ) as Tab;
+        expect(selectedTab).to.exist;
+        const selectedTabPosition = selectedTab.getBoundingClientRect();
+
+        // Selected tab is in the viewport, offset left is greater than 0 and less than the width of the tabs.
+        expect(selectedTabPosition.left).to.be.greaterThan(0);
+        expect(selectedTabPosition.left).to.be.lessThan(tabsEl.clientWidth);
+
+        // First tab is not in the viewport anymore, its offset left is less than 0.
+        const firstTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
+        const firstTabPosition = firstTab.getBoundingClientRect();
+        expect(firstTabPosition.left).to.be.lessThan(0);
     });
 });
