@@ -449,6 +449,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                         ['pointerup', 'pointercancel', 'pointerleave'],
                         this.handlePointerup,
                     ],
+                    streamOutside: ['dblclick', this.handleDoubleClick],
                 })}
             >
                 <div id="controls">
@@ -480,6 +481,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 </div>
             </div>
         `;
+    }
+
+    protected handleDoubleClick(event: Event): void {
+        this.handleController.handleDoubleClick(event);
     }
 
     protected handlePointerdown(event: PointerEvent): void {
