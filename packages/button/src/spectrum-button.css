@@ -548,9 +548,6 @@ governing permissions and limitations under the License.
 }
 @media (hover: hover) {
     :host(:hover) {
-        box-shadow: none;
-    }
-    :host(:hover) {
         background-color: var(
             --highcontrast-button-background-color-hover,
             var(
@@ -565,6 +562,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-button-border-color-hover)
             )
         );
+        box-shadow: none;
         color: var(
             --highcontrast-button-content-color-hover,
             var(

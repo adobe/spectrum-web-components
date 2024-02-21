@@ -94,8 +94,6 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
     --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
-}
-:host {
     background-color: var(
         --highcontrast-card-background-color,
         var(

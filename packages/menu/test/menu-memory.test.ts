@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 import { expect, fixture, nextFrame } from '@open-wc/testing';
 import { html, render } from '@spectrum-web-components/base';
-import { Default } from '../stories/grid.stories.js';
+import { singleSelect } from '../stories/menu.stories.js';
 import { usedHeapMB } from '../../../test/testing-helpers.js';
 
-describe('Grid memory usage', () => {
+describe('Menu memory usage', () => {
     it('releases references on disconnect', async function () {
         if (!window.gc || !('measureUserAgentSpecificMemory' in performance))
             this.skip();
@@ -35,7 +35,7 @@ describe('Grid memory usage', () => {
             forced: boolean | undefined = undefined
         ): Promise<void> {
             active = forced != null ? forced : !active;
-            render(active ? Default() : html``, el);
+            render(active ? singleSelect() : html``, el);
             await nextFrame();
             await nextFrame();
         }
@@ -53,11 +53,6 @@ describe('Grid memory usage', () => {
         await toggle(false);
         const afterMB = await usedHeapMB();
 
-        /**
-         * An actually leak here shapes up to be more than 10MB per test,
-         * we could be more linient later, if needed, but the test currently
-         * shows less heap after the test cycle.
-         */
         expect(
             afterMB.total - beforeMB.total,
             `Total | before: ${beforeMB.total}, after: ${afterMB.total}

@@ -611,7 +611,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ${outputCss}
-`
+`.replace(/\/\*\![\w|\W]*\*\//, '')
         );
     }
 }

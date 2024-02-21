@@ -48,8 +48,6 @@ governing permissions and limitations under the License.
         --spectrum-disabled-background-color
     );
     --mod-opacity-checkerboard-position: 50%;
-}
-:host {
     block-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));
     border-color: var(
         --highcontrast-colorhandle-border-color,

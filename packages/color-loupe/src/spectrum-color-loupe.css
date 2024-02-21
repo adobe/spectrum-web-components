@@ -46,8 +46,6 @@ governing permissions and limitations under the License.
     --spectrum-colorloupe-checkerboard-light-color: var(
         --spectrum-opacity-checkerboard-square-light
     );
-}
-:host {
     block-size: var(--spectrum-colorloupe-height);
     filter: drop-shadow(
         var(

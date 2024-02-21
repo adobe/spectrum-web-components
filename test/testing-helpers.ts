@@ -269,3 +269,30 @@ export async function fixture<T extends Element>(
     document.documentElement.dir = dir;
     return test.children[0] as T;
 }
+
+export async function usedHeapMB(): Promise<
+    Record<'dom' | 'js' | 'shared' | 'total', number>
+> {
+    // @ts-ignore
+    const memorySample = performance.measureUserAgentSpecificMemory();
+    const result = (await memorySample) as {
+        bytes: number;
+        breakdown: {
+            attribution: string;
+            bytes: number;
+            types: ('DOM' | 'JS' | 'Shared')[];
+        }[];
+    };
+    return {
+        total: result.bytes,
+        js:
+            result.breakdown.find((entry) => entry.types.includes('JS'))
+                ?.bytes || 0,
+        dom:
+            result.breakdown.find((entry) => entry.types.includes('DOM'))
+                ?.bytes || 0,
+        shared:
+            result.breakdown.find((entry) => entry.types.includes('Shared'))
+                ?.bytes || 0,
+    };
+}

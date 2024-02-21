@@ -35,8 +35,6 @@ governing permissions and limitations under the License.
     :host {
         --highcontrast-colorwheel-border-color-disabled: GrayText;
         --highcontrast-colorwheel-fill-color-disabled: Canvas;
-    }
-    :host {
         forced-color-adjust: none;
     }
 }

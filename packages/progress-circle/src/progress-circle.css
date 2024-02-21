@@ -22,6 +22,7 @@ governing permissions and limitations under the License.
         var(--_spectrum-progress-circle-size)
     );
 
+    --spectrum-progress-circle-size: inherit;
     --spectrum-progresscircle-m-over-background-track-fill-color: var(
         --spectrum-alias-track-fill-color-overbackground
     );
@@ -78,3 +79,11 @@ slot {
         var(--_spectrum-progress-circle-size)
     );
 }
+
+/* stylelint-disable */
+:host([indeterminate]) .fills,
+:host([indeterminate]) .fillSubMask1,
+:host([indeterminate]) .fillSubMask2 {
+    animation-duration: var(--spectrum-animation-duration-2000);
+}
+/* stylelint-enable */
