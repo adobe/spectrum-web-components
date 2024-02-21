@@ -191,7 +191,6 @@ describe('TabsOverflow', () => {
             size: ElementSizes.L,
             includeTabPanel: false,
             selected: 10,
-            autoscroll: true,
         });
         await elementUpdated(el);
 

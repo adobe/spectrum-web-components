@@ -125,9 +125,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ attribute: false })
     public shouldAnimate = false;
 
-    @property({ attribute: false })
-    public shouldAutoscroll = false;
-
     @query('slot')
     private slotEl!: HTMLSlotElement;
 
@@ -248,15 +245,16 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
-    public scrollToSelection(): void {
-        if (this.enableTabsScroll && this.selected) {
-            this.updateComplete.then(() => {
-                const selectedTab = this.querySelector(
-                    `[role="tab"][value="${this.selected}"]`
-                ) as Tab;
-                selectedTab?.scrollIntoView();
-            });
+    public async scrollToSelection(): Promise<void> {
+        if (!this.enableTabsScroll || !this.selected) {
+            return;
         }
+
+        await this.updateComplete;
+        const selectedTab = this.tabs.find(
+            (tab) => tab.value === this.selected
+        );
+        selectedTab?.scrollIntoView();
     }
 
     protected override updated(
@@ -264,7 +262,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     ): void {
         super.updated(changedProperties);
 
-        if (changedProperties.has('selected') && this.shouldAutoscroll) {
+        if (changedProperties.has('selected')) {
             this.scrollToSelection();
         }
     }

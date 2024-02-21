@@ -48,12 +48,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     compact = false;
 
-    /**
-     * When mounted, automatically bring the selected tab into viewport.
-     */
-    @property({ type: Boolean, reflect: true })
-    autoscroll = false;
-
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
@@ -87,9 +81,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         const [tabs] = this.scrollContent;
         if (tabs) {
             tabs.enableTabsScroll = true;
-            if (this.autoscroll) {
-                tabs.shouldAutoscroll = true;
-            }
         }
         this.resizeController.observe(this.overflowContainer);
     }

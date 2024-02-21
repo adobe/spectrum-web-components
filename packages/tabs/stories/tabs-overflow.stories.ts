@@ -28,7 +28,5 @@ export const autoscroll = (args: OverflowProperties): TemplateResult => {
     return renderTabsOverflowExample(args);
 };
 autoscroll.args = {
-    selected: 10,
-    autoscroll: true,
-    includeTabPanel: true,
+    selected: 15,
 };
