@@ -89,7 +89,7 @@ function genPackageJson(
             "${dependencyPkgName}": "^${dependencyPkgVersion}"
         },
         "peerDependencies": {
-            "next": "~13.4 || ~14.0",
+            "next": "~13.4 || ~14",
         },
         "peerDependenciesMeta": {
             "next": {
