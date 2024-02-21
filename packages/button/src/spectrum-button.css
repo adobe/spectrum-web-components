@@ -677,13 +677,8 @@ governing permissions and limitations under the License.
 :host([pending]) ::slotted([slot='icon']) {
     display: none;
 }
+:host([static='black']),
 :host([static='white']) {
-    --spectrum-button-focus-indicator-color: var(
-        --mod-static-black-focus-indicator-color,
-        var(--spectrum-static-black-focus-indicator-color)
-    );
-}
-:host([static='black']) {
     --spectrum-button-focus-indicator-color: var(
         --mod-static-black-focus-indicator-color,
         var(--spectrum-static-black-focus-indicator-color)
