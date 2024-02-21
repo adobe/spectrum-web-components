@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   support generating random IDs outside of secure contexts ([485a67c](https://github.com/adobe/spectrum-web-components/commit/485a67c5401094705b711350f8ee74182a6dd64b))
+
 ## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
 
 ### Bug Fixes

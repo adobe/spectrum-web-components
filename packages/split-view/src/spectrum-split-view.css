@@ -35,8 +35,6 @@ governing permissions and limitations under the License.
     --spectrum-splitview-gripper-border-width-vertical: var(
         --spectrum-border-width-400
     );
-}
-:host {
     display: flex;
     overflow: hidden;
 }

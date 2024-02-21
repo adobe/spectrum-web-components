@@ -141,12 +141,7 @@ a:focus-visible {
     -webkit-text-decoration: none;
     text-decoration: none;
 }
-:host([static='white']) a {
-    color: var(
-        --highcontrast-link-text-color-white,
-        var(--mod-link-text-color-white, var(--spectrum-link-text-color-white))
-    );
-}
+:host([static='white']) a,
 :host([static='white']) a:active,
 :host([static='white']) a:focus {
     color: var(
@@ -154,12 +149,7 @@ a:focus-visible {
         var(--mod-link-text-color-white, var(--spectrum-link-text-color-white))
     );
 }
-:host([static='black']) a {
-    color: var(
-        --highcontrast-link-text-color-black,
-        var(--mod-link-text-color-black, var(--spectrum-link-text-color-black))
-    );
-}
+:host([static='black']) a,
 :host([static='black']) a:active,
 :host([static='black']) a:focus {
     color: var(

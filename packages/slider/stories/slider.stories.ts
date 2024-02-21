@@ -263,7 +263,7 @@ export const noVisibleValueLabel = (args: StoryArgs = {}): TemplateResult => {
             <sp-slider
                 max="1"
                 min="0"
-                value=".5"
+                value="0"
                 step="0.01"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}

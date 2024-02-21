@@ -572,7 +572,5 @@ governing permissions and limitations under the License.
 :host:not(.spectrum-Table-scroller) {
     border-collapse: separate;
     border-spacing: 0;
-}
-:host:not(.spectrum-Table-scroller) {
     display: table;
 }

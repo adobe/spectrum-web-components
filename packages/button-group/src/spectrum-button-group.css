@@ -15,14 +15,8 @@ governing permissions and limitations under the License.
     --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-200);
     --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-200);
 }
-:host {
-    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
-    --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
-}
-:host([size='l']) {
-    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
-    --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
-}
+:host,
+:host([size='l']),
 :host([size='xl']) {
     --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
     --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);

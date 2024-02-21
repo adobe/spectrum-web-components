@@ -273,9 +273,6 @@ governing permissions and limitations under the License.
     );
 }
 :host([variant='neutral']) {
-    font-style: italic;
-}
-:host([variant='neutral']) {
     color: var(
         --highcontrast-statuslight-subdued-content-color-default,
         var(
@@ -283,6 +280,7 @@ governing permissions and limitations under the License.
             var(--spectrum-statuslight-subdued-content-color-default)
         )
     );
+    font-style: italic;
 }
 :host([variant='neutral']):before {
     background-color: var(

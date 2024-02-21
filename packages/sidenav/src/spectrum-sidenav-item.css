@@ -427,6 +427,56 @@ governing permissions and limitations under the License.
         var(--spectrum-sidenav-focus-ring-gap)
     );
 }
+#item-link[data-level] {
+    font-family: var(
+        --mod-sidenav-top-level-font-family,
+        var(--spectrum-sidenav-top-level-font-family)
+    );
+    font-size: var(
+        --mod-sidenav-top-level-font-size,
+        var(--spectrum-sidenav-top-level-font-size)
+    );
+    font-style: var(
+        --mod-sidenav-top-level-font-style,
+        var(--spectrum-sidenav-top-level-font-style)
+    );
+    font-weight: var(
+        --mod-sidenav-top-level-font-weight,
+        var(--spectrum-sidenav-top-level-font-weight)
+    );
+    line-height: var(
+        --mod-sidenav-top-level-line-height,
+        var(--spectrum-sidenav-top-level-line-height)
+    );
+}
+#item-link:not([data-level='0']) {
+    font-weight: var(
+        --mod-sidenav-text-font-weight,
+        var(--spectrum-sidenav-text-font-weight)
+    );
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-second-level,
+        var(--spectrum-sidenav-start-to-content-second-level)
+    );
+}
+#item-link[data-level='2'] {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-third-level,
+        var(--spectrum-sidenav-start-to-content-third-level)
+    );
+}
+.spectrum-SideNav--hasIcon#item-link:not([data-level='0']) {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-with-icon-second-level,
+        var(--spectrum-sidenav-start-to-content-with-icon-second-level)
+    );
+}
+.spectrum-SideNav--hasIcon#item-link[data-level='2'] {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-with-icon-third-level,
+        var(--spectrum-sidenav-start-to-content-with-icon-third-level)
+    );
+}
 @media (forced-colors: active) {
     #list ::slotted([slot='icon']) {
         forced-color-adjust: preserve-parent-color;

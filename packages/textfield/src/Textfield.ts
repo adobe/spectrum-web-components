@@ -119,7 +119,8 @@ export class TextfieldBase extends ManageHelpText(
     public pattern?: string;
 
     /**
-     * Whether a form control delivered with the `multiline` attribute will change size to accomodate longer input
+     * Whether a form control delivered with the `multiline` attribute will change size
+     * vertically to accomodate longer input
      */
     @property({ type: Boolean, reflect: true })
     public grows = false;
@@ -289,7 +290,7 @@ export class TextfieldBase extends ManageHelpText(
 
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows && this.rows === -1
+            ${this.multiline && this.grows && this.rows === -1
                 ? html`
                       <div id="sizer" class="input" aria-hidden="true">
                           ${this.value}&#8203;

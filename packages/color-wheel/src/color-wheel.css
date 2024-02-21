@@ -22,15 +22,12 @@ governing permissions and limitations under the License.
 
 ::slotted([slot='gradient']) {
     border-color: var(
-        --spectrum-colorwheel-border-color,
-        var(--spectrum-alias-border-color-translucent)
+        --mod-colorwheel-border-color,
+        var(--spectrum-colorwheel-border-color)
     );
     border-radius: 100%;
     border-style: solid;
-    border-width: var(
-        --spectrum-colorwheel-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
+    border-width: var(--border-width);
     box-sizing: border-box;
     block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
     position: relative;
