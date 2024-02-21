@@ -228,7 +228,7 @@ describe('Tooltip', () => {
             consoleWarnStub.restore();
         });
 
-        it('loads default badge accessibly', async () => {
+        it('warns when incorrectly using `self-managed`', async () => {
             const el = await fixture<Tooltip>(
                 html`
                     <sp-tooltip variant="negative" self-managed>

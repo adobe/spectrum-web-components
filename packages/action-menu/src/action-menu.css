@@ -35,7 +35,6 @@ governing permissions and limitations under the License.
 }
 
 #popover {
-    width: auto;
     max-width: none;
 }
 
@@ -84,4 +83,8 @@ governing permissions and limitations under the License.
             ) * -1
     ); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
    * .spectrum-ActionButton-icon:only-child */
+}
+
+sp-overlay:not(:defined) {
+    display: none;
 }

@@ -32,8 +32,10 @@ const tokensRoot = path.join(
 /** @todo Could generate this from CSS packages that have @spectrum-css/tokens as a dependency */
 const tokenPackages = [
     'accordion',
+    'actionbar',
     'actionbutton',
     'actiongroup',
+    'alertdialog',
     'avatar',
     'badge',
     'button',
@@ -41,48 +43,42 @@ const tokenPackages = [
     'checkbox',
     'closebutton',
     'colorarea',
-    'colorwheel',
     'colorhandle',
     'colorloupe',
+    'colorwheel',
+    'combobox',
     'divider',
+    'dropzone',
     'fieldgroup',
     'fieldlabel',
     'helptext',
     'illustratedmessage',
+    'infieldbutton',
     'link',
     'menu',
     'picker',
+    'pickerbutton',
+    'popover',
     'progressbar',
     'progresscircle',
     'radio',
+    'search',
+    'sidenav',
+    'slider',
+    'splitview',
     'statuslight',
+    'stepper',
     'swatch',
     'swatchgroup',
     'switch',
+    'table',
+    'tabs',
     'tag',
+    'textfield',
+    'thumbnail',
     'toast',
     'tooltip',
     'tray',
-    'progressbar',
-    'picker',
-    'colorarea',
-    'colorwheel',
-    'colorhandle',
-    'colorloupe',
-    'illustratedmessage',
-    'slider',
-    'popover',
-    'thumbnail',
-    'dropzone',
-    'stepper',
-    'textfield',
-    'search',
-    'tabs',
-    'actionbar',
-    'alertdialog',
-    'pickerbutton',
-    'sidenav',
-    'table',
     'underlay',
 ];
 
@@ -142,35 +138,42 @@ const processPackages = async (srcPath, index) => {
     const packageName = tokenPackages[index];
     const expressPath = path.join(srcPath, 'express.css');
     const spectrumPath = path.join(srcPath, 'spectrum.css');
-    let express = fs.readFileSync(expressPath, 'utf8');
-    let spectrum = fs.readFileSync(spectrumPath, 'utf8');
-    express = removeImporantComments(targetHost(express));
-    spectrum = removeImporantComments(targetHost(spectrum));
 
-    fs.appendFileSync(
-        path.join(
-            __dirname,
-            '..',
-            'tools',
-            'styles',
-            'tokens',
-            'express',
-            'global-vars.css'
-        ),
-        express
-    );
-    fs.appendFileSync(
-        path.join(
-            __dirname,
-            '..',
-            'tools',
-            'styles',
-            'tokens',
-            'spectrum',
-            'global-vars.css'
-        ),
-        spectrum
-    );
+    // check if expressPath exists
+    if (fs.existsSync(expressPath)) {
+        let express = fs.readFileSync(expressPath, 'utf8');
+        express = removeImporantComments(targetHost(express));
+        fs.appendFileSync(
+            path.join(
+                __dirname,
+                '..',
+                'tools',
+                'styles',
+                'tokens',
+                'express',
+                'global-vars.css'
+            ),
+            express
+        );
+    }
+
+    // check if spectrumPath exists
+    if (fs.existsSync(spectrumPath)) {
+        let spectrum = fs.readFileSync(spectrumPath, 'utf8');
+        spectrum = removeImporantComments(targetHost(spectrum));
+        fs.appendFileSync(
+            path.join(
+                __dirname,
+                '..',
+                'tools',
+                'styles',
+                'tokens',
+                'spectrum',
+                'global-vars.css'
+            ),
+            spectrum
+        );
+    }
 
     const varsPaths = path.join(
         __dirname,

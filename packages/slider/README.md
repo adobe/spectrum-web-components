@@ -83,10 +83,75 @@ import { Slider } from '@spectrum-web-components/slider';
 ### Filled
 
 ```html
-<sp-slider label="Slider Label" variant="filled"></sp-slider>
+<sp-slider
+    label="Slider Label"
+    max="1"
+    variant="filled"
+    min="0"
+    value=".5"
+    step="0.01"
+></sp-slider>
 <sp-slider
     label="Slider Label - Disabled"
+    max="1"
     variant="filled"
+    min="0"
+    value=".5"
+    step="0.01"
+    disabled
+></sp-slider>
+```
+
+### Filled Offset with only fill-start
+
+```html
+<sp-slider
+    label="Slider Label"
+    max="1"
+    fill-start
+    min="0"
+    value=".5"
+    step="0.01"
+></sp-slider>
+<sp-slider
+    label="Slider Label"
+    max="1"
+    fill-start
+    min="0"
+    value=".5"
+    step="0.01"
+    disabled
+></sp-slider>
+```
+
+### Filled Offset with fill-start value
+
+```html
+<sp-slider
+    id="fill-start-slider"
+    label="Fill Start greater than Value"
+    max="1"
+    min="0"
+    value=".3"
+    step="0.1"
+    fill-start="0.7"
+></sp-slider>
+<sp-slider
+    id="fill-start-slider"
+    label="Fill Start less than Value"
+    max="1"
+    min="0"
+    value=".7"
+    step="0.1"
+    fill-start="0.25"
+></sp-slider>
+<sp-slider
+    label="Slider Label"
+    max="1"
+    min="0"
+    value=".7"
+    step="0.1"
+    fill-start="0.25"
     disabled
 ></sp-slider>
 ```

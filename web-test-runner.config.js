@@ -12,11 +12,12 @@ governing permissions and limitations under the License.
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
+    setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
-    chromiumWithFlags,
+    chromiumWithMemoryTooling,
     configuredVisualRegressionPlugin,
     firefox,
     packages,
@@ -54,6 +55,14 @@ export default {
                 }
             },
         },
+        {
+            name: 'measureUserAgentSpecificMemory-plugin',
+            transform(context) {
+                context.set('Cross-Origin-Opener-Policy', 'same-origin');
+                context.set('Cross-Origin-Embedder-Policy', 'credentialless');
+            },
+        },
+        setViewportPlugin(),
     ],
     mimeTypes: {
         '**/*.json': 'js',
@@ -63,8 +72,6 @@ export default {
     },
     http2: true,
     protocol: 'https:',
-    concurrency: 4,
-    concurrentBrowsers: 1,
     testsFinishTimeout: 60000,
     coverageConfig: {
         report: true,
@@ -73,29 +80,28 @@ export default {
             'packages/*/stories/*',
             'packages/icons-ui/**',
             'packages/icons-workflow/**',
-            // The following file is no longer used in Chrome where coverage is calculated.
             'test/**',
             '**/test/**',
             'tools/*/stories/*',
-            'tools/shared/src/focus-visible.*',
             'tools/styles/**',
             '**/node_modules/**',
-            // The following are WIP removals for the Overlay API update
-            '**/ActiveOverlay.*',
-            '**/overlay-stack.*',
-            '**/overlay-utils.*',
-            '**/OverlayPopover.*',
+            // The following files are not used in Chrome where coverage is calculated.
+            '**/OverlayNoPopover.*',
+            'tools/shared/src/focus-visible.*',
+            // Deprecated
+            'packages/icons/**',
         ],
         threshold: {
             statements: 98.5,
             branches: 95.5,
-            functions: 96.5,
+            functions: 97,
             lines: 98.5,
         },
     },
     testFramework: {
         config: {
-            timeout: 3000,
+            timeout: 5000,
+            retries: 1,
         },
     },
     groups: [
@@ -131,9 +137,17 @@ export default {
                 'packages/split-button/test/*.test.js',
                 'packages/tooltip/test/*.test.js',
             ],
-            browsers: [chromium, chromiumWithFlags, firefox, webkit],
+            browsers: [chromium, firefox, webkit],
+        },
+        {
+            name: 'memory',
+            files: ['{packages,tools}/**/*-memory.test.js'],
+            browsers: [chromiumWithMemoryTooling],
+        },
+        {
+            name: 'unit-ci',
         },
     ],
     group: 'unit',
-    browsers: [chromium, firefox, webkit],
+    browsers: [firefox, chromiumWithMemoryTooling, webkit],
 };

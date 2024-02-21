@@ -76,6 +76,7 @@ const config = {
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-active', 'active'),
+                converter.pseudoToAttribute('active', 'active'),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),
@@ -138,6 +139,29 @@ const config = {
                 },
                 {
                     find: [builder.class('spectrum-Menu-itemLabel--wrapping')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'attribute',
+                                        name: 'no-wrap',
+                                    },
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('label'),
+                        },
+                    ],
+                },
+                {
+                    find: [builder.class('spectrum-Menu-itemLabel--truncate')],
                     replace: [
                         {
                             replace: {

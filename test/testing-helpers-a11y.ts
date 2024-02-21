@@ -20,7 +20,8 @@ export type DescribedNode = {
 
 export const findDescribedNode = async (
     name: string,
-    description: string
+    description: string,
+    debug?: boolean
 ): Promise<void> => {
     await nextFrame();
 
@@ -31,6 +32,11 @@ export const findDescribedNode = async (
     const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
         children: DescribedNode[];
     };
+
+    if (debug) {
+        // eslint-disable-next-line no-console
+        console.log(JSON.stringify(snapshot, undefined, '  '));
+    }
 
     // WebKit doesn't currently associate the `aria-describedby` element to the attribute
     // host in the accessibility tree. Give it an escape hatch for now.

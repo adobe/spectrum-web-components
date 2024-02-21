@@ -28,6 +28,10 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
 }
+:host([dir='rtl']),
+[dir='rtl'] :host {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+}
 :host([size='s']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-small);
@@ -136,8 +140,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
     --spectrum-slider-range-track-reset: 0;
-}
-:host {
     display: block;
     min-inline-size: var(
         --mod-slider-min-size,
@@ -207,7 +209,7 @@ governing permissions and limitations under the License.
         var(--spectrum-slider-control-height)
     );
 }
-#fill,
+.fill,
 .track {
     block-size: var(
         --mod-slider-track-fill-thickness,
@@ -237,7 +239,7 @@ governing permissions and limitations under the License.
     position: absolute;
     z-index: 1;
 }
-#fill:before,
+.fill:before,
 .track:before {
     block-size: 100%;
     border-end-end-radius: 0;
@@ -303,7 +305,7 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-track-middle-handleoffset)
         );
 }
-#fill {
+.fill {
     margin-inline-start: 0;
     padding-block: 0;
     padding-inline-end: 0;
@@ -315,7 +317,7 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
     );
 }
-.spectrum-Slider-fill--right {
+.offset {
     padding-block: 0;
     padding-inline-end: calc(
         var(
@@ -400,12 +402,10 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
-:host([dir='rtl']) #ramp svg {
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-}
 #ramp svg {
     block-size: 100%;
     inline-size: 100%;
+    transform: var(--spectrum-logical-rotation);
 }
 .handle {
     block-size: var(
@@ -451,7 +451,6 @@ governing permissions and limitations under the License.
     z-index: 2;
 }
 .handle.dragging,
-.handle.handle-highlight,
 .handle:active {
     border-width: var(
         --mod-slider-handle-border-width-down,
@@ -470,15 +469,15 @@ governing permissions and limitations under the License.
         var(--spectrum-slider-handle-size)
     );
     border-radius: 100%;
-    content: ' ';
+    content: '';
     display: block;
     inline-size: var(
         --mod-slider-handle-size,
         var(--spectrum-slider-handle-size)
     );
-    left: 50%;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
     position: absolute;
-    top: 50%;
     transform: translate(-50%, -50%);
     transition: box-shadow
             var(
@@ -498,6 +497,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-out;
+}
+:host([dir='rtl']) .handle:before {
+    transform: translate(50%, -50%);
 }
 .handle.handle-highlight:before {
     block-size: calc(
@@ -567,9 +569,9 @@ governing permissions and limitations under the License.
     padding-inline-start: 0;
 }
 #value {
-    font-feature-settings: 'tnum';
     cursor: default;
     flex-grow: 0;
+    font-feature-settings: 'tnum';
     margin-inline-start: var(
         --mod-slider-label-margin-start,
         var(--spectrum-slider-label-margin-start)
@@ -616,7 +618,7 @@ governing permissions and limitations under the License.
     );
     z-index: 0;
 }
-.ticks ~ .spectrum-Slider-handleContainer .handle {
+.ticks ~ .handleContainer .handle {
     background: var(
         --mod-slider-ticks-handle-background-color,
         var(--spectrum-slider-ticks-handle-background-color)
@@ -697,30 +699,14 @@ governing permissions and limitations under the License.
 .tick:last-of-type .tickLabel {
     inset-inline-end: 0;
 }
-:host([disabled]) {
-    cursor: default;
-}
-:host([disabled]) .handle {
-    cursor: default;
-    pointer-events: none;
-}
-:host([disabled]) .tickLabel {
-    color: var(
-        --highcontrast-slider-label-text-color-disabled,
-        var(
-            --mod-slider-label-text-color-disabled,
-            var(--spectrum-slider-label-text-color-disabled)
-        )
-    );
-}
-.spectrum-Slider-handleContainer,
-.spectrum-Slider-trackContainer {
+.handleContainer,
+.trackContainer {
     inline-size: calc(100% + var(--spectrum-slider-handle-size));
     inset-block-start: 0;
     margin-inline-start: calc(var(--spectrum-slider-handle-size) / 2 * -1);
     position: absolute;
 }
-.spectrum-Slider-trackContainer {
+.trackContainer {
     block-size: var(
         --mod-slider-control-height,
         var(--spectrum-slider-control-height)
@@ -728,6 +714,12 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 .track:before {
+    background: var(
+        --highcontrast-slider-track-color-static,
+        var(--mod-slider-track-color, var(--spectrum-slider-track-color))
+    );
+}
+.track:not(:has(~ .spectrum-Slider-fill)):before {
     background: var(
         --highcontrast-slider-track-color,
         var(--mod-slider-track-color, var(--spectrum-slider-track-color))
@@ -742,18 +734,10 @@ governing permissions and limitations under the License.
         )
     );
 }
+.fill:before,
 :host([variant='filled']) .track:first-child:before {
     background: var(
-        --highcontrast-slider-track-fill-color,
-        var(
-            --mod-slider-track-fill-color,
-            var(--spectrum-slider-track-fill-color)
-        )
-    );
-}
-#fill:before {
-    background: var(
-        --highcontrast-slider-track-fill-color,
+        --highcontrast-slider-filled-track-fill-color,
         var(
             --mod-slider-track-fill-color,
             var(--spectrum-slider-track-fill-color)
@@ -782,15 +766,6 @@ governing permissions and limitations under the License.
         var(
             --mod-slider-handle-border-color,
             var(--spectrum-slider-handle-border-color)
-        )
-    );
-}
-.handle:hover {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-hover,
-        var(
-            --mod-slider-handle-border-color-hover,
-            var(--spectrum-slider-handle-border-color-hover)
         )
     );
 }
@@ -826,7 +801,10 @@ governing permissions and limitations under the License.
 :host([variant='ramp']) .handle {
     background: var(
         --mod-slider-ramp-handle-background-color,
-        var(--spectrum-slider-ramp-handle-background-color)
+        var(
+            --highcontrast-slider-ramp-handle-background-color,
+            var(--spectrum-slider-ramp-handle-background-color)
+        )
     );
     box-shadow: 0 0 0 var(--spectrum-slider-handle-gap)
         var(
@@ -836,14 +814,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-slider-ramp-handle-border-color-active)
             )
         );
-}
-@media (forced-colors: active) {
-    :host([variant='ramp']) .handle {
-        background-color: ButtonFace;
-        border-color: ButtonText;
-        box-shadow: 0 0 0 var(--spectrum-slider-handle-gap) ButtonFace;
-        forced-color-adjust: none;
-    }
 }
 .input {
     background: none;
@@ -873,16 +843,21 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='range']) .track:not(:first-of-type):not(:last-of-type):before {
+:host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
     background: var(
-        --highcontrast-slider-track-fill-color,
+        --highcontrast-slider-filled-track-fill-color,
         var(
             --mod-slider-track-fill-color,
             var(--spectrum-slider-track-fill-color)
         )
     );
 }
-:host([disabled]) #label-container {
+:host([disabled]),
+:host([disabled]) #controls {
+    cursor: default;
+}
+:host([disabled]) #label-container,
+:host([disabled]) .tickLabel {
     color: var(
         --highcontrast-slider-label-text-color-disabled,
         var(
@@ -906,9 +881,10 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-handle-border-color-disabled)
         )
     );
+    cursor: default;
+    pointer-events: none;
 }
-:host([disabled]) .handle:active,
-:host([disabled]) .handle:hover {
+:host([disabled]) .handle:active {
     background: var(
         --highcontrast-slider-handle-background-color-disabled,
         var(
@@ -921,6 +897,33 @@ governing permissions and limitations under the License.
         var(--mod-disabled-border-color, var(--spectrum-disabled-border-color))
     );
 }
+@media (hover: hover) {
+    .handle:hover {
+        border-color: var(
+            --highcontrast-slider-handle-border-color-hover,
+            var(
+                --mod-slider-handle-border-color-hover,
+                var(--spectrum-slider-handle-border-color-hover)
+            )
+        );
+    }
+    :host([disabled]) .handle:hover {
+        background: var(
+            --highcontrast-slider-handle-background-color-disabled,
+            var(
+                --mod-slider-handle-background-color-disabled,
+                var(--spectrum-slider-handle-background-color-disabled)
+            )
+        );
+        border-color: var(
+            --highcontrast-disabled-border-color,
+            var(
+                --mod-disabled-border-color,
+                var(--spectrum-disabled-border-color)
+            )
+        );
+    }
+}
 :host([disabled]) .track:before {
     background: var(
         --highcontrast-slider-track-color-disabled,
@@ -930,6 +933,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+:host([disabled]) .fill:before,
 :host([disabled][variant='filled']) .track:first-child:before {
     background: var(
         --highcontrast-slider-track-fill-color-disabled,
@@ -938,21 +942,6 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-track-fill-color-disabled)
         )
     );
-}
-:host([disabled]) #fill:before {
-    background: var(
-        --highcontrast-slider-track-fill-color-disabled,
-        var(
-            --mod-slider-track-fill-color-disabled,
-            var(--spectrum-slider-track-fill-color-disabled)
-        )
-    );
-}
-@media (forced-colors: active) {
-    :host([disabled]) #ramp + .handle {
-        fill: ButtonFace;
-        background-color: ButtonFace;
-    }
 }
 :host([disabled]) #ramp path {
     fill: var(
@@ -973,7 +962,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([disabled][variant='range'])
-    .track:not(:first-of-type):not(:last-of-type):before {
+    .track:not(:first-of-type, :last-of-type):before {
     background: var(
         --highcontrast-slider-track-color-disabled,
         var(
@@ -985,10 +974,20 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     :host {
         --highcontrast-slider-track-color: ButtonText;
+        --highcontrast-slider-track-color-static: ButtonText;
         --highcontrast-slider-track-fill-color: ButtonText;
+        --highcontrast-slider-filled-track-fill-color: Highlight;
         --highcontrast-slider-ramp-track-color: ButtonText;
         --highcontrast-slider-ramp-track-color-disabled: GrayText;
         --highcontrast-slider-tick-mark-color: ButtonText;
+        --highcontrast-slider-handle-border-color: ButtonText;
+        --highcontrast-slider-handle-border-color-hover: Highlight;
+        --highcontrast-slider-handle-border-color-down: Highlight;
+        --highcontrast-slider-handle-border-color-key-focus: Highlight;
+        --highcontrast-slider-handle-focus-ring-color-key-focus: CanvasText;
+        --highcontrast-slider-handle-background-color: ButtonFace;
+        --highcontrast-slider-ramp-handle-border-color-active: ButtonFace;
+        --highcontrast-slider-ramp-handle-background-color: ButtonFace;
         --spectrum-slider-track-color: ButtonText;
         --spectrum-slider-track-fill-color: ButtonText;
         --spectrum-slider-ramp-track-color: ButtonText;
@@ -1009,6 +1008,36 @@ governing permissions and limitations under the License.
         --spectrum-slider-label-text-color: CanvasText;
         --spectrum-slider-label-text-color-disabled: GrayText;
         --spectrum-slider-ramp-handle-border-color-active: ButtonText;
+    }
+    .handle.handle-highlight:before,
+    :host([variant='ramp']) .handle {
+        forced-color-adjust: none;
+    }
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        #controls.handle-highlight,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        #controls:active,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        #controls:focus-within {
+        --highcontrast-slider-track-fill-color: Highlight;
+        --highcontrast-slider-track-color: Highlight;
+        --highcontrast-slider-handle-border-color: Highlight;
+        --highcontrast-slider-ramp-track-color: Highlight;
+        --highcontrast-slider-tick-mark-color: Highlight;
+    }
+    @media (hover: hover) {
+        :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+            #controls:hover {
+            --highcontrast-slider-track-fill-color: Highlight;
+            --highcontrast-slider-track-color: Highlight;
+            --highcontrast-slider-handle-border-color: Highlight;
+            --highcontrast-slider-ramp-track-color: Highlight;
+            --highcontrast-slider-tick-mark-color: Highlight;
+        }
+    }
+    :host([disabled]) #ramp + .handle {
+        fill: ButtonFace;
+        background-color: ButtonFace;
     }
 }
 :host {

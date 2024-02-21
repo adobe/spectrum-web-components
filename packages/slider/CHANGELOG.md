@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   **slider:** high contrast improvements for filled track ([#3952](https://github.com/adobe/spectrum-web-components/issues/3952)) ([782560d](https://github.com/adobe/spectrum-web-components/commit/782560d98c3431c9f4467c4b93857133f30dc0d6))
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **slider:** reimplement gradient slider track application ([a10b91e](https://github.com/adobe/spectrum-web-components/commit/a10b91ed168ba58f02349e05e1c49898e8686206))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **slider:** add "fill-start" attribute/property and associated "variant="filled" visual delivery ([#3876](https://github.com/adobe/spectrum-web-components/issues/3876)) ([2c3e35e](https://github.com/adobe/spectrum-web-components/commit/2c3e35e858bbc10f162f719ada1356c516111050))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **slider:** update handle alignment and color application ([#3860](https://github.com/adobe/spectrum-web-components/issues/3860)) ([bed73c0](https://github.com/adobe/spectrum-web-components/commit/bed73c03827766fc9802840795df2b43be4f090a))
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **slider:** align editable slider when no label provided ([#3816](https://github.com/adobe/spectrum-web-components/issues/3816)) ([a5f4900](https://github.com/adobe/spectrum-web-components/commit/a5f49009d4acc1e8c5403a08b127769e18bda56c))
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **infield-button:** add infield-button package ([057b885](https://github.com/adobe/spectrum-web-components/commit/057b885276f3d5dcbe32bab5ab36a2bb82334bc3))
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+### Bug Fixes
+
+-   **number-field:** prevent over excited "change" events ([7b93724](https://github.com/adobe/spectrum-web-components/commit/7b937241151cad5cfc9e5a03fa70c4b70ac0cbea))
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 ### Bug Fixes

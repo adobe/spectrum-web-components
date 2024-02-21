@@ -171,33 +171,6 @@ governing permissions and limitations under the License.
     position: relative;
     vertical-align: top;
 }
-:host(:hover) #button:before {
-    border-color: var(
-        --highcontrast-radio-button-border-color-hover,
-        var(
-            --mod-radio-button-border-color-hover,
-            var(--spectrum-radio-button-border-color-hover)
-        )
-    );
-}
-:host([checked]:hover) #input + #button:before {
-    border-color: var(
-        --highcontrast-radio-button-checked-border-color-hover,
-        var(
-            --mod-radio-button-checked-border-color-hover,
-            var(--spectrum-radio-button-checked-border-color-hover)
-        )
-    );
-}
-:host(:hover) #label {
-    color: var(
-        --highcontrast-radio-neutral-content-color-hover,
-        var(
-            --mod-radio-neutral-content-color-hover,
-            var(--spectrum-radio-neutral-content-color-hover)
-        )
-    );
-}
 :host(:active) #button:before {
     border-color: var(
         --highcontrast-radio-button-border-color-down,
@@ -244,6 +217,10 @@ governing permissions and limitations under the License.
     );
 }
 :host(.focus-visible) #button:after {
+    block-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
@@ -256,16 +233,16 @@ governing permissions and limitations under the License.
         --mod-radio-focus-indicator-thickness,
         var(--spectrum-radio-focus-indicator-thickness)
     );
-    height: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
-    );
-    width: calc(
+    inline-size: calc(
         var(--spectrum-radio-button-control-size) +
             var(--spectrum-radio-focus-indicator-gap) * 2
     );
 }
 :host(:focus-visible) #button:after {
+    block-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
@@ -278,11 +255,7 @@ governing permissions and limitations under the License.
         --mod-radio-focus-indicator-thickness,
         var(--spectrum-radio-focus-indicator-thickness)
     );
-    height: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
-    );
-    width: calc(
+    inline-size: calc(
         var(--spectrum-radio-button-control-size) +
             var(--spectrum-radio-focus-indicator-gap) * 2
     );
@@ -323,26 +296,16 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid]) #label {
-    color: var(
-        --highcontrast-radio-neutral-content-color,
-        var(
-            --mod-radio-neutral-content-color,
-            var(--spectrum-radio-neutral-content-color)
-        )
-    );
-}
 :host([readonly]) #input:read-only {
     cursor: auto;
 }
 :host([readonly]) #button {
     clip: rect(1px, 1px, 1px, 1px);
-    bottom: 100%;
     clip-path: inset(50%);
+    inset-block-end: 100%;
+    inset-inline-end: 100%;
     position: fixed;
-    right: 100%;
 }
-:host([readonly]),
 :host([readonly]) #label,
 :host([readonly][checked][disabled]) #input ~ #label,
 :host([readonly][disabled]) #input ~ #label {
@@ -358,14 +321,43 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized][checked]:hover) #input + #button:before {
-    border-color: var(
-        --highcontrast-radio-emphasized-accent-color-hover,
-        var(
-            --mod-radio-emphasized-accent-color-hover,
-            var(--spectrum-radio-emphasized-accent-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host(:hover) #button:before {
+        border-color: var(
+            --highcontrast-radio-button-border-color-hover,
+            var(
+                --mod-radio-button-border-color-hover,
+                var(--spectrum-radio-button-border-color-hover)
+            )
+        );
+    }
+    :host([checked]:hover) #input + #button:before {
+        border-color: var(
+            --highcontrast-radio-button-checked-border-color-hover,
+            var(
+                --mod-radio-button-checked-border-color-hover,
+                var(--spectrum-radio-button-checked-border-color-hover)
+            )
+        );
+    }
+    :host(:hover) #label {
+        color: var(
+            --highcontrast-radio-neutral-content-color-hover,
+            var(
+                --mod-radio-neutral-content-color-hover,
+                var(--spectrum-radio-neutral-content-color-hover)
+            )
+        );
+    }
+    :host([emphasized][checked]:hover) #input + #button:before {
+        border-color: var(
+            --highcontrast-radio-emphasized-accent-color-hover,
+            var(
+                --mod-radio-emphasized-accent-color-hover,
+                var(--spectrum-radio-emphasized-accent-color-hover)
+            )
+        );
+    }
 }
 :host([emphasized]:active[checked]) #input + #button:before {
     border-color: var(
@@ -449,6 +441,10 @@ governing permissions and limitations under the License.
     );
 }
 #input.focus-visible + #button:after {
+    block-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
@@ -461,16 +457,16 @@ governing permissions and limitations under the License.
         --mod-radio-focus-indicator-thickness,
         var(--spectrum-radio-focus-indicator-thickness)
     );
-    height: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
-    );
-    width: calc(
+    inline-size: calc(
         var(--spectrum-radio-button-control-size) +
             var(--spectrum-radio-focus-indicator-gap) * 2
     );
 }
 #input:focus-visible + #button:after {
+    block-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
@@ -483,11 +479,7 @@ governing permissions and limitations under the License.
         --mod-radio-focus-indicator-thickness,
         var(--spectrum-radio-focus-indicator-thickness)
     );
-    height: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
-    );
-    width: calc(
+    inline-size: calc(
         var(--spectrum-radio-button-control-size) +
             var(--spectrum-radio-focus-indicator-gap) * 2
     );
@@ -553,6 +545,10 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-button-background-color)
         )
     );
+    block-size: var(
+        --mod-radio-button-control-size,
+        var(--spectrum-radio-button-control-size)
+    );
     border-color: var(
         --highcontrast-radio-button-border-color-default,
         var(
@@ -569,7 +565,7 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     content: '';
     display: block;
-    height: var(
+    inline-size: var(
         --mod-radio-button-control-size,
         var(--spectrum-radio-button-control-size)
     );
@@ -586,19 +582,15 @@ governing permissions and limitations under the License.
                 var(--spectrum-radio-animation-duration)
             )
             ease-in-out;
-    width: var(
-        --mod-radio-button-control-size,
-        var(--spectrum-radio-button-control-size)
-    );
     z-index: 0;
 }
 #button:after {
     border-radius: 50%;
     content: '';
     display: block;
-    left: 50%;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
     position: absolute;
-    top: 50%;
     transform: translateX(-50%) translateY(-50%);
     transition: opacity
             var(
@@ -612,6 +604,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-radio-animation-duration)
             )
             ease-out;
+}
+:host([dir='rtl']) #button:after {
+    transform: translateX(50%) translateY(-50%);
 }
 :host {
     --spectrum-radio-button-border-color-default: var(

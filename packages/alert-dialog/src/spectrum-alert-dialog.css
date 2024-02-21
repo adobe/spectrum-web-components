@@ -59,17 +59,15 @@ governing permissions and limitations under the License.
     --spectrum-alert-dialog-divider-to-description: var(--spectrum-spacing-300);
     --spectrum-alert-dialog-title-to-icon: var(--spectrum-spacing-300);
     --mod-buttongroup-justify-content: flex-end;
-}
-:host {
     box-sizing: border-box;
     display: flex;
     inline-size: -moz-fit-content;
     inline-size: fit-content;
+    max-block-size: inherit;
     max-inline-size: var(
         --mod-alert-dialog-max-width,
         var(--spectrum-alert-dialog-max-width)
     );
-    max-height: inherit;
     min-inline-size: var(
         --mod-alert-dialog-min-width,
         var(--spectrum-alert-dialog-min-width)
@@ -90,7 +88,7 @@ governing permissions and limitations under the License.
         --mod-alert-dialog-icon-size,
         var(--spectrum-alert-dialog-icon-size)
     );
-    margin-left: var(
+    margin-inline-start: var(
         --mod-alert-dialog-title-to-icon,
         var(--spectrum-alert-dialog-title-to-icon)
     );
@@ -147,7 +145,6 @@ governing permissions and limitations under the License.
     );
 }
 .content {
-    -webkit-overflow-scrolling: touch;
     color: var(
         --mod-alert-dialog-body-color,
         var(--spectrum-alert-dialog-body-color)
@@ -172,6 +169,7 @@ governing permissions and limitations under the License.
         --mod-alert-dialog-body-line-height,
         var(--spectrum-alert-dialog-body-line-height)
     );
+    -webkit-overflow-scrolling: touch;
     margin: 0;
     margin-block-end: var(
         --mod-alert-dialog-description-to-buttons,

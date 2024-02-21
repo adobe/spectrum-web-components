@@ -17,11 +17,15 @@ import {
     Indeterminate,
     StoryArgs,
 } from '../stories/slider.stories.js';
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 async function sliderFromFixture(
     sliderFixture: (args: StoryArgs) => TemplateResult
@@ -101,6 +105,89 @@ export const testEditableSlider = (type: string): void => {
             await elementUpdated(el);
 
             expect(el.shadowRoot.activeElement).to.equal(el.numberField);
+        });
+
+        it('dispatches `input` of the animation frame', async () => {
+            const inputSpy = spy();
+            const changeSpy = spy();
+            const el = await fixture<Slider>(
+                html`
+                    <sp-slider
+                        editable
+                        hide-stepper
+                        min="1"
+                        max="100"
+                        step="1"
+                        label="Slider label"
+                        @input=${(event: Event & { target: Slider }) => {
+                            inputSpy(event.target.value);
+                        }}
+                        @change=${(event: Event & { target: Slider }) => {
+                            changeSpy(event.target.value);
+                        }}
+                    ></sp-slider>
+                `
+            );
+            await elementUpdated(el);
+            expect(el.value).to.equal(50.5);
+
+            expect(inputSpy.callCount, 'start clean').to.equal(0);
+            expect(changeSpy.callCount, 'start clean').to.equal(0);
+
+            const handle = el.shadowRoot.querySelector(
+                '.handle'
+            ) as HTMLDivElement;
+            const rect = handle.getBoundingClientRect();
+            let frames = 0;
+            let shouldCountFrames = true;
+            const countFrames = (): void => {
+                if (!shouldCountFrames) return;
+                frames += 1;
+                requestAnimationFrame(countFrames);
+            };
+            countFrames();
+            type Steps = {
+                type: 'move';
+                position: [number, number];
+            }[];
+            const toRight: Steps = [...Array(51).keys()].map((i) => ({
+                type: 'move',
+                position: [
+                    rect.left + rect.width / 2 + i,
+                    rect.top + rect.height / 2,
+                ],
+            }));
+            const toLeft: Steps = toRight.slice(0, -1).reverse();
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'down',
+                    },
+                    ...toRight,
+                    ...toLeft,
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+            shouldCountFrames = false;
+            await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
+
+            expect(el.value).to.gt(50.5);
+            expect(
+                inputSpy.callCount,
+                'should not have more "input"s than frames'
+            ).to.lte(frames);
+            expect(changeSpy.callCount, 'only one change').to.equal(1);
         });
 
         it('edits via the `<sp-number-field>`', async () => {

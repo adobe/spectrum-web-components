@@ -19,6 +19,7 @@ export default {
         '**/overlay-trigger.ts',
         '**/src/[A-Z]*.ts',
         '**/src/elements/[A-Z]*.ts',
+        '**/tools/shared/src/*.ts',
     ],
     exclude: [
         '**/*.d.ts',

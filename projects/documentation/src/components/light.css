@@ -1,0 +1,3 @@
+@import '@spectrum-web-components/styles/theme-light.css';
+@import '@spectrum-web-components/styles/tokens/light-vars.css';
+@import 'prismjs/themes/prism.css';

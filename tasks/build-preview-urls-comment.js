@@ -76,7 +76,7 @@ export const buildPreviewURLComment = (ref) => {
             )
         )
     );
-    let comment = `# Branch Preview
+    let comment = `## Branch preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
 - [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)`;

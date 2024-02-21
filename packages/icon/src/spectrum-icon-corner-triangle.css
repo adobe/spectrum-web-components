@@ -12,30 +12,14 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-UIIcon-CornerTriangle75 {
-    height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75,
-        var(--spectrum-global-dimension-size-65)
-    );
-    width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75,
-        var(--spectrum-global-dimension-size-65)
-    );
+    --spectrum-icon-size: var(--spectrum-corner-triangle-icon-size-75);
 }
 .spectrum-UIIcon-CornerTriangle100 {
-    height: var(--spectrum-alias-ui-icon-cornertriangle-size-100);
-    width: var(--spectrum-alias-ui-icon-cornertriangle-size-100);
+    --spectrum-icon-size: var(--spectrum-corner-triangle-icon-size-100);
 }
 .spectrum-UIIcon-CornerTriangle200 {
-    height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-200,
-        var(--spectrum-global-dimension-size-75)
-    );
-    width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-200,
-        var(--spectrum-global-dimension-size-75)
-    );
+    --spectrum-icon-size: var(--spectrum-corner-triangle-icon-size-200);
 }
 .spectrum-UIIcon-CornerTriangle300 {
-    height: var(--spectrum-alias-ui-icon-cornertriangle-size-300);
-    width: var(--spectrum-alias-ui-icon-cornertriangle-size-300);
+    --spectrum-icon-size: var(--spectrum-corner-triangle-icon-size-300);
 }

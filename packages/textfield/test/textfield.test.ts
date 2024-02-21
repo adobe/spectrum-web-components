@@ -18,7 +18,11 @@ import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
+import {
+    isFirefox,
+    isWebKit,
+} from '@spectrum-web-components/shared/src/platform.js';
+import { fixture } from '../../../test/testing-helpers.js';
 
 describe('Textfield', () => {
     testForLitDevWarnings(
@@ -210,8 +214,11 @@ describe('Textfield', () => {
         expect(endBounds.height).equals(startBounds.height);
         expect(endBounds.width).equals(startBounds.width);
     });
-    it('resizes by default', async () => {
-        const el = await litFixture<Textfield>(
+    it('resizes by default', async function () {
+        if (isWebKit()) {
+            this.skip();
+        }
+        const el = await fixture<Textfield>(
             html`
                 <sp-textfield
                     multiline
@@ -334,6 +341,34 @@ describe('Textfield', () => {
             ? el.shadowRoot.querySelector('#valid')
             : null;
         expect(input).to.not.be.null;
+    });
+    it('handles `name` attribute', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield placeholder="Enter your name"></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        expect(el.name).to.be.undefined;
+
+        el.setAttribute('name', 'test');
+        expect(el.name).to.be.equal('test');
+    });
+    it('handles `name` attribute with multiline', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    name="name"
+                    placeholder="Enter your name"
+                    multiline
+                ></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('textarea')
+            : null;
+        expect(input?.name).to.equal('name');
     });
     it('valid - multiline', async () => {
         const el = await litFixture<Textfield>(

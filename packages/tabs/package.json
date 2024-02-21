@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tabs",
-    "version": "0.39.1",
+    "version": "0.41.0",
     "publishConfig": {
         "access": "public"
     },
@@ -86,14 +86,14 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.39.1",
-        "@spectrum-web-components/icon": "^0.39.1",
-        "@spectrum-web-components/icons-ui": "^0.39.1",
-        "@spectrum-web-components/reactive-controllers": "^0.39.1",
-        "@spectrum-web-components/shared": "^0.39.1"
+        "@spectrum-web-components/base": "^0.41.0",
+        "@spectrum-web-components/icon": "^0.41.0",
+        "@spectrum-web-components/icons-ui": "^0.41.0",
+        "@spectrum-web-components/reactive-controllers": "^0.41.0",
+        "@spectrum-web-components/shared": "^0.41.0"
     },
     "devDependencies": {
-        "@spectrum-css/tabs": "^4.0.17"
+        "@spectrum-css/tabs": "^4.1.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

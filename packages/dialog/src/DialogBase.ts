@@ -183,7 +183,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 ? html`
                       <sp-underlay
                           ?open=${this.open}
-                          @click=${this.dismiss}
+                          @close=${this.dismiss}
                           @transitionrun=${this.handleTransitionEvent}
                           @transitionend=${this.handleUnderlayTransitionend}
                           @transitioncancel=${this.handleTransitionEvent}

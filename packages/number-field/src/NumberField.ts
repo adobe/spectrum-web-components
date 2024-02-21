@@ -28,10 +28,11 @@ import {
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron50.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import {
     isAndroid,
     isIPhone,
@@ -66,26 +67,22 @@ export const remapMultiByteCharacters: Record<string, string> = {
 
 const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
     s: (dir) => html`
-        <sp-icon-chevron75
-            slot="icon"
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
-        ></sp-icon-chevron75>
+        <sp-icon-chevron50
+            class="stepper-icon spectrum-UIIcon-Chevron${dir}50"
+        ></sp-icon-chevron50>
     `,
     m: (dir) => html`
         <sp-icon-chevron75
-            slot="icon"
             class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
         ></sp-icon-chevron75>
     `,
     l: (dir) => html`
         <sp-icon-chevron100
-            slot="icon"
             class="stepper-icon spectrum-UIIcon-Chevron${dir}100"
         ></sp-icon-chevron100>
     `,
     xl: (dir) => html`
         <sp-icon-chevron200
-            slot="icon"
             class="stepper-icon spectrum-UIIcon-Chevron${dir}200"
         ></sp-icon-chevron200>
     `,
@@ -158,14 +155,9 @@ export class NumberField extends TextfieldBase {
         if (value === this.value) {
             return;
         }
+        this.lastCommitedValue = value;
         const oldValue = this._value;
         this._value = value;
-        if (!this.managedInput && this.lastCommitedValue !== this.value) {
-            this.dispatchEvent(
-                new Event('change', { bubbles: true, composed: true })
-            );
-            this.lastCommitedValue = this.value;
-        }
         this.requestUpdate('value', oldValue);
     }
 
@@ -181,7 +173,23 @@ export class NumberField extends TextfieldBase {
 
     public override _value = NaN;
     private _trackingValue = '';
-    private lastCommitedValue = NaN;
+    private lastCommitedValue?: number;
+
+    private setValue(value: number = this.value): void {
+        this.value = value;
+        if (
+            typeof this.lastCommitedValue === 'undefined' ||
+            this.lastCommitedValue === this.value
+        ) {
+            // Do not announce when the value is unchanged.
+            return;
+        }
+
+        this.dispatchEvent(
+            new Event('change', { bubbles: true, composed: true })
+        );
+        this.lastCommitedValue = this.value;
+    }
 
     /**
      * Retreive the value of the element parsed to a Number.
@@ -287,13 +295,8 @@ export class NumberField extends TextfieldBase {
         this.buttons.releasePointerCapture(event.pointerId);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
-        if (this.lastCommitedValue !== this.value) {
-            this.dispatchEvent(
-                new Event('change', { bubbles: true, composed: true })
-            );
-            this.lastCommitedValue = this.value;
-        }
         this.managedInput = false;
+        this.setValue();
     }
 
     private doNextChange(event: PointerEvent): number {
@@ -314,11 +317,15 @@ export class NumberField extends TextfieldBase {
         let value = this.value;
         value += count * this._step;
         if (isNaN(this.value)) {
-            this.value = min;
-        } else {
-            this.value = value;
+            value = min;
         }
-        this.dispatchEvent(
+        value = this.valueWithLimits(value);
+
+        this.requestUpdate();
+        this._value = this.validateInput(value);
+        this.inputElement.value = value.toString();
+
+        this.inputElement.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
         );
         this.indeterminate = false;
@@ -339,10 +346,12 @@ export class NumberField extends TextfieldBase {
             case 'ArrowUp':
                 event.preventDefault();
                 this.increment(event.shiftKey ? this.stepModifier : 1);
+                this.setValue();
                 break;
             case 'ArrowDown':
                 event.preventDefault();
                 this.decrement(event.shiftKey ? this.stepModifier : 1);
+                this.setValue();
                 break;
         }
     }
@@ -359,10 +368,7 @@ export class NumberField extends TextfieldBase {
             this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
             clearTimeout(this.queuedChangeEvent);
             this.queuedChangeEvent = setTimeout(() => {
-                this.dispatchEvent(
-                    new Event('change', { bubbles: true, composed: true })
-                );
-                this.lastCommitedValue = this.value;
+                this.setValue();
             }, CHANGE_DEBOUNCE_MS) as unknown as number;
         }
         this.managedInput = false;
@@ -375,8 +381,8 @@ export class NumberField extends TextfieldBase {
         this.addEventListener('wheel', this.onScroll, { passive: false });
     }
 
-    protected override onBlur(): void {
-        super.onBlur();
+    protected override onBlur(_event: FocusEvent): void {
+        super.onBlur(_event);
         this.keyboardFocused = !this.readonly && false;
         this.removeEventListener('wheel', this.onScroll);
     }
@@ -404,12 +410,8 @@ export class NumberField extends TextfieldBase {
                 return;
             }
         }
-        this.value = value;
+        this.setValue(value);
         this.inputElement.value = this.formattedValue;
-        if (this.lastCommitedValue !== this.value) {
-            this.lastCommitedValue = this.value;
-            super.handleChange();
-        }
     }
 
     protected handleCompositionStart(): void {
@@ -447,6 +449,8 @@ export class NumberField extends TextfieldBase {
             .map((char) => remapMultiByteCharacters[char] || char)
             .join('');
         if (this.numberParser.isValidPartialNumber(value)) {
+            // Use starting value as this.value is the `input` value.
+            this.lastCommitedValue = this.lastCommitedValue ?? this.value;
             const valueAsNumber = this.convertValueToNumber(value);
             if (!value && this.indeterminateValue) {
                 this.indeterminate = true;
@@ -472,15 +476,22 @@ export class NumberField extends TextfieldBase {
         this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
     }
 
-    private validateInput(value: number): number {
-        const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
-        value *= signMultiplier;
+    private valueWithLimits(nextValue: number): number {
+        let value = nextValue;
         if (typeof this.min !== 'undefined') {
             value = Math.max(this.min, value);
         }
         if (typeof this.max !== 'undefined') {
             value = Math.min(this.max, value);
         }
+        return value;
+    }
+
+    private validateInput(value: number): number {
+        value = this.valueWithLimits(value);
+        const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
+        value *= signMultiplier;
+
         // Step shouldn't validate when 0...
         if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
@@ -625,10 +636,13 @@ export class NumberField extends TextfieldBase {
                               ],
                           })}
                       >
-                          <sp-action-button
-                              class="step-up"
+                          <sp-infield-button
+                              inline="end"
+                              block="start"
+                              class="button step-up"
                               aria-describedby=${this.helpTextId}
                               label=${'Increase ' + this.appliedLabel}
+                              size=${this.size}
                               tabindex="-1"
                               ?focused=${this.focused}
                               ?disabled=${this.disabled ||
@@ -638,11 +652,14 @@ export class NumberField extends TextfieldBase {
                               ?quiet=${this.quiet}
                           >
                               ${chevronIcon[this.size]('Up')}
-                          </sp-action-button>
-                          <sp-action-button
-                              class="step-down"
+                          </sp-infield-button>
+                          <sp-infield-button
+                              inline="end"
+                              block="end"
+                              class="button step-down"
                               aria-describedby=${this.helpTextId}
                               label=${'Decrease ' + this.appliedLabel}
+                              size=${this.size}
                               tabindex="-1"
                               ?focused=${this.focused}
                               ?disabled=${this.disabled ||
@@ -652,7 +669,7 @@ export class NumberField extends TextfieldBase {
                               ?quiet=${this.quiet}
                           >
                               ${chevronIcon[this.size]('Down')}
-                          </sp-action-button>
+                          </sp-infield-button>
                       </span>
                   `}
         `;

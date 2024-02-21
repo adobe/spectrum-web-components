@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
     --spectrum-card-title-padding-right: var(--spectrum-spacing-400);
     --spectrum-card-content-margin-top: var(--spectrum-spacing-100);
     --spectrum-card-content-margin-bottom: var(--spectrum-spacing-300);
-    --spectrum-card-footer-margin-top: var(--spectrum-spacing-100);
+    --spectrum-card-footer-padding-top: var(--spectrum-spacing-100);
     --spectrum-card-subtitle-padding-right: var(--spectrum-spacing-100);
     --spectrum-card-border-width: var(--spectrum-border-width-100);
     --spectrum-card-corner-radius: var(--spectrum-corner-radius-100);
@@ -66,8 +66,6 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-thickness
     );
     --spectrum-card-selected-background-opacity: 0.1;
-    --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
-    --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
 }
 :host([variant='gallery']),
 :host([variant='quiet']) {
@@ -94,6 +92,8 @@ governing permissions and limitations under the License.
     );
 }
 :host {
+    --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
+    --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
     background-color: var(
         --highcontrast-card-background-color,
         var(
@@ -155,12 +155,13 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
-:host(:focus),
-:host([focused]) {
+:host(.focus-visible) {
     outline: none;
 }
-:host(:focus):after,
-:host([focused]):after {
+:host(:focus-visible) {
+    outline: none;
+}
+:host(.focus-visible):after {
     border-color: var(
         --mod-card-focus-indicator-color,
         var(--spectrum-card-focus-indicator-color)
@@ -170,10 +171,18 @@ governing permissions and limitations under the License.
         var(--spectrum-card-focus-indicator-width)
     );
 }
-:host(:focus) #cover-photo,
-:host(:focus) #preview,
-:host([focused]) #cover-photo,
-:host([focused]) #preview {
+:host(:focus-visible):after {
+    border-color: var(
+        --mod-card-focus-indicator-color,
+        var(--spectrum-card-focus-indicator-color)
+    );
+    border-width: var(
+        --mod-card-focus-indicator-width,
+        var(--spectrum-card-focus-indicator-width)
+    );
+}
+:host(.focus-visible) #cover-photo,
+:host(.focus-visible) #preview {
     border-start-end-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
             var(
@@ -189,13 +198,21 @@ governing permissions and limitations under the License.
             )
     );
 }
-:host(:hover) {
-    border-color: var(
-        --highcontrast-card-border-color-hover,
-        var(
-            --mod-card-border-color-hover,
-            var(--spectrum-card-border-color-hover)
-        )
+:host(:focus-visible) #cover-photo,
+:host(:focus-visible) #preview {
+    border-start-end-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(
+                --mod-card-focus-indicator-width,
+                var(--spectrum-card-focus-indicator-width)
+            )
+    );
+    border-start-start-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(
+                --mod-card-focus-indicator-width,
+                var(--spectrum-card-focus-indicator-width)
+            )
     );
 }
 :host([selected]) {
@@ -246,8 +263,6 @@ governing permissions and limitations under the License.
 }
 :host(:focus) .actions,
 :host(:focus) .quick-actions,
-:host(:hover) .actions,
-:host(:hover) .quick-actions,
 :host([focused]) .actions,
 :host([focused]) .quick-actions,
 :host([selected]) .actions,
@@ -356,21 +371,33 @@ governing permissions and limitations under the License.
     );
 }
 .body {
-    padding-block-end: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-block-end: var(
+        --mod-card-body-padding-block-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
     padding-block-start: var(
-        --mod-card-title-padding-top,
-        var(--spectrum-card-title-padding-top)
+        --mod-card-body-padding-block-start,
+        var(
+            --mod-card-title-padding-top,
+            var(--spectrum-card-title-padding-top)
+        )
     );
-    padding-inline-end: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-inline-end: var(
+        --mod-card-body-padding-inline-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
-    padding-inline-start: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-inline-start: var(
+        --mod-card-body-padding-inline-start,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
 }
 #preview {
@@ -479,30 +506,42 @@ governing permissions and limitations under the License.
         --mod-card-body-line-height,
         var(--spectrum-card-body-line-height)
     );
-    margin-block-start: calc(
-        (
-                var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+    margin-block-start: var(
+        --mod-card-footer-margin-block-start,
+        calc(
+            (
                     var(
-                        --mod-card-content-margin-bottom,
-                        var(--spectrum-card-content-margin-bottom)
-                    )
-            ) * -1
+                            --mod-card-body-spacing,
+                            var(--spectrum-card-body-spacing)
+                        ) -
+                        var(
+                            --mod-card-content-margin-bottom,
+                            var(--spectrum-card-content-margin-bottom)
+                        )
+                ) * -1
+        )
     );
     margin-inline-end: var(
-        --mod-card-body-spacing,
-        var(--spectrum-card-body-spacing)
+        --mod-card-footer-margin-inline-end,
+        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing))
     );
     margin-inline-start: var(
-        --mod-card-body-spacing,
-        var(--spectrum-card-body-spacing)
+        --mod-card-footer-margin-inline-start,
+        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing))
     );
-    padding-block-end: calc(
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    padding-block-end: var(
+        --mod-card-footer-padding-block-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
     );
     padding-block-start: var(
-        --mod-card-footer-margin-top,
-        var(--spectrum-card-footer-margin-top)
+        --mod-card-footer-padding-block-start,
+        var(
+            --mod-card-footer-margin-top,
+            var(--spectrum-card-footer-padding-top)
+        )
     );
 }
 .header {
@@ -629,17 +668,6 @@ governing permissions and limitations under the License.
     );
     position: absolute;
 }
-:host([variant='gallery']:hover),
-:host([variant='quiet']:hover) {
-    border-color: #0000;
-}
-:host([variant='gallery']:hover) #preview,
-:host([variant='quiet']:hover) #preview {
-    background-color: var(
-        --mod-card-background-color-hover,
-        var(--spectrum-card-background-color-hover)
-    );
-}
 :host([variant='gallery'][drop-target]),
 :host([variant='quiet'][drop-target]) {
     background-color: #0000;
@@ -694,11 +722,39 @@ governing permissions and limitations under the License.
 :host([horizontal]) {
     flex-direction: row;
 }
-:host([horizontal]:hover) #preview {
-    border-color: var(
-        --mod-card-border-color-hover,
-        var(--spectrum-card-border-color-hover)
-    );
+@media (hover: hover) {
+    :host(:hover) .actions,
+    :host(:hover) .quick-actions {
+        opacity: 1;
+        pointer-events: all;
+        visibility: visible;
+    }
+    :host(:hover) {
+        border-color: var(
+            --highcontrast-card-border-color-hover,
+            var(
+                --mod-card-border-color-hover,
+                var(--spectrum-card-border-color-hover)
+            )
+        );
+    }
+    :host([variant='gallery']:hover),
+    :host([variant='quiet']:hover) {
+        border-color: #0000;
+    }
+    :host([variant='gallery']:hover) #preview,
+    :host([variant='quiet']:hover) #preview {
+        background-color: var(
+            --mod-card-background-color-hover,
+            var(--spectrum-card-background-color-hover)
+        );
+    }
+    :host([horizontal]:hover) #preview {
+        border-color: var(
+            --mod-card-border-color-hover,
+            var(--spectrum-card-border-color-hover)
+        );
+    }
 }
 :host([horizontal]) #preview {
     align-items: center;
@@ -706,24 +762,19 @@ governing permissions and limitations under the License.
         --mod-card-background-color,
         var(--spectrum-card-background-color)
     );
-    border-end-end-radius: 0;
-    border-end-start-radius: var(
-        --mod-card-corner-radius,
-        var(--spectrum-card-corner-radius)
-    );
-    border-inline-end: var(
-            --mod-card-border-width,
-            var(--spectrum-card-border-width)
-        )
-        solid transparent;
     border-color: var(
         --mod-card-border-color,
         var(--spectrum-card-border-color)
     );
+    border-end-end-radius: 0;
+    border-end-start-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    );
     border-start-end-radius: 0;
-    border-start-start-radius: var(
-        --mod-card-corner-radius,
-        var(--spectrum-card-corner-radius)
+    border-start-start-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(--mod-card-border-width, var(--spectrum-card-border-width))
     );
     display: flex;
     flex-shrink: 0;

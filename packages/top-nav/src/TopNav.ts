@@ -48,6 +48,18 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    @property({ type: String })
+    public label = '';
+
+    /**
+     * A space separated list of part of the URL to ignore when matching
+     * for the "selected" Top Nav Item. Currently supported values are
+     * `hash` and `search`, which will remove the `#hash` and
+     * `?search=value` respectively.
+     */
+    @property({ attribute: 'ignore-url-parts' })
+    public ignoreURLParts = '';
+
     @property()
     public selectionIndicatorStyle = noSelectionStyle;
 
@@ -115,11 +127,19 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         this.items = this.slotEl
             .assignedElements({ flatten: true })
             .filter((el) => el.localName === 'sp-top-nav-item') as TopNavItem[];
-        const selectedChild = this.items.find(
-            (item) => item.value === window.location.href
-        );
+        let { href } = window.location;
+        const ignoredURLParts = this.ignoreURLParts.split(' ');
+        if (ignoredURLParts.includes('hash')) {
+            href = href.replace(window.location.hash, '');
+        }
+        if (ignoredURLParts.includes('search')) {
+            href = href.replace(window.location.search, '');
+        }
+        const selectedChild = this.items.find((item) => item.value === href);
         if (selectedChild) {
             this.selectTarget(selectedChild);
+        } else {
+            this.selected = '';
         }
     }
 
@@ -141,6 +161,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('direction', 'horizontal');
+        this.setAttribute('role', 'navigation');
     }
 
     protected override updated(changes: PropertyValues): void {
@@ -153,6 +174,16 @@ export class TopNav extends SizedMixin(SpectrumElement) {
             typeof changes.get('shouldAnimate') !== 'undefined'
         ) {
             this.shouldAnimate = true;
+        }
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
+            if (this.label.length) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
     }
 

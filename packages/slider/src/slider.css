@@ -90,6 +90,10 @@ governing permissions and limitations under the License.
     transform: translate(50%, 0);
 }
 
+:host([dir='rtl']) .handle:before {
+    transform: translate(50%, -50%);
+}
+
 /*
  * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
  * waits to be addressed at the Spectrum CSS level.
@@ -136,4 +140,12 @@ governing permissions and limitations under the License.
 :host([label-visibility='none']) #label-container {
     padding: 0;
     margin: 0;
+}
+
+:host([label-visibility='none']) #track {
+    align-self: flex-end;
+}
+
+.fill {
+    z-index: 2;
 }

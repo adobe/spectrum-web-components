@@ -91,11 +91,8 @@ governing permissions and limitations under the License.
     display: block;
     inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     margin: 0;
-    overflow: hidden;
     padding: 0;
     position: relative;
-    vertical-align: top;
-    z-index: 0;
 }
 :host:before {
     block-size: 100%;
@@ -204,17 +201,25 @@ governing permissions and limitations under the License.
     );
     overflow: hidden;
 }
+:host {
+    overflow: hidden;
+    vertical-align: top;
+    z-index: 0;
+}
 :host([layer]) {
     align-items: center;
-    border: var(
-            --mod-thumbnail-layer-border-width-outer,
-            var(--spectrum-thumbnail-layer-border-width-outer)
-        )
-        solid
+    border-color: var(
+        --highcontrast-thumbnail-layer-border-color-outer,
         var(
             --mod-thumbnail-layer-border-color-outer,
             var(--spectrum-thumbnail-layer-border-color-outer)
-        );
+        )
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-thumbnail-layer-border-width-outer,
+        var(--spectrum-thumbnail-layer-border-width-outer)
+    );
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -249,21 +254,28 @@ governing permissions and limitations under the License.
 .layer-inner {
     block-size: calc(
         var(--spectrum-thumbnail-size) -
-            var(
-                --mod-thumbnail-layer-border-width-inner,
-                var(--spectrum-thumbnail-layer-border-width-inner)
+            (
+                var(
+                    --mod-thumbnail-layer-border-width-inner,
+                    var(--spectrum-thumbnail-layer-border-width-inner)
+                )
             ) * 2
     );
     inline-size: calc(
         var(--spectrum-thumbnail-size) -
-            var(
-                --mod-thumbnail-layer-border-width-inner,
-                var(--spectrum-thumbnail-layer-border-width-inner)
+            (
+                var(
+                    --mod-thumbnail-layer-border-width-inner,
+                    var(--spectrum-thumbnail-layer-border-width-inner)
+                )
             ) * 2
     );
     outline-color: var(
-        --mod-thumbnail-layer-border-color-inner,
-        var(--spectrum-thumbnail-layer-border-color-inner)
+        --highcontrast-thumbnail-layer-border-color-inner,
+        var(
+            --mod-thumbnail-layer-border-color-inner,
+            var(--spectrum-thumbnail-layer-border-color-inner)
+        )
     );
     outline-style: solid;
     outline-width: calc(
@@ -315,11 +327,11 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
-        --highcontrast-thumbnail-border-color-selected: SelectedItem;
+        forced-color-adjust: none;
+        --highcontrast-thumbnail-border-color-selected: Highlight;
         --highcontrast-thumbnail-focus-indicator-color: Highlight;
         --highcontrast-thumbnail-border-color: CanvasText;
-        background-color: Canvas;
-        color: CanvasText;
-        forced-color-adjust: none;
+        --highcontrast-thumbnail-layer-border-color-inner: Canvas;
+        --highcontrast-thumbnail-layer-border-color-outer: CanvasText;
     }
 }

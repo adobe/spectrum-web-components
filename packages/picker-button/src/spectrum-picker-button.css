@@ -168,23 +168,25 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-button-padding)
     );
 }
-.root:hover .spectrum-PickerButton-fill {
-    background-color: var(
-        --mod-picker-button-background-color-hover,
-        var(--spectrum-picker-button-background-color-hover)
-    );
-}
-.root:hover .spectrum-PickerButton-label {
-    color: var(
-        --mod-picker-button-font-color-hover,
-        var(--spectrum-picker-button-font-color-hover)
-    );
-}
-.root:hover .spectrum-PickerButton-icon {
-    color: var(
-        --mod-picker-button-icon-color-hover,
-        var(--spectrum-picker-button-icon-color-hover)
-    );
+@media (hover: hover) {
+    .root:hover .spectrum-PickerButton-fill {
+        background-color: var(
+            --mod-picker-button-background-color-hover,
+            var(--spectrum-picker-button-background-color-hover)
+        );
+    }
+    .root:hover .spectrum-PickerButton-label {
+        color: var(
+            --mod-picker-button-font-color-hover,
+            var(--spectrum-picker-button-font-color-hover)
+        );
+    }
+    .root:hover .spectrum-PickerButton-icon {
+        color: var(
+            --mod-picker-button-icon-color-hover,
+            var(--spectrum-picker-button-icon-color-hover)
+        );
+    }
 }
 :host([active]) .root .spectrum-PickerButton-fill,
 :host([open]) .root .spectrum-PickerButton-fill {
@@ -208,54 +210,54 @@ governing permissions and limitations under the License.
     );
 }
 .root.focus-visible .spectrum-PickerButton-fill,
-.root.is-focused .spectrum-PickerButton-fill,
 .root.is-keyboardFocused .spectrum-PickerButton-fill,
-.root:focus .spectrum-PickerButton-fill {
+.root:focus .spectrum-PickerButton-fill,
+:host([focused]) .root .spectrum-PickerButton-fill {
     background-color: var(
         --mod-picker-button-background-color-key-focus,
         var(--spectrum-picker-button-background-color-key-focus)
     );
 }
-.root.is-focused .spectrum-PickerButton-fill,
 .root.is-keyboardFocused .spectrum-PickerButton-fill,
 .root:focus .spectrum-PickerButton-fill,
-.root:focus-visible .spectrum-PickerButton-fill {
+.root:focus-visible .spectrum-PickerButton-fill,
+:host([focused]) .root .spectrum-PickerButton-fill {
     background-color: var(
         --mod-picker-button-background-color-key-focus,
         var(--spectrum-picker-button-background-color-key-focus)
     );
 }
 .root.focus-visible .spectrum-PickerButton-label,
-.root.is-focused .spectrum-PickerButton-label,
 .root.is-keyboardFocused .spectrum-PickerButton-label,
-.root:focus .spectrum-PickerButton-label {
+.root:focus .spectrum-PickerButton-label,
+:host([focused]) .root .spectrum-PickerButton-label {
     color: var(
         --mod-picker-button-font-color-key-focus,
         var(--spectrum-picker-button-font-color-key-focus)
     );
 }
-.root.is-focused .spectrum-PickerButton-label,
 .root.is-keyboardFocused .spectrum-PickerButton-label,
 .root:focus .spectrum-PickerButton-label,
-.root:focus-visible .spectrum-PickerButton-label {
+.root:focus-visible .spectrum-PickerButton-label,
+:host([focused]) .root .spectrum-PickerButton-label {
     color: var(
         --mod-picker-button-font-color-key-focus,
         var(--spectrum-picker-button-font-color-key-focus)
     );
 }
 .root.focus-visible .spectrum-PickerButton-icon,
-.root.is-focused .spectrum-PickerButton-icon,
 .root.is-keyboardFocused .spectrum-PickerButton-icon,
-.root:focus .spectrum-PickerButton-icon {
+.root:focus .spectrum-PickerButton-icon,
+:host([focused]) .root .spectrum-PickerButton-icon {
     color: var(
         --mod-picker-button-icon-color-key-focus,
         var(--spectrum-picker-button-icon-color-key-focus)
     );
 }
-.root.is-focused .spectrum-PickerButton-icon,
 .root.is-keyboardFocused .spectrum-PickerButton-icon,
 .root:focus .spectrum-PickerButton-icon,
-.root:focus-visible .spectrum-PickerButton-icon {
+.root:focus-visible .spectrum-PickerButton-icon,
+:host([focused]) .root .spectrum-PickerButton-icon {
     color: var(
         --mod-picker-button-icon-color-key-focus,
         var(--spectrum-picker-button-icon-color-key-focus)

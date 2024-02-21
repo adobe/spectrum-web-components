@@ -11,12 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import './router.js';
+import './components/demo-container.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/top-nav/sp-top-nav.js';
 import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-remove.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
@@ -43,6 +45,10 @@ import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/field-group/sp-field-group.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/card/sp-card.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 
 if ('requestIdleCallback' in window) {
     requestIdleCallback(() => {

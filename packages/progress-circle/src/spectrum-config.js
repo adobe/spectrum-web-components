@@ -11,7 +11,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-ProgressCircle');
 
@@ -24,6 +27,9 @@ const config = {
             inPackage: '@spectrum-css/progresscircle',
             outPackage: 'progress-circle',
             fileName: 'progress-circle',
+            excludeByComponents: [
+                builder.class('spectrum-ProgressCircle--medium'),
+            ],
             components: [
                 converter.classToHost(),
                 converter.classToAttribute(

@@ -384,17 +384,25 @@ describe('Slider', () => {
 
     it('dispatches `input` of the animation frame', async () => {
         const inputSpy = spy();
+        const changeSpy = spy();
         const el = await fixture<Slider>(
             html`
                 <sp-slider
                     value="50"
                     style="width: 100px"
-                    @input=${({ target }: Event & { target: Slider }) =>
-                        inputSpy(target.value)}
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
                 ></sp-slider>
             `
         );
         await elementUpdated(el);
+
+        expect(inputSpy.callCount, 'start clean').to.equal(0);
+        expect(changeSpy.callCount, 'start clean').to.equal(0);
 
         let frames = 0;
         let shouldCountFrames = true;
@@ -435,6 +443,7 @@ describe('Slider', () => {
             inputSpy.callCount,
             'should not have more "input"s than frames'
         ).to.lte(frames);
+        expect(changeSpy.callCount, 'only one change').to.equal(1);
     });
 
     it('manages RTL when min != 0', async () => {
@@ -835,6 +844,89 @@ describe('Slider', () => {
         expect(el.variant).to.equal('tick');
         expect(el.getAttribute('variant')).to.equal('tick');
     });
+    it('renders fill from the centerPoint of the track when fill-start has no value', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    max="20"
+                    fill-start
+                    min="0"
+                    value="10"
+                    step="1"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('50%');
+        expect(fillElement.style.width).to.equal('0%');
+        expect(el.values).to.deep.equal({ value: 10 });
+    });
+    it('renders fill from fill-start point', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    max="100"
+                    fill-start="15"
+                    min="0"
+                    value="10"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('10%');
+        expect(fillElement.style.width).to.equal('5%');
+        expect(el.values).to.deep.equal({ value: 10 });
+
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        const handleBoundingRect = handle.getBoundingClientRect();
+        const position: [number, number] = [
+            handleBoundingRect.x + handleBoundingRect.width / 2,
+            handleBoundingRect.y + handleBoundingRect.height / 2,
+        ];
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position,
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        200,
+                        handleBoundingRect.y + handleBoundingRect.height + 100,
+                    ],
+                },
+            ],
+        });
+        await nextFrame();
+
+        expect(el.value).to.equal(24);
+    });
     it('has a `focusElement`', async () => {
         const el = await fixture<Slider>(
             html`
@@ -980,7 +1072,12 @@ describe('Slider', () => {
     it('supports units not included in Intl.NumberFormatOptions', async () => {
         let el = await fixture<Slider>(
             html`
-                <sp-slider value="50" min="0" max="100" format-options="{"style": "unit", "unit": "px"}"></sp-slider>
+                <sp-slider
+                    value="50"
+                    min="0"
+                    max="100"
+                    format-options='{"style": "unit", "unit": "px"}'
+                ></sp-slider>
             `
         );
 
@@ -989,7 +1086,7 @@ describe('Slider', () => {
         const input = el.focusElement as HTMLInputElement;
         await elementUpdated(el);
 
-        expect(input.getAttribute('aria-valuetext')).to.equal('50');
+        expect(input.getAttribute('aria-valuetext')).to.equal('50px');
 
         el = await fixture<Slider>(
             html`

@@ -23,6 +23,16 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
+:host([has-submenu][disabled]) .chevron {
+    color: var(
+        --highcontrast-menu-item-color-disabled,
+        var(
+            --mod-menu-item-label-icon-color-disabled,
+            var(--spectrum-menu-item-label-icon-color-disabled)
+        )
+    );
+}
+
 #button {
     position: absolute;
     inset: 0;
@@ -49,4 +59,8 @@ governing permissions and limitations under the License.
 ::slotted([slot='submenu']) {
     width: max-content;
     max-width: 100%;
+}
+
+:host([no-wrap]) #label {
+    display: block;
 }

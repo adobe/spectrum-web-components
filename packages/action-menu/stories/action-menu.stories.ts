@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -19,16 +20,20 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionMenuMarkup } from './';
 import { makeOverBackground } from '../../button/stories/index.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import { Menu } from '@spectrum-web-components/menu';
+import { ActionMenu } from '../src/ActionMenu';
 
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
     argTypes: {
+        onChange: { action: 'change' },
         disabled: {
             name: 'disabled',
             type: { name: 'boolean', required: false },
@@ -133,8 +138,25 @@ export default {
                 options: ['white', 'black', 'none'],
             },
         },
+        align: {
+            name: 'align',
+            type: { name: 'string', required: false },
+            description: 'Alignment of the Action Menu',
+            table: {
+                defaultValue: { summary: 'start' },
+            },
+            control: {
+                type: 'select',
+                labels: {
+                    start: 'start',
+                    end: 'end',
+                },
+            },
+            options: ['start', 'end'],
+        },
     },
     args: {
+        align: 'start',
         visibleLabel: 'More Actions',
         disabled: false,
         open: false,
@@ -146,6 +168,7 @@ export default {
 };
 
 interface StoryArgs {
+    align?: 'start' | 'end';
     visibleLabel?: string;
     disabled?: boolean;
     open?: boolean;
@@ -181,6 +204,7 @@ quiet.args = {
 };
 
 export const labelOnly = ({
+    align = 'start',
     changeHandler = (() => undefined) as (event: Event) => void,
     disabled = false,
     open = false,
@@ -198,6 +222,7 @@ export const labelOnly = ({
         }}
         .selects=${selects ? selects : undefined}
         value=${selected ? 'Select Inverse' : ''}
+        style=${ifDefined(align === 'end' ? 'float: inline-end;' : undefined)}
     >
         <span slot="label-only">Label Only</span>
         <sp-menu-item>Deselect</sp-menu-item>
@@ -219,6 +244,7 @@ export const selects = (args: StoryArgs = {}): TemplateResult =>
 selects.args = {
     open: true,
 };
+selects.decorators = [isOverlayOpen];
 
 export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
@@ -243,9 +269,14 @@ customIcon.args = {
     visibleLabel: '',
 };
 
-export const submenu = (): TemplateResult => {
+export const submenu = ({ align = 'start' } = {}): TemplateResult => {
     return html`
-        <sp-action-menu label="More Actions">
+        <sp-action-menu
+            label="More Actions"
+            style=${ifDefined(
+                align === 'end' ? 'float: inline-end;' : undefined
+            )}
+        >
             <sp-menu-item>One</sp-menu-item>
             <sp-menu-item>Two</sp-menu-item>
             <sp-menu-item>
@@ -260,7 +291,7 @@ export const submenu = (): TemplateResult => {
     `;
 };
 
-export const controlled = (): TemplateResult => {
+export const controlled = ({ align = 'start' } = {}): TemplateResult => {
     const state = {
         snap: true,
         grid: false,
@@ -287,7 +318,13 @@ export const controlled = (): TemplateResult => {
         )!.textContent = `application state: ${JSON.stringify(state)}`;
     }
     return html`
-        <sp-action-menu label="View" @change=${onChange}>
+        <sp-action-menu
+            label="View"
+            @change=${onChange}
+            style=${ifDefined(
+                align === 'end' ? 'float: inline-end;' : undefined
+            )}
+        >
             <sp-menu-item value="action" @click=${() => alert('action')}>
                 Non-selectable action
             </sp-menu-item>
@@ -326,8 +363,19 @@ export const controlled = (): TemplateResult => {
     `;
 };
 
-export const groups = (): TemplateResult => html`
-    <sp-action-menu open>
+export const groups = ({
+    align = 'start',
+    onChange,
+}: {
+    align: 'start' | 'end';
+    onChange(value: string): void;
+}): TemplateResult => html`
+    <sp-action-menu
+        @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
+            onChange(value)}
+        open
+        style=${ifDefined(align === 'end' ? 'float: inline-end;' : undefined)}
+    >
         <sp-menu-group id="cms">
             <span slot="header">cms</span>
             <sp-menu-item value="updateAllSiteContent">
@@ -353,3 +401,5 @@ export const groups = (): TemplateResult => html`
         </sp-menu-group>
     </sp-action-menu>
 `;
+
+groups.decorators = [isOverlayOpen];

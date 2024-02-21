@@ -17,14 +17,14 @@ governing permissions and limitations under the License.
     width: 240px;
 
     --spectrum-web-component-sidenav-font-weight: var(
-        --spectrum-sidenav-item-font-weight,
-        var(--spectrum-global-font-weight-regular)
+        --mod-sidenav-text-font-weight,
+        var(--spectrum-sidenav-text-font-weight)
     );
 }
 
-:host([variant='multilevel']) {
-    --spectrum-web-component-sidenav-font-weight: var(
-        --spectrum-sidenav-multilevel-main-item-font-weight,
-        var(--spectrum-global-font-weight-bold)
+:host(:not([variant='multilevel'])) {
+    --mod-sidenav-top-level-font-weight: var(
+        --mod-sidenav-text-font-weight,
+        var(--spectrum-sidenav-text-font-weight)
     );
 }

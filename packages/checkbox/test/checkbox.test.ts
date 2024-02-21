@@ -238,6 +238,16 @@ describe('Checkbox', () => {
         expect(el.checked).to.be.true;
     });
 
+    it('has name attribute', () => {
+        let el = testFixture.querySelector('#checkbox0') as Checkbox;
+
+        el = testFixture.querySelector('#checkbox1') as Checkbox;
+        expect(el.hasAttribute('name'));
+        expect(el.name).to.be.undefined;
+        el.setAttribute('name', 'test');
+        expect(el.name).to.be.equal('test');
+    });
+
     it('handles click events', async () => {
         const el = testFixture.querySelector('#checkbox1') as Checkbox;
         expect(el.checked).to.be.true;
@@ -264,7 +274,11 @@ describe('Checkbox', () => {
 
         expect(el.checked).to.be.true;
     });
-
+    it('should recognize readonly property', async () => {
+        const el: Checkbox = await fixture('<sp-checkbox></sp-checkbox>');
+        expect(el.readonly).to.not.throw;
+        expect(el.readonly).to.be.a('boolean');
+    });
     it('maintains its value when [readonly]', async () => {
         const el = await fixture<Checkbox>(html`
             <sp-checkbox id="checkbox0" checked readonly>Component</sp-checkbox>
@@ -297,7 +311,6 @@ describe('Checkbox', () => {
         expect(el.indeterminate).to.be.false;
         expect(inputEl.checked).to.be.false;
         expect(inputEl.indeterminate).to.be.false;
-
     });
 
     it('`indeterminate, not checked` becomes `checked` on click', async () => {
@@ -320,5 +333,66 @@ describe('Checkbox', () => {
         expect(el.indeterminate).to.be.false;
         expect(inputEl.checked).to.be.true;
         expect(inputEl.indeterminate).to.be.false;
+    });
+
+    it('updates checkmark icons in response to size', async function () {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox checked>sizes checkbox</sp-checkbox>
+        `);
+
+        const getCheckmarkLocalName = (): string => {
+            return (el.shadowRoot.querySelector('#checkmark') as HTMLElement)
+                .localName;
+        };
+
+        expect(el.size).to.equal('m');
+        let checkmarkLocalname = getCheckmarkLocalName();
+        el.size = 's';
+        await elementUpdated(el);
+        expect(getCheckmarkLocalName()).to.not.equal(checkmarkLocalname);
+
+        checkmarkLocalname = getCheckmarkLocalName();
+        el.size = 'l';
+        await elementUpdated(el);
+        expect(getCheckmarkLocalName()).to.not.equal(checkmarkLocalname);
+
+        checkmarkLocalname = getCheckmarkLocalName();
+        el.size = 'xl';
+        await elementUpdated(el);
+        expect(getCheckmarkLocalName()).to.not.equal(checkmarkLocalname);
+    });
+
+    it('updates partialCheckmark icons in response to size', async function () {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox indeterminate>sizes checkbox</sp-checkbox>
+        `);
+
+        const getPartialCheckmarkLocalName = (): string => {
+            return (
+                el.shadowRoot.querySelector('#partialCheckmark') as HTMLElement
+            ).localName;
+        };
+
+        expect(el.size).to.equal('m');
+        let partialCheckmarkLocalname = getPartialCheckmarkLocalName();
+        el.size = 's';
+        await elementUpdated(el);
+        expect(getPartialCheckmarkLocalName()).to.not.equal(
+            partialCheckmarkLocalname
+        );
+
+        partialCheckmarkLocalname = getPartialCheckmarkLocalName();
+        el.size = 'l';
+        await elementUpdated(el);
+        expect(getPartialCheckmarkLocalName()).to.not.equal(
+            partialCheckmarkLocalname
+        );
+
+        partialCheckmarkLocalname = getPartialCheckmarkLocalName();
+        el.size = 'xl';
+        await elementUpdated(el);
+        expect(getPartialCheckmarkLocalName()).to.not.equal(
+            partialCheckmarkLocalname
+        );
     });
 });

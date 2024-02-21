@@ -14,36 +14,98 @@ a {
     color: inherit;
 }
 
-a:focus {
+a:focus,
+a:focus-visible {
     outline: none;
 }
 
-:host(:focus-within) {
-    color: var(
-        --mod-tabs-color-key-focus,
-        var(--spectrum-tabs-color-key-focus)
-    ); /* .spectrum-Tabs-item.focus-ring */
+:host a:before {
+    block-size: calc(
+        100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text))
+    );
+    border: var(
+            --mod-tabs-focus-indicator-width,
+            var(--spectrum-tabs-focus-indicator-width)
+        )
+        solid transparent;
+    border-radius: var(
+        --mod-tabs-focus-indicator-border-radius,
+        var(--spectrum-tabs-focus-indicator-border-radius)
+    );
+    box-sizing: border-box;
+    content: '';
+    inline-size: calc(
+        100% +
+            var(
+                --mod-tabs-focus-indicator-gap,
+                var(--spectrum-tabs-focus-indicator-gap)
+            ) * 2
+    );
+    inset-block-start: calc(
+        var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
+    );
+    inset-inline-end: calc(
+        var(
+                --mod-tabs-focus-indicator-gap,
+                var(--spectrum-tabs-focus-indicator-gap)
+            ) * -1
+    );
+    inset-inline-start: calc(
+        var(
+                --mod-tabs-focus-indicator-gap,
+                var(--spectrum-tabs-focus-indicator-gap)
+            ) * -1
+    );
+    pointer-events: none;
+    position: absolute;
 }
 
-:host(:focus-within):before {
+:host a.focus-visible {
+    color: var(
+        --highcontrast-tabs-color-key-focus,
+        var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
+    );
+}
+
+:host a:focus-visible {
+    color: var(
+        --highcontrast-tabs-color-key-focus,
+        var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
+    );
+}
+
+:host a.focus-visible:before {
     border-color: var(
         --highcontrast-tabs-focus-indicator-color,
         var(
             --mod-tabs-focus-indicator-color,
             var(--spectrum-tabs-focus-indicator-color)
         )
-    ); /* .spectrum-Tabs-item.focus-ring:before */
+    );
 }
 
-:host(:focus-within) ::slotted([slot='icon']) {
-    color: var(
-        --mod-tabs-color-key-focus,
-        var(--spectrum-tabs-color-key-focus)
-    ); /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
+:host a:focus-visible:before {
+    border-color: var(
+        --highcontrast-tabs-focus-indicator-color,
+        var(
+            --mod-tabs-focus-indicator-color,
+            var(--spectrum-tabs-focus-indicator-color)
+        )
+    );
 }
 
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-tabs-focus-indicator-color: canvastext;
-    }
+#item-label {
+    margin-block: 0;
+    padding-block-end: var(
+        --mod-tabs-bottom-to-text,
+        var(--spectrum-tabs-bottom-to-text)
+    );
+    padding-block-start: var(
+        --mod-tabs-top-to-text,
+        var(--spectrum-tabs-top-to-text)
+    );
+}
+
+slot {
+    pointer-events: none;
 }

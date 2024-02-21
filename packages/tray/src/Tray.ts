@@ -123,7 +123,7 @@ export class Tray extends SpectrumElement {
         return html`
             <sp-underlay
                 ?open=${this.open}
-                @click=${this.close}
+                @close=${this.close}
                 @transitionend=${this.handleUnderlayTransitionend}
             ></sp-underlay>
             <div

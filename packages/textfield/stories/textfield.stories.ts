@@ -52,6 +52,20 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const growsOnly = (): TemplateResult => {
+    return html`
+        <sp-field-label for="grows-only">
+            This Textfield has the "grows" attribute without the "multiline"
+            attribute
+        </sp-field-label>
+        <sp-textfield
+            grows
+            id="grows-only"
+            placeholder="Does not grow or display incorrectly"
+        ></sp-textfield>
+    `;
+};
+
 export const quiet = (): TemplateResult => {
     return html`
         <sp-field-label for="name">Enter your name</sp-field-label>
@@ -76,6 +90,16 @@ export const notRequiredWithPattern = (): TemplateResult => {
 export const allowedKeys = (): TemplateResult => {
     return html`
         <sp-textfield
+            placeholder="Enter your name"
+            allowed-keys="a-z"
+        ></sp-textfield>
+    `;
+};
+
+export const withNameAttribute = (): TemplateResult => {
+    return html`
+        <sp-textfield
+            name="name"
             placeholder="Enter your name"
             allowed-keys="a-z"
         ></sp-textfield>

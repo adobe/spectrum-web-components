@@ -47,6 +47,12 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-start-to-content-with-icon-third-level: var(
         --spectrum-side-navigation-with-icon-third-level-edge-to-text
     );
+    --spectrum-sidenav-heading-top-margin: var(
+        --spectrum-side-navigation-item-to-header
+    );
+    --spectrum-sidenav-heading-bottom-margin: var(
+        --spectrum-side-navigation-header-to-item
+    );
     --spectrum-sidenav-background-disabled: transparent;
     --spectrum-sidenav-background-default: transparent;
     --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
@@ -91,6 +97,13 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
+}
+#list:lang(ja),
+#list:lang(ko),
+#list:lang(zh) {
+    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
+}
+#list {
     --spectrum-sidenav-top-level-font-family: var(
         --spectrum-sans-font-family-stack
     );
@@ -98,18 +111,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-header-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
-    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
-    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
-    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-}
-#list:lang(ja),
-#list:lang(ko),
-#list:lang(zh) {
-    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
 }
 #list:lang(ja),
 #list:lang(ko),
@@ -117,6 +118,15 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-line-height: var(
         --spectrum-cjk-line-height-100
     );
+}
+#list {
+    --spectrum-sidenav-header-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
+    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
+    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
+    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
 }
 #list:lang(ja),
 #list:lang(ko),
@@ -134,6 +144,24 @@ governing permissions and limitations under the License.
     list-style-type: none;
     margin-inline: 0;
 }
+:host([disabled]) #item-link {
+    background-color: var(
+        --highcontrast-sidenav-background-disabled,
+        var(
+            --mod-sidenav-background-disabled,
+            var(--spectrum-sidenav-background-disabled)
+        )
+    );
+    color: var(
+        --highcontrast-sidenav-content-disabled-color,
+        var(
+            --mod-sidenav-content-disabled-color,
+            var(--spectrum-sidenav-content-disabled-color)
+        )
+    );
+    cursor: default;
+    pointer-events: none;
+}
 :host([selected]) #item-link {
     background-color: var(
         --highcontrast-sidenav-item-background-default-selected,
@@ -148,19 +176,6 @@ governing permissions and limitations under the License.
             --mod-sidenav-content-color-default-selected,
             var(--spectrum-sidenav-content-color-default-selected)
         )
-    );
-}
-:host([selected]) #item-link:hover {
-    background-color: var(
-        --highcontrast-sidenav-background-hover-selected,
-        var(
-            --mod-sidenav-background-hover-selected,
-            var(--spectrum-sidenav-background-hover-selected)
-        )
-    );
-    color: var(
-        --mod-sidenav-content-color-hover-selected,
-        var(--spectrum-sidenav-content-color-hover-selected)
     );
 }
 :host([selected]) #item-link:active {
@@ -204,24 +219,6 @@ governing permissions and limitations under the License.
         var(--spectrum-sidenav-content-color-key-focus-selected)
     );
 }
-:host([disabled]) #item-link {
-    background-color: var(
-        --highcontrast-sidenav-background-disabled,
-        var(
-            --mod-sidenav-background-disabled,
-            var(--spectrum-sidenav-background-disabled)
-        )
-    );
-    color: var(
-        --highcontrast-sidenav-content-disabled-color,
-        var(
-            --mod-sidenav-content-disabled-color,
-            var(--spectrum-sidenav-content-disabled-color)
-        )
-    );
-    cursor: default;
-    pointer-events: none;
-}
 #item-link {
     background-color: var(
         --highcontrast-sidenav-background-default,
@@ -260,7 +257,6 @@ governing permissions and limitations under the License.
         --mod-sidenav-text-font-weight,
         var(--spectrum-sidenav-text-font-weight)
     );
-    -webkit-hyphens: auto;
     hyphens: auto;
     inline-size: var(--mod-sidenav-width, var(--spectrum-sidenav-width));
     justify-content: start;
@@ -303,27 +299,51 @@ governing permissions and limitations under the License.
     );
 }
 #item-link ::slotted([slot='icon']) {
-    block-size: var(--spectrum-sidenav-icon-size);
+    block-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
     flex-shrink: 0;
-    inline-size: var(--spectrum-sidenav-icon-size);
-    margin-block-start: var(--spectrum-sidenav-top-to-icon);
-    margin-inline-end: var(--spectrum-sidenav-icon-spacing);
+    inline-size: var(
+        --mod-sidenav-icon-size,
+        var(--spectrum-sidenav-icon-size)
+    );
+    margin-block-start: var(
+        --mod-sidenav-top-to-icon,
+        var(--spectrum-sidenav-top-to-icon)
+    );
+    margin-inline-end: var(
+        --mod-sidenav-icon-spacing,
+        var(--spectrum-sidenav-icon-spacing)
+    );
 }
-#item-link:hover {
-    background-color: var(
-        --highcontrast-sidenav-background-hover,
-        var(
-            --mod-sidenav-background-hover,
-            var(--spectrum-sidenav-background-hover)
-        )
-    );
-    color: var(
-        --highcontrast-sidenav-content-color-hover,
-        var(
-            --mod-sidenav-content-color-hover,
-            var(--spectrum-sidenav-content-color-hover)
-        )
-    );
+@media (hover: hover) {
+    :host([selected]) #item-link:hover {
+        background-color: var(
+            --highcontrast-sidenav-background-hover-selected,
+            var(
+                --mod-sidenav-background-hover-selected,
+                var(--spectrum-sidenav-background-hover-selected)
+            )
+        );
+        color: var(
+            --mod-sidenav-content-color-hover-selected,
+            var(--spectrum-sidenav-content-color-hover-selected)
+        );
+    }
+    #item-link:hover {
+        background-color: var(
+            --highcontrast-sidenav-background-hover,
+            var(
+                --mod-sidenav-background-hover,
+                var(--spectrum-sidenav-background-hover)
+            )
+        );
+        color: var(
+            --highcontrast-sidenav-content-color-hover,
+            var(
+                --mod-sidenav-content-color-hover,
+                var(--spectrum-sidenav-content-color-hover)
+            )
+        );
+    }
 }
 #item-link:active {
     background-color: var(
@@ -407,11 +427,62 @@ governing permissions and limitations under the License.
         var(--spectrum-sidenav-focus-ring-gap)
     );
 }
+#item-link[data-level] {
+    font-family: var(
+        --mod-sidenav-top-level-font-family,
+        var(--spectrum-sidenav-top-level-font-family)
+    );
+    font-size: var(
+        --mod-sidenav-top-level-font-size,
+        var(--spectrum-sidenav-top-level-font-size)
+    );
+    font-style: var(
+        --mod-sidenav-top-level-font-style,
+        var(--spectrum-sidenav-top-level-font-style)
+    );
+    font-weight: var(
+        --mod-sidenav-top-level-font-weight,
+        var(--spectrum-sidenav-top-level-font-weight)
+    );
+    line-height: var(
+        --mod-sidenav-top-level-line-height,
+        var(--spectrum-sidenav-top-level-line-height)
+    );
+}
+#item-link:not([data-level='0']) {
+    font-weight: var(
+        --mod-sidenav-text-font-weight,
+        var(--spectrum-sidenav-text-font-weight)
+    );
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-second-level,
+        var(--spectrum-sidenav-start-to-content-second-level)
+    );
+}
+#item-link[data-level='2'] {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-third-level,
+        var(--spectrum-sidenav-start-to-content-third-level)
+    );
+}
+.spectrum-SideNav--hasIcon#item-link:not([data-level='0']) {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-with-icon-second-level,
+        var(--spectrum-sidenav-start-to-content-with-icon-second-level)
+    );
+}
+.spectrum-SideNav--hasIcon#item-link[data-level='2'] {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-with-icon-third-level,
+        var(--spectrum-sidenav-start-to-content-with-icon-third-level)
+    );
+}
 @media (forced-colors: active) {
     #list ::slotted([slot='icon']) {
         forced-color-adjust: preserve-parent-color;
     }
     :host {
+        forced-color-adjust: none;
         --highcontrast-sidenav-content-disabled-color: GrayText;
         --highcontrast-sidenav-focus-ring-color: Highlight;
         --highcontrast-sidenav-content-color-default-selected: SelectedItemText;
@@ -426,6 +497,5 @@ governing permissions and limitations under the License.
         --highcontrast-sidenav-top-level-font-color: ButtonText;
         --highcontrast-sidenav-content-color-default: ButtonText;
         --highcontrast-sidenav-content-color-down: HighlightText;
-        forced-color-adjust: none;
     }
 }

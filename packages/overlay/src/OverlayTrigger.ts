@@ -212,10 +212,10 @@ export class OverlayTrigger extends SpectrumElement {
         return html`
             <sp-overlay
                 id="hover-overlay"
+                ?open=${this.open === 'hover' && !!this.hoverContent.length}
                 ?disabled=${this.disabled ||
                 !this.hoverContent.length ||
                 (!!this.open && this.open !== 'hover')}
-                ?open=${this.open === 'hover' && !!this.hoverContent.length}
                 .offset=${this.offset}
                 .placement=${this.hoverPlacement || this.placement}
                 .triggerElement=${this.targetContent[0]}

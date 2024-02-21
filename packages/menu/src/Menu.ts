@@ -121,7 +121,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
-    private selectedItemsMap = new Map() as Map<MenuItem, boolean>;
+    private selectedItemsMap = new Map<MenuItem, boolean>();
 
     public get childItems(): MenuItem[] {
         if (!this.cachedChildItems) {
@@ -309,8 +309,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
 
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('pointerup', this.handlePointerup);
         this.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('blur', this.handleBlur);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
     }
@@ -338,7 +339,24 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
+    private willSynthesizeClick = 0;
+
     private handleClick(event: Event): void {
+        if (this.willSynthesizeClick) {
+            cancelAnimationFrame(this.willSynthesizeClick);
+            return;
+        }
+        this.handlePointerBasedSelection(event);
+    }
+
+    private handlePointerup(event: Event): void {
+        this.willSynthesizeClick = requestAnimationFrame(() => {
+            event.target?.dispatchEvent(new Event('click'));
+        });
+        this.handlePointerBasedSelection(event);
+    }
+
+    private handlePointerBasedSelection(event: Event): void {
         const path = event.composedPath();
         const target = path.find((el) => {
             /* c8 ignore next 3 */
@@ -380,10 +398,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public handleFocusin(event: FocusEvent): void {
-        const wasOrContainedRelatedTarget = elementIsOrContains(
-            this,
-            event.relatedTarget as Node
-        );
         if (
             this.childItems.some(
                 (childItem) => childItem.menuData.focusRoot !== this
@@ -397,10 +411,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const selectionRoot =
             this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
             this;
-        if (
-            activeElement !== selectionRoot ||
-            (!wasOrContainedRelatedTarget && event.target !== this)
-        ) {
+        if (activeElement !== selectionRoot || event.target !== this) {
             selectionRoot.focus({ preventScroll: true });
             if (activeElement && this.focusedItemIndex === 0) {
                 const offset = this.childItems.findIndex(
@@ -416,7 +427,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener('keydown', this.handleKeydown);
     }
 
-    public handleFocusout(event: FocusEvent): void {
+    public handleBlur(event: FocusEvent): void {
         if (elementIsOrContains(this, event.relatedTarget as Node)) {
             return;
         }
@@ -593,10 +604,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public handleKeydown(event: KeyboardEvent): void {
-        const isNotThisOrDirectChild =
-            event.target !== this &&
-            this !== (event.target as HTMLElement).parentElement;
-        if (isNotThisOrDirectChild || event.defaultPrevented) {
+        if (event.defaultPrevented) {
             return;
         }
         const lastFocusedItem = this.childItems[this.focusedItemIndex];
@@ -639,11 +647,24 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
         }
         if (code === 'Space' || code === 'Enter') {
-            this.childItems[this.focusedItemIndex]?.click();
+            const childItem = this.childItems[this.focusedItemIndex];
+            if (
+                childItem &&
+                childItem.menuData.selectionRoot === event.target
+            ) {
+                event.preventDefault();
+                childItem.click();
+            }
             return;
         }
         if (code === 'ArrowDown' || code === 'ArrowUp') {
-            this.navigateWithinMenu(event);
+            const childItem = this.childItems[this.focusedItemIndex];
+            if (
+                childItem &&
+                childItem.menuData.selectionRoot === event.target
+            ) {
+                this.navigateWithinMenu(event);
+            }
             return;
         }
         this.navigateBetweenRelatedMenus(event);
@@ -888,8 +909,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
         this.updateComplete.then(() => this.updateItemFocus());
     }
+
     public override disconnectedCallback(): void {
         this.cachedChildItems = undefined;
+        this.selectedItems = [];
+        this.selectedItemsMap.clear();
+        this.childItemSet.clear();
+        this.descendentOverlays = new Map<Overlay, Overlay>();
         super.disconnectedCallback();
     }
 

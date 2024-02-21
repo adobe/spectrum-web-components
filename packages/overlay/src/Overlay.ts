@@ -34,6 +34,7 @@ import {
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import type {
     OpenableElement,
@@ -95,7 +96,15 @@ export class Overlay extends OverlayFeatures {
      * provided that option.
      */
     @property({ type: Boolean })
-    override delayed = false;
+    override get delayed(): boolean {
+        return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
+    }
+
+    override set delayed(delayed: boolean) {
+        this._delayed = delayed;
+    }
+
+    private _delayed = false;
 
     @query('.dialog')
     override dialogEl!: HTMLDialogElement & {
@@ -157,7 +166,7 @@ export class Overlay extends OverlayFeatures {
      * when there is no trigger element.
      */
     @property({ type: Number })
-    override offset: number | [number, number] = 6;
+    override offset: number | [number, number] = 0;
 
     protected override placementController = new PlacementController(this);
 
@@ -496,6 +505,8 @@ export class Overlay extends OverlayFeatures {
 
     protected bindEvents(): void {
         if (!this.hasNonVirtualTrigger) return;
+        // Clean up listeners if they've already been bound
+        this.abortController?.abort();
         this.abortController = new AbortController();
         const nextTriggerElement = this.triggerElement as HTMLElement;
         switch (this.triggerInteraction) {
@@ -575,7 +586,9 @@ export class Overlay extends OverlayFeatures {
         );
     }
 
-    protected manageTriggerElement(triggerElement: HTMLElement | null): void {
+    protected manageTriggerElement(
+        triggerElement: HTMLElement | undefined
+    ): void {
         if (triggerElement) {
             this.unbindEvents();
             this.releaseAriaDescribedby();
@@ -607,13 +620,25 @@ export class Overlay extends OverlayFeatures {
         }
 
         const longpressDescription = document.createElement('div');
-        longpressDescription.id = `longpress-describedby-descriptor-${crypto
-            .randomUUID()
-            .slice(0, 8)}`;
+        longpressDescription.id = `longpress-describedby-descriptor-${randomID()}`;
         const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
         longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
         longpressDescription.slot = 'longpress-describedby-descriptor';
-        trigger.insertAdjacentElement('afterend', longpressDescription);
+        const triggerParent = trigger.getRootNode() as HTMLElement;
+        const overlayParent = this.getRootNode() as HTMLElement;
+        // Manage the placement of the helper element in an accessible place with
+        // the lowest chance of negatively affecting the layout of the page.
+        if (triggerParent === overlayParent) {
+            // Trigger and Overlay in same DOM tree...
+            // Append helper element to Overlay.
+            this.append(longpressDescription);
+        } else {
+            // If Trigger in <body>, hide helper
+            longpressDescription.hidden = !('host' in triggerParent);
+            // Trigger and Overlay in different DOM tree, Trigger in shadow tree...
+            // Insert helper element after Trigger.
+            trigger.insertAdjacentElement('afterend', longpressDescription);
+        }
 
         const releaseLongpressDescribedby = conditionAttributeWithId(
             trigger,
@@ -659,9 +684,7 @@ export class Overlay extends OverlayFeatures {
             this.elementIds = this.elements.map((el) => el.id);
             const appliedIds = this.elements.map((el) => {
                 if (!el.id) {
-                    el.id = `${this.tagName.toLowerCase()}-helper-${crypto
-                        .randomUUID()
-                        .slice(0, 8)}`;
+                    el.id = `${this.tagName.toLowerCase()}-helper-${randomID()}`;
                 }
                 return el.id;
             });
@@ -857,7 +880,6 @@ export class Overlay extends OverlayFeatures {
     }
 
     public override manuallyKeepOpen(): void {
-        super.manuallyKeepOpen();
         this.open = true;
         this.placementController.allowPlacementUpdate = true;
         this.manageOpen(false);
@@ -886,9 +908,7 @@ export class Overlay extends OverlayFeatures {
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
-                `${this.tagName.toLowerCase()}-${crypto
-                    .randomUUID()
-                    .slice(0, 8)}`
+                `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
         if (
@@ -906,13 +926,17 @@ export class Overlay extends OverlayFeatures {
                 | 'hover'
                 | undefined;
         }
-        const oldTrigger = this.triggerElement as HTMLElement;
+        // Merge multiple possible calls to manageTriggerElement().
+        let oldTrigger: HTMLElement | false | undefined = false;
         if (changes.has(elementResolverUpdatedSymbol)) {
+            oldTrigger = this.triggerElement as HTMLElement;
             this.triggerElement = this.elementResolver.element;
-            this.manageTriggerElement(oldTrigger);
         }
         if (changes.has('triggerElement')) {
-            this.manageTriggerElement(changes.get('triggerElement'));
+            oldTrigger = changes.get('triggerElement');
+        }
+        if (oldTrigger !== false) {
+            this.manageTriggerElement(oldTrigger);
         }
     }
 
@@ -927,6 +951,9 @@ export class Overlay extends OverlayFeatures {
             if (this.open && typeof changes.get('placement') !== 'undefined') {
                 this.placementController.resetOverlayPosition();
             }
+        }
+        if (changes.has('state') && this.state === 'closed') {
+            this.placementController.clearOverlayPosition();
         }
     }
 

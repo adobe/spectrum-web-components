@@ -31,10 +31,8 @@ governing permissions and limitations under the License.
         --highcontrast-colorarea-border-color: Canvas;
         --highcontrast-colorarea-fill-color-disabled: Canvas;
     }
+    .gradient,
     :host([disabled]) {
-        forced-color-adjust: none;
-    }
-    .gradient {
         forced-color-adjust: none;
     }
 }

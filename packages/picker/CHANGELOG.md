@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Features
+
+-   **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **picker,action-menu,split-button:** update interaction model ([#3935](https://github.com/adobe/spectrum-web-components/issues/3935)) ([bae7d52](https://github.com/adobe/spectrum-web-components/commit/bae7d527e513d2588267c62cc70f5e1c1289f903))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **picker:** force close slotted Tooltip elements with disabled when Menu openes ([82c8f12](https://github.com/adobe/spectrum-web-components/commit/82c8f129d8a378f51ca083c4020a15b3cbde1fe7))
+-   **picker:** prevent the Menu opening until required dependencies are loaded ([55e6174](https://github.com/adobe/spectrum-web-components/commit/55e617497477f2627982f877743f1635e32ee583))
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **picker:** ensure menu placement in mobile ([#3835](https://github.com/adobe/spectrum-web-components/issues/3835)) ([4aba1c6](https://github.com/adobe/spectrum-web-components/commit/4aba1c6094e45481dec428fcc95fb4148f62dbc9))
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **overlay:** calculate more transforms ([6538a45](https://github.com/adobe/spectrum-web-components/commit/6538a45a036f60c4efce4c3ed3d1d6f2782a188e))
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

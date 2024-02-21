@@ -12,3 +12,27 @@ updates:
           - 'hunterloftis'
           - 'najikahalsema'
           - 'westbrook'
+      groups:
+          # Specify a name for the group, which will be used in pull request titles
+          # and branch names
+          storybook-ecosystem:
+              # Define patterns to include dependencies in the group (based on
+              # dependency name)
+              patterns:
+                  - 'storybook'
+                  - '@storybook/*'
+                  - '@types/storybook*'
+          commitlint-ecosystem:
+              patterns:
+                  - '@commitlint/*'
+                  - 'commitlint'
+          eleventy-ecosystem:
+              patterns:
+                  - '@11ty/*'
+                  - 'eleventy'
+                  - 'eleventy-plugin-*'
+
+    - package-ecosystem: 'github-actions'
+      directory: '/'
+      schedule:
+          interval: 'monthly'

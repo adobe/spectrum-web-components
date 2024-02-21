@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 
 import { converterFor } from '../../../tasks/process-spectrum-utils.js';
 
-const converter = converterFor('spectrum-CoachMarkIndicator');
+const converter = converterFor('spectrum-CoachMark');
 
 /**
  * @type { import('../../../tasks/spectrum-css-converter').SpectrumCSSConverter }
@@ -21,52 +21,46 @@ const converter = converterFor('spectrum-CoachMarkIndicator');
 const config = {
     conversions: [
         {
-            inPackage: '@spectrum-css/coachmark',
+            inPackage: '@spectrum-css/coachindicator',
             outPackage: 'coachmark',
-            fileName: 'coachmark',
-            excludeByComponents: [
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-image',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-content',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-footer',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-header',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-step',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-title',
-                },
-            ],
+            fileName: 'coach-indicator',
             components: [
-                converter.classToHost(),
-                converter.classToClass('spectrum-CoachMarkIndicator-ring'),
+                converter.classToHost('spectrum-CoachIndicator'),
+                converter.classToClass('spectrum-CoachIndicator-ring', 'ring'),
                 converter.classToAttribute(
-                    'spectrum-CoachMarkIndicator--quiet'
+                    'spectrum-CoachIndicator--quiet',
+                    'quiet'
                 ),
                 ...converter.enumerateAttributes(
                     [
-                        ['spectrum-CoachMarkIndicator--dark'],
-                        ['spectrum-CoachMarkIndicator--light'],
+                        ['spectrum-CoachIndicator--dark', 'black'],
+                        ['spectrum-CoachIndicator--light', 'white'],
                     ],
-                    'variant'
+                    'static'
                 ),
+            ],
+        },
+        {
+            inPackage: '@spectrum-css/coachmark',
+            outPackage: 'coachmark',
+            fileName: 'coachmark',
+            components: [
+                converter.classToHost(),
+                converter.classToClass('spectrum-CoachMark-ring'),
+                converter.classToClass('spectrum-CoachMark-buttongroup'),
+                converter.classToClass(
+                    'spectrum-CoachMark-buttongroup--mobile',
+                    'buttongroup-mobile'
+                ),
+                converter.classToClass('spectrum-CoachMark-menu'),
+                converter.classToClass('spectrum-CoachMark-image-wrapper'),
+                converter.classToClass('spectrum-CoachMark-image'),
+                converter.classToClass('spectrum-CoachMark-header'),
+                converter.classToClass('spectrum-CoachMark-content'),
+                converter.classToClass('spectrum-CoachMark-footer'),
+                converter.classToClass('spectrum-CoachMark-action-menu'),
+                converter.classToClass('spectrum-CoachMark-title'),
+                converter.classToClass('spectrum-CoachMark-step'),
             ],
         },
     ],

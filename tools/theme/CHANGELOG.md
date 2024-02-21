@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **theme:** expose version property ([#3978](https://github.com/adobe/spectrum-web-components/issues/3978)) ([d42bb71](https://github.com/adobe/spectrum-web-components/commit/d42bb710fab1857dabad80b982ad046a41251569))
+-   **theme:** include custom Spectrum color tokens in Express color tokens ([370a1f1](https://github.com/adobe/spectrum-web-components/commit/370a1f1df67dba51fd1110a5e850a8600f5a03dd))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 **Note:** Version bump only for package @spectrum-web-components/theme

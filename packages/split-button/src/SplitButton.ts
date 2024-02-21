@@ -125,7 +125,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
         const buttons: TemplateResult[] = [
             html`
                 <sp-button
-                    aria-label=${ifDefined(this.label || undefined)}
+                    aria-label=${ifDefined(
+                        this.label || this.selectedItem?.itemText || undefined
+                    )}
                     id="button"
                     class="button ${this.variant}"
                     @click=${this.passClick}
@@ -144,9 +146,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                     class="button trigger ${this.variant}"
                     @blur=${this.handleButtonBlur}
+                    @click=${this.handleActivate}
                     @pointerdown=${this.handleButtonPointerdown}
                     @focus=${this.handleButtonFocus}
-                    @click=${this.handleButtonClick}
                     @keydown=${{
                         handleEvent: this.handleEnterKeydown,
                         capture: true,

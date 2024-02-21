@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   support generating random IDs outside of secure contexts ([485a67c](https://github.com/adobe/spectrum-web-components/commit/485a67c5401094705b711350f8ee74182a6dd64b))
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **menu:** process ":active" styles ([7917583](https://github.com/adobe/spectrum-web-components/commit/79175833e8121cef1419b547802721324472965d))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **picker,action-menu,split-button:** update interaction model ([#3935](https://github.com/adobe/spectrum-web-components/issues/3935)) ([bae7d52](https://github.com/adobe/spectrum-web-components/commit/bae7d527e513d2588267c62cc70f5e1c1289f903))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **overlay:** move closed overlays to "display: none" ([fc0278b](https://github.com/adobe/spectrum-web-components/commit/fc0278b917759ed58c3ac62a6e962633914481c0))
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **menu:** support navigating to and selecting Menu Items in Menu Groups ([8469ab2](https://github.com/adobe/spectrum-web-components/commit/8469ab235bf4049b7ce9fca008494df1cde012a7))
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+### Bug Fixes
+
+-   update deps graph, fix imports ([f633005](https://github.com/adobe/spectrum-web-components/commit/f633005e26bff640615f157b54830bfb0677d682))
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+### Bug Fixes
+
+-   **menu:** conditionally access slots for their assigned content ([#3717](https://github.com/adobe/spectrum-web-components/issues/3717)) ([c045822](https://github.com/adobe/spectrum-web-components/commit/c04582216c67051fa6c78f27b299a9fdfd076597))
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 ### Bug Fixes

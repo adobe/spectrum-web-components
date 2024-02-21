@@ -12,4 +12,5 @@ governing permissions and limitations under the License.
 
 @import url('@spectrum-web-components/styles/express/theme-light.css');
 @import url('@spectrum-web-components/styles/tokens/light-vars.css');
+@import url('@spectrum-web-components/styles/tokens/spectrum/custom-light-vars.css');
 @import url('@spectrum-web-components/styles/tokens/express/custom-light-vars.css');

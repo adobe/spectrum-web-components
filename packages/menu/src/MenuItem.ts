@@ -20,6 +20,7 @@ import {
 import {
     ObserveSlotPresence,
     ObserveSlotText,
+    randomID,
 } from '@spectrum-web-components/shared';
 import {
     property,
@@ -372,7 +373,7 @@ export class MenuItem extends LikeAnchor(
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
-            this.id = `sp-menu-item-${crypto.randomUUID().slice(0, 8)}`;
+            this.id = `sp-menu-item-${randomID()}`;
         }
     }
 
@@ -580,6 +581,12 @@ export class MenuItem extends LikeAnchor(
 
     public override disconnectedCallback(): void {
         this.menuData.cleanupSteps.forEach((removal) => removal(this));
+        this.menuData = {
+            focusRoot: undefined,
+            parentMenu: undefined,
+            selectionRoot: undefined,
+            cleanupSteps: [],
+        };
         super.disconnectedCallback();
     }
 
@@ -595,6 +602,9 @@ export class MenuItem extends LikeAnchor(
     }
 
     public dispatchUpdate(): void {
+        if (!this.isConnected) {
+            return;
+        }
         this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
         this.willDispatchUpdate = false;
     }

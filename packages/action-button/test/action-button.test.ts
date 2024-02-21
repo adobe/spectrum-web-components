@@ -24,7 +24,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
 
@@ -46,6 +46,22 @@ describe('ActionButton', () => {
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
         await expect(el).to.be.accessible();
+    });
+    it('gardens "value" as a property', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button>Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.hasAttribute('value')).to.be.false;
+        el.value = 'Value';
+        await elementUpdated(el);
+        expect(el.hasAttribute('value')).to.be.true;
+        el.value = '';
+        await elementUpdated(el);
+        expect(el.hasAttribute('value')).to.be.false;
     });
     it('loads [hold-affordance]', async () => {
         const el = await fixture<ActionButton>(
@@ -289,5 +305,43 @@ describe('ActionButton', () => {
         expect(button).not.to.have.attribute('aria-pressed');
         expect(button).to.have.attribute('aria-haspopup', 'true');
         expect(button).to.have.attribute('aria-expanded', 'true');
+    });
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('warns that `variant` is deprecated', async () => {
+            const el = await fixture<ActionButton>(
+                html`
+                    <sp-action-button variant="white">Button</sp-action-button>
+                `
+            );
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('"variant"'),
+                'confirm variant-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-action-button',
+                    type: 'api',
+                    level: 'default',
+                },
+            });
+        });
     });
 });

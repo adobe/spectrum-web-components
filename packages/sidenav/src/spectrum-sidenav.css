@@ -47,6 +47,12 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-start-to-content-with-icon-third-level: var(
         --spectrum-side-navigation-with-icon-third-level-edge-to-text
     );
+    --spectrum-sidenav-heading-top-margin: var(
+        --spectrum-side-navigation-item-to-header
+    );
+    --spectrum-sidenav-heading-bottom-margin: var(
+        --spectrum-side-navigation-header-to-item
+    );
     --spectrum-sidenav-background-disabled: transparent;
     --spectrum-sidenav-background-default: transparent;
     --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
@@ -91,6 +97,13 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
+}
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
+}
+:host {
     --spectrum-sidenav-top-level-font-family: var(
         --spectrum-sans-font-family-stack
     );
@@ -98,18 +111,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-header-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
-    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
-    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
-    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-}
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
-    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
 }
 :host:lang(ja),
 :host:lang(ko),
@@ -117,6 +118,15 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-line-height: var(
         --spectrum-cjk-line-height-100
     );
+}
+:host {
+    --spectrum-sidenav-header-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
+    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
+    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
+    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
 }
 :host:lang(ja),
 :host:lang(ko),

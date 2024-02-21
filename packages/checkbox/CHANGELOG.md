@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+### Bug Fixes
+
+-   **checkbox:** add missing readonly prop ([#3859](https://github.com/adobe/spectrum-web-components/issues/3859)) ([35b5649](https://github.com/adobe/spectrum-web-components/commit/35b56490e9c03dccbb852935caf51bc52f922143))
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Performance Improvements
+
+-   **checkbox:** refactor architecture for more rendering perf and DOM element count ([7c2277f](https://github.com/adobe/spectrum-web-components/commit/7c2277f1a21e2e886678c3a3ad1d454cbd6637e0))
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Features
+
+-   **textfield:** added name attribute to textfield ([#3752](https://github.com/adobe/spectrum-web-components/issues/3752)) ([593005a](https://github.com/adobe/spectrum-web-components/commit/593005a8892139beb9ece9342b51a2b43d63cef3))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 **Note:** Version bump only for package @spectrum-web-components/checkbox

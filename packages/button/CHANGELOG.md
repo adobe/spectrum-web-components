@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Features
+
+-   **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **button:** use larger icons in Close Button ([c4aa02c](https://github.com/adobe/spectrum-web-components/commit/c4aa02c8a1c6456f8d9805ba02d74c7e4ecefaa3))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **shared:** update and expand attribute coverage in likeAnchor ([5cb5f1d](https://github.com/adobe/spectrum-web-components/commit/5cb5f1d67c3afe4d62941632d65177a2cd8804c6))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **button:** adds pending button, fixes [#3162](https://github.com/adobe/spectrum-web-components/issues/3162) ([#3163](https://github.com/adobe/spectrum-web-components/issues/3163)) ([71254ec](https://github.com/adobe/spectrum-web-components/commit/71254ec2b29f18e62a9a2e5285ca8c35273d8d43))
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **button:** support [icon-only] delivery ([#3716](https://github.com/adobe/spectrum-web-components/issues/3716)) ([e236a50](https://github.com/adobe/spectrum-web-components/commit/e236a50d8e51da0d019758f744e1a1a8a9370b1c))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 **Note:** Version bump only for package @spectrum-web-components/button

@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     LitElement,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -31,7 +32,6 @@ import type {
 import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/toast/sp-toast.js';
@@ -45,7 +45,6 @@ import './code-example.js';
 import { copyText } from './copy-to-clipboard.js';
 
 import layoutStyles from './layout.css';
-import { nothing } from 'lit-html';
 import {
     DARK_MODE,
     IS_MOBILE,
@@ -341,7 +340,7 @@ export class LayoutElement extends LitElement {
                       <sp-underlay
                           class="scrim"
                           ?open=${this.settings}
-                          @click=${this.toggleSettings}
+                          @close=${this.toggleSettings}
                           ?hidden=${!this.isNarrow}
                       ></sp-underlay>
                       <aside
@@ -376,7 +375,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.theme}
                         @change=${this.updateTheme}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                         <sp-menu-item value="express">
@@ -393,7 +391,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.color}
                         @change=${this.updateColor}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="lightest">Lightest</sp-menu-item>
                         <sp-menu-item value="light">Light</sp-menu-item>
@@ -409,7 +406,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.scale}
                         @change=${this.updateScale}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="medium">Medium</sp-menu-item>
                         <sp-menu-item value="large">Large</sp-menu-item>
@@ -425,7 +421,6 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.dir}
                         @change=${this.updateDirection}
-                        placement="bottom-end"
                     >
                         <sp-menu-item value="ltr">LTR</sp-menu-item>
                         <sp-menu-item value="rtl">RTL</sp-menu-item>

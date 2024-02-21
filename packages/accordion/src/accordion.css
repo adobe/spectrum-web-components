@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-accordion.css');
+
+:host {
+    --spectrum-logical-rotation: ;
+}

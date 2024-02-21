@@ -38,7 +38,13 @@ import { SplitView } from '@spectrum-web-components/split-view';
 ### Horizontal Resizable
 
 ```html
-<sp-split-view resizable primary-min="50" secondary-min="50" primary-size="100">
+<sp-split-view
+    resizable
+    primary-min="50"
+    secondary-min="50"
+    primary-size="100"
+    label="Resize the horizontal panels"
+>
     <div>
         <h1>Left panel</h1>
         <p>
@@ -59,7 +65,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 ### Horizontal Resizable & Collapsible
 
 ```html
-<sp-split-view resizable>
+<sp-split-view resizable label="Resize the horizontal collapsible panels">
     <div>
         <h1>Left panel</h1>
         <p>
@@ -95,6 +101,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
     primary-min="50"
     primary-max="150"
     secondary-min="50"
+    label="Resize the vertical panels"
 >
     <div>
         <h1>Top panel</h1>
@@ -116,7 +123,12 @@ import { SplitView } from '@spectrum-web-components/split-view';
 ### Vertical Resizable & Collapsible
 
 ```html
-<sp-split-view vertical resizable style="height: 300px;">
+<sp-split-view
+    vertical
+    resizable
+    style="height: 300px;"
+    label="Resize the vertical collapsible panels"
+>
     <div>
         <h1>Top panel</h1>
         <p>
@@ -182,3 +194,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
     </div>
 </sp-split-view>
 ```
+
+## Accessibility
+
+By default, the "separator" element within an `<sp-split-view>` is given the label "Resize the panels". A label is required to surface the interaction correctly to screen readers. You can customize or internationalize this with the `label` attribute.

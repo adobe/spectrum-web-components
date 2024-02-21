@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **button:** adds pending button, fixes [#3162](https://github.com/adobe/spectrum-web-components/issues/3162) ([#3163](https://github.com/adobe/spectrum-web-components/issues/3163)) ([71254ec](https://github.com/adobe/spectrum-web-components/commit/71254ec2b29f18e62a9a2e5285ca8c35273d8d43))
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+### Bug Fixes
+
+-   update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 **Note:** Version bump only for package @spectrum-web-components/meter

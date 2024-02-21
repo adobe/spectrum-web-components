@@ -15,15 +15,12 @@ import {
     firstFocusableSlottedIn,
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
-import {
-    Constructor,
-    OpenableElement,
-    OverlayOpenCloseDetail,
-} from './overlay-types.js';
+import { Constructor, OpenableElement } from './overlay-types.js';
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
+    OverlayStateEvent,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
@@ -35,9 +32,6 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
             await this.managePosition();
-            if (this.open !== targetOpenState) {
-                return;
-            }
             if (this.open !== targetOpenState) {
                 return;
             }
@@ -55,9 +49,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             const start =
                 (el: OpenableElement, index: number) =>
                 async (): Promise<void> => {
-                    if (typeof el.open !== 'undefined') {
-                        el.open = targetOpenState;
-                    }
+                    el.open = targetOpenState;
                     if (!targetOpenState) {
                         const close = (): void => {
                             el.removeEventListener('close', close);
@@ -103,10 +95,9 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                 const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
                 if (index > 0) {
                     el.dispatchEvent(
-                        new CustomEvent<OverlayOpenCloseDetail>(eventName, {
-                            bubbles: false,
-                            composed: false,
-                            detail: { interaction: this.type },
+                        new OverlayStateEvent(eventName, this, {
+                            interaction: this.type,
+                            publish: false,
                         })
                     );
                     return;
@@ -120,23 +111,22 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     const hasVirtualTrigger =
                         this.triggerElement instanceof VirtualTrigger;
                     this.dispatchEvent(
-                        new Event(eventName, {
-                            bubbles: hasVirtualTrigger,
-                            composed: hasVirtualTrigger,
+                        new OverlayStateEvent(eventName, this, {
+                            interaction: this.type,
+                            publish: hasVirtualTrigger,
                         })
                     );
                     el.dispatchEvent(
-                        new Event(eventName, {
-                            bubbles: false,
-                            composed: false,
+                        new OverlayStateEvent(eventName, this, {
+                            interaction: this.type,
+                            publish: false,
                         })
                     );
                     if (this.triggerElement && !hasVirtualTrigger) {
                         (this.triggerElement as HTMLElement).dispatchEvent(
-                            new CustomEvent<OverlayOpenCloseDetail>(eventName, {
-                                bubbles: true,
-                                composed: true,
-                                detail: { interaction: this.type },
+                            new OverlayStateEvent(eventName, this, {
+                                interaction: this.type,
+                                publish: true,
                             })
                         );
                     }

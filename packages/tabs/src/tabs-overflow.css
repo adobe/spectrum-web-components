@@ -20,34 +20,48 @@ governing permissions and limitations under the License.
     --sp-tabs-overflow-previous-button-left: calc(
         -1 * var(--spectrum-component-edge-to-text-100)
     );
-    --sp-tabs-overflow-button-height: var(--spectrum-tab-item-height-medium);
+    --sp-tabs-overflow-button-height: calc(
+        var(--spectrum-tab-item-height-medium) -
+            var(--spectrum-border-width-200)
+    );
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-medium);
     --sp-tabs-overflow-icon-color: var(--spectrum-gray-800);
     --sp-tabs-overflow-shadow-color: var(--spectrum-gray-100);
     --sp-tabs-overflow-shadow-width: 50px;
+    --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-100);
 }
 
 :host([size='s']) {
-    --sp-tabs-overflow-button-height: var(--spectrum-tab-item-height-small);
+    --sp-tabs-overflow-button-height: calc(
+        var(--spectrum-tab-item-height-small) - var(--spectrum-border-width-200)
+    );
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-small);
+    --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
 :host([size='l']) {
-    --sp-tabs-overflow-button-height: var(--spectrum-tab-item-height-large);
+    --sp-tabs-overflow-button-height: calc(
+        var(--spectrum-tab-item-height-large) - var(--spectrum-border-width-200)
+    );
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-large);
+    --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-200);
 }
 
 :host([size='xl']) {
-    --sp-tabs-overflow-button-height: var(
-        --spectrum-tab-item-height-extra-large
+    --sp-tabs-overflow-button-height: calc(
+        var(--spectrum-tab-item-height-extra-large) -
+            var(--spectrum-border-width-200)
     );
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-extra-large);
+    --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-300);
 }
 
 :host([compact]) {
-    --sp-tabs-overflow-button-height: var(
-        --spectrum-tab-item-compact-height-medium
+    --sp-tabs-overflow-button-height: calc(
+        var(--spectrum-tab-item-compact-height-medium) -
+            var(--spectrum-border-width-200)
     );
+    --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 
 sp-action-button {

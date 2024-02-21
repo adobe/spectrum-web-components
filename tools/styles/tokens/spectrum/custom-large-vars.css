@@ -48,10 +48,6 @@
         --spectrum-spacing-200
     );
 
-    --spectrum-sidenav-heading-top-margin: 30px; /* TODO replace with var(--spectrum-side-navigation-item-to-header); once token is updated */
-    --spectrum-sidenav-heading-bottom-margin: 10px; /* TODO replace with var(--spectrum-side-navigation-item-to-header); once token is added */
-    --spectrum-sidenav-bottom-to-label: 10px; /* TODO replace with updated var(--spectrum-component-bottom-to-text-100); */
-
     --spectrum-alert-dialog-padding: var(--spectrum-spacing-400);
     --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-600);
 
@@ -70,10 +66,55 @@
     --spectrum-well-border-radius: 5px;
 
     --spectrum-icon-chevron-size-50: 8px;
+    /* XXL and XXS icon sizes are not within the design spec and are planned to be deprecated in Spectrum 2. */
+    --spectrum-workflow-icon-size-xxl: 40px;
+    --spectrum-workflow-icon-size-xxs: 15px;
 
     --spectrum-treeview-item-indentation-medium: 20px;
     --spectrum-treeview-item-indentation-small: 15px;
     --spectrum-treeview-item-indentation-large: 25px;
     --spectrum-treeview-item-indentation-extra-large: 30px;
     --spectrum-treeview-indicator-inset-block-start: 6px;
+    --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 2px;
+
+    --spectrum-dialog-confirm-entry-animation-distance: 25px;
+    --spectrum-dialog-confirm-hero-height: 160px;
+    --spectrum-dialog-confirm-border-radius: 5px;
+    --spectrum-dialog-confirm-title-text-size: 19px;
+    --spectrum-dialog-confirm-description-text-size: 15px;
+    --spectrum-dialog-confirm-padding-grid: 24px;
+
+    --spectrum-datepicker-initial-width: 160px;
+    --spectrum-datepicker-generic-padding: 15px;
+    --spectrum-datepicker-dash-line-height: 30px;
+    --spectrum-datepicker-width-quiet-first: 90px;
+    --spectrum-datepicker-width-quiet-second: 20px;
+    --spectrum-datepicker-datetime-width-first: 45px;
+    --spectrum-datepicker-invalid-icon-to-button: 10px;
+    --spectrum-datepicker-invalid-icon-to-button-quiet: 9px;
+    --spectrum-datepicker-input-datetime-width: 30px;
+
+    --spectrum-pagination-textfield-width: 60px;
+    --spectrum-pagination-item-inline-spacing: 6px;
+
+    --spectrum-dial-border-radius: 20px;
+    --spectrum-dial-handle-position: 10px;
+    --spectrum-dial-handle-block-margin: 20px;
+    --spectrum-dial-handle-inline-margin: 20px;
+    --spectrum-dial-controls-margin: 10px;
+    --spectrum-dial-label-gap-y: 6px;
+    --spectrum-dial-label-container-top-to-text: 5px;
+
+    --spectrum-assetcard-focus-ring-border-radius: 9px;
+    --spectrum-assetcard-selectionindicator-margin: 15px;
+    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xxs);
+    --spectrum-assetcard-header-content-font-size: var(
+        --spectrum-heading-size-xxs
+    );
+    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-xs);
+
+    --spectrum-tooltip-animation-distance: 5px;
+
+    --spectrum-ui-icon-medium-display: none;
+    --spectrum-ui-icon-large-display: block;
 }

@@ -15,7 +15,8 @@ import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/button/sp-button.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { overlayTriggerDecorator } from '../../dialog/stories/index.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import '../../overlay/stories/index.js';
 
 export default {
     component: 'sp-popover',
@@ -185,7 +186,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                             Click for ${placement}-start popover
                         </sp-button>
                         <sp-popover tip slot="click-content">
-                            <sp-dialog>
+                            <sp-dialog style="--mod-dialog-min-inline-size: 0;">
                                 <h2 slot="heading">
                                     Popover ${placement}-start
                                 </h2>
@@ -201,10 +202,10 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
 };
 
 export const overlaidTop = (): TemplateResult => overlaid('top');
-overlaidTop.decorators = [overlayTriggerDecorator];
+overlaidTop.decorators = [isOverlayOpen];
 export const overlaidRight = (): TemplateResult => overlaid('right');
-overlaidRight.decorators = [overlayTriggerDecorator];
+overlaidRight.decorators = [isOverlayOpen];
 export const overlaidBottom = (): TemplateResult => overlaid('bottom');
-overlaidBottom.decorators = [overlayTriggerDecorator];
+overlaidBottom.decorators = [isOverlayOpen];
 export const overlaidLeft = (): TemplateResult => overlaid('left');
-overlaidLeft.decorators = [overlayTriggerDecorator];
+overlaidLeft.decorators = [isOverlayOpen];

@@ -20,9 +20,13 @@ import {
     ButtonVariants,
 } from '@spectrum-web-components/button/src/Button.js';
 
+import type { Properties } from './template.js';
+export type { Properties };
+
 export const args = {
     disabled: false,
     variant: 'cta',
+    pending: false,
 };
 
 export const argTypes = {
@@ -74,19 +78,19 @@ export const argTypes = {
             options: ['fill', 'outline'],
         },
     },
+    pending: {
+        name: 'pending',
+        type: { name: 'boolean', required: false },
+        description: 'Shows the pending state of the button.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
 };
-
-export interface Properties {
-    variant?: ButtonVariants;
-    treatment?: ButtonTreatments;
-    quiet?: boolean;
-    content?: TemplateResult;
-    disabled?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    href?: string;
-    target?: '_blank' | '_parent' | '_self' | '_top';
-    warning?: boolean;
-}
 
 export const makeOverBackground =
     (variant?: 'white' | 'black') =>
@@ -112,32 +116,21 @@ export const makeOverBackground =
     };
 
 export function renderButton(properties: Properties): TemplateResult {
-    if (properties.variant) {
-        return html`
-            <sp-button
-                variant="${properties.variant}"
-                treatment="${properties.treatment}"
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                size=${properties.size || 'm'}
-                href=${ifDefined(properties.href)}
-                target=${ifDefined(properties.target)}
-                ?warning=${properties.warning}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    } else {
-        return html`
-            <sp-button
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                size=${properties.size}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    }
+    return html`
+        <sp-button
+            ?disabled=${!!properties.disabled}
+            href=${ifDefined(properties.href)}
+            ?icon-only=${properties.iconOnly}
+            ?pending=${!!properties.pending}
+            ?quiet="${!!properties.quiet}"
+            size=${properties.size}
+            target=${ifDefined(properties.target)}
+            treatment=${ifDefined(properties.treatment)}
+            variant=${ifDefined(properties.variant)}
+        >
+            ${properties.content || 'Click Me'}
+        </sp-button>
+    `;
 }
 
 export function renderButtonSet(properties: Properties): TemplateResult {
@@ -151,6 +144,22 @@ export function renderButtonSet(properties: Properties): TemplateResult {
     return html`
         ${renderButton(properties)} ${renderButton(disabled)}
         ${renderButton(icon)}
+    `;
+}
+
+export function renderIconButtonSet(properties: Properties): TemplateResult {
+    const disabled = Object.assign({}, properties, {
+        iconOnly: true,
+        disabled: true,
+    });
+    const iconOnly = Object.assign({}, properties, {
+        iconOnly: true,
+        content: html`
+            <sp-icon-help slot="icon"></sp-icon-help>
+        `,
+    });
+    return html`
+        ${renderButton(iconOnly)} ${renderButton(disabled)}
     `;
 }
 
@@ -186,6 +195,17 @@ export const renderWithIcon = (props: Properties): TemplateResult => {
                 `,
             })}
         </div>
+    `;
+};
+
+export const renderWithIconOnly = (props: Properties): TemplateResult => {
+    return html`
+        ${renderIconButtonSet({
+            ...props,
+            content: html`
+                <sp-icon-help slot="icon"></sp-icon-help>
+            `,
+        })}
     `;
 };
 

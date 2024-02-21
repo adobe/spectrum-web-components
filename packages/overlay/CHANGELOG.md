@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   support generating random IDs outside of secure contexts ([485a67c](https://github.com/adobe/spectrum-web-components/commit/485a67c5401094705b711350f8ee74182a6dd64b))
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **overlay:** clean position data on close ([edac590](https://github.com/adobe/spectrum-web-components/commit/edac59003ecc1af8dc4aa91c00c9593e8792e63f))
+
+## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
+
+### Bug Fixes
+
+-   **overlay:** automatically reposition overlay when the contents resize ([83be807](https://github.com/adobe/spectrum-web-components/commit/83be807996ace4609486cc9d3bbf1723b3a531ad))
+-   **overlay:** move closed overlays to "display: none" ([fc0278b](https://github.com/adobe/spectrum-web-components/commit/fc0278b917759ed58c3ac62a6e962633914481c0))
+-   **overlay:** normalize popover toggling between native and synthetic [popover] usage ([26fa692](https://github.com/adobe/spectrum-web-components/commit/26fa6925f7f88959ba4d969c882daf7cb881c2d4))
+-   **overlay:** support positioning overlays within parents leveraging container-type rules ([21044b3](https://github.com/adobe/spectrum-web-components/commit/21044b3c8b5bed0af02f836b6ee6796554a90325))
+-   **overlay:** surface "overlay" property to "sp-opened" and "sp-closed" events ([957f8e9](https://github.com/adobe/spectrum-web-components/commit/957f8e9b42f5ad4672fe128fc42693d0065bb2d5))
+
+## [0.40.2](https://github.com/adobe/spectrum-web-components/compare/v0.40.1...v0.40.2) (2023-12-18)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+## [0.40.1](https://github.com/adobe/spectrum-web-components/compare/v0.40.0...v0.40.1) (2023-12-05)
+
+### Bug Fixes
+
+-   **overlay:** ensure events are only bound once ([abe57ce](https://github.com/adobe/spectrum-web-components/commit/abe57cedcc18a309f3acf1b664bfa561f13b4f8f))
+
+# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+
+### Bug Fixes
+
+-   **overlay:** ensure manual overlays persist through interactions outside of their subtree ([#3788](https://github.com/adobe/spectrum-web-components/issues/3788)) ([ef5617f](https://github.com/adobe/spectrum-web-components/commit/ef5617f81b205b8bcf0a79e2b8a810cc65f13c3d))
+
+## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
+
+### Bug Fixes
+
+-   **overlay:** add delay resolution from overlaid content ([#3748](https://github.com/adobe/spectrum-web-components/issues/3748)) ([5c4f1f6](https://github.com/adobe/spectrum-web-components/commit/5c4f1f6f87cac60cb1884f59aa29d256f7baabb8))
+-   **overlay:** calculate more transforms ([6538a45](https://github.com/adobe/spectrum-web-components/commit/6538a45a036f60c4efce4c3ed3d1d6f2782a188e))
+-   **overlay:** place longpress helper content in a more accessible, less layout affecting location ([dd12c23](https://github.com/adobe/spectrum-web-components/commit/dd12c2346142a107ee9c7824410dff5ae660e574))
+
+## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
+
+### Bug Fixes
+
+-   **overlay:** allow overlay to persist on hover ([#3706](https://github.com/adobe/spectrum-web-components/issues/3706)) ([7707040](https://github.com/adobe/spectrum-web-components/commit/77070405fdb0d6a2bca5d5e33fe03a856f1cef6c))
+
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

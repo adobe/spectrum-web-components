@@ -19,7 +19,7 @@ import {
 import { state } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { PickerBase } from '@spectrum-web-components/picker';
+import { DESCRIPTION_ID, PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
@@ -79,14 +79,21 @@ export class ActionMenu extends ObserveSlotPresence(
                       `}
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
                 <slot name="label-only"></slot>
-                <slot name="tooltip"></slot>
+                <slot
+                    name="tooltip"
+                    @slotchange=${this.handleTooltipSlotchange}
+                ></slot>
             `,
         ];
     }
 
     protected override render(): TemplateResult {
+        if (this.tooltipEl) {
+            this.tooltipEl.disabled = this.open;
+        }
         return html`
             <sp-action-button
+                aria-describedby=${DESCRIPTION_ID}
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
                 static=${ifDefined(this.static)}
@@ -98,9 +105,9 @@ export class ActionMenu extends ObserveSlotPresence(
                 class="button"
                 size=${this.size}
                 @blur=${this.handleButtonBlur}
+                @click=${this.handleActivate}
                 @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
-                @click=${this.handleButtonClick}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
@@ -109,7 +116,7 @@ export class ActionMenu extends ObserveSlotPresence(
             >
                 ${this.buttonContent}
             </sp-action-button>
-            ${this.renderMenu}
+            ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
     }
 

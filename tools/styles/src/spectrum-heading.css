@@ -30,11 +30,6 @@ governing permissions and limitations under the License.
             var(--spectrum-heading-margin-bottom-multiplier)
     );
 }
-@media (forced-colors: active) {
-    .spectrum-Heading {
-        --highcontrast-heading-font-color: Text;
-    }
-}
 .spectrum-Heading--sizeXXS {
     --spectrum-heading-font-size: var(--spectrum-heading-size-xxs);
     --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxs);
@@ -562,4 +557,9 @@ governing permissions and limitations under the License.
         --mod-heading-margin-start,
         var(--spectrum-heading-margin-start)
     );
+}
+@media (forced-colors: active) {
+    .spectrum-Heading {
+        --highcontrast-heading-font-color: Text;
+    }
 }

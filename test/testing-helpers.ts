@@ -136,7 +136,7 @@ export function ignoreResizeObserverLoopError(
         globalErrorHandler = window.onerror;
         addEventListener('error', (error) => {
             console.error('Uncaught global error:', error);
-            if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
+            if (error.message?.match?.(/ResizeObserver loop/)) {
                 return;
             } else {
                 globalErrorHandler?.(error);
@@ -187,7 +187,7 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
                 style.getPropertyValue('--sp-overlay-open') === 'true' &&
                 style.getPropertyValue('position') === 'fixed';
         }
-        resolve(open || modal || polyfill);
+        resolve(popoverOpen || open || modal || polyfill);
     });
     element.dispatchEvent(queryEvent);
     return found;
@@ -227,12 +227,72 @@ export async function isInteractive(
 }
 
 export async function fixture<T extends Element>(
-    story: TemplateResult
+    story: TemplateResult,
+    dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
-        <sp-theme theme="spectrum" scale="medium" color="dark">
+        <sp-theme theme="spectrum" scale="medium" color="light">
             ${story}
+            <style>
+                sp-theme {
+                    --spectrum-global-animation-duration-100: 50ms;
+                    --spectrum-global-animation-duration-200: 50ms;
+                    --spectrum-global-animation-duration-300: 50ms;
+                    --spectrum-global-animation-duration-400: 50ms;
+                    --spectrum-global-animation-duration-500: 50ms;
+                    --spectrum-global-animation-duration-600: 50ms;
+                    --spectrum-global-animation-duration-700: 50ms;
+                    --spectrum-global-animation-duration-800: 50ms;
+                    --spectrum-global-animation-duration-900: 50ms;
+                    --spectrum-global-animation-duration-1000: 50ms;
+                    --spectrum-global-animation-duration-2000: 50ms;
+                    --spectrum-global-animation-duration-4000: 50ms;
+                    --spectrum-animation-duration-0: 50ms;
+                    --spectrum-animation-duration-100: 50ms;
+                    --spectrum-animation-duration-200: 50ms;
+                    --spectrum-animation-duration-300: 50ms;
+                    --spectrum-animation-duration-400: 50ms;
+                    --spectrum-animation-duration-500: 50ms;
+                    --spectrum-animation-duration-600: 50ms;
+                    --spectrum-animation-duration-700: 50ms;
+                    --spectrum-animation-duration-800: 50ms;
+                    --spectrum-animation-duration-900: 50ms;
+                    --spectrum-animation-duration-1000: 50ms;
+                    --spectrum-animation-duration-2000: 50ms;
+                    --spectrum-animation-duration-4000: 50ms;
+                    --spectrum-coachmark-animation-indicator-ring-duration: 50ms;
+                    --swc-test-duration: 1ms;
+                }
+            </style>
         </sp-theme>
     `);
+    document.documentElement.dir = dir;
     return test.children[0] as T;
+}
+
+export async function usedHeapMB(): Promise<
+    Record<'dom' | 'js' | 'shared' | 'total', number>
+> {
+    // @ts-ignore
+    const memorySample = performance.measureUserAgentSpecificMemory();
+    const result = (await memorySample) as {
+        bytes: number;
+        breakdown: {
+            attribution: string;
+            bytes: number;
+            types: ('DOM' | 'JS' | 'Shared')[];
+        }[];
+    };
+    return {
+        total: result.bytes,
+        js:
+            result.breakdown.find((entry) => entry.types.includes('JS'))
+                ?.bytes || 0,
+        dom:
+            result.breakdown.find((entry) => entry.types.includes('DOM'))
+                ?.bytes || 0,
+        shared:
+            result.breakdown.find((entry) => entry.types.includes('Shared'))
+                ?.bytes || 0,
+    };
 }
