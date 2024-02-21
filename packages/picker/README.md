@@ -357,6 +357,46 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 ```
 
+### Side Label
+
+```html
+<sp-field-label side-aligned="start" for="picker-sideLabel">
+    Standard:
+</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    sideLabel
+    id="picker-sideLabel"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label side-aligned="start" for="picker-sideLabel-quiet">
+    Quiet:
+</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    sideLabel
+    quiet
+    id="picker-sideLabel-quiet"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
 ### Disabled
 
 ```html
