@@ -417,12 +417,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    private renderHandle(): TemplateResult {
-        return html`
-            ${this.variant === 'tick' ? html`` : this.handleController.render()}
-        `;
-    }
-
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
         const handleItems = [
@@ -483,7 +477,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    protected handleDoubleClick(event: Event): void {
+    protected handleDoubleClick(event: PointerEvent): void {
         this.handleController.handleDoubleClick(event);
     }
 
