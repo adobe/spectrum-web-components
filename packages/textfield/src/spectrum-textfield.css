@@ -416,6 +416,9 @@ governing permissions and limitations under the License.
     pointer-events: all;
     position: absolute;
 }
+#textfield.spectrum-Textfield--sideLabel .icon {
+    grid-area: 1/2 / span 1 / span 1;
+}
 :host([valid]) #textfield .icon {
     color: var(
         --highcontrast-textfield-icon-color-valid,
@@ -435,10 +438,6 @@ governing permissions and limitations under the License.
     inset-inline-end: var(
         --mod-textfield-icon-spacing-inline-end-valid,
         var(--spectrum-textfield-icon-spacing-inline-end-valid)
-    );
-    inset-inline-start: var(
-        --mod-textfield-icon-spacing-inline-start-valid,
-        var(--spectrum-textfield-icon-spacing-inline-start-valid)
     );
 }
 :host([invalid]) #textfield .icon {
@@ -469,10 +468,6 @@ governing permissions and limitations under the License.
         --mod-textfield-icon-spacing-inline-end-invalid,
         var(--spectrum-textfield-icon-spacing-inline-end-invalid)
     );
-    inset-inline-start: var(
-        --mod-textfield-icon-spacing-inline-start-invalid,
-        var(--spectrum-textfield-icon-spacing-inline-start-invalid)
-    );
 }
 :host([disabled]) #textfield .icon,
 :host([readonly]) #textfield .icon {
@@ -499,12 +494,6 @@ governing permissions and limitations under the License.
         --mod-textfield-label-spacing-block,
         var(--spectrum-textfield-label-spacing-block)
     );
-    padding-inline-start: calc(
-        var(
-                --mod-textfield-corner-radius,
-                var(--spectrum-textfield-corner-radius)
-            ) / 2
-    );
 }
 :host([quiet]) .spectrum-FieldLabel {
     margin-block-end: var(
@@ -520,12 +509,6 @@ governing permissions and limitations under the License.
     margin-block-start: var(
         --mod-textfield-helptext-spacing-block,
         var(--spectrum-textfield-helptext-spacing-block)
-    );
-    padding-inline-start: calc(
-        var(
-                --mod-textfield-corner-radius,
-                var(--spectrum-textfield-corner-radius)
-            ) / 2
     );
 }
 .spectrum-Textfield-characterCount {
@@ -621,7 +604,6 @@ governing permissions and limitations under the License.
         var(--spectrum-textfield-min-width)
     );
     outline: none;
-    overflow: visible;
     padding-block-end: calc(
         var(
                 --mod-textfield-spacing-block-end,
@@ -1180,6 +1162,9 @@ governing permissions and limitations under the License.
     resize: inherit;
 }
 :host([multiline][grows]) .input {
+    grid-row: 2;
+}
+:host([multiline][grows]) .spectrum-Textfield--sideLabel .input {
     grid-row: 1;
 }
 :host([multiline][quiet]) .input {

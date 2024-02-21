@@ -244,9 +244,14 @@
     --spectrum-icon-color-primary-default: var(
         --spectrum-neutral-content-color-default
     );
+    --spectrum-asterisk-icon-size-75: 8px;
     --spectrum-radio-button-selection-indicator: 4px;
+    --spectrum-field-label-top-margin-small: 0px;
     --spectrum-field-label-to-component: 0px;
     --spectrum-help-text-to-component: 0px;
+    --spectrum-status-light-dot-size-small: 8px;
+    --spectrum-action-button-edge-to-hold-icon-extra-small: 3px;
+    --spectrum-action-button-edge-to-hold-icon-small: 3px;
     --spectrum-button-minimum-width-multiplier: 2.25;
     --spectrum-divider-thickness-small: 1px;
     --spectrum-divider-thickness-medium: 2px;
@@ -327,6 +332,12 @@
     --spectrum-drop-zone-body-size: var(
         --spectrum-illustrated-message-body-size
     );
+    --spectrum-accordion-top-to-text-compact-small: 2px;
+    --spectrum-accordion-top-to-text-compact-medium: 4px;
+    --spectrum-accordion-disclosure-indicator-to-text: 0px;
+    --spectrum-accordion-edge-to-disclosure-indicator: 0px;
+    --spectrum-accordion-edge-to-text: 0px;
+    --spectrum-accordion-focus-indicator-gap: 0px;
     --spectrum-color-handle-border-width: var(--spectrum-border-width-200);
     --spectrum-color-handle-inner-border-width: 1px;
     --spectrum-color-handle-outer-border-width: 1px;
@@ -369,6 +380,7 @@
     --spectrum-table-row-bottom-to-text-extra-large-compact: var(
         --spectrum-component-bottom-to-text-300
     );
+    --spectrum-table-edge-to-content: 16px;
     --spectrum-table-border-divider-width: 1px;
     --spectrum-tab-item-height-small: var(--spectrum-component-height-200);
     --spectrum-tab-item-height-medium: var(--spectrum-component-height-300);
