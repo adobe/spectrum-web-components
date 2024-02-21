@@ -22,8 +22,6 @@ governing permissions and limitations under the License.
         --spectrum-opacity-checkerboard-square-size
     );
     --spectrum-opacity-checkerboard-position: left top;
-}
-:host {
     background: repeating-conic-gradient(
             var(
                     --mod-opacity-checkerboard-light,

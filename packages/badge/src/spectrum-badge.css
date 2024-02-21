@@ -200,7 +200,6 @@ governing permissions and limitations under the License.
 }
 :host {
     cursor: default;
-    inline-size: auto;
     min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
     vertical-align: middle;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -219,6 +218,7 @@ governing permissions and limitations under the License.
         var(--spectrum-badge-label-icon-color)
     );
     display: inline-flex;
+    inline-size: auto;
     position: relative;
 }
 :host([variant='neutral']) {

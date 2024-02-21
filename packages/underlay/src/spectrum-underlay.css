@@ -65,8 +65,6 @@ governing permissions and limitations under the License.
         var(--spectrum-black-rgb),
         var(--spectrum-overlay-opacity)
     );
-}
-:host {
     background-color: var(
         --mod-underlay-background-color,
         var(--spectrum-underlay-background-color)
