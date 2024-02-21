@@ -295,7 +295,6 @@ export const testEditableSlider = (type: string): void => {
                     pointerType: 'mouse',
                 })
             );
-            await new Promise((resolve) => setTimeout(resolve, 300));
             await elementUpdated(el);
 
             expect(el.dragging).to.be.false;
@@ -311,7 +310,6 @@ export const testEditableSlider = (type: string): void => {
                     pointerType: 'mouse',
                 })
             );
-            await new Promise((resolve) => setTimeout(resolve, 300));
 
             await elementUpdated(el);
 
@@ -343,7 +341,6 @@ export const testEditableSlider = (type: string): void => {
                     pointerType: 'mouse',
                 })
             );
-            await new Promise((resolve) => setTimeout(resolve, 300));
 
             await elementUpdated(el);
 
