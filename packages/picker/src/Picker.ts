@@ -93,6 +93,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public selects: undefined | 'single' = 'single';
 
+    @property({ type: Boolean, reflect: true })
+    public sideLabel = false;
+
     protected get menuItems(): MenuItem[] {
         return this.optionsMenu.childItems;
     }
@@ -496,7 +499,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 aria-haspopup="true"
                 aria-labelledby="icon label applied-label"
                 id="button"
-                class=${this.quiet ? 'button sideLabel' : 'button'}
+                class=${this.sideLabel && 'sideLabel'}
                 @blur=${this.handleButtonBlur}
                 @click=${this.handleActivate}
                 @pointerdown=${this.handleButtonPointerdown}

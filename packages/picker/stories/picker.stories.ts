@@ -125,6 +125,37 @@ tooltip.args = {
 };
 tooltip.decorators = [isOverlayOpen];
 
+export const sideLabel = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label side-aligned="start" for="picker-1">
+            Where do you live?
+        </sp-field-label>
+        <sp-picker
+            id="picker-1"
+            @change=${handleChange(args)}
+            sideLabel
+            label="Select a Country with a very long label, too long, in fact"
+            ${spreadProps(args)}
+        >
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+
 export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-picker
@@ -198,6 +229,36 @@ export const quiet = (args: StoryArgs): TemplateResult => {
     `;
 };
 quiet.args = {
+    quiet: true,
+};
+
+export const quietSideLabel = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label side-aligned="start" for="picker-quiet-sidelabel">
+            Where do you live?
+        </sp-field-label>
+        <sp-picker
+            ${spreadProps(args)}
+            id="picker-quiet-sidelabel"
+            @change=${handleChange(args)}
+            label="Pick an item"
+            sideLabel
+        >
+            <sp-menu-item value="1">Item 1</sp-menu-item>
+            <sp-menu-item value="2">Item 2</sp-menu-item>
+            <sp-menu-item value="3">Item 3</sp-menu-item>
+            <sp-menu-item value="4">Item 4</sp-menu-item>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+quietSideLabel.args = {
     quiet: true,
 };
 
