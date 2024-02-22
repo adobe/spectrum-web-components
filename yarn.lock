@@ -6932,10 +6932,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-5.3.1.tgz#d4783320c4650e00e465f1e1906527d292de8df0"
   integrity sha512-Nql6hMqxTQRkEPvvVJi08BuFdCLGVlgHvmFfdYeavBLCT+H0YV8fTml2uW7VC86nlFnBjPyhF0EFaXsGAaPlTA==
 
-"@spectrum-css/tray@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.2.2.tgz#a2e67137a2a2c35d3173da3b1797b1f953622a33"
-  integrity sha512-34B6VnyxI0/llIJ+2uYIQsce4wXIe9OYKtzyOeRX3ySVx9pr7utp5tQ8cOHHdXTboW7i+Ej76L7rA6OTnxVMpw==
+"@spectrum-css/tray@^2.2.5":
+  version "2.2.5"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npmjs-remote/@spectrum-css/tray/-/tray-2.2.5.tgz#02a28e8206a30fc48b01478ca0b06d454425b50e"
+  integrity sha512-E+I+8xj4Ebo9cN3wGYAX4bsGi1afKDxe+j7Utj5NdThlrbGErqCghbHxNtAPBxkmcuR1zbHA3xLDBH0HNW/Yjg==
 
 "@spectrum-css/typography@^5.1.1":
   version "5.1.1"
@@ -6958,7 +6958,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.41.0"
+  version "0.41.1"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.17"
