@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+### Bug Fixes
+
+-   **menu:** correct disabled menu item's chevron to appropriate colour ([#4052](https://github.com/adobe/spectrum-web-components/issues/4052)) ([30f5bb5](https://github.com/adobe/spectrum-web-components/commit/30f5bb58d376822f990545970581ebee943738f7))
+-   **picker:** correct implementation of "disabled", expand stories and documentation ([#4040](https://github.com/adobe/spectrum-web-components/issues/4040)) ([84c2fef](https://github.com/adobe/spectrum-web-components/commit/84c2fef72cb8be6d77ce62c21ed6d9d0d866d849))
+-   **progress-circle:** ensure size can be applied to non-"size" attribute bearing elements ([2bc1065](https://github.com/adobe/spectrum-web-components/commit/2bc10652ff9d7337c15eb8b3704678d0f2c700c9))
+-   **slider:** revert handle ui at min/max values ([#4042](https://github.com/adobe/spectrum-web-components/issues/4042)) ([da13af7](https://github.com/adobe/spectrum-web-components/commit/da13af78feb313a2c0aade65f87404cfa81fac72))
+-   **tabs:** bring selected tab into view ([#4032](https://github.com/adobe/spectrum-web-components/issues/4032)) ([a187057](https://github.com/adobe/spectrum-web-components/commit/a187057afa7ac073fe45117ebd0bc2315e6fea5e))
+-   **textfield:** clearly mark/support "multiline" as a requirement of "grows" ([a3e464d](https://github.com/adobe/spectrum-web-components/commit/a3e464d7ceda90ad241641916180ab6e8ea119dc))
+-   **top-nav:** focus loupe on :focus-visible only ([50d6870](https://github.com/adobe/spectrum-web-components/commit/50d687075257db5dd9ab121a980c9d27418a33d3))
+
 # [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
 
 ### Bug Fixes

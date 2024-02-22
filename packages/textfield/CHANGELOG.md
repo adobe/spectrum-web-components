@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+### Bug Fixes
+
+-   **textfield:** clearly mark/support "multiline" as a requirement of "grows" ([a3e464d](https://github.com/adobe/spectrum-web-components/commit/a3e464d7ceda90ad241641916180ab6e8ea119dc))
+
 # [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield
