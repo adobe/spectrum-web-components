@@ -445,7 +445,7 @@ export class HandleController {
         this.requestUpdate();
     };
 
-    private onInputKeydown = (event: Event): void => {
+    private onInputKeydown = (event: KeyboardEvent): void => {
         if (event.key == 'Enter') {
             const input = event.target as InputWithModel;
             if (input.model.handle?.defaultValue) {
