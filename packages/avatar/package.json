@@ -61,7 +61,7 @@
         "@spectrum-web-components/shared": "^0.41.0"
     },
     "devDependencies": {
-        "@spectrum-css/avatar": "^6.1.0"
+        "@spectrum-css/avatar": "^6.1.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

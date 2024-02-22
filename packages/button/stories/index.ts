@@ -116,35 +116,21 @@ export const makeOverBackground =
     };
 
 export function renderButton(properties: Properties): TemplateResult {
-    if (properties.variant) {
-        return html`
-            <sp-button
-                variant="${properties.variant}"
-                treatment="${properties.treatment}"
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                size=${properties.size || 'm'}
-                href=${ifDefined(properties.href)}
-                target=${ifDefined(properties.target)}
-                ?warning=${properties.warning}
-                ?pending=${!!properties.pending}
-                ?icon-only=${properties.iconOnly}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    } else {
-        return html`
-            <sp-button
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                size=${properties.size}
-                ?pending=${!!properties.pending}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    }
+    return html`
+        <sp-button
+            ?disabled=${!!properties.disabled}
+            href=${ifDefined(properties.href)}
+            ?icon-only=${properties.iconOnly}
+            ?pending=${!!properties.pending}
+            ?quiet="${!!properties.quiet}"
+            size=${properties.size}
+            target=${ifDefined(properties.target)}
+            treatment=${ifDefined(properties.treatment)}
+            variant=${ifDefined(properties.variant)}
+        >
+            ${properties.content || 'Click Me'}
+        </sp-button>
+    `;
 }
 
 export function renderButtonSet(properties: Properties): TemplateResult {

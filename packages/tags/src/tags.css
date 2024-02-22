@@ -10,28 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+@import url('./spectrum-tags.css');
+
 :host {
     --mod-clear-button-width: fit-content;
-    --spectrum-taggroup-tag-gap-x: var(--spectrum-global-dimension-size-100);
-    --spectrum-taggroup-tag-gap-y: var(--spectrum-global-dimension-size-100);
 
     display: inline-flex;
     margin: 0;
     padding: 0;
     list-style: none;
-}
-
-::slotted(*) {
-    margin: calc(
-            var(
-                    --spectrum-taggroup-tag-gap-y,
-                    var(--spectrum-global-dimension-size-100)
-                ) / 2
-        )
-        calc(
-            var(
-                    --spectrum-taggroup-tag-gap-x,
-                    var(--spectrum-global-dimension-size-100)
-                ) / 2
-        );
 }

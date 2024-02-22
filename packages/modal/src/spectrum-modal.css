@@ -147,8 +147,8 @@ governing permissions and limitations under the License.
                 var(--spectrum-modal-confirm-entry-animation-delay)
             );
 }
-@media only screen and (max-device-height: 350px),
-    only screen and (max-device-width: 400px) {
+@media only screen and (device-height <= 350px),
+    only screen and (device-width <= 400px) {
     :host([responsive]) .modal {
         border-radius: 0;
         inline-size: 100%;

@@ -140,8 +140,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
     --spectrum-slider-range-track-reset: 0;
-}
-:host {
     display: block;
     min-inline-size: var(
         --mod-slider-min-size,
@@ -736,16 +734,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+.fill:before,
 :host([variant='filled']) .track:first-child:before {
-    background: var(
-        --highcontrast-slider-filled-track-fill-color,
-        var(
-            --mod-slider-track-fill-color,
-            var(--spectrum-slider-track-fill-color)
-        )
-    );
-}
-.fill:before {
     background: var(
         --highcontrast-slider-filled-track-fill-color,
         var(
@@ -862,9 +852,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([disabled]) {
-    cursor: default;
-}
+:host([disabled]),
 :host([disabled]) #controls {
     cursor: default;
 }
@@ -945,16 +933,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+:host([disabled]) .fill:before,
 :host([disabled][variant='filled']) .track:first-child:before {
-    background: var(
-        --highcontrast-slider-track-fill-color-disabled,
-        var(
-            --mod-slider-track-fill-color-disabled,
-            var(--spectrum-slider-track-fill-color-disabled)
-        )
-    );
-}
-:host([disabled]) .fill:before {
     background: var(
         --highcontrast-slider-track-fill-color-disabled,
         var(
@@ -1029,9 +1009,7 @@ governing permissions and limitations under the License.
         --spectrum-slider-label-text-color-disabled: GrayText;
         --spectrum-slider-ramp-handle-border-color-active: ButtonText;
     }
-    .handle.handle-highlight:before {
-        forced-color-adjust: none;
-    }
+    .handle.handle-highlight:before,
     :host([variant='ramp']) .handle {
         forced-color-adjust: none;
     }
