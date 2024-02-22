@@ -10,38 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ColorFieldMarkup } from './';
 
-import '../sp-color-field.js';
-
-export interface Properties {
-    quiet?: boolean;
-    readonly?: boolean;
-    disabled?: boolean;
-    viewColor?: boolean;
-    value?: string;
-    label?: string;
-    size?: 's' | 'm' | 'l' | 'xl';
-}
-
-export const Template = ({
-    label,
-    quiet,
-    size,
-    readonly,
-    disabled,
-    viewColor = false,
-    value = '',
-}: Properties): TemplateResult => {
-    return html`
-        <sp-color-field
-            label=${label}
-            size=${size}
-            value=${value}
-            ?viewColor=${viewColor}
-            ?quiet=${quiet}
-            ?readonly=${readonly}
-            ?disabled=${disabled}
-        ></sp-color-field>
-    `;
-};
+export const Template = ColorFieldMarkup;

@@ -17,18 +17,19 @@ import {
 
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { TinyColor } from '@ctrl/tinycolor';
-import '@spectrum-web-components/textfield/sp-textfield.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 
 /**
  * @element sp-color-field
+ * @fires input - The value of the color-field has changed.
+ * @fires change - An alteration to the value of the color-field has been committed by the user.
  */
 export class ColorField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
-        return [TextfieldBase.styles];
+        return [...super.styles];
     }
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean, attribute: 'view-color' })
     public viewColor = false;
 
     public override set value(value: string) {
@@ -46,14 +47,27 @@ export class ColorField extends TextfieldBase {
 
     protected override _value = '';
 
-    public renderColorHandle(): TemplateResult {
+    private cachedColor: string | null = null;
+
+    private getColorValue(): string {
+        if (!this.value) {
+            return '';
+        }
+
+        if (!this.cachedColor || this.cachedColor !== this.value) {
+            const tinyColor = new TinyColor(this.value);
+            this.cachedColor = tinyColor.isValid ? tinyColor.toRgbString() : '';
+        }
+
+        return this.cachedColor;
+    }
+
+    private renderColorHandle(): TemplateResult {
         return this.viewColor
             ? html`
                   <sp-color-handle
                       size="m"
-                      color="${new TinyColor(this.value).isValid
-                          ? new TinyColor(this.value).toRgbString()
-                          : ''}"
+                      color="${this.getColorValue()}"
                   ></sp-color-handle>
               `
             : html``;
@@ -68,10 +82,18 @@ export class ColorField extends TextfieldBase {
         `;
     }
 
+    private cachedTinyColor: TinyColor | null = null;
+
     public override checkValidity(): boolean {
         let validity = super.checkValidity();
         if (this.value) {
-            this.valid = validity = new TinyColor(this.value).isValid;
+            if (
+                !this.cachedTinyColor ||
+                this.cachedTinyColor.originalInput !== this.value
+            ) {
+                this.cachedTinyColor = new TinyColor(this.value);
+            }
+            this.valid = validity = this.cachedTinyColor.isValid;
             this.invalid = !validity;
         }
         return validity;

@@ -51,7 +51,7 @@ describe('ColorField', () => {
         expect(el.checkValidity()).to.be.true;
 
         el.value = '##F00000000000';
-        //expect(el.checkValidity()).to.be.false;
+        expect(el.checkValidity()).to.be.false;
     });
 
     it('validates hsl color values', async () => {
