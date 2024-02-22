@@ -446,6 +446,14 @@ export class HandleController {
     };
 
     private onInputKeydown = (event: Event): void => {
+        if (event.key == 'Enter') {
+            const input = event.target as InputWithModel;
+            if (input.model.handle?.defaultValue) {
+                input.model.handle.value = input.model.handle.defaultValue;
+                this.dispatchChangeEvent(input, input.model.handle);
+                this.requestUpdate();
+            }
+        }
         const input = event.target as InputWithModel;
         input.model.handle.highlight = true;
         this.requestUpdate();
