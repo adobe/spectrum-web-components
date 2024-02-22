@@ -87,6 +87,7 @@
         "@spectrum-web-components/close-button": "^0.41.1",
         "@spectrum-web-components/icon": "^0.41.1",
         "@spectrum-web-components/icons-ui": "^0.41.1",
+        "@spectrum-web-components/progress-circle": "^0.41.1",
         "@spectrum-web-components/shared": "^0.41.1"
     },
     "devDependencies": {
