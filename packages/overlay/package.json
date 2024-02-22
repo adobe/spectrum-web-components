@@ -29,6 +29,22 @@
             "development": "./src/AbstractOverlay.dev.js",
             "default": "./src/AbstractOverlay.js"
         },
+        "./src/ClickController.js": {
+            "development": "./src/ClickController.dev.js",
+            "default": "./src/ClickController.js"
+        },
+        "./src/HoverController.js": {
+            "development": "./src/HoverController.dev.js",
+            "default": "./src/HoverController.js"
+        },
+        "./src/InteractionController.js": {
+            "development": "./src/InteractionController.dev.js",
+            "default": "./src/InteractionController.js"
+        },
+        "./src/LongpressController.js": {
+            "development": "./src/LongpressController.dev.js",
+            "default": "./src/LongpressController.js"
+        },
         "./src/Overlay.js": {
             "development": "./src/Overlay.dev.js",
             "default": "./src/Overlay.js"
