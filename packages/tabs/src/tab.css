@@ -12,6 +12,13 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-tab.css');
 
+:host {
+    scroll-margin-inline: var(
+        --mod-tabs-item-horizontal-spacing,
+        var(--spectrum-tabs-item-horizontal-spacing)
+    );
+}
+
 :host([disabled]) {
     pointer-events: none;
 }
