@@ -365,7 +365,6 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
-    sideLabel
     id="picker-sideLabel"
 >
     <sp-menu-item>Deselect</sp-menu-item>
@@ -383,7 +382,6 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
-    sideLabel
     quiet
     id="picker-sideLabel-quiet"
 >
