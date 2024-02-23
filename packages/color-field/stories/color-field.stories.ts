@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/color-field/sp-color-field.js';
-import { ColorFieldMarkup } from './';
+import { ColorFieldMarkup } from './template.js';
 import { argTypes } from './args.js';
 
 export default {

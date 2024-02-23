@@ -3,7 +3,7 @@
 `<sp-color-field>` elements are textfields that allow users to input custom color values.
 Color formats supported are `HEX, RGB, HSL, HSV, and shorthand HEX`
 
-### Usage
+## Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-field?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-field)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/color-field?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/color-field)
@@ -24,39 +24,7 @@ When looking to leverage the `ColorField` base class as a type and/or for extens
 import { ColorField } from '@spectrum-web-components/color-field';
 ```
 
-## Example
-
-### Default
-
-```html
-<sp-color-field></sp-color-field>
-```
-
-### View Color
-
-In dev mode & when `view-color` is true, the color handle will be rendered. This is useful for development and debugging purposes.
-
-```html
-<sp-color-field view-color value="#f00"></sp-color-field>
-```
-
-### Read Only
-
-A readonly color field
-
-```html
-<sp-color-field readonly value="#ffff00"></sp-color-field>
-```
-
-### Quiet
-
-A Quiet color field
-
-```html
-<sp-color-field quiet value="#ffff00"></sp-color-field>
-```
-
-### Sizes
+## Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -95,19 +63,43 @@ A Quiet color field
 </sp-tab-panel>
 </sp-tabs>
 
-### Invalid Input
+## View Color
 
-If the input value is not a valid color, the sp-color-field will not accept it.
+When `view-color` is true, the color handle will be rendered. This is useful for development and debugging purposes.
+
+```html
+<sp-color-field view-color value="#f00"></sp-color-field>
+```
+
+## Read Only
+
+A readonly color field
+
+```html
+<sp-color-field readonly value="#ffff00"></sp-color-field>
+```
+
+## Quiet
+
+A Quiet color field
+
+```html
+<sp-color-field quiet value="#e6e600"></sp-color-field>
+```
+
+## Invalid Input
+
+If the input value is not a valid color, `<sp-color-field>` will not accept it.
 
 ```html
 <sp-color-field value="not a color"></sp-color-field>
 ```
 
-### Valid Input
+## Valid Input
 
 If the input value is a valid color, the `<sp-color-field>` will accept it and the color handle will be updated to reflect the new color.
 
-The `<sp-color-field>` component accepts color values in various formats: `HEX, RGB, HSL, HSV, and shorthand HEX`
+`<sp-color-field>` component accepts color values in various formats: `HEX, RGB, HSL, HSV, and shorthand HEX`
 
 -   **HEX**: A hexadecimal color is specified with: `#RRGGBB`. `RR` (red), `GG` (green) and `BB` (blue) are hexadecimal integers between `00` and `FF` specifying the intensity of the color.
 
@@ -145,5 +137,6 @@ The `<sp-color-field>` component accepts color values in various formats: `HEX, 
 <sp-color-field view-color value="hsv(0, 70%, 50%)"></sp-color-field>
 ```
 
-Events:
+## Events
+
 The sp-color-field component fires a change event when the color value is changed. You can listen for this event to react to changes in the color value.
