@@ -25,7 +25,7 @@ export interface Properties {
 }
 
 export const ColorFieldMarkup = ({
-    label = '',
+    label = 'Color Field',
     quiet = false,
     size = 'm',
     readonly = false,
