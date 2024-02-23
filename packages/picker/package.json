@@ -67,6 +67,7 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.41.1",
         "@spectrum-web-components/button": "^0.41.1",
+        "@spectrum-web-components/field-label": "^0.41.1",
         "@spectrum-web-components/icon": "^0.41.1",
         "@spectrum-web-components/icons-ui": "^0.41.1",
         "@spectrum-web-components/icons-workflow": "^0.41.1",

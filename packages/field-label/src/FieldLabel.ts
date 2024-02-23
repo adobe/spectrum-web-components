@@ -39,7 +39,10 @@ import styles from './field-label.css.js';
 
 type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
 type Labelable = Focusable & {
-    applyFocusElementLabel?: (label?: string) => void;
+    applyFocusElementLabel?: (
+        appliedLabel: string,
+        labelElement?: FieldLabel
+    ) => void;
 };
 
 /**
@@ -105,7 +108,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
             const focusable = this.target.focusElement || this.target;
             const targetParent = focusable.getRootNode() as HTMLElement;
             if (typeof applyLabel !== 'undefined') {
-                applyLabel(this.labelText);
+                applyLabel(this.labelText, this);
             } else if (targetParent === (this.getRootNode() as HTMLElement)) {
                 const conditionAttribute = target
                     ? conditionAttributeWithId
@@ -177,9 +180,6 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
         }
         if (changes.has('for')) {
             this.resolvedElement.selector = this.for ? `#${this.for}` : '';
-        }
-        if (this.hasAttribute('side-aligned')) {
-            this.resolvedElement.element?.setAttribute('sideLabel', 'true');
         }
         if (changes.has('id') || changes.has(elementResolverUpdatedSymbol)) {
             this.manageTarget();

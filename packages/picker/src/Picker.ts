@@ -50,6 +50,7 @@ import {
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { FieldLabel } from '@spectrum-web-components/field-label';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -430,8 +431,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         ];
     }
 
-    applyFocusElementLabel = (value?: string): void => {
+    applyFocusElementLabel = (
+        value: string,
+        labelElement: FieldLabel
+    ): void => {
         this.appliedLabel = value;
+        if (labelElement.sideAligned === 'start') {
+            this.setAttribute('sideLabel', 'true');
+        }
     };
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
