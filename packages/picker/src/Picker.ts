@@ -93,7 +93,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public selects: undefined | 'single' = 'single';
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public sideLabel = false;
 
     protected get menuItems(): MenuItem[] {

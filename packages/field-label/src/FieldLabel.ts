@@ -178,6 +178,9 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
         if (changes.has('for')) {
             this.resolvedElement.selector = this.for ? `#${this.for}` : '';
         }
+        if (this.hasAttribute('side-aligned')) {
+            this.resolvedElement.element?.setAttribute('sideLabel', 'true');
+        }
         if (changes.has('id') || changes.has(elementResolverUpdatedSymbol)) {
             this.manageTarget();
         }

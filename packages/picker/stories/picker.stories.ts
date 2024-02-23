@@ -125,7 +125,7 @@ tooltip.args = {
 };
 tooltip.decorators = [isOverlayOpen];
 
-export const sideLabel = (args: StoryArgs): TemplateResult => {
+export const leftSideLabel = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label side-aligned="start" for="picker-1">
             Where do you live?
@@ -133,7 +133,6 @@ export const sideLabel = (args: StoryArgs): TemplateResult => {
         <sp-picker
             id="picker-1"
             @change=${handleChange(args)}
-            sideLabel
             label="Select a Country with a very long label, too long, in fact"
             ${spreadProps(args)}
         >
@@ -242,7 +241,6 @@ export const quietSideLabel = (args: StoryArgs): TemplateResult => {
             id="picker-quiet-sidelabel"
             @change=${handleChange(args)}
             label="Pick an item"
-            sideLabel
         >
             <sp-menu-item value="1">Item 1</sp-menu-item>
             <sp-menu-item value="2">Item 2</sp-menu-item>
