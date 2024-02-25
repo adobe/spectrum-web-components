@@ -48,7 +48,7 @@ const config = {
                 converter.classToClass('spectrum-Picker-menuIcon', 'picker'),
                 converter.classToClass(
                     'spectrum-Picker--sideLabel',
-                    'sideLabel'
+                    'label-inline'
                 ),
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
                 converter.classToClass('is-placeholder', 'placeholder'),

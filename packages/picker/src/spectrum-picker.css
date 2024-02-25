@@ -942,7 +942,7 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-spacing-edge-to-text-quiet)
     );
 }
-:host([quiet]) #button.sideLabel {
+:host([quiet]) #button.label-inline {
     margin-block-start: 0;
 }
 :host([quiet]) #button .picker {
@@ -1131,7 +1131,7 @@ governing permissions and limitations under the License.
 :host([quiet][open]) #button {
     background-color: var(--highcontrast-picker-background-color, transparent);
 }
-.sideLabel {
+.label-inline {
     display: inline-flex;
     vertical-align: top;
 }
