@@ -156,7 +156,6 @@ governing permissions and limitations under the License.
     --spectrum-button-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
-    --spectrum-button-intended-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 :host([size='s']) {
     --spectrum-button-min-width: calc(
@@ -184,10 +183,6 @@ governing permissions and limitations under the License.
     --spectrum-button-bottom-to-text: var(
         --spectrum-button-bottom-to-text-small
     );
-    --spectrum-button-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-75
-    );
-    --spectrum-button-intended-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 :host {
     --spectrum-button-min-width: calc(
@@ -215,18 +210,6 @@ governing permissions and limitations under the License.
     --spectrum-button-bottom-to-text: var(
         --spectrum-button-bottom-to-text-medium
     );
-    --spectrum-button-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
-    --spectrum-button-intended-icon-size: var(
-        --spectrum-workflow-icon-size-100
-    );
-}
-:host .is-pending,
-:host([pending]) {
-    --mod-button-edge-to-visual-only: calc(
-        1px + var(--spectrum-button-edge-to-visual-only)
-    );
 }
 :host([size='l']) {
     --spectrum-button-min-width: calc(
@@ -253,18 +236,6 @@ governing permissions and limitations under the License.
     --spectrum-button-top-to-text: var(--spectrum-button-top-to-text-large);
     --spectrum-button-bottom-to-text: var(
         --spectrum-button-bottom-to-text-large
-    );
-    --spectrum-button-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-200
-    );
-    --spectrum-button-intended-icon-size: var(
-        --spectrum-workflow-icon-size-200
-    );
-}
-:host([size='l']) .is-pending,
-:host([size='l'][pending]) {
-    --mod-button-edge-to-visual-only: calc(
-        2px + var(--spectrum-button-edge-to-visual-only)
     );
 }
 :host([size='xl']) {
@@ -294,24 +265,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-bottom-to-text: var(
         --spectrum-button-bottom-to-text-extra-large
-    );
-    --spectrum-button-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-300
-    );
-    --spectrum-button-intended-icon-size: var(
-        --spectrum-workflow-icon-size-300
-    );
-}
-:host([size='xl']) .spectrum--medium .is-pending,
-:host([size='xl'][pending]) .spectrum--medium {
-    --mod-button-edge-to-visual-only: calc(
-        3px + var(--spectrum-button-edge-to-visual-only)
-    );
-}
-:host([size='xl']) .spectrum--large .is-pending,
-:host([size='xl'][pending]) .spectrum--large {
-    --mod-button-edge-to-visual-only: calc(
-        4px + var(--spectrum-button-edge-to-visual-only)
     );
 }
 :host {
@@ -350,28 +303,7 @@ governing permissions and limitations under the License.
     box-shadow: none;
 }
 ::slotted([slot='icon']) {
-    --_icon-size-difference: max(
-        0px,
-        var(--spectrum-button-intended-icon-size) -
-            var(
-                --spectrum-icon-block-size,
-                var(--spectrum-button-intended-icon-size)
-            )
-    );
-    align-self: flex-start;
     color: inherit;
-    flex-shrink: 0;
-    margin-block-start: var(
-        --mod-button-icon-margin-block-start,
-        max(
-            0px,
-            var(--mod-button-top-to-icon, var(--spectrum-button-top-to-icon)) -
-                var(
-                    --mod-button-border-width,
-                    var(--spectrum-button-border-width)
-                ) + (var(--_icon-size-difference, 0px) / 2)
-        )
-    );
     margin-inline-start: calc(
         var(--mod-button-edge-to-visual, var(--spectrum-button-edge-to-visual)) -
             var(--mod-button-edge-to-text, var(--spectrum-button-edge-to-text))
@@ -395,8 +327,6 @@ governing permissions and limitations under the License.
     );
 }
 :host([icon-only]) ::slotted([slot='icon']) {
-    align-self: center;
-    margin-block-start: 0;
     margin-inline-start: 0;
 }
 :host([icon-only]):after {
@@ -416,10 +346,7 @@ governing permissions and limitations under the License.
         var(--mod-button-top-to-text, var(--spectrum-button-top-to-text)) -
             var(--mod-button-border-width, var(--spectrum-button-border-width))
     );
-    text-align: var(--mod-button-text-align, center);
-}
-[name='icon'] + #label {
-    text-align: var(--mod-button-text-align-with-icon, start);
+    white-space: nowrap;
 }
 :host(.focus-visible):after,
 :host([focused]):after {
@@ -642,9 +569,7 @@ governing permissions and limitations under the License.
     );
 }
 :host .is-disabled,
-:host .is-pending,
-:host([disabled]),
-:host([pending]) {
+:host([disabled]) {
     background-color: var(
         --highcontrast-button-background-color-disabled,
         var(
@@ -667,32 +592,10 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host .is-pending,
-:host([pending]) {
-    cursor: default;
-}
-:host .is-pending #label,
-:host .is-pending ::slotted([slot='icon']),
-:host([pending]) #label,
-:host([pending]) ::slotted([slot='icon']) {
-    display: none;
-}
-:host([static='black']),
-:host([static='white']) {
-    --spectrum-button-focus-indicator-color: var(
-        --mod-static-black-focus-indicator-color,
-        var(--spectrum-static-black-focus-indicator-color)
-    );
-}
 @media (forced-colors: active) {
     :host {
         --highcontrast-button-content-color-disabled: GrayText;
         --highcontrast-button-border-color-disabled: GrayText;
-        --mod-progress-circle-track-border-color: ButtonText;
-        --mod-progress-circle-track-border-color-over-background: ButtonText;
-        --mod-progress-circle-thickness: var(
-            --spectrum-progress-circle-thickness-medium
-        );
     }
     :host(.focus-visible):after {
         box-shadow: 0 0 0
@@ -726,6 +629,13 @@ governing permissions and limitations under the License.
     :host([variant='accent'][treatment='fill']) #label {
         forced-color-adjust: none;
     }
+}
+:host([static='black']),
+:host([static='white']) {
+    --spectrum-button-focus-indicator-color: var(
+        --mod-static-black-focus-indicator-color,
+        var(--spectrum-static-black-focus-indicator-color)
+    );
 }
 :host {
     --spectrum-button-background-color-default: var(

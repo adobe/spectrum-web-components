@@ -6657,10 +6657,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/button@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-12.0.0.tgz#882e14a51f26ca011a6629ecd79dba07e8167d33"
-  integrity sha512-AnNDsxqA5JS009pl9Pg4k2Oi9t5sGhuEoggxdx+2mDtb924M09z31ARoCRFRqP7WDFCII+vpf1gNc1zboWDmxg==
+"@spectrum-css/button@^11.2.1":
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-11.2.1.tgz#8a5954643242db8a24f91e306792b8a9d54df436"
+  integrity sha512-uyeOiBC46OaaBt1Vsm6sn8YWc2qYkN2aI4UFgwRfgOWiXBRPzdk38SHejxUbAMqg73Wz1sHsaqXhtxmXqJ822A==
 
 "@spectrum-css/buttongroup@^6.2.3":
   version "6.2.3"
@@ -6852,10 +6852,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-4.3.3.tgz#5eb8b8e762b4cd6ed46e0e585af2dc7a40ca32db"
   integrity sha512-jlm6kuTtXi+XH9F1ia5y5jzYAyYBCsitIxmHsfPRKJAAKb0KfO4O3IFl6g+Sy5f/ujES2j7UStAJrqjWFMcudg==
 
-"@spectrum-css/splitbutton@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-8.1.2.tgz#149d9e98094cd035f6f348f8cf50d72ce8f17f19"
-  integrity sha512-hUsqhEhgm8PfKvwKPSACPU+Jqt0NaovD53gOp9QRa4jU9G3q8RpE5uJbs+pGZ9vyI6ocsm5lbs0zYtA082axzQ==
+"@spectrum-css/splitbutton@^8.1.1":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-8.1.1.tgz#fbcf81bf5c824760d9677c091cd5406bd747e6cd"
+  integrity sha512-sjpEbFV5Lk852UsWRnh6ot/CzliXojSW4StpZqxXeN6cfhI0twcWCH9ikBWSWgR6Qhb0oZ2mxe2R1erVUoeQvg==
 
 "@spectrum-css/splitview@^4.2.2":
   version "4.2.2"
