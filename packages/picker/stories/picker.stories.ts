@@ -34,33 +34,20 @@ export default {
         invalid: false,
         open: false,
         quiet: false,
+        pending: false,
     },
     argTypes: {
         ...argTypes,
         onChange: { action: 'change' },
-        disabled: {
-            name: 'disabled',
+        open: {
+            name: 'open',
             type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
+            description: 'Whether the menu is open or not.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: false },
             },
-            control: {
-                type: 'boolean',
-            },
-        },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
+            control: 'boolean',
         },
         pending: {
             name: 'pending',
@@ -72,16 +59,6 @@ export default {
             control: {
                 type: 'boolean',
             },
-        },
-        open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the menu is open or not.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: 'boolean',
         },
     },
 };
@@ -117,6 +94,11 @@ export const Default = (args: StoryArgs): TemplateResult => {
 export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
+};
+
+export const pending = (args: StoryArgs): TemplateResult => Template(args);
+pending.args = {
+    pending: true,
 };
 
 export const tooltip = (args: StoryArgs): TemplateResult => {
@@ -453,24 +435,6 @@ export const readonly = (args: StoryArgs): TemplateResult => {
             <sp-menu-item disabled value="item-6">Make Work Path</sp-menu-item>
         </sp-picker>
     `;
-};
-
-export const pending = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="picker-loading">Country</sp-field-label>
-        <sp-picker id="picker-loading" ${spreadProps(args)}>
-            <span slot="label">Select an option...</span>
-            <sp-menu-item value="item-1">Deselect</sp-menu-item>
-            <sp-menu-item>Select Inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and Mask...</sp-menu-item>
-            <sp-menu-item>Save Selection</sp-menu-item>
-            <sp-menu-item disabled>Make Work Path</sp-menu-item>
-        </sp-picker>
-    `;
-};
-pending.args = {
-    pending: true,
 };
 
 export const custom = (args: StoryArgs): TemplateResult => {

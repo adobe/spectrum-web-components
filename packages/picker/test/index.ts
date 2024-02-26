@@ -1867,7 +1867,8 @@ export function runPickerTests(): void {
                 findAccessibilityNode<NamedNode>(
                     snapshot,
                     (node) =>
-                        node.name === 'Loading Select an option... Country'
+                        node.name ===
+                        'Pending Choose your neighborhood Where do you live?'
                 )
             ).to.not.be.null;
         });

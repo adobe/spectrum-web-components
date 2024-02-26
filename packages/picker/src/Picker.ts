@@ -84,8 +84,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    /** Whether the items are currently loading. */
     @property({ type: Boolean, reflect: true })
     public pending = false;
+
+    /** Defines a string value that labels the Picker while it is in pending state. */
+    @property({ type: String, attribute: 'pending-label' })
+    public pendingLabel = 'Pending';
 
     @property()
     public label?: string;
@@ -427,7 +432,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                             class="visually-hidden"
                             id="loader-label"
                         >
-                            Loading
+                            ${this.pendingLabel}
                         </span>
                         <sp-progress-circle
                             size="s"

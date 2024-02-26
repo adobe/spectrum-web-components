@@ -395,7 +395,7 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 
 ### Pending
 
-When in pending state, `<sp-picker>` elements will not respond to click events and be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
+When in pending state, `<sp-picker>` elements will not respond to click events and will be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
 
 ```html
 <sp-field-label for="picker-loading">Standard:</sp-field-label>
