@@ -1607,7 +1607,11 @@ describe('Slider', () => {
         let pointerId = -1;
         const el = await fixture<Slider>(
             html`
-                <sp-slider style="width: 100px" value="50"></sp-slider>
+                <sp-slider
+                    style="width: 100px"
+                    value="50"
+                    default-value="50"
+                ></sp-slider>
             `
         );
         await elementUpdated(el);
