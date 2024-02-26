@@ -73,7 +73,6 @@ const MaxConverter = {
  */
 export class SliderHandle extends Focusable {
     public handleController?: HandleController;
-    public defaultValue: number | undefined;
 
     public get handleName(): string {
         return this.name;
@@ -92,6 +91,13 @@ export class SliderHandle extends Focusable {
      */
     @property({ type: Number })
     value!: number;
+
+    /**
+     * Set the default value of the handle. Setting this property will cause the
+     * handle to reset to the default value on double click or pressing the `escape` key.
+     */
+    @property({ type: Number, attribute: 'default-value' })
+    defaultValue!: number;
 
     @property({ type: Boolean, reflect: true })
     public dragging = false;

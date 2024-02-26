@@ -152,6 +152,26 @@ export const Filled = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const HasADefaultValue = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                default-value="0.2"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                double click or press escape key to reset
+            </sp-slider>
+        </div>
+    `;
+};
+
 export const FillStart = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
