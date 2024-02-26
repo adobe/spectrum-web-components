@@ -12,71 +12,27 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-split-button.css');
 
-:host > sp-menu {
-    display: none;
-}
-
-#button {
-    --spectrum-splitbutton-flat-edge-padding: calc(
-        var(--spectrum-button-edge-to-text) -
-            var(
-                --spectrum-button-border-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * 2
-    );
-    --spectrum-splitbutton-round-edge-padding: var(
-        --spectrum-button-edge-to-visual,
-        var(--spectrum-global-dimension-size-200)
-    );
-    --spectrum-splitbutton-cta-flat-edge-padding: calc(
-        var(--spectrum-button-edge-to-text) -
-            var(
-                --spectrum-button-border-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * 3
-    );
-}
-
-.trigger {
-    --spectrum-splitbutton-trigger-flat-edge-padding: calc(
-        var(--spectrum-button-edge-to-text) -
-            var(
-                --spectrum-button-border-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * 2
-    );
-    --spectrum-splitbutton-trigger-round-edge-padding: var(
-        --spectrum-button-edge-to-visual,
-        var(--spectrum-global-dimension-size-200)
-    );
-    --spectrum-splitbutton-cta-trigger-flat-edge-padding: calc(
-        var(--spectrum-button-edge-to-text) -
-            var(
-                --spectrum-button-border-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * 3
-    );
-}
-
-:host([dir='ltr']) #button[variant='accent'] {
-    margin-right: var(
-        --spectrum-button-border-width,
-        var(--spectrum-alias-border-size-thick)
-    );
-}
-
-/**
- * Begin workaround for SplitButton not natively supporting t-shirt sizes.
- */
+/* Begin workaround for SplitButton not natively supporting t-shirt sizes. */
 sp-button {
     --spectrum-button-m-primary-outline-texticon-border-radius: var(
         --spectrum-button-border-radius
     );
+    --spectrum-button-m-primary-outline-texticon-padding-left: var(
+        --spectrum-button-edge-to-text
+    );
+    --spectrum-button-m-primary-outline-texticon-padding-right: var(
+        --spectrum-button-edge-to-visual
+    );
+    --spectrum-button-m-primary-outline-texticon-border-size: var(
+        --spectrum-button-border-width
+    );
 }
 
-/**
- * End workaround for SplitButton not natively supporting t-shirt sizes.
- */
+/* End workaround for SplitButton not natively supporting t-shirt sizes. */
+
+:host > sp-menu {
+    display: none;
+}
 
 ::slotted(sp-menu) {
     display: none;

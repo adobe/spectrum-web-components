@@ -20,9 +20,6 @@ governing permissions and limitations under the License.
         --spectrum-alias-border-radius-small
     );
 }
-:host([dir='rtl']) {
-    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
-}
 .trigger {
     --spectrum-splitbutton-trigger-round-edge-padding: var(
         --spectrum-global-dimension-size-125
@@ -79,16 +76,16 @@ governing permissions and limitations under the License.
     padding-inline-end: var(--spectrum-splitbutton-flat-edge-padding);
     padding-inline-start: var(--spectrum-splitbutton-round-edge-padding);
 }
+#button:after {
+    border-end-end-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-start-end-radius: var(--spectrum-splitbutton-border-radius-edge);
+}
 #button[variant='accent'] {
     margin-inline-end: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
     padding-inline-end: var(--spectrum-splitbutton-cta-flat-edge-padding);
-}
-#button:after {
-    border-end-end-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-start-end-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
 .trigger {
     border-end-end-radius: var(
@@ -107,6 +104,10 @@ governing permissions and limitations under the License.
     padding-inline-end: var(--spectrum-splitbutton-trigger-round-edge-padding);
     padding-inline-start: var(--spectrum-splitbutton-trigger-flat-edge-padding);
 }
+.trigger:after {
+    border-end-start-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-start-start-radius: var(--spectrum-splitbutton-border-radius-edge);
+}
 .trigger[variant='accent'] {
     border-inline-start-width: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
@@ -122,13 +123,8 @@ governing permissions and limitations under the License.
 .trigger:focus-visible {
     box-shadow: none;
 }
-.trigger:after {
-    border-end-start-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-start-start-radius: var(--spectrum-splitbutton-border-radius-edge);
-}
 .icon {
-    display: block;
-    margin-block-start: 1px;
+    margin-inline-start: 1px !important;
 }
 #button,
 .trigger {
@@ -144,15 +140,7 @@ governing permissions and limitations under the License.
     outline: none;
     z-index: 1;
 }
-#button.spectrum-Pagination-prevButton .spectrum-Icon,
-.trigger.spectrum-Pagination-prevButton .spectrum-Icon {
-    transform: var(--spectrum-logical-rotation) rotate(180deg);
-}
-#button.spectrum-Pagination-nextButton .spectrum-Icon,
-.trigger.spectrum-Pagination-nextButton .spectrum-Icon {
-    transform: var(--spectrum-logical-rotation);
-}
-#button .label + .spectrum-Icon {
+#button .label + .icon {
     margin-inline-start: var(--spectrum-splitbutton-icon-gap);
 }
 :host([left]) #button {

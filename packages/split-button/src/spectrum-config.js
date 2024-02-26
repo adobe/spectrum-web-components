@@ -32,7 +32,8 @@ const config = {
                 converter.classToAttribute('spectrum-SplitButton--left'),
                 converter.classToId('spectrum-SplitButton-action', 'button'),
                 converter.classToClass('spectrum-SplitButton-trigger'),
-                converter.classToClass('spectrum-SplitButton-icon'),
+                converter.classToClass('spectrum-Icon', 'icon'),
+                converter.classToClass('spectrum-Button-icon', 'icon'),
                 converter.classToClass('spectrum-Button-label', 'label'),
                 {
                     find: builder.class('spectrum-Button--accent'),
