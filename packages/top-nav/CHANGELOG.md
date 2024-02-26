@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+### Bug Fixes
+
+-   **top-nav:** focus loupe on :focus-visible only ([50d6870](https://github.com/adobe/spectrum-web-components/commit/50d687075257db5dd9ab121a980c9d27418a33d3))
+
 # [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
 
 **Note:** Version bump only for package @spectrum-web-components/top-nav
