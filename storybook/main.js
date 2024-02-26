@@ -18,6 +18,7 @@ import { watchSWC } from '../web-test-runner.utils.js';
 /** @type { import('storybook-builder-wds').StorybookConfigWds } */
 const config = {
     stories: [
+        './guides/*.mdx',
         '../packages/*/stories/*.stories.js',
         '../tools/*/stories/*.stories.js',
     ],

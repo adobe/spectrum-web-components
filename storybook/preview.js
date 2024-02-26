@@ -19,6 +19,21 @@ export const parameters = {
     docs: { hidden: true },
     controls: { expanded: true },
     layout: 'fullscreen',
+    options: {
+        storySort: {
+            method: 'alphabetical',
+            order: [
+                'Guides',
+                ['Contributing', '*', 'Adobe Code of Conduct', 'Changelog'],
+                'Components',
+                '*',
+            ],
+            includeNames: true,
+        },
+    },
+    docs: {
+        autodocs: true,
+    },
 };
 
 export const decorators = [swcThemeDecorator];
