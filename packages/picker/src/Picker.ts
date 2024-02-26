@@ -50,6 +50,7 @@ import {
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import type { FieldLabel } from '@spectrum-web-components/field-label';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -92,6 +93,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public readonly = false;
 
     public selects: undefined | 'single' = 'single';
+
+    @state()
+    public labelAlignment?: 'inline';
 
     protected get menuItems(): MenuItem[] {
         return this.optionsMenu.childItems;
@@ -427,8 +431,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         ];
     }
 
-    applyFocusElementLabel = (value?: string): void => {
+    applyFocusElementLabel = (
+        value: string,
+        labelElement: FieldLabel
+    ): void => {
         this.appliedLabel = value;
+        this.labelAlignment = labelElement.sideAligned ? 'inline' : undefined;
     };
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
@@ -496,7 +504,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 aria-haspopup="true"
                 aria-labelledby="icon label applied-label"
                 id="button"
-                class="button"
+                class=${ifDefined(
+                    this.labelAlignment
+                        ? `label-${this.labelAlignment}`
+                        : undefined
+                )}
                 @blur=${this.handleButtonBlur}
                 @click=${this.handleActivate}
                 @pointerdown=${this.handleButtonPointerdown}
