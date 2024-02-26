@@ -19,6 +19,108 @@ governing permissions and limitations under the License.
 
 #tooltip {
     inline-size: max-content;
+
+    --spectrum-overlay-animation-duration: var(
+        --spectrum-animation-duration-100
+    );
+
+    opacity: 0;
+    pointer-events: none;
+    transition: transform
+            var(
+                --mod-overlay-animation-transform-duration,
+                var(--spectrum-overlay-animation-duration)
+            )
+            ease-in-out,
+        opacity
+            var(
+                --mod-overlay-animation-opacity-duration,
+                var(--spectrum-overlay-animation-duration)
+            )
+            ease-in-out,
+        visibility 0s linear
+            var(
+                --mod-overlay-animation-visibility-duration,
+                var(--spectrum-overlay-animation-duration)
+            );
+    visibility: hidden;
+}
+
+:host([open]) #tooltip {
+    transition-delay: 0s;
+}
+
+:host([placement*='bottom']) #tooltip {
+    transform: translateY(var(--mod-overlay-animation-start-distance, 0));
+}
+
+:host([placement*='top']) #tooltip {
+    transform: translateY(
+        calc(var(--mod-overlay-animation-start-distance, 0) * -1)
+    );
+}
+
+:host([placement*='right']) #tooltip {
+    transform: translateX(var(--mod-overlay-animation-start-distance, 0));
+}
+
+:host([placement*='left']) #tooltip {
+    transform: translateX(
+        calc(var(--mod-overlay-animation-start-distance, 0) * -1)
+    );
+}
+
+:host(:not([placement*='top'])) #tooltip {
+    margin-bottom: 0;
+}
+
+:host([open]) #tooltip,
+:host([placement*='top'][open]) #tooltip {
+    --spectrum-overlay-animation-distance: 6px;
+
+    transform: translateY(
+        calc(
+            var(
+                    --mod-overlay-animation-distance,
+                    var(--spectrum-overlay-animation-distance)
+                ) * -1
+        )
+    );
+}
+
+:host([placement*='bottom'][open]) #tooltip {
+    --spectrum-overlay-animation-distance: 6px;
+
+    transform: translateY(
+        var(
+            --mod-overlay-animation-distance,
+            var(--spectrum-overlay-animation-distance)
+        )
+    );
+}
+
+:host([placement*='right'][open]) #tooltip {
+    --spectrum-overlay-animation-distance: 6px;
+
+    transform: translateX(
+        var(
+            --mod-overlay-animation-distance,
+            var(--spectrum-overlay-animation-distance)
+        )
+    );
+}
+
+:host([placement*='left'][open]) #tooltip {
+    --spectrum-overlay-animation-distance: 6px;
+
+    transform: translateX(
+        calc(
+            var(
+                    --mod-overlay-animation-distance,
+                    var(--spectrum-overlay-animation-distance)
+                ) * -1
+        )
+    );
 }
 
 #tip {
@@ -29,10 +131,6 @@ governing permissions and limitations under the License.
 
 #tip[style] {
     transform: none !important;
-}
-
-:host(:not([placement*='top'])) #tooltip {
-    margin-bottom: 0;
 }
 
 :host([placement*='top']) #tooltip #tip {

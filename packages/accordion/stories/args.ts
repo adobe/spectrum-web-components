@@ -68,5 +68,6 @@ export const argTypes = {
             },
             type: 'select',
         },
+        options: ['s', 'm', 'l', 'xl'],
     },
 };

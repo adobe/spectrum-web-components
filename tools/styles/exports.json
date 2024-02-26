@@ -27,6 +27,7 @@
     "./code.js": "./code.js",
     "./detail.js": "./detail.js",
     "./heading.js": "./heading.js",
+    "./overlay-transitions.css.js": "./overlay-transitions.css.js",
     "./typography.js": "./typography.js",
     "./src/*": "./src/*",
     "./tokens/*": "./tokens/*",

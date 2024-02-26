@@ -61,10 +61,12 @@
             "development": "./heading.dev.js",
             "default": "./heading.js"
         },
+        "./overlay-transitions.css.js": "./overlay-transitions.css.js",
         "./typography.js": {
             "development": "./typography.dev.js",
             "default": "./typography.js"
         },
+        "./src/overlay-transitions.css.js": "./src/overlay-transitions.css.js",
         "./src/spectrum-base.css": "./src/spectrum-base.css",
         "./src/spectrum-body.css": "./src/spectrum-body.css",
         "./src/spectrum-code.css": "./src/spectrum-code.css",

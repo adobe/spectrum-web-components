@@ -23,6 +23,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import overlayTransitionStyles from '@spectrum-web-components/styles/src/overlay-transitions.css.js';
 import popoverStyles from './popover.css.js';
 
 /**
@@ -32,7 +33,7 @@ import popoverStyles from './popover.css.js';
  */
 export class Popover extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [popoverStyles];
+        return [popoverStyles, overlayTransitionStyles];
     }
 
     /**

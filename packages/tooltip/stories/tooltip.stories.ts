@@ -22,6 +22,10 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import {
+    swcThemeDecoratorArgs,
+    swcThemeDecoratorArgTypes,
+} from '@spectrum-web-components/story-decorator/decorator.js';
 
 const iconOptions: {
     [key: string]: ({
@@ -54,6 +58,24 @@ const iconOptions: {
 export default {
     component: 'sp-tooltip',
     title: 'Tooltip',
+    args: {
+        ...swcThemeDecoratorArgs,
+    },
+    argTypes: {
+        ...swcThemeDecoratorArgTypes,
+        delayed: {
+            name: 'delayed',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the tooltip opens after a "warmup" period.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
 interface Properties {
@@ -266,7 +288,10 @@ const overlayStyles = html`
     </style>
 `;
 
-const overlaid = (openPlacement: Placement): TemplateResult => {
+const overlaid = (
+    openPlacement: Placement,
+    delayed?: boolean
+): TemplateResult => {
     return html`
         ${overlayStyles}
         ${(
@@ -284,6 +309,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                     ${placement}
                 </sp-button>
                 <sp-overlay
+                    ?delayed=${delayed}
                     trigger="trigger-${placement}@hover"
                     type="hint"
                     placement=${placement}
@@ -300,11 +326,16 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
     `;
 };
 
-export const overlaidTop = (): TemplateResult => overlaid('top');
-export const overlaidRight = (): TemplateResult => overlaid('right');
-export const overlaidBottom = (): TemplateResult => overlaid('bottom');
-export const overlaidLeft = (): TemplateResult => overlaid('left');
-export const overlaidTopStart = (): TemplateResult => overlaid('top-start');
+export const overlaidTop = (props: Properties): TemplateResult =>
+    overlaid('top', props.delayed);
+export const overlaidRight = (props: Properties): TemplateResult =>
+    overlaid('right', props.delayed);
+export const overlaidBottom = (props: Properties): TemplateResult =>
+    overlaid('bottom', props.delayed);
+export const overlaidLeft = (props: Properties): TemplateResult =>
+    overlaid('left', props.delayed);
+export const overlaidTopStart = (props: Properties): TemplateResult =>
+    overlaid('top-start', props.delayed);
 
 export const selfManaged = ({
     placement,
