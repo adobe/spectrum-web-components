@@ -50,7 +50,7 @@ export class Search extends Textfield {
     public override label = 'Search';
 
     @property()
-    public method?: 'GET' | 'POST' | 'dialog';
+    public method?: 'get' | 'post' | 'dialog';
 
     @property()
     public override placeholder = 'Search';

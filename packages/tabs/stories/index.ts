@@ -18,6 +18,7 @@ import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { repeat } from '@spectrum-web-components/base/src/directives.js';
 
 export interface OverflowProperties {
+    selected?: number;
     count?: number;
     size?: string;
     includeTabPanel?: boolean;
@@ -25,6 +26,7 @@ export interface OverflowProperties {
 }
 
 export const renderTabsOverflowExample = ({
+    selected = 1,
     count = 20,
     size = 'm',
     includeTabPanel,
@@ -41,7 +43,7 @@ export const renderTabsOverflowExample = ({
         </style>
         <div class="container">
             <sp-tabs-overflow size=${size} ?compact=${compact}>
-                <sp-tabs size=${size} selected="1" ?compact=${compact}>
+                <sp-tabs size=${size} selected=${selected} ?compact=${compact}>
                     ${repeat(
                         new Array(count),
                         (item) => item,

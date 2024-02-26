@@ -121,8 +121,8 @@ governing permissions and limitations under the License.
 }
 :host([vertical]) {
     align-self: var(--mod-divider-vertical-align);
-    block-size: 100%;
     block-size: var(--mod-divider-vertical-height);
+    block-size: 100%;
     inline-size: var(
         --mod-divider-thickness,
         var(--spectrum-divider-thickness)

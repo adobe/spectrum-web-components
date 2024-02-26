@@ -23,3 +23,10 @@ export const compact = (args: OverflowProperties): TemplateResult => {
 compact.args = {
     compact: true,
 };
+
+export const autoscroll = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
+};
+autoscroll.args = {
+    selected: 15,
+};

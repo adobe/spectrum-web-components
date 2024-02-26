@@ -137,8 +137,6 @@ governing permissions and limitations under the License.
     --spectrum-picker-spacing-edge-to-disclosure-icon-quiet: var(
         --spectrum-picker-end-edge-to-disclousure-icon-quiet
     );
-}
-:host {
     --spectrum-picker-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -346,10 +344,8 @@ governing permissions and limitations under the License.
     #button:focus-visible {
         --highcontrast-picker-border-color-hover: ButtonText;
     }
+    #button .label,
     #button:after {
-        forced-color-adjust: none;
-    }
-    #button .label {
         forced-color-adjust: none;
     }
 }
@@ -1130,11 +1126,9 @@ governing permissions and limitations under the License.
         0;
 }
 :host([quiet]) #button:active,
-:host([quiet][open]) #button {
-    background-color: var(--highcontrast-picker-background-color, transparent);
-}
 :host([quiet]) #button:disabled,
-:host([quiet][disabled]) #button {
+:host([quiet][disabled]) #button,
+:host([quiet][open]) #button {
     background-color: var(--highcontrast-picker-background-color, transparent);
 }
 .spectrum-Picker--sideLabel {

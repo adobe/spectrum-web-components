@@ -12,14 +12,8 @@ governing permissions and limitations under the License.
 
 import { expect, fixture, nextFrame } from '@open-wc/testing';
 import { html, render } from '@spectrum-web-components/base';
-import { Default } from '../stories/grid.stories';
-
-async function usedHeapMB(): Promise<number> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const memorySample = performance.measureUserAgentSpecificMemory();
-    return (await memorySample).bytes / (1024 * 1024);
-}
+import { Default } from '../stories/grid.stories.js';
+import { usedHeapMB } from '../../../test/testing-helpers.js';
 
 describe('Grid memory usage', () => {
     it('releases references on disconnect', async function () {
@@ -65,8 +59,11 @@ describe('Grid memory usage', () => {
          * shows less heap after the test cycle.
          */
         expect(
-            afterMB - beforeMB,
-            `before: ${beforeMB}, after: ${afterMB}`
-        ).to.be.lt(0);
+            afterMB.total - beforeMB.total,
+            `Total | before: ${beforeMB.total}, after: ${afterMB.total}
+DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}
+JS | before: ${beforeMB.js}, after: ${afterMB.js}
+Shared | before: ${beforeMB.shared}, after: ${afterMB.shared}`
+        ).to.be.lte(0);
     });
 });

@@ -54,9 +54,7 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
 }
 @media (forced-colors: active) {
-    :host {
-        --highcontrast-actionbar-popover-border-color: CanvasText;
-    }
+    :host,
     :host([emphasized]) #popover {
         --highcontrast-actionbar-popover-border-color: CanvasText;
     }
