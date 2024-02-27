@@ -94,9 +94,9 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "@commitlint/cli": "^18.6.0",
-        "@commitlint/config-conventional": "^18.6.0",
-        "@commitlint/config-lerna-scopes": "^18.4.4",
+        "@commitlint/cli": "^19.0.1",
+        "@commitlint/config-conventional": "^19.0.0",
+        "@commitlint/config-lerna-scopes": "^19.0.0",
         "@custom-elements-manifest/analyzer": "^0.9.0",
         "@lit/react": "^1.0.2",
         "@netlify/build": "^29.1.0",
