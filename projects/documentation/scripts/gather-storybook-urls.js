@@ -28,8 +28,21 @@ const targetFile = path.resolve(targetDir, 'storybookURLs.js');
 export const gatherStorybookURLs = async (flatPackageNames) => {
     const links = {};
 
+    const skipPackages = [
+        'base',
+        'bundle',
+        'opacity-checkerboard',
+        'reactive-controllers',
+        'shared',
+        'styles',
+        'theme',
+    ];
+
     // Get the storybook URLs for each package
     flatPackageNames.forEach((packageName) => {
+        if (skipPackages.includes(packageName)) {
+            return;
+        }
         const storybookURL = `https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/${packageName}/`;
         links[packageName] = storybookURL;
     });
