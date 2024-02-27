@@ -27,6 +27,7 @@ export const argTypes = {
             },
             type: 'select',
         },
+        options: ['s', 'm', 'l', 'xl'],
     },
     quiet: {
         name: 'quiet',

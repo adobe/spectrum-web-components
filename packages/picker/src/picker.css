@@ -29,6 +29,8 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-minimum-width-multiplier) *
             var(--mod-picker-block-size, var(--spectrum-picker-block-size))
     );
+
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-100);
 }
 
 :host([quiet]) {
@@ -41,32 +43,16 @@ governing permissions and limitations under the License.
     --spectrum-picker-width: var(--spectrum-global-dimension-size-2400);
 }
 
-:host([size='s']) sp-progress-circle {
+:host([size='s']) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-75);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-small
-    );
 }
 
-:host([size='m']) sp-progress-circle {
-    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-100);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-small
-    );
-}
-
-:host([size='l']) sp-progress-circle {
+:host([size='l']) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-200);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-medium
-    );
 }
 
-:host([size='xl']) sp-progress-circle {
+:host([size='xl']) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-300);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-large
-    );
 }
 
 :host([disabled]) {
