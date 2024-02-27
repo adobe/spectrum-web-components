@@ -435,6 +435,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                             ${this.pendingLabel}
                         </span>
                         <sp-progress-circle
+                            size="s"
                             indeterminate
                             aria-hidden="true"
                             class="progress-circle"
