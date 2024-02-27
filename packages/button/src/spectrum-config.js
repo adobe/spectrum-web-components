@@ -35,18 +35,44 @@ const config = {
                     name: '-moz-focus-inner',
                 },
             ],
+            excludeByWholeSelector: [
+                // Exclude content hiding selectors when `pending`
+                //.spectrum-Button[pending] .spectrum-Icon
+                [
+                    builder.class('spectrum-Button'),
+                    builder.attribute('pending'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Icon'),
+                ],
+                //.spectrum-Button[pending] .spectrum-Button-label
+                [
+                    builder.class('spectrum-Button'),
+                    builder.attribute('pending'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Button-label'),
+                ],
+                //.spectrum-Button.is-pending .spectrum-Icon
+                [
+                    builder.class('spectrum-Button'),
+                    builder.class('is-pending'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Icon'),
+                ],
+                //.spectrum-Button.is-pending .spectrum-Button-label
+                [
+                    builder.class('spectrum-Button'),
+                    builder.class('is-pending'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Button-label'),
+                ],
+            ],
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Button--quiet'),
                 converter.classToAttribute('spectrum-Button--emphasized'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-focused', 'focused'),
-                /**
-                 * HACK!
-                 * This relies on the fact that spectrum-css is using both `&:disabled` and `&.is-disabled` in the selectors
-                 * for disabled states. We're using the class based selector here to also emit a `pending` selector.
-                 */
-                // converter.classToAttribute('is-disabled', 'pending'),
+                converter.classToAttribute('is-pending', 'pending'),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.pseudoToAttribute('active', 'active'),
                 converter.classToAttribute(

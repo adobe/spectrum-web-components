@@ -104,6 +104,12 @@ staticWhite.args = {
 export const inButton = ({
     indeterminate,
 }: StoryArgs = {}): TemplateResult => html`
+    <style>
+        sp-progress-circle[slot='icon'] {
+            align-self: center;
+            margin-block: 0;
+        }
+    </style>
     <sp-button variant="black" style="color: white">
         <sp-progress-circle
             progress="53"
