@@ -11,10 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
-    -webkit-appearance: button;
-    box-sizing: border-box;
     cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    box-sizing: border-box;
     font-family: var(
         --mod-button-font-family,
         var(
@@ -27,6 +29,8 @@ governing permissions and limitations under the License.
         var(--mod-line-height-100, var(--spectrum-line-height-100))
     );
     text-transform: none;
+    vertical-align: top;
+    -webkit-appearance: button;
     transition: background
             var(
                 --mod-button-animation-duration,
@@ -63,37 +67,41 @@ governing permissions and limitations under the License.
                 )
             )
             ease-out;
-    -webkit-user-select: none;
-    user-select: none;
-    vertical-align: top;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    align-items: center;
     border-style: solid;
-    display: inline-flex;
     justify-content: center;
+    align-items: center;
     margin: 0;
-    overflow: visible;
-    -webkit-text-decoration: none;
     text-decoration: none;
+    display: inline-flex;
+    position: relative;
+    overflow: visible;
 }
+
 :host(:focus) {
     outline: none;
 }
+
+:host([disabled]),
 :host([disabled]) {
     cursor: default;
 }
+
 ::slotted([slot='icon']) {
     flex-shrink: 0;
     max-block-size: 100%;
 }
+
 #label {
-    place-self: center;
     text-align: center;
+    place-self: center;
 }
+
 #label:empty {
     display: none;
 }
+
 :host {
     --spectrum-actionbutton-animation-duration: var(
         --spectrum-animation-duration-100
@@ -126,10 +134,12 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-focus-indicator-gap)
     );
 }
+
 :host([dir='rtl']),
-[dir='rtl'] :host {
+:host:dir(rtl) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
+
 :host([selected]) {
     --mod-actionbutton-background-color-default: var(
         --mod-actionbutton-background-color-default-selected,
@@ -164,6 +174,7 @@ governing permissions and limitations under the License.
         var(--spectrum-gray-50)
     );
 }
+
 :host([selected][emphasized]) {
     --mod-actionbutton-background-color-default: var(
         --mod-actionbutton-background-color-default-selected-emphasized,
@@ -198,6 +209,7 @@ governing permissions and limitations under the License.
         var(--spectrum-white)
     );
 }
+
 :host([size='xs']) {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-50) * 2 +
@@ -223,6 +235,7 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-border-width)
     );
 }
+
 :host([size='s']) {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-75) * 2 +
@@ -248,6 +261,7 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-border-width)
     );
 }
+
 :host {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-100) * 2 +
@@ -273,6 +287,7 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-border-width)
     );
 }
+
 :host([size='l']) {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-200) * 2 +
@@ -298,6 +313,7 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-border-width)
     );
 }
+
 :host([size='xl']) {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-300) * 2 +
@@ -323,13 +339,16 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-border-width)
     );
 }
+
 @media (forced-colors: active) {
     :host:after {
         forced-color-adjust: none;
     }
+
     :host {
         --highcontrast-actionbutton-focus-indicator-color: ButtonText;
     }
+
     :host([selected]) {
         --highcontrast-actionbutton-background-color-default: Highlight;
         --highcontrast-actionbutton-background-color-hover: Highlight;
@@ -347,30 +366,22 @@ governing permissions and limitations under the License.
         --highcontrast-actionbutton-content-color-down: HighlightText;
         --highcontrast-actionbutton-content-color-disabled: GrayText;
     }
-    :host([selected]) #label,
+
+    :host([selected]) ::slotted([slot='icon']),
     :host([selected]) .hold-affordance,
-    :host([selected]) ::slotted([slot='icon']) {
+    :host([selected]) #label {
         forced-color-adjust: none;
     }
 }
+
 :host {
-    background-color: var(
-        --highcontrast-actionbutton-background-color-default,
-        var(
-            --mod-actionbutton-background-color-default,
-            var(--spectrum-actionbutton-background-color-default)
-        )
+    min-inline-size: var(
+        --mod-actionbutton-min-width,
+        var(--spectrum-actionbutton-min-width)
     );
     block-size: var(
         --mod-actionbutton-height,
         var(--spectrum-actionbutton-height)
-    );
-    border-color: var(
-        --highcontrast-actionbutton-border-color-default,
-        var(
-            --mod-actionbutton-border-color-default,
-            var(--spectrum-actionbutton-border-color-default)
-        )
     );
     border-radius: var(
         --mod-actionbutton-border-radius,
@@ -379,13 +390,6 @@ governing permissions and limitations under the License.
     border-width: var(
         --mod-actionbutton-border-width,
         var(--spectrum-actionbutton-border-width)
-    );
-    color: var(
-        --highcontrast-actionbutton-content-color-default,
-        var(
-            --mod-actionbutton-content-color-default,
-            var(--spectrum-actionbutton-content-color-default)
-        )
     );
     gap: calc(
         var(
@@ -401,16 +405,34 @@ governing permissions and limitations under the License.
                 var(--spectrum-actionbutton-edge-to-visual-only)
             )
     );
-    min-inline-size: var(
-        --mod-actionbutton-min-width,
-        var(--spectrum-actionbutton-min-width)
-    );
     padding-inline: var(
         --mod-actionbutton-edge-to-text,
         var(--spectrum-actionbutton-edge-to-text)
     );
+    background-color: var(
+        --highcontrast-actionbutton-background-color-default,
+        var(
+            --mod-actionbutton-background-color-default,
+            var(--spectrum-actionbutton-background-color-default)
+        )
+    );
+    border-color: var(
+        --highcontrast-actionbutton-border-color-default,
+        var(
+            --mod-actionbutton-border-color-default,
+            var(--spectrum-actionbutton-border-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-actionbutton-content-color-default,
+        var(
+            --mod-actionbutton-content-color-default,
+            var(--spectrum-actionbutton-content-color-default)
+        )
+    );
     position: relative;
 }
+
 @media (hover: hover) {
     :host(:hover) {
         background-color: var(
@@ -436,29 +458,7 @@ governing permissions and limitations under the License.
         );
     }
 }
-:host(.focus-visible) {
-    background-color: var(
-        --highcontrast-actionbutton-background-color-focus,
-        var(
-            --mod-actionbutton-background-color-focus,
-            var(--spectrum-actionbutton-background-color-focus)
-        )
-    );
-    border-color: var(
-        --highcontrast-actionbutton-border-color-focus,
-        var(
-            --mod-actionbutton-border-color-focus,
-            var(--spectrum-actionbutton-border-color-focus)
-        )
-    );
-    color: var(
-        --highcontrast-actionbutton-content-color-focus,
-        var(
-            --mod-actionbutton-content-color-focus,
-            var(--spectrum-actionbutton-content-color-focus)
-        )
-    );
-}
+
 :host(:focus-visible) {
     background-color: var(
         --highcontrast-actionbutton-background-color-focus,
@@ -482,6 +482,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([active]) {
     background-color: var(
         --highcontrast-actionbutton-background-color-down,
@@ -505,6 +506,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+:host([disabled]),
 :host([disabled]) {
     background-color: var(
         --highcontrast-actionbutton-background-color-disabled,
@@ -528,15 +531,26 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 ::slotted([slot='icon']) {
+    inline-size: var(
+        --mod-actionbutton-icon-size,
+        var(--spectrum-actionbutton-icon-size)
+    );
     block-size: var(
         --mod-actionbutton-icon-size,
         var(--spectrum-actionbutton-icon-size)
     );
     color: inherit;
-    inline-size: var(
-        --mod-actionbutton-icon-size,
-        var(--spectrum-actionbutton-icon-size)
+    margin-inline-start: calc(
+        var(
+                --mod-actionbutton-edge-to-visual,
+                var(--spectrum-actionbutton-edge-to-visual)
+            ) -
+            var(
+                --mod-actionbutton-edge-to-text,
+                var(--spectrum-actionbutton-edge-to-text)
+            )
     );
     margin-inline-end: calc(
         var(
@@ -548,17 +562,8 @@ governing permissions and limitations under the License.
                 var(--spectrum-actionbutton-edge-to-text)
             )
     );
-    margin-inline-start: calc(
-        var(
-                --mod-actionbutton-edge-to-visual,
-                var(--spectrum-actionbutton-edge-to-visual)
-            ) -
-            var(
-                --mod-actionbutton-edge-to-text,
-                var(--spectrum-actionbutton-edge-to-text)
-            )
-    );
 }
+
 .hold-affordance + ::slotted([slot='icon']),
 [icon-only]::slotted([slot='icon']) {
     margin-inline-start: calc(
@@ -572,19 +577,23 @@ governing permissions and limitations under the License.
             )
     );
 }
+
 #label {
-    color: var(--mod-actionbutton-label-color, inherit);
+    pointer-events: none;
     font-size: var(
         --mod-actionbutton-font-size,
         var(--spectrum-actionbutton-font-size)
     );
-    overflow: hidden;
-    pointer-events: none;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    color: var(--mod-actionbutton-label-color, inherit);
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
+
 .hold-affordance {
     color: inherit;
+    transform: var(--spectrum-logical-rotation);
+    position: absolute;
     inset-block-end: calc(
         var(
                 --mod-actionbutton-edge-to-hold-icon,
@@ -605,9 +614,8 @@ governing permissions and limitations under the License.
                 var(--spectrum-actionbutton-border-width)
             )
     );
-    position: absolute;
-    transform: var(--spectrum-logical-rotation);
 }
+
 :host {
     transition: border-color
         var(
@@ -616,13 +624,8 @@ governing permissions and limitations under the License.
         )
         ease-in-out;
 }
+
 :host:after {
-    border-radius: var(
-        --mod-actionbutton-focus-indicator-border-radius,
-        var(--spectrum-actionbutton-focus-indicator-border-radius)
-    );
-    content: '';
-    inset: 0;
     margin: calc(
         (
                 var(
@@ -635,37 +638,27 @@ governing permissions and limitations under the License.
                     )
             ) * -1
     );
-    pointer-events: none;
-    position: absolute;
+    border-radius: var(
+        --mod-actionbutton-focus-indicator-border-radius,
+        var(--spectrum-actionbutton-focus-indicator-border-radius)
+    );
     transition: box-shadow
         var(
             --mod-actionbutton-animation-duration,
             var(--spectrum-actionbutton-animation-duration)
         )
         ease-in-out;
+    pointer-events: none;
+    content: '';
+    position: absolute;
+    inset: 0;
 }
-:host(.focus-visible) {
-    box-shadow: none;
-    outline: none;
-}
+
 :host(:focus-visible) {
     box-shadow: none;
     outline: none;
 }
-:host(.focus-visible):after {
-    box-shadow: 0 0 0
-        var(
-            --mod-actionbutton-focus-indicator-thickness,
-            var(--spectrum-actionbutton-focus-indicator-thickness)
-        )
-        var(
-            --highcontrast-actionbutton-focus-indicator-color,
-            var(
-                --mod-actionbutton-focus-indicator-color,
-                var(--spectrum-actionbutton-focus-indicator-color)
-            )
-        );
-}
+
 :host(:focus-visible):after {
     box-shadow: 0 0 0
         var(
@@ -680,6 +673,7 @@ governing permissions and limitations under the License.
             )
         );
 }
+
 :host {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-background-color-default
@@ -715,6 +709,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-content-color-disabled
     );
 }
+
 :host([quiet]) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-quiet-background-color-default
@@ -747,6 +742,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-quiet-border-color-disabled
     );
 }
+
 :host([selected]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-spectrum-actionbutton-selected-border-color-default
@@ -767,6 +763,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-selected-border-color-disabled
     );
 }
+
 :host([static='black'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-spectrum-actionbutton-staticblack-quiet-border-color-default
@@ -784,6 +781,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticblack-quiet-border-color-disabled
     );
 }
+
 :host([static='white'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-spectrum-actionbutton-staticwhite-quiet-border-color-default
@@ -801,6 +799,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticwhite-quiet-border-color-disabled
     );
 }
+
 :host([static='black']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticblack-background-color-default
@@ -851,6 +850,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticblack-content-color-disabled
     );
 }
+
 :host([static='black'][selected]) {
     --mod-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-background-color-default
@@ -895,6 +895,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-border-color-disabled
     );
 }
+
 :host([static='white']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticwhite-background-color-default
@@ -945,6 +946,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticwhite-content-color-disabled
     );
 }
+
 :host([static='white'][selected]) {
     --mod-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-background-color-default

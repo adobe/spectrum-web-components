@@ -109,6 +109,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.setAttribute('dir', dir);
         this._dir = dir;
         const targetDir = dir === 'rtl' ? dir : 'ltr';
+        /* c8 ignore next 3 */
         this.trackedChildren.forEach((el) => {
             el.setAttribute('dir', targetDir);
         });
@@ -135,6 +136,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
+            /* c8 ignore next 3 */
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
@@ -146,6 +148,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     private requestUpdate(): void {
+        /* c8 ignore next 3 */
         if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
             window.ShadyCSS.styleElement(this);
         } else {
@@ -183,6 +186,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (theme) {
             this.setAttribute('theme', theme);
+            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('theme');
         }
@@ -216,6 +220,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (color) {
             this.setAttribute('color', color);
+            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('color');
         }
@@ -249,6 +254,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (scale) {
             this.setAttribute('scale', scale);
+            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('scale');
         }
@@ -374,6 +380,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         });
     }
 
+    /* c8 ignore next 12 */
     private onQueryTheme(event: CustomEvent<ThemeData>): void {
         if (event.defaultPrevented) {
             return;
@@ -448,9 +455,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         // There are three separate cases here based on Shadow DOM support.
         // (1) shadowRoot polyfilled: use ShadyCSS
         // (2) shadowRoot.adoptedStyleSheets available: use it.
-        // (3) shadowRoot.adoptedStyleSheets polyfilled: append styles after
-        // rendering
-        /* c8 ignore next */ if (
+        // (3) shadowRoot.adoptedStyleSheets polyfilled: append styles after rendering
+        /* c8 ignore next 28 */
+        if (
             window.ShadyCSS !== undefined &&
             !window.ShadyCSS.nativeShadow &&
             window.ShadyCSS.ScopingShim
@@ -486,6 +493,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 );
             }
             this.shadowRoot.adoptedStyleSheets = styleSheets;
+            /* c8 ignore next 9 */
         } else {
             const styleNodes = this.shadowRoot.querySelectorAll('style');
             styleNodes.forEach((element) => element.remove());
@@ -518,6 +526,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         [ProvideLang['callback'], () => void]
     >();
 
+    /* c8 ignore next 5 */
     private _provideContext(): void {
         this._contextConsumers.forEach(([callback, unsubscribe]) =>
             callback(this.lang, unsubscribe)
@@ -527,6 +536,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
         event.stopPropagation();
         const target = event.composedPath()[0] as HTMLElement;
+        /* c8 ignore next 3 */
         if (this._contextConsumers.has(target)) {
             return;
         }

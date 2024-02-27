@@ -14,50 +14,13 @@ governing permissions and limitations under the License.
 
 import path from 'path';
 import fs from 'fs-extra';
-import postcss from 'postcss';
-import { postCSSPlugins } from './css-processing.cjs';
+import { transform } from 'lightningcss';
 import { fileURLToPath } from 'url';
 import fg from 'fast-glob';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let removedVariableDeclarations = 0;
-
-/**
- * Use postcss to remove CSS Custom Properties that are not leveraged in the project
- *
- * @param { variables: string[] } options - list of CSS Custom Properties found to be used
- */
-function postcssFilterVariableDeclarations(options) {
-    options = options || {};
-
-    var variables = options.variables;
-
-    function filterDeclarations(root) {
-        root.walk(function (rule) {
-            if (rule.type === 'rule') {
-                rule.each(function (decl, index) {
-                    if (decl.variable) {
-                        // always include global and alias vars
-                        if (
-                            decl.prop.startsWith('--spectrum-global-') ||
-                            decl.prop.startsWith('--spectrum-alias-')
-                        ) {
-                            return;
-                        }
-                        // otherwise if the variable is not in the allowed list, remove it
-                        if (!variables.has(decl.prop)) {
-                            decl.remove();
-                            removedVariableDeclarations += 1;
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    return filterDeclarations;
-}
 
 const varRegex = /--spectrum-[^:,)\s]+/g;
 
@@ -111,19 +74,30 @@ const processCSSData = async (
         shadowSelector
     );
 
-    const plugins = postCSSPlugins();
-    if (usedVariables) {
-        plugins.push(
-            postcssFilterVariableDeclarations({
-                variables: usedVariables,
-            })
-        );
-    }
-    result = await postcss(plugins)
-        .process(result, {
-            from,
-        })
-        .then((output) => output.css);
+    ({ code: result } = transform({
+        code: Buffer.from(result),
+        visitor: {
+            Declaration(declaration) {
+                if (
+                    declaration.property === 'custom' &&
+                    // Manually include Spectrum Vars, for now...
+                    !declaration.value.name.startsWith('--spectrum-global-') &&
+                    !declaration.value.name.startsWith('--spectrum-alias-') &&
+                    !declaration.value.name.startsWith('--spectrum-semantic') &&
+                    // Manually include Typography values, while we do not ship a "package" for these...
+                    !declaration.value.name.startsWith('--spectrum-font') &&
+                    !declaration.value.name.startsWith('--spectrum-heading') &&
+                    !declaration.value.name.startsWith('--spectrum-body') &&
+                    !declaration.value.name.startsWith('--spectrum-detail') &&
+                    !declaration.value.name.startsWith('--spectrum-code') &&
+                    !usedVariables?.has(declaration.value.name)
+                ) {
+                    removedVariableDeclarations += 1;
+                    return [];
+                }
+            },
+        },
+    }));
 
     return result;
 };
