@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-checkbox-content-color-default: var(
         --spectrum-neutral-content-color-default
@@ -68,8 +69,13 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-control-selected-color-focus: var(
         --spectrum-neutral-background-color-selected-key-focus
     );
+    --spectrum-checkbox-font-size: var(--spectrum-font-size-100);
     --spectrum-checkbox-line-height: var(--spectrum-line-height-100);
     --spectrum-checkbox-line-height-cjk: var(--spectrum-cjk-line-height-100);
+    --spectrum-checkbox-height: var(--spectrum-component-height-100);
+    --spectrum-checkbox-control-size: var(
+        --spectrum-checkbox-control-size-medium
+    );
     --spectrum-checkbox-control-corner-radius: var(--spectrum-corner-radius-75);
     --spectrum-checkbox-focus-indicator-gap: var(
         --spectrum-focus-indicator-gap
@@ -81,10 +87,13 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-selected-border-width: calc(
         var(--spectrum-checkbox-control-size) / 2
     );
+    --spectrum-checkbox-top-to-text: var(--spectrum-component-top-to-text-100);
+    --spectrum-checkbox-text-to-control: var(--spectrum-text-to-control-100);
     --spectrum-checkbox-animation-duration: var(
         --spectrum-animation-duration-100
     );
 }
+
 :host([size='s']) {
     --spectrum-checkbox-font-size: var(--spectrum-font-size-75);
     --spectrum-checkbox-height: var(--spectrum-component-height-75);
@@ -94,6 +103,7 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-checkbox-text-to-control: var(--spectrum-text-to-control-75);
 }
+
 :host {
     --spectrum-checkbox-font-size: var(--spectrum-font-size-100);
     --spectrum-checkbox-height: var(--spectrum-component-height-100);
@@ -103,6 +113,7 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-top-to-text: var(--spectrum-component-top-to-text-100);
     --spectrum-checkbox-text-to-control: var(--spectrum-text-to-control-100);
 }
+
 :host([size='l']) {
     --spectrum-checkbox-font-size: var(--spectrum-font-size-200);
     --spectrum-checkbox-height: var(--spectrum-component-height-200);
@@ -112,6 +123,7 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-top-to-text: var(--spectrum-component-top-to-text-200);
     --spectrum-checkbox-text-to-control: var(--spectrum-text-to-control-200);
 }
+
 :host([size='xl']) {
     --spectrum-checkbox-font-size: var(--spectrum-font-size-300);
     --spectrum-checkbox-height: var(--spectrum-component-height-300);
@@ -121,8 +133,8 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-top-to-text: var(--spectrum-component-top-to-text-300);
     --spectrum-checkbox-text-to-control: var(--spectrum-text-to-control-300);
 }
+
 :host {
-    align-items: flex-start;
     color: var(
         --highcontrast-checkbox-content-color-default,
         var(
@@ -130,12 +142,14 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-content-color-default)
         )
     );
-    display: inline-flex;
-    max-inline-size: 100%;
     min-block-size: var(--mod-checkbox-height, var(--spectrum-checkbox-height));
-    position: relative;
     vertical-align: top;
+    align-items: flex-start;
+    max-inline-size: 100%;
+    display: inline-flex;
+    position: relative;
 }
+
 :host:active #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-down,
@@ -145,6 +159,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host:active #input:checked + #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-down,
@@ -154,6 +169,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host:active #label {
     color: var(
         --highcontrast-checkbox-content-color-down,
@@ -163,8 +179,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid][invalid]) #box:before,
-:host([invalid][invalid]) #input:checked + #box:before {
+
+:host([invalid][invalid]) #input:checked + #box:before,
+:host([invalid][invalid]) #box:before {
     border-color: var(
         --highcontrast-checkbox-color-default,
         var(
@@ -173,8 +190,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid][invalid]) #input.focus-visible + #box:before,
-:host([invalid][invalid][indeterminate]) #input.focus-visible + #box:before {
+
+:host([invalid][invalid][indeterminate]) #input:focus-visible + #box:before,
+:host([invalid][invalid]) #input:focus-visible + #box:before {
     border-color: var(
         --highcontrast-checkbox-color-hover,
         var(
@@ -183,16 +201,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid][invalid]) #input:focus-visible + #box:before,
-:host([invalid][invalid][indeterminate]) #input:focus-visible + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-color-hover,
-        var(
-            --mod-checkbox-invalid-color-hover,
-            var(--spectrum-checkbox-invalid-color-hover)
-        )
-    );
-}
+
 :host([readonly]) {
     border-color: var(
         --highcontrast-checkbox-color-default,
@@ -202,6 +211,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([readonly]):active #box:before {
     border-color: var(
         --highcontrast-checkbox-selected-color-default,
@@ -211,15 +221,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([readonly]) #input:checked:disabled + #box:before,
-:host([readonly]) #input:disabled + #box:before {
-    background-color: var(
-        --highcontrast-checkbox-background-color-default,
-        var(
-            --mod-checkbox-checkmark-color,
-            var(--spectrum-checkbox-checkmark-color)
-        )
-    );
+
+:host([readonly]) #input:disabled + #box:before,
+:host([readonly]) #input:checked:disabled + #box:before {
     border-color: var(
         --highcontrast-checkbox-color-default,
         var(
@@ -227,9 +231,18 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-control-selected-color-default)
         )
     );
+    background-color: var(
+        --highcontrast-checkbox-background-color-default,
+        var(
+            --mod-checkbox-checkmark-color,
+            var(--spectrum-checkbox-checkmark-color)
+        )
+    );
 }
-:host([readonly]) #input:checked:disabled ~ #label,
-:host([readonly]) #input:disabled ~ #label {
+
+:host([readonly]) #input:disabled ~ #label,
+:host([readonly]) #input:checked:disabled ~ #label {
+    forced-color-adjust: none;
     color: var(
         --highcontrast-checkbox-color-default,
         var(
@@ -237,8 +250,8 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-content-color-default)
         )
     );
-    forced-color-adjust: none;
 }
+
 :host([indeterminate]) #box:before,
 :host([indeterminate]) #input:checked + #box:before {
     border-color: var(
@@ -253,25 +266,19 @@ governing permissions and limitations under the License.
         var(--spectrum-checkbox-selected-border-width)
     );
 }
+
 :host([indeterminate]) #box #checkmark,
 :host([indeterminate]) #input:checked + #box #checkmark {
     display: none;
 }
+
 :host([indeterminate]) #box #partialCheckmark,
 :host([indeterminate]) #input:checked + #box #partialCheckmark {
-    display: block;
     opacity: 1;
+    display: block;
     transform: scale(1);
 }
-:host([indeterminate]) #input.focus-visible + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-highlight-color-focus,
-        var(
-            --mod-checkbox-control-selected-color-focus,
-            var(--spectrum-checkbox-control-selected-color-focus)
-        )
-    );
-}
+
 :host([indeterminate]) #input:focus-visible + #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-focus,
@@ -281,6 +288,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([invalid][invalid][indeterminate]) #box:before,
 :host([invalid][invalid][indeterminate]) #input:checked + #box:before {
     border-color: var(
@@ -295,9 +303,10 @@ governing permissions and limitations under the License.
         var(--spectrum-checkbox-selected-border-width)
     );
 }
+
 :host([emphasized]) #input:checked + #box:before,
-:host([emphasized][indeterminate]) #box:before,
-:host([emphasized][indeterminate]) #input:checked + #box:before {
+:host([emphasized][indeterminate]) #input:checked + #box:before,
+:host([emphasized][indeterminate]) #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-default,
         var(
@@ -306,16 +315,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized]) #input.focus-visible:checked + #box:before,
-:host([emphasized][indeterminate]) #input.focus-visible + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-highlight-color-focus,
-        var(
-            --mod-checkbox-emphasized-color-focus,
-            var(--spectrum-checkbox-emphasized-color-focus)
-        )
-    );
-}
+
 :host([emphasized]) #input:focus-visible:checked + #box:before,
 :host([emphasized][indeterminate]) #input:focus-visible + #box:before {
     border-color: var(
@@ -326,17 +326,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized][invalid][invalid])
-    #input.focus-visible:checked
-    + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-color-default,
-        var(
-            --mod-checkbox-invalid-color-focus,
-            var(--spectrum-checkbox-invalid-color-focus)
-        )
-    );
-}
+
 :host([emphasized][invalid][invalid])
     #input:focus-visible:checked
     + #box:before {
@@ -348,9 +338,10 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 @media (hover: hover) {
-    :host([invalid][invalid]:hover) #box:before,
-    :host([invalid][invalid]:hover) #input:checked + #box:before {
+    :host([invalid][invalid]:hover) #input:checked + #box:before,
+    :host([invalid][invalid]:hover) #box:before {
         border-color: var(
             --highcontrast-checkbox-color-hover,
             var(
@@ -359,6 +350,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host([readonly]:hover) #box:before {
         border-color: var(
             --highcontrast-checkbox-color-default,
@@ -368,8 +360,9 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([indeterminate]:hover) #box:before,
-    :host([indeterminate]:hover) #input:checked + #box:before {
+
+    :host([indeterminate]:hover) #input:checked + #box:before,
+    :host([indeterminate]:hover) #box:before {
         border-color: var(
             --highcontrast-checkbox-highlight-color-hover,
             var(
@@ -378,10 +371,9 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([invalid][invalid][indeterminate]:hover) #box:before,
-    :host([invalid][invalid][indeterminate]:hover)
-        #input:checked
-        + #box:before {
+
+    :host([invalid][invalid][indeterminate]:hover) #input:checked + #box:before,
+    :host([invalid][invalid][indeterminate]:hover) #box:before {
         border-color: var(
             --highcontrast-checkbox-color-default,
             var(
@@ -390,6 +382,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host(:hover) #box:before {
         border-color: var(
             --highcontrast-checkbox-highlight-color-hover,
@@ -399,6 +392,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host(:hover) #input:checked + #box:before {
         border-color: var(
             --highcontrast-checkbox-highlight-color-hover,
@@ -408,6 +402,7 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host(:hover) #label,
     :host([invalid][invalid][indeterminate]:hover) #label {
         color: var(
@@ -418,9 +413,10 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host([emphasized]:hover) #input:checked + #box:before,
-    :host([emphasized][indeterminate]:hover) #box:before,
-    :host([emphasized][indeterminate]:hover) #input:checked + #box:before {
+    :host([emphasized][indeterminate]:hover) #input:checked + #box:before,
+    :host([emphasized][indeterminate]:hover) #box:before {
         border-color: var(
             --highcontrast-checkbox-color-hover,
             var(
@@ -429,11 +425,12 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([emphasized][invalid][invalid]:hover) #input:checked + #box:before,
+
     :host([emphasized][invalid][invalid][indeterminate]:hover) #box:before,
     :host([emphasized][invalid][invalid][indeterminate]:hover)
         #input:checked
-        + #box:before {
+        + #box:before,
+    :host([emphasized][invalid][invalid]:hover) #input:checked + #box:before {
         border-color: var(
             --highcontrast-checkbox-color-hover,
             var(
@@ -442,9 +439,10 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([emphasized]:hover) #input:checked + #box:before,
+
     :host([emphasized][indeterminate]:hover) #box:before,
-    :host([emphasized][indeterminate]:hover) #input:checked + #box:before {
+    :host([emphasized][indeterminate]:hover) #input:checked + #box:before,
+    :host([emphasized]:hover) #input:checked + #box:before {
         border-color: var(
             --highcontrast-checkbox-highlight-color-hover,
             var(
@@ -454,9 +452,10 @@ governing permissions and limitations under the License.
         );
     }
 }
-:host([emphasized]):active #input:checked + #box:before,
+
 :host([emphasized][indeterminate]):active #box:before,
-:host([emphasized][indeterminate]):active #input:checked + #box:before {
+:host([emphasized][indeterminate]):active #input:checked + #box:before,
+:host([emphasized]):active #input:checked + #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-default,
         var(
@@ -465,8 +464,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized][invalid][invalid]):active #box:before,
-:host([emphasized][invalid][invalid]):active #input:checked + #box:before {
+
+:host([emphasized][invalid][invalid]):active #input:checked + #box:before,
+:host([emphasized][invalid][invalid]):active #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-default,
         var(
@@ -475,8 +475,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized].focus-visible) #box:before,
-:host([emphasized].focus-visible) #input:checked + #box:before {
+
+:host([emphasized]:focus-visible) #input:checked + #box:before,
+:host([emphasized]:focus-visible) #box:before {
     border-color: var(
         --highcontrast-checkbox-color-focus,
         var(
@@ -485,21 +486,19 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized]:focus-visible) #box:before,
-:host([emphasized]:focus-visible) #input:checked + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-color-focus,
-        var(
-            --mod-checkbox-control-color-focus,
-            var(--spectrum-checkbox-control-color-focus)
-        )
-    );
-}
+
 #label {
+    text-align: start;
     font-size: var(
         --mod-checkbox-font-size,
         var(--spectrum-checkbox-font-size)
     );
+    transition: color
+        var(
+            --mod-checkbox-animation-duration,
+            var(--spectrum-checkbox-animation-duration)
+        )
+        ease-in-out;
     line-height: var(
         --mod-checkbox-line-height,
         var(--spectrum-checkbox-line-height)
@@ -512,49 +511,42 @@ governing permissions and limitations under the License.
         --mod-checkbox-text-to-control,
         var(--spectrum-checkbox-text-to-control)
     );
-    text-align: start;
-    transition: color
-        var(
-            --mod-checkbox-animation-duration,
-            var(--spectrum-checkbox-animation-duration)
-        )
-        ease-in-out;
 }
+
 #label:lang(ja),
-#label:lang(ko),
-#label:lang(zh) {
+#label:lang(zh),
+#label:lang(ko) {
     line-height: var(
         --mod-checkbox-line-height-cjk,
         var(--spectrum-checkbox-line-height-cjk)
     );
 }
+
 #input {
-    block-size: 100%;
-    box-sizing: border-box;
     color: var(
         --mod-checkbox-control-color-default,
         var(--spectrum-checkbox-control-color-default)
     );
+    box-sizing: border-box;
+    opacity: 0.0001;
+    z-index: 1;
     cursor: pointer;
+    block-size: 100%;
+    inline-size: 100%;
+    margin: 0;
+    padding: 0;
     font-family: inherit;
     font-size: 100%;
-    inline-size: 100%;
     line-height: 1.15;
-    margin: 0;
-    opacity: 0.0001;
-    overflow: visible;
-    padding: 0;
     position: absolute;
-    z-index: 1;
+    overflow: visible;
 }
+
 #input:disabled {
     cursor: default;
 }
+
 #input:checked + #box:before {
-    background-color: var(
-        --mod-checkbox-checkmark-color,
-        var(--spectrum-checkbox-checkmark-color)
-    );
     border-color: var(
         --highcontrast-checkbox-highlight-color-default,
         var(
@@ -562,24 +554,21 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-control-selected-color-default)
         )
     );
+    background-color: var(
+        --mod-checkbox-checkmark-color,
+        var(--spectrum-checkbox-checkmark-color)
+    );
     border-width: var(
         --mod-checkbox-selected-border-width,
         var(--spectrum-checkbox-selected-border-width)
     );
 }
+
 #input:checked + #box #checkmark {
     opacity: 1;
     transform: scale(1);
 }
-#input.focus-visible + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-color-focus,
-        var(
-            --mod-checkbox-control-color-focus,
-            var(--spectrum-checkbox-control-color-focus)
-        )
-    );
-}
+
 #input:focus-visible + #box:before {
     border-color: var(
         --highcontrast-checkbox-color-focus,
@@ -589,28 +578,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input.focus-visible + #box:after {
-    box-shadow: 0 0 0
-        var(
-            --mod-checkbox-focus-indicator-thinkness,
-            var(--spectrum-checkbox-focus-indicator-thickness)
-        )
-        var(
-            --highcontrast-checkbox-focus-indicator-color,
-            var(
-                --mod-checkbox-focus-indicator-color,
-                var(--spectrum-checkbox-focus-indicator-color)
-            )
-        );
-    forced-color-adjust: none;
-    margin: calc(
-        var(
-                --mod-checkbox-focus-indicator-gap,
-                var(--spectrum-checkbox-focus-indicator-gap)
-            ) * -1
-    );
-}
+
 #input:focus-visible + #box:after {
+    forced-color-adjust: none;
     box-shadow: 0 0 0
         var(
             --mod-checkbox-focus-indicator-thinkness,
@@ -623,7 +593,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-focus-indicator-color)
             )
         );
-    forced-color-adjust: none;
     margin: calc(
         var(
                 --mod-checkbox-focus-indicator-gap,
@@ -631,15 +600,7 @@ governing permissions and limitations under the License.
             ) * -1
     );
 }
-#input.focus-visible + #label {
-    color: var(
-        --highcontrast-checkbox-content-color-focus,
-        var(
-            --mod-checkbox-content-color-focus,
-            var(--spectrum-checkbox-content-color-focus)
-        )
-    );
-}
+
 #input:focus-visible + #label {
     color: var(
         --highcontrast-checkbox-content-color-focus,
@@ -649,15 +610,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#input.focus-visible:checked + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-highlight-color-focus,
-        var(
-            --mod-checkbox-control-selected-color-focus,
-            var(--spectrum-checkbox-control-selected-color-focus)
-        )
-    );
-}
+
 #input:focus-visible:checked + #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-focus,
@@ -667,13 +620,14 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 #box {
-    block-size: var(
+    box-sizing: border-box;
+    inline-size: var(
         --mod-checkbox-control-size,
         var(--spectrum-checkbox-control-size)
     );
-    box-sizing: border-box;
-    inline-size: var(
+    block-size: var(
         --mod-checkbox-control-size,
         var(--spectrum-checkbox-control-size)
     );
@@ -684,22 +638,20 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-control-size)
             )
     );
-    align-items: center;
-    display: flex;
-    flex-grow: 0;
-    flex-shrink: 0;
-    justify-content: center;
     margin: calc(
             var(--mod-checkbox-spacing, var(--spectrum-checkbox-spacing)) / 2
         )
         0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     position: relative;
 }
+
 #box:before {
-    block-size: var(
-        --mod-checkbox-control-size,
-        var(--spectrum-checkbox-control-size)
-    );
+    forced-color-adjust: none;
     border-color: var(
         --highcontrast-checkbox-color-default,
         var(
@@ -707,24 +659,25 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-control-color-default)
         )
     );
-    border-radius: var(
-        --mod-checkbox-control-corner-radius,
-        var(--spectrum-checkbox-control-corner-radius)
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-checkbox-border-width,
-        var(--spectrum-checkbox-border-width)
-    );
-    box-sizing: border-box;
+    z-index: 0;
     content: '';
-    display: block;
-    forced-color-adjust: none;
+    box-sizing: border-box;
     inline-size: var(
         --mod-checkbox-control-size,
         var(--spectrum-checkbox-control-size)
     );
-    position: absolute;
+    block-size: var(
+        --mod-checkbox-control-size,
+        var(--spectrum-checkbox-control-size)
+    );
+    border-radius: var(
+        --mod-checkbox-control-corner-radius,
+        var(--spectrum-checkbox-control-corner-radius)
+    );
+    border-width: var(
+        --mod-checkbox-border-width,
+        var(--spectrum-checkbox-border-width)
+    );
     transition: border
             var(
                 --mod-checkbox-animation-duration,
@@ -737,8 +690,11 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-animation-duration)
             )
             ease-in-out;
-    z-index: 0;
+    border-style: solid;
+    display: block;
+    position: absolute;
 }
+
 #box:after {
     border-radius: calc(
         var(
@@ -751,15 +707,10 @@ governing permissions and limitations under the License.
             )
     );
     content: '';
-    display: block;
-    inset-block: 0;
-    inset-inline: 0;
     margin: var(
         --mod-checkbox-focus-indicator-gap,
         var(--spectrum-checkbox-focus-indicator-gap)
     );
-    position: absolute;
-    transform: translate(0);
     transition: box-shadow
             var(
                 --mod-checkbox-animation-duration,
@@ -772,7 +723,13 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-animation-duration)
             )
             ease-out;
+    display: block;
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+    transform: translate(0);
 }
+
 #checkmark,
 #partialCheckmark {
     color: var(
@@ -783,7 +740,6 @@ governing permissions and limitations under the License.
         )
     );
     opacity: 0;
-    transform: scale(0);
     transition: opacity
             var(
                 --mod-checkbox-animation-duration,
@@ -796,19 +752,15 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-animation-duration)
             )
             ease-in-out;
+    transform: scale(0);
 }
+
 #partialCheckmark {
     display: none;
 }
-#input:checked:disabled + #box:before,
-#input:disabled + #box:before {
-    background-color: var(
-        --highcontrast-checkbox-background-color-default,
-        var(
-            --mod-checkbox-checkmark-color,
-            var(--spectrum-checkbox-checkmark-color)
-        )
-    );
+
+#input:disabled + #box:before,
+#input:checked:disabled + #box:before {
     border-color: var(
         --highcontrast-checkbox-disabled-color-default,
         var(
@@ -816,9 +768,18 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-control-color-disabled)
         )
     );
+    background-color: var(
+        --highcontrast-checkbox-background-color-default,
+        var(
+            --mod-checkbox-checkmark-color,
+            var(--spectrum-checkbox-checkmark-color)
+        )
+    );
 }
-#input:checked:disabled ~ #label,
-#input:disabled ~ #label {
+
+#input:disabled ~ #label,
+#input:checked:disabled ~ #label {
+    forced-color-adjust: none;
     color: var(
         --highcontrast-checkbox-disabled-color-default,
         var(
@@ -826,31 +787,9 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-content-color-disabled)
         )
     );
-    forced-color-adjust: none;
 }
+
 @media (forced-colors: active) {
-    #input.focus-visible + #box {
-        forced-color-adjust: none;
-        outline-color: var(
-            --highcontrast-checkbox-focus-indicator-color,
-            var(
-                --mod-checkbox-focus-indicator-color,
-                var(--spectrum-checkbox-focus-indicator-color)
-            )
-        );
-        outline-offset: var(
-            --highcontrast-checkbox-focus-indicator-gap,
-            var(
-                --mod-checkbox-focus-indicator-gap,
-                var(--spectrum-checkbox-focus-indicator-gap)
-            )
-        );
-        outline-style: auto;
-        outline-width: var(
-            --mod-focus-indicator-thickness,
-            var(--spectrum-focus-indicator-thickness)
-        );
-    }
     #input:focus-visible + #box {
         forced-color-adjust: none;
         outline-color: var(
@@ -873,16 +812,7 @@ governing permissions and limitations under the License.
             var(--spectrum-focus-indicator-thickness)
         );
     }
-    #input.focus-visible + #box:after {
-        box-shadow: 0 0 0 0
-            var(
-                --highcontrast-checkbox-focus-indicator-color,
-                var(
-                    --mod-checkbox-focus-indicator-color,
-                    var(--spectrum-checkbox-focus-indicator-color)
-                )
-            );
-    }
+
     #input:focus-visible + #box:after {
         box-shadow: 0 0 0 0
             var(
@@ -893,6 +823,7 @@ governing permissions and limitations under the License.
                 )
             );
     }
+
     :host {
         --highcontrast-checkbox-content-color-default: CanvasText;
         --highcontrast-checkbox-content-color-hover: CanvasText;
@@ -910,6 +841,7 @@ governing permissions and limitations under the License.
         --highcontrast-checkbox-focus-indicator-color: CanvasText;
     }
 }
+
 :host {
     --spectrum-checkbox-control-color-default: var(
         --system-spectrum-checkbox-control-color-default

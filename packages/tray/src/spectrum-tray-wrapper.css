@@ -11,11 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
-    display: flex;
+    justify-content: center;
     inline-size: 100%;
+    display: flex;
+    position: fixed;
     inset-block-end: 0;
     inset-inline-start: 0;
-    justify-content: center;
-    position: fixed;
 }

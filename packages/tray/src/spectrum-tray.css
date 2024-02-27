@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-tray-exit-animation-delay: 0s;
     --spectrum-tray-entry-animation-delay: 0.16s;
@@ -94,9 +95,29 @@ governing permissions and limitations under the License.
                 --mod-tray-exit-animation-delay,
                 var(--spectrum-tray-exit-animation-delay)
             );
+    background-color: var(
+        --highcontrast-tray-background-color,
+        var(--mod-tray-background-color, var(--spectrum-tray-background-color))
+    );
+    outline: none;
+    inline-size: 100%;
+    margin-block-start: var(
+        --mod-tray-spacing-edge-to-tray-safe-zone,
+        var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
+    );
+    padding-block-start: var(
+        --mod-tray-top-to-content-area,
+        var(--spectrum-tray-top-to-content-area)
+    );
+    padding-block-end: var(
+        --mod-tray-bottom-to-content-area,
+        var(--spectrum-tray-top-to-content-area)
+    );
+    overflow: auto;
+    transform: translateY(100%);
 }
+
 :host([open]) .tray {
-    transform: translateY(0);
     transition: transform
             var(
                 --mod-tray-entry-animation-duration,
@@ -117,20 +138,22 @@ governing permissions and limitations under the License.
                 --mod-tray-entry-animation-delay,
                 var(--spectrum-tray-entry-animation-delay)
             );
+    transform: translateY(0);
 }
+
 @media screen and (orientation: landscape) {
     .tray {
-        border-start-end-radius: var(
-            --mod-tray-corner-radius,
-            var(--spectrum-tray-corner-radius)
+        max-inline-size: var(
+            --mod-tray-max-inline-size,
+            var(--spectrum-tray-max-inline-size)
         );
         border-start-start-radius: var(
             --mod-tray-corner-radius,
             var(--spectrum-tray-corner-radius)
         );
-        max-inline-size: var(
-            --mod-tray-max-inline-size,
-            var(--spectrum-tray-max-inline-size)
+        border-start-end-radius: var(
+            --mod-tray-corner-radius,
+            var(--spectrum-tray-corner-radius)
         );
     }
 }

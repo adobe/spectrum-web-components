@@ -151,6 +151,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         localName.search('-') > -1 &&
                         !customElements.get(localName)
                     ) {
+                        /* c8 ignore next 5 */
                         customElements.whenDefined(localName).then(() => {
                             (
                                 dirParent as ThemeRoot
@@ -204,14 +205,17 @@ if (window.__swc.DEBUG) {
     window.__swc = {
         ...window.__swc,
         ignoreWarningLocalNames: {
+            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLocalNames || {}),
         },
         ignoreWarningTypes: {
             ...ignoreWarningTypes,
+            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningTypes || {}),
         },
         ignoreWarningLevels: {
             ...ignoreWarningLevels,
+            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLevels || {}),
         },
         issuedWarnings: new Set(),
