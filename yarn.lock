@@ -24003,12 +24003,10 @@ postcss@8.4.31, postcss@^8, postcss@^8.4.19, postcss@^8.4.21, postcss@^8.4.23, p
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-posthtml-attrs-parser@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/posthtml-attrs-parser/-/posthtml-attrs-parser-0.1.1.tgz#cc33e00155fb99ba96f67e25e330461f05742ac8"
-  integrity sha512-ZFZfTIb74uHFdn80+7DyP+qrryDX/Bb7Q2rUaByh6iUJ1HlKGSxkChKORpwIUHjChJDzcKEtnyXxzXzcjpH9CQ==
-  dependencies:
-    object-assign "^4.0.1"
+posthtml-attrs-parser@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/posthtml-attrs-parser/-/posthtml-attrs-parser-1.0.1.tgz#d2435b0cff4c65dfe1dd55055b66a195c21d886b"
+  integrity sha512-GEjJu/PApFm56HEQ8U2M6v5YQglS05FhXKftuuAhP8loNM6Peu1Njt1ykXWJdZ0Nq770YLql9zhvwbTW/szpWw==
 
 posthtml-match-helper@^1.0.3:
   version "1.0.3"
