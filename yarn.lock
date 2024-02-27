@@ -6722,10 +6722,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-3.1.3.tgz#6edc288e56bafa2f718ccc2c148360e0e09bd9f6"
   integrity sha512-RYntyg8eZsiW5Hq9tVO6qS/0TpDVT1Ivb0oIXAfuaieb+uIO6ZeqtRPhLuzpDhv+OZgVpE7+kyAoXWFuyUvdUg==
 
-"@spectrum-css/combobox@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.4.tgz#a450f4bd1088ee942c89bb34f9b414ff2c9e36cc"
-  integrity sha512-jDTYSwTlWKe8jkoXGBmspjIXSR+ZKWh0iVVoE8zoHCMO6u+BJuonmR6rlY/m67QEFZGnnBvvmqk++Sq0lOtiUg==
+"@spectrum-css/combobox@^2.1.3":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.5.tgz#b8a62e5094f9eb973eb6cab7079b4fcf96d1afc5"
+  integrity sha512-wmgqaUmWmtLc0fZqjubMiRA3jv6y2yK+lqX0GUvqoFQjAn4DIdgtwu+GK8XHbIOF2N/i+U3BExT0NRAmaOPEGw==
 
 "@spectrum-css/commons@^9.1.2":
   version "9.1.2"
