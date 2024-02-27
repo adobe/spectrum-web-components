@@ -6608,9 +6608,9 @@
   integrity sha512-sXXKG+uL9IrKqViTtao2Ws6dy0znu9sOaP1di/jKGW1M6VssO8vlpXCQcpZ+jisQ1tTFAC5Jo/EOzFbggBagFQ==
 
 "@spectrum-css/accordion@^4.2.2":
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-4.2.2.tgz#39ecb27dae68f1e780aa0e94e3562955996ecabd"
-  integrity sha512-DaOQr2Fh8/WcDXJntey6mNVqXGGKvxUYzgUGjaXQHU43iE+HPl/bEQNyVpOKywBs/mLWQxsP2GhNXCQM6/ViPg==
+  version "4.2.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-4.2.5.tgz#d64ee314ed35514bc3fec5eecc0c634ab8164db1"
+  integrity sha512-E//tNAEiqsJzCQp0CyjFHWx88l1lCN/qWn3QLOaQzed2hUytsOdHYn3oTyC5GBXz9109Egg7raYhECfiuE4CEA==
 
 "@spectrum-css/actionbar@^7.2.0":
   version "7.2.0"
@@ -6958,7 +6958,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.41.0"
+  version "0.41.1"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.17"
