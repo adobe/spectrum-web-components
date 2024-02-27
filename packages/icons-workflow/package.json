@@ -1,9 +1,7 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
     "version": "0.41.1",
-    "publishConfig": {
-        "access": "public"
-    },
+    "publishConfig": { "access": "public" },
     "description": "",
     "license": "Apache-2.0",
     "repository": {
@@ -19,14 +17,12 @@
     "main": "./src/index.js",
     "module": "./src/index.js",
     "type": "module",
-    "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./icons/*": "./icons/*",
-        "./package.json": "./package.json"
-    },
+    "exports": { "./package.json": "./package.json", ".": "./src/index.js" },
     "scripts": {
-        "build": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18"
+        "build": "yarn build:spectrum && yarn build:express && yarn postbuild",
+        "build:express": "node ./bin/build @adobe/spectrum-css-ccx-workflow-icons/dist/18 express",
+        "build:spectrum": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18",
+        "postbuild": "node ./bin/postbuild"
     },
     "files": [
         "**/*.d.ts",
@@ -43,6 +39,7 @@
         "@spectrum-web-components/icon": "^0.41.1"
     },
     "devDependencies": {
+        "@adobe/spectrum-css-ccx-workflow-icons": "1.0.2",
         "@adobe/spectrum-css-workflow-icons": "^1.5.4",
         "@spectrum-css/icon": "^6.0.2",
         "case": "^1.6.1",
