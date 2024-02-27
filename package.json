@@ -356,6 +356,7 @@
                 "packages/icons-workflow/stories/icon-manifest.ts",
                 "!packages/icons-workflow/test/**/*.ts",
                 "!packages/icons-workflow/src/index.ts",
+                "!packages/icons-workflow/src/icon-provider.ts",
                 "!packages/icons-workflow/src/custom-tag.ts"
             ],
             "clean": "if-file-deleted"

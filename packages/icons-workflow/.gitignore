@@ -3,3 +3,6 @@ src/icons.ts
 src/elements
 icons
 stories/icon-manifest.ts
+!bin/postbuild.js
+!icon-provider.js
+src/express
