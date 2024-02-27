@@ -1121,8 +1121,8 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]) #ramp + .handle {
-        fill: ButtonFace;
-        background-color: ButtonFace;
+        fill: buttonface;
+        background-color: buttonface;
     }
 }
 

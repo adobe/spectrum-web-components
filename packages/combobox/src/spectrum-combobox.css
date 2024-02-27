@@ -357,7 +357,7 @@ governing permissions and limitations under the License.
     }
 
     .button.spectrum-PickerButton--quiet .spectrum-PickerButton-icon {
-        color: CanvasText;
+        color: canvastext;
     }
 }
 

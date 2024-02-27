@@ -203,7 +203,7 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
-        border-color: CanvasText;
+        border-color: canvastext;
     }
 }
 

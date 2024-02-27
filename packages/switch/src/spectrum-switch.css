@@ -750,54 +750,54 @@ governing permissions and limitations under the License.
     }
 
     #input:not(:checked) + #switch {
-        box-shadow: inset 0 0 0 1px ButtonText;
+        box-shadow: inset 0 0 0 1px buttontext;
     }
 
     @media (hover: hover) {
         :host(:hover) #input:not(:checked) + #switch {
-            box-shadow: inset 0 0 0 1px Highlight;
+            box-shadow: inset 0 0 0 1px highlight;
         }
 
         :host([disabled][checked]:hover) #input + #switch,
         :host([disabled][checked]:hover) #input + #switch {
-            box-shadow: inset 0 0 0 1px GrayText;
-            background-color: GrayText;
+            background-color: graytext;
+            box-shadow: inset 0 0 0 1px graytext;
         }
 
         :host([disabled][checked]:hover) #input + #switch:before,
         :host([disabled][checked]:hover) #input + #switch:before {
-            border-color: GrayText;
-            background-color: ButtonFace;
+            background-color: buttonface;
+            border-color: graytext;
         }
     }
 
     :host([disabled]) #input:not(:checked) + #switch,
     :host([disabled]) #input:not(:checked) + #switch {
-        box-shadow: inset 0 0 0 1px GrayText;
-        background-color: ButtonFace;
+        background-color: buttonface;
+        box-shadow: inset 0 0 0 1px graytext;
     }
 
     :host([disabled]) #input:not(:checked) + #switch:before,
     :host([disabled]) #input:not(:checked) + #switch:before {
-        border-color: GrayText;
-        background-color: ButtonFace;
+        background-color: buttonface;
+        border-color: graytext;
     }
 
     :host([disabled][checked]) #input + #switch,
     :host([disabled][checked]) #input + #switch {
-        box-shadow: inset 0 0 0 1px GrayText;
-        background-color: GrayText;
+        background-color: graytext;
+        box-shadow: inset 0 0 0 1px graytext;
     }
 
     :host([disabled][checked]) #input + #switch:before,
     :host([disabled][checked]) #input + #switch:before {
-        border-color: GrayText;
-        background-color: ButtonFace;
+        background-color: buttonface;
+        border-color: graytext;
     }
 
     :host([disabled]) #input ~ #label,
     :host([disabled]) #input ~ #label {
-        color: GrayText;
+        color: graytext;
     }
 }
 

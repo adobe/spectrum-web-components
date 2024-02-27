@@ -398,6 +398,6 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
         --highcontrast-progressbar-fill-color: ButtonText;
         --highcontrast-progressbar-track-color: ButtonFace;
-        border: 1px solid ButtonText;
+        border: 1px solid buttontext;
     }
 }

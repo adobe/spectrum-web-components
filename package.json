@@ -164,7 +164,7 @@
         "husky": "^9.0.10",
         "latest-version": "^7.0.0",
         "lerna": "^6.6.2",
-        "lightningcss": "^1.19.0",
+        "lightningcss": "^1.24.0",
         "lit": "^2.5.0",
         "lit-analyzer": "^2.0.3",
         "lit-html": "^2.4.0",
