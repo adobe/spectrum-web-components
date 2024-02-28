@@ -944,7 +944,7 @@ sp-link:not(:defined) {
 
 .demo-container {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 1fr auto;
     gap: 16px;
     border: 1px solid rgb(63, 63, 63);
     border-radius: 6px;
@@ -971,7 +971,6 @@ sp-link:not(:defined) {
     border-left: 1px solid rgb(63, 63, 63);
     justify-content: center;
     padding: 16px;
-    gap: 16px;
 }
 
 .control-container {
@@ -989,6 +988,7 @@ sp-link:not(:defined) {
     gap: 16px;
     border-radius: 6px;
     margin: 2rem 0 0 0;
+    container-type: inline-size;
 }
 
 .usage-links :is(h2, h3) {
@@ -1010,7 +1010,7 @@ p:has([alt='See it on NPM!']) {
     display: none;
 }
 
-@media screen and (max-width: 960px) {
+@container (max-width: 848px) {
     .usage-links sp-card {
         flex-basis: calc(50%-16px);
     }
