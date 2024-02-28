@@ -471,9 +471,11 @@ governing permissions and limitations under the License.
     position: absolute;
     inset-block-start: 0;
 }
+
 #textfield.spectrum-Textfield--sideLabel .icon {
-    grid-area: 1/2 / span 1 / span 1;
+    grid-area: 1 / 2 / span 1 / span 1;
 }
+
 :host([valid]) #textfield .icon {
     color: var(
         --highcontrast-textfield-icon-color-valid,
@@ -489,6 +491,10 @@ governing permissions and limitations under the License.
     inset-block-end: var(
         --mod-textfield-icon-spacing-block-valid,
         var(--spectrum-textfield-icon-spacing-block-valid)
+    );
+    inset-inline-end: var(
+        --mod-textfield-icon-spacing-inline-end-valid,
+        var(--spectrum-textfield-icon-spacing-inline-end-valid)
     );
 }
 
@@ -515,10 +521,6 @@ governing permissions and limitations under the License.
     inset-block-end: var(
         --mod-textfield-icon-spacing-block-invalid,
         var(--spectrum-textfield-icon-spacing-block-invalid)
-    );
-    inset-inline-start: var(
-        --mod-textfield-icon-spacing-inline-start-invalid,
-        var(--spectrum-textfield-icon-spacing-inline-start-invalid)
     );
     inset-inline-end: var(
         --mod-textfield-icon-spacing-inline-end-invalid,
@@ -625,8 +627,8 @@ governing permissions and limitations under the License.
         --mod-textfield-min-width,
         var(--spectrum-textfield-min-width)
     );
-    outline: none;
-    padding-block-end: calc(
+    block-size: var(--mod-textfield-height, var(--spectrum-textfield-height));
+    padding-block-start: calc(
         var(
                 --mod-textfield-spacing-block-start,
                 var(--spectrum-textfield-spacing-block-start)
@@ -710,7 +712,6 @@ governing permissions and limitations under the License.
     grid-area: 2 / 1 / auto / span 2;
     inline-size: 100%;
     margin: 0;
-    overflow: visible;
 }
 
 .input::-ms-clear {
@@ -1256,6 +1257,7 @@ governing permissions and limitations under the License.
 :host([multiline][grows]) .input {
     grid-row: 2;
 }
+
 :host([multiline][grows]) .spectrum-Textfield--sideLabel .input {
     grid-row: 1;
 }

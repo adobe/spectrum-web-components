@@ -26,20 +26,9 @@ governing permissions and limitations under the License.
     --spectrum-tray-corner-radius: var(--spectrum-corner-radius-100);
     --spectrum-tray-background-color: var(--spectrum-background-layer-2-color);
 }
+
 .tray {
     --mod-modal-max-width: 100%;
-    background-color: var(
-        --highcontrast-tray-background-color,
-        var(--mod-tray-background-color, var(--spectrum-tray-background-color))
-    );
-    border-radius: var(--mod-tray-corner-radius-portrait, 0)
-        var(--mod-tray-corner-radius-portrait, 0) 0 0;
-    box-sizing: border-box;
-    inline-size: 100%;
-    margin-block-start: var(
-        --mod-tray-spacing-edge-to-tray-safe-zone,
-        var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
-    );
     max-block-size: calc(
         100vh -
             var(
@@ -47,18 +36,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
             )
     );
-    max-inline-size: 100%;
-    outline: none;
-    overflow: auto;
-    padding-block-end: var(
-        --mod-tray-bottom-to-content-area,
-        var(--spectrum-tray-top-to-content-area)
-    );
-    padding-block-start: var(
-        --mod-tray-top-to-content-area,
-        var(--spectrum-tray-top-to-content-area)
-    );
-    transform: translateY(100%);
+    box-sizing: border-box;
+    border-radius: var(--mod-tray-corner-radius-portrait, 0)
+        var(--mod-tray-corner-radius-portrait, 0) 0 0;
     transition: opacity
             var(
                 --mod-tray-exit-animation-duration,
@@ -101,6 +81,7 @@ governing permissions and limitations under the License.
     );
     outline: none;
     inline-size: 100%;
+    max-inline-size: 100%;
     margin-block-start: var(
         --mod-tray-spacing-edge-to-tray-safe-zone,
         var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
@@ -157,11 +138,13 @@ governing permissions and limitations under the License.
         );
     }
 }
+
 @media (forced-colors: active) {
     .tray {
         --highcontrast-tray-background-color: Canvas;
         border: solid;
     }
+
     .tray ::slotted(*) {
         border: none;
     }
