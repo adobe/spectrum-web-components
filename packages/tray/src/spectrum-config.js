@@ -61,6 +61,7 @@ const config = {
                     ],
                 },
                 converter.classToClass('spectrum-Tray', 'tray'),
+                converter.classToSlotted('spectrum-Dialog'),
                 converter.classToAttribute('is-open', 'open'),
             ],
             excludeByComponents: [builder.class('spectrum-Tray-wrapper')],

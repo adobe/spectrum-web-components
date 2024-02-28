@@ -139,7 +139,7 @@ governing permissions and limitations under the License.
         --highcontrast-tray-background-color: Canvas;
         border: solid;
     }
-    .tray .spectrum-Dialog {
+    .tray ::slotted(*) {
         border: none;
     }
 }
