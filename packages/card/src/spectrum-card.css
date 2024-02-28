@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-card-background-color: var(--spectrum-background-layer-2-color);
     --spectrum-card-body-spacing: var(--spectrum-spacing-400);
@@ -67,8 +68,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-card-selected-background-opacity: 0.1;
 }
-:host([variant='gallery']),
-:host([variant='quiet']) {
+
+:host([variant='quiet']),
+:host([variant='gallery']) {
     --mod-card-content-margin-top: var(
         --spectrum-card-content-margin-top-quiet,
         var(--spectrum-spacing-100)
@@ -79,9 +81,10 @@ governing permissions and limitations under the License.
     );
     --spectrum-card-preview-border-width: var(--spectrum-border-width-100);
 }
-:host([horizontal]),
+
+:host([variant='quiet']),
 :host([variant='gallery']),
-:host([variant='quiet']) {
+:host([horizontal]) {
     --mod-card-background-color: var(
         --spectrum-card-background-color-quiet,
         var(--spectrum-background-base-color)
@@ -91,9 +94,25 @@ governing permissions and limitations under the License.
         var(--spectrum-gray-300)
     );
 }
+
 :host {
     --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
     --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
+    box-sizing: border-box;
+    min-inline-size: var(
+        --mod-card-minimum-width,
+        var(--spectrum-card-minimum-width)
+    );
+    border: var(--mod-card-border-width, var(--spectrum-card-border-width))
+        solid transparent;
+    border-radius: var(
+        --mod-card-corner-radius,
+        var(--spectrum-card-corner-radius)
+    );
+    border-color: var(
+        --highcontrast-card-border-color,
+        var(--mod-card-border-color, var(--spectrum-card-border-color))
+    );
     background-color: var(
         --highcontrast-card-background-color,
         var(
@@ -101,46 +120,30 @@ governing permissions and limitations under the License.
             var(--spectrum-card-background-color)
         )
     );
-    border: var(--mod-card-border-width, var(--spectrum-card-border-width))
-        solid transparent;
-    border-color: var(
-        --highcontrast-card-border-color,
-        var(--mod-card-border-color, var(--spectrum-card-border-color))
-    );
-    border-radius: var(
-        --mod-card-corner-radius,
-        var(--spectrum-card-corner-radius)
-    );
-    box-sizing: border-box;
-    display: inline-flex;
     flex-direction: column;
-    min-inline-size: var(
-        --mod-card-minimum-width,
-        var(--spectrum-card-minimum-width)
-    );
-    position: relative;
-    -webkit-text-decoration: none;
     text-decoration: none;
+    display: inline-flex;
+    position: relative;
 }
+
 :host:before {
-    block-size: 100%;
     content: '';
+    block-size: 100%;
     inline-size: 100%;
+    position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
-    position: absolute;
 }
+
 :host:after {
-    block-size: 100%;
-    border: 0 solid #0000;
+    content: '';
     border-radius: var(
         --mod-card-corner-radius,
         var(--spectrum-card-corner-radius)
     );
-    content: '';
+    border: 0 solid #0000;
+    block-size: 100%;
     inline-size: 100%;
-    inset-block-start: 0;
-    inset-inline: 0;
     margin-block-start: calc(
         var(
                 --mod-card-focus-indicator-width,
@@ -154,59 +157,27 @@ governing permissions and limitations under the License.
             ) * -1
     );
     position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
 }
-:host(.focus-visible) {
-    outline: none;
-}
+
 :host(:focus-visible) {
     outline: none;
 }
-:host(.focus-visible):after {
-    border-color: var(
-        --mod-card-focus-indicator-color,
-        var(--spectrum-card-focus-indicator-color)
-    );
-    border-width: var(
-        --mod-card-focus-indicator-width,
-        var(--spectrum-card-focus-indicator-width)
-    );
-}
+
 :host(:focus-visible):after {
-    border-color: var(
-        --mod-card-focus-indicator-color,
-        var(--spectrum-card-focus-indicator-color)
-    );
     border-width: var(
         --mod-card-focus-indicator-width,
         var(--spectrum-card-focus-indicator-width)
     );
-}
-:host(.focus-visible) #cover-photo,
-:host(.focus-visible) #preview {
-    border-start-end-radius: calc(
-        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
-            var(
-                --mod-card-focus-indicator-width,
-                var(--spectrum-card-focus-indicator-width)
-            )
-    );
-    border-start-start-radius: calc(
-        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
-            var(
-                --mod-card-focus-indicator-width,
-                var(--spectrum-card-focus-indicator-width)
-            )
+    border-color: var(
+        --mod-card-focus-indicator-color,
+        var(--spectrum-card-focus-indicator-color)
     );
 }
+
 :host(:focus-visible) #cover-photo,
 :host(:focus-visible) #preview {
-    border-start-end-radius: calc(
-        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
-            var(
-                --mod-card-focus-indicator-width,
-                var(--spectrum-card-focus-indicator-width)
-            )
-    );
     border-start-start-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
             var(
@@ -214,7 +185,15 @@ governing permissions and limitations under the License.
                 var(--spectrum-card-focus-indicator-width)
             )
     );
+    border-start-end-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(
+                --mod-card-focus-indicator-width,
+                var(--spectrum-card-focus-indicator-width)
+            )
+    );
 }
+
 :host([selected]) {
     border-color: var(
         --highcontrast-card-border-color-selected,
@@ -224,6 +203,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([selected]):before {
     background-color: rgba(
         var(
@@ -236,14 +216,11 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([drop-target]) {
     --mod-card-background-color: var(
         --spectrum-card-background-color-quiet,
         var(--spectrum-background-base-color)
-    );
-    background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
     );
     border-color: var(
         --highcontrast-card-border-color-selected,
@@ -260,33 +237,25 @@ governing permissions and limitations under the License.
                 var(--spectrum-card-border-color-selected)
             )
         );
+    background-color: var(
+        --mod-card-background-color,
+        var(--spectrum-card-background-color)
+    );
 }
-:host(:focus) .actions,
-:host(:focus) .quick-actions,
-:host([focused]) .actions,
+
 :host([focused]) .quick-actions,
+:host([focused]) .actions,
+:host([selected]) .quick-actions,
 :host([selected]) .actions,
-:host([selected]) .quick-actions {
+:host(:focus) .quick-actions,
+:host(:focus) .actions {
+    visibility: visible;
     opacity: 1;
     pointer-events: all;
-    visibility: visible;
 }
+
 .quick-actions {
-    background-color: rgba(
-        var(
-            --mod-card-actions-background-color-rgb,
-            var(--spectrum-card-actions-background-color-rgb)
-        ),
-        var(
-            --mod-card-actions-background-color-opacity,
-            var(--spectrum-card-actions-background-color-opacity)
-        )
-    );
-    block-size: var(--mod-card-actions-size, var(--spectrum-card-actions-size));
-    border-radius: var(
-        --mod-card-actions-border-radius,
-        var(--spectrum-card-actions-border-radius)
-    );
+    visibility: hidden;
     box-shadow: var(
             --mod-card-actions-drop-shadow-x,
             var(--spectrum-card-actions-drop-shadow-x)
@@ -307,6 +276,22 @@ governing permissions and limitations under the License.
         --mod-card-actions-size,
         var(--spectrum-card-actions-size)
     );
+    block-size: var(--mod-card-actions-size, var(--spectrum-card-actions-size));
+    border-radius: var(
+        --mod-card-actions-border-radius,
+        var(--spectrum-card-actions-border-radius)
+    );
+    background-color: rgba(
+        var(
+            --mod-card-actions-background-color-rgb,
+            var(--spectrum-card-actions-background-color-rgb)
+        ),
+        var(
+            --mod-card-actions-background-color-opacity,
+            var(--spectrum-card-actions-background-color-opacity)
+        )
+    );
+    position: absolute;
     inset-block-start: calc(
         var(--mod-card-actions-spacing, var(--spectrum-card-actions-spacing)) -
             var(--mod-card-border-width, var(--spectrum-card-border-width))
@@ -315,9 +300,8 @@ governing permissions and limitations under the License.
         var(--mod-card-actions-spacing, var(--spectrum-card-actions-spacing)) -
             var(--mod-card-border-width, var(--spectrum-card-border-width))
     );
-    position: absolute;
-    visibility: hidden;
 }
+
 .actions {
     inset-block-start: var(
         --mod-card-actions-spacing,
@@ -328,56 +312,53 @@ governing permissions and limitations under the License.
         var(--spectrum-card-actions-spacing)
     );
 }
+
 #cover-photo {
-    align-items: center;
-    background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
-    );
-    background-position: 50%;
-    background-size: cover;
     block-size: var(
         --mod-card-preview-minimum-height,
         var(--spectrum-card-preview-minimum-height)
+    );
+    box-sizing: border-box;
+    background-position: center;
+    background-size: cover;
+    background-color: var(
+        --mod-card-background-color,
+        var(--spectrum-card-background-color)
     );
     border-block-end-color: var(
         --mod-card-border-color,
         var(--spectrum-card-border-color)
     );
-    border-end-end-radius: 0;
-    border-end-start-radius: 0;
-    border-start-end-radius: calc(
-        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
-    );
     border-start-start-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
             var(--mod-card-border-width, var(--spectrum-card-border-width))
     );
-    box-sizing: border-box;
-    display: flex;
+    border-start-end-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    );
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
     justify-content: center;
+    align-items: center;
+    display: flex;
     position: relative;
 }
+
 .spectrum-Divider {
     margin: 0;
 }
+
 .content {
     align-items: center;
-    display: flex;
     margin-block-start: var(
         --mod-card-content-margin-top,
         var(--spectrum-card-content-margin-top)
     );
+    display: flex;
 }
+
 .body {
-    padding-block-end: var(
-        --mod-card-body-padding-block-end,
-        calc(
-            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-                var(--mod-card-border-width, var(--spectrum-card-border-width))
-        )
-    );
     padding-block-start: var(
         --mod-card-body-padding-block-start,
         var(
@@ -385,8 +366,8 @@ governing permissions and limitations under the License.
             var(--spectrum-card-title-padding-top)
         )
     );
-    padding-inline-end: var(
-        --mod-card-body-padding-inline-end,
+    padding-block-end: var(
+        --mod-card-body-padding-block-end,
         calc(
             var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
                 var(--mod-card-border-width, var(--spectrum-card-border-width))
@@ -399,26 +380,35 @@ governing permissions and limitations under the License.
                 var(--mod-card-border-width, var(--spectrum-card-border-width))
         )
     );
+    padding-inline-end: var(
+        --mod-card-body-padding-inline-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
+    );
 }
+
 #preview {
-    align-items: center;
-    border-end-end-radius: 0;
-    border-end-start-radius: 0;
-    border-start-end-radius: var(
-        --mod-card-corner-radius,
-        var(--spectrum-card-corner-radius)
+    color: var(
+        --highcontrast-card-body-font-color,
+        var(--mod-card-body-font-color, var(--spectrum-card-body-font-color))
     );
     border-start-start-radius: var(
         --mod-card-corner-radius,
         var(--spectrum-card-corner-radius)
     );
-    color: var(
-        --highcontrast-card-body-font-color,
-        var(--mod-card-body-font-color, var(--spectrum-card-body-font-color))
+    border-start-end-radius: var(
+        --mod-card-corner-radius,
+        var(--spectrum-card-corner-radius)
     );
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+    align-items: center;
     display: flex;
     overflow: hidden;
 }
+
 .title {
     font-family: var(
         --mod-card-title-font-family,
@@ -428,37 +418,40 @@ governing permissions and limitations under the License.
         --mod-card-title-font-size,
         var(--spectrum-card-title-font-size)
     );
-    font-style: var(
-        --mod-card-title-font-style,
-        var(--spectrum-card-title-font-style)
-    );
     font-weight: var(
         --mod-card-title-font-weight,
         var(--spectrum-card-title-font-weight)
     );
+    font-style: var(
+        --mod-card-title-font-style,
+        var(--spectrum-card-title-font-style)
+    );
     line-height: var(
         --mod-card-title-line-height,
         var(--spectrum-card-title-line-height)
+    );
+    color: var(
+        --highcontrast-card-title-font-color,
+        var(--mod-card-title-font-color, var(--spectrum-card-title-font-color))
     );
     padding-inline-end: var(
         --mod-card-title-padding-right,
         var(--spectrum-card-title-padding-right)
     );
 }
-.subtitle,
-.title {
+
+.subtitle {
     color: var(
         --highcontrast-card-title-font-color,
         var(--mod-card-title-font-color, var(--spectrum-card-title-font-color))
     );
-}
-.subtitle {
+    text-transform: none;
     padding-inline-end: var(
         --mod-card-subtitle-padding-right,
         var(--spectrum-card-subtitle-padding-right)
     );
-    text-transform: none;
 }
+
 .subtitle + ::slotted([slot='description']):before {
     content: '•';
     padding-inline-end: var(
@@ -466,11 +459,8 @@ governing permissions and limitations under the License.
         var(--spectrum-card-subtitle-padding-right)
     );
 }
+
 ::slotted([slot='description']) {
-    color: var(
-        --highcontrast-card-body-font-color,
-        var(--mod-card-body-font-color, var(--spectrum-card-body-font-color))
-    );
     font-family: var(
         --mod-card-body-font-family,
         var(--spectrum-card-body-font-family)
@@ -479,25 +469,25 @@ governing permissions and limitations under the License.
         --mod-card-body-font-size,
         var(--spectrum-card-body-font-size)
     );
-    font-style: var(
-        --mod-card-body-font-style,
-        var(--spectrum-card-body-font-style)
-    );
     font-weight: var(
         --mod-card-body-font-weight,
         var(--spectrum-card-body-font-weight)
+    );
+    font-style: var(
+        --mod-card-body-font-style,
+        var(--spectrum-card-body-font-style)
     );
     line-height: var(
         --mod-card-body-line-height,
         var(--spectrum-card-body-line-height)
     );
+    color: var(
+        --highcontrast-card-body-font-color,
+        var(--mod-card-body-font-color, var(--spectrum-card-body-font-color))
+    );
 }
+
 ::slotted([slot='footer']) {
-    border-block-start: var(
-            --mod-card-border-width,
-            var(--spectrum-card-border-width)
-        )
-        solid var(--mod-card-divider-color, var(--spectrum-card-divider-color));
     color: var(
         --highcontrast-card-body-font-color,
         var(--mod-card-body-font-color, var(--spectrum-card-body-font-color))
@@ -506,6 +496,11 @@ governing permissions and limitations under the License.
         --mod-card-body-line-height,
         var(--spectrum-card-body-line-height)
     );
+    border-block-start: var(
+            --mod-card-border-width,
+            var(--spectrum-card-border-width)
+        )
+        solid var(--mod-card-divider-color, var(--spectrum-card-divider-color));
     margin-block-start: var(
         --mod-card-footer-margin-block-start,
         calc(
@@ -521,20 +516,13 @@ governing permissions and limitations under the License.
                 ) * -1
         )
     );
-    margin-inline-end: var(
-        --mod-card-footer-margin-inline-end,
-        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing))
-    );
     margin-inline-start: var(
         --mod-card-footer-margin-inline-start,
         var(--mod-card-body-spacing, var(--spectrum-card-body-spacing))
     );
-    padding-block-end: var(
-        --mod-card-footer-padding-block-end,
-        calc(
-            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
-                var(--mod-card-border-width, var(--spectrum-card-border-width))
-        )
+    margin-inline-end: var(
+        --mod-card-footer-margin-inline-end,
+        var(--mod-card-body-spacing, var(--spectrum-card-body-spacing))
     );
     padding-block-start: var(
         --mod-card-footer-padding-block-start,
@@ -543,18 +531,28 @@ governing permissions and limitations under the License.
             var(--spectrum-card-footer-padding-top)
         )
     );
+    padding-block-end: var(
+        --mod-card-footer-padding-block-end,
+        calc(
+            var(--mod-card-body-spacing, var(--spectrum-card-body-spacing)) -
+                var(--mod-card-border-width, var(--spectrum-card-border-width))
+        )
+    );
 }
+
 .header {
     align-items: center;
     display: flex;
 }
+
 .action-button {
-    align-self: center;
-    display: flex;
+    z-index: 1;
     flex: 1;
     justify-content: flex-end;
-    z-index: 1;
+    align-self: center;
+    display: flex;
 }
+
 :host([variant='quiet']) #preview {
     border: var(
             --mod-card-focus-indicator-width,
@@ -562,10 +560,12 @@ governing permissions and limitations under the License.
         )
         solid transparent;
 }
+
 :host([variant='quiet']:focus):after,
 :host([variant='quiet'][focused]):after {
     border-width: 0;
 }
+
 :host([variant='quiet']:focus) #preview:after,
 :host([variant='quiet'][focused]) #preview:after {
     border-color: var(
@@ -573,6 +573,7 @@ governing permissions and limitations under the License.
         var(--spectrum-card-focus-indicator-color)
     );
 }
+
 :host([variant='quiet'][selected]) #preview {
     border: var(
             --mod-card-preview-border-width,
@@ -587,62 +588,66 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='gallery']),
-:host([variant='quiet']) {
-    background-color: #0000;
-    block-size: 100%;
-    border-color: #0000;
-    border-radius: 0;
-    border-width: 0;
+
+:host([variant='quiet']),
+:host([variant='gallery']) {
     min-inline-size: var(
         --mod-card-minimum-width,
         var(--spectrum-card-minimum-width)
     );
+    background-color: #0000;
+    border-width: 0;
+    border-color: #0000;
+    border-radius: 0;
+    block-size: 100%;
     overflow: visible;
 }
-:host([variant='gallery']):before,
-:host([variant='quiet']):before {
+
+:host([variant='quiet']):before,
+:host([variant='gallery']):before {
     display: none;
 }
-:host([variant='gallery']) #preview,
-:host([variant='quiet']) #preview {
-    background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
-    );
+
+:host([variant='quiet']) #preview,
+:host([variant='gallery']) #preview {
     border-radius: var(
         --mod-card-corner-radius,
         var(--spectrum-card-corner-radius)
     );
-    box-sizing: border-box;
-    flex: 1;
-    inline-size: 100%;
-    margin: 0 auto;
+    background-color: var(
+        --mod-card-background-color,
+        var(--spectrum-card-background-color)
+    );
     min-block-size: var(
         --mod-card-preview-minimum-height,
         var(--spectrum-card-preview-minimum-height)
     );
-    overflow: visible;
-    position: relative;
+    box-sizing: border-box;
     transition: background-color
         var(
             --mod-animation-duration-100,
             var(--spectrum-animation-duration-100)
         );
-}
-:host([variant='gallery']) #preview:before,
-:host([variant='quiet']) #preview:before {
-    block-size: 100%;
-    content: '';
+    flex: 1;
     inline-size: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+}
+
+:host([variant='quiet']) #preview:before,
+:host([variant='gallery']) #preview:before {
+    content: '';
+    block-size: 100%;
+    inline-size: 100%;
+    position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
-    position: absolute;
 }
-:host([variant='gallery']) #preview:after,
-:host([variant='quiet']) #preview:after {
-    block-size: 100%;
-    border: 0 solid #0000;
+
+:host([variant='quiet']) #preview:after,
+:host([variant='gallery']) #preview:after {
+    content: '';
     border-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) +
             var(
@@ -650,10 +655,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-card-focus-indicator-width)
             )
     );
-    content: '';
+    border: 0 solid #0000;
+    block-size: 100%;
     inline-size: 100%;
-    inset-block-start: 0;
-    inset-inline: 0;
     margin-block-start: calc(
         var(
                 --mod-card-focus-indicator-width,
@@ -667,23 +671,28 @@ governing permissions and limitations under the License.
             ) * -1
     );
     position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
 }
-:host([variant='gallery'][drop-target]),
-:host([variant='quiet'][drop-target]) {
+
+:host([variant='quiet'][drop-target]),
+:host([variant='gallery'][drop-target]) {
+    box-shadow: none;
     background-color: #0000;
     border-color: #0000;
-    box-shadow: none;
 }
-:host([variant='gallery'][drop-target]) #preview,
-:host([variant='quiet'][drop-target]) #preview {
+
+:host([variant='quiet'][drop-target]) #preview,
+:host([variant='gallery'][drop-target]) #preview {
     background-color: var(
         --mod-card-background-color,
         var(--spectrum-card-background-color)
     );
     transition: none;
 }
-:host([variant='gallery'][drop-target]) #preview:before,
-:host([variant='quiet'][drop-target]) #preview:before {
+
+:host([variant='quiet'][drop-target]) #preview:before,
+:host([variant='gallery'][drop-target]) #preview:before {
     border-color: var(
         --mod-card-focus-indicator-color,
         var(--spectrum-card-focus-indicator-color)
@@ -694,8 +703,9 @@ governing permissions and limitations under the License.
             var(--spectrum-card-focus-indicator-color)
         );
 }
-:host([variant='gallery'][selected]) #preview:before,
-:host([variant='quiet'][selected]) #preview:before {
+
+:host([variant='quiet'][selected]) #preview:before,
+:host([variant='gallery'][selected]) #preview:before {
     background-color: rgba(
         var(
             --mod-card-selected-background-color-rgb,
@@ -707,28 +717,33 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([variant='gallery']) .body,
-:host([variant='quiet']) .body {
+
+:host([variant='quiet']) .body,
+:host([variant='gallery']) .body {
     margin-block-start: var(
         --mod-card-content-margin-top,
         var(--spectrum-card-content-margin-top)
     );
     padding: 0;
 }
-:host([variant='gallery']) ::slotted([slot='footer']),
-:host([variant='quiet']) ::slotted([slot='footer']) {
+
+:host([variant='quiet']) ::slotted([slot='footer']),
+:host([variant='gallery']) ::slotted([slot='footer']) {
     margin-inline: 0;
 }
+
 :host([horizontal]) {
     flex-direction: row;
 }
+
 @media (hover: hover) {
-    :host(:hover) .actions,
-    :host(:hover) .quick-actions {
+    :host(:hover) .quick-actions,
+    :host(:hover) .actions {
+        visibility: visible;
         opacity: 1;
         pointer-events: all;
-        visibility: visible;
     }
+
     :host(:hover) {
         border-color: var(
             --highcontrast-card-border-color-hover,
@@ -738,17 +753,20 @@ governing permissions and limitations under the License.
             )
         );
     }
-    :host([variant='gallery']:hover),
-    :host([variant='quiet']:hover) {
+
+    :host([variant='quiet']:hover),
+    :host([variant='gallery']:hover) {
         border-color: #0000;
     }
-    :host([variant='gallery']:hover) #preview,
-    :host([variant='quiet']:hover) #preview {
+
+    :host([variant='quiet']:hover) #preview,
+    :host([variant='gallery']:hover) #preview {
         background-color: var(
             --mod-card-background-color-hover,
             var(--spectrum-card-background-color-hover)
         );
     }
+
     :host([horizontal]:hover) #preview {
         border-color: var(
             --mod-card-border-color-hover,
@@ -756,8 +774,12 @@ governing permissions and limitations under the License.
         );
     }
 }
+
 :host([horizontal]) #preview {
-    align-items: center;
+    padding: var(
+        --mod-card-horizontal-preview-padding,
+        var(--spectrum-card-horizontal-preview-padding)
+    );
     background-color: var(
         --mod-card-background-color,
         var(--spectrum-card-background-color)
@@ -766,50 +788,53 @@ governing permissions and limitations under the License.
         --mod-card-border-color,
         var(--spectrum-card-border-color)
     );
+    border-start-start-radius: calc(
+        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
+            var(--mod-card-border-width, var(--spectrum-card-border-width))
+    );
+    border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
             var(--mod-card-border-width, var(--spectrum-card-border-width))
     );
-    border-start-end-radius: 0;
-    border-start-start-radius: calc(
-        var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) -
-            var(--mod-card-border-width, var(--spectrum-card-border-width))
-    );
-    display: flex;
     flex-shrink: 0;
     justify-content: center;
+    align-items: center;
     min-block-size: 0;
-    padding: var(
-        --mod-card-horizontal-preview-padding,
-        var(--spectrum-card-horizontal-preview-padding)
-    );
+    display: flex;
 }
-:host([horizontal]) .content,
-:host([horizontal]) .header {
+
+:host([horizontal]) .header,
+:host([horizontal]) .content {
     block-size: auto;
     margin-block-start: 0;
 }
+
 :host([horizontal]) .content {
     margin-block-end: 0;
 }
+
 :host([horizontal]) .title {
     padding-inline-end: 0;
 }
+
 :host([horizontal]) .body {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    justify-content: center;
     padding-block: 0;
     padding-inline: var(
         --mod-card-horizontal-body-padding,
         var(--spectrum-card-horizontal-body-padding)
     );
+    flex-direction: column;
+    flex-shrink: 0;
+    justify-content: center;
+    display: flex;
 }
+
 :host([variant='gallery']) {
     min-inline-size: 0;
 }
+
 :host([variant='gallery']) #preview {
     border-radius: 0;
     padding: 0;

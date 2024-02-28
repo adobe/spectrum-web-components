@@ -13,7 +13,6 @@ custom-elements.json
 
 // typescript build artifacts
 src/*.js
-!src/postcss.config.js
 src/*.js.map
 src/components/*.js
 src/components/*.js.map

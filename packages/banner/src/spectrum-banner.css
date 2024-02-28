@@ -16,7 +16,22 @@ governing permissions and limitations under the License.
         --spectrum-banner-border-radius,
         var(--spectrum-global-dimension-static-size-100)
     );
-    display: inline-block;
+    padding-top: var(
+        --spectrum-banner-padding-y,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    padding-bottom: var(
+        --spectrum-banner-padding-y,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    padding-left: var(
+        --spectrum-banner-padding-x,
+        var(--spectrum-global-dimension-static-size-100)
+    );
+    padding-right: var(
+        --spectrum-banner-padding-x,
+        var(--spectrum-global-dimension-static-size-100)
+    );
     font-size: var(
         --spectrum-banner-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -25,46 +40,47 @@ governing permissions and limitations under the License.
         --spectrum-banner-text-line-height,
         var(--spectrum-alias-heading-text-line-height)
     );
-    padding: var(
-            --spectrum-banner-padding-y,
-            var(--spectrum-global-dimension-static-size-50)
-        )
-        var(
-            --spectrum-banner-padding-x,
-            var(--spectrum-global-dimension-static-size-100)
-        );
+    display: inline-block;
 }
+
 #header {
-    font-weight: 700;
+    font-weight: bold;
 }
+
 :host([dir='ltr'][corner]) {
     right: -10px;
 }
+
 :host([dir='rtl'][corner]) {
     left: -10px;
 }
+
 :host([corner]) {
     position: absolute;
     top: -10px;
 }
+
 :host {
     color: var(
         --spectrum-banner-text-color,
         var(--spectrum-global-color-static-white)
     );
 }
+
 :host([type='info']) {
     background-color: var(
         --spectrum-banner-info-background-color,
         var(--spectrum-semantic-informative-color-default)
     );
 }
+
 :host([type='warning']) {
     background-color: var(
         --spectrum-banner-warning-background-color,
         var(--spectrum-semantic-notice-color-default)
     );
 }
+
 :host([type='error']) {
     background-color: var(
         --spectrum-banner-error-background-color,

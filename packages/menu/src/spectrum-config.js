@@ -72,6 +72,13 @@ const config = {
                     regex: /spectrum-Menu--size/,
                 },
             ],
+            excludeByWholeSelector: [
+                [
+                    builder.class('spectrum-Menu-item'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Menu-item'),
+                ],
+            ],
             components: [
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
@@ -383,6 +390,7 @@ const config = {
                     name: 'regex',
                     regex: /spectrum-Menu-chevron/,
                 },
+                builder.element('li'),
             ],
             includeByWholeSelector: [
                 /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */

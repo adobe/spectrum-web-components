@@ -312,7 +312,9 @@ export class StoryDecorator extends SpectrumElement {
 
     private get themeControl(): TemplateResult {
         return html`
-            <sp-field-label for="theme">Spectrum</sp-field-label>
+            <sp-field-label side-aligned="start" for="theme">
+                Spectrum
+            </sp-field-label>
             <sp-picker
                 id="theme"
                 placement="top"
@@ -328,7 +330,9 @@ export class StoryDecorator extends SpectrumElement {
 
     private get colorControl(): TemplateResult {
         return html`
-            <sp-field-label for="color">Theme</sp-field-label>
+            <sp-field-label side-aligned="start" for="color">
+                Theme
+            </sp-field-label>
             <sp-picker
                 id="color"
                 placement="top"
@@ -346,7 +350,9 @@ export class StoryDecorator extends SpectrumElement {
 
     private get scaleControl(): TemplateResult {
         return html`
-            <sp-field-label for="scale">Scale</sp-field-label>
+            <sp-field-label side-aligned="start" for="scale">
+                Scale
+            </sp-field-label>
             <sp-picker
                 id="scale"
                 label="Scale"
@@ -363,7 +369,9 @@ export class StoryDecorator extends SpectrumElement {
 
     private get dirControl(): TemplateResult {
         return html`
-            <sp-field-label for="dir">Direction</sp-field-label>
+            <sp-field-label side-aligned="start" for="dir">
+                Direction
+            </sp-field-label>
             <sp-picker
                 id="dir"
                 label="Direction"

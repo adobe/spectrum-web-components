@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+### Bug Fixes
+
+-   **slider:** revert handle ui at min/max values ([#4042](https://github.com/adobe/spectrum-web-components/issues/4042)) ([da13af7](https://github.com/adobe/spectrum-web-components/commit/da13af78feb313a2c0aade65f87404cfa81fac72))
+
 # [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
 
 ### Bug Fixes

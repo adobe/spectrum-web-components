@@ -11,39 +11,41 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
-    align-items: center;
-    block-size: -webkit-fill-available;
-    block-size: -moz-available;
-    block-size: stretch;
     box-sizing: border-box;
-    display: flex;
-    inline-size: 100vw;
-    justify-content: center;
-    left: 0;
+    visibility: hidden;
     pointer-events: none;
-    position: fixed;
-    top: 0;
+    z-index: 2;
     transition: visibility 0s linear
         var(
             --mod-modal-transition-animation-duration,
             var(--spectrum-modal-transition-animation-duration)
         );
-    visibility: hidden;
-    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    block-size: stretch;
+    inline-size: 100vw;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
+
 :host([open]) {
     visibility: visible;
 }
-@media only screen and (device-height <= 350px),
-    only screen and (device-width <= 400px) {
+
+@media only screen and (device-width <= 400px),
+    only screen and (device-height <= 350px) {
     :host([responsive]) {
-        border-radius: 0;
         inline-size: 100%;
         height: 100%;
         max-inline-size: 100%;
+        border-radius: 0;
         max-height: 100%;
     }
+
     :host([responsive]) {
         margin-top: 0;
     }

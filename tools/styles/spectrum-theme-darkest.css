@@ -1,7 +1,7 @@
-:host,
-:root {
+:root,
+:host {
     --spectrum-global-color-status: Verified;
-    --spectrum-global-color-version: 5.1.0;
+    --spectrum-global-color-version: 5.1;
     --spectrum-global-color-opacity-100: 1;
     --spectrum-global-color-opacity-90: 0.9;
     --spectrum-global-color-opacity-80: 0.8;
@@ -267,20 +267,20 @@
     --spectrum-alias-background-color-tertiary: var(
         --spectrum-global-color-gray-50
     );
-    --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.6);
-    --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.8);
-    --spectrum-alias-background-color-hover-overlay: hsla(0, 0%, 100%, 0.08);
-    --spectrum-alias-highlight-hover: hsla(0, 0%, 100%, 0.08);
-    --spectrum-alias-highlight-down: hsla(0, 0%, 100%, 0.15);
-    --spectrum-alias-highlight-selected: rgba(64, 150, 243, 0.2);
-    --spectrum-alias-highlight-selected-hover: rgba(64, 150, 243, 0.3);
-    --spectrum-alias-text-highlight-color: rgba(64, 150, 243, 0.3);
-    --spectrum-alias-background-color-quickactions: rgba(29, 29, 29, 0.9);
+    --spectrum-alias-background-color-modal-overlay: #0009;
+    --spectrum-alias-dropshadow-color: #000c;
+    --spectrum-alias-background-color-hover-overlay: #ffffff14;
+    --spectrum-alias-highlight-hover: #ffffff14;
+    --spectrum-alias-highlight-down: #ffffff26;
+    --spectrum-alias-highlight-selected: #4096f333;
+    --spectrum-alias-highlight-selected-hover: #4096f34d;
+    --spectrum-alias-text-highlight-color: #4096f34d;
+    --spectrum-alias-background-color-quickactions: #1d1d1de6;
     --spectrum-alias-border-color-selected: var(
         --spectrum-global-color-blue-600
     );
-    --spectrum-alias-border-color-translucent: hsla(0, 0%, 100%, 0.1);
-    --spectrum-alias-radial-reaction-color-default: hsla(0, 0%, 92%, 0.6);
+    --spectrum-alias-border-color-translucent: #ffffff1a;
+    --spectrum-alias-radial-reaction-color-default: #ebebeb99;
     --spectrum-alias-pasteboard-background-color: var(
         --spectrum-global-color-gray-50
     );
@@ -290,14 +290,4 @@
     --spectrum-alias-appframe-separator-color: var(
         --spectrum-global-color-gray-50
     );
-    --spectrum-scrollbar-mac-s-track-background-color: var(
-        --spectrum-global-color-gray-100
-    );
-    --spectrum-scrollbar-mac-m-track-background-color: var(
-        --spectrum-global-color-gray-100
-    );
-    --spectrum-scrollbar-mac-l-track-background-color: var(
-        --spectrum-global-color-gray-100
-    );
-    --spectrum-well-background-color: hsla(0, 0%, 92%, 0.02);
 }

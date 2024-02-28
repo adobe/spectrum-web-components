@@ -15,6 +15,7 @@ import {
     CSSResult,
     CSSResultArray,
     html,
+    PropertyValueMap,
     PropertyValues,
     SizedMixin,
     TemplateResult,
@@ -229,7 +230,9 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return {};
     }
 
-    protected override manageAutoFocus(): void {
+    override async getUpdateComplete(): Promise<boolean> {
+        const complete = await super.getUpdateComplete();
+
         const tabs = [...this.children] as Tab[];
         const tabUpdateCompletes = tabs.map((tab) => {
             if (typeof tab.updateComplete !== 'undefined') {
@@ -237,7 +240,31 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
             }
             return Promise.resolve(true);
         });
-        Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
+
+        await Promise.all(tabUpdateCompletes);
+        return complete;
+    }
+
+    public async scrollToSelection(): Promise<void> {
+        if (!this.enableTabsScroll || !this.selected) {
+            return;
+        }
+
+        await this.updateComplete;
+        const selectedTab = this.tabs.find(
+            (tab) => tab.value === this.selected
+        );
+        selectedTab?.scrollIntoView();
+    }
+
+    protected override updated(
+        changedProperties: PropertyValueMap<this>
+    ): void {
+        super.updated(changedProperties);
+
+        if (changedProperties.has('selected')) {
+            this.scrollToSelection();
+        }
     }
 
     protected managePanels({

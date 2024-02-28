@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+### Bug Fixes
+
+-   **picker:** correct implementation of "disabled", expand stories and documentation ([#4040](https://github.com/adobe/spectrum-web-components/issues/4040)) ([84c2fef](https://github.com/adobe/spectrum-web-components/commit/84c2fef72cb8be6d77ce62c21ed6d9d0d866d849))
+
 # [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
 
 ### Features

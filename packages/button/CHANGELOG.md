@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+### Bug Fixes
+
+-   **progress-circle:** ensure size can be applied to non-"size" attribute bearing elements ([2bc1065](https://github.com/adobe/spectrum-web-components/commit/2bc10652ff9d7337c15eb8b3704678d0f2c700c9))
+
 # [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
 
 ### Features

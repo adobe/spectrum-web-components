@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-100);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-100);
@@ -181,6 +182,7 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-item-focus-indicator-width)
     );
 }
+
 :host([size='s']) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-75);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-75);
@@ -220,6 +222,7 @@ governing permissions and limitations under the License.
         --spectrum-navigational-indicator-top-to-back-icon-small
     );
 }
+
 :host([size='l']) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-200);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-200);
@@ -259,6 +262,7 @@ governing permissions and limitations under the License.
         --spectrum-navigational-indicator-top-to-back-icon-large
     );
 }
+
 :host([size='xl']) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-300);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-300);
@@ -298,6 +302,7 @@ governing permissions and limitations under the License.
         --spectrum-navigational-indicator-top-to-back-icon-extra-large
     );
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-menu-item-background-color-default: ButtonFace;
@@ -310,6 +315,7 @@ governing permissions and limitations under the License.
         --highcontrast-menu-item-selected-background-color: Highlight;
         --highcontrast-menu-item-selected-color: HighlightText;
     }
+
     @supports (color: SelectedItem) {
         :host {
             --highcontrast-menu-item-selected-background-color: SelectedItem;
@@ -317,18 +323,20 @@ governing permissions and limitations under the License.
         }
     }
 }
+
 :host {
-    box-sizing: border-box;
-    display: inline-block;
     inline-size: var(--mod-menu-inline-size, auto);
-    list-style-type: none;
+    box-sizing: border-box;
     margin: 0;
-    overflow: auto;
     padding: 0;
+    list-style-type: none;
+    display: inline-block;
+    overflow: auto;
 }
+
 :host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
+:host:lang(zh),
+:host:lang(ko) {
     --spectrum-menu-item-label-line-height: var(
         --mod-menu-item-label-line-height-cjk,
         var(--spectrum-menu-item-label-line-height-cjk)
@@ -342,6 +350,7 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-section-header-line-height-cjk)
     );
 }
+
 :host([selects]) ::slotted(sp-menu-item) {
     --spectrum-menu-checkmark-display: var(
         --spectrum-menu-checkmark-display-hidden
@@ -351,6 +360,7 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-selectable-edge-to-text-not-selected)
     );
 }
+
 :host([selects]) ::slotted(sp-menu-item[selected]) {
     --spectrum-menu-checkmark-display: var(
         --spectrum-menu-checkmark-display-shown
@@ -360,31 +370,7 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
 }
-li:not(::slotted(sp-menu-item), .menu-divider) {
-    box-sizing: border-box;
-    display: block;
-    margin: 0;
-    padding: 0;
-    position: relative;
-}
-.spectrum-Menu-back.focus-visible {
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) *
-                var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
-}
+
 .spectrum-Menu-back:focus-visible {
     box-shadow: inset
         calc(
@@ -403,6 +389,7 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
             )
         );
 }
+
 .spectrum-Menu-sectionHeading {
     color: var(
         --highcontrast-menu-item-color-default,
@@ -411,7 +398,6 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
             var(--spectrum-menu-section-header-color)
         )
     );
-    display: block;
     font-size: var(
         --mod-menu-section-header-font-size,
         var(--spectrum-menu-section-header-font-size)
@@ -420,7 +406,6 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
         --mod-menu-section-header-font-weight,
         var(--spectrum-menu-section-header-font-weight)
     );
-    grid-area: sectionHeadingArea/1/sectionHeadingArea/-1;
     line-height: var(
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
@@ -429,13 +414,6 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
         --mod-menu-section-header-min-width,
         var(--spectrum-menu-section-header-min-width)
     );
-    padding-block-end: var(
-        --mod-menu-section-header-bottom-edge-to-text,
-        var(
-            --mod-menu-item-bottom-edge-to-text,
-            var(--spectrum-menu-item-bottom-edge-to-text)
-        )
-    );
     padding-block-start: var(
         --mod-menu-section-header-top-edge-to-text,
         var(
@@ -443,41 +421,47 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
             var(--spectrum-menu-item-top-edge-to-text)
         )
     );
+    padding-block-end: var(
+        --mod-menu-section-header-bottom-edge-to-text,
+        var(
+            --mod-menu-item-bottom-edge-to-text,
+            var(--spectrum-menu-item-bottom-edge-to-text)
+        )
+    );
     padding-inline: var(
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
+    grid-area: sectionHeadingArea / 1 / sectionHeadingArea / -1;
+    display: block;
 }
+
 .spectrum-Menu-back {
-    align-items: center;
-    display: flex;
-    flex-flow: wrap;
-    padding-block: var(--mod-menu-back-padding-block-start, 0)
-        var(--mod-menu-back-padding-block-end, 0);
     padding-inline: var(--mod-menu-back-padding-inline-start, 0)
         var(
             --mod-menu-back-padding-inline-end,
             var(--spectrum-menu-item-label-inline-edge-to-content)
         );
+    padding-block: var(--mod-menu-back-padding-block-start, 0)
+        var(--mod-menu-back-padding-block-end, 0);
+    flex-flow: wrap;
+    align-items: center;
+    display: flex;
 }
+
 .spectrum-Menu-back .spectrum-Menu-sectionHeading {
     padding: 0;
 }
+
 .spectrum-Menu-backButton {
+    cursor: pointer;
     background: none;
     border: 0;
-    cursor: pointer;
-    display: inline-flex;
     margin: 0;
     padding: 0;
+    display: inline-flex;
 }
-.spectrum-Menu-backButton.focus-visible {
-    outline: var(--spectrum-focus-indicator-thickness) solid
-        var(--spectrum-focus-indicator-color);
-    outline-offset: calc(
-        (var(--spectrum-focus-indicator-thickness) + 1px) * -1
-    );
-}
+
 .spectrum-Menu-backButton:focus-visible {
     outline: var(--spectrum-focus-indicator-thickness) solid
         var(--spectrum-focus-indicator-color);
@@ -485,6 +469,7 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
         (var(--spectrum-focus-indicator-thickness) + 1px) * -1
     );
 }
+
 .spectrum-Menu-backHeading {
     color: var(
         --highcontrast-menu-item-color-default,
@@ -493,7 +478,6 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
             var(--spectrum-menu-section-header-color)
         )
     );
-    display: block;
     font-size: var(
         --mod-menu-section-header-font-size,
         var(--spectrum-menu-section-header-font-size)
@@ -506,7 +490,9 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
     );
+    display: block;
 }
+
 .spectrum-Menu-backIcon {
     margin-block: var(
         --mod-menu-back-icon-margin-block,
