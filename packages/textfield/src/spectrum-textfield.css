@@ -492,9 +492,9 @@ governing permissions and limitations under the License.
         --mod-textfield-icon-spacing-block-valid,
         var(--spectrum-textfield-icon-spacing-block-valid)
     );
-    inset-inline-end: var(
-        --mod-textfield-icon-spacing-inline-end-valid,
-        var(--spectrum-textfield-icon-spacing-inline-end-valid)
+    inset-block-end: var(
+        --mod-textfield-icon-spacing-block-valid,
+        var(--spectrum-textfield-icon-spacing-block-valid)
     );
 }
 
