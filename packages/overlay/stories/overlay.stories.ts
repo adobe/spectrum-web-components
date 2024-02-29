@@ -173,6 +173,7 @@ const template = ({
                         min="0"
                         max="20"
                         label="Awesomeness"
+                        default-value="10"
                     ></sp-slider>
                     <div id="styled-div">
                         The background of this div should be blue

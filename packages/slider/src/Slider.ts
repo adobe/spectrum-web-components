@@ -554,8 +554,4 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             }
         }
     }
-
-    protected override firstUpdated(changes: PropertyValues<this>): void {
-        super.firstUpdated(changes);
-    }
 }

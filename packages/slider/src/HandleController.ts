@@ -347,7 +347,7 @@ export class HandleController {
      */
     public handleDoubleClick(event: PointerEvent): void {
         const { input } = this.extractDataFromEvent(event);
-        if (input.model?.handle.defaultValue) {
+        if (input.model?.handle.defaultValue !== undefined) {
             input.model.handle.value = input.model.handle.defaultValue;
             this.dispatchChangeEvent(input, input.model.handle);
             this.requestUpdate();
@@ -449,13 +449,14 @@ export class HandleController {
         if (event.key == 'Escape') {
             const input = event.target as InputWithModel;
             if (
-                input.model.handle?.defaultValue &&
+                input.model.handle?.defaultValue !== undefined &&
                 input.model.handle.value !== input.model.handle.defaultValue
             ) {
                 input.model.handle.value = input.model.handle.defaultValue;
                 this.dispatchChangeEvent(input, input.model.handle);
                 this.requestUpdate();
                 event.preventDefault();
+                event.stopPropagation();
             }
             return;
         }
@@ -555,10 +556,10 @@ export class HandleController {
                     @keydown=${this.onInputKeydown}
                     .model=${model}
                 />
-                <p id="sliderDesc" class="visually-hidden">
+                <span id="sliderDesc" style="display:none">
                     Press escape or double click to reset the slider to its
                     default value.
-                </p>
+                </span>
             </div>
         `;
     }

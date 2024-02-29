@@ -12,6 +12,9 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { Slider, SliderHandle } from '@spectrum-web-components/slider';
 import { tick } from '../stories/slider.stories.js';
 import {
@@ -1604,7 +1607,6 @@ describe('Slider', () => {
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
     });
     it('resets to default value on double click after moving pointer', async () => {
-        let pointerId = -1;
         const el = await fixture<Slider>(
             html`
                 <sp-slider
@@ -1616,46 +1618,45 @@ describe('Slider', () => {
         );
         await elementUpdated(el);
         expect(el.value, 'initial').to.equal(50);
-        expect(pointerId).to.equal(-1);
-        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        el.track.setPointerCapture = (id: number) => (pointerId = id);
-        el.track.releasePointerCapture = (id: number) => (pointerId = id);
 
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        const handleBoundingRect = handle.getBoundingClientRect();
+        const position: [number, number] = [
+            handleBoundingRect.x + handleBoundingRect.width / 2,
+            handleBoundingRect.y + handleBoundingRect.height / 2,
+        ];
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: [9, 30],
+                    position,
                 },
                 {
                     type: 'down',
                 },
             ],
         });
+
         await elementUpdated(el);
-
-        handle.dispatchEvent(
-            new PointerEvent('pointermove', {
-                clientX: 0,
-                cancelable: true,
-                bubbles: true,
-                composed: true,
-            })
-        );
-
-        handle.dispatchEvent(
-            new PointerEvent('pointerup', {
-                clientX: 0,
-                cancelable: true,
-                composed: true,
-                bubbles: true,
-            })
-        );
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        150,
+                        handleBoundingRect.y + handleBoundingRect.height + 100,
+                    ],
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
 
         await elementUpdated(el);
 
-        // since we've moved the pointer, the new value should be 0
-        expect(el.value).to.equal(0);
+        // since we've moved the pointer, the new value should be 100
+        expect(el.value).to.equal(100);
 
         handle.dispatchEvent(
             new PointerEvent('dblclick', {
@@ -1673,5 +1674,60 @@ describe('Slider', () => {
             el.value,
             'reset to default value on double click after moving pointer'
         ).to.equal(50);
+    });
+    it('manages escape key interactions correctly in an overlaid context', async () => {
+        const el = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <sp-button id="trigger">Overlay Trigger</sp-button>
+                    <sp-overlay trigger="trigger@click" placement="bottom">
+                        <sp-popover>
+                            <sp-slider
+                                style="width: 100px"
+                                value="70"
+                                default-value="50"
+                            ></sp-slider>
+                        </sp-popover>
+                    </sp-overlay>
+                </div>
+            `
+        );
+
+        await elementUpdated(el);
+
+        // open the overlay
+        const trigger = el.querySelector('#trigger') as HTMLButtonElement;
+        trigger.click();
+
+        await elementUpdated(el);
+
+        // current slider value should be 70
+        const slider = el.querySelector('sp-slider') as Slider;
+        expect(slider.value).to.equal(70);
+
+        slider.focus();
+        // send escape key
+        await sendKeys({
+            press: 'Escape',
+        });
+
+        await elementUpdated(el);
+
+        // now the slider value should be 50
+        expect(slider.value).to.equal(50);
+
+        // and the overlay should be in open state
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+        expect(overlay.open).to.be.true;
+
+        // send escape key again
+        await sendKeys({
+            press: 'Escape',
+        });
+
+        await elementUpdated(el);
+
+        // now the overlay should be closed
+        expect(overlay.open).to.be.false;
     });
 });

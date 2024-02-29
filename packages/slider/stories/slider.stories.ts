@@ -67,6 +67,7 @@ export default {
         variant: undefined,
         tickStep: 0.1,
         labelVisibility: undefined,
+        defaultValue: 0.3,
     },
 };
 
@@ -160,7 +161,6 @@ export const HasADefaultValue = (args: StoryArgs = {}): TemplateResult => {
                 min="0"
                 value=".5"
                 step="0.01"
-                default-value="0.2"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
