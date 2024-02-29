@@ -346,7 +346,10 @@ export class HandleController {
      * @param event
      */
     public handleDoubleClick(event: PointerEvent): void {
-        const { input } = this.extractDataFromEvent(event);
+        const input = (event.target as Element).querySelector(
+            '.input'
+        ) as InputWithModel;
+
         if (input.model?.handle.defaultValue !== undefined) {
             input.model.handle.value = input.model.handle.defaultValue;
             this.dispatchChangeEvent(input, input.model.handle);

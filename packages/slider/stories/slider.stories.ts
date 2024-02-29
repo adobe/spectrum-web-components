@@ -67,7 +67,6 @@ export default {
         variant: undefined,
         tickStep: 0.1,
         labelVisibility: undefined,
-        defaultValue: 0.3,
     },
 };
 
@@ -161,6 +160,7 @@ export const HasADefaultValue = (args: StoryArgs = {}): TemplateResult => {
                 min="0"
                 value=".5"
                 step="0.01"
+                default-value="0.2"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
@@ -416,6 +416,37 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
 };
 
 editable.decorators = [editableDecorator];
+
+export const editableWithDefaultValue = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="360"
+                min="0"
+                value="90"
+                step="1"
+                default-value="180"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'degree',
+                    unitDisplay: 'narrow',
+                }}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableWithDefaultValue.swc_vrt = {
+    skip: true,
+};
 
 export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {
     return html`
