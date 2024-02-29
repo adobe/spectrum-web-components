@@ -426,18 +426,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     import(
                         '@spectrum-web-components/progress-circle/sp-progress-circle.js'
                     );
+                    // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
                     return html`
-                        <span
-                            aria-hidden="true"
-                            class="visually-hidden"
-                            id="loader-label"
-                        >
-                            ${this.pendingLabel}
-                        </span>
                         <sp-progress-circle
+                            id="loader"
                             size="s"
                             indeterminate
-                            aria-hidden="true"
+                            aria-valuetext=${this.pendingLabel}
                             class="progress-circle"
                         ></sp-progress-circle>
                     `;
@@ -524,7 +519,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 aria-describedby="tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
-                aria-labelledby="loader-label icon label applied-label"
+                aria-labelledby="loader icon label applied-label"
                 id="button"
                 class="button"
                 @blur=${this.handleButtonBlur}
