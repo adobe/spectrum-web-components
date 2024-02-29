@@ -15,6 +15,7 @@ import '@spectrum-web-components/slider/sp-slider-handle.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import { Overlay } from '@spectrum-web-components/overlay';
 import { Slider, SliderHandle } from '@spectrum-web-components/slider';
 import { tick } from '../stories/slider.stories.js';
 import {
