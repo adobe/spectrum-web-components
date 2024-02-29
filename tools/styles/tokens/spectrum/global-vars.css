@@ -31,6 +31,8 @@
     --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
         --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
     );
+    --spectrum-corner-radius-75: 2px;
+    --spectrum-drop-shadow-x: 0px;
     --spectrum-border-width-100: 1px;
     --spectrum-accent-color-100: var(--spectrum-blue-100);
     --spectrum-accent-color-200: var(--spectrum-blue-200);
