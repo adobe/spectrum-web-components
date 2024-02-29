@@ -36,11 +36,6 @@ governing permissions and limitations under the License.
     min-width: 0;
 }
 
-:host([size]) {
-    /* TODO: https://github.com/adobe/spectrum-css/blob/011ca5408ae5eb32bb55e1cf79c06e40171fd17c/components/picker/index.css#L93 */
-    --spectrum-picker-width: var(--spectrum-global-dimension-size-2400);
-}
-
 :host([disabled]) {
     pointer-events: none;
 }

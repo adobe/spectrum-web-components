@@ -46,7 +46,6 @@ import type {
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
 import { Placement } from '@spectrum-web-components/overlay';
-
 import {
     IS_MOBILE,
     MatchMediaController,
