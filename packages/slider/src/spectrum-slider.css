@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-medium);
@@ -28,10 +29,12 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
 }
+
 :host([dir='rtl']),
-[dir='rtl'] :host {
+:host:dir(rtl) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
+
 :host([size='s']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-small);
@@ -48,6 +51,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-100);
 }
+
 :host([size='l']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-100);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-large);
@@ -67,6 +71,7 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
 }
+
 :host([size='xl']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-200);
     --spectrum-slider-handle-size: var(
@@ -88,6 +93,7 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 22px;
 }
+
 :host {
     --spectrum-slider-cjk-line-height: var(--spectrum-cjk-line-height-100);
     --spectrum-slider-min-size: var(--spectrum-spacing-900);
@@ -140,49 +146,50 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
     --spectrum-slider-range-track-reset: 0;
-    display: block;
+    z-index: 1;
     min-inline-size: var(
         --mod-slider-min-size,
         var(--spectrum-slider-min-size)
     );
-    position: relative;
     -webkit-user-select: none;
     user-select: none;
-    z-index: 1;
+    display: block;
+    position: relative;
 }
+
 .spectrum-Slider--sideLabel {
     align-items: center;
     display: flex;
 }
+
 .spectrum-Slider--sideLabel #label-container,
 .spectrum-Slider--sideLabel #label-container + #track {
     margin-block-start: 0;
 }
+
 .spectrum-Slider--sideLabel #controls {
     margin-inline-end: var(
         --mod-slider-controls-margin,
         var(--spectrum-slider-controls-margin)
     );
 }
+
 .spectrum-Slider--sideLabel #value {
     inline-size: var(
         --mod-slider-value-inline-size,
         var(--spectrum-slider-value-inline-size)
     );
+    text-align: start;
     margin-inline-start: var(
         --mod-slider-value-side-padding-inline,
         var(--spectrum-slider-value-side-padding-inline)
     );
-    text-align: start;
 }
+
 #controls {
-    block-size: var(
-        --mod-slider-control-height,
-        var(--spectrum-slider-control-height)
-    );
     box-sizing: border-box;
     cursor: pointer;
-    display: inline-block;
+    z-index: auto;
     inline-size: calc(
         100% -
             var(
@@ -190,32 +197,52 @@ governing permissions and limitations under the License.
                 var(--spectrum-slider-controls-margin)
             ) * 2
     );
+    block-size: var(
+        --mod-slider-control-height,
+        var(--spectrum-slider-control-height)
+    );
+    vertical-align: top;
     margin-inline-start: var(
         --mod-slider-controls-margin,
         var(--spectrum-slider-controls-margin)
     );
+    display: inline-block;
     position: relative;
-    vertical-align: top;
-    z-index: auto;
 }
+
 #label-container + #track {
     margin-block-start: calc(
         var(--spectrum-slider-control-to-field-label) * -1
     );
 }
+
 :host([tick-labels]) {
     margin-block-end: var(
         --mod-slider-control-height,
         var(--spectrum-slider-control-height)
     );
 }
-.fill,
-.track {
+
+.track,
+.fill {
     block-size: var(
         --mod-slider-track-fill-thickness,
         var(--spectrum-slider-track-fill-thickness)
     );
     box-sizing: border-box;
+    z-index: 1;
+    pointer-events: none;
+    margin-inline-start: var(
+        --mod-slider-track-margin-offset,
+        var(--spectrum-slider-track-margin-offset)
+    );
+    padding-block: 0;
+    padding-inline-start: 0;
+    padding-inline-end: var(
+        --mod-slider-handle-gap,
+        var(--spectrum-slider-handle-gap)
+    );
+    position: absolute;
     inset-block-start: calc(
         var(--mod-slider-control-height, var(--spectrum-slider-control-height)) /
             2 -
@@ -225,77 +252,64 @@ governing permissions and limitations under the License.
             ) / 2
     );
     inset-inline: 0 auto;
-    margin-inline-start: var(
-        --mod-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
-    padding-block: 0;
-    padding-inline-end: var(
-        --mod-slider-handle-gap,
-        var(--spectrum-slider-handle-gap)
-    );
-    padding-inline-start: 0;
-    pointer-events: none;
-    position: absolute;
-    z-index: 1;
 }
-.fill:before,
-.track:before {
-    block-size: 100%;
+
+.track:before,
+.fill:before {
+    content: '';
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: 0;
-    border-start-end-radius: 0;
-    border-start-start-radius: 0;
-    content: '';
+    block-size: 100%;
     display: block;
 }
+
 .track:first-of-type:before {
-    border-end-start-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
     border-start-start-radius: var(
         --mod-slider-track-corner-radius,
         var(--spectrum-slider-track-corner-radius)
     );
-}
-.track:last-of-type:before {
-    border-end-end-radius: var(
+    border-end-start-radius: var(
         --mod-slider-track-corner-radius,
         var(--spectrum-slider-track-corner-radius)
     );
+}
+
+.track:last-of-type:before {
     border-start-end-radius: var(
         --mod-slider-track-corner-radius,
         var(--spectrum-slider-track-corner-radius)
     );
+    border-end-end-radius: var(
+        --mod-slider-track-corner-radius,
+        var(--spectrum-slider-track-corner-radius)
+    );
 }
+
 .track ~ .track {
-    inset-inline-end: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
-    inset-inline-start: auto;
-    margin-inline-end: var(
-        --mod-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
     margin-inline-start: var(
         --mod-slider-range-track-reset,
         var(--spectrum-slider-range-track-reset)
     );
+    margin-inline-end: var(
+        --mod-slider-track-margin-offset,
+        var(--spectrum-slider-track-margin-offset)
+    );
     padding-block: 0;
-    padding-inline-end: 0;
     padding-inline-start: var(
         --mod-slider-track-handleoffset,
         var(--spectrum-slider-track-handleoffset)
     );
-}
-:host([variant='range']) .track ~ .track {
-    inset-inline: auto;
-    margin-inline: var(
+    padding-inline-end: 0;
+    inset-inline-start: auto;
+    inset-inline-end: var(
         --mod-slider-range-track-reset,
         var(--spectrum-slider-range-track-reset)
     );
+}
+
+:host([variant='range']) .track ~ .track {
     padding-inline: var(
             --mod-slider-track-middle-handleoffset,
             var(--spectrum-slider-track-middle-handleoffset)
@@ -304,11 +318,16 @@ governing permissions and limitations under the License.
             --mod-slider-track-middle-handleoffset,
             var(--spectrum-slider-track-middle-handleoffset)
         );
+    margin-inline: var(
+        --mod-slider-range-track-reset,
+        var(--spectrum-slider-range-track-reset)
+    );
+    inset-inline: auto;
 }
+
 .fill {
     margin-inline-start: 0;
     padding-block: 0;
-    padding-inline-end: 0;
     padding-inline-start: calc(
         var(
                 --mod-slider-controls-margin,
@@ -316,9 +335,12 @@ governing permissions and limitations under the License.
             ) +
             var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
     );
+    padding-inline-end: 0;
 }
+
 .offset {
     padding-block: 0;
+    padding-inline-start: 0;
     padding-inline-end: calc(
         var(
                 --mod-slider-controls-margin,
@@ -326,73 +348,70 @@ governing permissions and limitations under the License.
             ) +
             var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
     );
-    padding-inline-start: 0;
 }
+
 :host([variant='range']) #value {
     -webkit-user-select: text;
     user-select: text;
 }
+
 :host([variant='range']) .track:first-of-type {
-    inset-inline-end: auto;
-    inset-inline-start: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
     margin-inline-start: var(
         --mod-slider-track-margin-offset,
         var(--spectrum-slider-track-margin-offset)
     );
+    padding-inline-start: 0;
     padding-inline-end: var(
         --mod-slider-track-handleoffset,
         var(--spectrum-slider-track-handleoffset)
     );
-    padding-inline-start: 0;
-}
-:host([variant='range']) .track:first-of-type:before {
-    border-end-start-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
+    inset-inline-start: var(
+        --mod-slider-range-track-reset,
+        var(--spectrum-slider-range-track-reset)
     );
+    inset-inline-end: auto;
+}
+
+:host([variant='range']) .track:first-of-type:before {
     border-start-start-radius: var(
         --mod-slider-track-corner-radius,
         var(--spectrum-slider-track-corner-radius)
     );
-}
-:host([variant='range']) .track:last-of-type {
-    inset-inline-end: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
+    border-end-start-radius: var(
+        --mod-slider-track-corner-radius,
+        var(--spectrum-slider-track-corner-radius)
     );
-    inset-inline-start: auto;
+}
+
+:host([variant='range']) .track:last-of-type {
     margin-inline-end: var(
         --mod-slider-track-margin-offset,
         var(--spectrum-slider-track-margin-offset)
     );
-    padding-inline-end: 0;
     padding-inline-start: var(--spectrum-slider-track-handleoffset);
-}
-:host([variant='range']) .track:last-of-type:before {
-    border-end-end-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
+    padding-inline-end: 0;
+    inset-inline-start: auto;
+    inset-inline-end: var(
+        --mod-slider-range-track-reset,
+        var(--spectrum-slider-range-track-reset)
     );
+}
+
+:host([variant='range']) .track:last-of-type:before {
     border-start-end-radius: var(
         --mod-slider-track-corner-radius,
         var(--spectrum-slider-track-corner-radius)
     );
+    border-end-end-radius: var(
+        --mod-slider-track-corner-radius,
+        var(--spectrum-slider-track-corner-radius)
+    );
 }
+
 #ramp {
     block-size: var(
         --mod-slider-ramp-track-height,
         var(--spectrum-slider-ramp-track-height)
-    );
-    inset-inline-end: var(
-        --spectrum-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
-    inset-inline-start: var(
-        --spectrum-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
     );
     margin-block-start: calc(
         var(
@@ -401,32 +420,57 @@ governing permissions and limitations under the License.
             ) / 2
     );
     position: absolute;
+    inset-inline-start: var(
+        --spectrum-slider-track-margin-offset,
+        var(--spectrum-slider-track-margin-offset)
+    );
+    inset-inline-end: var(
+        --spectrum-slider-track-margin-offset,
+        var(--spectrum-slider-track-margin-offset)
+    );
 }
+
 #ramp svg {
+    transform: var(--spectrum-logical-rotation);
     block-size: 100%;
     inline-size: 100%;
-    transform: var(--spectrum-logical-rotation);
 }
+
 .handle {
+    z-index: 2;
+    box-sizing: border-box;
+    inline-size: var(
+        --mod-slider-handle-size,
+        var(--spectrum-slider-handle-size)
+    );
     block-size: var(
         --mod-slider-handle-size,
         var(--spectrum-slider-handle-size)
+    );
+    margin-block: 0;
+    margin-inline: calc(
+            var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) /
+                -2
+        )
+        0;
+    border-width: var(
+        --mod-slider-handle-border-width,
+        var(--spectrum-slider-handle-border-width)
     );
     border-radius: var(
         --mod-slider-handle-border-radius,
         var(--spectrum-slider-handle-border-radius)
     );
+    transition: border-width
+        var(
+            --mod-animation-duration-100,
+            var(--spectrum-animation-duration-100)
+        )
+        ease-in-out;
     border-style: solid;
-    border-width: var(
-        --mod-slider-handle-border-width,
-        var(--spectrum-slider-handle-border-width)
-    );
-    box-sizing: border-box;
+    outline: none;
     display: inline-block;
-    inline-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
+    position: absolute;
     inset-block-start: calc(
         var(--mod-slider-control-height, var(--spectrum-slider-control-height)) /
             2 -
@@ -434,51 +478,25 @@ governing permissions and limitations under the License.
             2
     );
     inset-inline-start: 0;
-    margin-block: 0;
-    margin-inline: calc(
-            var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) /
-                -2
-        )
-        0;
-    outline: none;
-    position: absolute;
-    transition: border-width
-        var(
-            --mod-animation-duration-100,
-            var(--spectrum-animation-duration-100)
-        )
-        ease-in-out;
-    z-index: 2;
 }
-.handle.dragging,
-.handle:active {
+
+.handle:active,
+.handle.dragging {
     border-width: var(
         --mod-slider-handle-border-width-down,
         var(--spectrum-slider-handle-border-width-down)
     );
 }
-.handle.dragging,
+
+.handle:active,
 .handle.handle-highlight,
-.handle.is-tophandle,
-.handle:active {
+.handle.dragging,
+.handle.is-tophandle {
     z-index: 3;
 }
+
 .handle:before {
-    block-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
-    border-radius: 100%;
     content: '';
-    display: block;
-    inline-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
-    inset-block-start: 50%;
-    inset-inline-start: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
     transition: box-shadow
             var(
                 --mod-animation-duration-100,
@@ -497,34 +515,56 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-out;
+    inline-size: var(
+        --mod-slider-handle-size,
+        var(--spectrum-slider-handle-size)
+    );
+    block-size: var(
+        --mod-slider-handle-size,
+        var(--spectrum-slider-handle-size)
+    );
+    border-radius: 100%;
+    display: block;
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
 }
+
 :host([dir='rtl']) .handle:before {
     transform: translate(50%, -50%);
 }
+
 .handle.handle-highlight:before {
-    block-size: calc(
-        var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
-            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
-            2
-    );
     inline-size: calc(
         var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
             var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
             2
     );
-}
-.input {
-    -webkit-appearance: none;
-    block-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
+    block-size: calc(
+        var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
+            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
+            2
     );
-    border: 0;
-    cursor: default;
+}
+
+.input {
     inline-size: var(
         --mod-slider-handle-size,
         var(--spectrum-slider-handle-size)
     );
+    block-size: var(
+        --mod-slider-handle-size,
+        var(--spectrum-slider-handle-size)
+    );
+    opacity: 0.000001;
+    cursor: default;
+    -webkit-appearance: none;
+    pointer-events: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
     inset-block-start: var(
         --mod-slider-input-top-size,
         var(--spectrum-slider-input-top-size)
@@ -533,52 +573,53 @@ governing permissions and limitations under the License.
         --mod-slider-input-left,
         var(--spectrum-slider-input-left)
     );
-    margin: 0;
-    opacity: 0.000001;
     overflow: hidden;
-    padding: 0;
-    pointer-events: none;
-    position: absolute;
 }
+
 .input:focus {
     outline: none;
 }
+
 #label-container {
-    align-items: center;
-    display: flex;
     font-size: var(--mod-slider-font-size, var(--spectrum-slider-font-size));
-    inline-size: auto;
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
+    align-items: center;
+    inline-size: auto;
     margin-block-start: var(
         --mod-slider-label-top-to-text,
         var(--spectrum-slider-label-top-to-text)
     );
+    display: flex;
     position: relative;
 }
+
 #label-container:lang(ja),
-#label-container:lang(ko),
-#label-container:lang(zh) {
+#label-container:lang(zh),
+#label-container:lang(ko) {
     line-height: var(
         --mod-slider-cjk-line-height,
         var(--spectrum-slider-cjk-line-height)
     );
 }
+
 #label {
-    flex-grow: 1;
     font-size: var(--mod-slider-font-size, var(--spectrum-slider-font-size));
+    flex-grow: 1;
     padding-inline-start: 0;
 }
+
 #value {
     cursor: default;
-    flex-grow: 0;
     font-feature-settings: 'tnum';
+    text-align: end;
+    flex-grow: 0;
     margin-inline-start: var(
         --mod-slider-label-margin-start,
         var(--spectrum-slider-label-margin-start)
     );
     padding-inline-end: 0;
-    text-align: end;
 }
+
 :host([variant='tick']) .handle {
     background-color: var(
         --highcontrast-slider-tick-handle-background-color,
@@ -588,6 +629,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([variant='tick']) #controls {
     margin-block-start: calc(
         var(--spectrum-text-to-visual-75) -
@@ -601,6 +643,7 @@ governing permissions and limitations under the License.
             ) / 2
     );
 }
+
 :host([variant='tick']) .tickLabel {
     margin-block-start: calc(
         var(
@@ -609,26 +652,30 @@ governing permissions and limitations under the License.
             ) + var(--spectrum-text-to-visual-75)
     );
 }
+
 .ticks {
-    display: flex;
-    justify-content: space-between;
+    z-index: 0;
     margin-inline: var(
         --mod-slider-track-margin-offset,
         var(--spectrum-slider-track-margin-offset)
     );
-    z-index: 0;
+    justify-content: space-between;
+    display: flex;
 }
+
 .ticks ~ .handleContainer .handle {
     background: var(
         --mod-slider-ticks-handle-background-color,
         var(--spectrum-slider-ticks-handle-background-color)
     );
 }
+
 .tick {
     inline-size: var(
         --mod-slider-tick-mark-width,
         var(--spectrum-slider-tick-mark-width)
     );
+    position: relative;
     inset-block-start: calc(
         var(--mod-slider-track-thickness, var(--spectrum-slider-control-height)) /
             2 -
@@ -637,9 +684,14 @@ governing permissions and limitations under the License.
                 var(--spectrum-slider-tick-mark-height)
             ) / 2
     );
-    position: relative;
 }
+
 .tick:after {
+    content: '';
+    inline-size: var(
+        --mod-slider-tick-mark-width,
+        var(--spectrum-slider-tick-mark-width)
+    );
     block-size: var(
         --mod-slider-tick-mark-height,
         var(--spectrum-slider-tick-mark-height)
@@ -648,12 +700,8 @@ governing permissions and limitations under the License.
         --mod-slider-tick-mark-border-radius,
         var(--spectrum-slider-tick-mark-border-radius)
     );
-    content: '';
     display: block;
-    inline-size: var(
-        --mod-slider-tick-mark-width,
-        var(--spectrum-slider-tick-mark-width)
-    );
+    position: absolute;
     inset-block-start: 0;
     inset-inline-start: calc(
         50% -
@@ -662,21 +710,23 @@ governing permissions and limitations under the License.
                 var(--spectrum-slider-tick-mark-width)
             ) / 2
     );
-    position: absolute;
 }
+
 .tick .tickLabel {
+    font-size: var(--mod-font-size-75, var(--spectrum-font-size-75));
+    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
+    justify-content: center;
     align-items: center;
     display: flex;
-    font-size: var(--mod-font-size-75, var(--spectrum-font-size-75));
-    justify-content: center;
-    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
 }
+
 .tick:first-of-type .tickLabel,
 .tick:last-of-type .tickLabel {
-    display: block;
     margin-inline: 0;
+    display: block;
     position: absolute;
 }
+
 .tick:first-of-type {
     inset-inline-start: calc(
         var(
@@ -685,9 +735,11 @@ governing permissions and limitations under the License.
             ) / -2
     );
 }
+
 .tick:first-of-type .tickLabel {
     inset-inline-start: 0;
 }
+
 .tick:last-of-type {
     inset-inline-end: calc(
         var(
@@ -696,16 +748,19 @@ governing permissions and limitations under the License.
             ) / -2
     );
 }
+
 .tick:last-of-type .tickLabel {
     inset-inline-end: 0;
 }
+
 .handleContainer,
 .trackContainer {
     inline-size: calc(100% + var(--spectrum-slider-handle-size));
-    inset-block-start: 0;
     margin-inline-start: calc(var(--spectrum-slider-handle-size) / 2 * -1);
     position: absolute;
+    inset-block-start: 0;
 }
+
 .trackContainer {
     block-size: var(
         --mod-slider-control-height,
@@ -713,18 +768,21 @@ governing permissions and limitations under the License.
     );
     overflow: hidden;
 }
+
 .track:before {
     background: var(
         --highcontrast-slider-track-color-static,
         var(--mod-slider-track-color, var(--spectrum-slider-track-color))
     );
 }
+
 .track:not(:has(~ .spectrum-Slider-fill)):before {
     background: var(
         --highcontrast-slider-track-color,
         var(--mod-slider-track-color, var(--spectrum-slider-track-color))
     );
 }
+
 #label-container {
     color: var(
         --highcontrast-slider-label-text-color,
@@ -734,8 +792,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-.fill:before,
-:host([variant='filled']) .track:first-child:before {
+
+:host([variant='filled']) .track:first-child:before,
+.fill:before {
     background: var(
         --highcontrast-slider-filled-track-fill-color,
         var(
@@ -744,6 +803,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 #ramp path {
     fill: var(
         --highcontrast-slider-ramp-track-color,
@@ -753,14 +813,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 .handle {
-    background: var(
-        --highcontrast-slider-handle-background-color,
-        var(
-            --mod-slider-handle-background-color,
-            var(--spectrum-slider-handle-background-color)
-        )
-    );
     border-color: var(
         --highcontrast-slider-handle-border-color,
         var(
@@ -768,7 +822,15 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-handle-border-color)
         )
     );
+    background: var(
+        --highcontrast-slider-handle-background-color,
+        var(
+            --mod-slider-handle-background-color,
+            var(--spectrum-slider-handle-background-color)
+        )
+    );
 }
+
 .handle.handle-highlight {
     border-color: var(
         --highcontrast-slider-handle-border-color-key-focus,
@@ -778,6 +840,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 .handle.handle-highlight:before {
     box-shadow: 0 0 0 var(--spectrum-focus-indicator-thickness)
         var(
@@ -788,8 +851,9 @@ governing permissions and limitations under the License.
             )
         );
 }
-.handle.dragging,
-.handle:active {
+
+.handle:active,
+.handle.dragging {
     border-color: var(
         --highcontrast-slider-handle-border-color-down,
         var(
@@ -798,14 +862,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([variant='ramp']) .handle {
-    background: var(
-        --mod-slider-ramp-handle-background-color,
-        var(
-            --highcontrast-slider-ramp-handle-background-color,
-            var(--spectrum-slider-ramp-handle-background-color)
-        )
-    );
     box-shadow: 0 0 0 var(--spectrum-slider-handle-gap)
         var(
             --highcontrast-slider-ramp-handle-border-color-active,
@@ -814,10 +872,19 @@ governing permissions and limitations under the License.
                 var(--spectrum-slider-ramp-handle-border-color-active)
             )
         );
+    background: var(
+        --mod-slider-ramp-handle-background-color,
+        var(
+            --highcontrast-slider-ramp-handle-background-color,
+            var(--spectrum-slider-ramp-handle-background-color)
+        )
+    );
 }
+
 .input {
     background: none;
 }
+
 .tick:after {
     background-color: var(
         --highcontrast-slider-tick-mark-color,
@@ -827,14 +894,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 .handle.dragging {
-    background: var(
-        --highcontrast-slider-handle-background-color,
-        var(
-            --mod-slider-handle-background-color,
-            var(--spectrum-slider-handle-background-color)
-        )
-    );
     border-color: var(
         --highcontrast-slider-handle-border-color-down,
         var(
@@ -842,7 +903,15 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-handle-border-color-down)
         )
     );
+    background: var(
+        --highcontrast-slider-handle-background-color,
+        var(
+            --mod-slider-handle-background-color,
+            var(--spectrum-slider-handle-background-color)
+        )
+    );
 }
+
 :host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
     background: var(
         --highcontrast-slider-filled-track-fill-color,
@@ -852,12 +921,14 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([disabled]),
 :host([disabled]) #controls {
     cursor: default;
 }
-:host([disabled]) #label-container,
-:host([disabled]) .tickLabel {
+
+:host([disabled]) .tickLabel,
+:host([disabled]) #label-container {
     color: var(
         --highcontrast-slider-label-text-color-disabled,
         var(
@@ -866,14 +937,8 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([disabled]) .handle {
-    background: var(
-        --highcontrast-slider-handle-disabled-background-color,
-        var(
-            --mod-slider-handle-disabled-background-color,
-            var(--spectrum-slider-handle-disabled-background-color)
-        )
-    );
     border-color: var(
         --highcontrast-slider-handle-border-color-disabled,
         var(
@@ -881,10 +946,22 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-handle-border-color-disabled)
         )
     );
+    background: var(
+        --highcontrast-slider-handle-disabled-background-color,
+        var(
+            --mod-slider-handle-disabled-background-color,
+            var(--spectrum-slider-handle-disabled-background-color)
+        )
+    );
     cursor: default;
     pointer-events: none;
 }
+
 :host([disabled]) .handle:active {
+    border-color: var(
+        --highcontrast-disabled-border-color,
+        var(--mod-disabled-border-color, var(--spectrum-disabled-border-color))
+    );
     background: var(
         --highcontrast-slider-handle-background-color-disabled,
         var(
@@ -892,11 +969,8 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-handle-background-color-disabled)
         )
     );
-    border-color: var(
-        --highcontrast-disabled-border-color,
-        var(--mod-disabled-border-color, var(--spectrum-disabled-border-color))
-    );
 }
+
 @media (hover: hover) {
     .handle:hover {
         border-color: var(
@@ -907,14 +981,8 @@ governing permissions and limitations under the License.
             )
         );
     }
+
     :host([disabled]) .handle:hover {
-        background: var(
-            --highcontrast-slider-handle-background-color-disabled,
-            var(
-                --mod-slider-handle-background-color-disabled,
-                var(--spectrum-slider-handle-background-color-disabled)
-            )
-        );
         border-color: var(
             --highcontrast-disabled-border-color,
             var(
@@ -922,8 +990,16 @@ governing permissions and limitations under the License.
                 var(--spectrum-disabled-border-color)
             )
         );
+        background: var(
+            --highcontrast-slider-handle-background-color-disabled,
+            var(
+                --mod-slider-handle-background-color-disabled,
+                var(--spectrum-slider-handle-background-color-disabled)
+            )
+        );
     }
 }
+
 :host([disabled]) .track:before {
     background: var(
         --highcontrast-slider-track-color-disabled,
@@ -933,8 +1009,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([disabled]) .fill:before,
-:host([disabled][variant='filled']) .track:first-child:before {
+
+:host([disabled][variant='filled']) .track:first-child:before,
+:host([disabled]) .fill:before {
     background: var(
         --highcontrast-slider-track-fill-color-disabled,
         var(
@@ -943,6 +1020,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([disabled]) #ramp path {
     fill: var(
         --highcontrast-slider-ramp-track-color-disabled,
@@ -952,6 +1030,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([disabled]) .tick:after {
     background-color: var(
         --highcontrast-slider-tick-mark-color-disabled,
@@ -961,6 +1040,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([disabled][variant='range'])
     .track:not(:first-of-type, :last-of-type):before {
     background: var(
@@ -971,6 +1051,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-slider-track-color: ButtonText;
@@ -1009,22 +1090,25 @@ governing permissions and limitations under the License.
         --spectrum-slider-label-text-color-disabled: GrayText;
         --spectrum-slider-ramp-handle-border-color-active: ButtonText;
     }
+
     .handle.handle-highlight:before,
     :host([variant='ramp']) .handle {
         forced-color-adjust: none;
     }
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
-        #controls.handle-highlight,
+
     :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
         #controls:active,
     :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
-        #controls:focus-within {
+        #controls:focus-within,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        #controls.handle-highlight {
         --highcontrast-slider-track-fill-color: Highlight;
         --highcontrast-slider-track-color: Highlight;
         --highcontrast-slider-handle-border-color: Highlight;
         --highcontrast-slider-ramp-track-color: Highlight;
         --highcontrast-slider-tick-mark-color: Highlight;
     }
+
     @media (hover: hover) {
         :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
             #controls:hover {
@@ -1035,11 +1119,13 @@ governing permissions and limitations under the License.
             --highcontrast-slider-tick-mark-color: Highlight;
         }
     }
+
     :host([disabled]) #ramp + .handle {
-        fill: ButtonFace;
-        background-color: ButtonFace;
+        fill: buttonface;
+        background-color: buttonface;
     }
 }
+
 :host {
     --spectrum-slider-track-color: var(--system-spectrum-slider-track-color);
     --spectrum-slider-track-fill-color: var(

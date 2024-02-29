@@ -1,7 +1,7 @@
-:host,
-:root {
+:root,
+:host {
     --spectrum-global-color-status: Verified;
-    --spectrum-global-color-version: 5.1.0;
+    --spectrum-global-color-version: 5.1;
     --spectrum-global-color-opacity-100: 1;
     --spectrum-global-color-opacity-90: 0.9;
     --spectrum-global-color-opacity-80: 0.8;
@@ -267,20 +267,20 @@
     --spectrum-alias-background-color-tertiary: var(
         --spectrum-global-color-gray-300
     );
-    --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.4);
-    --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.15);
-    --spectrum-alias-background-color-hover-overlay: rgba(0, 0, 0, 0.04);
-    --spectrum-alias-highlight-hover: rgba(0, 0, 0, 0.06);
-    --spectrum-alias-highlight-down: rgba(0, 0, 0, 0.1);
-    --spectrum-alias-highlight-selected: rgba(4, 105, 227, 0.1);
-    --spectrum-alias-highlight-selected-hover: rgba(4, 105, 227, 0.2);
-    --spectrum-alias-text-highlight-color: rgba(4, 105, 227, 0.2);
-    --spectrum-alias-background-color-quickactions: hsla(0, 0%, 100%, 0.9);
+    --spectrum-alias-background-color-modal-overlay: #0006;
+    --spectrum-alias-dropshadow-color: #00000026;
+    --spectrum-alias-background-color-hover-overlay: #0000000a;
+    --spectrum-alias-highlight-hover: #0000000f;
+    --spectrum-alias-highlight-down: #0000001a;
+    --spectrum-alias-highlight-selected: #0469e31a;
+    --spectrum-alias-highlight-selected-hover: #0469e333;
+    --spectrum-alias-text-highlight-color: #0469e333;
+    --spectrum-alias-background-color-quickactions: #ffffffe6;
     --spectrum-alias-border-color-selected: var(
         --spectrum-global-color-blue-500
     );
-    --spectrum-alias-border-color-translucent: rgba(0, 0, 0, 0.1);
-    --spectrum-alias-radial-reaction-color-default: rgba(34, 34, 34, 0.6);
+    --spectrum-alias-border-color-translucent: #0000001a;
+    --spectrum-alias-radial-reaction-color-default: #2229;
     --spectrum-alias-pasteboard-background-color: var(
         --spectrum-global-color-gray-300
     );

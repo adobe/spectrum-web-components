@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-splitbutton-trigger-border-left: 0;
     --spectrum-splitbutton-trigger-min-width: 0;
@@ -20,9 +21,12 @@ governing permissions and limitations under the License.
         --spectrum-alias-border-radius-small
     );
 }
+
+:host([dir='rtl']),
 :host([dir='rtl']) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
+
 .trigger {
     --spectrum-splitbutton-trigger-round-edge-padding: var(
         --spectrum-global-dimension-size-125
@@ -38,6 +42,7 @@ governing permissions and limitations under the License.
             )
     );
 }
+
 #button {
     --spectrum-splitbutton-flat-edge-padding: calc(
         var(--spectrum-button-m-primary-outline-texticon-padding-left) -
@@ -58,27 +63,30 @@ governing permissions and limitations under the License.
             ) * 3
     );
 }
+
 :host {
-    display: inline-flex;
-    flex-direction: row;
-    position: relative;
     vertical-align: top;
+    flex-direction: row;
+    display: inline-flex;
+    position: relative;
 }
+
 #button {
+    border-start-start-radius: var(
+        --spectrum-button-m-primary-outline-texticon-border-radius,
+        var(--spectrum-global-dimension-size-200)
+    );
+    border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-start-end-radius: 0;
-    border-start-start-radius: var(
-        --spectrum-button-m-primary-outline-texticon-border-radius,
-        var(--spectrum-global-dimension-size-200)
-    );
     margin-inline-start: 0;
-    padding-inline-end: var(--spectrum-splitbutton-flat-edge-padding);
     padding-inline-start: var(--spectrum-splitbutton-round-edge-padding);
+    padding-inline-end: var(--spectrum-splitbutton-flat-edge-padding);
 }
+
 #button[variant='accent'] {
     margin-inline-end: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
@@ -86,27 +94,30 @@ governing permissions and limitations under the License.
     );
     padding-inline-end: var(--spectrum-splitbutton-cta-flat-edge-padding);
 }
+
 #button:after {
-    border-end-end-radius: var(--spectrum-splitbutton-border-radius-edge);
     border-start-end-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-end-end-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
+
 .trigger {
+    border-inline-start-width: var(--spectrum-splitbutton-trigger-border-left);
+    min-inline-size: var(--spectrum-splitbutton-trigger-min-width);
+    border-start-start-radius: 0;
+    border-start-end-radius: var(
+        --spectrum-button-m-primary-outline-texticon-border-radius,
+        var(--spectrum-global-dimension-size-200)
+    );
     border-end-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
     border-end-start-radius: 0;
-    border-inline-start-width: var(--spectrum-splitbutton-trigger-border-left);
-    border-start-end-radius: var(
-        --spectrum-button-m-primary-outline-texticon-border-radius,
-        var(--spectrum-global-dimension-size-200)
-    );
-    border-start-start-radius: 0;
     margin-inline-start: 0;
-    min-inline-size: var(--spectrum-splitbutton-trigger-min-width);
-    padding-inline-end: var(--spectrum-splitbutton-trigger-round-edge-padding);
     padding-inline-start: var(--spectrum-splitbutton-trigger-flat-edge-padding);
+    padding-inline-end: var(--spectrum-splitbutton-trigger-round-edge-padding);
 }
+
 .trigger[variant='accent'] {
     border-inline-start-width: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
@@ -116,73 +127,76 @@ governing permissions and limitations under the License.
         --spectrum-splitbutton-cta-trigger-flat-edge-padding
     );
 }
-.trigger.focus-visible {
-    box-shadow: none;
-}
+
 .trigger:focus-visible {
     box-shadow: none;
 }
+
 .trigger:after {
-    border-end-start-radius: var(--spectrum-splitbutton-border-radius-edge);
     border-start-start-radius: var(--spectrum-splitbutton-border-radius-edge);
+    border-end-start-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
+
 .icon {
-    display: block;
     margin-block-start: 1px;
+    display: block;
 }
+
 #button,
 .trigger {
     position: relative;
 }
-#button.focus-visible,
-.trigger.focus-visible {
-    outline: none;
-    z-index: 1;
-}
+
 #button:focus-visible,
 .trigger:focus-visible {
-    outline: none;
     z-index: 1;
+    outline: none;
 }
+
 #button.spectrum-Pagination-prevButton .spectrum-Icon,
 .trigger.spectrum-Pagination-prevButton .spectrum-Icon {
     transform: var(--spectrum-logical-rotation) rotate(180deg);
 }
+
 #button.spectrum-Pagination-nextButton .spectrum-Icon,
 .trigger.spectrum-Pagination-nextButton .spectrum-Icon {
     transform: var(--spectrum-logical-rotation);
 }
+
 #button .label + .spectrum-Icon {
     margin-inline-start: var(--spectrum-splitbutton-icon-gap);
 }
+
 :host([left]) #button {
+    border-start-start-radius: 0;
+    border-start-end-radius: var(
+        --spectrum-button-m-primary-outline-texticon-border-radius,
+        var(--spectrum-global-dimension-size-200)
+    );
     border-end-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
     border-end-start-radius: 0;
+    margin-inline-start: var(--spectrum-spltibutton-margin-left);
+    margin-inline-end: 0;
+    padding-inline-start: var(--spectrum-splitbutton-flat-edge-padding);
+    padding-inline-end: var(--spectrum-splitbutton-round-edge-padding);
+}
+
+:host([left]) #button:after {
+    border-start-start-radius: var(--spectrum-splitbutton-border-radius-edge);
     border-start-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-start-start-radius: 0;
-    margin-inline-end: 0;
-    margin-inline-start: var(--spectrum-spltibutton-margin-left);
-    padding-inline-end: var(--spectrum-splitbutton-round-edge-padding);
-    padding-inline-start: var(--spectrum-splitbutton-flat-edge-padding);
-}
-:host([left]) #button:after {
     border-end-end-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
     border-end-start-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-start-end-radius: var(
-        --spectrum-button-m-primary-outline-texticon-border-radius,
-        var(--spectrum-global-dimension-size-200)
-    );
-    border-start-start-radius: var(--spectrum-splitbutton-border-radius-edge);
 }
+
 :host([left]) #button[variant='accent'] {
     margin-inline-start: var(
         --spectrum-button-m-primary-outline-texticon-border-size,
@@ -190,40 +204,43 @@ governing permissions and limitations under the License.
     );
     padding-inline-start: var(--spectrum-splitbutton-cta-flat-edge-padding);
 }
+
 :host([left]) .trigger {
+    border-inline-start-width: var(
+        --spectrum-button-m-primary-outline-texticon-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+    border-inline-end-width: var(--spectrum-splitbutton-trigger-border-left);
+    border-start-start-radius: var(
+        --spectrum-button-m-primary-outline-texticon-border-radius,
+        var(--spectrum-global-dimension-size-200)
+    );
+    border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-inline-end-width: var(--spectrum-splitbutton-trigger-border-left);
-    border-inline-start-width: var(
-        --spectrum-button-m-primary-outline-texticon-border-size,
-        var(--spectrum-alias-border-size-thick)
+    margin-inline-end: 0;
+    padding-inline-start: var(
+        --spectrum-splitbutton-trigger-round-edge-padding
     );
-    border-start-end-radius: 0;
+    padding-inline-end: var(--spectrum-splitbutton-trigger-flat-edge-padding);
+}
+
+:host([left]) .trigger:after {
     border-start-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    margin-inline-end: 0;
-    padding-inline-end: var(--spectrum-splitbutton-trigger-flat-edge-padding);
-    padding-inline-start: var(
-        --spectrum-splitbutton-trigger-round-edge-padding
-    );
-}
-:host([left]) .trigger:after {
+    border-start-end-radius: var(--spectrum-splitbutton-border-radius-edge);
     border-end-end-radius: var(--spectrum-splitbutton-border-radius-edge);
     border-end-start-radius: var(
         --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     );
-    border-start-end-radius: var(--spectrum-splitbutton-border-radius-edge);
-    border-start-start-radius: var(
-        --spectrum-button-m-primary-outline-texticon-border-radius,
-        var(--spectrum-global-dimension-size-200)
-    );
 }
+
 :host([left]) .trigger[variant='accent'] {
     border-inline-end-width: var(
         --spectrum-button-m-primary-outline-texticon-border-size,

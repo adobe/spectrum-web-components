@@ -1,5 +1,5 @@
-:host,
-:root {
+:root,
+:host {
     --spectrum-global-dimension-scale-factor: 1.25;
     --spectrum-global-dimension-size-0: 0px;
     --spectrum-global-dimension-size-10: 1px;

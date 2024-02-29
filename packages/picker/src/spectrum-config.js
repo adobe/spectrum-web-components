@@ -47,6 +47,10 @@ const config = {
                     'size'
                 ),
                 converter.classToClass('spectrum-Picker-menuIcon', 'picker'),
+                converter.classToClass(
+                    'spectrum-Picker--sideLabel',
+                    'label-inline'
+                ),
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
                 converter.classToClass(
                     'spectrum-ProgressCircle',

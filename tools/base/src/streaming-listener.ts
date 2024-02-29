@@ -144,6 +144,7 @@ class StreamingListenerDirective extends AsyncDirective {
         this.addListeners('off');
     };
 
+    /* c8 ignore next 3 */
     handleOutside = (event: Event): void => {
         this.handleStream(this.streamOutside[1], event);
     };

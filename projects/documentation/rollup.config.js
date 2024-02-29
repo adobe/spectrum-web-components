@@ -13,15 +13,11 @@ import { minify } from 'html-minifier-terser';
 import { copy } from '@web/rollup-plugin-copy';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
-import styles from 'rollup-plugin-styles';
-import litcss from 'rollup-plugin-lit-css';
 import { createBasicConfig } from '@open-wc/building-rollup';
 import { injectManifest } from 'rollup-plugin-workbox';
 import path from 'path';
 import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import Terser from 'terser';
-import { postCSSPlugins } from '../../scripts/css-processing.cjs';
-import postCSSPrefixwrap from 'postcss-prefixwrap';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const stringReplaceHtml = (source) => {
@@ -140,22 +136,6 @@ export default async () => {
     mpaConfig.plugins.push(minifyHTML());
     mpaConfig.preserveEntrySignatures = false;
 
-    mpaConfig.plugins.push(
-        styles({
-            mode: 'emit',
-            minimize: true,
-            plugins: [
-                ...postCSSPlugins(),
-                postCSSPrefixwrap('.light', {
-                    whitelist: ['code-example-light.css'],
-                }),
-                postCSSPrefixwrap('.dark', {
-                    whitelist: ['code-example-dark.css'],
-                }),
-            ],
-        })
-    );
-    mpaConfig.plugins.push(litcss());
     mpaConfig.plugins.push(
         commonjs({
             exclude: [

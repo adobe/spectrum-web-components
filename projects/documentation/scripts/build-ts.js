@@ -12,10 +12,19 @@ governing permissions and limitations under the License.
 
 import { build } from 'esbuild';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
-import postcss from 'postcss';
-import postcssImport from 'postcss-import';
-import postcssEnv from 'postcss-preset-env';
-import cssnano from 'cssnano';
+import { bundleAsync } from 'lightningcss';
+import path from 'path';
+import fs from 'fs-extra';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const nodeModulesDir = path.resolve(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'node_modules'
+);
 
 async function main() {
     await build({
@@ -31,35 +40,35 @@ async function main() {
         outdir: './_site/src/',
         plugins: [
             litCssPlugin({
-                transform: (css, { filePath }) => {
-                    const processor = postcss(
-                        postcssImport({ root: filePath }),
-                        postcssEnv({
-                            browsers: [
-                                'last 2 Chrome versions',
-                                'last 2 Firefox versions',
-                                'last 2 Safari versions',
-                                'last 2 iOS versions',
-                            ],
-                            stage: 2,
-                            features: {
-                                'nesting-rules': true,
+                transform: async (css, { filePath }) => {
+                    const { code } = await bundleAsync({
+                        filename: filePath,
+                        code: css,
+                        minify: true,
+                        resolver: {
+                            read(readPath) {
+                                const file = fs.readFileSync(readPath, 'utf8');
+                                return file;
                             },
-                        }),
-                        cssnano({
-                            preset: [
-                                'default',
-                                {
-                                    svgo: false,
-                                    discardComments: true,
-                                    uniqueSelectors: false,
-                                },
-                            ],
-                        })
-                    );
-                    return processor
-                        .process(css, { from: filePath })
-                        .then((result) => result.css);
+                            resolve(specifier, from) {
+                                if (specifier.startsWith('./')) {
+                                    const resolution = path.resolve(
+                                        from,
+                                        '..',
+                                        specifier
+                                    );
+                                    return resolution;
+                                } else {
+                                    const resolution = path.resolve(
+                                        nodeModulesDir,
+                                        specifier
+                                    );
+                                    return resolution;
+                                }
+                            },
+                        },
+                    });
+                    return code.toString();
                 },
             }),
         ],
