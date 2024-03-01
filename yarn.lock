@@ -5066,6 +5066,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
+"@spectrum-css/breadcrumb@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/breadcrumb/-/breadcrumb-8.2.3.tgz#8fd23f5df49dfb0a57d421433afe4b1fc24501bb"
+  integrity sha512-XYWJiv7z29sOnp/Ou2ykWd1wbhMXIM5DjBmamIDtbNWSDai0+tz6BHeS0geAkvcCHQ6FiblZ9JzLgm893uBSKQ==
+
 "@spectrum-css/button@^12.0.1":
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-12.0.1.tgz#544031febb19985e90736abf0de99212ddc5ad4c"
@@ -5155,7 +5160,6 @@
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.2.4.tgz#12a9e0bf58965aec34613dab4ba4c22bdbc46ca5"
   integrity sha512-smNmkIVfJwX01xeikbgahW5kjw3tn7WXV+ee19LrMqUBHuqQIfvo6Qi5xPJmJsmPIT6DoMj/aYVOdXNG0AjwXA==
-
 "@spectrum-css/expressvars@^3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-3.0.9.tgz#72678e0845c240bc9cb6b4d828f20806810f4cab"
@@ -5350,7 +5354,6 @@
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.1.4.tgz#293305027368f39a366ee77c9a8f9fa990f5ccfe"
   integrity sha512-09qn4n933GLPjO1G3dGhhA780wfbR4+k0/ktpZQDJRwQxpSwA3BINILnYYKXP5uuXWPr2o8FH1LYg7psj2caWg==
-
 "@spectrum-css/ui-icons@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@spectrum-css/ui-icons/-/ui-icons-1.1.2.tgz#596e10c662de2b3a2142277998be5e11faf6aff4"
@@ -7646,7 +7649,6 @@
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/@webpack-cli/serve/-/serve-2.0.5.tgz#325db42395cd49fe6c14057f9a900e427df8810e"
   integrity sha512-lqaoKnRYBdo1UgDX8uF24AfGMifWK19TxPmM5FHc2vAGxrJ/qtyUyFBWoY1tISZdelsQ5fBcOusifo5o5wSJxQ==
-
 "@xhmikosr/archive-type@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@xhmikosr/archive-type/-/archive-type-6.0.1.tgz#684e9e5369bfa93223d7aeb2c84fe0780d6d5e24"
@@ -15034,7 +15036,6 @@ ip@^2.0.0, ip@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ip/-/ip-2.0.1.tgz#e8f3595d33a3ea66490204234b77636965307105"
   integrity sha512-lJUL9imLTNi1ZfXT+DU6rBBdbiKGBuay9B6xGSPVjUeQwaH1RIGqef8RZkUtHioLmSNpPR5M4HVKJGm1j8FWVQ==
-
 ipaddr.js@1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"

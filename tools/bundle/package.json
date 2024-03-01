@@ -70,6 +70,7 @@
         "@spectrum-web-components/badge": "^0.41.2",
         "@spectrum-web-components/banner": "^0.41.2",
         "@spectrum-web-components/base": "^0.41.2",
+        "@spectrum-web-components/breadcrumbs": "^0.0.1",
         "@spectrum-web-components/button": "^0.41.2",
         "@spectrum-web-components/button-group": "^0.41.2",
         "@spectrum-web-components/card": "^0.41.2",

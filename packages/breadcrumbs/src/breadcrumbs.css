@@ -1,0 +1,91 @@
+/*
+Copyright 2024 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+@import url('./spectrum-breadcrumbs.css');
+
+sp-breadcrumb-item:last-of-type::part(separator) {
+    display: none;
+}
+
+:host([compact]) sp-breadcrumb-item::part(separator) {
+    margin-block: var(
+        --mod-breadcrumbs-icon-spacing-block-compact,
+        var(--spectrum-breadcrumbs-icon-spacing-block-compact)
+    );
+}
+
+:host([compact]) {
+    flex-wrap: nowrap;
+}
+
+:host([multiline]) sp-breadcrumb-item::part(separator) {
+    margin-block-start: var(
+        --mod-breadcrumbs-icon-spacing-block-start-multiline,
+        var(--spectrum-breadcrumbs-icon-spacing-block-start-multiline)
+    );
+    margin-block-end: var(
+        --mod-breadcrumbs-icon-spacing-block-between-multiline,
+        var(--spectrum-breadcrumbs-icon-spacing-block-between-multiline)
+    );
+}
+
+:host([multiline]) sp-breadcrumb-item::part(link) {
+    margin-block-start: var(
+        --mod-breadcrumbs-text-spacing-block-start-multiline,
+        var(--spectrum-breadcrumbs-text-spacing-block-start-multiline)
+    );
+    margin-block-end: var(
+        --mod-breadcrumbs-text-spacing-block-between-multiline,
+        var(--spectrum-breadcrumbs-text-spacing-block-between-multiline)
+    );
+}
+
+:host([multiline]) sp-breadcrumb-item:last-of-type::part(link) {
+    margin-block-start: 0;
+    margin-block-end: var(
+        --mod-breadcrumbs-text-spacing-block-end-multiline,
+        var(--spectrum-breadcrumbs-text-spacing-block-end-multiline)
+    );
+}
+
+:host([compact]) #container {
+    display: flex;
+    flex-wrap: no-wrap;
+}
+
+:host([dir]) slot[slot='icon']::slotted([slot='icon']),
+:host([dir]) slot[slot='icon'] .icon {
+    margin-inline-end: calc(
+        (
+                var(
+                        --custom-actionbutton-edge-to-text,
+                        var(--spectrum-actionbutton-edge-to-text)
+                    ) -
+                    var(
+                        --custom-actionbutton-edge-to-visual-only,
+                        var(--spectrum-actionbutton-edge-to-visual-only)
+                    )
+            ) * -1
+    );
+    margin-inline-start: calc(
+        (
+                var(
+                        --custom-actionbutton-edge-to-text,
+                        var(--spectrum-actionbutton-edge-to-text)
+                    ) -
+                    var(
+                        --custom-actionbutton-edge-to-visual-only,
+                        var(--spectrum-actionbutton-edge-to-visual-only)
+                    )
+            ) * -1
+    );
+}
