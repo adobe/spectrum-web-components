@@ -66,7 +66,7 @@ The correct way to make it accessible would be to wrap it under an interactive e
 
 ```html
 <sp-action-button size="s">
-    <sp-icon-info></sp-icon-info>
+    <sp-icon-info slot="icon"></sp-icon-info>
     <sp-tooltip self-managed placement="right">
         Display something here
     </sp-tooltip>
