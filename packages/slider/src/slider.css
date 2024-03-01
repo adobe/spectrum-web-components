@@ -149,3 +149,7 @@ governing permissions and limitations under the License.
 .fill {
     z-index: 2;
 }
+
+#slider-description {
+    display: none;
+}

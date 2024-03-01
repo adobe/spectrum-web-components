@@ -552,14 +552,14 @@ export class HandleController {
                     aria-label=${ifDefined(model.ariaLabel)}
                     aria-labelledby=${ariaLabelledBy}
                     aria-valuetext=${this.formattedValueForHandle(model)}
-                    aria-describedby="sliderDesc"
+                    aria-describedby="slider-description"
                     @change=${this.onInputChange}
                     @focus=${this.onInputFocus}
                     @blur=${this.onInputBlur}
                     @keydown=${this.onInputKeydown}
                     .model=${model}
                 />
-                <span id="sliderDesc" style="display:none">
+                <span id="slider-description">
                     Press escape or double click to reset the slider to its
                     default value.
                 </span>
