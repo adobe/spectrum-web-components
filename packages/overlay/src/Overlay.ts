@@ -50,6 +50,10 @@ import { LongpressController } from './LongpressController.js';
 export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
 
 import styles from './overlay.css.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from './slottable-request-event.js';
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 
@@ -172,6 +176,9 @@ export class Overlay extends OverlayFeatures {
             Overlay.openCount += 1;
         }
         this.requestUpdate('open', !this.open);
+        if (this.open) {
+            this.requestSlottable();
+        }
     }
 
     private _open = false;
@@ -512,6 +519,18 @@ export class Overlay extends OverlayFeatures {
         const shouldPreventClose = this.willPreventClose;
         this.willPreventClose = false;
         return shouldPreventClose;
+    }
+
+    protected override requestSlottable(): void {
+        if (!this.open) {
+            document.body.offsetHeight;
+        }
+        this.dispatchEvent(
+            new SlottableRequestEvent(
+                'overlay-content',
+                this.open ? {} : removeSlottableRequest
+            )
+        );
     }
 
     override willUpdate(changes: PropertyValues): void {

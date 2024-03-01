@@ -205,6 +205,15 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                             );
                         }
                         this.state = targetOpenState ? 'opened' : 'closed';
+                        // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
+                        await nextFrame();
+                        await nextFrame();
+                        if (
+                            targetOpenState === this.open &&
+                            targetOpenState === false
+                        ) {
+                            this.requestSlottable();
+                        }
                     };
                     if (this.open !== targetOpenState) {
                         return;
