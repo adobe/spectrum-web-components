@@ -58,13 +58,6 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='ltr']) #button[variant='accent'] {
-    margin-right: var(
-        --spectrum-button-border-width,
-        var(--spectrum-alias-border-size-thick)
-    );
-}
-
 /**
  * Begin workaround for SplitButton not natively supporting t-shirt sizes.
  */
@@ -78,10 +71,10 @@ sp-button {
  * End workaround for SplitButton not natively supporting t-shirt sizes.
  */
 
-::slotted(sp-menu) {
+sp-overlay:not(:defined) {
     display: none;
 }
 
-sp-overlay:not(:defined) {
-    display: none;
+.icon {
+    align-self: center;
 }

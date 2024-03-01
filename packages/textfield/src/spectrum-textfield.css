@@ -472,6 +472,10 @@ governing permissions and limitations under the License.
     inset-block-start: 0;
 }
 
+#textfield.spectrum-Textfield--sideLabel .icon {
+    grid-area: 1 / 2 / span 1 / span 1;
+}
+
 :host([valid]) #textfield .icon {
     color: var(
         --highcontrast-textfield-icon-color-valid,
@@ -487,10 +491,6 @@ governing permissions and limitations under the License.
     inset-block-end: var(
         --mod-textfield-icon-spacing-block-valid,
         var(--spectrum-textfield-icon-spacing-block-valid)
-    );
-    inset-inline-start: var(
-        --mod-textfield-icon-spacing-inline-start-valid,
-        var(--spectrum-textfield-icon-spacing-inline-start-valid)
     );
     inset-inline-end: var(
         --mod-textfield-icon-spacing-inline-end-valid,
@@ -521,10 +521,6 @@ governing permissions and limitations under the License.
     inset-block-end: var(
         --mod-textfield-icon-spacing-block-invalid,
         var(--spectrum-textfield-icon-spacing-block-invalid)
-    );
-    inset-inline-start: var(
-        --mod-textfield-icon-spacing-inline-start-invalid,
-        var(--spectrum-textfield-icon-spacing-inline-start-invalid)
     );
     inset-inline-end: var(
         --mod-textfield-icon-spacing-inline-end-invalid,
@@ -561,12 +557,6 @@ governing permissions and limitations under the License.
         --mod-textfield-label-spacing-block,
         var(--spectrum-textfield-label-spacing-block)
     );
-    padding-inline-start: calc(
-        var(
-                --mod-textfield-corner-radius,
-                var(--spectrum-textfield-corner-radius)
-            ) / 2
-    );
 }
 
 :host([quiet]) .spectrum-FieldLabel {
@@ -585,12 +575,6 @@ governing permissions and limitations under the License.
     margin-block-start: var(
         --mod-textfield-helptext-spacing-block,
         var(--spectrum-textfield-helptext-spacing-block)
-    );
-    padding-inline-start: calc(
-        var(
-                --mod-textfield-corner-radius,
-                var(--spectrum-textfield-corner-radius)
-            ) / 2
     );
 }
 
@@ -728,7 +712,6 @@ governing permissions and limitations under the License.
     grid-area: 2 / 1 / auto / span 2;
     inline-size: 100%;
     margin: 0;
-    overflow: visible;
 }
 
 .input::-ms-clear {
@@ -1272,6 +1255,10 @@ governing permissions and limitations under the License.
 }
 
 :host([multiline][grows]) .input {
+    grid-row: 2;
+}
+
+:host([multiline][grows]) .spectrum-Textfield--sideLabel .input {
     grid-row: 1;
 }
 

@@ -169,11 +169,6 @@ export function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
-export function forcePaint(): void {
-    // force the browser to paint
-    document.body.offsetHeight;
-}
-
 /**
  * Abstract Overlay base class so that property tyings and imperative API
  * interfaces can be held separate from the actual class definition.
@@ -185,6 +180,7 @@ export class AbstractOverlay extends SpectrumElement {
     ): Promise<void> {
         return;
     }
+    /* c8 ignore next 6 */
     get delayed(): boolean {
         return false;
     }
@@ -195,11 +191,20 @@ export class AbstractOverlay extends SpectrumElement {
         showPopover(): void;
         hidePopover(): void;
     };
+    /* c8 ignore next 6 */
+    get disabled(): boolean {
+        return false;
+    }
+    set disabled(_disabled: boolean) {
+        return;
+    }
     dispose = noop;
+    /* c8 ignore next 3 */
     protected async ensureOnDOM(_targetOpenState: boolean): Promise<void> {
         return;
     }
     elements!: OpenableElement[];
+    /* c8 ignore next 5 */
     protected async makeTransition(
         _targetOpenState: boolean
     ): Promise<HTMLElement | null> {
@@ -208,16 +213,20 @@ export class AbstractOverlay extends SpectrumElement {
     protected async manageDelay(_targetOpenState: boolean): Promise<void> {
         return;
     }
+    /* c8 ignore next 3 */
     protected async manageDialogOpen(): Promise<void> {
         return;
     }
+    /* c8 ignore next 3 */
     protected async managePopoverOpen(): Promise<void> {
         return;
     }
+    /* c8 ignore next 3 */
     protected managePosition(): void {
         return;
     }
-    protected offset: number | [number, number] = 6;
+    protected offset: number | [number, number] = 0;
+    /* c8 ignore next 6 */
     get open(): boolean {
         return false;
     }
@@ -227,6 +236,7 @@ export class AbstractOverlay extends SpectrumElement {
     placement?: Placement;
     protected placementController!: PlacementController;
     receivesFocus!: 'true' | 'false' | 'auto';
+    /* c8 ignore next 6 */
     get state(): OverlayState {
         return 'closed';
     }
@@ -237,7 +247,7 @@ export class AbstractOverlay extends SpectrumElement {
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;
     willPreventClose = false;
-
+    /* c8 ignore next 3 */
     public manuallyKeepOpen(): void {
         return;
     }

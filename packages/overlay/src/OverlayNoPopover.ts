@@ -19,7 +19,6 @@ import { Constructor, OpenableElement } from './overlay-types.js';
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
-    forcePaint,
     guaranteedAllTransitionend,
     OverlayStateEvent,
     overlayTimer,
@@ -53,7 +52,8 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
         protected override async ensureOnDOM(
             _targetOpenState: boolean
         ): Promise<void> {
-            forcePaint();
+            // force the browser to paint
+            document.body.offsetHeight;
         }
 
         protected override async makeTransition(

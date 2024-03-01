@@ -27,13 +27,8 @@ governing permissions and limitations under the License.
     --spectrum-tray-background-color: var(--spectrum-background-layer-2-color);
 }
 
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-tray-background-color: Background;
-    }
-}
-
 .tray {
+    --mod-modal-max-width: 100%;
     max-block-size: calc(
         100vh -
             var(
@@ -42,7 +37,8 @@ governing permissions and limitations under the License.
             )
     );
     box-sizing: border-box;
-    border-radius: unset;
+    border-radius: var(--mod-tray-corner-radius-portrait, 0)
+        var(--mod-tray-corner-radius-portrait, 0) 0 0;
     transition: opacity
             var(
                 --mod-tray-exit-animation-duration,
@@ -85,6 +81,7 @@ governing permissions and limitations under the License.
     );
     outline: none;
     inline-size: 100%;
+    max-inline-size: 100%;
     margin-block-start: var(
         --mod-tray-spacing-edge-to-tray-safe-zone,
         var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
@@ -139,5 +136,16 @@ governing permissions and limitations under the License.
             --mod-tray-corner-radius,
             var(--spectrum-tray-corner-radius)
         );
+    }
+}
+
+@media (forced-colors: active) {
+    .tray {
+        --highcontrast-tray-background-color: Canvas;
+        border: solid;
+    }
+
+    .tray ::slotted(*) {
+        border: none;
     }
 }
