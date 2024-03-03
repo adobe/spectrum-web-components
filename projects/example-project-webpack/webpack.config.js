@@ -80,22 +80,6 @@ const shared = (env) => {
             loader: 'css-loader',
             options: { importLoaders: 1 },
         },
-        {
-            loader: 'postcss-loader',
-            options: {
-                postcssOptions: {
-                    plugins: (loader) => [
-                        require('postcss-import')({
-                            root: loader.resourcePath,
-                        }),
-                        require('postcss-preset-env')({
-                            browsers: 'last 2 versions',
-                        }),
-                        ...(IS_DEV ? [] : [require('cssnano')()]),
-                    ],
-                },
-            },
-        },
     ];
 
     return {

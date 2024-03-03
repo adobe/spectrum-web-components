@@ -141,7 +141,6 @@
         "chalk": "^5.0.1",
         "chromedriver": "^121.0.2",
         "common-tags": "^1.8.2",
-        "cssnano": "^6.0.1",
         "custom-elements-manifest": "^2.0.0",
         "debounce": "^2.0.0",
         "deepmerge": "^4.2.2",
