@@ -25,8 +25,11 @@ commands:
                   keys:
                       - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
+                  name: Enable Corepack
+                  command: corepack enable
+            - run:
                   name: Installing Dependencies
-                  command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+                  command: yarn install --immutable
             - save_cache:
                   paths:
                       - ~/.cache/yarn
@@ -124,8 +127,11 @@ jobs:
                   keys:
                       - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
+                  name: Enable Corepack
+                  command: corepack enable
+            - run:
                   name: Installing Dependencies
-                  command: yarn --ignore-scripts --frozen-lockfile --cache-folder ~/.cache/yarn
+                  command: yarn install --immutable
             - save_cache:
                   paths:
                       - ~/.cache/yarn
