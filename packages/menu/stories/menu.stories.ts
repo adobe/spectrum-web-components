@@ -168,7 +168,7 @@ export const menuItemWithDescription = (): TemplateResult => {
                 Open a copy
                 <span slot="description">Illustrator for iPad</span>
             </sp-menu-item>
-            <sp-menu-item>
+            <sp-menu-item disabled>
                 <sp-icon-share slot="icon"></sp-icon-share>
                 Share link
                 <span slot="description">Enable comments and download</span>
@@ -369,6 +369,59 @@ export const MenuGroupSelectsMultiple = (): TemplateResult => {
                         Silverado street
                     </sp-menu-item>
                 </sp-menu-group>
+            </sp-menu>
+        </sp-popover>
+    `;
+};
+
+export const menuWithValueSlots = (): TemplateResult => {
+    return html`
+        <sp-menu style="width: 150px">
+            <sp-menu-item>
+                Undo
+                <span slot="value">⌘​Z</span>
+            </sp-menu-item>
+            <sp-menu-item disabled>
+                Redo
+                <span slot="value">⇧⌘​Z</span>
+            </sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>
+                Cut
+                <span slot="value">⌘​X</span>
+            </sp-menu-item>
+            <sp-menu-item>
+                Copy
+                <span slot="value">⌘​S</span>
+            </sp-menu-item>
+            <sp-menu-item disabled>
+                Paste
+                <span slot="value">⌘​P</span>
+            </sp-menu-item>
+        </sp-menu>
+        <sp-popover open style="width: 150px">
+            <sp-menu>
+                <sp-menu-item>
+                    Undo
+                    <span slot="value">⌘​Z</span>
+                </sp-menu-item>
+                <sp-menu-item disabled>
+                    Redo
+                    <span slot="value">⇧⌘​Z</span>
+                </sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>
+                    Cut
+                    <span slot="value">⌘​X</span>
+                </sp-menu-item>
+                <sp-menu-item>
+                    Copy
+                    <span slot="value">⌘​S</span>
+                </sp-menu-item>
+                <sp-menu-item disabled>
+                    Paste
+                    <span slot="value">⌘​P</span>
+                </sp-menu-item>
             </sp-menu>
         </sp-popover>
     `;

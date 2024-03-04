@@ -110,8 +110,10 @@ export default async () => {
                         'font2'
                     ] = `<link rel="preload" href="https://use.typekit.net/af/cb695f/000000000000000000017701/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3" as="font" type="font/woff2" crossorigin/>`;
                     return html.replace(
-                        '</head>',
-                        `${[...Object.values(modulepreloads)].join('')}</head>`
+                        '<link rel="dns-prefetch" href="https://use.typekit.net">',
+                        `${[...Object.values(modulepreloads)].join(
+                            ''
+                        )}<link rel="dns-prefetch" href="https://use.typekit.net">`
                     );
                 },
                 processAndReplaceHTML,
