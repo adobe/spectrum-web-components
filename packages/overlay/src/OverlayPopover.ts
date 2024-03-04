@@ -27,6 +27,8 @@ import {
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 
+const supportsOverlayAuto = CSS.supports('(overlay: auto)');
+
 function isOpen(el: HTMLElement): boolean {
     let popoverOpen = false;
     try {
@@ -122,7 +124,9 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             targetOpenState: boolean
         ): Promise<void> {
             await nextFrame();
-            await this.shouldHidePopover(targetOpenState);
+            if (!supportsOverlayAuto) {
+                await this.shouldHidePopover(targetOpenState);
+            }
             await this.shouldShowPopover(targetOpenState);
             await nextFrame();
         }
@@ -205,6 +209,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                             );
                         }
                         this.state = targetOpenState ? 'opened' : 'closed';
+                        this.returnFocus();
                         // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
                         await nextFrame();
                         await nextFrame();

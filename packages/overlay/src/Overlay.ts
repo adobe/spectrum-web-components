@@ -354,6 +354,42 @@ export class Overlay extends OverlayFeatures {
         focusEl?.focus();
     }
 
+    protected override returnFocus(): void {
+        if (this.open || this.type === 'hint') return;
+
+        // If the focus remains inside of the overlay or
+        // a slotted descendent of the overlay you need to return
+        // focus back to the trigger.
+        const getAncestors = (): HTMLElement[] => {
+            const ancestors: HTMLElement[] = [];
+            // eslint-disable-next-line @spectrum-web-components/document-active-element
+            let currentNode = document.activeElement;
+            while (currentNode?.shadowRoot?.activeElement) {
+                currentNode = currentNode.shadowRoot.activeElement;
+            }
+            while (currentNode) {
+                const ancestor =
+                    currentNode.assignedSlot ||
+                    currentNode.parentElement ||
+                    (currentNode.getRootNode() as ShadowRoot)?.host;
+                if (ancestor) {
+                    ancestors.push(ancestor as HTMLElement);
+                }
+                currentNode = ancestor;
+            }
+            return ancestors;
+        };
+        if (
+            (this.triggerElement as HTMLElement)?.focus &&
+            (this.contains((this.getRootNode() as Document).activeElement) ||
+                getAncestors().includes(this) ||
+                // eslint-disable-next-line @spectrum-web-components/document-active-element
+                document.activeElement === document.body)
+        ) {
+            (this.triggerElement as HTMLElement).focus();
+        }
+    }
+
     private closeOnFocusOut = (event: FocusEvent): void => {
         // If you don't know where the focus went, we can't do anyting here.
         if (!event.relatedTarget) {
@@ -434,42 +470,6 @@ export class Overlay extends OverlayFeatures {
                     this.closeOnFocusOut,
                     { capture: true }
                 );
-            }
-        }
-        if (!this.open && this.type !== 'hint') {
-            // If the focus remains inside of the overlay or
-            // a slotted descendent of the overlay you need to return
-            // focus back to the trigger.
-            const getAncestors = (): HTMLElement[] => {
-                const ancestors: HTMLElement[] = [];
-                // eslint-disable-next-line @spectrum-web-components/document-active-element
-                let currentNode = document.activeElement;
-                while (
-                    currentNode?.shadowRoot &&
-                    currentNode.shadowRoot.activeElement
-                ) {
-                    currentNode = currentNode.shadowRoot.activeElement;
-                }
-                while (currentNode) {
-                    const ancestor =
-                        currentNode.assignedSlot ||
-                        currentNode.parentElement ||
-                        (currentNode.getRootNode() as ShadowRoot)?.host;
-                    if (ancestor) {
-                        ancestors.push(ancestor as HTMLElement);
-                    }
-                    currentNode = ancestor;
-                }
-                return ancestors;
-            };
-            if (
-                (this.triggerElement as HTMLElement)?.focus &&
-                (this.contains(
-                    (this.getRootNode() as Document).activeElement
-                ) ||
-                    getAncestors().includes(this))
-            ) {
-                (this.triggerElement as HTMLElement).focus();
             }
         }
     }
