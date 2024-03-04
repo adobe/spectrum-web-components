@@ -8,6 +8,9 @@ layout: layout.njk
         <h1 class="spectrum-Heading spectrum-Heading--sizeXXL spectrum-Heading--serif" id="component-name">{{ componentHeading }}</h1>
       </div>
       {% include "partials/demo.njk" %}
+      {% if deprecationNotice %}
+      {% include "partials/deprecation.njk" %}
+      {% endif %}
       {{ content | safe }}
       {% for part in collections[componentName] %}
         <sp-tab-panel class="section" value="{{ part.data.partType }}">

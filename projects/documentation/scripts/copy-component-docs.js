@@ -57,6 +57,15 @@ const findDeclaration = (customElements, test) => {
     return declaration;
 };
 
+const readPackageJsonDeprecation = (filePath) => {
+    if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, { encoding: 'utf8' });
+        const body = JSON.parse(content);
+        return body.deprecationNotice;
+    }
+    return {};
+};
+
 export async function processREADME(mdPath) {
     const fileName = extractFileNameRegExp.exec(mdPath)[0];
     if (fileName === 'CHANGELOG.md' || /node_modules/.test(mdPath)) {
@@ -173,6 +182,14 @@ export async function processREADME(mdPath) {
             'args.js'
         )
     );
+    const deprecationNotice = readPackageJsonDeprecation(
+        path.resolve(
+            __dirname,
+            '../../../packages',
+            packageName,
+            'package.json'
+        )
+    );
     const hasTemplate = fs.existsSync(
         path.resolve(
             __dirname,
@@ -192,6 +209,7 @@ export async function processREADME(mdPath) {
     }export default {
     hasDemoControls: ${hasArgs},
     hasDemoTemplate: ${hasTemplate},
+    deprecationNotice: ${JSON.stringify(deprecationNotice)},
     ${hasArgs ? 'demoControls: Object.values(argTypes),' : ''}
 };
 `;
