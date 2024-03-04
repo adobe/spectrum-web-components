@@ -92,7 +92,6 @@
     "peerDependencies": {
         "common-tags": "^1.8.0"
     },
-    "dependencies": {},
     "devDependencies": {
         "@commitlint/cli": "^19.0.1",
         "@commitlint/config-conventional": "^19.0.0",
@@ -194,6 +193,7 @@
         "wireit": "^0.14.3",
         "yargs": "^17.2.1"
     },
+    "packageManager": "yarn@4.1.0",
     "wireit": {
         "build:css:watch": {
             "command": "node ./tasks/watch-css.js",

@@ -15,8 +15,10 @@ jobs:
               with:
                   cache: yarn
                   node-version: 18
+            - name: Enable Corepack
+              run: corepack enable
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              run: yarn install --immutable
               # README: https://github.com/castastrophe/actions-pr-auto-update#auto-update-pull-requests
             - uses: castastrophe/actions-pr-auto-update@v1.1.0
               with:

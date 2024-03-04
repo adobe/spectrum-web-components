@@ -26,9 +26,10 @@ jobs:
                   node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
-
+            - name: Enable Corepack
+              run: corepack enable
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn install --immutable
 
             - name: Post Previews
               uses: actions/github-script@v7
@@ -74,9 +75,10 @@ jobs:
                   node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
-
+            - name: Enable Corepack
+              run: corepack enable
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn install --immutable
 
             - name: Extract branch name
               shell: bash
@@ -146,9 +148,10 @@ jobs:
                   node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
-
+            - name: Enable Corepack
+              run: corepack enable
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn install --immutable
 
             - run: firefox --version
 
@@ -187,9 +190,10 @@ jobs:
                   node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
-
+            - name: Enable Corepack
+              run: corepack enable
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn install --immutable
 
             - name: Tachometer the changed packages
               run: yarn test:changed
@@ -227,9 +231,10 @@ jobs:
                   node-version: '18'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
-
+            - name: Enable Corepack
+              run: corepack enable
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn install --immutable
 
             - name: Retrieve tachometer results archives
               uses: actions/download-artifact@v4

@@ -6,6 +6,20 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 
 # Requirements
 
+This project uses **Node** and modern **yarn**. You must enable [corepack](https://yarnpkg.com/corepack) to use modern yarn. This only needs to be done once; to check if you've already enabled corepack:
+
+```sh
+yarn exec env
+```
+
+if you get a path as output, Corepack is properly installed. Otherwise, try:
+
+```shell
+corepack enable
+```
+
+Read more about [installing yarn](https://yarnpkg.com/getting-started/install);
+
 -   NodeJS >= 18.17.0
 -   Typescript
 -   Browsers with Custom Elements V1 and Shadow DOM support, e.g. Chrome, Firefox, Safari, Edge (79+)

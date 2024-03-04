@@ -93,3 +93,13 @@ test/visual/test.js
 node_modules
 npm-debug.log
 package-lock.json
+
+
+# yarn 3
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

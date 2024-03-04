@@ -15,9 +15,10 @@ jobs:
                   node-version: 18
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
-
+            - name: Enable Corepack
+              run: corepack enable
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn install --immutable
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps
             - name: Run Playwright tests
