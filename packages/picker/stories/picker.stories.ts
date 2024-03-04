@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
@@ -389,15 +390,6 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 clear: left;
                 margin-bottom: 15px;
             }
-            /* Enforce CSS stacking to test "transition-behavior: allow-discrete" */
-            /* Breaks the story in non-[popover] supporting browsers */
-            fieldset:nth-of-type(2) {
-                position: relative;
-                z-index: 2;
-            }
-            .backdrop-filter-test {
-                backdrop-filter: saturate(80%);
-            }
         </style>
         <fieldset class="backdrop-filter-test">
             <sp-field-label for="picker-open">
@@ -441,6 +433,90 @@ Open.args = {
     open: true,
 };
 Open.decorators = [isOverlayOpen];
+
+export const OpenShowingEdgeCase = (args: StoryArgs): TemplateResult => {
+    return html`
+        <style>
+            fieldset {
+                float: left;
+                clear: left;
+                margin-bottom: 15px;
+            }
+            /* Enforce CSS stacking to test "transition-behavior: allow-discrete" */
+            /* Breaks the story in non-[popover] supporting browsers */
+            fieldset:nth-of-type(2) {
+                position: relative;
+                z-index: 2;
+            }
+            .backdrop-filter-test {
+                backdrop-filter: saturate(80%);
+            }
+        </style>
+        <p>
+            In browser that do not support
+            <code>[popover]</code>
+            , the following "open"
+            <code>sp-picker</code>
+            will display behind both the closed
+            <code>sp-picker</code>
+            as well as the
+            <code>fieldset</code>
+            that contains it.
+        </p>
+        <p>
+            Learn more about this situation in our
+            <sp-link
+                href="https://opensource.adobe.com/spectrum-web-components/components/overlay/#fallback-support"
+            >
+                documentation site
+            </sp-link>
+            .
+        </p>
+        <fieldset class="backdrop-filter-test">
+            <sp-field-label for="picker-open">
+                Where do you live?
+            </sp-field-label>
+            <sp-picker
+                id="picker-open"
+                label="Open picker"
+                ${spreadProps(args)}
+                @change=${handleChange(args)}
+            >
+                <span slot="label">
+                    Select a Country with a very long label, too long, in fact
+                </span>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-picker>
+        </fieldset>
+        <fieldset>
+            <sp-field-label for="picker-closed">
+                Where do you live?
+            </sp-field-label>
+            <sp-picker
+                id="picker-closed"
+                label="Picker that displays below the options"
+                @change=${handleChange(args)}
+            >
+                <span slot="label">
+                    Other menu that goes behind the open one
+                </span>
+                <sp-menu-item>Not so many options...</sp-menu-item>
+            </sp-picker>
+        </fieldset>
+    `;
+};
+OpenShowingEdgeCase.args = {
+    open: true,
+};
+OpenShowingEdgeCase.decorators = [isOverlayOpen];
+OpenShowingEdgeCase.swc_vrt = {
+    skip: true,
+};
 
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
