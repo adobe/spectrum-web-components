@@ -793,7 +793,7 @@ describe('sp-overlay', () => {
                 expect(this.manual.open).to.be.true;
             });
         });
-        describe('only close when mnually closed', function () {
+        describe('only close when manually closed', function () {
             it('does not close when clicking away', async () => {
                 const test = await fixture(html`
                     <div>
@@ -823,6 +823,43 @@ describe('sp-overlay', () => {
                             position: [50, 400],
                         },
                     ],
+                });
+
+                await aTimeout(200);
+
+                expect(el.open).to.be.true;
+
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                ({ overlay } = await closed);
+                expect(el === overlay).to.be.true;
+
+                expect(el.open).to.be.false;
+            });
+            it('does not close when pressing `Escape`', async () => {
+                const test = await fixture(html`
+                    <div>
+                        ${click({
+                            ...click.args,
+                            interaction: 'click',
+                            placement: 'bottom',
+                            type: 'manual',
+                            delayed: false,
+                            receivesFocus: 'auto',
+                        })}
+                    </div>
+                `);
+                const el = test.querySelector('sp-overlay') as Overlay;
+
+                expect(el.open).to.be.false;
+
+                const opened = oneEvent(el, 'sp-opened');
+                el.open = true;
+                let { overlay } = await opened;
+                expect(el === overlay).to.be.true;
+
+                await sendKeys({
+                    press: 'Escape',
                 });
 
                 await aTimeout(200);
