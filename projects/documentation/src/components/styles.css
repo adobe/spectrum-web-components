@@ -952,7 +952,7 @@ sp-link:not(:defined) {
 }
 
 .deprecation-container {
-    margin: 3em 0;
+    margin: 2em 0;
 }
 
 .demo-container:not(.with-demo) {

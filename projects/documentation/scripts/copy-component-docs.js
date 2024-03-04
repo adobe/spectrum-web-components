@@ -57,13 +57,26 @@ const findDeclaration = (customElements, test) => {
     return declaration;
 };
 
-const readPackageJsonDeprecation = (filePath) => {
-    if (fs.existsSync(filePath)) {
-        const content = fs.readFileSync(filePath, { encoding: 'utf8' });
-        const body = JSON.parse(content);
-        return body.deprecationNotice;
+const findDeprecationNotice = async function (packageName) {
+    let packageJSON = {};
+    try {
+        packageJSON = await import(
+            `../../../packages/${packageName}/package.json`,
+            {
+                assert: { type: 'json' },
+            }
+        ).then((packageDefault) => packageDefault.default);
+    } catch (error) {
+        try {
+            packageJSON = await import(
+                `../../tools/${packageName}/package.json`,
+                {
+                    assert: { type: 'json' },
+                }
+            ).then((packageDefault) => packageDefault.default);
+        } catch (error) {}
     }
-    return {};
+    return packageJSON.deprecationNotice;
 };
 
 export async function processREADME(mdPath) {
@@ -182,14 +195,7 @@ export async function processREADME(mdPath) {
             'args.js'
         )
     );
-    const deprecationNotice = readPackageJsonDeprecation(
-        path.resolve(
-            __dirname,
-            '../../../packages',
-            packageName,
-            'package.json'
-        )
-    );
+    const deprecationNotice = await findDeprecationNotice(packageName);
     const hasTemplate = fs.existsSync(
         path.resolve(
             __dirname,
