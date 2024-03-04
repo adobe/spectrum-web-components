@@ -364,10 +364,7 @@ export class Overlay extends OverlayFeatures {
             const ancestors: HTMLElement[] = [];
             // eslint-disable-next-line @spectrum-web-components/document-active-element
             let currentNode = document.activeElement;
-            while (
-                currentNode?.shadowRoot &&
-                currentNode.shadowRoot.activeElement
-            ) {
+            while (currentNode?.shadowRoot?.activeElement) {
                 currentNode = currentNode.shadowRoot.activeElement;
             }
             while (currentNode) {
