@@ -5242,9 +5242,9 @@
   integrity sha512-PCp/83ctAWrYlDYjZU+9vRMLte2GBaxiKOBvm1g9UH0XqTvocjlyVRNIvVbE0ywdefVtbKGFr30x+Yk9HTdaRQ==
 
 "@spectrum-css/radio@^8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-8.1.3.tgz#bd186494e99c020ff74de20ba4f6050321bb0c68"
-  integrity sha512-y3ouXEm59NHspIicBxaXWoSs19CAHSoFGx4MrWCdjHDMUaRtKUUHDfaqhFm16DbyENA5YVUB5QeKu34qbDqYSQ==
+  version "8.1.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-8.1.4.tgz#f41bf9a50841e36cc344dd44b80227c228c8b9b0"
+  integrity sha512-2j2mMm3VPKr/ayFUMtjuQKrcaJikwW86w8RAkax4KVppuOc3DUng+lYfYTJkd5b6i02ohhJx7n65/dicoOiTdw==
 
 "@spectrum-css/search@^6.2.2":
   version "6.2.2"
