@@ -92,7 +92,6 @@
     "peerDependencies": {
         "common-tags": "^1.8.0"
     },
-    "dependencies": {},
     "devDependencies": {
         "@commitlint/cli": "^19.0.1",
         "@commitlint/config-conventional": "^19.0.0",
