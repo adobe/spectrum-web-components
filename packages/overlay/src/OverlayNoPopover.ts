@@ -20,6 +20,7 @@ import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
+    nextFrame,
     OverlayStateEvent,
     overlayTimer,
 } from './AbstractOverlay.js';
@@ -91,37 +92,51 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
                     }
                 });
             };
-            const finish = (el: OpenableElement, index: number) => (): void => {
-                if (this.open !== targetOpenState) {
-                    return;
-                }
-                const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
-                el.dispatchEvent(
-                    new OverlayStateEvent(eventName, this, {
-                        interaction: this.type,
-                    })
-                );
-                if (index > 0) {
-                    return;
-                }
-                const hasVirtualTrigger =
-                    this.triggerElement instanceof VirtualTrigger;
-                this.dispatchEvent(
-                    new OverlayStateEvent(eventName, this, {
-                        interaction: this.type,
-                        publish: hasVirtualTrigger,
-                    })
-                );
-                if (this.triggerElement && !hasVirtualTrigger) {
-                    (this.triggerElement as HTMLElement).dispatchEvent(
+            const finish =
+                (el: OpenableElement, index: number) =>
+                async (): Promise<void> => {
+                    if (this.open !== targetOpenState) {
+                        return;
+                    }
+                    const eventName = targetOpenState
+                        ? 'sp-opened'
+                        : 'sp-closed';
+                    el.dispatchEvent(
                         new OverlayStateEvent(eventName, this, {
                             interaction: this.type,
-                            publish: true,
                         })
                     );
-                }
-                this.state = targetOpenState ? 'opened' : 'closed';
-            };
+                    if (index > 0) {
+                        return;
+                    }
+                    const hasVirtualTrigger =
+                        this.triggerElement instanceof VirtualTrigger;
+                    this.dispatchEvent(
+                        new OverlayStateEvent(eventName, this, {
+                            interaction: this.type,
+                            publish: hasVirtualTrigger,
+                        })
+                    );
+                    if (this.triggerElement && !hasVirtualTrigger) {
+                        (this.triggerElement as HTMLElement).dispatchEvent(
+                            new OverlayStateEvent(eventName, this, {
+                                interaction: this.type,
+                                publish: true,
+                            })
+                        );
+                    }
+                    this.state = targetOpenState ? 'opened' : 'closed';
+                    this.returnFocus();
+                    // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
+                    await nextFrame();
+                    await nextFrame();
+                    if (
+                        targetOpenState === this.open &&
+                        targetOpenState === false
+                    ) {
+                        this.requestSlottable();
+                    }
+                };
             this.elements.forEach((el, index) => {
                 guaranteedAllTransitionend(
                     el,

@@ -236,6 +236,10 @@ export class AbstractOverlay extends SpectrumElement {
     placement?: Placement;
     protected placementController!: PlacementController;
     receivesFocus!: 'true' | 'false' | 'auto';
+    protected requestSlottable(): void {}
+    protected returnFocus(): void {
+        return;
+    }
     /* c8 ignore next 6 */
     get state(): OverlayState {
         return 'closed';
