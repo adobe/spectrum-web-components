@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
+
+### Bug Fixes
+
+-   **button:** add missing progress-circle dependency ([#4086](https://github.com/adobe/spectrum-web-components/issues/4086)) ([2dfeeb3](https://github.com/adobe/spectrum-web-components/commit/2dfeeb3c5f1febec269fef00933cc65a1d0a0c43))
+-   **color-field:** add color-field package ([#3870](https://github.com/adobe/spectrum-web-components/issues/3870)) ([5081634](https://github.com/adobe/spectrum-web-components/commit/508163476cbe47a4450b2448fcd47ecd237c8085))
+-   **menu:** fix css for `disabled` "value" slots in menu items ([#4113](https://github.com/adobe/spectrum-web-components/issues/4113)) ([3c5855d](https://github.com/adobe/spectrum-web-components/commit/3c5855d606739b29c7da7a6250cc7636ee15fad1))
+-   **overlay:** ensure "manual" Overlays ignore "light dismiss" when [popover] is not supported ([#4121](https://github.com/adobe/spectrum-web-components/issues/4121)) ([eb5e1ad](https://github.com/adobe/spectrum-web-components/commit/eb5e1ad78ebde99443929aa985a38297ebb16f4e))
+-   **overlay:** leverage "transition-behavior" to persist top-layer content while closing ([#4050](https://github.com/adobe/spectrum-web-components/issues/4050)) ([e3dea14](https://github.com/adobe/spectrum-web-components/commit/e3dea14fa382b4e02f61ae8b651e89cd92c348f8))
+-   **picker:** support inline labeling of quiet Picker ([#3704](https://github.com/adobe/spectrum-web-components/issues/3704)) ([3372286](https://github.com/adobe/spectrum-web-components/commit/337228659bfcd831700ce782254e5cb539c503d2))
+-   **slider:** double click on slider handle to reset slider position ([#3991](https://github.com/adobe/spectrum-web-components/issues/3991)) ([64c594a](https://github.com/adobe/spectrum-web-components/commit/64c594a7c305bd4946bb5801341366a1e751a614))
+
 ## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
 
 ### Bug Fixes
