@@ -1608,12 +1608,21 @@ describe('Slider', () => {
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
     });
     it('resets to default value on double click after moving pointer', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+
         const el = await fixture<Slider>(
             html`
                 <sp-slider
                     style="width: 100px"
                     value="50"
                     default-value="50"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
                 ></sp-slider>
             `
         );
@@ -1659,6 +1668,9 @@ describe('Slider', () => {
         // since we've moved the pointer, the new value should be 100
         expect(el.value).to.equal(100);
 
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+
         handle.dispatchEvent(
             new PointerEvent('dblclick', {
                 clientX: 0,
@@ -1675,8 +1687,15 @@ describe('Slider', () => {
             el.value,
             'reset to default value on double click after moving pointer'
         ).to.equal(50);
+
+        // input and change events should have been fired
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
     });
     it('manages escape key interactions correctly in an overlaid context', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+
         const el = await fixture<HTMLDivElement>(
             html`
                 <div>
@@ -1687,6 +1706,16 @@ describe('Slider', () => {
                                 style="width: 100px"
                                 value="70"
                                 default-value="50"
+                                @input=${(
+                                    event: Event & { target: Slider }
+                                ) => {
+                                    inputSpy(event.target.value);
+                                }}
+                                @change=${(
+                                    event: Event & { target: Slider }
+                                ) => {
+                                    changeSpy(event.target.value);
+                                }}
                             ></sp-slider>
                         </sp-popover>
                     </sp-overlay>
@@ -1716,6 +1745,10 @@ describe('Slider', () => {
 
         // now the slider value should be 50
         expect(slider.value).to.equal(50);
+
+        // input and change events should have been fired
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
 
         // and the overlay should be in open state
         const overlay = el.querySelector('sp-overlay') as Overlay;
