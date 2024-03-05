@@ -25,7 +25,8 @@ import type {
 import type { Overlay } from './Overlay.js';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import { OverlayTimer } from './overlay-timer.js';
-import { PlacementController } from './PlacementController.js';
+import type { PlacementController } from './PlacementController.js';
+import type { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 export const overlayTimer = new OverlayTimer();
 
@@ -199,6 +200,13 @@ export class AbstractOverlay extends SpectrumElement {
         return;
     }
     dispose = noop;
+    protected get elementResolver(): ElementResolutionController {
+        return this._elementResolver;
+    }
+    protected set elementResolver(controller) {
+        this._elementResolver = controller;
+    }
+    protected _elementResolver!: ElementResolutionController;
     /* c8 ignore next 3 */
     protected async ensureOnDOM(_targetOpenState: boolean): Promise<void> {
         return;
@@ -234,7 +242,13 @@ export class AbstractOverlay extends SpectrumElement {
         return;
     }
     placement?: Placement;
-    protected placementController!: PlacementController;
+    protected get placementController(): PlacementController {
+        return this._placementController;
+    }
+    protected set placementController(controller) {
+        this._placementController = controller;
+    }
+    protected _placementController!: PlacementController;
     receivesFocus!: 'true' | 'false' | 'auto';
     protected requestSlottable(): void {}
     protected returnFocus(): void {
@@ -341,19 +355,16 @@ export class AbstractOverlay extends SpectrumElement {
             const trigger = triggerOrContent;
             const interaction = interactionOrOptions;
             const options = optionsV1;
-            overlay.delayed =
-                options.delayed || overlayContent.hasAttribute('delayed');
-            overlay.receivesFocus = options.receivesFocus ?? 'auto';
-            overlay.triggerElement = options.virtualTrigger || trigger;
-            overlay.type =
-                interaction === 'modal'
+            AbstractOverlay.applyOptions(overlay, {
+                ...options,
+                delayed: options.delayed || overlayContent.hasAttribute('delayed'),
+                trigger: options.virtualTrigger || trigger,
+                type: interaction === 'modal'
                     ? 'modal'
                     : interaction === 'hover'
                     ? 'hint'
-                    : 'auto';
-            overlay.offset = options.offset ?? 6;
-            overlay.placement = options.placement;
-            overlay.willPreventClose = !!options.notImmediatelyClosable;
+                    : 'auto'
+            });
             trigger.insertAdjacentElement('afterend', overlay);
             await overlay.updateComplete;
             overlay.open = true;
@@ -362,18 +373,24 @@ export class AbstractOverlay extends SpectrumElement {
 
         const options = interactionOrOptions as OverlayOptions;
         overlay.append(overlayContent);
-        overlay.delayed =
-            options.delayed || overlayContent.hasAttribute('delayed');
-        overlay.receivesFocus = options.receivesFocus ?? 'auto';
-        overlay.triggerElement = options.trigger || null;
-        overlay.type = options.type || 'modal';
-        overlay.offset = options.offset ?? 6;
-        overlay.placement = options.placement;
-        overlay.willPreventClose = !!options.notImmediatelyClosable;
+        AbstractOverlay.applyOptions(overlay, {
+            ...options,
+            delayed: options.delayed || overlayContent.hasAttribute('delayed')
+        });
         overlay.updateComplete.then(() => {
             // Do we want to "open" this path, or leave that to the consumer?
             overlay.open = true;
         });
         return overlay;
+    }
+
+    static applyOptions(overlay: Overlay, options: OverlayOptions): void {
+        overlay.delayed = !!options.delayed;
+        overlay.receivesFocus = options.receivesFocus ?? 'auto';
+        overlay.triggerElement = options.trigger || null;
+        overlay.type = options.type || 'modal';
+        overlay.offset = options.offset ?? 0;
+        overlay.placement = options.placement;
+        overlay.willPreventClose = !!options.notImmediatelyClosable;
     }
 }

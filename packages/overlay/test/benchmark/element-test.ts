@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
@@ -21,9 +21,9 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(
     html`
-        <overlay-trigger content="click">
-            <sp-button slot="trigger">Trigger</sp-button>
-            <sp-popover slot="click-content">
+        <sp-button id="button">Trigger</sp-button>
+        <sp-overlay trigger="button@click">
+            <sp-popover>
                 <sp-dialog no-divider>
                     <sp-slider
                         value="5"
@@ -46,6 +46,6 @@ measureFixtureCreation(
                     </sp-button>
                 </sp-dialog>
             </sp-popover>
-        </overlay-trigger>
+        </sp-overlay>
     `
 );

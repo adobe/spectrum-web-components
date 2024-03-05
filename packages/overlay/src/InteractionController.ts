@@ -13,6 +13,12 @@ governing permissions and limitations under the License.
 import type { ReactiveController } from 'lit';
 import { AbstractOverlay } from './AbstractOverlay.js';
 
+export enum InteractionTypes {
+    'click',
+    'hover',
+    'longpress',
+}
+
 export class InteractionController implements ReactiveController {
     abortController!: AbortController;
 
@@ -20,9 +26,14 @@ export class InteractionController implements ReactiveController {
         return false;
     }
 
-    constructor(public host: AbstractOverlay, public target: HTMLElement) {
+    type!: InteractionTypes;
+
+    constructor(public host: AbstractOverlay, public target: HTMLElement, private isPersistent = false) {
         this.host.addController(this);
         this.prepareDescription(this.target);
+        if (this.isPersistent) {
+            this.init();
+        }
     }
 
     prepareDescription(_: HTMLElement): void {}
@@ -46,6 +57,8 @@ export class InteractionController implements ReactiveController {
     }
 
     hostDisconnected(): void {
-        this.abort();
+        if (!this.isPersistent) {
+            this.abort();
+        }
     }
 }
