@@ -507,6 +507,9 @@ export class Table extends SizedMixin(SpectrumElement, {
                 }
             );
         }
+        if (this.items.length) {
+            this.setAttribute('aria-rowcount', `${this.items.length}`);
+        }
         const config: VirtualizeDirectiveConfig<Record<string, unknown>> = {
             items: this.items,
             renderItem: this.renderItem,
