@@ -989,6 +989,7 @@ describe('SplitView', () => {
         );
         expect(el.label).to.equal(customLabel);
     });
+
     it('keeps the splitter pos when removing and re-adding a panel', async () => {
         let pointerId = -1;
         const el = await fixture<SplitView>(
