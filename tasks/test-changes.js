@@ -38,7 +38,8 @@ const getChangedPackages = () => {
                 // There are no benchmarks available in this directory.
                 item.location.search('projects') === -1 &&
                 // The icons-* tests are particular and long, exclude in CI.
-                !name.startsWith('icons-')
+                !name.startsWith('icons-') &&
+                !name.startsWith('color-field')
             ) {
                 acc.push(name);
             }
