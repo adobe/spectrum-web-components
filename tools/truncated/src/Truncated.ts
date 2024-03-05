@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    PropertyValueMap,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -134,7 +134,7 @@ export class Truncated extends SpectrumElement {
     }
 
     protected override firstUpdated(
-        _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+        _changedProperties: PropertyValues<this>
     ): void {
         this.resizeObserver.observe(this);
         this.resizeObserver.observe(this.content);
@@ -142,7 +142,7 @@ export class Truncated extends SpectrumElement {
         this.measureOverflow();
     }
 
-    protected override updated(changedProperties: PropertyValueMap<any>): void {
+    protected override updated(changedProperties: PropertyValues<this>): void {
         super.updated(changedProperties);
         if (
             changedProperties.has('hasCopied') &&
