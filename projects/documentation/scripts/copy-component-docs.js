@@ -57,26 +57,14 @@ const findDeclaration = (customElements, test) => {
     return declaration;
 };
 
-const findDeprecationNotice = async function (packageName) {
-    let packageJSON = {};
-    try {
-        packageJSON = await import(
-            `../../../packages/${packageName}/package.json`,
-            {
-                assert: { type: 'json' },
-            }
-        ).then((packageDefault) => packageDefault.default);
-    } catch (error) {
-        try {
-            packageJSON = await import(
-                `../../tools/${packageName}/package.json`,
-                {
-                    assert: { type: 'json' },
-                }
-            ).then((packageDefault) => packageDefault.default);
-        } catch (error) {}
+const findDeprecationNotice = async function (filePath) {
+    const hasDeprecation = fs.existsSync(filePath);
+    if (hasDeprecation) {
+        const packageJSON = await import(filePath, {
+            assert: { type: 'json' },
+        }).then((packageDefault) => packageDefault.default);
+        return packageJSON.deprecationNotice;
     }
-    return packageJSON.deprecationNotice;
 };
 
 export async function processREADME(mdPath) {
@@ -195,7 +183,14 @@ export async function processREADME(mdPath) {
             'args.js'
         )
     );
-    const deprecationNotice = await findDeprecationNotice(packageName);
+    const deprecationNotice = await findDeprecationNotice(
+        path.resolve(
+            __dirname,
+            '../../../packages',
+            packageName,
+            'package.json'
+        )
+    );
     const hasTemplate = fs.existsSync(
         path.resolve(
             __dirname,
