@@ -56,7 +56,12 @@ Coach marks can include an `<sp-action-menu>`, which appears at the top right of
     <div slot="content">
         This is a Coachmark with nothing but text in it. Kind of lonely in here.
     </div>
-    <sp-action-menu placement="bottom-end" quiet slot="actions">
+    <sp-action-menu
+        label="More Actions"
+        placement="bottom-end"
+        quiet
+        slot="actions"
+    >
         <sp-menu-item>Skip tour</sp-menu-item>
         <sp-menu-item>Restart tour</sp-menu-item>
     </sp-action-menu>
@@ -86,7 +91,7 @@ The primary and secondary CTA buttons within the coachmark popover can be config
     <div slot="content">
         This is a Coachmark with nothing but text in it. Kind of lonely in here.
     </div>
-    <sp-action-menu placement="bottom-end" quiet slot="actions">
+    <sp-action-menu label="More Actions" placement="bottom-end" quiet slot="actions">
         <sp-menu-item>Skip tour</sp-menu-item>
         <sp-menu-item>Restart tour</sp-menu-item>
     </sp-action-menu>
@@ -137,7 +142,12 @@ Media Types allowed: `Images & Gifs`
 >
     <div slot="title">Coachmark with 16:9 image</div>
     <div slot="content">This is a Coachmark with some description</div>
-    <sp-action-menu placement="bottom-end" quiet slot="actions">
+    <sp-action-menu
+        label="More Actions"
+        placement="bottom-end"
+        quiet
+        slot="actions"
+    >
         <sp-menu-item>Skip tour</sp-menu-item>
         <sp-menu-item>Restart tour</sp-menu-item>
     </sp-action-menu>
@@ -159,7 +169,12 @@ A custom media can also be added via `<slot name="cover-photo"></slot>`
     <div slot="title">Coachmark with 16:9 image</div>
     <div slot="content">This is a Coachmark with some description</div>
     <img slot="asset" src="https://picsum.photos/id/237/200/300" alt="" />
-    <sp-action-menu placement="bottom-end" quiet slot="actions">
+    <sp-action-menu
+        label="More Actions"
+        placement="bottom-end"
+        quiet
+        slot="actions"
+    >
         <sp-menu-item>Skip tour</sp-menu-item>
         <sp-menu-item>Restart tour</sp-menu-item>
     </sp-action-menu>
@@ -182,7 +197,7 @@ The `shortcutKey` is the primary key used to trigger an interaction and are typi
         secondary-cta="Previous"
         id="coachmark-keys"
     >
-        <sp-action-menu placement="bottom-end" quiet slot="actions">
+        <sp-action-menu label="More Actions" placement="bottom-end" quiet slot="actions">
             <sp-menu-item>Skip tour</sp-menu-item>
             <sp-menu-item>Restart tour</sp-menu-item>
         </sp-action-menu>

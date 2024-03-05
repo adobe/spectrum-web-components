@@ -346,7 +346,7 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 <sp-action-button id="trigger-3" hold-affordance>
                     <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
                 </sp-action-button>
-                <sp-action-menu placement="left">
+                <sp-action-menu label="More Actions" placement="left">
                     <sp-menu-group id="cms">
                         <span slot="header">cms</span>
                         <sp-menu-item value="updateAllSiteContent">
@@ -557,7 +557,7 @@ export const actionGroupWithFilters = ({
                         Hover
                     </sp-tooltip>
                 </sp-action-button>
-                <sp-action-menu>
+                <sp-action-menu label="More Actions">
                     <sp-menu-group id="cms">
                         <span slot="header">cms</span>
                         <sp-menu-item value="updateAllSiteContent">

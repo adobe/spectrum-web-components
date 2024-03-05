@@ -85,7 +85,12 @@ export const href = (args: StoryArgs): TemplateResult => {
                 Footer with a
                 <sp-link href="https://google.com">link to Google</sp-link>
             </div>
-            <sp-action-menu slot="actions" placement="bottom-end" quiet>
+            <sp-action-menu
+                label="More Actions"
+                slot="actions"
+                placement="bottom-end"
+                quiet
+            >
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
@@ -112,7 +117,12 @@ export const actions = (args: StoryArgs): TemplateResult => {
         >
             <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
             <div slot="footer">Footer</div>
-            <sp-action-menu slot="actions" placement="bottom-end" quiet>
+            <sp-action-menu
+                label="More Actions"
+                slot="actions"
+                placement="bottom-end"
+                quiet
+            >
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
@@ -222,7 +232,12 @@ export const quietActions = (args: StoryArgs): TemplateResult => {
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="description">10/15/18</div>
-                <sp-action-menu slot="actions" placement="bottom-end" quiet>
+                <sp-action-menu
+                    label="More Actions"
+                    slot="actions"
+                    placement="bottom-end"
+                    quiet
+                >
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
@@ -289,7 +304,12 @@ export const smallQuiet = (args: StoryArgs): TemplateResult => {
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="footer">Footer</div>
-                <sp-action-menu slot="actions" placement="bottom-end" quiet>
+                <sp-action-menu
+                    label="More Actions"
+                    slot="actions"
+                    placement="bottom-end"
+                    quiet
+                >
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
@@ -331,7 +351,12 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
                 quiet
             ></sp-textfield>
             <div slot="subheading">Last modified on 6/17/2020, 3:37 PM</div>
-            <sp-action-menu slot="actions" placement="bottom-end" quiet>
+            <sp-action-menu
+                label="More Actions"
+                slot="actions"
+                placement="bottom-end"
+                quiet
+            >
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
