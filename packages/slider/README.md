@@ -232,6 +232,19 @@ An `<sp-slider>` element can be paired with an `<sp-number-field>` element via t
 <sp-slider quiet disabled editable value="50"></sp-slider>
 ```
 
+#### Default value
+
+Slider will reset to its `default-value` when the user double clicks on the slider handle or if the user presses the `escape` key when the slider handle is focused.
+
+```html
+<sp-slider value="50" default-value="20"></sp-slider>
+```
+
+Note: If a slider with `default-value` attribute is contained in a modal and the slider-handle is focused then the following interaction will occur on pressing the `escape` key:
+
+-   If the slider value is different from the default value then the slider value will be reset to the default value and the modal will not be closed.
+-   If the slider value is equal to the default value then the modal will be closed.
+
 #### Indeterminate
 
 The indeterminate attribute will be passed to the internal `<sp-number-field>` element and alter its visual delivery until a change has been made to the `<sp-slider>` element at which point the `change` event that is dispatched can be understood as always removing the indeterminate attribute from the `<sp-slider>`.

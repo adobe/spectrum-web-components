@@ -341,6 +341,23 @@ export class HandleController {
 
     private _activePointerEventData!: DataFromPointerEvent | undefined;
 
+    /**
+     * @description check for defaultvalue(value) property in sp-slider and reset on double click on sliderHandle
+     * @param event
+     */
+    public handleDoubleClick(event: PointerEvent): void {
+        const input = (event.target as Element).querySelector(
+            '.input'
+        ) as InputWithModel;
+
+        if (input.model?.handle.defaultValue !== undefined) {
+            input.model.handle.value = input.model.handle.defaultValue;
+            this.dispatchChangeEvent(input, input.model.handle);
+            input.model.handle.dispatchInputEvent();
+            this.requestUpdate();
+        }
+    }
+
     public handlePointerdown(event: PointerEvent): void {
         const { resolvedInput, model } = this.extractDataFromEvent(event);
         if (!model || this.host.disabled || event.button !== 0) {
@@ -432,7 +449,22 @@ export class HandleController {
         this.requestUpdate();
     };
 
-    private onInputKeydown = (event: Event): void => {
+    private onInputKeydown = (event: KeyboardEvent): void => {
+        if (event.key == 'Escape') {
+            const input = event.target as InputWithModel;
+            if (
+                input.model.handle?.defaultValue !== undefined &&
+                input.model.handle.value !== input.model.handle.defaultValue
+            ) {
+                input.model.handle.value = input.model.handle.defaultValue;
+                input.model.handle.dispatchInputEvent();
+                this.dispatchChangeEvent(input, input.model.handle);
+                this.requestUpdate();
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            return;
+        }
         const input = event.target as InputWithModel;
         input.model.handle.highlight = true;
         this.requestUpdate();
@@ -522,12 +554,17 @@ export class HandleController {
                     aria-label=${ifDefined(model.ariaLabel)}
                     aria-labelledby=${ariaLabelledBy}
                     aria-valuetext=${this.formattedValueForHandle(model)}
+                    aria-describedby="slider-description"
                     @change=${this.onInputChange}
                     @focus=${this.onInputFocus}
                     @blur=${this.onInputBlur}
                     @keydown=${this.onInputKeydown}
                     .model=${model}
                 />
+                <span id="slider-description">
+                    Press escape or double click to reset the slider to its
+                    default value.
+                </span>
             </div>
         `;
     }
