@@ -50,6 +50,10 @@ import { LongpressController } from './LongpressController.js';
 export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
 
 import styles from './overlay.css.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from './slottable-request-event.js';
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 
@@ -172,6 +176,9 @@ export class Overlay extends OverlayFeatures {
             Overlay.openCount += 1;
         }
         this.requestUpdate('open', !this.open);
+        if (this.open) {
+            this.requestSlottable();
+        }
     }
 
     private _open = false;
@@ -347,6 +354,42 @@ export class Overlay extends OverlayFeatures {
         focusEl?.focus();
     }
 
+    protected override returnFocus(): void {
+        if (this.open || this.type === 'hint') return;
+
+        // If the focus remains inside of the overlay or
+        // a slotted descendent of the overlay you need to return
+        // focus back to the trigger.
+        const getAncestors = (): HTMLElement[] => {
+            const ancestors: HTMLElement[] = [];
+            // eslint-disable-next-line @spectrum-web-components/document-active-element
+            let currentNode = document.activeElement;
+            while (currentNode?.shadowRoot?.activeElement) {
+                currentNode = currentNode.shadowRoot.activeElement;
+            }
+            while (currentNode) {
+                const ancestor =
+                    currentNode.assignedSlot ||
+                    currentNode.parentElement ||
+                    (currentNode.getRootNode() as ShadowRoot)?.host;
+                if (ancestor) {
+                    ancestors.push(ancestor as HTMLElement);
+                }
+                currentNode = ancestor;
+            }
+            return ancestors;
+        };
+        if (
+            (this.triggerElement as HTMLElement)?.focus &&
+            (this.contains((this.getRootNode() as Document).activeElement) ||
+                getAncestors().includes(this) ||
+                // eslint-disable-next-line @spectrum-web-components/document-active-element
+                document.activeElement === document.body)
+        ) {
+            (this.triggerElement as HTMLElement).focus();
+        }
+    }
+
     private closeOnFocusOut = (event: FocusEvent): void => {
         // If you don't know where the focus went, we can't do anyting here.
         if (!event.relatedTarget) {
@@ -429,42 +472,6 @@ export class Overlay extends OverlayFeatures {
                 );
             }
         }
-        if (!this.open && this.type !== 'hint') {
-            // If the focus remains inside of the overlay or
-            // a slotted descendent of the overlay you need to return
-            // focus back to the trigger.
-            const getAncestors = (): HTMLElement[] => {
-                const ancestors: HTMLElement[] = [];
-                // eslint-disable-next-line @spectrum-web-components/document-active-element
-                let currentNode = document.activeElement;
-                while (
-                    currentNode?.shadowRoot &&
-                    currentNode.shadowRoot.activeElement
-                ) {
-                    currentNode = currentNode.shadowRoot.activeElement;
-                }
-                while (currentNode) {
-                    const ancestor =
-                        currentNode.assignedSlot ||
-                        currentNode.parentElement ||
-                        (currentNode.getRootNode() as ShadowRoot)?.host;
-                    if (ancestor) {
-                        ancestors.push(ancestor as HTMLElement);
-                    }
-                    currentNode = ancestor;
-                }
-                return ancestors;
-            };
-            if (
-                (this.triggerElement as HTMLElement)?.focus &&
-                (this.contains(
-                    (this.getRootNode() as Document).activeElement
-                ) ||
-                    getAncestors().includes(this))
-            ) {
-                (this.triggerElement as HTMLElement).focus();
-            }
-        }
     }
 
     protected bindEvents(): void {
@@ -512,6 +519,18 @@ export class Overlay extends OverlayFeatures {
         const shouldPreventClose = this.willPreventClose;
         this.willPreventClose = false;
         return shouldPreventClose;
+    }
+
+    protected override requestSlottable(): void {
+        if (!this.open) {
+            document.body.offsetHeight;
+        }
+        this.dispatchEvent(
+            new SlottableRequestEvent(
+                'overlay-content',
+                this.open ? {} : removeSlottableRequest
+            )
+        );
     }
 
     override willUpdate(changes: PropertyValues): void {
