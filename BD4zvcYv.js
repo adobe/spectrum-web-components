@@ -1,4 +1,4 @@
-import{t as e,s as r}from"./BkNr85_9.js";import{I as t}from"./ejOpN1Of.js";import{x as i}from"./4DfSdS6s.js";import{d as a}from"./JlveB6nj.js";a("sp-icon-checkmark75",class extends t{render(){return r(i),(({width:r=24,height:t=24,title:i="Checkmark75"}={})=>e`<svg
+import{t as e,s as r}from"./CJygKO7k.js";import{I as t}from"./ejOpN1Of.js";import{x as i}from"./4DfSdS6s.js";import{d as a}from"./JlveB6nj.js";a("sp-icon-checkmark75",class extends t{render(){return r(i),(({width:r=24,height:t=24,title:i="Checkmark75"}={})=>e`<svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 10 10"
     aria-hidden="true"

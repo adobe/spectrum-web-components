@@ -1,4 +1,4 @@
-import{t as r,s}from"./BkNr85_9.js";import{I as t}from"./ejOpN1Of.js";import{x as i}from"./4DfSdS6s.js";import{d as l}from"./JlveB6nj.js";l("sp-icon-asterisk100",class extends t{render(){return s(i),(({width:s=24,height:t=24,title:i="Asterisk100"}={})=>r`<svg
+import{t as r,s}from"./CJygKO7k.js";import{I as t}from"./ejOpN1Of.js";import{x as i}from"./4DfSdS6s.js";import{d as l}from"./JlveB6nj.js";l("sp-icon-asterisk100",class extends t{render(){return s(i),(({width:s=24,height:t=24,title:i="Asterisk100"}={})=>r`<svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 8 8"
     aria-hidden="true"

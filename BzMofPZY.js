@@ -1,4 +1,4 @@
-import{t as r,s}from"./BkNr85_9.js";import{I as t}from"./ejOpN1Of.js";import{x as e}from"./4DfSdS6s.js";import{d as i}from"./JlveB6nj.js";i("sp-icon-cross75",class extends t{render(){return s(e),(({width:s=24,height:t=24,title:e="Cross75"}={})=>r`<svg
+import{t as r,s}from"./CJygKO7k.js";import{I as t}from"./ejOpN1Of.js";import{x as e}from"./4DfSdS6s.js";import{d as i}from"./JlveB6nj.js";i("sp-icon-cross75",class extends t{render(){return s(e),(({width:s=24,height:t=24,title:e="Cross75"}={})=>r`<svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 8 8"
     aria-hidden="true"

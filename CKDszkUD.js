@@ -1,4 +1,4 @@
-import{t as e,s as t}from"./CJygKO7k.js";import{I as l}from"./ejOpN1Of.js";import{x as i}from"./4DfSdS6s.js";import{d as h}from"./JlveB6nj.js";h("sp-icon-add",class extends l{render(){return t(i),(({width:t=24,height:l=24,hidden:i=!1,title:h="Add"}={})=>e`<svg
+import{t as e,s as t}from"./BkNr85_9.js";import{I as l}from"./ejOpN1Of.js";import{x as i}from"./4DfSdS6s.js";import{d as h}from"./JlveB6nj.js";h("sp-icon-add",class extends l{render(){return t(i),(({width:t=24,height:l=24,hidden:i=!1,title:h="Add"}={})=>e`<svg
     xmlns="http://www.w3.org/2000/svg"
     height=${l}
     viewBox="0 0 36 36"
