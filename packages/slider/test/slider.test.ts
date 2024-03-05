@@ -1698,9 +1698,9 @@ describe('Slider', () => {
 
         // open the overlay
         const trigger = el.querySelector('#trigger') as HTMLButtonElement;
+        const opened = oneEvent(el, 'sp-opened');
         trigger.click();
-
-        await elementUpdated(el);
+        await opened;
 
         // current slider value should be 70
         const slider = el.querySelector('sp-slider') as Slider;
@@ -1721,12 +1721,12 @@ describe('Slider', () => {
         const overlay = el.querySelector('sp-overlay') as Overlay;
         expect(overlay.open).to.be.true;
 
+        const closed = oneEvent(el, 'sp-closed');
         // send escape key again
         await sendKeys({
             press: 'Escape',
         });
-
-        await elementUpdated(el);
+        await closed;
 
         // now the overlay should be closed
         expect(overlay.open).to.be.false;

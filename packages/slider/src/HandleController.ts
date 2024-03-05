@@ -353,6 +353,7 @@ export class HandleController {
         if (input.model?.handle.defaultValue !== undefined) {
             input.model.handle.value = input.model.handle.defaultValue;
             this.dispatchChangeEvent(input, input.model.handle);
+            input.model.handle.dispatchInputEvent();
             this.requestUpdate();
         }
     }
@@ -456,6 +457,7 @@ export class HandleController {
                 input.model.handle.value !== input.model.handle.defaultValue
             ) {
                 input.model.handle.value = input.model.handle.defaultValue;
+                input.model.handle.dispatchInputEvent();
                 this.dispatchChangeEvent(input, input.model.handle);
                 this.requestUpdate();
                 event.preventDefault();
