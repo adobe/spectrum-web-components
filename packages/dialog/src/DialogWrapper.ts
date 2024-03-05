@@ -50,6 +50,9 @@ export class DialogWrapper extends DialogBase {
     @property({ attribute: 'confirm-label' })
     public confirmLabel = '';
 
+    @property({ attribute: 'dismiss-label' })
+    public dismissLabel = '';
+
     @property()
     public footer = '';
 
@@ -192,6 +195,19 @@ export class DialogWrapper extends DialogBase {
                           >
                               ${this.confirmLabel}
                           </sp-button>
+                      `
+                    : nothing}
+                ${this.dismissable && this.dismissLabel
+                    ? html`
+                          <sp-close-button
+                              class="close-button"
+                              label="Close"
+                              quiet
+                              size="m"
+                              @click=${this.close}
+                          >
+                              ${this.dismissLabel}
+                          </sp-close-button>
                       `
                     : nothing}
             </sp-dialog>
