@@ -36,6 +36,7 @@ import type {
     OverlayState,
     OverlayTypes,
     Placement,
+    TriggerInteraction,
 } from './overlay-types.js';
 import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
 import { OverlayDialog } from './OverlayDialog.js';
@@ -251,7 +252,7 @@ export class Overlay extends OverlayFeatures {
      * The specific interaction to listen for on the `triggerElement` to open the overlay.
      */
     @property({ attribute: false })
-    triggerInteraction?: 'click' | 'longpress' | 'hover';
+    triggerInteraction?: TriggerInteraction;
 
     /**
      * Configures the open/close heuristics of the Overlay.

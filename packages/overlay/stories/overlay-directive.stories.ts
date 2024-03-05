@@ -22,7 +22,10 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { trigger } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
+import {
+    InsertionOptions,
+    trigger,
+} from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
 
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -42,6 +45,7 @@ import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 const storyStyles = html`
     <style>
@@ -129,87 +133,80 @@ export default {
 };
 
 interface Properties {
-    placement: Placement;
-    offset: number;
+    placement?: Placement;
+    offset?: number;
     triggerOn?: OverlayContentTypes;
     type?: Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'>;
+    insertionOptions?: InsertionOptions;
 }
 
 const template = ({
     placement,
     offset,
     triggerOn,
+    insertionOptions,
 }: Properties): TemplateResult => {
+    const renderTooltip = (): TemplateResult => html`
+        Click to open a popover.
+    `;
+    const renderPopover = (): TemplateResult => html`
+        <sp-popover placement="${ifDefined(placement)}" tip>
+            <sp-dialog no-divider>
+                <div class="options-popover-content">
+                    <sp-slider
+                        value="5"
+                        step="0.5"
+                        min="0"
+                        max="20"
+                        label="Awesomeness"
+                    ></sp-slider>
+                    <div id="styled-div">
+                        The background of this div should be blue
+                    </div>
+                    <sp-button
+                        ${tooltip(
+                            () =>
+                                html`
+                                    Click to open another popover.
+                                `
+                        )}
+                        ${trigger(
+                            () => html`
+                                <sp-popover placement="bottom" tip open>
+                                    <sp-dialog size="s" no-divider>
+                                        <div class="options-popover-content">
+                                            Another Popover
+                                        </div>
+                                    </sp-dialog>
+                                </sp-popover>
+                            `,
+                            {
+                                triggerInteraction: 'click',
+                                overlayOptions: {
+                                    placement: 'bottom',
+                                },
+                            }
+                        )}
+                    >
+                        Press Me
+                    </sp-button>
+                </div>
+            </sp-dialog>
+        </sp-popover>
+    `;
     return html`
         ${storyStyles}
         <sp-button
             variant="primary"
-            ${tooltip(
-                () =>
-                    html`
-                        Click to open a popover.
-                    `
-            )}
-            ${trigger(
-                () => html`
-                    <sp-popover placement="${placement}" tip>
-                        <sp-dialog no-divider>
-                            <div class="options-popover-content">
-                                <sp-slider
-                                    value="5"
-                                    step="0.5"
-                                    min="0"
-                                    max="20"
-                                    label="Awesomeness"
-                                ></sp-slider>
-                                <div id="styled-div">
-                                    The background of this div should be blue
-                                </div>
-                                <sp-button
-                                    ${tooltip(
-                                        () =>
-                                            html`
-                                                Click to open another popover.
-                                            `
-                                    )}
-                                    ${trigger(
-                                        () => html`
-                                            <sp-popover
-                                                placement="bottom"
-                                                tip
-                                                open
-                                            >
-                                                <sp-dialog size="s" no-divider>
-                                                    <div
-                                                        class="options-popover-content"
-                                                    >
-                                                        Another Popover
-                                                    </div>
-                                                </sp-dialog>
-                                            </sp-popover>
-                                        `,
-                                        {
-                                            triggerInteraction: 'click',
-                                            overlayOptions: {
-                                                placement: 'bottom',
-                                            },
-                                        }
-                                    )}
-                                >
-                                    Press Me
-                                </sp-button>
-                            </div>
-                        </sp-dialog>
-                    </sp-popover>
-                `,
-                {
-                    triggerInteraction: triggerOn,
-                    overlayOptions: {
-                        placement,
-                        offset,
-                    },
-                }
-            )}
+            ${tooltip(renderTooltip)}
+            ${trigger(renderPopover, {
+                triggerInteraction: triggerOn,
+                overlayOptions: {
+                    placement,
+                    offset,
+                },
+                insertionOptions: insertionOptions,
+            })}
         >
             Show Popover
         </sp-button>
@@ -219,5 +216,21 @@ const template = ({
 export const Default = (args: Properties): TemplateResult => template(args);
 
 Default.swc_vrt = {
+    skip: true,
+};
+
+export const elsewhere = (args: Properties = {}): TemplateResult => html`
+    ${template(args)}
+    <div id="other-element"></div>
+`;
+
+elsewhere.args = {
+    insertionOptions: {
+        el: () => document.querySelector('#other-element'),
+        where: 'afterbegin',
+    },
+} as Properties;
+
+elsewhere.swc_vrt = {
     skip: true,
 };

@@ -20,12 +20,21 @@ export const tooltip = function tooltip(
     tooltipContent: () => TemplateResult,
     options?: Partial<OverlayTriggerOptions & { variant: string }>
 ): ReturnType<typeof trigger> {
-    return trigger(() => {
-        import('@spectrum-web-components/tooltip/sp-tooltip.js');
-        return html`
-            <sp-tooltip variant=${ifDefined(options?.variant)}>
-                ${tooltipContent()}
-            </sp-tooltip>
-        `;
-    }, options);
+    return trigger(
+        () => {
+            import('@spectrum-web-components/tooltip/sp-tooltip.js');
+            return html`
+                <sp-tooltip variant=${ifDefined(options?.variant)}>
+                    ${tooltipContent()}
+                </sp-tooltip>
+            `;
+        },
+        {
+            ...options,
+            overlayOptions: {
+                type: 'hint',
+                ...options?.overlayOptions,
+            },
+        }
+    );
 };

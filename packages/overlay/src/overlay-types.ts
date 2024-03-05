@@ -23,6 +23,8 @@ export { Placement };
 
 export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
 
+export type TriggerInteraction = 'click' | 'longpress' | 'hover';
+
 export type TriggerInteractions = OverlayTypes;
 
 export type TriggerInteractionsV1 =

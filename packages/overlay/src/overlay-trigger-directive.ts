@@ -17,7 +17,7 @@ import {
 } from '@spectrum-web-components/base';
 import { AsyncDirective, directive } from 'lit/async-directive.js';
 import { Overlay, strategies } from './Overlay.js';
-import { OverlayOptions } from './overlay-types.js';
+import { OverlayOptions, TriggerInteraction } from './overlay-types.js';
 import { ClickController } from './ClickController.js';
 import { HoverController } from './HoverController.js';
 import { LongpressController } from './LongpressController.js';
@@ -27,9 +27,15 @@ import {
     SlottableRequestEvent,
 } from './slottable-request-event.js';
 
+export type InsertionOptions = {
+    el: HTMLElement | (() => HTMLElement);
+    where: InsertPosition;
+};
+
 export type OverlayTriggerOptions = {
-    triggerInteraction: 'click' | 'hover' | 'longpress';
+    triggerInteraction: TriggerInteraction;
     overlayOptions: OverlayOptions;
+    insertionOptions?: InsertionOptions;
 };
 
 export class OverlayTriggerDirective extends AsyncDirective {
@@ -50,13 +56,15 @@ export class OverlayTriggerDirective extends AsyncDirective {
     protected options: OverlayOptions = {
         ...this.defaultOptions.overlayOptions,
     };
+    protected insertionOptions?: InsertionOptions;
 
+    /* c8 ignore next 9 */
     render(
         _template: () => TemplateResult,
         _options?: Partial<OverlayTriggerOptions>
     ): unknown {
         // render function here just defines the interface to the update call later
-        // we don't have anything to render since this is tintended to be an ElementPart directive
+        // we don't have anything to render since this is intended to be an ElementPart directive
         // so will be used on an element and is not itself rendered
         return nothing;
     }
@@ -69,21 +77,22 @@ export class OverlayTriggerDirective extends AsyncDirective {
             ...this.defaultOptions.overlayOptions,
             ...options?.overlayOptions,
         };
+        this.insertionOptions = options?.insertionOptions;
         this.template = template;
         let newTarget = false;
+        const triggerInteraction = (options?.triggerInteraction ||
+            this.defaultOptions.triggerInteraction) as TriggerInteraction;
+        const newStrategy =
+            (this.strategy?.type as unknown as TriggerInteraction) !==
+            triggerInteraction;
         if (this.target !== part.element) {
             this.target = part.element as HTMLElement;
             newTarget = true;
         }
-        if (
-            newTarget ||
-            this.strategy?.type !== options?.triggerInteraction ||
-            this.defaultOptions.triggerInteraction
-        ) {
+        if (newTarget || newStrategy) {
             this.strategy?.abort();
             this.strategy = new strategies[
-                options?.triggerInteraction ||
-                    this.defaultOptions.triggerInteraction
+                triggerInteraction as TriggerInteraction
             ](this.overlay, this.target, true);
         }
         this.init();
@@ -102,6 +111,7 @@ export class OverlayTriggerDirective extends AsyncDirective {
     }
 
     handleSlottableRequest(event: SlottableRequestEvent): void {
+        /* c8 ignore next 1 */
         if (event.target !== event.currentTarget) return;
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
@@ -114,7 +124,12 @@ export class OverlayTriggerDirective extends AsyncDirective {
                 ...this.options,
                 trigger: this.target,
             });
-            this.target.insertAdjacentElement('afterend', this.overlay);
+            const insertionEl =
+                typeof this.insertionOptions?.el === 'function'
+                    ? this.insertionOptions.el()
+                    : this.insertionOptions?.el || this.target;
+            const { where = 'afterend' } = this.insertionOptions || {};
+            insertionEl.insertAdjacentElement(where, this.overlay);
         }
     }
 
@@ -134,6 +149,7 @@ export class OverlayTriggerDirective extends AsyncDirective {
         this.abortController.abort();
     }
 
+    /* c8 ignore next 3 */
     override reconnected(): void {
         this.init();
     }
