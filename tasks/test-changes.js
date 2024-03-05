@@ -23,7 +23,7 @@ const getChangedPackages = () => {
     let command;
     try {
         command = execSync(
-            'yarn --silent lerna ls --since origin/main --json --loglevel silent --ignore "@swc-react/*"'
+            'yarn --silent lerna ls --json --loglevel silent --ignore "@swc-react/*"'
         );
     } catch (error) {
         console.log(error.message);
