@@ -1,0 +1,2 @@
+import{o}from"./D6fgiH-J.js";function r(r,e){return o({descriptor:o=>{const t={get(){var o,e;return null!==(e=null===(o=this.renderRoot)||void 0===o?void 0:o.querySelector(r))&&void 0!==e?e:null},enumerable:!0,configurable:!0};if(e){const e="symbol"==typeof o?Symbol():"__"+o;t.get=function(){var o,t;return void 0===this[e]&&(this[e]=null!==(t=null===(o=this.renderRoot)||void 0===o?void 0:o.querySelector(r))&&void 0!==t?t:null),this[e]}}return t}})}export{r as i};
+//# sourceMappingURL=DT0v3XjE.js.map

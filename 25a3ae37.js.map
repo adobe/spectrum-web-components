@@ -1,1 +1,0 @@
-{"version":3,"file":"25a3ae37.js","sources":["../../../tools/base/src/define-element.js"],"sourcesContent":["\"use strict\";export function defineElement(e,n){window.__swc,customElements.define(e,n)}\n//# sourceMappingURL=define-element.js.map\n"],"names":["name","constructor","customElements","define"],"mappings":"AAgBO,WACHA,EACAC,GAWAC,eAAeC,OAAOH,EAAMC,EAChC"}
