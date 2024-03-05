@@ -972,6 +972,22 @@ describe('SplitView', () => {
         expect(testPanel).to.be.null;
     });
 
+    it('allows a custom label', async () => {
+        const el = await fixture<SplitView>(
+            html`
+                <sp-split-view
+                    resizable
+                    label="Resizable Split View Custom Label"
+                    primary-min="50"
+                    secondary-min="50"
+                >
+                    <div>First panel</div>
+                    <div>Second panel</div>
+                </sp-split-view>
+            `
+        );
+        expect(el.label).to.equal('Resizable Split View Custom Label');
+    });
     it('keeps the splitter pos when removing and re-adding a panel', async () => {
         let pointerId = -1;
         const el = await fixture<SplitView>(
