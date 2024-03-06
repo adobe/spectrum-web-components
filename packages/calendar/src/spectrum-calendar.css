@@ -1,0 +1,816 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
+:host {
+    --spectrum-calendar-border-radius-reset: 0;
+    --spectrum-calendar-border-width-reset: 0;
+    --spectrum-calendar-margin-y: 24px;
+    --spectrum-calendar-margin-x: 32px;
+    --spectrum-calendar-width: calc(
+        (
+                var(
+                        --spectrum-calendar-day-width,
+                        var(--spectrum-global-dimension-size-400)
+                    ) +
+                    var(
+                        --spectrum-calendar-day-padding,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) * 2
+            ) * 7
+    );
+    --spectrum-calendar-button-gap: var(--spectrum-global-dimension-size-40);
+    --spectrum-calendar-title-text-letter-spacing: var(
+        --spectrum-detail-m-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    width: var(--spectrum-calendar-width, 250px);
+    display: inline-block;
+}
+
+:host([padded]) {
+    margin: var(--spectrum-calendar-margin-x) var(--spectrum-calendar-margin-y);
+}
+
+.spectrum-Calendar-header {
+    align-items: center;
+    width: 100%;
+    display: flex;
+}
+
+.spectrum-Calendar-title {
+    font-size: var(
+        --spectrum-calendar-title-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    font-weight: bold;
+    line-height: var(
+        --spectrum-calendar-title-height,
+        var(--spectrum-global-dimension-static-size-400)
+    );
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    order: 1;
+    margin: 0;
+    overflow: hidden;
+}
+
+:host([dir='ltr']) .spectrum-Calendar-prevMonth,
+:host([dir='ltr']) .spectrum-Calendar-nextMonth,
+:host([dir='rtl']) .spectrum-Calendar-prevMonth,
+:host([dir='rtl']) .spectrum-Calendar-nextMonth {
+    margin: 0 var(--spectrum-calendar-button-gap);
+}
+
+:host([dir='rtl']) .spectrum-Calendar-prevMonth,
+:host([dir='rtl']) .spectrum-Calendar-nextMonth {
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.spectrum-Calendar-prevMonth {
+    order: 0;
+}
+
+.spectrum-Calendar-nextMonth {
+    order: 2;
+}
+
+.spectrum-Calendar-dayOfWeek {
+    width: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    font-size: var(
+        --spectrum-calendar-day-title-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    font-weight: var(
+        --spectrum-calendar-day-title-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
+    );
+    text-transform: uppercase;
+    cursor: default;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    display: flex;
+    border-bottom: none !important;
+    text-decoration: none !important;
+}
+
+:host([title]) .spectrum-Calendar-dayOfWeek {
+    letter-spacing: var(--spectrum-calendar-title-text-letter-spacing);
+    border-bottom: none;
+    text-decoration: underline dotted;
+}
+
+.spectrum-Calendar-body {
+    outline: none;
+}
+
+.spectrum-Calendar-table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.spectrum-Calendar-tableCell {
+    text-align: center;
+    box-sizing: content-box;
+    height: var(
+        --spectrum-calendar-day-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    width: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    padding: 0;
+    padding: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    position: relative;
+}
+
+.spectrum-Calendar-tableCell:focus {
+    outline: 0;
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date {
+    left: 0;
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date {
+    right: 0;
+}
+
+.spectrum-Calendar-date {
+    box-sizing: border-box;
+    height: var(
+        --spectrum-calendar-day-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    width: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    margin: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    border-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    border: var(
+            --spectrum-calendar-day-border-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
+    font-size: var(
+        --spectrum-calendar-day-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    line-height: calc(
+        var(
+                --spectrum-calendar-day-width,
+                var(--spectrum-global-dimension-size-400)
+            ) -
+            var(
+                --spectrum-calendar-day-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 2
+    );
+    white-space: nowrap;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 0;
+}
+
+.spectrum-Calendar-date:lang(ja),
+.spectrum-Calendar-date:lang(zh),
+.spectrum-Calendar-date:lang(ko) {
+    font-size: var(
+        --spectrum-calendar-day-text-size-han,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+}
+
+.spectrum-Calendar-date.is-disabled {
+    cursor: default;
+    pointer-events: none;
+}
+
+.spectrum-Calendar-date.is-outsideMonth {
+    visibility: hidden;
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date:before {
+    left: calc(
+        50% -
+            var(
+                --spectrum-calendar-day-width,
+                var(--spectrum-global-dimension-size-400)
+            ) / 2
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date:before {
+    right: calc(
+        50% -
+            var(
+                --spectrum-calendar-day-width,
+                var(--spectrum-global-dimension-size-400)
+            ) / 2
+    );
+}
+
+.spectrum-Calendar-date:before {
+    content: '';
+    top: calc(
+        50% -
+            var(
+                --spectrum-calendar-day-width,
+                var(--spectrum-global-dimension-size-400)
+            ) / 2
+    );
+    box-sizing: border-box;
+    width: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    height: var(
+        --spectrum-calendar-day-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    border-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    border: var(
+            --spectrum-calendar-day-border-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
+    position: absolute;
+}
+
+.spectrum-Calendar-date.is-selected:not(.is-range-selection) {
+    font-weight: var(
+        --spectrum-calendar-day-text-font-weight-selected,
+        var(--spectrum-global-font-weight-bold)
+    );
+}
+
+.spectrum-Calendar-date.is-selected:not(.is-range-selection):before {
+    display: none;
+}
+
+.spectrum-Calendar-date.is-today {
+    font-weight: var(
+        --spectrum-calendar-day-today-text-font-weight,
+        var(--spectrum-global-font-weight-bold)
+    );
+}
+
+.spectrum-Calendar-date.is-range-selection {
+    margin: var(
+            --spectrum-calendar-day-padding,
+            var(--spectrum-global-dimension-static-size-50)
+        )
+        0;
+    border-width: var(--spectrum-calendar-border-width-reset);
+    line-height: var(
+        --spectrum-calendar-day-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    border-radius: var(--spectrum-calendar-border-radius-reset);
+    width: calc(
+        var(
+                --spectrum-calendar-day-width,
+                var(--spectrum-global-dimension-size-400)
+            ) +
+            var(
+                --spectrum-calendar-day-padding,
+                var(--spectrum-global-dimension-static-size-50)
+            ) * 2
+    );
+}
+
+.spectrum-Calendar-date.is-range-selection.is-range-start,
+.spectrum-Calendar-date.is-range-selection.is-range-end,
+.spectrum-Calendar-date.is-range-selection.is-selection-start,
+.spectrum-Calendar-date.is-range-selection.is-selection-end {
+    width: calc(
+        var(
+                --spectrum-calendar-day-width,
+                var(--spectrum-global-dimension-size-400)
+            ) +
+            var(
+                --spectrum-calendar-day-padding,
+                var(--spectrum-global-dimension-static-size-50)
+            )
+    );
+}
+
+.spectrum-Calendar-date.is-range-selection.is-selection-start,
+.spectrum-Calendar-date.is-range-selection.is-selection-end {
+    font-weight: var(
+        --spectrum-calendar-day-text-font-weight-cap-selected,
+        var(--spectrum-global-font-weight-bold)
+    );
+}
+
+.spectrum-Calendar-date.is-range-selection.is-selection-start:after,
+.spectrum-Calendar-date.is-range-selection.is-selection-end:after {
+    height: var(
+        --spectrum-calendar-day-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    width: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    border-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    padding-right: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    padding-left: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    margin-left: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    margin-right: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    border-top-left-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    border-top-right-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    border-bottom-left-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-start,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start {
+    border-bottom-right-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-range-start:before,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-range-start:after,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start:before,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start:after {
+    left: 0;
+}
+
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-range-start:before,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-range-start:after,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start:before,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-start:after {
+    right: 0;
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    padding-left: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    padding-right: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    margin-right: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    margin-left: var(
+        --spectrum-calendar-day-padding,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    border-top-right-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    border-top-left-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='ltr']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    border-bottom-right-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-range-end,
+:host([dir='rtl']) .spectrum-Calendar-date.is-range-selection.is-selection-end {
+    border-bottom-left-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:before,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:after,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:before,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:after {
+    left: auto;
+}
+
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:before,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:after,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:before,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:after {
+    right: auto;
+}
+
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:before,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:after,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:before,
+:host([dir='ltr'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:after {
+    right: 0;
+}
+
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:before,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-range-end:after,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:before,
+:host([dir='rtl'])
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:after {
+    left: 0;
+}
+
+.spectrum-Calendar-date.is-range-selection.is-selection-start.is-selection-end,
+.spectrum-Calendar-date.is-range-selection.is-selection-start.is-range-end,
+.spectrum-Calendar-date.is-range-selection.is-selection-end.is-range-start,
+.spectrum-Calendar-date.is-range-selection.is-range-start.is-range-end {
+    width: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    border-radius: var(
+        --spectrum-calendar-day-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+
+.spectrum-Calendar-prevMonth,
+.spectrum-Calendar-nextMonth {
+    color: var(
+        --spectrum-calendar-button-icon-color,
+        var(--spectrum-global-color-gray-700)
+    );
+}
+
+.spectrum-Calendar-dayOfWeek {
+    color: var(
+        --spectrum-calendar-day-title-text-color,
+        var(--spectrum-global-color-gray-700)
+    );
+}
+
+.spectrum-Calendar-date:hover {
+    color: var(
+        --spectrum-calendar-day-text-color-hover,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
+
+.spectrum-Calendar-date:hover:not(.is-selection-end):not(.is-selection-start):before {
+    background: var(
+        --spectrum-calendar-day-background-color-hover,
+        var(--spectrum-alias-highlight-hover)
+    );
+}
+
+.spectrum-Calendar-date:hover.is-selected {
+    color: var(
+        --spectrum-calendar-day-text-color-selected-hover,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
+
+.spectrum-Calendar-date:hover.is-selected:not(.is-selection-end):not(.is-selection-start):before,
+.spectrum-Calendar-date:hover.is-range-selection:before {
+    background: var(
+        --spectrum-calendar-day-background-color-selected-hover,
+        var(--spectrum-alias-highlight-selected-hover)
+    );
+}
+
+.spectrum-Calendar-date:active {
+    background-color: var(
+        --spectrum-calendar-day-background-color-down,
+        var(--spectrum-alias-highlight-down)
+    );
+}
+
+.spectrum-Calendar-date.is-selected {
+    color: var(
+        --spectrum-calendar-day-text-color-selected,
+        var(--spectrum-alias-text-color-hover)
+    );
+    background: var(
+        --spectrum-calendar-day-background-color-selected,
+        var(--spectrum-alias-highlight-selected)
+    );
+}
+
+.spectrum-Calendar-date.is-selected:not(.is-range-selection) {
+    background: var(
+        --spectrum-calendar-day-background-color-cap-selected,
+        var(--spectrum-alias-highlight-selected-hover)
+    );
+}
+
+.spectrum-Calendar-date.is-today {
+    color: var(
+        --spectrum-calendar-day-today-text-color,
+        var(--spectrum-alias-text-color)
+    );
+    border-color: var(
+        --spectrum-calendar-day-today-border-color,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+
+.spectrum-Calendar-date.is-today:before {
+    border-color: var(
+        --spectrum-calendar-day-today-border-color,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+
+.spectrum-Calendar-date.is-today:hover.is-selected:not(.is-range-selection):before {
+    background: var(
+        --spectrum-calendar-day-today-background-color-selected-hover,
+        var(--spectrum-alias-highlight-selected-hover)
+    );
+}
+
+.spectrum-Calendar-date.is-today.is-disabled {
+    color: var(
+        --spectrum-calendar-day-today-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+    border-color: var(
+        --spectrum-calendar-day-today-border-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+
+.spectrum-Calendar-date.is-today.is-disabled:before {
+    border-color: var(
+        --spectrum-calendar-day-today-border-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+
+.spectrum-Calendar-date.is-focused:not(.is-range-selection) {
+    background: var(
+        --spectrum-calendar-day-background-color-key-focus,
+        var(--spectrum-alias-highlight-hover)
+    );
+    border-color: var(
+        --spectrum-calendar-day-border-color-key-focus,
+        var(--spectrum-alias-focus-color)
+    );
+    color: var(
+        --spectrum-calendar-day-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
+
+.spectrum-Calendar-date.is-focused:not(.is-range-selection).is-today {
+    border-color: var(
+        --spectrum-calendar-day-border-color-key-focus,
+        var(--spectrum-alias-focus-color)
+    );
+}
+
+.spectrum-Calendar-date.is-focused:not(.is-range-selection):active,
+.spectrum-Calendar-date.is-focused:not(.is-range-selection).is-selected {
+    color: var(
+        --spectrum-calendar-day-text-color-selected,
+        var(--spectrum-alias-text-color-hover)
+    );
+    background: var(
+        --spectrum-calendar-day-background-color-cap-selected,
+        var(--spectrum-alias-highlight-selected-hover)
+    );
+    border-color: var(
+        --spectrum-calendar-day-border-color-key-focus,
+        var(--spectrum-alias-focus-color)
+    );
+}
+
+.spectrum-Calendar-date.is-focused.is-selected:before,
+.spectrum-Calendar-date.is-focused.is-range-selection:before {
+    background: var(
+        --spectrum-calendar-day-background-color-selected-hover,
+        var(--spectrum-alias-highlight-selected-hover)
+    );
+}
+
+.spectrum-Calendar-date.is-focused:before {
+    border-color: var(
+        --spectrum-calendar-day-border-color-key-focus,
+        var(--spectrum-alias-focus-color)
+    );
+}
+
+.spectrum-Calendar-date.is-disabled {
+    color: var(
+        --spectrum-calendar-day-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+
+.spectrum-Calendar-date.is-selection-start,
+.spectrum-Calendar-date.is-selection-end {
+    color: var(
+        --spectrum-calendar-day-text-color-cap-selected,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
+
+.spectrum-Calendar-date.is-selection-start:after,
+.spectrum-Calendar-date.is-selection-end:after {
+    background-color: var(
+        --spectrum-calendar-day-background-color-selected,
+        var(--spectrum-alias-highlight-selected)
+    );
+}
+
+.spectrum-Calendar-date.is-selection-start.is-disabled,
+.spectrum-Calendar-date.is-selection-end.is-disabled {
+    color: var(
+        --spectrum-calendar-day-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+
+@media (forced-colors: active) {
+    .spectrum-Calendar-date {
+        color: canvastext;
+        forced-color-adjust: none;
+        --spectrum-calendar-button-icon-color: ButtonText;
+        --spectrum-calendar-day-background-color-cap-selected: Highlight;
+        --spectrum-calendar-day-background-color-down: ButtonFace;
+        --spectrum-calendar-day-background-color-hover: Transparent;
+        --spectrum-calendar-day-background-color-key-focus: ButtonFace;
+        --spectrum-calendar-day-background-color-selected-hover: Transparent;
+        --spectrum-calendar-day-background-color-selected: Highlight;
+        --spectrum-calendar-day-border-color-key-focus: ButtonText;
+        --spectrum-calendar-day-text-color-cap-selected: HighlightText;
+        --spectrum-calendar-day-text-color-disabled: GrayText;
+        --spectrum-calendar-day-text-color-hover: ButtonText;
+        --spectrum-calendar-day-text-color-key-focus: ButtonText;
+        --spectrum-calendar-day-text-color-selected-hover: HighlightText;
+        --spectrum-calendar-day-text-color-selected: HighlightText;
+        --spectrum-calendar-day-title-text-color: CanvasText;
+        --spectrum-calendar-day-today-background-color-selected-hover: Highlight;
+        --spectrum-calendar-day-today-border-color-disabled: GrayText;
+        --spectrum-calendar-day-today-border-color: ButtonText;
+        --spectrum-calendar-day-today-text-color-disabled: GrayText;
+        --spectrum-calendar-day-today-text-color: ButtonText;
+    }
+
+    .spectrum-Calendar-date.is-range-selection {
+        color: highlighttext;
+    }
+
+    .spectrum-Calendar-date.is-range-selection.is-selection-start:after,
+    .spectrum-Calendar-date.is-range-selection.is-selection-end:after {
+        content: none;
+    }
+
+    .spectrum-Calendar-date.is-disabled.is-range-selection,
+    .spectrum-Calendar-date.is-disabled.is-selected {
+        color: highlighttext;
+        background: highlight;
+    }
+
+    .spectrum-Calendar-date:hover.is-today {
+        color: buttontext;
+    }
+}

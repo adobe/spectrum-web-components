@@ -23,6 +23,7 @@ import '@spectrum-web-components/banner/sp-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';

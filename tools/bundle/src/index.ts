@@ -20,6 +20,7 @@ export * from '@spectrum-web-components/badge';
 export * from '@spectrum-web-components/banner';
 export * from '@spectrum-web-components/button';
 export * from '@spectrum-web-components/button-group';
+export * from '@spectrum-web-components/calendar';
 export * from '@spectrum-web-components/card';
 export * from '@spectrum-web-components/checkbox';
 export * from '@spectrum-web-components/coachmark';
