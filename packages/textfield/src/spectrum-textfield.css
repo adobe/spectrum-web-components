@@ -1017,7 +1017,7 @@ governing permissions and limitations under the License.
 }
 
 :host([readonly]) #textfield .input,
-.input:read-only {
+:host([readonly]) .input {
     color: var(
         --highcontrast-textfield-text-color-readonly,
         var(
@@ -1031,7 +1031,7 @@ governing permissions and limitations under the License.
 }
 
 :host([readonly]) #textfield .input::placeholder,
-.input:read-only::placeholder {
+:host([readonly]) .input::placeholder {
     color: var(
         --highcontrast-textfield-text-color-readonly,
         var(
