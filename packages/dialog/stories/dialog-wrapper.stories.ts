@@ -27,7 +27,7 @@ import '../../overlay/stories/index.js';
 import type { DialogWrapper } from '@spectrum-web-components/dialog';
 
 export default {
-    title: 'Dialog Wrapped',
+    title: 'Dialog Wrapper',
     component: 'sp-dialog-wrapper',
     argTypes: {
         onClose: { action: 'close' },
