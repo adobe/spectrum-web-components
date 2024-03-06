@@ -22,55 +22,39 @@ governing permissions and limitations under the License.
 
 ::slotted(*) {
     object-fit: contain;
-    transition: opacity var(--spectrum-global-animation-duration-100, 0.13s);
+    transition: opacity var(--spectrum-animation-duration-100);
     max-block-size: 100%;
     max-inline-size: 100%;
 }
 
 .folder,
 .file {
-    min-inline-size: var(
-        --spectrum-asset-icon-min-width,
-        var(--spectrum-global-dimension-size-600)
+    inline-size: clamp(
+        var(--mod-asset-icon-min-width, 48px),
+        100%,
+        var(--mod-asset-icon-max-width, 80px)
     );
-    max-inline-size: var(
-        --spectrum-asset-icon-max-width,
-        var(--spectrum-global-dimension-static-size-1000)
-    );
-    margin: var(
-        --spectrum-asset-icon-margin,
-        var(--spectrum-global-dimension-size-250)
-    );
+    margin: var(--mod-asset-icon-margin, 20px);
     block-size: 100%;
-    inline-size: 100%;
 }
 
 .folderBackground {
     fill: var(
         --highcontrast-asset-folder-background-color,
-        var(
-            --spectrum-asset-folder-background-color,
-            var(--spectrum-global-color-gray-300)
-        )
+        var(--mod-asset-folder-background-color, var(--spectrum-gray-300))
     );
 }
 
 .fileBackground {
     fill: var(
         --highcontrast-asset-file-background-color,
-        var(
-            --spectrum-asset-file-background-color,
-            var(--spectrum-global-color-gray-50)
-        )
+        var(--mod-asset-file-background-color, var(--spectrum-gray-50))
     );
 }
 
 .folderOutline,
 .fileOutline {
-    fill: var(
-        --spectrum-asset-icon-outline-color,
-        var(--spectrum-global-color-gray-500)
-    );
+    fill: var(--mod-asset-icon-outline-color, var(--spectrum-gray-500));
 }
 
 @media (forced-colors: active) {
