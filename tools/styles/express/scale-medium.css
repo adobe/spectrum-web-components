@@ -15,4 +15,5 @@ governing permissions and limitations under the License.
 :host,
 :root {
     --spectrum-global-alias-appframe-border-size: 2px;
+    --swc-scale-factor: 1;
 }

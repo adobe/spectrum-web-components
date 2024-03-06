@@ -16,11 +16,11 @@ governing permissions and limitations under the License.
     margin: 1rem 0 2rem;
     flex-direction: column;
     border-radius: var(--code-example-border-radius);
-    border: 1px solid var(--spectrum-global-color-gray-100);
+    border: 1px solid var(--spectrum-gray-100);
     width: 100%;
     position: relative;
 
-    --code-example-border-radius: var(--spectrum-alias-border-radius-regular);
+    --code-example-border-radius: calc(var(--swc-scale-factor) * 4px);
 }
 
 .demo-example {
@@ -29,11 +29,11 @@ governing permissions and limitations under the License.
     max-width: 100%;
     overflow: auto;
     flex: 1;
-    padding: var(--spectrum-global-dimension-size-400)
-        var(--spectrum-global-dimension-size-500);
+    padding: calc(var(--swc-scale-factor) * 32px)
+        calc(var(--swc-scale-factor) * 40px);
     border-radius: var(--code-example-border-radius)
         var(--code-example-border-radius) 0 0;
-    background: var(--spectrum-global-color-gray-100);
+    background: var(--spectrum-gray-100);
 }
 
 .demo-example .flex {
@@ -42,8 +42,8 @@ governing permissions and limitations under the License.
 
 @media (max-width: 768px) {
     .demo-example {
-        padding: var(--spectrum-global-dimension-size-200)
-            var(--spectrum-global-dimension-size-200);
+        padding: calc(var(--swc-scale-factor) * 16px)
+            calc(var(--swc-scale-factor) * 16px);
     }
 }
 
@@ -53,8 +53,8 @@ governing permissions and limitations under the License.
     grid-template-rows: minmax(60px, 100%);
     padding: 0.75rem 1.5rem;
     border-radius: 0 0 6px 6px;
-    border-top: 1px solid var(--spectrum-global-color-gray-100);
-    background: var(--spectrum-global-color-gray-75);
+    border-top: 1px solid var(--spectrum-gray-100);
+    background: var(--spectrum-gray-75);
     line-height: 1.3em;
     position: relative;
     overflow: auto;
@@ -62,7 +62,7 @@ governing permissions and limitations under the License.
 
 pre {
     grid-area: 1/1/1/1;
-    padding-bottom: calc(0.75rem + var(--spectrum-global-dimension-size-400));
+    padding-bottom: calc(0.75rem + var(--swc-scale-factor) * 32px);
 }
 
 .copy-holder {
@@ -79,27 +79,14 @@ pre {
 }
 
 pre {
-    font-weight: var(
-        --spectrum-code-xs-text-font-weight,
-        var(--spectrum-alias-code-text-font-weight-regular)
-    );
-    line-height: var(
-        --spectrum-code-xs-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
-    );
-    font-style: var(
-        --spectrum-code-xs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    letter-spacing: var(
-        --spectrum-code-xs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    margin-top: 0;
-    margin-bottom: 0;
-    font-family: var(
-        --spectrum-code-xs-text-font-family,
-        var(--spectrum-alias-code-text-font-family)
+    font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
+    font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
+    font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
+    font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
+    line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
+    color: var(
+        --highcontrast-code-font-color,
+        var(--mod-code-font-color, var(--spectrum-code-font-color))
     );
 }
 
