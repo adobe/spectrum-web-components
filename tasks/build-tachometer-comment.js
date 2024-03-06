@@ -140,7 +140,7 @@ const buildTable = (result) => {
             remoteDifferences = formatDifference(remote.differences[i + 1]);
             remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
 
-            branch = results[i + 1];
+            branch = result[i + 1];
             branchDifferences = formatDifference(branch.differences[i]);
             branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
 
