@@ -1,0 +1,85 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+.input-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+.input-content::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.literal-segment,
+.editable-segment {
+    display: inline-block;
+    height: 100%;
+    color: var(--spectrum-textfield-text-color-default);
+}
+
+.editable-segment {
+    padding: 0 0.15em;
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    white-space: nowrap;
+    caret-color: transparent;
+    outline: none;
+}
+
+.literal-segment {
+    white-space: pre;
+    user-select: none;
+}
+
+[dir='ltr'] .editable-segment {
+    text-align: start;
+}
+
+.placeholder {
+    display: block;
+    width: 100%;
+    height: 0;
+    visibility: hidden;
+    font-style: italic;
+    text-align: center;
+    pointer-events: none;
+}
+
+.editable-segment.is-placeholder,
+.editable-segment.is-placeholder + .literal-segment {
+    color: var(--spectrum-gray-500);
+}
+
+.editable-segment.is-placeholder .placeholder {
+    height: auto;
+    visibility: visible;
+}
+
+.editable-segment:focus,
+.editable-segment:focus .placeholder {
+    color: var(--spectrum-white);
+    background-color: var(--spectrum-accent-background-color-default);
+}
+
+/**
+ * Hide selection because there is no way to avoid it entirely in Firefox
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1742153
+ */
+.editable-segment::selection,
+.placeholder::selection {
+    background-color: transparent;
+}
