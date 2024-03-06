@@ -23,7 +23,7 @@ import { NumberFormatter } from '@internationalized/number';
 import {
     CSSResultArray,
     html,
-    PropertyValueMap,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -121,9 +121,7 @@ export class Calendar extends SpectrumElement {
         this.setInitialCalendarDate();
     }
 
-    protected override willUpdate(
-        changedProperties: PropertyValueMap<this>
-    ): void {
+    protected override willUpdate(changedProperties: PropertyValues): void {
         if (changedProperties.has('selectedDate')) {
             this.setCurrentCalendarDate();
         }
