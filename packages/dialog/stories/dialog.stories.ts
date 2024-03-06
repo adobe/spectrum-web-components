@@ -80,7 +80,7 @@ export const large = (): TemplateResult => {
 
 export const dismissable = (): TemplateResult => {
     return html`
-        <sp-dialog size="m" dismissable>
+        <sp-dialog size="m" dismissable dismiss-label="Close">
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
@@ -99,7 +99,7 @@ export const dismissable = (): TemplateResult => {
 
 export const noDivider = (): TemplateResult => {
     return html`
-        <sp-dialog size="m" dismissable no-divider>
+        <sp-dialog size="m" dismissable dismiss-label="Close" no-divider>
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
@@ -118,7 +118,7 @@ export const noDivider = (): TemplateResult => {
 
 export const hero = (): TemplateResult => {
     return html`
-        <sp-dialog size="m" dismissable no-divider>
+        <sp-dialog size="m" dismissable dismiss-label="Close" no-divider>
             <div slot="hero" style="background-image: url(${landscape})"></div>
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -214,7 +214,7 @@ export const alertErrorWithLongTitle = (): TemplateResult => {
 
 export const fullscreen = (): TemplateResult => {
     return html`
-        <sp-dialog mode="fullscreen" dismissable>
+        <sp-dialog mode="fullscreen" dismissable dismiss-label="Close">
             <h2 slot="heading">Enable Smart Filters?</h2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
