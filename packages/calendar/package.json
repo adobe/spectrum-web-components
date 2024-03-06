@@ -1,0 +1,80 @@
+{
+    "name": "@spectrum-web-components/calendar",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum Calendar",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/calendar"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/calendar",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/Calendar.js": {
+            "development": "./src/Calendar.dev.js",
+            "default": "./src/Calendar.js"
+        },
+        "./src/calendar.css.js": "./src/calendar.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./sp-calendar.js": {
+            "development": "./sp-calendar.dev.js",
+            "default": "./sp-calendar.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@internationalized/date": "^3.2.0",
+        "@internationalized/number": "^3.1.0",
+        "@spectrum-web-components/action-button": "^0.39.3",
+        "@spectrum-web-components/base": "^0.39.3",
+        "@spectrum-web-components/icons-workflow": "^0.39.3",
+        "@spectrum-web-components/reactive-controllers": "^0.39.3"
+    },
+    "devDependencies": {
+        "@spectrum-css/calendar": "^3.2.6"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}
