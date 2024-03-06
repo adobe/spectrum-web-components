@@ -12,6 +12,15 @@
         "sourceType": "module"
     },
     "rules": {
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": false,
+                "optionalDependencies": false,
+                "peerDependencies": false,
+                "packageDir": "./"
+            }
+        ],
         "no-debugger": 2,
         "no-console": ["error", { "allow": ["warn", "error"] }],
         "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
