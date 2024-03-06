@@ -56,7 +56,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2"
+        "@ctrl/tinycolor": "^4.0.3",
+        "@spectrum-web-components/base": "^0.41.2",
+        "@spectrum-web-components/textfield": "^0.41.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
