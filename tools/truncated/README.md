@@ -27,20 +27,23 @@ When looking to leverage the `Truncated` base class as a type and/or for extensi
 import { Truncated } from '@spectrum-web-components/truncated';
 ```
 
-
 ## Example
 
-```
-<sp-truncated>This will truncate into a tooltip if there isn't enough space for it.</sp-truncated>
+```html
+<sp-truncated>
+    This will truncate into a tooltip if there isn't enough space for it.
+</sp-truncated>
 ```
 
 ### With specific overflow content
 
 By default, tooltip text will be extracted from overflowing content. To provide your own overflow content, slot it into "overflow":
 
-```
+```html
 <sp-truncated placement="right">
     This is the inline content
-    <span slot="overflow">And this overflow content will go into the tooltip, on the right</span>
+    <span slot="overflow">
+        And this overflow content will go into the tooltip, on the right
+    </span>
 </sp-truncated>
 ```
