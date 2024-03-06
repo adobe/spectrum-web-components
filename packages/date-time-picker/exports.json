@@ -1,0 +1,4 @@
+{
+    "./src/*": "./src/*.js",
+    "./sp-date-time-picker.js": "./sp-date-time-picker.js"
+}

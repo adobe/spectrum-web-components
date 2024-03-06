@@ -9,3 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
+import { html } from '@spectrum-web-components/base';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+
+measureFixtureCreation(html`
+    <sp-date-time-picker
+        .value=${new Date(2023, 11, 12).toISOString()}
+    ></sp-date-time-picker>
+`);
