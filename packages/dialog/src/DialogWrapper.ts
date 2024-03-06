@@ -127,6 +127,7 @@ export class DialogWrapper extends DialogBase {
         return html`
             <sp-dialog
                 ?dismissable=${this.dismissable}
+                dismiss-label=${this.dismissLabel}
                 ?no-divider=${hideDivider}
                 ?error=${this.error}
                 mode=${ifDefined(this.mode)}
@@ -195,19 +196,6 @@ export class DialogWrapper extends DialogBase {
                           >
                               ${this.confirmLabel}
                           </sp-button>
-                      `
-                    : nothing}
-                ${this.dismissable && this.dismissLabel
-                    ? html`
-                          <sp-close-button
-                              class="close-button"
-                              label="Close"
-                              quiet
-                              size="m"
-                              @click=${this.close}
-                          >
-                              ${this.dismissLabel}
-                          </sp-close-button>
                       `
                     : nothing}
             </sp-dialog>

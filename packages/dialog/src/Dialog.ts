@@ -61,6 +61,9 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
     @property({ type: Boolean, reflect: true })
     public dismissable = false;
 
+    @property({ type: String, reflect: true, attribute: 'dismiss-label' })
+    public dismissLabel = '';
+
     protected get hasFooter(): boolean {
         return this.getSlotContentPresence('[slot="footer"]');
     }
@@ -123,7 +126,7 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
         return html`
             <sp-close-button
                 class="close-button"
-                label="Close"
+                label=${this.dismissLabel}
                 quiet
                 size="m"
                 @click=${this.close}
