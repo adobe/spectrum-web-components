@@ -5613,7 +5613,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
-"@spectrum-web-components/base@^0.40.0", "@spectrum-web-components/base@^0.40.5":
+"@spectrum-web-components/base@^0.40.2", "@spectrum-web-components/base@^0.40.5":
   version "0.40.5"
   resolved "https://registry.yarnpkg.com/@spectrum-web-components/base/-/base-0.40.5.tgz#5e67bab5aa835d5ec3fa141abd14aaf5344ab9ee"
   integrity sha512-lGvAkpWzaPuLBdKfFqQW5J4dBTsn8I9OxpfKoEifR9OdNEELJshNVs+9iZY+3AYx3s3Y2WRLnsGrxtWuNg595g==
@@ -5663,7 +5663,7 @@
   dependencies:
     "@spectrum-web-components/base" "^0.40.5"
 
-"@spectrum-web-components/reactive-controllers@^0.40.0":
+"@spectrum-web-components/reactive-controllers@^0.40.2":
   version "0.40.5"
   resolved "https://registry.yarnpkg.com/@spectrum-web-components/reactive-controllers/-/reactive-controllers-0.40.5.tgz#2120977080c115893d7bb2ab258d5a33f14705c3"
   integrity sha512-x2wPDhhmMw4Zoq0W7Jd6ECUnKwT1WTjDIRPsulArbLMbjJCMc0YTshAJibIMBVFxP9H06OVdALY/3HbwIKQKuQ==
@@ -5679,7 +5679,7 @@
     "@spectrum-web-components/base" "^0.40.5"
     focus-visible "^5.1.0"
 
-"@spectrum-web-components/textfield@^0.40.0":
+"@spectrum-web-components/textfield@^0.40.2":
   version "0.40.5"
   resolved "https://registry.yarnpkg.com/@spectrum-web-components/textfield/-/textfield-0.40.5.tgz#346ff07a0e17aa528a07730f231b35b75215707f"
   integrity sha512-o92RNLL9Ib9emvkvo9vYyRyy0an3Sbj9n0IkZXfvGjn50JAoyezM7lGZzggtjpn9N+184aYRnSmvuQjwrLo98A==
