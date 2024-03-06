@@ -45,9 +45,6 @@ export class PickerButton extends SizedMixin(
     @property({ type: Boolean, reflect: true })
     invalid = false;
 
-    @property({ type: Boolean, reflect: true })
-    quiet = false;
-
     @property({ reflect: true })
     position: 'left' | 'right' = 'right';
 
@@ -60,8 +57,8 @@ export class PickerButton extends SizedMixin(
             root: true,
             uiicononly: !this.hasText,
             textuiicon: this.hasText,
-            'spectrum-PickerButton--quiet': this.quiet,
         };
+
         return html`
             <div class=${classMap(rootClasses)}>
                 <div class="spectrum-PickerButton-fill">

@@ -10,17 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 :host {
-    --datetime-picker-spacing: calc(
-        var(
-                --mod-textfield-spacing-inline,
-                var(--spectrum-textfield-spacing-inline)
-            ) -
-            var(
-                --mod-textfield-border-width,
-                var(--spectrum-textfield-border-width)
-            )
-    );
-
     inline-size: calc(
         20ch +
             (
@@ -46,7 +35,16 @@ governing permissions and limitations under the License.
     align-items: center;
     justify-content: flex-end;
     height: 100%;
-    gap: var(--datetime-picker-spacing);
+    gap: calc(
+        var(
+                --mod-textfield-spacing-inline,
+                var(--spectrum-textfield-spacing-inline)
+            ) -
+            var(
+                --mod-textfield-border-width,
+                var(--spectrum-textfield-border-width)
+            )
+    );
 }
 
 .popover {

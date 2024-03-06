@@ -60,23 +60,23 @@ export class DateTimePicker extends InputSegments {
 
     protected override renderField(): TemplateResult {
         return html`
-            ${super.renderInputContent()} ${this.renderPicker()}
+            ${this.renderInputContent()} ${this.renderPicker()}
         `;
     }
 
     public renderPicker(): TemplateResult {
-        const isDisabled = super.disabled || super.readonly;
+        const isDisabled = this.disabled || this.readonly;
 
         return html`
             <div class="picker">
-                ${super.renderStateIcons()}
+                ${this.renderStateIcons()}
 
                 <sp-picker-button
                     ?open=${this.open}
-                    ?quiet=${super.quiet}
-                    ?invalid=${super.invalid}
+                    ?quiet=${this.quiet}
+                    ?invalid=${this.invalid}
                     ?disabled=${isDisabled}
-                    @click=${this.openPicker}
+                    @click=${this.showPicker}
                 >
                     <slot name="calendar-icon" slot="icon">
                         <sp-icon-calendar></sp-icon-calendar>
@@ -89,7 +89,7 @@ export class DateTimePicker extends InputSegments {
                     receives-focus="false"
                     .triggerElement=${this as HTMLElement}
                     ?open=${this.open}
-                    @sp-closed=${this.closePicker}
+                    @sp-closed=${this.hidePicker}
                 >
                     <sp-popover class="popover">
                         <div class="popover-content">
@@ -104,14 +104,14 @@ export class DateTimePicker extends InputSegments {
         `;
     }
 
-    public openPicker(): void {
-        this.pickerDate = super.getDateFromSegments();
+    public showPicker(): void {
+        this.pickerDate = this.getDateFromSegments();
         this.open = true;
     }
 
-    public closePicker(): void {
-        super.setNewDateTime();
-        super.emitNewDateTime();
+    public hidePicker(): void {
+        this.setNewDateTime();
+        this.emitNewDateTime();
 
         this.pickerDate = undefined;
         this.open = false;
@@ -122,7 +122,7 @@ export class DateTimePicker extends InputSegments {
      *
      * @param event - Event with the value emitted by the calendar
      */
-    public handleDate(event: CustomEvent<Date | undefined>): void {
+    private handleDate(event: CustomEvent<Date | undefined>): void {
         event.stopPropagation();
 
         const dateTime = event.detail;
@@ -140,19 +140,19 @@ export class DateTimePicker extends InputSegments {
 
         const { year, month, day } = this.dateToCalendarDateTime(dateTime);
 
-        if (!super.yearSegment || !super.monthSegment || !super.daySegment) {
+        if (!this.yearSegment || !this.monthSegment || !this.daySegment) {
             return;
         }
 
-        super.yearSegment.value = year;
-        super.formatValue(super.yearSegment);
+        this.yearSegment.value = year;
+        this.formatValue(this.yearSegment);
 
-        super.monthSegment.value = month;
-        super.formatValue(super.monthSegment);
+        this.monthSegment.value = month;
+        this.formatValue(this.monthSegment);
 
-        super.daySegment.value = day;
-        super.formatValue(super.daySegment);
+        this.daySegment.value = day;
+        this.formatValue(this.daySegment);
 
-        super.requestUpdate();
+        this.requestUpdate();
     }
 }

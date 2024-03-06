@@ -16,6 +16,7 @@ import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
+import { CalendarDate } from '@internationalized/date';
 
 export default {
     title: 'Calendar',
@@ -28,6 +29,7 @@ export default {
 };
 
 type ComponentArgs = {
+    currentDate?: CalendarDate;
     selectedDate?: Date;
     min?: Date;
     max?: Date;
@@ -47,11 +49,13 @@ const renderCalendar = (
     title: string,
     args: StoryArgs = {}
 ): TemplateResult => {
+    const currentDate = new CalendarDate(2023, 11, 17);
     const story = html`
         <h1>${title}</h1>
         <hr />
         <sp-calendar
             ...=${spreadProps(args as SpreadStoryArgs)}
+            .currentDate=${currentDate}
             @change=${args.onChange}
         ></sp-calendar>
     `;
@@ -94,47 +98,25 @@ export const selectedDate = (args: StoryArgs = {}): TemplateResult => {
 };
 
 export const minimumDate = (args: StoryArgs = {}): TemplateResult => {
-    const today = new Date();
-    const lastMonth = new Date(
-        today.getFullYear(),
-        today.getMonth() - 1,
-        today.getDate()
-    );
-
-    const formatted = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    }).format(lastMonth);
+    const minimumDate = new Date(2023, 10, 12);
 
     args = {
         ...args,
-        min: lastMonth,
+        min: minimumDate,
     };
 
-    return renderCalendar(`Minimum Date: ${formatted}`, args);
+    return renderCalendar(`Minimum Date: ${minimumDate.toDateString()}`, args);
 };
 
 export const maximumDate = (args: StoryArgs = {}): TemplateResult => {
-    const today = new Date();
-    const nextMonth = new Date(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        today.getDate()
-    );
-
-    const formatted = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    }).format(nextMonth);
+    const maxDate = new Date(2023, 10, 23);
 
     args = {
         ...args,
-        max: nextMonth,
+        max: maxDate,
     };
 
-    return renderCalendar(`Maximum Date: ${formatted}`, args);
+    return renderCalendar(`Maximum Date: ${maxDate.toDateString()}`, args);
 };
 
 export const disabled = (args: StoryArgs = {}): TemplateResult => {

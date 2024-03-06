@@ -209,6 +209,15 @@ export class InputSegments extends TextfieldBase {
         `;
     }
 
+    protected renderSegmentText(segment: Segment): string {
+        const usePlaceholder = segment.value === undefined;
+        return when(
+            usePlaceholder,
+            () => segment.placeholder ?? '',
+            () => segment.formatted ?? ''
+        );
+    }
+
     public renderInputContent(): TemplateResult {
         return html`
             <div class="input">
@@ -283,11 +292,7 @@ export class InputSegments extends TextfieldBase {
                 @input=${(event: InputEvent) => {
                     this.handleInputEvent(segment, event);
                 }}
-                .innerText=${when(
-                    usePlaceholder,
-                    () => segment.placeholder ?? '',
-                    () => segment.formatted ?? ''
-                )}
+                .innerText=${this.renderSegmentText(segment)}
             ></div>
         `;
     }
@@ -621,16 +626,13 @@ export class InputSegments extends TextfieldBase {
             };
         }
 
-        const { value, minValue, maxValue } = this.getValueAndLimits(type);
         const placeholder = this.getPlaceholder(type, part.value);
 
         const segment: Segment = {
             type,
             formatted,
-            ...(value !== undefined && { value }),
-            ...(minValue !== undefined && { minValue }),
-            ...(maxValue !== undefined && { maxValue }),
             ...(placeholder !== undefined && { placeholder }),
+            ...this.getValueAndLimits(type),
         };
 
         this.formatValue(segment);

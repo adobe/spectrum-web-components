@@ -32,3 +32,4 @@ import { DateTimePicker } from '@spectrum-web-components/date-time-picker';
 -   Enable "receives-focus" when calendar is navigable via keyboard
 -   Complete documentation
 -   Add/Review unit tests
+-   Review https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-datepicker/ - we likely want this to trap the tab order.

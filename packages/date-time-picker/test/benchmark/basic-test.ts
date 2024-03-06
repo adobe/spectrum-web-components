@@ -14,5 +14,7 @@ import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-date-time-picker></sp-date-time-picker>
+    <sp-date-time-picker
+        .value=${new Date(2023, 11, 12).toISOString()}
+    ></sp-date-time-picker>
 `);

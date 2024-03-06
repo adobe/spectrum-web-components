@@ -89,8 +89,8 @@ export class Calendar extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     padded = false;
 
-    @state()
-    private currentDate!: CalendarDate;
+    @property({ attribute: false })
+    currentDate!: CalendarDate;
 
     @state()
     private minDate!: CalendarDate;

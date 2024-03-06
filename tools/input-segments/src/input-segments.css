@@ -50,8 +50,14 @@ governing permissions and limitations under the License.
     text-align: start;
 }
 
-.editable-segment.is-placeholder {
+.is-placeholder {
     font-style: italic;
+}
+
+.is-placeholder:lang(ja),
+.is-placeholder:lang(ko),
+.is-placeholder:lang(zh) {
+    font-style: normal;
 }
 
 .editable-segment.is-placeholder,
