@@ -126,7 +126,10 @@ export default async () => {
             extractAssets: false,
         })
     );
-    mpaConfig.output.assetFileNames = '[hash][extname]';
+    mpaConfig.output.assetFileNames = 'swc.[hash].[ext]';
+    mpaConfig.output.chunkFileNames = 'swc.[hash].js';
+    mpaConfig.output.entryFileNames = 'swc.[hash].js';
+    mpaConfig.output.sourcemapFileNames = 'swc.[hash].js.map';
     mpaConfig.output.sourcemap = true;
 
     mpaConfig.moduleContext = {
