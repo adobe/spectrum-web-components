@@ -34,6 +34,8 @@ type OverflowProperties = {
     includeTabPanel: boolean;
     selected?: number;
     autoscroll?: boolean;
+    labelPrev?: string;
+    labelNext?: string;
 };
 
 const renderTabsOverflow = async ({
@@ -42,11 +44,17 @@ const renderTabsOverflow = async ({
     includeTabPanel,
     selected = 1,
     autoscroll = false,
+    labelPrev,
+    labelNext,
 }: OverflowProperties): Promise<HTMLDivElement> => {
     const tabsContainer = await fixture<HTMLDivElement>(
         html`
             <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow ?autoscroll=${autoscroll}>
+                <sp-tabs-overflow
+                    ?autoscroll=${autoscroll}
+                    label-previous=${labelPrev}
+                    label-next=${labelNext}
+                >
                     <sp-tabs size=${size} selected=${selected}>
                         ${repeat(
                             new Array(count),
@@ -212,5 +220,55 @@ describe('TabsOverflow', () => {
         const firstTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
         const firstTabPosition = firstTab.getBoundingClientRect();
         expect(firstTabPosition.left).to.be.lessThan(0);
+    });
+
+    it('prev and next buttons have default labels', async () => {
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.M,
+            includeTabPanel: true,
+        });
+        await elementUpdated(el);
+
+        const spTabsOverflows: TabsOverflow = el.querySelector(
+            'sp-tabs-overflow'
+        ) as TabsOverflow;
+        const leftButton = spTabsOverflows.shadowRoot.querySelector(
+            '.left-scroll'
+        ) as ActionButton;
+        const rightButton = spTabsOverflows.shadowRoot.querySelector(
+            '.right-scroll'
+        ) as ActionButton;
+
+        expect(leftButton?.getAttribute('aria-label')).to.equal(
+            'Scroll to previous tabs'
+        );
+        expect(rightButton?.getAttribute('aria-label')).to.equal(
+            'Scroll to next tabs'
+        );
+    });
+
+    it('prev and next buttons labels overwritten via attributes', async () => {
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.M,
+            includeTabPanel: true,
+            labelNext: 'Go right',
+            labelPrev: 'Go left',
+        });
+        await elementUpdated(el);
+
+        const spTabsOverflows: TabsOverflow = el.querySelector(
+            'sp-tabs-overflow'
+        ) as TabsOverflow;
+        const leftButton = spTabsOverflows.shadowRoot.querySelector(
+            '.left-scroll'
+        ) as ActionButton;
+        const rightButton = spTabsOverflows.shadowRoot.querySelector(
+            '.right-scroll'
+        ) as ActionButton;
+
+        expect(leftButton?.getAttribute('aria-label')).to.equal('Go left');
+        expect(rightButton?.getAttribute('aria-label')).to.equal('Go right');
     });
 });
