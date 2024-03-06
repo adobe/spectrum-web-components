@@ -9,112 +9,37 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { html, render, TemplateResult } from '@spectrum-web-components/base';
+import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 
-const locales = [
-    'cs-CZ',
-    'cy-GB',
-    'da-DK',
-    'de-DE',
-    'en-GB',
-    'en-US',
-    'es-ES',
-    'fi-FI',
-    'fr-FR',
-    'hu-HU',
-    'it-IT',
-    'ja-JP',
-    'ko-KR',
-    'nb-NO',
-    'nl-NL',
-    'pl-PL',
-    'pt-BR',
-    'ru-RU',
-    'sv-SE',
-    'tr-TR',
-    'uk-UA',
-    'zh-Hans-CN',
-    'zh-Hans-CN-u-nu-hanidec',
-    'zh-Hant-TW',
-    'zz-ZY',
-    'zz-ZZ',
-] as const;
-
-const defaultLocale = 'en-US';
-
-const hiddenProperty = {
-    table: {
-        disable: true,
-    },
-};
-
 export default {
     title: 'Calendar',
     component: 'sp-calendar',
-
-    argTypes: {
-        lang: {
-            options: locales,
-            control: {
-                type: 'select',
-            },
-            table: {
-                defaultValue: {
-                    summary: defaultLocale,
-                },
-            },
-        },
-
-        // Don't render private properties and getters in the Storybook UI
-        currentDate: { ...hiddenProperty },
-        minDate: { ...hiddenProperty },
-        maxDate: { ...hiddenProperty },
-        weeksInCurrentMonth: { ...hiddenProperty },
-        weekdays: { ...hiddenProperty },
-        languageResolver: { ...hiddenProperty },
-        timeZone: { ...hiddenProperty },
-        locale: { ...hiddenProperty },
-        today: { ...hiddenProperty },
-
-        // Inherited
-        _dirParent: { ...hiddenProperty },
-        shadowRoot: { ...hiddenProperty },
-        dir: { ...hiddenProperty },
-        isLTR: { ...hiddenProperty },
-    },
-
-    args: {
-        lang: defaultLocale,
-    },
-
     parameters: {
-        controls: {
-            // Hide "This story is not configured to handle controls" warning
-            hideNoControlsWarning: true,
-        },
         actions: {
             handles: ['onChange'],
         },
     },
 };
 
-interface StoryArgs {
-    lang?: string;
-
-    padded?: boolean;
-    disabled?: boolean;
+type ComponentArgs = {
     selectedDate?: Date;
     min?: Date;
     max?: Date;
+    padded?: boolean;
+    disabled?: boolean;
+};
 
-    onChange?: (date: Date) => void;
+type StoryArgs = ComponentArgs & {
+    onChange?: (dateTime: Date) => void;
+};
 
+interface SpreadStoryArgs {
     [prop: string]: unknown;
 }
 
@@ -122,64 +47,34 @@ const renderCalendar = (
     title: string,
     args: StoryArgs = {}
 ): TemplateResult => {
+    const story = html`
+        <h1>${title}</h1>
+        <hr />
+        <sp-calendar
+            ...=${spreadProps(args as SpreadStoryArgs)}
+            @change=${args.onChange}
+        ></sp-calendar>
+    `;
+
+    const randomId = Math.floor(Math.random() * 99999);
+
+    requestAnimationFrame(() => {
+        const container = document.querySelector(
+            `.story-container-${randomId}`
+        );
+
+        if (container) {
+            render(story, container as HTMLElement);
+        }
+    });
+
     return html`
-        <sp-theme lang=${ifDefined(args.lang || undefined)}>
-            <h1>${title}</h1>
-            <h2>
-                Locale:
-                <code>${args.lang}</code>
-            </h2>
-
-            <hr />
-
-            <sp-calendar
-                ...=${spreadProps(args)}
-                @change=${args.onChange}
-            ></sp-calendar>
-        </sp-theme>
+        <div class="story-container-${randomId}"></div>
     `;
 };
 
 export const Default = (args: StoryArgs = {}): TemplateResult => {
     return renderCalendar('Default', args);
-};
-
-export const padded = (args: StoryArgs = {}): TemplateResult => {
-    return renderCalendar(`Padded? ${args.padded}`, args);
-};
-
-padded.argTypes = {
-    padded: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: true,
-            },
-        },
-    },
-};
-
-padded.args = {
-    padded: true,
-};
-
-export const disabled = (args: StoryArgs = {}): TemplateResult => {
-    return renderCalendar(`Disabled? ${args.disabled}`, args);
-};
-
-disabled.argTypes = {
-    disabled: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: true,
-            },
-        },
-    },
-};
-
-disabled.args = {
-    disabled: true,
 };
 
 export const selectedDate = (args: StoryArgs = {}): TemplateResult => {
@@ -240,4 +135,42 @@ export const maximumDate = (args: StoryArgs = {}): TemplateResult => {
     };
 
     return renderCalendar(`Maximum Date: ${formatted}`, args);
+};
+
+export const disabled = (args: StoryArgs = {}): TemplateResult => {
+    return renderCalendar(`Disabled? ${args.disabled}`, args);
+};
+
+disabled.argTypes = {
+    disabled: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: true,
+            },
+        },
+    },
+};
+
+disabled.args = {
+    disabled: true,
+};
+
+export const padded = (args: StoryArgs = {}): TemplateResult => {
+    return renderCalendar(`Padded? ${args.padded}`, args);
+};
+
+padded.argTypes = {
+    padded: {
+        control: 'boolean',
+        table: {
+            defaultValue: {
+                summary: true,
+            },
+        },
+    },
+};
+
+padded.args = {
+    padded: true,
 };
