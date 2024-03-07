@@ -994,6 +994,7 @@ describe('SplitView', () => {
         ) as HTMLDivElement;
         expect(splitter.ariaLabel).to.equal(customLabel);
 
+        // If custom label not provided, should fall back to default label
         el = await fixture<SplitView>(
             html`
                 <sp-split-view resizable primary-min="50" secondary-min="50">
