@@ -45,10 +45,7 @@ import type {
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
 import { Placement } from '@spectrum-web-components/overlay';
-import {
-    IS_MOBILE,
-    MatchMediaController,
-} from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 
@@ -61,7 +58,10 @@ const chevronClass = {
 
 export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
-    protected isMobile = new MatchMediaController(this, IS_MOBILE);
+    protected isMobile = new MatchMediaController(
+        this,
+        '(hover: none) and (pointer: coarse)'
+    );
 
     @state()
     appliedLabel?: string;
