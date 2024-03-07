@@ -131,10 +131,8 @@ const buildTable = (result) => {
     )} | ${branchDifferencesString} | - |
 `);
 
-    // if there are more benchmark tests besides the basic test,
     if (result.length > 2) {
-        // iterate  through the rest of the results
-        for (let i = 2; i < result.length - 2; i + 2) {
+        for (let i = 2; i <= result.length - 2; i + 2) {
             let testName = `${result[i].name.split(':')[1]}`;
             remote = result[i];
             remoteDifferences = formatDifference(remote.differences[i + 1]);
