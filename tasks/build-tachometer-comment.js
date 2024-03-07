@@ -101,23 +101,23 @@ function formatDifference({ absolute, percentChange: relative }) {
     };
 }
 
-const buildTable = (result) => {
-    const packageName = `${result[0].name.split(':')[0]}`;
+const buildTable = (results) => {
+    const packageName = `${results[0].name.split(':')[0]}`;
     const table = [];
 
-    /* eslint-disable prettier/prettier */
     table.push(`<a id="${packageName}"></a>
 
 ## ${packageName} [_permalink_](#user-content-${packageName})
 `);
 
-    for (let i = 0; i <= result.length - 2; i + 2) {
-        const testName = `${result[i].name.split(':')[1]}`;
-        const remote = result[i];
+    results.forEach((result, i) => {
+        if (i % 2 > 0) return;
+        const testName = `${result.name.split(':')[1]}`;
+        const remote = result;
         const remoteDifferences = formatDifference(remote.differences[i + 1]);
         const remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
 
-        const branch = result[i + 1];
+        const branch = results[i + 1];
         const branchDifferences = formatDifference(branch.differences[i]);
         const branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
 
@@ -134,7 +134,7 @@ const buildTable = (result) => {
             milli
         )} | ${branchDifferencesString} | - |
 `);
-    }
+    });
 
     const resultTable = table.join(`
 
