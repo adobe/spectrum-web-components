@@ -72,6 +72,13 @@ describe('Checkbox', () => {
                         <sp-checkbox id="checkbox5" tabindex="-1">
                             Check 5
                         </sp-checkbox>
+                        <sp-checkbox
+                            id="checkbox6"
+                            tabindex="6"
+                            label="This is checkbox6"
+                        >
+                            Check 6
+                        </sp-checkbox>
                     </div>
                 </div>
             `
@@ -256,6 +263,13 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         expect(el.checked).to.be.false;
+    });
+
+    it('has aria-label', async () => {
+        const el = testFixture.querySelector('#checkbox6') as Checkbox;
+        expect(el.inputElement.getAttribute('aria-label')).to.equal(
+            'This is checkbox6'
+        );
     });
 
     it('can have `change` events cancelled', async () => {

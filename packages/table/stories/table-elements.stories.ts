@@ -25,9 +25,25 @@ export default {
     component: 'sp-table',
     args: {
         selected: [],
-        selects: '',
+        selects: 'single',
+        selectRowString: 'Select',
+        selectAllRowsString: 'Select All',
     },
     argTypes: {
+        selectRowString: {
+            name: 'selectRowString',
+            description: 'The string to use for the select row checkbox label.',
+            control: {
+                type: 'text',
+            },
+        },
+        selectAllRowsString: {
+            name: 'selectAllRowsString',
+            description: 'The string to use for the select all checkbox label.',
+            control: {
+                type: 'text',
+            },
+        },
         selected: {
             name: 'selected',
             description: 'The value of the selected `<sp-table-row>`(s).',
@@ -171,6 +187,140 @@ export const selectsSingle = (): TemplateResult => {
                     <sp-table-cell>Row Item Echo</sp-table-cell>
                     <sp-table-cell>Row Item Echo</sp-table-cell>
                     <sp-table-cell>Row Item Echo</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+        <div>Selected: ["row1"]</div>
+    `;
+};
+
+type Properties = {
+    selectedRowString: string;
+    selectedAllRowsString: string;
+    selects: string;
+};
+
+export const selectsSingleWithRowHeader = ({
+    selectedRowString,
+    selectedAllRowsString,
+    selects,
+}: Properties): TemplateResult => {
+    return html`
+        <sp-table
+            .selects=${selects}
+            .selected=${['row1']}
+            .selectedRowString=${selectedRowString}
+            .selectedAllRowStrings=${selectedAllRowsString}
+            @change=${({ target }: Event & { target: Table }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected
+                )}`;
+            }}
+        >
+            <sp-table-head>
+                <sp-table-head-cell>Week (Row Header)</sp-table-head-cell>
+                <sp-table-head-cell>Monday</sp-table-head-cell>
+                <sp-table-head-cell>Wednesday</sp-table-head-cell>
+                <sp-table-head-cell>Friday</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 120px">
+                <sp-table-row value="row0" class="row0">
+                    <sp-table-cell role="rowheader">Week 1</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell role="rowheader">Week 2</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell role="rowheader">Week 3</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell role="rowheader">Week 4</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell role="rowheader">Week 5</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell role="rowheader">Week 6</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+        <div>Selected: ["row1"]</div>
+    `;
+};
+
+export const selectsMultipleWithRowHeader = (): TemplateResult => {
+    return html`
+        <sp-table
+            selects="multiple"
+            .selected=${['row1']}
+            @change=${({ target }: Event & { target: Table }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected
+                )}`;
+            }}
+        >
+            <sp-table-head>
+                <sp-table-head-cell>Week (Row Header)</sp-table-head-cell>
+                <sp-table-head-cell>Monday</sp-table-head-cell>
+                <sp-table-head-cell>Wednesday</sp-table-head-cell>
+                <sp-table-head-cell>Friday</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 120px">
+                <sp-table-row value="row0" class="row0">
+                    <sp-table-cell role="rowheader">Week 1</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell role="rowheader">Week 2</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell role="rowheader">Week 3</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell role="rowheader">Week 4</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell role="rowheader">Week 5</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell role="rowheader">Week 6</sp-table-cell>
+                    <sp-table-cell>Squat</sp-table-cell>
+                    <sp-table-cell>Pushup</sp-table-cell>
+                    <sp-table-cell>Deadlift</sp-table-cell>
                 </sp-table-row>
             </sp-table-body>
         </sp-table>

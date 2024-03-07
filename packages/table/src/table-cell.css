@@ -17,3 +17,10 @@ governing permissions and limitations under the License.
     flex: 1;
     block-size: auto;
 }
+
+:host([role='rowheader']) {
+    font-weight: var(
+        --mod-table-header-font-weight,
+        var(--spectrum-table-header-font-weight)
+    );
+}

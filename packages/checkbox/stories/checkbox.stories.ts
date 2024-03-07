@@ -30,6 +30,12 @@ export const readonly = (): TemplateResult => {
     `;
 };
 
+export const WithLabel = (): TemplateResult => {
+    return html`
+        <sp-checkbox label="Checkbox Label">Checkbox</sp-checkbox>
+    `;
+};
+
 export const Indeterminate = (): TemplateResult => {
     return html`
         <sp-checkbox indeterminate>
