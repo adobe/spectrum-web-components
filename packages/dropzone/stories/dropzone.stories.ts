@@ -180,10 +180,10 @@ class ControlledDropzone extends LitElement {
         this.input = this.fileName;
     }
 }
-defineElement('controlled-dropbox', ControlledDropzone);
+defineElement('controlled-dropzone', ControlledDropzone);
 
 export const Controlled = (): TemplateResult => {
     return html`
-        <controlled-dropbox></controlled-dropbox>
+        <controlled-dropzone></controlled-dropzone>
     `;
 };
