@@ -44,17 +44,11 @@ const renderTabsOverflow = async ({
     includeTabPanel,
     selected = 1,
     autoscroll = false,
-    labelPrev,
-    labelNext,
 }: OverflowProperties): Promise<HTMLDivElement> => {
     const tabsContainer = await fixture<HTMLDivElement>(
         html`
             <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow
-                    ?autoscroll=${autoscroll}
-                    label-previous=${labelPrev}
-                    label-next=${labelNext}
-                >
+                <sp-tabs-overflow ?autoscroll=${autoscroll}>
                     <sp-tabs size=${size} selected=${selected}>
                         ${repeat(
                             new Array(count),
@@ -249,14 +243,42 @@ describe('TabsOverflow', () => {
     });
 
     it('prev and next buttons labels overwritten via attributes', async () => {
-        const el = await renderTabsOverflow({
-            count: 20,
-            size: ElementSizes.M,
-            includeTabPanel: true,
-            labelNext: 'Go right',
-            labelPrev: 'Go left',
-        });
-        await elementUpdated(el);
+        const tabsContainer = await fixture<HTMLDivElement>(
+            html`
+                <div class="container" style="width: 200px; height: 150px;">
+                    <sp-tabs-overflow
+                        label-previous="custom label prev"
+                        label-next="custom label next"
+                    >
+                        <sp-tabs size=${ElementSizes.M} selected=${1}>
+                            ${repeat(
+                                new Array(20),
+                                (item) => item,
+                                (_item, index) =>
+                                    html`
+                                        <sp-tab
+                                            label=${`Tab Item ${index + 1}`}
+                                            value=${index + 1}
+                                        ></sp-tab>
+                                    `
+                            )}
+                            ${repeat(
+                                new Array(20),
+                                (item) => item,
+                                (_item, index) =>
+                                    html`
+                                        <sp-tab-panel value=${index + 1}>
+                                            Content for Tab Item ${index + 1}
+                                        </sp-tab-panel>
+                                    `
+                            )}
+                        </sp-tabs>
+                    </sp-tabs-overflow>
+                </div>
+            `
+        );
+        await elementUpdated(tabsContainer);
+        const el = tabsContainer;
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
             'sp-tabs-overflow'
@@ -268,7 +290,11 @@ describe('TabsOverflow', () => {
             '.right-scroll'
         ) as ActionButton;
 
-        expect(leftButton?.getAttribute('aria-label')).to.equal('Go left');
-        expect(rightButton?.getAttribute('aria-label')).to.equal('Go right');
+        expect(leftButton?.getAttribute('aria-label')).to.equal(
+            'custom label prev'
+        );
+        expect(rightButton?.getAttribute('aria-label')).to.equal(
+            'custom label next'
+        );
     });
 });
