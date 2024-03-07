@@ -111,12 +111,14 @@ const buildTable = (result) => {
     let branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
 
     const packageName = `${result[0].name.split(':')[0]}`;
+    let testName = `${result[0].name.split(':')[1]}`;
     const table = [];
 
     /* eslint-disable prettier/prettier */
     table.push(`<a id="${packageName}"></a>
 
 ## ${packageName} [_permalink_](#user-content-${packageName})
+### ${testName}
 | Version | Bytes | Avg Time | vs remote | vs branch |
 |---|---|---|---|---|
 | npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
@@ -132,9 +134,8 @@ const buildTable = (result) => {
     // if there are more benchmark tests besides the basic test,
     if (result.length > 2) {
         // iterate  through the rest of the results
-        for (let i = 2; i < result.length - 1; i++) {
-            const testName = `${result[i].name.split(':')[1]}`;
-
+        for (let i = 2; i < result.length - 1; i + 2) {
+            let testName = `${result[i].name.split(':')[1]}`;
             remote = result[i];
             remoteDifferences = formatDifference(remote.differences[i + 1]);
             remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
@@ -144,8 +145,7 @@ const buildTable = (result) => {
             branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
 
             table.push(`
-## ${packageName} [_permalink_](#user-content-${packageName})
-# ${testName}
+### ${testName}
 | Version | Bytes | Avg Time | vs remote | vs branch |
 |---|---|---|---|---|
 | npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
