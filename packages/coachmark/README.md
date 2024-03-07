@@ -29,7 +29,7 @@ import { Coachmark } from '@spectrum-web-components/coachmark';
 
 ## Default
 
-Coachmark can take a `placement` and an `offset` similar to the [Overlay](https://opensource.adobe.com/spectrum-web-components/components/overlay/).
+Coachmark can take a `placement` similar to the [Overlay](https://opensource.adobe.com/spectrum-web-components/components/overlay/).
 
 ```html
 <sp-coachmark open>
