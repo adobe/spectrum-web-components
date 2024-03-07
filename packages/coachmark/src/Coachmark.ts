@@ -17,7 +17,6 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import coachmarkStyles from './coachmark.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
@@ -41,7 +40,7 @@ import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
  * @slot description - A description of the card
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  */
-export class Coachmark extends LikeAnchor(Popover) {
+export class Coachmark extends Popover {
     public static override get styles(): CSSResultArray {
         return [...super.styles, coachmarkStyles, chevronStyles];
     }
@@ -179,9 +178,7 @@ export class Coachmark extends LikeAnchor(Popover) {
     }
 
     private stopPropagationOnHref(event: Event): void {
-        if (this.href) {
-            event.stopPropagation();
-        }
+        event.stopPropagation();
     }
 
     // event on primary button
