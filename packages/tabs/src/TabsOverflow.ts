@@ -139,7 +139,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     protected override render(): TemplateResult {
         const { canScrollRight, canScrollLeft } = this.overflowState;
         const ariaLabelPrevious = this.labelPrevious;
-        // this.labelPrevious || 'Scroll to previous tabs';
         const ariaLabelNext = this.labelNext;
         return html`
             <div
