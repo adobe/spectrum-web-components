@@ -113,6 +113,7 @@ const buildTable = (result) => {
     const packageName = `${result[0].name.split(':')[0]}`;
     const table = [];
 
+    /* eslint-disable prettier/prettier */
     table.push(`<a id="${packageName}"></a>
 
     ## ${packageName} [_permalink_](#user-content-${packageName})
