@@ -102,61 +102,40 @@ function formatDifference({ absolute, percentChange: relative }) {
 }
 
 const buildTable = (result) => {
-    let remote = result[0];
-    let remoteDifferences = formatDifference(remote.differences[1]);
-    let remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
-
-    let branch = result[1];
-    let branchDifferences = formatDifference(branch.differences[0]);
-    let branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
-
     const packageName = `${result[0].name.split(':')[0]}`;
-    let testName = `${result[0].name.split(':')[1]}`;
     const table = [];
 
     /* eslint-disable prettier/prettier */
     table.push(`<a id="${packageName}"></a>
 
 ## ${packageName} [_permalink_](#user-content-${packageName})
+`);
+
+    for (let i = 0; i <= result.length - 2; i + 2) {
+        const testName = `${result[i].name.split(':')[1]}`;
+        const remote = result[i];
+        const remoteDifferences = formatDifference(remote.differences[i + 1]);
+        const remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
+
+        const branch = result[i + 1];
+        const branchDifferences = formatDifference(branch.differences[i]);
+        const branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
+
+        table.push(`
 ### ${testName}
 | Version | Bytes | Avg Time | vs remote | vs branch |
 |---|---|---|---|---|
 | npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
-        remote.mean,
-        milli
-    )} | - | ${remoteDifferencesString} |
+            remote.mean,
+            milli
+        )} | - | ${remoteDifferencesString} |
 | branch | ${prettyBytes(branch.bytesSent)} | ${formatConfidenceInterval(
-        branch.mean,
-        milli
-    )} | ${branchDifferencesString} | - |
+            branch.mean,
+            milli
+        )} | ${branchDifferencesString} | - |
 `);
-
-    if (result.length > 2) {
-        for (let i = 2; i <= result.length - 2; i + 2) {
-            let testName = `${result[i].name.split(':')[1]}`;
-            remote = result[i];
-            remoteDifferences = formatDifference(remote.differences[i + 1]);
-            remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
-
-            branch = result[i + 1];
-            branchDifferences = formatDifference(branch.differences[i]);
-            branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
-
-            table.push(`
-### ${testName}
-| Version | Bytes | Avg Time | vs remote | vs branch |
-|---|---|---|---|---|
-| npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
-                remote.mean,
-                milli
-            )} | - | ${remoteDifferencesString} |
-| branch | ${prettyBytes(branch.bytesSent)} | ${formatConfidenceInterval(
-                branch.mean,
-                milli
-            )} | ${branchDifferencesString} | - |
-`);
-        }
     }
+
     const resultTable = table.join(`
 
     `);
