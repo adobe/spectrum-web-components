@@ -10,13 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('@spectrum-web-components/styles/express/scale-medium.css');
-@import url('@spectrum-web-components/styles/tokens/medium-vars.css');
-@import url('@spectrum-web-components/styles/tokens/spectrum/custom-medium-vars.css');
-@import url('@spectrum-web-components/styles/tokens/express/custom-medium-vars.css');
-@import url('@spectrum-web-components/styles/tokens/express/medium-vars.css');
-
-:root,
-:host {
-    --swc-scale-factor: 1;
-}
+import '../../express/theme-light-tokens-version.js';
+import '../../express/theme-lightest-tokens-version.js';
+import '../../express/theme-dark-tokens-version.js';
+import '../../express/theme-darkest-tokens-version.js';
+import '../../express/scale-medium-tokens-version.js';
+import '../../express/scale-large-tokens-version.js';

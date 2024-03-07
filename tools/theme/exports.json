@@ -5,9 +5,15 @@
     "./core.js": "./core.js",
     "./sp-theme.js": "./sp-theme.js",
     "./scale-medium.js": "./scale-medium.js",
+    "./scale-medium-tokens-version.js": "./scale-medium-tokens-version.js",
     "./scale-large.js": "./scale-large.js",
+    "./scale-large-tokens-version.js": "./scale-large-tokens-version.js",
     "./theme-lightest.js": "./theme-lightest.js",
+    "./theme-lightest-tokens-version.js": "./theme-lightest-tokens-version.js",
     "./theme-light.js": "./theme-light.js",
+    "./theme-light-tokens-version.js": "./theme-light-tokens-version.js",
     "./theme-dark.js": "./theme-dark.js",
-    "./theme-darkest.js": "./theme-darkest.js"
+    "./theme-dark-tokens-version.js": "./theme-dark-tokens-version.js",
+    "./theme-darkest.js": "./theme-darkest.js",
+    "./theme-darkest-tokens-version.js": "./theme-darkest-tokens-version.js"
 }
