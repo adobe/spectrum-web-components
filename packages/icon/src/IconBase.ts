@@ -26,7 +26,7 @@ export class IconBase extends SpectrumElement {
         return [iconStyles];
     }
 
-    @property()
+    @property({ type: String, reflect: true })
     public label = '';
 
     @property({ reflect: true })
@@ -36,6 +36,7 @@ export class IconBase extends SpectrumElement {
         if (changes.has('label')) {
             if (this.label) {
                 this.removeAttribute('aria-hidden');
+                this.setAttribute('aria-label', this.label);
             } else {
                 this.setAttribute('aria-hidden', 'true');
             }

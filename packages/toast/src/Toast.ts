@@ -116,14 +116,28 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return this._variant;
     }
 
+    @property({ type: String })
+    public set iconLabel(iconLabel: string) {
+        this._iconLabel = iconLabel;
+        this.requestUpdate('iconLabel', iconLabel);
+    }
+
+    public get iconLabel(): string {
+        return this._iconLabel;
+    }
+
     private _variant: ToastVariants = '';
 
-    private renderIcon(variant: string): TemplateResult {
+    private _iconLabel: string = '';
+
+    private renderIcon(variant: string, iconLabel: string): TemplateResult {
+        console.log(iconLabel);
         switch (variant) {
+            
             case 'info':
                 return html`
                     <sp-icon-info
-                        label="Information"
+                        label=${iconLabel}
                         class="type"
                     ></sp-icon-info>
                 `;
@@ -131,13 +145,13 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
             case 'error': // deprecated
             case 'warning': // deprecated
                 return html`
-                    <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+                    <sp-icon-alert label=${iconLabel} class="type"></sp-icon-alert>
                 `;
             case 'positive':
             case 'success': // deprecated
                 return html`
                     <sp-icon-checkmark-circle
-                        label="Success"
+                        label=${iconLabel}
                         class="type"
                     ></sp-icon-checkmark-circle>
                 `;
@@ -205,7 +219,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderIcon(this.variant)}
+            ${this.renderIcon(this.variant, this.iconLabel)}
             <div class="body" role="alert">
                 <div class="content">
                     <slot></slot>

@@ -23,6 +23,7 @@ const toast = ({
     variant = '',
     open = true,
     content = '',
+    iconLabel='',
 }): TemplateResult => html`
     <sp-toast
         variant=${variant as
@@ -33,6 +34,7 @@ const toast = ({
             | 'error'
             | 'warning'}
         ?open=${open}
+        iconLabel=${iconLabel}
     >
         ${content}
         <sp-button
@@ -82,6 +84,7 @@ interface Properties {
     variant: '' | 'negative' | 'positive' | 'info' | 'error' | 'warning';
     open: boolean;
     content: string;
+    iconLabel: string;
     onClose: (event: Event) => void;
 }
 
@@ -89,26 +92,28 @@ export const Default = ({
     variant,
     open,
     content,
+    iconLabel
 }: Properties): TemplateResult => {
-    return toast({ variant, open, content });
+    return toast({ variant, open, content, iconLabel});
 };
 
 const variantDemo = ({
     variant,
     open,
     content,
+    iconLabel,
 }: Properties): TemplateResult => {
-    return toast({ variant, open, content });
+    return toast({ variant, open, content, iconLabel });
 };
 
 export const Positive = (args: Properties): TemplateResult =>
-    variantDemo({ ...args, variant: 'positive' });
+    variantDemo({ ...args, variant: 'positive', iconLabel: 'Success' });
 
 export const Negative = (args: Properties): TemplateResult =>
-    variantDemo({ ...args, variant: 'negative' });
+    variantDemo({ ...args, variant: 'negative', iconLabel: 'Error' });
 
 export const Info = (args: Properties): TemplateResult =>
-    variantDemo({ ...args, variant: 'info' });
+    variantDemo({ ...args, variant: 'info', iconLabel: 'Information' });
 
 const overlayStyles = html`
     <style>
