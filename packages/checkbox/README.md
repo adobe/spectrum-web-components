@@ -163,11 +163,11 @@ Event handlers for clicks and other user actions can be registered on an `<sp-ch
 Checkboxes are accessible by default, rendered in HTML using the `<input type="checkbox">` element. When the checkbox is set as `indeterminate` or
 `invalid`, the appropriate ARIA state attribute will automatically be applied.
 
-The `label` attribute value will be automatically assigned to the `aria-label` attribute of the checkbox, providing accessibility support.
+The `aria-label` attribute is useful to specify a label for a checkbox that doesn't have an explicit string label.
 
 ```html
 <sp-checkbox
     id="checkbox-with-explicit-label"
-    label="This Checkbox has a custom label"
+    aria-label="This Checkbox has a custom label"
 ></sp-checkbox>
 ```

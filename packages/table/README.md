@@ -873,7 +873,7 @@ For each table column you want to sort, use the `sortable` attribute in its resp
             cell2.textContent = `Row Item Beta ${item.date}`;
             cell3.textContent = `Index: ${index}`;
             return [cell1, cell2, cell3];
-        }
+        };
         table.addEventListener('sorted', (event) => {
             const { sortDirection, sortKey } = event.detail;
             items = items.sort((a, b) => {
@@ -900,16 +900,16 @@ Tables can be created to allow the selection of single or multiple rows. In both
 
 The `<sp-table>` component is built to be accessible by default. The `aria-label` attribute is automatically assigned to the checkbox, providing accessibility support. The English default value for a row checkbox is 'Select'. The checkbox in the table header will have the value 'Select All'.
 
-Both strings can be customized by setting the `selectRowString` and `selectAllRowsString` attributes of the `<sp-table>` component. Providing selectRowString for the `<sp-table-row>` component will override the default value for that row. Providing selectAllRowsString for the `<sp-table>` component will override the default value for the row checkbox.
+Both strings can be customized by setting the `selectRowLabel` and `selectAllRowsLabel` attributes of the `<sp-table>` component. Providing selectRowLabel for the `<sp-table-row>` component will override the default value for that row. Providing selectAllRowsLabel for the `<sp-table>` component will override the default value for the row checkbox.
 
-### Combination of `selects`, `selectRowString` and `selectAllRowsString`
+### Combination of `selects`, `selectRowLabel` and `selectAllRowsLabel`
 
-| Component    | selectRowString | selectAllRowsString | Selects  | Result                                                                                                                                             |
-| ------------ | :-------------: | :-----------------: | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| sp-table     |        X        |         N/A         | single   | All row checkboxes with have an aria-label with the specified string                                                                               |
-| sp-table     |        X        |          X          | multiple | All row checkboxes with have an aria-label with the specified string. The header checkbox will have an aria-label with the specified header string |
-| sp-table-row |        X        |         N/A         | single   | The row checkbox will have an aria-label with the specified string                                                                                 |
-| sp-table-row |        X        |         N/A         | multiple | The row checkbox will have an aria-label with the specified string                                                                                 |
+| Component    | selectRowLabel | selectAllRowsLabel | Selects  | Result                                                                                                                                             |
+| ------------ | :------------: | :----------------: | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| sp-table     |       X        |        N/A         | single   | All row checkboxes with have an aria-label with the specified string                                                                               |
+| sp-table     |       X        |         X          | multiple | All row checkboxes with have an aria-label with the specified string. The header checkbox will have an aria-label with the specified header string |
+| sp-table-row |       X        |        N/A         | single   | The row checkbox will have an aria-label with the specified string                                                                                 |
+| sp-table-row |       X        |        N/A         | multiple | The row checkbox will have an aria-label with the specified string                                                                                 |
 
 ### Setting the Header Row Checkbox Label
 
@@ -918,7 +918,7 @@ The following example shows how to set the label for the checkbox in the header 
 ```html
 <sp-table
     selects="multiple"
-    selecteAllRowsString="Click to select all rows in the table"
+    selectAllRowsLabel="Click to select all rows in the table"
 >
     <sp-table-head>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -950,7 +950,7 @@ The following example shows how to set the label for the checkbox in the header 
 The following example shows how to set the label for the checkboxes in each row. Every checkbox of each row will have an `aria-label` attribute with a value of **Click to select entire row**.
 
 ```html
-<sp-table selects="single" selecteRowString="Click to select entire row">
+<sp-table selects="single" selectRowLabel="Click to select entire row">
     <sp-table-head>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
         <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -988,7 +988,7 @@ The following example shows how to set the label for the checkbox of an individu
         <sp-table-head-cell>Column Title</sp-table-head-cell>
     </sp-table-head>
     <sp-table-body>
-        <sp-table-row id="row1" value="row1" selectRowString="Select Row 1">
+        <sp-table-row id="row1" value="row1" selectRowLabel="Select Row 1">
             <sp-table-cell>Row Item Alpha</sp-table-cell>
             <sp-table-cell>Row Item Alpha</sp-table-cell>
             <sp-table-cell>Row Item Alpha</sp-table-cell>

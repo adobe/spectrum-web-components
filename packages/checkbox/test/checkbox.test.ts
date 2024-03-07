@@ -75,7 +75,7 @@ describe('Checkbox', () => {
                         <sp-checkbox
                             id="checkbox6"
                             tabindex="6"
-                            label="This is checkbox6"
+                            aria-label="This is checkbox 6"
                         >
                             Check 6
                         </sp-checkbox>
@@ -265,13 +265,6 @@ describe('Checkbox', () => {
         expect(el.checked).to.be.false;
     });
 
-    it('has aria-label', async () => {
-        const el = testFixture.querySelector('#checkbox6') as Checkbox;
-        expect(el.inputElement.getAttribute('aria-label')).to.equal(
-            'This is checkbox6'
-        );
-    });
-
     it('can have `change` events cancelled', async () => {
         const el = testFixture.querySelector('#checkbox0') as Checkbox;
         await elementUpdated(el);
@@ -408,5 +401,14 @@ describe('Checkbox', () => {
         expect(getPartialCheckmarkLocalName()).to.not.equal(
             partialCheckmarkLocalname
         );
+    });
+
+    describe('aria-label', () => {
+        it('is available through aria-label on sp-checkbox component', async () => {
+            const el = testFixture.querySelector('#checkbox6') as Checkbox;
+            expect(el.inputElement.getAttribute('aria-label')).to.equal(
+                'This is checkbox 6'
+            );
+        });
     });
 });

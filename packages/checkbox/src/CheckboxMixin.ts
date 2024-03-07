@@ -45,13 +45,6 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
         @property({ type: Boolean, reflect: true })
         public readonly = false;
 
-        /**
-         * An accessible label that describes the component.
-         * It will be applied to aria-label, but not visually rendered.
-         */
-        @property({ type: String })
-        public label?: string;
-
         @query('#input')
         inputElement!: HTMLInputElement;
 
@@ -78,9 +71,7 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
         protected render(): TemplateResult {
             return html`
                 <input
-                    aria-label="${ifDefined(
-                        this.label || this.ariaLabel || undefined
-                    )}"
+                    aria-label="${ifDefined(this.ariaLabel || undefined)}"
                     id="input"
                     name=${ifDefined(this.name || undefined)}
                     type="checkbox"

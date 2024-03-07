@@ -162,14 +162,14 @@ export class Table extends SizedMixin(SpectrumElement, {
      * Specify the string that is used to provide a label for a row checkbox
      */
     @property({ type: String })
-    public selectRowString = 'Select';
+    public selectRowLabel = 'Select';
 
     /**
      * Specify the string that is used to provide a label for the select all
      * checkbox in the table head
      */
     @property({ type: String })
-    public selectAllRowsString = 'Select All';
+    public selectAllRowsLabel = 'Select All';
 
     /**
      * Changes the spacing around table cell content.
@@ -344,7 +344,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             ) as TableCheckboxCell;
             this.tableHeadCheckboxCell.headCell = true;
             this.tableHeadCheckboxCell.emphasized = this.emphasized;
-            this.tableHeadCheckboxCell.label = this.selectAllRowsString;
+            this.tableHeadCheckboxCell.ariaLabel = this.selectAllRowsLabel;
 
             const allSelected = this.selected.length === this.tableRows.length;
             this.manageHeadCheckbox(allSelected);
@@ -365,17 +365,19 @@ export class Table extends SizedMixin(SpectrumElement, {
                 checkbox.checked = row.selected;
 
                 // if we have a rowheader, then update the label of the checkbox
-                // Clients can specify a selectRowString attribute on the rowheader that will
+                // Clients can specify a selectRowLabel attribute on the rowheader that will
                 // be used as the label for the checkbox. If not present, the default
-                // selectRowString will be used.
+                // selectRowLabel will be used.
                 const rowHeader = row.querySelector('[role="rowheader"]');
                 if (rowHeader) {
                     const cell = rowHeader as TableCell;
-                    checkbox.label = cell.selectRowString
-                        ? cell.selectRowString
-                        : `${this.selectRowString} ${rowHeader.textContent}`;
+                    checkbox.ariaLabel = cell.selectRowLabel
+                        ? cell.selectRowLabel
+                        : `${
+                              this.selectRowLabel
+                          } ${rowHeader.textContent?.trim()}`;
                 } else {
-                    checkbox.label = this.selectRowString;
+                    checkbox.ariaLabel = this.selectRowLabel;
                 }
             });
         } else {

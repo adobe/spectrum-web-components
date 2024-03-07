@@ -32,7 +32,7 @@ export const readonly = (): TemplateResult => {
 
 export const WithLabel = (): TemplateResult => {
     return html`
-        <sp-checkbox label="Checkbox Label">Checkbox</sp-checkbox>
+        <sp-checkbox aria-label="Explicit Checkbox Label">Checkbox</sp-checkbox>
     `;
 };
 

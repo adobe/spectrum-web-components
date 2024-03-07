@@ -36,7 +36,7 @@ export class TableCell extends SpectrumElement {
     public role: 'gridcell' | 'rowheader' | 'cell';
 
     @property({ type: String })
-    public selectRowString?: string;
+    public selectRowLabel?: string;
 
     protected override render(): TemplateResult {
         return html`

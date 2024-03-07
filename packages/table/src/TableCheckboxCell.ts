@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -59,9 +60,6 @@ export class TableCheckboxCell extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
-    @property({ type: String })
-    public label?: string;
-
     public override click(): void {
         this.checkbox.click();
     }
@@ -74,7 +72,7 @@ export class TableCheckboxCell extends SpectrumElement {
                 ?disabled=${this.disabled}
                 ?emphasized=${this.emphasized}
                 aria-hidden=${ifDefined(this.selectsSingle)}
-                aria-label=${ifDefined(this.label)}
+                aria-label="${this.ariaLabel || nothing}"
                 class="checkbox"
             ></sp-checkbox>
         `;

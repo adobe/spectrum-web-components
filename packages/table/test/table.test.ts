@@ -136,9 +136,9 @@ describe('Table', () => {
         );
     });
 
-    it('ensure row checkbox aria-label uses the provided selectRowString', async () => {
+    it('ensure row checkbox aria-label uses the provided selectRowLabel', async () => {
         const el = await fixture<Table>(html`
-            <sp-table size="s" selects="single" selectRowString="Mark the row">
+            <sp-table size="s" selects="single" selectRowLabel="Mark the row">
                 <sp-table-head>
                     <sp-table-head-cell>Column Title</sp-table-head-cell>
                     <sp-table-head-cell>Column Title</sp-table-head-cell>
@@ -148,7 +148,7 @@ describe('Table', () => {
                     <sp-table-row value="row1">
                         <sp-table-cell
                             role="rowheader"
-                            selectRowString="Please mark row Item Alpha"
+                            selectRowLabel="Please mark row Item Alpha"
                         >
                             Item Alpha
                         </sp-table-cell>
@@ -223,12 +223,12 @@ describe('Table', () => {
         ).to.equal('Select All');
     });
 
-    it('ensure header checkbox aria-label uses the provided selectRowString', async () => {
+    it('ensure header checkbox aria-label uses the provided selectRowLabel', async () => {
         const el = await fixture<Table>(html`
             <sp-table
                 size="s"
                 selects="multiple"
-                selectAllRowsString="Select all the rows in the table"
+                selectAllRowsLabel="Select all the rows in the table"
             >
                 <sp-table-head>
                     <sp-table-head-cell>Column Title</sp-table-head-cell>

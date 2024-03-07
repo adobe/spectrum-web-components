@@ -26,19 +26,19 @@ export default {
     args: {
         selected: [],
         selects: 'single',
-        selectRowString: 'Select',
-        selectAllRowsString: 'Select All',
+        selectRowLabel: 'Select',
+        selectAllRowsLabel: 'Select All',
     },
     argTypes: {
-        selectRowString: {
-            name: 'selectRowString',
+        selectRowLabel: {
+            name: 'selectRowLabel',
             description: 'The string to use for the select row checkbox label.',
             control: {
                 type: 'text',
             },
         },
-        selectAllRowsString: {
-            name: 'selectAllRowsString',
+        selectAllRowsLabel: {
+            name: 'selectAllRowsLabel',
             description: 'The string to use for the select all checkbox label.',
             control: {
                 type: 'text',
