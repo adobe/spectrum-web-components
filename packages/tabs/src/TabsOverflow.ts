@@ -46,16 +46,16 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     }
 
     @property({ type: Boolean, reflect: true })
-    compact = false;
+    public compact = false;
+
+    @property({ type: String, attribute: 'label-previous' })
+    public labelPrevious = 'Scroll to previous tabs';
+
+    @property({ type: String, attribute: 'label-next' })
+    public labelNext = 'Scroll to next tabs';
 
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
-
-    @property({ reflect: true, type: String, attribute: 'label-previous' })
-    public labelPrevious: string | undefined;
-
-    @property({ reflect: true, type: String, attribute: 'label-next' })
-    public labelNext: string | undefined;
 
     @state()
     private overflowState: TabsOverflowState = {
@@ -138,9 +138,9 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
 
     protected override render(): TemplateResult {
         const { canScrollRight, canScrollLeft } = this.overflowState;
-        const ariaLabelPrevious =
-            this.labelPrevious || 'Scroll to previous tabs';
-        const ariaLabelNext = this.labelNext || 'Scroll to next tabs';
+        const ariaLabelPrevious = this.labelPrevious;
+        // this.labelPrevious || 'Scroll to previous tabs';
+        const ariaLabelNext = this.labelNext;
         return html`
             <div
                 class=${classMap({
