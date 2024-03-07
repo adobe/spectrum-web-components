@@ -116,20 +116,18 @@ const buildTable = (result) => {
     /* eslint-disable prettier/prettier */
     table.push(`<a id="${packageName}"></a>
 
-    ## ${packageName} [_permalink_](#user-content-${packageName})
-    | Version | Bytes | Avg Time | vs remote | vs branch |
-    |---|---|---|---|---|
-    | npm latest | ${prettyBytes(
-        remote.bytesSent
-    )} | ${formatConfidenceInterval(
+## ${packageName} [_permalink_](#user-content-${packageName})
+| Version | Bytes | Avg Time | vs remote | vs branch |
+|---|---|---|---|---|
+| npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
         remote.mean,
         milli
     )} | - | ${remoteDifferencesString} |
-    | branch | ${prettyBytes(branch.bytesSent)} | ${formatConfidenceInterval(
+| branch | ${prettyBytes(branch.bytesSent)} | ${formatConfidenceInterval(
         branch.mean,
         milli
     )} | ${branchDifferencesString} | - |
-    `);
+`);
 
     // if there are more benchmark tests besides the basic test,
     if (result.length > 2) {
@@ -145,25 +143,20 @@ const buildTable = (result) => {
             branchDifferences = formatDifference(branch.differences[i]);
             branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
 
-            table.push(`<a id="${packageName}"></a>
-
-            ## ${packageName} [_permalink_](#user-content-${packageName})
-            # ${testName}
-            | Version | Bytes | Avg Time | vs remote | vs branch |
-            |---|---|---|---|---|
-            | npm latest | ${prettyBytes(
-                remote.bytesSent
-            )} | ${formatConfidenceInterval(
+            table.push(`
+## ${packageName} [_permalink_](#user-content-${packageName})
+# ${testName}
+| Version | Bytes | Avg Time | vs remote | vs branch |
+|---|---|---|---|---|
+| npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
                 remote.mean,
                 milli
             )} | - | ${remoteDifferencesString} |
-            | branch | ${prettyBytes(
-                branch.bytesSent
-            )} | ${formatConfidenceInterval(
+| branch | ${prettyBytes(branch.bytesSent)} | ${formatConfidenceInterval(
                 branch.mean,
                 milli
             )} | ${branchDifferencesString} | - |
-            `);
+`);
         }
     }
     const resultTable = table.join(`
