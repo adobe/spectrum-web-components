@@ -9,7 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { state } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
 import { illustration } from '../test/test-svg';
@@ -44,22 +50,27 @@ type StoryArgs = {
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
-            <sp-illustrated-message heading="Drag and Drop Your File" cta>
+            <sp-illustrated-message heading="Drag and Drop Your File">
                 ${illustration}
-                <div slot="description">
-                    <label for="file-input">
-                        <sp-link>Select a File</sp-link>
-                        from your computer
-                    </label>
-                    <input type="file" id="file-input" style="display: none" />
-                </div>
-                <div slot="description">
-                    or
-                    <sp-link href="http://stock.adobe.com" target="blank">
-                        Search Adobe Stock
-                    </sp-link>
-                </div>
             </sp-illustrated-message>
+            <div>
+                <label for="file-input">
+                    <sp-link
+                        href="javascript:;"
+                        onclick="this.parentElement.nextElementSibling.click()"
+                    >
+                        Select a File
+                    </sp-link>
+                    from your computer
+                </label>
+                <input type="file" id="file-input" style="display: none" />
+            </div>
+            <div>
+                or
+                <sp-link href="http://stock.adobe.com" target="blank">
+                    Search Adobe Stock
+                </sp-link>
+            </div>
         </sp-dropzone>
     `;
 };
@@ -67,25 +78,101 @@ export const Default = (args: StoryArgs): TemplateResult => {
 export const Dragged = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
-            <sp-illustrated-message heading="Drag and Drop Your File" cta>
+            <sp-illustrated-message heading="Drag and Drop Your File">
                 ${illustration}
-                <div slot="description">
-                    <label for="file-input">
-                        <sp-link>Select a File</sp-link>
-                        from your computer
-                    </label>
-                    <input type="file" id="file-input" style="display: none" />
-                </div>
-                <div slot="description">
-                    or
-                    <sp-link href="http://stock.adobe.com" target="blank">
-                        Search Adobe Stock
-                    </sp-link>
-                </div>
             </sp-illustrated-message>
+            <div>
+                <label for="file-input">
+                    <sp-link
+                        href="javascript:;"
+                        onclick="this.parentElement.nextElementSibling.click()"
+                    >
+                        Select a File
+                    </sp-link>
+                    from your computer
+                </label>
+                <input type="file" id="file-input" style="display: none" />
+            </div>
+            <div>
+                or
+                <sp-link href="http://stock.adobe.com" target="blank">
+                    Search Adobe Stock
+                </sp-link>
+            </div>
         </sp-dropzone>
     `;
 };
 Dragged.args = {
     isDragged: true,
+};
+
+class ControlledDropzone extends LitElement {
+    private fileName = 'mock_file.png';
+
+    @state()
+    private input?: string = undefined;
+
+    override render(): TemplateResult {
+        return html`
+            <span>
+                ${this.renderDroppedContent()}
+                <sp-dropzone
+                    tabindex="0"
+                    id="dropzone"
+                    drop-effect="copy"
+                    ?dragged=${this.input !== undefined}
+                    @sp-dropzone-drop=${this.onChange}
+                >
+                    <sp-illustrated-message heading="Drag and Drop Your File">
+                        ${illustration}
+                    </sp-illustrated-message>
+                    <div>
+                        <label for="file-input">
+                            <sp-link
+                                href="javascript:;"
+                                onclick="this.parentElement.nextElementSibling.click()"
+                            >
+                                Select a File
+                            </sp-link>
+                            from your computer
+                        </label>
+                        <input
+                            type="file"
+                            id="file-input"
+                            style="display: none"
+                            @change=${this.onChange}
+                        />
+                    </div>
+                </sp-dropzone>
+            </span>
+        `;
+    }
+
+    private renderDroppedContent(): TemplateResult {
+        return this.input !== undefined
+            ? html`
+                  <sp-action-button autofocus style="margin-bottom: 16px;">
+                      Added ${this.fileName}
+                  </sp-action-button>
+              `
+            : html`
+                  <sp-action-button
+                      draggable="true"
+                      style="margin-bottom: 16px;"
+                  >
+                      Drag ${this.fileName}
+                  </sp-action-button>
+              `;
+    }
+
+    private onChange(): void {
+        this.input = this.fileName;
+    }
+}
+defineElement('controlled-dropbox', ControlledDropzone);
+
+export const Controlled = (): TemplateResult => {
+    return html`
+        <controlled-dropbox></controlled-dropbox>
+    `;
 };
