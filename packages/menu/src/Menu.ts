@@ -344,6 +344,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handleClick(event: Event): void {
         if (this.willSynthesizeClick) {
             cancelAnimationFrame(this.willSynthesizeClick);
+            this.willSynthesizeClick = 0;
             return;
         }
         this.handlePointerBasedSelection(event);
@@ -352,6 +353,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handlePointerup(event: Event): void {
         this.willSynthesizeClick = requestAnimationFrame(() => {
             event.target?.dispatchEvent(new Event('click'));
+            this.willSynthesizeClick = 0;
         });
         this.handlePointerBasedSelection(event);
     }
