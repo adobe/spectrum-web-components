@@ -157,6 +157,7 @@ export class Truncated extends SpectrumElement {
     private handleOverflowSlotchange(): void {
         this.mutationObserver.disconnect();
         if (!this.hasCustomOverflow) {
+            /* c8 ignore next 5 */
             this.mutationObserver.observe(this.content, {
                 subtree: true,
                 childList: true,

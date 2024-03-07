@@ -20,7 +20,7 @@ describe('Truncated', () => {
     it('loads default truncated accessibly', async () => {
         const el = await fixture<Truncated>(
             html`
-                <ue-truncated></ue-truncated>
+                <sp-truncated></sp-truncated>
             `
         );
 
@@ -28,7 +28,7 @@ describe('Truncated', () => {
     });
     it('renders a tooltip when overflowing', async () => {
         const p = await fixture(html`
-            <p style="width: 200px">
+            <p style="width: 20px">
                 <sp-truncated>This will overflow into a tooltip</sp-truncated>
             </p>
         `);
@@ -36,15 +36,13 @@ describe('Truncated', () => {
         const tooltip = el.shadowRoot!.querySelector('sp-tooltip') as Tooltip;
         const rect = el.getBoundingClientRect();
 
-        const opened = oneEvent(el, 'sp-opened');
-
         await sendMouse({
             type: 'move',
             position: [Math.round(rect.left + 2), Math.round(rect.top + 2)],
         });
+        const opened = oneEvent(el, 'sp-opened');
 
         await opened;
-
         expect(tooltip.open).to.be.true;
     });
     it('does not render a tooltip when content fits', async () => {
@@ -82,5 +80,24 @@ describe('Truncated', () => {
 
         expect(defaultOverflow.hasCustomOverflow).to.be.false;
         expect(customOverflow.hasCustomOverflow).to.be.true;
+    });
+    it('copies the text when clicked', async () => {
+        const text =
+            'This will overflow into a  tooltiptooltiptooltiptooltipmtooltipv tooltip tooltiptooltip';
+
+        const defaultOverflow = await fixture<Truncated>(
+            html`
+                <p style="width: 200px">
+                    <sp-truncated>${text}</sp-truncated>
+                </p>
+            `
+        );
+
+        const truncated = defaultOverflow.querySelector('sp-truncated');
+        const content = truncated?.shadowRoot.querySelector(
+            '#content'
+        ) as Truncated;
+        content.click();
+        expect(truncated?.hasCopied).to.be.true;
     });
 });
