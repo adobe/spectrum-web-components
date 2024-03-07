@@ -143,6 +143,7 @@ class ControlledDropzone extends LitElement {
                             @change=${this.onChange}
                         />
                     </div>
+                    ${this.renderUpload()}
                 </sp-dropzone>
             </span>
         `;
@@ -151,7 +152,7 @@ class ControlledDropzone extends LitElement {
     private renderDroppedContent(): TemplateResult {
         return this.input !== undefined
             ? html`
-                  <sp-action-button autofocus style="margin-bottom: 16px;">
+                  <sp-action-button style="margin-bottom: 16px;">
                       Added ${this.fileName}
                   </sp-action-button>
               `
@@ -161,6 +162,16 @@ class ControlledDropzone extends LitElement {
                       style="margin-bottom: 16px;"
                   >
                       Drag ${this.fileName}
+                  </sp-action-button>
+              `;
+    }
+
+    private renderUpload(): TemplateResult | null {
+        return this.input === undefined
+            ? null
+            : html`
+                  <sp-action-button autofocus style="margin-top: 16px;">
+                      Upload ${this.fileName}
                   </sp-action-button>
               `;
     }
