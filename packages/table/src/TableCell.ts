@@ -27,8 +27,16 @@ export class TableCell extends SpectrumElement {
         return [styles];
     }
 
+    constructor() {
+        super();
+        this.role = 'gridcell';
+    }
+
     @property({ reflect: true })
-    public role = 'gridcell';
+    public role: 'gridcell' | 'rowheader' | 'cell';
+
+    @property({ type: String })
+    public selectRowLabel?: string;
 
     protected override render(): TemplateResult {
         return html`

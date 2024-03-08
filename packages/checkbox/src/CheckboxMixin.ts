@@ -71,6 +71,7 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
         protected render(): TemplateResult {
             return html`
                 <input
+                    aria-label="${ifDefined(this.ariaLabel || undefined)}"
                     id="input"
                     name=${ifDefined(this.name || undefined)}
                     type="checkbox"

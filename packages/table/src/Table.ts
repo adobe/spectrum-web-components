@@ -41,6 +41,7 @@ import {
     RangeChangedEvent,
     VisibilityChangedEvent,
 } from '@lit-labs/virtualizer/events.js';
+import { TableCell } from './TableCell';
 
 export enum RowType {
     ITEM = 0,
@@ -156,6 +157,19 @@ export class Table extends SizedMixin(SpectrumElement, {
      */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
+
+    /**
+     * Specify the string that is used to provide a label for a row checkbox
+     */
+    @property({ type: String })
+    public selectRowLabel = 'Select';
+
+    /**
+     * Specify the string that is used to provide a label for the select all
+     * checkbox in the table head
+     */
+    @property({ type: String })
+    public selectAllRowsLabel = 'Select All';
 
     /**
      * Changes the spacing around table cell content.
@@ -330,6 +344,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             ) as TableCheckboxCell;
             this.tableHeadCheckboxCell.headCell = true;
             this.tableHeadCheckboxCell.emphasized = this.emphasized;
+            this.tableHeadCheckboxCell.ariaLabel = this.selectAllRowsLabel;
 
             const allSelected = this.selected.length === this.tableRows.length;
             this.manageHeadCheckbox(allSelected);
@@ -348,6 +363,22 @@ export class Table extends SizedMixin(SpectrumElement, {
                 row.insertAdjacentElement('afterbegin', checkbox);
                 row.selected = this.selectedSet.has(row.value);
                 checkbox.checked = row.selected;
+
+                // if we have a rowheader, then update the label of the checkbox
+                // Clients can specify a selectRowLabel attribute on the rowheader that will
+                // be used as the label for the checkbox. If not present, the default
+                // selectRowLabel will be used.
+                const rowHeader = row.querySelector('[role="rowheader"]');
+                if (rowHeader) {
+                    const cell = rowHeader as TableCell;
+                    checkbox.ariaLabel = cell.selectRowLabel
+                        ? cell.selectRowLabel
+                        : `${
+                              this.selectRowLabel
+                          } ${rowHeader.textContent?.trim()}`.trim();
+                } else {
+                    checkbox.ariaLabel = this.selectRowLabel;
+                }
             });
         } else {
             // Remove all checkbox cells.
