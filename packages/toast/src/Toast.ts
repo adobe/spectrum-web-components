@@ -117,41 +117,37 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     @property({ type: String })
-    public set iconLabel(iconLabel: string) {
-        this._iconLabel = iconLabel;
-        this.requestUpdate('iconLabel', iconLabel);
+    public set label(label: string) {
+        this._label = label;
+        this.setAttribute('label', label);
+        this.requestUpdate('label', label);
     }
 
-    public get iconLabel(): string {
-        return this._iconLabel;
+    public get label(): string {
+        return this._label;
     }
 
     private _variant: ToastVariants = '';
 
-    private _iconLabel: string = '';
+    private _label: string = '';
 
-    private renderIcon(variant: string, iconLabel: string): TemplateResult {
-        console.log(iconLabel);
+    private renderIcon(variant: string, label: string): TemplateResult {
         switch (variant) {
-            
             case 'info':
                 return html`
-                    <sp-icon-info
-                        label=${iconLabel}
-                        class="type"
-                    ></sp-icon-info>
+                    <sp-icon-info label=${label} class="type"></sp-icon-info>
                 `;
             case 'negative':
             case 'error': // deprecated
             case 'warning': // deprecated
                 return html`
-                    <sp-icon-alert label=${iconLabel} class="type"></sp-icon-alert>
+                    <sp-icon-alert label=${label} class="type"></sp-icon-alert>
                 `;
             case 'positive':
             case 'success': // deprecated
                 return html`
                     <sp-icon-checkmark-circle
-                        label=${iconLabel}
+                        label=${label}
                         class="type"
                     ></sp-icon-checkmark-circle>
                 `;
@@ -219,7 +215,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderIcon(this.variant, this.iconLabel)}
+            ${this.renderIcon(this.variant, this.label)}
             <div class="body" role="alert">
                 <div class="content">
                     <slot></slot>
