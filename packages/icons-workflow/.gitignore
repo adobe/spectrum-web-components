@@ -1,5 +1,8 @@
 src/icons
 src/icons.ts
 src/elements
+src/express
 icons
 stories/icon-manifest.ts
+!bin/postbuild.js
+!bin/build-utils.js

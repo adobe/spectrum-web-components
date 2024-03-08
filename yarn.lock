@@ -118,6 +118,11 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
+"@adobe/spectrum-css-ccx-workflow-icons@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-ccx-workflow-icons/-/spectrum-css-ccx-workflow-icons-1.0.2.tgz#31a3a9f62d7411861dc7368cfa5fa8b42bacc608"
+  integrity sha512-/Q9l1/6x1oZpHsiTIc6pJ4UrbufyKyn/6lfSskMjPsQ6l/jOsSMPR6yIUdCvt5GF4zjeFXqQvv13e6ywoqoGYg==
+
 "@adobe/spectrum-css-workflow-icons@^1.5.4":
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.5.4.tgz#0e09ff519c36139176c3ba3ce617a995c9032f67"
@@ -5367,7 +5372,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.41.1"
+  version "0.41.2"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.17"

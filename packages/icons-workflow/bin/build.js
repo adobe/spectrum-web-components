@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,9 +15,9 @@ import fs from 'fs';
 import fg from 'fast-glob';
 import path from 'path';
 import { load } from 'cheerio';
-import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
+import { disclaimer, prettify } from './build-utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -24,75 +25,72 @@ const rootDir = path.join(__dirname, '../../../');
 
 const iconsPath = process.argv.slice(2)[0];
 const keepColors = process.argv.slice(2)[1];
+const theme = process.argv.slice(2)[1] ?? '';
 
-const disclaimer = `
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+const setupDirectoryStructure = () => {
+    if (
+        !fs.existsSync(
+            path.join(`${rootDir}packages/icons-workflow/src`, theme)
+        )
+    ) {
+        fs.mkdirSync(path.join(`${rootDir}packages/icons-workflow/src`, theme));
+    }
+    if (
+        !fs.existsSync(
+            path.join(`${rootDir}packages/icons-workflow/src`, theme, 'icons')
+        )
+    ) {
+        fs.mkdirSync(
+            path.join(`${rootDir}packages/icons-workflow/src`, theme, 'icons')
+        );
+    }
+    if (
+        !fs.existsSync(
+            path.join(
+                `${rootDir}packages/icons-workflow/src`,
+                theme,
+                'elements'
+            )
+        )
+    ) {
+        fs.mkdirSync(
+            path.join(
+                `${rootDir}packages/icons-workflow/src`,
+                theme,
+                'elements'
+            )
+        );
+    }
+    if (
+        !fs.existsSync(
+            path.join(`${rootDir}packages/icons-workflow/icons`, theme)
+        )
+    ) {
+        fs.mkdirSync(
+            path.join(`${rootDir}packages/icons-workflow/icons`, theme),
+            { recursive: true }
+        );
+    }
+};
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/`;
-
-const icons = (await fg(`${rootDir}/node_modules/${iconsPath}/**.svg`)).sort();
-
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/icons`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/icons`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/elements`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/elements`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/icons`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/icons`);
-}
-fs.writeFileSync(
-    path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
-    disclaimer,
-    'utf-8'
-);
-const manifestPath = path.join(
-    rootDir,
-    'packages',
-    'icons-workflow',
-    'stories',
-    'icon-manifest.ts'
-);
-fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
-let manifestImports = `import {
-    html,
-    TemplateResult
-} from '@spectrum-web-components/base';\r\n`;
-let manifestListings = `\r\nexport const iconManifest = [\r\n`;
-
-icons.forEach((i) => {
-    const svg = fs.readFileSync(i, 'utf-8');
-    let id = path.basename(i, '.svg').replace('S_', '').replace('_22_N', '');
+const getIconId = (svgPath) => {
+    let id = path
+        .basename(svgPath, '.svg')
+        .replace('S_', '')
+        .replace('_22_N', '');
     if (id.search(/^Ad[A-Z]/) !== -1) {
         id = id.replace(/^Ad/, '');
         id += 'Advert';
     }
-    const ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-    const $ = load(svg, {
+    return id.includes('Fullscreen')
+        ? id.replace('Fullscreen', 'FullScreen')
+        : id;
+};
+
+const stripColors = (icon) => {
+    const $ = load(icon.rawFile, {
         xmlMode: true,
     });
-    const title = Case.capital(id);
-    const fileName = `${id}.ts`;
-    const location = path.join(
-        rootDir,
-        'packages/icons-workflow/src/icons',
-        fileName
-    );
-
-    if (!Number.isNaN(Number(ComponentName[0]))) {
-        return;
-    }
 
     $('*').each((index, el) => {
         if (el.name === 'svg') {
@@ -121,20 +119,7 @@ icons.forEach((i) => {
             }
         });
     });
-
-    const iconLiteral = `
-    ${disclaimer}
-
-    import {tag as html, TemplateResult} from '../custom-tag.js';
-
-    export {setCustomTemplateLiteralTag} from '../custom-tag.js';
-    export const ${ComponentName}Icon = ({
-    width = 24,
-    height = 24,
-    hidden = false,
-    title = '${title}',
-    } = {},): string | TemplateResult => {
-    return html\`${$('svg')
+    return $('svg')
         .toString()
         .replace(
             'aria-hidden="..."',
@@ -142,141 +127,158 @@ icons.forEach((i) => {
         )
         .replace('width="..."', 'width=${width}')
         .replace('height="..."', 'height=${height}')
-        .replace('aria-label="..."', 'aria-label=${title}')}\`;
-    }
-`;
+        .replace('aria-label="..."', 'aria-label=${title}');
+};
 
-    const icon = prettier.format(iconLiteral, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-    });
-
-    fs.writeFileSync(location, icon, 'utf-8');
-
-    const exportString = `export {${ComponentName}Icon} from './icons/${id}.js';\r\n`;
-    fs.appendFileSync(
-        path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
-        exportString,
-        'utf-8'
+const generateIconLiteral = (icon) => {
+    const customTagRelativePath = path.relative(
+        path.dirname(getIconLiteralPath(icon)),
+        path.join(rootDir, 'packages/icons-workflow/src/custom-tag.js')
     );
-
-    const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
-    const iconElement = `
+    const iconLiteral = `
     ${disclaimer}
 
-    import {
-        html,
-        TemplateResult
-    } from '@spectrum-web-components/base';
-    import {
-        IconBase
-    } from '@spectrum-web-components/icon';
+    import {tag as html, TemplateResult} from '${customTagRelativePath}';
 
-    import {
-        ${ComponentName}Icon
-    } from '../icons/${id}.js';
-    import {
-        setCustomTemplateLiteralTag
-    } from '../custom-tag.js';
+    export const ${icon.componentName}Icon = ({
+      width = 24,
+      height = 24,
+      hidden = false,
+      title = '${icon.title}',
+    } = {},): string | TemplateResult => {
+      return html\`${icon.sanitizedSVG}\`;
+    }
+  `;
+    return prettify(iconLiteral);
+};
 
-    /**
-     * @element ${iconElementName}
-     */
-    export class Icon${ComponentName} extends IconBase {
-        protected override render(): TemplateResult {
-            setCustomTemplateLiteralTag(html);
-            return ${ComponentName}Icon({hidden: !this.label, title: this.label}) as TemplateResult;
+const getIconLiteralPath = ({ id }, extension = 'ts') => {
+    return path.join(
+        rootDir,
+        'packages/icons-workflow/src',
+        theme,
+        'icons',
+        `${id}.${extension}`
+    );
+};
+
+const getIconElementPath = ({ id }, extension = 'ts') => {
+    return path.join(
+        rootDir,
+        'packages',
+        'icons-workflow',
+        'src',
+        theme,
+        'elements',
+        `Icon${id}.${extension}`
+    );
+};
+
+const generateIconElement = (icon) => {
+    const customTagRelativePath = path.relative(
+        path.dirname(getIconElementPath(icon)),
+        path.join(rootDir, 'packages/icons-workflow/src/custom-tag.js')
+    );
+    const iconComponentRelativePath = path.join(
+        path.relative(
+            path.dirname(getIconElementPath(icon)),
+            getIconLiteralPath(icon, 'js')
+        )
+    );
+    return prettify(`
+        ${disclaimer}
+
+        import {
+            html,
+            TemplateResult
+        } from '@spectrum-web-components/base';
+        import {
+            IconBase
+        } from '@spectrum-web-components/icon';
+
+        import {
+            ${icon.componentName}Icon
+        } from '${iconComponentRelativePath}';
+        import {
+            setCustomTemplateLiteralTag
+        } from '${customTagRelativePath}';
+
+        /**
+         * @element ${icon.elementName}
+         */
+        export class Icon${icon.componentName} extends IconBase {
+            protected override render(): TemplateResult {
+                setCustomTemplateLiteralTag(html);
+                return ${icon.componentName}Icon({hidden: !this.label, title: this.label}) as TemplateResult;
+            }
         }
-    }
-    `;
-    const iconElementFile = prettier.format(iconElement, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-    });
+        `);
+};
 
-    fs.writeFileSync(
-        path.join(
-            rootDir,
-            'packages',
-            'icons-workflow',
-            'src',
-            'elements',
-            `Icon${id}.ts`
-        ),
-        iconElementFile,
-        'utf-8'
-    );
-
-    const iconRegistration = `
+const generateIconRegistration = (icon) => {
+    return `
     ${disclaimer}
 
-    import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
-    import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+    import { Icon${icon.componentName} } from '@spectrum-web-components/icons-workflow/src/elements/Icon${icon.id}.js';
 
-    defineElement('${iconElementName}', Icon${ComponentName});
+    customElements.define('${icon.elementName}', Icon${icon.componentName});
 
     declare global {
         interface HTMLElementTagNameMap {
-            '${iconElementName}': Icon${ComponentName};
+            '${icon.elementName}': Icon${icon.componentName};
         }
     }
     `;
-    const iconRegistrationFile = prettier.format(iconRegistration, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-    });
+};
 
-    fs.writeFileSync(
-        path.join(
-            rootDir,
-            'packages',
-            'icons-workflow',
-            'icons',
-            `${iconElementName}.ts`
-        ),
-        iconRegistrationFile,
-        'utf-8'
+const getIconRegistrationPath = ({ elementName }, extension = 'ts') => {
+    return path.join(
+        rootDir,
+        'packages',
+        'icons-workflow',
+        'icons',
+        theme,
+        `${elementName}.${extension}`
     );
-    const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons/${iconElementName}.js';`;
-    const metadata = `{name: '${Case.sentence(
-        ComponentName
-    )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
-    manifestImports += importStatement;
-    manifestListings += metadata;
-});
+};
 
-const exportString = `\r\nexport { setCustomTemplateLiteralTag } from './custom-tag.js';\r\n`;
-fs.appendFileSync(
-    path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
-    exportString,
-    'utf-8'
-);
-fs.appendFileSync(
-    manifestPath,
-    `${manifestImports}${manifestListings}];\r\n`,
-    'utf-8'
-);
+// Build start
+setupDirectoryStructure();
+
+const icons = (await fg(`${rootDir}/node_modules/${iconsPath}/**.svg`)).sort();
+
+icons.forEach((i) => {
+    const svg = fs.readFileSync(i, 'utf-8');
+    const id = getIconId(i);
+
+    const icon = {
+        id,
+        rawFile: svg,
+        componentName: Case.pascal(id),
+        elementName: `sp-icon-${Case.kebab(id)}`,
+        title: Case.capital(id),
+    };
+
+    if (!Number.isNaN(Number(icon.componentName[0]))) {
+        return;
+    }
+
+    // Write svgs in icons-workflow/src/icons/** */
+    icon.sanitizedSVG = stripColors(icon);
+    const iconLiteral = generateIconLiteral(icon);
+    const iconLiteralPath = getIconLiteralPath(icon);
+
+    fs.writeFileSync(iconLiteralPath, iconLiteral, 'utf-8');
+
+    // Write custom elements in icons-workflow/icons/** */
+    const iconElement = generateIconElement(icon);
+    const iconElementPath = getIconElementPath(icon);
+
+    fs.writeFileSync(iconElementPath, iconElement, 'utf-8');
+
+    // Write class decarations in icons-workflow/src/elements/** */
+    const iconRegistration = prettify(generateIconRegistration(icon));
+    const iconRegistrationPath = getIconRegistrationPath(icon);
+
+    fs.writeFileSync(iconRegistrationPath, iconRegistration, 'utf-8');
+});

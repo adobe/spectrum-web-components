@@ -257,6 +257,8 @@
                 "!**/spectrum-config.js",
                 "!**/spectrum-config.v1.js",
                 "!**/build.js",
+                "!**/postbuild.js",
+                "!**/build-utils.js",
                 "test/**/*.js",
                 "test/**/*.js.map",
                 "!test/visual/create.js",
@@ -336,7 +338,9 @@
             "command": "yarn workspace @spectrum-web-components/icons-workflow build",
             "files": [
                 "packages/icons-workflow/bin/build.js",
-                "node_modules/@adobe/spectrum-css-workflow-icons/dist/18/**.svg"
+                "packages/icons-workflow/bin/postbuild.js",
+                "node_modules/@adobe/spectrum-css-workflow-icons/dist/18/**.svg",
+                "node_modules/@adobe/spectrum-css-ccx-workflow-icons/dist/18/**.svg"
             ],
             "output": [
                 "packages/icons-workflow/**/*.ts",
