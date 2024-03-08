@@ -15,13 +15,13 @@ layout: layout.njk
       {% for part in collections[componentName] %}
         <sp-tab-panel class="section" value="{{ part.data.partType }}">
             {{ part.templateContent | safe }}
-            {% if hasReadmePackagesTemplate %}
-            {% include "partials/accessibility.njk" %}
-            {% endif %}
         </sp-tab-panel>
       {% endfor %}
       </sp-tabs>
     </main>
+    {% if isComponentTemplate %}
+    {% include "partials/accessibility.njk" %}
+    {% endif %}
     {% include "partials/sidenav.njk" %}
 </docs-page>
 <script type="module" src="../../src/index.js"></script>
