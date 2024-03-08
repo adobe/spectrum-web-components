@@ -538,6 +538,11 @@ export class Table extends SizedMixin(SpectrumElement, {
                 }
             );
         }
+
+        // Ensures screenreaders can announce the true size of the table
+        // despite virtualization only rendering a subset of rows.
+        this.setAttribute('aria-rowcount', `${this.items.length}`);
+
         const config: VirtualizeDirectiveConfig<Record<string, unknown>> = {
             items: this.items,
             renderItem: this.renderItem,

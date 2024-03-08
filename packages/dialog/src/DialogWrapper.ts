@@ -50,6 +50,9 @@ export class DialogWrapper extends DialogBase {
     @property({ attribute: 'confirm-label' })
     public confirmLabel = '';
 
+    @property({ attribute: 'dismiss-label' })
+    public dismissLabel = '';
+
     @property()
     public footer = '';
 
@@ -124,6 +127,7 @@ export class DialogWrapper extends DialogBase {
         return html`
             <sp-dialog
                 ?dismissable=${this.dismissable}
+                dismiss-label=${this.dismissLabel}
                 ?no-divider=${hideDivider}
                 ?error=${this.error}
                 mode=${ifDefined(this.mode)}

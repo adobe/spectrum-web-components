@@ -103,6 +103,10 @@
             "default": "./src/overlay-types.js"
         },
         "./src/overlay.css.js": "./src/overlay.css.js",
+        "./src/slottable-request-event.js": {
+            "development": "./src/slottable-request-event.dev.js",
+            "default": "./src/slottable-request-event.js"
+        },
         "./active-overlay.js": {
             "development": "./active-overlay.dev.js",
             "default": "./active-overlay.js"

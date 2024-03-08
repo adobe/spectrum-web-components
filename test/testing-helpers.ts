@@ -155,40 +155,44 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
         composed: true,
         bubbles: true,
     });
-    element.addEventListener(queryEvent.type, (event: Event) => {
-        const closestDialog = ([...event.composedPath()] as HTMLElement[]).find(
-            (el) => {
+    element.addEventListener(
+        queryEvent.type,
+        (event: Event) => {
+            const closestDialog = (
+                [...event.composedPath()] as HTMLElement[]
+            ).find((el) => {
                 return (
                     el.classList?.contains('dialog') &&
                     el.part?.contains('dialog')
                 );
+            });
+            if (!closestDialog) {
+                resolve(false);
+                return;
             }
-        );
-        if (!closestDialog) {
-            resolve(false);
-            return;
-        }
-        let popoverOpen = false;
-        try {
-            popoverOpen = closestDialog.matches(':popover-open');
-        } catch (error) {}
-        let open = false;
-        try {
-            open = closestDialog.matches(':open');
-        } catch (error) {}
-        let modal = false;
-        try {
-            modal = closestDialog.matches(':modal');
-        } catch (error) {}
-        let polyfill = false;
-        if (!popoverOpen && !open && !modal) {
-            const style = getComputedStyle(closestDialog);
-            polyfill =
-                style.getPropertyValue('--sp-overlay-open') === 'true' &&
-                style.getPropertyValue('position') === 'fixed';
-        }
-        resolve(popoverOpen || open || modal || polyfill);
-    });
+            let popoverOpen = false;
+            try {
+                popoverOpen = closestDialog.matches(':popover-open');
+            } catch (error) {}
+            let open = false;
+            try {
+                open = closestDialog.matches(':open');
+            } catch (error) {}
+            let modal = false;
+            try {
+                modal = closestDialog.matches(':modal');
+            } catch (error) {}
+            let polyfill = false;
+            if (!popoverOpen && !open && !modal) {
+                const style = getComputedStyle(closestDialog);
+                polyfill =
+                    style.getPropertyValue('--sp-overlay-open') === 'true' &&
+                    style.getPropertyValue('position') === 'fixed';
+            }
+            resolve(popoverOpen || open || modal || polyfill);
+        },
+        { once: true }
+    );
     element.dispatchEvent(queryEvent);
     return found;
 }

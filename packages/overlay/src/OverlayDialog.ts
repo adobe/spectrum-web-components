@@ -20,6 +20,7 @@ import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
+    nextFrame,
     OverlayStateEvent,
 } from './AbstractOverlay.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
@@ -107,7 +108,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     // The browser will error in this case.
                     return;
                 }
-                const reportChange = (): void => {
+                const reportChange = async (): Promise<void> => {
                     const hasVirtualTrigger =
                         this.triggerElement instanceof VirtualTrigger;
                     this.dispatchEvent(
@@ -131,6 +132,16 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         );
                     }
                     this.state = targetOpenState ? 'opened' : 'closed';
+                    this.returnFocus();
+                    // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
+                    await nextFrame();
+                    await nextFrame();
+                    if (
+                        targetOpenState === this.open &&
+                        targetOpenState === false
+                    ) {
+                        this.requestSlottable();
+                    }
                 };
                 if (!targetOpenState && this.dialogEl.open) {
                     this.dialogEl.addEventListener(
