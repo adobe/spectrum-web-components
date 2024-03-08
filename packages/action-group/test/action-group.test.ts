@@ -82,6 +82,7 @@ async function singleSelectedActionGroup(
                     First
                 </sp-action-button>
                 <sp-action-button value="second" class="second">
+                    <div slot="icon" style="width: 10px; height: 10px;"></div>
                     Second
                 </sp-action-button>
             </sp-action-group>
@@ -655,6 +656,54 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         expect(el.selected.length).to.equal(1);
+        expect(firstButton.selected, 'first button not selected').to.be.false;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+    });
+
+    it('does not allow interaction with child content to interupt the selection mechanism', async () => {
+        const el = await singleSelectedActionGroup([]);
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(0);
+
+        const firstButton = el.querySelector('.first') as ActionButton;
+        const secondButton = el.querySelector('.second') as ActionButton;
+        const icon = secondButton.querySelector('[slot=icon]') as HTMLElement;
+        expect(firstButton.selected, 'first button selected').to.be.false;
+        expect(secondButton.selected, 'second button not selected').to.be.false;
+
+        secondButton.click();
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected).to.deep.equal(['second']);
+        expect(firstButton.selected, 'first button not selected').to.be.false;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+
+        firstButton.click();
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected).to.deep.equal(['first']);
+        expect(firstButton.selected, 'first button not selected').to.be.true;
+        expect(secondButton.selected, 'second button selected').to.be.false;
+
+        const rect = icon.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                },
+            ],
+        });
+        icon.click();
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected).to.deep.equal(['second']);
         expect(firstButton.selected, 'first button not selected').to.be.false;
         expect(secondButton.selected, 'second button selected').to.be.true;
     });
