@@ -56,14 +56,13 @@ describe('Toast', () => {
         it(`loads - [variant="${variant}"]`, async () => {
             const el = await fixture<Toast>(
                 html`
-                    <sp-toast variant=${variant} open>
+                    <sp-toast variant=${variant} open label="testLabel">
                         This toast is of the \`${variant}\` variant.
                     </sp-toast>
                 `
             );
-
             await elementUpdated(el);
-
+            await expect(el.getAttribute('label')).to.equal('testLabel');
             await expect(el).to.be.accessible();
         });
     });
@@ -309,6 +308,21 @@ describe('Toast', () => {
         expect(closeSpy.callCount).to.equal(1);
     });
     it('sp close button renders with static="white"', async () => {
+        const el = await fixture<Toast>(
+            html`
+                <sp-toast open>Help text.</sp-toast>
+            `
+        );
+        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+        const closeButton = renderRoot.querySelector(
+            'sp-close-button'
+        ) as CloseButton;
+
+        expect(closeButton).to.exist;
+
+        expect(closeButton.getAttribute('static')).to.equal('white');
+    });
+    it('sp-icon label is customizable', async () => {
         const el = await fixture<Toast>(
             html`
                 <sp-toast open>Help text.</sp-toast>
