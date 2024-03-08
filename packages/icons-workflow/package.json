@@ -10737,14 +10737,13 @@
             "default": "./src/express/icons/Discover.js"
         },
         "./src/icons/FolderBreadcrumb.js": {
-            "types": "./src/express/icons/FolderBreadcrumb.js",
             "express": "./src/express/icons/FolderBreadcrumb.js",
             "default": "./src/express/icons/FolderBreadcrumb.js"
         },
         "./src/icons/Video.js": "./src/express/icons/Video.js"
     },
     "scripts": {
-        "build": "yarn build:express && yarn build:spectrum",
+        "build": "yarn build:express && yarn build:spectrum && postbuild",
         "build:express": "node ./bin/build @adobe/spectrum-css-ccx-workflow-icons/dist/18 express",
         "build:spectrum": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18",
         "postbuild": "node ./bin/postbuild"
