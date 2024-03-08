@@ -122,7 +122,11 @@ const buildTable = (results) => {
         const branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
 
         table.push(`
-### ${testName}
+### ${
+            testName.includes(`basic`)
+                ? `${testName}`
+                : `${testName} [_permalink_](#user-content-${testName})`
+        }
 | Version | Bytes | Avg Time | vs remote | vs branch |
 |---|---|---|---|---|
 | npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
