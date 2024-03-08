@@ -90,7 +90,6 @@
         { "path": "tools/reactive-controllers" },
         { "path": "tools/shared" },
         { "path": "tools/styles" },
-        { "path": "tools/theme" },
-        { "path": "tools/truncated" }
+        { "path": "tools/theme" }
     ]
 }

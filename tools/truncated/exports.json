@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*.js",
-    "./sp-truncated": "./sp-truncated.js",
-    "./sp-truncated.js": "./sp-truncated.js"
-}
