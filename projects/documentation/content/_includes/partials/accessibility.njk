@@ -1,0 +1,100 @@
+ <div class="headerContainer">
+    <h2 id="accessibility" tabindex="-1" class="spectrum-Heading spectrum-Heading--sizeM">Accessibility testing status&nbsp;<sp-link class="header-anchor" href="#accessibility" aria-label="Accessibility" dir="ltr" focusable="">#</sp-link></h2>      
+    <sp-divider size="l" dir="ltr" role="separator"></sp-divider>
+</div>
+    <sp-table quiet>
+    <sp-table-head>
+        <sp-table-head-cell>Component</sp-table-head-cell>
+        <sp-table-head-cell>Accessibility test</sp-table-head-cell>
+        <sp-table-head-cell>Status</sp-table-head-cell>
+         <sp-table-head-cell>Source Code</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row value="row1">
+            <sp-table-cell><sp-link href="https://opensource.adobe.com/spectrum-web-components/components/{{componentName}}/#usage">{{componentName}}</sp-link></sp-table-cell>
+            <sp-table-cell>
+            <span id="defaulttest">Default state</span> 
+            <sp-overlay trigger="defaulttest@hover" placement="bottom">
+                <sp-tooltip>
+                    Test(s) that ensure the initial render state of a component is accessible.
+                </sp-tooltip>
+            </sp-overlay>
+            </sp-table-cell>
+            <sp-table-cell>
+                <sp-badge 
+                variant="positive" 
+                id="defaultstatus"
+                >
+                Tested
+                </sp-badge>
+            <sp-overlay trigger="defaultstatus@hover" placement="bottom">
+                <sp-tooltip>
+                    Passes all automated tests with no reported accessibility violations.
+                </sp-tooltip>
+            </sp-overlay></sp-table-cell>
+            <sp-table-cell>
+            <sp-link target="_blank" href="https://github.com/adobe/spectrum-web-components/tree/main/packages/{{componentName}}">Github link</sp-link>
+            </sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row2">
+            <sp-table-cell></sp-table-cell>
+            <sp-table-cell>
+            <span id="advancedtest">Advanced states</span> 
+            <sp-overlay trigger="advancedtest@hover" placement="bottom">
+                <sp-tooltip>
+                    Tests that ensure additional states of the component are accessible. 
+                    This could be interactive states of a component or its multiple variants.
+                </sp-tooltip>
+            </sp-overlay>
+            </sp-table-cell>
+            <sp-table-cell><sp-badge variant="positive" id="advancedstatus">Tested</sp-badge>
+            <sp-overlay trigger="advancedstatus@hover" placement="bottom">
+                <sp-tooltip>
+                    Passes all automated tests with no reported accessibility violations.
+                </sp-tooltip>
+            </sp-overlay></sp-table-cell>
+            <sp-table-cell></sp-table-cell>
+        </sp-table-row>
+         <sp-table-row value="row2">
+            <sp-table-cell></sp-table-cell>
+            <sp-table-cell>
+            <span id="keyboardtest">Keyboard navigation</span> 
+            <sp-overlay trigger="keyboardtest@hover" placement="bottom">
+                <sp-tooltip>
+                    Tests that ensure additional states of the component are accessible. 
+                    This could be interactive states of a component or its multiple variants.
+                </sp-tooltip>
+            </sp-overlay>
+            </sp-table-cell>
+            <sp-table-cell><sp-badge variant="positive" id="keyboardstatus">Tested</sp-badge>
+            <sp-overlay trigger="keyboardstatus@hover" placement="bottom">
+                <sp-tooltip>
+                    Passes all automated tests with no reported accessibility violations.
+                </sp-tooltip>
+            </sp-overlay>
+            </sp-table-cell>
+            <sp-table-cell></sp-table-cell>
+        </sp-table-row>
+        <sp-table-row value="row3">
+            <sp-table-cell></sp-table-cell>
+            <sp-table-cell>
+            <span id="screenreadertest">Screen reader</span> 
+            <sp-overlay trigger="screenreadertest@hover" placement="bottom">
+                <sp-tooltip>
+                    This manual testing ensures that the visual information on the screen 
+                    is properly conveyed and read correctly by screen readers such as JAWS, VoiceOver, and NVDA.
+                </sp-tooltip>
+            </sp-overlay>
+            </sp-table-cell>
+            <sp-table-cell>
+            <sp-badge variant="indigo" id="screenreaderstatus">Manually tested</sp-badge>
+            <sp-overlay trigger="screenreaderstatus@hover" placement="bottom">
+                <sp-tooltip>
+                    A human has manually tested this component, e.g. screen reader testing.
+                </sp-tooltip>
+            </sp-overlay>
+            </sp-table-cell>
+            <sp-table-cell></sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>

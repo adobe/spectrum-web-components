@@ -15,6 +15,9 @@ layout: layout.njk
       {% for part in collections[componentName] %}
         <sp-tab-panel class="section" value="{{ part.data.partType }}">
             {{ part.templateContent | safe }}
+            {% if hasReadmePackagesTemplate %}
+            {% include "partials/accessibility.njk" %}
+            {% endif %}
         </sp-tab-panel>
       {% endfor %}
       </sp-tabs>

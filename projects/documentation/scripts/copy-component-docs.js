@@ -200,6 +200,9 @@ export async function processREADME(mdPath) {
             'template.js'
         )
     );
+    const hasReadmeinPackages = fs.existsSync(
+        path.resolve(__dirname, '../../../packages', packageName, 'README.md')
+    );
     /* eslint-disable prettier/prettier */
     const data = `${
         hasArgs
@@ -210,6 +213,7 @@ export async function processREADME(mdPath) {
     }export default {
     hasDemoControls: ${hasArgs},
     hasDemoTemplate: ${hasTemplate},
+    hasReadmePackagesTemplate: ${hasReadmeinPackages},
     deprecationNotice: ${JSON.stringify(deprecationNotice)},
     ${hasArgs ? 'demoControls: Object.values(argTypes),' : ''}
 };
