@@ -125,7 +125,7 @@ const buildTable = (results) => {
 ### ${
             testName.includes(`basic`)
                 ? `${testName}`
-                : `${testName} [_permalink_](#user-content-${testName})`
+                : `${testName} [_permalink_](#user-content-${packageName}-${testName})`
         }
 | Version | Bytes | Avg Time | vs remote | vs branch |
 |---|---|---|---|---|
