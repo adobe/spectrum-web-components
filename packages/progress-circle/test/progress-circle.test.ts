@@ -112,4 +112,37 @@ describe('ProgressCircle', () => {
         });
         consoleWarnStub.restore();
     });
+    it('accepts `aria-label`', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle aria-label="Loading"></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('sets `aria-label` to equal `label` if `label` is set', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle label="Loading"></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('does not remove `aria-label` if set independently of `label`', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle
+                label=""
+                aria-label="Loading"
+            ></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
 });

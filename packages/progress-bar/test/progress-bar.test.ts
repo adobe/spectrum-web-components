@@ -173,4 +173,35 @@ describe('ProgressBar', () => {
         ) as HTMLElement;
         expect(percentage.textContent?.search('٪')).to.not.equal(-1);
     });
+
+    it('accepts `aria-label`', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar aria-label="Loading"></sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('sets `aria-label` to equal `label` if `label` is set', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="Loading"></sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('does not remove `aria-label` if set independently of `label`', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="" aria-label="Loading"></sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
 });
