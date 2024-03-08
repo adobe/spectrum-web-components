@@ -322,19 +322,4 @@ describe('Toast', () => {
 
         expect(closeButton.getAttribute('static')).to.equal('white');
     });
-    it('sp-icon label is customizable', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast open>Help text.</sp-toast>
-            `
-        );
-        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const closeButton = renderRoot.querySelector(
-            'sp-close-button'
-        ) as CloseButton;
-
-        expect(closeButton).to.exist;
-
-        expect(closeButton.getAttribute('static')).to.equal('white');
-    });
 });
