@@ -57,11 +57,30 @@ const getExportConditionsForFiles = async (
     const mergedSet = mergeSets(spectrumFiles, expressFiles);
     const exports = {};
     for (const [exportedPath, paths] of Object.entries(mergedSet)) {
-        exports[`./${path.join(exportBasePath, path.basename(exportedPath))}`] =
-            {
+        const importPath = `./${path.join(
+            exportBasePath,
+            path.basename(exportedPath)
+        )}`;
+
+        if (!paths.express || !paths.spectrum) {
+            const resolvedPath = paths.express ?? paths.spectrum;
+
+            if (importPath !== resolvedPath) {
+                exports[
+                    `./${path.join(
+                        exportBasePath,
+                        path.basename(exportedPath)
+                    )}`
+                ] = paths.express ?? paths.spectrum;
+            }
+        } else {
+            exports[
+                `./${path.join(exportBasePath, path.basename(exportedPath))}`
+            ] = {
                 express: paths.express ?? paths.spectrum,
                 default: paths.spectrum ?? paths.express,
             };
+        }
     }
     return exports;
 };
