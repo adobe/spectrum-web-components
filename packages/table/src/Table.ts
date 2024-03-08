@@ -375,7 +375,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                         ? cell.selectRowLabel
                         : `${
                               this.selectRowLabel
-                          } ${rowHeader.textContent?.trim()}`;
+                          } ${rowHeader.textContent?.trim()}`.trim();
                 } else {
                     checkbox.ariaLabel = this.selectRowLabel;
                 }

@@ -91,179 +91,220 @@ describe('Table', () => {
         expect(el.size).to.equal('s');
     });
 
-    it('ensure row checkbox has aria-label when no label is provided', async () => {
-        const el = await fixture<Table>(html`
-            <sp-table size="s" selects="single">
-                <sp-table-head>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                </sp-table-head>
-                <sp-table-body style="height: 120px">
-                    <sp-table-row value="row1">
-                        <sp-table-cell role="rowheader">
-                            Row Item Alpha
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                    </sp-table-row>
-                    <sp-table-row value="row2">
-                        <sp-table-cell role="rowheader">
-                            Row Item Bravo
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                    </sp-table-row>
-                </sp-table-body>
-            </sp-table>
-        `);
+    describe('aria-label', async () => {
+        it('ensure row checkbox has aria-label when no label is provided', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table size="s" selects="single">
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body style="height: 120px">
+                        <sp-table-row value="row1">
+                            <sp-table-cell role="rowheader">
+                                Row Item Alpha
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                        <sp-table-row value="row2">
+                            <sp-table-cell role="rowheader">
+                                Row Item Bravo
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
 
-        await elementUpdated(el);
+            await elementUpdated(el);
 
-        const rowOneCheckboxCell = el.querySelector(
-            '[value="row1"] sp-table-checkbox-cell'
-        ) as TableCheckboxCell;
-        const rowTwoCheckboxCell = el.querySelector(
-            '[value="row2"] sp-table-checkbox-cell'
-        ) as TableCheckboxCell;
+            const rowOneCheckboxCell = el.querySelector(
+                '[value="row1"] sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+            const rowTwoCheckboxCell = el.querySelector(
+                '[value="row2"] sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
 
-        expect(rowOneCheckboxCell).to.be.accessible();
-        expect(rowOneCheckboxCell.checkbox.getAttribute('aria-label')).to.equal(
-            'Select Row Item Alpha'
-        );
-        expect(rowTwoCheckboxCell.checkbox.getAttribute('aria-label')).to.equal(
-            'Select Row Item Bravo'
-        );
-    });
+            expect(rowOneCheckboxCell).to.be.accessible();
+            expect(
+                rowOneCheckboxCell.checkbox.getAttribute('aria-label')
+            ).to.equal('Select Row Item Alpha');
+            expect(
+                rowTwoCheckboxCell.checkbox.getAttribute('aria-label')
+            ).to.equal('Select Row Item Bravo');
+        });
 
-    it('ensure row checkbox aria-label uses the provided selectRowLabel', async () => {
-        const el = await fixture<Table>(html`
-            <sp-table size="s" selects="single" selectRowLabel="Mark the row">
-                <sp-table-head>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                </sp-table-head>
-                <sp-table-body style="height: 120px">
-                    <sp-table-row value="row1">
-                        <sp-table-cell
-                            role="rowheader"
-                            selectRowLabel="Please mark row Item Alpha"
-                        >
-                            Item Alpha
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                    </sp-table-row>
-                    <sp-table-row value="row2">
-                        <sp-table-cell role="rowheader">
-                            Item Bravo
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                    </sp-table-row>
-                </sp-table-body>
-            </sp-table>
-        `);
+        it('ensure row checkbox aria-label uses the provided selectRowLabel', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table
+                    size="s"
+                    selects="single"
+                    selectRowLabel="Mark the row"
+                >
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body style="height: 120px">
+                        <sp-table-row value="row1">
+                            <sp-table-cell
+                                role="rowheader"
+                                selectRowLabel="Please mark row Item Alpha"
+                            >
+                                Item Alpha
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                        <sp-table-row value="row2">
+                            <sp-table-cell role="rowheader">
+                                Item Bravo
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
 
-        await elementUpdated(el);
+            await elementUpdated(el);
 
-        const rowOneCheckboxCell = el.querySelector(
-            '[value="row1"] sp-table-checkbox-cell'
-        ) as TableCheckboxCell;
-        const rowTwoCheckboxCell = el.querySelector(
-            '[value="row2"] sp-table-checkbox-cell'
-        ) as TableCheckboxCell;
+            const rowOneCheckboxCell = el.querySelector(
+                '[value="row1"] sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+            const rowTwoCheckboxCell = el.querySelector(
+                '[value="row2"] sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
 
-        expect(rowOneCheckboxCell).to.be.accessible();
-        expect(rowOneCheckboxCell.checkbox.getAttribute('aria-label')).to.equal(
-            'Please mark row Item Alpha'
-        );
-        expect(rowTwoCheckboxCell.checkbox.getAttribute('aria-label')).to.equal(
-            'Mark the row Item Bravo'
-        );
-    });
+            expect(rowOneCheckboxCell).to.be.accessible();
+            expect(
+                rowOneCheckboxCell.checkbox.getAttribute('aria-label')
+            ).to.equal('Please mark row Item Alpha');
+            expect(
+                rowTwoCheckboxCell.checkbox.getAttribute('aria-label')
+            ).to.equal('Mark the row Item Bravo');
+        });
 
-    it('ensure header checkbox aria-label uses the default string', async () => {
-        const el = await fixture<Table>(html`
-            <sp-table size="s" selects="multiple">
-                <sp-table-head>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                </sp-table-head>
-                <sp-table-body style="height: 120px">
-                    <sp-table-row value="row1">
-                        <sp-table-cell role="rowheader">
-                            Item Alpha
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                    </sp-table-row>
-                    <sp-table-row value="row2">
-                        <sp-table-cell role="rowheader">
-                            Item Bravo
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                    </sp-table-row>
-                </sp-table-body>
-            </sp-table>
-        `);
+        it('ensure header checkbox aria-label uses the default string', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table size="s" selects="multiple">
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body style="height: 120px">
+                        <sp-table-row value="row1">
+                            <sp-table-cell role="rowheader">
+                                Item Alpha
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                        <sp-table-row value="row2">
+                            <sp-table-cell role="rowheader">
+                                Item Bravo
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
 
-        await elementUpdated(el);
+            await elementUpdated(el);
 
-        const tableHeadCheckboxCell = el.querySelector(
-            'sp-table-head sp-table-checkbox-cell'
-        ) as TableCheckboxCell;
+            const tableHeadCheckboxCell = el.querySelector(
+                'sp-table-head sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
 
-        expect(tableHeadCheckboxCell).to.be.accessible();
-        expect(
-            tableHeadCheckboxCell.checkbox.getAttribute('aria-label')
-        ).to.equal('Select All');
-    });
+            expect(tableHeadCheckboxCell).to.be.accessible();
+            expect(
+                tableHeadCheckboxCell.checkbox.getAttribute('aria-label')
+            ).to.equal('Select All');
+        });
 
-    it('ensure header checkbox aria-label uses the provided selectRowLabel', async () => {
-        const el = await fixture<Table>(html`
-            <sp-table
-                size="s"
-                selects="multiple"
-                selectAllRowsLabel="Select all the rows in the table"
-            >
-                <sp-table-head>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    <sp-table-head-cell>Column Title</sp-table-head-cell>
-                </sp-table-head>
-                <sp-table-body style="height: 120px">
-                    <sp-table-row value="row1">
-                        <sp-table-cell role="rowheader">
-                            Item Alpha
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                        <sp-table-cell>Row Item Alpha</sp-table-cell>
-                    </sp-table-row>
-                    <sp-table-row value="row2">
-                        <sp-table-cell role="rowheader">
-                            Item Bravo
-                        </sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                        <sp-table-cell>Row Item Bravo</sp-table-cell>
-                    </sp-table-row>
-                </sp-table-body>
-            </sp-table>
-        `);
+        it('ensure row checkbox aria-label uses the default string when rowheader is empty', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table size="s" selects="multiple">
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body style="height: 120px">
+                        <sp-table-row value="row1">
+                            <sp-table-cell role="rowheader"></sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                        <sp-table-row value="row2">
+                            <sp-table-cell role="rowheader">
+                                Item Bravo
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
 
-        await elementUpdated(el);
+            const rowOneCheckboxCell = el.querySelector(
+                '[value="row1"] sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
 
-        const tableHeadCheckboxCell = el.querySelector(
-            'sp-table-head sp-table-checkbox-cell'
-        ) as TableCheckboxCell;
+            expect(rowOneCheckboxCell).to.be.accessible();
+            expect(
+                rowOneCheckboxCell.checkbox.getAttribute('aria-label')
+            ).to.equal('Select');
+        });
 
-        expect(tableHeadCheckboxCell).to.be.accessible();
-        expect(
-            tableHeadCheckboxCell.checkbox.getAttribute('aria-label')
-        ).to.equal('Select all the rows in the table');
+        it('ensure header checkbox aria-label uses the provided selectRowLabel', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table
+                    size="s"
+                    selects="multiple"
+                    selectAllRowsLabel="Select all the rows in the table"
+                >
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body style="height: 120px">
+                        <sp-table-row value="row1">
+                            <sp-table-cell role="rowheader">
+                                Item Alpha
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                        <sp-table-row value="row2">
+                            <sp-table-cell role="rowheader">
+                                Item Bravo
+                            </sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                            <sp-table-cell>Row Item Bravo</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
+
+            await elementUpdated(el);
+
+            const tableHeadCheckboxCell = el.querySelector(
+                'sp-table-head sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+
+            expect(tableHeadCheckboxCell).to.be.accessible();
+            expect(
+                tableHeadCheckboxCell.checkbox.getAttribute('aria-label')
+            ).to.equal('Select all the rows in the table');
+        });
     });
 
     it('dispatches `change` events', async () => {

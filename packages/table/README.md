@@ -904,7 +904,7 @@ Both strings can be customized by setting the `selectRowLabel` and `selectAllRow
 
 ### Combination of `selects`, `selectRowLabel` and `selectAllRowsLabel`
 
-| Component    | selectRowLabel | selectAllRowsLabel | Selects  | Result                                                                                                                                             |
+| Component    | selectRowLabel | selectAllRowsLabel | selects  | Result                                                                                                                                             |
 | ------------ | :------------: | :----------------: | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | sp-table     |       X        |        N/A         | single   | All row checkboxes with have an aria-label with the specified string                                                                               |
 | sp-table     |       X        |         X          | multiple | All row checkboxes with have an aria-label with the specified string. The header checkbox will have an aria-label with the specified header string |
