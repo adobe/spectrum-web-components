@@ -27,7 +27,7 @@ import '../../overlay/stories/index.js';
 import type { DialogWrapper } from '@spectrum-web-components/dialog';
 
 export default {
-    title: 'Dialog Wrapped',
+    title: 'Dialog Wrapper',
     component: 'sp-dialog-wrapper',
     argTypes: {
         onClose: { action: 'close' },
@@ -86,6 +86,7 @@ export const wrapperLabeledHero = (
             hero=${landscape}
             hero-label="Hero Image Alt Text"
             dismissable
+            dismiss-label="Close"
             headline="Wrapped Dialog w/ Hero Image"
             @close=${handleClose(args)}
             size="s"
@@ -116,6 +117,7 @@ export const wrapperDismissable = (
             ?open=${open}
             .hero=${landscape}
             dismissable
+            dismiss-label="Close"
             headline="Wrapped Dialog w/ Hero Image"
             @close=${handleClose(args)}
             size="s"
@@ -147,6 +149,7 @@ export const wrapperDismissableUnderlay = (
             ?open=${open}
             hero=${landscape}
             dismissable
+            dismiss-label="Close"
             headline="Wrapped Dialog w/ Hero Image"
             underlay
             @close=${handleClose(args)}
@@ -272,6 +275,7 @@ export const longContent = (
                 slot="click-content"
                 headline="Dialog title"
                 dismissable
+                dismiss-label="Close"
                 underlay
                 size="s"
             >
@@ -386,6 +390,7 @@ export const wrapperDismissableUnderlayError = (
                 ?open=${open}
                 hero=${landscape}
                 dismissable
+                dismiss-label="Close"
                 error
                 headline="Wrapped Dialog w/ Hero Image"
                 underlay
@@ -549,6 +554,7 @@ export const tooltips = (
                 slot="click-content"
                 headline="Dialog title"
                 dismissable
+                dismiss-label="Close"
                 underlay
                 size="s"
             >
