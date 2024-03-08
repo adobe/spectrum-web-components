@@ -150,18 +150,18 @@ class ControlledDropzone extends LitElement {
     }
 
     private renderDroppedContent(): TemplateResult {
-        return this.input !== undefined
+        return this.input === undefined
             ? html`
-                  <sp-action-button style="margin-bottom: 16px;">
-                      Added ${this.fileName}
-                  </sp-action-button>
-              `
-            : html`
                   <sp-action-button
                       draggable="true"
                       style="margin-bottom: 16px;"
                   >
                       Drag ${this.fileName}
+                  </sp-action-button>
+              `
+            : html`
+                  <sp-action-button style="margin-bottom: 16px;">
+                      Added ${this.fileName}
                   </sp-action-button>
               `;
     }
