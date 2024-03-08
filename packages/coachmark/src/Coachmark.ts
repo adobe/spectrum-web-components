@@ -177,10 +177,6 @@ export class Coachmark extends Popover {
         `;
     }
 
-    private stopPropagationOnHref(event: Event): void {
-        event.stopPropagation();
-    }
-
     // event on primary button
     private handlePrimaryCTA(): void {
         this.dispatchEvent(
@@ -285,7 +281,7 @@ export class Coachmark extends Popover {
     // render action menu
     protected renderActionMenu = (): TemplateResult => {
         return html`
-            <div class="action-menu" @pointerdown=${this.stopPropagationOnHref}>
+            <div class="action-menu">
                 <slot name="actions"></slot>
             </div>
         `;
