@@ -22,6 +22,8 @@
     "exports": {
         "./package.json": "./package.json",
         ".": "./src/index.js",
+        "./src/*": "./src/*",
+        "./icons/*": "./icons/*",
         "./icons/sp-icon-add-circle.js": {
             "express": "./icons/express/sp-icon-add-circle.js",
             "default": "./icons/sp-icon-add-circle.js"

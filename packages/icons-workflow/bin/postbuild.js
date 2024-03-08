@@ -176,6 +176,8 @@ const updatePackageExports = async () => {
         exports: {
             './package.json': './package.json',
             '.': './src/index.js',
+            './src/*': './src/*',
+            './icons/*': './icons/*',
             ...iconRegistrationExports,
             ...iconComponentExports,
             ...iconLiteralExports,
