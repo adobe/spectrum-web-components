@@ -109,35 +109,35 @@ Non-semantic badge colors are no longer supported directly by Spectrum and Spect
     <sp-badge
         variant="seafoam"
         static="black"
-        style="--mod-badge-background-color-default: var(--spectrum-seafoam-background-color-default)"
+        style="--mod-badge-background-color-seafoam: var(--spectrum-seafoam-background-color-default)"
     >
         Seafoam
     </sp-badge>
     <sp-badge
         variant="indigo"
         static="black"
-        style="--mod-badge-background-color-default: var(--spectrum-indigo-background-color-default)"
+        style="--mod-badge-background-color-indigo: var(--spectrum-indigo-background-color-default)"
     >
         Indigo
     </sp-badge>
     <sp-badge
         variant="purple"
         static="black"
-        style="--mod-badge-background-color-default: var(--spectrum-purple-background-color-default)"
+        style="--mod-badge-background-color-purple: var(--spectrum-purple-background-color-default)"
     >
         Purple
     </sp-badge>
     <sp-badge
         variant="fuchsia"
         static="black"
-        style="--mod-badge-background-color-default: var(--spectrum-fuchsia-background-color-default)"
+        style="--mod-badge-background-color-fuchsia: var(--spectrum-fuchsia-background-color-default)"
     >
         Fuchsia
     </sp-badge>
     <sp-badge
         variant="magenta"
         static="black"
-        style="--mod-badge-background-color-default: var(--spectrum-magenta-background-color-default)"
+        style="--mod-badge-background-color-magenta: var(--spectrum-magenta-background-color-default)"
     >
         Magenta
     </sp-badge>
@@ -145,7 +145,7 @@ Non-semantic badge colors are no longer supported directly by Spectrum and Spect
         variant="yellow"
         static="black"
         style="
-            --mod-badge-background-color-default: var(--spectrum-yellow-background-color-default); --mod-badge-label-icon-color-white: var(--spectrum-black);
+            --mod-badge-background-color-yellow: var(--spectrum-yellow-background-color-default); --mod-badge-label-icon-color-white: var(--spectrum-black);
         "
     >
         Yellow
