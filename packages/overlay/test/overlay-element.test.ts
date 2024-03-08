@@ -181,7 +181,7 @@ describe('sp-overlay', () => {
                 consoleWarnStub.restore();
             });
 
-            it('warns that `variant` is deprecated', async () => {
+            it('warns that `slottable-request` events are experimental', async () => {
                 const el = await fixture<Overlay>(html`
                     <sp-overlay>
                         <sp-popover>test</sp-popover>

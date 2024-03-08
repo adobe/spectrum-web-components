@@ -13,12 +13,14 @@ governing permissions and limitations under the License.
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
-import { InteractionController } from './InteractionController.js';
+import { InteractionController, InteractionTypes } from './InteractionController.js';
 import { noop } from './AbstractOverlay.js';
 
 const HOVER_DELAY = 300;
 
 export class HoverController extends InteractionController {
+    override type = InteractionTypes.hover;
+
     private elementIds: string[] = [];
 
     focusedin = false;

@@ -362,7 +362,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
      * @description calculates the fill width
      * @param fillStartValue
      * @param currentValue
-     * @param cachedValue
      * @returns
      */
     private getOffsetWidth(
@@ -409,10 +408,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             ></div>
         `;
     }
-
     private renderHandle(): TemplateResult {
+        if (this.variant === 'tick') {
+            return html``;
+        }
         return html`
-            ${this.variant === 'tick' ? html`` : this.handleController.render()}
+            ${this.handleController.render()}
         `;
     }
 
@@ -442,6 +443,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                         ['pointerup', 'pointercancel', 'pointerleave'],
                         this.handlePointerup,
                     ],
+                    streamOutside: ['dblclick', this.handleDoubleClick],
                 })}
             >
                 <div id="controls">
@@ -473,6 +475,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                 </div>
             </div>
         `;
+    }
+
+    protected handleDoubleClick(event: PointerEvent): void {
+        this.handleController.handleDoubleClick(event);
     }
 
     protected handlePointerdown(event: PointerEvent): void {
