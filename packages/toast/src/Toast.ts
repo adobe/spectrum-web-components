@@ -135,19 +135,25 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         switch (variant) {
             case 'info':
                 return html`
-                    <sp-icon-info label=${label} class="type"></sp-icon-info>
+                    <sp-icon-info
+                        label=${label === '' ? 'Information' : label}
+                        class="type"
+                    ></sp-icon-info>
                 `;
             case 'negative':
             case 'error': // deprecated
             case 'warning': // deprecated
                 return html`
-                    <sp-icon-alert label=${label} class="type"></sp-icon-alert>
+                    <sp-icon-alert
+                        label=${label === '' ? 'Error' : label}
+                        class="type"
+                    ></sp-icon-alert>
                 `;
             case 'positive':
             case 'success': // deprecated
                 return html`
                     <sp-icon-checkmark-circle
-                        label=${label}
+                        label=${label === '' ? 'Success' : label}
                         class="type"
                     ></sp-icon-checkmark-circle>
                 `;

@@ -65,6 +65,74 @@ describe('Toast', () => {
             await expect(el.getAttribute('label')).to.equal('testLabel');
             await expect(el).to.be.accessible();
         });
+
+        it(`customized label for sp-icon for [variant="${variant}"]`, async () => {
+            const el = await fixture<Toast>(
+                html`
+                    <sp-toast variant=${variant} open label="testLabel">
+                        This toast is of the \`${variant}\` variant.
+                    </sp-toast>
+                `
+            );
+
+            const getIconType = (): string => {
+                switch (variant) {
+                    case 'info':
+                        return 'sp-icon-info';
+                    case 'negative':
+                    case 'error': // deprecated
+                    case 'warning': // deprecated
+                        return 'sp-icon-alert';
+                    case 'positive':
+                        return 'sp-icon-checkmark-circle';
+                    default:
+                        return '';
+                }
+            };
+
+            await elementUpdated(el);
+            const icon = el.shadowRoot.querySelector(
+                getIconType()
+            ) as HTMLElement;
+            await expect(icon.getAttribute('label')).to.equal('testLabel');
+        });
+
+        it(`default label for sp-icon for [variant="${variant}"]`, async () => {
+            const el = await fixture<Toast>(
+                html`
+                    <sp-toast variant=${variant} open>
+                        This toast is of the \`${variant}\` variant.
+                    </sp-toast>
+                `
+            );
+
+            let iconType;
+            let defaultLabel;
+            switch (variant) {
+                case 'info':
+                    iconType = 'sp-icon-info';
+                    defaultLabel = 'Information';
+                    break;
+                case 'negative':
+                case 'error': // deprecated
+                case 'warning': // deprecated
+                    iconType = 'sp-icon-alert';
+                    defaultLabel = 'Error';
+                    break;
+                case 'positive':
+                    iconType = 'sp-icon-checkmark-circle';
+                    defaultLabel = 'Success';
+                    break;
+                default:
+                    iconType = '';
+                    defaultLabel = '';
+                    break;
+            }
+
+            await elementUpdated(el);
+            const icon = el.shadowRoot.querySelector(iconType) as HTFMLElement;
+            await expect(icon.getAttribute('label')).to.equal(defaultLabel);
+        });
     });
     it('loads - timeout', async () => {
         const el = await fixture<Toast>(
