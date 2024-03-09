@@ -93,6 +93,7 @@ The `<sp-badge>` can be customized with either semantic or non-semantic variants
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
+    <sp-badge variant="accent">Informative</sp-badge>
     <sp-badge variant="neutral">Neutral</sp-badge>
     <sp-badge variant="informative">Informative</sp-badge>
     <sp-badge variant="positive">Positive</sp-badge>
@@ -107,20 +108,20 @@ Non-semantic badge colors are no longer supported directly by Spectrum and Spect
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75); flex-wrap:wrap;">
-    <sp-badge variant="seafoam" static="black">Seafoam</sp-badge>
-    <sp-badge variant="indigo" static="black">Indigo</sp-badge>
-    <sp-badge variant="purple" static="black">Purple</sp-badge>
-    <sp-badge variant="fuchsia" static="black">Fuchsia</sp-badge>
-    <sp-badge variant="magenta" static="black">Magenta</sp-badge>
-    <sp-badge variant="yellow" static="black">Yellow</sp-badge>
-    <sp-badge variant="gray" static="black">Gray</sp-badge>
-    <sp-badge variant="red" static="black">Red</sp-badge>
-    <sp-badge variant="orange" static="black">Orange</sp-badge>
-    <sp-badge variant="chartreuse" static="black">Chartreuse</sp-badge>
-    <sp-badge variant="celery" static="black">Celery</sp-badge>
-    <sp-badge variant="green" static="black">Green</sp-badge>
-    <sp-badge variant="cyan" static="black">Cyan</sp-badge>
-    <sp-badge variant="blue" static="black">Blue</sp-badge>
+    <sp-badge variant="seafoam">Seafoam</sp-badge>
+    <sp-badge variant="indigo">Indigo</sp-badge>
+    <sp-badge variant="purple">Purple</sp-badge>
+    <sp-badge variant="fuchsia">Fuchsia</sp-badge>
+    <sp-badge variant="magenta">Magenta</sp-badge>
+    <sp-badge variant="yellow">Yellow</sp-badge>
+    <sp-badge variant="gray">Gray</sp-badge>
+    <sp-badge variant="red">Red</sp-badge>
+    <sp-badge variant="orange">Orange</sp-badge>
+    <sp-badge variant="chartreuse">Chartreuse</sp-badge>
+    <sp-badge variant="celery">Celery</sp-badge>
+    <sp-badge variant="green">Green</sp-badge>
+    <sp-badge variant="cyan">Cyan</sp-badge>
+    <sp-badge variant="blue">Blue</sp-badge>
 </div>
 ```
 
