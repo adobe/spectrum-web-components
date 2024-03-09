@@ -97,6 +97,7 @@ The `<sp-badge>` can be customized with either semantic or non-semantic variants
     <sp-badge variant="informative">Informative</sp-badge>
     <sp-badge variant="positive">Positive</sp-badge>
     <sp-badge variant="negative">Negative</sp-badge>
+    <sp-badge variant="notice">Notice</sp-badge>
 </div>
 ```
 
@@ -105,51 +106,21 @@ The `<sp-badge>` can be customized with either semantic or non-semantic variants
 Non-semantic badge colors are no longer supported directly by Spectrum and Spectrum Web Components. You can mimic their delivery via the following CSS Custom Properties. These values for the `variant` attribute/property have not been marked as deprecated, but will no longer achieve the results you may have relied on in the past.
 
 ```html demo
-<div style="display: flex; gap: var(--spectrum-spacing-75);">
-    <sp-badge
-        variant="seafoam"
-        static="black"
-        style="--mod-badge-background-color-seafoam: var(--spectrum-seafoam-background-color-default)"
-    >
-        Seafoam
-    </sp-badge>
-    <sp-badge
-        variant="indigo"
-        static="black"
-        style="--mod-badge-background-color-indigo: var(--spectrum-indigo-background-color-default)"
-    >
-        Indigo
-    </sp-badge>
-    <sp-badge
-        variant="purple"
-        static="black"
-        style="--mod-badge-background-color-purple: var(--spectrum-purple-background-color-default)"
-    >
-        Purple
-    </sp-badge>
-    <sp-badge
-        variant="fuchsia"
-        static="black"
-        style="--mod-badge-background-color-fuchsia: var(--spectrum-fuchsia-background-color-default)"
-    >
-        Fuchsia
-    </sp-badge>
-    <sp-badge
-        variant="magenta"
-        static="black"
-        style="--mod-badge-background-color-magenta: var(--spectrum-magenta-background-color-default)"
-    >
-        Magenta
-    </sp-badge>
-    <sp-badge
-        variant="yellow"
-        static="black"
-        style="
-            --mod-badge-background-color-yellow: var(--spectrum-yellow-background-color-default); --mod-badge-label-icon-color-white: var(--spectrum-black);
-        "
-    >
-        Yellow
-    </sp-badge>
+<div style="display: flex; gap: var(--spectrum-spacing-75); flex-wrap:wrap;">
+    <sp-badge variant="seafoam" static="black">Seafoam</sp-badge>
+    <sp-badge variant="indigo" static="black">Indigo</sp-badge>
+    <sp-badge variant="purple" static="black">Purple</sp-badge>
+    <sp-badge variant="fuchsia" static="black">Fuchsia</sp-badge>
+    <sp-badge variant="magenta" static="black">Magenta</sp-badge>
+    <sp-badge variant="yellow" static="black">Yellow</sp-badge>
+    <sp-badge variant="gray" static="black">Gray</sp-badge>
+    <sp-badge variant="red" static="black">Red</sp-badge>
+    <sp-badge variant="orange" static="black">Orange</sp-badge>
+    <sp-badge variant="chartreuse" static="black">Chartreuse</sp-badge>
+    <sp-badge variant="celery" static="black">Celery</sp-badge>
+    <sp-badge variant="green" static="black">Green</sp-badge>
+    <sp-badge variant="cyan" static="black">Cyan</sp-badge>
+    <sp-badge variant="blue" static="black">Blue</sp-badge>
 </div>
 ```
 
