@@ -215,12 +215,16 @@
         "./sp-*.js",
         "./**/*.dev.js",
         "./core.js",
+        "./core-*.js",
         "./theme-*.js",
         "./scale-*.js",
         "./express/theme-*.js",
         "./express/scale-*.js",
         "./src/themes.js",
+        "./src/themes-*.js",
         "./src/express/core.js",
-        "./src/express/themes.js"
+        "./src/express/core-*.js",
+        "./src/express/themes.js",
+        "./src/express/themes-*.js"
     ]
 }

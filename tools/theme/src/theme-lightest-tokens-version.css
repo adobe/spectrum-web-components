@@ -12,3 +12,8 @@ governing permissions and limitations under the License.
 
 @import url('@spectrum-web-components/styles/tokens/light-vars.css');
 @import url('@spectrum-web-components/styles/tokens/spectrum/custom-light-vars.css');
+
+:host,
+:root {
+    color-scheme: light;
+}

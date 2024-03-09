@@ -468,7 +468,7 @@ export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
                 width: 200px;
                 overflow-y: scroll;
                 padding: 10px;
-                background: var(--spectrum-global-color-gray-50);
+                background: var(--spectrum-gray-50);
             }
 
             .scroller > div {
