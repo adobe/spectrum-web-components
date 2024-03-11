@@ -65,6 +65,7 @@
         { "path": "../../packages/tags" },
         { "path": "../../packages/textfield" },
         { "path": "../theme" },
+        { "path": "../truncated" },
         { "path": "../../packages/thumbnail" },
         { "path": "../../packages/toast" },
         { "path": "../../packages/tooltip" },

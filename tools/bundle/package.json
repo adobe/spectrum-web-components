@@ -78,6 +78,7 @@
         "@spectrum-web-components/close-button": "^0.41.2",
         "@spectrum-web-components/coachmark": "^0.41.2",
         "@spectrum-web-components/color-area": "^0.41.2",
+        "@spectrum-web-components/color-field": "^0.41.2",
         "@spectrum-web-components/color-handle": "^0.41.2",
         "@spectrum-web-components/color-loupe": "^0.41.2",
         "@spectrum-web-components/color-slider": "^0.41.2",
@@ -131,6 +132,7 @@
         "@spectrum-web-components/tooltip": "^0.41.2",
         "@spectrum-web-components/top-nav": "^0.41.2",
         "@spectrum-web-components/tray": "^0.41.2",
+        "@spectrum-web-components/truncated": "^0.0.1",
         "@spectrum-web-components/underlay": "^0.41.2"
     },
     "types": "./src/index.d.ts",
