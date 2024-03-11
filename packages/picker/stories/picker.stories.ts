@@ -97,9 +97,9 @@ disabled.args = {
     disabled: true,
 };
 
-export const pending = (args: StoryArgs): TemplateResult => Template(args);
-pending.args = {
-    pending: true,
+export const invalid = (args: StoryArgs): TemplateResult => Template(args);
+invalid.args = {
+    invalid: true,
 };
 
 export const tooltip = (args: StoryArgs): TemplateResult => {

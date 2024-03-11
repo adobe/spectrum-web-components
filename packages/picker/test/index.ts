@@ -42,10 +42,10 @@ import {
     disabled,
     iconsOnly,
     noVisibleLabel,
-    pending,
     slottedLabel,
     tooltip,
 } from '../stories/picker.stories.js';
+import { M as pending } from '../stories/picker-pending.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     ignoreResizeObserverLoopError,
@@ -1833,7 +1833,7 @@ export function runPickerTests(): void {
     describe('pending', function () {
         beforeEach(async function () {
             const test = await fixture(html`
-                <div>${pending(pending.args)}</div>
+                <div>${pending({ pending: true })}</div>
             `);
             this.label = test.querySelector('sp-field-label') as FieldLabel;
             this.el = test.querySelector('sp-picker') as Picker;
