@@ -66,17 +66,13 @@ const getExportConditionsForFiles = async (
             const resolvedPath = paths.express ?? paths.spectrum;
 
             if (importPath !== resolvedPath) {
-                exports[
-                    `./${path.join(
-                        exportBasePath,
-                        path.basename(exportedPath)
-                    )}`
-                ] = paths.express ?? paths.spectrum;
+                exports[importPath] = {
+                    types: resolvedPath.replace('.js', '.d.ts'),
+                    default: resolvedPath,
+                };
             }
         } else {
-            exports[
-                `./${path.join(exportBasePath, path.basename(exportedPath))}`
-            ] = {
+            exports[importPath] = {
                 express: paths.express ?? paths.spectrum,
                 default: paths.spectrum ?? paths.express,
             };

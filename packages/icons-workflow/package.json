@@ -572,9 +572,18 @@
             "express": "./icons/express/sp-icon-zoom-out.js",
             "default": "./icons/sp-icon-zoom-out.js"
         },
-        "./icons/sp-icon-discover.js": "./icons/express/sp-icon-discover.js",
-        "./icons/sp-icon-folder-breadcrumb.js": "./icons/express/sp-icon-folder-breadcrumb.js",
-        "./icons/sp-icon-video.js": "./icons/express/sp-icon-video.js",
+        "./icons/sp-icon-discover.js": {
+            "types": "./icons/express/sp-icon-discover.d.ts",
+            "default": "./icons/express/sp-icon-discover.js"
+        },
+        "./icons/sp-icon-folder-breadcrumb.js": {
+            "types": "./icons/express/sp-icon-folder-breadcrumb.d.ts",
+            "default": "./icons/express/sp-icon-folder-breadcrumb.js"
+        },
+        "./icons/sp-icon-video.js": {
+            "types": "./icons/express/sp-icon-video.d.ts",
+            "default": "./icons/express/sp-icon-video.js"
+        },
         "./src/elements/IconAdd.js": {
             "express": "./src/express/elements/IconAdd.js",
             "default": "./src/elements/IconAdd.js"
@@ -1123,9 +1132,18 @@
             "express": "./src/express/elements/IconZoomOut.js",
             "default": "./src/elements/IconZoomOut.js"
         },
-        "./src/elements/IconDiscover.js": "./src/express/elements/IconDiscover.js",
-        "./src/elements/IconFolderBreadcrumb.js": "./src/express/elements/IconFolderBreadcrumb.js",
-        "./src/elements/IconVideo.js": "./src/express/elements/IconVideo.js",
+        "./src/elements/IconDiscover.js": {
+            "types": "./src/express/elements/IconDiscover.d.ts",
+            "default": "./src/express/elements/IconDiscover.js"
+        },
+        "./src/elements/IconFolderBreadcrumb.js": {
+            "types": "./src/express/elements/IconFolderBreadcrumb.d.ts",
+            "default": "./src/express/elements/IconFolderBreadcrumb.js"
+        },
+        "./src/elements/IconVideo.js": {
+            "types": "./src/express/elements/IconVideo.d.ts",
+            "default": "./src/express/elements/IconVideo.js"
+        },
         "./src/icons/Add.js": {
             "express": "./src/express/icons/Add.js",
             "default": "./src/icons/Add.js"
@@ -1674,9 +1692,18 @@
             "express": "./src/express/icons/ZoomOut.js",
             "default": "./src/icons/ZoomOut.js"
         },
-        "./src/icons/Discover.js": "./src/express/icons/Discover.js",
-        "./src/icons/FolderBreadcrumb.js": "./src/express/icons/FolderBreadcrumb.js",
-        "./src/icons/Video.js": "./src/express/icons/Video.js"
+        "./src/icons/Discover.js": {
+            "types": "./src/express/icons/Discover.d.ts",
+            "default": "./src/express/icons/Discover.js"
+        },
+        "./src/icons/FolderBreadcrumb.js": {
+            "types": "./src/express/icons/FolderBreadcrumb.d.ts",
+            "default": "./src/express/icons/FolderBreadcrumb.js"
+        },
+        "./src/icons/Video.js": {
+            "types": "./src/express/icons/Video.d.ts",
+            "default": "./src/express/icons/Video.js"
+        }
     },
     "scripts": {
         "build": "yarn build:express && yarn build:spectrum && yarn postbuild",
