@@ -159,7 +159,11 @@ export const submenu = (): TemplateResult => {
         valueEls.second.textContent = event.target.selected[0] || '';
     };
     return html`
-        <sp-action-menu @change=${handleRootChange} @sp-opened=${clearValues}>
+        <sp-action-menu
+            label="More Actions"
+            @change=${handleRootChange}
+            @sp-opened=${clearValues}
+        >
             <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
             <sp-menu-group
                 @change=${() => console.log('group change')}

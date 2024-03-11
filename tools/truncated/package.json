@@ -1,18 +1,18 @@
 {
-    "name": "@spectrum-web-components/color-field",
-    "version": "0.41.2",
+    "name": "@spectrum-web-components/truncated",
+    "version": "0.0.1",
     "publishConfig": {
         "access": "public"
     },
-    "description": "Web component implementation of a Spectrum design ColorField",
+    "description": "Web component implementation of a Spectrum design Truncated",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/color-field"
+        "directory": "tools/truncated"
     },
     "author": "",
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/color-field",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/truncated",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
@@ -25,17 +25,19 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
-        "./src/ColorField.js": {
-            "development": "./src/ColorField.dev.js",
-            "default": "./src/ColorField.js"
+        "./src/Truncated.js": {
+            "development": "./src/Truncated.dev.js",
+            "default": "./src/Truncated.js"
         },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./sp-color-field.js": {
-            "development": "./sp-color-field.dev.js",
-            "default": "./sp-color-field.js"
+        "./src/truncated.css.js": "./src/truncated.css.js",
+        "./sp-truncated": "./sp-truncated.js",
+        "./sp-truncated.js": {
+            "development": "./sp-truncated.dev.js",
+            "default": "./sp-truncated.js"
         }
     },
     "scripts": {
@@ -56,10 +58,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@ctrl/tinycolor": "^4.0.3",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/color-handle": "^0.41.2",
-        "@spectrum-web-components/textfield": "^0.41.2"
+        "@spectrum-web-components/base": "^0.41.0",
+        "@spectrum-web-components/overlay": "^0.41.0",
+        "@spectrum-web-components/styles": "^0.41.0",
+        "@spectrum-web-components/tooltip": "^0.41.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
