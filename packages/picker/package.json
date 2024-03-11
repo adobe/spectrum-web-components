@@ -74,6 +74,7 @@
         "@spectrum-web-components/menu": "^0.41.2",
         "@spectrum-web-components/overlay": "^0.41.2",
         "@spectrum-web-components/popover": "^0.41.2",
+        "@spectrum-web-components/progress-circle": "^0.41.2",
         "@spectrum-web-components/reactive-controllers": "^0.41.2",
         "@spectrum-web-components/shared": "^0.41.2",
         "@spectrum-web-components/tooltip": "^0.41.2",
