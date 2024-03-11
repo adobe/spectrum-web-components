@@ -2,7 +2,7 @@
     <h2 id="accessibility" tabindex="-1" class="spectrum-Heading spectrum-Heading--sizeM">Accessibility testing status&nbsp;<sp-link class="header-anchor" href="#accessibility" aria-label="Accessibility" dir="ltr" focusable="">#</sp-link></h2>      
     <sp-divider size="l" dir="ltr" role="separator"></sp-divider>
 </div>
-    <sp-table quiet>
+    <sp-table quiet style="--mod-table-row-background-color-hover: none">
     <sp-table-head>
         <sp-table-head-cell>Component</sp-table-head-cell>
         <sp-table-head-cell>Accessibility test</sp-table-head-cell>
@@ -13,13 +13,12 @@
         <sp-table-row value="row1">
             <sp-table-cell><sp-link href="https://opensource.adobe.com/spectrum-web-components/components/{{componentName}}/#usage">{{componentName}}</sp-link></sp-table-cell>
             <sp-table-cell>
-                Default state
+               <sp-button static="white" style="--mod-bold-font-weight:400">Default state</sp-button>
             </sp-table-cell>
-            <sp-table-cell>Test(s) that ensure the initial render state of a component is accessible.</sp-table-cell>
             <sp-table-cell>
-                <sp-badge variant="positive" id="trigger-1">
-                    Tested
-                </sp-badge>
+                <sp-button static="white" style="--mod-bold-font-weight:400">Test(s) that ensure the initial render state of a component is accessible.</sp-button></sp-table-cell>
+            <sp-table-cell>
+                <sp-button id="trigger-1" variant="secondary" style="--mod-button-background-color-default: #a7f0ba;">Tested</sp-button>
                 <sp-overlay trigger="trigger-1@hover" placement="bottom">
                     <sp-tooltip>
                         Passes all automated tests with no reported accessibility violations.
@@ -30,13 +29,14 @@
         <sp-table-row value="row2">
             <sp-table-cell></sp-table-cell>
             <sp-table-cell>
-                Advanced states
+                <sp-button static="white" style="--mod-bold-font-weight:400">Advanced states</sp-button>
             </sp-table-cell>
             <sp-table-cell>
-                    Tests that ensure additional states of the component are accessible. 
-                    This could be interactive states of a component or its multiple variants.
+                    <sp-button static="white" style="--mod-bold-font-weight:400">Tests that ensure additional states of the component are accessible. 
+                    This could be interactive states of a component or its multiple variants.</sp-button>
             </sp-table-cell>
-            <sp-table-cell><sp-badge variant="positive" id="trigger-2">Tested</sp-badge>
+            <sp-table-cell>
+            <sp-button   id="trigger-2" variant="secondary" style="--mod-button-background-color-default: #a7f0ba;">Tested</sp-button>
             <sp-overlay trigger="trigger-2@hover" placement="bottom">
                 <sp-tooltip>
                     Passes all automated tests with no reported accessibility violations.
@@ -47,12 +47,14 @@
          <sp-table-row value="row2">
             <sp-table-cell></sp-table-cell>
             <sp-table-cell>
-            Keyboard navigation
+                <sp-button static="white" style="--mod-bold-font-weight:400">Keyboard navigation</sp-button>
             </sp-table-cell>
             <sp-table-cell>
-                    Tests that ensure focus is properly managed, and all interactive functions of a component have a proper keyboard-accessible equivalent.
+                    <sp-button static="white" style="--mod-bold-font-weight:400">Tests that ensure focus is properly managed, and all interactive functions of a 
+                        component have a proper keyboard-accessible equivalent.</sp-button>
             </sp-table-cell>
-            <sp-table-cell><sp-badge variant="positive" id="trigger-3">Tested</sp-badge>
+            <sp-table-cell>
+             <sp-button id="trigger-3" variant="secondary" style="--mod-button-background-color-default: #a7f0ba;">Tested</sp-button>
             <sp-overlay trigger="trigger-3@hover" placement="bottom">
                 <sp-tooltip>
                     Passes all automated tests with no reported accessibility violations.
@@ -63,13 +65,14 @@
         <sp-table-row value="row3">
             <sp-table-cell></sp-table-cell>
             <sp-table-cell>
-            Screen reader
+                <sp-button static="white" style="--mod-bold-font-weight:400">Screen reader</sp-button>
             </sp-table-cell>
             <sp-table-cell>
-                    This manual testing ensures that the visual information on the screen 
-                    is properly conveyed and read correctly by screen readers such as JAWS, VoiceOver, and NVDA.</sp-table-cell>
+                    <sp-button static="white" style="--mod-bold-font-weight:400">This manual testing ensures that the visual information on the screen 
+                    is properly conveyed and read correctly by screen readers such as JAWS, VoiceOver, and NVDA.</sp-button>
+            </sp-table-cell>
             <sp-table-cell>
-            <sp-badge variant="indigo" id="trigger-4">Manually tested</sp-badge>
+            <sp-button id="trigger-4" variant="secondary" style="--mod-button-background-color-default: #9ef0f0;">Manually Tested</sp-button>
             <sp-overlay trigger="trigger-4@hover" placement="bottom">
                 <sp-tooltip>
                     A human has manually tested this component, e.g. screen reader testing.
