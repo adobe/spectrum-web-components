@@ -50,7 +50,7 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 
 const chevronClass = {
@@ -189,17 +189,23 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
         this.pointerdownState = this.open;
         this.preventNextToggle = 'maybe';
+        let cleanupAction = 0;
         const cleanup = (): void => {
-            document.removeEventListener('pointerup', cleanup);
-            document.removeEventListener('pointercancel', cleanup);
-            requestAnimationFrame(() => {
-                // Complete cleanup on the animation frame so that `click` can go first.
-                this.preventNextToggle = 'no';
+            cancelAnimationFrame(cleanupAction);
+            cleanupAction = requestAnimationFrame(async () => {
+                document.removeEventListener('pointerup', cleanup);
+                document.removeEventListener('pointercancel', cleanup);
+                this.button.removeEventListener('click', cleanup);
+                requestAnimationFrame(() => {
+                    // Complete cleanup on the second animation frame so that `click` can go first.
+                    this.preventNextToggle = 'no';
+                });
             });
         };
         // Ensure that however the pointer goes up we do `cleanup()`.
         document.addEventListener('pointerup', cleanup);
         document.addEventListener('pointercancel', cleanup);
+        this.button.addEventListener('click', cleanup);
         this.handleActivate();
     }
 
@@ -244,6 +250,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public handleChange(event: Event): void {
+        this.preventNextToggle = 'no';
         const target = event.target as Menu;
         const [selected] = target.selectedItems;
         event.stopPropagation();
@@ -367,6 +374,30 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             | undefined;
     }
 
+    protected handleBeforetoggle(
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            if (this.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.pointerdownState) {
+                // Prevent browser driven closure while opening the Picker
+                // and the expected event series has not completed.
+                this.overlayElement.manuallyKeepOpen();
+            }
+        }
+        if (!this.open) {
+            this.optionsMenu.updateSelectedItemIndex();
+            this.optionsMenu.closeDescendentOverlays();
+        }
+    }
+
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
             return content;
@@ -478,23 +509,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .willPreventClose=${this.preventNextToggle !== 'no' &&
                 this.open &&
                 this.dependenciesLoaded}
-                @beforetoggle=${(
-                    event: Event & {
-                        target: Overlay;
-                        newState: 'open' | 'closed';
-                    }
-                ) => {
-                    if (event.composedPath()[0] !== event.target) {
-                        return;
-                    }
-                    if (event.newState === 'closed') {
-                        this.open = false;
-                    }
-                    if (!this.open) {
-                        this.optionsMenu.updateSelectedItemIndex();
-                        this.optionsMenu.closeDescendentOverlays();
-                    }
-                }}
+                @beforetoggle=${this.handleBeforetoggle}
             >
                 ${container}
             </sp-overlay>

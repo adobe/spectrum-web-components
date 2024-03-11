@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/sidenav",
-    "version": "0.41.1",
+    "version": "0.41.2",
     "publishConfig": {
         "access": "public"
     },
@@ -75,12 +75,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.1",
-        "@spectrum-web-components/reactive-controllers": "^0.41.1",
-        "@spectrum-web-components/shared": "^0.41.1"
+        "@spectrum-web-components/base": "^0.41.2",
+        "@spectrum-web-components/reactive-controllers": "^0.41.2",
+        "@spectrum-web-components/shared": "^0.41.2"
     },
     "devDependencies": {
-        "@spectrum-css/sidenav": "^4.2.2"
+        "@spectrum-css/sidenav": "^4.2.3"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

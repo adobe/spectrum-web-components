@@ -18,6 +18,7 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/src/spectrum-body.css';
 @import '@spectrum-web-components/styles/src/spectrum-code.css';
 @import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
+@import './inline-alert.css';
 @import './fonts.css';
 
 :root,
@@ -948,6 +949,10 @@ sp-link:not(:defined) {
     gap: 16px;
     border: 1px solid rgb(63, 63, 63);
     border-radius: 6px;
+}
+
+.deprecation-container {
+    margin: 2em 0;
 }
 
 .demo-container:not(.with-demo) {

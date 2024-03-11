@@ -23,6 +23,8 @@ export { Placement };
 
 export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
 
+export type TriggerInteraction = 'click' | 'longpress' | 'hover';
+
 export type TriggerInteractions = OverlayTypes;
 
 export type TriggerInteractionsV1 =
@@ -68,6 +70,13 @@ export type OverlayOptionsV1 = {
     abortPromise?: Promise<boolean>;
     virtualTrigger?: VirtualTrigger;
 };
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-opened': CustomEvent<OverlayOpenCloseDetail>;
+        'sp-closed': CustomEvent<OverlayOpenCloseDetail>;
+    }
+}
 
 export type OpenableElement = HTMLElement & {
     open: boolean;

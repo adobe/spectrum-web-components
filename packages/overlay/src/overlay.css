@@ -177,6 +177,29 @@ slot[name='longpress-describedby-descriptor'] {
     }
 }
 
+@supports (overlay: auto) {
+    .dialog {
+        display: none;
+        transition: all
+                var(
+                    --mod-overlay-animation-duration,
+                    var(--spectrum-animation-duration-100, 0.13s)
+                ),
+            translate 0s,
+            display
+                var(
+                    --mod-overlay-animation-duration,
+                    var(--spectrum-animation-duration-100, 0.13s)
+                );
+        transition-behavior: allow-discrete;
+    }
+
+    .dialog:popover-open,
+    .dialog:modal {
+        display: flex;
+    }
+}
+
 @supports (not selector(:open)) and (not selector(:popover-open)) {
     :host:not([open]) .dialog {
         pointer-events: none;

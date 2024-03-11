@@ -115,6 +115,14 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 this.selects = 'single';
             }
         }
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> is deprecated. Use a Button Group to show any additional actions related to the most critical action.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/split-button/#deprecation',
+                { level: 'deprecation' }
+            );
+        }
         super.update(changes);
     }
 

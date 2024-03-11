@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
-    "version": "0.41.1",
+    "version": "0.41.2",
     "publishConfig": {
         "access": "public"
     },
@@ -44,12 +44,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.1",
-        "@spectrum-web-components/icon": "^0.41.1"
+        "@spectrum-web-components/base": "^0.41.2",
+        "@spectrum-web-components/icon": "^0.41.2"
     },
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "^1.5.4",
-        "@spectrum-css/icon": "^6.0.3",
+        "@spectrum-css/icon": "^6.0.4",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fast-glob": "^3.2.12",
