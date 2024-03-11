@@ -50,6 +50,7 @@ const config = {
                         ['spectrum-Badge--informative'],
                         ['spectrum-Badge--negative'],
                         ['spectrum-Badge--neutral'],
+                        ['spectrum-Badge--notice'],
                         // non-semantic
                         ['spectrum-Badge--seafoam'],
                         ['spectrum-Badge--indigo'],
@@ -57,6 +58,14 @@ const config = {
                         ['spectrum-Badge--fuchsia'],
                         ['spectrum-Badge--magenta'],
                         ['spectrum-Badge--yellow'],
+                        ['spectrum-Badge--gray'],
+                        ['spectrum-Badge--red'],
+                        ['spectrum-Badge--orange'],
+                        ['spectrum-Badge--chartreuse'],
+                        ['spectrum-Badge--celery'],
+                        ['spectrum-Badge--green'],
+                        ['spectrum-Badge--cyan'],
+                        ['spectrum-Badge--blue'],
                     ],
                     'variant'
                 ),

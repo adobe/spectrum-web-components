@@ -357,15 +357,13 @@ export class AbstractOverlay extends SpectrumElement {
             const options = optionsV1;
             AbstractOverlay.applyOptions(overlay, {
                 ...options,
-                delayed:
-                    options.delayed || overlayContent.hasAttribute('delayed'),
+                delayed: options.delayed || overlayContent.hasAttribute('delayed'),
                 trigger: options.virtualTrigger || trigger,
-                type:
-                    interaction === 'modal'
-                        ? 'modal'
-                        : interaction === 'hover'
-                        ? 'hint'
-                        : 'auto',
+                type: interaction === 'modal'
+                    ? 'modal'
+                    : interaction === 'hover'
+                    ? 'hint'
+                    : 'auto'
             });
             trigger.insertAdjacentElement('afterend', overlay);
             await overlay.updateComplete;
@@ -377,7 +375,7 @@ export class AbstractOverlay extends SpectrumElement {
         overlay.append(overlayContent);
         AbstractOverlay.applyOptions(overlay, {
             ...options,
-            delayed: options.delayed || overlayContent.hasAttribute('delayed'),
+            delayed: options.delayed || overlayContent.hasAttribute('delayed')
         });
         overlay.updateComplete.then(() => {
             // Do we want to "open" this path, or leave that to the consumer?

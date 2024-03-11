@@ -29,10 +29,15 @@ const popover = (): TemplateResult => html`
                 max="20"
                 label="Awesomeness"
             ></sp-slider>
-            <div id="styled-div">The background of this div should be blue</div>
+            <div id="styled-div">
+                The background of this div should be blue
+            </div>
             <sp-button>
                 Press Me
-                <sp-tooltip self-managed delayed>
+                <sp-tooltip
+                    self-managed
+                    delayed
+                >
                     Click to open another popover.
                 </sp-tooltip>
             </sp-button>
@@ -42,6 +47,8 @@ const popover = (): TemplateResult => html`
 
 measureFixtureCreation(
     html`
-        <sp-button ${trigger(popover)}>Trigger</sp-button>
+        <sp-button ${trigger(popover)}>
+            Trigger
+        </sp-button>
     `
 );

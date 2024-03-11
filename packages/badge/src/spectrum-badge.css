@@ -19,19 +19,19 @@ governing permissions and limitations under the License.
     --spectrum-badge-label-icon-color: var(--spectrum-white);
 }
 
-.spectrum-Badge--orange,
+:host([variant='orange']),
 :host([variant='yellow']),
-.spectrum-Badge--chartreuse,
-.spectrum-Badge--celery {
+:host([variant='chartreuse']),
+:host([variant='celery']) {
     --spectrum-badge-label-icon-color: var(--spectrum-black);
 }
 
-.spectrum-Badge--gray,
-.spectrum-Badge--red,
-.spectrum-Badge--green,
+:host([variant='gray']),
+:host([variant='red']),
+:host([variant='green']),
 :host([variant='seafoam']),
-.spectrum-Badge--cyan,
-.spectrum-Badge--blue,
+:host([variant='cyan']),
+:host([variant='blue']),
 :host([variant='indigo']),
 :host([variant='purple']),
 :host([variant='fuchsia']),
@@ -266,28 +266,28 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Badge--notice {
+:host([variant='notice']) {
     background: var(
         --mod-badge-background-color-notice,
         var(--spectrum-badge-background-color-notice)
     );
 }
 
-.spectrum-Badge--gray {
+:host([variant='gray']) {
     background: var(
         --mod-badge-background-color-gray,
         var(--spectrum-badge-background-color-gray)
     );
 }
 
-.spectrum-Badge--red {
+:host([variant='red']) {
     background: var(
         --mod-badge-background-color-red,
         var(--spectrum-badge-background-color-red)
     );
 }
 
-.spectrum-Badge--orange {
+:host([variant='orange']) {
     background: var(
         --mod-badge-background-color-orange,
         var(--spectrum-badge-background-color-orange)
@@ -301,21 +301,21 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Badge--chartreuse {
+:host([variant='chartreuse']) {
     background: var(
         --mod-badge-background-color-chartreuse,
         var(--spectrum-badge-background-color-chartreuse)
     );
 }
 
-.spectrum-Badge--celery {
+:host([variant='celery']) {
     background: var(
         --mod-badge-background-color-celery,
         var(--spectrum-badge-background-color-celery)
     );
 }
 
-.spectrum-Badge--green {
+:host([variant='green']) {
     background: var(
         --mod-badge-background-color-green,
         var(--spectrum-badge-background-color-green)
@@ -329,14 +329,14 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Badge--cyan {
+:host([variant='cyan']) {
     background: var(
         --mod-badge-background-color-cyan,
         var(--spectrum-badge-background-color-cyan)
     );
 }
 
-.spectrum-Badge--blue {
+:host([variant='blue']) {
     background: var(
         --mod-badge-background-color-blue,
         var(--spectrum-badge-background-color-blue)

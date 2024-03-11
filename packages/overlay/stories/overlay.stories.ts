@@ -183,7 +183,11 @@ const template = ({
                             </sp-dialog>
                         </sp-popover>
 
-                        <sp-tooltip slot="hover-content" delayed tip="bottom">
+                        <sp-tooltip
+                            slot="hover-content"
+                            delayed
+                            tip="bottom"
+                        >
                             Click to open another popover.
                         </sp-tooltip>
                     </overlay-trigger>

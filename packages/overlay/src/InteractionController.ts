@@ -28,11 +28,7 @@ export class InteractionController implements ReactiveController {
 
     type!: InteractionTypes;
 
-    constructor(
-        public host: AbstractOverlay,
-        public target: HTMLElement,
-        private isPersistent = false
-    ) {
+    constructor(public host: AbstractOverlay, public target: HTMLElement, private isPersistent = false) {
         this.host.addController(this);
         this.prepareDescription(this.target);
         if (this.isPersistent) {

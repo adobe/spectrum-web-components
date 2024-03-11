@@ -30,12 +30,21 @@ export const BADGE_VARIANTS = [
     'informative',
     'positive',
     'negative',
+    'notice',
     'fuchsia',
     'indigo',
     'magenta',
     'purple',
     'seafoam',
     'yellow',
+    'gray',
+    'red',
+    'orange',
+    'chartreuse',
+    'celery',
+    'green',
+    'cyan',
+    'blue',
 ] as const;
 export type BadgeVariant = typeof BADGE_VARIANTS[number];
 export const FIXED_VALUES_DEPRECATED = ['top', 'bottom', 'left', 'right'];

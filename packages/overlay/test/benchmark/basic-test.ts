@@ -37,7 +37,10 @@ measureFixtureCreation(
                     </div>
                     <sp-button>
                         Press Me
-                        <sp-tooltip self-managed delayed>
+                        <sp-tooltip
+                            self-managed
+                            delayed
+                        >
                             Click to open another popover.
                         </sp-tooltip>
                     </sp-button>

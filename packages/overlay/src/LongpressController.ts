@@ -18,10 +18,7 @@ import { conditionAttributeWithId } from '@spectrum-web-components/base/src/cond
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { noop } from './AbstractOverlay.js';
-import {
-    InteractionController,
-    InteractionTypes,
-} from './InteractionController.js';
+import { InteractionController, InteractionTypes } from './InteractionController.js';
 
 const LONGPRESS_DURATION = 300;
 export const LONGPRESS_INSTRUCTIONS = {
