@@ -162,11 +162,7 @@ const template = ({
             type=${ifDefined(type)}
         >
             <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
-            <sp-popover
-                slot="click-content"
-                placement="${placement}"
-                tip
-            >
+            <sp-popover slot="click-content" placement="${placement}" tip>
                 <sp-dialog no-divider>
                     <sp-slider
                         value="5"
@@ -181,11 +177,7 @@ const template = ({
                     </div>
                     <overlay-trigger id="inner-trigger" placement="bottom">
                         <sp-button slot="trigger">Press Me</sp-button>
-                        <sp-popover
-                            slot="click-content"
-                            placement="bottom"
-                            tip
-                        >
+                        <sp-popover slot="click-content" placement="bottom" tip>
                             <sp-dialog size="s" no-divider>
                                 Another Popover
                             </sp-dialog>

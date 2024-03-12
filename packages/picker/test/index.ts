@@ -45,6 +45,7 @@ import {
     slottedLabel,
     tooltip,
 } from '../stories/picker.stories.js';
+import { M as pending } from '../stories/picker-pending.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     ignoreResizeObserverLoopError,
@@ -1827,6 +1828,49 @@ export function runPickerTests(): void {
             await nextFrame();
 
             expect(this.el.open).to.be.false;
+        });
+    });
+    describe('pending', function () {
+        beforeEach(async function () {
+            const test = await fixture(html`
+                <div>${pending({ pending: true })}</div>
+            `);
+            this.label = test.querySelector('sp-field-label') as FieldLabel;
+            this.el = test.querySelector('sp-picker') as Picker;
+            await elementUpdated(this.elel);
+        });
+        it('receives focus from an `<sp-field-label>`', async function () {
+            expect(this.el.focused).to.be.false;
+
+            this.label.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.focused).to.be.true;
+        });
+        it('does not open from `click()`', async function () {
+            expect(this.el.open).to.be.false;
+
+            this.el.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.open).to.be.false;
+        });
+        it('manages its "name" value in the accessibility tree when [pending]', async () => {
+            type NamedNode = { name: string; role: string };
+            const snapshot = (await a11ySnapshot(
+                {}
+            )) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name ===
+                        'Pending Choose your neighborhood Where do you live?'
+                )
+            ).to.not.be.null;
         });
     });
 }
