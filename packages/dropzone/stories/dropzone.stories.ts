@@ -115,7 +115,7 @@ class ControlledDropzone extends LitElement {
     override render(): TemplateResult {
         return html`
             <span>
-                ${this.renderDroppedContent()}
+                ${this.renderMockFile()}
                 <sp-dropzone
                     tabindex="0"
                     id="dropzone"
@@ -143,13 +143,13 @@ class ControlledDropzone extends LitElement {
                             @change=${this.onChange}
                         />
                     </div>
-                    ${this.renderUpload()}
+                    ${this.renderUploadButton()}
                 </sp-dropzone>
             </span>
         `;
     }
 
-    private renderDroppedContent(): TemplateResult {
+    private renderMockFile(): TemplateResult {
         return this.input === undefined
             ? html`
                   <sp-action-button
@@ -166,7 +166,7 @@ class ControlledDropzone extends LitElement {
               `;
     }
 
-    private renderUpload(): TemplateResult | null {
+    private renderUploadButton(): TemplateResult | null {
         return this.input === undefined
             ? null
             : html`
