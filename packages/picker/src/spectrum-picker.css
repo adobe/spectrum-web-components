@@ -713,7 +713,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([open]) #button:not(.spectrum-Picker--quiet) {
+:host([open]:not([quiet])) #button {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -737,7 +737,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([open]) #button:not(.spectrum-Picker--quiet) .picker {
+:host([open]:not([quiet])) #button .picker {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -969,7 +969,7 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([open]) #button:not(.spectrum-Picker--quiet):hover .picker {
+    :host([open]:not([quiet])) #button:hover .picker {
         color: var(
             --highcontrast-picker-content-color-default,
             var(
@@ -1013,7 +1013,7 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([open]) #button:not(.spectrum-Picker--quiet):hover {
+    :host([open]:not([quiet])) #button:hover {
         color: var(
             --highcontrast-picker-content-color-default,
             var(
