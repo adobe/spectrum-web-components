@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tooltip",
-    "version": "0.41.1",
+    "version": "0.41.2",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,10 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/tooltip-directive.js": {
+            "development": "./src/tooltip-directive.dev.js",
+            "default": "./src/tooltip-directive.js"
+        },
         "./src/tooltip.css.js": "./src/tooltip.css.js",
         "./sp-tooltip.js": {
             "development": "./sp-tooltip.dev.js",
@@ -57,12 +61,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.1",
-        "@spectrum-web-components/overlay": "^0.41.1",
-        "@spectrum-web-components/shared": "^0.41.1"
+        "@spectrum-web-components/base": "^0.41.2",
+        "@spectrum-web-components/overlay": "^0.41.2",
+        "@spectrum-web-components/shared": "^0.41.2"
     },
     "devDependencies": {
-        "@spectrum-css/tooltip": "^5.3.3"
+        "@spectrum-css/tooltip": "^5.3.4"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -35,8 +35,10 @@ export default {
         invalid: false,
         open: false,
         quiet: false,
+        pending: false,
     },
     argTypes: {
+        ...argTypes,
         onChange: { action: 'change' },
         open: {
             name: 'open',
@@ -48,7 +50,17 @@ export default {
             },
             control: 'boolean',
         },
-        ...argTypes,
+        pending: {
+            name: 'pending',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
 };
 
@@ -83,6 +95,11 @@ export const Default = (args: StoryArgs): TemplateResult => {
 export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
+};
+
+export const invalid = (args: StoryArgs): TemplateResult => Template(args);
+invalid.args = {
+    invalid: true,
 };
 
 export const tooltip = (args: StoryArgs): TemplateResult => {

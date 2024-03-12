@@ -12,11 +12,13 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-action-button>
-        <sp-tooltip open self-managed>Tip me!</sp-tooltip>
+        I'm a button...
+        <sp-tooltip self-managed>Tip me!</sp-tooltip>
     </sp-action-button>
 `);

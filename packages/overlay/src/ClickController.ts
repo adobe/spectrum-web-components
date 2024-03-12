@@ -10,9 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { InteractionController } from './InteractionController.js';
+import {
+    InteractionController,
+    InteractionTypes,
+} from './InteractionController.js';
 
 export class ClickController extends InteractionController {
+    override type = InteractionTypes.click;
+
     /**
      * An overlay with a `click` interaction should not close on click `triggerElement`.
      * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the

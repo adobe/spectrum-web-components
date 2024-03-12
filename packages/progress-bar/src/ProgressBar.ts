@@ -139,7 +139,9 @@ export class ProgressBar extends SizedMixin(
         if (changes.has('label')) {
             if (this.label.length) {
                 this.setAttribute('aria-label', this.label);
-            } else {
+            } else if (
+                changes.get('label') === this.getAttribute('aria-label')
+            ) {
                 this.removeAttribute('aria-label');
             }
         }

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
+
+### Bug Fixes
+
+-   **menu:** fix css for `disabled` "value" slots in menu items ([#4113](https://github.com/adobe/spectrum-web-components/issues/4113)) ([3c5855d](https://github.com/adobe/spectrum-web-components/commit/3c5855d606739b29c7da7a6250cc7636ee15fad1))
+
 ## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
 
 ### Bug Fixes

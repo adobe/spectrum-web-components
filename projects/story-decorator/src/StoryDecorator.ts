@@ -53,6 +53,7 @@ export let color: Color =
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
+export let screenshot = urlParams.get('sp_screenshot') === 'true';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultThemeVariant: theme,
@@ -187,7 +188,7 @@ export class StoryDecorator extends SpectrumElement {
     public reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion;
 
     @property({ type: Boolean, reflect: true })
-    public screenshot = false;
+    public screenshot = screenshot;
 
     @queryAsync('sp-theme')
     private themeRoot!: Theme;

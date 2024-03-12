@@ -24,6 +24,7 @@ import {
     ifDefined,
     StyleInfo,
     styleMap,
+    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
@@ -49,7 +50,7 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 
 const chevronClass = {
@@ -82,6 +83,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
+
+    /** Whether the items are currently loading. */
+    @property({ type: Boolean, reflect: true })
+    public pending = false;
+
+    /** Defines a string value that labels the Picker while it is in pending state. */
+    @property({ type: String, attribute: 'pending-label' })
+    public pendingLabel = 'Pending';
 
     @property()
     public label?: string;
@@ -180,17 +189,23 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
         this.pointerdownState = this.open;
         this.preventNextToggle = 'maybe';
+        let cleanupAction = 0;
         const cleanup = (): void => {
-            document.removeEventListener('pointerup', cleanup);
-            document.removeEventListener('pointercancel', cleanup);
-            requestAnimationFrame(() => {
-                // Complete cleanup on the animation frame so that `click` can go first.
-                this.preventNextToggle = 'no';
+            cancelAnimationFrame(cleanupAction);
+            cleanupAction = requestAnimationFrame(async () => {
+                document.removeEventListener('pointerup', cleanup);
+                document.removeEventListener('pointercancel', cleanup);
+                this.button.removeEventListener('click', cleanup);
+                requestAnimationFrame(() => {
+                    // Complete cleanup on the second animation frame so that `click` can go first.
+                    this.preventNextToggle = 'no';
+                });
             });
         };
         // Ensure that however the pointer goes up we do `cleanup()`.
         document.addEventListener('pointerup', cleanup);
         document.addEventListener('pointercancel', cleanup);
+        this.button.addEventListener('click', cleanup);
         this.handleActivate();
     }
 
@@ -235,6 +250,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public handleChange(event: Event): void {
+        this.preventNextToggle = 'no';
         const target = event.target as Menu;
         const [selected] = target.selectedItems;
         event.stopPropagation();
@@ -309,7 +325,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly) {
+        if (this.readonly || this.pending) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -356,6 +372,30 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.tooltipEl = event.target.assignedElements()[0] as
             | Tooltip
             | undefined;
+    }
+
+    protected handleBeforetoggle(
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            if (this.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.pointerdownState) {
+                // Prevent browser driven closure while opening the Picker
+                // and the expected event series has not completed.
+                this.overlayElement.manuallyKeepOpen();
+            }
+        }
+        if (!this.open) {
+            this.optionsMenu.updateSelectedItemIndex();
+            this.optionsMenu.closeDescendentOverlays();
+        }
     }
 
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
@@ -409,13 +449,28 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid
+                ${this.invalid && !this.pending
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
+                ${when(this.pending, () => {
+                    import(
+                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+                    );
+                    // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
+                    return html`
+                        <sp-progress-circle
+                            id="loader"
+                            size="s"
+                            indeterminate
+                            aria-valuetext=${this.pendingLabel}
+                            class="progress-circle"
+                        ></sp-progress-circle>
+                    `;
+                })}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize
@@ -454,23 +509,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .willPreventClose=${this.preventNextToggle !== 'no' &&
                 this.open &&
                 this.dependenciesLoaded}
-                @beforetoggle=${(
-                    event: Event & {
-                        target: Overlay;
-                        newState: 'open' | 'closed';
-                    }
-                ) => {
-                    if (event.composedPath()[0] !== event.target) {
-                        return;
-                    }
-                    if (event.newState === 'closed') {
-                        this.open = false;
-                    }
-                    if (!this.open) {
-                        this.optionsMenu.updateSelectedItemIndex();
-                        this.optionsMenu.closeDescendentOverlays();
-                    }
-                }}
+                @beforetoggle=${this.handleBeforetoggle}
             >
                 ${container}
             </sp-overlay>
@@ -502,7 +541,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 aria-describedby="tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
-                aria-labelledby="icon label applied-label"
+                aria-labelledby="loader icon label applied-label"
                 id="button"
                 class=${ifDefined(
                     this.labelAlignment
@@ -533,6 +572,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
+            this.open = false;
+        }
+        if (changes.has('pending') && this.pending) {
             this.open = false;
         }
         if (changes.has('value')) {
@@ -828,7 +870,7 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-        if (!code.startsWith('Arrow') || this.readonly) {
+        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
             return;
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {

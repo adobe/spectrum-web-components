@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { Overlay } from '@spectrum-web-components/overlay';
 import { Slider, SliderHandle } from '@spectrum-web-components/slider';
 import { tick } from '../stories/slider.stories.js';
 import {
@@ -169,7 +173,6 @@ describe('Slider', () => {
             })
         );
         await elementUpdated(el);
-
         expect(el.dragging, 'it is dragging 1').to.be.true;
         expect(pointerId, '2').to.equal(1);
 
@@ -1603,5 +1606,162 @@ describe('Slider', () => {
         });
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
+    });
+    it('resets to default value on double click after moving pointer', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    style="width: 100px"
+                    value="50"
+                    default-value="50"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.value, 'initial').to.equal(50);
+
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        const handleBoundingRect = handle.getBoundingClientRect();
+        const position: [number, number] = [
+            handleBoundingRect.x + handleBoundingRect.width / 2,
+            handleBoundingRect.y + handleBoundingRect.height / 2,
+        ];
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position,
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        150,
+                        handleBoundingRect.y + handleBoundingRect.height + 100,
+                    ],
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+
+        // since we've moved the pointer, the new value should be 100
+        expect(el.value).to.equal(100);
+
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+
+        handle.dispatchEvent(
+            new PointerEvent('dblclick', {
+                clientX: 0,
+                cancelable: true,
+                button: 0,
+                composed: true,
+                bubbles: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(
+            el.value,
+            'reset to default value on double click after moving pointer'
+        ).to.equal(50);
+
+        // input and change events should have been fired
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+    });
+    it('manages escape key interactions correctly in an overlaid context', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+
+        const el = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <sp-button id="trigger">Overlay Trigger</sp-button>
+                    <sp-overlay trigger="trigger@click" placement="bottom">
+                        <sp-popover>
+                            <sp-slider
+                                style="width: 100px"
+                                value="70"
+                                default-value="50"
+                                @input=${(
+                                    event: Event & { target: Slider }
+                                ) => {
+                                    inputSpy(event.target.value);
+                                }}
+                                @change=${(
+                                    event: Event & { target: Slider }
+                                ) => {
+                                    changeSpy(event.target.value);
+                                }}
+                            ></sp-slider>
+                        </sp-popover>
+                    </sp-overlay>
+                </div>
+            `
+        );
+
+        await elementUpdated(el);
+
+        // open the overlay
+        const trigger = el.querySelector('#trigger') as HTMLButtonElement;
+        const opened = oneEvent(el, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        // current slider value should be 70
+        const slider = el.querySelector('sp-slider') as Slider;
+        expect(slider.value).to.equal(70);
+
+        slider.focus();
+        // send escape key
+        await sendKeys({
+            press: 'Escape',
+        });
+
+        await elementUpdated(el);
+
+        // now the slider value should be 50
+        expect(slider.value).to.equal(50);
+
+        // input and change events should have been fired
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+
+        // and the overlay should be in open state
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+        expect(overlay.open).to.be.true;
+
+        const closed = oneEvent(el, 'sp-closed');
+        // send escape key again
+        await sendKeys({
+            press: 'Escape',
+        });
+        await closed;
+
+        // now the overlay should be closed
+        expect(overlay.open).to.be.false;
     });
 });

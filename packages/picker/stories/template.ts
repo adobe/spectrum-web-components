@@ -23,6 +23,7 @@ export interface StoryArgs {
     invalid?: boolean;
     open?: boolean;
     quiet?: boolean;
+    pending?: boolean;
     showText?: boolean;
     onChange?: (val: string) => void;
     [prop: string]: unknown;
