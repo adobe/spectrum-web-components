@@ -103,6 +103,19 @@ const config = {
                         },
                     ],
                 },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.class('spectrum-Picker--quiet')]],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.attribute('quiet')]],
+                    },
+                    hoist: true,
+                },
             ],
         },
     ],

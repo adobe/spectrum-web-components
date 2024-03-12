@@ -26,6 +26,7 @@ import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
 import { handleChange, StoryArgs, Template } from './template.js';
 import { argTypes } from './args.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export default {
     title: 'Picker',
@@ -66,7 +67,9 @@ export default {
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-1">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             id="picker-1"
             @change=${handleChange(args)}
@@ -105,7 +108,9 @@ invalid.args = {
 export const tooltip = (args: StoryArgs): TemplateResult => {
     const { open, ...rest } = args;
     return html`
-        <sp-field-label for="picker-1">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             id="picker-1"
             @change=${handleChange(args)}
@@ -145,7 +150,11 @@ tooltip.decorators = [isOverlayOpen];
 
 export const leftSideLabel = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label side-aligned="start" for="picker-1">
+        <sp-field-label
+            side-aligned="start"
+            for="picker-1"
+            size=${ifDefined(args.size)}
+        >
             Where do you live?
         </sp-field-label>
         <sp-picker
@@ -224,7 +233,9 @@ export const slottedLabel = (args: StoryArgs): TemplateResult => {
 
 export const quiet = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             ${spreadProps(args)}
             id="picker-quiet"
@@ -251,7 +262,11 @@ quiet.args = {
 
 export const quietSideLabel = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label side-aligned="start" for="picker-quiet-sidelabel">
+        <sp-field-label
+            side-aligned="start"
+            for="picker-quiet-sidelabel"
+            size=${ifDefined(args.size)}
+        >
             Where do you live?
         </sp-field-label>
         <sp-picker
@@ -280,7 +295,7 @@ quietSideLabel.args = {
 
 export const icons = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
@@ -308,7 +323,7 @@ export const icons = (args: StoryArgs): TemplateResult => {
 
 export const iconsNone = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
@@ -341,7 +356,7 @@ iconsNone.decorators = [isOverlayOpen];
 
 export const iconValue = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
@@ -371,7 +386,7 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
 
 export const iconsOnly = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
@@ -409,7 +424,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
             }
         </style>
         <fieldset class="backdrop-filter-test">
-            <sp-field-label for="picker-open">
+            <sp-field-label for="picker-open" size=${ifDefined(args.size)}>
                 Where do you live?
             </sp-field-label>
             <sp-picker
@@ -430,7 +445,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
             </sp-picker>
         </fieldset>
         <fieldset>
-            <sp-field-label for="picker-closed">
+            <sp-field-label for="picker-closed" size=${ifDefined(args.size)}>
                 Where do you live?
             </sp-field-label>
             <sp-picker
@@ -490,7 +505,7 @@ export const OpenShowingEdgeCase = (args: StoryArgs): TemplateResult => {
             .
         </p>
         <fieldset class="backdrop-filter-test">
-            <sp-field-label for="picker-open">
+            <sp-field-label for="picker-open" size=${ifDefined(args.size)}>
                 Where do you live?
             </sp-field-label>
             <sp-picker
@@ -511,7 +526,7 @@ export const OpenShowingEdgeCase = (args: StoryArgs): TemplateResult => {
             </sp-picker>
         </fieldset>
         <fieldset>
-            <sp-field-label for="picker-closed">
+            <sp-field-label for="picker-closed" size=${ifDefined(args.size)}>
                 Where do you live?
             </sp-field-label>
             <sp-picker
@@ -537,7 +552,9 @@ OpenShowingEdgeCase.swc_vrt = {
 
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-initial">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-initial" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             id="picker-initial"
             @change=${handleChange(args)}
@@ -581,7 +598,7 @@ export const readonly = (args: StoryArgs): TemplateResult => {
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';
     return html`
-        <sp-field-label for="picker-state">
+        <sp-field-label for="picker-state" size=${ifDefined(args.size)}>
             What state do you live in?
         </sp-field-label>
         <sp-picker
