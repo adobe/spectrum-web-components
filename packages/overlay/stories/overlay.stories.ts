@@ -183,11 +183,7 @@ const template = ({
                             </sp-dialog>
                         </sp-popover>
 
-                        <sp-tooltip
-                            slot="hover-content"
-                            delayed
-                            tip="bottom"
-                        >
+                        <sp-tooltip slot="hover-content" delayed tip="bottom">
                             Click to open another popover.
                         </sp-tooltip>
                     </overlay-trigger>
@@ -635,13 +631,13 @@ export const deepNesting = (): TemplateResult => {
         ${storyStyles}
         <sp-theme
             color=${outter}
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
             scale=${window.__swc_hack_knobs__.defaultScale}
             dir=${window.__swc_hack_knobs__.defaultDirection}
         >
             <sp-theme
                 color=${color}
-                theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+                system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 scale=${window.__swc_hack_knobs__.defaultScale}
                 dir=${window.__swc_hack_knobs__.defaultDirection}
             >
