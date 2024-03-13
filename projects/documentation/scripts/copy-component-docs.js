@@ -15,6 +15,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import {
+    accessibilityDestinationTemplate,
+    accessibilityPartialTemplate,
     apiDestinationTemplate,
     apiPartialTemplate,
     exampleDestinationTemplate,
@@ -73,10 +75,9 @@ export async function processREADME(mdPath) {
         return;
     }
     const packageName = extractPackageNameRegExp.exec(mdPath)[1];
-    let componentName =
-        fileName !== 'README.md'
-            ? fileName.replace('.md', '')
-            : extractPackageNameRegExp.exec(mdPath)[1];
+    let componentName = !['README.md', 'accessibility.md'].includes(fileName)
+        ? fileName.replace('.md', '')
+        : extractPackageNameRegExp.exec(mdPath)[1];
     const parent =
         fileName === 'README.md' ? 'root' : packageName + '-children';
     let componentHeading = componentName;
@@ -160,20 +161,45 @@ export async function processREADME(mdPath) {
     }
     const tagType = isComponent ? 'component-examples' : 'tool-examples';
     const body = fs.readFileSync(mdPath);
-    fs.writeFileSync(
-        exampleDestinationFile,
-        exampleDestinationTemplate(
+    if (fileName === 'accessibility.md') {
+        const accessibilityDestinationFile = path.resolve(
+            destinationPath,
             componentName,
-            componentHeading,
-            tagType,
-            parent,
-            packageName
-        )
-    );
-    fs.writeFileSync(
-        examplePartialFile,
-        examplePartialTemplate(componentName, componentHeading, body)
-    );
+            'accessibility.md'
+        );
+        const accessibilityPartialFile = path.resolve(
+            destinationPath,
+            componentName,
+            'accessibility-content.md'
+        );
+        fs.writeFileSync(
+            accessibilityDestinationFile,
+            accessibilityDestinationTemplate(componentName, componentHeading)
+        );
+        fs.writeFileSync(
+            accessibilityPartialFile,
+            accessibilityPartialTemplate(
+                componentName,
+                componentHeading,
+                fs.readFileSync(mdPath, 'utf8')
+            )
+        );
+    } else {
+        fs.writeFileSync(
+            exampleDestinationFile,
+            exampleDestinationTemplate(
+                componentName,
+                componentHeading,
+                tagType,
+                parent,
+                packageName
+            )
+        );
+        fs.writeFileSync(
+            examplePartialFile,
+            examplePartialTemplate(componentName, componentHeading, body)
+        );
+    }
     const hasArgs = fs.existsSync(
         path.resolve(
             __dirname,

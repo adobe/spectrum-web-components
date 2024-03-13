@@ -254,3 +254,35 @@ tags:
 ---
 ${body}`;
 }
+
+export function accessibilityDestinationTemplate(
+    componentName,
+    componentHeading
+) {
+    return `---
+layout: accessibility.njk
+title: '${nameToTitle(componentName)} API: Spectrum Web Components'
+displayName: ${nameToTitle(componentName)}
+componentName: ${componentName}
+componentHeading: ${componentHeading}
+tags:
+- component-accessibility
+---`;
+}
+
+export function accessibilityPartialTemplate(
+    componentName,
+    componentHeading,
+    body
+) {
+    return `---
+layout: partial.njk
+title: '${nameToTitle(componentName)}: Spectrum Web Components'
+displayName: ${nameToTitle(componentName)}
+componentName: ${componentName}
+partType: accessibility
+tags:
+- ${componentName}
+---
+${body}`;
+}
