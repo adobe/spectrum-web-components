@@ -32,7 +32,7 @@ describe('Themes - lazy', () => {
             Theme as unknown as TestableThemeConstructor
         ).themeFragmentsByKind.clear();
         // Core is registered by default in `theme.ts`
-        Theme.registerThemeFragment('spectrum', 'theme', coreStyles);
+        Theme.registerThemeFragment('spectrum', 'system', coreStyles);
     });
     after(() => {
         Theme.registerThemeFragment('light', 'color', lightStyles);

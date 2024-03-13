@@ -14,4 +14,7 @@ import { Theme } from '../Theme.js';
 
 import coreStyles from './theme.css.js';
 
+Theme.registerThemeFragment('express', 'system', coreStyles);
+
+// `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
 Theme.registerThemeFragment('express', 'theme', coreStyles);
