@@ -39,6 +39,8 @@ interface TabsOverflowState {
 }
 /**
  * @element sp-tabs-overflow
+ * @slot - text label of the Tab
+ * @slot icon - The icon that appears on the left of the label
  */
 export class TabsOverflow extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
@@ -46,7 +48,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     }
 
     @property({ type: Boolean, reflect: true })
-    compact = false;
+    public compact = false;
 
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
