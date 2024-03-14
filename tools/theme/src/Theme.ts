@@ -47,11 +47,9 @@ type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
 export type Color =
     | 'light'
-    | 'lightest'
     | 'dark'
     | 'darkest'
     | 'light-express'
-    | 'lightest-express'
     | 'dark-express'
     | 'darkest-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
@@ -60,11 +58,9 @@ const ThemeVariantValues = ['spectrum', 'express'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
 const ColorValues = [
     'light',
-    'lightest',
     'dark',
     'darkest',
     'light-express',
-    'lightest-express',
     'dark-express',
     'darkest-express',
 ];
@@ -198,7 +194,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
      *
      * A value is requried.
-     * @type {"lightest" | "light" | "dark" | "darkest" | ""}
+     * @type {"light" | "dark" | "darkest" | ""}
      * @attr
      */
     get color(): Color | '' {

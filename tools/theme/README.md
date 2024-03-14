@@ -1,6 +1,6 @@
 ## Description
 
-`sp-theme` applies a Spectrum theme by using CSS custom properties to set default sizes & colors for all of the components in its scope. The Spectrum design system provides four color themes (`lightest`, `light`, `dark`, and `darkest`) and two different scales (`medium` and `large`) to support desktop & mobile UI.
+`sp-theme` applies a Spectrum theme by using CSS custom properties to set default sizes & colors for all of the components in its scope. The Spectrum design system provides four color themes (`light`, `dark`, and `darkest`) and two different scales (`medium` and `large`) to support desktop & mobile UI.
 
 ### Usage
 
@@ -18,7 +18,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 ```
 
-The above import statements do two things: the first will get you started using the `<sp-theme>` wrapper element, and the second includes all four (4) color options (`lightest`, `light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`) for the Spectrum Classic theme. Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empowers you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See the "Advanced usage" section below for instructions on tuning the performance of an application that leverages this package.
+The above import statements do two things: the first will get you started using the `<sp-theme>` wrapper element, and the second includes all four (4) color options (`light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`) for the Spectrum Classic theme. Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empowers you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See the "Advanced usage" section below for instructions on tuning the performance of an application that leverages this package.
 
 Below are more ways to import the different scale and color options individually, in case you didn't want to import all of them as we did above. You'll use these statements in combination with the side effectful registration import statement `import '@spectrum-web-components/theme/sp-theme.js'`.
 
@@ -40,13 +40,11 @@ Or you can import the themes and scales individually:
 import '@spectrum-web-components/theme/theme-darkest.js';
 import '@spectrum-web-components/theme/theme-dark.js';
 import '@spectrum-web-components/theme/theme-light.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/scale-large.js';
 import '@spectrum-web-components/theme/express/theme-darkest.js';
 import '@spectrum-web-components/theme/express/theme-dark.js';
 import '@spectrum-web-components/theme/express/theme-light.js';
-import '@spectrum-web-components/theme/express/theme-lightest.js';
 import '@spectrum-web-components/theme/express/scale-medium.js';
 import '@spectrum-web-components/theme/express/scale-large.js';
 ```

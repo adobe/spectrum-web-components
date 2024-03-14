@@ -135,7 +135,7 @@ const vrtHTML =
 
 export let vrtGroups = [];
 const themeVariants = ['classic', 'express'];
-const colors = ['lightest', 'light', 'dark', 'darkest'];
+const colors = ['light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
 themeVariants.forEach((themeVariant) => {
