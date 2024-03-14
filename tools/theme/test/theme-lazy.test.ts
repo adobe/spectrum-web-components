@@ -109,7 +109,6 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        Theme.registerThemeFragment('light', 'color', lightStyles);
         Theme.registerThemeFragment('medium', 'scale', mediumStyles);
 
         await elementUpdated(el);
@@ -131,7 +130,6 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        Theme.registerThemeFragment('light', 'color', lightStyles);
         Theme.registerThemeFragment('medium', 'scale', mediumStyles);
 
         await elementUpdated(el);
