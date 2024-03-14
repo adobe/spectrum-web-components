@@ -36,7 +36,6 @@
         "./src/scale-large.css.js": "./src/scale-large.css.js",
         "./src/scale-medium.css.js": "./src/scale-medium.css.js",
         "./src/theme-dark.css.js": "./src/theme-dark.css.js",
-        "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
         "./src/theme-light.css.js": "./src/theme-light.css.js",
         "./src/theme.css.js": "./src/theme.css.js",
         "./src/themes.js": {
@@ -55,10 +54,6 @@
         "./express/theme-dark.js": {
             "development": "./express/theme-dark.dev.js",
             "default": "./express/theme-dark.js"
-        },
-        "./express/theme-darkest.js": {
-            "development": "./express/theme-darkest.dev.js",
-            "default": "./express/theme-darkest.js"
         },
         "./express/theme-light.js": {
             "development": "./express/theme-light.dev.js",

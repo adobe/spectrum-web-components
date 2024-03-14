@@ -69,6 +69,10 @@ governing permissions and limitations under the License.
     --spectrum-card-selected-background-opacity: 0.1;
 }
 
+:host .spectrum--darkest {
+    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-600-rgb);
+}
+
 :host([variant='quiet']),
 :host([variant='gallery']) {
     --mod-card-content-margin-top: var(
