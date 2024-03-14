@@ -86,11 +86,11 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/icon": "^0.41.2",
-        "@spectrum-web-components/icons-ui": "^0.41.2",
-        "@spectrum-web-components/reactive-controllers": "^0.41.2",
-        "@spectrum-web-components/shared": "^0.41.2"
+        "@spectrum-web-components/base": "0.41.2",
+        "@spectrum-web-components/icon": "0.41.2",
+        "@spectrum-web-components/icons-ui": "0.41.2",
+        "@spectrum-web-components/reactive-controllers": "0.41.2",
+        "@spectrum-web-components/shared": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/tabs": "^4.1.3"

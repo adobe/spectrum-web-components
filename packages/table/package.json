@@ -117,10 +117,10 @@
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
         "@lit-labs/virtualizer": "^2.0.6",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/checkbox": "^0.41.2",
-        "@spectrum-web-components/icon": "^0.41.2",
-        "@spectrum-web-components/icons-ui": "^0.41.2"
+        "@spectrum-web-components/base": "0.41.2",
+        "@spectrum-web-components/checkbox": "0.41.2",
+        "@spectrum-web-components/icon": "0.41.2",
+        "@spectrum-web-components/icons-ui": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/table": "^5.2.4"

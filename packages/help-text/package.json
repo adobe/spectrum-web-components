@@ -77,8 +77,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/icons-workflow": "^0.41.2"
+        "@spectrum-web-components/base": "0.41.2",
+        "@spectrum-web-components/icons-workflow": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/helptext": "^4.1.4"
