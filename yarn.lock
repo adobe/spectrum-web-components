@@ -5071,10 +5071,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-12.0.1.tgz#544031febb19985e90736abf0de99212ddc5ad4c"
   integrity sha512-emXx9cC/kDiEoiUthx1CGUUiNg6bJGnPKWEL5vX8QR3weouyL0Os7giUl2T/gKO/yC/4amfl7jgsMwcBtD1SbQ==
 
-"@spectrum-css/buttongroup@^6.2.4":
-  version "6.2.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.2.4.tgz#9331c3fb3b570f0e42a93a5cf206933d1984202b"
-  integrity sha512-qth055QTs31x/9XVnjFHiOsvNpYAquSqr20mwYXEOOcjjayl5QTtLnsOEnPH5lffo14k2P/Egg3AYV3Q+leo8g==
+"@spectrum-css/buttongroup@^7.0.0-next.1":
+  version "7.0.0-next.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-7.0.0-next.1.tgz#610b6a2b068ca4b51c8c296bb8981977c12927a0"
+  integrity sha512-NEbqIKJO40JE43tKYQRKWx7nY9bR+suYxHAEZ8/YVlcReNr+a5ed4ZIFIXXEFWr0vMEvaiSQDPOsIAlO9go0xw==
 
 "@spectrum-css/card@^7.0.1":
   version "7.0.1"
