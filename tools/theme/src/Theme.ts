@@ -45,25 +45,12 @@ type FragmentType = 'color' | 'scale' | 'theme' | 'core' | 'app';
 type SettableFragmentTypes = 'color' | 'scale' | 'theme';
 type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
-export type Color =
-    | 'light'
-    | 'lightest'
-    | 'dark'
-    | 'light-express'
-    | 'lightest-express'
-    | 'dark-express';
+export type Color = 'light' | 'dark' | 'light-express' | 'dark-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
 export type ThemeVariant = 'spectrum' | 'express';
 const ThemeVariantValues = ['spectrum', 'express'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
-const ColorValues = [
-    'light',
-    'lightest',
-    'dark',
-    'light-express',
-    'lightest-express',
-    'dark-express',
-];
+const ColorValues = ['light', 'dark', 'light-express', 'dark-express'];
 type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
 
 export interface ThemeData {
@@ -194,7 +181,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
      *
      * A value is requried.
-     * @type {"lightest" | "light" | "dark" | ""}
+     * @type {"light" | "dark" | ""}
      * @attr
      */
     get color(): Color | '' {

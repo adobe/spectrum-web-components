@@ -91,9 +91,6 @@ const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
         case 'light-spectrum':
             import('@spectrum-web-components/theme/theme-light.js');
             break;
-        case 'lightest-spectrum':
-            import('@spectrum-web-components/theme/theme-lightest.js');
-            break;
         case 'medium-spectrum':
             import('@spectrum-web-components/theme/scale-medium.js');
             break;
@@ -105,9 +102,6 @@ const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
             break;
         case 'light-express':
             import('@spectrum-web-components/theme/express/theme-light.js');
-            break;
-        case 'lightest-express':
-            import('@spectrum-web-components/theme/express/theme-lightest.js');
             break;
         case 'medium-express':
             import('@spectrum-web-components/theme/express/scale-medium.js');
@@ -386,7 +380,6 @@ export class LayoutElement extends LitElement {
                         value=${this.color}
                         @change=${this.updateColor}
                     >
-                        <sp-menu-item value="lightest">Lightest</sp-menu-item>
                         <sp-menu-item value="light">Light</sp-menu-item>
                         <sp-menu-item value="dark">Dark</sp-menu-item>
                     </sp-picker>

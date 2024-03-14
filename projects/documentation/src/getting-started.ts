@@ -10,5 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/theme/theme-lightest.js';
 import '@spectrum-web-components/theme/scale-medium.js';

@@ -34,18 +34,6 @@ This file brings together the global variables and font settings with the "Dark"
 This file brings together the global variables and font settings with the "Light" color set and "Medium" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-medium-lightest.css';
-```
-
-This file brings together the global variables and font settings with the "Lightest" color set and "Medium" scale system specification.
-
-```
-@import '@spectrum-web-components/styles/all-large-dark.css';
-```
-
-This file brings together the global variables and font settings with the "Darkest" color set and "Large" scale system specification.
-
-```
 @import '@spectrum-web-components/styles/all-large-dark.css';
 ```
 
@@ -56,12 +44,6 @@ This file brings together the global variables and font settings with the "Dark"
 ```
 
 This file brings together the global variables and font settings with the "Light" color set and "Large" scale system specification.
-
-```
-@import '@spectrum-web-components/styles/all-large-lightest.css';
-```
-
-This file brings together the global variables and font settings with the "Lightest" color set and "Large" scale system specification.
 
 ## Color sets
 
@@ -82,14 +64,6 @@ This file provides only the variables needed to power a color palette featuring 
 ```
 
 This file provides only the variables needed to power a color palette featuring colors found in the "Light" theme.
-
-### Lightest
-
-```
-@import '@spectrum-web-components/styles/theme-lightest.css';
-```
-
-This file provides only the variables needed to power a color palette featuring colors found in the "Lightest" theme.
 
 ## Scale
 

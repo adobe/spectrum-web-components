@@ -64,10 +64,6 @@
             "development": "./express/theme-light.dev.js",
             "default": "./express/theme-light.js"
         },
-        "./express/theme-lightest.js": {
-            "development": "./express/theme-lightest.dev.js",
-            "default": "./express/theme-lightest.js"
-        },
         "./src/express/core.js": {
             "development": "./src/express/core.dev.js",
             "default": "./src/express/core.js"
@@ -96,10 +92,6 @@
         "./scale-large.js": {
             "development": "./scale-large.dev.js",
             "default": "./scale-large.js"
-        },
-        "./theme-lightest.js": {
-            "development": "./theme-lightest.dev.js",
-            "default": "./theme-lightest.js"
         },
         "./theme-light.js": {
             "development": "./theme-light.dev.js",

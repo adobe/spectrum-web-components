@@ -29,7 +29,7 @@ const getHash = (context) => {
 const vrts = [];
 const themes = ['Classic', 'Express'];
 const scales = ['Medium', 'Large'];
-const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
+const colors = ['Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
 vrts.push([
     `High Contrast Mode | Medium | LTR`,

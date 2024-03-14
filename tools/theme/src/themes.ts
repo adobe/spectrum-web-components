@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import '../theme-light.js';
-import '../theme-lightest.js';
 import '../theme-dark.js';
 import '../scale-medium.js';
 import '../scale-large.js';

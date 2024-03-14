@@ -140,7 +140,7 @@ const spectrumPaths = [
 ];
 
 // sources to use from spectrum-css
-const themes = ['lightest', 'light', 'dark'];
+const themes = ['light', 'dark'];
 const scales = ['medium', 'large'];
 const cores = ['global'];
 const processes = [];
