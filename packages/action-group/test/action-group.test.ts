@@ -699,7 +699,7 @@ describe('ActionGroup', () => {
         expect(secondButton.selected, 'second button selected').to.be.true;
     });
 
-    it('does not allow interaction with child content to interupt the selection mechanism', async () => {
+    it('does not allow interaction with child content to interrupt the selection mechanism', async () => {
         const el = await singleSelectedActionGroup([]);
         await elementUpdated(el);
         expect(el.selected.length).to.equal(0);
@@ -723,8 +723,8 @@ describe('ActionGroup', () => {
 
         expect(el.selected.length).to.equal(1);
         expect(el.selected).to.deep.equal(['first']);
-        expect(firstButton.selected, 'first button not selected').to.be.true;
-        expect(secondButton.selected, 'second button selected').to.be.false;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button not selected').to.be.false;
 
         const rect = icon.getBoundingClientRect();
         await sendMouse({
