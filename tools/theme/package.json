@@ -38,7 +38,6 @@
         "./src/theme-dark.css.js": "./src/theme-dark.css.js",
         "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
         "./src/theme-light.css.js": "./src/theme-light.css.js",
-        "./src/theme-lightest.css.js": "./src/theme-lightest.css.js",
         "./src/theme.css.js": "./src/theme.css.js",
         "./src/themes.js": {
             "development": "./src/themes.dev.js",
@@ -109,10 +108,6 @@
         "./theme-dark.js": {
             "development": "./theme-dark.dev.js",
             "default": "./theme-dark.js"
-        },
-        "./theme-darkest.js": {
-            "development": "./theme-darkest.dev.js",
-            "default": "./theme-darkest.js"
         }
     },
     "scripts": {

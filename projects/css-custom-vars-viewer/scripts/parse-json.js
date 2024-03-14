@@ -53,7 +53,6 @@ spectrumColours.forEach((colour) => {
                     sets: {
                         light: info.sets.light.value,
                         dark: info.sets.dark.value,
-                        darkest: info.sets.darkest.value,
                         wireframe: info.sets.wireframe.value,
                     },
                 });

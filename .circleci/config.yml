@@ -322,7 +322,7 @@ workflows:
                   matrix:
                       parameters:
                           theme: [classic, express]
-                          color: [lightest, light, dark, darkest]
+                          color: [lightest, light, dark]
                           scale: [medium, large]
                           dir: [ltr, rtl]
                   filters:

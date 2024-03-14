@@ -1028,7 +1028,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **action-menu:** update spectrum css input ([62a5065](https://github.com/adobe/spectrum-web-components/commit/62a50651a3c797598f8d76330e87f2824cdabbc5))
 -   **actionbar:** add actionbar component package ([36dd7e9](https://github.com/adobe/spectrum-web-components/commit/36dd7e943a8b825b947f0053ddbe31b69ca27062))
 -   **actionbar:** update spectrum css input ([8c888aa](https://github.com/adobe/spectrum-web-components/commit/8c888aa883490fe8e6a070f799095284128a609a))
--   add "darkest" theme styles ([fe38025](https://github.com/adobe/spectrum-web-components/commit/fe38025d2b631f07834789c936efe7ffcbc1a628))
 -   add and use icons-ui package ([d9c3ab2](https://github.com/adobe/spectrum-web-components/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
 -   add badge component ([cabfdfe](https://github.com/adobe/spectrum-web-components/commit/cabfdfe7b7eb00c3868ec26afab524cef1c2fcbd))
 -   add dialog, dialog-wrapped, and underlay elements ([3df9050](https://github.com/adobe/spectrum-web-components/commit/3df9050f65bd3a95f9b986aa728cfc1a2eaee432))

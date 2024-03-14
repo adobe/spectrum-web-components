@@ -205,7 +205,7 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
         if (color && scale && dir) {
             test(stories, name, color, scale, dir);
         } else {
-            const colors: Color[] = ['lightest', 'light', 'dark', 'darkest'];
+            const colors: Color[] = ['lightest', 'light', 'dark'];
             const scales: Scale[] = ['medium', 'large'];
             const directions: ('ltr' | 'rtl')[] = ['ltr', 'rtl'];
             colors.forEach((color: Color) => {

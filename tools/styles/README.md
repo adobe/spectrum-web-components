@@ -16,7 +16,7 @@ yarn add @spectrum-web-components/styles
 ## Theme packages
 
 ```
-@import '@spectrum-web-components/styles/all-medium-darkest.css';
+@import '@spectrum-web-components/styles/all-medium-dark.css';
 ```
 
 This file brings together the global variables and font settings with the "Darkest" color set and "Medium" scale system specification.
@@ -40,7 +40,7 @@ This file brings together the global variables and font settings with the "Light
 This file brings together the global variables and font settings with the "Lightest" color set and "Medium" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-large-darkest.css';
+@import '@spectrum-web-components/styles/all-large-dark.css';
 ```
 
 This file brings together the global variables and font settings with the "Darkest" color set and "Large" scale system specification.
@@ -64,12 +64,6 @@ This file brings together the global variables and font settings with the "Light
 This file brings together the global variables and font settings with the "Lightest" color set and "Large" scale system specification.
 
 ## Color sets
-
-### Darkest
-
-```
-@import '@spectrum-web-components/styles/theme-darkest.css';
-```
 
 This file provides only the variables needed to power a color palette featuring colors found in the "Darkest" theme.
 

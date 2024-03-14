@@ -85,9 +85,6 @@ const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
     var fragmentName = `${name}-${flavor}`;
     switch (fragmentName) {
-        case 'darkest-spectrum':
-            import('@spectrum-web-components/theme/theme-darkest.js');
-            break;
         case 'dark-spectrum':
             import('@spectrum-web-components/theme/theme-dark.js');
             break;
@@ -102,9 +99,6 @@ const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
             break;
         case 'large-spectrum':
             import('@spectrum-web-components/theme/scale-large.js');
-            break;
-        case 'darkest-express':
-            import('@spectrum-web-components/theme/express/theme-darkest.js');
             break;
         case 'dark-express':
             import('@spectrum-web-components/theme/express/theme-dark.js');
@@ -395,7 +389,6 @@ export class LayoutElement extends LitElement {
                         <sp-menu-item value="lightest">Lightest</sp-menu-item>
                         <sp-menu-item value="light">Light</sp-menu-item>
                         <sp-menu-item value="dark">Dark</sp-menu-item>
-                        <sp-menu-item value="darkest">Darkest</sp-menu-item>
                     </sp-picker>
                 </div>
                 <div class="theme-control">
@@ -525,17 +518,11 @@ export class LayoutElement extends LitElement {
                 ...this.querySelectorAll('code-example'),
             ] as CodeExample[];
             examples.forEach((example) => {
-                example.codeTheme =
-                    this.color === 'dark' || this.color === 'darkest'
-                        ? 'dark'
-                        : 'light';
+                example.codeTheme = this.color === 'dark' ? 'dark' : 'light';
             });
             (
                 document.querySelector('html') as HTMLHtmlElement
-            ).style.colorScheme =
-                this.color === 'dark' || this.color === 'darkest'
-                    ? 'dark'
-                    : 'light';
+            ).style.colorScheme = this.color === 'dark' ? 'dark' : 'light';
         }
         if (changes.has('scale')) {
             if (window.localStorage) {

@@ -49,11 +49,9 @@ export type Color =
     | 'light'
     | 'lightest'
     | 'dark'
-    | 'darkest'
     | 'light-express'
     | 'lightest-express'
-    | 'dark-express'
-    | 'darkest-express';
+    | 'dark-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
 export type ThemeVariant = 'spectrum' | 'express';
 const ThemeVariantValues = ['spectrum', 'express'];
@@ -62,11 +60,9 @@ const ColorValues = [
     'light',
     'lightest',
     'dark',
-    'darkest',
     'light-express',
     'lightest-express',
     'dark-express',
-    'darkest-express',
 ];
 type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
 
@@ -198,7 +194,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
      *
      * A value is requried.
-     * @type {"lightest" | "light" | "dark" | "darkest" | ""}
+     * @type {"lightest" | "light" | "dark" | ""}
      * @attr
      */
     get color(): Color | '' {
