@@ -423,6 +423,45 @@ describe('ActionGroup', () => {
 
         expect(el.selected, '"Third" selected').to.deep.equal(['Third']);
     });
+    it('manages [selects="single"] selection through multiple slots', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <sp-action-button>First</sp-action-button>
+                    <sp-action-button>Second</sp-action-button>
+                    <sp-action-button selected>Third</sp-action-button>
+                </div>
+            `
+        );
+
+        const firstItem = test.querySelector(
+            'sp-action-button'
+        ) as ActionButton;
+        const thirdItem = test.querySelector(
+            'sp-action-button[selected]'
+        ) as ActionButton;
+
+        const shadowRoot = test.attachShadow({ mode: 'open' });
+        shadowRoot.innerHTML = `
+            <sp-action-group label="Selects Single Group" selects="single">
+                <slot></slot>
+            </sp-action-group>
+        `;
+
+        const el = shadowRoot.querySelector('sp-action-group') as ActionGroup;
+        await elementUpdated(el);
+
+        expect(el.selected, '"Third" selected').to.deep.equal(['Third']);
+        expect(firstItem.selected).to.be.false;
+        expect(thirdItem.selected).to.be.true;
+
+        firstItem.click();
+        await elementUpdated(el);
+
+        expect(el.selected, '"First" selected').to.deep.equal(['First']);
+        expect(firstItem.selected).to.be.true;
+        expect(thirdItem.selected).to.be.false;
+    });
     it('surfaces [selects="multiple"] selection', async () => {
         const el = await fixture<ActionGroup>(
             html`
