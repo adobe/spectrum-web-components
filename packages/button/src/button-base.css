@@ -47,6 +47,10 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
+::slotted(*) {
+    pointer-events: none;
+}
+
 slot[name='icon']::slotted(svg),
 slot[name='icon']::slotted(img) {
     fill: currentcolor;
