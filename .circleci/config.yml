@@ -218,7 +218,7 @@ jobs:
                   keys:
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
                       - v2-golden-images-main-hcm-
-                      - v2-golden-images-main-classic-lightest-medium-ltr-
+                      - v2-golden-images-main-classic-light-medium-ltr-
             - run:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
@@ -322,7 +322,7 @@ workflows:
                   matrix:
                       parameters:
                           theme: [classic, express]
-                          color: [lightest, light, dark, darkest]
+                          color: [light, dark, darkest]
                           scale: [medium, large]
                           dir: [ltr, rtl]
                   filters:

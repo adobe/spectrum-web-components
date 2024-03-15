@@ -56,7 +56,7 @@ export const buildPreviewURLComment = (ref) => {
     const previewLinks = [];
     const themes = ['Classic', 'Express'];
     const scales = ['Medium', 'Large'];
-    const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
+    const colors = ['Light', 'Dark', 'Darkest'];
     const directions = ['LTR', 'RTL'];
     previewLinks.push(
         `- [High Contrast Mode | Medium | LTR](https://${getHash(
