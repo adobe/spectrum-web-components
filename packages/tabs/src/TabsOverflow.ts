@@ -39,8 +39,6 @@ interface TabsOverflowState {
 }
 /**
  * @element sp-tabs-overflow
- * @slot - text label of the Tab
- * @slot icon - The icon that appears on the left of the label
  */
 export class TabsOverflow extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
@@ -49,6 +47,12 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
 
     @property({ type: Boolean, reflect: true })
     public compact = false;
+
+    @property({ type: String, attribute: 'label-previous' })
+    public labelPrevious = 'Scroll to previous tabs';
+
+    @property({ type: String, attribute: 'label-next' })
+    public labelNext = 'Scroll to next tabs';
 
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
@@ -134,6 +138,8 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
 
     protected override render(): TemplateResult {
         const { canScrollRight, canScrollLeft } = this.overflowState;
+        const ariaLabelPrevious = this.labelPrevious;
+        const ariaLabelNext = this.labelNext;
         return html`
             <div
                 class=${classMap({
@@ -147,8 +153,10 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                         'left-scroll': true,
                         show: canScrollLeft,
                     })}
+                    aria-label=${ariaLabelPrevious}
                     quiet
                     dir="rtl"
+                    tabindex="-1"
                     @click=${this._handleScrollClick}
                 >
                     <sp-icon-chevron100
@@ -161,7 +169,9 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                         'right-scroll': true,
                         show: canScrollRight,
                     })}
+                    aria-label=${ariaLabelNext}
                     quiet
+                    tabindex="-1"
                     @click=${this._handleScrollClick}
                 >
                     <sp-icon-chevron100

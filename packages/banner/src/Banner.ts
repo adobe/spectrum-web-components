@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -38,6 +39,18 @@ export class Banner extends SpectrumElement {
 
     public static override get styles(): CSSResultArray {
         return [bannerStyles];
+    }
+
+    protected override update(changes: PropertyValues<this>): void {
+        super.update(changes);
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> is deprecated and it will be removed in the future release.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/banner/#deprecation',
+                { level: 'deprecation' }
+            );
+        }
     }
 
     protected override render(): TemplateResult {
