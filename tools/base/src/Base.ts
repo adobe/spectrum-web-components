@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, ReactiveElement } from 'lit';
+import { LitElement, ReactiveController, ReactiveElement } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
@@ -187,6 +187,10 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
+
+    protected themeDelegates: ReactiveController;
+
+    protected delegates: ReactiveController;
 }
 
 if (window.__swc.DEBUG) {

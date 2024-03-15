@@ -13,8 +13,10 @@ governing permissions and limitations under the License.
 import {
     CSSResult,
     CSSResultGroup,
+    SpectrumElement,
     supportsAdoptingStyleSheets,
 } from '@spectrum-web-components/base';
+import type { ReactiveController } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
 
 declare global {
@@ -53,11 +55,26 @@ export type Color =
     | 'light-express'
     | 'lightest-express'
     | 'dark-express'
-    | 'darkest-express';
-export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type ThemeVariant = 'spectrum' | 'express';
-const ThemeVariantValues = ['spectrum', 'express'];
-const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
+    | 'darkest-express'
+    | 'light-spectrum-two'
+    | 'dark-spectrum-two';
+export type Scale =
+    | 'medium'
+    | 'large'
+    | 'medium-express'
+    | 'large-express'
+    | 'medium-spectrum-two'
+    | 'large-spectrum-two';
+export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
+const ThemeVariantValues = ['spectrum', 'express', 'spectrum-two'];
+const ScaleValues = [
+    'medium',
+    'large',
+    'medium-express',
+    'large-express',
+    'medium-spectrum-two',
+    'large-spectrum-two',
+];
 const ColorValues = [
     'light',
     'lightest',
@@ -67,6 +84,8 @@ const ColorValues = [
     'lightest-express',
     'dark-express',
     'darkest-express',
+    'light-spectrum-two',
+    'dark-spectrum-two',
 ];
 type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
 
@@ -503,6 +522,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
+
+        this.trackedChildren.forEach((el) => {
+            if (this._theme === 'spectrum-two') el.delegates?.manage();
+            else el.delegates?.unmanage();
+        });
     }
 
     static registerThemeFragment(
@@ -519,6 +543,13 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         fragmentMap.set(name, { name, styles });
         Theme.instances.forEach((instance) => instance.shouldAdoptStyles());
+    }
+
+    static registerThemeDelegates(
+        name: FragmentName,
+        DelegatesController: ReactiveController
+    ): void {
+        SpectrumElement.themeDelegates = DelegatesController;
     }
 
     private _contextConsumers = new Map<

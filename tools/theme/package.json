@@ -45,6 +45,35 @@
             "default": "./src/themes.js"
         },
         "./src/typography.css.js": "./src/typography.css.js",
+        "./spectrum-two/scale-large.js": {
+            "development": "./spectrum-two/scale-large.dev.js",
+            "default": "./spectrum-two/scale-large.js"
+        },
+        "./spectrum-two/scale-medium.js": {
+            "development": "./spectrum-two/scale-medium.dev.js",
+            "default": "./spectrum-two/scale-medium.js"
+        },
+        "./spectrum-two/theme-dark.js": {
+            "development": "./spectrum-two/theme-dark.dev.js",
+            "default": "./spectrum-two/theme-dark.js"
+        },
+        "./spectrum-two/theme-light.js": {
+            "development": "./spectrum-two/theme-light.dev.js",
+            "default": "./spectrum-two/theme-light.js"
+        },
+        "./src/spectrum-two/core.js": {
+            "development": "./src/spectrum-two/core.dev.js",
+            "default": "./src/spectrum-two/core.js"
+        },
+        "./src/spectrum-two/scale-large.css.js": "./src/spectrum-two/scale-large.css.js",
+        "./src/spectrum-two/scale-medium.css.js": "./src/spectrum-two/scale-medium.css.js",
+        "./src/spectrum-two/theme-dark.css.js": "./src/spectrum-two/theme-dark.css.js",
+        "./src/spectrum-two/theme-light.css.js": "./src/spectrum-two/theme-light.css.js",
+        "./src/spectrum-two/theme.css.js": "./src/spectrum-two/theme.css.js",
+        "./src/spectrum-two/themes.js": {
+            "development": "./src/spectrum-two/themes.dev.js",
+            "default": "./src/spectrum-two/themes.js"
+        },
         "./express/scale-large.js": {
             "development": "./express/scale-large.dev.js",
             "default": "./express/scale-large.js"
@@ -144,9 +173,13 @@
         "./core.js",
         "./theme-*.js",
         "./scale-*.js",
+        "./spectrum-two/theme-*.js",
+        "./spectrum-two/scale-*.js",
         "./express/theme-*.js",
         "./express/scale-*.js",
         "./src/themes.js",
+        "./src/spectrum-two/core.js",
+        "./src/spectrum-two/themes.js",
         "./src/express/core.js",
         "./src/express/themes.js"
     ]

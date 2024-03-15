@@ -45,6 +45,10 @@
             "development": "./src/MatchMedia.dev.js",
             "default": "./src/MatchMedia.js"
         },
+        "./src/SpectrumTwoDelegates.js": {
+            "development": "./src/SpectrumTwoDelegates.dev.js",
+            "default": "./src/SpectrumTwoDelegates.js"
+        },
         "./src/RovingTabindex.js": {
             "development": "./src/RovingTabindex.dev.js",
             "default": "./src/RovingTabindex.js"
