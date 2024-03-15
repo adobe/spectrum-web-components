@@ -524,8 +524,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
 
         this.trackedChildren.forEach((el) => {
-            if (this._theme === 'spectrum-two') el.delegates?.manage();
-            else el.delegates?.unmanage();
+            if (this._theme === 'spectrum-two') el.delegatesObject?.manage();
+            else el.delegatesObject?.unmanage();
         });
     }
 

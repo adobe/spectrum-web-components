@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -74,6 +75,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         this.addEventListener('click', this.handleClickCapture, {
             capture: true,
         });
+
+        if (SpectrumElement.themeDelegates) {
+            this.delegatesObject = new SpectrumElement.themeDelegates(this);
+        }
     }
 
     public override click(): void {

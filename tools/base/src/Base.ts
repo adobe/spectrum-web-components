@@ -190,7 +190,7 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
 
     protected themeDelegates: ReactiveController;
 
-    protected delegates: ReactiveController;
+    protected delegatesObject: ReactiveController;
 }
 
 if (window.__swc.DEBUG) {
