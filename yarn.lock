@@ -5132,9 +5132,9 @@
   integrity sha512-nNn8CXP5FUzO84hEO33DLxfHp+3XTTvozC2pyepVQgEAan6QEhGCoYiV+9/tMqmELWOuTsecONWgMZ8tcBaZzw==
 
 "@spectrum-css/combobox@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.5.tgz#b8a62e5094f9eb973eb6cab7079b4fcf96d1afc5"
-  integrity sha512-wmgqaUmWmtLc0fZqjubMiRA3jv6y2yK+lqX0GUvqoFQjAn4DIdgtwu+GK8XHbIOF2N/i+U3BExT0NRAmaOPEGw==
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.6.tgz#39e5f849a6eacd845069352a3ce02105ded4faab"
+  integrity sha512-vemm0kZ9nW/aUs9y5ldqwW3Jvq5KA9EaZ5IsWUCUWwhXROncjlXZ4MhaYfcEIxO4kNVyb4fIT6Alaswup2z2nw==
 
 "@spectrum-css/commons@^9.1.2":
   version "9.1.2"
@@ -5227,9 +5227,9 @@
   integrity sha512-k3UUuIV6MGk7pCJYIa3bmFlP9bUilsZjVJvVO1Sxrrf5VzckHQf6y+vDKn+KKbGqluU0dZTXq3CyzyhBX6OfMw==
 
 "@spectrum-css/progressbar@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.1.4.tgz#6ddefad16bd91afd21f30448308c70821a3decbc"
-  integrity sha512-MtIyTd2CBuYPt4vaixkyIT8WUvBMuU3dnQR3LUHCoRZgsAs94nMc/6OsrRd6yRFhD4c77vOdOa0sfyrqLfZhFg==
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.1.5.tgz#bef497e05aef133876d124043f2e44dcc47271b2"
+  integrity sha512-oAqxKtELLG7vw0b6H90r22e8cot9LYJ+a1J9unbzrW4FsoiC4fKv/KavP13BcjM4kbJwMFRPukv+WuEpHPyZtg==
 
 "@spectrum-css/progresscircle@^2.2.2":
   version "2.2.2"
