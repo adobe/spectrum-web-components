@@ -57,8 +57,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/opacity-checkerboard": "^0.41.2"
+        "@spectrum-web-components/base": "0.41.2",
+        "@spectrum-web-components/opacity-checkerboard": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/thumbnail": "^5.2.3"

@@ -45,7 +45,7 @@ function readPackageJsonNameVersion(filePath) {
     if (existsSync(filePath)) {
         const jsonData = JSON.parse(readFileSync(filePath, 'utf-8'));
         const result = {};
-        result[jsonData.name] = `^${jsonData.version}`;
+        result[jsonData.name] = `${jsonData.version}`;
         return result;
     }
     return {};

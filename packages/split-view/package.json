@@ -61,7 +61,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2"
+        "@spectrum-web-components/base": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/splitview": "^4.2.3"

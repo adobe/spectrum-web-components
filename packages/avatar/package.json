@@ -57,8 +57,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/shared": "^0.41.2"
+        "@spectrum-web-components/base": "0.41.2",
+        "@spectrum-web-components/shared": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/avatar": "^6.1.4"

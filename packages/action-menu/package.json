@@ -61,12 +61,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.41.2",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/icon": "^0.41.2",
-        "@spectrum-web-components/icons-workflow": "^0.41.2",
-        "@spectrum-web-components/picker": "^0.41.2",
-        "@spectrum-web-components/shared": "^0.41.2"
+        "@spectrum-web-components/action-button": "0.41.2",
+        "@spectrum-web-components/base": "0.41.2",
+        "@spectrum-web-components/icon": "0.41.2",
+        "@spectrum-web-components/icons-workflow": "0.41.2",
+        "@spectrum-web-components/picker": "0.41.2",
+        "@spectrum-web-components/shared": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/actionmenu": "^5.1.2"

@@ -66,10 +66,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/button": "^0.41.2",
-        "@spectrum-web-components/reactive-controllers": "^0.41.2",
-        "@spectrum-web-components/shared": "^0.41.2"
+        "@spectrum-web-components/base": "0.41.2",
+        "@spectrum-web-components/button": "0.41.2",
+        "@spectrum-web-components/reactive-controllers": "0.41.2",
+        "@spectrum-web-components/shared": "0.41.2"
     },
     "devDependencies": {
         "@spectrum-css/tag": "^8.1.4",
