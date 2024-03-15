@@ -106,4 +106,4 @@ When a file is dragged over the `<sp-dropzone>` element, it will display with th
 
 ## Accessibility
 
-When actions, e.g. copy/paste, can be enacted directly on the `<sp-dropzone>` element itself, be sure to supply a `tabindex` so that keyboard users can find this interaction in the tab order. For screen readers, supply appropriate `role` and `aria-label` attributes to clarify what these actions are and how to complete them.
+When actions, e.g. copy/paste, can be enacted directly on the `<sp-dropzone>` element itself, be sure to supply a `tabindex` so that keyboard users can find this interaction in the tab order. For screen readers, be sure to announce what the actions are, how to complete them, and when they are completed by supplying the appropriate `role` and `aria-label` attributes.
