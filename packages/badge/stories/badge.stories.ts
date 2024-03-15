@@ -85,48 +85,26 @@ export const Semantic = (): TemplateResult => {
         <sp-badge variant="informative">Informative</sp-badge>
         <sp-badge variant="negative">Negative</sp-badge>
         <sp-badge variant="neutral">Neutral</sp-badge>
+        <sp-badge variant="notice">Notice</sp-badge>
     `;
 };
 
 export const NonSemantic = (): TemplateResult => {
     return html`
-        <sp-badge
-            variant="seafoam"
-            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-seafoam-600)"
-        >
-            Seafoam
-        </sp-badge>
-        <sp-badge
-            variant="indigo"
-            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-indigo-600)"
-        >
-            Indigo
-        </sp-badge>
-        <sp-badge
-            variant="purple"
-            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-purple-600)"
-        >
-            Purple
-        </sp-badge>
-        <sp-badge
-            variant="fuchsia"
-            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-fuchsia-600)"
-        >
-            Fuchsia
-        </sp-badge>
-        <sp-badge
-            variant="magenta"
-            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-magenta-600)"
-        >
-            Magenta
-        </sp-badge>
-        <sp-badge
-            variant="yellow"
-            static="black"
-            style="--mod-badge-background-color-default: var(--spectrum-alias-background-color-yellow-default)"
-        >
-            Yellow
-        </sp-badge>
+        <sp-badge variant="seafoam">Seafoam</sp-badge>
+        <sp-badge variant="indigo">Indigo</sp-badge>
+        <sp-badge variant="purple">Purple</sp-badge>
+        <sp-badge variant="fuchsia">Fuchsia</sp-badge>
+        <sp-badge variant="magenta">Magenta</sp-badge>
+        <sp-badge variant="yellow">Yellow</sp-badge>
+        <sp-badge variant="gray">Gray</sp-badge>
+        <sp-badge variant="red">Red</sp-badge>
+        <sp-badge variant="orange">Orange</sp-badge>
+        <sp-badge variant="chartreuse">Chartreuse</sp-badge>
+        <sp-badge variant="celery">Celery</sp-badge>
+        <sp-badge variant="green">Green</sp-badge>
+        <sp-badge variant="cyan">Cyan</sp-badge>
+        <sp-badge variant="blue">Blue</sp-badge>
     `;
 };
 

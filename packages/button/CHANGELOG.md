@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
+
+### Bug Fixes
+
+-   **button:** add missing progress-circle dependency ([#4086](https://github.com/adobe/spectrum-web-components/issues/4086)) ([2dfeeb3](https://github.com/adobe/spectrum-web-components/commit/2dfeeb3c5f1febec269fef00933cc65a1d0a0c43))
+
 ## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
 
 ### Bug Fixes

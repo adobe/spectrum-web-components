@@ -310,6 +310,7 @@ export const testEditableSlider = (type: string): void => {
                     pointerType: 'mouse',
                 })
             );
+
             await elementUpdated(el);
 
             expect(el.dragging, 'it is dragging 1').to.be.true;
@@ -340,6 +341,7 @@ export const testEditableSlider = (type: string): void => {
                     pointerType: 'mouse',
                 })
             );
+
             await elementUpdated(el);
 
             expect(el.dragging, 'it is dragging 2').to.be.true;

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
+
+### Bug Fixes
+
+-   **slider:** double click on slider handle to reset slider position ([#3991](https://github.com/adobe/spectrum-web-components/issues/3991)) ([64c594a](https://github.com/adobe/spectrum-web-components/commit/64c594a7c305bd4946bb5801341366a1e751a614))
+
 ## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
 
 ### Bug Fixes
