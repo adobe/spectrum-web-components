@@ -258,6 +258,7 @@ describe('Swatch Group', () => {
         el.selected = [selectedChild.value];
         await elementUpdated(el);
         await nextFrame();
+        await nextFrame();
 
         expect(selectedChild.selected).to.be.true;
 
@@ -320,6 +321,8 @@ describe('Swatch Group - DOM selected', () => {
             );
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
@@ -354,7 +357,7 @@ describe('Swatch Group - DOM selected', () => {
 
         expect(el.selected).to.deep.equal(['color-1', 'color-3']);
     });
-    it('merges `selected` and selection from DOM', async () => {
+    it('merges `selected` and selection from DOM', async function () {
         const el = await fixture<SwatchGroup>(html`
             <sp-swatch-group selects="multiple" .selected=${['color-1']}>
                 <sp-swatch value="color-0" color="red"></sp-swatch>
@@ -365,10 +368,12 @@ describe('Swatch Group - DOM selected', () => {
         `);
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
         expect(el.selected).to.deep.equal(['color-1', 'color-3']);
     });
-    it('lazily accepts selection from DOM', async () => {
+    it('lazily accepts selection from DOM', async function () {
         const el = await fixture<SwatchGroup>(html`
             <sp-swatch-group selects="multiple">
                 <sp-swatch value="color-0" color="red"></sp-swatch>
@@ -379,12 +384,16 @@ describe('Swatch Group - DOM selected', () => {
         `);
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
         const color1 = el.querySelector('[value="color-1"]') as Swatch;
 
         expect(el.selected).to.deep.equal(['color-3']);
 
         color1.selected = true;
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
         expect(el.selected).to.deep.equal(['color-3', 'color-1']);
     });
@@ -401,5 +410,46 @@ describe('Swatch Group - DOM selected', () => {
         el.selected = ['color-2'];
         await elementUpdated(el);
         expect(el.selected).to.deep.equal(['color-2']);
+    });
+});
+
+describe('Swatch Group - slotted', () => {
+    it('manages [selects="single"] selection through multiple slots', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <sp-swatch value="First">First</sp-swatch>
+                    <sp-swatch value="Second">Second</sp-swatch>
+                    <sp-swatch value="Third" selected>Third</sp-swatch>
+                </div>
+            `
+        );
+
+        const firstItem = test.querySelector('sp-swatch') as Swatch;
+        const thirdItem = test.querySelector('sp-swatch[selected]') as Swatch;
+
+        const shadowRoot = test.attachShadow({ mode: 'open' });
+        shadowRoot.innerHTML = `
+            <sp-swatch-group label="Selects Single Group" selects="single">
+                <slot></slot>
+            </sp-swatch-group>
+        `;
+
+        const el = shadowRoot.querySelector('sp-swatch-group') as SwatchGroup;
+        await elementUpdated(el);
+        // Await test slot change time.
+        await nextFrame();
+        await nextFrame();
+
+        expect(el.selected, '"Third" selected').to.deep.equal(['Third']);
+        expect(firstItem.selected).to.be.false;
+        expect(thirdItem.selected).to.be.true;
+
+        firstItem.click();
+        await elementUpdated(el);
+
+        expect(el.selected, '"First" selected').to.deep.equal(['First']);
+        expect(firstItem.selected).to.be.true;
+        expect(thirdItem.selected).to.be.false;
     });
 });
