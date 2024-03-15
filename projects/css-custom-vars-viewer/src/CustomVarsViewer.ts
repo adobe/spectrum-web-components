@@ -47,7 +47,6 @@ export interface Item extends TableItem {
     sets: {
         light: string;
         dark: string;
-        darkest: string;
         wireframe: string;
     };
 }
@@ -138,7 +137,6 @@ export class CustomVarsViewer extends SpectrumElement {
                 >
                     <sp-menu-item value="light">Light</sp-menu-item>
                     <sp-menu-item value="dark">Dark</sp-menu-item>
-                    <sp-menu-item value="darkest">Darkest</sp-menu-item>
                     <sp-menu-item value="wireframe">Wireframe</sp-menu-item>
                 </sp-picker>
             </div>

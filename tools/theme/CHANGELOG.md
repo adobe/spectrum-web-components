@@ -433,8 +433,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add "darkest" theme styles ([fe38025](https://github.com/adobe/spectrum-web-components/commit/fe38025))
-
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.1.1...@spectrum-web-components/theme@0.2.0) (2020-01-30)
 
 ### Bug Fixes

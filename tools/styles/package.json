@@ -23,13 +23,9 @@
         ".": "./src/spectrum-base.css.js",
         "./package.json": "./package.json",
         "./all-large-dark.css": "./all-large-dark.css",
-        "./all-large-darkest.css": "./all-large-darkest.css",
         "./all-large-light.css": "./all-large-light.css",
-        "./all-large-lightest.css": "./all-large-lightest.css",
         "./all-medium-dark.css": "./all-medium-dark.css",
-        "./all-medium-darkest.css": "./all-medium-darkest.css",
         "./all-medium-light.css": "./all-medium-light.css",
-        "./all-medium-lightest.css": "./all-medium-lightest.css",
         "./core-global.css": "./core-global.css",
         "./express/core-global.css": "./express/core-global.css",
         "./scale-large.css": "./scale-large.css",
@@ -38,12 +34,8 @@
         "./express/scale-medium.css": "./express/scale-medium.css",
         "./theme-dark.css": "./theme-dark.css",
         "./express/theme-dark.css": "./express/theme-dark.css",
-        "./theme-darkest.css": "./theme-darkest.css",
-        "./express/theme-darkest.css": "./express/theme-darkest.css",
         "./theme-light.css": "./theme-light.css",
         "./express/theme-light.css": "./express/theme-light.css",
-        "./theme-lightest.css": "./theme-lightest.css",
-        "./express/theme-lightest.css": "./express/theme-lightest.css",
         "./typography.css": "./typography.css",
         "./body.js": {
             "development": "./body.dev.js",
@@ -117,5 +109,5 @@
     "sideEffects": [
         "./**/*.css"
     ],
-    "style": "all-medium-lightest.css"
+    "style": "all-medium-light.css"
 }

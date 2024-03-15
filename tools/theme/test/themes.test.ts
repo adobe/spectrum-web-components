@@ -80,21 +80,6 @@ describe('Themes', () => {
     });
 });
 
-describe('Lightest', () => {
-    it('loads', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="lightest"></sp-theme>
-            `
-        );
-
-        await elementUpdated(el);
-
-        expect(el).to.exist;
-        expect(el).shadowDom.to.exist;
-    });
-});
-
 describe('Medium', () => {
     it('loads', async () => {
         const el = await fixture<Theme>(
