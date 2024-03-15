@@ -130,7 +130,7 @@ describe('Toast', () => {
             }
 
             await elementUpdated(el);
-            const icon = el.shadowRoot.querySelector(iconType) as HTFMLElement;
+            const icon = el.shadowRoot.querySelector(iconType) as HTMLElement;
             await expect(icon.getAttribute('label')).to.equal(defaultLabel);
         });
     });
