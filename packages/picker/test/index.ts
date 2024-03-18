@@ -48,6 +48,7 @@ import {
 import { M as pending } from '../stories/picker-pending.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
+    detectOS,
     ignoreResizeObserverLoopError,
     fixture as styledFixture,
 } from '../../../test/testing-helpers.js';
@@ -60,6 +61,7 @@ import '@spectrum-web-components/theme/src/themes.js';
 import type { Menu } from '@spectrum-web-components/menu';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 export type TestablePicker = { optionsMenu: Menu };
 
@@ -195,19 +197,53 @@ export function runPickerTests(): void {
                 </div>
             `);
             const el = test.querySelector('sp-picker') as Picker;
+            await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
-            type NamedNode = { name: string };
+            type NamedNode = { name: string; description: string };
             let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
                 children: NamedNode[];
             };
 
+            let name = 'Where do you live?';
+            const isWebKitLinux = isWebKit() && detectOS() === 'Linux';
+
+            // WebKit (in CI) doesn't currently associate the `name` via the accessibility tree.
+            // Instead if lists this data in the description 🤷🏻‍♂️
+            // Give it an escape hatch for now.
+            let node = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) =>
+                    node.name === name ||
+                    (isWebKitLinux && node.description === name)
+            );
+
             expect(
-                findAccessibilityNode<NamedNode>(
+                node,
+                `pre escape hatch node not available: ${JSON.stringify(
                     snapshot,
-                    (node) => node.name === 'Where do you live?'
-                ),
-                '`name` is the label text'
+                    null,
+                    '  '
+                )}`
             ).to.not.be.null;
+
+            if (isWebKitLinux) {
+                // Retest WebKit without the escape hatch, expecting it to fail.
+                // This way we get notified when the results are as expected, again.
+                const iOSNode = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === name
+                );
+                expect(
+                    iOSNode,
+                    `post escape hatch node available: ${JSON.stringify(
+                        snapshot,
+                        null,
+                        '  '
+                    )}`
+                ).to.be.null;
+            }
 
             el.value = 'option-2';
             await elementUpdated(el);
@@ -218,13 +254,42 @@ export function runPickerTests(): void {
                 children: NamedNode[];
             };
 
+            name = 'Select Inverse Where do you live?';
+
+            // WebKit doesn't currently associate the `name` via the accessibility tree.
+            // Give it an escape hatch for now.
+            node = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) =>
+                    node.name === name ||
+                    (isWebKitLinux && node.description === name)
+            );
+
             expect(
-                findAccessibilityNode<NamedNode>(
+                node,
+                `pre escape hatch node not available: ${JSON.stringify(
                     snapshot,
-                    (node) => node.name === 'Select Inverse Where do you live?'
-                ),
-                '`name` is the the selected item text plus the label text'
+                    null,
+                    '  '
+                )}`
             ).to.not.be.null;
+
+            if (isWebKitLinux) {
+                // Retest WebKit without the escape hatch, expecting it to fail.
+                // This way we get notified when the results are as expected, again.
+                const iOSNode = findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === name
+                );
+                expect(
+                    iOSNode,
+                    `post escape hatch node available: ${JSON.stringify(
+                        snapshot,
+                        null,
+                        '  '
+                    )}`
+                ).to.not.be.null;
+            }
         });
     });
     describe('standard', () => {
