@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { html } from '@spectrum-web-components/base';
 import {
     elementUpdated,
@@ -20,18 +19,36 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/button/sp-button.js';
-import { elsewhere } from '../stories/overlay-directive.stories.js';
+import { Overlay } from '@spectrum-web-components/overlay';
+import { Default, insertionOptions } from '../stories/overlay-directive.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture } from '../../../test/testing-helpers.js';
 
 describe('Overlay Directive', () => {
+    it('opens declaratively', async function() {
+        const test = await fixture<Button>(Default({ open: true }));
+        await oneEvent(test, 'sp-opened');
+
+        const el = test.nextElementSibling as Overlay;
+        
+        expect(el.open).to.be.true;
+    });
+    it('opens without options', async function() {
+        const test = await fixture<Button>(Default());
+        const opened = oneEvent(test, 'sp-opened');
+        test.click();
+        await opened;
+
+        const el = test.nextElementSibling as Overlay;
+        
+        expect(el.open).to.be.true;
+    });
     it('opens an Overlay after the trigger', async function () {
         const test = await fixture<HTMLElement>(html`
             <div
                 style="width: 100%; height: 100vh; display: grid; place-content: center;"
             >
-                ${elsewhere()}
+                ${insertionOptions()}
             </div>
         `);
 
@@ -111,7 +128,7 @@ describe('Overlay Directive', () => {
             <div
                 style="width: 100%; height: 100vh; display: grid; place-content: center;"
             >
-                ${elsewhere(elsewhere.args)}
+                ${insertionOptions(insertionOptions.args)}
             </div>
         `);
 
