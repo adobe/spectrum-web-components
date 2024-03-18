@@ -107,6 +107,10 @@
             "default": "./src/overlay-types.js"
         },
         "./src/overlay.css.js": "./src/overlay.css.js",
+        "./src/slottable-request-directive.js": {
+            "development": "./src/slottable-request-directive.dev.js",
+            "default": "./src/slottable-request-directive.js"
+        },
         "./src/slottable-request-event.js": {
             "development": "./src/slottable-request-event.dev.js",
             "default": "./src/slottable-request-event.js"
