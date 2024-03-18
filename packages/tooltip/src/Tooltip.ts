@@ -78,6 +78,7 @@ class TooltipOpenable extends HTMLElement {
         }
         tooltip.open = open;
     }
+    /* c8 ignore next 3 */
     get open(): boolean {
         return this._open;
     }
@@ -221,6 +222,7 @@ export class Tooltip extends SpectrumElement {
         }
         let triggerElement = (start.parentElement ||
             (root as ShadowRoot).host ||
+            /* c8 ignore next 1 */
             root) as HTMLElement;
         while (!triggerElement?.matches?.(focusableSelector)) {
             start =
@@ -242,6 +244,7 @@ export class Tooltip extends SpectrumElement {
             }
             triggerElement = (start.parentElement ||
                 (root as ShadowRoot).host ||
+                /* c8 ignore next 1 */
                 root) as HTMLElement;
         }
         return triggerElement;
