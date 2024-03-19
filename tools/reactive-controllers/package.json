@@ -72,6 +72,7 @@
         "reactive controllers"
     ],
     "dependencies": {
+        "colorjs.io": "^0.5.0",
         "lit": "^2.5.0"
     },
     "types": "./src/index.d.ts",

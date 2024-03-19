@@ -44,6 +44,7 @@ type StoryArgs = {
 export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
     return html`
         <sp-color-area
+            color="#ff0000"
             @input=${({ target }: Event & { target: ColorArea }) => {
                 const next = target.nextElementSibling as HTMLElement;
                 next.textContent = target.color as string;
@@ -55,6 +56,16 @@ export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
             }}
         ></sp-color-area>
         <div style="color: #ff0000" aria-live="off">#ff0000</div>
+    `;
+};
+
+export const appliedValues = (): TemplateResult => {
+    return html`
+        <sp-color-area
+            .color=${{ space: 'hsv', coords: [250, 90, 80] }}
+        ></sp-color-area>
+        <sp-color-area color="hsv(250, 90%, 80%)"></sp-color-area>
+        <sp-color-area hue="250" x="0.1" y="0.1"></sp-color-area>
     `;
 };
 
@@ -72,7 +83,7 @@ export const joint = (): TemplateResult => {
                 }}
             ></sp-color-area>
             <sp-color-slider
-                color="hsv(120 0% 1)"
+                color="hsv(120 0% 100%)"
                 @input=${({
                     target: {
                         color,
