@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import darkStyles from './src/theme-dark-tokens-version.css.js';
-import { Theme } from './src/Theme.js';
-import './core-tokens-version.js';
+import mediumStyles from '../src/express/scale-medium-core-tokens.css.js';
+import { Theme } from '../src/Theme.js';
+import '../src/express/core-core-tokens.js';
 
-Theme.registerThemeFragment('dark', 'color', darkStyles);
+Theme.registerThemeFragment('medium-express', 'scale', mediumStyles);

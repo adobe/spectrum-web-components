@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import lightStyles from '../src/express/theme-light-tokens-version.css.js';
-import { Theme } from '../src/Theme.js';
-import '../src/express/core-tokens-version.js';
-
-Theme.registerThemeFragment('lightest-express', 'color', lightStyles);
+import '../../express/theme-light-core-tokens.js';
+import '../../express/theme-lightest-core-tokens.js';
+import '../../express/theme-dark-core-tokens.js';
+import '../../express/theme-darkest-core-tokens.js';
+import '../../express/scale-medium-core-tokens.js';
+import '../../express/scale-large-core-tokens.js';

@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../theme-light-tokens-version.js';
-import '../theme-lightest-tokens-version.js';
-import '../theme-dark-tokens-version.js';
-import '../theme-darkest-tokens-version.js';
-import '../scale-medium-tokens-version.js';
-import '../scale-large-tokens-version.js';
+import '../theme-light-core-tokens.js';
+import '../theme-lightest-core-tokens.js';
+import '../theme-dark-core-tokens.js';
+import '../theme-darkest-core-tokens.js';
+import '../scale-medium-core-tokens.js';
+import '../scale-large-core-tokens.js';

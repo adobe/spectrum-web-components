@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Theme } from './src/Theme.js';
+import { Theme } from '../Theme.js';
 
-import coreStyles from './src/theme-tokens-version.css.js';
-Theme.registerThemeFragment('spectrum', 'theme', coreStyles);
+import coreStyles from './theme-core-tokens.css.js';
+
+Theme.registerThemeFragment('express', 'theme', coreStyles);
