@@ -214,10 +214,8 @@ export const form = (
                 <style>
                     #form-fields div {
                         display: grid;
-                        row-gap: var(--spectrum-global-dimension-size-150);
+                        row-gap: calc(var(--swc-scale-factor) * 12px);
                         grid-template-columns: auto auto;
-
-                        --spectrum-fieldlabel-m-side-padding-right: 0;
                     }
                 </style>
                 <div>

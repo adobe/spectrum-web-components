@@ -70,8 +70,8 @@ class StyledElement extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    background-color: var(--spectrum-global-color-gray-50);
-                    color: var(--spectrum-global-color-gray-800);
+                    background-color: var(--spectrum-gray-50);
+                    color: var(--spectrum-gray-800);
                     border: 1px solid;
                     padding: 2em;
                 }

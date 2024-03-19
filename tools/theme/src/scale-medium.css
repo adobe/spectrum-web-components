@@ -14,3 +14,9 @@ governing permissions and limitations under the License.
 @import url('@spectrum-web-components/styles/tokens/medium-vars.css');
 @import url('@spectrum-web-components/styles/tokens/spectrum/custom-medium-vars.css');
 @import url('@spectrum-web-components/styles/tokens/spectrum/medium-vars.css');
+
+:root,
+:host {
+    --spectrum-global-alias-appframe-border-size: 2px;
+    --swc-scale-factor: 1;
+}

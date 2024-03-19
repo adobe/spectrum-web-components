@@ -18,6 +18,6 @@ governing permissions and limitations under the License.
    * .spectrum-StatusLight[disabled]:before */
     background-color: var(
         --spectrum-statuslight-dot-color-disabled,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-gray-400)
     );
 }

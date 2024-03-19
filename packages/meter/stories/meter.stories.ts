@@ -19,13 +19,28 @@ export default {
     component: 'sp-meter',
 };
 
-const makeOverBackground = (story: TemplateResult): TemplateResult => html`
-    <div
-        style="background-color: var(--spectrum-global-color-seafoam-600); color: var(--spectrum-global-color-seafoam-600); padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250); display: inline-block"
-    >
-        ${story}
-    </div>
-`;
+const makeOverBackground =
+    (variant?: 'white' | 'black') =>
+    (story: () => TemplateResult): TemplateResult => {
+        const color =
+            variant === 'black'
+                ? 'rgb(181, 209, 211)'
+                : 'var(--spectrum-seafoam-900)';
+        return html`
+            <div
+                style="
+                    --mod-actionbutton-static-content-color: ${color};
+                    --mod-button-static-content-color: ${color};
+                    background-color: ${color};
+                    color: ${color};
+                    padding: var(--spectrum-font-size-100) var(--spectrum-font-size-400);
+                    display: inline-block;
+                "
+            >
+                ${story()}
+            </div>
+        `;
+    };
 
 export const sideLabel = (): TemplateResult => {
     return html`
@@ -52,9 +67,10 @@ export const positive = (): TemplateResult => {
 };
 
 export const staticWhite = (): TemplateResult => {
-    return makeOverBackground(
-        html`
-            <sp-meter static="white" progress="50">Storage Space</sp-meter>
-        `
+    return makeOverBackground('white')(
+        (): TemplateResult =>
+            html`
+                <sp-meter static="white" progress="50">Storage Space</sp-meter>
+            `
     );
 };
