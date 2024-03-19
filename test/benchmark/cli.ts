@@ -205,8 +205,8 @@ $ node test/benchmark/cli -n 20
                     dirEntry.isFile() &&
                     dirEntry.name.endsWith('.js') &&
                     (!opts.filter.length ||
-                        opts.filter.find(
-                            (filter) => dirEntry.name.search(filter) > -1
+                        opts.filter.find((filter) =>
+                            dirEntry.name.includes(filter)
                         ))
             )
             .map((dirEntry) => dirEntry.name.replace(/\.js$/, ''));
