@@ -12,6 +12,6 @@ governing permissions and limitations under the License.
 
 import lightStyles from '../src/express/theme-light-core-tokens.css.js';
 import { Theme } from '../src/Theme.js';
-import '../src/express/core-core-tokens.js';
+import '../src/express/core-tokens.js';
 
 Theme.registerThemeFragment('light-express', 'color', lightStyles);

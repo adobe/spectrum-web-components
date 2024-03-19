@@ -12,6 +12,6 @@ governing permissions and limitations under the License.
 
 import darkStyles from './src/theme-dark-core-tokens.css.js';
 import { Theme } from './src/Theme.js';
-import './core-core-tokens.js';
+import './core-tokens.js';
 
 Theme.registerThemeFragment('dark', 'color', darkStyles);

@@ -646,7 +646,7 @@ export const deepNesting = (): TemplateResult => {
                     style="
                         background-color: var(--spectrum-gray-100);
                         color: var(--spectrum-gray-800);
-                        padding: var(--spectrum-global-dimension-size-225, 22px);
+                        padding: calc(var(--swc-scale-factor) * 22px);
                     "
                 ></recursive-popover>
             </sp-theme>

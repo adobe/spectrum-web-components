@@ -11,19 +11,21 @@ By default, Spectrum Web Component themes support both the Spectrum Vars and Spe
 yarn add @spectrum-web-components/theme
 ```
 
-Import the side effectful registration of `<sp-thtme>` via:
+Import the side effectful registration of `<sp-theme>` via:
 
-```
+```js
 import '@spectrum-web-components/theme/sp-theme.js';
 ```
 
-Import all specific Core Tokens-only theme files based on the system in which you deliver your application:
+The various theme files within the Spectrum system can be imported as follows:
 
-```
+```js
 import '@spectrum-web-components/theme/src/themes-core-tokens.js';
+```
 
-// ...OR...
+If you leverage the Express system, the same files in that context can be imported from:
 
+```js
 import '@spectrum-web-components/theme/src/express/themes-core-tokens.js';
 ```
 
@@ -31,7 +33,7 @@ import '@spectrum-web-components/theme/src/express/themes-core-tokens.js';
 
 You can import specific color and scale data individually:
 
-```
+```js
 import '@spectrum-web-components/theme/theme-darkest-core-tokens.js';
 import '@spectrum-web-components/theme/theme-dark-core-tokens.js';
 import '@spectrum-web-components/theme/theme-light-core-tokens.js';

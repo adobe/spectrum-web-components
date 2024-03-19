@@ -104,9 +104,9 @@
             "development": "./express/theme-lightest.dev.js",
             "default": "./express/theme-lightest.js"
         },
-        "./src/express/core-core-tokens.js": {
-            "development": "./src/express/core-core-tokens.dev.js",
-            "default": "./src/express/core-core-tokens.js"
+        "./src/express/core-tokens.js": {
+            "development": "./src/express/core-tokens.dev.js",
+            "default": "./src/express/core-tokens.js"
         },
         "./src/express/core.js": {
             "development": "./src/express/core.dev.js",
