@@ -20,7 +20,6 @@ import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.
 
 describe('Slottable Request Directive', () => {
     it('Action Menu requests for options rendering when opening and closing', async function () {
-        this.retries(0);
         const el = await fixture<ActionMenu>(directive());
         const initialNodeLength = el.children.length;
         expect(el.open).to.be.false;

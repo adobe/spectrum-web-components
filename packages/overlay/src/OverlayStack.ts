@@ -180,14 +180,14 @@ class OverlayStack {
             );
             overlay.dispatchEvent(queryPathEvent);
         } else if (overlay.type === 'hint') {
-            const previous = this.stack.find((overlayEl) => {
+            const hasPrevious = this.stack.some((overlayEl) => {
                 return (
                     overlayEl.type !== 'manual' &&
                     overlayEl.triggerElement &&
                     overlayEl.triggerElement === overlay.triggerElement
                 );
             });
-            if (previous) {
+            if (hasPrevious) {
                 overlay.open = false;
                 return;
             }

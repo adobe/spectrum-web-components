@@ -232,16 +232,12 @@ const template = ({
 export const Default = ({ open }: Properties = {}): TemplateResult => {
     const renderPopover = (): TemplateResult => html`
         <sp-popover>
-            <p>Popover content goes here</p>
+            <sp-dialog no-divider>Popover content goes here</sp-dialog>
         </sp-popover>
     `;
-    const options = typeof open !== 'undefined'
-        ? { open }
-        : undefined;
+    const options = typeof open !== 'undefined' ? { open } : undefined;
     return html`
-        <sp-button
-            ${trigger(renderPopover, options)}
-        >Open Popover</sp-button>
+        <sp-button ${trigger(renderPopover, options)}>Open Popover</sp-button>
     `;
 };
 
