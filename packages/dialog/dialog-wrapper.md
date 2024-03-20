@@ -1,6 +1,6 @@
 ## Description
 
-`sp-dialog-wrapper` supplies an attribute based interface for the managed custmization of an `sp-dialog` element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an `sp-underlay` element between your page content and the `sp-dialog` that opens over it.
+`sp-dialog-wrapper` supplies an attribute based interface for the managed customization of an `sp-dialog` element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an `sp-underlay` element between your page content and the `sp-dialog` that opens over it.
 
 ### Usage
 
@@ -34,6 +34,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
         slot="click-content"
         headline="Dialog title"
         dismissable
+        dismiss-label="Close"
         underlay
         footer="Content for footer"
     >
