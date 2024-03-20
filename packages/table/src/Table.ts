@@ -471,6 +471,8 @@ export class Table extends SizedMixin(SpectrumElement, {
     protected override updated(): void {
         if (this.items.length) {
             this.renderVirtualizedItems();
+        } else {
+            this.removeAttribute('aria-rowcount');
         }
     }
 
