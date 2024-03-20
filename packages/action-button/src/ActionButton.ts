@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
     DefaultElementSize,
     html,
     PropertyValues,
@@ -53,9 +52,11 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
     noDefaultSize: true,
 }) {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles, cornerTriangleStyles];
-    }
+    public static override styles = [
+        ...super.styles,
+        buttonStyles,
+        cornerTriangleStyles,
+    ];
 
     @property({ type: Boolean, reflect: true })
     public emphasized = false;

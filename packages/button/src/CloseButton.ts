@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
     html,
     SizedMixin,
     TemplateResult,
@@ -62,9 +61,11 @@ const crossIcon: Record<string, () => TemplateResult> = {
 export class CloseButton extends SizedMixin(StyledButton, {
     noDefaultSize: true,
 }) {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles, crossMediumStyles];
-    }
+    public static override styles = [
+        ...super.styles,
+        buttonStyles,
+        crossMediumStyles,
+    ];
 
     /**
      * The visual variant to apply to this button.

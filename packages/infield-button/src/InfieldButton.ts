@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    CSSResultArray,
     html,
     SizedMixin,
     TemplateResult,
@@ -27,9 +26,7 @@ export class InfieldButton extends SizedMixin(ButtonBase, {
     noDefaultSize: true,
     validSizes: ['s', 'm', 'l', 'xl'],
 }) {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles, styles];
-    }
+    public static override styles = [...super.styles, styles];
 
     /**
      * Whether to style the button as if it is at the start or end of a vertical stack

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
     html,
     PropertyValues,
     SizedMixin,
@@ -50,9 +49,7 @@ export type ButtonTreatments = 'fill' | 'outline';
  * @slot icon - The icon to use for Button
  */
 export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles];
-    }
+    public static override styles = [...super.styles, buttonStyles];
 
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';

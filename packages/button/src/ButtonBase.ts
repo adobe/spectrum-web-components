@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
     html,
     PropertyValues,
     TemplateResult,
@@ -32,9 +31,7 @@ import buttonStyles from './button-base.css.js';
 export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     'sp-overlay,sp-tooltip',
 ]) {
-    public static override get styles(): CSSResultArray {
-        return [buttonStyles];
-    }
+    public static override styles = [buttonStyles];
 
     @property({ type: Boolean, reflect: true })
     public active = false;

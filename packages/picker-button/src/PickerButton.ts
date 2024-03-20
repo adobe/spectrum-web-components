@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    CSSResultArray,
     DefaultElementSize,
     html,
     SizedMixin,
@@ -38,9 +37,7 @@ const chevronClass = {
 export class PickerButton extends SizedMixin(
     ObserveSlotPresence(ButtonBase, '[slot="label"]')
 ) {
-    public static override get styles(): CSSResultArray {
-        return [styles, chevronStyles];
-    }
+    public static override styles = [styles, chevronStyles];
 
     @property({ type: Boolean, reflect: true })
     invalid = false;
