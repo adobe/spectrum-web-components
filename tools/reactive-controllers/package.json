@@ -45,9 +45,13 @@
             "development": "./src/MatchMedia.dev.js",
             "default": "./src/MatchMedia.js"
         },
-        "./src/SpectrumTwoDelegates.js": {
-            "development": "./src/SpectrumTwoDelegates.dev.js",
-            "default": "./src/SpectrumTwoDelegates.js"
+        "./src/SpectrumDelegates.js": {
+            "development": "./src/SpectrumDelegates.dev.js",
+            "default": "./src/SpectrumDelegates.js"
+        },
+        "./src/delegate-controllers/DownStateController.js": {
+            "development": "./src/delegate-controllers/DownStateController.dev.js",
+            "default": "./src/delegate-controllers/DownStateController.js"
         },
         "./src/RovingTabindex.js": {
             "development": "./src/RovingTabindex.dev.js",
