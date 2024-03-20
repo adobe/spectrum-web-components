@@ -62,7 +62,7 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
     public dismissable = false;
 
     @property({ type: String, reflect: true, attribute: 'dismiss-label' })
-    public dismissLabel = '';
+    public dismissLabel = 'Close';
 
     protected get hasFooter(): boolean {
         return this.getSlotContentPresence('[slot="footer"]');

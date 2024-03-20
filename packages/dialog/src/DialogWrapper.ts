@@ -51,7 +51,7 @@ export class DialogWrapper extends DialogBase {
     public confirmLabel = '';
 
     @property({ attribute: 'dismiss-label' })
-    public dismissLabel = '';
+    public dismissLabel = 'Close';
 
     @property()
     public footer = '';
