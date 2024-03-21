@@ -19,23 +19,11 @@
         box-sizing: border-box;
         width: 100%;
         min-height: 100vh;
-        background-color: var(--spectrum-global-color-gray-100);
-        color: var(
-            --spectrum-body-text-color,
-            var(--spectrum-alias-text-color)
-        );
+        background-color: var(--spectrum-gray-100);
+        color: var(--spectrum-body-color);
     }
     .sbdocs-preview #root-theme {
         width: 100%;
         min-height: 200px;
     }
 </style>
-<script>
-    // Needed while tachometer does not surface support for export conditions.
-    // @floating-ui/core leverages `process.env.NODE_ENV` in their 'default' export.
-    window.process = window.process || {
-        env: {
-            NODE_ENV: 'production',
-        },
-    };
-</script>

@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **action-group:** manage Action Button selection through multiple slots ([4d02b46](https://github.com/adobe/spectrum-web-components/commit/4d02b469ffee693d23b67e68b1b63ad0b5c5eccc))
+-   allowing split view to have a custom aria label ([#4155](https://github.com/adobe/spectrum-web-components/issues/4155)) ([d9abed7](https://github.com/adobe/spectrum-web-components/commit/d9abed716633b10fa3e985e91239f4ebad3f6c91))
+-   **badge:** expand and update variant availability and mod override usage ([#4162](https://github.com/adobe/spectrum-web-components/issues/4162)) ([19e1a49](https://github.com/adobe/spectrum-web-components/commit/19e1a49079f67d5946a6779bd70838b69c726c4a))
+-   **button:** prevent pointer interaction of child/slotted content ([2cd5823](https://github.com/adobe/spectrum-web-components/commit/2cd5823649f71ca849df0eb39d01d64034a4af70))
+-   **color-field:** added missing dependencies ([#4141](https://github.com/adobe/spectrum-web-components/issues/4141)) ([b3bb23a](https://github.com/adobe/spectrum-web-components/commit/b3bb23a68958e728b2133dc5e5d309b8975f6da9))
+-   **menu:** release synthetic "click" promise to unblock keyboard interactions ([f8aecf3](https://github.com/adobe/spectrum-web-components/commit/f8aecf33cfa94ee1e1b791dc203fc46ead84eb10))
+-   **overlay:** prevent focus based hover interaction without :focus-visible ([79337ff](https://github.com/adobe/spectrum-web-components/commit/79337ff0c8df69203877732ce0541d9f1d49f33d))
+-   **overlay:** prioritize non-"hint" Overlays on the same trigger ([b9833f3](https://github.com/adobe/spectrum-web-components/commit/b9833f3e22cfc89c34a98bd235c30f207b013781))
+-   **picker:** add loading state to the picker ([#3110](https://github.com/adobe/spectrum-web-components/issues/3110)) ([d91e2c9](https://github.com/adobe/spectrum-web-components/commit/d91e2c9f3530c3c911832ea3a401fddc23e7854a))
+-   **picker:** allow open/close in tablet ([dcfc96e](https://github.com/adobe/spectrum-web-components/commit/dcfc96e779c0dd6005f4697450d1edcf7809e8ea))
+-   **picker:** correctly process the CSS for the quiet hover effect ([#4167](https://github.com/adobe/spectrum-web-components/issues/4167)) ([eb282fa](https://github.com/adobe/spectrum-web-components/commit/eb282fad1d1b4f5e7c2bce65df6ca56f46e6870e))
+-   **progress-bar:** remove aria-label only if set by label and label is empty; add tests ([d351451](https://github.com/adobe/spectrum-web-components/commit/d351451bba6be99eeddbf9fe55a29104fd86d809))
+-   **progress-circle:** remove aria-label only when set by label and changed label is empty ([cdd181a](https://github.com/adobe/spectrum-web-components/commit/cdd181abec29d90b6adea24569b05400f931b3ae))
+-   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+-   **swatch:** allow Swatch Group to manage selection through multiple slots ([f333379](https://github.com/adobe/spectrum-web-components/commit/f3333795070c009523c4af750480ae288e17091f))
+-   **tab-overflow:** improve tab navigation experience and support custom aria labels ([#4165](https://github.com/adobe/spectrum-web-components/issues/4165)) ([9c9bf95](https://github.com/adobe/spectrum-web-components/commit/9c9bf952cf2a1e4a0c5bc35e63e46f5d5bd6afe8))
+-   **theme:** deprecate lightest and darkest color stops ([#4179](https://github.com/adobe/spectrum-web-components/issues/4179)) ([0c01a66](https://github.com/adobe/spectrum-web-components/commit/0c01a66627bbc46b459bda7680c6dcb9ea9c1b66))
+-   **truncated:** add truncated package ([#4163](https://github.com/adobe/spectrum-web-components/issues/4163)) ([4ba0480](https://github.com/adobe/spectrum-web-components/commit/4ba0480e2c471d8bba14eb898963ab0dca2f2d5a))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
+### Reverts
+
+-   Revert "Truncated element (#4125)" (#4160) ([da88bbe](https://github.com/adobe/spectrum-web-components/commit/da88bbe416a3ee5a991acdbceec2d698222e5f6a)), closes [#4125](https://github.com/adobe/spectrum-web-components/issues/4125) [#4160](https://github.com/adobe/spectrum-web-components/issues/4160)
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 ### Bug Fixes

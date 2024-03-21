@@ -24,6 +24,14 @@ interface ItemSize {
     height: number;
 }
 
+const doCallbackAfterPaint = (cb: () => void): void => {
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            cb();
+        });
+    });
+};
+
 export class GridController<T extends HTMLElement>
     implements ReactiveController
 {
@@ -171,13 +179,6 @@ export class GridController<T extends HTMLElement>
     }
 
     protected handleFocusin = (event: FocusEvent): void => {
-        const doCallbackAfterPaint = (cb: () => void): void => {
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    cb();
-                });
-            });
-        };
         const scrollToFirst = (): void => this.host.scrollToIndex(0);
         const focusIntoGrid = (): void => {
             this.focus();

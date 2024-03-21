@@ -127,19 +127,19 @@ export default {
 };
 
 const colors = [
-    '--spectrum-global-color-gray-500',
-    '--spectrum-global-color-red-500',
-    '--spectrum-global-color-orange-500',
-    '--spectrum-global-color-yellow-500',
-    '--spectrum-global-color-chartreuse-500',
-    '--spectrum-global-color-celery-500',
-    '--spectrum-global-color-green-500',
-    '--spectrum-global-color-seafoam-500',
-    '--spectrum-global-color-blue-500',
-    '--spectrum-global-color-indigo-500',
-    '--spectrum-global-color-purple-500',
-    '--spectrum-global-color-fuchsia-500',
-    '--spectrum-global-color-magenta-500',
+    '--spectrum-gray-700',
+    '--spectrum-red-700',
+    '--spectrum-orange-700',
+    '--spectrum-yellow-700',
+    '--spectrum-chartreuse-700',
+    '--spectrum-celery-700',
+    '--spectrum-green-700',
+    '--spectrum-seafoam-700',
+    '--spectrum-blue-700',
+    '--spectrum-indigo-700',
+    '--spectrum-purple-700',
+    '--spectrum-fuchsia-700',
+    '--spectrum-magenta-700',
 ];
 
 const template = ({
@@ -194,17 +194,17 @@ export const selectsSingle = (args: Properties): TemplateResult =>
     template(args);
 selectsSingle.args = {
     selects: 'single',
-    selected: ['--spectrum-global-color-yellow-500'],
+    selected: ['--spectrum-yellow-500'],
 } as Properties;
 export const selectsMultiple = (args: Properties): TemplateResult =>
     template(args);
 selectsMultiple.args = {
     selects: 'multiple',
     selected: [
-        '--spectrum-global-color-celery-500',
-        '--spectrum-global-color-red-500',
-        '--spectrum-global-color-purple-500',
-        '--spectrum-global-color-blue-500',
+        '--spectrum-celery-500',
+        '--spectrum-red-500',
+        '--spectrum-purple-500',
+        '--spectrum-blue-500',
     ],
 } as Properties;
 export const borderLight = (args: Properties): TemplateResult => template(args);

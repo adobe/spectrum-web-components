@@ -31,6 +31,8 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
+import { sendKeys } from '@web/test-runner-commands';
+import { Button } from '@spectrum-web-components/button';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -209,6 +211,7 @@ describe('Overlay Trigger - Hover and Click', () => {
             <div>${deep()}</div>
         `);
         const el = test.querySelector('overlay-trigger') as OverlayTrigger;
+        const trigger = test.querySelector('sp-button') as Button;
         const button = el.querySelector('sp-action-button') as ActionButton;
         const button2 = el.querySelector(
             'sp-action-button:nth-of-type(2)'
@@ -219,10 +222,18 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(tooltip.open).to.be.false;
 
         const opened = oneEvent(el, 'sp-opened');
-        const tooltipOpen = oneEvent(button, 'sp-opened');
-        el.open = 'click';
+        trigger.focus();
+        // For `:focus-visible` heuristic.
+        await sendKeys({
+            press: 'Tab',
+        });
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+        await sendKeys({
+            press: 'Space',
+        });
         await opened;
-        await tooltipOpen;
 
         expect(el.open).to.equal('click');
         expect(tooltip.open).to.be.true;
@@ -235,7 +246,11 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(tooltip.open).to.be.true;
 
         let closed = oneEvent(button, 'sp-closed');
-        button2.focus();
+        expect(document.activeElement === button, `button focused`).to.be.true;
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(document.activeElement === button2, `button focused`).to.be.true;
         await closed;
 
         expect(el.open).to.equal('click');

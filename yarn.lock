@@ -4228,12 +4228,12 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@playwright/test@^1.41.2":
-  version "1.41.2"
-  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.41.2.tgz#bd9db40177f8fd442e16e14e0389d23751cdfc54"
-  integrity sha512-qQB9h7KbibJzrDpkXkYvsmiDJK14FULCCZgEcoe2AvFAS64oCirWTwzTlAYEbKaRxWs5TFesE1Na6izMv3HfGg==
+"@playwright/test@^1.42.1":
+  version "1.42.1"
+  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.42.1.tgz#9eff7417bcaa770e9e9a00439e078284b301f31c"
+  integrity sha512-Gq9rmS54mjBL/7/MvBaNOBwbfnh7beHvS6oS4srqXFcQHpQCV1+c8JXWE8VLPyRDhgS3H8x8A7hztqI9VnwrAQ==
   dependencies:
-    playwright "1.41.2"
+    playwright "1.42.1"
 
 "@pnpm/network.ca-file@^1.0.1":
   version "1.0.1"
@@ -5137,9 +5137,9 @@
   integrity sha512-nNn8CXP5FUzO84hEO33DLxfHp+3XTTvozC2pyepVQgEAan6QEhGCoYiV+9/tMqmELWOuTsecONWgMZ8tcBaZzw==
 
 "@spectrum-css/combobox@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.5.tgz#b8a62e5094f9eb973eb6cab7079b4fcf96d1afc5"
-  integrity sha512-wmgqaUmWmtLc0fZqjubMiRA3jv6y2yK+lqX0GUvqoFQjAn4DIdgtwu+GK8XHbIOF2N/i+U3BExT0NRAmaOPEGw==
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.1.6.tgz#39e5f849a6eacd845069352a3ce02105ded4faab"
+  integrity sha512-vemm0kZ9nW/aUs9y5ldqwW3Jvq5KA9EaZ5IsWUCUWwhXROncjlXZ4MhaYfcEIxO4kNVyb4fIT6Alaswup2z2nw==
 
 "@spectrum-css/commons@^9.1.2":
   version "9.1.2"
@@ -5232,9 +5232,9 @@
   integrity sha512-k3UUuIV6MGk7pCJYIa3bmFlP9bUilsZjVJvVO1Sxrrf5VzckHQf6y+vDKn+KKbGqluU0dZTXq3CyzyhBX6OfMw==
 
 "@spectrum-css/progressbar@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.1.4.tgz#6ddefad16bd91afd21f30448308c70821a3decbc"
-  integrity sha512-MtIyTd2CBuYPt4vaixkyIT8WUvBMuU3dnQR3LUHCoRZgsAs94nMc/6OsrRd6yRFhD4c77vOdOa0sfyrqLfZhFg==
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.1.5.tgz#bef497e05aef133876d124043f2e44dcc47271b2"
+  integrity sha512-oAqxKtELLG7vw0b6H90r22e8cot9LYJ+a1J9unbzrW4FsoiC4fKv/KavP13BcjM4kbJwMFRPukv+WuEpHPyZtg==
 
 "@spectrum-css/progresscircle@^2.2.2":
   version "2.2.2"
@@ -5372,7 +5372,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.41.2"
+  version "0.42.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.17"
@@ -13183,15 +13183,10 @@ folder-walker@3.2.0:
   dependencies:
     from2 "^2.1.0"
 
-follow-redirects@^1.0.0:
-  version "1.15.4"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.4.tgz#cdc7d308bf6493126b17ea2191ea0ccf3e535adf"
-  integrity sha512-Cr4D/5wlrb0z9dgERpUL3LrmPKVDsETIJhaCMeDfuFYcqa5bldGV6wBsAN6X/vxlXQtFBMrXdXxdL8CbDTGniw==
-
-follow-redirects@^1.15.4:
-  version "1.15.5"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
-  integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
+follow-redirects@^1.0.0, follow-redirects@^1.15.4:
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
+  integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
 
 for-each@^0.3.3:
   version "0.3.3"
@@ -21110,17 +21105,17 @@ pkg-up@^4.0.0:
   dependencies:
     find-up "^6.2.0"
 
-playwright-core@1.41.2:
-  version "1.41.2"
-  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.41.2.tgz#db22372c708926c697acc261f0ef8406606802d9"
-  integrity sha512-VaTvwCA4Y8kxEe+kfm2+uUUw5Lubf38RxF7FpBxLPmGe5sdNkSg5e3ChEigaGrX7qdqT3pt2m/98LiyvU2x6CA==
+playwright-core@1.42.1:
+  version "1.42.1"
+  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.42.1.tgz#13c150b93c940a3280ab1d3fbc945bc855c9459e"
+  integrity sha512-mxz6zclokgrke9p1vtdy/COWBH+eOZgYUVVU34C73M+4j4HLlQJHtfcqiqqxpP0o8HhMkflvfbquLX5dg6wlfA==
 
-playwright@1.41.2, playwright@^1.22.2:
-  version "1.41.2"
-  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.41.2.tgz#4e760b1c79f33d9129a8c65cc27953be6dd35042"
-  integrity sha512-v0bOa6H2GJChDL8pAeLa/LZC4feoAMbSQm1/jF/ySsWWoaNItvrMP7GEkvEEFyCTUYKMxjQKaTSg5up7nR6/8A==
+playwright@1.42.1, playwright@^1.22.2:
+  version "1.42.1"
+  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.42.1.tgz#79c828b51fe3830211137550542426111dc8239f"
+  integrity sha512-PgwB03s2DZBcNRoW+1w9E+VkLBxweib6KTXM0M3tkiT4jVxKSi6PmVJ591J+0u10LUrgxB7dLRbiJqO5s2QPMg==
   dependencies:
-    playwright-core "1.41.2"
+    playwright-core "1.42.1"
   optionalDependencies:
     fsevents "2.3.2"
 

@@ -31,6 +31,9 @@ updates:
                   - '@11ty/*'
                   - 'eleventy'
                   - 'eleventy-plugin-*'
+          spectrumcss-ecosystem:
+              patterns:
+                  - '@spectrum-css/*'
 
     - package-ecosystem: 'github-actions'
       directory: '/'

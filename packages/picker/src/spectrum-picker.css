@@ -649,7 +649,7 @@ governing permissions and limitations under the License.
     );
 }
 
-#button.is-loading .picker {
+:host([pending]) #button .picker {
     color: var(
         --highcontrast-picker-content-color-disabled,
         var(
@@ -713,7 +713,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([open]) #button:not(.spectrum-Picker--quiet) {
+:host([open]:not([quiet])) #button {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -737,7 +737,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([open]) #button:not(.spectrum-Picker--quiet) .picker {
+:host([open]:not([quiet])) #button .picker {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -848,7 +848,7 @@ governing permissions and limitations under the License.
 }
 
 .validation-icon,
-#button .spectrum-ProgressCircle {
+#button .progress-circle {
     margin-inline-start: var(
         --mod-picker-spacing-text-to-alert-icon-inline-start,
         var(--spectrum-picker-spacing-text-to-alert-icon-inline-start)
@@ -872,7 +872,7 @@ governing permissions and limitations under the License.
     );
 }
 
-#button .spectrum-ProgressCircle {
+#button .progress-circle {
     margin-block-start: calc(
         var(
                 --mod-picker-spacing-top-to-progress-circle,
@@ -969,7 +969,7 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([open]) #button:not(.spectrum-Picker--quiet):hover .picker {
+    :host([open]:not([quiet])) #button:hover .picker {
         color: var(
             --highcontrast-picker-content-color-default,
             var(
@@ -1013,7 +1013,7 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([open]) #button:not(.spectrum-Picker--quiet):hover {
+    :host([open]:not([quiet])) #button:hover {
         color: var(
             --highcontrast-picker-content-color-default,
             var(
