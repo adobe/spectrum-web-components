@@ -55,6 +55,7 @@ export type Color =
     | 'dark-express'
     | 'darkest-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
+export type ThemeVariant = 'spectrum' | 'express';
 export type SystemVariant = 'spectrum' | 'express' | 'spectrum-two';
 const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
@@ -74,6 +75,7 @@ export interface ThemeData {
     color?: Color;
     scale?: Scale;
     lang?: string;
+    theme?: ThemeVariant;
     system?: SystemVariant;
 }
 
@@ -148,7 +150,15 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
-        } else if (attrName === 'system' || attrName === 'theme') {
+        } else if (attrName === 'theme') {
+            this.theme = value as ThemeVariant;
+            window.__swc.warn(
+                this,
+                'proprety theme in <sp-theme> has been deprecated. Plesae use system instead like this <sp-theme system="spectrum"></sp-theme>',
+                'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
+                { level: 'deprecation' }
+            );
+        } else if (attrName === 'system') {
             this.system = value as SystemVariant;
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
@@ -176,7 +186,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @attr
      */
     get system(): SystemVariant | '' {
-        const themeFragments = Theme.themeFragmentsByKind.get('system');
+        const themeFragments =
+            Theme.themeFragmentsByKind.get('system') ||
+            Theme.themeFragmentsByKind.get('theme');
         const { name } =
             (themeFragments && themeFragments.get('default')) || {};
         return this._system || (name as SystemVariant) || '';
@@ -195,9 +207,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         if (system) {
             this.setAttribute('system', system);
             /* c8 ignore next 3 */
-        } else {
-            this.removeAttribute('system');
-            this.removeAttribute('theme');
         }
     }
 
@@ -205,6 +214,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
      */
     get theme(): SystemVariant | '' {
+        if (!this.system) {
+            this.removeAttribute('system');
+        }
         return this.system;
     }
 
@@ -328,7 +340,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 actualValue?: string
             ): void => {
                 const systemModifier =
-                    this.system && this.system !== 'spectrum'
+                    this.system &&
+                    !['spectrum', 'spectrum-two'].includes(this.system)
                         ? `-${this.system}`
                         : '';
                 if (!resolvedValue) {
