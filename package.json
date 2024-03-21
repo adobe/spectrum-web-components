@@ -339,6 +339,7 @@
             "files": [
                 "packages/icons-workflow/bin/build.js",
                 "packages/icons-workflow/bin/postbuild.js",
+                "node_modules/@adobe/spectrum-css-workflow-icons/dist/icons.json",
                 "node_modules/@adobe/spectrum-css-workflow-icons/dist/18/**.svg",
                 "node_modules/@adobe/spectrum-css-ccx-workflow-icons/dist/18/**.svg"
             ],

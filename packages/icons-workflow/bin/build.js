@@ -26,6 +26,7 @@ const rootDir = path.join(__dirname, '../../../');
 const iconsPath = process.argv.slice(2)[0];
 const keepColors = process.argv.slice(2)[1];
 const theme = process.argv.slice(2)[1] ?? '';
+const spectrumIconsMap = {};
 
 const setupDirectoryStructure = () => {
     if (
@@ -71,6 +72,20 @@ const setupDirectoryStructure = () => {
             { recursive: true }
         );
     }
+};
+
+/**
+ * Do not export any other icon which does not have a Spectrum equivalent.
+ */
+const setAllowedIcons = () => {
+    const availableSpectrumIcons = fs.readFileSync(
+        `${rootDir}/node_modules/@adobe/spectrum-css-workflow-icons/dist/icons.json`,
+        'utf-8'
+    );
+    const spectrumIcons = JSON.parse(availableSpectrumIcons);
+    spectrumIcons.forEach((icon) => {
+        spectrumIconsMap[icon] = true;
+    });
 };
 
 const getIconId = (svgPath) => {
@@ -243,6 +258,10 @@ const getIconRegistrationPath = ({ elementName }, extension = 'ts') => {
 // Build start
 setupDirectoryStructure();
 
+if (theme) {
+    setAllowedIcons();
+}
+
 const icons = (await fg(`${rootDir}/node_modules/${iconsPath}/**.svg`)).sort();
 
 icons.forEach((i) => {
@@ -258,6 +277,11 @@ icons.forEach((i) => {
     };
 
     if (!Number.isNaN(Number(icon.componentName[0]))) {
+        return;
+    }
+
+    // Skip any icon which does not have a Spectrum classic equivalent
+    if (theme && !spectrumIconsMap[`${icon.id}.svg`]) {
         return;
     }
 

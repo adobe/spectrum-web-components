@@ -572,26 +572,6 @@
             "express": "./icons/express/sp-icon-zoom-out.js",
             "default": "./icons/sp-icon-zoom-out.js"
         },
-        "./icons/sp-icon-discover.js": {
-            "types": "./icons/express/sp-icon-discover.d.ts",
-            "default": "./icons/express/sp-icon-discover.js"
-        },
-        "./icons/sp-icon-folder-breadcrumb.js": {
-            "types": "./icons/express/sp-icon-folder-breadcrumb.d.ts",
-            "default": "./icons/express/sp-icon-folder-breadcrumb.js"
-        },
-        "./icons/sp-icon-resolved-comment.js": {
-            "types": "./icons/express/sp-icon-resolved-comment.d.ts",
-            "default": "./icons/express/sp-icon-resolved-comment.js"
-        },
-        "./icons/sp-icon-unresolved-comment.js": {
-            "types": "./icons/express/sp-icon-unresolved-comment.d.ts",
-            "default": "./icons/express/sp-icon-unresolved-comment.js"
-        },
-        "./icons/sp-icon-video.js": {
-            "types": "./icons/express/sp-icon-video.d.ts",
-            "default": "./icons/express/sp-icon-video.js"
-        },
         "./src/elements/IconAdd.js": {
             "express": "./src/express/elements/IconAdd.js",
             "default": "./src/elements/IconAdd.js"
@@ -1140,26 +1120,6 @@
             "express": "./src/express/elements/IconZoomOut.js",
             "default": "./src/elements/IconZoomOut.js"
         },
-        "./src/elements/IconDiscover.js": {
-            "types": "./src/express/elements/IconDiscover.d.ts",
-            "default": "./src/express/elements/IconDiscover.js"
-        },
-        "./src/elements/IconFolderBreadcrumb.js": {
-            "types": "./src/express/elements/IconFolderBreadcrumb.d.ts",
-            "default": "./src/express/elements/IconFolderBreadcrumb.js"
-        },
-        "./src/elements/IconResolvedComment.js": {
-            "types": "./src/express/elements/IconResolvedComment.d.ts",
-            "default": "./src/express/elements/IconResolvedComment.js"
-        },
-        "./src/elements/IconUnresolvedComment.js": {
-            "types": "./src/express/elements/IconUnresolvedComment.d.ts",
-            "default": "./src/express/elements/IconUnresolvedComment.js"
-        },
-        "./src/elements/IconVideo.js": {
-            "types": "./src/express/elements/IconVideo.d.ts",
-            "default": "./src/express/elements/IconVideo.js"
-        },
         "./src/icons/Add.js": {
             "express": "./src/express/icons/Add.js",
             "default": "./src/icons/Add.js"
@@ -1707,30 +1667,10 @@
         "./src/icons/ZoomOut.js": {
             "express": "./src/express/icons/ZoomOut.js",
             "default": "./src/icons/ZoomOut.js"
-        },
-        "./src/icons/Discover.js": {
-            "types": "./src/express/icons/Discover.d.ts",
-            "default": "./src/express/icons/Discover.js"
-        },
-        "./src/icons/FolderBreadcrumb.js": {
-            "types": "./src/express/icons/FolderBreadcrumb.d.ts",
-            "default": "./src/express/icons/FolderBreadcrumb.js"
-        },
-        "./src/icons/ResolvedComment.js": {
-            "types": "./src/express/icons/ResolvedComment.d.ts",
-            "default": "./src/express/icons/ResolvedComment.js"
-        },
-        "./src/icons/UnresolvedComment.js": {
-            "types": "./src/express/icons/UnresolvedComment.d.ts",
-            "default": "./src/express/icons/UnresolvedComment.js"
-        },
-        "./src/icons/Video.js": {
-            "types": "./src/express/icons/Video.d.ts",
-            "default": "./src/express/icons/Video.js"
         }
     },
     "scripts": {
-        "build": "yarn build:express && yarn build:spectrum && yarn postbuild",
+        "build": "yarn build:spectrum && yarn build:express && yarn postbuild",
         "build:express": "node ./bin/build @adobe/spectrum-css-ccx-workflow-icons/dist/18 express",
         "build:spectrum": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18",
         "postbuild": "node ./bin/postbuild"

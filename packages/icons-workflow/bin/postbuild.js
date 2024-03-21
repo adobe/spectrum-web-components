@@ -39,10 +39,12 @@ const mergeSets = (spectrumFiles, expressFiles) => {
     });
     expressFiles.forEach((file) => {
         const baseName = path.basename(file);
-        mergedSet[baseName] = {
-            ...(mergedSet[baseName] ?? {}),
-            express: `./${path.relative(packageDir, file)}`,
-        };
+        if (mergedSet[baseName]) {
+            mergedSet[baseName] = {
+                ...(mergedSet[baseName] ?? {}),
+                express: `./${path.relative(packageDir, file)}`,
+            };
+        }
     });
     return mergedSet;
 };
