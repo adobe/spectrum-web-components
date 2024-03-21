@@ -53,6 +53,7 @@ import type { ActionButton } from '@spectrum-web-components/bundle';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
+const SWC_THEME_THEME_KEY = 'swc-docs:theme:theme';
 const SWC_THEME_SYSTEM_KEY = 'swc-docs:theme:system';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
 const COLOR_FALLBACK = matchMedia(DARK_MODE).matches ? 'dark' : 'light';
@@ -71,7 +72,7 @@ const DEFAULT_SCALE = (
 ) as Scale;
 const DEFAULT_SYSTEM = (
     window.localStorage
-        ? localStorage.getItem(SWC_THEME_SYSTEM_KEY) || SYSTEM_FALLBACK
+        ? localStorage.getItem(SWC_THEME_THEME_KEY) || SYSTEM_FALLBACK
         : SYSTEM_FALLBACK
 ) as SystemVariant;
 const DEFAULT_DIR = (
