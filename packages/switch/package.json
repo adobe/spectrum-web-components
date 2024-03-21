@@ -62,7 +62,7 @@
         "@spectrum-web-components/checkbox": "^0.42.0"
     },
     "devDependencies": {
-        "@spectrum-css/switch": "^4.2.4"
+        "@spectrum-css/switch": "^4.2.5"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

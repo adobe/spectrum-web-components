@@ -65,7 +65,7 @@
         "@spectrum-web-components/shared": "^0.42.0"
     },
     "devDependencies": {
-        "@spectrum-css/textfield": "^6.1.5"
+        "@spectrum-css/textfield": "^6.1.6"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
