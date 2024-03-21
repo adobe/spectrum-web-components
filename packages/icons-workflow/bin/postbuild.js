@@ -96,12 +96,6 @@ const generateIconsExports = async () => {
             let componentName = `${Case.pascal(
                 path.basename(baseName, '.js')
             )}Icon`;
-            if (componentName.includes('Fullscreen')) {
-                componentName = componentName.replace(
-                    'Fullscreen',
-                    'FullScreen'
-                );
-            }
             return `export { ${componentName} } from "@spectrum-web-components/icons-workflow/src/icons/${baseName}"`;
         })
         .join('\r\n');

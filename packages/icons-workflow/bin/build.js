@@ -82,9 +82,7 @@ const getIconId = (svgPath) => {
         id = id.replace(/^Ad/, '');
         id += 'Advert';
     }
-    return id.includes('Fullscreen')
-        ? id.replace('Fullscreen', 'FullScreen')
-        : id;
+    return id;
 };
 
 const stripColors = (icon) => {

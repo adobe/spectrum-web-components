@@ -580,6 +580,14 @@
             "types": "./icons/express/sp-icon-folder-breadcrumb.d.ts",
             "default": "./icons/express/sp-icon-folder-breadcrumb.js"
         },
+        "./icons/sp-icon-resolved-comment.js": {
+            "types": "./icons/express/sp-icon-resolved-comment.d.ts",
+            "default": "./icons/express/sp-icon-resolved-comment.js"
+        },
+        "./icons/sp-icon-unresolved-comment.js": {
+            "types": "./icons/express/sp-icon-unresolved-comment.d.ts",
+            "default": "./icons/express/sp-icon-unresolved-comment.js"
+        },
         "./icons/sp-icon-video.js": {
             "types": "./icons/express/sp-icon-video.d.ts",
             "default": "./icons/express/sp-icon-video.js"
@@ -1139,6 +1147,14 @@
         "./src/elements/IconFolderBreadcrumb.js": {
             "types": "./src/express/elements/IconFolderBreadcrumb.d.ts",
             "default": "./src/express/elements/IconFolderBreadcrumb.js"
+        },
+        "./src/elements/IconResolvedComment.js": {
+            "types": "./src/express/elements/IconResolvedComment.d.ts",
+            "default": "./src/express/elements/IconResolvedComment.js"
+        },
+        "./src/elements/IconUnresolvedComment.js": {
+            "types": "./src/express/elements/IconUnresolvedComment.d.ts",
+            "default": "./src/express/elements/IconUnresolvedComment.js"
         },
         "./src/elements/IconVideo.js": {
             "types": "./src/express/elements/IconVideo.d.ts",
@@ -1700,6 +1716,14 @@
             "types": "./src/express/icons/FolderBreadcrumb.d.ts",
             "default": "./src/express/icons/FolderBreadcrumb.js"
         },
+        "./src/icons/ResolvedComment.js": {
+            "types": "./src/express/icons/ResolvedComment.d.ts",
+            "default": "./src/express/icons/ResolvedComment.js"
+        },
+        "./src/icons/UnresolvedComment.js": {
+            "types": "./src/express/icons/UnresolvedComment.d.ts",
+            "default": "./src/express/icons/UnresolvedComment.js"
+        },
         "./src/icons/Video.js": {
             "types": "./src/express/icons/Video.d.ts",
             "default": "./src/express/icons/Video.js"
@@ -1731,7 +1755,7 @@
         "@spectrum-web-components/icon": "^0.41.2"
     },
     "devDependencies": {
-        "@adobe/spectrum-css-ccx-workflow-icons": "1.0.2",
+        "@adobe/spectrum-css-ccx-workflow-icons": "2.0.0",
         "@adobe/spectrum-css-workflow-icons": "^1.5.4",
         "@spectrum-css/icon": "^6.0.4",
         "case": "^1.6.1",
