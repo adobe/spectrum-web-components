@@ -78,7 +78,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.42.0",
-        "@spectrum-web-components/icons-workflow": "^0.42.0"
+        "@spectrum-web-components/icons-workflow": "^0.42.0",
+        "@spectrum-web-components/shared": "^0.42.0"
     },
     "devDependencies": {
         "@spectrum-css/helptext": "^4.1.5"

@@ -20,7 +20,8 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-button.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import alertStyles from './alert-dialog.css.js';
@@ -43,8 +44,6 @@ export const alertDialogVariants: AlertDialogVariants[] = [
     'secondary',
 ];
 
-let appliedIds = 0;
-
 function gatherAppliedIdsFromSlottedChildren(
     slot: HTMLSlotElement,
     idBase: string
@@ -55,7 +54,7 @@ function gatherAppliedIdsFromSlottedChildren(
         if (el.id) {
             ids.push(el.id);
         } else {
-            const id = idBase + `-${appliedIds++}`;
+            const id = idBase + `-${randomID()}`;
             el.id = id;
             ids.push(id);
         }
