@@ -1670,7 +1670,7 @@
         }
     },
     "scripts": {
-        "build": "yarn build:spectrum && yarn build:express && yarn postbuild",
+        "build": "yarn build:spectrum && yarn build:express",
         "build:express": "node ./bin/build @adobe/spectrum-css-ccx-workflow-icons/dist/18 express",
         "build:spectrum": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18",
         "postbuild": "node ./bin/postbuild"

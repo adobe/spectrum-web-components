@@ -59,24 +59,14 @@ const getExportConditionsForFiles = async (
     const mergedSet = mergeSets(spectrumFiles, expressFiles);
     const exports = {};
     for (const [exportedPath, paths] of Object.entries(mergedSet)) {
-        const importPath = `./${path.join(
-            exportBasePath,
-            path.basename(exportedPath)
-        )}`;
+        const importPath = `./${path
+            .join(exportBasePath, path.basename(exportedPath))
+            .replace('.ts', '.js')}`;
 
-        if (!paths.express || !paths.spectrum) {
-            const resolvedPath = paths.express ?? paths.spectrum;
-
-            if (importPath !== resolvedPath) {
-                exports[importPath] = {
-                    types: resolvedPath.replace('.js', '.d.ts'),
-                    default: resolvedPath,
-                };
-            }
-        } else {
+        if (paths.express) {
             exports[importPath] = {
-                express: paths.express ?? paths.spectrum,
-                default: paths.spectrum ?? paths.express,
+                express: paths.express.replace('.ts', '.js'),
+                default: paths.spectrum.replace('.ts', '.js'),
             };
         }
     }
@@ -85,16 +75,16 @@ const getExportConditionsForFiles = async (
 
 const generateIconsExports = async () => {
     const spectrumFiles = await getFiles(
-        path.join(packageDir, 'src/icons/**.js')
+        path.join(packageDir, 'src/icons/**.ts')
     );
     const expressFiles = await getFiles(
-        path.join(packageDir, 'src/express/icons/**.js')
+        path.join(packageDir, 'src/express/icons/**.ts')
     );
     const mergedSet = mergeSets(spectrumFiles, expressFiles);
 
     const exports = Object.keys(mergedSet)
         .map((file) => {
-            const baseName = path.basename(file);
+            const baseName = path.basename(file).replace('.ts', '.js');
             let componentName = `${Case.pascal(
                 path.basename(baseName, '.js')
             )}Icon`;
@@ -109,16 +99,16 @@ const generateIconsExports = async () => {
 
 const generateStoriesManifest = async () => {
     const spectrumFiles = await getFiles(
-        path.join(packageDir, 'icons/sp-**.js')
+        path.join(packageDir, 'icons/sp-**.ts')
     );
     const expressFiles = await getFiles(
-        path.join(packageDir, 'icons/express/sp-**.js')
+        path.join(packageDir, 'icons/express/sp-**.ts')
     );
     const mergedSet = mergeSets(spectrumFiles, expressFiles);
 
     const imports = Object.keys(mergedSet)
         .map((file) => {
-            const baseName = path.basename(file);
+            const baseName = path.basename(file).replace('.ts', '.js');
             return `import "@spectrum-web-components/icons-workflow/icons/${baseName}"`;
         })
         .join('\r\n');
@@ -147,24 +137,22 @@ const generateStoriesManifest = async () => {
 const updatePackageExports = async () => {
     const iconRegistrationExports = await getExportConditionsForFiles(
         './icons',
-        path.join(packageDir, 'icons/sp-**.js'),
-        path.join(packageDir, 'icons/express/sp-**.js')
+        path.join(packageDir, 'icons/sp-**.ts'),
+        path.join(packageDir, 'icons/express/sp-**.ts')
     );
     const iconComponentExports = await getExportConditionsForFiles(
         './src/elements',
-        path.join(packageDir, 'src/elements/**.js'),
-        path.join(packageDir, 'src/express/elements/**.js')
+        path.join(packageDir, 'src/elements/**.ts'),
+        path.join(packageDir, 'src/express/elements/**.ts')
     );
     const iconLiteralExports = await getExportConditionsForFiles(
         './src/icons',
-        path.join(packageDir, 'src/icons/**.js'),
-        path.join(packageDir, 'src/express/icons/**.js')
+        path.join(packageDir, 'src/icons/**.ts'),
+        path.join(packageDir, 'src/express/icons/**.ts')
     );
 
     const packageJSON = {
-        ...JSON.parse(
-            await fs.readFileSync(path.join(packageDir, 'package.json'))
-        ),
+        ...JSON.parse(fs.readFileSync(path.join(packageDir, 'package.json'))),
         exports: {
             './package.json': './package.json',
             '.': './src/index.js',
