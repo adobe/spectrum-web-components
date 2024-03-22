@@ -50,6 +50,7 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 
@@ -69,6 +70,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @query('#button')
     public button!: HTMLButtonElement;
+
+    private dependencyManager = new DependencyManagerController(this);
 
     private deprecatedMenu: Menu | null = null;
 
@@ -349,7 +352,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return {};
     }
 
-    @property({ attribute: false })
+    @state()
     protected get selectedItemContent(): MenuItemChildren {
         return this._selectedItemContent || { icon: [], content: [] };
     }
@@ -496,19 +499,19 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
         const container = this.renderContainer(menu);
-        this.trackDependency('sp-overlay');
+        this.dependencyManager.add('sp-overlay');
         import('@spectrum-web-components/overlay/sp-overlay.js');
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
-                ?open=${this.open && this.dependenciesLoaded}
+                ?open=${this.open && this.dependencyManager.loaded}
                 .placement=${this.isMobile.matches ? undefined : this.placement}
                 .type=${this.isMobile.matches ? 'modal' : 'auto'}
                 .receivesFocus=${'true'}
                 .willPreventClose=${this.preventNextToggle !== 'no' &&
                 this.open &&
-                this.dependenciesLoaded}
+                this.dependencyManager.loaded}
                 @beforetoggle=${this.handleBeforetoggle}
             >
                 ${container}
@@ -643,29 +646,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
-    @state()
-    private dependenciesLoaded = false;
-    private dependenciesToLoad: Record<string, boolean> = {};
-
-    private trackDependency(dependency: string, flag?: boolean): void {
-        const loaded =
-            !!customElements.get(dependency) ||
-            this.dependenciesToLoad[dependency] ||
-            !!flag;
-        if (!loaded) {
-            customElements.whenDefined(dependency).then(() => {
-                this.trackDependency(dependency, true);
-            });
-        }
-        this.dependenciesToLoad = {
-            ...this.dependenciesToLoad,
-            [dependency]: loaded,
-        };
-        this.dependenciesLoaded = Object.values(this.dependenciesToLoad).every(
-            (loaded) => loaded
-        );
-    }
-
     protected renderContainer(menu: TemplateResult): TemplateResult {
         const accessibleMenu = html`
             ${this.dismissHelper} ${menu} ${this.dismissHelper}
@@ -673,7 +653,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // @todo: test in mobile
         /* c8 ignore next 11 */
         if (this.isMobile.matches) {
-            this.trackDependency('sp-tray');
+            this.dependencyManager.add('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');
             return html`
                 <sp-tray
@@ -685,7 +665,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 </sp-tray>
             `;
         }
-        this.trackDependency('sp-popover');
+        this.dependencyManager.add('sp-popover');
         import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-popover

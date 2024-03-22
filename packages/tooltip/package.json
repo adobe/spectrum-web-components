@@ -63,6 +63,7 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.42.0",
         "@spectrum-web-components/overlay": "^0.42.0",
+        "@spectrum-web-components/reactive-controllers": "^0.42.0",
         "@spectrum-web-components/shared": "^0.42.0"
     },
     "devDependencies": {
