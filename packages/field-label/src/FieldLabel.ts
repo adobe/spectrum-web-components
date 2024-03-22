@@ -24,6 +24,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Focusable } from '@spectrum-web-components/shared';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 import {
@@ -56,11 +57,6 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
     public static override get styles(): CSSResultArray {
         return [styles, asteriskIconStyles];
     }
-
-    /**
-     * @private
-     */
-    static instanceCount = 0;
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
@@ -175,7 +171,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
-                `${this.tagName.toLowerCase()}-${FieldLabel.instanceCount++}`
+                `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
         if (changes.has('for')) {
