@@ -1,4 +1,11 @@
-# Spectrum Web Components Deprecation Guidelines
+---
+layout: deprecation.njk
+title: 'Deprecation Guide: Spectrum Web Components'
+displayName: Deprecation Guide
+slug: deprecation-guide
+---
+
+# Deprecation Guidelines
 
 The deprecation strategy for Spectrum Web Components (SWC) outlines the process for identifying, communicating, and removing deprecated components from the library. This document provides guidelines for managing deprecation and ensuring a smooth transition for users.
 
@@ -10,16 +17,33 @@ By default the removal of functionality or a component is considered for the nex
 
 ### Warning Levels
 
-Deprecation warnings will be categorised into the following levels:
+Deprecation warnings are categorised into the following levels:
 
--   **_Yellow_**: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
--   **\*Red**: Components are nearing removal and require immediate action for migration.
+-   Yellow: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
+
+<img src="https://raw.githubusercontent.com/adobe/spectrum-web-components/98f9b338444fda239650d582d19879c7c72e04e4/.github/images/yellow-warning.png" alt="Yellow warning" width="50%"/>
+
+-   Red: Components are nearing removal and require immediate action for migration.
+
+<img src="https://github.com/adobe/spectrum-web-components/blob/98f9b338444fda239650d582d19879c7c72e04e4/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
 
 ### Communication
 
 Deprecation notices will be added to the affected components, including a warning message and a link to documentation for migration guidance. Notices will be prominently displayed in the documentation and release notes.
 
-## Removing a function, method or class
+## Deprecation Process
+
+1. \*\*\*Identification: Components or features that are no longer recommended for use will be identified through internal review or community feedback.
+2. **_Announcement_**: Deprecation of a component will be announced in the release notes and on the SWC website. The announcement will include the deprecation level and migration guidance.
+3. **_Warning Implementation_**: A deprecation warning will be added to the affected components, using the `window.__swc.warn` method to display the warning message.
+4. **_Package.json Update_**: The `package.json` file of the deprecated component will be updated with a `deprecationNotice` key containing the deprecation message and guidance.
+5. \*\*\*Documentation Update: Documentation for the deprecated component will be updated to include the deprecation notice and migration guidance.
+6. **_Migration Period_**: Deprecated components will remain functional for a specified period to allow users to migrate to alternative solutions.
+7. **_Removal:_** Deprecated components will be removed from the library in the 1.0.0 release. Prior to removal, the deprecation level will be changed to red to indicate the urgency of migration.
+
+## Examples
+
+### Deprecating a function, method or class
 
 Its important functions, methods and classes are never immediately removed from code.
 Instead they are deprecated for at least 1 major release before being removed.
@@ -35,29 +59,6 @@ const enableScrollIntoView = () => {
     ....
 }
 ```
-
-## Deprecation Process
-
-1. \*\*\*Identification: Components or features that are no longer recommended for use will be identified through internal review or community feedback.
-2. **_Announcement_**: Deprecation of a component will be announced in the release notes and on the SWC website. The announcement will include the deprecation level and migration guidance.
-3. **_Warning Implementation_**: A deprecation warning will be added to the affected components, using the `window.__swc.warn` method to display the warning message.
-
-Below are the two levels of warning we have proposed.
-
--   Yellow: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
-
-![alt text](image.png)
-
--   Red: Components are nearing removal and require immediate action for migration.
-
-![alt text](image-1.png)
-
-4. **_Package.json Update_**: The `package.json` file of the deprecated component will be updated with a `deprecationNotice` key containing the deprecation message and guidance.
-5. \*\*\*Documentation Update: Documentation for the deprecated component will be updated to include the deprecation notice and migration guidance.
-6. **_Migration Period_**: Deprecated components will remain functional for a specified period to allow users to migrate to alternative solutions.
-7. **_Removal:_** Deprecated components will be removed from the library in the 1.0.0 release. Prior to removal, the deprecation level will be changed to red to indicate the urgency of migration.
-
-## Examples
 
 ### Adding Deprecation Notice
 
