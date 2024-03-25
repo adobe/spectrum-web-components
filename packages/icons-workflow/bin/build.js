@@ -22,55 +22,27 @@ import { disclaimer, prettify } from './build-utils.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rootDir = path.join(__dirname, '../../../');
+const packageDir = path.join(rootDir, 'packages/icons-workflow');
 
 const iconsPath = process.argv.slice(2)[0];
-const keepColors = process.argv.slice(2)[1];
 const theme = process.argv.slice(2)[1] ?? '';
+const keepColors = process.argv.slice(2)[2];
 const spectrumIconsMap = {};
 
 const setupDirectoryStructure = () => {
-    if (
-        !fs.existsSync(
-            path.join(`${rootDir}packages/icons-workflow/src`, theme)
-        )
-    ) {
-        fs.mkdirSync(path.join(`${rootDir}packages/icons-workflow/src`, theme));
+    if (!fs.existsSync(path.join(`${packageDir}/src`, theme))) {
+        fs.mkdirSync(path.join(`${packageDir}/src`, theme));
     }
-    if (
-        !fs.existsSync(
-            path.join(`${rootDir}packages/icons-workflow/src`, theme, 'icons')
-        )
-    ) {
-        fs.mkdirSync(
-            path.join(`${rootDir}packages/icons-workflow/src`, theme, 'icons')
-        );
+    if (!fs.existsSync(path.join(`${packageDir}/src`, theme, 'icons'))) {
+        fs.mkdirSync(path.join(`${packageDir}/src`, theme, 'icons'));
     }
-    if (
-        !fs.existsSync(
-            path.join(
-                `${rootDir}packages/icons-workflow/src`,
-                theme,
-                'elements'
-            )
-        )
-    ) {
-        fs.mkdirSync(
-            path.join(
-                `${rootDir}packages/icons-workflow/src`,
-                theme,
-                'elements'
-            )
-        );
+    if (!fs.existsSync(path.join(`${packageDir}/src`, theme, 'elements'))) {
+        fs.mkdirSync(path.join(`${packageDir}/src`, theme, 'elements'));
     }
-    if (
-        !fs.existsSync(
-            path.join(`${rootDir}packages/icons-workflow/icons`, theme)
-        )
-    ) {
-        fs.mkdirSync(
-            path.join(`${rootDir}packages/icons-workflow/icons`, theme),
-            { recursive: true }
-        );
+    if (!fs.existsSync(path.join(`${packageDir}/icons`, theme))) {
+        fs.mkdirSync(path.join(`${packageDir}/icons`, theme), {
+            recursive: true,
+        });
     }
 };
 

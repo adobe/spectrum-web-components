@@ -33,8 +33,7 @@ const config = {
         const json = fromRollup(rollupJson);
         return mergeConfigs(config, {
             nodeResolve: {
-                // FOR TESTING PURPOSES ONLY
-                exportConditions: ['browser', 'development', 'express'],
+                exportConditions: ['browser', 'development'],
                 moduleDirectories: [
                     'node_modules',
                     'packages',

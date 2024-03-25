@@ -31,17 +31,19 @@ const getFiles = async (globPattern) => {
 const mergeSets = (spectrumFiles, expressFiles) => {
     const mergedSet = {};
     spectrumFiles.forEach((file) => {
-        const baseName = path.basename(file);
+        const jsFile = file.replace('.ts', '.js');
+        const baseName = path.basename(jsFile);
         mergedSet[baseName] = {
-            spectrum: `./${path.relative(packageDir, file)}`,
+            spectrum: `./${path.relative(packageDir, jsFile)}`,
         };
     });
     expressFiles.forEach((file) => {
-        const baseName = path.basename(file);
+        const jsFile = file.replace('.ts', '.js');
+        const baseName = path.basename(jsFile);
         if (mergedSet[baseName]) {
             mergedSet[baseName].express = `./${path.relative(
                 packageDir,
-                file
+                jsFile
             )}`;
         }
     });
@@ -59,14 +61,15 @@ const getExportConditionsForFiles = async (
     const exports = {};
 
     for (const [exportedPath, paths] of Object.entries(mergedSet)) {
-        const importPath = `./${path
-            .join(exportBasePath, path.basename(exportedPath))
-            .replace('.ts', '.js')}`;
+        const importPath = `./${path.join(
+            exportBasePath,
+            path.basename(exportedPath)
+        )}`;
 
         if (paths.express) {
             exports[importPath] = {
-                express: paths.express.replace('.ts', '.js'),
-                default: paths.spectrum.replace('.ts', '.js'),
+                express: paths.express,
+                default: paths.spectrum,
             };
         }
     }
@@ -75,16 +78,16 @@ const getExportConditionsForFiles = async (
 
 const generateIconsExports = async () => {
     const spectrumFiles = await getFiles(
-        path.join(packageDir, 'src/icons/**.ts')
+        path.join(packageDir, 'src/icons/**(!.d).ts')
     );
     const expressFiles = await getFiles(
-        path.join(packageDir, 'src/express/icons/**.ts')
+        path.join(packageDir, 'src/express/icons/**(!.d).ts')
     );
     const mergedSet = mergeSets(spectrumFiles, expressFiles);
 
     const exports = Object.keys(mergedSet)
         .map((file) => {
-            const baseName = path.basename(file).replace('.ts', '.js');
+            const baseName = path.basename(file);
             let componentName = `${Case.pascal(
                 path.basename(baseName, '.js')
             )}Icon`;
@@ -99,16 +102,16 @@ const generateIconsExports = async () => {
 
 const generateStoriesManifest = async () => {
     const spectrumFiles = await getFiles(
-        path.join(packageDir, 'icons/sp-**.ts')
+        path.join(packageDir, 'icons/sp-**(!.d).ts')
     );
     const expressFiles = await getFiles(
-        path.join(packageDir, 'icons/express/sp-**.ts')
+        path.join(packageDir, 'icons/express/sp-**(!.d).ts')
     );
     const mergedSet = mergeSets(spectrumFiles, expressFiles);
 
     const imports = Object.keys(mergedSet)
         .map((file) => {
-            const baseName = path.basename(file).replace('.ts', '.js');
+            const baseName = path.basename(file);
             return `import "@spectrum-web-components/icons-workflow/icons/${baseName}"`;
         })
         .join('\r\n');
@@ -137,18 +140,18 @@ const generateStoriesManifest = async () => {
 const updatePackageExports = async () => {
     const iconRegistrationExports = await getExportConditionsForFiles(
         './icons',
-        path.join(packageDir, 'icons/sp-**.ts'),
-        path.join(packageDir, 'icons/express/sp-**.ts')
+        path.join(packageDir, 'icons/sp-**(!.d).ts'),
+        path.join(packageDir, 'icons/express/sp-**(!.d).ts')
     );
     const iconComponentExports = await getExportConditionsForFiles(
         './src/elements',
-        path.join(packageDir, 'src/elements/**.ts'),
-        path.join(packageDir, 'src/express/elements/**.ts')
+        path.join(packageDir, 'src/elements/**(!.d).ts'),
+        path.join(packageDir, 'src/express/elements/**(!.d).ts')
     );
     const iconLiteralExports = await getExportConditionsForFiles(
         './src/icons',
-        path.join(packageDir, 'src/icons/**.ts'),
-        path.join(packageDir, 'src/express/icons/**.ts')
+        path.join(packageDir, 'src/icons/**(!.d).ts'),
+        path.join(packageDir, 'src/express/icons/**(!.d).ts')
     );
 
     const packageJSON = {
