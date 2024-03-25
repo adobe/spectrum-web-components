@@ -32,6 +32,7 @@ import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
 import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
@@ -100,6 +101,8 @@ export class MenuItem extends LikeAnchor(
 
     @property({ type: Boolean, reflect: true })
     public active = false;
+
+    private dependencyManager = new DependencyManagerController(this);
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -272,13 +275,17 @@ export class MenuItem extends LikeAnchor(
         if (!this.hasSubmenu) {
             return slot;
         }
+        this.dependencyManager.add('sp-overlay');
+        this.dependencyManager.add('sp-popover');
         import('@spectrum-web-components/overlay/sp-overlay.js');
         import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
                 ?disabled=${!this.hasSubmenu}
-                ?open=${this.hasSubmenu && this.open}
+                ?open=${this.hasSubmenu &&
+                this.open &&
+                this.dependencyManager.loaded}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
                 .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
