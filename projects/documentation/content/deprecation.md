@@ -23,11 +23,11 @@ Deprecation warnings are categorised into the following levels:
 
 -   Yellow: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
 
-<img src="https://raw.githubusercontent.com/adobe/spectrum-web-components/e3bc1270ff1b003787c2ab20d4d90271705aa8ca/.github/images/yellow-warning.png" alt="Yellow warning" width="50%"/>
+<img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/yellow-warning.png?raw=true" alt="Yellow warning" width="50%"/>
 
 -   Red: Components are nearing removal and require immediate action for migration.
 
-<img src="https://raw.githubusercontent.com/adobe/spectrum-web-components/e3bc1270ff1b003787c2ab20d4d90271705aa8ca/.github/images/red-warning.png" alt="Red warning" width="50%"/>
+<img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
 
 ### Communication
 
