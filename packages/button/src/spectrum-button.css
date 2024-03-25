@@ -362,7 +362,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host([active]) {
+:host(:is(:active, [active])) {
     box-shadow: none;
 }
 
@@ -594,7 +594,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) {
+:host(:is(:active, [active])) {
     background-color: var(
         --highcontrast-button-background-color-down,
         var(

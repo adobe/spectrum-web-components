@@ -446,7 +446,7 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 
-:host(:active) {
+:host(:is(:active, [active])) {
     border-color: var(
         --highcontrast-tag-border-color-active,
         var(
@@ -573,7 +573,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([selected]:active) {
+:host([selected]:is(:active, [active])) {
     border-color: var(
         --highcontrast-tag-border-color-selected-active,
         var(
@@ -625,7 +625,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]:active) {
+:host([invalid]:is(:active, [active])) {
     border-color: var(
         --highcontrast-tag-border-color-invalid-active,
         var(
@@ -684,7 +684,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid][selected]:active) {
+:host([invalid][selected]:is(:active, [active])) {
     border-color: var(
         --highcontrast-tag-border-color-invalid-selected-active,
         var(
@@ -858,7 +858,7 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([emphasized]:active) {
+:host([emphasized]:is(:active, [active])) {
     border-color: var(
         --highcontrast-tag-border-color-emphasized-active,
         var(

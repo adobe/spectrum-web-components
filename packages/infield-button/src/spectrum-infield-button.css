@@ -200,7 +200,7 @@ governing permissions and limitations under the License.
 }
 
 @media (forced-colors: active) {
-    :host:active:not(:disabled),
+    :host(:is(:active, [active])):not(:disabled),
     :host(:focus-visible):not(:disabled) {
         --highcontrast-infield-button-border-color: Highlight;
     }
@@ -323,14 +323,14 @@ governing permissions and limitations under the License.
     }
 }
 
-:host:active .fill {
+:host(:is(:active, [active])) .fill {
     background-color: var(
         --mod-infield-button-background-color-down,
         var(--spectrum-infield-button-background-color-down)
     );
 }
 
-:host:active ::slotted(*) {
+:host(:is(:active, [active])) ::slotted(*) {
     color: var(
         --mod-infield-button-icon-color-down,
         var(--spectrum-infield-button-icon-color-down)

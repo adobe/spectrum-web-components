@@ -150,7 +150,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host:active #box:before {
+:host(:is(:active, [active])) #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-down,
         var(
@@ -160,7 +160,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host:active #input:checked + #box:before {
+:host(:is(:active, [active])) #input:checked + #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-down,
         var(
@@ -170,7 +170,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host:active #label {
+:host(:is(:active, [active])) #label {
     color: var(
         --highcontrast-checkbox-content-color-down,
         var(
@@ -212,7 +212,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([readonly]):active #box:before {
+:host([readonly]:is(:active, [active])) #box:before {
     border-color: var(
         --highcontrast-checkbox-selected-color-default,
         var(
@@ -453,9 +453,11 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([emphasized][indeterminate]):active #box:before,
-:host([emphasized][indeterminate]):active #input:checked + #box:before,
-:host([emphasized]):active #input:checked + #box:before {
+:host([emphasized]:is(:active, [active])[indeterminate]) #box:before,
+:host([emphasized]:is(:active, [active])[indeterminate])
+    #input:checked
+    + #box:before,
+:host([emphasized]:is(:active, [active])) #input:checked + #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-default,
         var(
@@ -465,8 +467,10 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([emphasized][invalid][invalid]):active #input:checked + #box:before,
-:host([emphasized][invalid][invalid]):active #box:before {
+:host([emphasized][invalid][invalid]:is(:active, [active]))
+    #input:checked
+    + #box:before,
+:host([emphasized][invalid][invalid]:is(:active, [active])) #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-default,
         var(
