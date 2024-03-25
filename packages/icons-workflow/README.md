@@ -101,6 +101,25 @@ Every icons can be customized via the following options:
 }
 ```
 
+### Spectrum Express icons
+
+The default exports of this package are using the [Spectrum Workflow Icons](https://spectrum.adobe.com/page/icons/).
+
+However, when using the [Spectrum Express theme](https://opensource.adobe.com/spectrum-web-components/tools/theme/#express), you might find yourself wanting to use the Express variant of the icons as well.
+
+In order to support multiple variants of the same icon, the `@spectrum-web-components/icons-workflow` uses [conditional exports](https://nodejs.org/api/packages.html#conditional-exports) to provide different implementations of the same icon.
+
+Example:
+
+```
+"./icons/sp-icon-add.js": {
+    "express": "./icons/express/sp-icon-add.js",
+    "default": "./icons/sp-icon-add.js"
+}
+```
+
+Note that not all icons have an Express theme equivalent. Where there is no such parity, the default Spectrum icon will be provided.
+
 ### Extended use cases
 
 The default exports of this package are pre-wrapped via `setCustomTemplateLiteralTag` in the `html` template tag from `lit-html`, and work like the following::
