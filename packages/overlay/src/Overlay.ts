@@ -77,6 +77,7 @@ export const strategies = {
  *
  * @fires sp-opened - announces that an overlay has completed any entry animations
  * @fires sp-closed - announce that an overlay has compelted any exit animations
+ * @fires slottable-request - requests to add or remove slottable content
  */
 export class Overlay extends OverlayFeatures {
     static override styles = [styles];
@@ -536,6 +537,9 @@ export class Overlay extends OverlayFeatures {
         if (!this.open) {
             document.body.offsetHeight;
         }
+        /**
+         * @ignore
+         */
         this.dispatchEvent(
             new SlottableRequestEvent(
                 'overlay-content',

@@ -81,8 +81,8 @@
         "@spectrum-web-components/shared": "^0.42.0"
     },
     "devDependencies": {
-        "@spectrum-css/coachindicator": "^1.1.4",
-        "@spectrum-css/coachmark": "^6.1.4"
+        "@spectrum-css/coachindicator": "^1.1.5",
+        "@spectrum-css/coachmark": "^6.1.5"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
