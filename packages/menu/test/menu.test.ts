@@ -17,7 +17,6 @@ import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     waitUntil,
@@ -25,6 +24,7 @@ import {
 import {
     arrowDownEvent,
     arrowUpEvent,
+    fixture,
     tabEvent,
     testForLitDevWarnings,
     tEvent,
@@ -191,7 +191,15 @@ describe('Menu', () => {
         await elementUpdated(el);
 
         const otherItem = el.querySelector('#other') as MenuItem;
-        otherItem.click();
+        otherItem.focus();
+        await elementUpdated(el);
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await elementUpdated(el);
+        await sendKeys({
+            press: 'Enter',
+        });
 
         await elementUpdated(el);
 
@@ -566,13 +574,17 @@ describe('Menu', () => {
                 </sp-menu>
             `
         );
+        await nextFrame();
+        await nextFrame();
         expect(el.selected).to.deep.equal([]);
 
-        const items = [...el.querySelectorAll('[value]')] as MenuItem[];
+        const items = [...el.children] as MenuItem[];
+        await Promise.all(items.map((child) => child.updateComplete));
 
         items[0].click();
         await nextFrame();
         await nextFrame();
+        expect(el.selected).to.deep.equal(['1']);
 
         items[0].click();
         await nextFrame();
