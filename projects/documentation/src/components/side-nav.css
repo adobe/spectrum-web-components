@@ -23,7 +23,7 @@ aside {
     position: sticky;
     top: 0;
     left: 0;
-    background-color: var(--spectrum-global-color-gray-75);
+    background-color: var(--spectrum-gray-75);
 }
 
 @media screen and (max-width: 960px) {
@@ -34,10 +34,10 @@ aside {
         transition: transform
                 var(
                     --spectrum-dialog-confirm-background-entry-animation-duration,
-                    var(--spectrum-global-animation-duration-600)
+                    var(--spectrum-animation-duration-600)
                 )
                 cubic-bezier(0, 0, 0.4, 1),
-            visibility 0s linear var(--spectrum-global-animation-duration-600);
+            visibility 0s linear var(--spectrum-animation-duration-600);
         transform: translateX(-100%);
         z-index: 10;
         min-height: 100vh;
@@ -65,12 +65,12 @@ aside {
 
 #nav-header a,
 #nav-header a:visited {
-    color: var(--spectrum-global-color-gray-800);
+    color: var(--spectrum-gray-800);
     text-decoration: none;
 }
 
 .navigation {
-    width: var(--spectrum-global-dimension-size-2400);
+    width: calc(var(--swc-scale-factor) * 240px - 48px);
     padding: 0 24px 24px 24px;
     flex: 1;
     flex-grow: 1;
@@ -100,10 +100,10 @@ docs-spectrum-logo {
 }
 
 docs-search {
-    width: var(--spectrum-global-dimension-size-2400);
-    padding: 0 var(--spectrum-global-dimension-size-300)
-        var(--spectrum-global-dimension-size-300)
-        var(--spectrum-global-dimension-size-300);
+    width: calc(var(--swc-scale-factor) * 192px);
+    padding: 0 calc(var(--swc-scale-factor) * 24px)
+        calc(var(--swc-scale-factor) * 24px)
+        calc(var(--swc-scale-factor) * 24px);
 }
 
 sp-sidenav {

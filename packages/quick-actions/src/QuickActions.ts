@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -41,6 +42,18 @@ export class QuickActions extends SpectrumElement {
         },
     })
     public textOnly = false;
+
+    protected override update(changes: PropertyValues<this>): void {
+        super.update(changes);
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> is deprecated. Use an Action bar to allow users to perform actions on either a single or multiple items at the same time, instead.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/quick-actions/#deprecation',
+                { level: 'deprecation' }
+            );
+        }
+    }
 
     protected override render(): TemplateResult {
         return html`

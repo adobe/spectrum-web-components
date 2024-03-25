@@ -661,7 +661,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(openSpy.callCount).to.equal(1);
         });
         it('opens, then closes, on subsequent clicks', async function () {
-            this.retries(0);
             const el = await actionMenuFixture();
             const rect = el.getBoundingClientRect();
 

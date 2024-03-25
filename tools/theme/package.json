@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/theme",
-    "version": "0.41.2",
+    "version": "0.42.0",
     "publishConfig": {
         "access": "public"
     },
@@ -33,13 +33,24 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/scale-large-core-tokens.css.js": "./src/scale-large-core-tokens.css.js",
         "./src/scale-large.css.js": "./src/scale-large.css.js",
+        "./src/scale-medium-core-tokens.css.js": "./src/scale-medium-core-tokens.css.js",
         "./src/scale-medium.css.js": "./src/scale-medium.css.js",
+        "./src/theme-core-tokens.css.js": "./src/theme-core-tokens.css.js",
+        "./src/theme-dark-core-tokens.css.js": "./src/theme-dark-core-tokens.css.js",
         "./src/theme-dark.css.js": "./src/theme-dark.css.js",
+        "./src/theme-darkest-core-tokens.css.js": "./src/theme-darkest-core-tokens.css.js",
         "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
+        "./src/theme-light-core-tokens.css.js": "./src/theme-light-core-tokens.css.js",
         "./src/theme-light.css.js": "./src/theme-light.css.js",
+        "./src/theme-lightest-core-tokens.css.js": "./src/theme-lightest-core-tokens.css.js",
         "./src/theme-lightest.css.js": "./src/theme-lightest.css.js",
         "./src/theme.css.js": "./src/theme.css.js",
+        "./src/themes-core-tokens.js": {
+            "development": "./src/themes-core-tokens.dev.js",
+            "default": "./src/themes-core-tokens.js"
+        },
         "./src/themes.js": {
             "development": "./src/themes.dev.js",
             "default": "./src/themes.js"
@@ -78,35 +89,68 @@
             "development": "./express/scale-large.dev.js",
             "default": "./express/scale-large.js"
         },
+        "./express/scale-medium-core-tokens.js": {
+            "development": "./express/scale-medium-core-tokens.dev.js",
+            "default": "./express/scale-medium-core-tokens.js"
+        },
         "./express/scale-medium.js": {
             "development": "./express/scale-medium.dev.js",
             "default": "./express/scale-medium.js"
+        },
+        "./express/theme-dark-core-tokens.js": {
+            "development": "./express/theme-dark-core-tokens.dev.js",
+            "default": "./express/theme-dark-core-tokens.js"
         },
         "./express/theme-dark.js": {
             "development": "./express/theme-dark.dev.js",
             "default": "./express/theme-dark.js"
         },
+        "./express/theme-darkest-core-tokens.js": {
+            "development": "./express/theme-darkest-core-tokens.dev.js",
+            "default": "./express/theme-darkest-core-tokens.js"
+        },
         "./express/theme-darkest.js": {
             "development": "./express/theme-darkest.dev.js",
             "default": "./express/theme-darkest.js"
+        },
+        "./express/theme-light-core-tokens.js": {
+            "development": "./express/theme-light-core-tokens.dev.js",
+            "default": "./express/theme-light-core-tokens.js"
         },
         "./express/theme-light.js": {
             "development": "./express/theme-light.dev.js",
             "default": "./express/theme-light.js"
         },
+        "./express/theme-lightest-core-tokens.js": {
+            "development": "./express/theme-lightest-core-tokens.dev.js",
+            "default": "./express/theme-lightest-core-tokens.js"
+        },
         "./express/theme-lightest.js": {
             "development": "./express/theme-lightest.dev.js",
             "default": "./express/theme-lightest.js"
+        },
+        "./src/express/core-tokens.js": {
+            "development": "./src/express/core-tokens.dev.js",
+            "default": "./src/express/core-tokens.js"
         },
         "./src/express/core.js": {
             "development": "./src/express/core.dev.js",
             "default": "./src/express/core.js"
         },
+        "./src/express/scale-large-core-tokens.css.js": "./src/express/scale-large-core-tokens.css.js",
         "./src/express/scale-large.css.js": "./src/express/scale-large.css.js",
+        "./src/express/scale-medium-core-tokens.css.js": "./src/express/scale-medium-core-tokens.css.js",
         "./src/express/scale-medium.css.js": "./src/express/scale-medium.css.js",
+        "./src/express/theme-core-tokens.css.js": "./src/express/theme-core-tokens.css.js",
+        "./src/express/theme-dark-core-tokens.css.js": "./src/express/theme-dark-core-tokens.css.js",
         "./src/express/theme-dark.css.js": "./src/express/theme-dark.css.js",
+        "./src/express/theme-light-core-tokens.css.js": "./src/express/theme-light-core-tokens.css.js",
         "./src/express/theme-light.css.js": "./src/express/theme-light.css.js",
         "./src/express/theme.css.js": "./src/express/theme.css.js",
+        "./src/express/themes-core-tokens.js": {
+            "development": "./src/express/themes-core-tokens.dev.js",
+            "default": "./src/express/themes-core-tokens.js"
+        },
         "./src/express/themes.js": {
             "development": "./src/express/themes.dev.js",
             "default": "./src/express/themes.js"
@@ -123,25 +167,49 @@
             "development": "./scale-medium.dev.js",
             "default": "./scale-medium.js"
         },
+        "./scale-medium-core-tokens.js": {
+            "development": "./scale-medium-core-tokens.dev.js",
+            "default": "./scale-medium-core-tokens.js"
+        },
         "./scale-large.js": {
             "development": "./scale-large.dev.js",
             "default": "./scale-large.js"
+        },
+        "./scale-large-core-tokens.js": {
+            "development": "./scale-large-core-tokens.dev.js",
+            "default": "./scale-large-core-tokens.js"
         },
         "./theme-lightest.js": {
             "development": "./theme-lightest.dev.js",
             "default": "./theme-lightest.js"
         },
+        "./theme-lightest-core-tokens.js": {
+            "development": "./theme-lightest-core-tokens.dev.js",
+            "default": "./theme-lightest-core-tokens.js"
+        },
         "./theme-light.js": {
             "development": "./theme-light.dev.js",
             "default": "./theme-light.js"
+        },
+        "./theme-light-core-tokens.js": {
+            "development": "./theme-light-core-tokens.dev.js",
+            "default": "./theme-light-core-tokens.js"
         },
         "./theme-dark.js": {
             "development": "./theme-dark.dev.js",
             "default": "./theme-dark.js"
         },
+        "./theme-dark-core-tokens.js": {
+            "development": "./theme-dark-core-tokens.dev.js",
+            "default": "./theme-dark-core-tokens.js"
+        },
         "./theme-darkest.js": {
             "development": "./theme-darkest.dev.js",
             "default": "./theme-darkest.js"
+        },
+        "./theme-darkest-core-tokens.js": {
+            "development": "./theme-darkest-core-tokens.dev.js",
+            "default": "./theme-darkest-core-tokens.js"
         }
     },
     "scripts": {
@@ -162,15 +230,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/styles": "^0.41.2"
+        "@spectrum-web-components/base": "^0.42.0",
+        "@spectrum-web-components/styles": "^0.42.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "deprecationNotice": "Color Lightest and Darkest are deprecated and will be removed in a future release",
     "sideEffects": [
         "./sp-*.js",
         "./**/*.dev.js",
         "./core.js",
+        "./core-*.js",
         "./theme-*.js",
         "./scale-*.js",
         "./spectrum-two/theme-*.js",
@@ -181,6 +251,8 @@
         "./src/spectrum-two/core.js",
         "./src/spectrum-two/themes.js",
         "./src/express/core.js",
-        "./src/express/themes.js"
+        "./src/express/core-*.js",
+        "./src/express/themes.js",
+        "./src/express/themes-*.js"
     ]
 }

@@ -15,42 +15,42 @@ governing permissions and limitations under the License.
 :host([invalid]) .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-key-focus,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-red-600)
     );
     --spectrum-clearbutton-medium-icon-color-hover: var(
         --spectrum-clearbutton-medium-icon-color
     );
     --spectrum-clearbutton-medium-icon-color-down: var(
         --spectrum-tag-deletable-icon-color-error-down,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-red-700)
     );
 }
 
 :host([invalid]):hover .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-hover,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-red-600)
     );
     --spectrum-clearbutton-medium-icon-color-hover: var(
         --spectrum-clearbutton-medium-icon-color
     );
     --spectrum-clearbutton-medium-icon-color-down: var(
         --spectrum-tag-deletable-icon-color-error-down,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-red-700)
     );
 }
 
 :host([invalid]):active .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-hover,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-red-600)
     );
     --spectrum-clearbutton-medium-icon-color-hover: var(
         --spectrum-clearbutton-medium-icon-color
     );
     --spectrum-clearbutton-medium-icon-color-down: var(
         --spectrum-tag-deletable-icon-color-error-down,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-red-700)
     );
 }
 

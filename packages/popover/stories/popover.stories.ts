@@ -63,7 +63,7 @@ export default {
 
 export const Default = ({ content }: { content: string }): TemplateResult => {
     return html`
-        <div style="color: var(--spectrum-global-color-gray-800)">
+        <div style="color: var(--spectrum-gray-800)">
             <sp-popover variant="default" open style="max-width: 320px">
                 <div style="font-size: 14px; padding: 10px">${content}</div>
             </sp-popover>
@@ -94,7 +94,7 @@ interface StoryArgs {
 const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
     return html`
         <div
-            style="color: var(--spectrum-global-color-gray-800); position: relative; display: contents"
+            style="color: var(--spectrum-gray-800); position: relative; display: contents"
         >
             <sp-popover
                 variant="dialog"

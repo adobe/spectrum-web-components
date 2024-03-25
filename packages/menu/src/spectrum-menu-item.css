@@ -688,7 +688,9 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled]) #label,
-:host([aria-disabled='true']) #label {
+:host([disabled]) ::slotted([slot='value']),
+:host([aria-disabled='true']) #label,
+:host([aria-disabled='true']) ::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-color-disabled,
         var(
@@ -853,7 +855,9 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]:hover) #label,
-    :host([aria-disabled='true']:hover) #label {
+    :host([disabled]:hover) ::slotted([slot='value']),
+    :host([aria-disabled='true']:hover) #label,
+    :host([aria-disabled='true']:hover) ::slotted([slot='value']) {
         color: var(
             --highcontrast-menu-item-color-disabled,
             var(

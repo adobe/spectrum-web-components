@@ -18,6 +18,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import { ActionMenuMarkup } from './';
 import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
@@ -403,3 +404,26 @@ export const groups = ({
 `;
 
 groups.decorators = [isOverlayOpen];
+
+export const directive = (): TemplateResult => {
+    const renderOptions = (): TemplateResult => html`
+        <sp-menu-item>Deselect</sp-menu-item>
+        <sp-menu-item>Select Inverse</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Select and Mask...</sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>Save Selection</sp-menu-item>
+        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+    `;
+    return html`
+        <sp-action-menu ${slottableRequest(renderOptions)}>
+            <span slot="label">
+                Select a Country with a very long label, too long in fact
+            </span>
+        </sp-action-menu>
+    `;
+};
+
+directive.swc_vrt = {
+    skip: true,
+};

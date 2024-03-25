@@ -42,7 +42,7 @@ governing permissions and limitations under the License.
 :host([editable]) sp-number-field {
     grid-area: number;
     align-self: flex-end;
-    margin-inline-start: var(--spectrum-global-dimension-size-200);
+    margin-inline-start: calc(var(--swc-scale-factor) * 16px);
 }
 
 :host([editable]) output {

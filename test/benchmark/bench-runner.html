@@ -13,13 +13,6 @@
     </head>
     <body>
         <script type="module">
-            // Needed while tachometer does not surface support for export conditions.
-            // @floating-ui/core leverages `process.env.NODE_ENV` in their 'default' export.
-            window.process = window.process || {
-                env: {
-                    NODE_ENV: 'production',
-                },
-            };
             const params = new URLSearchParams(window.location.search);
             const pack = params.get('package');
             const bench = params.get('bench');
