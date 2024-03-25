@@ -21,31 +21,14 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-alert-banner open>Text content in alert</sp-alert-banner>
-        <div style="background:lightblue;height: 600px;"></div>
         <div style="display:flex;flex-direction:column;gap:24px;">
-            <sp-alert-banner variant="neutral" open>
-                Text content in alert
-            </sp-alert-banner>
+            <sp-alert-banner open>Text content in alert</sp-alert-banner>
             <sp-alert-banner variant="info" open>
                 Text content in alert
             </sp-alert-banner>
-            <sp-alert-banner variant="info">
-                <sp-button static="white" treatment="outline" slot="action">
-                    Do something
-                </sp-button>
-                Text content in alert
-            </sp-alert-banner>
+
             <sp-alert-banner variant="negative" open>
                 Text content in alert
-            </sp-alert-banner>
-            <sp-alert-banner variant="negative" open>
-                Connection interupted. Check your network to continue.Adding
-                this as to see reallllllllly looooooooong text coming up and
-                this message wrapping on the next line.
-                <sp-button static="white" treatment="outline" slot="action">
-                    Try Again
-                </sp-button>
             </sp-alert-banner>
         </div>
     `;

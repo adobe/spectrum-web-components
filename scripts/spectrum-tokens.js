@@ -35,6 +35,7 @@ const tokenPackages = [
     'actionbar',
     'actionbutton',
     'actiongroup',
+    'alertbanner',
     'alertdialog',
     'avatar',
     'badge',
