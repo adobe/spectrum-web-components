@@ -5,33 +5,35 @@ displayName: Deprecation Guide
 slug: deprecation-guide
 ---
 
-# Deprecation Guidelines
+# Introduction
 
-The deprecation strategy for Spectrum Web Components (SWC) outlines the process for identifying, communicating, and removing deprecated components from the library. This document provides guidelines for managing deprecation and ensuring a smooth transition for users.
+The deprecation process for Spectrum Web Components (SWC) outlines the process for identifying, communicating, and removing deprecated components from the library. This document provides process for managing deprecation and ensuring a smooth transition for consumers.
 
-## Deprecation Timeline
+Things change and evolve in libraries like SWC, but we don't want consumers to be surprised by those changes. We think that by providing clearer expectations to when we intent to remove potentially useful APIs, consuming teams have the opportunity to talk with us to better understand their needs before we finalize changes. If a deprecation is unexpected to you please reach out to the SWC team.
 
-By default the removal of functionality or a component is considered for the next major release after the major release for which it was marked as deprecated. For example, a function marked as deprecated for the SWC 1.0.0 release will be removed for the SWC 2.0.0 release.
+## Deprecation timeline
 
-## Deprecation Policy
+By default the removal of functionality or a component is considered for the next major release after the major release for which it was marked as deprecated. For example, a function marked as deprecated during a SWC 1.x will be removed at the next major release, e.g. SWC 2.0.
 
-### Warning Levels
+## Deprecation policy
+
+### Warning levels
 
 Deprecation warnings are categorised into the following levels:
 
 -   Yellow: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
 
-<img src="https://raw.githubusercontent.com/adobe/spectrum-web-components/98f9b338444fda239650d582d19879c7c72e04e4/.github/images/yellow-warning.png" alt="Yellow warning" width="50%"/>
+<img src="https://raw.githubusercontent.com/adobe/spectrum-web-components/e3bc1270ff1b003787c2ab20d4d90271705aa8ca/.github/images/yellow-warning.png" alt="Yellow warning" width="50%"/>
 
 -   Red: Components are nearing removal and require immediate action for migration.
 
-<img src="https://github.com/adobe/spectrum-web-components/blob/98f9b338444fda239650d582d19879c7c72e04e4/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
+<img src="https://raw.githubusercontent.com/adobe/spectrum-web-components/e3bc1270ff1b003787c2ab20d4d90271705aa8ca/.github/images/red-warning.png" alt="Red warning" width="50%"/>
 
 ### Communication
 
 Deprecation notices will be added to the affected components, including a warning message and a link to documentation for migration guidance. Notices will be prominently displayed in the documentation and release notes.
 
-## Deprecation Process
+## Deprecation process
 
 1. \*\*\*Identification: Components or features that are no longer recommended for use will be identified through internal review or community feedback.
 2. **_Announcement_**: Deprecation of a component will be announced in the release notes and on the SWC website. The announcement will include the deprecation level and migration guidance.
@@ -105,4 +107,4 @@ Purpose:
 
 Breaking changes in Spectrum Web Components will only happen in the platform releases (ie: major version releases). Any planned breaking changes will be communicated with advance notice through the deprecation method and documentation.
 
-Breaking changes will be deprecated at least 2 feature releases or six months ahead (whatever is smaller).
+Deprecations will be removed at the next major release, if possible. If the specifics for a deprecation can't be constrained to the next major release, we'll minimally mark things as deprecated for 2 releases or six months (whatever is smaller).
