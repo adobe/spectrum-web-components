@@ -33,17 +33,16 @@ const mergeSets = (spectrumFiles, expressFiles) => {
     spectrumFiles.forEach((file) => {
         const baseName = path.basename(file);
         mergedSet[baseName] = {
-            ...(mergedSet[baseName] ?? {}),
             spectrum: `./${path.relative(packageDir, file)}`,
         };
     });
     expressFiles.forEach((file) => {
         const baseName = path.basename(file);
         if (mergedSet[baseName]) {
-            mergedSet[baseName] = {
-                ...(mergedSet[baseName] ?? {}),
-                express: `./${path.relative(packageDir, file)}`,
-            };
+            mergedSet[baseName].express = `./${path.relative(
+                packageDir,
+                file
+            )}`;
         }
     });
     return mergedSet;
@@ -58,6 +57,7 @@ const getExportConditionsForFiles = async (
     const expressFiles = await getFiles(expressGlobPattern);
     const mergedSet = mergeSets(spectrumFiles, expressFiles);
     const exports = {};
+
     for (const [exportedPath, paths] of Object.entries(mergedSet)) {
         const importPath = `./${path
             .join(exportBasePath, path.basename(exportedPath))
