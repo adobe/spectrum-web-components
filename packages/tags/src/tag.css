@@ -40,7 +40,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]):active .clear-button {
+:host([invalid]:is(:active, [active])) .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-hover,
         var(--spectrum-red-600)
