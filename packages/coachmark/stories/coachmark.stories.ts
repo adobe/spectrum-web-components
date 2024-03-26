@@ -48,6 +48,7 @@ type Properties = {
     totalSteps?: number;
     primaryCTA?: string;
     secondaryCTA?: string;
+    separator?: string;
 };
 
 export const Default = (): TemplateResult => {
@@ -78,6 +79,53 @@ export const InTour = (
             secondary-cta="Previous"
             current-step="2"
             total-steps="8"
+            .content=${{
+                title: heading,
+                description: content,
+            }}
+            @primary=${(event: Event & { target: HTMLElement }) => {
+                event.target.dispatchEvent(
+                    new Event('close', { bubbles: true, composed: true })
+                );
+                args.onPrimary?.(event);
+            }}
+            @secondary=${(event: Event & { target: HTMLElement }) => {
+                event.target.dispatchEvent(
+                    new Event('close', { bubbles: true, composed: true })
+                );
+                args.onSecondary?.(event);
+            }}
+        >
+            <sp-action-menu
+                placement="bottom-end"
+                quiet
+                slot="actions"
+                label="More Actions"
+            >
+                <sp-menu-item>Skip tour</sp-menu-item>
+                <sp-menu-item>Restart tour</sp-menu-item>
+            </sp-action-menu>
+        </sp-coachmark>
+    `;
+};
+
+export const customSeparator = (
+    props: Properties,
+    args: StoryArgs = {}
+): TemplateResult => {
+    const {
+        open = true,
+        heading = 'Coachmark in Tour',
+        content = 'This is a Coachmark with nothing but text in it.',
+    } = props;
+    return html`
+        <sp-coachmark
+            ?open=${open}
+            primary-cta="Next"
+            secondary-cta="Previous"
+            current-step="2"
+            total-steps="8"
+            separator="out of"
             .content=${{
                 title: heading,
                 description: content,
