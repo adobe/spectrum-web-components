@@ -5,7 +5,7 @@ displayName: Deprecation Guide
 slug: deprecation-guide
 ---
 
-# Introduction
+## Introduction
 
 The deprecation process for Spectrum Web Components (SWC) outlines the process for identifying, communicating, and removing deprecated components from the library. This document provides process for managing deprecation and ensuring a smooth transition for consumers.
 
@@ -35,11 +35,11 @@ Deprecation notices will be added to the affected components, including a warnin
 
 ## Deprecation process
 
-1. \*\*\*Identification: Components or features that are no longer recommended for use will be identified through internal review or community feedback.
+1. **_Identification_**: Components or features that are no longer recommended for use will be identified through internal review or community feedback.
 2. **_Announcement_**: Deprecation of a component will be announced in the release notes and on the SWC website. The announcement will include the deprecation level and migration guidance.
 3. **_Warning Implementation_**: A deprecation warning will be added to the affected components, using the `window.__swc.warn` method to display the warning message.
 4. **_Package.json Update_**: The `package.json` file of the deprecated component will be updated with a `deprecationNotice` key containing the deprecation message and guidance.
-5. \*\*\*Documentation Update: Documentation for the deprecated component will be updated to include the deprecation notice and migration guidance.
+5. **_Documentation Update_**: Documentation for the deprecated component will be updated to include the deprecation notice and migration guidance.
 6. **_Migration Period_**: Deprecated components will remain functional for a specified period to allow users to migrate to alternative solutions.
 7. **_Removal:_** Deprecated components will be removed from the library in the 1.0.0 release. Prior to removal, the deprecation level will be changed to red to indicate the urgency of migration.
 
@@ -64,12 +64,12 @@ const enableScrollIntoView = () => {
 
 ### Adding Deprecation Notice
 
-Context:
+**Context**:
 
 -   This example demonstrates how a deprecation notice is added to a component using the `window.__swc.warn` method.
 -   The `window.__swc.warn` method is used to display a warning message to developers using the deprecated component.
 
-Purpose:
+**Purpose**:
 
 -   The purpose of this deprecation notice is to inform developers using the deprecated component about its status and encourage them to migrate to alternative solutions in dev mode.
 -   The notice provides a link to documentation for more information on migrating to alternative solutions.
@@ -85,12 +85,12 @@ window.__swc.warn(
 
 ### Adding `package.json` update
 
-Context:
+**Context**:
 
 -   This example demonstrates how the `package.json` file of a deprecated component is updated with a `deprecationNotice` key.
 -   The `deprecationNotice` key contains a message informing users about the deprecation and providing guidance on alternative solutions.
 
-Purpose:
+**Purpose**:
 
 -   The purpose of updating the `package.json` file with a `deprecationNotice` key is to provide a clear and visible indication to users that the component is deprecated.
 -   This helps users to easily identify the deprecated component and access guidance on migrating to alternative solutions.
