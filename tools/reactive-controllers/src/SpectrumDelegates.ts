@@ -12,22 +12,24 @@ governing permissions and limitations under the License.
 
 import type { ReactiveController } from 'lit';
 import { SpectrumElement } from '@spectrum-web-components/base';
-import { DownStateController } from './delegate-controllers/DownstateController.js';
+import { SpectrumTwoDownStateController } from './delegate-controllers/SpectrumTwoDownStateController.js';
 
 export class SpectrumDelegates implements ReactiveController {
     private host: SpectrumElement;
+
+    private spectrumTwoDownStateController: SpectrumTwoDownStateController | null =
+        null;
 
     protected theme: string | null = null;
 
     set theme(value: string | null) {
         if (value === 'spectrum-two') {
-            this.downStateController = new DownStateController(this.host);
+            this.spectrumTwoDownStateController =
+                new SpectrumTwoDownStateController(this.host);
         } else {
-            this.downStateController?.unmanage();
+            this.spectrumTwoDownStateController?.unmanage();
         }
     }
-
-    private downStateController: DownStateController | null = null;
 
     constructor(host: SpectrumElement) {
         this.host = host;

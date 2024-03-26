@@ -33,7 +33,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     'sp-overlay,sp-tooltip',
 ]) {
     spectrumConfig = {
-        downstate: true,
+        downstate: ['spectrum-two'],
     };
 
     public static override get styles(): CSSResultArray {
