@@ -21,13 +21,13 @@ By default the removal of functionality or a component is considered for the nex
 
 Deprecation warnings are categorised into the following levels:
 
--   Yellow: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
+-   **Yellow**: Components are marked as deprecated but still functional. Users are encouraged to migrate to alternative solutions.
 
-<img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/yellow-warning.png?raw=true" alt="Yellow warning" width="50%"/>
+    <img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/yellow-warning.png?raw=true" alt="Yellow warning" width="50%"/>
 
--   Red: Components are nearing removal and require immediate action for migration.
+-   **Red**: Components are nearing removal and require immediate action for migration.
 
-<img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
+    <img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
 
 ### Communication
 
@@ -53,7 +53,7 @@ Instead they are deprecated for at least 1 major release before being removed.
 A function,method or a class can be depreacted with a depreacted tag in the JSdoc to properly surface up to its context and API
 
 ```js
-*
+/**
 * @deprecated since 0.42.1
 */
 
