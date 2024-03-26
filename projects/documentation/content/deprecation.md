@@ -27,7 +27,7 @@ Deprecation warnings are categorised into the following levels:
 
 -   **Red**: Components are nearing removal and require immediate action for migration.
 
-    <img src="https://github.com/adobe/spectrum-web-components/blob/dea262add8a832f8ec89ae54d77484b64758b139/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
+    <img src="https://github.com/adobe/spectrum-web-components/blob/3dcbf73f2fc9f207cddb39a5edf5bb5438eff88b/.github/images/red-warning.png?raw=true" alt="Red warning" width="50%"/>
 
 ### Communication
 
