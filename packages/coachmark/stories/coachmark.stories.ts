@@ -71,6 +71,7 @@ export const InTour = (
         open = true,
         heading = 'Coachmark in Tour',
         content = 'This is a Coachmark with nothing but text in it.',
+        separator = 'of',
     } = props;
     return html`
         <sp-coachmark
@@ -79,6 +80,7 @@ export const InTour = (
             secondary-cta="Previous"
             current-step="2"
             total-steps="8"
+            separator=${separator}
             .content=${{
                 title: heading,
                 description: content,

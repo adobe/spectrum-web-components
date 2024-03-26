@@ -80,6 +80,31 @@ describe('Coachmark', () => {
             'the slotted content renders in the element'
         );
     });
+    it('if in tour coachmark can have custom separator text of step count', async () => {
+        const el = await fixture<Coachmark>(
+            InTour(
+                {
+                    open: true,
+                    heading: 'Coachmark In Tour',
+                    content: 'This is a Coachmark with nothing but text in it.',
+                    separator: 'out of',
+                },
+                {}
+            )
+        );
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        const stepCount = el.shadowRoot.querySelector(
+            'span[aria-live="polite"]'
+        );
+
+        expect((stepCount as HTMLElement).textContent).to.contain(
+            'out of',
+            'the correct text is displayed'
+        );
+    });
     it('if in tour coachmark loads with pagination with previous, next buttons and action menu', async () => {
         const stepText = '2 of 8';
         const el = await fixture<Coachmark>(
