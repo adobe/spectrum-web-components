@@ -96,8 +96,6 @@ export class MenuItem extends LikeAnchor(
         return [menuItemStyles, checkmarkStyles, chevronStyles];
     }
 
-    abortControllerPointer!: AbortController;
-
     abortControllerSubmenu!: AbortController;
 
     @property({ type: Boolean, reflect: true })
@@ -282,7 +280,7 @@ export class MenuItem extends LikeAnchor(
                 ?disabled=${!this.hasSubmenu}
                 ?open=${this.hasSubmenu && this.open}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
-                .offset=${[-10, -4] as [number, number]}
+                .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
             >
@@ -347,15 +345,7 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
-    private handleRemoveActive(): void {
-        if (this.open) {
-            return;
-        }
-        this.active = false;
-    }
-
     private handlePointerdown(event: PointerEvent): void {
-        this.active = true;
         if (event.target === this && this.hasSubmenu && this.open) {
             this.addEventListener('focus', this.handleSubmenuFocus, {
                 once: true,
@@ -510,25 +500,6 @@ export class MenuItem extends LikeAnchor(
         ) {
             if (this.active) {
                 this.menuData.selectionRoot?.closeDescendentOverlays();
-                this.abortControllerPointer = new AbortController();
-                const options = { signal: this.abortControllerPointer.signal };
-                this.addEventListener(
-                    'pointerup',
-                    this.handleRemoveActive,
-                    options
-                );
-                this.addEventListener(
-                    'pointerleave',
-                    this.handleRemoveActive,
-                    options
-                );
-                this.addEventListener(
-                    'pointercancel',
-                    this.handleRemoveActive,
-                    options
-                );
-            } else {
-                this.abortControllerPointer?.abort();
             }
         }
         if (this.anchorElement) {

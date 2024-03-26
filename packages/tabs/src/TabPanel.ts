@@ -17,6 +17,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import panelStyles from './tab-panel.css.js';
 
@@ -27,11 +28,6 @@ import panelStyles from './tab-panel.css.js';
  */
 export class TabPanel extends SpectrumElement {
     static override styles = [panelStyles];
-
-    /**
-     * @private
-     */
-    static instanceCount = 0;
 
     @property({ type: Boolean, reflect: true })
     public selected = false;
@@ -61,7 +57,7 @@ export class TabPanel extends SpectrumElement {
         this.setAttribute('role', 'tabpanel');
         this.tabIndex = 0;
         if (!this.hasAttribute('id')) {
-            this.id = `sp-tab-panel-${TabPanel.instanceCount++}`;
+            this.id = `sp-tab-panel-${randomID()}`;
         }
     }
 

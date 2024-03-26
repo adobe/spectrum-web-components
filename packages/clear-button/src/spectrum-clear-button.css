@@ -169,14 +169,14 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([active]) {
+:host(:is(:active, [active])) {
     color: var(
         --mod-clear-button-icon-color-down,
         var(--spectrum-clear-button-icon-color-down)
     );
 }
 
-:host([active]) .fill {
+:host(:is(:active, [active])) .fill {
     background-color: var(
         --mod-clear-button-background-color-down,
         var(--spectrum-clear-button-background-color-down)
