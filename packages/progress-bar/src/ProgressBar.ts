@@ -58,7 +58,7 @@ export class ProgressBar extends SizedMixin(
     public sideLabel = false;
 
     @property({ type: Number })
-    public progress = 0;
+    public value = 0;
 
     @property({ type: String, reflect: true })
     public static: 'white' | undefined;
@@ -93,7 +93,7 @@ export class ProgressBar extends SizedMixin(
                                             style: 'percent',
                                             unitDisplay: 'narrow',
                                         }
-                                    ).format(this.progress / 100)}
+                                    ).format(this.value / 100)}
                                 </sp-field-label>
                             `}
                   `
@@ -101,7 +101,7 @@ export class ProgressBar extends SizedMixin(
             <div class="track">
                 <div
                     class="fill"
-                    style="transform: scaleX(calc(${this.progress} / 100));"
+                    style="transform: scaleX(calc(${this.value} / 100));"
                 ></div>
             </div>
         `;
@@ -133,8 +133,8 @@ export class ProgressBar extends SizedMixin(
                 this.setAttribute('aria-valuemax', '100');
             }
         }
-        if (!this.indeterminate && changes.has('progress')) {
-            this.setAttribute('aria-valuenow', '' + this.progress);
+        if (!this.indeterminate && changes.has('value')) {
+            this.setAttribute('aria-valuenow', '' + this.value);
         }
         if (changes.has('label')) {
             if (this.label.length) {

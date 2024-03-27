@@ -50,7 +50,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     public static?: 'white';
 
     @property({ type: Number })
-    public progress = 0;
+    public value = 0;
 
     @query('slot')
     private slotEl!: HTMLSlotElement;
@@ -83,9 +83,9 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
 
     protected override render(): TemplateResult {
         const styles = [
-            this.makeRotation(-180 + (180 / 50) * Math.min(this.progress, 50)),
+            this.makeRotation(-180 + (180 / 50) * Math.min(this.value, 50)),
             this.makeRotation(
-                -180 + (180 / 50) * Math.max(this.progress - 50, 0)
+                -180 + (180 / 50) * Math.max(this.value - 50, 0)
             ),
         ];
         const masks = ['Mask1', 'Mask2'];
@@ -125,8 +125,8 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (!this.indeterminate && changes.has('progress')) {
-            this.setAttribute('aria-valuenow', '' + this.progress);
+        if (!this.indeterminate && changes.has('value')) {
+            this.setAttribute('aria-valuenow', '' + this.value);
         } else if (this.hasAttribute('aria-valuenow')) {
             this.removeAttribute('aria-valuenow');
         }

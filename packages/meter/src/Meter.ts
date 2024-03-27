@@ -47,7 +47,8 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     }
 
     @property({ type: Number })
-    public progress = 0;
+    public value = 0;
+
 
     /**
      * The variant applies specific styling when set to `negative`, `positive`, `notice`
@@ -102,12 +103,12 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
                 ${new Intl.NumberFormat(this.languageResolver.language, {
                     style: 'percent',
                     unitDisplay: 'narrow',
-                }).format(this.progress / 100)}
+                }).format(this.value / 100)}
             </sp-field-label>
             <div class="track">
                 <div
                     class="fill"
-                    style="transform: scaleX(calc(${this.progress} / 100));"
+                    style="transform: scaleX(calc(${this.value} / 100));"
                 ></div>
             </div>
         `;
@@ -127,8 +128,8 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('progress')) {
-            this.setAttribute('aria-valuenow', '' + this.progress);
+        if (changes.has('value')) {
+            this.setAttribute('aria-valuenow', '' + this.value);
         }
         if (changes.has('label')) {
             if (this.label.length) {
