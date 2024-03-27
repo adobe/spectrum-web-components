@@ -80,33 +80,7 @@ describe('Coachmark', () => {
             'the slotted content renders in the element'
         );
     });
-    it('if in tour coachmark can have custom separator text of step count', async () => {
-        const el = await fixture<Coachmark>(
-            InTour(
-                {
-                    open: true,
-                    heading: 'Coachmark In Tour',
-                    content: 'This is a Coachmark with nothing but text in it.',
-                    separator: 'out of',
-                },
-                {}
-            )
-        );
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
-
-        const stepCount = el.shadowRoot.querySelector(
-            'span[aria-live="polite"]'
-        );
-
-        expect((stepCount as HTMLElement).textContent).to.contain(
-            'out of',
-            'the correct text is displayed'
-        );
-    });
     it('if in tour coachmark loads with pagination with previous, next buttons and action menu', async () => {
-        const stepText = '2 of 8';
         const el = await fixture<Coachmark>(
             InTour(
                 {
@@ -125,10 +99,10 @@ describe('Coachmark', () => {
             'span[aria-live="polite"]'
         );
 
-        expect((stepCount as HTMLElement).textContent).to.contain(
-            stepText,
-            'the slotted content renders in the element'
-        );
+        const stepCountSlot = el.querySelector(
+            '[slot="step-count"]'
+        ) as HTMLSlotElement;
+        expect(stepCountSlot?.textContent?.trim()).to.equal('2 of 8');
 
         expect(stepCount?.textContent);
         const nextButton = el.shadowRoot.querySelector(
@@ -150,16 +124,17 @@ describe('Coachmark', () => {
                     open: true,
                     heading: 'Coachmark In Tour',
                     content: 'This is a Coachmark with nothing but text in it.',
+                    currentStep: 2,
+                    totalSteps: 8,
                 },
                 {}
             )
         );
         await elementUpdated(el);
-        const content = el.shadowRoot.querySelector(
-            '.step span[aria-live="polite"]'
-        );
-
-        expect(content?.textContent?.trim()).to.equal('2 of 8');
+        const stepCountSlot = el.querySelector(
+            '[slot="step-count"]'
+        ) as HTMLSlotElement;
+        expect(stepCountSlot?.textContent?.trim()).to.equal('2 of 8');
 
         await expect(el).to.be.accessible();
     });
@@ -191,7 +166,12 @@ describe('Coachmark', () => {
         expect(joiner?.textContent?.trim()).to.include('+');
     });
     it('renders with shortcut', async () => {
-        const el = await fixture<Coachmark>(withShortCut());
+        const el = await fixture<Coachmark>(
+            withShortCut({
+                currentStep: 1,
+                totalSteps: 8,
+            })
+        );
         await elementUpdated(el);
 
         const shortcutKey = el.shadowRoot.querySelector(
@@ -201,7 +181,12 @@ describe('Coachmark', () => {
         expect(shortcutKey?.textContent?.trim()).to.include('Z');
     });
     it('renders content with image asset', async () => {
-        const el = await fixture<Coachmark>(withImage());
+        const el = await fixture<Coachmark>(
+            withImage({
+                currentStep: 1,
+                totalSteps: 8,
+            })
+        );
         await elementUpdated(el);
         const imageElement = el.shadowRoot.querySelector(
             'img[src="https://picsum.photos/id/237/200/300"'

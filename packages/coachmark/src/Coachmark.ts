@@ -87,9 +87,6 @@ export class Coachmark extends Popover {
     @property({ type: String, attribute: 'secondary-cta' })
     secondaryCTA?: string;
 
-    @property({ type: String })
-    separator = 'of';
-
     // render video and images
     private renderMedia(): TemplateResult {
         const isImage = this.mediaType === MediaType.IMAGE;
@@ -276,7 +273,7 @@ export class Coachmark extends Popover {
         return html`
             <div class="step" role="status">
                 <span aria-live="polite">
-                    ${this.currentStep} ${this.separator} ${this.totalSteps}
+                    <slot name="step-count"></slot>
                 </span>
             </div>
         `;
