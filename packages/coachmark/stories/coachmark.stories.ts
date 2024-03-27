@@ -124,7 +124,7 @@ export const single = (): TemplateResult => {
 };
 
 export const TriggerOnClick = (props: Properties): TemplateResult => {
-    const { open = true, currentStep = 2, totalSteps = 8 } = props;
+    const { open = true, currentStep = 1, totalSteps = 4 } = props;
 
     return html`
         <sp-coach-indicator id="trigger"></sp-coach-indicator>
