@@ -852,6 +852,7 @@ describe('Slider', () => {
             html`
                 <sp-slider
                     max="20"
+                    variant="filled"
                     fill-start
                     min="0"
                     value="10"
