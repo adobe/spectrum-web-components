@@ -101,7 +101,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (variant === this.variant) {
             return;
         }
-        if (variants.includes(variant)) {
+        if (variants.includes(variant) && this.fillStart === undefined) {
             this.setAttribute('variant', variant);
             this._variant = variant;
         } else {
