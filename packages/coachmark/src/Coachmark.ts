@@ -273,7 +273,9 @@ export class Coachmark extends Popover {
         return html`
             <div class="step" role="status">
                 <span aria-live="polite">
-                    <slot name="step-count"></slot>
+                    <slot name="step-count">
+                        ${this.currentStep} of ${this.totalSteps}
+                    </slot>
                 </span>
             </div>
         `;

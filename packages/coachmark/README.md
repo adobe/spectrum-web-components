@@ -66,35 +66,6 @@ Coach marks can include an `<sp-action-menu>`, which appears at the top right of
 </sp-coachmark>
 ```
 
-## Using Custom Separator
-
-Coach mark in tour by default, uses the separator `'of'` between the current step and the total steps. You can customize this separator by using the `separator` attribute. If no `separator` is provided, it will default to `'of'`.
-
-```html
-<sp-coachmark
-    open
-    current-step="2"
-    total-steps="8"
-    primary-cta="Next"
-    secondary-cta="Previous"
-    separator="out of"
->
-    <div slot="title">Coachmark with Text Only</div>
-    <div slot="content">
-        This is a Coachmark with nothing but text in it. Kind of lonely in here.
-    </div>
-    <sp-action-menu
-        label="More Actions"
-        placement="bottom-end"
-        quiet
-        slot="actions"
-    >
-        <sp-menu-item>Skip tour</sp-menu-item>
-        <sp-menu-item>Restart tour</sp-menu-item>
-    </sp-action-menu>
-</sp-coachmark>
-```
-
 ## User Action Dependent
 
 User action-dependent coachmarks are designed to guide users based on their interactions within your application. In such cases, there is no "Next Step" button, as the coachmark progresses when the user takes a specific action. This allows users to learn by doing, rather than simply reading instructions. The coachmark remains until the user performs the required action or takes an alternative route in the tour, such as skipping, restarting, or moving back to a previous step.
