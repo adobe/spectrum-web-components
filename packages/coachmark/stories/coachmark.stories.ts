@@ -48,7 +48,6 @@ type Properties = {
     totalSteps?: number;
     primaryCTA?: string;
     secondaryCTA?: string;
-    separator?: string;
 };
 
 export const Default = (): TemplateResult => {
