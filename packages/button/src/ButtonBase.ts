@@ -32,6 +32,10 @@ import buttonStyles from './button-base.css.js';
 export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     'sp-overlay,sp-tooltip',
 ]) {
+    spectrumConfig = {
+        downstate: ['spectrum-two'],
+    };
+
     public static override get styles(): CSSResultArray {
         return [buttonStyles];
     }
