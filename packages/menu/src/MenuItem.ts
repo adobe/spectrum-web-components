@@ -39,6 +39,7 @@ import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-che
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
+import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -164,6 +165,8 @@ export class MenuItem extends LikeAnchor(
     @query('sp-overlay')
     public overlayElement!: Overlay;
 
+    private submenuElement?: HTMLElement;
+
     public override get focusElement(): HTMLElement {
         return this;
     }
@@ -210,7 +213,14 @@ export class MenuItem extends LikeAnchor(
                 childList: true,
                 subtree: true,
             },
-            callback: () => {
+            callback: (mutations) => {
+                const isSubmenu = mutations.every(
+                    (mutation) =>
+                        (mutation.target as HTMLElement).slot === 'submenu'
+                );
+                if (isSubmenu) {
+                    return;
+                }
                 this.breakItemChildrenCache();
             },
         });
@@ -239,6 +249,12 @@ export class MenuItem extends LikeAnchor(
             return false;
         }
     }
+
+    private handleSlottableRequest = (event: SlottableRequestEvent): void => {
+        this.submenuElement?.dispatchEvent(
+            new SlottableRequestEvent(event.name, event.data)
+        );
+    };
 
     private proxyFocus = (): void => {
         this.focus();
@@ -290,6 +306,7 @@ export class MenuItem extends LikeAnchor(
                 .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
+                @slottable-request=${this.handleSlottableRequest}
             >
                 <sp-popover
                     @change=${(event: Event) => {
@@ -343,10 +360,10 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
-        const assignedElements = event.target.assignedElements({
+        this.submenuElement = event.target.assignedElements({
             flatten: true,
-        });
-        this.hasSubmenu = !!assignedElements.length;
+        })[0] as HTMLElement;
+        this.hasSubmenu = !!this.submenuElement;
         if (this.hasSubmenu) {
             this.setAttribute('aria-haspopup', 'true');
         }
@@ -389,7 +406,7 @@ export class MenuItem extends LikeAnchor(
     protected handleSubmenuFocus(): void {
         requestAnimationFrame(() => {
             // Wait till after `closeDescendentOverlays` has happened in Menu
-            // to reopen (keey open) the direct descendent of this Menu Item
+            // to reopen (keep open) the direct descendent of this Menu Item
             this.overlayElement.open = this.open;
         });
     }

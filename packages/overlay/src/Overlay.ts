@@ -201,6 +201,12 @@ export class Overlay extends OverlayFeatures {
     override placement?: Placement;
 
     /**
+     * The state in which the last `request-slottable` event was dispatched.
+     * Do not allow overlays from dispatching the same state twice in a row.
+     */
+    private lastRequestSlottableState = false;
+
+    /**
      * Whether to pass focus to the overlay once opened, or
      * to the appropriate value based on the "type" of the overlay
      * when set to `"auto"`.
@@ -534,6 +540,9 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected override requestSlottable(): void {
+        if (this.lastRequestSlottableState === this.open) {
+            return;
+        }
         if (!this.open) {
             document.body.offsetHeight;
         }
@@ -546,6 +555,7 @@ export class Overlay extends OverlayFeatures {
                 this.open ? {} : removeSlottableRequest
             )
         );
+        this.lastRequestSlottableState = this.open;
     }
 
     override willUpdate(changes: PropertyValues): void {
