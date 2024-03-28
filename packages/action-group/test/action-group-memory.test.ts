@@ -55,17 +55,11 @@ describe('Menu memory usage', () => {
 
         expect(
             afterMB.dom - beforeMB.dom,
-            `Total | before: ${beforeMB.total}, after: ${afterMB.total}
-DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}
-JS | before: ${beforeMB.js}, after: ${afterMB.js}
-Shared | before: ${beforeMB.shared}, after: ${afterMB.shared}`
+            `DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}`
         ).to.be.lte(0);
         expect(
             afterMB.js - beforeMB.js,
-            `Total | before: ${beforeMB.total}, after: ${afterMB.total}
-DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}
-JS | before: ${beforeMB.js}, after: ${afterMB.js}
-Shared | before: ${beforeMB.shared}, after: ${afterMB.shared}`
+            `JS | before: ${beforeMB.js}, after: ${afterMB.js}`
         ).to.be.lte(0);
     });
 });
