@@ -406,10 +406,22 @@ export const groups = ({
 groups.decorators = [isOverlayOpen];
 
 export const directive = (): TemplateResult => {
+    const renderSubmenu = (): TemplateResult => html`
+        <sp-menu-item>Submenu Item 1</sp-menu-item>
+        <sp-menu-item>Submenu Item 2</sp-menu-item>
+        <sp-menu-item>Submenu Item 3</sp-menu-item>
+        <sp-menu-item>Submenu Item 4</sp-menu-item>
+    `;
     const renderOptions = (): TemplateResult => html`
         <sp-menu-item>Deselect</sp-menu-item>
         <sp-menu-item>Select Inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>
+            Feather...
+            <sp-menu
+                slot="submenu"
+                ${slottableRequest(renderSubmenu)}
+            ></sp-menu>
+        </sp-menu-item>
         <sp-menu-item>Select and Mask...</sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>Save Selection</sp-menu-item>
