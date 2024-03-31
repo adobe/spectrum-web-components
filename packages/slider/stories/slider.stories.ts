@@ -178,6 +178,7 @@ export const FillStart = (args: StoryArgs = {}): TemplateResult => {
             <sp-slider
                 max="1"
                 fill-start
+                variant="filled"
                 min="0"
                 value=".7"
                 step="0.01"
@@ -201,6 +202,7 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 value=".7"
                 step="0.1"
                 fill-start="0.3"
+                variant="filled"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}

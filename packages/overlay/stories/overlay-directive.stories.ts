@@ -123,12 +123,25 @@ export default {
                 options: ['light', 'dark'],
             },
         },
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the second accordion item is open.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
     args: {
         placement: 'bottom',
         offset: 0,
         colorStop: 'light',
         triggerOn: 'click',
+        open: false,
     },
 };
 
@@ -138,11 +151,13 @@ interface Properties {
     triggerOn?: OverlayContentTypes;
     type?: Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'>;
     insertionOptions?: InsertionOptions;
+    open?: boolean;
 }
 
 const template = ({
     placement,
     offset,
+    open,
     triggerOn,
     insertionOptions,
 }: Properties): TemplateResult => {
@@ -200,6 +215,7 @@ const template = ({
             variant="primary"
             ${tooltip(renderTooltip)}
             ${trigger(renderPopover, {
+                open,
                 triggerInteraction: triggerOn,
                 overlayOptions: {
                     placement,
@@ -213,24 +229,40 @@ const template = ({
     `;
 };
 
-export const Default = (args: Properties): TemplateResult => template(args);
+export const Default = ({ open }: Properties = {}): TemplateResult => {
+    const renderPopover = (): TemplateResult => html`
+        <sp-popover>
+            <sp-dialog no-divider>Popover content goes here</sp-dialog>
+        </sp-popover>
+    `;
+    const options = typeof open !== 'undefined' ? { open } : undefined;
+    return html`
+        <sp-button ${trigger(renderPopover, options)}>Open Popover</sp-button>
+    `;
+};
 
 Default.swc_vrt = {
     skip: true,
 };
 
-export const elsewhere = (args: Properties = {}): TemplateResult => html`
+export const congifured = (args: Properties): TemplateResult => template(args);
+
+congifured.swc_vrt = {
+    skip: true,
+};
+
+export const insertionOptions = (args: Properties = {}): TemplateResult => html`
     ${template(args)}
     <div id="other-element"></div>
 `;
 
-elsewhere.args = {
+insertionOptions.args = {
     insertionOptions: {
         el: () => document.querySelector('#other-element'),
         where: 'afterbegin',
     },
 } as Properties;
 
-elsewhere.swc_vrt = {
+insertionOptions.swc_vrt = {
     skip: true,
 };

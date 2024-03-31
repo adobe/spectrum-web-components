@@ -25,6 +25,7 @@ import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
+import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
 /**
  * @element sp-action-menu
@@ -61,6 +62,10 @@ export class ActionMenu extends ObserveSlotPresence(
     private get labelOnly(): boolean {
         return this.slotContentIsPresent;
     }
+
+    private handleSlottableRequest = (event: SlottableRequestEvent): void => {
+        this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
+    };
 
     protected override get buttonContent(): TemplateResult[] {
         return [
@@ -125,5 +130,15 @@ export class ActionMenu extends ObserveSlotPresence(
             this.invalid = false;
         }
         super.update(changedProperties);
+    }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+        if (this.hasRenderedOverlay) {
+            this.overlayElement.addEventListener(
+                'slottable-request',
+                this.handleSlottableRequest
+            );
+        }
     }
 }

@@ -49,7 +49,28 @@ const config = {
             fileName: 'tag',
             components: [
                 {
-                    find: builder.pseudoClass('active'),
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
                     hoist: true,
                 },
                 {

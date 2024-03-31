@@ -58,12 +58,14 @@ const findDeclaration = (customElements, test) => {
 };
 
 const findDeprecationNotice = async function (filePath) {
-    const hasDeprecation = fs.existsSync(filePath);
-    if (hasDeprecation) {
-        const packageJSON = await import(filePath, {
-            assert: { type: 'json' },
-        }).then((packageDefault) => packageDefault.default);
-        return packageJSON.deprecationNotice;
+    for await (const mdPath of globby.stream(filePath)) {
+        const hasDeprecation = fs.existsSync(mdPath);
+        if (hasDeprecation) {
+            const packageJSON = await import(mdPath, {
+                assert: { type: 'json' },
+            }).then((packageDefault) => packageDefault.default);
+            return packageJSON.deprecationNotice;
+        }
     }
 };
 
@@ -184,12 +186,7 @@ export async function processREADME(mdPath) {
         )
     );
     const deprecationNotice = await findDeprecationNotice(
-        path.resolve(
-            __dirname,
-            '../../../packages',
-            packageName,
-            'package.json'
-        )
+        `${projectDir}/(packages|tools)/${packageName}/package.json`
     );
     const hasTemplate = fs.existsSync(
         path.resolve(
@@ -211,6 +208,7 @@ export async function processREADME(mdPath) {
     hasDemoControls: ${hasArgs},
     hasDemoTemplate: ${hasTemplate},
     deprecationNotice: ${JSON.stringify(deprecationNotice)},
+    isComponent: ${isComponent},
     ${hasArgs ? 'demoControls: Object.values(argTypes),' : ''}
 };
 `;

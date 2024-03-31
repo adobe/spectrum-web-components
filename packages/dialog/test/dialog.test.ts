@@ -135,6 +135,8 @@ describe('Dialog', () => {
                 : el.querySelector('.close-button ')
         ) as HTMLElement;
 
+        expect(closeButton.ariaLabel).to.be.equals('Close');
+
         closeButton.click();
 
         await elementUpdated(el);

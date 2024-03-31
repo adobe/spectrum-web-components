@@ -101,7 +101,7 @@
         "@netlify/build": "^29.1.0",
         "@open-wc/dev-server-hmr": "^0.2.0",
         "@open-wc/testing": "^3.2.0",
-        "@playwright/test": "^1.41.2",
+        "@playwright/test": "^1.42.1",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
@@ -138,7 +138,7 @@
         "alex": "^11.0.1",
         "cem-plugin-module-file-extensions": "^0.0.5",
         "chalk": "^5.0.1",
-        "chromedriver": "^121.0.2",
+        "chromedriver": "^122.0.0",
         "common-tags": "^1.8.2",
         "custom-elements-manifest": "^2.0.0",
         "debounce": "^2.0.0",
@@ -381,7 +381,9 @@
             "output": [
                 "packages/*/src/spectrum-*.css",
                 "tools/*/src/spectrum-*.css",
-                "tools/styles/*.css"
+                "tools/styles/*.css",
+                "!tools/styles/scale-medium.css",
+                "!tools/styles/scale-large.css"
             ],
             "clean": false
         },

@@ -77,6 +77,7 @@ export const strategies = {
  *
  * @fires sp-opened - announces that an overlay has completed any entry animations
  * @fires sp-closed - announce that an overlay has compelted any exit animations
+ * @fires slottable-request - requests to add or remove slottable content
  */
 export class Overlay extends OverlayFeatures {
     static override styles = [styles];
@@ -198,6 +199,12 @@ export class Overlay extends OverlayFeatures {
      */
     @property()
     override placement?: Placement;
+
+    /**
+     * The state in which the last `request-slottable` event was dispatched.
+     * Do not allow overlays from dispatching the same state twice in a row.
+     */
+    private lastRequestSlottableState = false;
 
     /**
      * Whether to pass focus to the overlay once opened, or
@@ -533,15 +540,22 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected override requestSlottable(): void {
+        if (this.lastRequestSlottableState === this.open) {
+            return;
+        }
         if (!this.open) {
             document.body.offsetHeight;
         }
+        /**
+         * @ignore
+         */
         this.dispatchEvent(
             new SlottableRequestEvent(
                 'overlay-content',
                 this.open ? {} : removeSlottableRequest
             )
         );
+        this.lastRequestSlottableState = this.open;
     }
 
     override willUpdate(changes: PropertyValues): void {

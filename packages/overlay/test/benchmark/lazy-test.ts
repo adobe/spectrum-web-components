@@ -12,18 +12,18 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import {
     removeSlottableRequest,
     type SlottableRequestEvent,
 } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
-import { html, render } from 'lit';
+import { html, render } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const handleSlottableRequest = (event: SlottableRequestEvent): void => {
+    import('@spectrum-web-components/popover/sp-popover.js');
+    import('@spectrum-web-components/dialog/sp-dialog.js');
+    import('@spectrum-web-components/slider/sp-slider.js');
+    import('@spectrum-web-components/tooltip/sp-tooltip.js');
     const template =
         event.data === removeSlottableRequest
             ? undefined
@@ -56,8 +56,7 @@ measureFixtureCreation(
     html`
         <sp-button id="button">Trigger</sp-button>
         <sp-overlay
-            trigger="button"
-            .triggerInteraction=${'click'}
+            trigger="button@click"
             @slottable-request=${handleSlottableRequest}
         ></sp-overlay>
     `

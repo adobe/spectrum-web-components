@@ -199,7 +199,7 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([active]) .root .spectrum-PickerButton-fill,
+:host(:is(:active, [active])) .root .spectrum-PickerButton-fill,
 :host([open]) .root .spectrum-PickerButton-fill {
     background-color: var(
         --mod-picker-button-background-color-down,
@@ -207,7 +207,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) .root .spectrum-PickerButton-label,
+:host(:is(:active, [active])) .root .spectrum-PickerButton-label,
 :host([open]) .root .spectrum-PickerButton-label {
     color: var(
         --mod-picker-button-font-color-down,
@@ -215,7 +215,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) .root .spectrum-PickerButton-icon,
+:host(:is(:active, [active])) .root .spectrum-PickerButton-icon,
 :host([open]) .root .spectrum-PickerButton-icon {
     color: var(
         --mod-picker-button-icon-color-down,

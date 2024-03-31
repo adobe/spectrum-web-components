@@ -43,7 +43,7 @@ class OverlayTargetIcon extends LitElement {
             :host {
                 position: absolute;
                 display: block;
-                color: var(--spectrum-global-color-magenta-700);
+                color: var(--spectrum-magenta-900);
                 width: 64px;
                 height: 64px;
                 top: 0;

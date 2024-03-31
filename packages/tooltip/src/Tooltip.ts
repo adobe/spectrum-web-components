@@ -19,7 +19,6 @@ import {
 import {
     property,
     query,
-    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type {
@@ -30,6 +29,7 @@ import type {
 
 import tooltipStyles from './tooltip.css.js';
 import { focusableSelector } from '@spectrum-web-components/shared/src/focusable-selectors.js';
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
 class TooltipOpenable extends HTMLElement {
     constructor() {
@@ -78,6 +78,7 @@ class TooltipOpenable extends HTMLElement {
         }
         tooltip.open = open;
     }
+    /* c8 ignore next 3 */
     get open(): boolean {
         return this._open;
     }
@@ -128,6 +129,8 @@ export class Tooltip extends SpectrumElement {
      */
     @property({ type: Boolean })
     delayed = false;
+
+    private dependencyManager = new DependencyManagerController(this);
 
     /**
      * Whether to prevent a self-managed Tooltip from responding to user input.
@@ -221,6 +224,7 @@ export class Tooltip extends SpectrumElement {
         }
         let triggerElement = (start.parentElement ||
             (root as ShadowRoot).host ||
+            /* c8 ignore next 1 */
             root) as HTMLElement;
         while (!triggerElement?.matches?.(focusableSelector)) {
             start =
@@ -242,32 +246,10 @@ export class Tooltip extends SpectrumElement {
             }
             triggerElement = (start.parentElement ||
                 (root as ShadowRoot).host ||
+                /* c8 ignore next 1 */
                 root) as HTMLElement;
         }
         return triggerElement;
-    }
-
-    @state()
-    private dependenciesLoaded = false;
-    private dependenciesToLoad: Record<string, boolean> = {};
-
-    private trackDependency(dependency: string, flag?: boolean): void {
-        const loaded =
-            !!customElements.get(dependency) ||
-            this.dependenciesToLoad[dependency] ||
-            !!flag;
-        if (!loaded) {
-            customElements.whenDefined(dependency).then(() => {
-                this.trackDependency(dependency, true);
-            });
-        }
-        this.dependenciesToLoad = {
-            ...this.dependenciesToLoad,
-            [dependency]: loaded,
-        };
-        this.dependenciesLoaded = Object.values(this.dependenciesToLoad).every(
-            (loaded) => loaded
-        );
     }
 
     override render(): TemplateResult {
@@ -285,13 +267,13 @@ export class Tooltip extends SpectrumElement {
             </sp-tooltip-openable>
         `;
         if (this.selfManaged) {
-            this.trackDependency('sp-overlay');
+            this.dependencyManager.add('sp-overlay');
             import('@spectrum-web-components/overlay/sp-overlay.js');
             return html`
                 <sp-overlay
                     ?open=${this.open &&
                     !this.disabled &&
-                    this.dependenciesLoaded}
+                    this.dependencyManager.loaded}
                     ?delayed=${this.delayed}
                     ?disabled=${this.disabled}
                     offset=${this.offset}

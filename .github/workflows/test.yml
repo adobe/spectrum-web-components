@@ -36,28 +36,8 @@ jobs:
                   script: |
                       const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
-                      github.rest.issues.listComments({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: context.issue.number,
-                      }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('## Branch preview') || comment.body.startsWith('# Branch Preview'));
-                        if (priorComment) {
-                          github.rest.issues.updateComment({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            comment_id: priorComment.id,
-                            body
-                          });
-                        } else {
-                          github.rest.issues.createComment({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            issue_number: context.issue.number,
-                            body
-                          });
-                        }
-                      });
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
+                      commentOrUpdate(github, context, '## Branch preview', body);
     lighthouse:
         name: Lighthouse CI
         runs-on: ubuntu-20.04
@@ -103,28 +83,8 @@ jobs:
                   script: |
                       const { buildLighthouseComment } = await import('${{ github.workspace }}/tasks/build-lighthouse-comment.js');
                       const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }}, ${{ steps.lighthouse.outputs.assertionResults }});
-                      github.rest.issues.listComments({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: context.issue.number,
-                      }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('## Lighthouse scores') || comment.body.startsWith('# Lighthouse Results'));
-                        if (priorComment) {
-                          github.rest.issues.updateComment({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            comment_id: priorComment.id,
-                            body
-                          });
-                        } else {
-                          github.rest.issues.createComment({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            issue_number: context.issue.number,
-                            body
-                          });
-                        }
-                      });
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
+                      commentOrUpdate(github, context, '## Lighthouse scores', body);
     compare-firefox:
         name: Compare performance to latest release on Firefox
 
@@ -247,25 +207,5 @@ jobs:
                   script: |
                       const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.js');
                       const body = buildTachometerComment();
-                      github.rest.issues.listComments({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: context.issue.number,
-                      }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('## Tachometer results') || comment.body.startsWith('# Tachometer results'));
-                        if (priorComment) {
-                          github.rest.issues.updateComment({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            comment_id: priorComment.id,
-                            body
-                          });
-                        } else {
-                          github.rest.issues.createComment({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            issue_number: context.issue.number,
-                            body
-                          });
-                        }
-                      });
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
+                      commentOrUpdate(github, context, '## Tachometer results', body);
