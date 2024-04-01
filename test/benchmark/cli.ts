@@ -96,6 +96,15 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
         defaultValue: 'element',
     },
     {
+        name: 'end',
+        description:
+            'Test until "updateComplete" for all elements in the text (only includes the work included required to update) or "paint" (wait for the paint after the update has completed).' +
+            '\n(default updateComplete)',
+        alias: 'e',
+        type: String,
+        defaultValue: 'updateComplete',
+    },
+    {
         name: 'json',
         description: 'Save output to json.',
         alias: 'j',
@@ -114,6 +123,7 @@ interface Options {
     browser: 'chrome' | 'firefox';
     compare: string;
     start: string;
+    end: string;
     json: boolean;
 }
 
@@ -162,6 +172,7 @@ $ node test/benchmark/cli -n 20
             .map((dirEntry) => dirEntry.name);
     }
     const start = opts.start;
+    const end = opts.end;
 
     const printResults: string[] = [];
     for (const packageName of packages) {
@@ -238,7 +249,7 @@ $ node test/benchmark/cli -n 20
             if (opts.compare !== 'none') {
                 config.benchmarks.push({
                     name: `${packageName}:${benchmark}`,
-                    url: `bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}&dir=${monorepoDir}`,
+                    url: `bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}&end=${end}&dir=${monorepoDir}`,
                     packageVersions: {
                         label: 'remote',
                         dependencies: {
@@ -260,7 +271,7 @@ $ node test/benchmark/cli -n 20
             }
             config.benchmarks.push({
                 name: `${packageName}:${benchmark}`,
-                url: `bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}&dir=${monorepoDir}`,
+                url: `bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}&end=${end}&dir=${monorepoDir}`,
                 measurement: 'global',
                 browser: {
                     name: opts.browser,
