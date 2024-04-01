@@ -435,7 +435,7 @@ export class LayoutElement extends LitElement {
             <sp-theme
                 .color=${this.color}
                 .scale=${this.scale}
-                .theme=${this.system}
+                .system=${this.system}
                 dir=${this.dir}
                 id="app"
                 @sp-track-theme=${this.handleTrackTheme}
