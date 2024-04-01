@@ -10,56 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, fixture, nextFrame } from '@open-wc/testing';
-import { html, render } from '@spectrum-web-components/base';
+import { fixture } from '@open-wc/testing';
 import { Default } from '../stories/action-bar.stories.js';
-import { usedHeapMB } from '../../../test/testing-helpers.js';
+import { ActionBar } from '@spectrum-web-components/action-bar';
+import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-describe('Menu memory usage', () => {
-    it('releases references on disconnect', async function () {
-        if (!window.gc || !('measureUserAgentSpecificMemory' in performance))
-            this.skip();
-
-        this.timeout(10000);
-
-        const iterations = 50;
-        let active = false;
-
-        const el = await fixture<HTMLElement>(
-            html`
-                <div></div>
-            `
-        );
-
-        async function toggle(
-            forced: boolean | undefined = undefined
-        ): Promise<void> {
-            active = forced != null ? forced : !active;
-            render(active ? Default() : html``, el);
-            await nextFrame();
-            await nextFrame();
-        }
-
-        // "shake things out" to get a good first reading
-        for (let i = 0; i < 5; i++) {
-            await toggle();
-        }
-        await toggle(false);
-        const beforeMB = await usedHeapMB();
-
-        for (let i = 0; i < iterations; i++) {
-            await toggle();
-        }
-        await toggle(false);
-        const afterMB = await usedHeapMB();
-
-        expect(
-            afterMB.dom - beforeMB.dom,
-            `DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}`
-        ).to.be.lte(0);
-        expect(
-            afterMB.js - beforeMB.js,
-            `JS | before: ${beforeMB.js}, after: ${afterMB.js}`
-        ).to.be.lte(0);
-    });
-});
+testForMemoryLeaks(async () => await fixture<ActionBar>(Default()));
