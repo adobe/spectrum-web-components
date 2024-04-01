@@ -142,7 +142,7 @@ describe('Virtualized Table Selects', () => {
     it('surfaces [selects="single"] selection on Virtualized Table', async () => {
         const test = await fixture<Table>(
             html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
+                <sp-theme system="spectrum" scale="medium" color="light">
                     ${virtualizedSingle(virtualizedSingle.args as Properties)}
                 </sp-theme>
             `
@@ -174,7 +174,7 @@ describe('Virtualized Table Selects', () => {
     it('selects via `click` while [selects="single"]', async () => {
         const test = await fixture<Table>(
             html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
+                <sp-theme system="spectrum" scale="medium" color="light">
                     ${virtualizedSingle(virtualizedSingle.args as Properties)}
                 </sp-theme>
             `
@@ -215,7 +215,7 @@ describe('Virtualized Table Selects', () => {
     it('surfaces [selects="multiple"] selection on Virtualized Table', async () => {
         const test = await fixture<Table>(
             html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
+                <sp-theme system="spectrum" scale="medium" color="light">
                     ${virtualizedMultiple(
                         virtualizedMultiple.args as Properties
                     )}
@@ -413,7 +413,7 @@ describe('Virtualized Table Selects', () => {
     it('ensures that virtualized elements with values in .selected are visually selected when brought into view using scrollTop', async () => {
         const test = await fixture<Table>(
             html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
+                <sp-theme system="spectrum" scale="medium" color="light">
                     ${virtualizedMultiple(
                         virtualizedMultiple.args as Properties
                     )}

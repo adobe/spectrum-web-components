@@ -25,7 +25,7 @@ describe('Themes', () => {
     it('loads - light', async () => {
         const el = await fixture<Theme>(
             html`
-                <sp-theme theme="classic" color="light"></sp-theme>
+                <sp-theme system="spectrum" color="light"></sp-theme>
             `
         );
 
@@ -61,7 +61,7 @@ describe('Themes', () => {
     it('adds an instance only once', async () => {
         const el = await fixture<Theme>(
             html`
-                <sp-theme theme="express"></sp-theme>
+                <sp-theme system="express"></sp-theme>
             `
         );
 

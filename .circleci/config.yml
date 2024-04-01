@@ -85,7 +85,7 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_theme >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_theme >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail
@@ -248,7 +248,7 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="hcm"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail
