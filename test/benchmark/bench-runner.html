@@ -18,6 +18,7 @@
             const bench = params.get('bench');
             const dir = params.get('dir');
             window.tachometerStart = params.get('start');
+            window.tachometerEnd = params.get('end');
             import(`../../${dir}/${pack}/test/benchmark/${bench}.js`);
         </script>
     </body>

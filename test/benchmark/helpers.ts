@@ -20,7 +20,24 @@ declare global {
     interface Window {
         tachometerResult: undefined | number;
         tachometerStart: undefined | 'page' | 'element';
+        tachometerEnd: undefined | 'updateComplete' | 'paint';
     }
+}
+
+/**
+ * Runs `callback` shortly after the next browser Frame is produced.
+ */
+function runAfterFramePaint(callback: () => void) {
+    // Queue a "before Render Steps" callback via requestAnimationFrame.
+    requestAnimationFrame(() => {
+        const messageChannel = new MessageChannel();
+
+        // Setup the callback to run in a Task
+        messageChannel.port1.onmessage = callback;
+
+        // Queue the Task on the Task Queue
+        messageChannel.port2.postMessage(undefined);
+    });
 }
 
 @customElement('test-fixture')
@@ -144,9 +161,10 @@ export const measureFixtureCreation = async (
                 return acc;
             }, [] as Element[]);
         }
-        document.body.offsetWidth;
-    } else {
-        await new Promise((res) => requestAnimationFrame(res));
+    }
+
+    if (window.tachometerEnd === 'paint') {
+        await new Promise<void>((res) => runAfterFramePaint(res));
     }
 
     if (opts.afterRender) {
