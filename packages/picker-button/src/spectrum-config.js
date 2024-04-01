@@ -195,7 +195,31 @@ const config = {
                     },
                     hoist: true,
                 },
-                converter.pseudoToAttribute('active', 'active'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.notToAttribute('is-invalid', 'invalid'),
                 ...converter.enumerateAttributes(

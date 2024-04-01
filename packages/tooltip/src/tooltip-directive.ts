@@ -31,6 +31,7 @@ export const tooltip = function tooltip(
         },
         {
             ...options,
+            triggerInteraction: 'hover',
             overlayOptions: {
                 type: 'hint',
                 ...options?.overlayOptions,

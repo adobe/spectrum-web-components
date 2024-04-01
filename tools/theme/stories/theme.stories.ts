@@ -40,15 +40,15 @@ const storyStyles = html`
         #example {
             width: 500px;
             padding: 3em;
-            background-color: var(--spectrum-global-color-gray-100);
-            color: var(--spectrum-global-color-gray-800);
+            background-color: var(--spectrum-gray-100);
+            color: var(--spectrum-gray-800);
         }
 
         #inner {
             margin-top: 2em;
             padding: 2em;
-            background-color: var(--spectrum-global-color-gray-100);
-            color: var(--spectrum-global-color-gray-800);
+            background-color: var(--spectrum-gray-100);
+            color: var(--spectrum-gray-800);
         }
 
         #buttons {
@@ -208,15 +208,15 @@ export const reverseColorNestedTheme = ({
             #outer {
                 width: 500px;
                 padding: 3em;
-                background-color: var(--spectrum-global-color-gray-100);
-                color: var(--spectrum-global-color-gray-800);
+                background-color: var(--spectrum-gray-100);
+                color: var(--spectrum-gray-800);
             }
 
             #inner {
                 margin-top: 2em;
                 padding: 2em;
-                background-color: var(--spectrum-global-color-gray-100);
-                color: var(--spectrum-global-color-gray-800);
+                background-color: var(--spectrum-gray-100);
+                color: var(--spectrum-gray-800);
             }
 
             #buttons {

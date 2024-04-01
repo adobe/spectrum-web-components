@@ -86,7 +86,7 @@ const hydrateExportMap = async (exportMapPath) => {
             key.endsWith('.css.js') ||
             exportMapResolved[key].endsWith('.css.js') ||
             (key !== '.' && !key.endsWith('.js')) ||
-            key.search('version.js') > -1
+            (key.endsWith('version.js') && !key.endsWith('core-tokens.js'))
         ) {
             // simple map for assets without "development" versions
             exportMapExploded[key] = exportMapResolved[key];

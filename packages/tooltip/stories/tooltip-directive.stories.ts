@@ -35,6 +35,7 @@ interface Properties {
 }
 
 export const Default = ({
+    open,
     placement,
     text,
     variant,
@@ -47,6 +48,7 @@ export const Default = ({
                         ${text || 'Tooltip'}
                     `,
                 {
+                    open,
                     overlayOptions: { placement },
                     variant,
                 }

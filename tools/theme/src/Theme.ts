@@ -378,6 +378,14 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                     }
                 );
             }
+            if (['lightest', 'darkest'].includes(this.color)) {
+                window.__swc.warn(
+                    this,
+                    `Color lightest and darkest are deprecated and will be removed in a future release`,
+                    'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
+                    { level: 'deprecation' }
+                );
+            }
         }
         return [...styles];
     }

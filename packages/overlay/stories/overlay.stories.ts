@@ -541,11 +541,11 @@ export const customizedClickContent = (
     args: Properties
 ): TemplateResult => html`
     <style>
-        overlay-trigger {
+        sp-popover {
             --styled-div-background-color: var(
-                --spectrum-semantic-cta-background-color-default
+                --spectrum-accent-background-color-default
             );
-            --spectrum-button-m-accent-fill-texticon-background-color: rebeccapurple;
+            --mod-button-background-color-default: rebeccapurple;
         }
     </style>
     ${template({
@@ -644,9 +644,9 @@ export const deepNesting = (): TemplateResult => {
                 <recursive-popover
                     tabindex=""
                     style="
-                        background-color: var(--spectrum-global-color-gray-100);
-                        color: var(--spectrum-global-color-gray-800);
-                        padding: var(--spectrum-global-dimension-size-225);
+                        background-color: var(--spectrum-gray-100);
+                        color: var(--spectrum-gray-800);
+                        padding: calc(var(--swc-scale-factor) * 22px);
                     "
                 ></recursive-popover>
             </sp-theme>
@@ -781,8 +781,8 @@ export const detachedElement = (): TemplateResult => {
         div.setAttribute(
             'style',
             `
-            background-color: var(--spectrum-global-color-gray-50);
-            color: var(--spectrum-global-color-gray-800);
+            background-color: var(--spectrum-gray-50);
+            color: var(--spectrum-gray-800);
             border: 1px solid;
             padding: 2em;
         `
@@ -924,7 +924,7 @@ export const longpress = (): TemplateResult => {
                         )}
                     selects="single"
                     vertical
-                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,calc(var(--swc-scale-factor) * 10px)) / 2);"
                 >
                     <sp-action-button>
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>

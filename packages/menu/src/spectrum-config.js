@@ -83,7 +83,31 @@ const config = {
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-active', 'active'),
-                converter.pseudoToAttribute('active', 'active'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),

@@ -333,14 +333,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host(:not([disabled])[active]) {
+:host(:not([disabled]):is(:active, [active])) {
     background-color: var(
         --mod-closebutton-background-color-down,
         var(--spectrum-closebutton-background-color-down)
     );
 }
 
-:host(:not([disabled])[active]) .icon {
+:host(:not([disabled]):is(:active, [active])) .icon {
     color: var(
         --highcontrast-closebutton-icon-color-down,
         var(
@@ -456,8 +456,8 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([static='black']:not([disabled])[active]),
-:host([static='white']:not([disabled])[active]) {
+:host([static='black']:not([disabled]):is(:active, [active])),
+:host([static='white']:not([disabled]):is(:active, [active])) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-down,
         var(
@@ -467,8 +467,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black']:not([disabled])[active]) .icon,
-:host([static='white']:not([disabled])[active]) .icon {
+:host([static='black']:not([disabled]):is(:active, [active])) .icon,
+:host([static='white']:not([disabled]):is(:active, [active])) .icon {
     color: var(
         --highcontrast-closebutton-icon-color-default,
         var(

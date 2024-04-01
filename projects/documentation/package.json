@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.41.2",
+    "version": "0.42.0",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -22,8 +22,8 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^0.41.2",
-        "@spectrum-web-components/custom-vars-viewer": "^0.41.2"
+        "@spectrum-web-components/bundle": "^0.42.0",
+        "@spectrum-web-components/custom-vars-viewer": "^0.42.0"
     },
     "devDependencies": {
         "@11ty/eleventy": "^3.0.0-alpha.4",
@@ -44,7 +44,7 @@
         "lunr": "^2.3.9",
         "markdown-it": "^14.0.0",
         "markdown-it-anchor": "^8.4.1",
-        "markdown-it-for-inline": "^0.1.1",
+        "markdown-it-for-inline": "^2.0.1",
         "posthtml": "^0.16.6",
         "posthtml-attrs-parser": "^1.0.1",
         "posthtml-match-helper": "^1.0.3",
