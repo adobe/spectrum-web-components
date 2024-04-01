@@ -26,6 +26,10 @@ declare global {
 
 /**
  * Runs `callback` shortly after the next browser Frame is produced.
+ *
+ * Adopted from https://webperf.tips/tip/measuring-paint-time/ but possibly replaceable by
+ * a performance observer with additional work:
+ * https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver/PerformanceObserver
  */
 function runAfterFramePaint(callback: () => void) {
     // Queue a "before Render Steps" callback via requestAnimationFrame.
