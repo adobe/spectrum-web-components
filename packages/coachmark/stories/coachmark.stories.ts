@@ -138,23 +138,22 @@ export const TriggerOnClick = (props: Properties): TemplateResult => {
                 ?open=${open}
                 current-step=${currentStep}
                 total-steps=${totalSteps}
-                primary-cta="Next"
-                secondary-cta="Previous"
+                primary-cta="次"
+                secondary-cta="前の"
             >
-                <div slot="title">Coachmark on Click</div>
+                <div slot="title">クリック時のコーチマーク</div>
                 <div slot="content">
-                    This is a Coachmark with nothing but text in it. Kind of
-                    lonely in here.
+                    これはテキストだけが入ったコーチマークです。ここはなんだか寂しいですね。
                 </div>
-                <div slot="step-count">${currentStep} of ${totalSteps}</div>
+                <div slot="step-count">4 分の 1</div>
                 <sp-action-menu
                     placement="bottom-end"
                     quiet
                     slot="actions"
                     label="More Actions"
                 >
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
+                    <sp-menu-item>ツアーをスキップ</sp-menu-item>
+                    <sp-menu-item>ツアー再開</sp-menu-item>
                 </sp-action-menu>
             </sp-coachmark>
         </sp-overlay>
