@@ -383,8 +383,11 @@
                 "packages/*/src/spectrum-*.css",
                 "tools/*/src/spectrum-*.css",
                 "tools/styles/*.css",
-                "!tools/styles/scale-medium.css",
-                "!tools/styles/scale-large.css"
+                "tools/styles/express/*.css",
+                "!tools/styles/scale-*.css",
+                "!tools/styles/theme-*.css",
+                "!tools/styles/express/scale-*.css",
+                "!tools/styles/express/theme-*.css"
             ],
             "clean": false
         },
