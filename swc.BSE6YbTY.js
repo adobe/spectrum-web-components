@@ -1,0 +1,2 @@
+function t(){return Array.from(crypto.getRandomValues(new Uint8Array(4)),(t=>`0${(255&t).toString(16)}`.slice(-2))).join("")}function r(t,r,e){const i=t.getAttribute(r);let n=i?i.split(/\s+/):[];n=n.filter((t=>!e.find((r=>t===r)))),n.length?t.setAttribute(r,n.join(" ")):t.removeAttribute(r)}function e(t,e,i){const n=Array.isArray(i)?i:[i],s=t.getAttribute(e),o=s?s.split(/\s+/):[];return n.every((t=>o.indexOf(t)>-1))?()=>{}:(o.push(...n),t.setAttribute(e,o.join(" ")),()=>r(t,e,n))}export{r as a,e as c,t as r};
+//# sourceMappingURL=swc.DzQJMBX3.js.map

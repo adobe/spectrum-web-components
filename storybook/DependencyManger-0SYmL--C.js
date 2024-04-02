@@ -1,0 +1,3 @@
+const dependencyManagerLoadedSymbol=Symbol("dependency manager loaded");class DependencyManagerController{constructor(e){this.dependencies={};this._loaded=!1;this.host=e;}get loaded(){return this._loaded}set loaded(e){e!==this.loaded&&(this._loaded=e,this.host.requestUpdate(dependencyManagerLoadedSymbol,!this.loaded));}add(e,o){const t=!!o||!!customElements.get(e)||this.dependencies[e];t||customElements.whenDefined(e).then(()=>{this.add(e,!0);}),this.dependencies={...this.dependencies,[e]:t},this.loaded=Object.values(this.dependencies).every(d=>d);}}
+
+export { DependencyManagerController as D };
