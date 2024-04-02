@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { fixture } from '@open-wc/testing';
-import { Default } from '../stories/grid.stories.js';
-import { Grid } from '@spectrum-web-components/grid';
+import { Default } from '../stories/asset.stories.js';
+import { Asset } from '@spectrum-web-components/asset';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(async () => await fixture<Grid>(Default()));
+testForMemoryLeaks(async () => await fixture<Asset>(Default()));
