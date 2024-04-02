@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **table:** Add aria-rowcount to virtualized tables ([#4156](https://github.com/adobe/spectrum-web-components/issues/4156)) ([b4136ab](https://github.com/adobe/spectrum-web-components/commit/b4136abf29bae6c7a5358bb8f4211feb95ca7690))
+
 # [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
 
 ### Features
