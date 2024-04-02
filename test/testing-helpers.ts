@@ -16,7 +16,7 @@ import {
     nextFrame,
     fixture as owcFixture,
 } from '@open-wc/testing';
-import { html } from '@spectrum-web-components/base';
+import { html, render } from '@spectrum-web-components/base';
 import { SinonStub, spy, stub } from 'sinon';
 import type { HookFunction } from 'mocha';
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -49,6 +49,63 @@ export async function testForLitDevWarnings(
                 consoleWarnStub.called,
                 consoleWarnStub.getCall(0)?.args.join(', ')
             ).to.be.false;
+        });
+    });
+}
+
+export async function testForMemoryLeaks(
+    element: () => Promise<HTMLElement>
+): Promise<void> {
+    describe('Memory usage', () => {
+        it('releases references on disconnect', async function () {
+            if (
+                !window.gc ||
+                !('measureUserAgentSpecificMemory' in performance)
+            )
+                this.skip();
+
+            this.timeout(10000);
+
+            const iterations = 50;
+            let active = false;
+
+            // Call fixture with 'htmlString' as the additional argument
+            const el = await fixture<HTMLElement>(
+                html`
+                    <div></div>
+                `
+            );
+
+            async function toggle(
+                forced: boolean | undefined = undefined
+            ): Promise<void> {
+                active = forced != null ? forced : !active;
+                render(active ? element : html``, el);
+                await nextFrame();
+                await nextFrame();
+            }
+
+            // "shake things out" to get a good first reading
+            for (let i = 0; i < 5; i++) {
+                await toggle();
+            }
+            await toggle(false);
+            const beforeMB = await usedHeapMB();
+
+            for (let i = 0; i < iterations; i++) {
+                await toggle();
+            }
+            await toggle(false);
+            const afterMB = await usedHeapMB();
+
+            expect(
+                afterMB.dom - beforeMB.dom,
+                `DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}`
+            ).to.be.lte(0);
+            expect(
+                afterMB.js - beforeMB.js,
+                `JS | before: ${beforeMB.js}, after: ${afterMB.js}`
+            ).to.be.lte(0);
         });
     });
 }
