@@ -25,7 +25,7 @@ describe('Themes', () => {
     it('loads - light', async () => {
         const el = await fixture<Theme>(
             html`
-                <sp-theme system="spectrum" color="light"></sp-theme>
+                <sp-theme system="classic" color="light"></sp-theme>
             `
         );
 

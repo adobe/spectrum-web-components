@@ -134,7 +134,7 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const systemVariants = ['spectrum', 'express'];
+const systemVariants = ['classic', 'express'];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];

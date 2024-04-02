@@ -54,7 +54,7 @@ export const buildPreviewURLComment = (ref) => {
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
     const previewLinks = [];
-    const themes = ['Classic', 'Express'];
+    const systems = ['Classic', 'Express'];
     const scales = ['Medium', 'Large'];
     const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
     const directions = ['LTR', 'RTL'];
@@ -63,7 +63,7 @@ export const buildPreviewURLComment = (ref) => {
             `${branch}-hcm`
         )}--spectrum-web-components.netlify.app/review/)`
     );
-    themes.map((theme) =>
+    systems.map((theme) =>
         colors.map((color) =>
             scales.map((scale) =>
                 directions.map((direction) => {

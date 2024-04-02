@@ -18,7 +18,7 @@ import { hideBin } from 'yargs/helpers';
 import crypto from 'crypto';
 import slugify from '@sindresorhus/slugify';
 
-const { commit, theme, branch } = yargs(hideBin(process.argv)).argv;
+const { commit, system, branch } = yargs(hideBin(process.argv)).argv;
 
 const getHash = (context) => {
     const md5 = crypto.createHash('md5');
@@ -27,7 +27,7 @@ const getHash = (context) => {
 };
 
 const vrts = [];
-const themes = ['Classic', 'Express'];
+const systems = ['Classic', 'Express'];
 const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
@@ -37,7 +37,7 @@ vrts.push([
         `${branch}-hcm`
     )}--spectrum-web-components.netlify.app/review/`,
 ]);
-themes.map((theme) =>
+systems.map((theme) =>
     colors.map((color) =>
         scales.map((scale) =>
             directions.map((direction) => {
@@ -178,7 +178,7 @@ async function main() {
                 branch
             )}--spectrum-web-components.netlify.app`,
             commit,
-            theme,
+            system,
             vrts,
         },
         tests,
