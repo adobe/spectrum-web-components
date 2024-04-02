@@ -39,6 +39,7 @@ import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
  * @slot heading - HTML content to be listed as the heading
  * @slot description - A description of the card
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
+ * @slot step-count - Override the default pagination delivery with your own internationalized content
  */
 export class Coachmark extends Popover {
     public static override get styles(): CSSResultArray {
