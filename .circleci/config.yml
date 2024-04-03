@@ -282,8 +282,6 @@ jobs:
         parameters:
             theme:
                 type: string
-            system:
-                type: string
             color:
                 type: string
             scale:
