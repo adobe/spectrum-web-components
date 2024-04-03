@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **dialog-wrapper:** add dismiss-label attribute for the close button's label ([#4154](https://github.com/adobe/spectrum-web-components/issues/4154)) ([c450a09](https://github.com/adobe/spectrum-web-components/commit/c450a098addaa1442f619cf892cdab1de96dbcaa))
+
 # [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
 
 ### Bug Fixes

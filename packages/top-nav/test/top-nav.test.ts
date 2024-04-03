@@ -47,10 +47,13 @@ describe('TopNav', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('updates indicator size when Nav Item conten changes', async () => {
+    it('updates indicator size when Nav Item content changes', async () => {
         const el = await fixture<TopNav>(Selected());
 
         await elementUpdated(el);
+
+        const items = [...el.querySelectorAll('sp-top-nav-item')];
+        await Promise.all(items.map((item) => elementUpdated(item)));
 
         const indicator = el.shadowRoot.querySelector(
             '#selection-indicator'
@@ -64,10 +67,14 @@ describe('TopNav', () => {
 
         // Wait for slotchange time before continuing the test.
         await nextFrame();
+        await nextFrame();
 
         const { width: widthEnd } = indicator.getBoundingClientRect();
 
-        expect(widthStart).to.be.greaterThan(widthEnd);
+        expect(
+            widthStart,
+            `${widthStart} is not greater than ${widthEnd}`
+        ).to.be.greaterThan(widthEnd);
     });
     it('can have an item removed', async () => {
         const el = await fixture<TopNav>(Selected());
