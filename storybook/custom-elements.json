@@ -4167,7 +4167,11 @@
             {
               "kind": "field",
               "name": "handleSlottableRequest",
-              "privacy": "private"
+              "privacy": "protected",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
             },
             {
               "kind": "field",
@@ -35299,6 +35303,11 @@
               ]
             },
             {
+              "kind": "field",
+              "name": "handleSlottableRequest",
+              "privacy": "protected"
+            },
+            {
               "kind": "method",
               "name": "renderLabelContent",
               "privacy": "protected",
@@ -36675,6 +36684,15 @@
                   }
                 }
               ],
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleSlottableRequest",
+              "privacy": "protected",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -46647,6 +46665,15 @@
                   }
                 }
               ],
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleSlottableRequest",
+              "privacy": "protected",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
