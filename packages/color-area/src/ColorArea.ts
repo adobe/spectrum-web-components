@@ -79,8 +79,9 @@ export class ColorArea extends SpectrumElement {
             v: this.y,
         }),
         applyColorToState: ({ s, v }) => {
-            this.x = s;
-            this.y = v;
+            this._x = s;
+            this._y = v;
+            this.requestUpdate();
         },
     });
 
