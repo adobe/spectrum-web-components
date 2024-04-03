@@ -26,13 +26,13 @@ type TestableThemeConstructor = {
     themeFragmentsByKind: ThemeFragmentMap;
 };
 
-describe('System - lazy', () => {
+describe('Themes - lazy', () => {
     beforeEach(() => {
         (
             Theme as unknown as TestableThemeConstructor
         ).themeFragmentsByKind.clear();
         // Core is registered by default in `theme.ts`
-        Theme.registerThemeFragment('spectrum', 'system', coreStyles);
+        Theme.registerThemeFragment('spectrum', 'theme', coreStyles);
     });
     after(() => {
         Theme.registerThemeFragment('light', 'color', lightStyles);

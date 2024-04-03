@@ -35,16 +35,16 @@ function buildNavigation(tests, metadata) {
                     style="user-select: all"
                 ></sp-sidenav-item>
                 <sp-sidenav-item
-                    label=${metadata.system}
+                    label=${metadata.theme}
                     style="user-select: all"
                 ></sp-sidenav-item>
             </sp-sidenav-heading>
             <sp-sidenav-item multilevel label="Other VRT Results">
                 ${metadata.vrts.map(
-                    (system) => html`
+                    (theme) => html`
                         <sp-sidenav-item
-                            label=${system[0]}
-                            href=${system[1]}
+                            label=${theme[0]}
+                            href=${theme[1]}
                         ></sp-sidenav-item>
                     `
                 )}
@@ -174,10 +174,10 @@ async function run() {
     const response = await fetch('./data.json');
     const data = await response.json();
     const decorator = document.querySelector('sp-story-decorator');
-    const system = data.meta.system.split(' ');
-    decorator.system = system[0];
-    decorator.color = system[1];
-    decorator.scale = system[2];
+    const theme = data.meta.theme.split(' ');
+    decorator.theme = theme[0];
+    decorator.color = theme[1];
+    decorator.scale = theme[2];
     buildNavigation(data.tests, data.meta);
 }
 
