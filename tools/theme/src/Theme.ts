@@ -53,11 +53,26 @@ export type Color =
     | 'light-express'
     | 'lightest-express'
     | 'dark-express'
-    | 'darkest-express';
-export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type ThemeVariant = 'spectrum' | 'express';
-const ThemeVariantValues = ['spectrum', 'express'];
-const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
+    | 'darkest-express'
+    | 'light-spectrum-two'
+    | 'dark-spectrum-two';
+export type Scale =
+    | 'medium'
+    | 'large'
+    | 'medium-express'
+    | 'large-express'
+    | 'medium-spectrum-two'
+    | 'large-spectrum-two';
+export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
+const ThemeVariantValues = ['spectrum', 'express', 'spectrum-two'];
+const ScaleValues = [
+    'medium',
+    'large',
+    'medium-express',
+    'large-express',
+    'medium-spectrum-two',
+    'large-spectrum-two',
+];
 const ColorValues = [
     'light',
     'lightest',
@@ -67,6 +82,8 @@ const ColorValues = [
     'lightest-express',
     'dark-express',
     'darkest-express',
+    'light-spectrum-two',
+    'dark-spectrum-two',
 ];
 type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
 
@@ -511,6 +528,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
+
+        // console.log('adopting styles', this.theme, this.styles);
     }
 
     static registerThemeFragment(
