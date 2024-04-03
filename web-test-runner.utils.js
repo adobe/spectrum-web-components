@@ -100,7 +100,7 @@ export const packages = fs
     .concat(tools);
 
 const vrtHTML =
-    ({ systemVariant, color, scale, dir, reduceMotion, hcm }) =>
+    ({ themeVariant, color, scale, dir, reduceMotion, hcm }) =>
     (testFramework) =>
         `<!doctype html>
     <html dir=${dir}>
@@ -121,7 +121,7 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultSystemVariant: "${systemVariant || ''}",
+                defaultThemeVariant: "${themeVariant || ''}",
                 defaultColor: "${color || ''}",
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",
@@ -134,24 +134,24 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const systemVariants = ['classic', 'express'];
+const themeVariants = ['classic', 'express'];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
-systemVariants.forEach((system) => {
+themeVariants.forEach((themeVariant) => {
     colors.forEach((color) => {
         scales.forEach((scale) => {
             directions.forEach((dir) => {
                 const reduceMotion = true;
                 const testHTML = vrtHTML({
-                    system,
+                    themeVariant,
                     color,
                     scale,
                     dir,
                     reduceMotion,
                 });
                 vrtGroups.push({
-                    name: `vrt-${system}-${color}-${scale}-${dir}`,
+                    name: `vrt-${themeVariant}-${color}-${scale}-${dir}`,
                     files: '(packages|tools)/*/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
                     browsers: [chromium],

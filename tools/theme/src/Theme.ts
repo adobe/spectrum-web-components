@@ -55,7 +55,6 @@ export type Color =
     | 'dark-express'
     | 'darkest-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type ThemeVariant = 'spectrum' | 'express';
 export type SystemVariant = 'classic' | 'spectrum' | 'express' | 'spectrum-two';
 const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
@@ -75,7 +74,7 @@ export interface ThemeData {
     color?: Color;
     scale?: Scale;
     lang?: string;
-    theme?: ThemeVariant;
+    theme?: SystemVariant;
     system?: SystemVariant;
 }
 
@@ -151,10 +150,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.lang = value;
             this._provideContext();
         } else if (attrName === 'theme') {
-            this.theme = value as ThemeVariant;
+            this.theme = value as SystemVariant;
             window.__swc.warn(
                 this,
-                'proprety theme in <sp-theme> has been deprecated. Plesae use system instead like this <sp-theme system="spectrum"></sp-theme>',
+                'proprety theme in <sp-theme> has been deprecated. Plesae use system instead like this <sp-theme theme="spectrum"></sp-theme>',
                 'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
                 { level: 'deprecation' }
             );
@@ -177,7 +176,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     public override shadowRoot!: ShadowRootWithAdoptedStyleSheets;
 
     private _system: SystemVariant | '' = 'spectrum';
-
     /**
      * The Spectrum system that is applied to the content scoped to this `sp-theme` element.
      *
@@ -308,7 +306,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 kind && kind !== 'system' && this.system === 'express'
                     ? fragments.get(`${name}-express`)
                     : fragments.get(name);
-            // system="spectrum" is available by default and doesn't need to be applied.
+            // theme="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
                 name === 'spectrum' || !kind || this.hasAttribute(kind);
             if (currentStyles && isAppliedFragment) {
@@ -357,7 +355,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                         .get(name)
                         ?.get(
                             resolvedValue +
-                                (name === 'system' ? '' : systemModifier)
+                                (['theme', 'system'].includes(name)
+                                    ? ''
+                                    : systemModifier)
                         )
                 ) {
                     issues.push(

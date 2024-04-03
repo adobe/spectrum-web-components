@@ -175,6 +175,9 @@ export class LayoutElement extends LitElement {
     private isNarrow = isNarrowMediaQuery.matches;
 
     @property({ attribute: false })
+    public theme: SystemVariant = DEFAULT_SYSTEM;
+
+    @property({ attribute: false })
     public scale: Scale = DEFAULT_SCALE;
 
     @property({ attribute: false })
@@ -435,6 +438,7 @@ export class LayoutElement extends LitElement {
             <sp-theme
                 .color=${this.color}
                 .scale=${this.scale}
+                .theme=${this.system}
                 .system=${this.system}
                 dir=${this.dir}
                 id="app"

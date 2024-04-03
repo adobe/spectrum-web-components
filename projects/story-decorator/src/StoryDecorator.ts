@@ -46,6 +46,8 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
+export let theme: SystemVariant =
+    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
 export let system: SystemVariant =
     (urlParams.get('sp_theme') as SystemVariant) || 'spectrum'; // Not sure of how this export is used, do we also need to introduce an `sp_system`?
 export let color: Color =
@@ -315,8 +317,9 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.system}
                 @change=${this.updateTheme}
             >
-                <sp-menu-item value="spectrum">Classic</sp-menu-item>
+                <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                 <sp-menu-item value="express">Express</sp-menu-item>
+                <sp-menu-item value="spectrum-two">Spectrum 2</sp-menu-item>
             </sp-picker>
         `;
     }

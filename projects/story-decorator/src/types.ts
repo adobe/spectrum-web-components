@@ -14,6 +14,7 @@ import { Color, Scale, SystemVariant } from '@spectrum-web-components/theme';
 declare global {
     interface Window {
         __swc_hack_knobs__: {
+            defaultThemeVariant: SystemVariant;
             defaultSystemVariant: SystemVariant;
             defaultColor: Color;
             defaultScale: Scale;

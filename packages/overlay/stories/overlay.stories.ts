@@ -632,12 +632,14 @@ export const deepNesting = (): TemplateResult => {
         <sp-theme
             color=${outter}
             system=${window.__swc_hack_knobs__.defaultSystemVariant}
+            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
             scale=${window.__swc_hack_knobs__.defaultScale}
             dir=${window.__swc_hack_knobs__.defaultDirection}
         >
             <sp-theme
                 color=${color}
                 system=${window.__swc_hack_knobs__.defaultSystemVariant}
+                theme=${window.__swc_hack_knobs__.defaultSystemVariant}
                 scale=${window.__swc_hack_knobs__.defaultScale}
                 dir=${window.__swc_hack_knobs__.defaultDirection}
             >

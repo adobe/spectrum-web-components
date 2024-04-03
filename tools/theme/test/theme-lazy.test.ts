@@ -26,7 +26,7 @@ type TestableThemeConstructor = {
     themeFragmentsByKind: ThemeFragmentMap;
 };
 
-describe('Themes - lazy', () => {
+describe('System - lazy', () => {
     beforeEach(() => {
         (
             Theme as unknown as TestableThemeConstructor
