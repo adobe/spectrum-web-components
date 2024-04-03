@@ -165,7 +165,7 @@ describe('Setting attributes', () => {
         expect(el.hasAttribute('scale')).to.be.false;
 
         if (el.shadowRoot.adoptedStyleSheets) {
-            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(2);
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(3);
         } else {
             expect(
                 [...el.shadowRoot.querySelectorAll('style')].length
@@ -179,7 +179,7 @@ describe('Setting attributes', () => {
         expect(el.getAttribute('scale')).to.equal('medium');
 
         if (el.shadowRoot.adoptedStyleSheets) {
-            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(2);
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(3);
         } else {
             expect(
                 [...el.shadowRoot.querySelectorAll('style')].length
@@ -194,7 +194,7 @@ describe('Setting attributes', () => {
         expect(el.getAttribute('scale')).to.equal('medium');
 
         if (el.shadowRoot.adoptedStyleSheets) {
-            expect(el.shadowRoot.adoptedStyleSheets.length, 'all').to.equal(3);
+            expect(el.shadowRoot.adoptedStyleSheets.length, 'all').to.equal(4);
         } else {
             expect(
                 [...el.shadowRoot.querySelectorAll('style')].length
@@ -208,7 +208,7 @@ describe('Setting attributes', () => {
         expect(el.getAttribute('color')).to.equal('dark');
 
         if (el.shadowRoot.adoptedStyleSheets) {
-            expect(el.shadowRoot.adoptedStyleSheets.length, 'last').to.equal(3);
+            expect(el.shadowRoot.adoptedStyleSheets.length, 'last').to.equal(4);
         } else {
             expect(
                 [...el.shadowRoot.querySelectorAll('style')].length
