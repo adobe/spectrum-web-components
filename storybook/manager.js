@@ -13,6 +13,8 @@ import { addons } from '@storybook/addons';
 import yourTheme from './theme.js';
 
 addons.setConfig({
+    // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
+    theme: yourTheme,
     system: yourTheme,
     sidebar: {
         showRoots: false,

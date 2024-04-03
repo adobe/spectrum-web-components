@@ -365,6 +365,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                     );
                 }
             };
+            // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
+            checkForAttribute('theme', this.theme, this._system);
             checkForAttribute('system', this.system, this._system);
             checkForAttribute('color', this.color, this._color);
             checkForAttribute('scale', this.scale, this._scale);
@@ -435,6 +437,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         theme.scale = this.scale || undefined;
         theme.lang =
             this.lang || document.documentElement.lang || navigator.language;
+        // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
+        theme.theme = this.system || undefined;
         theme.system = this.system || undefined;
     }
 
