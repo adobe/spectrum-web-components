@@ -52,6 +52,7 @@ import {
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 
 const chevronClass = {
@@ -401,6 +402,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    protected handleSlottableRequest = (
+        _event: SlottableRequestEvent
+    ): void => {};
+
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
             return content;
@@ -503,6 +508,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         return html`
             <sp-overlay
+                @slottable-request=${this.handleSlottableRequest}
+                @beforetoggle=${this.handleBeforetoggle}
                 .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open && this.dependencyManager.loaded}
@@ -512,7 +519,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .willPreventClose=${this.preventNextToggle !== 'no' &&
                 this.open &&
                 this.dependencyManager.loaded}
-                @beforetoggle=${this.handleBeforetoggle}
             >
                 ${container}
             </sp-overlay>

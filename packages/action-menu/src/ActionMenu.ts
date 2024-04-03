@@ -63,7 +63,9 @@ export class ActionMenu extends ObserveSlotPresence(
         return this.slotContentIsPresent;
     }
 
-    private handleSlottableRequest = (event: SlottableRequestEvent): void => {
+    protected override handleSlottableRequest = (
+        event: SlottableRequestEvent
+    ): void => {
         this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
     };
 
@@ -130,15 +132,5 @@ export class ActionMenu extends ObserveSlotPresence(
             this.invalid = false;
         }
         super.update(changedProperties);
-    }
-
-    protected override updated(changes: PropertyValues<this>): void {
-        super.updated(changes);
-        if (this.hasRenderedOverlay) {
-            this.overlayElement.addEventListener(
-                'slottable-request',
-                this.handleSlottableRequest
-            );
-        }
     }
 }
