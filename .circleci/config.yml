@@ -321,7 +321,7 @@ workflows:
                   name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          theme: [classic, express]
+                          theme: [classic, express, spectrum-two]
                           color: [lightest, light, dark, darkest]
                           scale: [medium, large]
                           dir: [ltr, rtl]
