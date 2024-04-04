@@ -280,7 +280,7 @@ jobs:
     visual:
         executor: node
         parameters:
-            theme:
+            system:
                 type: string
             color:
                 type: string
