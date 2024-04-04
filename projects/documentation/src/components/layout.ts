@@ -121,6 +121,26 @@ const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
         case 'large-express':
             import('@spectrum-web-components/theme/express/scale-large.js');
             break;
+        case 'light-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/theme-light-core-tokens.js'
+            );
+            break;
+        case 'dark-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/theme-dark-core-tokens.js'
+            );
+            break;
+        case 'medium-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/scale-medium-core-tokens.js'
+            );
+            break;
+        case 'large-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/scale-large-core-tokens.js'
+            );
+            break;
     }
 };
 
@@ -379,6 +399,9 @@ export class LayoutElement extends LitElement {
                         <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                         <sp-menu-item value="express">
                             Spectrum Express
+                        </sp-menu-item>
+                        <sp-menu-item value="spectrum-two">
+                            Spectrum 2
                         </sp-menu-item>
                     </sp-picker>
                 </div>
