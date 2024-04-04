@@ -252,6 +252,7 @@ export class StoryDecorator extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <sp-theme
+                theme=${this.system}
                 system=${this.system}
                 color=${this.color}
                 scale=${this.scale}
