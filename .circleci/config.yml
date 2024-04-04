@@ -318,10 +318,10 @@ workflows:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
             - visual:
-                  name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+                  name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          theme: [classic, express]
+                          system: [classic, express]
                           color: [lightest, light, dark, darkest]
                           scale: [medium, large]
                           dir: [ltr, rtl]
