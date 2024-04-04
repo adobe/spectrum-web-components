@@ -67,6 +67,7 @@ export const Default = ({
         <sp-theme
             color="${color}"
             theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="example">
                 <div>
@@ -108,6 +109,7 @@ export const displayFlex = (): TemplateResult => html`
         id="flex-theme"
         color="dark"
         theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+        system=${window.__swc_hack_knobs__.defaultSystemVariant}
     >
         <sp-button>Start</sp-button>
         <sp-button id="middle-button">Middle</sp-button>
@@ -148,6 +150,7 @@ export const nestedTheme = ({
         <sp-theme
             color="${outer}"
             theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="outer">
                 <div>
@@ -171,6 +174,7 @@ export const nestedTheme = ({
                     color="${inner}"
                     dir="ltr"
                     theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 >
                     <div id="inner">
                         <div>
@@ -226,6 +230,7 @@ export const reverseColorNestedTheme = ({
         <sp-theme
             color="${inner}"
             theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="outer">
                 <div>
@@ -249,6 +254,7 @@ export const reverseColorNestedTheme = ({
                     color="${outer}"
                     dir="rtl"
                     theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 >
                     <div id="inner">
                         <div>
