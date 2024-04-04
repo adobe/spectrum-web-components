@@ -291,7 +291,7 @@ jobs:
         steps:
             - downstream
             - run-regressions:
-                  regression_theme: << parameters.theme >>
+                  regression_theme: << parameters.system >>
                   regression_color: << parameters.color >>
                   regression_scale: << parameters.scale >>
                   regression_dir: << parameters.dir >>
