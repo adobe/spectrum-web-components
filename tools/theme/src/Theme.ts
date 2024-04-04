@@ -55,8 +55,8 @@ export type Color =
     | 'dark-express'
     | 'darkest-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type SystemVariant = 'classic' | 'spectrum' | 'express' | 'spectrum-two';
-const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
+export type SystemVariant = 'spectrum' | 'express';
+const SystemVariantValues = ['spectrum', 'express'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
 const ColorValues = [
     'light',
