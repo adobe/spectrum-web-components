@@ -25,6 +25,7 @@ import {
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/theme/src/spectrum-two/themes-core-tokens.js';
 import '@spectrum-web-components/theme/src/express/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -320,6 +321,7 @@ export class StoryDecorator extends SpectrumElement {
             >
                 <sp-menu-item value="spectrum">Classic</sp-menu-item>
                 <sp-menu-item value="express">Express</sp-menu-item>
+                <sp-menu-item value="spectrum-two">S2</sp-menu-item>
             </sp-picker>
         `;
     }
