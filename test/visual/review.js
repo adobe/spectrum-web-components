@@ -18,7 +18,7 @@ import { hideBin } from 'yargs/helpers';
 import crypto from 'crypto';
 import slugify from '@sindresorhus/slugify';
 
-const { commit, system, theme, branch } = yargs(hideBin(process.argv)).argv;
+const { commit, system, branch } = yargs(hideBin(process.argv)).argv;
 
 const getHash = (context) => {
     const md5 = crypto.createHash('md5');
@@ -178,7 +178,6 @@ async function main() {
                 branch
             )}--spectrum-web-components.netlify.app`,
             commit,
-            theme,
             system,
             vrts,
         },

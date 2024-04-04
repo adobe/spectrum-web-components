@@ -184,11 +184,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @attr
      */
     get system(): SystemVariant | '' {
-        const themeFragments =
-            Theme.themeFragmentsByKind.get('system') ||
-            Theme.themeFragmentsByKind.get('theme');
+        const systemFragments = Theme.themeFragmentsByKind.get('system');
         const { name } =
-            (themeFragments && themeFragments.get('default')) || {};
+            (systemFragments && systemFragments.get('default')) || {};
         return this._system || (name as SystemVariant) || '';
     }
 
@@ -205,6 +203,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         if (system) {
             this.setAttribute('system', system);
             /* c8 ignore next 3 */
+        } else {
+            this.removeAttribute('system');
         }
     }
 
@@ -222,6 +222,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
      */
     set theme(newValue: SystemVariant | '') {
+        if (this.system !== '') {
+            // System is provided, so do not set theme
+            return;
+        }
         this.system = newValue;
     }
 
@@ -337,9 +341,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 resolvedValue?: string,
                 actualValue?: string
             ): void => {
+                const themeModifier =
+                    this.theme && this.theme !== 'spectrum'
+                        ? `-${this.theme}`
+                        : '';
                 const systemModifier =
-                    this.system &&
-                    !['spectrum', 'spectrum-two'].includes(this.system)
+                    this.system && this.system !== 'spectrum'
                         ? `-${this.system}`
                         : '';
                 if (!resolvedValue) {
@@ -355,13 +362,22 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                         .get(name)
                         ?.get(
                             resolvedValue +
-                                (['theme', 'system'].includes(name)
-                                    ? ''
-                                    : systemModifier)
+                                (name === 'system' ? '' : systemModifier)
                         )
                 ) {
                     issues.push(
-                        `You have set "${name}='${resolvedValue}'" but the associated theme fragment has not been loaded.`
+                        `You have set "${name}='${resolvedValue}'" but the associated system fragment has not been loaded.`
+                    );
+                } else if (
+                    !Theme.themeFragmentsByKind
+                        .get(name)
+                        ?.get(
+                            resolvedValue +
+                                (name === 'theme' ? '' : themeModifier)
+                        )
+                ) {
+                    issues.push(
+                        `property theme is deprecated. Please use system, instead. You have set "${name}='${resolvedValue}'" but the associated theme fragment has not been loaded.`
                     );
                 }
             };

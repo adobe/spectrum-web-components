@@ -72,7 +72,9 @@ const DEFAULT_SCALE = (
 ) as Scale;
 const DEFAULT_SYSTEM = (
     window.localStorage
-        ? localStorage.getItem(SWC_THEME_THEME_KEY) || SYSTEM_FALLBACK
+        ? localStorage.getItem(SWC_THEME_THEME_KEY) ||
+          localStorage.getItem(SWC_THEME_SYSTEM_KEY) ||
+          SYSTEM_FALLBACK
         : SYSTEM_FALLBACK
 ) as SystemVariant;
 const DEFAULT_DIR = (
@@ -217,6 +219,10 @@ export class LayoutElement extends LitElement {
 
     toggleNav() {
         this.open = !this.open;
+    }
+
+    get systemOrTheme() {
+        return this.system || this.theme;
     }
 
     toggleSettings() {
@@ -549,6 +555,14 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
+        if (changes.has('theme')) {
+            if (window.localStorage) {
+                localStorage.setItem(SWC_THEME_THEME_KEY, this.theme);
+            }
+            if (changes.get('theme')) {
+                loadStyleFragments = true;
+            }
+        }
         if (changes.has('system')) {
             if (window.localStorage) {
                 localStorage.setItem(SWC_THEME_SYSTEM_KEY, this.system);
@@ -603,8 +617,8 @@ export class LayoutElement extends LitElement {
         }
 
         if (loadStyleFragments) {
-            lazyStyleFragment(this.color, this.system);
-            lazyStyleFragment(this.scale, this.system);
+            lazyStyleFragment(this.color, this.systemOrTheme);
+            lazyStyleFragment(this.scale, this.systemOrTheme);
         }
     }
 }

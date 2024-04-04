@@ -49,7 +49,7 @@ export let dir: 'ltr' | 'rtl' =
 export let theme: SystemVariant =
     (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
 export let system: SystemVariant =
-    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum'; // Not sure of how this export is used, do we also need to introduce an `sp_system`?
+    (urlParams.get('sp_system') as SystemVariant) || 'spectrum'; // Not sure of how this export is used, do we also need to introduce an `sp_system`?
 export let color: Color =
     (urlParams.get('sp_color') as Color) ||
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');

@@ -17,4 +17,4 @@ import coreStyles from './src/theme.css.js';
 Theme.registerThemeFragment('spectrum', 'system', coreStyles);
 
 // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
-Theme.registerThemeFragment('spectrum', 'theme', coreStyles);
+// Theme.registerThemeFragment('spectrum', 'theme', coreStyles);
