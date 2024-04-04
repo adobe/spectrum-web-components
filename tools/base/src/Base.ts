@@ -187,12 +187,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 }
 
 export type SpectrumConfig = {
-    downstate?: boolean;
+    downstate?: string[];
 };
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
-    static spectrumConfig: SpectrumConfig = {};
+    public spectrumConfig: SpectrumConfig = {};
     protected spectrumDelegates = new SpectrumDelegates(this);
 }
 

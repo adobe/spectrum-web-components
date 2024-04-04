@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import type { ReactiveController } from 'lit';
 import { SpectrumElement } from '@spectrum-web-components/base';
 
-export class SpectrumTwoDownStateController implements ReactiveController {
+export class DownStateController implements ReactiveController {
     private host: SpectrumElement;
 
     constructor(host: SpectrumElement) {
