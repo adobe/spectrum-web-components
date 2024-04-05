@@ -57,6 +57,16 @@ export class Search extends Textfield {
     @query('#form')
     public form!: HTMLFormElement;
 
+    private _formEventHandlers = {
+        submit: this.handleSubmit.bind(this),
+        reset: this.reset.bind(this),
+        keydown: this.handleKeydown.bind(this),
+    };
+
+    protected override _firstUpdateAfterConnected = false;
+
+    protected formAbortController?: AbortController;
+
     private handleSubmit(event: Event): void {
         const applyDefault = this.dispatchEvent(
             new Event('submit', {
@@ -97,15 +107,58 @@ export class Search extends Textfield {
         );
     }
 
+    protected override firstUpdateAfterConnected() {
+        super.firstUpdateAfterConnected();
+
+        this.formAbortController = new AbortController();
+        const { signal } = this.formAbortController;
+        this.form.addEventListener(
+            'submit',
+            this._formEventHandlers['submit'],
+            { signal }
+        );
+        this.form.addEventListener('reset', this._formEventHandlers['reset'], {
+            signal,
+        });
+        this.form.addEventListener(
+            'keydown',
+            this._formEventHandlers['keydown'],
+            { signal }
+        );
+    }
+
+    protected override updated(changedProperties: PropertyValues) {
+        super.updated(changedProperties);
+        // Adding this here instead of firstUpdated because we want to make sure
+        // this is called again on the first update after a previous disconnect
+        // since firstUpdated is called only once
+        if (this._firstUpdateAfterConnected) {
+            this._firstUpdateAfterConnected = false;
+            this.firstUpdateAfterConnected();
+        }
+    }
+
+    public override connectedCallback() {
+        super.connectedCallback();
+
+        this._firstUpdateAfterConnected = true;
+        this.requestUpdate();
+    }
+
+    public override disconnectedCallback() {
+        // Cleanup all form event listeners and remove form element from DOM
+        this.formAbortController?.abort();
+        this.form.remove();
+
+        super.disconnectedCallback();
+    }
+
     protected override renderField(): TemplateResult {
         return html`
             <form
                 action=${this.action}
                 id="form"
                 method=${ifDefined(this.method)}
-                @submit=${this.handleSubmit}
-                @reset=${this.reset}
-                @keydown=${this.handleKeydown}
             >
                 <sp-icon-magnify
                     class="icon magnifier icon-workflow icon-search"

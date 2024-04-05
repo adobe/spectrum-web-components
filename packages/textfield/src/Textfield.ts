@@ -142,6 +142,17 @@ export class TextfieldBase extends ManageHelpText(
         return this.inputElement;
     }
 
+    private _eventHandlers = {
+        input: this.handleInput.bind(this),
+        change: this.handleChange.bind(this),
+        focus: this.onFocus.bind(this),
+        blur: this.onBlur.bind(this),
+    };
+
+    protected _firstUpdateAfterConnected = false;
+
+    protected abortController?: AbortController;
+
     /**
      * Sets the start and end positions of the current selection.
      *
@@ -204,6 +215,55 @@ export class TextfieldBase extends ManageHelpText(
 
     protected onBlur(): void {
         this.focused = !this.readonly && false;
+    }
+
+    protected firstUpdateAfterConnected() {
+        this.abortController = new AbortController();
+        const { signal } = this.abortController;
+
+        this.inputElement.addEventListener(
+            'change',
+            this._eventHandlers['change'],
+            { signal }
+        );
+        this.inputElement.addEventListener(
+            'input',
+            this._eventHandlers['input'],
+            { signal }
+        );
+        this.inputElement.addEventListener(
+            'focus',
+            this._eventHandlers['focus'],
+            { signal }
+        );
+        this.inputElement.addEventListener(
+            'blur',
+            this._eventHandlers['blur'],
+            { signal }
+        );
+    }
+
+    protected override updated(changedProperties: PropertyValues) {
+        super.updated(changedProperties);
+        // Calling this here instead of firstUpdated because we want to make sure
+        // this is called again on the first update after a previous disconnect
+        // since firstUpdated is called only once
+        if (this._firstUpdateAfterConnected) {
+            this._firstUpdateAfterConnected = false;
+            this.firstUpdateAfterConnected();
+        }
+    }
+
+    public override connectedCallback() {
+        super.connectedCallback();
+        this._firstUpdateAfterConnected = true;
+        this.requestUpdate();
+    }
+
+    public override disconnectedCallback() {
+        // Cleanup all event listeners and and remove input element from DOM
+        this.abortController?.abort();
+        super.disconnectedCallback();
     }
 
     protected renderStateIcons(): TemplateResult | typeof nothing {
@@ -287,10 +347,6 @@ export class TextfieldBase extends ManageHelpText(
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${live(this.displayValue)}
-                @change=${this.handleChange}
-                @input=${this.handleInput}
-                @focus=${this.onFocus}
-                @blur=${this.onBlur}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
                 ?readonly=${this.readonly}
