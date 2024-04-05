@@ -10,24 +10,31 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController } from 'lit';
-import type { SpectrumElement } from '@spectrum-web-components/base';
-import { DownState } from '@spectrum-web-components/base/src/downstate.js';
+import type { LitElement, ReactiveController } from 'lit';
+import { DownState } from './downstate.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DelegatesList: Record<string, any> = {
     downState: DownState,
 };
 
+export type SpectrumConfig = {
+    downstate?: string[];
+};
+
 export class Delegates implements ReactiveController {
-    private host: SpectrumElement;
+    private host: LitElement;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private controllers: Record<string, any> = {};
 
     set system(value: string) {
-        const { spectrumConfig } = this.host;
-        Object.entries(spectrumConfig).forEach(([controller, systems]) => {
+        const hostSpectrumConfig = this.host as unknown as {
+            spectrumConfig: SpectrumConfig;
+        };
+        Object.entries(
+            hostSpectrumConfig.spectrumConfig as SpectrumConfig
+        ).forEach(([controller, systems]) => {
             if (systems.includes(value)) {
                 this.controllers[controller] = new DelegatesList[controller](
                     this.host
@@ -36,7 +43,7 @@ export class Delegates implements ReactiveController {
         });
     }
 
-    constructor(host: SpectrumElement) {
+    constructor(host: LitElement) {
         this.host = host;
         this.host.addController(this);
     }

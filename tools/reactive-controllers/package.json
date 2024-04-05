@@ -53,6 +53,14 @@
             "development": "./src/RovingTabindex.dev.js",
             "default": "./src/RovingTabindex.js"
         },
+        "./src/delegates.js": {
+            "development": "./src/delegates.dev.js",
+            "default": "./src/delegates.js"
+        },
+        "./src/downstate.js": {
+            "development": "./src/downstate.dev.js",
+            "default": "./src/downstate.js"
+        },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

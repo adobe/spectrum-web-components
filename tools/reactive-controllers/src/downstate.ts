@@ -10,13 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController } from 'lit';
-import type { SpectrumElement } from '@spectrum-web-components/base';
+import type { LitElement, ReactiveController } from 'lit';
 
 export class DownState implements ReactiveController {
-    private host: SpectrumElement;
+    private host: LitElement;
 
-    constructor(host: SpectrumElement) {
+    constructor(host: LitElement) {
         this.host = host;
         this.host.addController(this);
     }

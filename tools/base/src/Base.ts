@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { LitElement, ReactiveElement } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
-import { Delegates } from '@spectrum-web-components/base/src/delegates.js';
+import { Delegates } from '@spectrum-web-components/reactive-controllers/src/delegates.js';
 
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
