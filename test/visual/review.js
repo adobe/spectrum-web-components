@@ -27,7 +27,7 @@ const getHash = (context) => {
 };
 
 const vrts = [];
-const themes = ['Classic', 'Express'];
+const themes = ['Classic', 'Express', 'Spectrum-two'];
 const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
