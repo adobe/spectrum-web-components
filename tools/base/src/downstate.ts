@@ -22,9 +22,7 @@ export class DownState implements ReactiveController {
     }
 
     public hostConnected(): void {
-        if (this.host.spectrumConfig?.downstate?.includes('spectrum-two')) {
-            this.manage();
-        }
+        this.manage();
     }
 
     public hostDisconnected(): void {
