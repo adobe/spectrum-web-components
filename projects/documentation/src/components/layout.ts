@@ -38,7 +38,10 @@ import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
+import {
+    OverlayTriggerOptions,
+    trigger,
+} from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
 
 import './adobe-logo.js';
 import type { CodeExample } from './code-example.js';
@@ -199,8 +202,10 @@ export class LayoutElement extends LitElement {
         this.isNarrow = event.matches;
     };
 
-    private closeSettings(event: Event) {
-        event.target?.dispatchEvent(new Event('close', { bubbles: true }));
+    private closeSettings(event: Event & { target: HTMLElement }) {
+        event.target.parentElement?.dispatchEvent(
+            new Event('close', { bubbles: true })
+        );
     }
 
     private updateColor(event: Event) {
@@ -302,36 +307,25 @@ export class LayoutElement extends LitElement {
 
     private get settingsContent(): TemplateResult {
         import('./settings.js');
-        return (
-            this.isNarrow
-                ? html`
-                      <sp-overlay
-                          type="modal"
-                          trigger="toggle-settings-id@click"
-                      >
-                          <sp-underlay
-                              class="scrim"
-                              @close=${this.closeSettings}
-                          ></sp-underlay>
-                          <aside aria-label="Settings">
-                              ${this.manageTheme}
-                              <header>
-                                  <sp-action-button
-                                      quiet
-                                      label="Close Settings"
-                                      @click=${this.closeSettings}
-                                      id="close-settings-id"
-                                  >
-                                      <sp-icon-close
-                                          slot="icon"
-                                      ></sp-icon-close>
-                                  </sp-action-button>
-                              </header>
-                          </aside>
-                      </sp-overlay>
-                  `
-                : nothing
-        ) as TemplateResult;
+        return html`
+            <sp-underlay
+                class="scrim"
+                @close=${this.closeSettings}
+            ></sp-underlay>
+            <aside aria-label="Settings">
+                ${this.manageTheme}
+                <header>
+                    <sp-action-button
+                        quiet
+                        label="Close Settings"
+                        @click=${this.closeSettings}
+                        id="close-settings-id"
+                    >
+                        <sp-icon-close slot="icon"></sp-icon-close>
+                    </sp-action-button>
+                </header>
+            </aside>
+        `;
     }
 
     private get manageTheme(): TemplateResult {
@@ -395,6 +389,39 @@ export class LayoutElement extends LitElement {
         `;
     }
 
+    private get header(): TemplateResult {
+        const triggerOptions: Partial<OverlayTriggerOptions> = {
+            overlayOptions: {
+                type: 'modal',
+            },
+            insertionOptions: {
+                el: () =>
+                    this.shadowRoot?.querySelector('#body') as HTMLElement,
+                where: 'afterbegin',
+            },
+        };
+        return html`
+            <header>
+                <sp-action-button
+                    quiet
+                    label="Open Navigation"
+                    id="toggle-nav-id"
+                    ${trigger(() => this.sideNav, triggerOptions)}
+                >
+                    <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                </sp-action-button>
+                <sp-action-button
+                    quiet
+                    label="Open Settings"
+                    id="toggle-settings-id"
+                    ${trigger(() => this.settingsContent, triggerOptions)}
+                >
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                </sp-action-button>
+            </header>
+        `;
+    }
+
     override render() {
         return html`
             <sp-theme
@@ -405,42 +432,10 @@ export class LayoutElement extends LitElement {
                 id="app"
                 @sp-track-theme=${this.handleTrackTheme}
             >
-                ${this.isNarrow
-                    ? html`
-                          <header>
-                              <sp-action-button
-                                  quiet
-                                  label="Open Navigation"
-                                  id="toggle-nav-id"
-                              >
-                                  <sp-icon-show-menu
-                                      slot="icon"
-                                  ></sp-icon-show-menu>
-                              </sp-action-button>
-                              <sp-action-button
-                                  quiet
-                                  label="Open Settings"
-                                  id="toggle-settings-id"
-                              >
-                                  <sp-icon-settings
-                                      slot="icon"
-                                  ></sp-icon-settings>
-                              </sp-action-button>
-                          </header>
-                      `
-                    : html``}
+                ${this.isNarrow ? this.header : html``}
                 <div id="body">
-                    ${this.isNarrow
-                        ? html`
-                              <sp-overlay
-                                  type="modal"
-                                  trigger="toggle-nav-id@click"
-                              >
-                                  ${this.sideNav}
-                              </sp-overlay>
-                          `
-                        : this.sideNav}
-                    ${this.settingsContent}
+                    ${this.isNarrow ? html`` : this.sideNav}
+                    ${this.isNarrow ? html`` : this.settingsContent}
                     <div
                         id="page"
                         @alert=${this.addAlert}

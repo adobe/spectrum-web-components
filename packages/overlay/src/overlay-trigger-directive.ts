@@ -47,7 +47,6 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
     protected defaultOptions: OverlayTriggerOptions = {
         triggerInteraction: 'click',
         overlayOptions: {
-            placement: 'top-start',
             type: 'auto',
             offset: 0,
         },

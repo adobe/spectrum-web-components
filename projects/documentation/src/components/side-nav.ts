@@ -53,14 +53,25 @@ export class SideNav extends LitElement {
         target.focus();
     }
 
+    handleTransitionEvent(event: TransitionEvent): void {
+        this.dispatchEvent(new TransitionEvent(event.type));
+    }
+
     override render(): TemplateResult {
         return html`
             <sp-underlay
                 class="scrim"
                 @close=${this.toggle}
                 ?open=${this.open}
+                @transitionrun=${this.handleTransitionEvent}
+                @transitionend=${this.handleTransitionEvent}
+                @transitioncancel=${this.handleTransitionEvent}
             ></sp-underlay>
-            <aside>
+            <aside
+                @transitionrun=${this.handleTransitionEvent}
+                @transitionend=${this.handleTransitionEvent}
+                @transitioncancel=${this.handleTransitionEvent}
+            >
                 <div id="nav-header">
                     <div id="logo-container">
                         <slot name="logo"></slot>
