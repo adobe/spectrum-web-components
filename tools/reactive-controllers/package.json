@@ -76,7 +76,6 @@
         "reactive controllers"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.0",
         "lit": "^2.5.0"
     },
     "types": "./src/index.d.ts",
