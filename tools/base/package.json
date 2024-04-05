@@ -41,6 +41,10 @@
             "development": "./src/define-element.dev.js",
             "default": "./src/define-element.js"
         },
+        "./src/delegates.js": {
+            "development": "./src/delegates.dev.js",
+            "default": "./src/delegates.js"
+        },
         "./src/directive.js": {
             "development": "./src/directive.dev.js",
             "default": "./src/directive.js"
@@ -48,6 +52,10 @@
         "./src/directives.js": {
             "development": "./src/directives.dev.js",
             "default": "./src/directives.js"
+        },
+        "./src/downstate.js": {
+            "development": "./src/downstate.dev.js",
+            "default": "./src/downstate.js"
         },
         "./src/html.js": {
             "development": "./src/html.dev.js",

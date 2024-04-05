@@ -11,20 +11,29 @@ governing permissions and limitations under the License.
 */
 
 import type { ReactiveController } from 'lit';
-import { SpectrumElement } from '@spectrum-web-components/base';
-import { DownStateController } from './delegate-controllers/DownStateController.js';
+import type { SpectrumElement } from '@spectrum-web-components/base';
+import { DownState } from '@spectrum-web-components/base/src/downstate.js';
 
-export class SpectrumDelegates implements ReactiveController {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const DelegatesList: Record<string, any> = {
+    downState: DownState,
+};
+
+export class Delegates implements ReactiveController {
     private host: SpectrumElement;
 
-    private downStateController: DownStateController | null = null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private controllers: Record<string, any> = {};
 
-    set theme(value: string | null) {
-        if (value === 'spectrum-two') {
-            this.downStateController = new DownStateController(this.host);
-        } else {
-            this.downStateController?.unmanage();
-        }
+    set system(value: string) {
+        const { spectrumConfig } = this.host;
+        Object.entries(spectrumConfig).forEach(([controller, systems]) => {
+            if (systems.includes(value)) {
+                this.controllers[controller] = new DelegatesList[controller](
+                    this.host
+                );
+            }
+        });
     }
 
     constructor(host: SpectrumElement) {
