@@ -276,6 +276,12 @@ export class StoryDecorator extends SpectrumElement {
             ] as SpectrumElement[];
             descendents.push(...gathered);
         });
+        // run over the slotted descendants and add theme property
+        descendents.forEach((element) => {
+            if (element instanceof SpectrumElement) {
+                element.spectrumDelegates.theme = this.theme;
+            }
+        });
         const litElementDescendents = descendents.filter(
             (el) =>
                 el.tagName.search('-') !== -1 &&
@@ -316,6 +322,7 @@ export class StoryDecorator extends SpectrumElement {
             >
                 <sp-menu-item value="spectrum">Classic</sp-menu-item>
                 <sp-menu-item value="express">Express</sp-menu-item>
+                <sp-menu-item value="spectrum-two">Spectrum 2</sp-menu-item>
             </sp-picker>
         `;
     }

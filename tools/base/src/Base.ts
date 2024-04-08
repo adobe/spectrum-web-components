@@ -194,7 +194,7 @@ export type SpectrumConfig = {
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
     public spectrumConfig: SpectrumConfig = {};
-    protected spectrumDelegates = new Delegates(this);
+    public spectrumDelegates = new Delegates(this);
 }
 
 if (window.__swc.DEBUG) {

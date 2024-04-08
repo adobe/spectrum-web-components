@@ -12,10 +12,11 @@ governing permissions and limitations under the License.
 
 import type { LitElement, ReactiveController } from 'lit';
 import { DownState } from './downstate.js';
+import { ThemeVariant } from '@spectrum-web-components/theme';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DelegatesList: Record<string, any> = {
-    downState: DownState,
+    downstate: DownState,
 };
 
 export type SpectrumConfig = {
@@ -28,19 +29,20 @@ export class Delegates implements ReactiveController {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private controllers: Record<string, any> = {};
 
-    set system(value: string) {
-        const hostSpectrumConfig = this.host as unknown as {
+    set theme(value: ThemeVariant | '') {
+        const { spectrumConfig } = this.host as unknown as {
             spectrumConfig: SpectrumConfig;
         };
-        Object.entries(
-            hostSpectrumConfig.spectrumConfig as SpectrumConfig
-        ).forEach(([controller, systems]) => {
-            if (systems.includes(value)) {
-                this.controllers[controller] = new DelegatesList[controller](
-                    this.host
-                );
+        Object.entries(spectrumConfig as SpectrumConfig).forEach(
+            ([controller, systems]) => {
+                if (systems.includes(value)) {
+                    const ControllerClass = DelegatesList[controller];
+                    this.controllers[controller] = new ControllerClass(
+                        this.host
+                    );
+                }
             }
-        });
+        );
     }
 
     constructor(host: LitElement) {

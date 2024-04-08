@@ -14,9 +14,11 @@ import type { LitElement, ReactiveController } from 'lit';
 
 export class DownState implements ReactiveController {
     private host: LitElement;
+    private controller: AbortController;
 
     constructor(host: LitElement) {
         this.host = host;
+        this.controller = new AbortController();
         this.host.addController(this);
     }
 
@@ -26,6 +28,7 @@ export class DownState implements ReactiveController {
 
     public hostDisconnected(): void {
         this.removeEventListeners();
+        this.controller.abort(); // Abort the controller when disconnecting
     }
 
     public manage(): void {
@@ -37,8 +40,12 @@ export class DownState implements ReactiveController {
     }
 
     addEventListeners(): void {
-        this.host?.addEventListener('pointerdown', this.handlePointerDown);
-        this.host?.addEventListener('pointerup', this.handlePointerUp);
+        this.host?.addEventListener('pointerdown', this.handlePointerDown, {
+            signal: this.controller.signal,
+        });
+        this.host?.addEventListener('pointerup', this.handlePointerUp, {
+            signal: this.controller.signal,
+        });
     }
 
     removeEventListeners(): void {
