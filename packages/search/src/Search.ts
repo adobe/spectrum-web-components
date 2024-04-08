@@ -23,7 +23,8 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-import { Textfield } from '@spectrum-web-components/textfield';
+import { TextfieldBase } from '@spectrum-web-components/textfield';
+import { ClearButton } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
@@ -38,7 +39,7 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
  *
  * @fires submit - The search form has been submitted.
  */
-export class Search extends Textfield {
+export class Search extends TextfieldBase {
     public static override get styles(): CSSResultArray {
         return [...super.styles, searchStyles];
     }
@@ -55,8 +56,39 @@ export class Search extends Textfield {
     @property()
     public override placeholder = 'Search';
 
+    @property({ type: String })
+    public override set value(value: string) {
+        if (value === this.value) {
+            return;
+        }
+        const oldValue = this._value;
+        this._value = value;
+        this.requestUpdate('value', oldValue);
+    }
+
+    public override get value(): string {
+        return this._value;
+    }
+
+    protected override _value = '';
+
     @query('#form')
     public form!: HTMLFormElement;
+
+    @query('sp-clear-button')
+    protected clearButton!: ClearButton;
+
+    private _formEventHandlers = {
+        submit: this.handleSubmit.bind(this),
+        reset: this.reset.bind(this),
+        keydown: this.handleKeydown.bind(this),
+    };
+
+    protected override _firstUpdateAfterConnected = false;
+
+    protected formAbortController?: AbortController;
+
+    protected clearButtonAbortController?: AbortController;
 
     private handleSubmit(event: Event): void {
         const applyDefault = this.dispatchEvent(
@@ -98,15 +130,28 @@ export class Search extends Textfield {
         );
     }
 
+    private _manageClearButtonListeners(): void {
+        // add clear button listener when button is added to the DOM
+        if (this.clearButton && !this.clearButtonAbortController) {
+            this.clearButtonAbortController = new AbortController();
+            const { signal } = this.clearButtonAbortController;
+            this.clearButton.addEventListener('keydown', stopPropagation, {
+                signal,
+            });
+
+            // remove listener when button is removed from DOM
+        } else if (!this.clearButton && this.clearButtonAbortController) {
+            this.clearButtonAbortController.abort();
+            this.clearButtonAbortController = undefined;
+        }
+    }
+
     protected override renderField(): TemplateResult {
         return html`
             <form
                 action=${this.action}
                 id="form"
                 method=${ifDefined(this.method)}
-                @submit=${this.handleSubmit}
-                @reset=${this.reset}
-                @keydown=${this.handleKeydown}
             >
                 <sp-icon-magnify
                     class="icon magnifier icon-workflow icon-search"
@@ -120,7 +165,6 @@ export class Search extends Textfield {
                               tabindex="-1"
                               type="reset"
                               size=${ifDefined(this.size)}
-                              @keydown=${stopPropagation}
                           ></sp-clear-button>
                       `
                     : nothing}
@@ -131,6 +175,58 @@ export class Search extends Textfield {
     public override firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
         this.inputElement.setAttribute('type', 'search');
+    }
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        this._firstUpdateAfterConnected = true;
+        this.requestUpdate();
+    }
+
+    public override disconnectedCallback(): void {
+        // Cleanup all form & button event listeners and remove form element from DOM
+        this.formAbortController?.abort();
+        this.clearButtonAbortController?.abort();
+        this.clearButtonAbortController = undefined;
+        this.form.remove();
+
+        super.disconnectedCallback();
+    }
+
+    protected override updated(changedProperties: PropertyValues): void {
+        super.updated(changedProperties);
+        // Adding this here instead of firstUpdated because we want to make sure
+        // this is called again on the first update after a previous disconnect
+        if (this._firstUpdateAfterConnected) {
+            this._firstUpdateAfterConnected = false;
+            this.firstUpdateAfterConnected();
+        }
+
+        if (changedProperties.has('value')) {
+            this._manageClearButtonListeners();
+        }
+    }
+
+    protected override firstUpdateAfterConnected(): void {
+        super.firstUpdateAfterConnected();
+
+        this.formAbortController = new AbortController();
+        const { signal } = this.formAbortController;
+        this.form.addEventListener(
+            'submit',
+            this._formEventHandlers['submit'],
+            { signal }
+        );
+        this.form.addEventListener('reset', this._formEventHandlers['reset'], {
+            signal,
+        });
+        this.form.addEventListener(
+            'keydown',
+            this._formEventHandlers['keydown'],
+            { signal }
+        );
+
+        this._manageClearButtonListeners();
     }
 
     public override willUpdate(): void {
