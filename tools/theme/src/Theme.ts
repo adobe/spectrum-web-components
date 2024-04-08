@@ -533,8 +533,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
-
-        // console.log('adopting styles', this.theme, this.styles);
     }
 
     static registerThemeFragment(
