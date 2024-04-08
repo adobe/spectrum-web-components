@@ -13,16 +13,27 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
-    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
-    --spectrum-fieldlabel-color: var(
-        --spectrum-neutral-subdued-content-color-default
+    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-100);
+    --spectrum-fieldlabel-top-to-text: var(
+        --spectrum-component-top-to-text-100
+    );
+    --spectrum-fieldlabel-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-100
     );
     --spectrum-field-label-text-to-asterisk: var(
         --spectrum-field-label-text-to-asterisk-medium
     );
+    --spectrum-fieldlabel-font-size: var(--spectrum-font-size-100);
     --spectrum-fieldlabel-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-fieldlabel-line-height: var(--spectrum-line-height-100);
     --spectrum-fieldlabel-line-height-cjk: var(--spectrum-cjk-line-height-100);
+    --spectrum-fieldlabel-side-margin-block-start: var(
+        --spectrum-field-label-top-margin-medium
+    );
+    --spectrum-fieldlabel-side-padding-right: var(--spectrum-spacing-200);
+    --spectrum-fieldlabel-color: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
 }
 
 :host([size='s']) {
@@ -31,51 +42,17 @@ governing permissions and limitations under the License.
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-75
     );
+    --spectrum-field-label-text-to-asterisk: var(
+        --spectrum-field-label-text-to-asterisk-small
+    );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-75);
     --spectrum-fieldlabel-side-margin-block-start: var(
         --spectrum-field-label-top-margin-small
     );
     --spectrum-fieldlabel-side-padding-right: var(--spectrum-spacing-100);
-    --spectrum-field-label-text-to-asterisk: var(
-        --spectrum-field-label-text-to-asterisk-small
-    );
-}
-
-:host {
-    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
-    --spectrum-fieldlabel-top-to-text: var(--spectrum-component-top-to-text-75);
-    --spectrum-fieldlabel-bottom-to-text: var(
-        --spectrum-component-bottom-to-text-75
-    );
-    --spectrum-fieldlabel-font-size: var(--spectrum-font-size-75);
-    --spectrum-fieldlabel-side-margin-block-start: var(
-        --spectrum-field-label-top-margin-medium
-    );
-    --spectrum-fieldlabel-side-padding-right: var(--spectrum-spacing-200);
-    --spectrum-field-label-text-to-asterisk: var(
-        --spectrum-field-label-text-to-asterisk-medium
-    );
 }
 
 :host([size='l']) {
-    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-100);
-    --spectrum-fieldlabel-top-to-text: var(
-        --spectrum-component-top-to-text-100
-    );
-    --spectrum-fieldlabel-bottom-to-text: var(
-        --spectrum-component-bottom-to-text-100
-    );
-    --spectrum-fieldlabel-font-size: var(--spectrum-font-size-100);
-    --spectrum-fieldlabel-side-margin-block-start: var(
-        --spectrum-field-label-top-margin-large
-    );
-    --spectrum-fieldlabel-side-padding-right: var(--spectrum-spacing-200);
-    --spectrum-field-label-text-to-asterisk: var(
-        --spectrum-field-label-text-to-asterisk-large
-    );
-}
-
-:host([size='xl']) {
     --spectrum-fieldlabel-min-height: var(--spectrum-component-height-200);
     --spectrum-fieldlabel-top-to-text: var(
         --spectrum-component-top-to-text-200
@@ -83,13 +60,29 @@ governing permissions and limitations under the License.
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-200
     );
+    --spectrum-field-label-text-to-asterisk: var(
+        --spectrum-field-label-text-to-asterisk-large
+    );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-200);
     --spectrum-fieldlabel-side-margin-block-start: var(
-        --spectrum-field-label-top-margin-extra-large
+        --spectrum-field-label-top-margin-large
     );
-    --spectrum-fieldlabel-side-padding-right: var(--spectrum-spacing-200);
+}
+
+:host([size='xl']) {
+    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-300);
+    --spectrum-fieldlabel-top-to-text: var(
+        --spectrum-component-top-to-text-300
+    );
+    --spectrum-fieldlabel-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-300
+    );
     --spectrum-field-label-text-to-asterisk: var(
         --spectrum-field-label-text-to-asterisk-extra-large
+    );
+    --spectrum-fieldlabel-font-size: var(--spectrum-font-size-300);
+    --spectrum-fieldlabel-side-margin-block-start: var(
+        --spectrum-field-label-top-margin-extra-large
     );
 }
 
@@ -119,9 +112,9 @@ governing permissions and limitations under the License.
         --mod-fieldlabel-line-height,
         var(--spectrum-fieldlabel-line-height)
     );
+    color: var(--spectrum-fieldlabel-color);
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    color: var(--spectrum-fieldlabel-color);
     padding-inline: 0;
     display: block;
 }
@@ -164,12 +157,20 @@ governing permissions and limitations under the License.
     text-align: end;
 }
 
+.spectrum-FieldLabel--staticBlack {
+    color: var(--spectrum-black);
+}
+
+.spectrum-FieldLabel--staticWhite {
+    color: var(--spectrum-white);
+}
+
 :host([disabled]),
 :host([disabled]) .required-icon {
     color: var(
-        --highcontrast-disabled-content-color,
+        --highcontrast-field-label-disabled-content-color,
         var(
-            --mod-disabled-content-color,
+            --mod-field-label-disabled-content-color,
             var(--spectrum-disabled-content-color)
         )
     );
@@ -177,6 +178,6 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
-        --highcontrast-disabled-content-color: GrayText;
+        --highcontrast-field-label-disabled-content-color: GrayText;
     }
 }

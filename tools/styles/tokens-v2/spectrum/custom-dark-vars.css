@@ -1,6 +1,20 @@
 :host,
 :root {
-    /* --spectrum-gray-900 */
+    --spectrum-menu-item-background-color-default-rgb: 255, 255, 255;
+    --spectrum-menu-item-background-color-default-opacity: 0;
+    --spectrum-menu-item-background-color-default: rgba(
+        var(--spectrum-menu-item-background-color-default-rgb),
+        var(--spectrum-menu-item-background-color-default-opacity)
+    ); /* --spectrum-gray-900 */
+    --spectrum-menu-item-background-color-hover: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-menu-item-background-color-down: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-menu-item-background-color-key-focus: var(
+        --spectrum-transparent-white-200
+    );
 
     /* Drop Zone background color rgb */
     --spectrum-drop-zone-background-color-rgb: var(
@@ -38,6 +52,8 @@
         0.07
     );
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
 
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
     --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
