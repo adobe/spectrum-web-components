@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import type { LitElement, ReactiveController } from 'lit';
 import { DownState } from './downstate.js';
-import { ThemeVariant } from '@spectrum-web-components/theme';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DelegatesList: Record<string, any> = {
@@ -29,7 +28,7 @@ export class Delegates implements ReactiveController {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private controllers: Record<string, any> = {};
 
-    set theme(value: ThemeVariant | '') {
+    set theme(value: string) {
         const { spectrumConfig } = this.host as unknown as {
             spectrumConfig: SpectrumConfig;
         };
