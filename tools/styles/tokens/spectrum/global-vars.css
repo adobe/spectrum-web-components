@@ -275,10 +275,10 @@
 
 :host,
 :root {
-    --system-spectrum-button-background-color-default: var(--spectrum-gray-75);
-    --system-spectrum-button-background-color-hover: var(--spectrum-gray-200);
-    --system-spectrum-button-background-color-down: var(--spectrum-gray-300);
-    --system-spectrum-button-background-color-focus: var(--spectrum-gray-200);
+    --system-spectrum-button-background-color-default: var(--spectrum-gray-50);
+    --system-spectrum-button-background-color-hover: var(--spectrum-gray-100);
+    --system-spectrum-button-background-color-down: var(--spectrum-gray-200);
+    --system-spectrum-button-background-color-focus: var(--spectrum-gray-100);
     --system-spectrum-button-border-color-default: var(--spectrum-gray-400);
     --system-spectrum-button-border-color-hover: var(--spectrum-gray-500);
     --system-spectrum-button-border-color-down: var(--spectrum-gray-600);
@@ -477,13 +477,13 @@
     );
     --system-spectrum-button-primary-outline-background-color-default: transparent;
     --system-spectrum-button-primary-outline-background-color-hover: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-primary-outline-background-color-down: var(
         --spectrum-gray-400
     );
     --system-spectrum-button-primary-outline-background-color-focus: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-primary-outline-border-color-default: var(
         --spectrum-gray-800
@@ -517,16 +517,16 @@
         --spectrum-disabled-content-color
     );
     --system-spectrum-button-secondary-background-color-default: var(
-        --spectrum-gray-200
+        --spectrum-gray-100
     );
     --system-spectrum-button-secondary-background-color-hover: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-secondary-background-color-down: var(
         --spectrum-gray-400
     );
     --system-spectrum-button-secondary-background-color-focus: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-secondary-border-color-default: transparent;
     --system-spectrum-button-secondary-border-color-hover: transparent;
@@ -553,16 +553,16 @@
     );
     --system-spectrum-button-secondary-outline-background-color-default: transparent;
     --system-spectrum-button-secondary-outline-background-color-hover: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-secondary-outline-background-color-down: var(
         --spectrum-gray-400
     );
     --system-spectrum-button-secondary-outline-background-color-focus: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-secondary-outline-border-color-default: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-secondary-outline-border-color-hover: var(
         --spectrum-gray-400
@@ -594,13 +594,13 @@
     );
     --system-spectrum-button-quiet-background-color-default: transparent;
     --system-spectrum-button-quiet-background-color-hover: var(
-        --spectrum-gray-200
+        --spectrum-gray-100
     );
     --system-spectrum-button-quiet-background-color-down: var(
-        --spectrum-gray-300
+        --spectrum-gray-200
     );
     --system-spectrum-button-quiet-background-color-focus: var(
-        --spectrum-gray-200
+        --spectrum-gray-100
     );
     --system-spectrum-button-quiet-border-color-default: transparent;
     --system-spectrum-button-quiet-border-color-hover: transparent;
