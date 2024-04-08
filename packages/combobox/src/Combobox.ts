@@ -33,7 +33,7 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
-import { Textfield } from '@spectrum-web-components/textfield';
+import { TextfieldBase } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
@@ -50,10 +50,26 @@ export type ComboboxOption = {
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
-export class Combobox extends Textfield {
+export class Combobox extends TextfieldBase {
     public static override get styles(): CSSResultArray {
         return [...super.styles, styles, chevronStyles];
     }
+
+    @property({ type: String })
+    public override set value(value: string) {
+        if (value === this.value) {
+            return;
+        }
+        const oldValue = this._value;
+        this._value = value;
+        this.requestUpdate('value', oldValue);
+    }
+
+    public override get value(): string {
+        return this._value;
+    }
+
+    protected override _value = '';
 
     /**
      * The currently active ComboboxItem descendant, when available.
