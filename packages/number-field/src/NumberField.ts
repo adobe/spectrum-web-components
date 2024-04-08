@@ -103,6 +103,9 @@ export class NumberField extends TextfieldBase {
     @query('.buttons')
     private buttons!: HTMLDivElement;
 
+    @query('#form')
+    public form!: HTMLFormElement;
+
     @property({ type: Boolean, reflect: true })
     public override focused = false;
 
@@ -559,6 +562,7 @@ export class NumberField extends TextfieldBase {
     protected override renderField(): TemplateResult {
         this.autocomplete = 'off';
         return html`
+         <form id="form">
             ${super.renderField()}
             ${this.hideStepper
                 ? html``
@@ -619,7 +623,13 @@ export class NumberField extends TextfieldBase {
                           </sp-action-button>
                       </span>
                   `}
+        </form>
         `;
+    }
+
+    public override disconnectedCallback() {
+        this.form?.remove();
+        super.disconnectedCallback();
     }
 
     protected override update(changes: PropertyValues): void {
@@ -648,6 +658,7 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';
             const hasNegative = typeof this.min !== 'undefined' && this.min < 0;
