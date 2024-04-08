@@ -367,7 +367,7 @@
             ]
         },
         "process-spectrum": {
-            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/spectrum-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
+            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/spectrum-tokens.js && node ./scripts/spectrum-two-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
             "files": [
                 "tasks/process-spectrum.js",
                 "packages/**/spectrum-config.js",
