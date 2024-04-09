@@ -5044,6 +5044,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-5.1.3.tgz#c8444e65bc54e94f0b17688833ae5341585ff1d9"
   integrity sha512-hTU70r81vh1W9EbtZ+DA3uVz1tnpCYG/wNx0DW7GyW2q6cyLHjz7qgVX9Pl/YvL2AA43tAR6u7FHHSSxVhHLyw==
 
+"@spectrum-css/alertbanner@^1.1.39":
+  version "1.1.41"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/alertbanner/-/alertbanner-1.1.41.tgz#12efbcf2a06993f7a2956c2336953156d36fc748"
+  integrity sha512-EpicP0rFBl1669ZmeutCeKa2xlUNVccv0UC6avNjiui/m9X4jleJDY9ovtbZdoxuQLbSRoLrERVrrTZEOSOj+g==
+
 "@spectrum-css/alertdialog@^1.2.4":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@spectrum-css/alertdialog/-/alertdialog-1.2.4.tgz#57be37ef190362ad55c28c6c9809e1d9943b25b8"
@@ -5369,8 +5374,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
+"@spectrum-web-components/base@^0.41.0":
+  version "0.41.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-web-components/base/-/base-0.41.2.tgz#c184b017e50ab6238afe513f9b6738d911d0056f"
+  integrity sha512-fDqLj415n3/cIr+znETIjvfEXo5s2uP6KgixeccEnS+z4R/bZvGXymC8AXLiVOSVzfRNPEZ81S1zBkn9EZZWpA==
+  dependencies:
+    lit "^2.5.0"
+
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.42.1"
+  version "0.42.2"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.17"
