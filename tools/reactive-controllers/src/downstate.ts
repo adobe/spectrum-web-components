@@ -22,6 +22,9 @@ export class DownState implements ReactiveController {
         this.host.addController(this);
     }
 
+    public getElement(): LitElement {
+        return this.host;
+    }
     public hostConnected(): void {
         this.manage();
     }
