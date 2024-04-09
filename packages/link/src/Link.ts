@@ -47,6 +47,22 @@ export class Link extends LikeAnchor(Focusable) {
         return this.anchorElement;
     }
 
+    constructor() {
+        super();
+        this.addEventListener('click', this.handleClickCapture, {
+            capture: true,
+        });
+    }
+
+    private handleClickCapture(event: Event): void | boolean {
+        if (this.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            return false;
+        }
+    }
+
     protected override render(): TemplateResult {
         return this.renderAnchor({ id: 'anchor' });
     }
