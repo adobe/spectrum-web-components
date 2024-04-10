@@ -345,10 +345,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 resolvedValue?: string,
                 actualValue?: string
             ): void => {
-                const themeModifier =
-                    this.theme && this.theme !== 'spectrum'
-                        ? `-${this.theme}`
-                        : '';
                 const systemModifier =
                     this.system && this.system !== 'spectrum'
                         ? `-${this.system}`
@@ -372,24 +368,20 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                     issues.push(
                         `You have set "${name}='${resolvedValue}'" but the associated system fragment has not been loaded.`
                     );
-                } else if (
-                    !Theme.themeFragmentsByKind
-                        .get(name)
-                        ?.get(
-                            resolvedValue +
-                                (name === 'theme' ? '' : themeModifier)
-                        )
-                ) {
-                    issues.push(
-                        `property theme is deprecated. Please use system, instead. You have set "${name}='${resolvedValue}'" but the associated theme fragment has not been loaded.`
-                    );
                 }
             };
-            // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
-            checkForAttribute('theme', this.theme, this._system);
+
             checkForAttribute('system', this.system, this._system);
             checkForAttribute('color', this.color, this._color);
             checkForAttribute('scale', this.scale, this._scale);
+
+            // Check for deprecated attributes
+            if (this.hasAttribute('theme')) {
+                issues.push(
+                    `The "theme" attribute has been deprecated in favor of "system".`
+                );
+            }
+
             if (issues.length) {
                 window.__swc.warn(
                     this,
