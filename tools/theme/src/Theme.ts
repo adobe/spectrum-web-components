@@ -222,7 +222,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
      */
     set theme(newValue: SystemVariant | '') {
-        if (this.system !== '') {
+        if (this.hasAttribute('system')) {
             // System is provided, so do not set theme
             return;
         }
