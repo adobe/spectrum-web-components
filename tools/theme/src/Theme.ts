@@ -307,7 +307,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             kind?: FragmentType
         ): CSSResultGroup | undefined => {
             const currentStyles =
-                kind && kind !== 'theme' && this.theme === 'express'
+                kind &&
+                kind !== 'theme' &&
+                kind !== 'system' &&
+                this.theme === 'express' &&
+                this.system === 'express'
                     ? fragments.get(`${name}-express`)
                     : fragments.get(name);
             // theme="spectrum" is available by default and doesn't need to be applied.
