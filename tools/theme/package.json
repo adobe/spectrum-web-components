@@ -150,6 +150,10 @@
             "development": "./src/spectrum-two/core-tokens.dev.js",
             "default": "./src/spectrum-two/core-tokens.js"
         },
+        "./src/spectrum-two/core.js": {
+            "development": "./src/spectrum-two/core.dev.js",
+            "default": "./src/spectrum-two/core.js"
+        },
         "./src/spectrum-two/themes-core-tokens.js": {
             "development": "./src/spectrum-two/themes-core-tokens.dev.js",
             "default": "./src/spectrum-two/themes-core-tokens.js"
