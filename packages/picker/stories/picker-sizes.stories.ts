@@ -22,11 +22,35 @@ export default {
     component: 'sp-picker',
     argTypes: {
         onChange: { action: 'change' },
+        invalid: {
+            name: 'invalid',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        pending: {
+            name: 'pending',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
 };
 
 type StoryArgs = {
     onChange: (val: string) => void;
+    invalid: boolean;
+    pending: boolean;
     open: false;
 };
 
@@ -34,9 +58,13 @@ const picker = ({
     onChange,
     open,
     size,
+    pending,
+    invalid,
 }: {
     onChange: (val: string) => void;
     size: 's' | 'm' | 'l' | 'xl';
+    pending: boolean;
+    invalid: boolean;
     open: boolean;
 }): TemplateResult => {
     return html`
@@ -51,6 +79,8 @@ const picker = ({
                 onChange(picker.value);
             }}"
             label="Select a Country with a very long label, too long, in fact"
+            ?pending="${pending}"
+            ?invalid="${invalid}"
             ?open=${open}
         >
             <sp-menu-item>Deselect</sp-menu-item>

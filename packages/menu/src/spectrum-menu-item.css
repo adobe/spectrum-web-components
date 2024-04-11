@@ -255,7 +255,7 @@ governing permissions and limitations under the License.
     --spectrum-menu-item-focus-indicator-direction-scalar: -1;
 }
 
-:host([active]) {
+:host(:is(:active, [active])) {
     background-color: var(
         --highcontrast-menu-item-background-color-focus,
         var(
@@ -265,7 +265,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) > #label {
+:host(:is(:active, [active])) > #label {
     color: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -275,7 +275,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) > [name='description']::slotted(*) {
+:host(:is(:active, [active])) > [name='description']::slotted(*) {
     color: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -285,7 +285,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) > ::slotted([slot='value']) {
+:host(:is(:active, [active])) > ::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -295,7 +295,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) > .icon:not(.chevron, .checkmark) {
+:host(:is(:active, [active])) > .icon:not(.chevron, .checkmark) {
     fill: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -312,7 +312,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) > .chevron {
+:host(:is(:active, [active])) > .chevron {
     fill: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -329,7 +329,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([active]) > .checkmark {
+:host(:is(:active, [active])) > .checkmark {
     fill: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -531,7 +531,7 @@ governing permissions and limitations under the License.
     transform: rotate(90deg);
 }
 
-:host([active]) .spectrum-Menu-item--collapsible.is-open,
+:host(:is(:active, [active])) .spectrum-Menu-item--collapsible.is-open,
 .spectrum-Menu-item--collapsible.is-open:focus,
 :host([focused]) .spectrum-Menu-item--collapsible.is-open {
     background-color: var(
@@ -665,7 +665,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([has-submenu][active]) .chevron {
+:host([has-submenu]:is(:active, [active])) .chevron {
     fill: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -688,7 +688,9 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled]) #label,
-:host([aria-disabled='true']) #label {
+:host([disabled]) ::slotted([slot='value']),
+:host([aria-disabled='true']) #label,
+:host([aria-disabled='true']) ::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-color-disabled,
         var(
@@ -853,7 +855,9 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]:hover) #label,
-    :host([aria-disabled='true']:hover) #label {
+    :host([disabled]:hover) ::slotted([slot='value']),
+    :host([aria-disabled='true']:hover) #label,
+    :host([aria-disabled='true']:hover) ::slotted([slot='value']) {
         color: var(
             --highcontrast-menu-item-color-disabled,
             var(

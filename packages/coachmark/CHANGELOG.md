@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/coachmark
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **coachmark:** add "step-count" slot for custom/internationalized pagination content ([#4215](https://github.com/adobe/spectrum-web-components/issues/4215)) ([f4136a6](https://github.com/adobe/spectrum-web-components/commit/f4136a61d1e43ea32a4d9b8d83da3df828b32094))
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/coachmark

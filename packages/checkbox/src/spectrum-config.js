@@ -27,7 +27,31 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-indeterminate', 'indeterminate'),
-                // converter.classToAttribute('is-invalid', 'invalid'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.classToAttribute('is-readOnly', 'readonly'),
                 converter.classToAttribute('spectrum-Checkbox--emphasized'),
                 // Default to `size='m'` without needing the attribute

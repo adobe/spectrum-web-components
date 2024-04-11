@@ -101,29 +101,50 @@ function formatDifference({ absolute, percentChange: relative }) {
     };
 }
 
-const buildTable = (result) => {
-    const remote = result[0];
-    const remoteDifferences = formatDifference(remote.differences[1]);
-    const remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
-    const branch = result[1];
-    const branchDifferences = formatDifference(branch.differences[0]);
-    const branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
-    const packageName = `${result[0].name.split(':')[0]}`;
-    const table = `<a id="${packageName}"></a>
+const buildTable = (results) => {
+    const packageName = `${results[0].name.split(':')[0]}`;
+    const table = [];
+
+    table.push(`<a id="${packageName}"></a>
 
 ## ${packageName} [_permalink_](#user-content-${packageName})
+`);
+
+    results.forEach((result, i) => {
+        if (i % 2 > 0) return;
+        const testName = `${result.name.split(':')[1]}`;
+        const remote = result;
+        const remoteDifferences = formatDifference(remote.differences[i + 1]);
+        const remoteDifferencesString = `${remoteDifferences.label} <br> ${remoteDifferences.relative} <br> ${remoteDifferences.absolute}`;
+
+        const branch = results[i + 1];
+        const branchDifferences = formatDifference(branch.differences[i]);
+        const branchDifferencesString = `${branchDifferences.label} <br> ${branchDifferences.relative} <br> ${branchDifferences.absolute}`;
+
+        table.push(`
+### ${
+            testName.includes(`basic`)
+                ? `${testName}`
+                : `${testName} [_permalink_](#user-content-${packageName}-${testName})`
+        }
 | Version | Bytes | Avg Time | vs remote | vs branch |
 |---|---|---|---|---|
 | npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
-        remote.mean,
-        milli
-    )} | - | ${remoteDifferencesString} |
+            remote.mean,
+            milli
+        )} | - | ${remoteDifferencesString} |
 | branch | ${prettyBytes(branch.bytesSent)} | ${formatConfidenceInterval(
-        branch.mean,
-        milli
-    )} | ${branchDifferencesString} | - |
-`;
-    return table;
+            branch.mean,
+            milli
+        )} | ${branchDifferencesString} | - |
+`);
+    });
+
+    const resultTable = table.join(`
+
+    `);
+
+    return resultTable;
 };
 
 export const buildTachometerComment = () => {

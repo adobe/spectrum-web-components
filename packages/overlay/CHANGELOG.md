@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **overlay:** prevent focus based hover interaction without :focus-visible ([79337ff](https://github.com/adobe/spectrum-web-components/commit/79337ff0c8df69203877732ce0541d9f1d49f33d))
+-   **overlay:** prioritize non-"hint" Overlays on the same trigger ([b9833f3](https://github.com/adobe/spectrum-web-components/commit/b9833f3e22cfc89c34a98bd235c30f207b013781))
+-   **picker:** add loading state to the picker ([#3110](https://github.com/adobe/spectrum-web-components/issues/3110)) ([d91e2c9](https://github.com/adobe/spectrum-web-components/commit/d91e2c9f3530c3c911832ea3a401fddc23e7854a))
+-   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 ### Bug Fixes

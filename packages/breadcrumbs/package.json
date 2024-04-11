@@ -62,13 +62,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "lit": "^2.5.0",
-        "@spectrum-web-components/action-menu": "^0.41.2",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/icons-workflow": "^0.41.2",
-        "@spectrum-web-components/link": "^0.41.2",
-        "@spectrum-web-components/menu": "^0.41.2",
-        "@spectrum-web-components/truncated": "^0.0.1"
+        "@spectrum-web-components/action-menu": "^0.42.2",
+        "@spectrum-web-components/base": "^0.42.2",
+        "@spectrum-web-components/icons-workflow": "^0.42.2",
+        "@spectrum-web-components/link": "^0.42.2",
+        "@spectrum-web-components/menu": "^0.42.2",
+        "@spectrum-web-components/truncated": "^0.42.2",
+        "lit": "^2.5.0"
     },
     "devDependencies": {
         "@spectrum-css/breadcrumb": "^8.2.3"

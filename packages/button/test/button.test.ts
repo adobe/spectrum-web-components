@@ -20,11 +20,12 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
-    shiftTabEvent,
-    testForLitDevWarnings,
-} from '../../../test/testing-helpers.js';
-import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+} from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 type TestableButtonType = {
@@ -95,6 +96,41 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         await expect(el).to.be.accessible();
+    });
+    it('has a stable/predictable `updateComplete`', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div></div>
+            `
+        );
+
+        let keydownTime = -1;
+        let updateComplete1 = -1;
+        let updateComplete2 = -1;
+
+        const el = document.createElement('sp-button');
+        el.autofocus = true;
+        el.addEventListener('keydown', () => {
+            keydownTime = performance.now();
+        });
+        el.updateComplete.then(() => {
+            updateComplete1 = performance.now();
+        });
+        el.updateComplete.then(() => {
+            updateComplete2 = performance.now();
+        });
+        test.append(el);
+        // don't use elementUpdated(), as it is under test...
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        expect(keydownTime, 'keydown happened').to.not.eq(-1);
+        expect(updateComplete1, 'first update complete happened').to.not.eq(-1);
+        expect(updateComplete2, 'first update complete happened').to.not.eq(-1);
+        expect(updateComplete1).lte(updateComplete2);
+        expect(updateComplete2).lte(keydownTime);
     });
     it('manages "role"', async () => {
         const el = await fixture<Button>(
@@ -180,21 +216,31 @@ describe('Button', () => {
         );
 
         await elementUpdated(el);
+        const input = document.createElement('input');
+        el.insertAdjacentElement('beforebegin', input);
+        input.focus();
+        expect(document.activeElement === input).to.be.true;
 
-        const focusElement = el.focusElement as HTMLButtonElement;
-        focusElement.addEventListener('focus', () => (focusedCount += 1));
+        el.addEventListener('focus', () => {
+            focusedCount += 1;
+        });
         expect(focusedCount).to.equal(0);
 
-        el.focus();
+        await sendKeys({
+            press: 'Tab',
+        });
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.true;
+        expect(focusedCount).to.equal(1);
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
         await elementUpdated(el);
 
         expect(focusedCount).to.equal(1);
-
-        el.dispatchEvent(shiftTabEvent());
-        el.dispatchEvent(new Event('focusin'));
-        await elementUpdated(el);
-
-        expect(focusedCount).to.equal(1);
+        expect(document.activeElement === input).to.be.true;
     });
     it('manages `disabled`', async () => {
         const clickSpy = spy();
@@ -683,12 +729,17 @@ describe('Button', () => {
         );
 
         await elementUpdated(el);
-        el.active = true;
+        el.focus();
         await elementUpdated(el);
-
-        el.dispatchEvent(new FocusEvent('focusout'));
+        await sendKeys({
+            down: 'Space',
+        });
         await elementUpdated(el);
-
+        expect(el.active).to.be.true;
+        await sendKeys({
+            up: 'Space',
+        });
+        await elementUpdated(el);
         expect(el.active).to.be.false;
     });
     describe('deprecated variants and attributes', () => {

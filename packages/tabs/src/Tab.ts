@@ -19,11 +19,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import {
-    FocusVisiblePolyfillMixin,
-    ObserveSlotPresence,
-    ObserveSlotText,
-} from '@spectrum-web-components/shared';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import tabItemStyles from './tab.css.js';
 
@@ -39,11 +38,6 @@ export class Tab extends FocusVisiblePolyfillMixin(
     public static override get styles(): CSSResultArray {
         return [tabItemStyles];
     }
-
-    /**
-     * @private
-     */
-    static instanceCount = 0;
 
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
@@ -86,7 +80,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
         super.firstUpdated(changes);
         this.setAttribute('role', 'tab');
         if (!this.hasAttribute('id')) {
-            this.id = `sp-tab-${Tab.instanceCount++}`;
+            this.id = `sp-tab-${randomID()}`;
         }
     }
 

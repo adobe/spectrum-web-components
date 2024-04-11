@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/action-group
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **shared:** ensure the "updateComplete" in Focusable is stable ([885b4a5](https://github.com/adobe/spectrum-web-components/commit/885b4a5e12430910bb0dbacddc865081fe46d9a1))
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **action-group:** manage Action Button selection through multiple slots ([4d02b46](https://github.com/adobe/spectrum-web-components/commit/4d02b469ffee693d23b67e68b1b63ad0b5c5eccc))
+-   **button:** prevent pointer interaction of child/slotted content ([2cd5823](https://github.com/adobe/spectrum-web-components/commit/2cd5823649f71ca849df0eb39d01d64034a4af70))
+-   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

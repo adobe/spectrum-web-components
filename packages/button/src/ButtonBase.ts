@@ -180,14 +180,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
-    private handleRemoveActive(): void {
-        this.active = false;
-    }
-
-    private handlePointerdown(): void {
-        this.active = true;
-    }
-
     private manageAnchor(): void {
         if (this.href && this.href.length > 0) {
             if (
@@ -216,7 +208,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
-        this.addEventListener('pointerdown', this.handlePointerdown);
     }
 
     protected override updated(changed: PropertyValues): void {
@@ -226,25 +217,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
         if (changed.has('label')) {
             this.setAttribute('aria-label', this.label || '');
-        }
-        if (changed.has('active')) {
-            if (this.active) {
-                this.addEventListener('focusout', this.handleRemoveActive);
-                this.addEventListener('pointerup', this.handleRemoveActive);
-                this.addEventListener('pointercancel', this.handleRemoveActive);
-                this.addEventListener('pointerleave', this.handleRemoveActive);
-            } else {
-                this.removeEventListener('focusout', this.handleRemoveActive);
-                this.removeEventListener('pointerup', this.handleRemoveActive);
-                this.removeEventListener(
-                    'pointercancel',
-                    this.handleRemoveActive
-                );
-                this.removeEventListener(
-                    'pointerleave',
-                    this.handleRemoveActive
-                );
-            }
         }
         if (this.anchorElement) {
             this.anchorElement.addEventListener('focus', this.proxyFocus);

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **picker:** add loading state to the picker ([#3110](https://github.com/adobe/spectrum-web-components/issues/3110)) ([d91e2c9](https://github.com/adobe/spectrum-web-components/commit/d91e2c9f3530c3c911832ea3a401fddc23e7854a))
+-   **picker:** allow open/close in tablet ([dcfc96e](https://github.com/adobe/spectrum-web-components/commit/dcfc96e779c0dd6005f4697450d1edcf7809e8ea))
+-   **picker:** correctly process the CSS for the quiet hover effect ([#4167](https://github.com/adobe/spectrum-web-components/issues/4167)) ([eb282fa](https://github.com/adobe/spectrum-web-components/commit/eb282fad1d1b4f5e7c2bce65df6ca56f46e6870e))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 ### Bug Fixes

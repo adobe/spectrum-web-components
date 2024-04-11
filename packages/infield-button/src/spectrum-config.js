@@ -48,6 +48,31 @@ const config = {
                     ],
                     'block'
                 ),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.classToAttribute('spectrum-InfieldButton--quiet'),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.classToClass('spectrum-InfieldButton-fill', 'fill'),

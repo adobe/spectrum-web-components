@@ -23,7 +23,7 @@ governing permissions and limitations under the License.
 .footer {
     color: var(
         --spectrum-dialog-confirm-description-text-color,
-        var(--spectrum-global-color-gray-800)
+        var(--spectrum-gray-800)
     );
 }
 

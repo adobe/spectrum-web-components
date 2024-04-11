@@ -16,7 +16,7 @@ yarn add @spectrum-web-components/reactive-controllers
 Import the `MatchMediaController` via:
 
 ```
-import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/MatchMediaController.js';
+import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/MatchMedia.js';
 ```
 
 ## Example
@@ -25,7 +25,7 @@ A `Host` element that renders a different message depending on the "orientation"
 
 ```js
 import { html, LitElement } from 'lit';
-import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/MatchMediaController.js';
+import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/MatchMedia.js';
 
 class Host extends LitElement {
     orientationLandscape = new MatchMediaController(

@@ -81,7 +81,6 @@ describe('sp-overlay', () => {
 
     describe('`slottable-request` event', () => {
         it('dispatched before `sp-opened`', async function () {
-            this.retries(0);
             let slottableRequestTime = 0;
             let openedTime = 0;
             const el = await fixture<Overlay>(html`
@@ -103,7 +102,6 @@ describe('sp-overlay', () => {
             expect(slottableRequestTime).to.be.lt(openedTime);
         });
         it('dispatched after `sp-closed`', async function () {
-            this.retries(0);
             let slottableRequestTime = 0;
             let closedTime = 0;
             const el = await fixture<Overlay>(html`
@@ -138,7 +136,6 @@ describe('sp-overlay', () => {
             ).to.be.gt(closedTime);
         });
         it('follows transition timing from lazily added children', async function () {
-            this.retries(0);
             let slottableRequestTime = 0;
             let openedTime = 0;
             const popover = document.createElement('sp-popover');

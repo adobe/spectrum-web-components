@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/reactive-controllers",
-    "version": "0.41.2",
+    "version": "0.42.2",
     "publishConfig": {
         "access": "public"
     },
@@ -28,6 +28,10 @@
         "./src/Color.js": {
             "development": "./src/Color.dev.js",
             "default": "./src/Color.js"
+        },
+        "./src/DependencyManger.js": {
+            "development": "./src/DependencyManger.dev.js",
+            "default": "./src/DependencyManger.js"
         },
         "./src/ElementResolution.js": {
             "development": "./src/ElementResolution.dev.js",

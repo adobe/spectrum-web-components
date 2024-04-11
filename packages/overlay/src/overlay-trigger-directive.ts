@@ -15,7 +15,7 @@ import {
     render,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { AsyncDirective, directive } from 'lit/async-directive.js';
+import { directive } from 'lit/async-directive.js';
 import { Overlay, strategies } from './Overlay.js';
 import { OverlayOptions, TriggerInteraction } from './overlay-types.js';
 import { ClickController } from './ClickController.js';
@@ -26,6 +26,7 @@ import {
     removeSlottableRequest,
     SlottableRequestEvent,
 } from './slottable-request-event.js';
+import { SlottableRequestDirective } from './slottable-request-directive.js';
 
 export type InsertionOptions = {
     el: HTMLElement | (() => HTMLElement);
@@ -33,20 +34,18 @@ export type InsertionOptions = {
 };
 
 export type OverlayTriggerOptions = {
+    open?: boolean;
     triggerInteraction: TriggerInteraction;
     overlayOptions: OverlayOptions;
     insertionOptions?: InsertionOptions;
 };
 
-export class OverlayTriggerDirective extends AsyncDirective {
-    private template!: () => TemplateResult;
-    private target!: HTMLElement;
+export class OverlayTriggerDirective extends SlottableRequestDirective {
     private overlay = new Overlay();
     private strategy?: ClickController | HoverController | LongpressController;
-    private abortController!: AbortController;
 
     protected defaultOptions: OverlayTriggerOptions = {
-        triggerInteraction: 'hover',
+        triggerInteraction: 'click',
         overlayOptions: {
             placement: 'top-start',
             type: 'auto',
@@ -59,7 +58,7 @@ export class OverlayTriggerDirective extends AsyncDirective {
     protected insertionOptions?: InsertionOptions;
 
     /* c8 ignore next 9 */
-    render(
+    override render(
         _template: () => TemplateResult,
         _options?: Partial<OverlayTriggerOptions>
     ): unknown {
@@ -95,28 +94,18 @@ export class OverlayTriggerDirective extends AsyncDirective {
                 triggerInteraction as TriggerInteraction
             ](this.overlay, this.target, true);
         }
+        this.listenerHost = this.overlay;
         this.init();
-
-        if (window.__swc.DEBUG) {
-            window.__swc.warn(
-                undefined,
-                `⚠️  WARNING ⚠️ : The Overlay Trigger Directive is experimental and there is no guarantees behind its usage in an application!! Its API and presence within the library could be changed at anytime. See "sp-overlay" or "Overlay.open()" for a stable API for overlaying content on your application.`,
-                'https://opensource.adobe.com/spectrum-web-components/components/overlay',
-                {
-                    level: 'high',
-                    type: 'api',
-                }
-            );
-        }
+        this.overlay.open = options?.open ?? false;
     }
 
-    handleSlottableRequest(event: SlottableRequestEvent): void {
+    override handleSlottableRequest(event: SlottableRequestEvent): void {
         /* c8 ignore next 1 */
         if (event.target !== event.currentTarget) return;
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
-
         render(willRemoveSlottable ? undefined : this.template(), this.overlay);
+
         if (willRemoveSlottable) {
             this.overlay.remove();
         } else {
@@ -131,27 +120,6 @@ export class OverlayTriggerDirective extends AsyncDirective {
             const { where = 'afterend' } = this.insertionOptions || {};
             insertionEl.insertAdjacentElement(where, this.overlay);
         }
-    }
-
-    init(): void {
-        this.abortController?.abort();
-        this.abortController = new AbortController();
-        const { signal } = this.abortController;
-        this.overlay.addEventListener(
-            'slottable-request',
-            (event: Event) =>
-                this.handleSlottableRequest(event as SlottableRequestEvent),
-            { signal }
-        );
-    }
-
-    override disconnected(): void {
-        this.abortController.abort();
-    }
-
-    /* c8 ignore next 3 */
-    override reconnected(): void {
-        this.init();
     }
 }
 

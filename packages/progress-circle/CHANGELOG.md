@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/progress-circle
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package @spectrum-web-components/progress-circle
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **progress-circle:** remove aria-label only when set by label and changed label is empty ([cdd181a](https://github.com/adobe/spectrum-web-components/commit/cdd181abec29d90b6adea24569b05400f931b3ae))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/progress-circle
