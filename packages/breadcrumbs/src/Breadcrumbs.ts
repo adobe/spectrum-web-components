@@ -22,17 +22,16 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import '@spectrum-web-components/truncated/sp-truncated.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 
 import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { BreadcrumbItem as BreadCrumbElement } from './BreadcrumbItem.js';
 import styles from './breadcrumbs.css.js';
-
-import '@spectrum-web-components/truncated/sp-truncated.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
-
 import '../sp-breadcrumb-item.js';
-
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
 
 const MAX_VISIBLE_ITEMS = 4;
 
@@ -72,6 +71,12 @@ export class Breadcrumbs extends SpectrumElement {
      */
     @property({ type: Number, attribute: 'max-visible-items' })
     public maxVisibleItems = MAX_VISIBLE_ITEMS;
+
+    /**
+     * Accessible name for the Breadcrumbs component
+     */
+    @property({ type: String })
+    public label = 'Breadcrumbs';
 
     /**
      * Change the default label of the action menu
@@ -319,9 +324,6 @@ export class Breadcrumbs extends SpectrumElement {
     }
 
     protected renderMenu(): TemplateResult {
-        import('@spectrum-web-components/action-menu/sp-action-menu.js');
-        import('@spectrum-web-components/menu/sp-menu-item.js');
-
         return html`
             <sp-breadcrumb-item is-menu ?disabled=${this.disabled}>
                 <sp-action-menu
@@ -347,15 +349,11 @@ export class Breadcrumbs extends SpectrumElement {
                       <slot @slotchange=${this.slotChangeHandler}></slot>
                   `
                 : html`
-                      <nav id="container">
+                      <nav id="container" aria-label=${this.label}>
                           ${this.showRoot
                               ? this.renderRootBreadcrumb()
                               : nothing}
-                          ${this.hasMenu
-                              ? html`
-                                    ${this.renderMenu()}
-                                `
-                              : nothing}
+                          ${this.hasMenu ? this.renderMenu() : nothing}
                           ${this.renderBreadcrumbItems()}
                       </nav>
                   `}

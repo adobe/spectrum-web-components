@@ -211,29 +211,6 @@ governing permissions and limitations under the License.
     align-content: center;
 }
 
-sp-breadcrumb-item {
-    box-sizing: border-box;
-    white-space: nowrap;
-    font-family: var(
-        --mod-breadcrumbs-font-family,
-        var(--spectrum-breadcrumbs-font-family)
-    );
-    font-size: var(
-        --mod-breadcrumbs-font-size,
-        var(--spectrum-breadcrumbs-font-size)
-    );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight,
-        var(--spectrum-breadcrumbs-font-weight)
-    );
-    line-height: var(
-        --mod-breadcrumbs-line-height,
-        var(--spectrum-breadcrumbs-line-height)
-    );
-    display: inline-flex;
-    position: relative;
-}
-
 :host([compact]) sp-breadcrumb-item {
     font-family: var(
         --mod-breadcrumbs-font-family-compact,
@@ -331,40 +308,5 @@ sp-breadcrumb-item:last-of-type {
     font-weight: var(
         --mod-breadcrumbs-font-weight-multiline-current,
         var(--spectrum-breadcrumbs-font-weight-multiline-current)
-    );
-}
-
-sp-breadcrumb-item > sp-action-menu {
-    margin-inline: var(
-        --mod-breadcrumbs-action-button-spacing-inline,
-        var(--spectrum-breadcrumbs-action-button-spacing-inline)
-    );
-    margin-block: var(
-        --mod-breadcrumbs-action-button-spacing-block,
-        var(--spectrum-breadcrumbs-action-button-spacing-block)
-    );
-    color: var(
-        --highcontrast-breadcrumbs-action-button-color,
-        var(
-            --mod-breadcrumbs-action-button-color,
-            var(--spectrum-breadcrumbs-action-button-color)
-        )
-    );
-}
-
-sp-breadcrumb-item > sp-action-menu:disabled {
-    color: var(
-        --highcontrast-breadcrumbs-action-button-color-disabled,
-        var(
-            --mod-breadcrumbs-action-button-color-disabled,
-            var(--spectrum-breadcrumbs-action-button-color-disabled)
-        )
-    );
-}
-
-sp-breadcrumb-item:first-of-type > sp-action-menu {
-    margin-inline-start: var(
-        --mod-breadcrumbs-action-button-spacing-inline-start,
-        var(--spectrum-breadcrumbs-action-button-spacing-inline-start)
     );
 }

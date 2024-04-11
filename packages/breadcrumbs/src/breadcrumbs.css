@@ -16,6 +16,13 @@ sp-breadcrumb-item:last-of-type::part(separator) {
     display: none;
 }
 
+sp-breadcrumb-item:first-of-type > sp-action-menu {
+    margin-inline-start: var(
+        --mod-breadcrumbs-action-button-spacing-inline-start,
+        var(--spectrum-breadcrumbs-action-button-spacing-inline-start)
+    );
+}
+
 :host([compact]) sp-breadcrumb-item::part(separator) {
     margin-block: var(
         --mod-breadcrumbs-icon-spacing-block-compact,
@@ -35,6 +42,16 @@ sp-breadcrumb-item:last-of-type::part(separator) {
     margin-block-end: var(
         --mod-breadcrumbs-icon-spacing-block-between-multiline,
         var(--spectrum-breadcrumbs-icon-spacing-block-between-multiline)
+    );
+}
+
+sp-breadcrumb-item:last-of-type::part(link) {
+    color: var(
+        --highcontrast-breadcrumbs-text-color-current,
+        var(
+            --mod-breadcrumbs-text-color-current,
+            var(--spectrum-breadcrumbs-text-color-current)
+        )
     );
 }
 

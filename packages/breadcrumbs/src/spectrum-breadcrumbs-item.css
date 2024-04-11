@@ -32,8 +32,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host([dir='rtl']) .separator,
-.separator:dir(rtl) {
+:host([dir='rtl']) .separator {
     transform: scaleX(-1);
 }
 
@@ -60,23 +59,32 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host:last-of-type {
-    font-family: var(
-        --mod-breadcrumbs-font-family-current,
-        var(--spectrum-breadcrumbs-font-family-current)
+::slotted(sp-action-menu) {
+    margin-inline: var(
+        --mod-breadcrumbs-action-button-spacing-inline,
+        var(--spectrum-breadcrumbs-action-button-spacing-inline)
     );
-    font-size: var(
-        --mod-breadcrumbs-font-size-current,
-        var(--spectrum-breadcrumbs-font-size-current)
+    margin-block: var(
+        --mod-breadcrumbs-action-button-spacing-block,
+        var(--spectrum-breadcrumbs-action-button-spacing-block)
     );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight-current,
-        var(--spectrum-breadcrumbs-font-weight-current)
+    color: var(
+        --highcontrast-breadcrumbs-action-button-color,
+        var(
+            --mod-breadcrumbs-action-button-color,
+            var(--spectrum-breadcrumbs-action-button-color)
+        )
     );
 }
 
-:host:last-of-type .separator {
-    display: none;
+::slotted(sp-action-menu[disabled]) {
+    color: var(
+        --highcontrast-breadcrumbs-action-button-color-disabled,
+        var(
+            --mod-breadcrumbs-action-button-color-disabled,
+            var(--spectrum-breadcrumbs-action-button-color-disabled)
+        )
+    );
 }
 
 .link {
@@ -113,16 +121,6 @@ governing permissions and limitations under the License.
         var(
             --mod-breadcrumbs-text-color-disabled,
             var(--spectrum-breadcrumbs-text-color-disabled)
-        )
-    );
-}
-
-:host:last-of-type .link {
-    color: var(
-        --highcontrast-breadcrumbs-text-color-current,
-        var(
-            --mod-breadcrumbs-text-color-current,
-            var(--spectrum-breadcrumbs-text-color-current)
         )
     );
 }

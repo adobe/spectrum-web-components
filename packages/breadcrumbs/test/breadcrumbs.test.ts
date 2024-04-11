@@ -41,27 +41,26 @@ describe('Breadcrumbs', () => {
     it('loads default breadcrumbs accessibly', async () => {
         const el = await fixture<Breadcrumbs>(
             html`
-                <sp-breadcrumbs>
-                    ${getBreadcrumbs(5)}
-                </sp-breadcrumbs>
+                <sp-breadcrumbs>${getBreadcrumbs(5)}</sp-breadcrumbs>
             `
         );
         await elementUpdated(el);
         await expect(el).to.be.accessible();
+
+        const container = el.shadowRoot.querySelector('nav');
+        expect(container).to.have.attribute('aria-label', 'Breadcrumbs');
     });
 
     it('manages disabled state', async () => {
         const el = await fixture<Breadcrumbs>(
             html`
-                <sp-breadcrumbs disabled>
-                    ${getBreadcrumbs(5)}
-                </sp-breadcrumbs>
+                <sp-breadcrumbs disabled>${getBreadcrumbs(5)}</sp-breadcrumbs>
             `
         );
 
         const breadcrumbs =
             el.shadowRoot.querySelectorAll('sp-breadcrumb-item');
-        
+
         breadcrumbs.forEach((breadcrumb, index) => {
             if (index !== breadcrumbs.length - 1) {
                 expect(breadcrumb.hasAttribute('disabled')).to.be.true;
@@ -74,9 +73,7 @@ describe('Breadcrumbs', () => {
     it('renders an action menu that contains the first 4 items, maximum visible items', async () => {
         const el = await fixture<Breadcrumbs>(
             html`
-                <sp-breadcrumbs>
-                    ${getBreadcrumbs(8)}
-                </sp-breadcrumbs>
+                <sp-breadcrumbs>${getBreadcrumbs(8)}</sp-breadcrumbs>
             `
         );
 
@@ -104,7 +101,8 @@ describe('Breadcrumbs', () => {
 
         await elementUpdated(el);
         const menu = el.shadowRoot.querySelector('sp-action-menu');
-        const breadcrumbs = el.shadowRoot.querySelectorAll('sp-breadcrumb-item');
+        const breadcrumbs =
+            el.shadowRoot.querySelectorAll('sp-breadcrumb-item');
 
         expect(breadcrumbs.length).to.be.equal(breadcrumbsCount);
         expect(menu).to.be.null;
@@ -123,13 +121,12 @@ describe('Breadcrumbs', () => {
 
         await elementUpdated(el);
         const menu = el.shadowRoot.querySelector('sp-action-menu');
-        const breadcrumbs = el.shadowRoot.querySelectorAll('sp-breadcrumb-item');
+        const breadcrumbs =
+            el.shadowRoot.querySelectorAll('sp-breadcrumb-item');
         expect(breadcrumbs[0].textContent?.trim()).to.equal('Breadcrumb 0');
         expect(menu).to.exist;
-
     });
 });
-
 
 const getBreadcrumbs = (count: number): TemplateResult[] => {
     const breadcrumbs: TemplateResult[] = [];
