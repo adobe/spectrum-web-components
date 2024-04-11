@@ -27,6 +27,7 @@ const config = {
             inPackage: '@spectrum-css/breadcrumb',
             outPackage: 'breadcrumbs',
             fileName: 'breadcrumbs',
+            hoistCustomPropertiesFrom: 'spectrum-Breadcrumbs',
             excludeByComponents: [
                 builder.class('spectrum-Breadcrumbs-itemSeparator'),
                 builder.class('spectrum-Breadcrumbs-itemLink'),
@@ -82,27 +83,40 @@ const config = {
                 ],
             ],
             components: [
-                converter.classToHost(),
-                converter.classToAttribute(
-                    'spectrum-Breadcrumbs--compact',
-                    'compact'
-                ),
-                converter.classToAttribute(
-                    'spectrum-Breadcrumbs--multiline',
-                    'multiline'
-                ),
-
+                converter.classToId('spectrum-Breadcrumbs', 'list'),
                 {
-                    find: [builder.class('spectrum-Breadcrumbs-item')],
+                    find: [builder.class('spectrum-Breadcrumbs--compact')],
                     replace: [
                         {
                             replace: {
-                                type: 'pseudo-element',
-                                kind: 'slotted',
-                                selector: [
-                                    builder.element('sp-breadcrumb-item'),
-                                ],
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('compact')],
                             },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('list'),
+                        },
+                    ],
+                },
+                {
+                    find: [builder.class('spectrum-Breadcrumbs--multiline')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('multiline')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('list'),
                         },
                     ],
                 },

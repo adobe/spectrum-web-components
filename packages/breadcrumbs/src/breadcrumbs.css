@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-breadcrumbs.css');
 
+:host {
+    display: block;
+}
+
 sp-breadcrumb-item:last-of-type::part(separator) {
     display: none;
 }
@@ -28,10 +32,6 @@ sp-breadcrumb-item:first-of-type > sp-action-menu {
         --mod-breadcrumbs-icon-spacing-block-compact,
         var(--spectrum-breadcrumbs-icon-spacing-block-compact)
     );
-}
-
-:host([compact]) {
-    flex-wrap: nowrap;
 }
 
 :host([multiline]) sp-breadcrumb-item::part(separator) {

@@ -13,6 +13,7 @@ import {
     CSSResultArray,
     html,
     nothing,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -116,6 +117,11 @@ export class Breadcrumbs extends SpectrumElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
+
+        if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'navigation');
+        }
+
         this.resizeObserver = new ResizeObserver(() => {
             const visibleItemsChanged = this.startUpdateVisibleItems();
 
@@ -127,6 +133,22 @@ export class Breadcrumbs extends SpectrumElement {
         });
 
         this.resizeObserver.observe(this);
+    }
+
+    override updated(changes: PropertyValues): void {
+        super.updated(changes);
+
+        // Update `aria-label` when `label` available
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
+            if (this.label.length) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
+        }
     }
 
     override disconnectedCallback(): void {
@@ -263,7 +285,7 @@ export class Breadcrumbs extends SpectrumElement {
     private getLastBreadcrumb(): TemplateResult {
         const lastItem = this.items[this.items.length - 1];
         return html`
-            <sp-breadcrumb-item>
+            <sp-breadcrumb-item role="listitem">
                 <div style="display: grid">
                     <sp-truncated>${lastItem.label}</sp-truncated>
                 </div>
@@ -317,7 +339,11 @@ export class Breadcrumbs extends SpectrumElement {
         href?: string
     ): TemplateResult {
         return html`
-            <sp-breadcrumb-item ?disabled=${disabled} href=${ifDefined(href)}>
+            <sp-breadcrumb-item
+                role="listitem"
+                ?disabled=${disabled}
+                href=${ifDefined(href)}
+            >
                 ${label}
             </sp-breadcrumb-item>
         `;
@@ -325,7 +351,11 @@ export class Breadcrumbs extends SpectrumElement {
 
     protected renderMenu(): TemplateResult {
         return html`
-            <sp-breadcrumb-item is-menu ?disabled=${this.disabled}>
+            <sp-breadcrumb-item
+                role="listitem"
+                is-menu
+                ?disabled=${this.disabled}
+            >
                 <sp-action-menu
                     ${ref(this.menuRef)}
                     ?disabled=${this.disabled}
@@ -349,13 +379,13 @@ export class Breadcrumbs extends SpectrumElement {
                       <slot @slotchange=${this.slotChangeHandler}></slot>
                   `
                 : html`
-                      <nav id="container" aria-label=${this.label}>
+                      <ul id="list">
                           ${this.showRoot
                               ? this.renderRootBreadcrumb()
                               : nothing}
                           ${this.hasMenu ? this.renderMenu() : nothing}
                           ${this.renderBreadcrumbItems()}
-                      </nav>
+                      </ul>
                   `}
         `;
     }

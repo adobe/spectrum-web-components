@@ -47,8 +47,19 @@ describe('Breadcrumbs', () => {
         await elementUpdated(el);
         await expect(el).to.be.accessible();
 
-        const container = el.shadowRoot.querySelector('nav');
-        expect(container).to.have.attribute('aria-label', 'Breadcrumbs');
+        expect(el.getAttribute('role')).to.equal('navigation');
+        expect(el.getAttribute('aria-label')).to.equal('Breadcrumbs');
+
+        el.label = 'Custom accessible name';
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(
+            'Custom accessible name'
+        );
+
+        const listItems = el.shadowRoot.querySelectorAll('[role="listitem"]');
+        // 4 is the default maximum visible items
+        expect(listItems.length).to.equal(4);
     });
 
     it('manages disabled state', async () => {

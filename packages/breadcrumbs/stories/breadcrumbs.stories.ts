@@ -51,7 +51,7 @@ const getResizableStyles = (): TemplateResult => {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-breadcrumbs>${getBreadcrumbs(3)}</sp-breadcrumbs>
+        <sp-breadcrumbs label="Organizer">${getBreadcrumbs(3)}</sp-breadcrumbs>
     `;
 };
 

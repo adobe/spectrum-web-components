@@ -173,7 +173,7 @@ governing permissions and limitations under the License.
     }
 }
 
-:host {
+#list {
     block-size: var(
         --mod-breadcrumbs-block-size,
         var(--spectrum-breadcrumbs-block-size)
@@ -195,14 +195,14 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([compact]) {
+:host([compact]) #list {
     block-size: var(
         --mod-breadcrumbs-block-size-compact,
         var(--spectrum-breadcrumbs-block-size-compact)
     );
 }
 
-:host([multiline]) {
+:host([multiline]) #list {
     block-size: var(
         --mod-breadcrumbs-block-size-multiline,
         var(--spectrum-breadcrumbs-block-size-multiline)
