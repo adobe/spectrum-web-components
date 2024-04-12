@@ -107,7 +107,7 @@ export class AlertBanner extends SpectrumElement {
 
     private _handleKeydown(event: KeyboardEvent): void {
         if (event.code === 'Escape' && this.dismissible) {
-            this.close();
+            this._shouldClose();
         }
     }
 
