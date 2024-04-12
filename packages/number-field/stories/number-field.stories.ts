@@ -376,7 +376,7 @@ export const minMax = (args: StoryArgs): TemplateResult => html`
 `;
 
 minMax.args = {
-    value: 3,
+    value: 4,
     min: 0.1,
     max: 255,
     step: 0.01,
