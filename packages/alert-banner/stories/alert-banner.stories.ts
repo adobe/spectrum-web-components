@@ -10,26 +10,106 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
+
+interface Properties {
+    text: string;
+    variant: '' | 'info' | 'negative';
+    dismissible: boolean;
+    open: boolean;
+    onClose: (event: Event) => void;
+}
 
 export default {
     title: 'Alert Banner',
     component: 'sp-alert-banner',
+    args: {
+        text: 'Your trial has expired',
+        dismissible: true,
+        open: true,
+    },
+    argTypes: {
+        text: {
+            name: 'text',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
+        dismissible: {
+            name: 'dismissible',
+            type: { name: 'boolean', required: false },
+            description:
+                'Whether to include an icon-only close button to dismiss it',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the alert banner is open',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
-export const Default = (): TemplateResult => {
-    return html`
-        <div style="display:flex;flex-direction:column;gap:24px;">
-            <sp-alert-banner open>Text content in alert</sp-alert-banner>
-            <sp-alert-banner variant="info" open>
-                Text content in alert
-            </sp-alert-banner>
+const alertBanner = ({
+    text = '',
+    variant = '',
+    dismissible = true,
+    open = true,
+}): TemplateResult => html`
+    <sp-alert-banner
+        variant=${variant}
+        ?dismissible=${dismissible}
+        ?open=${open}
+    >
+        ${text}
+        <sp-button treatment="outline" static="white" slot="action">
+            Action
+        </sp-button>
+    </sp-alert-banner>
+`;
 
-            <sp-alert-banner variant="negative" open>
-                Text content in alert
-            </sp-alert-banner>
+export const Default = (args: Properties): TemplateResult => alertBanner(args);
+
+export const Info = (args: Properties): TemplateResult =>
+    alertBanner({
+        ...args,
+        variant: 'info',
+        text: 'Your trial will expire in 3 days',
+    });
+
+export const Negative = (args: Properties): TemplateResult =>
+    alertBanner({
+        ...args,
+        variant: 'negative',
+        text: 'Connection interupted. Check your network to continue',
+    });
+
+export const TextWrapping = (args: Properties): TemplateResult =>
+    html`
+        <div style="width:800px;">
+            ${alertBanner({
+                ...args,
+                variant: 'info',
+                text: ` Your trial will expire in 3 days. Please purchase to continue.
+Your work has been saved and is ready for you to open again once
+you have purchased the software.`,
+            })}
         </div>
     `;
-};
