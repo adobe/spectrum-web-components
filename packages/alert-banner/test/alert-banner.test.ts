@@ -1,0 +1,211 @@
+/*
+Copyright 2024 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
+
+import '../sp-alert-banner.js';
+import '@spectrum-web-components/button/sp-button.js';
+import { AlertBanner } from '@spectrum-web-components/alert-banner';
+import {
+    escapeEvent,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+
+describe('AlertBanner', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<AlertBanner>(
+                html`
+                    <sp-alert-banner>
+                        Your trial will expire soon
+                    </sp-alert-banner>
+                `
+            )
+    );
+    it('loads default alert-banner accessibly', async () => {
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open>
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads variant info', async () => {
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open variant="info">
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const infoIcon = el.shadowRoot.querySelector('sp-icon-info');
+        expect(infoIcon).to.exist;
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads variant negative', async () => {
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open variant="negative">
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const alertIcon = el.shadowRoot.querySelector('sp-icon-alert');
+        expect(alertIcon).to.exist;
+
+        await expect(el).to.be.accessible();
+    });
+    it('removes variant attribute when given invalid variant', async () => {
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open variant="inexistent">
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('variant')).to.be.null;
+    });
+    it('calls corresponding handler using Space or Enter key for actionable alerts', async () => {
+        const actionSpy = spy();
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open>
+                    Your trial will expire soon
+                    <sp-button slot="action" @click=${() => actionSpy()}>
+                        Buy now
+                    </sp-button>
+                </sp-alert-banner>
+            `
+        );
+        await elementUpdated(el);
+
+        const buttonEl = el.querySelector('sp-button');
+        expect(buttonEl).to.exist;
+
+        buttonEl?.focus();
+        await sendKeys({ press: 'Enter' });
+        await elementUpdated(el);
+
+        expect(actionSpy).to.be.calledOnce;
+
+        buttonEl?.focus();
+        await sendKeys({ press: 'Space' });
+        await elementUpdated(el);
+
+        expect(actionSpy).to.be.calledTwice;
+    });
+    it('can be dismissed by clicking the close button', async () => {
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open dismissible>
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const closeButton = el.shadowRoot.querySelector('sp-close-button');
+
+        expect(closeButton).to.exist;
+        expect(el.open).to.be.true;
+
+        closeButton?.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+    });
+    it('can be dismissed using public close method', async () => {
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open>
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const closeButton = el.shadowRoot.querySelector('sp-close-button');
+
+        expect(closeButton).to.not.exist;
+        expect(el.open).to.be.true;
+
+        el.close();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+    });
+    it('consumers can prevent close', async () => {
+        const closeSpy = spy();
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner
+                    open
+                    dismissible
+                    @close=${(event: CustomEvent) => {
+                        event.preventDefault();
+                        closeSpy();
+                    }}
+                >
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const closeButton = el.shadowRoot.querySelector('sp-close-button');
+        expect(el.open).to.be.true;
+
+        closeButton?.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        expect(closeSpy).to.be.calledOnce;
+    });
+    it('can be closed using Escape key', async () => {
+        const closeSpy = spy();
+        const el = await fixture<AlertBanner>(
+            html`
+                <sp-alert-banner open dismissible @close=${() => closeSpy()}>
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+
+        el.dispatchEvent(escapeEvent());
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+        expect(closeSpy).to.be.calledOnce;
+    });
+});
