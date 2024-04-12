@@ -36,10 +36,9 @@ const config = {
                 ),
                 converter.classToClass('spectrum-AlertBanner-body'),
                 converter.classToClass('spectrum-AlertBanner-content'),
-                // slotted text??
+                converter.classToClass('spectrum-AlertBanner-text'),
                 converter.classToSlotted('spectrum-Button', 'action'),
                 converter.classToClass('spectrum-AlertBanner-end'),
-                // converter.classToClass('spectrum-Divider', "end"), // where should this be added?
                 converter.classToClass('spectrum-AlertBanner-icon', 'type'),
             ],
         },

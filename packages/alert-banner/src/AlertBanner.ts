@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -20,13 +21,6 @@ import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import styles from './alert-banner.css.js';
-
-/**
- * @TODO
- *
- * - added here directly from toast; once implementation starts refactor component to check what's really needed
- * - Focus visible polyfill mixin
- */
 
 export type AlertBannerVariants = 'neutral' | 'info' | 'negative' | '';
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
@@ -42,13 +36,12 @@ export class AlertBanner extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    protected _isValidVariant(variant: string) {
-        return VALID_VARIANTS.includes(variant);
-    }
+    @property({ type: Boolean, reflect: true })
+    public dismissible = false;
 
     /**
-     * The variant applies specific styling when set to `negative` or `info`.
-     * `variant` attribute is removed when not passing valid variant check.
+     * The variant applies specific styling when set to `negative` or `info`;
+     * `variant` attribute is removed when it's passed an invalid variant.
      *
      * @param {String} variant
      */
@@ -74,7 +67,11 @@ export class AlertBanner extends SpectrumElement {
 
     private _variant: AlertBannerVariants = '';
 
-    private renderIcon(variant: string): TemplateResult {
+    protected _isValidVariant(variant: string): boolean {
+        return VALID_VARIANTS.includes(variant);
+    }
+
+    protected renderIcon(variant: string): TemplateResult {
         switch (variant) {
             case 'info':
                 return html`
@@ -88,11 +85,11 @@ export class AlertBanner extends SpectrumElement {
                     <sp-icon-alert label="Error" class="type"></sp-icon-alert>
                 `;
             default:
-                return html``;
+                return nothing;
         }
     }
 
-    private shouldClose(): void {
+    private _shouldClose(): void {
         const applyDefault = this.dispatchEvent(
             new CustomEvent('close', {
                 composed: true,
@@ -109,22 +106,42 @@ export class AlertBanner extends SpectrumElement {
         this.open = false;
     }
 
+    private _handleKeydown(event: KeyboardEvent): void {
+        if (event.code === 'Escape' && this.dismissible) {
+            this.close();
+        }
+    }
+
     protected override render(): TemplateResult {
         return html`
-            ${this.renderIcon(this.variant)}
             <div class="body" role="alert">
                 <div class="content">
-                    <slot></slot>
+                    ${this.renderIcon(this.variant)}
+                    <div class="text"><slot></slot></div>
                 </div>
                 <slot name="action"></slot>
             </div>
             <div class="end">
-                <sp-close-button
-                    @click=${this.shouldClose}
-                    label="Close"
-                    static="white"
-                ></sp-close-button>
+                ${this.dismissible
+                    ? html`
+                          <sp-close-button
+                              @click=${this._shouldClose}
+                              label="Close"
+                              static="white"
+                          ></sp-close-button>
+                      `
+                    : nothing}
             </div>
         `;
+    }
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        this.addEventListener('keydown', this._handleKeydown.bind(this));
+    }
+
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.removeEventListener('keydown', this._handleKeydown.bind(this));
     }
 }

@@ -160,7 +160,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-AlertBanner-text {
+.text {
     margin-block-start: var(
         --mod-alert-banner-top-text,
         var(--spectrum-alert-banner-top-text)

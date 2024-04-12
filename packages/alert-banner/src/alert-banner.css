@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-alert-banner.css');
+
+:host {
+    --spectrum-alert-banner-size: 100%;
+}
