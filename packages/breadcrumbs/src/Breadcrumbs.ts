@@ -47,7 +47,6 @@ export type BreadcrumbItem = {
  * @element sp-breadcrumbs
  *
  * @slot icon - change the default icon of the action menu
- * @attr compact - Display the compact variant of the breadcrumbs
  *
  */
 export class Breadcrumbs extends SpectrumElement {
@@ -86,9 +85,15 @@ export class Breadcrumbs extends SpectrumElement {
     public menuLabel = 'More items';
 
     /**
+     * Reduce the height of the breadcrumbs
+     */
+    @property({ type: Boolean, reflect: true })
+    public compact = false;
+
+    /**
      * Wrap the last breadcrumb element to a new line
      */
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true })
     public multiline = false;
 
     @queryAssignedElements({ selector: 'sp-breadcrumb-item' })
