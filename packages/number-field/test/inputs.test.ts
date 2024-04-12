@@ -314,6 +314,27 @@ describe('NumberField - inputs', () => {
             expect(el.value).to.equal(255);
         });
     });
+    describe('user suplied fractional numbers', () => {
+        it('do not crash the Number Field', async () => {
+            const el = await getElFrom(minMax(minMax.args));
+            el.setAttribute('min', '0.1');
+            el.setAttribute('step', '0.01');
+            el.setAttribute('value', '0.5');
+            await elementUpdated(el);
+
+            el.focus();
+            await sendKeys({
+                type: '6',
+            });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('0.56');
+            await sendKeys({
+                press: 'Enter',
+            });
+            await elementUpdated(el);
+            expect(el.value).to.equal(0.56);
+        });
+    });
     describe('locale specific', () => {
         it('can determine the group symbol', async () => {
             const [languageContext] = createLanguageContext('es-ES');

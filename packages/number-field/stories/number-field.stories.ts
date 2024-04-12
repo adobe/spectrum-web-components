@@ -377,9 +377,8 @@ export const minMax = (args: StoryArgs): TemplateResult => html`
 
 minMax.args = {
     value: 4,
-    min: 0.1,
+    min: 0,
     max: 255,
-    step: 0.01,
 };
 
 export const hideStepper = (args: StoryArgs): TemplateResult => {
