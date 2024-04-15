@@ -10,9 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
+
 import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
-import { AlertBannerVariants } from '../src/AlertBanner';
 
 interface Properties {
     text: string;

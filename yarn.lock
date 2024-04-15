@@ -5374,13 +5374,6 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
-"@spectrum-web-components/base@^0.41.0":
-  version "0.41.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/base/-/base-0.41.2.tgz#c184b017e50ab6238afe513f9b6738d911d0056f"
-  integrity sha512-fDqLj415n3/cIr+znETIjvfEXo5s2uP6KgixeccEnS+z4R/bZvGXymC8AXLiVOSVzfRNPEZ81S1zBkn9EZZWpA==
-  dependencies:
-    lit "^2.5.0"
-
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
   version "0.42.2"
 
