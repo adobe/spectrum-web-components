@@ -209,8 +209,8 @@ export class Tooltip extends SpectrumElement {
         // Resolve the parent element of the assigned slot (if one exists) or of the Tooltip.
         let start: HTMLElement = this.assignedSlot || this;
         let root = start.getRootNode();
-        if (window.__swc.DEBUG) {
-            if (root === document) {
+        if (root === document) {
+            if (window.__swc.DEBUG) {
                 window.__swc.warn(
                     this,
                     `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
@@ -219,8 +219,8 @@ export class Tooltip extends SpectrumElement {
                         level: 'high',
                     }
                 );
-                return root as HTMLElement;
             }
+            return root as HTMLElement;
         }
         let triggerElement = (start.parentElement ||
             (root as ShadowRoot).host ||
@@ -231,8 +231,8 @@ export class Tooltip extends SpectrumElement {
                 triggerElement.assignedSlot || (triggerElement as HTMLElement);
             root = start.getRootNode();
             /* c8 ignore next 13 */
-            if (window.__swc.DEBUG) {
-                if (root === document) {
+            if (root === document) {
+                if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
                         `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
@@ -241,8 +241,8 @@ export class Tooltip extends SpectrumElement {
                             level: 'high',
                         }
                     );
-                    return root as HTMLElement;
                 }
+                return root as HTMLElement;
             }
             triggerElement = (start.parentElement ||
                 (root as ShadowRoot).host ||
