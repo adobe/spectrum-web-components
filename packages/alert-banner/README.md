@@ -33,17 +33,6 @@ The alert banner accepts text context in the default slot provided:
 </sp-alert-banner>
 ```
 
-### Actionable
-
-Use the action slot for the contextual action that a user can take in response to the issue described:
-
-```html
-<sp-alert-banner open>
-    Your trial has expired
-    <sp-button slot="action" variant="secondary">Buy now</sp-button>
-</sp-alert-banner>
-```
-
 ### Dismissible
 
 Use the `dismissible` attribute to include an icon-only close button to dismiss the alert banner:
@@ -54,21 +43,36 @@ Use the `dismissible` attribute to include an icon-only close button to dismiss 
 </sp-alert-banner>
 ```
 
+### Actionable
+
+Use the action slot for the contextual action that a user can take in response to the issue described:
+
+```html
+<sp-alert-banner open dismissible>
+    Your trial has expired
+    <sp-button treatment="outline" static="white" slot="action">
+        Buy now
+    </sp-button>
+</sp-alert-banner>
+```
+
 ## Variants
 
 ### Info
 
 ```html
-<sp-alert-banner open variant="info">
+<sp-alert-banner open variant="info" dismissible>
     Your trial will expire in 3 days
-    <sp-button slot="action" variant="secondary">Buy now</sp-button>
+    <sp-button treatment="outline" static="white" slot="action">
+        Buy now
+    </sp-button>
 </sp-alert-banner>
 ```
 
 ### Negative
 
 ```html
-<sp-alert-banner open variant="negative">
+<sp-alert-banner open variant="negative" dismissible>
     Connection interupted. Check your network to continue
 </sp-alert-banner>
 ```
