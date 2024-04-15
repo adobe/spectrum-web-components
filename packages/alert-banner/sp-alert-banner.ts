@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { AlertBanner } from './src/AlertBanner.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
-customElements.define('sp-alert-banner', AlertBanner);
+defineElement('sp-alert-banner', AlertBanner);
 
 declare global {
     interface HTMLElementTagNameMap {
