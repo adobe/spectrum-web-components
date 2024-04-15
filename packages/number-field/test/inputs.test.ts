@@ -314,7 +314,7 @@ describe('NumberField - inputs', () => {
             expect(el.value).to.equal(255);
         });
     });
-    describe('with floating point numbers', () => {
+    describe('user suplied fractional numbers', () => {
         it('do not crash the Number Field', async () => {
             const el = await getElFrom(minMax(minMax.args));
             el.setAttribute('min', '0.1');
