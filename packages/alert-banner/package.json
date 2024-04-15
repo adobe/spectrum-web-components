@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/alert-banner",
-    "version": "0.42.2",
+    "version": "0.0.1",
     "publishConfig": {
         "access": "public"
     },
@@ -68,7 +68,6 @@
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
-        "./**/*.dev.js",
         "./**/*.dev.js"
     ]
 }
