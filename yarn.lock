@@ -51,9 +51,9 @@
     normalize-path "^3.0.0"
 
 "@11ty/eleventy@^3.0.0-alpha.4":
-  version "3.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@11ty/eleventy/-/eleventy-3.0.0-alpha.5.tgz#b4bac8fe07e7435a260b215316153fa28e84e86f"
-  integrity sha512-JRWRqoAalwkiWIb9dQHmSX40kSOD6vhUwt73df/PWZPYzlAPxx27Gfi96TzR2bE+lmZ8IwgQzhYEBenL9tJ9Ow==
+  version "3.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy/-/eleventy-3.0.0-alpha.6.tgz#8662beb054207d28c4f742617bb063b972aa9a47"
+  integrity sha512-wllqMiM3A9qRt1mUA6iETQfhRtpFfUnzCT7v4RK/5RFqX/Bjwmqe18v7dfStHSO+V2zv5hE32skdM23HigG+eg==
   dependencies:
     "@11ty/dependency-tree" "^3.0.0"
     "@11ty/dependency-tree-esm" "^1.0.0"
@@ -66,16 +66,16 @@
     chokidar "^3.6.0"
     cross-spawn "^7.0.3"
     debug "^4.3.4"
-    dependency-graph "^0.11.0"
+    dependency-graph "^1.0.0"
     fast-glob "^3.3.2"
     graceful-fs "^4.2.11"
     gray-matter "^4.0.3"
     is-glob "^4.0.3"
-    iso-639-1 "^3.1.0"
+    iso-639-1 "^3.1.2"
     kleur "^4.1.5"
-    liquidjs "^10.10.0"
+    liquidjs "^10.10.2"
     luxon "^3.4.4"
-    markdown-it "^14.0.0"
+    markdown-it "^14.1.0"
     micromatch "^4.0.5"
     minimist "^1.2.8"
     moo "^0.5.2"
@@ -11193,6 +11193,11 @@ dependency-graph@^0.11.0:
   resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.11.0.tgz#ac0ce7ed68a54da22165a85e97a01d53f5eb2e27"
   integrity sha512-JeMq7fEshyepOWDfcfHK06N3MhyPhz++vtqWhMT5O9A3K42rdsEDpfdVqjaqaAhsw6a+ZqeDvQVtD0hFHQWrzg==
 
+dependency-graph@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-1.0.0.tgz#bb5e85aec1310bc13b22dbd76e3196c4ee4c10d2"
+  integrity sha512-cW3gggJ28HZ/LExwxP2B++aiKxhJXMSIt9K48FOXQkm+vuG5gyatXnLsONRJdzO/7VfjDIiaOOa/bs4l464Lwg==
+
 deprecation@^2.0.0, deprecation@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/deprecation/-/deprecation-2.3.1.tgz#6368cbdb40abf3373b525ac87e4a260c3a700919"
@@ -15935,10 +15940,10 @@ isexe@^3.1.1:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-3.1.1.tgz#4a407e2bd78ddfb14bea0c27c6f7072dde775f0d"
   integrity sha512-LpB/54B+/2J5hqQ7imZHfdU31OlgQqx7ZicVlkm9kzg9/w8GKLEcFfJl/t7DCEDueOyBAD6zCCwTO6Fzs0NoEQ==
 
-iso-639-1@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/iso-639-1/-/iso-639-1-3.1.0.tgz#62611c680eba80ccedb57c3fa00d048f7c866693"
-  integrity sha512-rWcHp9dcNbxa5C8jA/cxFlWNFNwy5Vup0KcFvgA8sPQs9ZeJHj/Eq0Y8Yz2eL8XlWYpxw4iwh9FfTeVxyqdRMw==
+iso-639-1@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/iso-639-1/-/iso-639-1-3.1.2.tgz#86a53dcce056e0d856b17c022eb059eb16a35426"
+  integrity sha512-Le7BRl3Jt9URvaiEHJCDEdvPZCfhiQoXnFgLAWNRhzFMwRFdWO7/5tLRQbiPzE394I9xd7KdRCM7S6qdOhwG5A==
 
 isobject@^2.0.0:
   version "2.1.0"
@@ -17292,10 +17297,10 @@ linkify-it@^5.0.0:
   dependencies:
     uc.micro "^2.0.0"
 
-liquidjs@^10.10.0:
-  version "10.10.0"
-  resolved "https://registry.yarnpkg.com/liquidjs/-/liquidjs-10.10.0.tgz#349197e674994b8a0c6c21db09cfa9bd4b69a702"
-  integrity sha512-f4gPvCq4uV4Fm5YezVUQoAMPmBMEuIE2LvgCnzyWoPRx+ZefH6b8DU2eb7znltRqATHF8zYvOsd5FD2z1spJgg==
+liquidjs@^10.10.2:
+  version "10.11.0"
+  resolved "https://registry.yarnpkg.com/liquidjs/-/liquidjs-10.11.0.tgz#85a5bb50b4838558d03a352f7427f3186229e028"
+  integrity sha512-DPUG/ez9KbeV6oxon4EOJPzkNModjYmSa2ceP3r9+3bOV9+MnpN/+a1KwGaj8bz5pp4td3kBiHrPX9sC7iuDxA==
   dependencies:
     commander "^10.0.0"
 
@@ -17986,7 +17991,7 @@ markdown-it-for-inline@^2.0.1:
   resolved "https://registry.yarnpkg.com/markdown-it-for-inline/-/markdown-it-for-inline-2.0.1.tgz#dd06c736a0b18b74298497cc8d1d717db9eebd89"
   integrity sha512-JGOi3/Ohhzehs+1qSA4CkDydmVBtiYi2q2BD//YtTbSK+75InrGJX2MtPq1AdMeC4BV7rwEhq1+3pLnwGbsgzA==
 
-markdown-it@^14.0.0:
+markdown-it@^14.0.0, markdown-it@^14.1.0:
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-14.1.0.tgz#3c3c5992883c633db4714ccb4d7b5935d98b7d45"
   integrity sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==
