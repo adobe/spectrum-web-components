@@ -323,6 +323,34 @@ describe('Textfield', () => {
             : null;
         expect(sizer).to.be.null;
     });
+    it('multiline with grows actually grow', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    multiline
+                    grows
+                ></sp-textfield>
+            `
+        );
+        expect(el).to.not.equal(undefined);
+        const textArea = el.shadowRoot.querySelector('textarea');
+        expect(textArea).to.not.be.null;
+        if (textArea) {
+            const initialHeight = textArea.offsetHeight;
+            el.focus();
+            el.select();
+            for (let i = 0; i < 10; i++) {
+                await sendKeys({
+                    type: 'ab',
+                });
+                await sendKeys({ press: 'Enter' });
+            }
+            const finalHeight = textArea.offsetHeight;
+            expect(initialHeight).to.not.equal(finalHeight);
+        }
+    });
+
     it('valid', async () => {
         const el = await litFixture<Textfield>(
             html`
