@@ -137,7 +137,7 @@ class OverlayStack {
      * When overlays are added manage the open state of exisiting overlays appropriately:
      * - 'modal': should close other overlays
      * - 'page': should close other overlays
-     * - 'hint': shouldn't close other overlays
+     * - 'hint': shouldn't close other overlays and give way to all other overlays on a trigger
      * - 'auto': should close other 'auto' overlays and other 'hint' overlays, but not 'manual' overlays
      * - 'manual': shouldn't close other overlays
      */
@@ -176,6 +176,17 @@ class OverlayStack {
             );
             overlay.dispatchEvent(queryPathEvent);
         } else if (overlay.type === 'hint') {
+            const hasPrevious = this.stack.some((overlayEl) => {
+                return (
+                    overlayEl.type !== 'manual' &&
+                    overlayEl.triggerElement &&
+                    overlayEl.triggerElement === overlay.triggerElement
+                );
+            });
+            if (hasPrevious) {
+                overlay.open = false;
+                return;
+            }
             this.stack.forEach((overlayEl) => {
                 if (overlayEl.type === 'hint') {
                     this.closeOverlay(overlayEl);
