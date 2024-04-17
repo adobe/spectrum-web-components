@@ -19,34 +19,52 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     font-family: var(
         --mod-button-font-family,
-        var(--spectrum-sans-font-family-stack)
+        var(
+            --mod-sans-font-family-stack,
+            var(--spectrum-sans-font-family-stack)
+        )
     );
-    line-height: var(--mod-button-line-height, var(--spectrum-line-height-100));
+    line-height: var(
+        --mod-button-line-height,
+        var(--mod-line-height-100, var(--spectrum-line-height-100))
+    );
     text-transform: none;
     vertical-align: top;
     -webkit-appearance: button;
     transition: background
             var(
                 --mod-button-animation-duration,
-                var(--spectrum-animation-duration-100)
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         border-color
             var(
                 --mod-button-animation-duration,
-                var(--spectrum-animation-duration-100)
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         color
             var(
                 --mod-button-animation-duration,
-                var(--spectrum-animation-duration-100)
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out,
         box-shadow
             var(
                 --mod-button-animation-duration,
-                var(--spectrum-animation-duration-100)
+                var(
+                    --mod-animation-duration-100,
+                    var(--spectrum-animation-duration-100)
+                )
             )
             ease-out;
     -webkit-font-smoothing: antialiased;
@@ -55,7 +73,6 @@ governing permissions and limitations under the License.
     justify-content: center;
     align-items: center;
     margin: 0;
-    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
@@ -76,19 +93,34 @@ governing permissions and limitations under the License.
     margin: calc(
         var(
                 --mod-button-focus-indicator-gap,
-                var(--spectrum-focus-indicator-gap)
+                var(
+                    --mod-focus-indicator-gap,
+                    var(--spectrum-focus-indicator-gap)
+                )
             ) * -1
     );
     transition: opacity
             var(
                 --mod-button-animation-duration,
-                var(--spectrum-animation-duration-100)
+                var(
+                    --mod-button-animation-duration,
+                    var(
+                        --mod-animation-duration-100,
+                        var(--spectrum-animation-duration-100)
+                    )
+                )
             )
             ease-out,
         margin
             var(
                 --mod-button-animation-duration,
-                var(--spectrum-animation-duration-100)
+                var(
+                    --mod-button-animation-duration,
+                    var(
+                        --mod-animation-duration-100,
+                        var(--spectrum-animation-duration-100)
+                    )
+                )
             )
             ease-out;
     display: block;
@@ -99,10 +131,7 @@ governing permissions and limitations under the License.
 
 :host(:focus-visible):after {
     margin: calc(
-        var(
-                --mod-button-focus-indicator-gap,
-                var(--spectrum-focus-indicator-gap)
-            ) * -2
+        var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -2
     );
 }
 
@@ -134,12 +163,6 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-color
     );
     --spectrum-button-intended-icon-size: var(--spectrum-workflow-icon-size-50);
-    --mod-progress-circle-position: absolute;
-    --spectrum-downstate-perspective: max(
-        var(--spectrum-downstate-height),
-        var(--spectrum-downstate-width) *
-            var(--spectrum-component-size-width-ratio-down)
-    );
 }
 
 :host([size='s']) {
@@ -172,12 +195,6 @@ governing permissions and limitations under the License.
         --spectrum-component-top-to-workflow-icon-75
     );
     --spectrum-button-intended-icon-size: var(--spectrum-workflow-icon-size-75);
-}
-
-:host([size='s'][icon-only]) {
-    --spectrum-downstate-perspective: var(
-        --spectrum-component-size-minimum-perspective-down
-    );
 }
 
 :host {
@@ -214,6 +231,13 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([pending]),
+:host([pending]) {
+    --mod-button-edge-to-visual-only: calc(
+        1px + var(--spectrum-button-edge-to-visual-only)
+    );
+}
+
 :host([size='l']) {
     --spectrum-button-min-width: calc(
         var(--spectrum-component-height-200) *
@@ -245,6 +269,13 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-intended-icon-size: var(
         --spectrum-workflow-icon-size-200
+    );
+}
+
+:host([size='l'][pending]),
+:host([size='l'][pending]) {
+    --mod-button-edge-to-visual-only: calc(
+        2px + var(--spectrum-button-edge-to-visual-only)
     );
 }
 
@@ -284,6 +315,20 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([size='xl'][pending]) .spectrum--medium,
+:host([size='xl'][pending]) .spectrum--medium {
+    --mod-button-edge-to-visual-only: calc(
+        3px + var(--spectrum-button-edge-to-visual-only)
+    );
+}
+
+:host([size='xl'][pending]) .spectrum--large,
+:host([size='xl'][pending]) .spectrum--large {
+    --mod-button-edge-to-visual-only: calc(
+        4px + var(--spectrum-button-edge-to-visual-only)
+    );
+}
+
 :host {
     border-radius: var(
         --mod-button-border-radius,
@@ -319,8 +364,6 @@ governing permissions and limitations under the License.
 
 :host(:is(:active, [active])) {
     box-shadow: none;
-    transform: perspective(var(--spectrum-downstate-perspective))
-        translateZ(var(--spectrum-component-size-difference-down));
 }
 
 ::slotted([slot='icon']) {
@@ -498,24 +541,6 @@ governing permissions and limitations under the License.
             var(--spectrum-button-content-color-default)
         )
     );
-    transition: border
-            var(
-                --mod-button-animation-duration,
-                var(--spectrum-button-animation-duration, 0.13s)
-            )
-            linear,
-        color
-            var(
-                --mod-button-animation-duration,
-                var(--spectrum-button-animation-duration, 0.13s)
-            )
-            linear,
-        background-color
-            var(
-                --mod-button-animation-duration,
-                var(--spectrum-button-animation-duration, 0.13s)
-            )
-            linear;
 }
 
 @media (hover: hover) {
@@ -620,49 +645,9 @@ governing permissions and limitations under the License.
     );
 }
 
-::slotted([slot='icon']),
-#label {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity
-        var(
-            --mod-button-animation-duration,
-            var(--spectrum-button-animation-duration, 0.13s)
-        )
-        ease-in-out;
-}
-
-.spectrum-ProgressCircle {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity
-            var(
-                --mod-button-animation-duration,
-                var(--spectrum-button-animation-duration, 0.13s)
-            )
-            ease-in-out,
-        visibility 0s linear
-            var(
-                --mod-button-animation-duration,
-                var(--spectrum-button-animation-duration, 0.13s)
-            );
-}
-
 :host([pending]),
 :host([pending]) {
     cursor: default;
-}
-
-:host([pending]) .spectrum-ProgressCircle,
-:host([pending]) .spectrum-ProgressCircle {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity
-        var(
-            --mod-button-animation-duration,
-            var(--spectrum-button-animation-duration, 0.13s)
-        )
-        ease-in-out;
 }
 
 :host([static='white']),

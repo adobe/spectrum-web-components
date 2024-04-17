@@ -5069,10 +5069,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/button@^14.0.0-next.4":
-  version "14.0.0-next.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-14.0.0-next.4.tgz#cd058e65edd139d6fccf4c6818bd65bd67af46b9"
-  integrity sha512-bURMqyn7mxyD2i5MUsm0LozPdttQ8icVIcH1NN5F6KWbnFBcuQWa8GliW2tMgyGqSy3dzN0KbQy6OBKpKUBrMA==
+"@spectrum-css/button@^12.0.2":
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-12.0.2.tgz#2e8bc1adc8a3a87e56ad16ae66650f6b0d024efb"
+  integrity sha512-+BHRovrbS/lfdewCmHGyGzlJQiColOwbUodBJsh7S8Nn/myruYi5pz6pL/G88K0dUP+4F8VOIu8gbZM7xogTpw==
 
 "@spectrum-css/buttongroup@^6.2.5":
   version "6.2.5"
@@ -5084,10 +5084,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-7.0.2.tgz#4db4772fa6e67ce46a823faca390d57f3afe4512"
   integrity sha512-ftp5BEts14oCFxy9iA0RmndZs0lbbqQCO8Yovd60E73gJmlzlk9SuSiRTGJCGzfPZjm7kZN5q2qfXG9Iwr5Qdw==
 
-"@spectrum-css/checkbox@^8.1.5":
-  version "8.1.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-8.1.5.tgz#4dd8ff605f37e8d24b4991528939c2c84ecaba5a"
-  integrity sha512-91xOm+Hj4IrfbPlyNchLf5YW4ohBJlEQq1Urw+mqHSrzjqH9MG+IXLRT9OAY9zhuKTHfEOTqXatgYtfFqR6ILQ==
+"@spectrum-css/checkbox@^14.0.0-next.2":
+  version "14.0.0-next.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-14.0.0-next.4.tgz#abbfc2e35e5538373a250a60e4cbbc658dac8994"
+  integrity sha512-JBLBJESd492ooOz33AJCK1Z7hLiAGfNTdk7lhr3R5a8N30LLIj0ozSaYPgqnSIv4lGtSLOw+ZZU8FWYO7iWwLw==
 
 "@spectrum-css/clearbutton@^5.1.4":
   version "5.1.4"

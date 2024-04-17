@@ -15,6 +15,11 @@ governing permissions and limitations under the License.
 :host {
     display: inline-flex;
     vertical-align: top;
+
+    /** remove this after migration @spectrum-css/tokens to 14.0.0-next.6 **/
+    --spectrum-component-size-width-ratio-down: 0.3333;
+    --spectrum-component-size-minimum-perspective-down: 24px;
+    --spectrum-component-size-difference-down: -2px;
 }
 
 :host(:focus) {

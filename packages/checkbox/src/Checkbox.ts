@@ -116,6 +116,10 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
         delegatesFocus: true,
     };
 
+    override spectrumConfig = {
+        downstate: ['spectrum'], // change to spectrum-two once PR is merged
+    };
+
     /**
      * Disable this control. It will not receive focus or events
      */
