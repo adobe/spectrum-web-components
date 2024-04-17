@@ -68,18 +68,17 @@ export class DownState implements ReactiveController {
         if (isPressed) {
             const height = this.host.offsetHeight;
             const width = this.host.offsetWidth;
-            const transform = `perspective(max(${height}px, ${
-                width / 3
-            }px)) translate3d(0, 0, -2px)`;
-            this.host.style.setProperty('transform', transform);
-            // change to this once s2 themes are propagated
-            // this.host.style.setProperty('--spectrum-downstate-width', `${width}px`);
-            // this.host.style.setProperty('--spectrum-downstate-height', `${height}px`);
+            this.host.style.setProperty(
+                '--spectrum-downstate-width',
+                `${width}px`
+            );
+            this.host.style.setProperty(
+                '--spectrum-downstate-height',
+                `${height}px`
+            );
         } else {
-            this.host.style.removeProperty('transform');
-            // change to this once s2 themes are propagated
-            // this.host.style.removeProperty('--spectrum-downstate-width');
-            // this.host.style.removeProperty('--spectrum-downstate-height');
+            this.host.style.removeProperty('--spectrum-downstate-width');
+            this.host.style.removeProperty('--spectrum-downstate-height');
         }
     }
 }

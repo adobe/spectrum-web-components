@@ -29,11 +29,15 @@ describe('DownState', () => {
         );
         await nextFrame();
         await nextFrame();
-
         expect(
-            (controller.getElement() as HTMLElement).style.getPropertyValue(
-                'transform'
-            )
+            controller
+                .getElement()
+                .style.getPropertyValue('--spectrum-downstate-width')
+        ).to.equal('');
+        expect(
+            controller
+                .getElement()
+                .style.getPropertyValue('--spectrum-downstate-height')
         ).to.equal('');
 
         controller.getElement().dispatchEvent(new PointerEvent('pointerdown'));
@@ -41,19 +45,31 @@ describe('DownState', () => {
         await nextFrame();
         await nextFrame();
 
-        const transformStyle = (
-            controller.getElement() as HTMLElement
-        ).style.getPropertyValue('transform');
-        expect(transformStyle).to.include('translate3d(0px, 0px, -2px)');
+        // Checking if downstate is applied
+        const widthStyle = controller
+            .getElement()
+            .style.getPropertyValue('--spectrum-downstate-width');
+        const heightStyle = controller
+            .getElement()
+            .style.getPropertyValue('--spectrum-downstate-height');
+        expect(widthStyle).to.include('px');
+        expect(heightStyle).to.include('px');
 
         controller.getElement().dispatchEvent(new PointerEvent('pointerup'));
 
         await nextFrame();
         await nextFrame();
+
+        // Checking if downstate is removed
         expect(
-            (controller.getElement() as HTMLElement).style.getPropertyValue(
-                'transform'
-            )
+            controller
+                .getElement()
+                .style.getPropertyValue('--spectrum-downstate-width')
+        ).to.equal('');
+        expect(
+            controller
+                .getElement()
+                .style.getPropertyValue('--spectrum-downstate-height')
         ).to.equal('');
     });
 });
