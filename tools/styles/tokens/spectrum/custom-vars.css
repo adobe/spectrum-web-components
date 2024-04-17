@@ -46,7 +46,4 @@
     --spectrum-docs-static-black-background-color: rgba(
         var(--spectrum-docs-static-black-background-color-rgb)
     );
-
-    /* override for Spectrum Tokens value until a Style Dictionary transform gets written for our usage */
-    --spectrum-corner-radius-1000: 9999px;
 }

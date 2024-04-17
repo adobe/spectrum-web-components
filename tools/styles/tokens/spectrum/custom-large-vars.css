@@ -1,5 +1,11 @@
 :host,
 :root {
+    /* edge-to-visual-only is used for icon-only buttons */
+    --spectrum-edge-to-visual-only-75: 5px;
+    --spectrum-edge-to-visual-only-100: 9px;
+    --spectrum-edge-to-visual-only-200: 13px;
+    --spectrum-edge-to-visual-only-300: 16px;
+
     --spectrum-slider-tick-mark-height: 13px;
     --spectrum-slider-ramp-track-height: 20px;
 
@@ -59,6 +65,7 @@
     --spectrum-well-min-width: 300px;
     --spectrum-well-border-radius: 5px;
 
+    --spectrum-icon-chevron-size-50: 8px;
     /* XXL and XXS icon sizes are not within the design spec and are planned to be deprecated in Spectrum 2. */
     --spectrum-workflow-icon-size-xxl: 40px;
     --spectrum-workflow-icon-size-xxs: 15px;
