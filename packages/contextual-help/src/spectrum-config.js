@@ -11,7 +11,10 @@ governing permissions and limitations under the License.
 */
 // @ts-check
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-ContextualHelp');
 
@@ -24,8 +27,14 @@ const config = {
             inPackage: '@spectrum-css/contextualhelp',
             outPackage: 'contextual-help',
             fileName: 'contextual-help',
+            hoistCustomPropertiesFrom: 'spectrum-ContextualHelp',
+            excludeByComponents: [
+                // No need to style the trigger, it is already styled by sp-button
+                builder.class('spectrum-ContextualHelp-button'),
+            ],
             components: [
-                converter.classToHost(),
+                // The min-width should be applied to the popover, not the :host
+                converter.classToClass('spectrum-ContextualHelp', 'popover'),
                 converter.classToClass('spectrum-ContextualHelp-popover'),
                 converter.classToClass('spectrum-ContextualHelp-heading'),
                 converter.classToClass('spectrum-ContextualHelp-body'),

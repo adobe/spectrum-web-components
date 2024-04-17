@@ -15,9 +15,11 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -41,22 +43,52 @@ export class ContextualHelp extends SpectrumElement {
     }
 
     @property()
-    public headline = '';
+    public headline?: string;
+
+    @property()
+    public label?: string;
+
+    @property()
+    public variant: 'info' | 'help' = 'info';
+
+    /**
+     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+     * @attr
+     */
+    @property({ reflect: true })
+    public placement?: Placement = 'bottom-start';
+
+    @property({ type: Number })
+    public offset: number | [number, number];
+
+    private get buttonAriaLabel(): string {
+        if (this.label) {
+            return this.label;
+        } else {
+            if (this.variant === 'help') {
+                return 'Help';
+            }
+            return 'Informations';
+        }
+    }
 
     private renderContent(): TemplateResult {
         if (this.isMobile.matches) {
+            const headlineVisibility = !this.headline ? 'none' : undefined;
+
             return html`
                 <sp-dialog-wrapper
                     dismissable
                     underlay
-                    headline=${this.headline}
+                    headline=${ifDefined(this.headline)}
+                    headline-visibility=${ifDefined(headlineVisibility)}
                 >
                     <slot></slot>
                     <div class="link">
                         <slot name="link"></slot>
                     </div>
-                <sp-dialog-wrapper>
-            `
+                </sp-dialog-wrapper>
+            `;
         } else {
             return html`
                 <sp-popover class="popover">
@@ -68,29 +100,44 @@ export class ContextualHelp extends SpectrumElement {
                         </div>
                     </section>
                 </sp-popover>
-            `
+            `;
         }
     }
 
     protected override render(): TemplateResult {
+        const actualPlacement = this.isMobile.matches
+            ? undefined
+            : this.placement;
+
         return html`
             <sp-action-button
                 quiet
                 size="s"
                 id="trigger"
-                aria-label="Informations"
+                aria-label=${this.buttonAriaLabel}
                 id="trigger"
             >
-                <sp-icon-info-outline slot="icon"></sp-icon-info-outline>
+                ${this.variant === 'help'
+                    ? html`
+                          <sp-icon-help-outline
+                              slot="icon"
+                          ></sp-icon-help-outline>
+                      `
+                    : html`
+                          <sp-icon-info-outline
+                              slot="icon"
+                          ></sp-icon-info-outline>
+                      `}
             </sp-action-button>
             <sp-overlay
                 trigger="trigger@click"
-                placement=${this.isMobile.matches ? undefined : 'bottom-start'}
+                placement=${ifDefined(actualPlacement)}
                 type=${this.isMobile.matches ? 'modal' : 'auto'}
-                receivesFocus='true'
+                receives-focus="true"
+                .offset=${this.offset}
             >
                 ${this.renderContent()}
-            <sp-overlay>
+            </sp-overlay>
         `;
     }
 }

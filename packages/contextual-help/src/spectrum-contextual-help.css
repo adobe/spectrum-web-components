@@ -23,23 +23,15 @@ governing permissions and limitations under the License.
     --spectrum-contextual-help-body-color: var(--spectrum-body-color);
 }
 
-:host .spectrum--large {
+.spectrum--large .popover {
     --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-200);
 }
 
-:host {
+.popover {
     min-inline-size: var(
         --mod-spectrum-contextual-help-minimum-width,
         var(--spectrum-contextual-help-minimum-width)
     );
-    position: relative;
-}
-
-.spectrum-ContextualHelp-button {
-    display: flex;
-}
-
-.popover {
     padding-block: var(
         --mod-spectrum-contextual-help-padding,
         var(--spectrum-contextual-help-padding)
@@ -59,6 +51,7 @@ governing permissions and limitations under the License.
             var(--spectrum-contextual-help-body-color)
         )
     );
+    position: relative;
 }
 
 .popover .heading,
