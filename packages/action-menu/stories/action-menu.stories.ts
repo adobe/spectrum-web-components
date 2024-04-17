@@ -22,13 +22,12 @@ import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable
 import { ActionMenuMarkup } from './';
 import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
-import '../../overlay/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import { Menu } from '@spectrum-web-components/menu';
-import { ActionMenu } from '../src/ActionMenu';
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 
 export default {
     component: 'sp-action-menu',

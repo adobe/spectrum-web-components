@@ -150,6 +150,38 @@ describe('ColorArea', () => {
             'something custom Color Picker'
         );
     });
+    it('updates color when x value changes', async () => {
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area></sp-color-area>
+            `
+        );
+
+        await el.updateComplete;
+
+        const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
+
+        expect(handle.color).to.equal('hsl(0, 100%, 50%)');
+        el.x = 0.3;
+        await el.updateComplete;
+        expect(handle.color).to.equal('hsl(0, 100%, 85%)');
+    });
+    it('updates color when y value changes', async () => {
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area></sp-color-area>
+            `
+        );
+
+        await el.updateComplete;
+
+        const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
+
+        expect(handle.color).to.equal('hsl(0, 100%, 50%)');
+        el.y = 0.7;
+        await el.updateComplete;
+        expect(handle.color).to.equal('hsl(0, 100%, 35%)');
+    });
     it('accepts `hue` values', async () => {
         const el = await fixture<ColorArea>(
             html`

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/reactive-controllers
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **reactive-controllers:** add DependencyManagerController ([c7f7dea](https://github.com/adobe/spectrum-web-components/commit/c7f7dead131c9c2594a181ac62294683b6c7fd63))
+
 # [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
 
 **Note:** Version bump only for package @spectrum-web-components/reactive-controllers
