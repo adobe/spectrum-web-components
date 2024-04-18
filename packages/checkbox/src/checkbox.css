@@ -20,6 +20,7 @@ governing permissions and limitations under the License.
     --spectrum-component-size-width-ratio-down: 0.3333;
     --spectrum-component-size-minimum-perspective-down: 24px;
     --spectrum-component-size-difference-down: -2px;
+    --spectrum-corner-radius-small-size-medium: 3px;
 }
 
 :host(:focus) {
