@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, html } from '@open-wc/testing';
-import '@spectrum-web-components/color-handle/sp-combobox.js';
+import '@spectrum-web-components/combobox/sp-combobox.js';
 import { Combobox } from '@spectrum-web-components/combobox';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 

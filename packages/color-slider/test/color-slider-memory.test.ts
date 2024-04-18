@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, html } from '@open-wc/testing';
-import '@spectrum-web-components/color-handle/sp-color-slider.js';
+import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 

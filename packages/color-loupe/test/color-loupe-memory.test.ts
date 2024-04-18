@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, html } from '@open-wc/testing';
-import '@spectrum-web-components/color-handle/sp-color-loupe.js';
+import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 import { ColorLoupe } from '@spectrum-web-components/color-loupe';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 

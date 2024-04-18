@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, html } from '@open-wc/testing';
-import '@spectrum-web-components/popover/sp-progress-bar.js';
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
