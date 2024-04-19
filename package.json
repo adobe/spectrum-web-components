@@ -109,7 +109,7 @@
         "@sindresorhus/slugify": "^2.1.1",
         "@spectrum-web-components/eslint-plugin": "file:./linters/eslint",
         "@storybook/addon-a11y": "^7.5.0",
-        "@storybook/addon-designs": "^7.5.0",
+        "@storybook/addon-designs": "^8.0.0",
         "@storybook/addon-essentials": "^7.5.0",
         "@storybook/addon-links": "^7.5.0",
         "@storybook/web-components": "^7.5.0",
