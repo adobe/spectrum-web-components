@@ -25,6 +25,9 @@ const config = {
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-a11y',
+        // https://storybook.js.org/addons/@storybook/addon-designs/
+        '@storybook/addon-designs',
+        // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
     ],
     framework: {
