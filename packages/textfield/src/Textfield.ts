@@ -249,8 +249,6 @@ export class TextfieldBase extends ManageHelpText(
             }
         }
         this.value = this.inputElement.value;
-        this.inputElement.style.height = 'auto';
-        this.inputElement.style.height = `${this.inputElement.scrollHeight}px`;
     }
 
     protected handleChange(): void {

@@ -134,5 +134,7 @@ textarea {
     left: 0;
     height: 100%;
     resize: none;
-    overflow: hidden;
+    white-space: pre-line;
+    min-height: max-content;
+    overflow: clip;
 }
