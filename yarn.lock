@@ -5066,10 +5066,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/button@^14.0.0-next.3":
-  version "14.0.0-next.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-14.0.0-next.3.tgz#e0d487e0dadad5e27ac4595ba62d848fb5f28c7e"
-  integrity sha512-k5eSFrpeQsAJgwuL7JUyUixKp+I2oGVbnREEuaAdGXCbYSguCNC0XxpuxG7Y/utmdngK5XQeEtGuyPG5TQE+zg==
+"@spectrum-css/button@^12.0.2":
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-12.0.2.tgz#2e8bc1adc8a3a87e56ad16ae66650f6b0d024efb"
+  integrity sha512-+BHRovrbS/lfdewCmHGyGzlJQiColOwbUodBJsh7S8Nn/myruYi5pz6pL/G88K0dUP+4F8VOIu8gbZM7xogTpw==
 
 "@spectrum-css/buttongroup@^6.2.5":
   version "6.2.5"
@@ -5166,10 +5166,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-4.2.4.tgz#dc3c6f6199d6b662e60afc31b6af363417f7d6f5"
   integrity sha512-MPlw5k/7NRG2L5ZQEO7jB9Gisf16Xrnk+VuTmfK3US+qr0BLp4YFFwvvSN8llA12ZszbEochYK7hnAauperhRg==
 
-"@spectrum-css/fieldlabel@^8.0.0-next.1":
-  version "8.0.0-next.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-8.0.0-next.1.tgz#bec9adb1e41deeac3eda4b6e43c482b149ef2067"
-  integrity sha512-BAiH+P4ZYJrBoJ8qOPV6leB+XDG+y4K8QNAgK/HYeqd6814lRBm+rmD73U+WQx5bRfWtHN2qvKlF7qxSqrrO1g==
+"@spectrum-css/fieldlabel@^7.3.6":
+  version "7.3.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-7.3.6.tgz#7e5efe3055028f17a8e390f02cf24a7c3588d6dc"
+  integrity sha512-GthR5h3d+3n//g6BYCc4nCjq0mahmN0BdcmAJJHOt+yUBQYmWLcVYXen67sN9nuHWPBClpvDEXzkdU+sU4YZDA==
 
 "@spectrum-css/helptext@^4.1.5":
   version "4.1.5"
