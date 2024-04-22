@@ -57,7 +57,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.1"
+        "@spectrum-web-components/action-button": "^0.42.1",
+        "@spectrum-web-components/base": "^0.42.1",
+        "@spectrum-web-components/dialog": "^0.42.1",
+        "@spectrum-web-components/icons-workflow": "^0.42.1",
+        "@spectrum-web-components/overlay": "^0.42.1",
+        "@spectrum-web-components/popover": "^0.42.1"
     },
     "devDependencies": {
         "@spectrum-css/contextualhelp": "^2.1.5"

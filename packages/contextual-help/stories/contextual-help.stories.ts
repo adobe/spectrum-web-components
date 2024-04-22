@@ -28,7 +28,7 @@ export default {
     title: 'Contextual Help',
     component: 'sp-contextual-help',
     args: {
-        label: false,
+        label: '',
         variant: 'info',
         headline: undefined,
         placement: undefined,
@@ -110,19 +110,14 @@ export default {
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-contextual-help headline="Test" ${spreadProps(args)}>
-            <div>
-                Unless required by applicable law or agreed to in writing,
-                software distributed under the License is distributed on an "AS
-                IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF
-                <b>ANY KIND</b>
-                , either express or implied.
-            </div>
+        <sp-contextual-help headline="Permission required" ${spreadProps(args)}>
+            Your admin must grant you permission before you can create a
+            segment.
             <sp-link
                 slot="link"
                 href="https://opensource.adobe.com/spectrum-web-components/"
             >
-                Learn more
+                Request permission
             </sp-link>
         </sp-contextual-help>
     `;
@@ -130,19 +125,16 @@ export const Default = (args: StoryArgs): TemplateResult => {
 
 export const Help = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-contextual-help headline="Test" ${spreadProps(args)}>
+        <sp-contextual-help headline="What is a segment?" ${spreadProps(args)}>
             <div>
-                Unless required by applicable law or agreed to in writing,
-                software distributed under the License is distributed on an "AS
-                IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF
-                <b>ANY KIND</b>
-                , either express or implied.
+                Segments identify who your visitors are, what devices and
+                services they use, where they navigate from, and much more.
             </div>
             <sp-link
                 slot="link"
                 href="https://opensource.adobe.com/spectrum-web-components/"
             >
-                Learn more
+                Learn more about segments
             </sp-link>
         </sp-contextual-help>
     `;
@@ -157,19 +149,17 @@ export const CustomPlacement = (args: StoryArgs): TemplateResult => {
         <div
             style="width: 100%; height: 500px; display: flex; align-items: center; justify-content: center"
         >
-            <sp-contextual-help headline="Test" ${spreadProps(args)}>
-                <div>
-                    Unless required by applicable law or agreed to in writing,
-                    software distributed under the License is distributed on an
-                    "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF
-                    <b>ANY KIND</b>
-                    , either express or implied.
-                </div>
+            <sp-contextual-help
+                headline="Permission required"
+                ${spreadProps(args)}
+            >
+                Your admin must grant you permission before you can create a
+                segment.
                 <sp-link
                     slot="link"
                     href="https://opensource.adobe.com/spectrum-web-components/"
                 >
-                    Learn more
+                    Request permission
                 </sp-link>
             </sp-contextual-help>
         </div>

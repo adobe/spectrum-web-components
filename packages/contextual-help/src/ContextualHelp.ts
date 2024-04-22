@@ -12,19 +12,24 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    render,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    property,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import {
     IS_MOBILE,
     MatchMediaController,
@@ -33,7 +38,12 @@ import {
 import styles from './contextual-help.css.js';
 
 /**
+ * Spectrum Contextual help provides additional information about
+ * the state of either an adjacent component or an entire view.
  * @element sp-contextual-help
+ *
+ * @slot Text content to display in the popover
+ * @slot link - link to additional informations
  */
 export class ContextualHelp extends SpectrumElement {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
@@ -42,12 +52,24 @@ export class ContextualHelp extends SpectrumElement {
         return [styles];
     }
 
+    /**
+     * Optional title to be displayed inside the popover.
+     * @param {String} headline
+     */
     @property()
     public headline?: string;
 
+    /**
+     * Provides an accessible name for the action button trigger.
+     * @param {String} label
+     */
     @property()
     public label?: string;
 
+    /**
+     * The `variant` property applies specific styling on the action button trigger.
+     * @param {String} variant
+     */
     @property()
     public variant: 'info' | 'help' = 'info';
 
@@ -58,8 +80,17 @@ export class ContextualHelp extends SpectrumElement {
     @property({ reflect: true })
     public placement?: Placement = 'bottom-start';
 
+    /**
+     * The `offset` property accepts either a single number, to
+     * define the offset of the Popover along the main axis from
+     * the action button, or 2-tuple, to define the offset along the
+     * main axis and the cross axis.
+     */
     @property({ type: Number })
-    public offset: number | [number, number];
+    public offset: number | [number, number] = 0;
+
+    @state()
+    overlayOpen = false;
 
     private get buttonAriaLabel(): string {
         if (this.label) {
@@ -72,36 +103,60 @@ export class ContextualHelp extends SpectrumElement {
         }
     }
 
-    private renderContent(): TemplateResult {
-        if (this.isMobile.matches) {
-            const headlineVisibility = !this.headline ? 'none' : undefined;
+    private renderPopover(event: SlottableRequestEvent): void {
+        event.stopPropagation();
 
-            return html`
-                <sp-dialog-wrapper
-                    dismissable
-                    underlay
-                    headline=${ifDefined(this.headline)}
-                    headline-visibility=${ifDefined(headlineVisibility)}
-                >
+        if (event.data === removeSlottableRequest) {
+            render(undefined, event.target as HTMLElement);
+            return;
+        }
+
+        import('@spectrum-web-components/popover/sp-popover.js');
+
+        const template = html`
+            <sp-popover class="popover">
+                <section>
+                    ${this.headline &&
+                    html`
+                        <h2 class="heading">${this.headline}</h2>
+                    `}
                     <slot></slot>
                     <div class="link">
                         <slot name="link"></slot>
                     </div>
-                </sp-dialog-wrapper>
-            `;
-        } else {
-            return html`
-                <sp-popover class="popover">
-                    <section>
-                        <h2 class="heading">${this.headline}</h2>
-                        <slot></slot>
-                        <div class="link">
-                            <slot name="link"></slot>
-                        </div>
-                    </section>
-                </sp-popover>
-            `;
+                </section>
+            </sp-popover>
+        `;
+
+        render(template, event.target as HTMLElement);
+    }
+
+    private renderDialog(event: SlottableRequestEvent): void {
+        event.stopPropagation();
+
+        if (event.data === removeSlottableRequest) {
+            render(undefined, event.target as HTMLElement);
+            return;
         }
+
+        import('@spectrum-web-components/dialog/sp-dialog-wrapper.js');
+        const headlineVisibility = !this.headline ? 'none' : undefined;
+
+        const template = html`
+            <sp-dialog-wrapper
+                dismissable
+                underlay
+                headline=${ifDefined(this.headline)}
+                headline-visibility=${ifDefined(headlineVisibility)}
+            >
+                <slot></slot>
+                <div class="link">
+                    <slot name="link"></slot>
+                </div>
+            </sp-dialog-wrapper>
+        `;
+
+        render(template, event.target as HTMLElement);
     }
 
     protected override render(): TemplateResult {
@@ -115,7 +170,7 @@ export class ContextualHelp extends SpectrumElement {
                 size="s"
                 id="trigger"
                 aria-label=${this.buttonAriaLabel}
-                id="trigger"
+                ?is-active=${this.overlayOpen}
             >
                 ${this.variant === 'help'
                     ? html`
@@ -135,9 +190,16 @@ export class ContextualHelp extends SpectrumElement {
                 type=${this.isMobile.matches ? 'modal' : 'auto'}
                 receives-focus="true"
                 .offset=${this.offset}
-            >
-                ${this.renderContent()}
-            </sp-overlay>
+                @sp-opened=${() => {
+                    this.overlayOpen = true;
+                }}
+                @sp-closed=${() => {
+                    this.overlayOpen = false;
+                }}
+                @slottable-request=${this.isMobile.matches
+                    ? this.renderDialog
+                    : this.renderPopover}
+            ></sp-overlay>
         `;
     }
 }

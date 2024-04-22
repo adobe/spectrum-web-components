@@ -12,6 +12,6 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-contextual-help.css');
 
-.popover {
-    max-inline-size: 400px;
+#trigger[is-active] {
+    background-color: var(--spectrum-actionbutton-background-color-down);
 }
