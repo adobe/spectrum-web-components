@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/modal",
-    "version": "0.42.1",
+    "version": "0.42.2",
     "publishConfig": {
         "access": "public"
     },
@@ -43,7 +43,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.1"
+        "@spectrum-web-components/base": "^0.42.2"
     },
     "devDependencies": {
         "@spectrum-css/modal": "^4.2.6"
