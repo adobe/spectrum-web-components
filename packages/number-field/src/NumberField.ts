@@ -101,9 +101,6 @@ export class NumberField extends TextfieldBase {
     @query('.buttons')
     private buttons!: HTMLDivElement;
 
-    @query('#form')
-    public form!: HTMLFormElement;
-
     @property({ type: Boolean, reflect: true })
     public override focused = false;
 
@@ -479,16 +476,6 @@ export class NumberField extends TextfieldBase {
         this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
     }
 
-    private handleSubmit(event: Event): void {
-        event.preventDefault();
-        this.dispatchEvent(
-            new Event('submit', {
-                cancelable: true,
-                bubbles: true,
-            })
-        );
-    }
-
     private valueWithLimits(nextValue: number): number {
         let value = nextValue;
         if (typeof this.min !== 'undefined') {
@@ -619,7 +606,7 @@ export class NumberField extends TextfieldBase {
     protected override renderField(): TemplateResult {
         this.autocomplete = 'off';
         return html`
-            <form id="form">${super.renderField()}</form>
+            ${super.renderField()}
             ${this.hideStepper
                 ? nothing
                 : html`
@@ -717,31 +704,8 @@ export class NumberField extends TextfieldBase {
         this.addEventListener('compositionend', this.handleCompositionEnd);
     }
 
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this._firstUpdateAfterConnected = true;
-        this.requestUpdate();
-    }
-
-    public override disconnectedCallback(): void {
-        // Cleanup form event listener and remove form element from DOM
-        this.form.removeEventListener('submit', this.handleSubmit.bind(this));
-        this.form.remove();
-        super.disconnectedCallback();
-    }
-
-    protected override firstUpdateAfterConnected(): void {
-        super.firstUpdateAfterConnected();
-        this.form.addEventListener('submit', this.handleSubmit.bind(this));
-    }
-
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (this._firstUpdateAfterConnected) {
-            this._firstUpdateAfterConnected = false;
-            this.firstUpdateAfterConnected();
-        }
-
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';
             const hasNegative = typeof this.min !== 'undefined' && this.min < 0;

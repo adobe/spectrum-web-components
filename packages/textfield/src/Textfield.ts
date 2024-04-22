@@ -405,6 +405,10 @@ export class TextfieldBase extends ManageHelpText(
     }
 
     protected firstUpdateAfterConnected(): void {
+        if(!this.inputElement) {
+            return;
+        }
+
         this.abortController = new AbortController();
         const { signal } = this.abortController;
 
@@ -464,9 +468,6 @@ export class TextfieldBase extends ManageHelpText(
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
 export class Textfield extends TextfieldBase {
-    @query('#form')
-    public form!: HTMLFormElement;
-
     @property({ type: String })
     public override set value(value: string) {
         if (value === this.value) {
@@ -482,46 +483,4 @@ export class Textfield extends TextfieldBase {
     }
 
     protected override _value = '';
-
-    private handleSubmit(event: Event): void {
-        event.preventDefault();
-        this.dispatchEvent(
-            new Event('submit', {
-                cancelable: true,
-                bubbles: true,
-            })
-        );
-    }
-
-    protected override renderField(): TemplateResult {
-        return html`
-            <form id="form">${super.renderField()}</form>
-        `;
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this._firstUpdateAfterConnected = true;
-        this.requestUpdate();
-    }
-
-    public override disconnectedCallback(): void {
-        // Cleanup form event listener and remove form element from DOM
-        this.form.removeEventListener('submit', this.handleSubmit.bind(this));
-        this.form.remove();
-        super.disconnectedCallback();
-    }
-
-    protected override firstUpdateAfterConnected(): void {
-        super.firstUpdateAfterConnected();
-        this.form.addEventListener('submit', this.handleSubmit.bind(this));
-    }
-
-    protected override updated(changes: PropertyValues<this>): void {
-        super.updated(changes);
-        if (this._firstUpdateAfterConnected) {
-            this._firstUpdateAfterConnected = false;
-            this.firstUpdateAfterConnected();
-        }
-    }
 }

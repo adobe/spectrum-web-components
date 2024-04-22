@@ -23,7 +23,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-import { TextfieldBase } from '@spectrum-web-components/textfield';
+import { Textfield } from '@spectrum-web-components/textfield';
 import { ClearButton } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
@@ -39,7 +39,7 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
  *
  * @fires submit - The search form has been submitted.
  */
-export class Search extends TextfieldBase {
+export class Search extends Textfield {
     public static override get styles(): CSSResultArray {
         return [...super.styles, searchStyles];
     }
@@ -55,22 +55,6 @@ export class Search extends TextfieldBase {
 
     @property()
     public override placeholder = 'Search';
-
-    @property({ type: String })
-    public override set value(value: string) {
-        if (value === this.value) {
-            return;
-        }
-        const oldValue = this._value;
-        this._value = value;
-        this.requestUpdate('value', oldValue);
-    }
-
-    public override get value(): string {
-        return this._value;
-    }
-
-    protected override _value = '';
 
     @query('#form')
     public form!: HTMLFormElement;
@@ -188,7 +172,6 @@ export class Search extends TextfieldBase {
         this.formAbortController?.abort();
         this.clearButtonAbortController?.abort();
         this.clearButtonAbortController = undefined;
-        this.form.remove();
 
         super.disconnectedCallback();
     }
@@ -210,21 +193,27 @@ export class Search extends TextfieldBase {
     protected override firstUpdateAfterConnected(): void {
         super.firstUpdateAfterConnected();
 
-        this.formAbortController = new AbortController();
-        const { signal } = this.formAbortController;
-        this.form.addEventListener(
-            'submit',
-            this._formEventHandlers['submit'],
-            { signal }
-        );
-        this.form.addEventListener('reset', this._formEventHandlers['reset'], {
-            signal,
-        });
-        this.form.addEventListener(
-            'keydown',
-            this._formEventHandlers['keydown'],
-            { signal }
-        );
+        if (this.form) {
+            this.formAbortController = new AbortController();
+            const { signal } = this.formAbortController;
+            this.form.addEventListener(
+                'submit',
+                this._formEventHandlers['submit'],
+                { signal }
+            );
+            this.form.addEventListener(
+                'reset',
+                this._formEventHandlers['reset'],
+                {
+                    signal,
+                }
+            );
+            this.form.addEventListener(
+                'keydown',
+                this._formEventHandlers['keydown'],
+                { signal }
+            );
+        }
 
         this._manageClearButtonListeners();
     }
