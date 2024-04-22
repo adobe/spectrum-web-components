@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, html } from '@open-wc/testing';
-import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+import '@spectrum-web-components/color-area/sp-color-area.js';
 import { ColorArea } from '@spectrum-web-components/color-area';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
