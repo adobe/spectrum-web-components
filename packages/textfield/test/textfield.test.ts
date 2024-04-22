@@ -340,7 +340,7 @@ describe('Textfield', () => {
             const initialHeight = textArea.offsetHeight;
             el.focus();
             el.select();
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 100; i++) {
                 await sendKeys({
                     type: 'ab',
                 });
