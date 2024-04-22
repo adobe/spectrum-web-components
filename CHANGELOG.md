@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @adobe/spectrum-web-components
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **coachmark:** add "step-count" slot for custom/internationalized pagination content ([#4215](https://github.com/adobe/spectrum-web-components/issues/4215)) ([f4136a6](https://github.com/adobe/spectrum-web-components/commit/f4136a61d1e43ea32a4d9b8d83da3df828b32094))
+-   **dialog-wrapper:** add dismiss-label attribute for the close button's label ([#4154](https://github.com/adobe/spectrum-web-components/issues/4154)) ([c450a09](https://github.com/adobe/spectrum-web-components/commit/c450a098addaa1442f619cf892cdab1de96dbcaa))
+-   **reactive-controllers:** add DependencyManagerController ([c7f7dea](https://github.com/adobe/spectrum-web-components/commit/c7f7dead131c9c2594a181ac62294683b6c7fd63))
+-   **shared:** ensure the "updateComplete" in Focusable is stable ([885b4a5](https://github.com/adobe/spectrum-web-components/commit/885b4a5e12430910bb0dbacddc865081fe46d9a1))
+-   **slider:** skip variant="filled" css when fill-start ([#4217](https://github.com/adobe/spectrum-web-components/issues/4217)) ([b6d389d](https://github.com/adobe/spectrum-web-components/commit/b6d389d1be04284b30e395bd2fab2dcd2c65da63))
+-   **table:** Add aria-rowcount to virtualized tables ([#4156](https://github.com/adobe/spectrum-web-components/issues/4156)) ([b4136ab](https://github.com/adobe/spectrum-web-components/commit/b4136abf29bae6c7a5358bb8f4211feb95ca7690))
+
 # [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
 
 ### Bug Fixes

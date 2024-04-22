@@ -770,6 +770,8 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
+        await Promise.all(el.buttons.map((button) => elementUpdated(button)));
+
         const firstButton = el.querySelector('.first') as ActionButton;
         const secondButton = el.querySelector('.second') as ActionButton;
         const thirdButton = el.querySelector('.third') as ActionButton;
@@ -818,6 +820,8 @@ describe('ActionGroup', () => {
         );
 
         await elementUpdated(el);
+
+        await Promise.all(el.buttons.map((button) => elementUpdated(button)));
 
         const firstButton = el.querySelector('.first') as ActionButton;
         const secondButton = el.querySelector('.second') as ActionButton;

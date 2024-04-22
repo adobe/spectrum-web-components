@@ -10,20 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-#label {
-    flex: 1 1 auto; /* .spectrum-Menu-itemLabel */
-    hyphens: auto;
-    line-height: var(--spectrum-listitem-texticon-label-line-height);
-    overflow-wrap: break-word;
-    width: calc(
-        100% - var(--spectrum-listitem-texticon-ui-icon-width) -
-            var(--spectrum-listitem-texticon-icon-gap)
-    );
-}
+import { fixture } from '@open-wc/testing';
+import { Default } from '../stories/button-accent-fill.stories.js';
+import { Button } from '@spectrum-web-components/button';
+import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-.spectrum-Menu-itemLabel--wrapping {
-    overflow: hidden;
-    text-overflow: ellipsis; /* .spectrum-Menu-itemLabel--wrapping */
-    white-space: nowrap;
-}
+testForMemoryLeaks(async () => await fixture<Button>(Default({})));
