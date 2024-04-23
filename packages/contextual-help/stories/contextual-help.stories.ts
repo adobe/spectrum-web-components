@@ -19,7 +19,6 @@ export default {
     args: {
         label: '',
         variant: 'info',
-        headline: undefined,
         placement: undefined,
     },
     argTypes,
@@ -30,7 +29,6 @@ export const Default = (args: StoryArgs): TemplateResult => Template(args);
 export const Help = (args: StoryArgs): TemplateResult => Template(args);
 Help.args = {
     variant: 'help',
-    headline: 'What is a segment?',
 };
 
 export const CustomPlacement = (args: StoryArgs): TemplateResult => {

@@ -26,7 +26,8 @@ import { ContextualHelp } from '@spectrum-web-components/contextual-help';
 ## Example
 
 ```html
-<sp-contextual-help headline="Permission required">
+<sp-contextual-help>
+    <h2 slot="heading">Permission required</h2>
     Your admin must grant you permission before you can create a segment.
     <sp-link
         slot="link"
@@ -42,7 +43,8 @@ import { ContextualHelp } from '@spectrum-web-components/contextual-help';
 Use `variant="help"` for helpful content: more detailed, in-depth guidance about a task, UI element, tool, or keyboard shortcuts. This may include an image, video, or link and should be helpful in tone.
 
 ```html
-<sp-contextual-help headline="What is a segment?" variant="help">
+<sp-contextual-help variant="help">
+    <h2 slot="heading">What is a segment?</h2>
     Segments identify who your visitors are, what devices and services they use,
     where they navigate from, and much more.
     <sp-link
@@ -59,7 +61,8 @@ Use `variant="help"` for helpful content: more detailed, in-depth guidance about
 By default a `sp-contextual-help` will render its popover at the `bottom-start` position. This can be customized using the `placement` attribute and supports [all the placement options](http://localhost:8000/components/overlay-trigger/#placement) an `overlay-trigger` component supports.
 
 ```html
-<sp-contextual-help headline="Permission required" placement="top-start">
+<sp-contextual-help placement="top-start">
+    <h2 slot="heading">Permission required</h2>
     Your admin must grant you permission before you can create a segment.
     <sp-link
         slot="link"

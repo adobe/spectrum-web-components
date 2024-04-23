@@ -36,7 +36,10 @@ const config = {
                 // The min-width should be applied to the popover, not the :host
                 converter.classToClass('spectrum-ContextualHelp', 'popover'),
                 converter.classToClass('spectrum-ContextualHelp-popover'),
-                converter.classToClass('spectrum-ContextualHelp-heading'),
+                converter.classToSlotted(
+                    'spectrum-ContextualHelp-heading',
+                    'heading'
+                ),
                 converter.classToClass('spectrum-ContextualHelp-body'),
                 converter.classToSlotted(
                     'spectrum-ContextualHelp-link',

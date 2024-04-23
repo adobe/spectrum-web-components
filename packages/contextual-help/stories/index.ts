@@ -19,10 +19,10 @@ import '../sp-contextual-help.js';
 export const ContextualHelpMarkup = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-contextual-help
-            headline="Permission required"
             ${spreadProps(args)}
             placement=${ifDefined(args.placement)}
         >
+            <h2 slot="heading">Permission required</h2>
             Your admin must grant you permission before you can create a
             segment.
             <sp-link

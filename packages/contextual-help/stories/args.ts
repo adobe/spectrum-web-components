@@ -14,7 +14,6 @@ import type { Placement } from '@spectrum-web-components/overlay/src/overlay-typ
 export interface StoryArgs {
     label?: string;
     variant?: 'info' | 'help';
-    headline?: string;
     placement?: Placement;
     open?: boolean;
     [key: string]: unknown;
@@ -49,15 +48,6 @@ export const argTypes = {
         table: {
             type: { summary: 'label' },
             defaultValue: { summary: `'Help' | 'Info'` },
-        },
-        control: 'text',
-    },
-    headline: {
-        name: 'headline',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'headline' },
-            defaultValue: { summary: '' },
         },
         control: 'text',
     },

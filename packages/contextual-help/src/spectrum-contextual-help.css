@@ -54,12 +54,12 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-.popover .heading,
+.popover ::slotted([slot='heading']),
 .popover .body {
     margin: 0;
 }
 
-.popover .heading {
+.popover ::slotted([slot='heading']) {
     font-size: var(
         --mod-spectrum-contextual-help-heading-size,
         var(--spectrum-contextual-help-heading-size)

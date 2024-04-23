@@ -19,7 +19,6 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import {
@@ -35,6 +34,7 @@ import styles from './contextual-help.css.js';
  * the state of either an adjacent component or an entire view.
  * @element sp-contextual-help
  *
+ * @slot heading - content to display as the heading of the popover
  * @slot Text content to display in the popover
  * @slot link - link to additional informations
  */
@@ -44,13 +44,6 @@ export class ContextualHelp extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
-
-    /**
-     * Optional title to be displayed inside the popover.
-     * @param {String} headline
-     */
-    @property()
-    public headline?: string;
 
     /**
      * Provides an accessible name for the action button trigger.
@@ -118,17 +111,17 @@ export class ContextualHelp extends SpectrumElement {
 
     private renderOverlayContent(): TemplateResult {
         if (this.isMobile.matches) {
-            import('@spectrum-web-components/dialog/sp-dialog-wrapper.js');
+            import('@spectrum-web-components/dialog/sp-dialog-base.js');
+            import('@spectrum-web-components/dialog/sp-dialog.js');
 
             return html`
-                <sp-dialog-wrapper
-                    dismissable
-                    underlay
-                    headline=${ifDefined(this.headline)}
-                >
-                    <slot></slot>
-                    <slot name="link"></slot>
-                </sp-dialog-wrapper>
+                <sp-dialog-base underlay>
+                    <sp-dialog dismissable size="s">
+                        <slot name="heading" slot="heading"></slot>
+                        <slot></slot>
+                        <slot name="link"></slot>
+                    </sp-dialog>
+                </sp-dialog-base>
             `;
         } else {
             import('@spectrum-web-components/popover/sp-popover.js');
@@ -136,7 +129,7 @@ export class ContextualHelp extends SpectrumElement {
             return html`
                 <sp-popover class="popover">
                     <section>
-                        <h2 class="heading">${this.headline}</h2>
+                        <slot name="heading"></slot>
                         <slot></slot>
                         <slot name="link"></slot>
                     </section>
