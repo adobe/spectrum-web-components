@@ -9,40 +9,19 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    oneEvent,
-} from '@open-wc/testing';
+import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
 import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { ContextualHelp } from '../src/ContextualHelp.js';
-import '../sp-contextual-help.js';
+import { ContextualHelpMarkup } from '../stories';
 
 describe('ContextualHelp', () => {
     testForLitDevWarnings(
-        async () =>
-            await fixture<ContextualHelp>(
-                html`
-                    <sp-contextual-help headline="Permission required">
-                        Your admin must grant you permission before you can
-                        create a segment.
-                    </sp-contextual-help>
-                `
-            )
+        async () => await fixture<ContextualHelp>(ContextualHelpMarkup())
     );
     it('loads default contextual-help accessibly', async () => {
-        const el = await fixture<ContextualHelp>(
-            html`
-                <sp-contextual-help headline="Permission required">
-                    Your admin must grant you permission before you can create a
-                    segment.
-                </sp-contextual-help>
-            `
-        );
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
 
         await elementUpdated(el);
 
@@ -59,15 +38,7 @@ describe('ContextualHelp', () => {
         expect(button).to.have.attribute('aria-label', 'Help');
     });
     it('is a popover on web', async () => {
-        const el = await fixture<ContextualHelp>(
-            html`
-                <sp-contextual-help headline="Permission required">
-                    Your admin must grant you permission before you can create a
-                    segment.
-                    <a href="#" slot="link">Learn more</a>
-                </sp-contextual-help>
-            `
-        );
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
 
         await elementUpdated(el);
         const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
