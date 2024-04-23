@@ -110,7 +110,11 @@ export default {
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-contextual-help headline="Permission required" ${spreadProps(args)}>
+        <sp-contextual-help
+            open
+            headline="Permission required"
+            ${spreadProps(args)}
+        >
             Your admin must grant you permission before you can create a
             segment.
             <sp-link
@@ -126,10 +130,8 @@ export const Default = (args: StoryArgs): TemplateResult => {
 export const Help = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-contextual-help headline="What is a segment?" ${spreadProps(args)}>
-            <div>
-                Segments identify who your visitors are, what devices and
-                services they use, where they navigate from, and much more.
-            </div>
+            Segments identify who your visitors are, what devices and services
+            they use, where they navigate from, and much more.
             <sp-link
                 slot="link"
                 href="https://opensource.adobe.com/spectrum-web-components/"

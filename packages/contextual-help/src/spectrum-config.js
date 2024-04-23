@@ -38,7 +38,10 @@ const config = {
                 converter.classToClass('spectrum-ContextualHelp-popover'),
                 converter.classToClass('spectrum-ContextualHelp-heading'),
                 converter.classToClass('spectrum-ContextualHelp-body'),
-                converter.classToClass('spectrum-ContextualHelp-link'),
+                converter.classToSlotted(
+                    'spectrum-ContextualHelp-link',
+                    'link'
+                ),
             ],
         },
     ],

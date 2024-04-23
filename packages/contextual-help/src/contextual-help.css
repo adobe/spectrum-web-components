@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-contextual-help.css');
 
-#trigger[is-active] {
-    background-color: var(--spectrum-actionbutton-background-color-down);
+:host {
+    display: inline-block;
+}
+
+::slotted([slot='link']) {
+    display: block;
 }

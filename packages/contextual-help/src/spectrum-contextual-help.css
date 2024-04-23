@@ -77,7 +77,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.link {
+::slotted([slot='link']) {
     margin-block-start: var(
         --mod-spectrum-contextual-help-link-spacing,
         var(--spectrum-contextual-help-link-spacing)
