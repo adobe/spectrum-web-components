@@ -562,10 +562,7 @@ export class Overlay extends OverlayFeatures {
                 `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
-        if (
-            changes.has('open') &&
-            (typeof changes.get('open') !== 'undefined' || this.open)
-        ) {
+        if (changes.has('open') && (this.hasUpdated || this.open)) {
             this.manageOpen(changes.get('open'));
         }
         if (changes.has('trigger')) {

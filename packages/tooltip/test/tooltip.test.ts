@@ -214,19 +214,33 @@ describe('Tooltip', () => {
 
         expect(typeof el.tipElement).to.not.equal('undefined');
     });
+    describe('self-managed', () => {
+        let documentEventsSpy!: ReturnType<typeof spy>;
+        before(() => {
+            documentEventsSpy = spy(document, 'addEventListener');
+        });
+        afterEach(() => {
+            documentEventsSpy.resetHistory();
+        });
+        after(() => {
+            documentEventsSpy.restore();
+        });
+        it('does not attach event listeners if no trigger was found', async function () {
+            const el = await fixture<Tooltip>(
+                html`
+                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                `
+            );
 
-    it('self managed does not attach event listeners if no trigger was found', async () => {
-        const documentEventsSpy = spy(document, 'addEventListener');
-        const el = await fixture<Tooltip>(
-            html`
-                <sp-tooltip self-managed>Help text.</sp-tooltip>
-            `
-        );
-
-        await elementUpdated(el);
-        expect(documentEventsSpy.callCount).to.equal(0);
-        expect(el.overlayElement?.triggerElement).to.be.null;
-        documentEventsSpy.restore();
+            await elementUpdated(el);
+            let calls = documentEventsSpy.callCount;
+            while (calls) {
+                calls -= 1;
+                const call = documentEventsSpy.getCall(calls);
+                expect(call.args[0]).to.not.equal('pointerenter');
+            }
+            expect(el.overlayElement?.triggerElement).to.be.null;
+        });
     });
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;

@@ -38,7 +38,7 @@ import {
     SlottableRequestEvent,
 } from '../src/slottable-request-event.js';
 import { stub } from 'sinon';
-import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
+import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.js';
 
 const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
 type OverlayTypes = typeof OVERLAY_TYPES[number];

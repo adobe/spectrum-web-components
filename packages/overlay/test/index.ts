@@ -31,7 +31,6 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { isChrome } from '@spectrum-web-components/shared';
 
 export const runOverlayTriggerTests = (type: string): void => {
     describe(`Overlay Trigger - ${type}`, () => {
@@ -47,6 +46,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                                     justify-content: center;
                                 }
                             </style>
+                            <input type="text" />
                             <overlay-trigger id="trigger" placement="top">
                                 <sp-button
                                     id="outer-button"
@@ -106,12 +106,6 @@ export const runOverlayTriggerTests = (type: string): void => {
                         </div>
                     `
                 );
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
 
                 this.innerTrigger = this.testDiv.querySelector(
                     '#inner-trigger'
@@ -134,6 +128,16 @@ export const runOverlayTriggerTests = (type: string): void => {
                 this.hoverContent = this.testDiv.querySelector(
                     '#hover-content'
                 ) as HTMLDivElement;
+
+                await Promise.all([
+                    this.innerTrigger.updateComplete,
+                    this.outerTrigger.updateComplete,
+                    this.innerButton.updateComplete,
+                    this.outerButton.updateComplete,
+                    this.innerClickContent.updateComplete,
+                    this.outerClickContent.updateComplete,
+                ]);
+                this.testDiv.querySelector('input').focus();
             });
 
             it('opens a popover', async function () {
@@ -451,13 +455,6 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
 
             it('escape closes an open popover', async function () {
-                if (isChrome()) {
-                    // Does a werid test time bleed that allows the `Escape` press through to the
-                    // parent modal. Manual testing does not exhibit this interaction, which seems
-                    // to step from how long the `Escape` button in down.
-                    this.skip();
-                }
-
                 this.outerTrigger.type = 'modal';
                 this.innerTrigger.type = 'modal';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
