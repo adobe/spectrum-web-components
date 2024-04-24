@@ -246,6 +246,8 @@
         "./core-*.js",
         "./theme-*.js",
         "./scale-*.js",
+        "./spectrum-two/theme-*.js",
+        "./spectrum-two/scale-*.js",
         "./express/theme-*.js",
         "./express/scale-*.js",
         "./src/themes.js",
@@ -253,6 +255,10 @@
         "./src/express/core.js",
         "./src/express/core-*.js",
         "./src/express/themes.js",
-        "./src/express/themes-*.js"
+        "./src/express/themes-*.js",
+        "./src/spectrum-two/core.js",
+        "./src/spectrum-two/core-*.js",
+        "./src/spectrum-two/themes.js",
+        "./src/spectrum-two/themes-*.js"
     ]
 }

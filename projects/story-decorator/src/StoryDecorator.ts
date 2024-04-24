@@ -338,10 +338,8 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.color}
                 @change=${this.updateTheme}
             >
-                <sp-menu-item value="lightest">Lightest</sp-menu-item>
                 <sp-menu-item value="light">Light</sp-menu-item>
                 <sp-menu-item value="dark">Dark</sp-menu-item>
-                <sp-menu-item value="darkest">Darkest</sp-menu-item>
             </sp-picker>
         `;
     }
