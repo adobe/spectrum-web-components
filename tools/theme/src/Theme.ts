@@ -153,7 +153,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.theme = value as SystemVariant;
             window.__swc.warn(
                 this,
-                'proprety theme in <sp-theme> has been deprecated. Plesae use system instead like this <sp-theme theme="spectrum"></sp-theme>',
+                'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
                 'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
                 { level: 'deprecation' }
             );
