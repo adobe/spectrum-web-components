@@ -40,6 +40,9 @@ export class SideNav extends LitElement {
         this.open = !this.open;
     }
 
+    @property({ type: Boolean })
+    public isNarrow = false;
+
     public override focus() {
         const target = document.querySelector(
             '[slot="logo"]'
@@ -59,14 +62,18 @@ export class SideNav extends LitElement {
 
     override render(): TemplateResult {
         return html`
-            <sp-underlay
-                class="scrim"
-                @close=${this.toggle}
-                ?open=${this.open}
-                @transitionrun=${this.handleTransitionEvent}
-                @transitionend=${this.handleTransitionEvent}
-                @transitioncancel=${this.handleTransitionEvent}
-            ></sp-underlay>
+            ${this.isNarrow
+                ? html`
+                      <sp-underlay
+                          class="scrim"
+                          @close=${this.toggle}
+                          ?open=${this.open}
+                          @transitionrun=${this.handleTransitionEvent}
+                          @transitionend=${this.handleTransitionEvent}
+                          @transitioncancel=${this.handleTransitionEvent}
+                      ></sp-underlay>
+                  `
+                : html``}
             <aside
                 @transitionrun=${this.handleTransitionEvent}
                 @transitionend=${this.handleTransitionEvent}

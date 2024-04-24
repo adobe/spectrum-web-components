@@ -301,7 +301,9 @@ export class LayoutElement extends LitElement {
         `;
         import('./side-nav.js');
         return html`
-            <docs-side-nav id="side-nav">${navContent}</docs-side-nav>
+            <docs-side-nav id="side-nav" .isNarrow=${this.isNarrow}>
+                ${navContent}
+            </docs-side-nav>
         `;
     }
 
@@ -435,7 +437,6 @@ export class LayoutElement extends LitElement {
                 ${this.isNarrow ? this.header : html``}
                 <div id="body">
                     ${this.isNarrow ? html`` : this.sideNav}
-                    ${this.isNarrow ? html`` : this.settingsContent}
                     <div
                         id="page"
                         @alert=${this.addAlert}
