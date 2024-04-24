@@ -60,6 +60,10 @@ export const FocusVisiblePolyfillMixin = <
 >(
     SuperClass: T
 ): T => {
+    if (hasFocusVisible) {
+        return SuperClass;
+    }
+
     const coordinateWithPolyfill = (
         instance: MixableBaseClass
     ): EndPolyfillCoordinationCallback => {
@@ -127,29 +131,25 @@ export const FocusVisiblePolyfillMixin = <
         // document:
         override connectedCallback(): void {
             super.connectedCallback && super.connectedCallback();
-            if (!hasFocusVisible) {
-                requestAnimationFrame(() => {
-                    if (this[$endPolyfillCoordination] == null) {
-                        this[$endPolyfillCoordination] =
-                            coordinateWithPolyfill(this);
-                    }
-                });
-            }
+            requestAnimationFrame(() => {
+                if (this[$endPolyfillCoordination] == null) {
+                    this[$endPolyfillCoordination] =
+                        coordinateWithPolyfill(this);
+                }
+            });
         }
 
         override disconnectedCallback(): void {
             super.disconnectedCallback && super.disconnectedCallback();
             // It's important to remove the polyfill event listener when we
             // disconnect, otherwise we will leak the whole element via window:
-            if (!hasFocusVisible) {
-                requestAnimationFrame(() => {
-                    if (this[$endPolyfillCoordination] != null) {
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        this[$endPolyfillCoordination]!();
-                        this[$endPolyfillCoordination] = null;
-                    }
-                });
-            }
+            requestAnimationFrame(() => {
+                if (this[$endPolyfillCoordination] != null) {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    this[$endPolyfillCoordination]!();
+                    this[$endPolyfillCoordination] = null;
+                }
+            });
         }
     }
 
