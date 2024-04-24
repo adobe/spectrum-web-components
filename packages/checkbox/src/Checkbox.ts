@@ -117,7 +117,7 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     };
 
     override spectrumConfig = {
-        downstate: ['spectrum'], // change to spectrum-two once PR is merged
+        downstate: ['spectrum-two'],
     };
 
     /**
