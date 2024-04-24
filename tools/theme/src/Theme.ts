@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResult,
     CSSResultGroup,
+    SpectrumElement,
     supportsAdoptingStyleSheets,
 } from '@spectrum-web-components/base';
 import { version } from '@spectrum-web-components/base/src/version.js';
@@ -533,6 +534,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
+        this.trackedChildren.forEach((el) => {
+            const elm = el as unknown as SpectrumElement;
+            elm.spectrumDelegates.theme = this.theme;
+        });
     }
 
     static registerThemeFragment(
