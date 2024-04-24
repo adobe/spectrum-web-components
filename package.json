@@ -48,7 +48,7 @@
         "postcustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,clear-button,close-button,iconset,modal,shared,opacity-checkerboard,styles,custom-vars-viewer,reactive-controllers,vrt-compare,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- node ../../tasks/check-cem.js",
         "postdocs:analyze": "node ./scripts/add-custom-properties.js --src=\"projects/documentation/custom-elements.json\"",
         "postinstall": "patch-package && yarn get-ready",
-        "postlerna-publish": "yarn build:react && lerna publish from-package --message \"chore: release new Reach Wrapper versions #publish\"",
+        "postlerna-publish": "yarn build:react && lerna publish from-package --message \"chore: release new React Wrapper versions #publish\"",
         "precustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,iconset,modal,shared,opacity-checkerboard,styles,custom-vars-viewer,reactive-controllers,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- rm custom-elements.json ||:",
         "preeleventy": "yarn docs:analyze",
         "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn build:confirm",
@@ -93,6 +93,8 @@
         "common-tags": "^1.8.0"
     },
     "devDependencies": {
+        "@changesets/changelog-github": "^0.5.0",
+        "@changesets/cli": "^2.27.1",
         "@commitlint/cli": "^19.2.1",
         "@commitlint/config-conventional": "^19.1.0",
         "@commitlint/config-lerna-scopes": "^19.0.0",
