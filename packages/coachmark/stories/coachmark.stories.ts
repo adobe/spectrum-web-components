@@ -37,10 +37,10 @@ type Properties = {
     open?: boolean;
     placement?: Placement;
     id?: string;
-    heading: string;
+    heading?: string;
     shortcutKey?: string;
     modifierKeys?: string[];
-    content: string;
+    content?: string;
     src?: string;
     mediaType?: MediaType;
     imageAlt?: string;
@@ -70,14 +70,16 @@ export const InTour = (
         open = true,
         heading = 'Coachmark in Tour',
         content = 'This is a Coachmark with nothing but text in it.',
+        currentStep = 2,
+        totalSteps = 8,
     } = props;
     return html`
         <sp-coachmark
             ?open=${open}
             primary-cta="Next"
             secondary-cta="Previous"
-            current-step="2"
-            total-steps="8"
+            current-step=${currentStep}
+            total-steps=${totalSteps}
             .content=${{
                 title: heading,
                 description: content,
@@ -95,6 +97,7 @@ export const InTour = (
                 args.onSecondary?.(event);
             }}
         >
+            <div slot="step-count">${currentStep} of ${totalSteps}</div>
             <sp-action-menu
                 placement="bottom-end"
                 quiet
@@ -121,7 +124,7 @@ export const single = (): TemplateResult => {
 };
 
 export const TriggerOnClick = (props: Properties): TemplateResult => {
-    const { open = true } = props;
+    const { open = true, currentStep = 1, totalSteps = 4 } = props;
 
     return html`
         <sp-coach-indicator id="trigger"></sp-coach-indicator>
@@ -133,24 +136,24 @@ export const TriggerOnClick = (props: Properties): TemplateResult => {
         >
             <sp-coachmark
                 ?open=${open}
-                current-step="2"
-                total-steps="8"
-                primary-cta="Next"
-                secondary-cta="Previous"
+                current-step=${currentStep}
+                total-steps=${totalSteps}
+                primary-cta="次"
+                secondary-cta="前の"
             >
-                <div slot="title">Coachmark on Click</div>
+                <div slot="title">クリック時のコーチマーク</div>
                 <div slot="content">
-                    This is a Coachmark with nothing but text in it. Kind of
-                    lonely in here.
+                    これはテキストだけが入ったコーチマークです。ここはなんだか寂しいですね。
                 </div>
+                <div slot="step-count">4 分の 1</div>
                 <sp-action-menu
                     placement="bottom-end"
                     quiet
                     slot="actions"
                     label="More Actions"
                 >
-                    <sp-menu-item>Skip tour</sp-menu-item>
-                    <sp-menu-item>Restart tour</sp-menu-item>
+                    <sp-menu-item>ツアーをスキップ</sp-menu-item>
+                    <sp-menu-item>ツアー再開</sp-menu-item>
                 </sp-action-menu>
             </sp-coachmark>
         </sp-overlay>
@@ -158,7 +161,7 @@ export const TriggerOnClick = (props: Properties): TemplateResult => {
 };
 
 export const TriggerOnHover = (props: Properties): TemplateResult => {
-    const { open = true } = props;
+    const { open = true, currentStep = 2, totalSteps = 8 } = props;
 
     return html`
         <sp-coach-indicator id="trigger"></sp-coach-indicator>
@@ -170,8 +173,8 @@ export const TriggerOnHover = (props: Properties): TemplateResult => {
         >
             <sp-coachmark
                 ?open=${open}
-                current-step="2"
-                total-steps="8"
+                current-step=${currentStep}
+                total-steps=${totalSteps}
                 primary-cta="Next"
                 secondary-cta="Previous"
             >
@@ -180,6 +183,7 @@ export const TriggerOnHover = (props: Properties): TemplateResult => {
                     This is a Coachmark with nothing but text in it. Kind of
                     lonely in here.
                 </div>
+                <div slot="step-count">${currentStep} of ${totalSteps}</div>
                 <sp-action-menu
                     placement="bottom-end"
                     quiet
@@ -194,22 +198,24 @@ export const TriggerOnHover = (props: Properties): TemplateResult => {
     `;
 };
 
-export const withImage = (): TemplateResult => {
+export const withImage = (props: Properties): TemplateResult => {
+    const { open = true, currentStep = 2, totalSteps = 8 } = props;
     return html`
         <sp-coachmark
-            open
+            ?open=${open}
             src=${cave}
             media-type="image"
             primary-cta="Next"
             secondary-cta="Previous"
-            current-step="2"
-            total-steps="8"
+            current-step=${currentStep}
+            total-steps=${totalSteps}
         >
             <div slot="title">Coachmark with Media</div>
             <div slot="content">
                 This is a Coachmark with nothing but text in it. Kind of lonely
                 in here.
             </div>
+            <div slot="step-count">${currentStep} of ${totalSteps}</div>
             <sp-action-menu
                 placement="bottom-end"
                 quiet
@@ -223,22 +229,25 @@ export const withImage = (): TemplateResult => {
     `;
 };
 
-export const withGif = (): TemplateResult => {
+export const withGif = (props: Properties): TemplateResult => {
+    const { open = true, currentStep = 2, totalSteps = 8 } = props;
+
     return html`
         <sp-coachmark
-            open
+            ?open=${open}
             src=${gif}
             media-type="image"
             primary-cta="Next"
             secondary-cta="Previous"
-            current-step="2"
-            total-steps="8"
+            current-step=${currentStep}
+            total-steps=${totalSteps}
         >
             <div slot="title">Coachmark with GIF</div>
             <div slot="content">
                 This is a Coachmark with nothing but text in it. Kind of lonely
                 in here.
             </div>
+            <div slot="step-count">${currentStep} of ${totalSteps}</div>
             <sp-action-menu
                 placement="bottom-end"
                 quiet
@@ -261,6 +270,8 @@ export const withKeys = (props: Properties): TemplateResult => {
         modifierKeys = ['⇧ Shift', '⌘'],
         heading = 'Coachmark with Keys',
         content = 'This is a Coachmark with nothing but text in it.',
+        currentStep = 2,
+        totalSteps = 8,
     } = props;
     return html`
         <sp-coachmark
@@ -272,9 +283,10 @@ export const withKeys = (props: Properties): TemplateResult => {
             }}
             primary-cta="Next"
             secondary-cta="Previous"
-            current-step="2"
-            total-steps="8"
+            current-step=${currentStep}
+            total-steps=${totalSteps}
         >
+            <div slot="step-count">${currentStep} of ${totalSteps}</div>
             <sp-action-menu
                 placement="bottom-end"
                 quiet
@@ -288,14 +300,15 @@ export const withKeys = (props: Properties): TemplateResult => {
     `;
 };
 
-export const withShortCut = (): TemplateResult => {
+export const withShortCut = (props: Properties): TemplateResult => {
+    const { currentStep = 2, totalSteps = 8 } = props;
     return html`
         <sp-coachmark
             open
             primary-cta="Next"
             secondary-cta="Previous"
-            current-step="2"
-            total-steps="8"
+            current-step=${currentStep}
+            total-steps=${totalSteps}
             shortcut-key="Z"
             .content=${{
                 title: 'Coachmark Shortcut',
@@ -303,6 +316,7 @@ export const withShortCut = (): TemplateResult => {
                     'This is a Coachmark with nothing but text in it. Kind of lonely in here',
             }}
         >
+            <div slot="step-count">${currentStep} of ${totalSteps}</div>
             <sp-action-menu
                 placement="bottom-end"
                 quiet

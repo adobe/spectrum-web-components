@@ -79,8 +79,9 @@ export class ColorArea extends SpectrumElement {
             v: this.y,
         }),
         applyColorToState: ({ s, v }) => {
-            this.x = s;
-            this.y = v;
+            this._x = s;
+            this._y = v;
+            this.requestUpdate();
         },
     });
 
@@ -128,6 +129,7 @@ export class ColorArea extends SpectrumElement {
             this._x = x;
         }
         this.requestUpdate('x', oldValue);
+        this.colorController.applyColorFromState();
     }
 
     private _x = 1;
@@ -150,6 +152,7 @@ export class ColorArea extends SpectrumElement {
             this._y = y;
         }
         this.requestUpdate('y', oldValue);
+        this.colorController.applyColorFromState();
     }
 
     private _y = 1;

@@ -97,6 +97,41 @@ describe('Button', () => {
         expect(el).to.not.be.undefined;
         await expect(el).to.be.accessible();
     });
+    it('has a stable/predictable `updateComplete`', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div></div>
+            `
+        );
+
+        let keydownTime = -1;
+        let updateComplete1 = -1;
+        let updateComplete2 = -1;
+
+        const el = document.createElement('sp-button');
+        el.autofocus = true;
+        el.addEventListener('keydown', () => {
+            keydownTime = performance.now();
+        });
+        el.updateComplete.then(() => {
+            updateComplete1 = performance.now();
+        });
+        el.updateComplete.then(() => {
+            updateComplete2 = performance.now();
+        });
+        test.append(el);
+        // don't use elementUpdated(), as it is under test...
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        expect(keydownTime, 'keydown happened').to.not.eq(-1);
+        expect(updateComplete1, 'first update complete happened').to.not.eq(-1);
+        expect(updateComplete2, 'first update complete happened').to.not.eq(-1);
+        expect(updateComplete1).lte(updateComplete2);
+        expect(updateComplete2).lte(keydownTime);
+    });
     it('manages "role"', async () => {
         const el = await fixture<Button>(
             html`
