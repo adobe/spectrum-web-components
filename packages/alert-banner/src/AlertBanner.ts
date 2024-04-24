@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -21,20 +22,35 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import styles from './alert-banner.css.js';
 
-export type AlertBannerVariants = 'neutral' | 'info' | 'negative' | '';
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
+export type AlertBannerVariants = typeof VALID_VARIANTS[number];
 
 /**
  * @element sp-alert-banner
+ *
+ * @slot - The alert banner text context
+ * @slot action - Slot for the button element that surfaces the contextual action a user can take
+ *
+ * @fires close - Announces the alert banner has been closed
  */
 export class AlertBanner extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    /**
+     * Controls the display of the alert banner
+     *
+     * @param {Boolean} open
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * Whether to include an icon-only close button to dismiss the alert banner
+     *
+     * @param {Boolean} dismissible
+     */
     @property({ type: Boolean, reflect: true })
     public dismissible = false;
 
@@ -50,12 +66,24 @@ export class AlertBanner extends SpectrumElement {
             return;
         }
         const oldValue = this.variant;
-        if (this._isValidVariant(variant)) {
+
+        if (this.isValidVariant(variant)) {
             this.setAttribute('variant', variant);
             this._variant = variant;
         } else {
             this.removeAttribute('variant');
             this._variant = '';
+
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/alert-banner/#variants',
+                    {
+                        issues: [...VALID_VARIANTS],
+                    }
+                );
+            }
         }
         this.requestUpdate('variant', oldValue);
     }
@@ -66,7 +94,7 @@ export class AlertBanner extends SpectrumElement {
 
     private _variant: AlertBannerVariants = '';
 
-    protected _isValidVariant(variant: string): boolean {
+    protected isValidVariant(variant: string): boolean {
         return VALID_VARIANTS.includes(variant);
     }
 
@@ -88,7 +116,7 @@ export class AlertBanner extends SpectrumElement {
         }
     }
 
-    private _shouldClose(): void {
+    private shouldClose(): void {
         const applyDefault = this.dispatchEvent(
             new CustomEvent('close', {
                 composed: true,
@@ -105,9 +133,9 @@ export class AlertBanner extends SpectrumElement {
         this.open = false;
     }
 
-    private _handleKeydown(event: KeyboardEvent): void {
+    private handleKeydown(event: KeyboardEvent): void {
         if (event.code === 'Escape' && this.dismissible) {
-            this._shouldClose();
+            this.shouldClose();
         }
     }
 
@@ -124,7 +152,7 @@ export class AlertBanner extends SpectrumElement {
                 ${this.dismissible
                     ? html`
                           <sp-close-button
-                              @click=${this._shouldClose}
+                              @click=${this.shouldClose}
                               label="Close"
                               static="white"
                           ></sp-close-button>
@@ -134,13 +162,15 @@ export class AlertBanner extends SpectrumElement {
         `;
     }
 
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.addEventListener('keydown', this._handleKeydown.bind(this));
-    }
+    protected override updated(changes: PropertyValues): void {
+        super.updated(changes);
 
-    public override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.removeEventListener('keydown', this._handleKeydown.bind(this));
+        if (changes.has('open')) {
+            if (this.open) {
+                this.addEventListener('keydown', this.handleKeydown);
+            } else {
+                this.removeEventListener('keydown', this.handleKeydown);
+            }
+        }
     }
 }

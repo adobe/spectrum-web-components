@@ -10,4 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-alert-banner.css');
+import { AlertBannerMarkup } from './';
+
+export const Template = AlertBannerMarkup;

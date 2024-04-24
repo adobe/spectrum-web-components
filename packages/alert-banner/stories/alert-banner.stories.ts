@@ -9,15 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
 
-import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
-import '@spectrum-web-components/button/sp-button.js';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { AlertBannerMarkup } from './';
+import { argTypes } from './args.js';
 
 interface Properties {
     text: string;
-    variant: '' | 'info' | 'negative';
+    variant: 'neutral' | 'info' | 'negative';
     dismissible: boolean;
     open: boolean;
     onClose: (event: Event) => void;
@@ -30,74 +29,23 @@ export default {
         text: 'Your trial has expired',
         dismissible: true,
         open: true,
+        variant: 'neutral',
     },
-    argTypes: {
-        text: {
-            name: 'text',
-            type: { name: 'string', required: false },
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '' },
-            },
-            control: 'text',
-        },
-        dismissible: {
-            name: 'dismissible',
-            type: { name: 'boolean', required: false },
-            description:
-                'Whether to include an icon-only close button to dismiss it',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the alert banner is open',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-    },
+    argTypes,
 };
 
-const alertBanner = ({
-    text = '',
-    variant = '',
-    dismissible = true,
-    open = true,
-}): TemplateResult => html`
-    <sp-alert-banner
-        variant=${variant as AlertBannerVariants}
-        ?dismissible=${dismissible}
-        ?open=${open}
-    >
-        ${text}
-        <sp-button treatment="outline" static="white" slot="action">
-            Action
-        </sp-button>
-    </sp-alert-banner>
-`;
-
-export const Default = (args: Properties): TemplateResult => alertBanner(args);
+export const Default = (args: Properties): TemplateResult =>
+    AlertBannerMarkup(args);
 
 export const Info = (args: Properties): TemplateResult =>
-    alertBanner({
+    AlertBannerMarkup({
         ...args,
         variant: 'info',
         text: 'Your trial will expire in 3 days',
     });
 
 export const Negative = (args: Properties): TemplateResult =>
-    alertBanner({
+    AlertBannerMarkup({
         ...args,
         variant: 'negative',
         text: 'Connection interupted. Check your network to continue',
@@ -106,7 +54,7 @@ export const Negative = (args: Properties): TemplateResult =>
 export const TextWrapping = (args: Properties): TemplateResult =>
     html`
         <div style="width:800px;">
-            ${alertBanner({
+            ${AlertBannerMarkup({
                 ...args,
                 variant: 'info',
                 text: ` Your trial will expire in 3 days. Please purchase to continue.
