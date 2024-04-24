@@ -54,11 +54,26 @@ export type Color =
     | 'light-express'
     | 'lightest-express'
     | 'dark-express'
-    | 'darkest-express';
-export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type ThemeVariant = 'spectrum' | 'express';
-const ThemeVariantValues = ['spectrum', 'express'];
-const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
+    | 'darkest-express'
+    | 'light-spectrum-two'
+    | 'dark-spectrum-two';
+export type Scale =
+    | 'medium'
+    | 'large'
+    | 'medium-express'
+    | 'large-express'
+    | 'medium-spectrum-two'
+    | 'large-spectrum-two';
+export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
+const ThemeVariantValues = ['spectrum', 'express', 'spectrum-two'];
+const ScaleValues = [
+    'medium',
+    'large',
+    'medium-express',
+    'large-express',
+    'medium-spectrum-two',
+    'large-spectrum-two',
+];
 const ColorValues = [
     'light',
     'lightest',
@@ -68,6 +83,8 @@ const ColorValues = [
     'lightest-express',
     'dark-express',
     'darkest-express',
+    'light-spectrum-two',
+    'dark-spectrum-two',
 ];
 type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
 
@@ -270,10 +287,15 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             name: FragmentName,
             kind?: FragmentType
         ): CSSResultGroup | undefined => {
-            const currentStyles =
-                kind && kind !== 'theme' && this.theme === 'express'
-                    ? fragments.get(`${name}-express`)
-                    : fragments.get(name);
+            let themeSuffix = '';
+            if (kind && kind !== 'theme') {
+                if (this.theme === 'express') {
+                    themeSuffix = '-express';
+                } else if (this.theme === 'spectrum-two') {
+                    themeSuffix = '-spectrum-two';
+                }
+            }
+            const currentStyles = fragments.get(`${name}${themeSuffix}`);
             // theme="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
                 name === 'spectrum' || !kind || this.hasAttribute(kind);

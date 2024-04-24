@@ -367,12 +367,13 @@
             ]
         },
         "process-spectrum": {
-            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/spectrum-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
+            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/spectrum-tokens.js && node ./scripts/spectrum-two-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
             "files": [
                 "tasks/process-spectrum.js",
                 "packages/**/spectrum-config.js",
                 "tools/**/spectrum-config.js",
                 "node_modules/@spectrum-css/**/index-vars.css",
+                "scripts/spectrum-two-tokens.js",
                 "scripts/spectrum-tokens.js",
                 "node_modules/@spectrum-css/**/*.css",
                 "scripts/spectrum-vars.js",
