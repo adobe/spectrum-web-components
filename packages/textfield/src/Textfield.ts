@@ -287,13 +287,13 @@ export class TextfieldBase extends ManageHelpText(
     protected get displayValue(): string {
         return this.value.toString();
     }
+    // prettier-ignore
     /* eslint-disable */
     private get renderMultiline(): TemplateResult {
         return html`
             ${this.multiline && this.grows && this.rows === -1
                 ? html`
-                      <div id="sizer" class="input" aria-hidden="true">
-                          ${this.value}&#8203;
+                      <div id="sizer" class="input" aria-hidden="true">${this.value}&#8203;
                       </div>
                   `
                 : nothing}
