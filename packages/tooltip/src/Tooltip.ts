@@ -205,7 +205,7 @@ export class Tooltip extends SpectrumElement {
         );
     }
 
-    private get triggerElement(): HTMLElement {
+    private get triggerElement(): HTMLElement | null {
         // Resolve the parent element of the assigned slot (if one exists) or of the Tooltip.
         let start: HTMLElement = this.assignedSlot || this;
         let root = start.getRootNode();
@@ -220,7 +220,7 @@ export class Tooltip extends SpectrumElement {
                     }
                 );
             }
-            return root as HTMLElement;
+            return null;
         }
         let triggerElement = (start.parentElement ||
             (root as ShadowRoot).host ||
@@ -242,7 +242,7 @@ export class Tooltip extends SpectrumElement {
                         }
                     );
                 }
-                return root as HTMLElement;
+                return null;
             }
             triggerElement = (start.parentElement ||
                 (root as ShadowRoot).host ||
