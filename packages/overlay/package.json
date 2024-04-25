@@ -77,6 +77,10 @@
             "development": "./src/VirtualTrigger.dev.js",
             "default": "./src/VirtualTrigger.js"
         },
+        "./src/events.js": {
+            "development": "./src/events.dev.js",
+            "default": "./src/events.js"
+        },
         "./src/fullSizePlugin.js": {
             "development": "./src/fullSizePlugin.dev.js",
             "default": "./src/fullSizePlugin.js"

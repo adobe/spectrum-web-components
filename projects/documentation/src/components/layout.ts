@@ -35,11 +35,10 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import {
-    OverlayTriggerOptions,
+    type OverlayTriggerOptions,
     trigger,
 } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
 
@@ -264,16 +263,19 @@ export class LayoutElement extends LitElement {
                  * every additional alert.
                  */
 
-                element: (count: number, message: string) => html`
-                    <sp-toast
-                        .timeout=${count}
-                        variant="info"
-                        @close=${close}
-                        open
-                    >
-                        ${message} ${count > 1 ? `(${count} alerts)` : ''}
-                    </sp-toast>
-                `,
+                element: (count: number, message: string) => {
+                    import('@spectrum-web-components/toast/sp-toast.js');
+                    return html`
+                        <sp-toast
+                            .timeout=${count}
+                            variant="info"
+                            @close=${close}
+                            open
+                        >
+                            ${message} ${count > 1 ? `(${count} alerts)` : ''}
+                        </sp-toast>
+                    `;
+                },
             });
         }
         const alert = this.alerts.get(target);
@@ -308,7 +310,7 @@ export class LayoutElement extends LitElement {
     }
 
     private get settingsContent(): TemplateResult {
-        import('./settings.js');
+        import('@spectrum-web-components/underlay/sp-underlay.js');
         return html`
             <sp-underlay
                 class="scrim"
@@ -331,6 +333,7 @@ export class LayoutElement extends LitElement {
     }
 
     private get manageTheme(): TemplateResult {
+        import('./settings.js');
         return html`
             <div class="manage-theme" role="form" aria-label="Settings">
                 <div class="theme-control">
