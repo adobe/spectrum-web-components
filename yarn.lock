@@ -53,9 +53,9 @@
     normalize-path "^3.0.0"
 
 "@11ty/eleventy@^3.0.0-alpha.4":
-  version "3.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@11ty/eleventy/-/eleventy-3.0.0-alpha.7.tgz#713e8faa4bcf291eb05e47f7b965938b955de9d0"
-  integrity sha512-0d81WOSU9OVnRZKwnMl61cWxXuM4fXyJabgW9Q5PovO0Yx/eT+xkdzhRFwC70cSgLVVsZY5BYnvlauCW1hqNrw==
+  version "3.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy/-/eleventy-3.0.0-alpha.9.tgz#a36e70a801e67f8c0eff91b8e7e124fb57a961b4"
+  integrity sha512-q5tBKD7/AHyYN3R733GeKGgR8mPVTtmaRerqrhgmK2qyGS404QMZncB1knBPx6//vtwLEI954Caofu1A8M7Lrw==
   dependencies:
     "@11ty/dependency-tree" "^3.0.0"
     "@11ty/dependency-tree-esm" "^1.0.0"
