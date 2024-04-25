@@ -287,6 +287,7 @@ export class TextfieldBase extends ManageHelpText(
     protected get displayValue(): string {
         return this.value.toString();
     }
+
     // prettier-ignore
     private get renderMultiline(): TemplateResult {
         return html`

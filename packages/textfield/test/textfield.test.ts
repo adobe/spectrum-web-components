@@ -347,7 +347,7 @@ describe('Textfield', () => {
                 await sendKeys({ press: 'Enter' });
             }
             const finalHeight = textArea.offsetHeight;
-            expect(initialHeight).to.not.equal(finalHeight);
+            expect(initialHeight).to.be.lt(finalHeight);
         }
     });
 
