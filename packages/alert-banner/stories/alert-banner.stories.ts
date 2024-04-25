@@ -20,6 +20,7 @@ interface Properties {
     dismissible: boolean;
     open: boolean;
     onClose: (event: Event) => void;
+    actionLabel: string;
 }
 
 export default {
@@ -56,10 +57,21 @@ export const TextWrapping = (args: Properties): TemplateResult =>
         <div style="width:800px;">
             ${AlertBannerMarkup({
                 ...args,
-                variant: 'info',
-                text: ` Your trial will expire in 3 days. Please purchase to continue.
+                variant: 'negative',
+                text: ` Your trial has expired. Please purchase to continue.
 Your work has been saved and is ready for you to open again once
 you have purchased the software.`,
+                actionLabel: 'Purchase',
             })}
         </div>
+    `;
+
+export const Multilanguage = (args: Properties): TemplateResult =>
+    html`
+        ${AlertBannerMarkup({
+            ...args,
+            variant: 'info',
+            text: `ستنتهي الفترة التجريبية الخاصة بك في الأسبوع المقبل`,
+            actionLabel: `اشتري الآن`,
+        })}
     `;

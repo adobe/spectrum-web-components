@@ -21,6 +21,7 @@ export const AlertBannerMarkup = ({
     variant = 'neutral',
     dismissible = true,
     open = false,
+    actionLabel = 'Action',
 }): TemplateResult => html`
     <sp-alert-banner
         variant=${variant as AlertBannerVariants}
@@ -29,7 +30,7 @@ export const AlertBannerMarkup = ({
     >
         ${text}
         <sp-button treatment="outline" static="white" slot="action">
-            Action
+            ${actionLabel}
         </sp-button>
     </sp-alert-banner>
 `;
