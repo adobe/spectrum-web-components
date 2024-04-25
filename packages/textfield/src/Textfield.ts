@@ -288,7 +288,6 @@ export class TextfieldBase extends ManageHelpText(
         return this.value.toString();
     }
     // prettier-ignore
-    /* eslint-disable */
     private get renderMultiline(): TemplateResult {
         return html`
             ${this.multiline && this.grows && this.rows === -1
