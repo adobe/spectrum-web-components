@@ -291,12 +291,14 @@ export class TextfieldBase extends ManageHelpText(
     private get renderMultiline(): TemplateResult {
         return html`
             ${this.multiline && this.grows && this.rows === -1
-                ? html`
+                ? /* eslint-disable */
+                  html`
                       <div id="sizer" class="input" aria-hidden="true">
                           ${this.value}&#8203;
                       </div>
                   `
                 : nothing}
+            /* eslint-enable */
             <!-- @ts-ignore -->
             <textarea
                 name=${ifDefined(this.name || undefined)}
