@@ -25,7 +25,7 @@ describe('Systems', () => {
     it('loads - light', async () => {
         const el = await fixture<Theme>(
             html`
-                <sp-theme system="classic" color="light"></sp-theme>
+                <sp-theme system="spectrum" color="light"></sp-theme>
             `
         );
 
@@ -232,5 +232,42 @@ describe('Setting attributes', () => {
 
         expect(el.system).to.equal('express');
         expect(el.theme).to.equal('express');
+    });
+});
+
+describe('Themes', () => {
+    it('updates system value even if only theme is added to sp-theme', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme theme="express"></sp-theme>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.theme).to.equal('express');
+
+        el.setAttribute('theme', 'spectrum');
+        await elementUpdated(el);
+
+        expect(el.theme).to.equal('spectrum');
+        expect(el.system).to.equal('spectrum');
+    });
+    it('updates system and theme value iif both are added to sp-theme', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme system="spectrum" theme="spectrum"></sp-theme>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.theme).to.equal('spectrum');
+        expect(el.system).to.equal('spectrum');
+
+        el.setAttribute('theme', 'express');
+        await elementUpdated(el);
+        expect(el.theme).to.equal('express');
+        expect(el.system).to.equal('express');
     });
 });

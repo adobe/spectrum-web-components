@@ -221,8 +221,8 @@ export class LayoutElement extends LitElement {
         this.open = !this.open;
     }
 
-    get systemOrTheme() {
-        return this.system || this.theme;
+    get systemValue() {
+        return this.system;
     }
 
     toggleSettings() {
@@ -444,7 +444,6 @@ export class LayoutElement extends LitElement {
             <sp-theme
                 .color=${this.color}
                 .scale=${this.scale}
-                .theme=${this.system}
                 .system=${this.system}
                 dir=${this.dir}
                 id="app"
@@ -555,14 +554,6 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
-        if (changes.has('theme')) {
-            if (window.localStorage) {
-                localStorage.setItem(SWC_THEME_THEME_KEY, this.theme);
-            }
-            if (changes.get('theme')) {
-                loadStyleFragments = true;
-            }
-        }
         if (changes.has('system')) {
             if (window.localStorage) {
                 localStorage.setItem(SWC_THEME_SYSTEM_KEY, this.system);
@@ -617,8 +608,8 @@ export class LayoutElement extends LitElement {
         }
 
         if (loadStyleFragments) {
-            lazyStyleFragment(this.color, this.systemOrTheme);
-            lazyStyleFragment(this.scale, this.systemOrTheme);
+            lazyStyleFragment(this.color, this.systemValue);
+            lazyStyleFragment(this.scale, this.systemValue);
         }
     }
 }

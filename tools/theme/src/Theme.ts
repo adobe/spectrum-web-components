@@ -55,6 +55,7 @@ export type Color =
     | 'dark-express'
     | 'darkest-express';
 export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
+export type ThemeVariant = 'spectrum' | 'express';
 export type SystemVariant = 'spectrum' | 'express';
 const SystemVariantValues = ['spectrum', 'express'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
@@ -68,7 +69,13 @@ const ColorValues = [
     'dark-express',
     'darkest-express',
 ];
-type FragmentName = Color | Scale | SystemVariant | 'core' | 'app';
+type FragmentName =
+    | Color
+    | Scale
+    | ThemeVariant
+    | SystemVariant
+    | 'core'
+    | 'app';
 
 export interface ThemeData {
     color?: Color;
@@ -79,7 +86,12 @@ export interface ThemeData {
 }
 
 type ThemeKindProvider = {
-    [P in SettableFragmentTypes]: SystemVariant | Color | Scale | '';
+    [P in SettableFragmentTypes]:
+        | ThemeVariant
+        | SystemVariant
+        | Color
+        | Scale
+        | '';
 };
 
 export interface ProvideLang {
@@ -222,11 +234,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
      */
     set theme(newValue: SystemVariant | '') {
-        if (this.hasAttribute('system')) {
-            // System is provided, so do not set theme
-            return;
-        }
         this.system = newValue;
+        this.requestUpdate();
     }
 
     private _color: Color | '' = '';
