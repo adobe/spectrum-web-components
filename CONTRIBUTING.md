@@ -92,6 +92,8 @@ type(scope?): subject #scope is optional, but should reference the package you a
 
 We maintain a specific standard of commit messages while committing to the respository. See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
 
+To ensure that we release your changes properly, [add a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md) to your branch, [following the steps outlined in the "multi-package repository" section of the Changesets docs](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md#i-am-in-a-multi-package-repository-a-mono-repo) via the `yarn changeset` command. Once complete, stage the change and commit it to your branch.
+
 ## Do you want to contribute to the Spectrum Web Components documentation?
 
 Please read [Contributing Guidelines for documentation](https://github.com/adobe/spectrum-web-components#documentation)
