@@ -47,9 +47,16 @@ export const argTypes = {
         description: 'The visual variant of the alert banner',
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            defaultValue: { summary: 'neutral' },
         },
-        control: { type: 'select' },
+        control: {
+            labels: {
+                neutral: 'Neutral',
+                info: 'Info',
+                negative: 'Negative',
+            },
+            type: 'select',
+        },
         options: ['neutral', 'info', 'negative'],
     },
 };
