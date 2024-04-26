@@ -53,11 +53,27 @@ export type Color =
     | 'light-express'
     | 'lightest-express'
     | 'dark-express'
-    | 'darkest-express';
-export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type SystemVariant = 'spectrum' | 'express';
-const SystemVariantValues = ['spectrum', 'express'];
+    | 'darkest-express'
+    | 'light-spectrum-two'
+    | 'dark-spectrum-two';
+export type SystemVariant = 'spectrum' | 'express' | 'spectrum-two';
+const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
 const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
+export type Scale =
+    | 'medium'
+    | 'large'
+    | 'medium-express'
+    | 'large-express'
+    | 'medium-spectrum-two'
+    | 'large-spectrum-two';
+const ScaleValues = [
+    'medium',
+    'large',
+    'medium-express',
+    'large-express',
+    'medium-spectrum-two',
+    'large-spectrum-two',
+];
 const ColorValues = [
     'light',
     'lightest',
@@ -67,6 +83,8 @@ const ColorValues = [
     'lightest-express',
     'dark-express',
     'darkest-express',
+    'light-spectrum-two',
+    'dark-spectrum-two',
 ];
 type FragmentName = Color | Scale | SystemVariant | 'core' | 'app';
 
@@ -310,9 +328,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 kind &&
                 kind !== 'theme' &&
                 kind !== 'system' &&
-                this.theme === 'express' &&
-                this.system === 'express'
-                    ? fragments.get(`${name}-express`)
+                this.theme !== 'spectrum' &&
+                this.system !== 'spectrum'
+                    ? fragments.get(`${name}-${this.theme}`)
                     : fragments.get(name);
             // theme="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
@@ -563,6 +581,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
+
+        // console.log('adopting styles', this.theme, this.styles);
     }
 
     static registerThemeFragment(
