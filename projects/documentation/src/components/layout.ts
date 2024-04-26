@@ -91,10 +91,10 @@ const lazyStyleFragment = (
 ): void => {
     var fragmentName = `${name}-${system}`;
     switch (fragmentName) {
-        case 'dark-spectrum':
+        case 'dark-spectrum' || 'darkest-spectrum':
             import('@spectrum-web-components/theme/theme-dark.js');
             break;
-        case 'light-spectrum':
+        case 'light-spectrum' || 'lightest-spectrum':
             import('@spectrum-web-components/theme/theme-light.js');
             break;
         case 'medium-spectrum':
@@ -103,10 +103,10 @@ const lazyStyleFragment = (
         case 'large-spectrum':
             import('@spectrum-web-components/theme/scale-large.js');
             break;
-        case 'dark-express':
+        case 'dark-express' || 'darkest-express':
             import('@spectrum-web-components/theme/express/theme-dark.js');
             break;
-        case 'light-express':
+        case 'light-express' || 'lightest-express':
             import('@spectrum-web-components/theme/express/theme-light.js');
             break;
         case 'medium-express':
