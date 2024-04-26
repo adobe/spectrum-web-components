@@ -121,7 +121,7 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultThemeVariant: "${
+                defaultSystemVariant:  "${
                     themeVariant === 's2' ? 'spectrum-two' : themeVariant || ''
                 }",
                 defaultColor: "${color || ''}",

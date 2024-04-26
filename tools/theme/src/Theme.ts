@@ -42,8 +42,8 @@ type ShadowRootWithAdoptedStyleSheets = HTMLElement['shadowRoot'] & {
     adoptedStyleSheets?: CSSStyleSheet[];
 };
 
-type FragmentType = 'color' | 'scale' | 'theme' | 'core' | 'app';
-type SettableFragmentTypes = 'color' | 'scale' | 'theme';
+type FragmentType = 'color' | 'scale' | 'system' | 'theme' | 'core' | 'app';
+type SettableFragmentTypes = 'color' | 'scale' | 'system' | 'theme';
 type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
 export type Color =
@@ -57,6 +57,9 @@ export type Color =
     | 'darkest-express'
     | 'light-spectrum-two'
     | 'dark-spectrum-two';
+export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
+export type SystemVariant = 'spectrum' | 'express' | 'spectrum-two';
+const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
 export type Scale =
     | 'medium'
     | 'large'
@@ -64,8 +67,6 @@ export type Scale =
     | 'large-express'
     | 'medium-spectrum-two'
     | 'large-spectrum-two';
-export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
-const ThemeVariantValues = ['spectrum', 'express', 'spectrum-two'];
 const ScaleValues = [
     'medium',
     'large',
@@ -86,17 +87,29 @@ const ColorValues = [
     'light-spectrum-two',
     'dark-spectrum-two',
 ];
-type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
+type FragmentName =
+    | Color
+    | Scale
+    | ThemeVariant
+    | SystemVariant
+    | 'core'
+    | 'app';
 
 export interface ThemeData {
     color?: Color;
     scale?: Scale;
     lang?: string;
-    theme?: ThemeVariant;
+    theme?: SystemVariant;
+    system?: SystemVariant;
 }
 
 type ThemeKindProvider = {
-    [P in SettableFragmentTypes]: ThemeVariant | Color | Scale | '';
+    [P in SettableFragmentTypes]:
+        | ThemeVariant
+        | SystemVariant
+        | Color
+        | Scale
+        | '';
 };
 
 export interface ProvideLang {
@@ -117,7 +130,15 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     static VERSION = version;
 
     static get observedAttributes(): string[] {
-        return ['color', 'scale', 'theme', 'lang', 'dir'];
+        return [
+            'color',
+            'scale',
+            'lang',
+            'dir',
+            'system',
+            /* deprecated attributes, but still observing */
+            'theme',
+        ];
     }
 
     _dir: 'ltr' | 'rtl' | '' = '';
@@ -159,7 +180,15 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.lang = value;
             this._provideContext();
         } else if (attrName === 'theme') {
-            this.theme = value as ThemeVariant;
+            this.theme = value as SystemVariant;
+            window.__swc.warn(
+                this,
+                'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
+                'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
+                { level: 'deprecation' }
+            );
+        } else if (attrName === 'system') {
+            this.system = value as SystemVariant;
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
@@ -176,38 +205,55 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     public override shadowRoot!: ShadowRootWithAdoptedStyleSheets;
 
-    private _theme: ThemeVariant | '' = 'spectrum';
-
+    private _system: SystemVariant | '' = 'spectrum';
     /**
-     * The Spectrum theme that is applied to the content scoped to this `sp-theme` element.
+     * The Spectrum system that is applied to the content scoped to this `sp-theme` element.
      *
      * A value is requried.
-     * @type {"spectrum" | "express" | ""}
+     * @type {"spectrum" | "express" }
      * @attr
      */
-    get theme(): ThemeVariant | '' {
-        const themeFragments = Theme.themeFragmentsByKind.get('theme');
+    get system(): SystemVariant | '' {
+        const systemFragments = Theme.themeFragmentsByKind.get('system');
         const { name } =
-            (themeFragments && themeFragments.get('default')) || {};
-        return this._theme || (name as ThemeVariant) || '';
+            (systemFragments && systemFragments.get('default')) || {};
+        return this._system || (name as SystemVariant) || '';
     }
 
-    set theme(newValue: ThemeVariant | '') {
-        if (newValue === this._theme) return;
-        const theme =
-            !!newValue && ThemeVariantValues.includes(newValue)
+    set system(newValue: SystemVariant | '') {
+        if (newValue === this._system) return;
+        const system =
+            !!newValue && SystemVariantValues.includes(newValue)
                 ? newValue
-                : this.theme;
-        if (theme !== this._theme) {
-            this._theme = theme;
+                : this.system;
+        if (system !== this._system) {
+            this._system = system;
             this.requestUpdate();
         }
-        if (theme) {
-            this.setAttribute('theme', theme);
+        if (system) {
+            this.setAttribute('system', system);
             /* c8 ignore next 3 */
         } else {
-            this.removeAttribute('theme');
+            this.removeAttribute('system');
         }
+    }
+
+    /*
+     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
+     */
+    get theme(): SystemVariant | '' {
+        if (!this.system) {
+            this.removeAttribute('system');
+        }
+        return this.system;
+    }
+
+    /*
+     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
+     */
+    set theme(newValue: SystemVariant | '') {
+        this.system = newValue;
+        this.requestUpdate();
     }
 
     private _color: Color | '' = '';
@@ -287,15 +333,14 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             name: FragmentName,
             kind?: FragmentType
         ): CSSResultGroup | undefined => {
-            let themeSuffix = '';
-            if (kind && kind !== 'theme') {
-                if (this.theme === 'express') {
-                    themeSuffix = '-express';
-                } else if (this.theme === 'spectrum-two') {
-                    themeSuffix = '-spectrum-two';
-                }
-            }
-            const currentStyles = fragments.get(`${name}${themeSuffix}`);
+            const currentStyles =
+                kind &&
+                kind !== 'theme' &&
+                kind !== 'system' &&
+                this.theme !== 'spectrum' &&
+                this.system !== 'spectrum'
+                    ? fragments.get(`${name}-${this.theme}`)
+                    : fragments.get(name);
             // theme="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
                 name === 'spectrum' || !kind || this.hasAttribute(kind);
@@ -327,9 +372,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 resolvedValue?: string,
                 actualValue?: string
             ): void => {
-                const themeModifier =
-                    this.theme && this.theme !== 'spectrum'
-                        ? `-${this.theme}`
+                const systemModifier =
+                    this.system && this.system !== 'spectrum'
+                        ? `-${this.system}`
                         : '';
                 if (!resolvedValue) {
                     issues.push(
@@ -344,17 +389,26 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                         .get(name)
                         ?.get(
                             resolvedValue +
-                                (name === 'theme' ? '' : themeModifier)
+                                (name === 'system' ? '' : systemModifier)
                         )
                 ) {
                     issues.push(
-                        `You have set "${name}='${resolvedValue}'" but the associated theme fragment has not been loaded.`
+                        `You have set "${name}='${resolvedValue}'" but the associated system fragment has not been loaded.`
                     );
                 }
             };
-            checkForAttribute('theme', this.theme, this._theme);
+
+            checkForAttribute('system', this.system, this._system);
             checkForAttribute('color', this.color, this._color);
             checkForAttribute('scale', this.scale, this._scale);
+
+            // Check for deprecated attributes
+            if (this.hasAttribute('theme')) {
+                issues.push(
+                    `The "theme" attribute has been deprecated in favor of "system".`
+                );
+            }
+
             if (issues.length) {
                 window.__swc.warn(
                     this,
@@ -422,7 +476,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         theme.scale = this.scale || undefined;
         theme.lang =
             this.lang || document.documentElement.lang || navigator.language;
-        theme.theme = this.theme || undefined;
+        // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
+        theme.theme = this.system || undefined;
+        theme.system = this.system || undefined;
     }
 
     protected connectedCallback(): void {
