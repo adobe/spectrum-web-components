@@ -14,24 +14,21 @@ import type { LitElement, ReactiveController } from 'lit';
 
 export class DownState implements ReactiveController {
     private host: LitElement;
-    private controller: AbortController;
+    private abortController: AbortController;
 
     constructor(host: LitElement) {
         this.host = host;
-        this.controller = new AbortController();
+        this.abortController = new AbortController();
         this.host.addController(this);
     }
 
-    public getElement(): LitElement {
-        return this.host;
-    }
     public hostConnected(): void {
         this.manage();
     }
 
     public hostDisconnected(): void {
         this.removeEventListeners();
-        this.controller.abort(); // Abort the controller when disconnecting
+        this.abortController.abort();
     }
 
     public manage(): void {
@@ -44,10 +41,10 @@ export class DownState implements ReactiveController {
 
     addEventListeners(): void {
         this.host?.addEventListener('pointerdown', this.handlePointerDown, {
-            signal: this.controller.signal,
+            signal: this.abortController.signal,
         });
         this.host?.addEventListener('pointerup', this.handlePointerUp, {
-            signal: this.controller.signal,
+            signal: this.abortController.signal,
         });
     }
 
@@ -56,15 +53,15 @@ export class DownState implements ReactiveController {
         this.host?.removeEventListener('pointerup', this.handlePointerUp);
     }
 
-    private handlePointerDown = (): void => {
+    public handlePointerDown = (): void => {
         this.updateDownStateStyles(true);
     };
 
-    private handlePointerUp = (): void => {
+    public handlePointerUp = (): void => {
         this.updateDownStateStyles(false);
     };
 
-    private updateDownStateStyles(isPressed: boolean): void {
+    public updateDownStateStyles(isPressed: boolean): void {
         if (isPressed) {
             const height = this.host.offsetHeight;
             const width = this.host.offsetWidth;

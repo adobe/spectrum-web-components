@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { LitElement, ReactiveController } from 'lit';
+import type { LitElement } from 'lit';
 import { DownState } from './downstate.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,13 +22,13 @@ export type SpectrumConfig = {
     downstate?: string[];
 };
 
-export class Delegates implements ReactiveController {
+export class Delegates {
     private host: LitElement;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private controllers: Record<string, any> = {};
 
-    set theme(value: string) {
+    set system(value: string) {
         const { spectrumConfig } = this.host as unknown as {
             spectrumConfig: SpectrumConfig;
         };
@@ -46,10 +46,5 @@ export class Delegates implements ReactiveController {
 
     constructor(host: LitElement) {
         this.host = host;
-        this.host.addController(this);
     }
-
-    public hostConnected(): void {}
-
-    public hostDisconnected(): void {}
 }

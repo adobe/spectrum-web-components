@@ -1,6 +1,6 @@
 ## Description
 
-The `downstate` controller is designed to manage the down state styles of a custom element in a web application. This controller is particularly useful for creating interactive elements that visually respond to user input, such as buttons or interactive components.
+The `downstate` controller enables an element to be visually "pressed" when it is interacted with via a pointing device.
 
 ### Usage
 
