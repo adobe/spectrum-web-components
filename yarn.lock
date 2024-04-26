@@ -7556,11 +7556,11 @@
     v8-to-istanbul "^9.0.1"
 
 "@web/test-runner-junit-reporter@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-junit-reporter/-/test-runner-junit-reporter-0.7.0.tgz#05886c8fda69da1e56b85eef598bac7bb110364b"
-  integrity sha512-jQ5DU0utnCKh+h40xSLm2696qX8XX/U/akeSc+wImGy8bZNtvPqJq4B296Q+Zlh6vmpAjPTAhcHi0/5eXvKr8A==
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-junit-reporter/-/test-runner-junit-reporter-0.7.1.tgz#0dc06e6d7f6004bfca7d08471f73242c7f57b9c5"
+  integrity sha512-5fxiMw3lvoFluvGHxThKtT+BPt2nATVlx4/emlUS1ZCpCq/1Xucmsux/JvIqOChzahzPSTTgmqCkVwB1vbnloQ==
   dependencies:
-    "@web/test-runner-chrome" "^0.15.0"
+    "@web/test-runner-chrome" "^0.16.0"
     "@web/test-runner-core" "^0.13.0"
     array-flat-polyfill "^1.0.1"
     xml "^1.0.1"
