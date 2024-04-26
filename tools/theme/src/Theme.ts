@@ -591,8 +591,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             });
         }
         this.trackedChildren.forEach((el) => {
-            const elm = el as unknown as SpectrumElement;
-            elm.spectrumDelegates.system = this.system; // change to system afterwards
+            if (el instanceof SpectrumElement) {
+                el.spectrumDelegates.system = this.system;
+            }
         });
     }
 
