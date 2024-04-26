@@ -280,12 +280,6 @@ export class StoryDecorator extends SpectrumElement {
             ] as SpectrumElement[];
             descendents.push(...gathered);
         });
-        // run over the slotted descendants and add theme property
-        descendents.forEach((element) => {
-            if (element instanceof SpectrumElement) {
-                element.spectrumDelegates.system = this.system;
-            }
-        });
         const litElementDescendents = descendents.filter(
             (el) =>
                 el.tagName.search('-') !== -1 &&
