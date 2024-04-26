@@ -21724,9 +21724,9 @@ posthtml-attrs-parser@^1.0.1:
   integrity sha512-GEjJu/PApFm56HEQ8U2M6v5YQglS05FhXKftuuAhP8loNM6Peu1Njt1ykXWJdZ0Nq770YLql9zhvwbTW/szpWw==
 
 posthtml-match-helper@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/posthtml-match-helper/-/posthtml-match-helper-1.0.3.tgz#9308f0bdc66398735f7117441feca64f131956d5"
-  integrity sha512-aeRAPvok2Fs6uzSm85665jdAk5UOd8US2QCkWtGU6yLPlKSwzWTSgZZuABc3UeNy3K1lVk/HV9bRkWJYN05Ymw==
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/posthtml-match-helper/-/posthtml-match-helper-1.0.4.tgz#b8f384179732cb5d5e060b9dd1945a2352eb6a44"
+  integrity sha512-Tj9orTIBxHdnraCxoEGjoizsFsTGvukzwcuhOjYQGmDG6gTlaRbMrGgi1J+FwKTN8hsCQENHYY0Deqs9a89BVg==
 
 posthtml-parser@^0.11.0:
   version "0.11.0"
