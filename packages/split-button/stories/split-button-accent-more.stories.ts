@@ -11,7 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import { ElementSizes, TemplateResult } from '@spectrum-web-components/base';
-import { args, argTypes, renderSplitButtonSet, splitbutton } from './index.js';
+import {
+    args,
+    argTypes,
+    parameters,
+    renderSplitButtonSet,
+    splitbutton,
+} from './index.js';
 import type { Properties } from './index.js';
 
 import '@spectrum-web-components/split-button/sp-split-button.js';
@@ -31,6 +37,7 @@ export default {
         type,
     },
     argTypes,
+    parameters,
 };
 
 export const s = (args: Properties): TemplateResult =>

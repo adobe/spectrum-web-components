@@ -146,6 +146,10 @@ export const argTypes = {
     },
 };
 
+export const parameters = {
+    badges: ['deprecated'],
+};
+
 export const splitbutton = (
     properties: Properties = {}
 ): TemplateResult => html`
