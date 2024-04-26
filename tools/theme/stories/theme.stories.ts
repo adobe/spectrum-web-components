@@ -66,7 +66,6 @@ export const Default = ({
         ${storyStyles}
         <sp-theme
             color="${color}"
-            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
             system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="example">
