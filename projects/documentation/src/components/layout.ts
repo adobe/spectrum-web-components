@@ -221,10 +221,6 @@ export class LayoutElement extends LitElement {
         this.open = !this.open;
     }
 
-    get systemValue() {
-        return this.system;
-    }
-
     toggleSettings() {
         this.settings = !this.settings;
     }
@@ -238,7 +234,7 @@ export class LayoutElement extends LitElement {
         this.scale = (event.target as Picker).value as Scale;
     }
 
-    private updateTheme(event: Event) {
+    private updateSystem(event: Event) {
         this.system = (event.target as Picker).value as SystemVariant;
     }
 
@@ -387,7 +383,7 @@ export class LayoutElement extends LitElement {
                         id="theme-system"
                         quiet
                         value=${this.system}
-                        @change=${this.updateTheme}
+                        @change=${this.updateSystem}
                     >
                         <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                         <sp-menu-item value="express">Express</sp-menu-item>
@@ -608,8 +604,8 @@ export class LayoutElement extends LitElement {
         }
 
         if (loadStyleFragments) {
-            lazyStyleFragment(this.color, this.systemValue);
-            lazyStyleFragment(this.scale, this.systemValue);
+            lazyStyleFragment(this.color, this.system);
+            lazyStyleFragment(this.scale, this.system);
         }
     }
 }

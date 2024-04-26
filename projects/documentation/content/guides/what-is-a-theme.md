@@ -33,7 +33,7 @@ All these parameters together are what we consider a "theme". Theme becomes an a
 
 ```
 <sp-theme
-    theme="spectrum"
+    system="spectrum"
     color="dark"
     scale="medium">
     <sp-button>Don't Click</sp-button>
@@ -42,7 +42,7 @@ All these parameters together are what we consider a "theme". Theme becomes an a
 <!-- is a different "theme" from -->
 
 <sp-theme
-    theme="express"
+    system="express"
     color="light"
     scale="large">
     <sp-button>Don't Click</sp-button>
