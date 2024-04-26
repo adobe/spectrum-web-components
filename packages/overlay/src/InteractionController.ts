@@ -19,6 +19,12 @@ export enum InteractionTypes {
     'longpress',
 }
 
+export type ControllerOptions = {
+    overlay?: AbstractOverlay;
+    handleOverlayReady?: (overlay: AbstractOverlay) => void;
+    isPersistent?: boolean;
+};
+
 export class InteractionController implements ReactiveController {
     abortController!: AbortController;
 
@@ -26,14 +32,71 @@ export class InteractionController implements ReactiveController {
         return false;
     }
 
+    private handleOverlayReady?: (overlay: AbstractOverlay) => void;
+
+    public get open(): boolean {
+        return this.overlay?.open ?? false;
+    }
+
+    /**
+     * Set `open` against the associated Overlay lazily.
+     */
+    public set open(open: boolean) {
+        if (this.overlay) {
+            // If there already is an Overlay, apply the value of `open` directly.
+            this.overlay.open = open;
+            return;
+        }
+        if (!open) {
+            // When `open` moves to `false` and there is not yet an Overlay,
+            // assume that no Overlay and a closed Overlay are the same and return early.
+            return;
+        }
+        // When there is no Overlay and `open` is moving to `true`, lazily import/create
+        // an Overlay and apply that state to it.
+        customElements
+            .whenDefined('sp-overlay')
+            .then(async (): Promise<void> => {
+                const { Overlay } = await import('./Overlay.js');
+                this.overlay = new Overlay();
+                this.overlay.open = true;
+            });
+        import('@spectrum-web-components/overlay/sp-overlay.js');
+    }
+
+    public get overlay(): AbstractOverlay {
+        return this._overlay;
+    }
+
+    public set overlay(overlay: AbstractOverlay | undefined) {
+        if (!overlay) return;
+        if (this.overlay === overlay) return;
+        if (this.overlay) {
+            this.overlay.removeController(this);
+        }
+        this._overlay = overlay;
+        this.overlay.addController(this);
+        this.initOverlay();
+        this.prepareDescription(this.target);
+        this.handleOverlayReady?.(this.overlay);
+    }
+
+    private _overlay!: AbstractOverlay;
+
+    protected isPersistent = false;
+
     type!: InteractionTypes;
 
-    constructor(public host: AbstractOverlay, public target: HTMLElement, private isPersistent = false) {
-        this.host.addController(this);
-        this.prepareDescription(this.target);
+    constructor(
+        public target: HTMLElement,
+        { overlay, isPersistent, handleOverlayReady }: ControllerOptions
+    ) {
+        this.isPersistent = !!isPersistent;
+        this.handleOverlayReady = handleOverlayReady;
         if (this.isPersistent) {
             this.init();
         }
+        this.overlay = overlay;
     }
 
     prepareDescription(_: HTMLElement): void {}
@@ -45,6 +108,11 @@ export class InteractionController implements ReactiveController {
     /* c8 ignore next 3 */
     init(): void {
         // Abstract init() method.
+    }
+
+    /* c8 ignore next 3 */
+    initOverlay(): void {
+        // Abstract initOverlay() method.
     }
 
     abort(): void {
