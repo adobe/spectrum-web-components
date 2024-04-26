@@ -14,6 +14,7 @@ import '@spectrum-web-components/link/sp-link.js';
 import { Link } from '@spectrum-web-components/link';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { spy } from 'sinon';
 
 describe('Link', () => {
     testForLitDevWarnings(
@@ -66,5 +67,23 @@ describe('Link', () => {
         expect(el.focusElement.getAttribute('rel')).to.eq('external');
 
         await expect(el).to.be.accessible();
+    });
+
+    it('no click triggers for disabled link', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Link>(
+            html`
+                <sp-link href="#" disabled @click=${() => clickSpy()}>
+                    Disabled Link
+                </sp-link>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.disabled).to.eq(true);
+        await expect(el).to.be.accessible();
+        el.click();
+        expect(clickSpy.callCount).to.equal(0);
     });
 });

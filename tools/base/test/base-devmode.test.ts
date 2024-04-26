@@ -11,9 +11,22 @@ governing permissions and limitations under the License.
 import { expect } from '@open-wc/testing';
 import { stub } from 'sinon';
 
-describe('Base', () => {
-    it('warns in Dev Mode when no attributes', async () => {
-        const consoleWarnStub = stub(console, 'warn');
+describe('Dev Mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc = {
+            ...window.__swc,
+            verbose: true,
+        };
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        consoleWarnStub.restore();
+    });
+    it('announces that Dev Mode is on', async function () {
         const { SpectrumElement } = await import(
             '@spectrum-web-components/base'
         );
@@ -32,6 +45,5 @@ describe('Base', () => {
                 level: 'default',
             },
         });
-        consoleWarnStub.restore();
     });
 });

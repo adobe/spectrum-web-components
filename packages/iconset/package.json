@@ -64,6 +64,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "deprecationNotice": "@spectrum-web-components/iconset is deprecated and it will be removed in the future release.",
     "sideEffects": [
         "./src/index.js",
         "./stories/icons-demo.js",
