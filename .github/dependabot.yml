@@ -34,6 +34,10 @@ updates:
           spectrumcss-ecosystem:
               patterns:
                   - '@spectrum-css/*'
+          web-and-open-wc-ecosystem:
+              patterns:
+                  - '@open-wc/*'
+                  - '@web/*'
 
     - package-ecosystem: 'github-actions'
       directory: '/'
