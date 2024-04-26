@@ -174,10 +174,10 @@ async function run() {
     const response = await fetch('./data.json');
     const data = await response.json();
     const decorator = document.querySelector('sp-story-decorator');
-    const theme = data.meta.theme.split(' ');
-    decorator.theme = theme[0];
-    decorator.color = theme[1];
-    decorator.scale = theme[2];
+    const system = data.meta.system.split(' ');
+    decorator.theme = system[0];
+    decorator.color = system[1];
+    decorator.scale = system[2];
     buildNavigation(data.tests, data.meta);
 }
 
