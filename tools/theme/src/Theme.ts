@@ -339,7 +339,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 kind !== 'system' &&
                 this.theme !== 'spectrum' &&
                 this.system !== 'spectrum'
-                    ? fragments.get(`${name}-${this.theme}`)
+                    ? fragments.get(`${name}-${this.system}`)
                     : fragments.get(name);
             // theme="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
