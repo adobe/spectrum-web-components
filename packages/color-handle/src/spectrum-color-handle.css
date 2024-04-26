@@ -79,6 +79,15 @@ governing permissions and limitations under the License.
             --mod-colorhandle-outer-border-color,
             var(--spectrum-colorhandle-outer-border-color)
         );
+    transition: all
+        var(
+            --mod-colorhandle-animation-duration,
+            var(--spectrum-colorhandle-animation-duration)
+        )
+        var(
+            --mod-colorhandle-animation-easing,
+            var(--spectrum-colorhandle-animation-easing)
+        );
     border-style: solid;
     border-radius: 100%;
     display: block;
@@ -112,18 +121,6 @@ governing permissions and limitations under the License.
     border-radius: var(--mod-colorhandle-hitarea-border-radius, 100%);
     display: block;
     position: absolute;
-}
-
-:host {
-    transition: all
-        var(
-            --mod-colorhandle-animation-duration,
-            var(--spectrum-colorhandle-animation-duration)
-        )
-        var(
-            --mod-colorhandle-animation-easing,
-            var(--spectrum-colorhandle-animation-easing)
-        );
 }
 
 :host([focused]),

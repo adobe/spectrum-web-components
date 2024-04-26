@@ -145,10 +145,10 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host(:not([head-cell]):focus-visible),
 :host(:not([head-cell])[focused]),
-:host([head-cell]:focus-visible),
-:host([head-cell][focused]) {
+:host(:not([head-cell]):focus-visible),
+:host([head-cell][focused]),
+:host([head-cell]:focus-visible) {
     outline-width: var(
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)
@@ -189,7 +189,7 @@ governing permissions and limitations under the License.
 
 :host(:host) sp-checkbox {
     --mod-checkbox-spacing: 0px;
-    min-block-size: initial;
+    min-block-size: 0;
 }
 
 :host(:host:not([head-cell])) sp-checkbox {

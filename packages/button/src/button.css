@@ -74,6 +74,13 @@ governing permissions and limitations under the License.
     animation: update-pending-button-styles 0s var(--pending-delay, 1s) forwards;
 }
 
+::slotted([slot='icon']) {
+    /* Correct CSS output taking too much control of this element */
+    visibility: revert-layer;
+
+    --mod-progress-circle-position: relative;
+}
+
 sp-progress-circle {
     display: block;
     visibility: hidden;

@@ -150,9 +150,9 @@ governing permissions and limitations under the License.
     display: block;
 }
 
-.header,
 .content,
-.footer {
+.footer,
+.header {
     padding-block: 0;
     padding-inline: var(
         --mod-coachmark-padding,
