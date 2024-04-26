@@ -121,9 +121,7 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultSystemVariant:  "${
-                    themeVariant === 's2' ? 'spectrum-two' : themeVariant || ''
-                }",
+                defaultSystemVariant:  "${themeVariant || ''}",
                 defaultColor: "${color || ''}",
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",
@@ -136,7 +134,7 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const themeVariants = ['classic', 'express', 's2'];
+const themeVariants = ['classic', 'express', 'spectrum-two'];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
