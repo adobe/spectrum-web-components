@@ -561,7 +561,7 @@ export class LayoutElement extends LitElement {
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
-        if (changes.has('open')) {
+        if (changes.has('open') && this.hasUpdated) {
             this.open
                 ? this.focus()
                 : (
