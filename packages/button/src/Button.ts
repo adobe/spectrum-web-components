@@ -19,6 +19,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from './ButtonBase.js';
+import builtStyles from './constructed-styles.js';
 import buttonStyles from './button.css.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
 
@@ -51,7 +52,7 @@ export type ButtonTreatments = 'fill' | 'outline';
  */
 export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles];
+        return [...super.styles, builtStyles, buttonStyles];
     }
 
     @property({ type: String, attribute: 'pending-label' })
