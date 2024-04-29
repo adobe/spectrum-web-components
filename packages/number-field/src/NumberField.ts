@@ -493,7 +493,7 @@ export class NumberField extends TextfieldBase {
         value *= signMultiplier;
 
         // Step shouldn't validate when 0...
-        if (this.step && this.valueFormatter) {
+        if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
             const moduloStep = parseFloat(
                 this.valueFormatter.format((value - min) % this.step)
@@ -566,12 +566,13 @@ export class NumberField extends TextfieldBase {
     protected clearValueFormatterCache(): void {
         this._valueFormatter = undefined;
     }
-    protected get valueFormatter(): NumberFormatter | undefined {
-        if (!this._valueFormatter && this.step) {
-            const digitsAfterDecimal =
-                this.step != Math.floor(this.step)
+    protected get valueFormatter(): NumberFormatter {
+        if (!this._valueFormatter) {
+            const digitsAfterDecimal = this.step
+                ? this.step != Math.floor(this.step)
                     ? this.step.toString().split('.')[1].length
-                    : 0;
+                    : 0
+                : 0;
             this._valueFormatter = new NumberFormatter(
                 this.languageResolver.language,
                 { maximumFractionDigits: digitsAfterDecimal }
