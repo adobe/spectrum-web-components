@@ -174,22 +174,6 @@ export class NumberField extends TextfieldBase {
     public override _value = NaN;
     private _trackingValue = '';
     private lastCommitedValue?: number;
-    private _formatter: Intl.NumberFormat | null = null;
-    private _lastDigitsAfterDecimal: number = 0;
-    private digitsAfterDecimal: number = 0;
-
-    protected get formatter(): Intl.NumberFormat {
-        if (
-            this._formatter === null ||
-            this._lastDigitsAfterDecimal !== this.digitsAfterDecimal
-        ) {
-            this._formatter = new Intl.NumberFormat('en-US', {
-                maximumFractionDigits: this.digitsAfterDecimal,
-            });
-            this._lastDigitsAfterDecimal = this.digitsAfterDecimal;
-        }
-        return this._formatter;
-    }
 
     private setValue(value: number = this.value): void {
         this.value = value;
@@ -516,7 +500,7 @@ export class NumberField extends TextfieldBase {
                     ? this.step.toString().split('.')[1].length
                     : 0;
             const moduloStep = parseFloat(
-                this.formatter.format((value - min) % this.step)
+                this.numberFormatter.format((value - min) % this.step)
             );
 
             const fallsOnStep = moduloStep === 0;
@@ -533,7 +517,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
-            value = parseFloat(this.formatter.format(value));
+            value = parseFloat(this.numberFormatter.format(value));
         }
         value *= signMultiplier;
         return value;
@@ -550,7 +534,11 @@ export class NumberField extends TextfieldBase {
     }
 
     protected get numberFormatter(): NumberFormatter {
-        if (!this._numberFormatter || !this._numberFormatterFocused) {
+        if (
+            !this._numberFormatter ||
+            !this._numberFormatterFocused ||
+            this._lastDigitsAfterDecimal !== this.digitsAfterDecimal
+        ) {
             const {
                 style,
                 unit,
@@ -563,12 +551,18 @@ export class NumberField extends TextfieldBase {
             }
             this._numberFormatterFocused = new NumberFormatter(
                 this.languageResolver.language,
-                formatOptionsNoUnit
+                {
+                    ...formatOptionsNoUnit,
+                    maximumFractionDigits: this.digitsAfterDecimal,
+                }
             );
             try {
                 this._numberFormatter = new NumberFormatter(
                     this.languageResolver.language,
-                    this.formatOptions
+                    {
+                        ...this.formatOptions,
+                        maximumFractionDigits: this.digitsAfterDecimal,
+                    }
                 );
                 this._forcedUnit = '';
                 this._numberFormatter.format(1);
@@ -578,6 +572,7 @@ export class NumberField extends TextfieldBase {
                 }
                 this._numberFormatter = this._numberFormatterFocused;
             }
+            this._lastDigitsAfterDecimal = this.digitsAfterDecimal;
         }
         return this.focused
             ? this._numberFormatterFocused
@@ -586,6 +581,8 @@ export class NumberField extends TextfieldBase {
 
     private _numberFormatter?: NumberFormatter;
     private _numberFormatterFocused?: NumberFormatter;
+    private _lastDigitsAfterDecimal: number = 0;
+    private digitsAfterDecimal: number = 0;
 
     protected get numberParser(): NumberParser {
         if (!this._numberParser || !this._numberParserFocused) {
