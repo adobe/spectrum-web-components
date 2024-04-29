@@ -32,6 +32,13 @@ export const Quiet = (): TemplateResult => {
     `;
 };
 
+export const Disabled = (): TemplateResult => {
+    // prettier-ignore
+    return html`
+        This is a <sp-link disabled onclick="('hi')" href="#">disabled non focusable link</sp-link> in a sentence.
+    `;
+};
+
 export const secondary = (): TemplateResult => {
     // prettier-ignore
     return html`
