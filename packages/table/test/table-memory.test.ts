@@ -9,10 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture } from '@open-wc/testing';
 import '@spectrum-web-components/table/sp-table.js';
-import type { Table } from '@spectrum-web-components/table';
 import { elements } from '../stories/table-elements.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(async () => await fixture<Table>(elements()));
+testForMemoryLeaks(elements());

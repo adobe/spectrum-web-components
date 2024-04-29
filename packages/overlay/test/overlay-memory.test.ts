@@ -9,18 +9,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture } from '@open-wc/testing';
 import { Default } from '../stories/overlay.stories.js';
-import { Overlay } from '@spectrum-web-components/overlay';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 // Defualt Overlay
 testForMemoryLeaks(
-    async () =>
-        await fixture<Overlay>(
-            Default({
-                placement: 'bottom',
-                offset: 0,
-            })
-        )
+    Default({
+        placement: 'bottom',
+        offset: 0,
+    })
 );

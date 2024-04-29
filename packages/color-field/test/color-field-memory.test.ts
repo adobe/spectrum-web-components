@@ -9,12 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture } from '@open-wc/testing';
 import { Template } from '../stories/template.js';
-import { ColorField } from '@spectrum-web-components/color-field';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(
-    async () =>
-        await fixture<ColorField>(Template({ label: 'Enter color value' }))
-);
+testForMemoryLeaks(Template({ label: 'Enter color value' }));

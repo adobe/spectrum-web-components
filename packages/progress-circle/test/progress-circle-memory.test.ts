@@ -9,16 +9,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, html } from '@open-wc/testing';
+import { html } from '@open-wc/testing';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
-import { ProgressCircle } from '@spectrum-web-components/progress-circle';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(
-    async () =>
-        await fixture<ProgressCircle>(
-            html`
-                <sp-progress-circle></sp-progress-circle>
-            `
-        )
-);
+testForMemoryLeaks(html`
+    <sp-progress-circle></sp-progress-circle>
+`);

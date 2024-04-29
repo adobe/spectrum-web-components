@@ -9,16 +9,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, html } from '@open-wc/testing';
+import { html } from '@open-wc/testing';
 import '@spectrum-web-components/divider/sp-divider.js';
-import { Divider } from '@spectrum-web-components/divider';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(
-    async () =>
-        await fixture<Divider>(
-            html`
-                <sp-divider></sp-divider>
-            `
-        )
-);
+testForMemoryLeaks(html`
+    <sp-divider></sp-divider>
+`);

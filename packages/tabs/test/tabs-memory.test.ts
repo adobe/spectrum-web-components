@@ -9,21 +9,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, html } from '@open-wc/testing';
+import { html } from '@open-wc/testing';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
-import { Tabs } from '@spectrum-web-components/tabs';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(
-    async () =>
-        await fixture<Tabs>(
-            html`
-                <sp-tabs selected="first">
-                    <sp-tab label="Tab 1" value="first"></sp-tab>
-                    <sp-tab label="Tab 2" value="second"></sp-tab>
-                    <sp-tab label="Tab 3" value="third"></sp-tab>
-                </sp-tabs>
-            `
-        )
-);
+testForMemoryLeaks(html`
+    <sp-tabs selected="first">
+        <sp-tab label="Tab 1" value="first"></sp-tab>
+        <sp-tab label="Tab 2" value="second"></sp-tab>
+        <sp-tab label="Tab 3" value="third"></sp-tab>
+    </sp-tabs>
+`);
