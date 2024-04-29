@@ -52,6 +52,7 @@ textarea {
     block-size: auto;
     word-break: break-word;
     opacity: 0;
+    white-space: pre-line;
 }
 
 .icon,

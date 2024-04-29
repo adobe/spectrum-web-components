@@ -25,3 +25,7 @@ governing permissions and limitations under the License.
     text-decoration: underline;
     text-decoration-style: double;
 }
+
+:host([disabled]) {
+    pointer-events: none;
+}
