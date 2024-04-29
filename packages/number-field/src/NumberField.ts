@@ -174,6 +174,22 @@ export class NumberField extends TextfieldBase {
     public override _value = NaN;
     private _trackingValue = '';
     private lastCommitedValue?: number;
+    private _formatter: Intl.NumberFormat | null = null;
+    private _lastDigitsAfterDecimal: number = 0;
+    private digitsAfterDecimal: number = 0;
+
+    protected get formatter(): Intl.NumberFormat {
+        if (
+            this._formatter === null ||
+            this._lastDigitsAfterDecimal !== this.digitsAfterDecimal
+        ) {
+            this._formatter = new Intl.NumberFormat('en-US', {
+                maximumFractionDigits: this.digitsAfterDecimal,
+            });
+            this._lastDigitsAfterDecimal = this.digitsAfterDecimal;
+        }
+        return this._formatter;
+    }
 
     private setValue(value: number = this.value): void {
         this.value = value;
@@ -495,15 +511,12 @@ export class NumberField extends TextfieldBase {
         // Step shouldn't validate when 0...
         if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
-            const digitsAfterDecimals =
+            this.digitsAfterDecimal =
                 this.step != Math.floor(this.step)
                     ? this.step.toString().split('.')[1].length
                     : 0;
-            const formatter = new Intl.NumberFormat('en-US', {
-                maximumFractionDigits: digitsAfterDecimals,
-            });
             const moduloStep = parseFloat(
-                formatter.format((value - min) % this.step)
+                this.formatter.format((value - min) % this.step)
             );
 
             const fallsOnStep = moduloStep === 0;
@@ -520,7 +533,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
-            value = parseFloat(formatter.format(value));
+            value = parseFloat(this.formatter.format(value));
         }
         value *= signMultiplier;
         return value;
