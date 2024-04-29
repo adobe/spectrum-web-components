@@ -185,7 +185,7 @@
         "rollup": "^4.12.0",
         "sinon": "^17.0.1",
         "storybook": "^7.5.0",
-        "stylelint": "^15.10.2",
+        "stylelint": "^16.0.0",
         "stylelint-config-prettier": "^9.0.5",
         "stylelint-config-standard": "^34.0.0",
         "tachometer": "^0.7.0",
