@@ -500,9 +500,8 @@ export class NumberField extends TextfieldBase {
                     ? this.step.toString().split('.')[1].length
                     : 0;
             const moduloStep = parseFloat(
-                this.numberFormatter.format((value - min) % this.step)
+                this.valueFormatter.format((value - min) % this.step)
             );
-
             const fallsOnStep = moduloStep === 0;
             if (!fallsOnStep) {
                 const overUnder = Math.round(moduloStep / this.step);
@@ -517,7 +516,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
-            value = parseFloat(this.numberFormatter.format(value));
+            value = parseFloat(this.valueFormatter.format(value));
         }
         value *= signMultiplier;
         return value;
@@ -534,11 +533,7 @@ export class NumberField extends TextfieldBase {
     }
 
     protected get numberFormatter(): NumberFormatter {
-        if (
-            !this._numberFormatter ||
-            !this._numberFormatterFocused ||
-            this._lastDigitsAfterDecimal !== this.digitsAfterDecimal
-        ) {
+        if (!this._numberFormatter || !this._numberFormatterFocused) {
             const {
                 style,
                 unit,
@@ -548,10 +543,6 @@ export class NumberField extends TextfieldBase {
             } = this.formatOptions;
             if (style !== 'unit') {
                 (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
-                if (this.step)
-                    (
-                        formatOptionsNoUnit as Intl.NumberFormatOptions
-                    ).maximumFractionDigits = this.digitsAfterDecimal;
             }
             this._numberFormatterFocused = new NumberFormatter(
                 this.languageResolver.language,
@@ -570,16 +561,29 @@ export class NumberField extends TextfieldBase {
                 }
                 this._numberFormatter = this._numberFormatterFocused;
             }
-            this._lastDigitsAfterDecimal = this.digitsAfterDecimal;
         }
         return this.focused
             ? this._numberFormatterFocused
             : this._numberFormatter;
     }
 
+    protected get valueFormatter(): NumberFormatter {
+        if (this.step && !this._valueFormatter) {
+            this.digitsAfterDecimal =
+                this.step != Math.floor(this.step)
+                    ? this.step.toString().split('.')[1].length
+                    : 0;
+            this._valueFormatter = new NumberFormatter(
+                this.languageResolver.language,
+                { maximumFractionDigits: this.digitsAfterDecimal }
+            );
+        }
+
+        return this._valueFormatter;
+    }
     private _numberFormatter?: NumberFormatter;
     private _numberFormatterFocused?: NumberFormatter;
-    private _lastDigitsAfterDecimal: number = 0;
+    private _valueFormatter!: NumberFormatter;
     private digitsAfterDecimal: number = 0;
 
     protected get numberParser(): NumberParser {
@@ -703,6 +707,18 @@ export class NumberField extends TextfieldBase {
                 this.formattedValue.replace(this._forcedUnit, '')
             );
             this.value = value;
+        }
+        if (changes.has('step')) {
+            if (this.step) {
+                this.digitsAfterDecimal =
+                    this.step != Math.floor(this.step)
+                        ? this.step.toString().split('.')[1].length
+                        : 0;
+                this._valueFormatter = new NumberFormatter(
+                    this.languageResolver.language,
+                    { maximumFractionDigits: this.digitsAfterDecimal }
+                );
+            }
         }
         super.update(changes);
     }
