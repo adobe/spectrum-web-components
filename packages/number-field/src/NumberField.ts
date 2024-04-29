@@ -495,7 +495,17 @@ export class NumberField extends TextfieldBase {
         // Step shouldn't validate when 0...
         if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
-            const moduloStep = Math.round((value - min) % this.step);
+            const digitsAfterDecimals =
+                this.step != Math.floor(this.step)
+                    ? this.step.toString().split('.')[1].length
+                    : 0;
+            const formatter = new Intl.NumberFormat('en-US', {
+                maximumFractionDigits: digitsAfterDecimals,
+            });
+            const moduloStep = parseFloat(
+                formatter.format((value - min) % this.step)
+            );
+
             const fallsOnStep = moduloStep === 0;
             if (!fallsOnStep) {
                 const overUnder = Math.round(moduloStep / this.step);
@@ -510,6 +520,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
+            value = parseFloat(formatter.format(value));
         }
         value *= signMultiplier;
         return value;
