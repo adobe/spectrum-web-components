@@ -152,7 +152,7 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-lit-a11y": "^2.2.2",
         "eslint-plugin-notice": "^0.9.10",
-        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-storybook": "^0.6.13",
         "express": "^4.16.4",
         "fast-glob": "^3.2.12",
