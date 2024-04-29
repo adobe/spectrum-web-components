@@ -1110,7 +1110,11 @@ governing permissions and limitations under the License.
     }
 
     @media (hover: hover) {
-        :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        :host:not(
+                .is-disabled,
+                .spectrum-Slider--filled,
+                .spectrum-Slider--range
+            )
             #controls:hover {
             --highcontrast-slider-track-fill-color: Highlight;
             --highcontrast-slider-track-color: Highlight;
