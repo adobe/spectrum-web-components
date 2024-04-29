@@ -197,6 +197,8 @@ export class TextfieldBase extends ManageHelpText(
      */
     @property({ type: String, reflect: true })
     public autocomplete?:
+        | 'list'
+        | 'none'
         | HTMLInputElement['autocomplete']
         | HTMLTextAreaElement['autocomplete'];
 
@@ -288,12 +290,12 @@ export class TextfieldBase extends ManageHelpText(
         return this.value.toString();
     }
 
+    // prettier-ignore
     private get renderMultiline(): TemplateResult {
         return html`
             ${this.multiline && this.grows && this.rows === -1
                 ? html`
-                      <div id="sizer" class="input" aria-hidden="true">
-                          ${this.value}&#8203;
+                      <div id="sizer" class="input" aria-hidden="true">${this.value}&#8203;
                       </div>
                   `
                 : nothing}

@@ -22,6 +22,9 @@ import '@spectrum-web-components/underlay/sp-underlay.js';
 export default {
     title: 'Quick Actions',
     component: 'sp-quick-actions',
+    parameters: {
+        badges: ['deprecated'],
+    },
 };
 
 export const iconButtons = (): TemplateResult => {

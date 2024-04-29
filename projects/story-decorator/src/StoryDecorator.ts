@@ -36,8 +36,8 @@ import { Switch } from '@spectrum-web-components/switch';
 import {
     Color,
     Scale,
+    SystemVariant,
     Theme,
-    ThemeVariant,
 } from '@spectrum-web-components/theme';
 import './types.js';
 
@@ -46,8 +46,10 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
-export let theme: ThemeVariant =
-    (urlParams.get('sp_theme') as ThemeVariant) || 'spectrum';
+export let theme: SystemVariant =
+    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
+export let system: SystemVariant =
+    (urlParams.get('sp_system') as SystemVariant) || 'spectrum';
 export let color: Color =
     (urlParams.get('sp_color') as Color) ||
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
@@ -56,7 +58,7 @@ export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
 export let screenshot = urlParams.get('sp_screenshot') === 'true';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
-    defaultThemeVariant: theme,
+    defaultSystemVariant: system,
     defaultColor: color,
     defaultScale: scale,
     defaultDirection: dir,
@@ -163,7 +165,8 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     @property({ type: String })
-    public theme: ThemeVariant = window.__swc_hack_knobs__.defaultThemeVariant;
+    public system: SystemVariant =
+        window.__swc_hack_knobs__.defaultSystemVariant;
 
     @property({ type: String })
     public color: Color = window.__swc_hack_knobs__.defaultColor;
@@ -199,11 +202,11 @@ export class StoryDecorator extends SpectrumElement {
         const { value } = target as Picker;
         const { checked } = target as Switch;
         switch (id) {
-            case 'theme':
-                this.theme =
-                    theme =
-                    window.__swc_hack_knobs__.defaultThemeVariant =
-                        value as ThemeVariant;
+            case 'system':
+                this.system =
+                    system =
+                    window.__swc_hack_knobs__.defaultSystemVariant =
+                        value as SystemVariant;
                 break;
             case 'color':
                 this.color =
@@ -249,7 +252,7 @@ export class StoryDecorator extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <sp-theme
-                theme=${this.theme}
+                system=${this.system}
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
@@ -296,22 +299,22 @@ export class StoryDecorator extends SpectrumElement {
     private get manageTheme(): TemplateResult {
         return html`
             <div class="manage-theme" part="controls">
-                ${this.themeControl} ${this.colorControl} ${this.scaleControl}
+                ${this.systemControl} ${this.colorControl} ${this.scaleControl}
                 ${this.dirControl} ${this.reduceMotionControl}
             </div>
         `;
     }
 
-    private get themeControl(): TemplateResult {
+    private get systemControl(): TemplateResult {
         return html`
-            <sp-field-label side-aligned="start" for="theme">
-                Spectrum
+            <sp-field-label side-aligned="start" for="system">
+                System
             </sp-field-label>
             <sp-picker
-                id="theme"
+                id="system"
                 placement="top"
                 quiet
-                .value=${this.theme}
+                .value=${this.system}
                 @change=${this.updateTheme}
             >
                 <sp-menu-item value="spectrum">Classic</sp-menu-item>
