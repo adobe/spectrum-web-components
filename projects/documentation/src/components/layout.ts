@@ -246,7 +246,7 @@ export class LayoutElement extends LitElement {
         this.scale = (event.target as Picker).value as Scale;
     }
 
-    private updateTheme(event: Event) {
+    private updateSystem(event: Event) {
         this.system = (event.target as Picker).value as SystemVariant;
     }
 
@@ -395,15 +395,10 @@ export class LayoutElement extends LitElement {
                         id="theme-system"
                         quiet
                         value=${this.system}
-                        @change=${this.updateTheme}
+                        @change=${this.updateSystem}
                     >
                         <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
-                        <sp-menu-item value="express">
-                            Spectrum Express
-                        </sp-menu-item>
-                        <sp-menu-item value="spectrum-two">
-                            Spectrum 2
-                        </sp-menu-item>
+                        <sp-menu-item value="express">Express</sp-menu-item>
                     </sp-picker>
                 </div>
                 <div class="theme-control">
@@ -570,7 +565,7 @@ export class LayoutElement extends LitElement {
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
-        if (changes.has('open')) {
+        if (changes.has('open') && this.hasUpdated) {
             this.open
                 ? this.focus()
                 : (
@@ -613,8 +608,8 @@ export class LayoutElement extends LitElement {
         }
 
         if (loadStyleFragments) {
-            lazyStyleFragment(this.color, this.systemValue);
-            lazyStyleFragment(this.scale, this.systemValue);
+            lazyStyleFragment(this.color, this.system);
+            lazyStyleFragment(this.scale, this.system);
         }
     }
 }

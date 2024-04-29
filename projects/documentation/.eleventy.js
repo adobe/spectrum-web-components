@@ -40,6 +40,7 @@ export default function (eleventyConfig) {
     eleventyConfig.addNunjucksGlobal('WATCH_MODE', process.env.WATCH_MODE);
     eleventyConfig.setUseGitIgnore(false);
     eleventyConfig.addPassthroughCopy('./content/favicon.ico');
+    eleventyConfig.addPassthroughCopy('./content/typekit/*.woff2');
     eleventyConfig.addPassthroughCopy('./content/favicon.svg');
     eleventyConfig.addPassthroughCopy('./content/404.html');
     eleventyConfig.addPassthroughCopy('./content/serviceWorker.js');

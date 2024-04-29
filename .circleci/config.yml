@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 9a721e82794e1956a64d523b3836b01e18dce581
+        default: 3cb248b727e7f6d907052579e211751700c02f1e
     wireit_cache_name:
         type: string
         default: wireit
@@ -321,7 +321,7 @@ workflows:
                   name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          theme: [classic, express, s2]
+                          theme: [classic, express, spectrum-two]
                           color: [lightest, light, dark, darkest]
                           scale: [medium, large]
                           dir: [ltr, rtl]
