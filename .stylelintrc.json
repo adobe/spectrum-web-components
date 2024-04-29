@@ -1,6 +1,6 @@
 {
     "plugins": ["./linters/stylelint-header"],
-    "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+    "extends": ["stylelint-config-standard"],
     "rules": {
         "header/header": ["config/license.js", {}],
         "length-zero-no-unit": [true, { "ignore": "custom-properties" }],
