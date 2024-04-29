@@ -77,6 +77,10 @@
             "development": "./src/VirtualTrigger.dev.js",
             "default": "./src/VirtualTrigger.js"
         },
+        "./src/events.js": {
+            "development": "./src/events.dev.js",
+            "default": "./src/events.js"
+        },
         "./src/fullSizePlugin.js": {
             "development": "./src/fullSizePlugin.dev.js",
             "default": "./src/fullSizePlugin.js"
@@ -114,6 +118,10 @@
         "./src/slottable-request-event.js": {
             "development": "./src/slottable-request-event.dev.js",
             "default": "./src/slottable-request-event.js"
+        },
+        "./src/strategies.js": {
+            "development": "./src/strategies.dev.js",
+            "default": "./src/strategies.js"
         },
         "./active-overlay.js": {
             "development": "./active-overlay.dev.js",

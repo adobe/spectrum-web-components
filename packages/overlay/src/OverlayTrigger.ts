@@ -24,7 +24,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Placement } from '@floating-ui/dom';
 
-import type { BeforetoggleOpenEvent } from './AbstractOverlay.js';
+import type { BeforetoggleOpenEvent } from './events.js';
 import type { Overlay } from './Overlay.js';
 import type { OverlayTriggerInteractions } from './overlay-types';
 

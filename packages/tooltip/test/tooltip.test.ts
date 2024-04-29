@@ -22,7 +22,7 @@ import {
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
-import { stub } from 'sinon';
+import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
@@ -213,6 +213,34 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         expect(typeof el.tipElement).to.not.equal('undefined');
+    });
+    describe('self-managed', () => {
+        let documentEventsSpy!: ReturnType<typeof spy>;
+        before(() => {
+            documentEventsSpy = spy(document, 'addEventListener');
+        });
+        afterEach(() => {
+            documentEventsSpy.resetHistory();
+        });
+        after(() => {
+            documentEventsSpy.restore();
+        });
+        it('does not attach event listeners if no trigger was found', async function () {
+            const el = await fixture<Tooltip>(
+                html`
+                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                `
+            );
+
+            await elementUpdated(el);
+            let calls = documentEventsSpy.callCount;
+            while (calls) {
+                calls -= 1;
+                const call = documentEventsSpy.getCall(calls);
+                expect(call.args[0]).to.not.equal('pointerenter');
+            }
+            expect(el.overlayElement?.triggerElement).to.be.null;
+        });
     });
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
