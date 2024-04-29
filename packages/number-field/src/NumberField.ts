@@ -563,8 +563,11 @@ export class NumberField extends TextfieldBase {
             : this._numberFormatter;
     }
 
+    protected clearValueFormatterCache(): void {
+        this._valueFormatter = undefined;
+    }
     protected get valueFormatter(): NumberFormatter {
-        if (this.step && !this._valueFormatter) {
+        if (!this._valueFormatter && this.step) {
             const digitsAfterDecimal =
                 this.step != Math.floor(this.step)
                     ? this.step.toString().split('.')[1].length
@@ -579,8 +582,7 @@ export class NumberField extends TextfieldBase {
     }
     private _numberFormatter?: NumberFormatter;
     private _numberFormatterFocused?: NumberFormatter;
-    private _valueFormatter!: NumberFormatter;
-
+    private _valueFormatter?: NumberFormatter;
     protected get numberParser(): NumberParser {
         if (!this._numberParser || !this._numberParserFocused) {
             const {
@@ -705,14 +707,7 @@ export class NumberField extends TextfieldBase {
         }
         if (changes.has('step')) {
             if (this.step) {
-                const digitsAfterDecimal =
-                    this.step != Math.floor(this.step)
-                        ? this.step.toString().split('.')[1].length
-                        : 0;
-                this._valueFormatter = new NumberFormatter(
-                    this.languageResolver.language,
-                    { maximumFractionDigits: digitsAfterDecimal }
-                );
+                this.clearValueFormatterCache();
             }
         }
         super.update(changes);
