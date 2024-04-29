@@ -217,7 +217,7 @@ describe('Tooltip', () => {
 
     it('self managed does not attach event listeners if no trigger was found', async () => {
         const documentEventsSpy = spy(document, 'addEventListener');
-        const el = await fixture<HTMLDivElement>(
+        const el = await fixture<Tooltip>(
             html`
                 <sp-tooltip self-managed>Help text.</sp-tooltip>
             `
@@ -225,6 +225,7 @@ describe('Tooltip', () => {
 
         await elementUpdated(el);
         expect(documentEventsSpy.callCount).to.equal(0);
+        expect(el.overlayElement?.triggerElement).to.be.null;
         documentEventsSpy.restore();
     });
     describe('dev mode', () => {
