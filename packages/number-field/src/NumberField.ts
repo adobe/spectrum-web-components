@@ -495,10 +495,6 @@ export class NumberField extends TextfieldBase {
         // Step shouldn't validate when 0...
         if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
-            this.digitsAfterDecimal =
-                this.step != Math.floor(this.step)
-                    ? this.step.toString().split('.')[1].length
-                    : 0;
             const moduloStep = parseFloat(
                 this.valueFormatter.format((value - min) % this.step)
             );
