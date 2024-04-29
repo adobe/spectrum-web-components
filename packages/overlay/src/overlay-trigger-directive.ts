@@ -17,13 +17,13 @@ import {
 } from '@spectrum-web-components/base';
 import { directive } from 'lit/async-directive.js';
 import { strategies } from './strategies.js';
-import { OverlayOptions, TriggerInteraction } from './overlay-types.js';
-import { ClickController } from './ClickController.js';
-import { HoverController } from './HoverController.js';
-import { LongpressController } from './LongpressController.js';
+import type { OverlayOptions, TriggerInteraction } from './overlay-types.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
 import {
     removeSlottableRequest,
-    SlottableRequestEvent,
+    type SlottableRequestEvent,
 } from './slottable-request-event.js';
 import { SlottableRequestDirective } from './slottable-request-directive.js';
 import { AbstractOverlay } from './AbstractOverlay.js';
@@ -47,7 +47,6 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
     protected defaultOptions: OverlayTriggerOptions = {
         triggerInteraction: 'click',
         overlayOptions: {
-            placement: 'top-start',
             type: 'auto',
             offset: 0,
         },
