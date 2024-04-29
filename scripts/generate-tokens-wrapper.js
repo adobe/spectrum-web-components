@@ -129,8 +129,8 @@ const processTokens = (srcPath, tokensDir) => {
     const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
     css = removeImporantComments(targetHost(css));
 
-    // if the filename starts with express ignore it
-    if (fileName.startsWith('express')) {
+    // s2 doesn't need express tokens
+    if (tokensDir === 'tokens-v2' && fileName.startsWith('express')) {
         return;
     }
 
@@ -162,7 +162,7 @@ const processPackages = async (srcPath, tokensDir, index) => {
         );
     }
 
-    // spectrum-2 doesn't need express or vars
+    // spectrum-2 doesn't need express package tokens
     if (tokensDir === 'tokens-v2') {
         return;
     }
@@ -222,7 +222,17 @@ export async function generateTokensWrapper(spectrumVersion) {
             recursive: true,
         }
     );
-    for (const tokensPath of await fg([`${tokensRoot(spectrumVersion)}`])) {
+
+    if (spectrumVersion === 'classic') {
+        fs.mkdirSync(
+            path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'express'),
+            {
+                recursive: true,
+            }
+        );
+    }
+
+    for (const tokensPath of await fg([`${tokensRoot(tokensDir)}`])) {
         processTokens(tokensPath, tokensDir);
     }
 
