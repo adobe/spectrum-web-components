@@ -706,9 +706,7 @@ export class NumberField extends TextfieldBase {
             this.value = value;
         }
         if (changes.has('step')) {
-            if (this.step) {
-                this.clearValueFormatterCache();
-            }
+            this.clearValueFormatterCache();
         }
         super.update(changes);
     }
