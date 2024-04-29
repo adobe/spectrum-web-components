@@ -551,18 +551,26 @@ export class NumberField extends TextfieldBase {
             }
             this._numberFormatterFocused = new NumberFormatter(
                 this.languageResolver.language,
-                {
-                    ...formatOptionsNoUnit,
-                    maximumFractionDigits: this.digitsAfterDecimal,
-                }
+                this.step
+                    ? {
+                          ...formatOptionsNoUnit,
+                          maximumFractionDigits: this.digitsAfterDecimal,
+                      }
+                    : {
+                          ...formatOptionsNoUnit,
+                      }
             );
             try {
                 this._numberFormatter = new NumberFormatter(
                     this.languageResolver.language,
-                    {
-                        ...this.formatOptions,
-                        maximumFractionDigits: this.digitsAfterDecimal,
-                    }
+                    this.step
+                        ? {
+                              ...this.formatOptions,
+                              maximumFractionDigits: this.digitsAfterDecimal,
+                          }
+                        : {
+                              ...this.formatOptions,
+                          }
                 );
                 this._forcedUnit = '';
                 this._numberFormatter.format(1);
