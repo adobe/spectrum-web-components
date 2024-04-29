@@ -548,29 +548,19 @@ export class NumberField extends TextfieldBase {
             } = this.formatOptions;
             if (style !== 'unit') {
                 (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
+                if (this.step)
+                    (
+                        formatOptionsNoUnit as Intl.NumberFormatOptions
+                    ).maximumFractionDigits = this.digitsAfterDecimal;
             }
             this._numberFormatterFocused = new NumberFormatter(
                 this.languageResolver.language,
-                this.step
-                    ? {
-                          ...formatOptionsNoUnit,
-                          maximumFractionDigits: this.digitsAfterDecimal,
-                      }
-                    : {
-                          ...formatOptionsNoUnit,
-                      }
+                formatOptionsNoUnit
             );
             try {
                 this._numberFormatter = new NumberFormatter(
                     this.languageResolver.language,
-                    this.step
-                        ? {
-                              ...this.formatOptions,
-                              maximumFractionDigits: this.digitsAfterDecimal,
-                          }
-                        : {
-                              ...this.formatOptions,
-                          }
+                    this.formatOptions
                 );
                 this._forcedUnit = '';
                 this._numberFormatter.format(1);
