@@ -28,6 +28,7 @@ describe('sp-update-overlays event', () => {
         ) as AccordionItem;
 
         el.content = 'click';
+        await elementUpdated(item);
 
         const opened = oneEvent(el, 'sp-opened');
         el.open = 'click';
