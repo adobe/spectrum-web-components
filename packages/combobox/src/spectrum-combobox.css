@@ -467,7 +467,11 @@ governing permissions and limitations under the License.
 
 :host([keyboard-focused])
     .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
-.button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):focus-visible,
+.button:not(
+        :disabled,
+        .is-invalid,
+        .spectrum-PickerButton--quiet
+    ):focus-visible,
 :host([keyboard-focused])
     .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
@@ -632,9 +636,17 @@ governing permissions and limitations under the License.
         );
     }
 
-    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):focus:hover,
+    .button:not(
+            :disabled,
+            .is-invalid,
+            .spectrum-PickerButton--quiet
+        ):focus:hover,
     :host([focused])
-        .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):hover,
+        .button:not(
+            :disabled,
+            .is-invalid,
+            .spectrum-PickerButton--quiet
+        ):hover,
     :host(:hover):has(:focus)
         .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
     :host([focused]:hover)
