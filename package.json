@@ -146,7 +146,7 @@
         "debounce": "^2.0.0",
         "deepmerge": "^4.2.2",
         "esbuild": "^0.20.0",
-        "eslint": "^8.23.0",
+        "eslint": "^9.0.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-formatter-pretty": "^5.0.0",
         "eslint-plugin-import": "^2.26.0",
