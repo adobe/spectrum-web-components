@@ -246,6 +246,7 @@
             ],
             "output": [
                 "packages/**/*.js",
+                "packages/**/*.dev.js",
                 "projects/**/*.js",
                 "packages/**/*.js.map",
                 "projects/**/*.js.map",

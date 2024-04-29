@@ -115,6 +115,10 @@
             "development": "./src/slottable-request-event.dev.js",
             "default": "./src/slottable-request-event.js"
         },
+        "./src/strategies.js": {
+            "development": "./src/strategies.dev.js",
+            "default": "./src/strategies.js"
+        },
         "./active-overlay.js": {
             "development": "./active-overlay.dev.js",
             "default": "./active-overlay.js"

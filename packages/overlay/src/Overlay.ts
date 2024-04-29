@@ -45,10 +45,11 @@ import { OverlayNoPopover } from './OverlayNoPopover.js';
 import { overlayStack } from './OverlayStack.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { PlacementController } from './PlacementController.js';
-import { ClickController } from './ClickController.js';
-import { HoverController } from './HoverController.js';
-import { LongpressController } from './LongpressController.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
 export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
+import { strategies } from './strategies.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
@@ -65,12 +66,6 @@ if (supportsPopover) {
 } else {
     OverlayFeatures = OverlayNoPopover(OverlayFeatures);
 }
-
-export const strategies = {
-    click: ClickController,
-    longpress: LongpressController,
-    hover: HoverController,
-};
 
 /**
  * @element sp-overlay
@@ -498,8 +493,10 @@ export class Overlay extends OverlayFeatures {
         if (!this.hasNonVirtualTrigger) return;
         if (!this.triggerInteraction) return;
         this.strategy = new strategies[this.triggerInteraction](
-            this,
-            this.triggerElement as HTMLElement
+            this.triggerElement as HTMLElement,
+            {
+                overlay: this,
+            }
         );
     }
 
