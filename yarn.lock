@@ -22105,9 +22105,9 @@ postcss@^8.4.38:
     source-map-js "^1.2.0"
 
 posthtml-attrs-parser@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/posthtml-attrs-parser/-/posthtml-attrs-parser-1.0.1.tgz#d2435b0cff4c65dfe1dd55055b66a195c21d886b"
-  integrity sha512-GEjJu/PApFm56HEQ8U2M6v5YQglS05FhXKftuuAhP8loNM6Peu1Njt1ykXWJdZ0Nq770YLql9zhvwbTW/szpWw==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/posthtml-attrs-parser/-/posthtml-attrs-parser-1.1.0.tgz#e8d798f1dbea5911c4042d565100a406e0b823e6"
+  integrity sha512-OUhvavusxyXVW+ccxE4fYekIc5XOPW9MQeW2R/i4rAGHxGLTFnz41LxhhZxADdjxej8+kY/m/N+B6tw8P2M3Vg==
 
 posthtml-match-helper@^1.0.3:
   version "1.0.4"
