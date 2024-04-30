@@ -14,6 +14,6 @@ governing permissions and limitations under the License.
 import { generateTokensWrapper } from './generate-tokens-wrapper.js';
 
 (async () => {
-    await generateTokensWrapper('classic');
+    await generateTokensWrapper('spectrum');
     await generateTokensWrapper('spectrum-two');
 })();

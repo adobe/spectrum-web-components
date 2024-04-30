@@ -399,6 +399,9 @@ export class LayoutElement extends LitElement {
                     >
                         <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                         <sp-menu-item value="express">Express</sp-menu-item>
+                        <sp-menu-item value="spectrum-two">
+                            Spectrum 2
+                        </sp-menu-item>
                     </sp-picker>
                 </div>
                 <div class="theme-control">
