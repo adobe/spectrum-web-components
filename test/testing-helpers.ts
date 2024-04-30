@@ -54,7 +54,7 @@ export async function testForLitDevWarnings(
 }
 
 export async function testForMemoryLeaks(
-    element: () => Promise<HTMLElement>
+    element: TemplateResult
 ): Promise<void> {
     describe('Memory usage', () => {
         it('releases references on disconnect', async function () {

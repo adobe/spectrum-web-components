@@ -109,7 +109,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     ) => TemplateResult = /* c8 ignore next */ () => html``;
 
     @property({ reflect: true })
-    public role = 'grid';
+    public override role = 'grid';
 
     /**
      * Whether the Table allows users to select a row or rows, and thus controls whether or not the Table also renders checkboxes.

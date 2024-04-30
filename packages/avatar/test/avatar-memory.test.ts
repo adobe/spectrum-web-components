@@ -10,9 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture } from '@open-wc/testing';
 import { linked } from '../stories/avatar.stories.js';
-import { Avatar } from '@spectrum-web-components/avatar';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(async () => await fixture<Avatar>(linked()));
+testForMemoryLeaks(linked());

@@ -450,6 +450,32 @@ editableWithDefaultValue.swc_vrt = {
     skip: true,
 };
 
+export const editableWithFractionValue = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="255"
+                min="0.1"
+                value="0.5"
+                step="0.01"
+                default-value="18"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableWithFractionValue.swc_vrt = {
+    skip: true,
+};
+
 export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">

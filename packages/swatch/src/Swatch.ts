@@ -86,7 +86,7 @@ export class Swatch extends SizedMixin(Focusable, {
     public nothing = false;
 
     @property({ reflect: true })
-    public role = 'button';
+    public override role = 'button';
 
     @property({ reflect: true })
     public rounding: SwatchRounding;

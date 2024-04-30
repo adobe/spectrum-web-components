@@ -22,7 +22,7 @@
         "linter"
     ],
     "peerDependencies": {
-        "stylelint": "^13.0.0 || ^14.0.0"
+        "stylelint": "^13.0.0 || ^14.0.0 || ^16.0.0"
     },
     "dependencies": {
         "string-similarity": "^4.0.4"
@@ -31,7 +31,7 @@
         "jest": "^27.0.1",
         "jest-preset-stylelint": "^5.0.2",
         "lodash": "^4.17.21",
-        "stylelint": "^14.2.0"
+        "stylelint": "^16.0.0"
     },
     "jest": {
         "preset": "jest-preset-stylelint"

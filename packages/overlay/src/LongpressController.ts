@@ -18,7 +18,10 @@ import { conditionAttributeWithId } from '@spectrum-web-components/base/src/cond
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { noop } from './AbstractOverlay.js';
-import { InteractionController, InteractionTypes } from './InteractionController.js';
+import {
+    InteractionController,
+    InteractionTypes,
+} from './InteractionController.js';
 
 const LONGPRESS_DURATION = 300;
 export const LONGPRESS_INSTRUCTIONS = {
@@ -48,7 +51,7 @@ export class LongpressController extends InteractionController {
     private timeout!: ReturnType<typeof setTimeout>;
 
     handleLongpress(): void {
-        this.host.open = true;
+        this.open = true;
         this.longpressState =
             this.longpressState === 'potential' ? 'opening' : 'pressed';
     }
@@ -83,7 +86,8 @@ export class LongpressController extends InteractionController {
         // or `pointerup` should move the `longpressState` to
         // `null` so that the earlier event can void the "light
         // dismiss" and keep the Overlay open.
-        this.longpressState = this.host.state === 'opening' ? 'pressed' : null;
+        this.longpressState =
+            this.overlay?.state === 'opening' ? 'pressed' : null;
         document.removeEventListener('pointerup', this.handlePointerup);
         document.removeEventListener('pointercancel', this.handlePointerup);
     };
@@ -123,7 +127,7 @@ export class LongpressController extends InteractionController {
             // do not reapply until target is recycled
             this.releaseDescription !== noop ||
             // require "longpress content" to apply relationship
-            !this.host.elements.length
+            !this.overlay.elements.length
         ) {
             return;
         }
@@ -134,13 +138,13 @@ export class LongpressController extends InteractionController {
         longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
         longpressDescription.slot = 'longpress-describedby-descriptor';
         const triggerParent = trigger.getRootNode() as HTMLElement;
-        const overlayParent = this.host.getRootNode() as HTMLElement;
+        const overlayParent = this.overlay.getRootNode() as HTMLElement;
         // Manage the placement of the helper element in an accessible place with
         // the lowest chance of negatively affecting the layout of the page.
         if (triggerParent === overlayParent) {
             // Trigger and Overlay in same DOM tree...
             // Append helper element to Overlay.
-            this.host.append(longpressDescription);
+            this.overlay.append(longpressDescription);
         } else {
             // If Trigger in <body>, hide helper
             longpressDescription.hidden = !('host' in triggerParent);

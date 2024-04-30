@@ -71,6 +71,9 @@ export default {
         inCorner: false,
         type: 'info',
     },
+    parameters: {
+        badges: ['deprecated'],
+    },
 };
 
 interface StoryArgs {

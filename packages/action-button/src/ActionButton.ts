@@ -67,7 +67,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     public quiet = false;
 
     @property({ reflect: true })
-    public role = 'button';
+    public override role = 'button';
 
     /**
      * Whether an Action Button with `role='button'`

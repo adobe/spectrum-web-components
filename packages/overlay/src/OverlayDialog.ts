@@ -16,13 +16,12 @@ import {
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { Constructor, OpenableElement } from './overlay-types.js';
+import { guaranteedAllTransitionend, nextFrame } from './AbstractOverlay.js';
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
-    guaranteedAllTransitionend,
-    nextFrame,
     OverlayStateEvent,
-} from './AbstractOverlay.js';
+} from './events.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 
