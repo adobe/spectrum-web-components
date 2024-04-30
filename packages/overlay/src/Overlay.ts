@@ -393,6 +393,7 @@ export class Overlay extends OverlayFeatures {
             return ancestors;
         };
         if (
+            this.receivesFocus !== 'false' &&
             (this.triggerElement as HTMLElement)?.focus &&
             (this.contains((this.getRootNode() as Document).activeElement) ||
                 getAncestors().includes(this) ||
