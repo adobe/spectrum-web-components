@@ -49,7 +49,7 @@ export const Negative = (args: Properties): TemplateResult =>
     AlertBannerMarkup({
         ...args,
         variant: 'negative',
-        text: 'Connection interupted. Check your network to continue',
+        text: 'Connection interrupted. Check your network to continue',
     });
 
 export const TextWrapping = (args: Properties): TemplateResult =>
