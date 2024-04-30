@@ -39,7 +39,8 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     border-radius: var(--mod-tray-corner-radius-portrait, 0)
         var(--mod-tray-corner-radius-portrait, 0) 0 0;
-    transition: opacity
+    transition:
+        opacity
             var(
                 --mod-tray-exit-animation-duration,
                 var(--spectrum-tray-exit-animation-duration)
@@ -99,7 +100,8 @@ governing permissions and limitations under the License.
 }
 
 :host([open]) .tray {
-    transition: transform
+    transition:
+        transform
             var(
                 --mod-tray-entry-animation-duration,
                 var(--spectrum-tray-entry-animation-duration)
