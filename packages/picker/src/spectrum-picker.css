@@ -31,7 +31,8 @@ governing permissions and limitations under the License.
     text-transform: none;
     vertical-align: top;
     -webkit-appearance: button;
-    transition: background
+    transition:
+        background
             var(
                 --mod-button-animation-duration,
                 var(
@@ -381,7 +382,8 @@ governing permissions and limitations under the License.
         --mod-picker-border-radius,
         var(--spectrum-picker-border-radius)
     );
-    transition: background-color
+    transition:
+        background-color
             var(
                 --mod-picker-animation-duration,
                 var(--spectrum-picker-animation-duration)

@@ -31,7 +31,8 @@ governing permissions and limitations under the License.
     text-transform: none;
     vertical-align: top;
     -webkit-appearance: button;
-    transition: background
+    transition:
+        background
             var(
                 --mod-button-animation-duration,
                 var(

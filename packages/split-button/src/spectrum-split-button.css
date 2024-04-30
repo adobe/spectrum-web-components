@@ -155,7 +155,7 @@ governing permissions and limitations under the License.
 
 #button.spectrum-Pagination-prevButton .spectrum-Icon,
 .trigger.spectrum-Pagination-prevButton .spectrum-Icon {
-    transform: var(--spectrum-logical-rotation) rotate(180deg);
+    transform: var(--spectrum-logical-rotation,) rotate(180deg);
 }
 
 #button.spectrum-Pagination-nextButton .spectrum-Icon,

@@ -497,7 +497,8 @@ governing permissions and limitations under the License.
 
 .handle:before {
     content: '';
-    transition: box-shadow
+    transition:
+        box-shadow
             var(
                 --mod-animation-duration-100,
                 var(--spectrum-animation-duration-100)
