@@ -4249,6 +4249,11 @@
   dependencies:
     playwright "1.43.1"
 
+"@pnpm/config.env-replace@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@pnpm/config.env-replace/-/config.env-replace-1.1.0.tgz#ab29da53df41e8948a00f2433f085f54de8b3a4c"
+  integrity sha512-htyl8TWnKL7K/ESFa1oW2UB5lVDxuF5DpM7tBi6Hu2LNL3mWkIzNLG6N4zoCUP1lCKNxWy/3iu8mS8MvToGd6w==
+
 "@pnpm/network.ca-file@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@pnpm/network.ca-file/-/network.ca-file-1.0.1.tgz#16f88d057c68cd5419c1ef3dfa281296ea80b047"
@@ -4261,6 +4266,15 @@
   resolved "https://registry.yarnpkg.com/@pnpm/npm-conf/-/npm-conf-1.0.4.tgz#e2c927a933f55e9211e12ef6cc4885ce915211ce"
   integrity sha512-o5YFq/+ksEJMbSzzkaQDHlp00aonLDU5xNPVTRL12hTWBbVSSeWXxPukq75h+mvXnoOWT95vV2u1HSTw2C4XOw==
   dependencies:
+    "@pnpm/network.ca-file" "^1.0.1"
+    config-chain "^1.1.11"
+
+"@pnpm/npm-conf@^2.1.0":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@pnpm/npm-conf/-/npm-conf-2.2.2.tgz#0058baf1c26cbb63a828f0193795401684ac86f0"
+  integrity sha512-UA91GwWPhFExt3IizW6bOeY/pQ0BkuNwKjk9iQW9KqxluGCrg4VenZ0/L+2Y0+ZOtme72EVvg6v0zo3AMQRCeA==
+  dependencies:
+    "@pnpm/config.env-replace" "^1.1.0"
     "@pnpm/network.ca-file" "^1.0.1"
     config-chain "^1.1.11"
 
@@ -17215,6 +17229,11 @@ kuler@^2.0.0:
   resolved "https://registry.yarnpkg.com/kuler/-/kuler-2.0.0.tgz#e2c570a3800388fb44407e851531c1d670b061b3"
   integrity sha512-Xq9nH7KlWZmXAtodXDDRE7vs6DU1gTU8zYDHDiWLSip45Egwq3plLHzPn27NgvzL2r1LMPC1vdqh98sQxtqj4A==
 
+ky@^1.2.0:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/ky/-/ky-1.2.4.tgz#d095aa848c686116f3326bfce53d9c2ffdb692c1"
+  integrity sha512-CfSrf4a0yj1n6WgPT6kQNQOopIGLkQzqSAXo05oKByaH7G3SiqW4a8jGox0p9whMXqO49H7ljgigivrMyycAVA==
+
 lambda-local@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/lambda-local/-/lambda-local-2.1.1.tgz#d3b0ab368c9cda3707390492ca498e0ac2ac1d3d"
@@ -17242,6 +17261,13 @@ latest-version@^7.0.0:
   integrity sha512-KvNT4XqAMzdcL6ka6Tl3i2lYeFDgXNCuIX+xNx6ZMVR1dFq+idXd9FLKNMOIx0t9mJ9/HudyX4oZWXZQ0UJHeg==
   dependencies:
     package-json "^8.1.0"
+
+latest-version@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/latest-version/-/latest-version-9.0.0.tgz#e91ed216e7a4badc6f73b66c65adb46c58ec6ba1"
+  integrity sha512-7W0vV3rqv5tokqkBAFV1LbR7HPOWzXQDpDgEuib/aJ1jsZZx6x3c2mBI+TJhJzOhkGeaLbCKEHXEXLfirtG2JA==
+  dependencies:
+    package-json "^10.0.0"
 
 launch-editor@^2.6.1:
   version "2.6.1"
@@ -20933,6 +20959,16 @@ pac-resolver@^7.0.0:
     degenerator "^5.0.0"
     netmask "^2.0.2"
 
+package-json@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/package-json/-/package-json-10.0.0.tgz#238786d9deabb946fe514b13290f19e2d5347fe1"
+  integrity sha512-w34pqp733w35nElGG6eH1OnDnHEWud4uxruQ2nKzY/Uy0uOJmWFdjDcAC+xAD4goVuBZStwaAEBS21BANv83HQ==
+  dependencies:
+    ky "^1.2.0"
+    registry-auth-token "^5.0.2"
+    registry-url "^6.0.1"
+    semver "^7.6.0"
+
 package-json@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/package-json/-/package-json-8.1.0.tgz#2a22806f1ed7c786c8e6ff26cfe20003bf4c6850"
@@ -23135,7 +23171,14 @@ registry-auth-token@^5.0.1:
   dependencies:
     "@pnpm/npm-conf" "^1.0.4"
 
-registry-url@^6.0.0:
+registry-auth-token@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/registry-auth-token/-/registry-auth-token-5.0.2.tgz#8b026cc507c8552ebbe06724136267e63302f756"
+  integrity sha512-o/3ikDxtXaA59BmZuZrJZDJv8NMDGSj+6j6XaeBmHw8eY1i1qd9+6H+LjVvQXx3HN6aRCGa1cUdJ9RaJZUugnQ==
+  dependencies:
+    "@pnpm/npm-conf" "^2.1.0"
+
+registry-url@^6.0.0, registry-url@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/registry-url/-/registry-url-6.0.1.tgz#056d9343680f2f64400032b1e199faa692286c58"
   integrity sha512-+crtS5QjFRqFCoQmvGduwYWEBng99ZvmFvF+cUJkGYF1L1BfU8C6Zp9T7f5vPAwyLkUExpvK+ANVZmGU49qi4Q==
