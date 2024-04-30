@@ -31,23 +31,24 @@ export interface SpectrumInterface {
 }
 
 const observedForElements: Set<HTMLElement> = new Set();
+if ('MutationObserver' in globalThis) {
+    const updateRTL = (): void => {
+        const dir =
+            document.documentElement.dir === 'rtl'
+                ? document.documentElement.dir
+                : 'ltr';
+        observedForElements.forEach((el) => {
+            el.setAttribute('dir', dir);
+        });
+    };
 
-const updateRTL = (): void => {
-    const dir =
-        document.documentElement.dir === 'rtl'
-            ? document.documentElement.dir
-            : 'ltr';
-    observedForElements.forEach((el) => {
-        el.setAttribute('dir', dir);
+    const rtlObserver = new MutationObserver(updateRTL);
+
+    rtlObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['dir'],
     });
-};
-
-const rtlObserver = new MutationObserver(updateRTL);
-
-rtlObserver.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['dir'],
-});
+}
 
 type ContentDirectionManager = HTMLElement & {
     startManagingContentDirection?(): void;

@@ -28,6 +28,7 @@
     "devDependencies": {
         "@11ty/eleventy": "^3.0.0-alpha.4",
         "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+        "@lit-labs/eleventy-plugin-lit": "1.0.1",
         "@open-wc/building-rollup": "^3.0.2",
         "@rollup/plugin-alias": "^5.0.1",
         "@rollup/plugin-commonjs": "^25.0.7",
@@ -81,9 +82,6 @@
         "build:assets": {
             "dependencies": [
                 {
-                    "script": "build:ts"
-                },
-                {
                     "script": "build:move-css"
                 },
                 {
@@ -92,8 +90,12 @@
             ]
         },
         "build:eleventy": {
-            "command": "eleventy --config=.eleventy.js --incremental --quiet",
+            "command": "NODE_OPTIONS=--experimental-vm-modules eleventy --config=.eleventy.js --incremental --quiet",
             "dependencies": [
+                {
+                    "script": "build:ts",
+                    "cascade": false
+                },
                 {
                     "script": "copy-docs"
                 }

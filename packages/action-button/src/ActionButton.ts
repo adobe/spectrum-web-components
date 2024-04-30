@@ -116,7 +116,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
 
     constructor() {
         super();
-        this.addEventListener('click', this.onClick);
+        if ('addEventListener' in this) {
+            this.addEventListener('click', this.onClick);
+        }
     }
 
     private onClick = (): void => {

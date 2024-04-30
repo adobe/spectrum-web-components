@@ -53,6 +53,10 @@ docs-side-nav:not(:defined) {
         flex: 1;
         flex-grow: 1;
     }
+
+    #page {
+        grid-column: 2;
+    }
 }
 
 #body {
@@ -67,6 +71,10 @@ docs-side-nav:not(:defined) {
     #body {
         height: 50%;
         grid-template-columns: 100%;
+    }
+
+    .desktop-only {
+        display: none;
     }
 }
 
@@ -299,4 +307,8 @@ sp-underlay:not([open]) + aside {
 
 :host([dir='rtl']) aside:not(.show) {
     transform: translateX(-100%);
+}
+
+[inert] + sp-underlay {
+    visibility: hidden;
 }

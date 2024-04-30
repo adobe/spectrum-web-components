@@ -10,23 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import 'lit/experimental-hydrate-support.js';
-import './layout.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/divider/sp-divider.js';
+import '@spectrum-web-components/toast/sp-toast.js';
 
-declare global {
-    interface Window {
-        spAlert(el: HTMLElement, message: string): void;
-    }
-}
-
-window.spAlert = (el: HTMLElement, message: string): void => {
-    el.dispatchEvent(
-        new CustomEvent('alert', {
-            composed: true,
-            bubbles: true,
-            detail: {
-                message,
-            },
-        })
-    );
-};
+import './components/code-example.js';
+import './components/layout-element.js';

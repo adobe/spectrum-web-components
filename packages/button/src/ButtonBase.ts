@@ -71,9 +71,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         super();
         this.proxyFocus = this.proxyFocus.bind(this);
 
-        this.addEventListener('click', this.handleClickCapture, {
-            capture: true,
-        });
+        if ('addEventListener' in this) {
+            this.addEventListener('click', this.handleClickCapture, {
+                capture: true,
+            });
+        }
     }
 
     public override click(): void {

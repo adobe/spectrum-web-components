@@ -9,7 +9,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export class SlottableRequestEvent extends Event {
+const EventBaseClass = (typeof Event !== 'undefined'
+    ? Event
+    : class {}) as unknown as typeof Event;
+
+export class SlottableRequestEvent extends EventBaseClass {
     readonly data: unknown;
     readonly name: string;
     readonly slotName: string;

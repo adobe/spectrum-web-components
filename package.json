@@ -194,6 +194,13 @@
         "wireit": "^0.14.3",
         "yargs": "^17.2.1"
     },
+    "resolutions": {
+        "@lit-labs/observers": "2.0.2",
+        "@lit/reactive-element": "1.6.3",
+        "lit": "2.8.0",
+        "lit-element": "3.3.3",
+        "lit-html": "2.8.0"
+    },
     "wireit": {
         "build:css:watch": {
             "command": "node ./tasks/watch-css.js",
