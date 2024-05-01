@@ -1,5 +1,0 @@
-import { t as t$1 } from './mutation-controller-KeE5MDSl.js';
-
-const t=Symbol("slotContentIsPresent");function ObserveSlotPresence(o,s){var l;const r=Array.isArray(s)?s:[s];class i extends o{constructor(...e){super(e);this[l]=new Map;this.managePresenceObservedSlot=()=>{let e=!1;r.forEach(n=>{const a=!!this.querySelector(`:scope > ${n}`),c=this[t].get(n)||!1;e=e||c!==a,this[t].set(n,!!this.querySelector(`:scope > ${n}`));}),e&&this.updateComplete.then(()=>{this.requestUpdate();});};new t$1(this,{config:{childList:!0,subtree:!0},callback:()=>{this.managePresenceObservedSlot();}}),this.managePresenceObservedSlot();}get slotContentIsPresent(){if(r.length===1)return this[t].get(r[0])||!1;throw new Error("Multiple selectors provided to `ObserveSlotPresence` use `getSlotContentPresence(selector: string)` instead.")}getSlotContentPresence(e){if(this[t].has(e))return this[t].get(e)||!1;throw new Error(`The provided selector \`${e}\` is not being observed.`)}}return l=t,i}
-
-export { ObserveSlotPresence as O };
