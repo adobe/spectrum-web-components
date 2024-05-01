@@ -11,10 +11,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    builder,
-    converterFor,
-} from '../../../tasks/process-spectrum-utils.js';
+import { converterFor } from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-Checkbox');
 
@@ -52,20 +49,6 @@ const config = {
                                 },
                             ],
                         ],
-                    },
-
-                    hoist: true,
-                },
-                {
-                    find: {
-                        type: 'pseudo-class',
-                        kind: 'not',
-                        selectors: [[builder.class('is-readOnly')]],
-                    },
-                    replace: {
-                        type: 'pseudo-class',
-                        kind: 'not',
-                        selectors: [[builder.attribute('readonly')]],
                     },
                     hoist: true,
                 },
