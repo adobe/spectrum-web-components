@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **combobox:** correct package.json listings ([35a69a2](https://github.com/adobe/spectrum-web-components/commit/35a69a2923eec3f9f7bac867752d869e5fe988c1))
+
 ## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
 
 **Note:** Version bump only for package @spectrum-web-components/combobox
