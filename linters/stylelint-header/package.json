@@ -28,7 +28,7 @@
         "string-similarity": "^4.0.4"
     },
     "devDependencies": {
-        "jest": "^27.0.1",
+        "jest": "^29.0.0",
         "jest-preset-stylelint": "^7.0.0",
         "lodash": "^4.17.21",
         "stylelint": "^16.0.0"
