@@ -317,7 +317,7 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-spectrum-express:
+            - visual:
                   name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
@@ -329,10 +329,11 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-spectrum-two:
+            - visual:
                   name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
+                          # Spectrum-two doesn't support the lightest and darkest themes
                           theme: [spectrum-two]
                           color: [light, dark]
                           scale: [medium, large]
