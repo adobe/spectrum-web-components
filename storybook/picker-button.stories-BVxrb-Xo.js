@@ -1,5 +1,5 @@
 import { a as argTypes, T as Template } from './index-CEtrQPzt.js';
-import './sp-picker-button-ZMTkyBfi.js';
+import './sp-picker-button-D4qkg_jJ.js';
 import './sp-icon-add-BogZc3cU.js';
 import { x } from './lit-html-COgVUehj.js';
 import './if-defined-DDJGFaN4.js';
@@ -44,6 +44,8 @@ customIcon.args = {
 };
 const invalid = (args) => Template(args);
 invalid.args = { invalid: true };
+const quiet = (args) => Template(args);
+quiet.args = { label: true, quiet: true };
 const label = (args) => Template(args);
 label.args = { label: true };
 const labelCustom = (args) => Template(args);
@@ -61,6 +63,6 @@ roundedLabel.args = {
   label: true,
   rounded: true
 };
-const __namedExportsOrder = ['active', 'customIcon', 'invalid', 'label', 'labelCustom', 'open', 'positionLeft', 'positionRight', 'rounded', 'roundedLabel'];
+const __namedExportsOrder = ['active', 'customIcon', 'invalid', 'quiet', 'label', 'labelCustom', 'open', 'positionLeft', 'positionRight', 'rounded', 'roundedLabel'];
 
-export { __namedExportsOrder, active, customIcon, pickerButton_stories as default, invalid, label, labelCustom, open, positionLeft, positionRight, rounded, roundedLabel };
+export { __namedExportsOrder, active, customIcon, pickerButton_stories as default, invalid, label, labelCustom, open, positionLeft, positionRight, quiet, rounded, roundedLabel };

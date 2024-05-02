@@ -1,4 +1,4 @@
-import { c as countries, f as fruits } from './index-CxrC4bJr.js';
+import { c as countries, f as fruits } from './index-P4fk-4rT.js';
 import './sp-field-label-d2_767OQ.js';
 import './sp-help-text-0uGrOojQ.js';
 import './sp-tooltip-B_mXL8hM.js';
@@ -34,7 +34,7 @@ import './sp-popover-CDcNcrBt.js';
 import './Popover-BIai2pXS.js';
 import './sp-menu-DkZ1KZaP.js';
 import './sizedMixin-C1lD98vT.js';
-import './sp-picker-button-ZMTkyBfi.js';
+import './sp-picker-button-D4qkg_jJ.js';
 import './ButtonBase-DVG8snfH.js';
 import './like-anchor-3x3vwb8N.js';
 import './focusable-CCdy673g.js';
@@ -84,6 +84,18 @@ const disabled = () => {
             .options=${countries}
             value="Azerbaijan"
         ></sp-combobox>
+    `;
+};
+const invalid = () => {
+  return x`
+        <sp-field-label for="combobox-invalid">
+            What would you like to eat for dessert?
+        </sp-field-label>
+        <sp-combobox id="combobox-invalid" .options=${fruits} invalid>
+            <sp-help-text slot="negative-help-text">
+                Choose or add at least one fruit.
+            </sp-help-text>
+        </sp-combobox>
     `;
 };
 const readonly = () => {
@@ -255,6 +267,6 @@ const controlled = () => {
 controlled.swc_vrt = {
   skip: true
 };
-const __namedExportsOrder = ['Default', 'disabled', 'readonly', 'listAutocomplete', 'noAutocomplete', 'lightDOM', 'withTooltip', 'withFieldLabel', 'withLabelAttribute', 'withHelpText', 'controlled'];
+const __namedExportsOrder = ['Default', 'disabled', 'invalid', 'readonly', 'listAutocomplete', 'noAutocomplete', 'lightDOM', 'withTooltip', 'withFieldLabel', 'withLabelAttribute', 'withHelpText', 'controlled'];
 
-export { Default, __namedExportsOrder, controlled, combobox_stories as default, disabled, lightDOM, listAutocomplete, noAutocomplete, readonly, withFieldLabel, withHelpText, withLabelAttribute, withTooltip };
+export { Default, __namedExportsOrder, controlled, combobox_stories as default, disabled, invalid, lightDOM, listAutocomplete, noAutocomplete, readonly, withFieldLabel, withHelpText, withLabelAttribute, withTooltip };
