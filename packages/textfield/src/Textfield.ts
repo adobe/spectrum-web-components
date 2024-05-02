@@ -197,6 +197,8 @@ export class TextfieldBase extends ManageHelpText(
      */
     @property({ type: String, reflect: true })
     public autocomplete?:
+        | 'list'
+        | 'none'
         | HTMLInputElement['autocomplete']
         | HTMLTextAreaElement['autocomplete'];
 

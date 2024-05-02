@@ -369,7 +369,8 @@ describe('Overlays, v1', () => {
         });
     });
 
-    it('closes via events', async () => {
+    it('closes via events', async function () {
+        this.retries(0);
         const test = await fixture<HTMLDivElement>(html`
             <div>
                 <sp-popover id="root">

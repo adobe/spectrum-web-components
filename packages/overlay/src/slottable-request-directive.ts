@@ -85,7 +85,7 @@ export class SlottableRequestDirective extends AsyncDirective {
     }
 
     override disconnected(): void {
-        this.listeners.abort();
+        this.listeners?.abort();
     }
 
     /* c8 ignore next 3 */

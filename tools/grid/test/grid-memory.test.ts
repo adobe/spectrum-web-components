@@ -10,9 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture } from '@open-wc/testing';
 import { Default } from '../stories/grid.stories.js';
-import { Grid } from '@spectrum-web-components/grid';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(async () => await fixture<Grid>(Default()));
+testForMemoryLeaks(Default());

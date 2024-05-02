@@ -497,7 +497,8 @@ governing permissions and limitations under the License.
 
 .handle:before {
     content: '';
-    transition: box-shadow
+    transition:
+        box-shadow
             var(
                 --mod-animation-duration-100,
                 var(--spectrum-animation-duration-100)
@@ -1110,7 +1111,11 @@ governing permissions and limitations under the License.
     }
 
     @media (hover: hover) {
-        :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        :host:not(
+                .is-disabled,
+                .spectrum-Slider--filled,
+                .spectrum-Slider--range
+            )
             #controls:hover {
             --highcontrast-slider-track-fill-color: Highlight;
             --highcontrast-slider-track-color: Highlight;

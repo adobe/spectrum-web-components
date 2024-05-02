@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **number-field, slider:** floating point roundoff precision bug ([#4263](https://github.com/adobe/spectrum-web-components/issues/4263)) ([74480ef](https://github.com/adobe/spectrum-web-components/commit/74480efd47305a7d41d0e20682d8dcba1c129f2f))
+
 ## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

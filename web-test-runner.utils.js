@@ -17,6 +17,7 @@ import fg from 'fast-glob';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -134,7 +135,7 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const themeVariants = ['classic', 'express', 'spectrum-two'];
+const themeVariants = ['spectrum', 'express', 'spectrum-two'];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
