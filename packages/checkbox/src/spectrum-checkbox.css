@@ -682,7 +682,8 @@ governing permissions and limitations under the License.
         --mod-checkbox-border-width,
         var(--spectrum-checkbox-border-width)
     );
-    transition: border
+    transition:
+        border
             var(
                 --mod-checkbox-animation-duration,
                 var(--spectrum-checkbox-animation-duration)
@@ -715,7 +716,8 @@ governing permissions and limitations under the License.
         --mod-checkbox-focus-indicator-gap,
         var(--spectrum-checkbox-focus-indicator-gap)
     );
-    transition: box-shadow
+    transition:
+        box-shadow
             var(
                 --mod-checkbox-animation-duration,
                 var(--spectrum-checkbox-animation-duration)
@@ -744,7 +746,8 @@ governing permissions and limitations under the License.
         )
     );
     opacity: 0;
-    transition: opacity
+    transition:
+        opacity
             var(
                 --mod-checkbox-animation-duration,
                 var(--spectrum-checkbox-animation-duration)

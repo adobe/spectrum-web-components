@@ -268,7 +268,8 @@ governing permissions and limitations under the License.
             )
     );
     vertical-align: middle;
-    transition: background
+    transition:
+        background
             var(
                 --mod-animation-duration-100,
                 var(--spectrum-animation-duration-100)
@@ -299,7 +300,8 @@ governing permissions and limitations under the License.
 #switch:before {
     content: '';
     box-sizing: border-box;
-    transition: background
+    transition:
+        background
             var(
                 --mod-animation-duration-100,
                 var(--spectrum-animation-duration-100)
@@ -351,7 +353,8 @@ governing permissions and limitations under the License.
             2
     );
     content: '';
-    transition: opacity
+    transition:
+        opacity
             var(
                 --mod-animation-duration-100,
                 var(--spectrum-animation-duration-100)

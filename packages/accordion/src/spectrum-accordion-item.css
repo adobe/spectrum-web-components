@@ -335,7 +335,7 @@ governing permissions and limitations under the License.
 
 :host([open]) > #heading > .iconContainer > .indicator,
 :host([open]) > .iconContainer > .indicator {
-    transform: var(--spectrum-logical-rotation) rotate(90deg);
+    transform: var(--spectrum-logical-rotation,) rotate(90deg);
 }
 
 :host([open]) > #content {

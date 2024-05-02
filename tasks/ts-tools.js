@@ -19,6 +19,11 @@ const relativeImportRegex = RegExp(
     'import([^;]+)["|\'](?![a-zA-Z@])(..+)(?<!.css).js["|\'];',
     'g'
 );
+const relativeDynamicImportRegex = RegExp(
+    // eslint-disable-next-line prettier/prettier
+    'import[(]["|\'](?![a-zA-Z@])(..+)(?!.css).js["|\'][)]',
+    'g'
+);
 const relativeExportRegex = RegExp(
     'export([^;]+)["|\'](?![a-zA-Z@])(..+)(?<!.css).js["|\'];',
     'g'
@@ -29,9 +34,17 @@ const makeDev = {
     setup(build) {
         // Am I fragile or what? Should we just force prevent the use of relative imports?
         build.onLoad({ filter: /\.ts$/ }, async (args) => {
-            let js = await fs.promises.readFile(args.path, 'utf8');
-            js = js.replace(relativeImportRegex, "import$1'$2.dev.js'");
-            const contents = js.replace(
+            const js = await fs.promises.readFile(args.path, 'utf8');
+            const relativeImportsProcessed = js.replace(
+                relativeImportRegex,
+                "import$1'$2.dev.js'"
+            );
+            const relativeDynamicImportsProcessed =
+                relativeImportsProcessed.replace(
+                    relativeDynamicImportRegex,
+                    "import('$1.dev.js')"
+                );
+            const contents = relativeDynamicImportsProcessed.replace(
                 relativeExportRegex,
                 "export$1'$2.dev.js'"
             );

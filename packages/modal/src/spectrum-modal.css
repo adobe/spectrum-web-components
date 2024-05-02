@@ -16,7 +16,8 @@ governing permissions and limitations under the License.
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    transition: transform
+    transition:
+        transform
             var(
                 --mod-overlay-animation-duration,
                 var(--spectrum-animation-duration-100, 0.13s)
@@ -93,7 +94,8 @@ governing permissions and limitations under the License.
         var(--spectrum-modal-confirm-border-radius)
     );
     pointer-events: auto;
-    transition: opacity
+    transition:
+        opacity
             var(
                 --mod-modal-confirm-exit-animation-duration,
                 var(--spectrum-modal-confirm-exit-animation-duration)
@@ -130,7 +132,8 @@ governing permissions and limitations under the License.
 }
 
 :host([open]) .modal {
-    transition: transform
+    transition:
+        transform
             var(
                 --mod-modal-confirm-entry-animation-duration,
                 var(--spectrum-modal-confirm-entry-animation-duration)

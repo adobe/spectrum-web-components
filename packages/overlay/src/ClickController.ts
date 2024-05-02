@@ -28,13 +28,13 @@ export class ClickController extends InteractionController {
 
     handleClick(): void {
         if (!this.preventNextToggle) {
-            this.host.open = !this.host.open;
+            this.open = !this.open;
         }
         this.preventNextToggle = false;
     }
 
     handlePointerdown(): void {
-        this.preventNextToggle = this.host.open;
+        this.preventNextToggle = this.open;
     }
 
     override init(): void {
