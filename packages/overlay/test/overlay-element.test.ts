@@ -38,6 +38,7 @@ import {
     SlottableRequestEvent,
 } from '../src/slottable-request-event.js';
 import { stub } from 'sinon';
+import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.js';
 
 const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
 type OverlayTypes = typeof OVERLAY_TYPES[number];
@@ -950,7 +951,7 @@ describe('sp-overlay', () => {
 
                 expect(el.open).to.be.false;
 
-                const opened = oneEvent(el, 'sp-opened');
+                const opened = oneEvent<OverlayStateEvent>(el, 'sp-opened');
                 el.open = true;
                 let { overlay } = await opened;
                 expect(el === overlay).to.be.true;
@@ -968,7 +969,7 @@ describe('sp-overlay', () => {
 
                 expect(el.open).to.be.true;
 
-                const closed = oneEvent(el, 'sp-closed');
+                const closed = oneEvent<OverlayStateEvent>(el, 'sp-closed');
                 el.open = false;
                 ({ overlay } = await closed);
                 expect(el === overlay).to.be.true;
@@ -992,7 +993,7 @@ describe('sp-overlay', () => {
 
                 expect(el.open).to.be.false;
 
-                const opened = oneEvent(el, 'sp-opened');
+                const opened = oneEvent<OverlayStateEvent>(el, 'sp-opened');
                 el.open = true;
                 let { overlay } = await opened;
                 expect(el === overlay).to.be.true;
@@ -1005,7 +1006,7 @@ describe('sp-overlay', () => {
 
                 expect(el.open).to.be.true;
 
-                const closed = oneEvent(el, 'sp-closed');
+                const closed = oneEvent<OverlayStateEvent>(el, 'sp-closed');
                 el.open = false;
                 ({ overlay } = await closed);
                 expect(el === overlay).to.be.true;

@@ -227,7 +227,8 @@ governing permissions and limitations under the License.
     word-break: break-word;
     hyphens: auto;
     cursor: pointer;
-    transition: background-color var(--spectrum-animation-duration-100) ease-out,
+    transition:
+        background-color var(--spectrum-animation-duration-100) ease-out,
         color var(--spectrum-animation-duration-100) ease-out;
     border-radius: var(
         --mod-sidenav-border-radius,

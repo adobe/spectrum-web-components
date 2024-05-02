@@ -17,6 +17,7 @@ import fg from 'fast-glob';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -121,7 +122,7 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultThemeVariant: "${themeVariant || ''}",
+                defaultSystemVariant: "${themeVariant || ''}",
                 defaultColor: "${color || ''}",
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",

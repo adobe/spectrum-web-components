@@ -285,7 +285,8 @@ governing permissions and limitations under the License.
     vertical-align: bottom;
     -webkit-user-select: none;
     user-select: none;
-    transition: border-color
+    transition:
+        border-color
             var(
                 --mod-tag-animation-duration,
                 var(--spectrum-tag-animation-duration)

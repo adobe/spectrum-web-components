@@ -243,8 +243,9 @@ sp-tab:not(:defined) {
 
 docs-page sp-button:not(:defined) {
     visibility: hidden;
-    line-height: 23px;
-    padding: 10px 0 12px;
+    padding: calc(var(--swc-scale-factor) * 10px) 0
+        calc(var(--swc-scale-factor) * 12px);
+    line-height: calc(var(--swc-scale-factor) * 23px);
     border: 2px solid;
     display: inline-block;
 }
@@ -920,7 +921,7 @@ docs-page:not(:defined) {
     color: var(--spectrum-gray-800);
 }
 
-sp-link:not(:defined) {
+sp-link {
     color: var(--spectrum-accent-content-color-default);
     text-decoration: underline;
 }

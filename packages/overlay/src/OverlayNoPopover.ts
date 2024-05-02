@@ -17,13 +17,15 @@ import type { SpectrumElement } from '@spectrum-web-components/base';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { Constructor, OpenableElement } from './overlay-types.js';
 import {
-    BeforetoggleClosedEvent,
-    BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
     nextFrame,
-    OverlayStateEvent,
     overlayTimer,
 } from './AbstractOverlay.js';
+import {
+    BeforetoggleClosedEvent,
+    BeforetoggleOpenEvent,
+    OverlayStateEvent,
+} from './events.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 

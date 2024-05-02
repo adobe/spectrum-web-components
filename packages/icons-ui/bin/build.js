@@ -141,20 +141,22 @@ icons.forEach((i) => {
     }
 `;
 
-    const icon = prettier.format(iconLiteral, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-    });
-
-    fs.writeFileSync(location, icon, 'utf-8');
+    prettier
+        .format(iconLiteral, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        })
+        .then((icon) => {
+            fs.writeFileSync(location, icon, 'utf-8');
+        });
 
     const exportString = `export {${ComponentName}Icon} from './icons/${id}.js';\r\n`;
     fs.appendFileSync(
@@ -192,31 +194,33 @@ icons.forEach((i) => {
         }
     }
     `;
-    const iconElementFile = prettier.format(iconElement, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-    });
-
-    fs.writeFileSync(
-        path.join(
-            rootDir,
-            'packages',
-            'icons-ui',
-            'src',
-            'elements',
-            `Icon${id}.ts`
-        ),
-        iconElementFile,
-        'utf-8'
-    );
+    prettier
+        .format(iconElement, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        })
+        .then((iconElementFile) => {
+            fs.writeFileSync(
+                path.join(
+                    rootDir,
+                    'packages',
+                    'icons-ui',
+                    'src',
+                    'elements',
+                    `Icon${id}.ts`
+                ),
+                iconElementFile,
+                'utf-8'
+            );
+        });
 
     const iconRegistration = `
     ${disclaimer}
@@ -232,30 +236,32 @@ icons.forEach((i) => {
         }
     }
     `;
-    const iconRegistrationFile = prettier.format(iconRegistration, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-    });
-
-    fs.writeFileSync(
-        path.join(
-            rootDir,
-            'packages',
-            'icons-ui',
-            'icons',
-            `${iconElementName}.ts`
-        ),
-        iconRegistrationFile,
-        'utf-8'
-    );
+    prettier
+        .format(iconRegistration, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        })
+        .then((iconRegistrationFile) => {
+            fs.writeFileSync(
+                path.join(
+                    rootDir,
+                    'packages',
+                    'icons-ui',
+                    'icons',
+                    `${iconElementName}.ts`
+                ),
+                iconRegistrationFile,
+                'utf-8'
+            );
+        });
     const importStatement = `\r\nimport '@spectrum-web-components/icons-ui/icons/${iconElementName}.js';`;
     const metadata = `{name: '${Case.sentence(
         ComponentName

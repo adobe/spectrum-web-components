@@ -32,8 +32,7 @@ governing permissions and limitations under the License.
 }
 
 :host([direction='vertical-right']) #list #selection-indicator {
-    inset-inline-start: auto;
-    inset-inline-end: 0;
+    inset-inline: auto 0;
 }
 
 #list {
@@ -71,8 +70,7 @@ governing permissions and limitations under the License.
 
 :host([dir][direction='horizontal']) #list.scroll {
     scrollbar-width: none;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
 }
 
 :host([dir][direction='horizontal']) #list.scroll::-webkit-scrollbar {

@@ -77,7 +77,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-colorloupe-drop-shadow-color)
             )
     );
-    transition: transform 0.1s ease-in-out, opacity 0.125s ease-in-out;
+    transition:
+        transform 0.1s ease-in-out,
+        opacity 0.125s ease-in-out;
     position: absolute;
     inset-block-end: calc(
         var(--spectrum-color-handle-size) -
