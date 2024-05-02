@@ -54,7 +54,7 @@ export const buildPreviewURLComment = (ref) => {
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
     const previewLinks = [];
-    const themes = ['Classic', 'Express', 'Spectrum-two'];
+    const themes = ['Spectrum', 'Express', 'Spectrum-two'];
     const scales = ['Medium', 'Large'];
     const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
     const directions = ['LTR', 'RTL'];

@@ -215,7 +215,7 @@ const processPackages = async (srcPath, tokensDir, index) => {
  * Core entry function
  */
 export async function generateTokensWrapper(spectrumVersion) {
-    const tokensDir = spectrumVersion === 'classic' ? 'tokens' : 'tokens-v2';
+    const tokensDir = spectrumVersion === 'spectrum' ? 'tokens' : 'tokens-v2';
     fs.mkdirSync(
         path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'spectrum'),
         {
@@ -223,7 +223,7 @@ export async function generateTokensWrapper(spectrumVersion) {
         }
     );
 
-    if (spectrumVersion === 'classic') {
+    if (spectrumVersion === 'spectrum') {
         fs.mkdirSync(
             path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'express'),
             {
