@@ -64,7 +64,13 @@ export const buildPreviewURLComment = (ref) => {
         )}--spectrum-web-components.netlify.app/review/)`
     );
     themes.map((theme) =>
-        colors.map((color) =>
+        colors.map((color) => {
+            if (
+                theme === 'Spectrum-two' &&
+                (color === 'Lightest' || color === 'Darkest')
+            ) {
+                return;
+            }
             scales.map((scale) =>
                 directions.map((direction) => {
                     const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
@@ -73,8 +79,8 @@ export const buildPreviewURLComment = (ref) => {
                         context
                     )}--spectrum-web-components.netlify.app/review/)`);
                 })
-            )
-        )
+            );
+        })
     );
     let comment = `## Branch preview
 
