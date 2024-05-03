@@ -2893,17 +2893,7 @@
   resolved "https://registry.yarnpkg.com/@lit-labs/react/-/react-1.2.1.tgz#5b421502cdf68a3639dec431318eeed2285f1c0e"
   integrity sha512-DiZdJYFU0tBbdQkfwwRSwYyI/mcWkg3sWesKRsHUd4G+NekTmmeq9fzsurvcKTNVa0comNljwtg4Hvi1ds3V+A==
 
-"@lit-labs/ssr-dom-shim@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.0.0.tgz#427e19a2765681fd83411cd72c55ba80a01e0523"
-  integrity sha512-ic93MBXfApIFTrup4a70M/+ddD8xdt2zxxj9sRwHQzhS9ag/syqkD8JPdTXsc1gUy2K8TTirhlCqyTEM/sifNw==
-
-"@lit-labs/ssr-dom-shim@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.1.0.tgz#3361d6b8c4cb2ac426d5794ac7cd9776cd2f0814"
-  integrity sha512-92uQ5ARf7UXYrzaFcAX3T2rTvaS9Z1//ukV+DqjACM4c8s0ZBQd7ayJU5Dh2AFLD/Ayuyz4uMmxQec8q3U4Ong==
-
-"@lit-labs/ssr-dom-shim@^1.2.0":
+"@lit-labs/ssr-dom-shim@^1.0.0", "@lit-labs/ssr-dom-shim@^1.1.0", "@lit-labs/ssr-dom-shim@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.2.0.tgz#353ce4a76c83fadec272ea5674ede767650762fd"
   integrity sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==
@@ -5840,9 +5830,9 @@
     ts-dedent "^2.0.0"
 
 "@storybook/addon-designs@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-designs/-/addon-designs-8.0.0.tgz#4e27a340ed1aaa34def48e6dc4437dbce09a2fd1"
-  integrity sha512-xCiv2PmdUXgco8IHVIY+pe5pWQQoPVwsyimhap1v68kDUuLio5glOS8pTm1zf2KWj8AqXreio/j5krOZpQyKSQ==
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-designs/-/addon-designs-8.0.1.tgz#c8da0732d9f6d8b382dee6243c2c1516cf2601c0"
+  integrity sha512-WiDkSD8ZYCs1CzIZUClcZ8ZF/9+YHAvYbiq0W69jQkyRPGfKSe/ZLXvte+bFKk+JJ0X68sk3nsaTlUQJHjltzw==
   dependencies:
     "@figspec/react" "^1.0.0"
 
