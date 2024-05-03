@@ -16,4 +16,4 @@ import{i as r}from"./swc.DpYYvrpg.js";import{S as e}from"./swc.mnlV9LWQ.js";impo
                     `))}
             </div>
         `}handleSlotchange(){const r=l(this.label,this.slotEl);r&&(this.label=r)}firstUpdated(r){super.firstUpdated(r),this.hasAttribute("role")||this.setAttribute("role","progressbar")}updated(r){super.updated(r),!this.indeterminate&&r.has("progress")?this.setAttribute("aria-valuenow",""+this.progress):this.hasAttribute("aria-valuenow")&&this.removeAttribute("aria-valuenow"),r.has("label")&&(this.label.length?this.setAttribute("aria-label",this.label):r.get("label")===this.getAttribute("aria-label")&&this.removeAttribute("aria-label"))}}d([o({type:Boolean,reflect:!0})],g.prototype,"indeterminate"),d([o({type:String})],g.prototype,"label"),d([o({type:Boolean,reflect:!0,attribute:"over-background"})],g.prototype,"overBackground"),d([o({reflect:!0})],g.prototype,"static"),d([o({type:Number})],g.prototype,"progress"),d([i("slot")],g.prototype,"slotEl"),c("sp-progress-circle",g);var f=Object.freeze({__proto__:null});export{l as g,f as s};
-//# sourceMappingURL=swc.DHdDfGh_.js.map
+//# sourceMappingURL=swc.TbqUJc4H.js.map

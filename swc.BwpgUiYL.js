@@ -49,4 +49,4 @@ import{c as r,S as e}from"./swc.CauAr8K7.js";import{i as o}from"./swc.DpYYvrpg.j
                       `:s}
             </form>
         `}firstUpdated(r){super.firstUpdated(r),this.inputElement.setAttribute("type","search")}willUpdate(){this.multiline=!1}}f([a()],k.prototype,"action"),f([a()],k.prototype,"label"),f([a()],k.prototype,"method"),f([a()],k.prototype,"placeholder"),f([l("#form")],k.prototype,"form"),u("sp-search",k);
-//# sourceMappingURL=swc.Bq4FUSko.js.map
+//# sourceMappingURL=swc.CiGS-4vW.js.map

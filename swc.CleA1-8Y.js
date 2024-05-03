@@ -10,4 +10,4 @@ import{B as t}from"./swc.CKqJpY0s.js";import{i as o}from"./swc.DpYYvrpg.js";impo
                     ></sp-progress-circle>
                 `)))}
         `}}d([n({type:String,attribute:"pending-label"})],i.prototype,"pendingLabel",2),d([n({type:Boolean,reflect:!0,attribute:!0})],i.prototype,"pending",2),d([n()],i.prototype,"variant",1),d([n({type:String,reflect:!0})],i.prototype,"static",2),d([n({reflect:!0})],i.prototype,"treatment",2),d([n({type:Boolean})],i.prototype,"quiet",1),s("sp-button",i);
-//# sourceMappingURL=swc.Qpo6i1G0.js.map
+//# sourceMappingURL=swc.uEEfXs_t.js.map
