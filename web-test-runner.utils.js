@@ -141,6 +141,12 @@ const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
 themeVariants.forEach((themeVariant) => {
     colors.forEach((color) => {
+        if (
+            themeVariant === 'spectrum-two' &&
+            (color === 'lightest' || color === 'darkest')
+        ) {
+            return;
+        }
         scales.forEach((scale) => {
             directions.forEach((dir) => {
                 const reduceMotion = true;

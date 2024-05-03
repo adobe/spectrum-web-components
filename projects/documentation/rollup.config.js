@@ -87,13 +87,11 @@ export default async () => {
                     }
                     const modulepreloads = {};
                     entrypoints.forEach(({ importPath, chunk }) => {
-                        modulepreloads[
-                            importPath
-                        ] = `<link rel="modulepreload" href="${importPath}">`;
+                        modulepreloads[importPath] =
+                            `<link rel="modulepreload" href="${importPath}">`;
                         for (const importPath of Object.values(chunk.imports)) {
-                            modulepreloads[
-                                importPath
-                            ] = `<link rel="modulepreload" href="/${importPath}">`;
+                            modulepreloads[importPath] =
+                                `<link rel="modulepreload" href="/${importPath}">`;
                         }
                         // Leverage when/if `importance` lands.
                         // modulepreloads.push(
@@ -103,12 +101,10 @@ export default async () => {
                         //     )
                         // );
                     });
-                    modulepreloads['font1'] = `<link rel="preload" href="${
-                        process.env.SWC_DIR ? `/${process.env.SWC_DIR}` : ''
-                    }/typekit/adobe-clean-normal-400.woff2" as="font" type="font/woff2" crossorigin/>`;
-                    modulepreloads['font2'] = `<link rel="preload" href="${
-                        process.env.SWC_DIR ? `/${process.env.SWC_DIR}` : ''
-                    }/typekit/adobe-clean-normal-700.woff2" as="font" type="font/woff2" crossorigin/>`;
+                    modulepreloads['font1'] =
+                        `<link rel="preload" href="/typekit/adobe-clean-normal-400.woff2" as="font" type="font/woff2" crossorigin/>`;
+                    modulepreloads['font2'] =
+                        `<link rel="preload" href="/typekit/adobe-clean-normal-700.woff2" as="font" type="font/woff2" crossorigin/>`;
                     return html.replace(
                         '<link rel="preload" href="/styles.css" as="style">',
                         `<link rel="preload" href="/styles.css" as="style">${[

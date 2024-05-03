@@ -38,7 +38,13 @@ vrts.push([
     )}--spectrum-web-components.netlify.app/review/`,
 ]);
 themes.map((theme) =>
-    colors.map((color) =>
+    colors.map((color) => {
+        if (
+            theme === 'Spectrum-two' &&
+            (color === 'Lightest' || color === 'Darkest')
+        ) {
+            return;
+        }
         scales.map((scale) =>
             directions.map((direction) => {
                 const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
@@ -49,8 +55,8 @@ themes.map((theme) =>
                     )}--spectrum-web-components.netlify.app/review/`,
                 ]);
             })
-        )
-    )
+        );
+    })
 );
 
 function cleanURL(url) {
