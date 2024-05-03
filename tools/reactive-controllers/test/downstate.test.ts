@@ -9,35 +9,72 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { expect, fixture, nextFrame } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { html, LitElement } from 'lit';
 import { DownState } from '@spectrum-web-components/reactive-controllers/src/downstate.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { SpectrumElement, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import '@spectrum-web-components/theme/sp-theme.js';
 
-class TestDownstateEl extends LitElement {}
+class TestDownstateEl extends SpectrumElement {
+    override spectrumConfig = {
+        downstate: ['spectrum-two'],
+    };
+    protected override render(): TemplateResult {
+        return html`
+            <sp-theme system="spectrum-two" color="light" scale="medium">
+                <slot></slot>
+            </sp-theme>
+        `;
+    }
+}
 
 customElements.define('test-downstate-el', TestDownstateEl);
 
 describe('DownState', () => {
     it('adds downstate to SpectrumElement', async () => {
-        const el = await fixture<TestDownstateEl>(
-            html`
-                <test-downstate-el></test-downstate-el>
-            `
-        );
-
-        const controller = new DownState(
-            el as LitElement & { shadowRoot: ShadowRoot }
-        );
+        const el = await fixture<TestDownstateEl>(html`
+            <sp-checkbox>I am checkbox</sp-checkbox>
+        `);
+        new DownState(el as LitElement & { shadowRoot: ShadowRoot });
         await nextFrame();
         await nextFrame();
-        controller.handlePointerDown();
-        await nextFrame();
+        const rect = el.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+        await elementUpdated(el);
         expect(
             el.style.getPropertyValue('--spectrum-downstate-width')
         ).to.not.equal('');
 
-        controller.handlePointerUp();
-        await nextFrame();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'up',
+                },
+                {
+                    type: 'move',
+                    position: [
+                        rect.left + rect.width * 2,
+                        rect.top + rect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await elementUpdated(el);
         expect(
             el.style.getPropertyValue('--spectrum-downstate-width')
         ).to.equal('');

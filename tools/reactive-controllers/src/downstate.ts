@@ -28,7 +28,6 @@ export class DownState implements ReactiveController {
 
     public hostDisconnected(): void {
         this.removeEventListeners();
-        this.abortController.abort();
     }
 
     public manage(): void {
@@ -49,6 +48,7 @@ export class DownState implements ReactiveController {
     }
 
     removeEventListeners(): void {
+        this.abortController.abort();
         this.host?.removeEventListener('pointerdown', this.handlePointerDown);
         this.host?.removeEventListener('pointerup', this.handlePointerUp);
     }
