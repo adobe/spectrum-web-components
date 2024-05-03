@@ -115,6 +115,8 @@ export interface ProvideLang {
     callback: (lang: string, unsubscribe: () => void) => void;
 }
 
+// Temporary comment for testing...
+
 /**
  * @element sp-theme
  * @attr {string} [lang=""] - The language of the content scoped to this `sp-theme` element, see: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">MDN reference</a>.
