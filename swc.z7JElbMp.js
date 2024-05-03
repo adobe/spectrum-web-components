@@ -16,4 +16,4 @@ import"./swc.CbSTC6_4.js";import{f as a}from"./swc.C-4VxDS_.js";import{M as r}fr
                 <slot></slot>
             </div>
         `}async getUpdateComplete(){const a=await super.getUpdateComplete();return await this.transitionPromise,a}}l([n({type:Boolean,reflect:!0})],u.prototype,"open"),l([e(".tray")],u.prototype,"tray"),m("sp-tray",u);var p=Object.freeze({__proto__:null});export{s as i,p as s};
-//# sourceMappingURL=swc.1XegOYRN.js.map
+//# sourceMappingURL=swc.Fd7qUPQT.js.map

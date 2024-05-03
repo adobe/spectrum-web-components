@@ -26,4 +26,4 @@ import"./swc.BoXZoQzj.js";import{R as t}from"./swc.ChFnD8LO.js";import{t as r}fr
                 </slot>
             </sp-popover>
         `}}z([i({type:Boolean,reflect:!0})],x.prototype,"emphasized",2),z([i({type:Boolean,reflect:!0})],x.prototype,"flexible",2),z([i({type:Boolean,reflect:!0})],x.prototype,"open",2),z([i({type:String})],x.prototype,"variant",1),n("sp-action-bar",x);
-//# sourceMappingURL=swc.Bny3NcSK.js.map
+//# sourceMappingURL=swc.C-rcsnWs.js.map

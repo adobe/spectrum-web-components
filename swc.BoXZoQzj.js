@@ -13,4 +13,4 @@ import{i as t}from"./swc.DpYYvrpg.js";import{S as o,n as p}from"./swc.Diz0ivfk.j
             <slot></slot>
             ${this.tip?this.renderTip():r}
         `}}v([p({type:Boolean,reflect:!0})],a.prototype,"dialog"),v([p({type:Boolean,reflect:!0})],a.prototype,"open"),v([p({reflect:!0})],a.prototype,"placement"),v([p({type:Boolean,reflect:!0})],a.prototype,"tip"),v([s("#tip")],a.prototype,"tipElement"),i("sp-popover",a);var h=Object.freeze({__proto__:null});export{a as P,h as s};
-//# sourceMappingURL=swc.CUnQDAjp.js.map
+//# sourceMappingURL=swc.WjSGWexO.js.map

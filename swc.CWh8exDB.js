@@ -6,4 +6,4 @@ import{a as t}from"./swc.BcDkcB0b.js";import{x as e}from"./swc.DAPqj1CM.js";impo
               `:e``}render(){return this.viewColor&&import("./swc.CDMoNIMn.js"),e`
             ${super.render()} ${this.renderColorHandle()}
         `}checkValidity(){let t=super.checkValidity();return this.value&&((!this.cachedTinyColor||this.cachedTinyColor.originalInput!==this.value)&&(this.cachedTinyColor=new v(this.value)),this.valid=t=this.cachedTinyColor.isValid,this.invalid=!t),t}}((t,e,r,a)=>{for(var n,s=void 0,i=t.length-1;i>=0;i--)(n=t[i])&&(s=n(e,r,s)||s);s&&M(e,r,s)})([r({type:Boolean,attribute:"view-color"})],S.prototype,"viewColor"),customElements.define("sp-color-field",S);export{v as T};
-//# sourceMappingURL=swc.C4ZM5zjY.js.map
+//# sourceMappingURL=swc.0hbT6OG4.js.map

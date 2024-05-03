@@ -28,4 +28,4 @@ import"./swc.DwEqNJ8B.js";import"./swc.jxF8tUts.js";import"./swc.D8tHUMmB.js";im
                 ></sp-close-button>
             </div>
         `}updated(t){super.updated(t),t.has("open")&&(this.open?this.timeout&&this.startCountdown():this.timeout&&this.stopCountdown()),t.has("timeout")&&(null!==this.timeout&&this.open?this.startCountdown():this.stopCountdown())}}d([r({type:Boolean,reflect:!0})],l.prototype,"open",2),d([r({type:Number})],l.prototype,"timeout",1),d([r({type:String})],l.prototype,"variant",1),e("sp-toast",l);
-//# sourceMappingURL=swc.Gw_8C3Xf.js.map
+//# sourceMappingURL=swc.sm1qTHRO.js.map
