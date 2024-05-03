@@ -55,6 +55,8 @@ import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 
+import { ClickController } from './ClickController.js';
+
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
     m: 'spectrum-UIIcon-ChevronDown100',
@@ -65,6 +67,8 @@ const chevronClass = {
 export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
+
+    public strategy?: ClickController;
 
     @state()
     appliedLabel?: string;
@@ -558,8 +562,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         : undefined
                 )}
                 @blur=${this.handleButtonBlur}
-                @click=${this.handleActivate}
-                @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
@@ -644,6 +646,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         this.bindButtonKeydownListener();
+
+        this.strategy?.abort();
+        this.strategy = undefined;
+
+        this.strategy = new ClickController(this, this.button);
     }
 
     protected get dismissHelper(): TemplateResult {

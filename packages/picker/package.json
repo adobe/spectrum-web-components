@@ -25,6 +25,14 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/ClickController.js": {
+            "development": "./src/ClickController.dev.js",
+            "default": "./src/ClickController.js"
+        },
+        "./src/InteractionController.js": {
+            "development": "./src/InteractionController.dev.js",
+            "default": "./src/InteractionController.js"
+        },
         "./src/Picker.js": {
             "development": "./src/Picker.dev.js",
             "default": "./src/Picker.js"
