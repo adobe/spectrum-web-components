@@ -22635,10 +22635,10 @@ posthtml-attrs-parser@^1.0.1:
   resolved "https://registry.yarnpkg.com/posthtml-attrs-parser/-/posthtml-attrs-parser-1.1.0.tgz#e8d798f1dbea5911c4042d565100a406e0b823e6"
   integrity sha512-OUhvavusxyXVW+ccxE4fYekIc5XOPW9MQeW2R/i4rAGHxGLTFnz41LxhhZxADdjxej8+kY/m/N+B6tw8P2M3Vg==
 
-posthtml-match-helper@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/posthtml-match-helper/-/posthtml-match-helper-1.0.4.tgz#b8f384179732cb5d5e060b9dd1945a2352eb6a44"
-  integrity sha512-Tj9orTIBxHdnraCxoEGjoizsFsTGvukzwcuhOjYQGmDG6gTlaRbMrGgi1J+FwKTN8hsCQENHYY0Deqs9a89BVg==
+posthtml-match-helper@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/posthtml-match-helper/-/posthtml-match-helper-2.0.0.tgz#c3a473f92690db123052900c90e1b99afe326dfd"
+  integrity sha512-YV+rLIm/GIIV1jmJoYdv6mAvsvtJ82ohj2afoho4abPj13Wa6EoYggUYhcTRatzdmtuwOCfOXeMgBRWV1V3t5Q==
 
 posthtml-parser@^0.11.0:
   version "0.11.0"
