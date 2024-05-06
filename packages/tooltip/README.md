@@ -66,7 +66,7 @@ The correct way to make it accessible would be to wrap it under an interactive e
 
 ```html
 <sp-action-button size="s">
-    <sp-icon-info slot="icon"></sp-icon-info>
+    <sp-icon-info-circle slot="icon"></sp-icon-info-circle>
     <sp-tooltip self-managed placement="right">
         Display something here
     </sp-tooltip>
@@ -85,11 +85,11 @@ This is the informative or info variant of Tooltip
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="info">
-    <sp-icon-info slot="icon" size="s"></sp-icon-info>
+    <sp-icon-info-circle slot="icon" size="s"></sp-icon-info-circle>
     Label
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="info">
-    <sp-icon-info slot="icon" size="s"></sp-icon-info>
+    <sp-icon-info-circle slot="icon" size="s"></sp-icon-info-circle>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 ```
@@ -123,11 +123,11 @@ This is the negative a.k.a. error variant of Tooltip
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="negative">
-    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
+    <sp-icon-alert-circle slot="icon" size="s"></sp-icon-alert-circle>
     Label
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="negative">
-    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
+    <sp-icon-alert-circle slot="icon" size="s"></sp-icon-alert-circle>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 ```

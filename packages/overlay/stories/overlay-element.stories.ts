@@ -23,9 +23,9 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-select.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-lasso-select.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-rectangle-select.js';
 import { Placement } from '@floating-ui/dom';
 import { OverlayTypes } from '../src/overlay-types.js';
 import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
@@ -364,15 +364,17 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
         <sp-popover open class="root">
             <sp-action-group vertical quiet emphasized selects="single">
                 <sp-action-button id="trigger-1" hold-affordance>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                    <sp-icon-select slot="icon"></sp-icon-select>
                 </sp-action-button>
                 <sp-action-button id="trigger-2" hold-affordance>
-                    <sp-icon-polygon-select
+                    <sp-icon-polygon-lasso-select
                         slot="icon"
-                    ></sp-icon-polygon-select>
+                    ></sp-icon-polygon-lasso-select>
                 </sp-action-button>
                 <sp-action-button id="trigger-3" hold-affordance>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    <sp-icon-rectangle-select
+                        slot="icon"
+                    ></sp-icon-rectangle-select>
                 </sp-action-button>
                 <sp-action-menu label="More Actions" placement="left">
                     <sp-menu-group id="cms">
@@ -423,17 +425,17 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
             <sp-popover tip>
                 <sp-action-group vertical quiet>
                     <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
+                        <sp-icon-select slot="icon"></sp-icon-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-polygon-select
+                        <sp-icon-polygon-lasso-select
                             slot="icon"
-                        ></sp-icon-polygon-select>
+                        ></sp-icon-polygon-lasso-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                        <sp-icon-rectangle-select
+                            slot="icon"
+                        ></sp-icon-rectangle-select>
                     </sp-action-button>
                 </sp-action-group>
             </sp-popover>
@@ -450,17 +452,17 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
             <sp-popover tip>
                 <sp-action-group vertical quiet>
                     <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
+                        <sp-icon-select slot="icon"></sp-icon-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-polygon-select
+                        <sp-icon-polygon-lasso-select
                             slot="icon"
-                        ></sp-icon-polygon-select>
+                        ></sp-icon-polygon-lasso-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                        <sp-icon-rectangle-select
+                            slot="icon"
+                        ></sp-icon-rectangle-select>
                     </sp-action-button>
                 </sp-action-group>
             </sp-popover>
@@ -482,17 +484,17 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
             <sp-popover tip>
                 <sp-action-group vertical quiet>
                     <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
+                        <sp-icon-select slot="icon"></sp-icon-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-polygon-select
+                        <sp-icon-polygon-lasso-select
                             slot="icon"
-                        ></sp-icon-polygon-select>
+                        ></sp-icon-polygon-lasso-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                        <sp-icon-rectangle-select
+                            slot="icon"
+                        ></sp-icon-rectangle-select>
                     </sp-action-button>
                 </sp-action-group>
             </sp-popover>
@@ -543,7 +545,7 @@ export const actionGroupWithFilters = ({
         <sp-popover open class="root">
             <sp-action-group vertical quiet emphasized selects="single">
                 <sp-action-button id="trigger-1" hold-affordance>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                    <sp-icon-select slot="icon"></sp-icon-select>
                     <sp-tooltip ?delayed=${delayed} self-managed>
                         Hover
                     </sp-tooltip>
@@ -556,31 +558,33 @@ export const actionGroupWithFilters = ({
                         <sp-popover tip>
                             <sp-action-group vertical quiet>
                                 <sp-action-button>
-                                    <sp-icon-anchor-select
+                                    <sp-icon-select
                                         slot="icon"
-                                    ></sp-icon-anchor-select>
+                                    ></sp-icon-select>
                                 </sp-action-button>
                                 <sp-action-button>
-                                    <sp-icon-polygon-select
+                                    <sp-icon-polygon-lasso-select
                                         slot="icon"
-                                    ></sp-icon-polygon-select>
+                                    ></sp-icon-polygon-lasso-select>
                                 </sp-action-button>
                                 <sp-action-button>
-                                    <sp-icon-rect-select
+                                    <sp-icon-rectangle-select
                                         slot="icon"
-                                    ></sp-icon-rect-select>
+                                    ></sp-icon-rectangle-select>
                                 </sp-action-button>
                             </sp-action-group>
                         </sp-popover>
                     </sp-overlay>
                 </sp-action-button>
                 <sp-action-button id="trigger-2" hold-affordance>
-                    <sp-icon-polygon-select
+                    <sp-icon-polygon-lasso-select
                         slot="icon"
-                    ></sp-icon-polygon-select>
+                    ></sp-icon-polygon-lasso-select>
                 </sp-action-button>
                 <sp-action-button id="trigger-3" hold-affordance>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    <sp-icon-rectangle-select
+                        slot="icon"
+                    ></sp-icon-rectangle-select>
                     <sp-tooltip ?delayed=${delayed} self-managed>
                         Hover
                     </sp-tooltip>
@@ -634,17 +638,17 @@ export const actionGroupWithFilters = ({
             <sp-popover tip>
                 <sp-action-group vertical quiet>
                     <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
+                        <sp-icon-select slot="icon"></sp-icon-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-polygon-select
+                        <sp-icon-polygon-lasso-select
                             slot="icon"
-                        ></sp-icon-polygon-select>
+                        ></sp-icon-polygon-lasso-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                        <sp-icon-rectangle-select
+                            slot="icon"
+                        ></sp-icon-rectangle-select>
                     </sp-action-button>
                 </sp-action-group>
             </sp-popover>
@@ -658,17 +662,17 @@ export const actionGroupWithFilters = ({
             <sp-popover tip>
                 <sp-action-group vertical quiet>
                     <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
+                        <sp-icon-select slot="icon"></sp-icon-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-polygon-select
+                        <sp-icon-polygon-lasso-select
                             slot="icon"
-                        ></sp-icon-polygon-select>
+                        ></sp-icon-polygon-lasso-select>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                        <sp-icon-rectangle-select
+                            slot="icon"
+                        ></sp-icon-rectangle-select>
                     </sp-action-button>
                 </sp-action-group>
             </sp-popover>

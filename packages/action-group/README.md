@@ -101,15 +101,15 @@ An `<sp-action-group selects="single">` will manage its `<sp-action-button>` chi
     label="Single Selection Demo Group"
 >
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Button 1
     </sp-action-button>
     <sp-action-button selected>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Short 3
     </sp-action-button>
 </sp-action-group>
@@ -126,15 +126,15 @@ An `<sp-action-group selects="multiple">` will manage its `<sp-action-button>` c
     label="Multiple Selection Demo Group"
 >
     <sp-action-button selected>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Longer Button 2
     </sp-action-button>
     <sp-action-button selected>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Short 3
     </sp-action-button>
 </sp-action-group>
@@ -178,55 +178,55 @@ By default, an `<sp-action-group>` will organize its child buttons horizontally 
 ```html
 <sp-action-group>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group compact>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group quiet>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group compact emphasized>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
 </sp-action-group>
 ```
@@ -239,52 +239,52 @@ The use of the `vertical` attribute instructs the `<sp-action-group>` element to
 <div style="display: flex; justify-content: space-around;">
     <sp-action-group vertical>
         <sp-action-button>
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
             Button 1
         </sp-action-button>
         <sp-action-button>
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
             Longer Button 2
         </sp-action-button>
         <sp-action-button>
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
             Short 3
         </sp-action-button>
     </sp-action-group>
     <sp-action-group vertical compact>
         <sp-action-button>
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
             Button 1
         </sp-action-button>
         <sp-action-button>
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
             Longer Button 2
         </sp-action-button>
         <sp-action-button>
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
             Short 3
         </sp-action-button>
     </sp-action-group>
     <sp-action-group vertical quiet>
         <sp-action-button label="Zoom in">
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
         </sp-action-button>
         <sp-action-button label="Zoom in">
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
         </sp-action-button>
         <sp-action-button label="Zoom in">
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
         </sp-action-button>
     </sp-action-group>
     <sp-action-group compact vertical>
         <sp-action-button label="Zoom in">
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
         </sp-action-button>
         <sp-action-button label="Zoom in">
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
         </sp-action-button>
         <sp-action-button label="Zoom in">
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
         </sp-action-button>
     </sp-action-group>
 </div>
@@ -297,55 +297,55 @@ The `justified` attribute will cause the `<sp-action-group>` element to fill the
 ```html
 <sp-action-group justified>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group justified compact>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group justified quiet>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group compact justified>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
 </sp-action-group>
 ```

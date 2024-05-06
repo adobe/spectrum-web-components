@@ -33,11 +33,11 @@ import {
     <sp-tab label="Tab 1" value="1"></sp-tab>
     <sp-tab value="2">Tab 2</sp-tab>
     <sp-tab label="Tab 3" value="3">
-        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
     </sp-tab>
     <sp-tab vertical value="4">
         Tab 4
-        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
     </sp-tab>
     <sp-tab-panel value="1">
         Content for Tab 1 which uses an attribute for its content delivery
@@ -65,11 +65,11 @@ import {
     <sp-tab label="Tab 1" value="1"></sp-tab>
     <sp-tab value="2">Tab 2</sp-tab>
     <sp-tab label="Tab 3" value="3">
-        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
     </sp-tab>
     <sp-tab vertical value="4">
         Tab 4
-        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
     </sp-tab>
     <sp-tab-panel value="1">
         Content for Tab 1 which uses an attribute for its content delivery

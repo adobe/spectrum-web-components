@@ -20,10 +20,10 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-export.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-export-to.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-menu-hamburger.js';
 
 export default {
     component: 'sp-menu',
@@ -159,7 +159,7 @@ export const menuItemWithDescription = (): TemplateResult => {
     return html`
         <sp-menu>
             <sp-menu-item>
-                <sp-icon-export slot="icon"></sp-icon-export>
+                <sp-icon-export-to slot="icon"></sp-icon-export-to>
                 Quick export
                 <span slot="description">Share a snapshot</span>
             </sp-menu-item>
@@ -200,7 +200,7 @@ export const selectsWithIcons = (): TemplateResult => {
         <sp-popover open>
             <sp-menu selects="single">
                 <sp-menu-item>
-                    <sp-icon-export slot="icon"></sp-icon-export>
+                    <sp-icon-export-to slot="icon"></sp-icon-export-to>
                     Quick export
                 </sp-menu-item>
                 <sp-menu-item selected>

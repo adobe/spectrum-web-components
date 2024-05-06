@@ -152,7 +152,7 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
 ```html demo
 <sp-tabs selected="1">
     <sp-tab label="Tab 1" value="1">
-        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
     </sp-tab>
     <sp-tab label="Tab 2" value="2">
         <sp-icon-close slot="icon"></sp-icon-close>
@@ -161,7 +161,7 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
         <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
     </sp-tab>
     <sp-tab label="Tab 4" value="4">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-tab>
     <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
     <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
@@ -256,7 +256,7 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
 ```html demo
 <sp-tabs selected="1" direction="vertical">
     <sp-tab label="Tab 1" value="1">
-        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
     </sp-tab>
     <sp-tab label="Tab 2" value="2">
         <sp-icon-close slot="icon"></sp-icon-close>
@@ -265,7 +265,7 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
         <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
     </sp-tab>
     <sp-tab label="Tab 4" value="4">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-tab>
     <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
     <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>

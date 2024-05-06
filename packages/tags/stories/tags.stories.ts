@@ -16,7 +16,7 @@ import '@spectrum-web-components/tags/sp-tags.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import { avatar } from '../../avatar/stories/images';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
 
 export default {
     title: 'Tags',
@@ -68,15 +68,15 @@ export const Default = (): TemplateResult => {
         <sp-tags>
             <sp-tag>
                 Tag 1
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
             <sp-tag invalid>
                 Tag 2
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
             <sp-tag disabled>
                 Tag 3
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
         </sp-tags>
     `;
@@ -122,15 +122,15 @@ export const deletable = (args: Props): TemplateResult => {
         <sp-tags @delete=${args.onDelete}>
             <sp-tag deletable>
                 Tag 1
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
             <sp-tag invalid deletable>
                 Tag 2
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
             <sp-tag disabled deletable>
                 Tag 3
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
         </sp-tags>
     `;
@@ -141,15 +141,15 @@ export const readonly = (): TemplateResult => {
         <sp-tags>
             <sp-tag deletable readonly>
                 Tag 1
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
             <sp-tag invalid deletable readonly>
                 Tag 2
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
             <sp-tag disabled deletable>
                 Tag 3
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                <sp-icon-search slot="icon" size="s"></sp-icon-search>
             </sp-tag>
         </sp-tags>
     `;

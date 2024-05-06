@@ -32,10 +32,10 @@ import { QuickActions } from '@spectrum-web-components/quick-actions';
 >
     <sp-quick-actions opened>
         <sp-action-button quiet label="Info">
-            <sp-icon-info slot="icon"></sp-icon-info>
+            <sp-icon-info-circle slot="icon"></sp-icon-info-circle>
         </sp-action-button>
         <sp-action-button quiet label="Magnify">
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            <sp-icon-search slot="icon"></sp-icon-search>
         </sp-action-button>
         <sp-action-button quiet label="Star">
             <sp-icon-star slot="icon"></sp-icon-star>

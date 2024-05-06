@@ -65,13 +65,13 @@ Here a default `<overlay-trigger>` manages content that is triggered by click an
             style="margin: calc(var(--spectrum-spacing-100) / 2);"
         >
             <sp-action-button>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                <sp-icon-search slot="icon"></sp-icon-search>
             </sp-action-button>
             <sp-action-button>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                <sp-icon-search slot="icon"></sp-icon-search>
             </sp-action-button>
             <sp-action-button>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                <sp-icon-search slot="icon"></sp-icon-search>
             </sp-action-button>
         </sp-action-group>
     </sp-popover>

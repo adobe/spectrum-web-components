@@ -75,7 +75,7 @@ When a vertical Divider is used inside of a flex container, use `align-self: str
 ```html-live demo
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-divider
         size="s"
@@ -83,7 +83,7 @@ When a vertical Divider is used inside of a flex container, use `align-self: str
         vertical
     ></sp-divider>
     <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
 </div>
 ```
@@ -95,7 +95,7 @@ When a vertical Divider is used inside of a flex container, use `align-self: str
 ```html-live demo
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-divider
         size="m"
@@ -103,7 +103,7 @@ When a vertical Divider is used inside of a flex container, use `align-self: str
         vertical
     ></sp-divider>
     <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
 </div>
 ```
@@ -115,7 +115,7 @@ When a vertical Divider is used inside of a flex container, use `align-self: str
 ```html-live demo
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
     <sp-divider
         size="l"
@@ -123,7 +123,7 @@ When a vertical Divider is used inside of a flex container, use `align-self: str
         vertical
     ></sp-divider>
     <sp-action-button quiet label="Zoom in">
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        <sp-icon-search slot="icon"></sp-icon-search>
     </sp-action-button>
 </div>
 ```

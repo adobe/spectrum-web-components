@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';

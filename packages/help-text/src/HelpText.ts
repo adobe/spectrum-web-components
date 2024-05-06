@@ -19,7 +19,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-circle.js';
 
 import styles from './help-text.css.js';
 
@@ -48,7 +48,7 @@ export class HelpText extends SizedMixin(SpectrumElement, {
         return html`
             ${this.variant === 'negative' && this.icon
                 ? html`
-                      <sp-icon-alert class="icon"></sp-icon-alert>
+                      <sp-icon-alert-circle class="icon"></sp-icon-alert-circle>
                   `
                 : nothing}
             <div class="text"><slot></slot></div>

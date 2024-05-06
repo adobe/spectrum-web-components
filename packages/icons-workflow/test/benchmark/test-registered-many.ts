@@ -20,7 +20,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-add-to.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add-to-selection.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-aemscreens.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-airplane.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-add.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-check.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-circle.js';
@@ -60,7 +60,7 @@ measureFixtureCreation(html`
     <sp-icon-add-to-selection></sp-icon-add-to-selection>
     <sp-icon-aemscreens></sp-icon-aemscreens>
     <sp-icon-airplane></sp-icon-airplane>
-    <sp-icon-alert></sp-icon-alert>
+    <sp-icon-alert-circle></sp-icon-alert-circle>
     <sp-icon-alert-add></sp-icon-alert-add>
     <sp-icon-alert-check></sp-icon-alert-check>
     <sp-icon-alert-circle></sp-icon-alert-circle>

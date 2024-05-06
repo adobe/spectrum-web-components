@@ -26,7 +26,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
@@ -913,7 +913,7 @@ export const longpress = (): TemplateResult => {
     return html`
         <overlay-trigger placement="right-start">
             <sp-action-button slot="trigger" hold-affordance>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                <sp-icon-search slot="icon"></sp-icon-search>
             </sp-action-button>
             <sp-tooltip slot="hover-content">Search real hard...</sp-tooltip>
             <sp-popover slot="longpress-content" tip>
@@ -927,13 +927,13 @@ export const longpress = (): TemplateResult => {
                     style="margin: calc(var(--spectrum-actiongroup-button-gap-y,calc(var(--swc-scale-factor) * 10px)) / 2);"
                 >
                     <sp-action-button>
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-search slot="icon"></sp-icon-search>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-search slot="icon"></sp-icon-search>
                     </sp-action-button>
                     <sp-action-button>
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-search slot="icon"></sp-icon-search>
                     </sp-action-button>
                 </sp-action-group>
             </sp-popover>

@@ -35,7 +35,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-menu-hamburger.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import {
     type OverlayTriggerOptions,
@@ -413,7 +413,9 @@ export class LayoutElement extends LitElement {
                     id="toggle-nav-id"
                     ${trigger(() => this.sideNav, triggerOptions)}
                 >
-                    <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                    <sp-icon-menu-hamburger
+                        slot="icon"
+                    ></sp-icon-menu-hamburger>
                 </sp-action-button>
                 <sp-action-button
                     quiet

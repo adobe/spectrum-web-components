@@ -70,13 +70,15 @@ When a `<sp-overlay>` element is opened, it will pass that state to its direct c
 <sp-popover id="overlay-demo" class="overlay-demo-popover" open>
     <sp-action-group vertical quiet emphasized selects="single">
         <sp-action-button id="trigger-1" hold-affordance>
-            <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+            <sp-icon-select slot="icon"></sp-icon-select>
         </sp-action-button>
         <sp-action-button id="trigger-2" hold-affordance>
-            <sp-icon-polygon-select slot="icon"></sp-icon-polygon-select>
+            <sp-icon-polygon-lasso-select
+                slot="icon"
+            ></sp-icon-polygon-lasso-select>
         </sp-action-button>
         <sp-action-button id="trigger-3" hold-affordance>
-            <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+            <sp-icon-rectangle-select slot="icon"></sp-icon-rectangle-select>
         </sp-action-button>
     </sp-action-group>
     <sp-overlay trigger="trigger-1@hover" type="hint">
@@ -90,15 +92,17 @@ When a `<sp-overlay>` element is opened, it will pass that state to its direct c
         <sp-popover class="overlay-demo-popover" tip>
             <sp-action-group vertical quiet>
                 <sp-action-button>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                    <sp-icon-select slot="icon"></sp-icon-select>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon-polygon-select
+                    <sp-icon-polygon-lasso-select
                         slot="icon"
-                    ></sp-icon-polygon-select>
+                    ></sp-icon-polygon-lasso-select>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    <sp-icon-rectangle-select
+                        slot="icon"
+                    ></sp-icon-rectangle-select>
                 </sp-action-button>
             </sp-action-group>
         </sp-popover>
@@ -114,15 +118,17 @@ When a `<sp-overlay>` element is opened, it will pass that state to its direct c
         <sp-popover class="overlay-demo-popover" tip>
             <sp-action-group vertical quiet>
                 <sp-action-button>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                    <sp-icon-select slot="icon"></sp-icon-select>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon-polygon-select
+                    <sp-icon-polygon-lasso-select
                         slot="icon"
-                    ></sp-icon-polygon-select>
+                    ></sp-icon-polygon-lasso-select>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    <sp-icon-rectangle-select
+                        slot="icon"
+                    ></sp-icon-rectangle-select>
                 </sp-action-button>
             </sp-action-group>
         </sp-popover>
@@ -138,15 +144,17 @@ When a `<sp-overlay>` element is opened, it will pass that state to its direct c
         <sp-popover class="overlay-demo-popover" tip>
             <sp-action-group vertical quiet>
                 <sp-action-button>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
+                    <sp-icon-select slot="icon"></sp-icon-select>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon-polygon-select
+                    <sp-icon-polygon-lasso-select
                         slot="icon"
-                    ></sp-icon-polygon-select>
+                    ></sp-icon-polygon-lasso-select>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
+                    <sp-icon-rectangle-select
+                        slot="icon"
+                    ></sp-icon-rectangle-select>
                 </sp-action-button>
             </sp-action-group>
         </sp-popover>

@@ -29,7 +29,7 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-menu-hamburger.js';
 import { TemplateResult } from 'lit-html';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 
@@ -609,53 +609,47 @@ describe('Submenu', () => {
         const rootChanged = spy();
         const submenuChanged = spy();
         const subSubmenuChanged = spy();
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu
-                    @change=${(event: Event & { target: Menu }) => {
-                        rootChanged(event.target.value);
-                    }}
-                >
-                    <sp-menu-item class="root">
-                        Has submenu
-                        <sp-menu
-                            slot="submenu"
-                            @change=${(event: Event & { target: Menu }) => {
-                                submenuChanged(event.target.value);
-                            }}
-                        >
-                            <sp-menu-item class="submenu-item-1">
-                                One
-                            </sp-menu-item>
-                            <sp-menu-item class="submenu-item-2">
-                                Two
-                                <sp-menu
-                                    slot="submenu"
-                                    @change=${(
-                                        event: Event & { target: Menu }
-                                    ) => {
-                                        subSubmenuChanged(event.target.value);
-                                    }}
-                                >
-                                    <sp-menu-item class="sub-submenu-item-1">
-                                        A
-                                    </sp-menu-item>
-                                    <sp-menu-item class="sub-submenu-item-2">
-                                        B
-                                    </sp-menu-item>
-                                    <sp-menu-item class="sub-submenu-item-3">
-                                        C
-                                    </sp-menu-item>
-                                </sp-menu>
-                            </sp-menu-item>
-                            <sp-menu-item class="submenu-item-3">
-                                Three
-                            </sp-menu-item>
-                        </sp-menu>
-                    </sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                @change=${(event: Event & { target: Menu }) => {
+                    rootChanged(event.target.value);
+                }}
+            >
+                <sp-menu-item class="root">
+                    Has submenu
+                    <sp-menu
+                        slot="submenu"
+                        @change=${(event: Event & { target: Menu }) => {
+                            submenuChanged(event.target.value);
+                        }}
+                    >
+                        <sp-menu-item class="submenu-item-1">One</sp-menu-item>
+                        <sp-menu-item class="submenu-item-2">
+                            Two
+                            <sp-menu
+                                slot="submenu"
+                                @change=${(event: Event & { target: Menu }) => {
+                                    subSubmenuChanged(event.target.value);
+                                }}
+                            >
+                                <sp-menu-item class="sub-submenu-item-1">
+                                    A
+                                </sp-menu-item>
+                                <sp-menu-item class="sub-submenu-item-2">
+                                    B
+                                </sp-menu-item>
+                                <sp-menu-item class="sub-submenu-item-3">
+                                    C
+                                </sp-menu-item>
+                            </sp-menu>
+                        </sp-menu-item>
+                        <sp-menu-item class="submenu-item-3">
+                            Three
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-menu>
+        `);
         const rootItem = el.querySelector('.root') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
         const item2 = document.querySelector('.submenu-item-2') as MenuItem;
@@ -725,7 +719,7 @@ describe('Submenu', () => {
     it('closes all decendent submenus when closing a ancestor menu', async () => {
         const el = await fixture<ActionMenu>(html`
             <sp-action-menu label="Closing ancestors will close submenus">
-                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <sp-icon-menu-hamburger slot="icon"></sp-icon-menu-hamburger>
                 <sp-menu-group role="none" id="group">
                     <span slot="header">New York</span>
                     <sp-menu-item>Bronx</sp-menu-item>
@@ -801,7 +795,9 @@ describe('Submenu', () => {
         beforeEach(async function () {
             this.el = await fixture<ActionMenu>(html`
                 <sp-action-menu label="Deep submenu tree">
-                    <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                    <sp-icon-menu-hamburger
+                        slot="icon"
+                    ></sp-icon-menu-hamburger>
                     <sp-menu-group role="none">
                         <span slot="header">New York</span>
                         <sp-menu-item id="no-submenu">Bronx</sp-menu-item>
@@ -970,20 +966,18 @@ describe('Submenu', () => {
                 },
             ],
         });
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item class="root-1">
-                        Has submenu
-                        <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
-                    </sp-menu-item>
-                    <sp-menu-item class="root-2">
-                        Has submenu
-                        <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
-                    </sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item class="root-1">
+                    Has submenu
+                    <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
+                </sp-menu-item>
+                <sp-menu-item class="root-2">
+                    Has submenu
+                    <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
+                </sp-menu-item>
+            </sp-menu>
+        `);
 
         await elementUpdated(el);
         const rootItem1 = el.querySelector('.root-1') as MenuItem;

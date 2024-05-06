@@ -13,7 +13,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { html } from '@spectrum-web-components/base';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-circle.js';
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
 import {
     AlertDialog,
@@ -35,7 +35,7 @@ describe('AlertDialog', () => {
     it('warning variant renders with an alert icon', async () => {
         const el = await fixture<AlertDialog>(warning());
         await elementUpdated(el);
-        const alertIcon = el.shadowRoot.querySelector('sp-icon-alert');
+        const alertIcon = el.shadowRoot.querySelector('sp-icon-alert-circle');
         expect(alertIcon).to.be.not.null;
     });
     it('secondary variant renders with `confirm`, `cancel` and `secondary` buttons', async () => {
@@ -50,13 +50,11 @@ describe('AlertDialog', () => {
         expect(secondaryButton).to.be.not.null;
     });
     it('validates variants', async () => {
-        const el = await fixture<AlertDialog>(
-            html`
-                <sp-alert-dialog variant="invalid">
-                    This Alert Dialog validates variants.
-                </sp-alert-dialog>
-            `
-        );
+        const el = await fixture<AlertDialog>(html`
+            <sp-alert-dialog variant="invalid">
+                This Alert Dialog validates variants.
+            </sp-alert-dialog>
+        `);
 
         await elementUpdated(el);
         expect(el.variant).to.equal('');
