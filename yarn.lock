@@ -123,10 +123,10 @@
     lodash.assignwith "^4.2.0"
     typical "^7.1.1"
 
-"@adobe/spectrum-css-workflow-icons@^1.5.4":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.5.4.tgz#0e09ff519c36139176c3ba3ce617a995c9032f67"
-  integrity sha512-sZ19YOLGw5xTZzCEkVXPjf53lXVzo063KmDTJjpSjy/XLVsF+RaX0b436SfSM4hsIUZ7n27+UsbOvzFaFjcYXw==
+"@adobe/spectrum-css-workflow-icons@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-2.0.0.tgz#87cfee026fca3e930cc41460e73a1c3d845468a9"
+  integrity sha512-sioQc0V6zDRvoyVHwyHPRco9hp+Wril0URFp62GjJFg+Xh9uHfK3De99Zfbyt2yAcHgx9rCX2zVluC/sIgPnyw==
 
 "@ampproject/remapping@^2.2.0":
   version "2.3.0"

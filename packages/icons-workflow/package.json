@@ -48,7 +48,7 @@
         "@spectrum-web-components/icon": "^0.42.3"
     },
     "devDependencies": {
-        "@adobe/spectrum-css-workflow-icons": "^1.5.4",
+        "@adobe/spectrum-css-workflow-icons": "^2.0.0",
         "@spectrum-css/icon": "^7.1.0",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
