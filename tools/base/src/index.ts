@@ -13,3 +13,4 @@ governing permissions and limitations under the License.
 export * from './Base.js';
 export * from './sizedMixin.js';
 export * from 'lit';
+export * from 'lit/async-directive.js';

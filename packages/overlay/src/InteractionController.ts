@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController } from 'lit';
+import type { ReactiveController } from '@spectrum-web-components/base';
 import { AbstractOverlay } from './AbstractOverlay.js';
 
 export enum InteractionTypes {

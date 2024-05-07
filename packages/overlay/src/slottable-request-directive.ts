@@ -15,7 +15,7 @@ import {
     render,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { AsyncDirective, directive } from 'lit/async-directive.js';
+import { AsyncDirective, directive } from '@spectrum-web-components/base';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
