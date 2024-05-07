@@ -108,9 +108,12 @@ export class Combobox extends Textfield {
     }
 
     private scrollToActiveDescendant(): void {
-        const activeEl = this.shadowRoot.querySelector(
-            `#${this.activeDescendant?.value}`
-        ) as HTMLElement;
+        if (!this.activeDescendant) {
+            return;
+        }
+        const activeEl = this.shadowRoot.getElementById(
+            this.activeDescendant.value
+        );
         if (activeEl) {
             activeEl.scrollIntoView({ block: 'nearest' });
         }
@@ -211,6 +214,7 @@ export class Combobox extends Textfield {
             return;
         }
         this.value = this.activeDescendant.itemText;
+        this.handleChange();
     }
 
     public filterAvailableOptions(): void {

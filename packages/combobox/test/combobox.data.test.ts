@@ -17,7 +17,7 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-
+import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { fixture } from '../../../test/testing-helpers.js';
@@ -388,5 +388,31 @@ describe('Combobox Data', () => {
             itemText,
         }));
         expect(processedOptions).to.deep.equal([...options, newOption]);
+    });
+    it('accepts numeric values as html', async () => {
+        const el = await fixture<TestableCombobox>(
+            html`
+                <sp-combobox>
+                    Combobox Test
+                    <sp-menu-item value="1">Mambo no. 1</sp-menu-item>
+                    <sp-menu-item value="2">Mambo no. 2</sp-menu-item>
+                    <sp-menu-item value="3">Mambo no. 5</sp-menu-item>
+                </sp-combobox>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el.activeDescendant).to.be.undefined;
+
+        el.focus();
+        await elementUpdated(el);
+
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await elementUpdated(el);
+
+        expect(el.activeDescendant).to.not.be.undefined;
+        expect(el.activeDescendant.value).to.equal('1');   
     });
 });
