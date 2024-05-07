@@ -19,11 +19,9 @@ describe('Dev mode', () => {
     window.__swc.verbose = true;
     const consoleWarnStub = stub(console, 'warn');
     it('warns in Dev Mode when no attributes or fragments', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -44,15 +42,9 @@ describe('Dev mode', () => {
     });
 
     it('warns in Dev Mode when you pass a theme attribute', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme
-                    theme="classic"
-                    color="dark"
-                    scale="medium"
-                ></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme theme="classic" color="dark" scale="medium"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -68,6 +60,32 @@ describe('Dev mode', () => {
                 localName: 'sp-theme',
                 type: 'api',
                 level: 'default',
+            },
+        });
+        consoleWarnStub.restore();
+    });
+    it('warns in Dev Mode when you use Spectrum Two theme ', async () => {
+        const el = await fixture<Theme>(html`
+            <sp-theme
+                theme="spectrum-two"
+                color="dark"
+                scale="medium"
+            ></sp-theme>
+        `);
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+
+        expect(
+            spyCall.args.at(0).includes('Spectrum 2theme delivery'),
+            'confirm "beta-theme"-centric message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-theme',
+                level: 'high',
             },
         });
         consoleWarnStub.restore();
