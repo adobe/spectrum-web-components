@@ -74,28 +74,22 @@ const isMenuActiveElement = function (el: Picker): boolean {
 export function runPickerTests(): void {
     let el: Picker;
     const pickerFixture = async (): Promise<Picker> => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <sp-theme scale="medium" color="light">
-                    <sp-field-label for="picker">
-                        Where do you live?
-                    </sp-field-label>
-                    <sp-picker
-                        id="picker"
-                        style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
-                    >
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item value="option-2">
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-picker>
-                </sp-theme>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <sp-theme scale="medium" color="light">
+                <sp-field-label for="picker">Where do you live?</sp-field-label>
+                <sp-picker
+                    id="picker"
+                    style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
+                >
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-picker>
+            </sp-theme>
+        `);
 
         return test.querySelector('sp-picker') as Picker;
     };
@@ -1333,30 +1327,28 @@ export function runPickerTests(): void {
     });
     describe('grouped', async () => {
         const groupedFixture = async (): Promise<Picker> => {
-            return fixture<Picker>(
-                html`
-                    <sp-picker
-                        quiet
-                        label="I would like to use Spectrum Web Components"
-                        value="0"
-                    >
-                        <sp-menu-group>
-                            <span slot="header">Timeline</span>
-                            <sp-menu-item value="0" id="should-be-selected">
-                                Immediately
-                            </sp-menu-item>
-                            <sp-menu-item value="1">
-                                I'm already using them
-                            </sp-menu-item>
-                            <sp-menu-item value="2">Soon</sp-menu-item>
-                            <sp-menu-item value="3">
-                                As part of my next project
-                            </sp-menu-item>
-                            <sp-menu-item value="4">In the future</sp-menu-item>
-                        </sp-menu-group>
-                    </sp-picker>
-                `
-            );
+            return fixture<Picker>(html`
+                <sp-picker
+                    quiet
+                    label="I would like to use Spectrum Web Components"
+                    value="0"
+                >
+                    <sp-menu-group>
+                        <span slot="header">Timeline</span>
+                        <sp-menu-item value="0" id="should-be-selected">
+                            Immediately
+                        </sp-menu-item>
+                        <sp-menu-item value="1">
+                            I'm already using them
+                        </sp-menu-item>
+                        <sp-menu-item value="2">Soon</sp-menu-item>
+                        <sp-menu-item value="3">
+                            As part of my next project
+                        </sp-menu-item>
+                        <sp-menu-item value="4">In the future</sp-menu-item>
+                    </sp-menu-group>
+                </sp-picker>
+            `);
         };
         beforeEach(async () => {
             el = await groupedFixture();
@@ -1371,29 +1363,27 @@ export function runPickerTests(): void {
     });
     describe('slotted label', () => {
         const pickerFixture = async (): Promise<Picker> => {
-            const test = await fixture<Picker>(
-                html`
-                    <div>
-                        <sp-field-label for="picker-slotted">
-                            Where do you live?
-                        </sp-field-label>
-                        <sp-picker id="picker-slotted">
-                            <span slot="label">
-                                Select a Country with a very long label, too
-                                long in fact
-                            </span>
-                            <sp-menu-item>Deselect</sp-menu-item>
-                            <sp-menu-item value="option-2">
-                                Select Inverse
-                            </sp-menu-item>
-                            <sp-menu-item>Feather...</sp-menu-item>
-                            <sp-menu-item>Select and Mask...</sp-menu-item>
-                            <sp-menu-item>Save Selection</sp-menu-item>
-                            <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                        </sp-picker>
-                    </div>
-                `
-            );
+            const test = await fixture<Picker>(html`
+                <div>
+                    <sp-field-label for="picker-slotted">
+                        Where do you live?
+                    </sp-field-label>
+                    <sp-picker id="picker-slotted">
+                        <span slot="label">
+                            Select a Country with a very long label, too long in
+                            fact
+                        </span>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item value="option-2">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                    </sp-picker>
+                </div>
+            `);
 
             return test.querySelector('sp-picker') as Picker;
         };
@@ -1434,36 +1424,53 @@ export function runPickerTests(): void {
         });
 
         const pickerFixture = async (): Promise<Picker> => {
-            const test = await fixture<Picker>(
-                html`
-                    <div>
-                        <sp-field-label for="picker-deprecated">
-                            Where do you live?
-                        </sp-field-label>
-                        <sp-picker
-                            id="picker-deprecated"
-                            label="Select a Country with a very long label, too long in fact"
-                        >
-                            <sp-menu>
-                                <sp-menu-item>Deselect</sp-menu-item>
-                                <sp-menu-item value="option-2">
-                                    Select Inverse
-                                </sp-menu-item>
-                                <sp-menu-item>Feather...</sp-menu-item>
-                                <sp-menu-item>Select and Mask...</sp-menu-item>
-                                <sp-menu-item>Save Selection</sp-menu-item>
-                                <sp-menu-item disabled>
-                                    Make Work Path
-                                </sp-menu-item>
-                            </sp-menu>
-                        </sp-picker>
-                    </div>
-                `
-            );
+            const test = await fixture<Picker>(html`
+                <div>
+                    <sp-field-label for="picker-deprecated">
+                        Where do you live?
+                    </sp-field-label>
+                    <sp-picker
+                        id="picker-deprecated"
+                        label="Select a Country with a very long label, too long in fact"
+                    >
+                        <sp-menu>
+                            <sp-menu-item>Deselect</sp-menu-item>
+                            <sp-menu-item value="option-2">
+                                Select Inverse
+                            </sp-menu-item>
+                            <sp-menu-item>Feather...</sp-menu-item>
+                            <sp-menu-item>Select and Mask...</sp-menu-item>
+                            <sp-menu-item>Save Selection</sp-menu-item>
+                            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                        </sp-menu>
+                    </sp-picker>
+                </div>
+            `);
 
             return test.querySelector('sp-picker') as Picker;
         };
-        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+        it('does not warn in Dev Mode when accessible elements leveraged', async () => {
+            const test = await fixture<Picker>(html`
+                <div>
+                    <sp-field-label for="test">Test label</sp-field-label>
+                    <sp-picker id="test">
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                    </sp-picker>
+                </div>
+            `);
+
+            el = test.querySelector('sp-picker') as Picker;
+
+            await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
+
+            expect(consoleWarnStub.called).to.be.false;
+        });
+        it('warns in Dev Mode when accessible attributes are not leveraged', async function () {
+            this.retries(0);
             el = await fixture<Picker>(html`
                 <sp-picker>
                     <sp-menu-item>Feather...</sp-menu-item>
@@ -1473,6 +1480,8 @@ export function runPickerTests(): void {
             `);
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
@@ -1636,21 +1645,19 @@ export function runPickerTests(): void {
         expect(el1.open).to.be.false;
     });
     it('displays selected item text by default', async () => {
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    value="inverse"
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
-                    <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                value="inverse"
+                label="Select a Country with a very long label, too long in fact"
+            >
+                <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+                <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-picker>
+        `);
         await nextFrame();
 
         await elementUpdated(el);
@@ -1699,21 +1706,19 @@ export function runPickerTests(): void {
         ).to.equal(secondItem.id);
     });
     it('resets value when item not available', async () => {
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    value="missing"
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
-                    <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                value="missing"
+                label="Select a Country with a very long label, too long in fact"
+            >
+                <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+                <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-picker>
+        `);
 
         await elementUpdated(el);
         await waitUntil(() => el.value === '');
@@ -1724,20 +1729,15 @@ export function runPickerTests(): void {
     it('allows event listeners on child items', async () => {
         const mouseenterSpy = spy();
         const handleMouseenter = (): void => mouseenterSpy();
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu-item
-                        value="deselect"
-                        @mouseenter=${handleMouseenter}
-                    >
-                        Deselect Text
-                    </sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                label="Select a Country with a very long label, too long in fact"
+            >
+                <sp-menu-item value="deselect" @mouseenter=${handleMouseenter}>
+                    Deselect Text
+                </sp-menu-item>
+            </sp-picker>
+        `);
 
         await elementUpdated(el);
 
@@ -1768,17 +1768,15 @@ export function runPickerTests(): void {
         const handleOpenedSpy = (event: Event): void => openedSpy(event);
         const handleClosedSpy = (event: Event): void => closedSpy(event);
 
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    label="Select a Country with a very long label, too long in fact"
-                    @sp-opened=${handleOpenedSpy}
-                    @sp-closed=${handleClosedSpy}
-                >
-                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                label="Select a Country with a very long label, too long in fact"
+                @sp-opened=${handleOpenedSpy}
+                @sp-closed=${handleClosedSpy}
+            >
+                <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+            </sp-picker>
+        `);
 
         await elementUpdated(el);
         const opened = oneEvent(el, 'sp-opened');
