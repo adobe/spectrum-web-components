@@ -372,6 +372,14 @@ describe('Combobox accessibility', () => {
         expect(el.activeDescendant).to.not.be.undefined;
         expect(el.activeDescendant.value).to.equal('apple');
 
+        const activeDescendant = el.shadowRoot.querySelector(
+            '#apple'
+        ) as MenuItem;
+
+        await elementUpdated(activeDescendant);
+        await nextFrame();
+        await nextFrame();
+
         const change = oneEvent(el, 'change');
         await sendKeys({
             press: 'Enter',
@@ -379,6 +387,5 @@ describe('Combobox accessibility', () => {
 
         await change;
         expect(el.value).to.equal('Apple');
-    })
-    
+    });
 });

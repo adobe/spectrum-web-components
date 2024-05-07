@@ -214,7 +214,13 @@ export class Combobox extends Textfield {
             return;
         }
         this.value = this.activeDescendant.itemText;
-        this.handleChange();
+
+        const activeEl = this.shadowRoot.getElementById(
+            this.activeDescendant.value
+        );
+        if (activeEl) {
+            activeEl.click();
+        }
     }
 
     public filterAvailableOptions(): void {
