@@ -186,8 +186,24 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
                 { level: 'deprecation' }
             );
+            if (value === 'spectrum-two') {
+                window.__swc.warn(
+                    this,
+                    'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+                    'https://s2.spectrum.adobe.com/',
+                    { level: 'high' }
+                );
+            }
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
+            if (value === 'spectrum-two') {
+                window.__swc.warn(
+                    this,
+                    'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+                    'https://s2.spectrum.adobe.com/',
+                    { level: 'high' }
+                );
+            }
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
