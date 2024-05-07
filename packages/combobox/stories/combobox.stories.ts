@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -50,6 +50,19 @@ export const disabled = (): TemplateResult => {
             .options=${countries}
             value="Azerbaijan"
         ></sp-combobox>
+    `;
+};
+
+export const invalid = (): TemplateResult => {
+    return html`
+        <sp-field-label for="combobox-invalid">
+            What would you like to eat for dessert?
+        </sp-field-label>
+        <sp-combobox id="combobox-invalid" .options=${fruits} invalid>
+            <sp-help-text slot="negative-help-text">
+                Choose or add at least one fruit.
+            </sp-help-text>
+        </sp-combobox>
     `;
 };
 

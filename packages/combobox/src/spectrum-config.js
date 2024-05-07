@@ -101,11 +101,11 @@ const config = {
                     hoist: true,
                 },
                 converter.classToId('spectrum-Combobox-input'),
-                {
-                    find: [builder.class('spectrum-Combobox-textfield')],
-                    replace: [],
-                    collapseSelector: true,
-                },
+                converter.classToId('spectrum-Combobox-textfield'),
+                converter.classToClass(
+                    'spectrum-Textfield-validationIcon',
+                    'icon'
+                ),
             ],
             excludeByComponents: [
                 {
