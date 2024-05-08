@@ -147,6 +147,31 @@ describe('NumberField', () => {
             expect(el.focusElement.value).to.equal('-2.4');
         });
     });
+    describe('it handles values greater than 1000', () => {
+        it('correctly handles values greater than 1000 with step=1', async () => {
+            const el = await getElFrom(
+                Default({
+                    step: 1,
+                    min: 0,
+                    max: 200000,
+                    value: 999,
+                })
+            );
+            // Test increment button
+            await clickBySelector(el, '.step-up');
+            expect(el.value).to.equal(1000);
+            expect(el.valueAsString).to.equal('1000');
+            expect(el.formattedValue).to.equal('1,000');
+            expect(el.focusElement.value).to.equal('1,000');
+            // Test direct input
+            el.value = 15000;
+            await elementUpdated(el);
+            expect(el.value).to.equal(15000);
+            expect(el.valueAsString).to.equal('15000');
+            expect(el.formattedValue).to.equal('15,000');
+            expect(el.focusElement.value).to.equal('15,000');
+        });
+    });
     describe('Increments', () => {
         let el: NumberField;
 
@@ -164,6 +189,7 @@ describe('NumberField', () => {
             expect(el.value).to.be.NaN;
             expect(el.focusElement.value).to.equal('');
         });
+
         it('via pointer', async () => {
             await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('0');
