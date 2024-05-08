@@ -146,9 +146,7 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('-2.4');
             expect(el.focusElement.value).to.equal('-2.4');
         });
-    });
-    describe('it handles values greater than 1000', () => {
-        it('correctly handles values greater than 1000 with step=1', async () => {
+        it('correctly handles max values greater than 1000 with step=1', async () => {
             const el = await getElFrom(
                 Default({
                     step: 1,
@@ -157,15 +155,17 @@ describe('NumberField', () => {
                     value: 999,
                 })
             );
-            // Test increment button
+
             await clickBySelector(el, '.step-up');
+
             expect(el.value).to.equal(1000);
             expect(el.valueAsString).to.equal('1000');
             expect(el.formattedValue).to.equal('1,000');
             expect(el.focusElement.value).to.equal('1,000');
-            // Test direct input
+
             el.value = 15000;
             await elementUpdated(el);
+
             expect(el.value).to.equal(15000);
             expect(el.valueAsString).to.equal('15000');
             expect(el.formattedValue).to.equal('15,000');
