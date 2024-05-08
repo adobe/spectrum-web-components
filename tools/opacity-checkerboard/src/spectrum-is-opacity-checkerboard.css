@@ -28,12 +28,12 @@ governing permissions and limitations under the License.
                     --mod-opacity-checkerboard-light,
                     var(--spectrum-opacity-checkerboard-light)
                 )
-                0% 25%,
+                0 25%,
             var(
                     --mod-opacity-checkerboard-dark,
                     var(--spectrum-opacity-checkerboard-dark)
                 )
-                0% 50%
+                0 50%
         )
         var(
             --mod-opacity-checkerboard-position,

@@ -195,7 +195,7 @@ governing permissions and limitations under the License.
 
     #textfield #button .spectrum-ClearButton-fill {
         forced-color-adjust: none;
-        background-color: #0000;
+        background-color: initial;
     }
 }
 
@@ -310,15 +310,7 @@ governing permissions and limitations under the License.
 }
 
 .input {
-    -webkit-appearance: none;
-}
-
-.input::-webkit-search-cancel-button,
-.input::-webkit-search-decoration {
-    -webkit-appearance: none;
-}
-
-.input {
+    appearance: none;
     block-size: var(--mod-search-block-size, var(--spectrum-search-block-size));
     font-style: var(--mod-search-font-style, var(--spectrum-search-font-style));
     line-height: var(
@@ -333,6 +325,11 @@ governing permissions and limitations under the License.
         var(--mod-search-bottom-to-text, var(--spectrum-search-bottom-to-text)) -
             var(--mod-search-border-width, var(--spectrum-search-border-width))
     );
+}
+
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+    appearance: none;
 }
 
 :host(:not([quiet])) #textfield .icon-search {
