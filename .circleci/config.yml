@@ -3,14 +3,14 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.43.1
+            - image: mcr.microsoft.com/playwright:v1.44.0
         resource_class: large
         environment:
             NODE_ENV: development
 parameters:
     current_golden_images_hash:
         type: string
-        default: 867c424b27081b9e23b1ab8e7f6b1423a6bb754f
+        default: 5c6872265967e04446acee89bdfdef5a5887a114
     wireit_cache_name:
         type: string
         default: wireit
@@ -248,7 +248,7 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="hcm"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail

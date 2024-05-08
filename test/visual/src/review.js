@@ -35,7 +35,7 @@ function buildNavigation(tests, metadata) {
                     style="user-select: all"
                 ></sp-sidenav-item>
                 <sp-sidenav-item
-                    label=${metadata.theme}
+                    label=${metadata.system}
                     style="user-select: all"
                 ></sp-sidenav-item>
             </sp-sidenav-heading>
