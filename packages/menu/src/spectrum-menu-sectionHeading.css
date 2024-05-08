@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
-    grid-area: sectionHeadingArea / 1 / sectionHeadingArea / -1;
+    grid-area: c / 1 / c / -1;
     display: block;
 }
 

@@ -22,46 +22,46 @@ governing permissions and limitations under the License.
     --spectrum-coach-indicator-quiet-animation-keyframe-0-scale: 0.8;
 }
 
-@keyframes pulse {
+@keyframes a {
     0% {
-        -webkit-transform: scale(
+        transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-0-scale)
         );
         opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
     }
 
     50% {
-        -webkit-transform: scale(
+        transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-50-scale)
         );
         opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
     }
 
-    100% {
-        -webkit-transform: scale(
+    to {
+        transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-100-scale)
         );
         opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
     }
 }
 
-@keyframes pulse--quiet {
+@keyframes b {
     0% {
-        -webkit-transform: scale(
+        transform: scale(
             var(--spectrum-coach-indicator-quiet-animation-keyframe-0-scale)
         );
         opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
     }
 
     50% {
-        -webkit-transform: scale(
+        transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-50-scale)
         );
         opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
     }
 
-    100% {
-        -webkit-transform: scale(
+    to {
+        transform: scale(
             var(--spectrum-coach-indicator-animation-keyframe-100-scale)
         );
         opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
@@ -105,7 +105,7 @@ governing permissions and limitations under the License.
     --spectrum-coach-animation-indicator-ring-center-delay-multiple: -0.66;
     --spectrum-coach-animation-indicator-ring-outer-delay-multiple: -1;
     --spectrum-coach-indicator-quiet-animation-ring-inner-delay-multiple: -0.33;
-    --spectrum-coach-indicator-animation-name: pulse;
+    --spectrum-coach-indicator-animation-name: a;
     --spectrum-coach-indicator-inner-animation-delay-multiple: var(
         --spectrum-coach-animation-indicator-ring-inner-delay-multiple
     );
@@ -152,7 +152,7 @@ governing permissions and limitations under the License.
         var(--mod-coach-indicator-min-inline-size) / 3 -
             var(--spectrum-coach-indicator-ring-border-size)
     );
-    --mod-coach-indicator-animation-name: pulse--quiet;
+    --mod-coach-indicator-animation-name: b;
     --mod-coach-indicator-inner-animation-delay-multiple: var(
         --mod-coach-indicator-quiet-animation-ring-inner-delay-multiple,
         var(

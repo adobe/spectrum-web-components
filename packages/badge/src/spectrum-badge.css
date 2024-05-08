@@ -17,31 +17,6 @@ governing permissions and limitations under the License.
     --spectrum-badge-line-height: var(--spectrum-line-height-100);
     --spectrum-badge-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-badge-label-icon-color: var(--spectrum-white);
-}
-
-:host([variant='orange']),
-:host([variant='yellow']),
-:host([variant='chartreuse']),
-:host([variant='celery']) {
-    --spectrum-badge-label-icon-color: var(--spectrum-black);
-}
-
-:host([variant='gray']),
-:host([variant='red']),
-:host([variant='green']),
-:host([variant='seafoam']),
-:host([variant='cyan']),
-:host([variant='blue']),
-:host([variant='indigo']),
-:host([variant='purple']),
-:host([variant='fuchsia']),
-:host([variant='magenta']) {
-    --spectrum-badge-label-icon-color: var(
-        --spectrum-badge-label-icon-color-primary
-    );
-}
-
-:host {
     --spectrum-badge-background-color-default: var(
         --spectrum-neutral-subdued-background-color-default
     );
@@ -123,6 +98,28 @@ governing permissions and limitations under the License.
     );
     --spectrum-badge-icon-only-spacing-horizontal: var(
         --spectrum-component-edge-to-visual-only-100
+    );
+}
+
+:host([variant='celery']),
+:host([variant='chartreuse']),
+:host([variant='orange']),
+:host([variant='yellow']) {
+    --spectrum-badge-label-icon-color: var(--spectrum-black);
+}
+
+:host([variant='blue']),
+:host([variant='cyan']),
+:host([variant='fuchsia']),
+:host([variant='gray']),
+:host([variant='green']),
+:host([variant='indigo']),
+:host([variant='magenta']),
+:host([variant='purple']),
+:host([variant='red']),
+:host([variant='seafoam']) {
+    --spectrum-badge-label-icon-color: var(
+        --spectrum-badge-label-icon-color-primary
     );
 }
 
@@ -217,10 +214,6 @@ governing permissions and limitations under the License.
         --mod-badge-corner-radius,
         var(--spectrum-badge-corner-radius)
     );
-    background: var(
-        --mod-badge-background-color-default,
-        var(--spectrum-badge-background-color-default)
-    );
     color: var(
         --mod-badge-label-icon-color,
         var(--spectrum-badge-label-icon-color)
@@ -231,6 +224,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
+:host,
 :host([variant='neutral']) {
     background: var(
         --mod-badge-background-color-default,
@@ -420,8 +414,8 @@ governing permissions and limitations under the License.
 }
 
 .label:lang(ja),
-.label:lang(zh),
-.label:lang(ko) {
+.label:lang(ko),
+.label:lang(zh) {
     line-height: var(
         --mod-badge-line-height-cjk,
         var(--spectrum-badge-line-height-cjk)

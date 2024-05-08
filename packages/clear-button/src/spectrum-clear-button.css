@@ -183,16 +183,20 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([focus-within]) .js-focus-within,
 :host(:focus-visible),
-:host:focus-within {
+:host:focus-within,
+:host([focus-within]) .js-focus-within {
     color: var(
         --mod-clear-button-icon-color-key-focus,
         var(--spectrum-clear-button-icon-color-key-focus)
     );
 }
 
+:host([focus-within]) .js-focus-within .fill,
 :host(:focus-visible) .fill,
-:host:focus-within .fill {
+:host:focus-within .fill,
+:host([focus-within]) .js-focus-within .fill {
     background-color: var(
         --mod-clear-button-background-color-key-focus,
         var(--spectrum-clear-button-background-color-key-focus)
