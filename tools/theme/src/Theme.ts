@@ -181,14 +181,34 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this._provideContext();
         } else if (attrName === 'theme') {
             this.theme = value as SystemVariant;
-            window.__swc.warn(
-                this,
-                'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
-                'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
-                { level: 'deprecation' }
-            );
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
+                    'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
+                    { level: 'deprecation' }
+                );
+                if (value === 'spectrum-two') {
+                    window.__swc.warn(
+                        this,
+                        'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+                        'https://s2.spectrum.adobe.com/',
+                        { level: 'high' }
+                    );
+                }
+            }
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
+            if (window.__swc.DEBUG) {
+                if (value === 'spectrum-two') {
+                    window.__swc.warn(
+                        this,
+                        'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+                        'https://s2.spectrum.adobe.com/',
+                        { level: 'high' }
+                    );
+                }
+            }
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
