@@ -102,7 +102,7 @@
         "@netlify/build": "^29.1.0",
         "@open-wc/dev-server-hmr": "^0.2.0",
         "@open-wc/testing": "^4.0.0",
-        "@playwright/test": "^1.43.1",
+        "@playwright/test": "^1.44.0",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
