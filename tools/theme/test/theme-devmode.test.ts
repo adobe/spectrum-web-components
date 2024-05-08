@@ -18,6 +18,7 @@ import { stub } from 'sinon';
 describe('Dev mode', () => {
     window.__swc.verbose = true;
     const consoleWarnStub = stub(console, 'warn');
+
     it('warns in Dev Mode when no attributes or fragments', async () => {
         const el = await fixture<Theme>(html`
             <sp-theme></sp-theme>
@@ -38,7 +39,7 @@ describe('Dev mode', () => {
                 level: 'default',
             },
         });
-        consoleWarnStub.restore();
+        consoleWarnStub.reset();
     });
 
     it('warns in Dev Mode when you pass a theme attribute', async () => {
@@ -50,24 +51,24 @@ describe('Dev mode', () => {
 
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
-
         expect(
-            spyCall.args.at(0).includes('theme delivery'),
+            spyCall.args.at(0).includes('deprecated'),
             'confirm "theme-deprecation"-centric message'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
             data: {
                 localName: 'sp-theme',
                 type: 'api',
-                level: 'default',
+                level: 'deprecation',
             },
         });
-        consoleWarnStub.restore();
+        consoleWarnStub.reset();
     });
+
     it('warns in Dev Mode when you use Spectrum Two theme ', async () => {
         const el = await fixture<Theme>(html`
             <sp-theme
-                theme="spectrum-two"
+                system="spectrum-two"
                 color="dark"
                 scale="medium"
             ></sp-theme>
@@ -77,17 +78,17 @@ describe('Dev mode', () => {
 
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
-
         expect(
-            spyCall.args.at(0).includes('Spectrum 2theme delivery'),
+            spyCall.args.at(0).includes('beta version'),
             'confirm "beta-theme"-centric message'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
             data: {
                 localName: 'sp-theme',
+                type: 'api',
                 level: 'high',
             },
         });
-        consoleWarnStub.restore();
+        consoleWarnStub.reset();
     });
 });
