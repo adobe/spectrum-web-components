@@ -49,8 +49,6 @@ export class DownState implements ReactiveController {
 
     removeEventListeners(): void {
         this.abortController.abort();
-        this.host?.removeEventListener('pointerdown', this.handlePointerDown);
-        this.host?.removeEventListener('pointerup', this.handlePointerUp);
     }
 
     public handlePointerDown = (): void => {
