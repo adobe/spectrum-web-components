@@ -18,6 +18,7 @@ import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
     chromiumWithMemoryTooling,
+    chromiumWithMemoryToolingCI,
     configuredVisualRegressionPlugin,
     firefox,
     packages,
@@ -145,7 +146,19 @@ export default {
             browsers: [chromiumWithMemoryTooling],
         },
         {
+            name: 'memory-ci',
+            files: ['{packages,tools}/**/*-memory.test.js'],
+            browsers: [chromiumWithMemoryToolingCI],
+        },
+        {
             name: 'unit-ci',
+        },
+        {
+            name: 'no-memory-ci',
+            files: [
+                '{packages,tools}/**/*.test.js',
+                '!{packages,tools}/**/*-memory.test.js',
+            ],
         },
     ],
     group: 'unit',

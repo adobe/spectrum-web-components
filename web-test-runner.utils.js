@@ -17,7 +17,6 @@ import fg from 'fast-glob';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
-    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -27,6 +26,29 @@ export const chromium = playwrightLauncher({
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
+        }),
+    launchOptions: {
+        headless: false,
+        args: [
+            '--js-flags=--expose-gc',
+            '--headless=new',
+            /**
+             * Cause `measureUserAgentSpecificMemory()` to GC immediately,
+             * instead of up to 20s later:
+             * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
+             **/
+            '--enable-blink-features=ForceEagerMeasureMemory',
+        ],
+    },
+});
+
+export const chromiumWithMemoryToolingCI = playwrightLauncher({
+    product: 'chromium',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,

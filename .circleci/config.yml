@@ -146,12 +146,23 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
+                  name: Run unit tests
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
             - store_test_results:
                   path: /root/project/results/
             - store_artifacts:
                   path: coverage
+
+    test-chromium-memory:
+        executor: node
+
+        steps:
+            - downstream
+            - run:
+                  name: Run memory tests
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
+            - store_test_results:
+                  path: /root/project/results/
 
     test-firefox:
         executor: node
@@ -306,6 +317,7 @@ workflows:
     build:
         jobs:
             - test-chromium
+            - test-chromium-memory
             - test-firefox
             - test-webkit
             - lint
