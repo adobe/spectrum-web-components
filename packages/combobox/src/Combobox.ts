@@ -213,7 +213,6 @@ export class Combobox extends Textfield {
         if (!this.activeDescendant) {
             return;
         }
-        this.value = this.activeDescendant.itemText;
 
         const activeEl = this.shadowRoot.getElementById(
             this.activeDescendant.value

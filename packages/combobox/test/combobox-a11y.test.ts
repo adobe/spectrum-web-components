@@ -354,38 +354,4 @@ describe('Combobox accessibility', () => {
 
         expect(el.open).to.be.false;
     });
-    it('manages keyboard navigation and selection', async () => {
-        const el = await comboboxFixture();
-
-        await elementUpdated(el);
-
-        expect(el.activeDescendant).to.be.undefined;
-
-        el.focus();
-        await elementUpdated(el);
-
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await elementUpdated(el);
-
-        expect(el.activeDescendant).to.not.be.undefined;
-        expect(el.activeDescendant.value).to.equal('apple');
-
-        const activeDescendant = el.shadowRoot.querySelector(
-            '#apple'
-        ) as MenuItem;
-
-        await elementUpdated(activeDescendant);
-        await nextFrame();
-        await nextFrame();
-
-        const change = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'Enter',
-        });
-
-        await change;
-        expect(el.value).to.equal('Apple');
-    });
 });
