@@ -16,7 +16,11 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ifDefined,
+    StyleInfo,
+    styleMap,
+} from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
@@ -301,6 +305,13 @@ export class ColorSlider extends Focusable {
         }%`;
     }
 
+    private get getColorSliderStyle(): StyleInfo {
+        const orientation = this.vertical ? 'top' : 'right';
+        return {
+            background: `linear-gradient(to ${orientation}, var(--sp-color-slider-gradient, var(--sp-color-slider-gradient-fallback)))`,
+        };
+    }
+
     protected override render(): TemplateResult {
         return html`
             <div
@@ -311,11 +322,7 @@ export class ColorSlider extends Focusable {
                 <div
                     class="gradient"
                     role="presentation"
-                    style=${ifDefined(
-                        this.vertical
-                            ? "background: linear-gradient(to ${this.vertical ? 'top' : 'right'}, var(--sp-color-slider-gradient, var(--sp-color-slider-gradient-fallback)));"
-                            : undefined
-                    )}
+                    style=${styleMap(this.getColorSliderStyle)}
                 >
                     <slot name="gradient"></slot>
                 </div>
