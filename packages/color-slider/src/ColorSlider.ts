@@ -311,9 +311,11 @@ export class ColorSlider extends Focusable {
                 <div
                     class="gradient"
                     role="presentation"
-                    style="background: linear-gradient(to ${this.vertical
-                        ? 'top'
-                        : 'right'}, var(--sp-color-slider-gradient, var(--sp-color-slider-gradient-fallback)));"
+                    style=${ifDefined(
+                        this.vertical
+                            ? "background: linear-gradient(to ${this.vertical ? 'top' : 'right'}, var(--sp-color-slider-gradient, var(--sp-color-slider-gradient-fallback)));"
+                            : undefined
+                    )}
                 >
                     <slot name="gradient"></slot>
                 </div>
