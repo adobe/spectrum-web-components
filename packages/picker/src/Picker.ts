@@ -598,26 +598,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
         if (window.__swc.DEBUG) {
-            if (
-                !this.label &&
-                !this.getAttribute('aria-label') &&
-                !this.getAttribute('aria-labelledby') &&
-                !this.appliedLabel
-            ) {
-                window.__swc.warn(
-                    this,
-                    '<sp-picker> needs one of the following to be accessible:',
-                    'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
-                    {
-                        type: 'accessibility',
-                        issues: [
-                            'an <sp-field-label> element with a `for` attribute referencing the `id` of the `<sp-picker>`, or',
-                            'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-                            'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
-                        ],
-                    }
-                );
-            }
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
@@ -627,6 +607,32 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     { level: 'deprecation' }
                 );
             }
+            this.updateComplete.then(async () => {
+                // Attributes should be user supplied, making them available before first update.
+                // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
+                await new Promise((res) => requestAnimationFrame(res));
+                await new Promise((res) => requestAnimationFrame(res));
+                if (
+                    !this.label &&
+                    !this.getAttribute('aria-label') &&
+                    !this.getAttribute('aria-labelledby') &&
+                    !this.appliedLabel
+                ) {
+                    window.__swc.warn(
+                        this,
+                        '<sp-picker> needs one of the following to be accessible:',
+                        'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+                        {
+                            type: 'accessibility',
+                            issues: [
+                                'an <sp-field-label> element with a `for` attribute referencing the `id` of the `<sp-picker>`, or',
+                                'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                                'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                            ],
+                        }
+                    );
+                }
+            });
         }
         super.update(changes);
     }

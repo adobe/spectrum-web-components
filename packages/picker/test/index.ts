@@ -1395,7 +1395,28 @@ export function runPickerTests(): void {
 
             return test.querySelector('sp-picker') as Picker;
         };
-        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+        it('does not warn in Dev Mode when accessible elements leveraged', async () => {
+            const test = await fixture<Picker>(html`
+                <div>
+                    <sp-field-label for="test">Test label</sp-field-label>
+                    <sp-picker id="test">
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                    </sp-picker>
+                </div>
+            `);
+
+            el = test.querySelector('sp-picker') as Picker;
+
+            await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
+
+            expect(consoleWarnStub.called).to.be.false;
+        });
+        it('warns in Dev Mode when accessible attributes are not leveraged', async function () {
+            this.retries(0);
             el = await fixture<Picker>(html`
                 <sp-picker>
                     <sp-menu-item>Feather...</sp-menu-item>
@@ -1405,6 +1426,8 @@ export function runPickerTests(): void {
             `);
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
