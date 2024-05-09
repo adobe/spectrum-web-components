@@ -1690,10 +1690,10 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-4.1.0.tgz#91a8f8120ffc9da2feb2a38f7862b300d5e9691a"
   integrity sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==
 
-"@custom-elements-manifest/analyzer@^0.9.0":
-  version "0.9.8"
-  resolved "https://registry.yarnpkg.com/@custom-elements-manifest/analyzer/-/analyzer-0.9.8.tgz#f48b296737d935dad85187c858622eb674c23723"
-  integrity sha512-APAoF45ZRFWWVFFaZKoBfwqWoMqW3Zfn8f8Y1zGT9q0hTcHJi26lf6pUbwF7iYx2JIsHbmIBNAkzxiZ9DucznA==
+"@custom-elements-manifest/analyzer@^0.10.0":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@custom-elements-manifest/analyzer/-/analyzer-0.10.2.tgz#5f71d02f45c3db691e752ca19e4bee8ea4068ded"
+  integrity sha512-YkfAfaNGSulnXxyIAHU3K8Z7bYGmIU2MlPvEaQPXnWUaIFMo0p3VEVYvByvENnVCQKPPDyjlkCm73u/zRnRvMA==
   dependencies:
     "@custom-elements-manifest/find-dependencies" "^0.0.5"
     "@github/catalyst" "^1.6.0"
