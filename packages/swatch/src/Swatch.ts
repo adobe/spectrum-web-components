@@ -73,7 +73,7 @@ export class Swatch extends SizedMixin(Focusable, {
     @property({ reflect: true })
     public border: SwatchBorder;
 
-    @property({ type: String, reflect: true })
+    @property()
     public color = '';
 
     @property()
