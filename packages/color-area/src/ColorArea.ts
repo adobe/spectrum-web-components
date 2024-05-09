@@ -449,11 +449,11 @@ export class ColorArea extends SpectrumElement {
             <div
                 @pointerdown=${this.handleAreaPointerdown}
                 class="gradient"
-                style="background:
-                    linear-gradient(to top, black 0%, hsla(${this
-                    .hue}, 100%, 0.01%, 0) 100%),
-                    linear-gradient(to right, white 0%, hsla(${this
-                    .hue}, 100%, 0.01%, 0) 100%), hsl(${this.hue}, 100%, 50%);"
+                style=${ifDefined(
+                    this.hue
+                        ? 'background:linear-gradient(to top, black 0%, hsla(${this.hue}, 100%, 0.01%, 0) 100%),linear-gradient(to right, white 0%, hsla(${this.hue}, 100%, 0.01%, 0) 100%), hsl(${this.hue}, 100%, 50%);'
+                        : undefined
+                )}
             >
                 <slot name="gradient"></slot>
             </div>
