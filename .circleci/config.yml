@@ -204,6 +204,7 @@ jobs:
                   command: yarn docs:preview
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
+                  cd projects/documentation/dist
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch
@@ -255,10 +256,11 @@ jobs:
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
+                      cd test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
                       echo hash
-                      yarn netlify deploy --alias=$hash --dir=test/visual
+                      yarn netlify deploy --alias=$hash
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
