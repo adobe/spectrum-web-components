@@ -23,13 +23,14 @@ import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import actionBarStyles from './action-bar.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { FocusVisiblePolyfillMixin } from "@spectrum-web-components/shared/src/focus-visible.js";
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
  * @element sp-action-bar
  * @slot - Content to display with the Action Bar
  */
-export class ActionBar extends SpectrumElement {
+export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [actionBarStyles];
     }
