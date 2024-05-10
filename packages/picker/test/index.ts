@@ -817,11 +817,14 @@ export function runPickerTests(): void {
                 preventChangeSpy();
             });
 
+            const changed = oneEvent(el, 'change');
             secondItem.click();
-            // What is the time all about and how can it be better measured?
-            await nextFrame();
-            await nextFrame();
-            expect(preventChangeSpy.calledOnce).to.be.true;
+            // The `change` event is dispatched _after_ the `updateComplete` promise.
+            await changed;
+            expect(
+                preventChangeSpy.calledOnce,
+                preventChangeSpy.callCount.toString()
+            ).to.be.true;
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open).to.be.true;
         });
