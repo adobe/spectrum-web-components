@@ -134,13 +134,79 @@ const processTokens = (srcPath, tokensDir) => {
         return;
     }
 
-    fs.writeFileSync(
-        path.join(__dirname, '..', 'tools', 'styles', tokensDir, fileName),
-        css
-    );
+    try {
+        fs.writeFileSync(
+            path.join(__dirname, '..', 'tools', 'styles', tokensDir, fileName),
+            css
+        );
+    } catch (er) {}
 };
 
 const processPackages = async (srcPath, tokensDir, index) => {
+    if (tokensDir === 'tokens') {
+        const packagename = tokenPackages[index];
+
+        let componentLevelTokensPath = path.join(
+            __dirname,
+            '..',
+            'node_modules',
+            '@spectrum-css',
+            tokensDir,
+            'dist',
+            'css',
+            'components'
+        );
+        const spectrumPath = path.join(
+            componentLevelTokensPath,
+            'spectrum',
+            packagename + '.css'
+        );
+
+        // check if spectrumPath exists
+        if (fs.existsSync(spectrumPath)) {
+            let spectrum = fs.readFileSync(spectrumPath, 'utf8');
+            spectrum = removeImporantComments(targetHost(spectrum));
+            fs.appendFileSync(
+                path.join(
+                    __dirname,
+                    '..',
+                    'tools',
+                    'styles',
+                    tokensDir,
+                    'spectrum',
+                    'global-vars.css'
+                ),
+                spectrum
+            );
+        }
+
+        const expressPath = path.join(
+            componentLevelTokensPath,
+            'express',
+            packagename + '.css'
+        );
+
+        // check if expressPath exists
+        if (fs.existsSync(expressPath)) {
+            let express = fs.readFileSync(expressPath, 'utf8');
+            express = removeImporantComments(targetHost(express));
+            fs.appendFileSync(
+                path.join(
+                    __dirname,
+                    '..',
+                    'tools',
+                    'styles',
+                    tokensDir,
+                    'express',
+                    'global-vars.css'
+                ),
+                express
+            );
+        }
+
+        return;
+    }
+
     const packageName = tokenPackages[index];
     const spectrumPath = path.join(srcPath, 'spectrum.css');
 
