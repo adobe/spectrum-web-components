@@ -149,9 +149,9 @@ export default {
             name: 'memory-ci',
             files: [
                 '{packages,tools}/**/*-memory.test.js',
-                'packages/color-area/test/*-memory.test.js',
-                'packages/color-wheel/test/*-memory.test.js',
-                'packages/color-slider/test/*-memory.test.js',
+                '!packages/color-area/test/*-memory.test.js',
+                '!packages/color-wheel/test/*-memory.test.js',
+                '!packages/color-slider/test/*-memory.test.js',
             ],
             browsers: [chromiumWithMemoryToolingCI],
         },
