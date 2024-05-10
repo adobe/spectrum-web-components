@@ -180,7 +180,7 @@ export const withSlider = (): TemplateResult => html`
         <sp-popover tip>
             <sp-dialog no-divider class="options-popover-content">
                 <p>Try clicking the slider after popover opens</p>
-                <p>It snouldn't close the popover</p>
+                <p>It shouldn't close the popover</p>
                 <sp-slider
                     value="5"
                     step="0.5"
