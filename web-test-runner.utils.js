@@ -48,7 +48,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
 
 export const chromiumWithMemoryToolingCI = playwrightLauncher({
     product: 'chromium',
-    concurrency: 1,
+    concurrency: 2,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
