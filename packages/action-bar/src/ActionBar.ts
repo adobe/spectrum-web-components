@@ -14,7 +14,6 @@ import {
     CSSResultArray,
     html,
     SpectrumElement,
-    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -31,9 +30,7 @@ export const actionBarVariants = ['sticky', 'fixed'];
  * @element sp-action-bar
  * @slot - Content to display with the Action Bar
  */
-export class ActionBar extends SizedMixin(
-    FocusVisiblePolyfillMixin(SpectrumElement)
-) {
+export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [actionBarStyles];
     }
