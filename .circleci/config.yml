@@ -3,7 +3,7 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.43.1
+            - image: mcr.microsoft.com/playwright:v1.44.0
         resource_class: large
         environment:
             NODE_ENV: development
@@ -146,12 +146,23 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
+                  name: Run unit tests
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
             - store_test_results:
                   path: /root/project/results/
             - store_artifacts:
                   path: coverage
+
+    test-chromium-memory:
+        executor: node
+
+        steps:
+            - downstream
+            - run:
+                  name: Run memory tests
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
+            - store_test_results:
+                  path: /root/project/results/
 
     test-firefox:
         executor: node
@@ -248,7 +259,7 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="hcm"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail
@@ -304,6 +315,7 @@ workflows:
     build:
         jobs:
             - test-chromium
+            - test-chromium-memory
             - test-firefox
             - test-webkit
             - lint

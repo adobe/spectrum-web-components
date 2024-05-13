@@ -16,7 +16,6 @@ governing permissions and limitations under the License.
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    box-sizing: border-box;
     font-family: var(
         --mod-button-font-family,
         var(
@@ -70,10 +69,10 @@ governing permissions and limitations under the License.
             ease-out;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    border-style: solid;
     justify-content: center;
     align-items: center;
     margin: 0;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
@@ -88,11 +87,6 @@ governing permissions and limitations under the License.
 
 #button:focus {
     outline: none;
-}
-
-#button:disabled,
-:host([disabled]) #button {
-    cursor: default;
 }
 
 :host {
@@ -124,7 +118,7 @@ governing permissions and limitations under the License.
         --spectrum-field-label-to-component
     );
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-100);
-    --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(
         --spectrum-field-text-to-alert-icon-medium
     );
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(
@@ -240,7 +234,7 @@ governing permissions and limitations under the License.
         --spectrum-component-edge-to-text-75
     );
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-75);
-    --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(
         --spectrum-field-text-to-alert-icon-small
     );
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(
@@ -279,7 +273,7 @@ governing permissions and limitations under the License.
         --spectrum-component-edge-to-text-200
     );
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-200);
-    --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(
         --spectrum-field-text-to-alert-icon-large
     );
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(
@@ -318,7 +312,7 @@ governing permissions and limitations under the License.
         --spectrum-component-edge-to-text-300
     );
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-300);
-    --spectrum-picker-spacing-text-to-alert-icon-inline-start: var(
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(
         --spectrum-field-text-to-alert-icon-extra-large
     );
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(
@@ -352,13 +346,13 @@ governing permissions and limitations under the License.
         --highcontrast-picker-background-color: ButtonFace;
     }
 
-    #button:focus-visible,
-    #button.is-keyboardFocused {
+    #button.is-keyboardFocused,
+    #button:focus-visible {
         --highcontrast-picker-border-color-hover: ButtonText;
     }
 
-    #button:after,
-    #button .label {
+    #button .label,
+    #button:after {
         forced-color-adjust: none;
     }
 }
@@ -531,7 +525,7 @@ governing permissions and limitations under the License.
     border-color: #0000;
 }
 
-#button:active.placeholder .label {
+#button.placeholder:active .label {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -541,8 +535,8 @@ governing permissions and limitations under the License.
     );
 }
 
-#button:focus-visible,
-#button.is-keyboardFocused {
+#button.is-keyboardFocused,
+#button:focus-visible {
     background-color: var(
         --highcontrast-picker-background-color,
         var(
@@ -567,8 +561,8 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
-#button:focus-visible:after,
-#button.is-keyboardFocused:after {
+#button.is-keyboardFocused:after,
+#button:focus-visible:after {
     border-color: var(
         --highcontrast-picker-focus-indicator-color,
         var(
@@ -578,8 +572,8 @@ governing permissions and limitations under the License.
     );
 }
 
-#button:focus-visible.placeholder,
-#button.is-keyboardFocused.placeholder {
+#button.is-keyboardFocused.placeholder,
+#button.placeholder:focus-visible {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -589,8 +583,8 @@ governing permissions and limitations under the License.
     );
 }
 
-#button:focus-visible .picker,
-#button.is-keyboardFocused .picker {
+#button.is-keyboardFocused .picker,
+#button:focus-visible .picker {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -600,7 +594,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]) #button:not(:disabled, .is-disabled) {
+:host([invalid]) #button:not(:disabled):not(.is-disabled) {
     border-color: var(
         --highcontrast-picker-border-color-default,
         var(
@@ -610,7 +604,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]) #button:not(:disabled, .is-disabled) .validation-icon {
+:host([invalid]) #button:not(:disabled):not(.is-disabled) .validation-icon {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
@@ -620,7 +614,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]) #button:not(:disabled, .is-disabled):active {
+:host([invalid]) #button:not(:disabled):not(.is-disabled):active {
     border-color: var(
         --highcontrast-picker-border-color-default,
         var(
@@ -630,7 +624,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid][open]) #button:not(:disabled, .is-disabled) {
+:host([invalid][open]) #button:not(:disabled):not(.is-disabled) {
     border-color: var(
         --highcontrast-picker-border-color-default,
         var(
@@ -640,8 +634,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]) #button:not(:disabled, .is-disabled):focus-visible,
-:host([invalid]) #button:not(:disabled, .is-disabled).is-keyboardFocused {
+:host([invalid]) #button.is-keyboardFocused:not(:disabled):not(.is-disabled),
+:host([invalid]) #button:not(:disabled):not(.is-disabled):focus-visible {
     border-color: var(
         --highcontrast-picker-border-color-default,
         var(
@@ -661,8 +655,19 @@ governing permissions and limitations under the License.
     );
 }
 
-#button:disabled,
-:host([disabled]) #button {
+:host([invalid]) #button .label,
+:host([pending]) #button .label {
+    margin-inline-end: var(
+        --mod-picker-spacing-text-to-icon-inline-end,
+        var(
+            --mod-picker-spacing-text-to-alert-icon-inline-start,
+            var(--spectrum-picker-spacing-text-to-icon-inline-end)
+        )
+    );
+}
+
+:host([disabled]) #button,
+#button:disabled {
     cursor: default;
     background-color: var(
         --highcontrast-picker-background-color,
@@ -681,12 +686,12 @@ governing permissions and limitations under the License.
     );
 }
 
-#button:disabled .icon,
-#button:disabled .picker,
-#button:disabled .validation-icon,
 :host([disabled]) #button .icon,
 :host([disabled]) #button .picker,
-:host([disabled]) #button .validation-icon {
+:host([disabled]) #button .validation-icon,
+#button:disabled .icon,
+#button:disabled .picker,
+#button:disabled .validation-icon {
     color: var(
         --highcontrast-picker-content-color-disabled,
         var(
@@ -696,8 +701,8 @@ governing permissions and limitations under the License.
     );
 }
 
-#button:disabled .label.placeholder,
-:host([disabled]) #button .label.placeholder {
+:host([disabled]) #button .label.placeholder,
+#button:disabled .label.placeholder {
     color: var(
         --highcontrast-picker-content-color-disabled,
         var(
@@ -849,14 +854,6 @@ governing permissions and limitations under the License.
     );
 }
 
-.validation-icon,
-#button .progress-circle {
-    margin-inline-start: var(
-        --mod-picker-spacing-text-to-alert-icon-inline-start,
-        var(--spectrum-picker-spacing-text-to-alert-icon-inline-start)
-    );
-}
-
 .validation-icon {
     margin-block-start: calc(
         var(
@@ -941,56 +938,6 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    #button:hover .picker {
-        color: var(
-            --highcontrast-picker-content-color-default,
-            var(
-                --mod-picker-icon-color-hover,
-                var(--spectrum-picker-icon-color-hover)
-            )
-        );
-    }
-
-    :host([invalid]) #button:not(:disabled, .is-disabled):hover {
-        border-color: var(
-            --highcontrast-picker-border-color-hover,
-            var(
-                --mod-picker-border-color-error-hover,
-                var(--spectrum-picker-border-color-error-hover)
-            )
-        );
-    }
-
-    :host([invalid][open]) #button:not(:disabled, .is-disabled):hover {
-        border-color: var(
-            --highcontrast-picker-border-color-hover,
-            var(
-                --mod-picker-border-color-error-hover-open,
-                var(--spectrum-picker-border-color-error-hover-open)
-            )
-        );
-    }
-
-    :host([open]:not([quiet])) #button:hover .picker {
-        color: var(
-            --highcontrast-picker-content-color-default,
-            var(
-                --mod-picker-icon-color-hover-open,
-                var(--spectrum-picker-icon-color-hover-open)
-            )
-        );
-    }
-
-    .label.placeholder:hover {
-        color: var(
-            --highcontrast-picker-content-color-default,
-            var(
-                --mod-picker-font-color-hover,
-                var(--spectrum-picker-font-color-hover)
-            )
-        );
-    }
-
     #button:hover {
         color: var(
             --highcontrast-picker-content-color-default,
@@ -1011,6 +958,36 @@ governing permissions and limitations under the License.
             var(
                 --mod-picker-border-color-hover,
                 var(--spectrum-picker-border-color-hover)
+            )
+        );
+    }
+
+    #button:hover .picker {
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-icon-color-hover,
+                var(--spectrum-picker-icon-color-hover)
+            )
+        );
+    }
+
+    :host([invalid]) #button:not(:disabled):not(.is-disabled):hover {
+        border-color: var(
+            --highcontrast-picker-border-color-hover,
+            var(
+                --mod-picker-border-color-error-hover,
+                var(--spectrum-picker-border-color-error-hover)
+            )
+        );
+    }
+
+    :host([invalid][open]) #button:not(:disabled):not(.is-disabled):hover {
+        border-color: var(
+            --highcontrast-picker-border-color-hover,
+            var(
+                --mod-picker-border-color-error-hover-open,
+                var(--spectrum-picker-border-color-error-hover-open)
             )
         );
     }
@@ -1039,6 +1016,26 @@ governing permissions and limitations under the License.
         );
     }
 
+    :host([open]:not([quiet])) #button:hover .picker {
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-icon-color-hover-open,
+                var(--spectrum-picker-icon-color-hover-open)
+            )
+        );
+    }
+
+    .label.placeholder:hover {
+        color: var(
+            --highcontrast-picker-content-color-default,
+            var(
+                --mod-picker-font-color-hover,
+                var(--spectrum-picker-font-color-hover)
+            )
+        );
+    }
+
     :host([quiet]) #button:hover {
         background-color: var(
             --highcontrast-picker-background-color,
@@ -1047,13 +1044,13 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([quiet]) #button:focus-visible,
-:host([quiet]) #button.is-keyboardFocused {
+:host([quiet]) #button.is-keyboardFocused,
+:host([quiet]) #button:focus-visible {
     background-color: var(--highcontrast-picker-background-color, transparent);
 }
 
-:host([quiet]) #button:focus-visible:after,
-:host([quiet]) #button.is-keyboardFocused:after {
+:host([quiet]) #button.is-keyboardFocused:after,
+:host([quiet]) #button:focus-visible:after {
     box-shadow: 0
         var(
             --mod-picker-focus-indicator-thickness,
@@ -1084,10 +1081,10 @@ governing permissions and limitations under the License.
     border-radius: 0;
 }
 
-:host([quiet]) #button:active,
+:host([quiet][disabled]) #button,
 :host([quiet][open]) #button,
-:host([quiet]) #button:disabled,
-:host([quiet][disabled]) #button {
+:host([quiet]) #button:active,
+:host([quiet]) #button:disabled {
     background-color: var(--highcontrast-picker-background-color, transparent);
 }
 

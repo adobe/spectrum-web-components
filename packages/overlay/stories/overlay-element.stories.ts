@@ -174,6 +174,29 @@ click.args = {
     type: 'auto',
 };
 
+export const withSlider = (): TemplateResult => html`
+    <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
+    <sp-overlay trigger="triggerEl@click" placement="bottom">
+        <sp-popover tip>
+            <sp-dialog no-divider class="options-popover-content">
+                <p>Try clicking the slider after popover opens</p>
+                <p>It shouldn't close the popover</p>
+                <sp-slider
+                    value="5"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    label="Awesomeness"
+                ></sp-slider>
+                <sp-button>Press me</sp-button>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+`;
+withSlider.swc_vrt = {
+    skip: true,
+};
+
 export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
     interaction: 'hover',

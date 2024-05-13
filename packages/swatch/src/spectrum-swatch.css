@@ -207,7 +207,7 @@ governing permissions and limitations under the License.
 }
 
 :host .is-image .fill:before {
-    background-color: #0000;
+    background-color: initial;
 }
 
 :host([mixed-value]) .fill {
@@ -311,10 +311,6 @@ governing permissions and limitations under the License.
 
 .fill {
     box-sizing: border-box;
-    border-radius: var(
-        --mod-swatch-border-radius,
-        var(--spectrum-swatch-border-radius)
-    );
     justify-content: center;
     align-items: center;
     block-size: 100%;
@@ -322,6 +318,14 @@ governing permissions and limitations under the License.
     display: flex;
     position: relative;
     overflow: hidden;
+}
+
+.fill,
+.fill:before {
+    border-radius: var(
+        --mod-swatch-border-radius,
+        var(--spectrum-swatch-border-radius)
+    );
 }
 
 .fill:before {
@@ -337,10 +341,6 @@ governing permissions and limitations under the License.
             --highcontrast-swatch-border-color,
             var(--mod-swatch-border-color, var(--spectrum-swatch-border-color))
         );
-    border-radius: var(
-        --mod-swatch-border-radius,
-        var(--spectrum-swatch-border-radius)
-    );
     position: absolute;
     inset: 0;
 }
@@ -357,7 +357,7 @@ governing permissions and limitations under the License.
 }
 
 .disabledIcon {
-    z-index: 2;
+    z-index: 1;
     pointer-events: none;
     color: var(
         --highcontrast-swatch-disabled-icon-color,
@@ -399,26 +399,26 @@ governing permissions and limitations under the License.
 }
 
 :host([rounding='none']),
-:host([rounding='none']):before,
-:host([rounding='none']):after,
 :host([rounding='none']) .fill,
 :host([rounding='none']) .fill:before,
 :host([rounding='none'][selected]) .fill,
-:host([rounding='none'][selected]) .fill:before {
+:host([rounding='none'][selected]) .fill:before,
+:host([rounding='none']):after,
+:host([rounding='none']):before {
     border-radius: 0;
 }
 
+:host([rounding='full'][selected]:not([shape='rectangle'])) .fill,
+:host([rounding='full'][selected]:not([shape='rectangle'])) .fill:before,
 :host([rounding='full']:not([shape='rectangle'])),
-:host([rounding='full']:not([shape='rectangle'])):before,
-:host([rounding='full']:not([shape='rectangle'])):after,
 :host([rounding='full']:not([shape='rectangle'])) .fill,
 :host([rounding='full']:not([shape='rectangle'])) .fill:before,
-:host([rounding='full']:not([shape='rectangle'])[selected]) .fill,
-:host([rounding='full']:not([shape='rectangle'])[selected]) .fill:before {
+:host([rounding='full']:not([shape='rectangle'])):after,
+:host([rounding='full']:not([shape='rectangle'])):before {
     border-radius: 100%;
 }
 
-:host([rounding='full']:not([shape='rectangle'])[selected]) .fill {
+:host([rounding='full'][selected]:not([shape='rectangle'])) .fill {
     clip-path: circle(
         calc(
                 50% -
