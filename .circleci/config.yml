@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 4c5799f8273b709eada1adbdb6f4b890678c449b
+        default: 03abfae7ee169f6f42925e57e1590c87f212f01e
     wireit_cache_name:
         type: string
         default: wireit
