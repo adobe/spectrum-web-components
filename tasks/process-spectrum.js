@@ -424,6 +424,247 @@ async function processComponent(componentPath) {
             return buildSelectorsV2(selectorMetadata);
         };
 
+        if (conversion.legacyOverrides) {
+            // swc package name
+            const swcPackagename = conversion.fileName;
+
+            // action-button to actionbutton
+            const cssPackagename = swcPackagename.replace(/-/g, '');
+
+            let componentLevelTokensPath = path.join(
+                __dirname,
+                '..',
+                'node_modules',
+                '@spectrum-css',
+                'tokens',
+                'dist',
+                'css',
+                'components'
+            );
+
+            const bridgepath = path.join(
+                componentLevelTokensPath,
+                'bridge',
+                cssPackagename + '.css'
+            );
+
+            if (fs.existsSync(bridgepath)) {
+                let bridgeCss = fs.readFileSync(bridgepath, 'utf8');
+
+                const { code } = transform({
+                    code: Buffer.from(bridgeCss),
+                    visitor: {
+                        // @ts-ignore
+                        Rule(rule) {
+                            if (
+                                !conversion.allowThemeRules &&
+                                isThemeOnlyRule(rule)
+                            ) {
+                                return nullRuleFromRule(rule);
+                            }
+                            if (
+                                rule.type === 'style' &&
+                                rule.value.selectors?.length
+                            ) {
+                                if (
+                                    conversion.hoistCustomPropertiesFrom &&
+                                    rule.value.selectors.length === 1 &&
+                                    rule.value.selectors[0].length === 1 &&
+                                    rule.value.selectors[0][0].type ===
+                                        'class' &&
+                                    rule.value.selectors[0][0].name ===
+                                        conversion.hoistCustomPropertiesFrom &&
+                                    rule.value.declarations.declarations.every(
+                                        (declaration) =>
+                                            declaration.property === 'custom'
+                                    )
+                                ) {
+                                    return {
+                                        ...rule,
+                                        value: {
+                                            ...rule.value,
+                                            selectors: [
+                                                [
+                                                    {
+                                                        type: 'pseudo-class',
+                                                        kind: 'host',
+                                                    },
+                                                ],
+                                            ],
+                                        },
+                                    };
+                                }
+                                const currentSelectors = [
+                                    ...rule.value.selectors,
+                                ];
+                                const nextSelectors = [];
+                                currentSelectors.forEach((selector) => {
+                                    let include = true;
+                                    conversion.excludeByWholeSelector?.forEach(
+                                        (exclusion) => {
+                                            include =
+                                                include &&
+                                                !(
+                                                    exclusion.length ===
+                                                        selector.length &&
+                                                    exclusion.every(
+                                                        (
+                                                            component,
+                                                            exclusionIndex
+                                                        ) =>
+                                                            compareSelectors(
+                                                                component,
+                                                                selector[
+                                                                    exclusionIndex
+                                                                ]
+                                                            )
+                                                    )
+                                                );
+                                        }
+                                    );
+                                    conversion.excludeByComponents?.forEach(
+                                        (exclusion) => {
+                                            if (exclusion.regex) {
+                                                include =
+                                                    include &&
+                                                    !selector.find(
+                                                        (component) => {
+                                                            return (
+                                                                component.type ===
+                                                                    'class' &&
+                                                                component.type ===
+                                                                    exclusion.type &&
+                                                                component.name.search(
+                                                                    /** @type {RegExp} */ (
+                                                                        exclusion.regex
+                                                                    )
+                                                                ) > -1
+                                                            );
+                                                        }
+                                                    );
+                                            } else {
+                                                include =
+                                                    include &&
+                                                    !selector.find(
+                                                        (component) =>
+                                                            compareSelectors(
+                                                                exclusion,
+                                                                component
+                                                            )
+                                                    );
+                                            }
+                                        }
+                                    );
+                                    conversion.requireComponentPresence?.forEach(
+                                        (required) => {
+                                            if (required.regex) {
+                                                include =
+                                                    include &&
+                                                    !!selector.find(
+                                                        (component) => {
+                                                            return (
+                                                                component.type ===
+                                                                    'class' &&
+                                                                component.type ===
+                                                                    required.type &&
+                                                                component.name.search(
+                                                                    /** @type {RegExp} */ (
+                                                                        required.regex
+                                                                    )
+                                                                ) > -1
+                                                            );
+                                                        }
+                                                    );
+                                            } else {
+                                                include =
+                                                    include &&
+                                                    !!selector.find(
+                                                        (component) =>
+                                                            compareSelectors(
+                                                                required,
+                                                                component
+                                                            )
+                                                    );
+                                            }
+                                        }
+                                    );
+                                    if (!include) {
+                                        conversion.includeByWholeSelector?.forEach(
+                                            (inclusion) => {
+                                                const sameLength =
+                                                    inclusion.length ===
+                                                    selector.length;
+                                                if (!sameLength) {
+                                                    return;
+                                                }
+                                                const selectorSameAsComponent =
+                                                    inclusion.every(
+                                                        (
+                                                            component,
+                                                            inclusionIndex
+                                                        ) =>
+                                                            compareSelectors(
+                                                                selector[
+                                                                    inclusionIndex
+                                                                ],
+                                                                component
+                                                            )
+                                                    );
+                                                include =
+                                                    include ||
+                                                    (sameLength &&
+                                                        selectorSameAsComponent);
+                                            }
+                                        );
+                                    }
+                                    if (include) {
+                                        nextSelectors.push(selector);
+                                    }
+                                });
+                                if (!nextSelectors.length) {
+                                    return nullRuleFromRule(rule);
+                                }
+                                const selectors =
+                                    processSelectors(nextSelectors);
+                                return {
+                                    ...rule,
+                                    value: {
+                                        ...rule.value,
+                                        selectors,
+                                    },
+                                };
+                            }
+                        },
+                    },
+                });
+                const legacyPath = path.join(
+                    ...(Array.isArray(conversion.outPackage)
+                        ? conversion.outPackage
+                        : ['packages', conversion.outPackage]),
+                    'src',
+                    `legacy-overrides.css`
+                );
+                fs.writeFileSync(
+                    legacyPath,
+                    `/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+        ${code}
+        `.replace(/\/\*\![\w|\W]*\*\//, '')
+                );
+            }
+        }
+
         const { code } = transform({
             code: Buffer.from(sourceCSS),
             visitor: {

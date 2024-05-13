@@ -161,7 +161,6 @@ const processPackages = async (srcPath, tokensDir, index) => {
             'spectrum',
             packagename + '.css'
         );
-
         // check if spectrumPath exists
         if (fs.existsSync(spectrumPath)) {
             let spectrum = fs.readFileSync(spectrumPath, 'utf8');
@@ -203,7 +202,6 @@ const processPackages = async (srcPath, tokensDir, index) => {
                 express
             );
         }
-
         return;
     }
 
