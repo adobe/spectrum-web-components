@@ -575,7 +575,10 @@ export class NumberField extends TextfieldBase {
                 : 0;
             this._valueFormatter = new NumberFormatter(
                 this.languageResolver.language,
-                { maximumFractionDigits: digitsAfterDecimal }
+                {
+                    maximumFractionDigits: digitsAfterDecimal,
+                    useGrouping: false,
+                }
             );
         }
 

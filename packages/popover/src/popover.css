@@ -26,12 +26,12 @@ governing permissions and limitations under the License.
 
 :host([placement*='left']) #tip[style],
 :host([placement*='right']) #tip[style] {
-    bottom: auto;
+    inset-block-end: auto;
 }
 
 :host([placement*='top']) #tip[style],
 :host([placement*='bottom']) #tip[style] {
-    right: auto;
+    inset-inline-end: auto;
 }
 
 .block,

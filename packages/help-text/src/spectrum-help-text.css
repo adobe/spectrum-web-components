@@ -51,8 +51,8 @@ governing permissions and limitations under the License.
 }
 
 :host(:lang(ja)),
-:host(:lang(zh)),
-:host(:lang(ko)) {
+:host(:lang(ko)),
+:host(:lang(zh)) {
     --spectrum-helptext-line-height-cjk: var(--spectrum-cjk-line-height-100);
 }
 
@@ -128,11 +128,11 @@ governing permissions and limitations under the License.
     :host {
         --highcontrast-helptext-content-color-default: CanvasText;
         --highcontrast-helptext-icon-color-default: CanvasText;
-        forced-color-adjust: none;
     }
 
-    .icon,
-    .text {
+    :host,
+    .text,
+    .icon {
         forced-color-adjust: none;
     }
 }
@@ -196,8 +196,8 @@ governing permissions and limitations under the License.
 }
 
 :host(:lang(ja)) .text,
-:host(:lang(zh)) .text,
-:host(:lang(ko)) .text {
+:host(:lang(ko)) .text,
+:host(:lang(zh)) .text {
     line-height: var(
         --mod-helptext-line-height-cjk,
         var(--spectrum-helptext-line-height-cjk)

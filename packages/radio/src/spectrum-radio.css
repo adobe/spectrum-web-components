@@ -72,15 +72,6 @@ governing permissions and limitations under the License.
     --spectrum-radio-font-size: var(--spectrum-font-size-100);
     --spectrum-radio-line-height: var(--spectrum-line-height-100);
     --spectrum-radio-animation-duration: var(--spectrum-animation-duration-100);
-}
-
-:host(:lang(ja)),
-:host(:lang(zh)),
-:host(:lang(ko)) {
-    --spectrum-radio-line-height-cjk: var(--spectrum-cjk-line-height-100);
-}
-
-:host {
     --spectrum-radio-height: var(--spectrum-component-height-100);
     --spectrum-radio-button-control-size: var(
         --spectrum-radio-button-control-size-medium
@@ -88,6 +79,12 @@ governing permissions and limitations under the License.
     --spectrum-radio-button-top-to-control: var(
         --spectrum-radio-button-top-to-control-medium
     );
+}
+
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
+    --spectrum-radio-line-height-cjk: var(--spectrum-cjk-line-height-100);
 }
 
 :host([size='s']) {
@@ -283,7 +280,7 @@ governing permissions and limitations under the License.
 }
 
 :host([readonly]) #input:read-only {
-    cursor: initial;
+    cursor: auto;
 }
 
 :host([readonly]) #button {
@@ -294,9 +291,9 @@ governing permissions and limitations under the License.
     inset-inline-end: 100%;
 }
 
-:host([readonly]) #label,
+:host([readonly][checked][disabled]) #input ~ #label,
 :host([readonly][disabled]) #input ~ #label,
-:host([readonly][checked][disabled]) #input ~ #label {
+:host([readonly]) #label {
     color: inherit;
     margin-inline-start: auto;
 }
@@ -373,8 +370,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled]) #input + #button:before,
-:host([checked][disabled]) #input + #button:before {
+:host([checked][disabled]) #input + #button:before,
+:host([disabled]) #input + #button:before {
     border-color: var(
         --highcontrast-radio-disabled-border-color,
         var(
@@ -384,8 +381,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled]) #input ~ #label,
-:host([checked][disabled]) #input ~ #label {
+:host([checked][disabled]) #input ~ #label,
+:host([disabled]) #input ~ #label {
     color: var(
         --highcontrast-radio-disabled-content-color,
         var(
@@ -484,8 +481,8 @@ governing permissions and limitations under the License.
 }
 
 #label:lang(ja),
-#label:lang(zh),
-#label:lang(ko) {
+#label:lang(ko),
+#label:lang(zh) {
     line-height: var(
         --mod-radio-line-height-cjk,
         var(--spectrum-radio-line-height-cjk)
@@ -583,6 +580,7 @@ governing permissions and limitations under the License.
     transform: translateX(-50%) translateY(-50%);
 }
 
+#button:dir(rtl):after,
 :host([dir='rtl']) #button:after {
     transform: translateX(50%) translateY(-50%);
 }

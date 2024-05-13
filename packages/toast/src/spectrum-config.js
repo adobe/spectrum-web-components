@@ -11,7 +11,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-Toast');
 
@@ -42,6 +45,43 @@ const config = {
                 converter.classToClass('spectrum-Toast-content'),
                 converter.classToClass('spectrum-Toast-typeIcon', 'type'),
                 converter.classToClass('spectrum-Toast-closeButton'),
+                {
+                    find: [
+                        // .spectrum-Toast-body .spectrum-Button:dir(rtl)
+                        builder.class('spectrum-Toast-body'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Button'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'dir',
+                            direction: 'rtl',
+                        },
+                    ],
+                    replace: [
+                        // .body ::slotted([slot='action']:dir(rtl))
+                        {
+                            replace: builder.class('body'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [
+                                    builder.attribute('slot', 'action'),
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'dir',
+                                        direction: 'rtl',
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                    collapseSelector: true,
+                },
                 converter.classToSlotted('spectrum-Button', 'action'),
             ],
         },

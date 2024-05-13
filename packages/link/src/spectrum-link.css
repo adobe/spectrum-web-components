@@ -58,7 +58,9 @@ governing permissions and limitations under the License.
 }
 
 a {
+    background-color: initial;
     -webkit-text-decoration-skip: objects;
+    text-decoration-skip: objects;
     transition: color
         var(
             --mod-link-animation-duration,
@@ -73,8 +75,8 @@ a {
             var(--spectrum-link-text-color-primary-default)
         )
     );
-    background-color: #0000;
     outline: none;
+    -webkit-text-decoration: underline;
     text-decoration: underline;
 }
 
@@ -131,6 +133,7 @@ a:focus-visible {
 }
 
 :host([quiet]) a {
+    -webkit-text-decoration: none;
     text-decoration: none;
 }
 
@@ -174,6 +177,7 @@ a:focus-visible {
     }
 
     :host([quiet]) a:hover {
+        -webkit-text-decoration: underline;
         text-decoration: underline;
     }
 

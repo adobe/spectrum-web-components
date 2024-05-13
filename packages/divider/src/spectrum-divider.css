@@ -63,9 +63,9 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host,
-    :host([size='s']),
+    :host([size='l']),
     :host,
-    :host([size='l']) {
+    :host([size='s']) {
         --spectrum-divider-background-color: CanvasText;
         --spectrum-divider-background-color-small-static-white: CanvasText;
         --spectrum-divider-background-color-medium-static-white: CanvasText;
@@ -143,7 +143,6 @@ governing permissions and limitations under the License.
         var(--spectrum-divider-thickness)
     );
     margin-block: var(--mod-divider-vertical-margin);
-    block-size: var(--mod-divider-vertical-height);
+    block-size: var(--mod-divider-vertical-height, 100%);
     align-self: var(--mod-divider-vertical-align);
-    block-size: 100%;
 }
