@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* @import url('@spectrum-web-components/styles/core-global.css'); */
 @import url('@spectrum-web-components/styles/tokens-v2/global-vars.css');
 @import url('@spectrum-web-components/styles/tokens-v2/spectrum/global-vars.css');
 @import url('@spectrum-web-components/styles/tokens-v2/spectrum/custom-vars.css');

@@ -16,8 +16,18 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
 
 describe('Dev mode', () => {
-    window.__swc.verbose = true;
-    const consoleWarnStub = stub(console, 'warn');
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
+    });
 
     it('warns in Dev Mode when no attributes or fragments', async () => {
         const el = await fixture<Theme>(html`
@@ -29,7 +39,7 @@ describe('Dev mode', () => {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-            spyCall.args.at(0).includes('theme delivery'),
+            (spyCall.args.at(0) as string).includes('theme delivery'),
             'confirm "theme delivery"-centric message'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
@@ -39,7 +49,6 @@ describe('Dev mode', () => {
                 level: 'default',
             },
         });
-        consoleWarnStub.reset();
     });
 
     it('warns in Dev Mode when you pass a theme attribute', async () => {
@@ -52,7 +61,7 @@ describe('Dev mode', () => {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-            spyCall.args.at(0).includes('deprecated'),
+            (spyCall.args.at(0) as string).includes('deprecated'),
             'confirm "theme-deprecation"-centric message'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
@@ -62,7 +71,6 @@ describe('Dev mode', () => {
                 level: 'deprecation',
             },
         });
-        consoleWarnStub.reset();
     });
 
     it('warns in Dev Mode when you use Spectrum Two theme ', async () => {
@@ -79,7 +87,7 @@ describe('Dev mode', () => {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-            spyCall.args.at(0).includes('beta version'),
+            (spyCall.args.at(0) as string).includes('beta version'),
             'confirm "beta-theme"-centric message'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
@@ -89,6 +97,5 @@ describe('Dev mode', () => {
                 level: 'high',
             },
         });
-        consoleWarnStub.reset();
     });
 });
