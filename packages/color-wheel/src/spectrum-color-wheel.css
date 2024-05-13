@@ -51,15 +51,6 @@ governing permissions and limitations under the License.
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
-    display: block;
-    position: relative;
-}
-
-:host([focused]) {
-    z-index: 2;
-}
-
-:host {
     --track-width: var(
         --mod-colorwheel-track-width,
         var(--spectrum-colorwheel-track-width)
@@ -68,6 +59,12 @@ governing permissions and limitations under the License.
         --mod-colorwheel-border-width,
         var(--spectrum-colorwheel-border-width)
     );
+    display: block;
+    position: relative;
+}
+
+:host([focused]) {
+    z-index: 1;
 }
 
 :host([disabled]) {
@@ -75,7 +72,7 @@ governing permissions and limitations under the License.
 }
 
 :host([dragged]) {
-    z-index: 2;
+    z-index: 1;
 }
 
 .inner {
@@ -119,7 +116,7 @@ governing permissions and limitations under the License.
 }
 
 .handle {
-    transform: translate(var(--spectrum-colorwheel-colorhandle-position), 0);
+    transform: translate(var(--spectrum-colorwheel-colorhandle-position));
     inset-block-start: 50%;
     inset-inline: 50%;
 }

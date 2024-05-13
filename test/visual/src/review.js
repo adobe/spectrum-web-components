@@ -35,7 +35,7 @@ function buildNavigation(tests, metadata) {
                     style="user-select: all"
                 ></sp-sidenav-item>
                 <sp-sidenav-item
-                    label=${metadata.theme}
+                    label=${metadata.system}
                     style="user-select: all"
                 ></sp-sidenav-item>
             </sp-sidenav-heading>
@@ -175,7 +175,7 @@ async function run() {
     const data = await response.json();
     const decorator = document.querySelector('sp-story-decorator');
     const system = data.meta.system.split(' ');
-    decorator.theme = system[0];
+    decorator.system = system[0];
     decorator.color = system[1];
     decorator.scale = system[2];
     buildNavigation(data.tests, data.meta);

@@ -29,6 +29,10 @@
             "development": "./src/Base.dev.js",
             "default": "./src/Base.js"
         },
+        "./src/async-directive.js": {
+            "development": "./src/async-directive.dev.js",
+            "default": "./src/async-directive.js"
+        },
         "./src/condition-attribute-with-id.js": {
             "development": "./src/condition-attribute-with-id.dev.js",
             "default": "./src/condition-attribute-with-id.js"

@@ -313,9 +313,8 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
     }
     function logState(): void {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        document.getElementById(
-            'state-json'
-        )!.textContent = `application state: ${JSON.stringify(state)}`;
+        document.getElementById('state-json')!.textContent =
+            `application state: ${JSON.stringify(state)}`;
     }
     return html`
         <sp-action-menu
@@ -403,6 +402,35 @@ export const groups = ({
 `;
 
 groups.decorators = [isOverlayOpen];
+
+export const groupsWithSelects = ({
+    onChange,
+}: {
+    onChange(value: string): void;
+}): TemplateResult => {
+    return html`
+        <sp-action-menu
+            @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
+                onChange(value)}
+            label="Filter or Sort"
+        >
+            <sp-menu-group selects="single">
+                <span slot="header">Sort By</span>
+                <sp-menu-item>Name</sp-menu-item>
+                <sp-menu-item>Created</sp-menu-item>
+                <sp-menu-item>Modified</sp-menu-item>
+            </sp-menu-group>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-group selects="multiple">
+                <sp-menu-item>Reverse Order</sp-menu-item>
+            </sp-menu-group>
+        </sp-action-menu>
+    `;
+};
+
+groupsWithSelects.swc_vrt = {
+    skip: true,
+};
 
 export const directive = (): TemplateResult => {
     const renderSubmenu = (): TemplateResult => html`

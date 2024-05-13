@@ -40,7 +40,7 @@ jobs:
                       commentOrUpdate(github, context, '## Branch preview', body);
     lighthouse:
         name: Lighthouse CI
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         steps:
             - uses: actions/checkout@v4
               with:
@@ -92,7 +92,7 @@ jobs:
         # tachometer action reports results by posting a comment, and we can't post
         # comments without a github token.
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         steps:
             - uses: actions/checkout@v4
               with:
