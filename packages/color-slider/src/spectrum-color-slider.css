@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-color-slider-handle-margin-block: var(
         --spectrum-component-top-to-text-75
@@ -152,8 +153,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.gradient,
-.checkerboard {
+.checkerboard,
+.gradient {
     border-radius: var(
         --mod-color-slider-border-rounding,
         var(--spectrum-color-slider-border-rounding)
@@ -162,6 +163,7 @@ governing permissions and limitations under the License.
     inline-size: 100%;
 }
 
+.gradient:dir(rtl),
 :host([dir='rtl']) .gradient {
     transform: scaleX(-1);
 }

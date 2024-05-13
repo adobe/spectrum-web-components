@@ -105,6 +105,7 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([direction^='vertical']) #list:dir(rtl),
 :host([dir='rtl'][direction^='vertical']) #list {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical,
@@ -112,6 +113,7 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([direction^='vertical-right']) #list:dir(rtl),
 :host([dir='rtl'][direction^='vertical-right']) #list {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical,
@@ -211,9 +213,7 @@ governing permissions and limitations under the License.
     vertical-align: top;
 }
 
-:host([direction^='horizontal'])
-    #list
-    ::slotted(:not([slot]):not(:first-child)) {
+:host([direction^='horizontal']) ::slotted(:not(:first-child)) {
     margin-inline-start: var(
         --mod-tabs-item-horizontal-spacing,
         var(--spectrum-tabs-item-horizontal-spacing)
@@ -227,7 +227,7 @@ governing permissions and limitations under the License.
 }
 
 :host([direction^='horizontal'][compact]) #list {
-    box-sizing: content-box;
+    box-sizing: initial;
     align-items: end;
 }
 
@@ -251,8 +251,8 @@ governing permissions and limitations under the License.
     display: inline-flex;
 }
 
-:host([direction^='vertical'][quiet]) #list,
-:host([direction^='vertical-right'][quiet]) #list {
+:host([direction^='vertical-right'][quiet]) #list,
+:host([direction^='vertical'][quiet]) #list {
     border-color: #0000;
 }
 

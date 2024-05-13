@@ -36,35 +36,35 @@ governing permissions and limitations under the License.
 }
 
 :host([placement*='top']) #tooltip #tip {
-    top: 100%;
+    inset-block-start: 100%;
 }
 
 :host([placement*='bottom']) #tooltip #tip {
-    bottom: 100%;
+    inset-block-end: 100%;
     clip-path: polygon(50% 50%, 0 105%, 100% 105%);
     top: auto;
 }
 
 :host([placement*='left']) #tooltip #tip,
 :host([placement*='right']) #tooltip #tip {
-    top: 50%;
+    inset-block-start: 50%;
     transform: translateY(-50%);
 }
 
 :host([placement*='right']) #tooltip #tip {
     clip-path: polygon(50% 50%, 105% 100%, 105% 0);
-    left: calc(
-        var(
-                --mod-tooltip-tip-block-size,
-                var(--spectrum-tooltip-tip-block-size)
-            ) * -2
-    );
-    right: 100%;
+    inset-inline: calc(
+            var(
+                    --mod-tooltip-tip-block-size,
+                    var(--spectrum-tooltip-tip-block-size)
+                ) * -2
+        )
+        100%;
 }
 
 :host([placement*='left']) #tooltip #tip {
     clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
-    left: 100%;
+    inset-inline-start: 100%;
 }
 
 sp-overlay:not(:defined) {

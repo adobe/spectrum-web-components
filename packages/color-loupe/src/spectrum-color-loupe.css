@@ -49,8 +49,7 @@ governing permissions and limitations under the License.
     );
     inline-size: var(--spectrum-colorloupe-width);
     block-size: var(--spectrum-colorloupe-height);
-    transform: translate(
-        0,
+    transform: translateY(
         var(
             --mod-colorloupe-animation-distance,
             var(--spectrum-colorloupe-animation-distance)
@@ -89,6 +88,7 @@ governing permissions and limitations under the License.
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2);
 }
 
+:host:dir(rtl),
 :host([dir='rtl']) {
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2 - 1px);
 }

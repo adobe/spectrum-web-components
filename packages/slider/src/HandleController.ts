@@ -401,7 +401,6 @@ export class HandleController {
         if (!this.draggingHandle) {
             return;
         }
-        event.stopPropagation();
         input.value = this.calculateHandlePosition(event, model).toString();
         model.handle.value = parseFloat(input.value);
         this.host.indeterminate = false;

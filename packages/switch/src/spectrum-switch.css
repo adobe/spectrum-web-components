@@ -188,7 +188,7 @@ governing permissions and limitations under the License.
     inset-inline-start: 0;
 }
 
-:host([dir='ltr'][checked]) #input + #switch:before {
+:host([checked]) #input + #switch:before {
     transform: translateX(
         calc(
             var(
@@ -199,6 +199,7 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([checked]) #input + #switch:dir(rtl):before,
 :host([dir='rtl'][checked]) #input + #switch:before {
     transform: translateX(
         calc(
@@ -298,7 +299,6 @@ governing permissions and limitations under the License.
 }
 
 #switch:before {
-    content: '';
     box-sizing: border-box;
     transition:
         background
@@ -339,6 +339,11 @@ governing permissions and limitations under the License.
             2
     );
     border-style: solid;
+}
+
+#switch:after,
+#switch:before {
+    content: '';
     display: block;
     position: absolute;
     inset-block-start: 0;
@@ -352,7 +357,6 @@ governing permissions and limitations under the License.
             var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
             2
     );
-    content: '';
     transition:
         opacity
             var(
@@ -367,10 +371,8 @@ governing permissions and limitations under the License.
             )
             ease-out;
     margin: 0;
-    display: block;
-    position: absolute;
-    inset-block: 0;
-    inset-inline: 0;
+    inset-block-end: 0;
+    inset-inline-end: 0;
 }
 
 #switch {
@@ -496,51 +498,6 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    :host([disabled][checked]:hover) #input + #switch:before,
-    :host([disabled][checked]:hover) #input + #switch:before,
-    :host([disabled]:hover) #input + #switch:before,
-    :host([disabled]:hover) #input + #switch:before {
-        border-color: var(
-            --highcontrast-switch-handle-border-color-disabled,
-            var(
-                --mod-switch-handle-border-color-disabled,
-                var(--spectrum-switch-handle-border-color-disabled)
-            )
-        );
-    }
-
-    :host([disabled][checked]:hover) #input + #switch,
-    :host([disabled][checked]:hover) #input + #switch {
-        background-color: var(
-            --highcontrast-switch-background-color-selected-disabled,
-            var(
-                --mod-switch-background-color-selected-disabled,
-                var(--spectrum-switch-background-color-selected-disabled)
-            )
-        );
-    }
-
-    :host([disabled][checked]:hover) #input ~ #label,
-    :host([disabled][checked]:hover) #input ~ #label {
-        color: var(
-            --highcontrast-switch-label-color-disabled,
-            var(
-                --mod-switch-label-color-disabled,
-                var(--spectrum-switch-label-color-disabled)
-            )
-        );
-    }
-
-    :host([checked]:hover) #input:focus-visible + #switch:before {
-        border-color: var(
-            --highcontrast-switch-handle-border-color-selected-focus,
-            var(
-                --mod-switch-handle-border-color-selected-focus,
-                var(--spectrum-switch-handle-border-color-selected-focus)
-            )
-        );
-    }
-
     :host(:hover) #input + #switch:before {
         border-color: var(
             --highcontrast-switch-handle-border-color-hover,
@@ -550,6 +507,26 @@ governing permissions and limitations under the License.
             )
         );
         box-shadow: none;
+    }
+
+    :host(:hover) #input ~ #label {
+        color: var(
+            --highcontrast-switch-label-color-hover,
+            var(
+                --mod-switch-label-color-hover,
+                var(--spectrum-switch-label-color-hover)
+            )
+        );
+    }
+
+    :host([checked]:hover) #input:enabled + #switch {
+        background-color: var(
+            --highcontrast-switch-background-color-selected-hover,
+            var(
+                --mod-switch-background-color-selected-hover,
+                var(--spectrum-switch-background-color-selected-hover)
+            )
+        );
     }
 
     :host([checked]:hover) #input:enabled + #switch:before {
@@ -573,8 +550,52 @@ governing permissions and limitations under the License.
         );
     }
 
+    :host([disabled]:hover) #input + #switch:before,
+    :host([disabled]:hover) #input + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-disabled,
+            var(
+                --mod-switch-handle-border-color-disabled,
+                var(--spectrum-switch-handle-border-color-disabled)
+            )
+        );
+    }
+
     :host([disabled]:hover) #input ~ #label,
     :host([disabled]:hover) #input ~ #label {
+        color: var(
+            --highcontrast-switch-label-color-disabled,
+            var(
+                --mod-switch-label-color-disabled,
+                var(--spectrum-switch-label-color-disabled)
+            )
+        );
+    }
+
+    :host([disabled][checked]:hover) #input + #switch,
+    :host([disabled][checked]:hover) #input + #switch {
+        background-color: var(
+            --highcontrast-switch-background-color-selected-disabled,
+            var(
+                --mod-switch-background-color-selected-disabled,
+                var(--spectrum-switch-background-color-selected-disabled)
+            )
+        );
+    }
+
+    :host([disabled][checked]:hover) #input + #switch:before,
+    :host([disabled][checked]:hover) #input + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-disabled,
+            var(
+                --mod-switch-handle-border-color-disabled,
+                var(--spectrum-switch-handle-border-color-disabled)
+            )
+        );
+    }
+
+    :host([disabled][checked]:hover) #input ~ #label,
+    :host([disabled][checked]:hover) #input ~ #label {
         color: var(
             --highcontrast-switch-label-color-disabled,
             var(
@@ -619,22 +640,12 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host(:hover) #input ~ #label {
-        color: var(
-            --highcontrast-switch-label-color-hover,
+    :host([checked]:hover) #input:focus-visible + #switch:before {
+        border-color: var(
+            --highcontrast-switch-handle-border-color-selected-focus,
             var(
-                --mod-switch-label-color-hover,
-                var(--spectrum-switch-label-color-hover)
-            )
-        );
-    }
-
-    :host([checked]:hover) #input:enabled + #switch {
-        background-color: var(
-            --highcontrast-switch-background-color-selected-hover,
-            var(
-                --mod-switch-background-color-selected-hover,
-                var(--spectrum-switch-background-color-selected-hover)
+                --mod-switch-handle-border-color-selected-focus,
+                var(--spectrum-switch-handle-border-color-selected-focus)
             )
         );
     }
