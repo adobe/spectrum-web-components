@@ -52,7 +52,10 @@ describe('ContextualHelp', () => {
 
         popover = el.shadowRoot?.querySelector('sp-popover');
         expect(popover).to.exist;
-        const heading = popover?.querySelector('h2')?.textContent;
+        const headingSlot = popover?.querySelector(
+            'slot[name="heading"]'
+        ) as HTMLSlotElement;
+        const heading = headingSlot.assignedElements()[0].textContent;
         expect(heading).to.equal('Permission required');
 
         const closed = oneEvent(el, 'sp-closed');

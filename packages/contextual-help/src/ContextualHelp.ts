@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    render,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -20,13 +21,16 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import { trigger } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
-
 import styles from './contextual-help.css.js';
 
 /**
@@ -89,26 +93,6 @@ export class ContextualHelp extends SpectrumElement {
         }
     }
 
-    private handleOpened(): void {
-        this.open = true;
-    }
-
-    private handleClosed(): void {
-        this.open = false;
-    }
-
-    override connectedCallback(): void {
-        super.connectedCallback();
-        this.addEventListener('sp-opened', this.handleOpened);
-        this.addEventListener('sp-closed', this.handleClosed);
-    }
-
-    override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.removeEventListener('sp-opened', this.handleOpened);
-        this.removeEventListener('sp-closed', this.handleClosed);
-    }
-
     private renderOverlayContent(): TemplateResult {
         if (this.isMobile.matches) {
             import('@spectrum-web-components/dialog/sp-dialog-base.js');
@@ -138,6 +122,20 @@ export class ContextualHelp extends SpectrumElement {
         }
     }
 
+    private handleSlottableRequest(event: SlottableRequestEvent): void {
+        event.stopPropagation();
+
+        if (event.data === removeSlottableRequest) {
+            this.open = false;
+            render(undefined, event.target as HTMLElement);
+            return;
+        }
+
+        this.open = true;
+        const template = this.renderOverlayContent();
+        render(template, event.target as HTMLElement);
+    }
+
     protected override render(): TemplateResult {
         const actualPlacement = this.isMobile.matches
             ? undefined
@@ -150,15 +148,6 @@ export class ContextualHelp extends SpectrumElement {
                 id="trigger"
                 aria-label=${this.buttonAriaLabel}
                 .active=${this.open}
-                ${trigger(this.renderOverlayContent.bind(this), {
-                    open: this.open,
-                    triggerInteraction: 'click',
-                    overlayOptions: {
-                        placement: actualPlacement,
-                        offset: this.offset,
-                        type: this.isMobile.matches ? 'modal' : 'auto',
-                    },
-                })}
             >
                 ${this.variant === 'help'
                     ? html`
@@ -172,6 +161,14 @@ export class ContextualHelp extends SpectrumElement {
                           ></sp-icon-info-outline>
                       `}
             </sp-action-button>
+            <sp-overlay
+                trigger="trigger@click"
+                placement=${ifDefined(actualPlacement)}
+                type=${this.isMobile.matches ? 'modal' : 'auto'}
+                receives-focus="true"
+                .offset=${this.offset}
+                @slottable-request=${this.handleSlottableRequest}
+            ></sp-overlay>
         `;
     }
 }
