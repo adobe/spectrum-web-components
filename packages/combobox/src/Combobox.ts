@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     type SpectrumElement,
     TemplateResult,
@@ -322,6 +323,17 @@ export class Combobox extends Textfield {
         const appliedLabel = this.label || this.appliedLabel;
 
         return html`
+            ${this.pending
+                ? html`
+                      <span
+                          aria-hidden="true"
+                          class="visually-hidden"
+                          id="pending-label"
+                      >
+                          ${this.pendingLabel}
+                      </span>
+                  `
+                : nothing}
             ${this.value
                 ? html`
                       <span
@@ -349,10 +361,9 @@ export class Combobox extends Textfield {
         );
         return html`
             <sp-progress-circle
-                id="loader"
                 size="s"
                 indeterminate
-                aria-valuetext=${this.pendingLabel}
+                aria-hidden="true"
                 class="progress-circle"
             ></sp-progress-circle>
         `;
@@ -376,7 +387,7 @@ export class Combobox extends Textfield {
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="loader applied-label label"
+                aria-labelledby="pending-label applied-label label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
@@ -537,7 +548,7 @@ export class Combobox extends Textfield {
             this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
         >
     ): void {
-        if (changed.has('open')) {
+        if (changed.has('open') && !this.pending) {
             this.manageListOverlay();
         }
         if (!this.focused && this.open) {

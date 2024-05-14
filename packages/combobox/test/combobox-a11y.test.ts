@@ -367,9 +367,7 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Pending Combobox' &&
-                !node.value &&
-                node.role === 'combobox'
+                node.name === 'Pending Combobox' && node.role === 'combobox'
         );
 
         expect(a11yNode).to.not.be.null;
