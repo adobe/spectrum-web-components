@@ -5905,6 +5905,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-10.1.0.tgz#07e397d18ec1c7d9c919e8aae464686862b91f47"
   integrity sha512-TxkSE8ZvmIj80oCuPRbWHxJQna0/PeowjfXBrHBoKT7pJKF9LfWD2K+AIHwNVYJfaGCPJxsRlZUsldL7PmzfJw==
 
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@^14.0.0-next.3":
+  version "14.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-14.0.0-next.3.tgz#3b1effbd2ec41e0f21bf449f1479c834513c5777"
+  integrity sha512-Hcirt+qa13RDhQ2X/IwtKh6Q8oFizyyUXfF4PqreXzaTZuBKNmWxte/p21k6BYUupVTGqI1UFcGBQ/omLXIkvw==
+
 "@spectrum-css/tokens@^14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-14.0.0.tgz#e9c25523ebdca90c6acae516088ea8772d2d46ab"

@@ -104,6 +104,22 @@
             "development": "./express/theme-lightest.dev.js",
             "default": "./express/theme-lightest.js"
         },
+        "./spectrum-two/scale-large-core-tokens.js": {
+            "development": "./spectrum-two/scale-large-core-tokens.dev.js",
+            "default": "./spectrum-two/scale-large-core-tokens.js"
+        },
+        "./spectrum-two/scale-medium-core-tokens.js": {
+            "development": "./spectrum-two/scale-medium-core-tokens.dev.js",
+            "default": "./spectrum-two/scale-medium-core-tokens.js"
+        },
+        "./spectrum-two/theme-dark-core-tokens.js": {
+            "development": "./spectrum-two/theme-dark-core-tokens.dev.js",
+            "default": "./spectrum-two/theme-dark-core-tokens.js"
+        },
+        "./spectrum-two/theme-light-core-tokens.js": {
+            "development": "./spectrum-two/theme-light-core-tokens.dev.js",
+            "default": "./spectrum-two/theme-light-core-tokens.js"
+        },
         "./src/express/core-tokens.js": {
             "development": "./src/express/core-tokens.dev.js",
             "default": "./src/express/core-tokens.js"
@@ -129,6 +145,18 @@
         "./src/express/themes.js": {
             "development": "./src/express/themes.dev.js",
             "default": "./src/express/themes.js"
+        },
+        "./src/spectrum-two/core-tokens.js": {
+            "development": "./src/spectrum-two/core-tokens.dev.js",
+            "default": "./src/spectrum-two/core-tokens.js"
+        },
+        "./src/spectrum-two/core.js": {
+            "development": "./src/spectrum-two/core.dev.js",
+            "default": "./src/spectrum-two/core.js"
+        },
+        "./src/spectrum-two/themes-core-tokens.js": {
+            "development": "./src/spectrum-two/themes-core-tokens.dev.js",
+            "default": "./src/spectrum-two/themes-core-tokens.js"
         },
         "./core.js": {
             "development": "./core.dev.js",
@@ -218,6 +246,8 @@
         "./core-*.js",
         "./theme-*.js",
         "./scale-*.js",
+        "./spectrum-two/theme-*.js",
+        "./spectrum-two/scale-*.js",
         "./express/theme-*.js",
         "./express/scale-*.js",
         "./src/themes.js",
@@ -225,6 +255,10 @@
         "./src/express/core.js",
         "./src/express/core-*.js",
         "./src/express/themes.js",
-        "./src/express/themes-*.js"
+        "./src/express/themes-*.js",
+        "./src/spectrum-two/core.js",
+        "./src/spectrum-two/core-*.js",
+        "./src/spectrum-two/themes.js",
+        "./src/spectrum-two/themes-*.js"
     ]
 }
