@@ -10,11 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController } from 'lit';
-import type { PickerBase } from './Picker.js';
+import type { ReactiveController } from '@spectrum-web-components/base';
+import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay';
+import { PickerBase } from './PickerBase.js';
 
 export enum InteractionTypes {
-    'click',
+    'desktop',
+    'mobile',
 }
 
 export class InteractionController implements ReactiveController {
@@ -24,25 +26,37 @@ export class InteractionController implements ReactiveController {
         return false;
     }
 
+    private handleOverlayReady?: (overlay: AbstractOverlay) => void;
+
+    public get open(): boolean {
+        return this.host.open;
+    }
+
+    /**
+     * Set `open`
+     */
+    public set open(open: boolean) {
+        this.host.open = open;
+    }
+
+    toggle(target?: boolean): void {
+        this.host.toggle(target);
+    }
+
     type!: InteractionTypes;
 
     constructor(
-        public host: PickerBase,
         public target: HTMLElement,
-        private isPersistent = false
+        public overlay: AbstractOverlay | undefined,
+        public host: PickerBase
     ) {
-        this.host.addController(this);
-        this.prepareDescription(this.target);
-        if (this.isPersistent) {
-            this.init();
-        }
+        this.target = target;
+        this.overlay = overlay;
+        this.host = host;
+        this.init();
     }
 
-    prepareDescription(_: HTMLElement): void {}
-
     releaseDescription(): void {}
-
-    shouldCompleteOpen(): void {}
 
     /* c8 ignore next 3 */
     init(): void {

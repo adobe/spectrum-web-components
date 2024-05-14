@@ -55,7 +55,9 @@ import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
 
-import { ClickController } from './ClickController.js';
+import { DesktopController } from './DesktopController.js';
+import { MobileController } from './MobileController.js';
+import { strategies } from './strategies.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -68,7 +70,7 @@ export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
-    public strategy?: ClickController;
+    public strategy?: DesktopController | MobileController;
 
     @state()
     appliedLabel?: string;
@@ -122,7 +124,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected optionsMenu!: Menu;
 
     @query('sp-overlay')
-    protected overlayElement!: Overlay;
+    public overlayElement!: Overlay;
 
     protected tooltipEl?: Tooltip;
 
@@ -188,60 +190,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.focused = false;
     }
 
-    protected preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
-    private pointerdownState = false;
-
-    protected handleButtonPointerdown(event: PointerEvent): void {
-        if (event.button !== 0) {
-            return;
-        }
-        this.pointerdownState = this.open;
-        this.preventNextToggle = 'maybe';
-        let cleanupAction = 0;
-        const cleanup = (): void => {
-            cancelAnimationFrame(cleanupAction);
-            cleanupAction = requestAnimationFrame(async () => {
-                document.removeEventListener('pointerup', cleanup);
-                document.removeEventListener('pointercancel', cleanup);
-                this.button.removeEventListener('click', cleanup);
-                requestAnimationFrame(() => {
-                    // Complete cleanup on the second animation frame so that `click` can go first.
-                    this.preventNextToggle = 'no';
-                });
-            });
-        };
-        // Ensure that however the pointer goes up we do `cleanup()`.
-        document.addEventListener('pointerup', cleanup);
-        document.addEventListener('pointercancel', cleanup);
-        this.button.addEventListener('click', cleanup);
-        this.handleActivate();
-    }
-
-    protected handleButtonFocus(event: FocusEvent): void {
-        // When focus comes from a pointer event, and the related target is the Menu,
-        // we don't want to reopen the Menu.
-        if (
-            this.preventNextToggle === 'maybe' &&
-            event.relatedTarget === this.optionsMenu
-        ) {
-            this.preventNextToggle = 'yes';
-        }
-    }
-
-    protected handleActivate(event?: Event): void {
-        if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
-            return;
-        }
-        if (this.preventNextToggle === 'yes') {
-            return;
-        }
-        if (event?.type === 'click' && this.open !== this.pointerdownState) {
-            // When activation comes from a `click` event ensure that the `pointerup`
-            // event didn't already toggle the Picker state before doing so.
-            return;
-        }
-        this.toggle();
-    }
+    public preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
+    public pointerdownState = false;
 
     public override focus(options?: FocusOptions): void {
         super.focus(options);
@@ -562,7 +512,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         : undefined
                 )}
                 @blur=${this.handleButtonBlur}
-                @focus=${this.handleButtonFocus}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
@@ -646,11 +595,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         this.bindButtonKeydownListener();
-
-        this.strategy?.abort();
-        this.strategy = undefined;
-
-        this.strategy = new ClickController(this, this.button);
+        this.bindEvents();
     }
 
     protected get dismissHelper(): TemplateResult {
@@ -830,6 +775,16 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         );
     };
 
+    protected bindEvents(): void {
+        this.strategy?.abort();
+        this.strategy = undefined;
+        this.strategy = new strategies['desktop'](
+            this.button,
+            this.overlayElement,
+            this
+        );
+    }
+
     public override connectedCallback(): void {
         super.connectedCallback();
         this.recentlyConnected = this.hasUpdated;
@@ -837,7 +792,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public override disconnectedCallback(): void {
         this.close();
-
+        this.strategy?.releaseDescription();
         super.disconnectedCallback();
     }
 }
