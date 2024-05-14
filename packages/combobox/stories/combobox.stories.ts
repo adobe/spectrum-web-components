@@ -66,6 +66,19 @@ export const invalid = (): TemplateResult => {
     `;
 };
 
+export const pending = (): TemplateResult => {
+    return html`
+        <sp-field-label for="combobox-pending">
+            What would you like to eat for dessert?
+        </sp-field-label>
+        <sp-combobox
+            id="combobox-pending"
+            .options=${fruits}
+            pending
+        ></sp-combobox>
+    `;
+};
+
 export const readonly = (): TemplateResult => {
     return html`
         <sp-field-label for="combobox-readonly">
