@@ -1,0 +1,5 @@
+import { t as t$1 } from './mutation-controller-D2lT1xZk.js';
+
+const t=Symbol("slotContentIsPresent");function ObserveSlotPresence(l,s){var o,i;const r=Array.isArray(s)?s:[s];class a extends(i=l,o=t,i){constructor(...e){super(e);this[o]=new Map;this.managePresenceObservedSlot=()=>{let e=!1;r.forEach(n=>{const c=!!this.querySelector(`:scope > ${n}`),g=this[t].get(n)||!1;e=e||g!==c,this[t].set(n,!!this.querySelector(`:scope > ${n}`));}),e&&this.updateComplete.then(()=>{this.requestUpdate();});};new t$1(this,{config:{childList:!0,subtree:!0},callback:()=>{this.managePresenceObservedSlot();}}),this.managePresenceObservedSlot();}get slotContentIsPresent(){if(r.length===1)return this[t].get(r[0])||!1;throw new Error("Multiple selectors provided to `ObserveSlotPresence` use `getSlotContentPresence(selector: string)` instead.")}getSlotContentPresence(e){if(this[t].has(e))return this[t].get(e)||!1;throw new Error(`The provided selector \`${e}\` is not being observed.`)}}return a}
+
+export { ObserveSlotPresence as O };
