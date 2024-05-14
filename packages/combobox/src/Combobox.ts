@@ -79,7 +79,7 @@ export class Combobox extends Textfield {
     @property({ type: Boolean, reflect: true })
     public pending = false;
 
-    /** Defines a string value that labels the Picker while it is in pending state. */
+    /** Defines a string value that labels the Combobox while it is in pending state. */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
