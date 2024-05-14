@@ -89,8 +89,18 @@ describe('ProgressCircle', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
     });
+
     it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
-        const consoleWarnStub = stub(console, 'warn');
+        let consoleWarnStub!: SinonStub;
+        before(() => {
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            consoleWarnStub.restore();
+        });
         const el = await fixture<ProgressCircle>(html`
             <sp-progress-circle progress="50"></sp-progress-circle>
         `);
@@ -98,9 +108,9 @@ describe('ProgressCircle', () => {
         await elementUpdated(el);
 
         expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
+        let spyCall = consoleWarnStub.getCall(0);
         expect(
-            spyCall.args.at(0).includes('accessible'),
+            (spyCall.args.at(0) as string).includes('accessible'),
             'confirm accessibility-centric message'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
@@ -110,7 +120,23 @@ describe('ProgressCircle', () => {
                 level: 'default',
             },
         });
-        consoleWarnStub.restore();
+
+        el.overBackground = true;
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        spyCall = consoleWarnStub.getCall(0);
+        expect(
+            (spyCall.args.at(0) as string).includes('overBackground'),
+            'confirm a warning message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-progress-circle',
+                level: 'deprecation',
+                type: 'api',
+            },
+        });
     });
     it('accepts `aria-label`', async () => {
         const el = await fixture<ProgressCircle>(html`
