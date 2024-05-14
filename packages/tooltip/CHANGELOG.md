@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **tooltip:** fix infinite loop in self-managed tooltips ([#4269](https://github.com/adobe/spectrum-web-components/issues/4269)) ([b66ee49](https://github.com/adobe/spectrum-web-components/commit/b66ee495029cd8af8a20e6d450301c4368330c3b))
+
 ## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
 
 ### Bug Fixes

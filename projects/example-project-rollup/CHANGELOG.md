@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+- **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+
 ## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
 
 ### Bug Fixes
