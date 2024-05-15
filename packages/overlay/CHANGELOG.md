@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **action-menu:** allow menu groups to handle their own selections ([#4397](https://github.com/adobe/spectrum-web-components/issues/4397)) ([5a19051](https://github.com/adobe/spectrum-web-components/commit/5a190518814f85cfd2e345ad6a0add1378c05bf4))
+-   **base:** move lit imports to base ([#4416](https://github.com/adobe/spectrum-web-components/issues/4416)) ([b7cb07e](https://github.com/adobe/spectrum-web-components/commit/b7cb07e98e17754c83d3e0112aac9728139e043b))
+-   **overlay:** prevent "receivesFocus=false" overlays from returning focus ([607819f](https://github.com/adobe/spectrum-web-components/commit/607819f053113a21cccfbc97d775551ef11bfc4a))
+-   **slider,overlay:** ensure that pointer events in Slider are handled as expected in Overlay ([#4438](https://github.com/adobe/spectrum-web-components/issues/4438)) ([db193e8](https://github.com/adobe/spectrum-web-components/commit/db193e84d1ee300faaed47a5a4026b73a8d9fb30))
+-   **styles,theme:** add S2 tokens and theme ([#4241](https://github.com/adobe/spectrum-web-components/issues/4241)) ([a29e4a2](https://github.com/adobe/spectrum-web-components/commit/a29e4a298090e39e009c434e48113fb8a7e90d14)), closes [#4232](https://github.com/adobe/spectrum-web-components/issues/4232) [#4228](https://github.com/adobe/spectrum-web-components/issues/4228)
+-   **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+
 ## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
 
 ### Bug Fixes
