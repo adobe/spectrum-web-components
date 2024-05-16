@@ -161,7 +161,7 @@
         "genversion": "^3.1.1",
         "gh-pages": "^6.0.0",
         "gunzip-maybe": "^1.4.2",
-        "husky": "^9.0.10",
+        "husky": "^8.0.3",
         "latest-version": "^9.0.0",
         "lerna": "^6.6.2",
         "lightningcss": "^1.24.0",
@@ -169,7 +169,7 @@
         "lit-analyzer": "^2.0.3",
         "lit-html": "^2.4.0 || ^3.1.3",
         "mocha-junit-reporter": "^2.0.2",
-        "netlify-cli": "^17.0.0",
+        "netlify-cli": "^15.9.0",
         "next": "^14",
         "node-fetch": "^3.1.0",
         "npm-run-all2": "^6.0.0",
@@ -369,13 +369,13 @@
             ]
         },
         "process-spectrum": {
-            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/spectrum-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
+            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/generate-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
             "files": [
                 "tasks/process-spectrum.js",
                 "packages/**/spectrum-config.js",
                 "tools/**/spectrum-config.js",
                 "node_modules/@spectrum-css/**/index-vars.css",
-                "scripts/spectrum-tokens.js",
+                "scripts/generate-tokens.js",
                 "node_modules/@spectrum-css/**/*.css",
                 "scripts/spectrum-vars.js",
                 "tools/styles/package.json"

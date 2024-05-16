@@ -15,7 +15,7 @@ import {
     render,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { directive } from 'lit/async-directive.js';
+import { directive } from '@spectrum-web-components/base/src/async-directive.js';
 import { strategies } from './strategies.js';
 import type { OverlayOptions, TriggerInteraction } from './overlay-types.js';
 import type { ClickController } from './ClickController.js';

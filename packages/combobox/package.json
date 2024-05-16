@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/combobox",
-    "version": "0.42.3",
+    "version": "0.42.4",
     "publishConfig": {
         "access": "public"
     },
@@ -57,15 +57,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.42.3",
-        "@spectrum-web-components/base": "^0.42.3",
-        "@spectrum-web-components/icon": "^0.42.3",
-        "@spectrum-web-components/icons-ui": "^0.42.3",
-        "@spectrum-web-components/menu": "^0.42.3",
-        "@spectrum-web-components/overlay": "^0.42.3",
-        "@spectrum-web-components/picker-button": "^0.42.3",
-        "@spectrum-web-components/popover": "^0.42.3",
-        "@spectrum-web-components/textfield": "^0.42.3"
+        "@spectrum-web-components/action-button": "^0.42.4",
+        "@spectrum-web-components/base": "^0.42.4",
+        "@spectrum-web-components/icon": "^0.42.4",
+        "@spectrum-web-components/icons-ui": "^0.42.4",
+        "@spectrum-web-components/menu": "^0.42.4",
+        "@spectrum-web-components/overlay": "^0.42.4",
+        "@spectrum-web-components/picker-button": "^0.42.4",
+        "@spectrum-web-components/popover": "^0.42.4",
+        "@spectrum-web-components/textfield": "^0.42.4"
     },
     "devDependencies": {
         "@spectrum-css/combobox": "^3.1.0"

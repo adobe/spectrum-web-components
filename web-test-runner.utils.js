@@ -144,7 +144,7 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultSystemVariant: "${themeVariant || ''}",
+                defaultSystemVariant:  "${themeVariant || ''}",
                 defaultColor: "${color || ''}",
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",
@@ -157,12 +157,18 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const themeVariants = ['classic', 'express'];
+const themeVariants = ['spectrum', 'express', 'spectrum-two'];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
 themeVariants.forEach((themeVariant) => {
     colors.forEach((color) => {
+        if (
+            themeVariant === 'spectrum-two' &&
+            (color === 'lightest' || color === 'darkest')
+        ) {
+            return;
+        }
         scales.forEach((scale) => {
             directions.forEach((dir) => {
                 const reduceMotion = true;
