@@ -51,6 +51,15 @@ export const argTypes = {
         },
         control: 'text',
     },
+    offset: {
+        name: 'offset',
+        type: { name: 'number', required: false },
+        table: {
+            type: { summary: 'offset' },
+            defaultValue: { summary: 0 },
+        },
+        control: 'number',
+    },
     placement: {
         name: 'placement',
         type: { name: 'string', required: false },
