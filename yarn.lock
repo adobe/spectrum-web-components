@@ -5600,10 +5600,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-8.1.0.tgz#b20e7de8d791842f1c8a6fab1ab2c43c7801bbae"
   integrity sha512-cYdrYie8ULV1aLJgNEhqiSch8peGAYGYBPKZorA4ymWXP1uVK/t4+mcTx2D/F3+kdlzlewC7rZQvU0+y2A6QEw==
 
-"@spectrum-css/actionbutton@^7.0.0-alpha.1":
-  version "7.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-7.0.0-alpha.1.tgz#bdfaee45d9f2626f88d2ab9496bd8a815ac81c5d"
-  integrity sha512-rafH+f4qgegE1sC0BGLMyx3OFn5QTFn6hC9desRCJvVdJ4yTp0Er6E99I5K03ddhhww7bIZQjBx5Z2iMgTFKJQ==
+"@spectrum-css/actionbutton@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-6.1.0.tgz#68c0ff0d84f09430f7fb948d2f4f1b87f6eb11e4"
+  integrity sha512-GF0k93q2rHyW68L4uNjAlfAgQLK5JwvrjVAePitJsDsVGCEpdhnN2lFNS6xGfbPBAiFHspftqlv0M01eCXTcLg==
 
 "@spectrum-css/actiongroup@^5.1.0":
   version "5.1.0"
@@ -5946,7 +5946,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.42.3"
+  version "0.42.4"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"

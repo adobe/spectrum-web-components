@@ -34,7 +34,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/legacy-overrides.css.js": "./src/legacy-overrides.css.js",
         "./sp-action-button.js": {
             "development": "./sp-action-button.dev.js",
             "default": "./sp-action-button.js"
