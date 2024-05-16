@@ -353,10 +353,13 @@ describe('Combobox accessibility', () => {
     });
     it('renders accessibly with `pending` attribute', async () => {
         const el = await comboboxFixture();
+        el.value = 'Banana';
         el.pending = true;
 
         await elementUpdated(el);
         await nextFrame();
+
+        const name = 'Pending Combobox';
 
         const snapshot = (await a11ySnapshot(
             {}
@@ -366,8 +369,7 @@ describe('Combobox accessibility', () => {
 
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
-            (node) =>
-                node.name === 'Pending Combobox' && node.role === 'combobox'
+            (node) => node.name === name && node.role === 'combobox'
         );
 
         expect(a11yNode).to.not.be.null;
