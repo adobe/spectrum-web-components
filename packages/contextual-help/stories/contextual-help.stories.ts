@@ -25,10 +25,14 @@ export default {
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
+Default.args = {
+    open: true,
+};
 
 export const Help = (args: StoryArgs): TemplateResult => Template(args);
 Help.args = {
     variant: 'help',
+    open: true,
 };
 
 export const CustomPlacement = (args: StoryArgs): TemplateResult => {
@@ -43,4 +47,5 @@ export const CustomPlacement = (args: StoryArgs): TemplateResult => {
 
 CustomPlacement.args = {
     placement: 'top',
+    open: true,
 };

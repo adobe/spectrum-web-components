@@ -168,6 +168,7 @@ export class ContextualHelp extends SpectrumElement {
                 receives-focus="true"
                 .offset=${this.offset}
                 @slottable-request=${this.handleSlottableRequest}
+                ?open=${this.open}
             ></sp-overlay>
         `;
     }
