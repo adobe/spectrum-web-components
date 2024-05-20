@@ -108,8 +108,12 @@ describe('ColorArea', () => {
         const inputX = el.shadowRoot.querySelector('input[name="x"]');
         const inputY = el.shadowRoot.querySelector('input[name="y"]');
 
-        expect(inputX?.getAttribute('aria-label')).to.equal('Color Picker');
-        expect(inputY?.getAttribute('aria-label')).to.equal('Color Picker');
+        expect(inputX?.getAttribute('aria-label')).to.equal(
+            'saturation Color Picker'
+        );
+        expect(inputY?.getAttribute('aria-label')).to.equal(
+            'luminosity Color Picker'
+        );
         expect(inputX?.getAttribute('aria-roledescription')).to.equal(
             '2d slider'
         );
@@ -121,6 +125,24 @@ describe('ColorArea', () => {
         );
         expect(inputY?.getAttribute('aria-valuetext')).to.equal(
             '75%, luminosity, 67%, saturation'
+        );
+    });
+    it('overrides X and Y labels with provided "labelX" and "labelY" attributes', async () => {
+        const el = await fixture<ColorArea>(html`
+            <sp-color-area
+                color="hsl(100, 50%, 50%)"
+                label-X="custom X label"
+                label-Y="custom Y label"
+            ></sp-color-area>
+        `);
+        const inputX = el.shadowRoot.querySelector('input[name="x"]');
+        const inputY = el.shadowRoot.querySelector('input[name="y"]');
+
+        expect(inputX?.getAttribute('aria-label')).to.equal(
+            'custom X label Color Picker'
+        );
+        expect(inputY?.getAttribute('aria-label')).to.equal(
+            'custom Y label Color Picker'
         );
     });
     it('updates color when x value changes', async () => {

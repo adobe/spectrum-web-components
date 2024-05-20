@@ -474,7 +474,9 @@ export class ColorArea extends SpectrumElement {
                         type="range"
                         class="slider"
                         name="x"
-                        aria-label=${isMobile ? ariaLabelX : ariaLabel}
+                        aria-label=${isMobile
+                            ? ariaLabelX
+                            : `${ariaLabelX} ${ariaLabel}`}
                         aria-roledescription=${ariaRoleDescription}
                         aria-orientation="horizontal"
                         aria-valuetext=${isMobile
@@ -498,7 +500,9 @@ export class ColorArea extends SpectrumElement {
                         type="range"
                         class="slider"
                         name="y"
-                        aria-label=${isMobile ? ariaLabelY : ariaLabel}
+                        aria-label=${isMobile
+                            ? ariaLabelY
+                            : `${ariaLabelY} ${ariaLabel}`}
                         aria-roledescription=${ariaRoleDescription}
                         aria-orientation="vertical"
                         aria-valuetext=${isMobile
