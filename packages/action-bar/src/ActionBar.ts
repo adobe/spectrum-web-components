@@ -21,9 +21,12 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import actionBarStyles from './action-bar.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+
+import stylesDefault from './spectrum-action-bar.min.css' with { type: 'css' };
+import stylesOveride from './action-bar.min.css' with { type: 'css' };
+
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
@@ -32,7 +35,7 @@ export const actionBarVariants = ['sticky', 'fixed'];
  */
 export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [actionBarStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     /**

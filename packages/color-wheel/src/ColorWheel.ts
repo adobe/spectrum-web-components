@@ -33,7 +33,8 @@ import {
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
-import styles from './color-wheel.css.js';
+import stylesDefault from './spectrum-color-wheel.min.css' with { type: 'css' };
+import stylesOveride from './color-wheel.min.css' with { type: 'css' };
 
 /**
  * @element sp-color-wheel
@@ -43,7 +44,7 @@ import styles from './color-wheel.css.js';
  */
 export class ColorWheel extends Focusable {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: String, reflect: true })

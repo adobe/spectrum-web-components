@@ -33,7 +33,8 @@ import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { WithSWCResizeObserver } from './types';
 
-import styles from './split-view.css.js';
+import stylesDefault from './spectrum-split-view.min.css' with { type: 'css' };
+import stylesOveride from './split-view.min.css' with { type: 'css' };
 
 const DEFAULT_MAX_SIZE = 3840;
 
@@ -53,7 +54,7 @@ const COLLAPSE_THREASHOLD = 50;
  */
 export class SplitView extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @state()

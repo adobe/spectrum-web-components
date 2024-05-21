@@ -34,9 +34,11 @@ import { Tab } from './Tab.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
-import tabStyles from './tabs.css.js';
-import tabSizes from './tabs-sizes.css.js';
 import { TabPanel } from './TabPanel.js';
+
+import stylesSizes from './tabs-sizes.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-tabs.min.css' with { type: 'css' };
+import stylesOveride from './tabs.min.css' with { type: 'css' };
 
 // Encapsulated for use both here and in TopNav
 export const ScaledIndicator = {
@@ -77,7 +79,12 @@ export const ScaledIndicator = {
  */
 export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
-        return [tabSizes, tabStyles, ScaledIndicator.baseStyles()];
+        return [
+            stylesSizes,
+            stylesDefault,
+            stylesOveride,
+            ScaledIndicator.baseStyles(),
+        ];
     }
 
     /**

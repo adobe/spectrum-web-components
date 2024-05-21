@@ -26,7 +26,8 @@ import type { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import styles from './action-group.css.js';
+import stylesDefault from './spectrum-action-group.min.css' with { type: 'css' };
+import stylesOveride from './action-group.min.css' with { type: 'css' };
 
 const EMPTY_SELECTION: string[] = [];
 
@@ -41,7 +42,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     public set buttons(buttons: ActionButton[]) {

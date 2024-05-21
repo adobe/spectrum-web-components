@@ -23,8 +23,9 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
 
-import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
-import topNavItemStyles from './top-nav-item.css.js';
+import stylesDefault from '@spectrum-web-components/tabs/src/spectrum-tab.min.css' with { type: 'css' };
+import stylesOveride from '@spectrum-web-components/tabs/src/tab.min.css' with { type: 'css' };
+import stylesLocal from './top-nav-item.min.css' with { type: 'css' };
 
 /**
  * @element sp-top-nav-item
@@ -34,7 +35,7 @@ import topNavItemStyles from './top-nav-item.css.js';
 
 export class TopNavItem extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
-        return [itemStyles, topNavItemStyles];
+        return [stylesDefault, stylesOveride, stylesLocal];
     }
 
     @query('a')

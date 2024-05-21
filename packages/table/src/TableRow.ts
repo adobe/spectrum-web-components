@@ -20,8 +20,10 @@ import {
     property,
     queryAssignedElements,
 } from '@spectrum-web-components/base/src/decorators.js';
-import styles from './table-row.css.js';
 import { TableCheckboxCell } from './TableCheckboxCell.js';
+
+import stylesDefault from './spectrum-table-row.min.css' with { type: 'css' };
+import stylesOveride from './table-row.min.css' with { type: 'css' };
 
 /**
  * @element sp-table-row
@@ -30,7 +32,7 @@ import { TableCheckboxCell } from './TableCheckboxCell.js';
  */
 export class TableRow extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @queryAssignedElements({

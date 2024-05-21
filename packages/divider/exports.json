@@ -1,4 +1,6 @@
 {
     "./src/*": "./src/*",
-    "./sp-divider.js": "./sp-divider.js"
+    "./sp-divider.js": "./sp-divider.js",
+    "./src/spectrum-divider.min.css": "./src/spectrum-divider.min.css",
+    "./src/divider.min.css": "./src/divider.min.css"
 }

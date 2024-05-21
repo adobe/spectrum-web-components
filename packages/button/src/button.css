@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-button.css');
+/* @import url('./spectrum-button.css'); */
 
 @media (forced-colors: active) {
     :host([treatment][disabled]) {

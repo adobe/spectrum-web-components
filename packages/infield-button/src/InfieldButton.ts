@@ -18,7 +18,8 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button/src/ButtonBase.js';
 
-import styles from './infield-button.css.js';
+import stylesDefault from './spectrum-infield-button.min.css' with { type: 'css' };
+import stylesOveride from './infield-button.min.css' with { type: 'css' };
 
 /**
  * @element sp-infield-button
@@ -28,7 +29,7 @@ export class InfieldButton extends SizedMixin(ButtonBase, {
     validSizes: ['s', 'm', 'l', 'xl'],
 }) {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles];
+        return [...super.styles, stylesDefault, stylesOveride];
     }
 
     /**

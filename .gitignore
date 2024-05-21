@@ -25,6 +25,7 @@ lib
 # build artifacts
 custom-elements.json
 
+*.min.css
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js

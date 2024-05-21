@@ -167,7 +167,9 @@ jobs:
 
     comment-performance:
         name: Comment performance results
-        needs: [compare-chrome, compare-firefox]
+        # needs: [compare-chrome, compare-firefox]
+        # comparing in firefox will fail while leverageing Import Attributes
+        needs: [compare-chrome]
 
         # We can't currently run benchmarks on PRs from forked repos, because the
         # tachometer action reports results by posting a comment, and we can't post

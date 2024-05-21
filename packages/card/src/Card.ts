@@ -33,9 +33,11 @@ import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import '@spectrum-web-components/divider/sp-divider.js';
-import cardStyles from './card.css.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
 import detailStyles from '@spectrum-web-components/styles/detail.js';
+
+import stylesDefault from './spectrum-card.min.css' with { type: 'css' };
+import stylesOveride from './card.min.css' with { type: 'css' };
 
 /**
  * @element sp-card
@@ -62,7 +64,7 @@ export class Card extends LikeAnchor(
     )
 ) {
     public static override get styles(): CSSResultArray {
-        return [headingStyles, detailStyles, cardStyles];
+        return [headingStyles, detailStyles, stylesDefault, stylesOveride];
     }
 
     @property()

@@ -21,7 +21,8 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
-import radioStyles from './radio.css.js';
+import stylesDefault from './spectrum-radio.min.css' with { type: 'css' };
+import stylesOveride from './radio.min.css' with { type: 'css' };
 
 /**
  * @element sp-radio
@@ -39,7 +40,7 @@ export class Radio extends SizedMixin(
     { noDefaultSize: true }
 ) {
     public static override get styles(): CSSResultArray {
-        return [radioStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     /**

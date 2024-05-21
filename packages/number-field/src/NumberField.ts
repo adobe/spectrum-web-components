@@ -38,8 +38,10 @@ import {
     isIPhone,
 } from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import styles from './number-field.css.js';
+
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-number-field.min.css' with { type: 'css' };
+import stylesOveride from './number-field.min.css' with { type: 'css' };
 
 export const FRAMES_PER_CHANGE = 5;
 // Debounce duration for inserting a `change` event after a batch of `wheel` originating `input` events.
@@ -95,7 +97,7 @@ const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
  */
 export class NumberField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, stylesDefault, stylesOveride, chevronStyles];
     }
 
     @query('.buttons')

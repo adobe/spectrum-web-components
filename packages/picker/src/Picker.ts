@@ -32,9 +32,6 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import pickerStyles from './picker.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -54,6 +51,10 @@ import { DependencyManagerController } from '@spectrum-web-components/reactive-c
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
+
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-picker.min.css' with { type: 'css' };
+import stylesOveride from './picker.min.css' with { type: 'css' };
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -848,7 +849,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  */
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles];
+        return [stylesDefault, stylesOveride, chevronStyles];
     }
 
     protected override get containerStyles(): StyleInfo {

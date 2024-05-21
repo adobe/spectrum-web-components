@@ -37,7 +37,9 @@
         "./sp-divider.js": {
             "development": "./sp-divider.dev.js",
             "default": "./sp-divider.js"
-        }
+        },
+        "./src/spectrum-divider.min.css": "./src/spectrum-divider.min.css",
+        "./src/divider.min.css": "./src/divider.min.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

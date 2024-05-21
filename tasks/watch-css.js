@@ -22,6 +22,7 @@ const debounceProcessCSS = debounce(processCSS, 200);
 chokidar
     .watch(['./packages/*/src/**/*.css', './tools/*/src/**/*.css'], {
         ignoreInitial: true,
+        ignored: ['**/*.min.css'],
     })
     .on('change', (path) => {
         console.log(`Process CSS change in: ${path}`);

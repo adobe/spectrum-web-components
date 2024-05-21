@@ -29,7 +29,6 @@ import {
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 
-import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -38,6 +37,9 @@ import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import type { NumberFormatter } from '@internationalized/number';
+
+import stylesDefault from './spectrum-slider.min.css' with { type: 'css' };
+import stylesOveride from './slider.min.css' with { type: 'css' };
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
@@ -52,7 +54,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     validSizes: ['s', 'm', 'l', 'xl'],
 }) {
     public static override get styles(): CSSResultArray {
-        return [sliderStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     public override handleController: HandleController = new HandleController(

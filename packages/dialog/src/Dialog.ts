@@ -28,10 +28,12 @@ import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 
-import styles from './dialog.css.js';
 import type { CloseButton } from '@spectrum-web-components/button';
 import { AlertDialog } from '@spectrum-web-components/alert-dialog/src/AlertDialog.js';
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
+
+import stylesDefault from './spectrum-dialog.min.css' with { type: 'css' };
+import stylesOveride from './dialog.min.css' with { type: 'css' };
 
 /**
  * @element sp-dialog
@@ -49,7 +51,7 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
     '[slot="button"]',
 ]) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @query('.close-button')

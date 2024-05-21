@@ -22,7 +22,9 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
-import styles from './badge.css.js';
+
+import stylesDefault from './spectrum-badge.min.css' with { type: 'css' };
+import stylesOveride from './badge.min.css' with { type: 'css' };
 
 export const BADGE_VARIANTS = [
     'accent',
@@ -46,7 +48,7 @@ export const BADGE_VARIANTS = [
     'cyan',
     'blue',
 ] as const;
-export type BadgeVariant = typeof BADGE_VARIANTS[number];
+export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 export const FIXED_VALUES_DEPRECATED = ['top', 'bottom', 'left', 'right'];
 export const FIXED_VALUES = [
     'inline-start',
@@ -55,8 +57,8 @@ export const FIXED_VALUES = [
     'block-end',
 ] as const;
 export type FixedValues =
-    | typeof FIXED_VALUES[number]
-    | typeof FIXED_VALUES_DEPRECATED[number];
+    | (typeof FIXED_VALUES)[number]
+    | (typeof FIXED_VALUES_DEPRECATED)[number];
 
 /**
  * @element sp-badge
@@ -71,7 +73,7 @@ export class Badge extends SizedMixin(
     }
 ) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ reflect: true })

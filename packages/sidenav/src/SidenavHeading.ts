@@ -19,8 +19,10 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import sidenavItemStyles from './sidenav-item.css.js';
-import sidenavHeadingStyles from './sidenav-heading.css.js';
+import stylesItemDefault from './spectrum-sidenav-item.min.css' with { type: 'css' };
+import stylesItemOveride from './sidenav-item.min.css' with { type: 'css' };
+import stylesHeadingDefault from './spectrum-sidenav-heading.min.css' with { type: 'css' };
+import stylesHeadingOveride from './sidenav-heading.min.css' with { type: 'css' };
 
 /**
  * @element sp-sidenav-heading
@@ -32,7 +34,12 @@ export class SideNavHeading extends SpectrumElement {
     public label = '';
 
     public static override get styles(): CSSResultArray {
-        return [sidenavItemStyles, sidenavHeadingStyles];
+        return [
+            stylesItemDefault,
+            stylesItemOveride,
+            stylesHeadingDefault,
+            stylesHeadingOveride,
+        ];
     }
 
     protected override update(changes: PropertyValues): void {

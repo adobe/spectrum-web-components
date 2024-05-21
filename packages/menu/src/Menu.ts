@@ -26,7 +26,9 @@ import {
 import { MenuItem } from './MenuItem.js';
 import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
-import menuStyles from './menu.css.js';
+
+import stylesDefault from './spectrum-menu.min.css' with { type: 'css' };
+import stylesOveride from './menu.min.css' with { type: 'css' };
 
 export interface MenuChildItem {
     menuItem: MenuItem;
@@ -61,7 +63,7 @@ function elementIsOrContains(
  */
 export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
-        return [menuStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     private get isSubmenu(): boolean {

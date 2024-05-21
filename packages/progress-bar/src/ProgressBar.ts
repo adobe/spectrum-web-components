@@ -28,7 +28,9 @@ import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import styles from './progress-bar.css.js';
+
+import stylesDefault from './spectrum-progress-bar.min.css' with { type: 'css' };
+import stylesOveride from './progress-bar.min.css' with { type: 'css' };
 
 /**
  * @element sp-progress-bar
@@ -40,7 +42,7 @@ export class ProgressBar extends SizedMixin(
     }
 ) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

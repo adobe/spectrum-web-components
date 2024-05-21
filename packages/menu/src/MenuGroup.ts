@@ -24,7 +24,9 @@ import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import { Menu } from './Menu.js';
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 import '@spectrum-web-components/menu/sp-menu.js';
-import menuGroupStyles from './menu-group.css.js';
+
+import stylesDefault from './spectrum-menu-sectionHeading.min.css' with { type: 'css' };
+import stylesOveride from './menu-group.min.css' with { type: 'css' };
 
 /**
  * @element sp-menu-group
@@ -34,7 +36,7 @@ import menuGroupStyles from './menu-group.css.js';
  */
 export class MenuGroup extends Menu {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, menuGroupStyles];
+        return [...super.styles, stylesDefault, stylesOveride];
     }
 
     private headerId = '';

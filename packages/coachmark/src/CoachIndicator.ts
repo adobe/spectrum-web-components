@@ -17,14 +17,16 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import styles from './coach-indicator.css.js';
+
+import stylesDefault from './spectrum-coach-indicator.min.css' with { type: 'css' };
+import stylesOveride from './coach-indicator.min.css' with { type: 'css' };
 
 /**
  * @element sp-coach-indicator
  */
 export class CoachIndicator extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

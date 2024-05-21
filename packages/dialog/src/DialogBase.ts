@@ -25,11 +25,14 @@ import '@spectrum-web-components/button/sp-button.js';
 
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
-import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
+
+import stylesWrapperDefault from '@spectrum-web-components/modal/src/spectrum-modal-wrapper.min.css' with { type: 'css' };
+import stylesWrapperOveride from '@spectrum-web-components/modal/src/modal-wrapper.min.css' with { type: 'css' };
+import stylesModalDefault from '@spectrum-web-components/modal/src/spectrum-modal.min.css' with { type: 'css' };
+import stylesModalOveride from '@spectrum-web-components/modal/src/modal.min.css' with { type: 'css' };
 
 /**
  * @element sp-dialog-base
@@ -39,7 +42,12 @@ import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focu
  */
 export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [modalWrapperStyles, modalStyles];
+        return [
+            stylesWrapperDefault,
+            stylesWrapperOveride,
+            stylesModalDefault,
+            stylesModalOveride,
+        ];
     }
 
     @property({ type: Boolean, reflect: true })

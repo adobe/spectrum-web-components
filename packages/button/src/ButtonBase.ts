@@ -23,7 +23,8 @@ import {
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import buttonStyles from './button-base.css.js';
+import spectrumButtonStyles from './spectrum-button-base.min.css' with { type: 'css' };
+import buttonStyles from './button-base.min.css' with { type: 'css' };
 
 /**
  * @slot - text content to be displayed in the Button element
@@ -33,7 +34,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     'sp-overlay,sp-tooltip',
 ]) {
     public static override get styles(): CSSResultArray {
-        return [buttonStyles];
+        return [spectrumButtonStyles, buttonStyles];
     }
 
     @property({ type: Boolean, reflect: true })

@@ -20,7 +20,8 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 
-import styles from './field-group.css.js';
+import stylesDefault from './spectrum-field-group.min.css' with { type: 'css' };
+import stylesOveride from './field-group.min.css' with { type: 'css' };
 
 /**
  * @element sp-field-group
@@ -32,7 +33,7 @@ export class FieldGroup extends ManageHelpText(SpectrumElement, {
     mode: 'external',
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

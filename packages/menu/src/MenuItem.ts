@@ -31,15 +31,19 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
-import menuItemStyles from './menu-item.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.min.css' with { type: 'css' };
+import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.min.css' with { type: 'css' };
+import stylesDefaultCheckmark from './spectrum-checkmark.min.css' with { type: 'css' };
+import stylesDefaultChevron from './spectrum-chevron.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-menu-item.min.css' with { type: 'css' };
+import stylesOveride from './menu-item.min.css' with { type: 'css' };
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -95,7 +99,14 @@ export class MenuItem extends LikeAnchor(
     ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
     public static override get styles(): CSSResultArray {
-        return [menuItemStyles, checkmarkStyles, chevronStyles];
+        return [
+            stylesDefaultCheckmark,
+            stylesDefaultChevron,
+            stylesDefault,
+            stylesOveride,
+            checkmarkStyles,
+            chevronStyles,
+        ];
     }
 
     abortControllerSubmenu!: AbortController;

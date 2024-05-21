@@ -18,7 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './asset.css.js';
+import stylesDefault from './spectrum-asset.min.css' with { type: 'css' };
+import stylesOveride from './asset.min.css' with { type: 'css' };
 
 const file = (label: string): TemplateResult => html`
     <svg
@@ -62,7 +63,7 @@ const folder = (label: string): TemplateResult => html`
  */
 export class Asset extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: String, reflect: true })

@@ -18,15 +18,16 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './color-loupe.css.js';
-import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.min.css' with { type: 'css' };
+import stylesDefault from './spectrum-color-loupe.min.css' with { type: 'css' };
+import stylesOveride from './color-loupe.min.css' with { type: 'css' };
 
 /**
  * @element sp-color-loupe
  */
 export class ColorLoupe extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [opacityCheckerboardStyles, styles];
+        return [opacityCheckerboardStyles, stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

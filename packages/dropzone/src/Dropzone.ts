@@ -18,7 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import dropzoneStyles from './dropzone.css.js';
+import stylesDefault from './spectrum-dropzone.min.css' with { type: 'css' };
+import stylesOveride from './dropzone.min.css' with { type: 'css' };
 
 export type DropzoneEventDetail = DragEvent;
 
@@ -40,7 +41,7 @@ export type DropEffects = 'copy' | 'move' | 'link' | 'none';
  */
 export class Dropzone extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [dropzoneStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     /**

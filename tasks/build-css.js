@@ -15,11 +15,16 @@ import fg from 'fast-glob';
 import { processCSS } from './css-tools.js';
 
 const buildCSS = async () => {
-    for (const cssPath of await fg([
-        './packages/*/src/**/*.css',
-        './tools/*/src/*.css',
-        './tools/*/src/**/*.css',
-    ])) {
+    for (const cssPath of await fg(
+        [
+            './packages/*/src/**/*.css',
+            './tools/styles/**/*.css',
+            './tools/*/src/**/*.css',
+        ],
+        {
+            ignore: ['**/*.min.css'],
+        }
+    )) {
         await processCSS(cssPath);
     }
     process.exit(0);

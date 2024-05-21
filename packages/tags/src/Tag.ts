@@ -23,7 +23,8 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/button/sp-clear-button.js';
 
-import styles from './tag.css.js';
+import stylesDefault from './spectrum-tag.min.css' with { type: 'css' };
+import stylesOveride from './tag.min.css' with { type: 'css' };
 
 /**
  * @element sp-tag
@@ -37,7 +38,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     @property({ type: Boolean, reflect: true })

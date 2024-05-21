@@ -10,8 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import darkStyles from './src/theme-dark.css.js';
+// import darkStyles from './src/theme-dark.css.js';
+import darkSpectrumStyles from '@spectrum-web-components/styles/spectrum-theme-dark.min.css' with { type: 'css' };
+import darkStyles from '@spectrum-web-components/styles/theme-dark.min.css' with { type: 'css' };
+import darkVars from '@spectrum-web-components/styles/tokens/dark-vars.min.css' with { type: 'css' };
+import darkCustom from '@spectrum-web-components/styles/tokens/spectrum/custom-dark-vars.min.css' with { type: 'css' };
+// @import url('@spectrum-web-components/styles/theme-dark.css');
+// @import url('@spectrum-web-components/styles/tokens/dark-vars.css');
+// @import url('@spectrum-web-components/styles/tokens/spectrum/custom-dark-vars.css');
 import { Theme } from './src/Theme.js';
 import './core.js';
 
-Theme.registerThemeFragment('dark', 'color', darkStyles);
+Theme.registerThemeFragment('dark', 'color', [
+    darkSpectrumStyles,
+    darkStyles,
+    darkVars,
+    darkCustom,
+]);

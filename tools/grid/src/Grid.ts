@@ -23,8 +23,9 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { LitVirtualizer } from '@lit-labs/virtualizer/LitVirtualizer.js';
 import { grid } from '@lit-labs/virtualizer/layouts/grid.js';
-import styles from './grid.css.js';
 import { GridController } from './GridController.js';
+
+import stylesDefault from './grid.min.css' with { type: 'css' };
 
 /**
  * @element sp-grid
@@ -33,7 +34,7 @@ import { GridController } from './GridController.js';
  */
 export class Grid extends LitVirtualizer {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault];
     }
 
     private __gridPart: RootPart | undefined = undefined;

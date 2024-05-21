@@ -24,7 +24,8 @@ import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
-import tabItemStyles from './tab.css.js';
+import stylesDefault from './spectrum-tab.min.css' with { type: 'css' };
+import stylesOveride from './tab.min.css' with { type: 'css' };
 
 /**
  * @element sp-tab
@@ -36,7 +37,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
 ) {
     public static override get styles(): CSSResultArray {
-        return [tabItemStyles];
+        return [stylesDefault, stylesOveride];
     }
 
     protected get hasIcon(): boolean {

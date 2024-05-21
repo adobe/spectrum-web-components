@@ -10,8 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import lightestStyles from './src/theme-lightest.css.js';
+import lightestStyles from '@spectrum-web-components/styles/theme-lightest.min.css' with { type: 'css' };
+import lightestVars from '@spectrum-web-components/styles/tokens/light-vars.min.css' with { type: 'css' };
+import lightestCustomVars from '@spectrum-web-components/styles/tokens/spectrum/custom-light-vars.min.css' with { type: 'css' };
+// @import url('@spectrum-web-components/styles/theme-lightest.css');
+// @import url('@spectrum-web-components/styles/tokens/light-vars.css');
+// @import url('@spectrum-web-components/styles/tokens/spectrum/custom-light-vars.css');
 import { Theme } from './src/Theme.js';
 import './core.js';
 
-Theme.registerThemeFragment('lightest', 'color', lightestStyles);
+Theme.registerThemeFragment('lightest', 'color', [
+    lightestStyles,
+    lightestVars,
+    lightestCustomVars,
+]);

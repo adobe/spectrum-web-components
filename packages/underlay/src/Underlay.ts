@@ -18,7 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './underlay.css.js';
+import stylesDefault from './spectrum-underlay.min.css' with { type: 'css' };
+import stylesOveride from './underlay.min.css' with { type: 'css' };
 
 /**
  * @element sp-underlay
@@ -27,7 +28,7 @@ import styles from './underlay.css.js';
  */
 export class Underlay extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [stylesDefault, stylesOveride];
     }
 
     private canClick = false;
