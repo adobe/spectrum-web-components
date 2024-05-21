@@ -58,6 +58,45 @@ export class TableHeadCell extends SpectrumElement {
     @property({ attribute: 'sort-key' })
     public sortKey = '';
 
+    protected handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                event.preventDefault();
+                this.addEventListener('keyup', this.handleKeyup);
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
+
+    private handleKeypress(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Enter':
+            case 'NumpadEnter':
+                this.click();
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
+
+    protected handleKeyup(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                this.removeEventListener('keyup', this.handleKeyup);
+                this.click();
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
+
     protected handleClick(): void {
         if (!this.sortable) return;
         if (this.sortDirection) {
@@ -93,6 +132,8 @@ export class TableHeadCell extends SpectrumElement {
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('keypress', this.handleKeypress);
     }
 
     protected override update(changes: PropertyValues): void {
