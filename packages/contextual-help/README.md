@@ -82,3 +82,5 @@ By default a `sp-contextual-help` will render its popover at the `bottom-start` 
 Given that the trigger is an icon-only `sp-action-button`, it is important to provide an accessible name for it, so that it can be properly announced by screen readers.
 By default, the `sp-contextual-help` uses an `aria-label` property with either "Informations" or "Help" as values, depending on the component's `variant`.
 You can customize this using the `label` attribute.
+
+When providing headings using the `heading` slot, make sure to provide actual heading elements such as `h1`, `h2`, `h3` ... or use the `role="heading"` attribute.

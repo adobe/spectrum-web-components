@@ -37,10 +37,14 @@ export const argTypes = {
         table: {
             defaultValue: { summary: 'info' },
         },
-        options: ['info', 'help'],
         control: {
-            type: 'radio',
+            labels: {
+                info: 'Info',
+                help: 'Help',
+            },
+            type: 'select',
         },
+        options: ['info', 'help'],
     },
     label: {
         name: 'label',
