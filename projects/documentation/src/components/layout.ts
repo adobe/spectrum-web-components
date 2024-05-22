@@ -209,30 +209,30 @@ export class LayoutElement extends LitElement {
         this.isNarrow = event.matches;
     };
 
-    private closeSettings(event: Event & { target: HTMLElement }) {
+    private closeSettings = (event: Event & { target: HTMLElement }) => {
         event.target.parentElement?.dispatchEvent(
             new Event('close', { bubbles: true })
         );
-    }
+    };
 
-    private updateColor(event: Event) {
+    private updateColor = (event: Event) => {
         this.color = (event.target as Picker).value as Color;
         this._themeTrackers.forEach((tracker) => tracker(this.color));
-    }
+    };
 
-    private updateScale(event: Event) {
+    private updateScale = (event: Event) => {
         this.scale = (event.target as Picker).value as Scale;
-    }
+    };
 
-    private updateSystem(event: Event) {
+    private updateSystem = (event: Event) => {
         this.system = (event.target as Picker).value as SystemVariant;
-    }
+    };
 
-    private updateDirection(event: Event) {
+    private updateDirection = (event: Event) => {
         const dir = (event.target as Picker).value;
         this.dir = dir === 'rtl' ? dir : 'ltr';
         document.documentElement.dir = this.dir;
-    }
+    };
 
     private handleTrackTheme(event: CustomEvent<TrackTheme>): void {
         const target = event.composedPath()[0] as HTMLElement;
