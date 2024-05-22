@@ -1,12 +1,12 @@
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from '@spectrum-web-components/base';
 
-import '../{{> tagnamePartial }}.js';
+import { Template } from './template.js';
+import { argTypes } from './args.js';
 
 export default {
     title: '{{displayName name}}',
     component: '{{> tagnamePartial}}',
+    argTypes,
 };
 
-export const Default = (): TemplateResult => {
-    return html`<{{> tagnamePartial}}></{{> tagnamePartial}}>`;
-};
+export const Default = (): TemplateResult => Template({});
