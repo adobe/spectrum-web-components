@@ -13,4 +13,6 @@ governing permissions and limitations under the License.
 import { Default } from '../stories/accordion.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(Default());
+describe('Accordion - memory usage', () => {
+    testForMemoryLeaks(Default());
+});
