@@ -17,7 +17,6 @@ import fg from 'fast-glob';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
-    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -27,6 +26,29 @@ export const chromium = playwrightLauncher({
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
+        }),
+    launchOptions: {
+        headless: false,
+        args: [
+            '--js-flags=--expose-gc',
+            '--headless=new',
+            /**
+             * Cause `measureUserAgentSpecificMemory()` to GC immediately,
+             * instead of up to 20s later:
+             * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
+             **/
+            '--enable-blink-features=ForceEagerMeasureMemory',
+        ],
+    },
+});
+
+export const chromiumWithMemoryToolingCI = playwrightLauncher({
+    product: 'chromium',
+    concurrency: 2,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -122,7 +144,7 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultSystemVariant: "${themeVariant || ''}",
+                defaultSystemVariant:  "${themeVariant || ''}",
                 defaultColor: "${color || ''}",
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",
@@ -135,12 +157,18 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const themeVariants = ['classic', 'express'];
+const themeVariants = ['spectrum', 'express', 'spectrum-two'];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
 themeVariants.forEach((themeVariant) => {
     colors.forEach((color) => {
+        if (
+            themeVariant === 'spectrum-two' &&
+            (color === 'lightest' || color === 'darkest')
+        ) {
+            return;
+        }
         scales.forEach((scale) => {
             directions.forEach((dir) => {
                 const reduceMotion = true;

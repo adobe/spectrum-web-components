@@ -349,21 +349,21 @@ export default function genWrappers({
             const componentPath = resolve(`${outDir}/${componentShortName}`);
             await outputFile(
                 resolve(`${componentPath}/index.ts`),
-                prettier.format(reactComponentSrc, {
+                await prettier.format(reactComponentSrc, {
                     parser: 'typescript',
                     ...prettierConfig,
                 })
             );
             await outputFile(
                 resolve(`${componentPath}/next.ts`),
-                prettier.format(nextComponentSrc, {
+                await prettier.format(nextComponentSrc, {
                     parser: 'typescript',
                     ...prettierConfig,
                 })
             );
             await outputFile(
                 resolve(`${componentPath}/package.json`),
-                prettier.format(
+                await prettier.format(
                     genPackageJson(componentShortName, pkgName, pkgVersion),
                     {
                         parser: 'json',
@@ -373,7 +373,7 @@ export default function genWrappers({
             );
             await outputFile(
                 resolve(`${componentPath}/tsconfig.json`),
-                prettier.format(genTsconfigJson(), {
+                await prettier.format(genTsconfigJson(), {
                     parser: 'json',
                     ...prettierConfig,
                 })
@@ -453,7 +453,7 @@ export async function generateIconWrapper(iconType) {
         const iconElementName = `sp-icon-${Case.kebab(componentName)}`;
         await outputFile(
             resolve(__dirname, '..', `react/${iconType}/${componentName}.ts`),
-            prettier.format(
+            await prettier.format(
                 genIconReactComponent(
                     `Icon${componentName}`,
                     `Icon${id}`,
@@ -472,7 +472,7 @@ export async function generateIconWrapper(iconType) {
                 '..',
                 `react/${iconType}/next/${componentName}.ts`
             ),
-            prettier.format(genIconNextComponent(Case.pascal(id)), {
+            await prettier.format(genIconNextComponent(Case.pascal(id)), {
                 parser: 'typescript',
                 ...prettierConfig,
             })
@@ -485,15 +485,18 @@ export async function generateIconWrapper(iconType) {
 
     await outputFile(
         resolve(__dirname, '..', `react/${iconType}/package.json`),
-        prettier.format(genPackageJson(iconType, pkgName, pkgVersion, true), {
-            parser: 'json',
-            ...prettierConfig,
-        })
+        await prettier.format(
+            genPackageJson(iconType, pkgName, pkgVersion, true),
+            {
+                parser: 'json',
+                ...prettierConfig,
+            }
+        )
     );
 
     await outputFile(
         resolve(__dirname, '..', `react/${iconType}/tsconfig.json`),
-        prettier.format(genTsconfigJson(), {
+        await prettier.format(genTsconfigJson(), {
             parser: 'json',
             ...prettierConfig,
         })

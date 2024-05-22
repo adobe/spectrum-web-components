@@ -1,7 +1,9 @@
 {
     "./src/*": "./src/*",
     "./express/*": "./express/*",
+    "./spectrum-two/*": "./spectrum-two/*",
     "./src/express/*": "./src/express/*",
+    "./src/spectrum-two/*": "./src/spectrum-two/*",
     "./core.js": "./core.js",
     "./sp-theme.js": "./sp-theme.js",
     "./scale-medium.js": "./scale-medium.js",

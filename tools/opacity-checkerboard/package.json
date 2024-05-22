@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/opacity-checkerboard",
-    "version": "0.42.2",
+    "version": "0.42.4",
     "publishConfig": {
         "access": "public"
     },
@@ -43,10 +43,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.2"
+        "@spectrum-web-components/base": "^0.42.4"
     },
     "devDependencies": {
-        "@spectrum-css/opacitycheckerboard": "^1.1.5"
+        "@spectrum-css/opacitycheckerboard": "^2.1.0"
     },
     "types": "./src/opacity-checkerboard.d.ts",
     "sideEffects": [

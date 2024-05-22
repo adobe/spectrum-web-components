@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/base",
-    "version": "0.42.2",
+    "version": "0.42.4",
     "publishConfig": {
         "access": "public"
     },
@@ -28,6 +28,10 @@
         "./src/Base.js": {
             "development": "./src/Base.dev.js",
             "default": "./src/Base.js"
+        },
+        "./src/async-directive.js": {
+            "development": "./src/async-directive.dev.js",
+            "default": "./src/async-directive.js"
         },
         "./src/condition-attribute-with-id.js": {
             "development": "./src/condition-attribute-with-id.dev.js",

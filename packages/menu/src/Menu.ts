@@ -100,6 +100,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.selectedItems = [];
         this.selectedItemsMap.clear();
         this.childItems.forEach((item) => {
+            if (this !== item.menuData.selectionRoot) {
+                return;
+            }
             item.selected = this.selected.includes(item.value);
             if (item.selected) {
                 this.selectedItems.push(item);
@@ -829,13 +832,19 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handleSlotchange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
-        const assignedElement = target.assignedElements({
+        const assignedElements = target.assignedElements({
             flatten: true,
         }) as MenuItem[];
-        if (this.childItems.length !== assignedElement.length) {
-            assignedElement.forEach((item) => {
+        if (this.childItems.length !== assignedElements.length) {
+            assignedElements.forEach((item) => {
                 if (typeof item.triggerUpdate !== 'undefined') {
                     item.triggerUpdate();
+                } else if (
+                    typeof (item as unknown as Menu).childItems !== 'undefined'
+                ) {
+                    (item as unknown as Menu).childItems.forEach((child) => {
+                        child.triggerUpdate();
+                    });
                 }
             });
         }

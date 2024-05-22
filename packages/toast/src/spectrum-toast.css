@@ -122,15 +122,9 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-negative-background-color-default)
         )
     );
-    color: var(
-        --highcontrast-toast-negative-background-color-default,
-        var(
-            --mod-toast-negative-background-color-default,
-            var(--spectrum-toast-negative-background-color-default)
-        )
-    );
 }
 
+:host([variant='negative']),
 :host([variant='negative']) .closeButton:focus-visible:not(:active) {
     color: var(
         --highcontrast-toast-negative-background-color-default,
@@ -149,15 +143,9 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-informative-background-color-default)
         )
     );
-    color: var(
-        --highcontrast-toast-informative-background-color-default,
-        var(
-            --mod-toast-informative-background-color-default,
-            var(--spectrum-toast-informative-background-color-default)
-        )
-    );
 }
 
+:host([variant='info']),
 :host([variant='info']) .closeButton:focus-visible:not(:active) {
     color: var(
         --highcontrast-toast-informative-background-color-default,
@@ -176,15 +164,9 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-positive-background-color-default)
         )
     );
-    color: var(
-        --highcontrast-toast-positive-background-color-default,
-        var(
-            --mod-toast-positive-background-color-default,
-            var(--spectrum-toast-positive-background-color-default)
-        )
-    );
 }
 
+:host([variant='positive']),
 :host([variant='positive']) .closeButton:focus-visible:not(:active) {
     color: var(
         --highcontrast-toast-positive-background-color-default,
@@ -196,13 +178,6 @@ governing permissions and limitations under the License.
 }
 
 .type {
-    color: var(
-        --highcontrast-toast-text-and-icon-color,
-        var(
-            --mod-toast-text-and-icon-color,
-            var(--spectrum-toast-text-and-icon-color)
-        )
-    );
     flex-grow: 0;
     flex-shrink: 0;
     margin-block-start: var(
@@ -216,13 +191,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.content {
-    box-sizing: border-box;
-    line-height: var(
-        --mod-toast-line-height,
-        var(--spectrum-toast-line-height)
-    );
-    text-align: start;
+.content,
+.type {
     color: var(
         --highcontrast-toast-text-and-icon-color,
         var(
@@ -230,6 +200,15 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-text-and-icon-color)
         )
     );
+}
+
+.content {
+    box-sizing: border-box;
+    line-height: var(
+        --mod-toast-line-height,
+        var(--spectrum-toast-line-height)
+    );
+    text-align: start;
     flex: auto;
     padding-block-start: calc(
         var(
@@ -260,8 +239,8 @@ governing permissions and limitations under the License.
 }
 
 .content:lang(ja),
-.content:lang(zh),
-.content:lang(ko) {
+.content:lang(ko),
+.content:lang(zh) {
     line-height: var(
         --mod-toast-line-height-cjk,
         var(--spectrum-toast-line-height-cjk)
@@ -311,16 +290,14 @@ governing permissions and limitations under the License.
 }
 
 .body ::slotted([slot='action']) {
+    margin-inline-start: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)
     );
 }
 
-:host([dir='ltr']) .body ::slotted([slot='action']) {
-    margin-inline-start: auto;
-}
-
+.body ::slotted([slot='action']:dir(rtl)),
 :host([dir='rtl']) .body ::slotted([slot='action']) {
     margin-inline-end: auto;
     margin-inline-end: var(

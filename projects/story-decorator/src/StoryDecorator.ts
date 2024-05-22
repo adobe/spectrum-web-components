@@ -25,6 +25,7 @@ import {
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/theme/src/spectrum-two/themes-core-tokens.js';
 import '@spectrum-web-components/theme/src/express/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -317,8 +318,9 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.system}
                 @change=${this.updateTheme}
             >
-                <sp-menu-item value="spectrum">Classic</sp-menu-item>
+                <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                 <sp-menu-item value="express">Express</sp-menu-item>
+                <sp-menu-item value="spectrum-two">Spectrum 2</sp-menu-item>
             </sp-picker>
         `;
     }
@@ -335,10 +337,8 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.color}
                 @change=${this.updateTheme}
             >
-                <sp-menu-item value="lightest">Lightest</sp-menu-item>
                 <sp-menu-item value="light">Light</sp-menu-item>
                 <sp-menu-item value="dark">Dark</sp-menu-item>
-                <sp-menu-item value="darkest">Darkest</sp-menu-item>
             </sp-picker>
         `;
     }

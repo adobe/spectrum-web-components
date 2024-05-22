@@ -80,8 +80,8 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host(:focus-visible),
-:host([focused]) {
+:host([focused]),
+:host(:focus-visible) {
     outline-width: var(
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)

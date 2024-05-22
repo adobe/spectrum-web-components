@@ -235,7 +235,7 @@ const config = {
                     'rounded'
                 ),
                 converter.classToAttribute(
-                    'spectrum-PickerButton--low',
+                    'spectrum-PickerButton--quiet',
                     'quiet'
                 ),
                 converter.classToClass('spectrum-PickerButton--uiicononly'),
