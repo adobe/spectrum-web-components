@@ -15,25 +15,17 @@ import {
 } from './InteractionController.js';
 
 export class MobileController extends InteractionController {
-    override type = InteractionTypes.click;
-
-    /**
-     * An overlay with a `click` interaction should not close on click `triggerElement`.
-     * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the
-     * overlay is `open` to prevent from toggling the overlay when the click event
-     * propagates later in the interaction.
-     */
-    private preventNextToggle = false;
+    override type = InteractionTypes.mobile;
 
     handleClick(): void {
-        if (!this.preventNextToggle) {
-            this.host.open = !this.host.open;
+        if (this.preventNextToggle == 'no') {
+            this.open = !this.open;
         }
-        this.preventNextToggle = false;
+        this.preventNextToggle = 'no';
     }
 
-    handlePointerdown(): void {
-        this.preventNextToggle = this.host.open;
+    public override handlePointerdown(): void {
+        this.preventNextToggle = this.open ? 'yes' : 'no';
     }
 
     override init(): void {
@@ -48,6 +40,13 @@ export class MobileController extends InteractionController {
             'pointerdown',
             () => this.handlePointerdown(),
             { signal }
+        );
+        this.target.addEventListener(
+            'focus',
+            (event: FocusEvent) => this.handleButtonFocus(event),
+            {
+                signal,
+            }
         );
     }
 }

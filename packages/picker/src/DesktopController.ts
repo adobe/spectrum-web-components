@@ -16,25 +16,14 @@ import {
 } from './InteractionController.js';
 
 export class DesktopController extends InteractionController {
-    override type = InteractionTypes.click;
+    override type = InteractionTypes.desktop;
 
-    /**
-     * An overlay with a `click` interaction should not close on click `triggerElement`.
-     * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the
-     * overlay is `open` to prevent from toggling the overlay when the click event
-     * propagates later in the interaction.
-     */
-    // private preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
-    // private pointerdownState = false;
-
-    protected handlePointerdown(event: PointerEvent): void {
+    public override handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             return;
         }
-        this.host.pointerdownState = this.open;
-        // this.pointerdownState = this.open;
-        // this.preventNextToggle = 'maybe';
-        this.host.preventNextToggle = 'maybe';
+        this.pointerdownState = this.open;
+        this.preventNextToggle = 'maybe';
         let cleanupAction = 0;
         const cleanup = (): void => {
             cancelAnimationFrame(cleanupAction);
@@ -45,7 +34,7 @@ export class DesktopController extends InteractionController {
                 requestAnimationFrame(() => {
                     // Complete cleanup on the second animation frame so that `click` can go first.
                     // this.preventNextToggle = 'no';
-                    this.host.preventNextToggle = 'no';
+                    this.preventNextToggle = 'no';
                 });
             });
         };
@@ -56,34 +45,19 @@ export class DesktopController extends InteractionController {
         this.handleActivate();
     }
 
-    protected handleButtonFocus(event: FocusEvent): void {
-        // When focus comes from a pointer event, and the related target is the Menu,
-        // we don't want to reopen the Menu.
-        if (
-            this.host.preventNextToggle === 'maybe' &&
-            event.relatedTarget === this.host.optionsMenu
-        ) {
-            // this.preventNextToggle = 'yes';
-            this.host.preventNextToggle = 'yes';
-        }
-    }
-
-    protected handleActivate(event?: Event): void {
-        if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
+    public override handleActivate(event?: Event): void {
+        if (this.enterKeydownOn && this.enterKeydownOn !== this.target) {
             return;
         }
-        if (this.host.preventNextToggle === 'yes') {
+        if (this.preventNextToggle === 'yes') {
             return;
         }
-        if (
-            event?.type === 'click' &&
-            this.open !== this.host.pointerdownState
-        ) {
+        if (event?.type === 'click' && this.open !== this.pointerdownState) {
             // When activation comes from a `click` event ensure that the `pointerup`
             // event didn't already toggle the Picker state before doing so.
             return;
         }
-        this.host.toggle();
+        this.open = !this.open;
     }
 
     override init(): void {
@@ -93,7 +67,7 @@ export class DesktopController extends InteractionController {
         const { signal } = this.abortController;
         this.target.addEventListener(
             'click',
-            (event: PointerEvent) => this.handleActivate(event),
+            (event: Event) => this.handleActivate(event),
             {
                 signal,
             }

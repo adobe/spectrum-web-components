@@ -10,9 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController } from '@spectrum-web-components/base';
+import {
+    ReactiveController,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay';
-import { PickerBase } from './PickerBase.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { PickerBase } from './Picker.js';
 
 export enum InteractionTypes {
     'desktop',
@@ -22,46 +26,142 @@ export enum InteractionTypes {
 export class InteractionController implements ReactiveController {
     abortController!: AbortController;
 
+    public preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
+    public pointerdownState = false;
+    public enterKeydownOn: EventTarget | null = null;
+
+    public container!: TemplateResult;
+
     get activelyOpening(): boolean {
         return false;
     }
 
-    private handleOverlayReady?: (overlay: AbstractOverlay) => void;
+    private _open = false;
 
     public get open(): boolean {
-        return this.host.open;
+        return this._open;
     }
 
     /**
      * Set `open`
      */
     public set open(open: boolean) {
-        this.host.open = open;
+        this._open = open;
+        if (this.overlay) {
+            // If there already is an Overlay, apply the value of `open` directly.
+            this.overlay.open = open;
+            this.host.open = open;
+            return;
+        }
+        if (!open) {
+            this.host.open = open;
+            // When `open` moves to `false` and there is not yet an Overlay,
+            // assume that no Overlay and a closed Overlay are the same and return early.
+            return;
+        }
+        // When there is no Overlay and `open` is moving to `true`, lazily import/create
+        // an Overlay and apply that state to it.
+        customElements
+            .whenDefined('sp-overlay')
+            .then(async (): Promise<void> => {
+                const { Overlay } = await import(
+                    '@spectrum-web-components/overlay/src/Overlay.js'
+                );
+                this.overlay = new Overlay();
+                this.overlay.open = true;
+                this.host.open = true;
+            });
+        import('@spectrum-web-components/overlay/sp-overlay.js');
     }
 
-    toggle(target?: boolean): void {
-        this.host.toggle(target);
+    private _overlay!: AbstractOverlay;
+
+    public get overlay(): AbstractOverlay {
+        return this._overlay;
+    }
+
+    public set overlay(overlay: AbstractOverlay | undefined) {
+        if (!overlay) return;
+        if (this.overlay === overlay) return;
+        this._overlay = overlay;
+        this.initOverlay();
     }
 
     type!: InteractionTypes;
 
     constructor(
         public target: HTMLElement,
-        public overlay: AbstractOverlay | undefined,
         public host: PickerBase
     ) {
         this.target = target;
-        this.overlay = overlay;
         this.host = host;
         this.init();
     }
 
     releaseDescription(): void {}
 
-    /* c8 ignore next 3 */
-    init(): void {
-        // Abstract init() method.
+    protected handleBeforetoggle(
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            if (this.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.pointerdownState) {
+                // Prevent browser driven closure while opening the Picker
+                // and the expected event series has not completed.
+                this.overlay?.manuallyKeepOpen();
+            }
+        }
+        if (!this.open) {
+            this.host.optionsMenu.updateSelectedItemIndex();
+            this.host.optionsMenu.closeDescendentOverlays();
+        }
     }
+
+    initOverlay(): void {
+        if (this.overlay) {
+            this.overlay.addEventListener('beforetoggle', (event: Event) => {
+                this.handleBeforetoggle(
+                    event as Event & {
+                        target: Overlay;
+                        newState: 'open' | 'closed';
+                    }
+                );
+            });
+
+            this.overlay.triggerElement = this.host as HTMLElement;
+            this.overlay.placement = this.host.isMobile.matches
+                ? undefined
+                : this.host.placement;
+            this.overlay.receivesFocus = 'true';
+            this.overlay.willPreventClose =
+                this.preventNextToggle !== 'no' && this.open;
+        }
+    }
+
+    public handlePointerdown(_event: PointerEvent): void {}
+
+    public handleButtonFocus(event: FocusEvent): void {
+        // When focus comes from a pointer event, and the related target is the Menu,
+        // we don't want to reopen the Menu.
+        if (
+            this.preventNextToggle === 'maybe' &&
+            event.relatedTarget === this.host.optionsMenu
+        ) {
+            this.preventNextToggle = 'yes';
+        }
+    }
+
+    public handleActivate(_event: Event): void {}
+
+    /* c8 ignore next 3 */
+    init(): void {}
 
     abort(): void {
         this.releaseDescription();
@@ -73,8 +173,6 @@ export class InteractionController implements ReactiveController {
     }
 
     hostDisconnected(): void {
-        if (!this.isPersistent) {
-            this.abort();
-        }
+        this.abortController?.abort();
     }
 }
