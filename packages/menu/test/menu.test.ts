@@ -35,11 +35,9 @@ import { isWebKit } from '@spectrum-web-components/shared';
 
 describe('Menu', () => {
     it('renders empty', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu tabindex="0"><a href="#anchor">Test</a></sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu tabindex="0"><a href="#anchor">Test</a></sp-menu>
+        `);
 
         const anchor = el.querySelector('a') as HTMLAnchorElement;
         await elementUpdated(el);
@@ -64,13 +62,11 @@ describe('Menu', () => {
     });
     it('renders w/ [disabled] menu items', async () => {
         const focusinSpy = spy();
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu tabindex="0" @focusin=${() => focusinSpy()}>
-                    <sp-menu-item disabled>Disabled item</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu tabindex="0" @focusin=${() => focusinSpy()}>
+                <sp-menu-item disabled>Disabled item</sp-menu-item>
+            </sp-menu>
+        `);
 
         await elementUpdated(el);
         expect(document.activeElement === el, 'self not focused, 1').to.be
@@ -84,14 +80,12 @@ describe('Menu', () => {
     });
     it('renders w/ all [disabled] menu items', async () => {
         const focusinSpy = spy();
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu tabindex="0" @focusin=${() => focusinSpy()}>
-                    <sp-menu-item disabled>Disabled item 1</sp-menu-item>
-                    <sp-menu-item disabled>Disabled item 2</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu tabindex="0" @focusin=${() => focusinSpy()}>
+                <sp-menu-item disabled>Disabled item 1</sp-menu-item>
+                <sp-menu-item disabled>Disabled item 2</sp-menu-item>
+            </sp-menu>
+        `);
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         await elementUpdated(el);
@@ -111,19 +105,17 @@ describe('Menu', () => {
         expect(el.matches(':focus-within')).to.be.false;
     });
     it('renders w/ menu items', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu label="Pick an action:">
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item>Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu label="Pick an action:">
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => el.childItems.length == 6,
@@ -140,27 +132,23 @@ describe('Menu', () => {
 
     testForLitDevWarnings(
         async () =>
-            await fixture<Menu>(
-                html`
-                    <sp-menu selects="single">
-                        <sp-menu-item>Not Selected</sp-menu-item>
-                        <sp-menu-item selected>Selected</sp-menu-item>
-                        <sp-menu-item>Other</sp-menu-item>
-                    </sp-menu>
-                `
-            )
-    );
-
-    it('renders w/ selected', async () => {
-        const el = await fixture<Menu>(
-            html`
+            await fixture<Menu>(html`
                 <sp-menu selects="single">
                     <sp-menu-item>Not Selected</sp-menu-item>
                     <sp-menu-item selected>Selected</sp-menu-item>
                     <sp-menu-item>Other</sp-menu-item>
                 </sp-menu>
-            `
-        );
+            `)
+    );
+
+    it('renders w/ selected', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item>Not Selected</sp-menu-item>
+                <sp-menu-item selected>Selected</sp-menu-item>
+                <sp-menu-item>Other</sp-menu-item>
+            </sp-menu>
+        `);
 
         await elementUpdated(el);
 
@@ -171,22 +159,20 @@ describe('Menu', () => {
         if (isWebKit()) {
             this.skip();
         }
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu
-                    selects="single"
-                    @change=${({
-                        target: { value },
-                    }: Event & { target: Menu }): void => {
-                        navigator.clipboard.writeText(value);
-                    }}
-                >
-                    <sp-menu-item>Not Selected</sp-menu-item>
-                    <sp-menu-item selected>Selected</sp-menu-item>
-                    <sp-menu-item id="other">Other</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                @change=${({
+                    target: { value },
+                }: Event & { target: Menu }): void => {
+                    navigator.clipboard.writeText(value);
+                }}
+            >
+                <sp-menu-item>Not Selected</sp-menu-item>
+                <sp-menu-item selected>Selected</sp-menu-item>
+                <sp-menu-item id="other">Other</sp-menu-item>
+            </sp-menu>
+        `);
 
         await elementUpdated(el);
 
@@ -208,17 +194,15 @@ describe('Menu', () => {
     });
 
     it('renders w/ hrefs', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item href="not-selected.html">
-                        Not Selected
-                    </sp-menu-item>
-                    <sp-menu-item href="selected.html">Selected</sp-menu-item>
-                    <sp-menu-item href="other.html">Other</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item href="not-selected.html">
+                    Not Selected
+                </sp-menu-item>
+                <sp-menu-item href="selected.html">Selected</sp-menu-item>
+                <sp-menu-item href="other.html">Other</sp-menu-item>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => el.childItems.length == 3,
@@ -232,19 +216,17 @@ describe('Menu', () => {
     });
 
     it('handle focus and keyboard input', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item>Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => el.childItems.length == 6,
@@ -285,16 +267,14 @@ describe('Menu', () => {
     });
 
     it('handle focus and late descendent additions', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-group selects="inherit">
-                        <span slot="header">Options</span>
-                        <sp-menu-item>Deselect</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-group selects="inherit">
+                    <span slot="header">Options</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => el.childItems.length == 1,
@@ -351,15 +331,13 @@ describe('Menu', () => {
         expect(appendedItem.focused, 'last visibly focused').to.be.true;
     });
     it('cleans up when tabbing away', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu tabindex="0">
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item>Select Inverse</sp-menu-item>
-                    <sp-menu-item>Third Item</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu tabindex="0">
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Third Item</sp-menu-item>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => el.childItems.length == 3,
@@ -402,19 +380,17 @@ describe('Menu', () => {
         expect(secondItem.focused, 'second').to.be.true;
     });
     it('handles focus across focused MenuItem removals', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu id="test">
-                    <sp-menu-item class="first">Deselect</sp-menu-item>
-                    <sp-menu-item>Invert Selection</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-item selected class="selected">
-                        Save Selection
-                    </sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu id="test">
+                <sp-menu-item class="first">Deselect</sp-menu-item>
+                <sp-menu-item>Invert Selection</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item selected class="selected">
+                    Save Selection
+                </sp-menu-item>
+            </sp-menu>
+        `);
         const firstItem = el.querySelector('.first') as MenuItem;
         const selectedItem = el.querySelector('.selected') as MenuItem;
 
@@ -439,15 +415,13 @@ describe('Menu', () => {
         expect(firstItem.focused).to.be.true;
     });
     it('handles single selection', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item selected>First</sp-menu-item>
-                    <sp-menu-item>Second</sp-menu-item>
-                    <sp-menu-item>Third</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item selected>First</sp-menu-item>
+                <sp-menu-item>Second</sp-menu-item>
+                <sp-menu-item>Third</sp-menu-item>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => el.childItems.length == 3,
@@ -488,17 +462,71 @@ describe('Menu', () => {
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
         expect(el.value).to.equal('Second');
     });
+    it('handles selection via Numpad `Enter` key', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item id="first">First</sp-menu-item>
+                <sp-menu-item id="second" selected>Second</sp-menu-item>
+                <sp-menu-item id="third">Third</sp-menu-item>
+            </sp-menu>
+        `);
+
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items'
+        );
+        await waitUntil(
+            () => el.selectedItems.length == 1,
+            'expected menu to have 1 selected item'
+        );
+        await elementUpdated(el);
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        expect(firstItem.getAttribute('role')).to.equal('menuitemradio');
+        expect(secondItem.getAttribute('role')).to.equal('menuitemradio');
+
+        expect(firstItem.selected).to.be.false;
+        expect(secondItem.selected).to.be.true;
+        expect(firstItem.getAttribute('aria-checked')).to.equal('false');
+        expect(secondItem.getAttribute('aria-checked')).to.equal('true');
+        expect(el.value).to.equal('Second');
+
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-active-descendant')).to.equal('first');
+
+        await sendKeys({
+            press: 'Enter',
+        });
+
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
+        await elementUpdated(secondItem);
+
+        expect(secondItem.selected).to.be.false;
+        expect(firstItem.selected).to.be.true;
+        expect(firstItem.getAttribute('aria-checked')).to.equal('true');
+        expect(secondItem.getAttribute('aria-checked')).to.equal('false');
+        expect(el.value).to.equal('First');
+    });
     it('handles multiple selection', async () => {
         const changeSpy = spy();
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="multiple" @change=${() => changeSpy()}>
-                    <sp-menu-item selected>First</sp-menu-item>
-                    <sp-menu-item>Second</sp-menu-item>
-                    <sp-menu-item>Third</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="multiple" @change=${() => changeSpy()}>
+                <sp-menu-item selected>First</sp-menu-item>
+                <sp-menu-item>Second</sp-menu-item>
+                <sp-menu-item>Third</sp-menu-item>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => el.childItems.length == 3,
@@ -565,15 +593,13 @@ describe('Menu', () => {
                 event.target.selected = selected;
             });
         };
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="multiple" @change=${toggleSingleSelected}>
-                    <sp-menu-item value="1">First</sp-menu-item>
-                    <sp-menu-item value="2">Second</sp-menu-item>
-                    <sp-menu-item value="3">Third</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="multiple" @change=${toggleSingleSelected}>
+                <sp-menu-item value="1">First</sp-menu-item>
+                <sp-menu-item value="2">Second</sp-menu-item>
+                <sp-menu-item value="3">Third</sp-menu-item>
+            </sp-menu>
+        `);
         await nextFrame();
         await nextFrame();
         expect(el.selected).to.deep.equal([]);
