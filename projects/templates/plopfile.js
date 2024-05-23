@@ -54,7 +54,7 @@ module.exports = function (plop) {
 
     plop.setActionType('format files', function (answers) {
         execSync(
-            `cd ../../ && yarn prettier --write packages/${answers.name} && eslint --fix -f pretty packages/${answers.name} && stylelint --fix packages/${answers.name}`
+            `cd ../../ && yarn prettier --write packages/${answers.name} && yarn eslint --fix -f pretty packages/${answers.name} && yarn stylelint --fix packages/${answers.name}`
         );
     });
 
@@ -125,6 +125,16 @@ module.exports = function (plop) {
                 type: 'add',
                 path: '../../packages/{{name}}/stories/{{name}}.stories.ts',
                 templateFile: 'plop-templates/stories.ts.hbs',
+            },
+            {
+                type: 'add',
+                path: '../../packages/{{name}}/stories/args.ts',
+                templateFile: 'plop-templates/args.ts.hbs',
+            },
+            {
+                type: 'add',
+                path: '../../packages/{{name}}/stories/template.ts',
+                templateFile: 'plop-templates/template.ts.hbs',
             },
             {
                 type: 'add',
