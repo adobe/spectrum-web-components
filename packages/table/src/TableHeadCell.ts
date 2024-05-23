@@ -46,6 +46,9 @@ export class TableHeadCell extends SpectrumElement {
         return [styles, arrowStyles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public active = false;
+
     @property({ reflect: true })
     public override role = 'columnheader';
 
@@ -64,6 +67,7 @@ export class TableHeadCell extends SpectrumElement {
             case 'Space':
                 event.preventDefault();
                 this.addEventListener('keyup', this.handleKeyup);
+                this.active = true;
                 break;
             /* c8 ignore next 2 */
             default:
@@ -88,6 +92,7 @@ export class TableHeadCell extends SpectrumElement {
         const { code } = event;
         switch (code) {
             case 'Space':
+                this.active = false;
                 this.removeEventListener('keyup', this.handleKeyup);
                 this.click();
                 break;
