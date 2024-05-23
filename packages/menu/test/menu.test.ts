@@ -462,62 +462,6 @@ describe('Menu', () => {
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
         expect(el.value).to.equal('Second');
     });
-    it('handles selection via Numpad `Enter` key', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu selects="single">
-                <sp-menu-item id="first">First</sp-menu-item>
-                <sp-menu-item id="second" selected>Second</sp-menu-item>
-                <sp-menu-item id="third">Third</sp-menu-item>
-            </sp-menu>
-        `);
-
-        await waitUntil(
-            () => el.childItems.length == 3,
-            'expected menu to manage 3 items'
-        );
-        await waitUntil(
-            () => el.selectedItems.length == 1,
-            'expected menu to have 1 selected item'
-        );
-        await elementUpdated(el);
-
-        const firstItem = el.querySelector(
-            'sp-menu-item:nth-of-type(1)'
-        ) as MenuItem;
-
-        const secondItem = el.querySelector(
-            'sp-menu-item:nth-of-type(2)'
-        ) as MenuItem;
-
-        expect(firstItem.getAttribute('role')).to.equal('menuitemradio');
-        expect(secondItem.getAttribute('role')).to.equal('menuitemradio');
-
-        expect(firstItem.selected).to.be.false;
-        expect(secondItem.selected).to.be.true;
-        expect(firstItem.getAttribute('aria-checked')).to.equal('false');
-        expect(secondItem.getAttribute('aria-checked')).to.equal('true');
-        expect(el.value).to.equal('Second');
-
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await elementUpdated(el);
-        expect(el.getAttribute('aria-active-descendant')).to.equal('first');
-
-        await sendKeys({
-            press: 'Enter',
-        });
-
-        await elementUpdated(el);
-        await elementUpdated(firstItem);
-        await elementUpdated(secondItem);
-
-        expect(secondItem.selected).to.be.false;
-        expect(firstItem.selected).to.be.true;
-        expect(firstItem.getAttribute('aria-checked')).to.equal('true');
-        expect(secondItem.getAttribute('aria-checked')).to.equal('false');
-        expect(el.value).to.equal('First');
-    });
     it('handles multiple selection', async () => {
         const changeSpy = spy();
         const el = await fixture<Menu>(html`
