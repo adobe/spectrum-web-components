@@ -5615,10 +5615,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-6.1.0.tgz#f0d0ad1c482beb31b88198c506d29e8d1830e739"
   integrity sha512-z/BzL09yR4s9gMvWrjgBbQUO9oHZiQ9eUN8+ZKdPjzr949HBEXBEUJYHipLSJgeb9/ZJyCXICBgkkRMqhqjI9Q==
 
-"@spectrum-css/alertbanner@^1.1.39":
-  version "1.1.41"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/alertbanner/-/alertbanner-1.1.41.tgz#12efbcf2a06993f7a2956c2336953156d36fc748"
-  integrity sha512-EpicP0rFBl1669ZmeutCeKa2xlUNVccv0UC6avNjiui/m9X4jleJDY9ovtbZdoxuQLbSRoLrERVrrTZEOSOj+g==
+"@spectrum-css/alertbanner@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/alertbanner/-/alertbanner-2.2.0.tgz#c39feb201fe56b5acc2c1d85340c426431481e39"
+  integrity sha512-UjvegcmMUquXnJvpFSX5O6/qI+2tVgjBQ824e769kpj4V3Rf93HMPWn0MbTyMvEfdPADTZKbMd5iyFQjmE7Mhg==
 
 "@spectrum-css/alertdialog@^2.1.0":
   version "2.1.0"
