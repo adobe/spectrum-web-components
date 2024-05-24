@@ -15762,6 +15762,20 @@
             },
             {
               "kind": "method",
+              "name": "handleInputElementPointerdown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "TextfieldBase",
+                "module": "packages/textfield/src/Textfield.js"
+              }
+            },
+            {
+              "kind": "method",
               "name": "renderStateIcons",
               "privacy": "protected",
               "return": {
@@ -19321,6 +19335,20 @@
             {
               "kind": "method",
               "name": "onFocus",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "TextfieldBase",
+                "module": "packages/textfield/src/Textfield.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInputElementPointerdown",
               "privacy": "protected",
               "return": {
                 "type": {
@@ -29777,6 +29805,29 @@
               }
             },
             {
+              "kind": "field",
+              "name": "hasRecentlyReceivedPointerDown",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "handleInputElementPointerdown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "TextfieldBase",
+                "module": "packages/textfield/src/Textfield.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "handleInput",
               "privacy": "protected",
@@ -31843,6 +31894,19 @@
             },
             {
               "kind": "field",
+              "name": "isLazilyOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/overlay/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "open",
               "type": {
                 "text": "boolean"
@@ -32231,6 +32295,19 @@
             },
             {
               "kind": "field",
+              "name": "isLazilyOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/overlay/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "open",
               "type": {
                 "text": "boolean"
@@ -32395,6 +32472,15 @@
               },
               "privacy": "private",
               "default": "handleOverlayReady"
+            },
+            {
+              "kind": "field",
+              "name": "isLazilyOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
             },
             {
               "kind": "field",
@@ -32736,6 +32822,19 @@
               },
               "privacy": "private",
               "default": "handleOverlayReady",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/overlay/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLazilyOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
               "inheritedFrom": {
                 "name": "InteractionController",
                 "module": "packages/overlay/src/InteractionController.js"
@@ -40514,6 +40613,20 @@
                   }
                 }
               ],
+              "inheritedFrom": {
+                "name": "TextfieldBase",
+                "module": "packages/textfield/src/Textfield.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInputElementPointerdown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
               "inheritedFrom": {
                 "name": "TextfieldBase",
                 "module": "packages/textfield/src/Textfield.js"
@@ -53443,6 +53556,16 @@
             },
             {
               "kind": "method",
+              "name": "handleInputElementPointerdown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
               "name": "renderStateIcons",
               "privacy": "protected",
               "return": {
@@ -54625,6 +54748,20 @@
                   }
                 }
               ],
+              "inheritedFrom": {
+                "name": "TextfieldBase",
+                "module": "packages/textfield/src/Textfield.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInputElementPointerdown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
               "inheritedFrom": {
                 "name": "TextfieldBase",
                 "module": "packages/textfield/src/Textfield.js"
@@ -74932,6 +75069,14 @@
           "description": "",
           "name": "OverlayTriggerDirective",
           "members": [
+            {
+              "kind": "field",
+              "name": "host",
+              "type": {
+                "text": "object | undefined"
+              },
+              "privacy": "private"
+            },
             {
               "kind": "field",
               "name": "overlay",
