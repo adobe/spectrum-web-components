@@ -376,6 +376,7 @@
                 "tools/**/spectrum-config.js",
                 "node_modules/@spectrum-css/**/index-vars.css",
                 "scripts/generate-tokens.js",
+                "scripts/generate-tokens-wrapper.js",
                 "node_modules/@spectrum-css/**/*.css",
                 "scripts/spectrum-vars.js",
                 "tools/styles/package.json"
