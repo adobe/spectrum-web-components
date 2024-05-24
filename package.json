@@ -54,7 +54,7 @@
         "preeleventy": "yarn docs:analyze",
         "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn build:confirm",
         "prepare": "husky",
-        "prepublish:react": "yarn build:react && git add react -f && git commit -am \"Commit React Wrappers\" --no-verify",
+        "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"Commit React Wrappers\" --no-verify",
         "prestorybook": "wireit",
         "prestorybook:build": "cem analyze --outdir storybook/",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
