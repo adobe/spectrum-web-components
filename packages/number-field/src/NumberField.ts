@@ -223,7 +223,9 @@ export class NumberField extends TextfieldBase {
                 value = value.replace(sourceDecimal, replacementDecimal);
             }
         }
-        return this.numberParser.parse(value);
+        return this.numberParser.parse(
+            this.valueFormatter.format(Number(value))
+        );
     }
 
     private get _step(): number {
@@ -523,7 +525,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
-            value = parseFloat(this.valueFormatter.format(value));
+            value = this.numberParser.parse(this.valueFormatter.format(value));
         }
         value *= signMultiplier;
         return value;
@@ -587,8 +589,9 @@ export class NumberField extends TextfieldBase {
             this._valueFormatter = new NumberFormatter(
                 this.languageResolver.language,
                 {
-                    maximumFractionDigits: digitsAfterDecimal,
+                    ...this.formatOptions,
                     useGrouping: false,
+                    maximumFractionDigits: digitsAfterDecimal,
                 }
             );
         }
