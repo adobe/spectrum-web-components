@@ -223,9 +223,7 @@ export class NumberField extends TextfieldBase {
                 value = value.replace(sourceDecimal, replacementDecimal);
             }
         }
-        return this.numberParser.parse(
-            this.valueFormatter.format(Number(value))
-        );
+        return this.numberParser.parse(value);
     }
 
     private get _step(): number {
@@ -325,7 +323,7 @@ export class NumberField extends TextfieldBase {
 
         this.requestUpdate();
         this._value = this.validateInput(value);
-        this.inputElement.value = value.toString();
+        this.inputElement.value = this.numberFormatter.format(value); //value.toString();
 
         this.inputElement.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
@@ -589,7 +587,6 @@ export class NumberField extends TextfieldBase {
             this._valueFormatter = new NumberFormatter(
                 this.languageResolver.language,
                 {
-                    ...this.formatOptions,
                     useGrouping: false,
                     maximumFractionDigits: digitsAfterDecimal,
                 }
