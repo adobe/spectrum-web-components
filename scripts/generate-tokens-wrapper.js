@@ -140,6 +140,14 @@ const processTokens = (srcPath, tokensDir) => {
     );
 };
 
+const cleanFile = (filePath) => {
+    fs.writeFile(filePath, '', function (errr) {
+        if (errr) {
+            return console.log(errr);
+        }
+    });
+};
+
 const processPackages = async (srcPath, tokensDir, index) => {
     const packageName = tokenPackages[index];
     const spectrumPath = path.join(srcPath, 'spectrum.css');
@@ -148,18 +156,16 @@ const processPackages = async (srcPath, tokensDir, index) => {
     if (fs.existsSync(spectrumPath)) {
         let spectrum = fs.readFileSync(spectrumPath, 'utf8');
         spectrum = removeImporantComments(targetHost(spectrum));
-        fs.appendFileSync(
-            path.join(
-                __dirname,
-                '..',
-                'tools',
-                'styles',
-                tokensDir,
-                'spectrum',
-                'global-vars.css'
-            ),
-            spectrum
+        const filePath = path.join(
+            __dirname,
+            '..',
+            'tools',
+            'styles',
+            tokensDir,
+            'spectrum',
+            'global-vars.css'
         );
+        fs.appendFileSync(filePath, spectrum);
     }
 
     // spectrum-2 doesn't need express package tokens
@@ -235,7 +241,16 @@ export async function generateTokensWrapper(spectrumVersion) {
     for (const tokensPath of await fg([`${tokensRoot(tokensDir)}`])) {
         processTokens(tokensPath, tokensDir);
     }
-
+    const filePath = path.join(
+        __dirname,
+        '..',
+        'tools',
+        'styles',
+        tokensDir,
+        'spectrum',
+        'global-vars.css'
+    );
+    cleanFile(filePath);
     const processes = packagePaths.map((path, index) => {
         return processPackages(path, tokensDir, index);
     });
