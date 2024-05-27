@@ -323,7 +323,7 @@ export class NumberField extends TextfieldBase {
 
         this.requestUpdate();
         this._value = this.validateInput(value);
-        this.inputElement.value = this.numberFormatter.format(value); //value.toString();
+        this.inputElement.value = this.numberFormatter.format(value);
 
         this.inputElement.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
@@ -523,7 +523,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
-            value = this.numberParser.parse(this.valueFormatter.format(value));
+            value = parseFloat(this.valueFormatter.format(value));
         }
         value *= signMultiplier;
         return value;
@@ -584,13 +584,10 @@ export class NumberField extends TextfieldBase {
                     ? this.step.toString().split('.')[1].length
                     : 0
                 : 0;
-            this._valueFormatter = new NumberFormatter(
-                this.languageResolver.language,
-                {
-                    useGrouping: false,
-                    maximumFractionDigits: digitsAfterDecimal,
-                }
-            );
+            this._valueFormatter = new NumberFormatter('en', {
+                useGrouping: false,
+                maximumFractionDigits: digitsAfterDecimal,
+            });
         }
 
         return this._valueFormatter;
