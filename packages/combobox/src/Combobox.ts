@@ -415,7 +415,10 @@ export class Combobox extends Textfield {
                 ?required=${this.required}
                 ?readonly=${this.readonly}
             />
-            ${when(this.pending, () => this.renderLoader())}
+            ${when(
+                this.pending && !this.disabled && !this.readonly,
+                this.renderLoader
+            )}
         `;
     }
 

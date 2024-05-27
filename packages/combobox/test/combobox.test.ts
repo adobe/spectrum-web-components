@@ -838,12 +838,14 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             el.focusElement.focus();
-            el.focusElement.dispatchEvent(arrowDownEvent());
+            await sendKeys({
+                press: 'ArrowDown',
+            });
 
             await elementUpdated(el);
 
             const typed = oneEvent(el, 'input');
-            executeServerCommand('send-keys', {
+            await sendKeys({
                 press: 'g',
             });
             await typed;
