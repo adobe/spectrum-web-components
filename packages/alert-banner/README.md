@@ -35,7 +35,7 @@ The alert banner accepts text context in the default slot provided:
 
 ### Dismissible
 
-Use the `dismissible` attribute to include an icon-only close button to dismiss the alert banner:
+Use the `dismissible` attribute to include an icon-only close button used to dismiss the alert banner:
 
 ```html
 <sp-alert-banner open dismissible>
