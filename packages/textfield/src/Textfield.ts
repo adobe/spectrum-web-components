@@ -270,6 +270,8 @@ export class TextfieldBase extends ManageHelpText(
         this.focused = !this.readonly && false;
     }
 
+    protected handleInputElementPointerdown(): void {}
+
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
@@ -355,6 +357,7 @@ export class TextfieldBase extends ManageHelpText(
                 .value=${live(this.displayValue)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
+                @pointerdown=${this.handleInputElementPointerdown}
                 @focus=${this.onFocus}
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}

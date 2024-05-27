@@ -430,6 +430,17 @@ export class NumberField extends TextfieldBase {
         });
     }
 
+    private hasRecentlyReceivedPointerDown = false;
+
+    protected override handleInputElementPointerdown(): void {
+        this.hasRecentlyReceivedPointerDown = true;
+        this.updateComplete.then(() => {
+            requestAnimationFrame(() => {
+                this.hasRecentlyReceivedPointerDown = false;
+            });
+        });
+    }
+
     protected override handleInput(event: Event): void {
         if (this.isComposing) {
             event.stopPropagation();
@@ -758,6 +769,15 @@ export class NumberField extends TextfieldBase {
                 }
             }
             this.inputElement.inputMode = inputMode;
+        }
+        if (
+            changes.has('focused') &&
+            this.focused &&
+            !this.hasRecentlyReceivedPointerDown &&
+            !!this.formatOptions.unit
+        ) {
+            // Normalize keyboard focus entry between unit and non-unit bearing Number Fields
+            this.setSelectionRange(0, this.displayValue.length);
         }
     }
 }

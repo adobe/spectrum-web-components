@@ -15,7 +15,6 @@ import {
     aTimeout,
     elementUpdated,
     expect,
-    fixture,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
@@ -47,7 +46,11 @@ import { spy } from 'sinon';
 import { clickBySelector, getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { isMac } from '@spectrum-web-components/shared/src/platform.js';
 
 describe('NumberField', () => {
     before(async () => {
@@ -873,6 +876,87 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('17 inches');
             expect(el.valueAsString).to.equal('17');
             expect(el.value).to.equal(17);
+        });
+        it('does not select all on click based `focus`', async function () {
+            this.retries(0);
+            const modifier = isMac() ? 'Meta' : 'Control';
+            const el = await getElFrom(units({ value: 17 }));
+            expect(el.value).to.equal(17);
+            const rect = el.focusElement.getBoundingClientRect();
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            rect.left + rect.width / 8,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.focused).to.be.true;
+            await sendKeys({
+                press: `${modifier}+KeyC`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: `${modifier}+KeyV`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.value, 'copy/paste changed the value').to.equal(17);
+        });
+        it('selects all on `Tab` based `focus`', async function () {
+            this.retries(0);
+            const modifier = isMac() ? 'Meta' : 'Control';
+            const el = await getElFrom(units({ value: 17 }));
+            const input = document.createElement('input');
+            el.insertAdjacentElement('beforebegin', input);
+            input.focus();
+            await sendKeys({
+                press: 'Tab',
+            });
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.focused).to.be.true;
+            await sendKeys({
+                press: `${modifier}+KeyC`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: `${modifier}+KeyV`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.value, 'copy/paste did not change the value').to.equal(
+                1717
+            );
         });
         it('manages units not supported by the browser', async () => {
             const el = await getElFrom(pixels({ value: 17 }));
