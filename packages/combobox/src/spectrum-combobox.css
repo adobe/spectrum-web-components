@@ -440,22 +440,20 @@ governing permissions and limitations under the License.
     );
 }
 
-:host(:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+.button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --mod-combobox-border-color-default,
         var(--spectrum-combobox-border-color-default)
     );
 }
 
-:host([focused]:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet),
-:host(:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet):focus,
-:host([focused]:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet),
-:host(:not([invalid])):has(:focus)
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+:host([focused])
+    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
+.button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):focus,
+:host([focused])
+    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
+:host:has(:focus)
+    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --highcontrast-combobox-border-color-highlight,
         var(
@@ -465,22 +463,24 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([keyboard-focused]:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet),
-:host(:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet):focus-visible,
-:host([keyboard-focused]:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+:host([keyboard-focused])
+    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
+.button:not(
+        :disabled,
+        .is-invalid,
+        .spectrum-PickerButton--quiet
+    ):focus-visible,
+:host([keyboard-focused])
+    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --mod-combobox-border-color-key-focus,
         var(--spectrum-combobox-border-color-key-focus)
     );
 }
 
-:host(:not([invalid]))
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet):active,
-:host(:not([invalid])):has(:active)
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+.button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):active,
+:host:has(:active)
+    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --highcontrast-combobox-border-color-highlight,
         var(
@@ -490,7 +490,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]) .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+:host([invalid]) .button:not(:disabled, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --highcontrast-combobox-border-color-invalid,
         var(
@@ -500,14 +500,11 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid][focused])
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet),
-:host([invalid])
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet):focus,
-:host([focused][invalid])
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet),
+:host([invalid][focused]) .button:not(:disabled, .spectrum-PickerButton--quiet),
+:host([invalid]) .button:not(:disabled, .spectrum-PickerButton--quiet):focus,
+:host([focused][invalid]) .button:not(:disabled, .spectrum-PickerButton--quiet),
 :host([invalid]):has(:focus)
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+    .button:not(:disabled, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --highcontrast-combobox-border-color-invalid,
         var(
@@ -518,11 +515,11 @@ governing permissions and limitations under the License.
 }
 
 :host([invalid][keyboard-focused])
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet),
+    .button:not(:disabled, .spectrum-PickerButton--quiet),
 :host([invalid])
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet):focus-visible,
+    .button:not(:disabled, .spectrum-PickerButton--quiet):focus-visible,
 :host([keyboard-focused][invalid])
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+    .button:not(:disabled, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --highcontrast-combobox-border-color-invalid,
         var(
@@ -532,10 +529,9 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid])
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet):active,
+:host([invalid]) .button:not(:disabled, .spectrum-PickerButton--quiet):active,
 :host([invalid]):has(:active)
-    .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+    .button:not(:disabled, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
         --highcontrast-combobox-border-color-invalid,
         var(
@@ -626,10 +622,9 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    :host(:not([invalid]))
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet):hover,
-    :host(:not([invalid]):hover)
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):hover,
+    :host(:hover)
+        .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
         --mod-picker-button-border-color: var(
             --highcontrast-combobox-border-color-highlight,
             var(
@@ -639,14 +634,21 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([focused]:not([invalid]))
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet):hover,
-    :host(:not([invalid]))
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet):focus:hover,
-    :host([focused]:not([invalid]):hover)
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet),
-    :host(:not([invalid]):hover):has(:focus)
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+    :host([focused])
+        .button:not(
+            :disabled,
+            .is-invalid,
+            .spectrum-PickerButton--quiet
+        ):hover,
+    .button:not(
+            :disabled,
+            .is-invalid,
+            .spectrum-PickerButton--quiet
+        ):focus:hover,
+    :host([focused]:hover)
+        .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
+    :host(:hover):has(:focus)
+        .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
         --mod-picker-button-border-color: var(
             --highcontrast-combobox-border-color-highlight,
             var(
@@ -657,9 +659,9 @@ governing permissions and limitations under the License.
     }
 
     :host([invalid])
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet):hover,
+        .button:not(:disabled, .spectrum-PickerButton--quiet):hover,
     :host([invalid]:hover)
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+        .button:not(:disabled, .spectrum-PickerButton--quiet) {
         --mod-picker-button-border-color: var(
             --highcontrast-combobox-border-color-invalid,
             var(
@@ -670,13 +672,13 @@ governing permissions and limitations under the License.
     }
 
     :host([invalid][focused])
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet):hover,
+        .button:not(:disabled, .spectrum-PickerButton--quiet):hover,
     :host([invalid])
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet):focus:hover,
+        .button:not(:disabled, .spectrum-PickerButton--quiet):focus:hover,
     :host([focused][invalid]:hover)
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet),
+        .button:not(:disabled, .spectrum-PickerButton--quiet),
     :host([invalid]:hover):has(:focus)
-        .button:not(:disabled):not(.spectrum-PickerButton--quiet) {
+        .button:not(:disabled, .spectrum-PickerButton--quiet) {
         --mod-picker-button-border-color: var(
             --highcontrast-combobox-border-color-invalid,
             var(

@@ -28,6 +28,7 @@ import {
 } from './slottable-request-event.js';
 import { SlottableRequestDirective } from './slottable-request-directive.js';
 import { AbstractOverlay } from './AbstractOverlay.js';
+import { InteractionTypes } from './InteractionController.js';
 
 export type InsertionOptions = {
     el: HTMLElement | (() => HTMLElement);
@@ -84,8 +85,7 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
         const triggerInteraction = (options?.triggerInteraction ||
             this.defaultOptions.triggerInteraction) as TriggerInteraction;
         const newStrategy =
-            (this.strategy?.type as unknown as TriggerInteraction) !==
-            triggerInteraction;
+            InteractionTypes[this.strategy?.type] !== triggerInteraction;
         if (this.target !== part.element) {
             this.target = part.element as HTMLElement;
             newTarget = true;
