@@ -323,7 +323,7 @@ export class NumberField extends TextfieldBase {
 
         this.requestUpdate();
         this._value = this.validateInput(value);
-        this.inputElement.value = value.toString();
+        this.inputElement.value = this.numberFormatter.format(value);
 
         this.inputElement.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
@@ -427,6 +427,17 @@ export class NumberField extends TextfieldBase {
                     bubbles: true,
                 })
             );
+        });
+    }
+
+    private hasRecentlyReceivedPointerDown = false;
+
+    protected override handleInputElementPointerdown(): void {
+        this.hasRecentlyReceivedPointerDown = true;
+        this.updateComplete.then(() => {
+            requestAnimationFrame(() => {
+                this.hasRecentlyReceivedPointerDown = false;
+            });
         });
     }
 
@@ -573,13 +584,10 @@ export class NumberField extends TextfieldBase {
                     ? this.step.toString().split('.')[1].length
                     : 0
                 : 0;
-            this._valueFormatter = new NumberFormatter(
-                this.languageResolver.language,
-                {
-                    maximumFractionDigits: digitsAfterDecimal,
-                    useGrouping: false,
-                }
-            );
+            this._valueFormatter = new NumberFormatter('en', {
+                useGrouping: false,
+                maximumFractionDigits: digitsAfterDecimal,
+            });
         }
 
         return this._valueFormatter;
@@ -758,6 +766,15 @@ export class NumberField extends TextfieldBase {
                 }
             }
             this.inputElement.inputMode = inputMode;
+        }
+        if (
+            changes.has('focused') &&
+            this.focused &&
+            !this.hasRecentlyReceivedPointerDown &&
+            !!this.formatOptions.unit
+        ) {
+            // Normalize keyboard focus entry between unit and non-unit bearing Number Fields
+            this.setSelectionRange(0, this.displayValue.length);
         }
     }
 }
