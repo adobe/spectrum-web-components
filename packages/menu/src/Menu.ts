@@ -642,7 +642,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.prepareToCleanUp();
             return;
         }
-        if (key === 'Space') {
+        if (key === ' ') {
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
@@ -651,7 +651,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 return;
             }
         }
-        if (key === 'Space' || key === 'Enter') {
+        if (key === ' ' || key === 'Enter') {
             const childItem = this.childItems[this.focusedItemIndex];
             if (
                 childItem &&
