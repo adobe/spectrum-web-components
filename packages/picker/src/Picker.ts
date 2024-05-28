@@ -71,7 +71,7 @@ export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public isMobile = new MatchMediaController(this, IS_MOBILE);
 
-    public strategy?: DesktopController | MobileController;
+    public strategy!: DesktopController | MobileController;
 
     @state()
     appliedLabel?: string;
@@ -79,7 +79,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('#button')
     public button!: HTMLButtonElement;
 
-    private dependencyManager = new DependencyManagerController(this);
+    public dependencyManager = new DependencyManagerController(this);
 
     private deprecatedMenu: Menu | null = null;
 
@@ -217,6 +217,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         } else {
             // Non-cancelable "change" events announce a selection with no value
             // change that should close the Picker element.
+            this.open = false;
             if (this.strategy) {
                 this.strategy.open = false;
             }
@@ -249,6 +250,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         item: MenuItem,
         menuChangeEvent?: Event
     ): Promise<void> {
+        this.open = false;
         // should always close when "setting" a value
         if (this.strategy) {
             this.strategy.open = false;
@@ -278,6 +280,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             }
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
+            this.open = true;
             if (this.strategy) {
                 this.strategy.open = true;
             }
@@ -304,9 +307,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (this.readonly || this.pending) {
             return;
         }
+        this.open = typeof target !== 'undefined' ? target : !this.open;
         if (this.strategy) {
-            this.strategy.open =
-                typeof target !== 'undefined' ? target : !this.open;
+            this.strategy.open = this.open;
         }
     }
 
@@ -315,6 +318,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             return;
         }
         if (this.strategy) {
+            this.open = false;
             this.strategy.open = false;
         }
     }
@@ -456,6 +460,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
+        if (this.strategy?.overlay === undefined) {
+            return menu;
+        }
         const container = this.renderContainer(menu);
         render(container, this.strategy?.overlay as unknown as HTMLElement, {
             host: this,
@@ -517,11 +524,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
         if (changes.has('disabled') && this.disabled) {
             if (this.strategy) {
+                this.open = false;
                 this.strategy.open = false;
             }
         }
         if (changes.has('pending') && this.pending) {
             if (this.strategy) {
+                this.open = false;
                 this.strategy.open = false;
             }
         }
@@ -578,6 +587,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected bindButtonKeydownListener(): void {
         this.button.addEventListener('keydown', this.handleKeydown);
+    }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+        if (changes.has('open')) {
+            this.strategy.open = this.open;
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues<this>): void {
@@ -658,6 +674,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.open ||
             !!this.deprecatedMenu;
         if (this.hasRenderedOverlay) {
+            if (this.dependencyManager.loaded) {
+                this.dependencyManager.add('sp-overlay');
+            }
             return this.renderOverlay(menu);
         }
         return menu;
@@ -765,7 +784,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected bindEvents(): void {
         this.strategy?.abort();
-        this.strategy = undefined;
         if (this.isMobile.matches) {
             this.strategy = new strategies['mobile'](this.button, this);
         } else {

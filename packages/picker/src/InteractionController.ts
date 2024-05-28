@@ -46,10 +46,13 @@ export class InteractionController implements ReactiveController {
      * Set `open`
      */
     public set open(open: boolean) {
+        if (this._open === open) return;
         this._open = open;
         if (this.overlay) {
             // If there already is an Overlay, apply the value of `open` directly.
-            this.overlay.open = open;
+            if (this.host.dependencyManager.loaded) {
+                this.overlay.open = open;
+            }
             this.host.open = open;
             return;
         }
@@ -68,7 +71,10 @@ export class InteractionController implements ReactiveController {
                     '@spectrum-web-components/overlay/src/Overlay.js'
                 );
                 this.overlay = new Overlay();
-                this.overlay.open = true;
+                this.host.requestUpdate();
+                if (this.host.dependencyManager.loaded) {
+                    this.overlay.open = open;
+                }
                 this.host.open = true;
             });
         import('@spectrum-web-components/overlay/sp-overlay.js');
@@ -95,6 +101,7 @@ export class InteractionController implements ReactiveController {
     ) {
         this.target = target;
         this.host = host;
+        this.host.addController(this);
         this.init();
     }
 
@@ -174,5 +181,15 @@ export class InteractionController implements ReactiveController {
 
     hostDisconnected(): void {
         this.abortController?.abort();
+    }
+
+    public hostUpdated(): void {
+        if (
+            this.overlay &&
+            this.host.dependencyManager.loaded &&
+            this.host.open
+        ) {
+            this.overlay.open = true;
+        }
     }
 }
