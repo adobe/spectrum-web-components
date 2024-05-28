@@ -5588,40 +5588,40 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.2.tgz#5981a8db18b56ba38ef0efb7d995b12aa7b51918"
   integrity sha512-sXXKG+uL9IrKqViTtao2Ws6dy0znu9sOaP1di/jKGW1M6VssO8vlpXCQcpZ+jisQ1tTFAC5Jo/EOzFbggBagFQ==
 
-"@spectrum-css/accordion@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-5.1.0.tgz#130c731237fffd852695ccc2f1e92ef0c35050a3"
-  integrity sha512-OdQ4Ks5hgGIG3jyQXoYq8Hhyo5ymX9qofnaqrche9Sol4XINHLQmqxAUzUJLHr5YNKScwebLOtZate/Jl0s/oA==
+"@spectrum-css/accordion@^5.1.2":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-5.1.2.tgz#728fd22ac7d13875c21659861a87bf4cb51eb0dc"
+  integrity sha512-UQ8UsryN0p7nYJ300uy+gbHOV21lZ0gO7HZUq7+WBSXlcpK6zoLYoisk/+KfEHVZgZI0aSc0tHD67vFvqkvMgQ==
 
-"@spectrum-css/actionbar@^8.1.0":
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-8.1.0.tgz#b20e7de8d791842f1c8a6fab1ab2c43c7801bbae"
-  integrity sha512-cYdrYie8ULV1aLJgNEhqiSch8peGAYGYBPKZorA4ymWXP1uVK/t4+mcTx2D/F3+kdlzlewC7rZQvU0+y2A6QEw==
+"@spectrum-css/actionbar@^8.1.1":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-8.1.1.tgz#7acb7795dae39ba8f18fdb043fa4fa857ec15001"
+  integrity sha512-VrF/CP5Vm7b7d2pYZBjAmhZmeqgiTvDeQTKoAJUnFe5VkO2P2JUSP8QiYWFD7XZ7NVztUFzh2W11eQWHczAq7Q==
 
-"@spectrum-css/actionbutton@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-6.1.0.tgz#68c0ff0d84f09430f7fb948d2f4f1b87f6eb11e4"
-  integrity sha512-GF0k93q2rHyW68L4uNjAlfAgQLK5JwvrjVAePitJsDsVGCEpdhnN2lFNS6xGfbPBAiFHspftqlv0M01eCXTcLg==
+"@spectrum-css/actionbutton@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-6.1.1.tgz#3213db34ba89a5771ce51a84c159da4ded33828b"
+  integrity sha512-FHR29sujmQMujETsL+W7WmA4zSE1CRiMHm5b8V94w1QKJqksUWuhDljHUfIfTlS8zCPQv0EDGAZdW2UMi08tuQ==
 
 "@spectrum-css/actiongroup@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-5.1.0.tgz#954ed9b8d6dfe747371747c65dc1f0f5f795e599"
   integrity sha512-AJnymeAUMeQjAAgSjg03lZEn4CbC/BQYQ3qDYhX0qbpoakHvXyjtPMFiDzbAe+P4UcrrjYfhUJB2eqAK0Xkozg==
 
-"@spectrum-css/actionmenu@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-6.1.0.tgz#f0d0ad1c482beb31b88198c506d29e8d1830e739"
-  integrity sha512-z/BzL09yR4s9gMvWrjgBbQUO9oHZiQ9eUN8+ZKdPjzr949HBEXBEUJYHipLSJgeb9/ZJyCXICBgkkRMqhqjI9Q==
+"@spectrum-css/actionmenu@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-6.1.1.tgz#84753483d249e27e71facd4d0053c3d3cb5677ad"
+  integrity sha512-dkMroSrS+Ju4IUzVur+qr6ew1EvydCG4djZzn4Il4tdEZ5nguTaD0GYtyXpzNqyzQWgWSJCv8f9K7rQU6NHSTA==
 
-"@spectrum-css/alertdialog@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/alertdialog/-/alertdialog-2.1.0.tgz#71b277057f62cfa37a1d601101d1974b3a5e14f0"
-  integrity sha512-cUrSA7aZGzkVOhMPnOXjOQZn7b+MhfYVH371+i3mY+l88Llm7SmuxjX31O2FfTLFO2MD0pHxSFnYPyrcSei8ug==
+"@spectrum-css/alertdialog@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/alertdialog/-/alertdialog-2.1.1.tgz#765494d9809c255f7ee8758b94c9fcb254050006"
+  integrity sha512-/jOfaTtiUl9tf4jlcoyWyxfdW6zmnABiRg64DocRS9f3vtbc/hXHjW/t61bDIQ+VJrBwfYRJKVjFe9DMQovlZA==
 
-"@spectrum-css/asset@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-5.1.0.tgz#fc6d1e10f9e53e53c57237f227cbea40c8226517"
-  integrity sha512-W8DxpSoH7AJT6FsxGIGg8qFJY/x4gYLzuBh3hE8a+YZwqo4OTVFHmAmT5psb44eWsVbNNm5vZnHJofV0Mh31oA==
+"@spectrum-css/asset@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-5.1.1.tgz#38c1d6acca06379c93bb9a7e62d42ce3e5720d3d"
+  integrity sha512-//KDzWNeHuFYVoRDNRrKEj0sOe4mvlwVgOk3PiAJFIbIt42gfeQQu5CNXrHnzPubU8vVnXd75hPTspuiOw/Urg==
 
 "@spectrum-css/avatar@^7.1.0":
   version "7.1.0"
@@ -5703,10 +5703,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-4.1.0.tgz#6ea22820aed323e00df86d6025dcf62dbc429d83"
   integrity sha512-3IEts+RodM4jaYGmvyrWkPmlYiKHTEi7AdswZQZvqXLSvZN+fX6w9Vfwdh2nHoM/jl0NAJT8k3VZim5M+Dr8RA==
 
-"@spectrum-css/combobox@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-3.1.0.tgz#3366dcf257f0c8a8f4e007adcbe214ba531c7a0a"
-  integrity sha512-718DmxBUHC7tizC+VO9N7RSCLUMy4rDpJiCyWmqe0tEldosZ81EsRYWXvlmIdKPVAPu8Vh8YFOqNTwZzjGdboQ==
+"@spectrum-css/combobox@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-3.1.2.tgz#5499ac680a09c896970dc9f1f9f4765c114268ee"
+  integrity sha512-O0VkTnYyvIl+lWnUjuH87FFd4jGgmfsK/8mNz9w+numRZPRDvwgVuLr5v6AncFfg/DJHJwSXO57dVZ+H5unwaA==
 
 "@spectrum-css/commons@^10.0.0":
   version "10.0.0"
@@ -5768,10 +5768,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-5.1.0.tgz#6e15b557836b370e181edc39c0e2e40a7c0944df"
   integrity sha512-UP3g/iRnMOpp3/QsqCTwZhfuhEs44P6ActHqYpGPGSj0goT/R2F3VWi+YtYLBy8uSzsjdl61WFw32fg9ZBb9zQ==
 
-"@spectrum-css/menu@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-7.1.0.tgz#184278c63af23124f74676e6d81d22e2196b43e6"
-  integrity sha512-PcuwUj6pSIbAGcAb1R8IA1xU3/a+9Zb2rHu/5R3BMDR34ugdDrSW1DnH5vubStSg0n5D/PkZC+XOhO3JK0huzg==
+"@spectrum-css/menu@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-7.1.3.tgz#245732fd02464c37aa541e0b2ef32bf9337886ec"
+  integrity sha512-VpXnrHerfsFn5uKYwlLyKgmU4+x7ojTBxCzY07wi7XwhBYmYdguGzZWcQTOIEhU1BRNzkY+DR3m2yq+dLu0Slg==
 
 "@spectrum-css/modal@^5.1.0":
   version "5.1.0"
@@ -5944,7 +5944,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.42.4"
+  version "0.42.5"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
