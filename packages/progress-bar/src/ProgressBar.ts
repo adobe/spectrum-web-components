@@ -119,6 +119,9 @@ export class ProgressBar extends SizedMixin(
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'progressbar');
         }
+        if (!this.hasAttribute('tabindex')) {
+            this.setAttribute('tabindex', '0');
+        }
     }
 
     protected override updated(changes: PropertyValues): void {
