@@ -24,18 +24,18 @@ export default {
     argTypes,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => Template(args);
+export const Default = (args?: StoryArgs): TemplateResult => Template(args);
 Default.args = {
     open: true,
 };
 
-export const Help = (args: StoryArgs): TemplateResult => Template(args);
+export const Help = (args?: StoryArgs): TemplateResult => Template(args);
 Help.args = {
     variant: 'help',
     open: true,
 };
 
-export const CustomPlacement = (args: StoryArgs): TemplateResult => {
+export const CustomPlacement = (args?: StoryArgs): TemplateResult => {
     return html`
         <div
             style="width: 100%; height: 500px; display: flex; align-items: center; justify-content: center"

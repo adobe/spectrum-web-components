@@ -51,7 +51,7 @@ export const argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'label' },
-            defaultValue: { summary: `'Help' | 'Info'` },
+            defaultValue: { summary: 'Informations' },
         },
         control: 'text',
     },

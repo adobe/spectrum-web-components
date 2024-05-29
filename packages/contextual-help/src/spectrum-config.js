@@ -31,6 +31,7 @@ const config = {
             excludeByComponents: [
                 // No need to style the trigger, it is already styled by sp-button
                 builder.class('spectrum-ContextualHelp-button'),
+                builder.class('spectrum--large'),
             ],
             components: [
                 // The min-width should be applied to the popover, not the :host
