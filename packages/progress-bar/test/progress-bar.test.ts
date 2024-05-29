@@ -17,29 +17,46 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 import { stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
+import { sendKeys } from '@web/test-runner-commands';
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const tab = isSafari ? 'Alt+Tab' : 'Tab';
+const shiftTab = isSafari ? 'Alt+Shift+Tab' : 'Shift+Tab';
 
 describe('ProgressBar', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ProgressBar>(
-                html`
-                    <sp-progress-bar label="Loading"></sp-progress-bar>
-                `
-            )
+            await fixture<ProgressBar>(html`
+                <sp-progress-bar label="Loading"></sp-progress-bar>
+            `)
     );
     it('loads default progress-bar accessibly', async () => {
-        const el = await fixture<ProgressBar>(
-            html`
-                <sp-progress-bar label="Loading"></sp-progress-bar>
-            `
-        );
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="Loading"></sp-progress-bar>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
 
         await expect(el).to.be.accessible();
     });
+    it('handles focus and keyboard input', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="Loading"></sp-progress-bar>
+        `);
+        await sendKeys({
+            press: tab,
+        });
+        await elementUpdated(el);
+        expect(document.activeElement, 'element').to.equal(el);
+        await sendKeys({
+            press: shiftTab,
+        });
+        await elementUpdated(el);
 
+        const outsideFocused = document.activeElement as HTMLElement;
+        expect(typeof outsideFocused).not.to.equal(ProgressBar);
+    });
     it('accepts label from `slot`', async () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar role="progressbar">
