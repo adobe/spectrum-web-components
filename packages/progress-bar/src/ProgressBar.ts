@@ -71,9 +71,9 @@ export class ProgressBar extends SizedMixin(
             ${this.slotHasContent || this.label
                 ? html`
                       <sp-field-label size=${this.size} class="label">
-                          <slot @slotchange=${this.handleSlotchange}>
-                              ${this.label}
-                          </slot>
+                          ${this.slotHasContent ? html`` : this.label}
+
+                          <slot @slotchange=${this.handleSlotchange}></slot>
                       </sp-field-label>
                   `
                 : html``}
