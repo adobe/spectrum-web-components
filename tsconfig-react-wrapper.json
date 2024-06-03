@@ -29,6 +29,7 @@
         { "path": "react/color-slider" },
         { "path": "react/color-wheel" },
         { "path": "react/combobox" },
+        { "path": "react/contextual-help" },
         { "path": "react/dialog" },
         { "path": "react/divider" },
         { "path": "react/dropzone" },

@@ -37,7 +37,7 @@ import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
-export type TextfieldType = typeof textfieldTypes[number];
+export type TextfieldType = (typeof textfieldTypes)[number];
 
 /**
  * @fires input - The value of the element has changed.

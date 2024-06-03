@@ -1,23 +1,23 @@
 {
-    "name": "@spectrum-web-components/avatar",
-    "version": "0.42.5",
+    "name": "@spectrum-web-components/contextual-help",
+    "version": "0.0.1",
     "publishConfig": {
         "access": "public"
     },
-    "description": "",
+    "description": "Web component implementation of a Spectrum design ContextualHelp",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/avatar"
+        "directory": "packages/contextual-help"
     },
     "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/avatar",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/contextual-help",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -25,18 +25,18 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
-        "./src/Avatar.js": {
-            "development": "./src/Avatar.dev.js",
-            "default": "./src/Avatar.js"
+        "./src/ContextualHelp.js": {
+            "development": "./src/ContextualHelp.dev.js",
+            "default": "./src/ContextualHelp.js"
         },
-        "./src/avatar.css.js": "./src/avatar.css.js",
+        "./src/contextual-help.css.js": "./src/contextual-help.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./sp-avatar.js": {
-            "development": "./sp-avatar.dev.js",
-            "default": "./sp-avatar.js"
+        "./sp-contextual-help.js": {
+            "development": "./sp-contextual-help.dev.js",
+            "default": "./sp-contextual-help.js"
         }
     },
     "scripts": {
@@ -57,16 +57,21 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.5",
-        "@spectrum-web-components/shared": "^0.42.5"
+        "@spectrum-web-components/action-button": "^0.42.2",
+        "@spectrum-web-components/base": "^0.42.2",
+        "@spectrum-web-components/dialog": "^0.42.2",
+        "@spectrum-web-components/icons-workflow": "^0.42.2",
+        "@spectrum-web-components/overlay": "^0.42.2",
+        "@spectrum-web-components/popover": "^0.42.2"
     },
     "devDependencies": {
-        "@spectrum-css/avatar": "^7.1.1"
+        "@spectrum-css/contextualhelp": "^2.1.5"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
+        "./**/*.dev.js",
         "./**/*.dev.js"
     ]
 }
