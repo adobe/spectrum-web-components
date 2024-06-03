@@ -73,6 +73,7 @@ sp-action-button {
     text-align: center;
     box-shadow: none;
     background: transparent;
+    color: var(--sp-tabs-overflow-icon-color);
 }
 
 sp-action-button.left-scroll {
