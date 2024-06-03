@@ -5713,6 +5713,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-10.0.0.tgz#1fc4ca41bb3c8790a8f659164999125ce5d65e91"
   integrity sha512-o0agGKaqux6DQMZcOwMduUFfwD1aDzS1BfL1gf6TvlVBdgrUSpzYelHU82e6kjB7DSoYoG5nCngtQoR+ItM34w==
 
+"@spectrum-css/contextualhelp@^2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/contextualhelp/-/contextualhelp-2.1.5.tgz#a1c012ecf251b36af2a77271070a0e4176747072"
+  integrity sha512-omL3G/odcnpBRMbu0LRW/QjQ57cpI+bWOE2cjTb4l6PeqKt2zhmFpIusYVFq/DmTZxj2zh8f/W6tcriwgYd93Q==
+
 "@spectrum-css/dialog@^10.1.0":
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-10.1.0.tgz#a5027f04c64559c4708f10b6007d7dcc67b66999"
