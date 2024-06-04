@@ -32,10 +32,29 @@ const belongsToPackage = (file, packageLocation) =>
 
 // Get the list of workspace packages
 const getWorkspacePackages = () => {
-    const workspacePackages = JSON.parse(
-        execSync('yarn workspaces info --json').toString()
-    );
-    return JSON.parse(workspacePackages.data);
+    try {
+        const workspacePackagesOutput = execSync(
+            'yarn workspaces info --json'
+        ).toString();
+        if (!workspacePackagesOutput) {
+            console.error(
+                'No output from "yarn workspaces info --json" command'
+            );
+            return {};
+        }
+        let workspacePackages = JSON.parse(workspacePackagesOutput);
+        if (workspacePackages.data) {
+            // this condition will be true if the output is from yarn v2.x.x
+            workspacePackages = workspacePackages.data;
+        }
+        return workspacePackages;
+    } catch (error) {
+        console.error(
+            'Error running "yarn workspaces info --json" command:',
+            error
+        );
+        return {};
+    }
 };
 
 // Get the list of changed files since the specified commit
