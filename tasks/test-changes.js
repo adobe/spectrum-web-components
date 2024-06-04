@@ -15,48 +15,73 @@ governing permissions and limitations under the License.
 import { execSync } from 'child_process';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import path from 'path';
+import fs from 'fs';
 
 const { browser = 'chrome' } = yargs(hideBin(process.argv)).argv;
 
-// Duplicated from `tasks/build-preview-urls-comments.cjs` because GitHub Actions and CJS. 🤦
+// Define the packages to ignore
+const ignorePackages = [
+    '@swc-react/*',
+    // Add any other packages you want to ignore here
+];
+
+// Function to determine if a file belongs to a workspace package
+const belongsToPackage = (file, packageLocation) =>
+    file.startsWith(packageLocation);
+
+// Get the list of workspace packages
+const getWorkspacePackages = () => {
+    const workspacePackages = JSON.parse(
+        execSync('yarn workspaces info --json').toString()
+    );
+    return JSON.parse(workspacePackages.data);
+};
+
+// Get the list of changed files since the specified commit
+const getChangedFiles = () => {
+    return execSync('git diff --name-only origin/main')
+        .toString()
+        .split('\n')
+        .filter(Boolean);
+};
+
 const getChangedPackages = () => {
-    let command;
-    try {
-        command = execSync(
-            'yarn --silent lerna ls --since origin/main --json --loglevel silent --ignore "@swc-react/*"'
+    const packagesInfo = getWorkspacePackages();
+    const changedFiles = getChangedFiles();
+
+    // Get the list of changed packages
+    const changedPackages = Object.keys(packagesInfo).filter((pkgName) => {
+        const packageLocation = packagesInfo[pkgName].location;
+        return (
+            changedFiles.some((file) =>
+                belongsToPackage(file, packageLocation)
+            ) &&
+            !ignorePackages.some((ignore) =>
+                new RegExp(ignore.replace('*', '.*')).test(pkgName)
+            )
         );
-    } catch (error) {
-        console.log(error.message);
-        console.log(error.stdout.toString());
-        return [];
-    }
-    let packageList;
-    try {
-        packageList = JSON.parse(command.toString()).reduce((acc, item) => {
-            const name = item.name.replace('@spectrum-web-components/', '');
-            if (
-                // There are no benchmarks available in this directory.
-                item.location.search('projects') === -1 &&
-                // The icons-* tests are particular and long, exclude in CI.
-                !name.startsWith('icons-')
-            ) {
-                acc.push(name);
-            }
-            return acc;
-        }, []);
-    } catch (error) {
-        packageList = [];
-    }
-    return packageList;
+    });
+
+    // Filter and format the package list
+    return changedPackages.reduce((acc, pkgName) => {
+        const name = pkgName.replace('@spectrum-web-components/', '');
+        const packageLocation = packagesInfo[pkgName].location;
+        if (
+            packageLocation.search('projects') === -1 && // No benchmarks available in this directory
+            !name.startsWith('icons-') // Exclude icons-* tests in CI
+        ) {
+            acc.push(name);
+        }
+        return acc;
+    }, []);
 };
 
 const testChangedPackages = () => {
     const packages = getChangedPackages();
     if (packages.length) {
         console.log(
-            `Running tachometer on the following packages: ${packages.join(
-                ', '
-            )}`
+            `Running tachometer on the following packages: ${packages.join(', ')}`
         );
         execSync('yarn build:tests');
         execSync(
