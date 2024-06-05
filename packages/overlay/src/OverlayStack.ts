@@ -64,7 +64,9 @@ class OverlayStack {
         // pointer during the course of the interaction.
         // Ensure that this value is cleared even if the work in this method goes undone.
         const composedPath = this.pointerdownPath;
+        const lastOverlay = this.lastOverlay;
         this.pointerdownPath = undefined;
+        this.lastOverlay = undefined;
         if (!this.stack.length) return;
         if (!composedPath?.length) return;
 
@@ -80,7 +82,7 @@ class OverlayStack {
                     // The last Overlay in the stack is not the last Overlay at `pointerdown` time and has a
                     // `triggerInteraction` of "longpress", meaning it was opened by this poitner interaction
                     (i === lastIndex &&
-                        overlay !== this.lastOverlay &&
+                        overlay !== lastOverlay &&
                         overlay.triggerInteraction === 'longpress')
             );
             return (
