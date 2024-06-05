@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -802,6 +802,57 @@ describe('Combobox', () => {
             expect(el.value).to.equal('Bo');
             expect(el.activeDescendant).to.be.undefined;
             expect(el.open).to.be.true;
+        });
+    });
+    describe('pending state', () => {
+        it('renders a progress circle', async () => {
+            const el = await comboboxFixture();
+            el.pending = true;
+            await elementUpdated(el);
+
+            expect(el.shadowRoot.querySelector('sp-progress-circle')).to.exist;
+        });
+        it('receives focus', async () => {
+            const el = await comboboxFixture();
+            el.pending = true;
+            await elementUpdated(el);
+
+            el.focus();
+
+            await elementUpdated(el);
+            expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
+        });
+        it('does not open the dropdown on mouse events', async () => {
+            const el = await comboboxFixture();
+            el.pending = true;
+            await elementUpdated(el);
+
+            el.click();
+
+            await elementUpdated(el);
+            expect(el.open).to.be.false;
+        });
+        it('does not open the dropdown on keyboard events', async () => {
+            const el = await comboboxFixture();
+            el.pending = true;
+            await elementUpdated(el);
+
+            el.focusElement.focus();
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+
+            await elementUpdated(el);
+
+            const typed = oneEvent(el, 'input');
+            await sendKeys({
+                press: 'g',
+            });
+            await typed;
+
+            expect(el.focusElement.value, '<input> has value').to.equal('g');
+            expect(el.value, 'el has value').to.equal('g');
+            expect(el.open).to.be.false;
         });
     });
 

@@ -65,6 +65,7 @@
         "@spectrum-web-components/overlay": "^0.42.5",
         "@spectrum-web-components/picker-button": "^0.42.5",
         "@spectrum-web-components/popover": "^0.42.5",
+        "@spectrum-web-components/progress-circle": "^0.42.5",
         "@spectrum-web-components/textfield": "^0.42.5"
     },
     "devDependencies": {
