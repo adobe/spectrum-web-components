@@ -16,7 +16,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
-import { countries, fruits } from './index.js';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
@@ -26,69 +25,57 @@ import { Combobox, ComboboxOption } from '../src/Combobox.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 import { query, state } from '@spectrum-web-components/base/src/decorators.js';
 import { live } from '@spectrum-web-components/base/src/directives.js';
+import { countries, fruits, StoryArgs } from './index.js';
+import { Template } from './template.js';
+import { argTypes } from './args.js';
 
 export default {
     title: 'Combobox',
     component: 'sp-combobox',
+    args: {
+        open: false,
+        disabled: false,
+        invalid: false,
+        pending: false,
+        readonly: false,
+        quiet: false,
+    },
+    argTypes,
 };
 
-export const Default = (): TemplateResult => {
-    return html`
-        <sp-field-label for="combobox-1">Where do you live?</sp-field-label>
-        <sp-combobox id="combobox-1" .options=${countries}></sp-combobox>
-    `;
+export const Default = (args: StoryArgs): TemplateResult => Template(args);
+
+export const disabled = (args: StoryArgs): TemplateResult => Template(args);
+disabled.args = {
+    disabled: true,
+    value: 'Azerbaijan',
 };
 
-export const disabled = (): TemplateResult => {
-    return html`
-        <sp-field-label for="combobox-disabled">
-            Where do you live?
-        </sp-field-label>
-        <sp-combobox
-            disabled
-            id="combobox-disabled"
-            .options=${countries}
-            value="Azerbaijan"
-        ></sp-combobox>
-    `;
+export const invalid = (args: StoryArgs): TemplateResult => Template(args);
+invalid.args = {
+    invalid: true,
 };
 
-export const invalid = (): TemplateResult => {
-    return html`
-        <sp-field-label for="combobox-invalid">
-            What would you like to eat for dessert?
-        </sp-field-label>
-        <sp-combobox id="combobox-invalid" .options=${fruits} invalid>
-            <sp-help-text slot="negative-help-text">
-                Choose or add at least one fruit.
-            </sp-help-text>
-        </sp-combobox>
-    `;
+export const pending = (args: StoryArgs): TemplateResult => Template(args);
+pending.args = {
+    pending: true,
 };
 
-export const readonly = (): TemplateResult => {
-    return html`
-        <sp-field-label for="combobox-readonly">
-            Where do you live?
-        </sp-field-label>
-        <sp-combobox
-            readonly
-            id="combobox-readonly"
-            .options=${countries}
-            value="Solomon Islands"
-        ></sp-combobox>
-    `;
+export const quiet = (args: StoryArgs): TemplateResult => Template(args);
+quiet.args = {
+    quiet: true,
 };
 
-export const listAutocomplete = (): TemplateResult => {
-    return html`
-        <sp-field-label for="combobox-2">Where do you live?</sp-field-label>
-        <sp-combobox
-            id="combobox-2"
-            .options=${countries}
-            autocomplete="list"
-        ></sp-combobox>
-    `;
+export const readonly = (args: StoryArgs): TemplateResult => Template(args);
+readonly.args = {
+    readonly: true,
+    value: 'Solomon Islands',
+};
+
+export const listAutocomplete = (args: StoryArgs): TemplateResult =>
+    Template(args);
+listAutocomplete.args = {
+    autocomplete: 'list',
 };
 
 export const noAutocomplete = (): TemplateResult => {
