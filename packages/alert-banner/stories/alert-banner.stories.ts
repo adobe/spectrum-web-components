@@ -11,16 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
 import { AlertBannerMarkup } from './';
 import { argTypes } from './args.js';
 
 interface Properties {
     text: string;
-    variant: 'neutral' | 'info' | 'negative';
+    variant: AlertBannerVariants;
     dismissible: boolean;
     open: boolean;
-    onClose: (event: Event) => void;
-    actionLabel: string;
+    onClose?: (event: Event) => void;
+    actionLabel?: string;
 }
 
 export default {
@@ -52,26 +53,24 @@ export const Negative = (args: Properties): TemplateResult =>
         text: 'Connection interrupted. Check your network to continue',
     });
 
-export const TextWrapping = (args: Properties): TemplateResult =>
-    html`
-        <div style="width:800px;">
-            ${AlertBannerMarkup({
-                ...args,
-                variant: 'negative',
-                text: ` Your trial has expired. Please purchase to continue.
-Your work has been saved and is ready for you to open again once
-you have purchased the software.`,
-                actionLabel: 'Purchase',
-            })}
-        </div>
-    `;
-
-export const Multilanguage = (args: Properties): TemplateResult =>
-    html`
+export const TextWrapping = (args: Properties): TemplateResult => html`
+    <div style="max-width:800px;">
         ${AlertBannerMarkup({
             ...args,
-            variant: 'info',
-            text: `ستنتهي الفترة التجريبية الخاصة بك في الأسبوع المقبل`,
-            actionLabel: `اشتري الآن`,
+            variant: 'negative',
+            text: ` Your trial has expired. Please purchase to continue.
+Your work has been saved and is ready for you to open again once
+you have purchased the software.`,
+            actionLabel: 'Purchase',
         })}
-    `;
+    </div>
+`;
+
+export const Multilanguage = (args: Properties): TemplateResult => html`
+    ${AlertBannerMarkup({
+        ...args,
+        variant: 'info',
+        text: `ستنتهي الفترة التجريبية الخاصة بك في الأسبوع المقبل`,
+        actionLabel: `اشتري الآن`,
+    })}
+`;
