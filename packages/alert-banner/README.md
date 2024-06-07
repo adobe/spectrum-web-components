@@ -1,6 +1,6 @@
 ## Description
 
-The `sp-alert-banner` shows pressing and high-signal messages, such as system alerts. It is meant to be noticed and prompt users to take action.
+The `<sp-alert-banner>` shows pressing and high-signal messages, such as system alerts. It is meant to be noticed and prompt users to take action.
 
 ### Usage
 
@@ -85,7 +85,7 @@ The alert can be dismissed by triggering the close button in case of a dismissib
 
 The component dispatches a `close` event to announce that the alert banner has been closed. This can be prevented by using the `event.preventDefault()` API.
 
-## Accesibility
+## Accessibility
 
 The `sp-alert-banner` element is rendered with a `role` of `alert`, to inform screen readers and notify users accordingly. When rendering the element on a page, it should be placed in a container with a `role` of `region`. The component should not interfere with the user’s current workflow by changing page focus.
 

@@ -24,35 +24,25 @@ import {
 describe('AlertBanner', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<AlertBanner>(
-                html`
-                    <sp-alert-banner>
-                        Your trial will expire soon
-                    </sp-alert-banner>
-                `
-            )
+            await fixture<AlertBanner>(html`
+                <sp-alert-banner>Your trial will expire soon</sp-alert-banner>
+            `)
     );
     it('loads default alert-banner accessibly', async () => {
-        const el = await fixture<AlertBanner>(
-            html`
-                <sp-alert-banner open>
-                    Your trial will expire soon
-                </sp-alert-banner>
-            `
-        );
+        const el = await fixture<AlertBanner>(html`
+            <sp-alert-banner open>Your trial will expire soon</sp-alert-banner>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads variant info', async () => {
-        const el = await fixture<AlertBanner>(
-            html`
-                <sp-alert-banner open variant="info">
-                    Your trial will expire soon
-                </sp-alert-banner>
-            `
-        );
+        const el = await fixture<AlertBanner>(html`
+            <sp-alert-banner open variant="info">
+                Your trial will expire soon
+            </sp-alert-banner>
+        `);
 
         await elementUpdated(el);
 
@@ -62,13 +52,11 @@ describe('AlertBanner', () => {
         await expect(el).to.be.accessible();
     });
     it('loads variant negative', async () => {
-        const el = await fixture<AlertBanner>(
-            html`
-                <sp-alert-banner open variant="negative">
-                    Your trial will expire soon
-                </sp-alert-banner>
-            `
-        );
+        const el = await fixture<AlertBanner>(html`
+            <sp-alert-banner open variant="negative">
+                Your trial will expire soon
+            </sp-alert-banner>
+        `);
 
         await elementUpdated(el);
 
@@ -78,13 +66,11 @@ describe('AlertBanner', () => {
         await expect(el).to.be.accessible();
     });
     it('removes variant attribute when given invalid variant', async () => {
-        const el = await fixture<AlertBanner>(
-            html`
-                <sp-alert-banner open variant="inexistent">
-                    Your trial will expire soon
-                </sp-alert-banner>
-            `
-        );
+        const el = await fixture<AlertBanner>(html`
+            <sp-alert-banner open variant="inexistent">
+                Your trial will expire soon
+            </sp-alert-banner>
+        `);
 
         await elementUpdated(el);
 
@@ -92,16 +78,14 @@ describe('AlertBanner', () => {
     });
     it('calls corresponding handler using Space or Enter key for actionable alerts', async () => {
         const actionSpy = spy();
-        const el = await fixture<AlertBanner>(
-            html`
-                <sp-alert-banner open>
-                    Your trial will expire soon
-                    <sp-button slot="action" @click=${() => actionSpy()}>
-                        Buy now
-                    </sp-button>
-                </sp-alert-banner>
-            `
-        );
+        const el = await fixture<AlertBanner>(html`
+            <sp-alert-banner open>
+                Your trial will expire soon
+                <sp-button slot="action" @click=${() => actionSpy()}>
+                    Buy now
+                </sp-button>
+            </sp-alert-banner>
+        `);
         await elementUpdated(el);
 
         const buttonEl = el.querySelector('sp-button');
@@ -122,13 +106,11 @@ describe('AlertBanner', () => {
 
     describe('dismiss behavior', () => {
         it('can be dismissed by clicking the close button', async () => {
-            const el = await fixture<AlertBanner>(
-                html`
-                    <sp-alert-banner open dismissible>
-                        Your trial will expire soon
-                    </sp-alert-banner>
-                `
-            );
+            const el = await fixture<AlertBanner>(html`
+                <sp-alert-banner open dismissible>
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `);
 
             await elementUpdated(el);
 
@@ -142,14 +124,12 @@ describe('AlertBanner', () => {
 
             expect(el.open).to.be.false;
         });
-        it('can be dismissed using public close method', async () => {
-            const el = await fixture<AlertBanner>(
-                html`
-                    <sp-alert-banner open>
-                        Your trial will expire soon
-                    </sp-alert-banner>
-                `
-            );
+        it('can be dismissed using close button', async () => {
+            const el = await fixture<AlertBanner>(html`
+                <sp-alert-banner open>
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `);
 
             await elementUpdated(el);
 
@@ -163,22 +143,20 @@ describe('AlertBanner', () => {
 
             expect(el.open).to.be.false;
         });
-        it('consumers can prevent close', async () => {
+        it('prevent close', async () => {
             const closeSpy = spy();
-            const el = await fixture<AlertBanner>(
-                html`
-                    <sp-alert-banner
-                        open
-                        dismissible
-                        @close=${(event: CustomEvent) => {
-                            event.preventDefault();
-                            closeSpy();
-                        }}
-                    >
-                        Your trial will expire soon
-                    </sp-alert-banner>
-                `
-            );
+            const el = await fixture<AlertBanner>(html`
+                <sp-alert-banner
+                    open
+                    dismissible
+                    @close=${(event: CustomEvent) => {
+                        event.preventDefault();
+                        closeSpy();
+                    }}
+                >
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `);
 
             await elementUpdated(el);
 
@@ -193,17 +171,11 @@ describe('AlertBanner', () => {
         });
         it('can be closed using Escape key', async () => {
             const closeSpy = spy();
-            const el = await fixture<AlertBanner>(
-                html`
-                    <sp-alert-banner
-                        open
-                        dismissible
-                        @close=${() => closeSpy()}
-                    >
-                        Your trial will expire soon
-                    </sp-alert-banner>
-                `
-            );
+            const el = await fixture<AlertBanner>(html`
+                <sp-alert-banner open dismissible @close=${() => closeSpy()}>
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `);
 
             await elementUpdated(el);
             expect(el.open).to.be.true;
@@ -229,13 +201,11 @@ describe('AlertBanner', () => {
         });
 
         it('should log dev warning when given invalid variant', async () => {
-            const el = await fixture<AlertBanner>(
-                html`
-                    <sp-alert-banner open variant="inexistent">
-                        Your trial will expire soon
-                    </sp-alert-banner>
-                `
-            );
+            const el = await fixture<AlertBanner>(html`
+                <sp-alert-banner open variant="inexistent">
+                    Your trial will expire soon
+                </sp-alert-banner>
+            `);
 
             await elementUpdated(el);
 
