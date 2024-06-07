@@ -36,10 +36,10 @@ const configPath = path.resolve(
 const ignoredPackages = [
     '@spectrum-web-components/base',
     '@spectrum-web-components/bundle',
-    '@spectrum-web-components/close-button',
     '@spectrum-web-components/clear-button',
-    '@spectrum-web-components/iconset',
+    '@spectrum-web-components/close-button',
     '@spectrum-web-components/modal',
+    '@spectrum-web-components/iconset',
     '@spectrum-web-components/shared',
     '@spectrum-web-components/opacity-checkerboard',
     '@spectrum-web-components/styles',

@@ -12,9 +12,25 @@ governing permissions and limitations under the License.
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const getWorkspacePackages = (ignoredPackages) => {
+    const workspaceInfo = execSync('yarn workspaces info --json').toString();
+    const workspacePackages = JSON.parse(workspaceInfo);
+    return Object.entries(workspacePackages)
+        .filter(([pkgName]) => !ignoredPackages.includes(pkgName))
+        .map(([pkgName, pkgDetails]) => ({
+            name: pkgName,
+            path: pkgDetails.location,
+        }));
+};
 
 // Define the packages to ignore
-const ignorePackages = [
+const ignoredPackages = [
     '@spectrum-web-components/base',
     '@spectrum-web-components/bundle',
     '@spectrum-web-components/clear-button',
@@ -38,13 +54,27 @@ const ignorePackages = [
 ];
 
 // Get the list of workspace packages
-const workspacePackages = JSON.parse(
-    execSync('yarn workspaces info --json').toString()
-);
-const packagesInfo = JSON.parse(workspacePackages.data);
+const allPackages = getWorkspacePackages(ignoredPackages);
 
 // Execute check-cem.js for each package except the ignored ones
-Object.keys(packagesInfo).forEach((pkgName) => {
+const checkCemPath = path.resolve(__dirname, 'check-cem.js'); //'../../tasks/check-cem.js';
+allPackages.forEach((pkg) => {
+    if (fs.existsSync(checkCemPath)) {
+        console.log(`Running check-cem.js for ${pkg.name}`);
+        try {
+            execSync(`node ${checkCemPath}`, {
+                stdio: 'inherit',
+                cwd: pkg.path,
+            });
+        } catch (error) {
+            console.error(`Error running check-cem.js for ${pkg.name}:`, error);
+        }
+    } else {
+        console.warn(`check-cem.js not found for ${pkg.name}`);
+    }
+});
+
+/*Object.keys(packagesInfo).forEach((pkgName) => {
     if (
         !ignorePackages.some((ignore) =>
             new RegExp(ignore.replace('*', '.*')).test(pkgName)
@@ -65,4 +95,4 @@ Object.keys(packagesInfo).forEach((pkgName) => {
     } else {
         console.log(`Ignoring package ${pkgName}`);
     }
-});
+});*/

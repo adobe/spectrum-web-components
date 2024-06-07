@@ -29,13 +29,14 @@ const getWorkspacePackages = (ignoredPackages) => {
 const ignoredPackages = [
     '@spectrum-web-components/base',
     '@spectrum-web-components/bundle',
-    '@spectrum-web-components/iconset',
+    '@spectrum-web-components/clear-button',
+    '@spectrum-web-components/close-button',
     '@spectrum-web-components/modal',
+    '@spectrum-web-components/iconset',
     '@spectrum-web-components/shared',
     '@spectrum-web-components/opacity-checkerboard',
     '@spectrum-web-components/styles',
     '@spectrum-web-components/custom-vars-viewer',
-    '@spectrum-web-components/reactive-controllers',
     '@spectrum-web-components/eslint-plugin',
     'stylelint-header',
     '@swc-react/*',
@@ -45,7 +46,6 @@ const ignoredPackages = [
     'swc-templates',
     '@types/swc',
 ];
-
 const allPackages = getWorkspacePackages(ignoredPackages);
 
 allPackages.forEach((pkg) => {
