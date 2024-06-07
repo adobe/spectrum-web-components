@@ -85,6 +85,7 @@
         "@spectrum-web-components/color-slider": "^0.42.5",
         "@spectrum-web-components/color-wheel": "^0.42.5",
         "@spectrum-web-components/combobox": "^0.42.5",
+        "@spectrum-web-components/contextual-help": "^0.0.1",
         "@spectrum-web-components/dialog": "^0.42.5",
         "@spectrum-web-components/divider": "^0.42.5",
         "@spectrum-web-components/dropzone": "^0.42.5",

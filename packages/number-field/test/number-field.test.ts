@@ -24,6 +24,7 @@ import {
     currency,
     decimals,
     Default,
+    germanDecimals,
     indeterminate,
     percents,
     pixels,
@@ -133,7 +134,25 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('5');
             expect(el.focusElement.value).to.equal('5');
         });
+        it('respects other locales', async () => {
+            const el = await getElFrom(
+                germanDecimals({
+                    step: 0.01,
+                })
+            );
+            el.value = 2.42;
+            await elementUpdated(el);
+            el.size = 'xl';
+            expect(el.value).to.equal(2.42);
+            expect(el.formattedValue).to.equal('+2,42');
+            expect(el.focusElement.value).to.equal('+2,42');
 
+            await clickBySelector(el, '.step-up');
+
+            expect(el.value).to.equal(2.43);
+            expect(el.formattedValue).to.equal('+2,43');
+            expect(el.focusElement.value).to.equal('+2,43');
+        });
         it('supports both positive and negative decimal values', async () => {
             const el = await getElFrom(
                 Default({

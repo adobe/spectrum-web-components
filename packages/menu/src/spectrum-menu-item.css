@@ -178,9 +178,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([focused])
-    > .icon:not(.chevron, .checkmark):not(.spectrum-Menu-checkmark),
-:host(:focus) > .icon:not(.chevron, .checkmark):not(.spectrum-Menu-checkmark) {
+:host([focused]) > .icon:not(.chevron, .checkmark),
+:host(:focus) > .icon:not(.chevron, .checkmark) {
     fill: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -298,8 +297,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host(:is(:active, [active]))
-    > .icon:not(.chevron, .checkmark):not(.spectrum-Menu-checkmark) {
+:host(:is(:active, [active])) > .icon:not(.chevron, .checkmark) {
     fill: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -364,7 +362,7 @@ governing permissions and limitations under the License.
 }
 
 .is-selectableMultiple .spectrum-Menu-itemCheckbox {
-    grid-area: f;
+    grid-area: e;
 }
 
 .checkmark {
@@ -423,7 +421,7 @@ governing permissions and limitations under the License.
     grid-area: j;
 }
 
-.icon:not(.chevron, .checkmark):not(.spectrum-Menu-checkmark) {
+.icon:not(.chevron, .checkmark) {
     block-size: var(
         --mod-menu-item-icon-height,
         var(--spectrum-menu-item-icon-height)
@@ -600,9 +598,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([has-submenu])
-    .is-open
-    .icon:not(.chevron, .checkmark):not(.spectrum-Menu-checkmark) {
+:host([has-submenu]) .is-open .icon:not(.chevron, .checkmark) {
     fill: var(
         --highcontrast-menu-item-color-focus,
         var(
@@ -776,8 +772,7 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host(:hover)
-        > .icon:not(.chevron, .checkmark):not(.spectrum-Menu-checkmark) {
+    :host(:hover) > .icon:not(.chevron, .checkmark) {
         fill: var(
             --highcontrast-menu-item-color-focus,
             var(
