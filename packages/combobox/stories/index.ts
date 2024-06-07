@@ -9,7 +9,56 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { ComboboxOption } from '@spectrum-web-components/combobox';
+import {
+    ElementSize,
+    html,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import { Combobox, ComboboxOption } from '@spectrum-web-components/combobox';
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import { spreadProps } from '../../../test/lit-helpers';
+
+export type StoryArgs = {
+    open?: boolean;
+    pending?: boolean;
+    invalid?: boolean;
+    disabled?: boolean;
+    readonly?: boolean;
+    value?: string;
+    autocomplete?: 'list' | 'none';
+    size?: ElementSize;
+    onChange?: (val: string) => void;
+    onInput?: (val: string) => void;
+};
+
+const handleChange =
+    ({ onChange }: StoryArgs) =>
+    (event: Event): void => {
+        const picker = event.target as Combobox;
+        if (onChange) onChange(picker.value);
+    };
+
+const handleInput =
+    ({ onInput }: StoryArgs) =>
+    (event: Event): void => {
+        const picker = event.target as Combobox;
+        if (onInput) onInput(picker.value);
+    };
+
+export const ComboboxMarkup = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="combobox">Where do you live?</sp-field-label>
+        <sp-combobox
+            id="combobox"
+            .options=${countries}
+            .value=${args.value || ''}
+            @change=${handleChange(args)}
+            @input=${handleInput(args)}
+            ${spreadProps(args)}
+        ></sp-combobox>
+    `;
+};
 
 export const countries: ComboboxOption[] = [
     { value: 'af', itemText: 'Afghanistan' },
