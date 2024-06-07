@@ -12,6 +12,7 @@
         { "path": "react/action-button" },
         { "path": "react/action-group" },
         { "path": "react/action-menu" },
+        { "path": "react/alert-banner" },
         { "path": "react/alert-dialog" },
         { "path": "react/asset" },
         { "path": "react/avatar" },
