@@ -50,7 +50,7 @@
         "postinstall": "patch-package && yarn get-ready",
         "postchangeset-publish": "yarn publish:react",
         "postpublish:react": "git reset --hard HEAD^ && git prune",
-        "precustom-element-json": "node remove-custom-elements-json.js",
+        "precustom-element-json": "node tasks/remove-custom-elements-json.js",
         "preeleventy": "yarn docs:analyze",
         "prechangeset-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn build:confirm",
         "prepare": "husky",
@@ -423,5 +423,6 @@
         "projects/*",
         "tools/*",
         "react/*"
-    ]
+    ],
+    "customElements": "custom-elements.json"
 }

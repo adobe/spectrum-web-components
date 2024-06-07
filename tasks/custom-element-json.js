@@ -8,11 +8,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
 import { execSync } from 'child_process';
-import fs from 'fs';
-import path from 'path';
 import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import path from 'path';
 
 // Get a list of all packages except those you want to ignore
 const getWorkspacePackages = (ignoredPackages) => {
@@ -25,6 +24,13 @@ const getWorkspacePackages = (ignoredPackages) => {
             path: pkgDetails.location,
         }));
 };
+
+const __filename = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(__filename);
+const configPath = path.resolve(
+    __dirname,
+    'custom-elements-manifest.config.js'
+);
 
 // Define the packages to ignore
 const ignoredPackages = [
@@ -50,19 +56,17 @@ const ignoredPackages = [
 
 // Use the function
 const allPackages = getWorkspacePackages(ignoredPackages);
-
 // Define the command to execute
-const command = 'test -f src/index.js';
+const command = `cem analyze --config ${configPath} --packagejson`;
 
-// Execute the command in each package directory
+console.log(__dirname, 'Updating custom elements JSON files...');
 allPackages.forEach((pkg) => {
     try {
-        // Execute the command in the package directory
+        // Execute the command using Change Sets
         execSync(command, { cwd: pkg.path, stdio: 'inherit' });
     } catch (error) {
-        console.error(`Error executing command in package ${pkg.name}:`, error);
+        console.error('Error executing custom-element-json command:', error);
         process.exit(1);
     }
 });
-
-console.log('Build confirmation completed successfully for all packages.');
+console.log('All custom elements JSON files have been updated successfully.');
