@@ -17,7 +17,7 @@ import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 export const AlertBannerMarkup = ({
-    text = '',
+    text = 'Your trial has expired',
     variant = 'neutral',
     dismissible = true,
     open = false,

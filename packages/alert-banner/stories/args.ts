@@ -16,7 +16,7 @@ export const argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            defaultValue: { summary: 'Your trial has expired' },
         },
         control: 'text',
     },
@@ -27,7 +27,7 @@ export const argTypes = {
             'Whether to include an icon-only close button to dismiss it',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: true },
         },
         control: { type: 'boolean' },
     },
@@ -37,7 +37,7 @@ export const argTypes = {
         description: 'Whether the alert banner is open',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: true },
         },
         control: { type: 'boolean' },
     },
