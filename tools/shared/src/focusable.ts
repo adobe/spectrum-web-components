@@ -109,6 +109,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
 
         if (tabIndex === -1 || this.disabled) {
+            this.manipulatingTabindex = true;
             this.setAttribute('tabindex', '-1');
             this.removeAttribute('focusable');
             if (tabIndex !== -1) {
@@ -281,29 +282,31 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
-        if (this._recentlyConnected) {
-            this._recentlyConnected = false;
-            // If at connect time the [autofocus] content is placed within
-            // content that needs to be "hidden" by default, it would need to wait
-            // two rAFs for animations to be triggered on that content in
-            // order for the [autofocus] to become "visisble" and have its
-            // focus() capabilities enabled.
-            //
-            // Await this with `getUpdateComplete` so that the element cannot
-            // become "ready" until `manageFocus` has occured.
-            await nextFrame();
-            await nextFrame();
-        }
+        await this.autofocusReady;
         return complete;
     }
 
-    private _recentlyConnected = false;
+    private autofocusReady = Promise.resolve();
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        this._recentlyConnected = true;
-        this.updateComplete.then(() => {
-            this.manageAutoFocus();
-        });
+        if (this.autofocus) {
+            this.autofocusReady = new Promise(async (res) => {
+                // If at connect time the [autofocus] content is placed within
+                // content that needs to be "hidden" by default, it would need to wait
+                // two rAFs for animations to be triggered on that content in
+                // order for the [autofocus] to become "visisble" and have its
+                // focus() capabilities enabled.
+                //
+                // Await this with `getUpdateComplete` so that the element cannot
+                // become "ready" until `manageFocus` has occured.
+                await nextFrame();
+                await nextFrame();
+                res();
+            });
+            this.updateComplete.then(() => {
+                this.manageAutoFocus();
+            });
+        }
     }
 }

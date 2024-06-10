@@ -60,6 +60,36 @@ export class RovingTabindexController<
     }
 
     updateTabindexes(getTabIndex: (el: HTMLElement) => UpdateTabIndexes): void {
+        if (
+            this.elements.some((el) => {
+                const typeCastEl = el as unknown as HTMLElement & {
+                    selfManageFocusElement: boolean;
+                };
+                return typeCastEl.selfManageFocusElement === true;
+            })
+        ) {
+            this.elements.forEach((el) => {
+                const typeCastEl = el as unknown as HTMLElement & {
+                    selfManageFocusElement: boolean;
+                };
+                if (typeCastEl.selfManageFocusElement) {
+                    el.setAttribute('tabindex', '0');
+                    el.focus();
+                } else {
+                    const { tabIndex, removeTabIndex } = getTabIndex(el);
+                    if (!removeTabIndex) {
+                        el.tabIndex = tabIndex;
+                        return;
+                    }
+                    el.removeAttribute('tabindex');
+                }
+                const updatable = el as unknown as {
+                    requestUpdate?: () => void;
+                };
+                if (updatable.requestUpdate) updatable.requestUpdate();
+            });
+            return;
+        }
         this.elements.forEach((el) => {
             const { tabIndex, removeTabIndex } = getTabIndex(el);
             if (!removeTabIndex) {
