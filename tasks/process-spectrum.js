@@ -424,7 +424,7 @@ async function processComponent(componentPath) {
             return buildSelectorsV2(selectorMetadata);
         };
 
-        if (conversion.legacyOverrides) {
+        if (conversion.systemOverrides) {
             // swc package name
             const swcPackagename = conversion.fileName;
 
@@ -637,15 +637,15 @@ async function processComponent(componentPath) {
                         },
                     },
                 });
-                const legacyPath = path.join(
+                const systemsPath = path.join(
                     ...(Array.isArray(conversion.outPackage)
                         ? conversion.outPackage
                         : ['packages', conversion.outPackage]),
                     'src',
-                    `legacy-overrides.css`
+                    `system-overrides.css`
                 );
                 fs.writeFileSync(
-                    legacyPath,
+                    systemsPath,
                     `/*
 Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
