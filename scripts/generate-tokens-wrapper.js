@@ -296,6 +296,19 @@ export async function generateTokensWrapper(spectrumVersion) {
         );
     }
 
+    fs.writeFileSync(
+        path.join(
+            __dirname,
+            '..',
+            'tools',
+            'styles',
+            tokensDir,
+            'spectrum',
+            'global-vars.css'
+        ),
+        ''
+    );
+
     for (const tokensPath of await fg([`${tokensRoot(tokensDir)}`])) {
         processTokens(tokensPath, tokensDir);
     }

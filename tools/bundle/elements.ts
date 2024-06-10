@@ -34,6 +34,7 @@ import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import '@spectrum-web-components/color-field/sp-color-field.js';
 import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/contextual-help/sp-contextual-help.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';

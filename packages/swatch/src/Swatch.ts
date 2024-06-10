@@ -234,18 +234,21 @@ export class Swatch extends SizedMixin(Focusable, {
                 this.selected ? 'true' : 'false'
             );
         }
-        if (changes.has('label')) {
+
+        // aria-label should be in sync with changes in label and color.
+        if (
+            changes.has('label') ||
+            changes.has('color') ||
+            changes.has('mixedValue')
+        ) {
             if (this.label !== this.color && this.label?.length) {
                 this.setAttribute('aria-label', this.label);
-            } else if (this.color !== '') {
+            } else if (this.color) {
                 this.setAttribute('aria-label', this.color);
+            } else if (this.mixedValue) {
+                this.setAttribute('aria-label', 'Mixed');
             } else {
                 this.removeAttribute('aria-label');
-            }
-        }
-        if (changes.has('mixedValue')) {
-            if (this.mixedValue) {
-                this.setAttribute('aria-checked', 'mixed');
             }
         }
     }

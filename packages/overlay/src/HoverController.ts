@@ -33,8 +33,7 @@ export class HoverController extends InteractionController {
     pointerentered = false;
 
     handleTargetFocusin(): void {
-        // eslint-disable-next-line @spectrum-web-components/document-active-element
-        if (!document.activeElement?.matches(':focus-visible')) {
+        if (!this.target.matches(':focus-visible')) {
             return;
         }
         this.open = true;
