@@ -115,7 +115,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     @query('sp-menu')
-    public optionsMenu!: Menu;
+    protected optionsMenu!: Menu;
 
     public selfManageFocusElement = false;
 
