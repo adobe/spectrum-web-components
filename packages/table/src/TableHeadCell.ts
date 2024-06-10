@@ -47,7 +47,7 @@ export class TableHeadCell extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public role = 'columnheader';
+    public override role = 'columnheader';
 
     @property({ type: Boolean, reflect: true })
     public sortable = false;

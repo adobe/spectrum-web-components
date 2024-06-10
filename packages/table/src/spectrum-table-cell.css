@@ -11,17 +11,21 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
         forced-color-adjust: none;
     }
 }
+
 :host([align='center']) {
     text-align: center;
 }
+
 :host([align='end']) {
     text-align: end;
 }
+
 :host {
     border-block-start: var(
             --mod-table-border-width,
@@ -32,18 +36,7 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
-}
-:host {
-    background-color: var(--spectrum-table-cell-background-color);
-    block-size: var(
-        --mod-table-min-row-height,
-        var(--spectrum-table-min-row-height)
-    );
     box-sizing: border-box;
-    color: var(
-        --highcontrast-table-row-text-color,
-        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
-    );
     font-size: var(
         --mod-table-row-font-size,
         var(--spectrum-table-row-font-size)
@@ -56,13 +49,26 @@ governing permissions and limitations under the License.
         --mod-table-row-line-height,
         var(--spectrum-table-row-line-height)
     );
-    padding-block-end: var(
-        --mod-table-row-bottom-to-text,
-        var(--spectrum-table-row-bottom-to-text)
+    vertical-align: var(
+        --mod-table-default-vertical-align,
+        var(--spectrum-table-default-vertical-align)
+    );
+    color: var(
+        --highcontrast-table-row-text-color,
+        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
+    );
+    background-color: var(--spectrum-table-cell-background-color);
+    block-size: var(
+        --mod-table-min-row-height,
+        var(--spectrum-table-min-row-height)
     );
     padding-block-start: calc(
         var(--mod-table-row-top-to-text, var(--spectrum-table-row-top-to-text)) -
             var(--mod-table-border-width, var(--spectrum-table-border-width))
+    );
+    padding-block-end: var(
+        --mod-table-row-bottom-to-text,
+        var(--spectrum-table-row-bottom-to-text)
     );
     padding-inline: calc(
         var(--mod-table-edge-to-content, var(--spectrum-table-edge-to-content)) -
@@ -71,16 +77,16 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-outer-border-inline-width)
             )
     );
-    vertical-align: var(
-        --mod-table-default-vertical-align,
-        var(--spectrum-table-default-vertical-align)
-    );
-}
-:host {
     position: relative;
 }
-:host(.focus-visible),
-:host([focused]) {
+
+:host([focused]),
+:host(:focus-visible) {
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+    outline-style: solid;
     outline-color: var(
         --highcontrast-table-cell-focus-indicator-color,
         var(
@@ -97,36 +103,8 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-focus-indicator-thickness)
             ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
     );
-    outline-style: solid;
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
-    );
 }
-:host(:focus-visible),
-:host([focused]) {
-    outline-color: var(
-        --highcontrast-table-cell-focus-indicator-color,
-        var(
-            --highcontrast-table-focus-indicator-color,
-            var(
-                --mod-table-focus-indicator-color,
-                var(--spectrum-table-focus-indicator-color)
-            )
-        )
-    );
-    outline-offset: calc(
-        var(
-                --mod-table-focus-indicator-thickness,
-                var(--spectrum-table-focus-indicator-thickness)
-            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
-    );
-    outline-style: solid;
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
-    );
-}
+
 .divider {
     border-inline-end: var(
             --mod-table-border-width,
@@ -138,9 +116,11 @@ governing permissions and limitations under the License.
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
 }
+
 :host {
     display: table-cell;
 }
+
 .spectrum-Table-cell--collapsible {
     padding-block: 0;
     padding-inline-start: calc(

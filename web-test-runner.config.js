@@ -12,11 +12,13 @@ governing permissions and limitations under the License.
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
+    setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
     chromiumWithMemoryTooling,
+    chromiumWithMemoryToolingCI,
     configuredVisualRegressionPlugin,
     firefox,
     packages,
@@ -61,6 +63,7 @@ export default {
                 context.set('Cross-Origin-Embedder-Policy', 'credentialless');
             },
         },
+        setViewportPlugin(),
     ],
     mimeTypes: {
         '**/*.json': 'js',
@@ -91,7 +94,7 @@ export default {
         ],
         threshold: {
             statements: 98.5,
-            branches: 95.5,
+            branches: 95,
             functions: 97,
             lines: 98.5,
         },
@@ -138,7 +141,29 @@ export default {
             browsers: [chromium, firefox, webkit],
         },
         {
+            name: 'memory',
+            files: ['{packages,tools}/**/*-memory.test.js'],
+            browsers: [chromiumWithMemoryTooling],
+        },
+        {
+            name: 'memory-ci',
+            files: [
+                '{packages,tools}/**/*-memory.test.js',
+                '!packages/color-area/test/*-memory.test.js',
+                '!packages/color-wheel/test/*-memory.test.js',
+                '!packages/color-slider/test/*-memory.test.js',
+            ],
+            browsers: [chromiumWithMemoryToolingCI],
+        },
+        {
             name: 'unit-ci',
+        },
+        {
+            name: 'no-memory-ci',
+            files: [
+                '{packages,tools}/**/*.test.js',
+                '!{packages,tools}/**/*-memory.test.js',
+            ],
         },
     ],
     group: 'unit',

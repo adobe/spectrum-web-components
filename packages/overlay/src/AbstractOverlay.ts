@@ -19,78 +19,19 @@ import type {
     OverlayState,
     OverlayTypes,
     Placement,
-    TriggerInteractions,
     TriggerInteractionsV1,
 } from './overlay-types.js';
 import type { Overlay } from './Overlay.js';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import { OverlayTimer } from './overlay-timer.js';
-import { PlacementController } from './PlacementController.js';
+import type { PlacementController } from './PlacementController.js';
+import type { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 export const overlayTimer = new OverlayTimer();
 
 export const noop = (): void => {
     return;
 };
-
-export class BeforetoggleClosedEvent extends Event {
-    currentState = 'open';
-    newState = 'closed';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
-}
-
-export class BeforetoggleOpenEvent extends Event {
-    currentState = 'closed';
-    newState = 'open';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
-}
-
-export class OverlayStateEvent extends Event {
-    detail!: {
-        interaction: string;
-        reason?: 'external-click';
-    };
-
-    constructor(
-        type: string,
-        public overlay: HTMLElement,
-        {
-            publish,
-            interaction,
-            reason,
-        }: {
-            publish?: boolean;
-            interaction: TriggerInteractions;
-            reason?: 'external-click';
-        }
-    ) {
-        super(type, {
-            bubbles: publish,
-            composed: publish,
-        });
-        this.detail = {
-            interaction,
-            reason,
-        };
-    }
-}
-
-declare global {
-    interface GlobalEventHandlersEventMap {
-        'sp-open': OverlayStateEvent;
-        'sp-close': OverlayStateEvent;
-    }
-}
 
 /**
  * Apply a "transitionend" listener to an element that may not transition but
@@ -169,11 +110,6 @@ export function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
-export function forcePaint(): void {
-    // force the browser to paint
-    document.body.offsetHeight;
-}
-
 /**
  * Abstract Overlay base class so that property tyings and imperative API
  * interfaces can be held separate from the actual class definition.
@@ -185,6 +121,7 @@ export class AbstractOverlay extends SpectrumElement {
     ): Promise<void> {
         return;
     }
+    /* c8 ignore next 6 */
     get delayed(): boolean {
         return false;
     }
@@ -195,11 +132,27 @@ export class AbstractOverlay extends SpectrumElement {
         showPopover(): void;
         hidePopover(): void;
     };
+    /* c8 ignore next 6 */
+    get disabled(): boolean {
+        return false;
+    }
+    set disabled(_disabled: boolean) {
+        return;
+    }
     dispose = noop;
+    protected get elementResolver(): ElementResolutionController {
+        return this._elementResolver;
+    }
+    protected set elementResolver(controller) {
+        this._elementResolver = controller;
+    }
+    protected _elementResolver!: ElementResolutionController;
+    /* c8 ignore next 3 */
     protected async ensureOnDOM(_targetOpenState: boolean): Promise<void> {
         return;
     }
     elements!: OpenableElement[];
+    /* c8 ignore next 5 */
     protected async makeTransition(
         _targetOpenState: boolean
     ): Promise<HTMLElement | null> {
@@ -208,16 +161,20 @@ export class AbstractOverlay extends SpectrumElement {
     protected async manageDelay(_targetOpenState: boolean): Promise<void> {
         return;
     }
+    /* c8 ignore next 3 */
     protected async manageDialogOpen(): Promise<void> {
         return;
     }
+    /* c8 ignore next 3 */
     protected async managePopoverOpen(): Promise<void> {
         return;
     }
+    /* c8 ignore next 3 */
     protected managePosition(): void {
         return;
     }
-    protected offset: number | [number, number] = 6;
+    protected offset: number | [number, number] = 0;
+    /* c8 ignore next 6 */
     get open(): boolean {
         return false;
     }
@@ -225,8 +182,19 @@ export class AbstractOverlay extends SpectrumElement {
         return;
     }
     placement?: Placement;
-    protected placementController!: PlacementController;
+    protected get placementController(): PlacementController {
+        return this._placementController;
+    }
+    protected set placementController(controller) {
+        this._placementController = controller;
+    }
+    protected _placementController!: PlacementController;
     receivesFocus!: 'true' | 'false' | 'auto';
+    protected requestSlottable(): void {}
+    protected returnFocus(): void {
+        return;
+    }
+    /* c8 ignore next 6 */
     get state(): OverlayState {
         return 'closed';
     }
@@ -237,7 +205,7 @@ export class AbstractOverlay extends SpectrumElement {
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;
     willPreventClose = false;
-
+    /* c8 ignore next 3 */
     public manuallyKeepOpen(): void {
         return;
     }
@@ -327,19 +295,18 @@ export class AbstractOverlay extends SpectrumElement {
             const trigger = triggerOrContent;
             const interaction = interactionOrOptions;
             const options = optionsV1;
-            overlay.delayed =
-                options.delayed || overlayContent.hasAttribute('delayed');
-            overlay.receivesFocus = options.receivesFocus ?? 'auto';
-            overlay.triggerElement = options.virtualTrigger || trigger;
-            overlay.type =
-                interaction === 'modal'
-                    ? 'modal'
-                    : interaction === 'hover'
-                    ? 'hint'
-                    : 'auto';
-            overlay.offset = options.offset ?? 6;
-            overlay.placement = options.placement;
-            overlay.willPreventClose = !!options.notImmediatelyClosable;
+            AbstractOverlay.applyOptions(overlay, {
+                ...options,
+                delayed:
+                    options.delayed || overlayContent.hasAttribute('delayed'),
+                trigger: options.virtualTrigger || trigger,
+                type:
+                    interaction === 'modal'
+                        ? 'modal'
+                        : interaction === 'hover'
+                        ? 'hint'
+                        : 'auto',
+            });
             trigger.insertAdjacentElement('afterend', overlay);
             await overlay.updateComplete;
             overlay.open = true;
@@ -348,18 +315,27 @@ export class AbstractOverlay extends SpectrumElement {
 
         const options = interactionOrOptions as OverlayOptions;
         overlay.append(overlayContent);
-        overlay.delayed =
-            options.delayed || overlayContent.hasAttribute('delayed');
-        overlay.receivesFocus = options.receivesFocus ?? 'auto';
-        overlay.triggerElement = options.trigger || null;
-        overlay.type = options.type || 'modal';
-        overlay.offset = options.offset ?? 6;
-        overlay.placement = options.placement;
-        overlay.willPreventClose = !!options.notImmediatelyClosable;
+        AbstractOverlay.applyOptions(overlay, {
+            ...options,
+            delayed: options.delayed || overlayContent.hasAttribute('delayed'),
+        });
         overlay.updateComplete.then(() => {
             // Do we want to "open" this path, or leave that to the consumer?
             overlay.open = true;
         });
         return overlay;
+    }
+
+    static applyOptions(
+        overlay: AbstractOverlay,
+        options: OverlayOptions
+    ): void {
+        overlay.delayed = !!options.delayed;
+        overlay.receivesFocus = options.receivesFocus ?? 'auto';
+        overlay.triggerElement = options.trigger || null;
+        overlay.type = options.type || 'modal';
+        overlay.offset = options.offset ?? 0;
+        overlay.placement = options.placement;
+        overlay.willPreventClose = !!options.notImmediatelyClosable;
     }
 }

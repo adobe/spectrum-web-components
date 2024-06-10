@@ -14,4 +14,4 @@ import { Theme } from '../Theme.js';
 
 import coreStyles from './theme.css.js';
 
-Theme.registerThemeFragment('express', 'theme', coreStyles);
+Theme.registerThemeFragment('express', 'system', coreStyles);

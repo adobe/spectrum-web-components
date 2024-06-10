@@ -18,7 +18,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
@@ -32,10 +32,21 @@ import '@spectrum-web-components/button/sp-button.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { Button } from '@spectrum-web-components/button';
 import { sendKeys } from '@web/test-runner-commands';
-import { click, receivesFocus } from '../stories/overlay-element.stories.js';
+import {
+    click,
+    receivesFocus,
+    withSlider,
+} from '../stories/overlay-element.stories.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from '../src/slottable-request-event.js';
+import { stub } from 'sinon';
+import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.js';
+import { Slider } from '@spectrum-web-components/slider/src/Slider.js';
 
 const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
-type OverlayTypes = typeof OVERLAY_TYPES[number];
+type OverlayTypes = (typeof OVERLAY_TYPES)[number];
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -73,6 +84,140 @@ describe('sp-overlay', () => {
             expect(content.open).to.be.true;
         });
     }
+
+    describe('`slottable-request` event', () => {
+        it('dispatched before `sp-opened`', async function () {
+            let slottableRequestTime = 0;
+            let openedTime = 0;
+            const el = await fixture<Overlay>(html`
+                <sp-overlay
+                    @slottable-request=${() =>
+                        (slottableRequestTime = performance.now())}
+                    @sp-opened=${() => (openedTime = performance.now())}
+                >
+                    <sp-popover>test</sp-popover>
+                </sp-overlay>
+            `);
+
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            expect(slottableRequestTime).to.be.lt(openedTime);
+        });
+        it('dispatched after `sp-closed`', async function () {
+            let slottableRequestTime = 0;
+            let closedTime = 0;
+            const el = await fixture<Overlay>(html`
+                <sp-overlay
+                    @sp-closed=${() => (closedTime = performance.now())}
+                    @slottable-request=${() =>
+                        (slottableRequestTime = performance.now())}
+                >
+                    <sp-popover>test</sp-popover>
+                </sp-overlay>
+            `);
+
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            await nextFrame();
+            await nextFrame();
+
+            const closed = oneEvent(el, 'sp-closed');
+            el.open = false;
+            await closed;
+
+            await nextFrame();
+            await nextFrame();
+
+            expect(
+                slottableRequestTime,
+                `slottable-request: ${slottableRequestTime}, sp-closed: ${closedTime}`
+            ).to.be.gt(closedTime);
+        });
+        it('follows transition timing from lazily added children', async function () {
+            let slottableRequestTime = 0;
+            let openedTime = 0;
+            const popover = document.createElement('sp-popover');
+            popover.textContent = 'Test';
+            const el = await fixture<Overlay>(html`
+                <sp-overlay
+                    @slottable-request=${(event: SlottableRequestEvent) => {
+                        slottableRequestTime = performance.now();
+                        if (event.data !== removeSlottableRequest) {
+                            (event.target as HTMLElement).append(popover);
+                        } else {
+                            popover.remove();
+                        }
+                    }}
+                    @sp-opened=${() => (openedTime = performance.now())}
+                ></sp-overlay>
+            `);
+
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            expect(slottableRequestTime).to.be.lte(openedTime);
+            expect(openedTime - slottableRequestTime).to.be.gt(130);
+        });
+
+        describe('dev mode', () => {
+            let consoleWarnStub!: ReturnType<typeof stub>;
+            before(() => {
+                window.__swc.verbose = true;
+                consoleWarnStub = stub(console, 'warn');
+            });
+            afterEach(() => {
+                consoleWarnStub.resetHistory();
+            });
+            after(() => {
+                window.__swc.verbose = false;
+                consoleWarnStub.restore();
+            });
+
+            it('warns that `slottable-request` events are experimental', async () => {
+                const el = await fixture<Overlay>(html`
+                    <sp-overlay>
+                        <sp-popover>test</sp-popover>
+                    </sp-overlay>
+                `);
+
+                await elementUpdated(el);
+
+                const opened = oneEvent(el, 'sp-opened');
+                el.open = true;
+                await opened;
+
+                expect(consoleWarnStub.called).to.be.true;
+                const spyCall = consoleWarnStub.getCall(0);
+                expect(
+                    (spyCall.args.at(0) as string).includes(
+                        '`slottable-request` events are experimental'
+                    ),
+                    '`slottable-request`-centric message'
+                ).to.be.true;
+                expect(
+                    spyCall.args.at(-1),
+                    'confirm `data` shape'
+                ).to.deep.equal({
+                    data: {
+                        localName: 'base',
+                        type: 'api',
+                        level: 'high',
+                    },
+                });
+            });
+        });
+    });
 
     describe('[type="modal"]', () => {
         opensDeclaratively('modal');
@@ -396,23 +541,19 @@ describe('sp-overlay', () => {
             expect(hint2.open).to.be.false;
         });
         it('stays open when pointer enters overlay from trigger element', async () => {
-            const test = await styledFixture(
-                html`
-                    <div>
-                        <sp-button id="test-button">
-                            This is a button.
-                        </sp-button>
-                        <sp-overlay
-                            trigger="test-button@hover"
-                            type="hint"
-                            placement="bottom"
-                            offset="-10"
-                        >
-                            <sp-tooltip>Help text.</sp-tooltip>
-                        </sp-overlay>
-                    </div>
-                `
-            );
+            const test = await styledFixture(html`
+                <div>
+                    <sp-button id="test-button">This is a button.</sp-button>
+                    <sp-overlay
+                        trigger="test-button@hover"
+                        type="hint"
+                        placement="bottom"
+                        offset="-10"
+                    >
+                        <sp-tooltip>Help text.</sp-tooltip>
+                    </sp-overlay>
+                </div>
+            `);
 
             const button = test.querySelector('sp-button') as Button;
             const overlay = test.querySelector(
@@ -535,16 +676,14 @@ describe('sp-overlay', () => {
             await closed;
         });
         it('stays open when pointer enters overlay from trigger element: self managed', async () => {
-            const button = await styledFixture(
-                html`
-                    <sp-button>
-                        This is a button.
-                        <sp-tooltip self-managed placement="bottom">
-                            Help text.
-                        </sp-tooltip>
-                    </sp-button>
-                `
-            );
+            const button = await styledFixture(html`
+                <sp-button>
+                    This is a button.
+                    <sp-tooltip self-managed placement="bottom">
+                        Help text.
+                    </sp-tooltip>
+                </sp-button>
+            `);
 
             const el = button.querySelector('sp-tooltip') as Tooltip;
             const buttonRect = button.getBoundingClientRect();
@@ -668,6 +807,56 @@ describe('sp-overlay', () => {
             await opened;
 
             expect(document.activeElement === overlay).to.be.true;
+        });
+        it('does not close when clicking a Slider track in the Overlay', async function () {
+            const test = await fixture(html`
+                <div>${withSlider()}</div>
+            `);
+            const el = test.querySelector('sp-overlay') as Overlay;
+            const button = test.querySelector('sp-button') as Button;
+            const slider = el.querySelector('sp-slider') as Slider;
+            const track = slider.shadowRoot.querySelector(
+                '#track'
+            ) as HTMLDivElement;
+
+            expect(el.open).to.be.false;
+
+            const opened = oneEvent(el, 'sp-opened');
+            const buttonRect = button.getBoundingClientRect();
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            buttonRect.left + buttonRect.width / 2,
+                            buttonRect.top + buttonRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await opened;
+
+            expect(el.open).to.be.true;
+            expect(slider.value).to.equal(5);
+
+            const sliderRect = track.getBoundingClientRect();
+
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            sliderRect.left + sliderRect.width - 5,
+                            sliderRect.top + sliderRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+
+            await aTimeout(500);
+
+            expect(slider.value).to.equal(19.5);
+            expect(el.open).to.be.true;
         });
     });
     describe('[type="manual"]', () => {
@@ -793,7 +982,7 @@ describe('sp-overlay', () => {
                 expect(this.manual.open).to.be.true;
             });
         });
-        describe('only close when mnually closed', function () {
+        describe('only close when manually closed', function () {
             it('does not close when clicking away', async () => {
                 const test = await fixture(html`
                     <div>
@@ -811,7 +1000,7 @@ describe('sp-overlay', () => {
 
                 expect(el.open).to.be.false;
 
-                const opened = oneEvent(el, 'sp-opened');
+                const opened = oneEvent<OverlayStateEvent>(el, 'sp-opened');
                 el.open = true;
                 let { overlay } = await opened;
                 expect(el === overlay).to.be.true;
@@ -829,7 +1018,44 @@ describe('sp-overlay', () => {
 
                 expect(el.open).to.be.true;
 
-                const closed = oneEvent(el, 'sp-closed');
+                const closed = oneEvent<OverlayStateEvent>(el, 'sp-closed');
+                el.open = false;
+                ({ overlay } = await closed);
+                expect(el === overlay).to.be.true;
+
+                expect(el.open).to.be.false;
+            });
+            it('does not close when pressing `Escape`', async () => {
+                const test = await fixture(html`
+                    <div>
+                        ${click({
+                            ...click.args,
+                            interaction: 'click',
+                            placement: 'bottom',
+                            type: 'manual',
+                            delayed: false,
+                            receivesFocus: 'auto',
+                        })}
+                    </div>
+                `);
+                const el = test.querySelector('sp-overlay') as Overlay;
+
+                expect(el.open).to.be.false;
+
+                const opened = oneEvent<OverlayStateEvent>(el, 'sp-opened');
+                el.open = true;
+                let { overlay } = await opened;
+                expect(el === overlay).to.be.true;
+
+                await sendKeys({
+                    press: 'Escape',
+                });
+
+                await aTimeout(200);
+
+                expect(el.open).to.be.true;
+
+                const closed = oneEvent<OverlayStateEvent>(el, 'sp-closed');
                 el.open = false;
                 ({ overlay } = await closed);
                 expect(el === overlay).to.be.true;

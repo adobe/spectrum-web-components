@@ -37,7 +37,7 @@ import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
-export type TextfieldType = typeof textfieldTypes[number];
+export type TextfieldType = (typeof textfieldTypes)[number];
 
 /**
  * @fires input - The value of the element has changed.
@@ -53,67 +53,117 @@ export class TextfieldBase extends ManageHelpText(
     }
 
     @state()
-    appliedLabel?: string;
+    protected appliedLabel?: string;
 
+    /**
+     * A regular expression outlining the keys that will be allowed to update the value of the form control.
+     */
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';
 
+    /**
+     * @private
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
     @query('.input:not(#sizer)')
     protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
+    /**
+     * Whether the `value` held by the form control is invalid.
+     */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    /**
+     * A string applied via `aria-label` to the form control when a user visible label is not provided.
+     */
     @property()
     public label = '';
 
+    /**
+     * Name of the form control.
+     */
     @property({ type: String, reflect: true })
     public name: string | undefined;
 
+    /**
+     * Text that appears in the form control when it has no value set
+     */
     @property()
     public placeholder = '';
 
-    @property({ attribute: 'type', reflect: true })
-    private _type: TextfieldType = 'text';
-
     @state()
-    get type(): TextfieldType {
-        return textfieldTypes.find((t) => t === this._type) ?? 'text';
-    }
-
     set type(val: TextfieldType) {
         const prev = this._type;
         this._type = val;
         this.requestUpdate('type', prev);
     }
 
+    get type(): TextfieldType {
+        return textfieldTypes.find((t) => t === this._type) ?? 'text';
+    }
+
+    /**
+     * @private
+     * This binding allows for invalid value for `type` to still be reflected to the DOM
+     */
+    @property({ attribute: 'type', reflect: true })
+    private _type: TextfieldType = 'text';
+
+    /**
+     * Pattern the `value` must match to be valid
+     */
     @property()
     public pattern?: string;
 
+    /**
+     * Whether a form control delivered with the `multiline` attribute will change size
+     * vertically to accomodate longer input
+     */
     @property({ type: Boolean, reflect: true })
     public grows = false;
 
+    /**
+     * Defines the maximum string length that the user can enter
+     */
     @property({ type: Number })
     public maxlength = -1;
 
+    /**
+     * Defines the minimum string length that the user can enter
+     */
     @property({ type: Number })
     public minlength = -1;
 
+    /**
+     * Whether the form control should accept a value longer than one line
+     */
     @property({ type: Boolean, reflect: true })
     public multiline = false;
 
+    /**
+     * Whether a user can interact with the value of the form control
+     */
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
+    /**
+     * The specific number of rows the form control should provide in the user interface
+     */
     @property({ type: Number })
     public rows = -1;
 
+    /**
+     * Whether the `value` held by the form control is valid.
+     */
     @property({ type: Boolean, reflect: true })
     public valid = false;
 
+    /**
+     * The value held by the form control
+     */
     @property({ type: String })
     public set value(value: string | number) {
         if (value === this.value) {
@@ -130,14 +180,25 @@ export class TextfieldBase extends ManageHelpText(
 
     protected _value: string | number = '';
 
+    /**
+     * Whether to display the form control with no visible background
+     */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    /**
+     * Whether the form control will be found to be invalid when it holds no `value`
+     */
     @property({ type: Boolean, reflect: true })
     public required = false;
 
+    /**
+     * What form of assistance should be provided when attempting to supply a value to the form control
+     */
     @property({ type: String, reflect: true })
     public autocomplete?:
+        | 'list'
+        | 'none'
         | HTMLInputElement['autocomplete']
         | HTMLTextAreaElement['autocomplete'];
 
@@ -205,9 +266,11 @@ export class TextfieldBase extends ManageHelpText(
         this.focused = !this.readonly && true;
     }
 
-    protected onBlur(): void {
+    protected onBlur(_event: FocusEvent): void {
         this.focused = !this.readonly && false;
     }
+
+    protected handleInputElementPointerdown(): void {}
 
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
@@ -229,12 +292,12 @@ export class TextfieldBase extends ManageHelpText(
         return this.value.toString();
     }
 
+    // prettier-ignore
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows && this.rows === -1
+            ${this.multiline && this.grows && this.rows === -1
                 ? html`
-                      <div id="sizer" class="input" aria-hidden="true">
-                          ${this.value}&#8203;
+                      <div id="sizer" class="input" aria-hidden="true">${this.value}&#8203;
                       </div>
                   `
                 : nothing}
@@ -294,6 +357,7 @@ export class TextfieldBase extends ManageHelpText(
                 .value=${live(this.displayValue)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
+                @pointerdown=${this.handleInputElementPointerdown}
                 @focus=${this.onFocus}
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}

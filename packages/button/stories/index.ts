@@ -20,6 +20,9 @@ import {
     ButtonVariants,
 } from '@spectrum-web-components/button/src/Button.js';
 
+import type { Properties } from './template.js';
+export type { Properties };
+
 export const args = {
     disabled: false,
     variant: 'cta',
@@ -89,35 +92,20 @@ export const argTypes = {
     },
 };
 
-export interface Properties {
-    variant?: ButtonVariants;
-    treatment?: ButtonTreatments;
-    quiet?: boolean;
-    pending?: boolean;
-    content?: TemplateResult;
-    disabled?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    href?: string;
-    target?: '_blank' | '_parent' | '_self' | '_top';
-    warning?: boolean;
-    iconOnly?: boolean;
-}
-
 export const makeOverBackground =
     (variant?: 'white' | 'black') =>
     (story: () => TemplateResult): TemplateResult => {
         const color =
             variant === 'black'
                 ? 'rgb(181, 209, 211)'
-                : 'var(--spectrum-global-color-seafoam-600)';
+                : 'var(--spectrum-seafoam-900)';
         return html`
             <div
                 style="
                     --mod-actionbutton-static-content-color: ${color};
                     --mod-button-static-content-color: ${color};
                     background-color: ${color};
-                    color: ${color};
-                    padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250);
+                    padding: calc(var(--swc-scale-factor) * 14px) calc(var(--swc-scale-factor) * 20px);
                     display: inline-block;
                 "
             >
@@ -127,35 +115,21 @@ export const makeOverBackground =
     };
 
 export function renderButton(properties: Properties): TemplateResult {
-    if (properties.variant) {
-        return html`
-            <sp-button
-                variant="${properties.variant}"
-                treatment="${properties.treatment}"
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                size=${properties.size || 'm'}
-                href=${ifDefined(properties.href)}
-                target=${ifDefined(properties.target)}
-                ?warning=${properties.warning}
-                ?pending=${!!properties.pending}
-                ?icon-only=${properties.iconOnly}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    } else {
-        return html`
-            <sp-button
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                size=${properties.size}
-                ?pending=${!!properties.pending}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    }
+    return html`
+        <sp-button
+            ?disabled=${!!properties.disabled}
+            href=${ifDefined(properties.href)}
+            ?icon-only=${properties.iconOnly}
+            ?pending=${!!properties.pending}
+            ?quiet="${!!properties.quiet}"
+            size=${properties.size}
+            target=${ifDefined(properties.target)}
+            treatment=${ifDefined(properties.treatment)}
+            variant=${ifDefined(properties.variant)}
+        >
+            ${properties.content || 'Click Me'}
+        </sp-button>
+    `;
 }
 
 export function renderButtonSet(properties: Properties): TemplateResult {

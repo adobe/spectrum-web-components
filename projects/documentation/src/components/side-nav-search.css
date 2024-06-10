@@ -17,5 +17,5 @@ sp-search {
 sp-illustrated-message {
     flex: 1 1;
     margin-bottom: 2em;
-    color: var(--spectrum-global-color-gray-800);
+    color: var(--spectrum-gray-800);
 }

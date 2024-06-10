@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -22,6 +22,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
@@ -29,6 +30,10 @@ import { Placement } from '@floating-ui/dom';
 import { OverlayTypes } from '../src/overlay-types.js';
 import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
 import './overlay-story-components.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from '../src/slottable-request-event.js';
 
 export default {
     title: 'Overlay Element',
@@ -167,6 +172,29 @@ click.args = {
     placement: 'right',
     style: 'container-type' as WrapperStyleType,
     type: 'auto',
+};
+
+export const withSlider = (): TemplateResult => html`
+    <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
+    <sp-overlay trigger="triggerEl@click" placement="bottom">
+        <sp-popover tip>
+            <sp-dialog no-divider class="options-popover-content">
+                <p>Try clicking the slider after popover opens</p>
+                <p>It shouldn't close the popover</p>
+                <sp-slider
+                    value="5"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    label="Awesomeness"
+                ></sp-slider>
+                <sp-button>Press me</sp-button>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+`;
+withSlider.swc_vrt = {
+    skip: true,
 };
 
 export const hover = (args: Properties): TemplateResult => Template(args);
@@ -346,7 +374,7 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 <sp-action-button id="trigger-3" hold-affordance>
                     <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
                 </sp-action-button>
-                <sp-action-menu placement="left">
+                <sp-action-menu label="More Actions" placement="left">
                     <sp-menu-group id="cms">
                         <span slot="header">cms</span>
                         <sp-menu-item value="updateAllSiteContent">
@@ -557,7 +585,7 @@ export const actionGroupWithFilters = ({
                         Hover
                     </sp-tooltip>
                 </sp-action-button>
-                <sp-action-menu>
+                <sp-action-menu label="More Actions">
                     <sp-menu-group id="cms">
                         <span slot="header">cms</span>
                         <sp-menu-item value="updateAllSiteContent">
@@ -653,5 +681,49 @@ export const transientHover = (): TemplateResult => html`
     <transient-hover></transient-hover>
 `;
 transientHover.swc_vrt = {
+    skip: true,
+};
+
+export const lazyElements = (): TemplateResult => {
+    const handleSlottableRequest = (event: SlottableRequestEvent): void => {
+        const template =
+            event.data === removeSlottableRequest
+                ? undefined
+                : html`
+                      <sp-popover>
+                          <sp-dialog no-divider>
+                              <sp-slider
+                                  value="5"
+                                  step="0.5"
+                                  min="0"
+                                  max="20"
+                                  label="Awesomeness"
+                              ></sp-slider>
+                              <div id="styled-div">
+                                  The background of this div should be blue
+                              </div>
+                              <sp-button>
+                                  Press Me
+                                  <sp-tooltip self-managed delayed>
+                                      Click to open another popover.
+                                  </sp-tooltip>
+                              </sp-button>
+                          </sp-dialog>
+                      </sp-popover>
+                  `;
+        render(template, event.target as HTMLElement);
+    };
+    return html`
+        <sp-button id="button">Trigger</sp-button>
+        <sp-overlay
+            placement="bottom"
+            type="auto"
+            trigger="button@click"
+            @slottable-request=${handleSlottableRequest}
+        ></sp-overlay>
+    `;
+};
+
+lazyElements.swc_vrt = {
     skip: true,
 };

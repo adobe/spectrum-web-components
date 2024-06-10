@@ -19,7 +19,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    queryAssignedElements,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
@@ -51,10 +54,27 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     public border: SwatchBorder;
 
     @property({ reflect: true })
+    public density: 'compact' | 'spacious' | undefined;
+
+    @property({ reflect: true })
     public rounding: SwatchRounding;
 
     @property({ type: Array })
-    public selected: string[] = [];
+    public get selected(): string[] {
+        return this._selected;
+    }
+
+    public set selected(selected: string[]) {
+        if (selected === this.selected) return;
+
+        const oldSelected = this.selected;
+        this._selected = selected;
+        this.requestUpdate('selected', oldSelected);
+    }
+
+    // Specifically surface `_selected` internally so that change can be made to this value internally
+    // without triggering the update lifecycle directly.
+    private _selected: string[] = [];
 
     @property()
     public selects: SwatchSelects;
@@ -64,8 +84,8 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     @property({ reflect: true })
     public shape: SwatchShape;
 
-    @property({ reflect: true })
-    public density: 'compact' | 'spacious' | undefined;
+    @queryAssignedElements({ flatten: true })
+    public swatches!: Swatch[];
 
     constructor() {
         super();
@@ -95,7 +115,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                 ? firstSelectedIndex
                 : firstEnabledIndex;
         },
-        elements: () => [...this.children] as Swatch[],
+        elements: () => this.swatches,
         isFocusableElement: (el: Swatch) => !el.disabled,
     });
 
@@ -131,7 +151,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                 this.selectedSet.delete(target.value);
             }
         }
-        this.selected = [...this.selectedSet];
+        this._selected = [...this.selectedSet];
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
@@ -139,16 +159,16 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
             })
         );
         if (!applyDefault) {
-            this.selected = oldSelected;
+            this._selected = oldSelected;
             event.preventDefault();
         }
     }
 
-    private manageChange = (): void => {
+    private manageChange = async (): Promise<void> => {
         const presentSet = new Set();
         this.selectedSet = new Set(this.selected);
-        const swatches = [...this.children] as Swatch[];
-        swatches.forEach((swatch) => {
+        await Promise.all(this.swatches.map((swatch) => swatch.updateComplete));
+        this.swatches.forEach((swatch) => {
             presentSet.add(swatch.value);
             if (swatch.selected) {
                 this.selectedSet.add(swatch.value);
@@ -159,7 +179,8 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                 this.selectedSet.delete(value);
             }
         });
-        this.selected = [...this.selectedSet];
+        this._selected = [...this.selectedSet];
+        this.rovingTabindexController.clearElementCache();
     };
 
     private getPassthroughSwatchActions(
@@ -273,7 +294,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         ];
 
         // Create Swatch actions that build state to be applied later.
-        const nextSelected = new Set(this.selected);
+        let nextSelected = new Set(this.selected);
         const currentValues = new Set();
         if (changes.has('selected')) {
             swatchActions.push((swatch) => {
@@ -289,19 +310,37 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
             });
         }
 
-        // Do Swatch actions to each Swach in the collection.
-        this.rovingTabindexController.elements.forEach((swatch) => {
-            swatchActions.forEach((action) => {
-                action(swatch);
-            });
-        });
+        const doActions = (): void => {
+            nextSelected = new Set(this.selected);
 
-        // Apply state built in actions back to the Swatch Group
-        if (changes.has('selected')) {
-            this.selected = [...nextSelected].filter((selectedValue) =>
-                currentValues.has(selectedValue)
+            // Do Swatch actions to each Swatch in the collection.
+            this.swatches.forEach((swatch) => {
+                swatchActions.forEach((action) => {
+                    action(swatch);
+                });
+            });
+
+            // Apply state built in actions back to the Swatch Group
+            if (changes.has('selected')) {
+                this._selected = [...nextSelected.values()].filter(
+                    (selectedValue) => currentValues.has(selectedValue)
+                );
+            }
+        };
+
+        if (this.hasUpdated) {
+            // Do actions immediately when the element has already updated.
+            doActions();
+        } else {
+            // On first update wait for a `slotchange` event, which is not currently managed
+            // by the element lifecycle before allowing Swatch actions to be commited.
+            this.shadowRoot.addEventListener(
+                'slotchange',
+                () => {
+                    requestAnimationFrame(doActions);
+                },
+                { once: true }
             );
-            this.rovingTabindexController.clearElementCache();
         }
     }
 }

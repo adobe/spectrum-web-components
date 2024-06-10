@@ -54,7 +54,7 @@ export const buildPreviewURLComment = (ref) => {
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
     const previewLinks = [];
-    const themes = ['Classic', 'Express'];
+    const themes = ['Spectrum', 'Express', 'Spectrum-two'];
     const scales = ['Medium', 'Large'];
     const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
     const directions = ['LTR', 'RTL'];
@@ -64,7 +64,13 @@ export const buildPreviewURLComment = (ref) => {
         )}--spectrum-web-components.netlify.app/review/)`
     );
     themes.map((theme) =>
-        colors.map((color) =>
+        colors.map((color) => {
+            if (
+                theme === 'Spectrum-two' &&
+                (color === 'Lightest' || color === 'Darkest')
+            ) {
+                return;
+            }
             scales.map((scale) =>
                 directions.map((direction) => {
                     const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
@@ -73,10 +79,10 @@ export const buildPreviewURLComment = (ref) => {
                         context
                     )}--spectrum-web-components.netlify.app/review/)`);
                 })
-            )
-        )
+            );
+        })
     );
-    let comment = `# Branch Preview
+    let comment = `## Branch preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
 - [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)`;

@@ -25,6 +25,7 @@ import {
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/theme/src/spectrum-two/themes-core-tokens.js';
 import '@spectrum-web-components/theme/src/express/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -36,8 +37,8 @@ import { Switch } from '@spectrum-web-components/switch';
 import {
     Color,
     Scale,
+    SystemVariant,
     Theme,
-    ThemeVariant,
 } from '@spectrum-web-components/theme';
 import './types.js';
 
@@ -46,16 +47,19 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
-export let theme: ThemeVariant =
-    (urlParams.get('sp_theme') as ThemeVariant) || 'spectrum';
+export let theme: SystemVariant =
+    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
+export let system: SystemVariant =
+    (urlParams.get('sp_system') as SystemVariant) || 'spectrum';
 export let color: Color =
     (urlParams.get('sp_color') as Color) ||
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
+export let screenshot = urlParams.get('sp_screenshot') === 'true';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
-    defaultThemeVariant: theme,
+    defaultSystemVariant: system,
     defaultColor: color,
     defaultScale: scale,
     defaultDirection: dir,
@@ -88,6 +92,8 @@ const reduceMotionProperties = css`
     --spectrum-animation-duration-1000: 0ms;
     --spectrum-animation-duration-2000: 0ms;
     --spectrum-animation-duration-4000: 0ms;
+    --spectrum-animation-duration-6000: 0ms;
+    --pending-delay: 0s;
     --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
     --swc-test-duration: 1ms;
 `;
@@ -105,21 +111,28 @@ export class StoryDecorator extends SpectrumElement {
                     box-sizing: border-box;
                     width: 100%;
                     min-height: 100vh;
-                    padding: var(--spectrum-global-dimension-size-100)
-                        var(--spectrum-global-dimension-size-100)
+                    padding: var(--decorator-padding-100)
+                        var(--decorator-padding-100)
                         calc(
-                            2 * var(--spectrum-alias-focus-ring-size) +
-                                var(--spectrum-alias-item-height-m)
+                            2 * var(--spectrum-focus-indicator-thickness) +
+                                var(--spectrum-component-height-100)
                         );
                     box-sizing: border-box;
-                    background-color: var(--spectrum-global-color-gray-100);
-                    color: var(
-                        --spectrum-body-text-color,
-                        var(--spectrum-alias-text-color)
+                    background-color: var(--spectrum-gray-100);
+                    color: var(--spectrum-body-color);
+
+                    --decorator-padding-100: calc(
+                        var(--swc-scale-factor, 1) * var(--spectrum-spacing-100)
+                    );
+                    --decorator-padding-200: calc(
+                        var(--swc-scale-factor, 1) * var(--spectrum-spacing-200)
+                    );
+                    --decorator-padding-400: calc(
+                        var(--swc-scale-factor, 1) * var(--spectrum-spacing-400)
                     );
                 }
                 :host([screenshot]) sp-theme {
-                    padding: var(--spectrum-global-dimension-size-100);
+                    padding: var(--decorator-padding-100);
                 }
                 :host([reduce-motion]) sp-theme {
                     ${reduceMotionProperties}
@@ -127,49 +140,34 @@ export class StoryDecorator extends SpectrumElement {
                 .manage-theme {
                     position: fixed;
                     bottom: 0;
-                    left: var(--spectrum-global-dimension-size-200);
-                    right: var(--spectrum-global-dimension-size-200);
+                    left: var(--decorator-padding-200);
+                    right: var(--decorator-padding-200);
                     display: flex;
-                    align-items: center;
+                    align-items: flex-start;
                     justify-content: flex-end;
                     box-sizing: border-box;
-                    background-color: var(--spectrum-global-color-gray-100);
+                    background-color: var(--spectrum-gray-100);
                     padding-bottom: calc(
                         2 * var(--spectrum-alias-focus-ring-size)
                     );
                 }
-                [dir='ltr'] sp-field-label {
-                    padding-left: 0;
-                    padding-right: var(
+                sp-field-label {
+                    padding-inline-end: var(
                         --spectrum-fieldlabel-side-padding-x,
-                        var(--spectrum-global-dimension-size-100)
+                        var(--decorator-padding-100)
                     );
-                    margin-left: var(--spectrum-global-dimension-size-400);
+                    margin-inline-start: var(--decorator-padding-400);
                 }
-                [dir='ltr'] sp-switch {
-                    margin-left: var(--spectrum-global-dimension-size-400);
-                    margin-right: 0;
-                    padding: 0;
-                }
-                [dir='rtl'] sp-field-label {
-                    padding-right: 0;
-                    padding-left: var(
-                        --spectrum-fieldlabel-side-padding-x,
-                        var(--spectrum-global-dimension-size-100)
-                    );
-                    margin-right: var(--spectrum-global-dimension-size-400);
-                }
-                [dir='rtl'] sp-switch {
-                    margin-right: var(--spectrum-global-dimension-size-400);
-                    margin-left: 0;
-                    padding: 0;
+                sp-switch {
+                    margin-inline-start: var(--decorator-padding-400);
                 }
             `,
         ];
     }
 
     @property({ type: String })
-    public theme: ThemeVariant = window.__swc_hack_knobs__.defaultThemeVariant;
+    public system: SystemVariant =
+        window.__swc_hack_knobs__.defaultSystemVariant;
 
     @property({ type: String })
     public color: Color = window.__swc_hack_knobs__.defaultColor;
@@ -185,7 +183,7 @@ export class StoryDecorator extends SpectrumElement {
     public reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion;
 
     @property({ type: Boolean, reflect: true })
-    public screenshot = false;
+    public screenshot = screenshot;
 
     @queryAsync('sp-theme')
     private themeRoot!: Theme;
@@ -205,11 +203,11 @@ export class StoryDecorator extends SpectrumElement {
         const { value } = target as Picker;
         const { checked } = target as Switch;
         switch (id) {
-            case 'theme':
-                this.theme =
-                    theme =
-                    window.__swc_hack_knobs__.defaultThemeVariant =
-                        value as ThemeVariant;
+            case 'system':
+                this.system =
+                    system =
+                    window.__swc_hack_knobs__.defaultSystemVariant =
+                        value as SystemVariant;
                 break;
             case 'color':
                 this.color =
@@ -255,7 +253,7 @@ export class StoryDecorator extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <sp-theme
-                theme=${this.theme}
+                system=${this.system}
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
@@ -302,31 +300,36 @@ export class StoryDecorator extends SpectrumElement {
     private get manageTheme(): TemplateResult {
         return html`
             <div class="manage-theme" part="controls">
-                ${this.themeControl} ${this.colorControl} ${this.scaleControl}
+                ${this.systemControl} ${this.colorControl} ${this.scaleControl}
                 ${this.dirControl} ${this.reduceMotionControl}
             </div>
         `;
     }
 
-    private get themeControl(): TemplateResult {
+    private get systemControl(): TemplateResult {
         return html`
-            <sp-field-label for="theme">Spectrum</sp-field-label>
+            <sp-field-label side-aligned="start" for="system">
+                System
+            </sp-field-label>
             <sp-picker
-                id="theme"
+                id="system"
                 placement="top"
                 quiet
-                .value=${this.theme}
+                .value=${this.system}
                 @change=${this.updateTheme}
             >
-                <sp-menu-item value="spectrum">Classic</sp-menu-item>
+                <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                 <sp-menu-item value="express">Express</sp-menu-item>
+                <sp-menu-item value="spectrum-two">Spectrum 2</sp-menu-item>
             </sp-picker>
         `;
     }
 
     private get colorControl(): TemplateResult {
         return html`
-            <sp-field-label for="color">Theme</sp-field-label>
+            <sp-field-label side-aligned="start" for="color">
+                Theme
+            </sp-field-label>
             <sp-picker
                 id="color"
                 placement="top"
@@ -334,17 +337,17 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.color}
                 @change=${this.updateTheme}
             >
-                <sp-menu-item value="lightest">Lightest</sp-menu-item>
                 <sp-menu-item value="light">Light</sp-menu-item>
                 <sp-menu-item value="dark">Dark</sp-menu-item>
-                <sp-menu-item value="darkest">Darkest</sp-menu-item>
             </sp-picker>
         `;
     }
 
     private get scaleControl(): TemplateResult {
         return html`
-            <sp-field-label for="scale">Scale</sp-field-label>
+            <sp-field-label side-aligned="start" for="scale">
+                Scale
+            </sp-field-label>
             <sp-picker
                 id="scale"
                 label="Scale"
@@ -361,7 +364,9 @@ export class StoryDecorator extends SpectrumElement {
 
     private get dirControl(): TemplateResult {
         return html`
-            <sp-field-label for="dir">Direction</sp-field-label>
+            <sp-field-label side-aligned="start" for="dir">
+                Direction
+            </sp-field-label>
             <sp-picker
                 id="dir"
                 label="Direction"

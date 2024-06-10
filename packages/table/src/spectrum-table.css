@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-table-header-top-to-text: var(
         --spectrum-table-column-header-row-top-to-text-medium
@@ -173,6 +174,12 @@ governing permissions and limitations under the License.
         var(--spectrum-table-thumbnail-size)
     );
 }
+
+:host:dir(rtl),
+:host([dir='rtl']) {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+}
+
 :host([size='s']) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-100);
     --spectrum-table-header-top-to-text: var(
@@ -214,6 +221,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-to-text: var(--spectrum-text-to-visual-100);
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-200);
 }
+
 :host([size='l']) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-200);
     --spectrum-table-header-top-to-text: var(
@@ -255,6 +263,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-to-text: var(--spectrum-text-to-visual-200);
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-500);
 }
+
 :host([size='xl']) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-300);
     --spectrum-table-header-top-to-text: var(
@@ -296,6 +305,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-to-text: var(--spectrum-text-to-visual-300);
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-700);
 }
+
 :host([density='compact']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--compact,
@@ -322,6 +332,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-200)
     );
 }
+
 :host([density='compact'][size='s']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--compact,
@@ -348,6 +359,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-50)
     );
 }
+
 :host([density='compact'][size='l']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--compact,
@@ -374,6 +386,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-300)
     );
 }
+
 :host([density='compact'][size='xl']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--compact,
@@ -400,6 +413,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-500)
     );
 }
+
 :host([density='spacious']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--spacious,
@@ -426,6 +440,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-500)
     );
 }
+
 :host([density='spacious'][size='s']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--spacious,
@@ -452,6 +467,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-300)
     );
 }
+
 :host([density='spacious'][size='l']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--spacious,
@@ -478,6 +494,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-700)
     );
 }
+
 :host([density='spacious'][size='xl']) {
     --mod-table-min-row-height: var(
         --mod-table-min-row-height--spacious,
@@ -504,6 +521,7 @@ governing permissions and limitations under the License.
         var(--spectrum-thumbnail-size-800)
     );
 }
+
 :host([emphasized]) {
     --spectrum-table-selected-cell-background-color: var(
         --highcontrast-table-selected-row-background-color,
@@ -520,6 +538,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([quiet]) {
     --mod-table-border-radius: var(--mod-table-border-radius--quiet, 0px);
     --mod-table-outer-border-inline-width: var(
@@ -535,6 +554,7 @@ governing permissions and limitations under the License.
         var(--spectrum-transparent-white-100)
     );
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-table-row-background-color: Canvas;
@@ -555,6 +575,7 @@ governing permissions and limitations under the License.
         --highcontrast-table-focus-indicator-color: Highlight;
         --highcontrast-table-transition-duration: 0;
     }
+
     @supports (color: SelectedItem) {
         :host {
             --highcontrast-table-selected-row-background-color: SelectedItem;
@@ -563,10 +584,9 @@ governing permissions and limitations under the License.
         }
     }
 }
+
 :host:not(.spectrum-Table-scroller) {
-    border-collapse: separate;
+    border-collapse: initial;
     border-spacing: 0;
-}
-:host:not(.spectrum-Table-scroller) {
     display: table;
 }

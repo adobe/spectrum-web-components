@@ -26,7 +26,31 @@ const config = {
             fileName: 'clear-button',
             components: [
                 converter.classToHost(),
-                converter.pseudoToAttribute('active', 'active'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 ...converter.enumerateAttributes(

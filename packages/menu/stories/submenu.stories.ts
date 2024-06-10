@@ -159,7 +159,11 @@ export const submenu = (): TemplateResult => {
         valueEls.second.textContent = event.target.selected[0] || '';
     };
     return html`
-        <sp-action-menu @change=${handleRootChange} @sp-opened=${clearValues}>
+        <sp-action-menu
+            label="More Actions"
+            @change=${handleRootChange}
+            @sp-opened=${clearValues}
+        >
             <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
             <sp-menu-group
                 @change=${() => console.log('group change')}
@@ -207,6 +211,16 @@ export const submenu = (): TemplateResult => {
                             </sp-menu>
                         </sp-menu-item>
                         <sp-menu-item>Upper East Side</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+                <sp-menu-item disabled>
+                    Queens
+                    <sp-menu slot="submenu">
+                        <sp-menu-item>
+                            You shouldn't be able to see this!
+                        </sp-menu-item>
+                        <sp-menu-item>Forest Hills</sp-menu-item>
+                        <sp-menu-item>Jamaica</sp-menu-item>
                     </sp-menu>
                 </sp-menu-item>
             </sp-menu-group>

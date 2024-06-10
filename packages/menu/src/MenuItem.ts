@@ -20,6 +20,7 @@ import {
 import {
     ObserveSlotPresence,
     ObserveSlotText,
+    randomID,
 } from '@spectrum-web-components/shared';
 import {
     property,
@@ -31,12 +32,14 @@ import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
 import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
+import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -95,12 +98,12 @@ export class MenuItem extends LikeAnchor(
         return [menuItemStyles, checkmarkStyles, chevronStyles];
     }
 
-    abortControllerPointer!: AbortController;
-
     abortControllerSubmenu!: AbortController;
 
     @property({ type: Boolean, reflect: true })
     public active = false;
+
+    private dependencyManager = new DependencyManagerController(this);
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -162,6 +165,8 @@ export class MenuItem extends LikeAnchor(
     @query('sp-overlay')
     public overlayElement!: Overlay;
 
+    private submenuElement?: HTMLElement;
+
     public override get focusElement(): HTMLElement {
         return this;
     }
@@ -208,7 +213,14 @@ export class MenuItem extends LikeAnchor(
                 childList: true,
                 subtree: true,
             },
-            callback: () => {
+            callback: (mutations) => {
+                const isSubmenu = mutations.every(
+                    (mutation) =>
+                        (mutation.target as HTMLElement).slot === 'submenu'
+                );
+                if (isSubmenu) {
+                    return;
+                }
                 this.breakItemChildrenCache();
             },
         });
@@ -237,6 +249,12 @@ export class MenuItem extends LikeAnchor(
             return false;
         }
     }
+
+    private handleSlottableRequest = (event: SlottableRequestEvent): void => {
+        this.submenuElement?.dispatchEvent(
+            new SlottableRequestEvent(event.name, event.data)
+        );
+    };
 
     private proxyFocus = (): void => {
         this.focus();
@@ -273,17 +291,22 @@ export class MenuItem extends LikeAnchor(
         if (!this.hasSubmenu) {
             return slot;
         }
+        this.dependencyManager.add('sp-overlay');
+        this.dependencyManager.add('sp-popover');
         import('@spectrum-web-components/overlay/sp-overlay.js');
         import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
                 ?disabled=${!this.hasSubmenu}
-                ?open=${this.hasSubmenu && this.open}
+                ?open=${this.hasSubmenu &&
+                this.open &&
+                this.dependencyManager.loaded}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
-                .offset=${[-10, -4] as [number, number]}
+                .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
+                @slottable-request=${this.handleSlottableRequest}
             >
                 <sp-popover
                     @change=${(event: Event) => {
@@ -337,24 +360,16 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
-        const assignedElements = event.target.assignedElements({
+        this.submenuElement = event.target.assignedElements({
             flatten: true,
-        });
-        this.hasSubmenu = !!assignedElements.length;
+        })[0] as HTMLElement;
+        this.hasSubmenu = !!this.submenuElement;
         if (this.hasSubmenu) {
             this.setAttribute('aria-haspopup', 'true');
         }
     }
 
-    private handleRemoveActive(): void {
-        if (this.open) {
-            return;
-        }
-        this.active = false;
-    }
-
     private handlePointerdown(event: PointerEvent): void {
-        this.active = true;
         if (event.target === this && this.hasSubmenu && this.open) {
             this.addEventListener('focus', this.handleSubmenuFocus, {
                 once: true,
@@ -372,7 +387,7 @@ export class MenuItem extends LikeAnchor(
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
-            this.id = `sp-menu-item-${crypto.randomUUID().slice(0, 8)}`;
+            this.id = `sp-menu-item-${randomID()}`;
         }
     }
 
@@ -391,7 +406,7 @@ export class MenuItem extends LikeAnchor(
     protected handleSubmenuFocus(): void {
         requestAnimationFrame(() => {
             // Wait till after `closeDescendentOverlays` has happened in Menu
-            // to reopen (keey open) the direct descendent of this Menu Item
+            // to reopen (keep open) the direct descendent of this Menu Item
             this.overlayElement.open = this.open;
         });
     }
@@ -509,25 +524,6 @@ export class MenuItem extends LikeAnchor(
         ) {
             if (this.active) {
                 this.menuData.selectionRoot?.closeDescendentOverlays();
-                this.abortControllerPointer = new AbortController();
-                const options = { signal: this.abortControllerPointer.signal };
-                this.addEventListener(
-                    'pointerup',
-                    this.handleRemoveActive,
-                    options
-                );
-                this.addEventListener(
-                    'pointerleave',
-                    this.handleRemoveActive,
-                    options
-                );
-                this.addEventListener(
-                    'pointercancel',
-                    this.handleRemoveActive,
-                    options
-                );
-            } else {
-                this.abortControllerPointer?.abort();
             }
         }
         if (this.anchorElement) {
@@ -580,6 +576,12 @@ export class MenuItem extends LikeAnchor(
 
     public override disconnectedCallback(): void {
         this.menuData.cleanupSteps.forEach((removal) => removal(this));
+        this.menuData = {
+            focusRoot: undefined,
+            parentMenu: undefined,
+            selectionRoot: undefined,
+            cleanupSteps: [],
+        };
         super.disconnectedCallback();
     }
 
@@ -595,6 +597,9 @@ export class MenuItem extends LikeAnchor(
     }
 
     public dispatchUpdate(): void {
+        if (!this.isConnected) {
+            return;
+        }
         this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
         this.willDispatchUpdate = false;
     }

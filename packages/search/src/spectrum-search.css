@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-search-inline-size: var(--spectrum-field-width);
     --spectrum-search-block-size: var(--spectrum-component-height-100);
@@ -142,21 +143,25 @@ governing permissions and limitations under the License.
         var(--spectrum-search-background-color-disabled)
     );
 }
+
 :host([size='s']) {
     --spectrum-search-block-size: var(--spectrum-component-height-75);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-75);
 }
+
 :host([size='l']) {
     --spectrum-search-block-size: var(--spectrum-component-height-200);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-200);
 }
+
 :host([size='xl']) {
     --spectrum-search-block-size: var(--spectrum-component-height-300);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-300);
 }
+
 :host([quiet]) {
     --spectrum-search-quiet-button-offset: calc(
         var(--mod-search-block-size, var(--spectrum-search-block-size)) / 2 -
@@ -171,12 +176,14 @@ governing permissions and limitations under the License.
         --spectrum-disabled-border-color
     );
 }
+
 :host([quiet]) #textfield {
     --spectrum-search-border-radius: 0;
     --spectrum-search-edge-to-visual: var(
         --spectrum-field-edge-to-visual-quiet
     );
 }
+
 @media (forced-colors: active) {
     #textfield #textfield,
     #textfield #textfield .input {
@@ -185,13 +192,14 @@ governing permissions and limitations under the License.
         --highcontrast-search-color-focus: CanvasText;
         --highcontrast-search-color-disabled: GrayText;
     }
+
     #textfield #button .spectrum-ClearButton-fill {
-        background-color: #0000;
         forced-color-adjust: none;
+        background-color: initial;
     }
 }
+
 #textfield {
-    display: inline-block;
     inline-size: var(
         --mod-search-inline-size,
         var(--spectrum-search-inline-size)
@@ -200,64 +208,61 @@ governing permissions and limitations under the License.
         --mod-search-min-inline-size,
         var(--spectrum-search-min-inline-size)
     );
+    display: inline-block;
     position: relative;
 }
+
 #textfield .spectrum-HelpText {
     margin-block-start: var(
         --mod-search-to-help-text,
         var(--spectrum-search-to-help-text)
     );
 }
+
 #button {
+    border-radius: var(
+        --mod-search-border-radius,
+        var(--spectrum-search-border-radius)
+    );
+    position: absolute;
     inset-block-start: 0;
     inset-inline-end: 0;
-    position: absolute;
 }
-#button,
+
 #button .spectrum-ClearButton-fill {
     border-radius: var(
         --mod-search-border-radius,
         var(--spectrum-search-border-radius)
     );
 }
+
 #textfield.is-disabled #button {
     display: none;
 }
+
 #textfield {
     inline-size: 100%;
 }
+
 .icon-search {
     --spectrum-search-color: var(
         --highcontrast-search-color-default,
         var(--mod-search-color-default, var(--spectrum-search-color-default))
     );
     color: var(--spectrum-search-color);
-    display: block;
-    inset-block: 0;
     margin-block: auto;
+    display: block;
     position: absolute;
+    inset-block: 0;
 }
-#textfield:hover .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-hover,
-        var(--mod-search-color-hover, var(--spectrum-search-color-hover))
-    );
-}
+
 #textfield.is-focused .icon-search {
     --spectrum-search-color: var(
         --highcontrast-search-color-focus,
         var(--mod-search-color-focus, var(--spectrum-search-color-focus))
     );
 }
-#textfield.is-focused:hover .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-focus,
-        var(
-            --mod-search-color-focus-hover,
-            var(--spectrum-search-color-focus-hover)
-        )
-    );
-}
+
 #textfield.is-keyboardFocused .icon-search {
     --spectrum-search-color: var(
         --highcontrast-search-color-focus,
@@ -267,41 +272,80 @@ governing permissions and limitations under the License.
         )
     );
 }
-#textfield.is-disabled .icon-search,
-#textfield.is-disabled:hover .icon-search {
+
+#textfield.is-disabled .icon-search {
     --spectrum-search-color: var(
         --highcontrast-search-color-disabled,
         var(--mod-search-color-disabled, var(--spectrum-search-color-disabled))
     );
 }
+
+@media (hover: hover) {
+    #textfield:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-hover,
+            var(--mod-search-color-hover, var(--spectrum-search-color-hover))
+        );
+    }
+
+    #textfield.is-focused:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-focus,
+            var(
+                --mod-search-color-focus-hover,
+                var(--spectrum-search-color-focus-hover)
+            )
+        );
+    }
+
+    #textfield.is-disabled:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-disabled,
+            var(
+                --mod-search-color-disabled,
+                var(--spectrum-search-color-disabled)
+            )
+        );
+    }
+}
+
 .input {
-    -webkit-appearance: none;
+    appearance: none;
     block-size: var(--mod-search-block-size, var(--spectrum-search-block-size));
     font-style: var(--mod-search-font-style, var(--spectrum-search-font-style));
     line-height: var(
         --mod-search-line-height,
         var(--spectrum-search-line-height)
     );
-    padding-block-end: calc(
-        var(--mod-search-bottom-to-text, var(--spectrum-search-bottom-to-text)) -
-            var(--mod-search-border-width, var(--spectrum-search-border-width))
-    );
     padding-block-start: calc(
         var(--mod-search-top-to-text, var(--spectrum-search-top-to-text)) -
             var(--mod-search-border-width, var(--spectrum-search-border-width))
     );
+    padding-block-end: calc(
+        var(--mod-search-bottom-to-text, var(--spectrum-search-bottom-to-text)) -
+            var(--mod-search-border-width, var(--spectrum-search-border-width))
+    );
 }
+
 .input::-webkit-search-cancel-button,
 .input::-webkit-search-decoration {
-    -webkit-appearance: none;
+    appearance: none;
 }
+
 :host(:not([quiet])) #textfield .icon-search {
     inset-inline-start: var(
         --mod-search-edge-to-visual,
         var(--spectrum-search-edge-to-visual)
     );
 }
+
 :host(:not([quiet])) #textfield .input {
+    padding-inline-start: calc(
+        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) -
+            var(--mod-search-border-width, var(--spectrum-search-border-width)) +
+            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
+            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
+    );
     padding-inline-end: calc(
         var(
                 --mod-search-button-inline-size,
@@ -309,13 +353,8 @@ governing permissions and limitations under the License.
             ) -
             var(--mod-search-border-width, var(--spectrum-search-border-width))
     );
-    padding-inline-start: calc(
-        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) -
-            var(--mod-search-border-width, var(--spectrum-search-border-width)) +
-            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
-            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
-    );
 }
+
 :host([quiet]) #button {
     transform: translateX(
         var(
@@ -324,6 +363,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([quiet]) #textfield .input {
     border-radius: var(
         --mod-search-border-radius,
@@ -332,6 +372,11 @@ governing permissions and limitations under the License.
     padding-block-start: var(
         --mod-search-top-to-text,
         var(--spectrum-search-top-to-text)
+    );
+    padding-inline-start: calc(
+        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) +
+            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
+            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
     );
     padding-inline-end: calc(
         var(
@@ -343,12 +388,8 @@ governing permissions and limitations under the License.
                 var(--spectrum-search-quiet-button-offset)
             )
     );
-    padding-inline-start: calc(
-        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) +
-            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
-            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
-    );
 }
+
 :host {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-border-radius
@@ -372,6 +413,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-border-color-key-focus
     );
 }
+
 :host([size='s']) {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizes-border-radius
@@ -380,6 +422,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-sizes-edge-to-visual
     );
 }
+
 :host {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizem-border-radius
@@ -388,6 +431,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-sizem-edge-to-visual
     );
 }
+
 :host([size='l']) {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizel-border-radius
@@ -396,6 +440,7 @@ governing permissions and limitations under the License.
         --system-spectrum-search-sizel-edge-to-visual
     );
 }
+
 :host([size='xl']) {
     --spectrum-search-border-radius: var(
         --system-spectrum-search-sizexl-border-radius

@@ -20,6 +20,7 @@ import {
     exampleDestinationTemplate,
     examplePartialTemplate,
 } from './component-template-parts.js';
+import { gatherUrls } from './gather-spectrum-urls.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -54,6 +55,18 @@ const findDeclaration = (customElements, test) => {
     });
 
     return declaration;
+};
+
+const findDeprecationNotice = async function (filePath) {
+    for await (const mdPath of globby.stream(filePath)) {
+        const hasDeprecation = fs.existsSync(mdPath);
+        if (hasDeprecation) {
+            const packageJSON = await import(mdPath, {
+                assert: { type: 'json' },
+            }).then((packageDefault) => packageDefault.default);
+            return packageJSON.deprecationNotice;
+        }
+    }
 };
 
 export async function processREADME(mdPath) {
@@ -163,9 +176,55 @@ export async function processREADME(mdPath) {
         examplePartialFile,
         examplePartialTemplate(componentName, componentHeading, body)
     );
+    const hasArgs = fs.existsSync(
+        path.resolve(
+            __dirname,
+            '../../../packages',
+            packageName,
+            'stories',
+            'args.js'
+        )
+    );
+    const deprecationNotice = await findDeprecationNotice(
+        `${projectDir}/(packages|tools)/${packageName}/package.json`
+    );
+    const hasTemplate = fs.existsSync(
+        path.resolve(
+            __dirname,
+            '../../../packages',
+            packageName,
+            'stories',
+            'template.js'
+        )
+    );
+    /* eslint-disable prettier/prettier */
+    const data = `${
+        hasArgs
+            ? `import { argTypes } from '../../../../../packages/${packageName}/stories/args.js';
+
+`
+            : ''
+    }export default {
+    hasDemoControls: ${hasArgs},
+    hasDemoTemplate: ${hasTemplate},
+    deprecationNotice: ${JSON.stringify(deprecationNotice)},
+    isComponent: ${isComponent},
+    ${hasArgs ? 'demoControls: Object.values(argTypes),' : ''}
+};
+`;
+    /* eslint-enable prettier/prettier */
+    fs.writeFileSync(
+        path.resolve(
+            destinationPath,
+            componentName,
+            `${componentName}.11tydata.js`
+        ),
+        data
+    );
 }
 
 async function main() {
+    gatherUrls();
     fs.mkdirSync(componentDestinationPath, { recursive: true });
     fs.mkdirSync(toolDestinationPath, { recursive: true });
     fs.mkdirSync(partialPath, { recursive: true });

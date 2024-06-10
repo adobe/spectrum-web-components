@@ -1,11 +1,12 @@
 {
     "plugins": ["./linters/stylelint-header"],
-    "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+    "extends": ["stylelint-config-standard"],
     "rules": {
         "header/header": ["config/license.js", {}],
         "length-zero-no-unit": [true, { "ignore": "custom-properties" }],
         "selector-type-no-unknown": [true, { "ignore": ["custom-elements"] }],
-        "selector-pseudo-element-colon-notation": ["single", {}]
+        "selector-pseudo-element-colon-notation": ["single", {}],
+        "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*$"
     },
     "overrides": [
         {

@@ -60,9 +60,72 @@ const config = {
                         },
                     ],
                 },
-            ],
-            excludeByComponents: [
-                builder.class('spectrum-SideNav--multiLevel'),
+                {
+                    // .spectrum-SideNav--multiLevel .spectrum-SideNav-itemLink
+                    find: [
+                        builder.class('spectrum-SideNav--multiLevel'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-SideNav-itemLink'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('item-link'),
+                        },
+                        {
+                            replace: builder.attribute('data-level'),
+                            hoist: false,
+                        },
+                    ],
+                    collapseSelector: true,
+                },
+                {
+                    // .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink
+                    find: [
+                        builder.class('spectrum-SideNav--multiLevel'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-SideNav'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-SideNav-itemLink'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('item-link'),
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'not',
+                                selectors: [
+                                    [builder.attribute('data-level', '0')],
+                                ],
+                            },
+                            hoist: false,
+                        },
+                    ],
+                    collapseSelector: true,
+                },
+                {
+                    // .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink
+                    find: [
+                        builder.class('spectrum-SideNav--multiLevel'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-SideNav'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-SideNav'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-SideNav-itemLink'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('item-link'),
+                        },
+                        {
+                            replace: builder.attribute('data-level', '2'),
+                            hoist: false,
+                        },
+                    ],
+                    collapseSelector: true,
+                },
             ],
             excludeByWholeSelector: [
                 [builder.class('spectrum-SideNav-heading')],

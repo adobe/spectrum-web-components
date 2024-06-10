@@ -110,6 +110,31 @@ const config = {
                 converter.classToId('spectrum-Radio-input'),
                 converter.classToId('spectrum-Radio-button'),
                 converter.classToId('spectrum-Radio-label'),
+                {
+                    find: [
+                        // .spectrum-Radio-button:after:dir(rtl)
+                        builder.class('spectrum-Radio-button'),
+                        builder.pseudoElement('after'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'dir',
+                            direction: 'rtl',
+                        },
+                    ],
+                    replace: [
+                        // #button:dir(rtl):after
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            type: 'pseudo-class',
+                            kind: 'dir',
+                            direction: 'rtl',
+                        },
+                        builder.pseudoElement('after'),
+                    ],
+                    collapseSelector: true,
+                },
             ],
         },
     ],

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-opacity-checkerboard-dark: var(
         --spectrum-opacity-checkerboard-square-dark
@@ -22,8 +23,6 @@ governing permissions and limitations under the License.
         --spectrum-opacity-checkerboard-square-size
     );
     --spectrum-opacity-checkerboard-position: left top;
-}
-:host {
     background: repeating-conic-gradient(
             var(
                     --mod-opacity-checkerboard-light,
@@ -52,9 +51,8 @@ governing permissions and limitations under the License.
                     var(--spectrum-opacity-checkerboard-size)
                 ) * 2
         );
-    block-size: 100%;
-    inline-size: 100%;
 }
+
 @media (forced-colors: active) {
     :host {
         forced-color-adjust: none;

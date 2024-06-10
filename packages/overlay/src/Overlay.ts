@@ -21,49 +21,41 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
-    isAndroid,
-    isIOS,
-} from '@spectrum-web-components/shared/src/platform.js';
-import {
     ElementResolutionController,
     elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
-import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import {
     ifDefined,
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import type {
     OpenableElement,
     OverlayState,
     OverlayTypes,
     Placement,
+    TriggerInteraction,
 } from './overlay-types.js';
 import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
 import { OverlayDialog } from './OverlayDialog.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
 import { overlayStack } from './OverlayStack.js';
-import { noop } from './AbstractOverlay.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { PlacementController } from './PlacementController.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
+export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
+import { strategies } from './strategies.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from './slottable-request-event.js';
 
 import styles from './overlay.css.js';
-
-const LONGPRESS_DURATION = 300;
-const HOVER_DELAY = 300;
-
-type LongpressEvent = {
-    source: 'pointer' | 'keyboard';
-};
-
-export const LONGPRESS_INSTRUCTIONS = {
-    touch: 'Double tap and long press for additional options',
-    keyboard: 'Press Space or Alt+Down Arrow for additional options',
-    mouse: 'Click and hold for additional options',
-};
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 
@@ -80,11 +72,10 @@ if (supportsPopover) {
  *
  * @fires sp-opened - announces that an overlay has completed any entry animations
  * @fires sp-closed - announce that an overlay has compelted any exit animations
+ * @fires slottable-request - requests to add or remove slottable content
  */
 export class Overlay extends OverlayFeatures {
     static override styles = [styles];
-
-    abortController!: AbortController;
 
     /**
      * An Overlay that is `delayed` will wait until a warm-up period of 1000ms
@@ -115,16 +106,14 @@ export class Overlay extends OverlayFeatures {
      * Whether the overlay is currently functional or not
      */
     @property({ type: Boolean })
-    get disabled(): boolean {
+    override get disabled(): boolean {
         return this._disabled;
     }
 
-    set disabled(disabled: boolean) {
+    override set disabled(disabled: boolean) {
         this._disabled = disabled;
         if (disabled) {
-            if (this.hasNonVirtualTrigger) {
-                this.unbindEvents();
-            }
+            this.strategy?.abort();
             this.wasOpen = this.open;
             this.open = false;
         } else {
@@ -151,12 +140,6 @@ export class Overlay extends OverlayFeatures {
         );
     }
 
-    protected longpressState: 'null' | 'potential' | 'opening' | 'pressed' =
-        'null';
-
-    private longressTimeout!: ReturnType<typeof setTimeout>;
-    private hoverTimeout?: ReturnType<typeof setTimeout>;
-
     /**
      * The `offset` property accepts either a single number, to
      * define the offset of the Overlay along the main axis from
@@ -167,7 +150,12 @@ export class Overlay extends OverlayFeatures {
     @property({ type: Number })
     override offset: number | [number, number] = 0;
 
-    protected override placementController = new PlacementController(this);
+    protected override get placementController(): PlacementController {
+        if (!this._placementController) {
+            this._placementController = new PlacementController(this);
+        }
+        return this._placementController;
+    }
 
     /**
      * Whether the Overlay is projected onto the "top layer" or not.
@@ -184,17 +172,15 @@ export class Overlay extends OverlayFeatures {
         if (open === this.open) return;
         // Don't respond when you're in the shadow on a longpress
         // Shadow occurs when the first "click" would normally close the popover
-        if (
-            (this.longpressState === 'opening' ||
-                this.longpressState === 'pressed') &&
-            !open
-        )
-            return;
+        if (this.strategy?.activelyOpening && !open) return;
         this._open = open;
         if (this.open) {
             Overlay.openCount += 1;
         }
         this.requestUpdate('open', !this.open);
+        if (this.open) {
+            this.requestSlottable();
+        }
     }
 
     private _open = false;
@@ -210,6 +196,12 @@ export class Overlay extends OverlayFeatures {
     override placement?: Placement;
 
     /**
+     * The state in which the last `request-slottable` event was dispatched.
+     * Do not allow overlays from dispatching the same state twice in a row.
+     */
+    private lastRequestSlottableState = false;
+
+    /**
      * Whether to pass focus to the overlay once opened, or
      * to the appropriate value based on the "type" of the overlay
      * when set to `"auto"`.
@@ -217,9 +209,6 @@ export class Overlay extends OverlayFeatures {
      */
     @property({ attribute: 'receives-focus' })
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
-
-    private releaseAriaDescribedby = noop;
-    private releaseLongpressDescribedby = noop;
 
     @query('slot')
     slotEl!: HTMLSlotElement;
@@ -234,19 +223,14 @@ export class Overlay extends OverlayFeatures {
         const oldState = this.state;
         this._state = state;
         if (this.state === 'opened' || this.state === 'closed') {
-            // When triggered by the pointer, the last of `opened`
-            // or `pointerup` should move the `longpressState` to
-            // `null` so that the earlier event can void the "light
-            // dismiss" and keep the Overlay open.
-            this.longpressState =
-                this.longpressState === 'pressed'
-                    ? 'null'
-                    : this.longpressState;
+            this.strategy?.shouldCompleteOpen();
         }
         this.requestUpdate('state', oldState);
     }
 
     override _state: OverlayState = 'closed';
+
+    public strategy?: ClickController | HoverController | LongpressController;
 
     @property({ type: Number, attribute: 'tip-padding' })
     tipPadding?: number;
@@ -270,7 +254,7 @@ export class Overlay extends OverlayFeatures {
      * The specific interaction to listen for on the `triggerElement` to open the overlay.
      */
     @property({ attribute: false })
-    triggerInteraction?: 'click' | 'longpress' | 'hover';
+    triggerInteraction?: TriggerInteraction;
 
     /**
      * Configures the open/close heuristics of the Overlay.
@@ -281,7 +265,12 @@ export class Overlay extends OverlayFeatures {
 
     protected wasOpen = false;
 
-    private elementResolver = new ElementResolutionController(this);
+    protected override get elementResolver(): ElementResolutionController {
+        if (!this._elementResolver) {
+            this._elementResolver = new ElementResolutionController(this);
+        }
+        return this._elementResolver;
+    }
 
     private get usesDialog(): boolean {
         return this.type === 'modal' || this.type === 'page';
@@ -378,6 +367,43 @@ export class Overlay extends OverlayFeatures {
         focusEl?.focus();
     }
 
+    protected override returnFocus(): void {
+        if (this.open || this.type === 'hint') return;
+
+        // If the focus remains inside of the overlay or
+        // a slotted descendent of the overlay you need to return
+        // focus back to the trigger.
+        const getAncestors = (): HTMLElement[] => {
+            const ancestors: HTMLElement[] = [];
+            // eslint-disable-next-line @spectrum-web-components/document-active-element
+            let currentNode = document.activeElement;
+            while (currentNode?.shadowRoot?.activeElement) {
+                currentNode = currentNode.shadowRoot.activeElement;
+            }
+            while (currentNode) {
+                const ancestor =
+                    currentNode.assignedSlot ||
+                    currentNode.parentElement ||
+                    (currentNode.getRootNode() as ShadowRoot)?.host;
+                if (ancestor) {
+                    ancestors.push(ancestor as HTMLElement);
+                }
+                currentNode = ancestor;
+            }
+            return ancestors;
+        };
+        if (
+            this.receivesFocus !== 'false' &&
+            !!(this.triggerElement as HTMLElement)?.focus &&
+            (this.contains((this.getRootNode() as Document).activeElement) ||
+                getAncestors().includes(this) ||
+                // eslint-disable-next-line @spectrum-web-components/document-active-element
+                document.activeElement === document.body)
+        ) {
+            (this.triggerElement as HTMLElement).focus();
+        }
+    }
+
     private closeOnFocusOut = (event: FocusEvent): void => {
         // If you don't know where the focus went, we can't do anyting here.
         if (!event.relatedTarget) {
@@ -460,410 +486,20 @@ export class Overlay extends OverlayFeatures {
                 );
             }
         }
-        if (!this.open && this.type !== 'hint') {
-            // If the focus remains inside of the overlay or
-            // a slotted descendent of the overlay you need to return
-            // focus back to the trigger.
-            const getAncestors = (): HTMLElement[] => {
-                const ancestors: HTMLElement[] = [];
-                // eslint-disable-next-line @spectrum-web-components/document-active-element
-                let currentNode = document.activeElement;
-                while (
-                    currentNode?.shadowRoot &&
-                    currentNode.shadowRoot.activeElement
-                ) {
-                    currentNode = currentNode.shadowRoot.activeElement;
-                }
-                while (currentNode) {
-                    const ancestor =
-                        currentNode.assignedSlot ||
-                        currentNode.parentElement ||
-                        (currentNode.getRootNode() as ShadowRoot)?.host;
-                    if (ancestor) {
-                        ancestors.push(ancestor as HTMLElement);
-                    }
-                    currentNode = ancestor;
-                }
-                return ancestors;
-            };
-            if (
-                (this.triggerElement as HTMLElement)?.focus &&
-                (this.contains(
-                    (this.getRootNode() as Document).activeElement
-                ) ||
-                    getAncestors().includes(this))
-            ) {
-                (this.triggerElement as HTMLElement).focus();
-            }
-        }
-    }
-
-    protected unbindEvents(): void {
-        this.abortController?.abort();
     }
 
     protected bindEvents(): void {
+        this.strategy?.abort();
+        this.strategy = undefined;
         if (!this.hasNonVirtualTrigger) return;
-        // Clean up listeners if they've already been bound
-        this.abortController?.abort();
-        this.abortController = new AbortController();
-        const nextTriggerElement = this.triggerElement as HTMLElement;
-        switch (this.triggerInteraction) {
-            case 'click':
-                this.bindClickEvents(nextTriggerElement);
-                return;
-            case 'longpress':
-                this.bindLongpressEvents(nextTriggerElement);
-                return;
-            case 'hover':
-                this.bindHoverEvents(nextTriggerElement);
-                return;
-        }
-    }
-
-    protected bindClickEvents(triggerElement: HTMLElement): void {
-        const options = { signal: this.abortController.signal };
-        triggerElement.addEventListener('click', this.handleClick, options);
-        triggerElement.addEventListener(
-            'pointerdown',
-            this.handlePointerdownForClick,
-            options
-        );
-    }
-
-    protected bindLongpressEvents(triggerElement: HTMLElement): void {
-        const options = { signal: this.abortController.signal };
-        triggerElement.addEventListener(
-            'longpress',
-            this.handleLongpress,
-            options
-        );
-        triggerElement.addEventListener(
-            'pointerdown',
-            this.handlePointerdown,
-            options
-        );
-        this.prepareLongpressDescription(triggerElement);
-        if (
-            (triggerElement as HTMLElement & { holdAffordance: boolean })
-                .holdAffordance
-        ) {
-            // Only bind keyboard events when the trigger element isn't doing it for us.
-            return;
-        }
-        triggerElement.addEventListener('keydown', this.handleKeydown, options);
-        triggerElement.addEventListener('keyup', this.handleKeyup, options);
-    }
-
-    protected bindHoverEvents(triggerElement: HTMLElement): void {
-        const options = { signal: this.abortController.signal };
-        triggerElement.addEventListener('focusin', this.handleFocusin, options);
-        triggerElement.addEventListener(
-            'focusout',
-            this.handleFocusout,
-            options
-        );
-        triggerElement.addEventListener(
-            'pointerenter',
-            this.handlePointerenter,
-            options
-        );
-        triggerElement.addEventListener(
-            'pointerleave',
-            this.handlePointerleave,
-            options
-        );
-        this.addEventListener(
-            'pointerenter',
-            this.handleOverlayPointerenter,
-            options
-        );
-        this.addEventListener(
-            'pointerleave',
-            this.handleOverlayPointerleave,
-            options
-        );
-    }
-
-    protected manageTriggerElement(
-        triggerElement: HTMLElement | undefined
-    ): void {
-        if (triggerElement) {
-            this.unbindEvents();
-            this.releaseAriaDescribedby();
-        }
-        const missingOrVirtual =
-            !this.triggerElement ||
-            this.triggerElement instanceof VirtualTrigger;
-        if (missingOrVirtual) {
-            return;
-        }
-        this.bindEvents();
-        if (this.receivesFocus === 'true') return;
-
-        this.prepareAriaDescribedby();
-    }
-
-    private elementIds: string[] = [];
-
-    private prepareLongpressDescription(trigger: HTMLElement): void {
-        if (
-            // only "longpress" relationships are described this way
-            this.triggerInteraction !== 'longpress' ||
-            // do not reapply until target it recycled
-            this.releaseLongpressDescribedby !== noop ||
-            // require "longpress content" to apply relationship
-            !this.elements.length
-        ) {
-            return;
-        }
-
-        const longpressDescription = document.createElement('div');
-        longpressDescription.id = `longpress-describedby-descriptor-${crypto
-            .randomUUID()
-            .slice(0, 8)}`;
-        const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
-        longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
-        longpressDescription.slot = 'longpress-describedby-descriptor';
-        const triggerParent = trigger.getRootNode() as HTMLElement;
-        const overlayParent = this.getRootNode() as HTMLElement;
-        // Manage the placement of the helper element in an accessible place with
-        // the lowest chance of negatively affecting the layout of the page.
-        if (triggerParent === overlayParent) {
-            // Trigger and Overlay in same DOM tree...
-            // Append helper element to Overlay.
-            this.append(longpressDescription);
-        } else {
-            // If Trigger in <body>, hide helper
-            longpressDescription.hidden = !('host' in triggerParent);
-            // Trigger and Overlay in different DOM tree, Trigger in shadow tree...
-            // Insert helper element after Trigger.
-            trigger.insertAdjacentElement('afterend', longpressDescription);
-        }
-
-        const releaseLongpressDescribedby = conditionAttributeWithId(
-            trigger,
-            'aria-describedby',
-            [longpressDescription.id]
-        );
-        this.releaseLongpressDescribedby = () => {
-            releaseLongpressDescribedby();
-            longpressDescription.remove();
-            this.releaseLongpressDescribedby = noop;
-        };
-    }
-
-    private prepareAriaDescribedby(): void {
-        if (
-            // only "hover" relationships establed described by content
-            this.triggerInteraction !== 'hover' ||
-            // do not reapply until target is recycled
-            this.releaseAriaDescribedby !== noop ||
-            // require "hover content" to apply relationship
-            !this.elements.length ||
-            // Virtual triggers can have no aria content
-            !this.hasNonVirtualTrigger
-        ) {
-            return;
-        }
-
-        const trigger = this.triggerElement as HTMLElement;
-        const triggerRoot = trigger.getRootNode();
-        const contentRoot = this.elements[0].getRootNode();
-        const overlayRoot = this.getRootNode();
-        if (triggerRoot == overlayRoot) {
-            const releaseAriaDescribedby = conditionAttributeWithId(
-                trigger,
-                'aria-describedby',
-                [this.id]
-            );
-            this.releaseAriaDescribedby = () => {
-                releaseAriaDescribedby();
-                this.releaseAriaDescribedby = noop;
-            };
-        } else if (triggerRoot === contentRoot) {
-            this.elementIds = this.elements.map((el) => el.id);
-            const appliedIds = this.elements.map((el) => {
-                if (!el.id) {
-                    el.id = `${this.tagName.toLowerCase()}-helper-${crypto
-                        .randomUUID()
-                        .slice(0, 8)}`;
-                }
-                return el.id;
-            });
-            const releaseAriaDescribedby = conditionAttributeWithId(
-                trigger,
-                'aria-describedby',
-                appliedIds
-            );
-            this.releaseAriaDescribedby = () => {
-                releaseAriaDescribedby();
-                this.elements.map((el, index) => {
-                    el.id = this.elementIds[index];
-                });
-                this.releaseAriaDescribedby = noop;
-            };
-        }
-    }
-
-    private handlePointerdown = (event: PointerEvent): void => {
-        if (!this.triggerElement) return;
-        if (event.button !== 0) return;
-        const triggerElement = this.triggerElement as HTMLElement;
-        this.longpressState = 'potential';
-        document.addEventListener('pointerup', this.handlePointerup);
-        document.addEventListener('pointercancel', this.handlePointerup);
-        if (
-            (triggerElement as HTMLElement & { holdAffordance: boolean })
-                .holdAffordance
-        ) {
-            // Only dispatch longpress event if the trigger element isn't doing it for us.
-            return;
-        }
-        this.longressTimeout = setTimeout(() => {
-            if (!triggerElement) return;
-            triggerElement.dispatchEvent(
-                new CustomEvent<LongpressEvent>('longpress', {
-                    bubbles: true,
-                    composed: true,
-                    detail: {
-                        source: 'pointer',
-                    },
-                })
-            );
-        }, LONGPRESS_DURATION);
-    };
-
-    private handlePointerup = (): void => {
-        clearTimeout(this.longressTimeout);
-        if (!this.triggerElement) return;
-        // When triggered by the pointer, the last of `opened`
-        // or `pointerup` should move the `longpressState` to
-        // `null` so that the earlier event can void the "light
-        // dismiss" and keep the Overlay open.
-        this.longpressState = this.state === 'opening' ? 'pressed' : 'null';
-        document.removeEventListener('pointerup', this.handlePointerup);
-        document.removeEventListener('pointercancel', this.handlePointerup);
-    };
-
-    /**
-     * @private
-     */
-    protected handleKeydown = (event: KeyboardEvent): void => {
-        const { code, altKey } = event;
-        if (code === 'Space' || (altKey && code === 'ArrowDown')) {
-            if (code === 'ArrowDown') {
-                event.stopPropagation();
-                event.stopImmediatePropagation();
+        if (!this.triggerInteraction) return;
+        this.strategy = new strategies[this.triggerInteraction](
+            this.triggerElement as HTMLElement,
+            {
+                overlay: this,
             }
-        }
-    };
-
-    protected handleKeyup = (event: KeyboardEvent): void => {
-        const { code, altKey } = event;
-        if (code === 'Space' || (altKey && code === 'ArrowDown')) {
-            if (!this.triggerElement || !this.hasNonVirtualTrigger) {
-                return;
-            }
-            event.stopPropagation();
-            (this.triggerElement as HTMLElement).dispatchEvent(
-                new CustomEvent<LongpressEvent>('longpress', {
-                    bubbles: true,
-                    composed: true,
-                    detail: {
-                        source: 'keyboard',
-                    },
-                })
-            );
-            setTimeout(() => {
-                this.longpressState = 'null';
-            });
-        }
-    };
-
-    /**
-     * An overlay with a `click` interaction should not close on click `triggerElement`.
-     * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the
-     * overlay is `open` to prevent from toggling the overlay when the click event
-     * propagates later in the interaction.
-     */
-    private preventNextToggle = false;
-
-    protected handlePointerdownForClick = (): void => {
-        this.preventNextToggle = this.open;
-    };
-
-    protected handleClick = (): void => {
-        if (
-            this.longpressState === 'opening' ||
-            this.longpressState === 'pressed'
-        ) {
-            return;
-        }
-        if (!this.preventNextToggle) {
-            this.open = !this.open;
-        }
-        this.preventNextToggle = false;
-    };
-
-    private focusedin = false;
-
-    protected handleFocusin = (): void => {
-        this.open = true;
-        this.focusedin = true;
-    };
-
-    protected handleFocusout = (): void => {
-        this.focusedin = false;
-        if (this.pointerentered) return;
-        this.open = false;
-    };
-
-    private pointerentered = false;
-
-    protected handlePointerenter = (): void => {
-        if (this.hoverTimeout) {
-            clearTimeout(this.hoverTimeout);
-            delete this.hoverTimeout;
-        }
-        if (this.disabled) return;
-        this.open = true;
-        this.pointerentered = true;
-    };
-
-    // set a timeout once the pointer enters and the overlay is shown
-    // give the user time to enter the overlay
-
-    protected handleOverlayPointerenter = (): void => {
-        if (this.hoverTimeout) {
-            clearTimeout(this.hoverTimeout);
-            delete this.hoverTimeout;
-        }
-    };
-
-    protected handlePointerleave = (): void => {
-        this.doPointerleave();
-    };
-
-    protected handleOverlayPointerleave = (): void => {
-        this.doPointerleave();
-    };
-
-    protected doPointerleave(): void {
-        this.pointerentered = false;
-        const triggerElement = this.triggerElement as HTMLElement;
-        if (this.focusedin && triggerElement.matches(':focus-visible')) return;
-
-        this.hoverTimeout = setTimeout(() => {
-            this.open = false;
-        }, HOVER_DELAY);
+        );
     }
-
-    protected handleLongpress = (): void => {
-        this.open = true;
-        this.longpressState =
-            this.longpressState === 'potential' ? 'opening' : 'pressed';
-    };
 
     protected handleBeforetoggle(event: Event & { newState: string }): void {
         if (event.newState !== 'open') {
@@ -872,10 +508,7 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected handleBrowserClose(): void {
-        if (
-            this.longpressState !== 'opening' &&
-            this.longpressState !== 'pressed'
-        ) {
+        if (!this.strategy?.activelyOpening) {
             this.open = false;
             return;
         }
@@ -889,13 +522,10 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected handleSlotchange(): void {
-        if (this.triggerElement) {
-            this.prepareAriaDescribedby();
-        }
         if (!this.elements.length) {
-            this.releaseLongpressDescribedby();
+            this.strategy?.releaseDescription();
         } else if (this.hasNonVirtualTrigger) {
-            this.prepareLongpressDescription(
+            this.strategy?.prepareDescription(
                 this.triggerElement as HTMLElement
             );
         }
@@ -907,19 +537,33 @@ export class Overlay extends OverlayFeatures {
         return shouldPreventClose;
     }
 
+    protected override requestSlottable(): void {
+        if (this.lastRequestSlottableState === this.open) {
+            return;
+        }
+        if (!this.open) {
+            document.body.offsetHeight;
+        }
+        /**
+         * @ignore
+         */
+        this.dispatchEvent(
+            new SlottableRequestEvent(
+                'overlay-content',
+                this.open ? {} : removeSlottableRequest
+            )
+        );
+        this.lastRequestSlottableState = this.open;
+    }
+
     override willUpdate(changes: PropertyValues): void {
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
-                `${this.tagName.toLowerCase()}-${crypto
-                    .randomUUID()
-                    .slice(0, 8)}`
+                `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
-        if (
-            changes.has('open') &&
-            (typeof changes.get('open') !== 'undefined' || this.open)
-        ) {
+        if (changes.has('open') && (this.hasUpdated || this.open)) {
             this.manageOpen(changes.get('open'));
         }
         if (changes.has('trigger')) {
@@ -931,7 +575,7 @@ export class Overlay extends OverlayFeatures {
                 | 'hover'
                 | undefined;
         }
-        // Merge multiple possible calls to manageTriggerElement().
+        // Merge multiple possible calls to `bindEvents()`.
         let oldTrigger: HTMLElement | false | undefined = false;
         if (changes.has(elementResolverUpdatedSymbol)) {
             oldTrigger = this.triggerElement as HTMLElement;
@@ -941,7 +585,7 @@ export class Overlay extends OverlayFeatures {
             oldTrigger = changes.get('triggerElement');
         }
         if (oldTrigger !== false) {
-            this.manageTriggerElement(oldTrigger);
+            this.bindEvents();
         }
     }
 
@@ -956,6 +600,13 @@ export class Overlay extends OverlayFeatures {
             if (this.open && typeof changes.get('placement') !== 'undefined') {
                 this.placementController.resetOverlayPosition();
             }
+        }
+        if (
+            changes.has('state') &&
+            this.state === 'closed' &&
+            typeof changes.get('state') !== 'undefined'
+        ) {
+            this.placementController.clearOverlayPosition();
         }
     }
 
@@ -1044,17 +695,13 @@ export class Overlay extends OverlayFeatures {
         this.addEventListener('close', () => {
             this.open = false;
         });
-        if (this.hasNonVirtualTrigger) {
+        if (this.hasUpdated) {
             this.bindEvents();
         }
     }
 
     override disconnectedCallback(): void {
-        if (this.hasNonVirtualTrigger) {
-            this.unbindEvents();
-        }
-        this.releaseAriaDescribedby();
-        this.releaseLongpressDescribedby();
+        this.strategy?.releaseDescription();
         this.open = false;
         super.disconnectedCallback();
     }

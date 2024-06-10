@@ -72,10 +72,42 @@ const config = {
                     regex: /spectrum-Menu--size/,
                 },
             ],
+            excludeByWholeSelector: [
+                [
+                    builder.class('spectrum-Menu-item'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Menu-item'),
+                ],
+            ],
             components: [
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-active', 'active'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),
@@ -138,6 +170,29 @@ const config = {
                 },
                 {
                     find: [builder.class('spectrum-Menu-itemLabel--wrapping')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    {
+                                        type: 'attribute',
+                                        name: 'no-wrap',
+                                    },
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('label'),
+                        },
+                    ],
+                },
+                {
+                    find: [builder.class('spectrum-Menu-itemLabel--truncate')],
                     replace: [
                         {
                             replace: {
@@ -359,6 +414,7 @@ const config = {
                     name: 'regex',
                     regex: /spectrum-Menu-chevron/,
                 },
+                builder.element('li'),
             ],
             includeByWholeSelector: [
                 /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */

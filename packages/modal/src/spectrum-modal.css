@@ -11,30 +11,41 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .modal {
-    --spectrum-overlay-animation-distance: 6px;
-    --spectrum-overlay-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --spectrum-overlay-animation-duration-opened: var(
-        --spectrum-animation-duration-0
-    );
-    opacity: 0;
     pointer-events: none;
-    transition: transform var(--spectrum-overlay-animation-duration) ease-in-out,
-        opacity var(--spectrum-overlay-animation-duration) ease-in-out,
-        visibility 0s linear var(--spectrum-overlay-animation-duration);
     visibility: hidden;
+    opacity: 0;
+    transition:
+        transform
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        opacity
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        visibility 0s linear
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            );
 }
+
 :host([open]) .modal {
-    opacity: 1;
     pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
     transition-delay: var(
         --mod-overlay-animation-duration-opened,
-        var(--spectrum-overlay-animation-duration-opened)
+        var(--spectrum-animation-duration-0, 0s)
     );
-    visibility: visible;
 }
+
 :host {
     --spectrum-modal-confirm-exit-animation-delay: var(
         --spectrum-animation-duration-0
@@ -57,15 +68,15 @@ governing permissions and limitations under the License.
         --spectrum-animation-duration-100
     );
 }
+
 .modal {
-    background: var(
-        --mod-modal-background-color,
-        var(--spectrum-modal-background-color)
+    transform: translateY(
+        var(
+            --mod-modal-confirm-entry-animation-distance,
+            var(--spectrum-modal-confirm-entry-animation-distance)
+        )
     );
-    border-radius: var(
-        --mod-modal-confirm-border-radius,
-        var(--spectrum-modal-confirm-border-radius)
-    );
+    z-index: 1;
     max-block-size: var(
         --mod-modal-max-height,
         var(--spectrum-modal-max-height)
@@ -74,16 +85,17 @@ governing permissions and limitations under the License.
         --mod-modal-max-width,
         var(--spectrum-modal-max-width)
     );
-    outline: none;
-    overflow: hidden;
-    pointer-events: auto;
-    transform: translateY(
-        var(
-            --mod-modal-confirm-entry-animation-distance,
-            var(--spectrum-modal-confirm-entry-animation-distance)
-        )
+    background: var(
+        --mod-modal-background-color,
+        var(--spectrum-modal-background-color)
     );
-    transition: opacity
+    border-radius: var(
+        --mod-modal-confirm-border-radius,
+        var(--spectrum-modal-confirm-border-radius)
+    );
+    pointer-events: auto;
+    transition:
+        opacity
             var(
                 --mod-modal-confirm-exit-animation-duration,
                 var(--spectrum-modal-confirm-exit-animation-duration)
@@ -115,11 +127,13 @@ governing permissions and limitations under the License.
                         var(--spectrum-modal-confirm-exit-animation-duration)
                     )
             );
-    z-index: 2;
+    outline: none;
+    overflow: hidden;
 }
+
 :host([open]) .modal {
-    transform: translateY(0);
-    transition: transform
+    transition:
+        transform
             var(
                 --mod-modal-confirm-entry-animation-duration,
                 var(--spectrum-modal-confirm-entry-animation-duration)
@@ -139,27 +153,29 @@ governing permissions and limitations under the License.
                 --mod-modal-confirm-entry-animation-delay,
                 var(--spectrum-modal-confirm-entry-animation-delay)
             );
+    transform: translateY(0);
 }
-@media only screen and (max-device-height: 350px),
-    only screen and (max-device-width: 400px) {
+
+@media only screen and (device-height <= 350px),
+    only screen and (device-width <= 400px) {
     :host([responsive]) .modal {
         border-radius: 0;
+        block-size: 100%;
+        max-block-size: 100%;
         inline-size: 100%;
-        height: 100%;
         max-inline-size: 100%;
-        max-height: 100%;
     }
 }
+
 .fullscreen {
-    inset-block-end: var(
-        --mod-modal-fullscreen-margin,
-        var(--spectrum-modal-fullscreen-margin)
-    );
+    max-block-size: none;
+    max-inline-size: none;
+    position: fixed;
     inset-block-start: var(
         --mod-modal-fullscreen-margin,
         var(--spectrum-modal-fullscreen-margin)
     );
-    inset-inline-end: var(
+    inset-block-end: var(
         --mod-modal-fullscreen-margin,
         var(--spectrum-modal-fullscreen-margin)
     );
@@ -167,19 +183,22 @@ governing permissions and limitations under the License.
         --mod-modal-fullscreen-margin,
         var(--spectrum-modal-fullscreen-margin)
     );
+    inset-inline-end: var(
+        --mod-modal-fullscreen-margin,
+        var(--spectrum-modal-fullscreen-margin)
+    );
 }
-.fullscreen,
+
 .fullscreenTakeover {
-    max-inline-size: none;
-    max-height: none;
-    position: fixed;
-}
-.fullscreenTakeover {
+    box-sizing: border-box;
     border: none;
     border-radius: 0;
-    box-sizing: border-box;
+    max-block-size: none;
+    max-inline-size: none;
+    position: fixed;
     inset: 0;
 }
+
 .fullscreenTakeover,
 :host([open]) .fullscreenTakeover {
     transform: none;

@@ -17,6 +17,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-action-button>
-        <sp-tooltip open self-managed>Tip me!</sp-tooltip>
+        I'm a button...
+        <sp-tooltip self-managed>Tip me!</sp-tooltip>
     </sp-action-button>
 `);

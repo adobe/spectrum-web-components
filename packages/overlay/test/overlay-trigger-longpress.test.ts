@@ -56,8 +56,15 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content).to.not.be.null;
             expect(this.content.open).to.be.false;
 
+            // For `:focus-visible` heuristic.
+            const input = document.createElement('input');
+            this.el.insertAdjacentElement('beforebegin', input);
+            input.focus();
+
             const open = oneEvent(this.el, 'sp-opened');
-            this.trigger.focus();
+            await sendKeys({
+                press: 'Tab',
+            });
             await open;
         });
         it('opens/closes for `Space`', async function () {

@@ -29,6 +29,7 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { WithSWCResizeObserver } from './types';
 
@@ -183,8 +184,9 @@ export class SplitView extends SpectrumElement {
                         this.viewSize - this.splitterSize
                     )) as boolean,
         };
-        const label =
-            this.label || (this.resizable ? 'Resize the panels' : undefined);
+        const label = this.resizable
+            ? this.label || 'Resize the panels'
+            : undefined;
 
         return html`
             <slot
@@ -251,9 +253,7 @@ export class SplitView extends SpectrumElement {
         }
         this.controlledEl = event.target.assignedElements()[0] as HTMLElement;
         if (this.controlledEl && !this.controlledEl.id) {
-            this.controlledEl.id = `${this.tagName.toLowerCase()}-${crypto
-                .randomUUID()
-                .slice(0, 8)}`;
+            this.controlledEl.id = `${this.tagName.toLowerCase()}-${randomID()}`;
             this.controlledElIDApplied = true;
         }
         this.enoughChildren = this.children.length > 1;

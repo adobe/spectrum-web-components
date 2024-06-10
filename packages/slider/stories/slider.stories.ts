@@ -152,12 +152,33 @@ export const Filled = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const HasADefaultValue = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                default-value="0.2"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                double click or press escape key to reset
+            </sp-slider>
+        </div>
+    `;
+};
+
 export const FillStart = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
                 max="1"
                 fill-start
+                variant="filled"
                 min="0"
                 value=".7"
                 step="0.01"
@@ -181,6 +202,7 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 value=".7"
                 step="0.1"
                 fill-start="0.3"
+                variant="filled"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
@@ -263,7 +285,7 @@ export const noVisibleValueLabel = (args: StoryArgs = {}): TemplateResult => {
             <sp-slider
                 max="1"
                 min="0"
-                value=".5"
+                value="0"
                 step="0.01"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}
@@ -397,6 +419,63 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
 
 editable.decorators = [editableDecorator];
 
+export const editableWithDefaultValue = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="360"
+                min="0"
+                value="90"
+                step="1"
+                default-value="180"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'degree',
+                    unitDisplay: 'narrow',
+                }}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableWithDefaultValue.swc_vrt = {
+    skip: true,
+};
+
+export const editableWithFractionValue = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="255"
+                min="0.1"
+                value="0.5"
+                step="0.01"
+                default-value="18"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableWithFractionValue.swc_vrt = {
+    skip: true,
+};
+
 export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
@@ -499,6 +578,22 @@ hideStepper.decorators = [editableDecorator];
 
 export const Gradient = (args: StoryArgs = {}): TemplateResult => {
     return html`
+        <style>
+            sp-slider {
+                --mod-slider-track-color: linear-gradient(
+                    to right,
+                    red,
+                    green 100%
+                );
+            }
+            sp-slider[dir='rtl'] {
+                --mod-slider-track-color: linear-gradient(
+                    to left,
+                    red,
+                    green 100%
+                );
+            }
+        </style>
         <div
             style="
                 width: 500px;
@@ -506,10 +601,6 @@ export const Gradient = (args: StoryArgs = {}): TemplateResult => {
             "
         >
             <sp-slider
-                style="
-                    --spectrum-slider-track-color:linear-gradient(to right, red, green 100%);
-                    --spectrum-slider-track-color-rtl:linear-gradient(to left, red, green 100%);
-                "
                 label="Opacity"
                 max="100"
                 min="0"

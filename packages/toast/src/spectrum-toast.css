@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-toast-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-toast-font-size: var(--spectrum-font-size-100);
@@ -58,6 +59,7 @@ governing permissions and limitations under the License.
     --spectrum-toast-text-and-icon-color: var(--spectrum-white);
     --spectrum-toast-divider-color: var(--spectrum-transparent-white-300);
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-toast-border-color: ButtonText;
@@ -68,9 +70,27 @@ governing permissions and limitations under the License.
             solid var(--highcontrast-toast-border-color, transparent);
     }
 }
+
 :host {
+    box-sizing: border-box;
+    min-block-size: var(
+        --mod-toast-block-size,
+        var(--spectrum-toast-block-size)
+    );
+    max-inline-size: var(
+        --mod-toast-max-inline-size,
+        var(--spectrum-toast-max-inline-size)
+    );
+    border-radius: var(
+        --mod-toast-corner-radius,
+        var(--spectrum-toast-corner-radius)
+    );
+    font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
+    font-weight: var(
+        --mod-toast-font-weight,
+        var(--spectrum-toast-font-weight)
+    );
     -webkit-font-smoothing: antialiased;
-    align-items: stretch;
     background-color: var(
         --highcontrast-toast-background-color-default,
         var(
@@ -78,11 +98,6 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-background-color-default)
         )
     );
-    border-radius: var(
-        --mod-toast-corner-radius,
-        var(--spectrum-toast-corner-radius)
-    );
-    box-sizing: border-box;
     color: var(
         --highcontrast-toast-background-color-default,
         var(
@@ -90,26 +105,15 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-background-color-default)
         )
     );
-    display: inline-flex;
     flex-direction: row;
-    font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
-    font-weight: var(
-        --mod-toast-font-weight,
-        var(--spectrum-toast-font-weight)
-    );
-    max-inline-size: var(
-        --mod-toast-max-inline-size,
-        var(--spectrum-toast-max-inline-size)
-    );
-    min-block-size: var(
-        --mod-toast-block-size,
-        var(--spectrum-toast-block-size)
-    );
+    align-items: stretch;
     padding-inline-start: var(
         --mod-toast-spacing-start-edge-to-text-and-icon,
         var(--spectrum-toast-spacing-start-edge-to-text-and-icon)
     );
+    display: inline-flex;
 }
+
 :host([variant='negative']) {
     background-color: var(
         --highcontrast-toast-negative-background-color-default,
@@ -118,23 +122,9 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-negative-background-color-default)
         )
     );
-    color: var(
-        --highcontrast-toast-negative-background-color-default,
-        var(
-            --mod-toast-negative-background-color-default,
-            var(--spectrum-toast-negative-background-color-default)
-        )
-    );
 }
-:host([variant='negative']) .closeButton.focus-visible:not(:active) {
-    color: var(
-        --highcontrast-toast-negative-background-color-default,
-        var(
-            --mod-toast-negative-background-color-default,
-            var(--spectrum-toast-negative-background-color-default)
-        )
-    );
-}
+
+:host([variant='negative']),
 :host([variant='negative']) .closeButton:focus-visible:not(:active) {
     color: var(
         --highcontrast-toast-negative-background-color-default,
@@ -144,6 +134,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([variant='info']) {
     background-color: var(
         --highcontrast-toast-informative-background-color-default,
@@ -152,23 +143,9 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-informative-background-color-default)
         )
     );
-    color: var(
-        --highcontrast-toast-informative-background-color-default,
-        var(
-            --mod-toast-informative-background-color-default,
-            var(--spectrum-toast-informative-background-color-default)
-        )
-    );
 }
-:host([variant='info']) .closeButton.focus-visible:not(:active) {
-    color: var(
-        --highcontrast-toast-informative-background-color-default,
-        var(
-            --mod-toast-informative-background-color-default,
-            var(--spectrum-toast-informative-background-color-default)
-        )
-    );
-}
+
+:host([variant='info']),
 :host([variant='info']) .closeButton:focus-visible:not(:active) {
     color: var(
         --highcontrast-toast-informative-background-color-default,
@@ -178,6 +155,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 :host([variant='positive']) {
     background-color: var(
         --highcontrast-toast-positive-background-color-default,
@@ -186,23 +164,9 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-positive-background-color-default)
         )
     );
-    color: var(
-        --highcontrast-toast-positive-background-color-default,
-        var(
-            --mod-toast-positive-background-color-default,
-            var(--spectrum-toast-positive-background-color-default)
-        )
-    );
 }
-:host([variant='positive']) .closeButton.focus-visible:not(:active) {
-    color: var(
-        --highcontrast-toast-positive-background-color-default,
-        var(
-            --mod-toast-positive-background-color-default,
-            var(--spectrum-toast-positive-background-color-default)
-        )
-    );
-}
+
+:host([variant='positive']),
 :host([variant='positive']) .closeButton:focus-visible:not(:active) {
     color: var(
         --highcontrast-toast-positive-background-color-default,
@@ -212,6 +176,7 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 .type {
     flex-grow: 0;
     flex-shrink: 0;
@@ -219,12 +184,13 @@ governing permissions and limitations under the License.
         --mod-toast-spacing-top-edge-to-icon,
         var(--spectrum-toast-spacing-top-edge-to-icon)
     );
+    margin-inline-start: 0;
     margin-inline-end: var(
         --mod-toast-spacing-icon-to-text,
         var(--spectrum-toast-spacing-icon-to-text)
     );
-    margin-inline-start: 0;
 }
+
 .content,
 .type {
     color: var(
@@ -235,13 +201,24 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 .content {
     box-sizing: border-box;
-    display: inline-block;
-    flex: auto;
     line-height: var(
         --mod-toast-line-height,
         var(--spectrum-toast-line-height)
+    );
+    text-align: start;
+    flex: auto;
+    padding-block-start: calc(
+        var(
+                --mod-toast-spacing-top-edge-to-text,
+                var(--spectrum-toast-spacing-top-edge-to-text)
+            ) -
+            var(
+                --mod-toast-spacing-block-start,
+                var(--spectrum-toast-spacing-block-start)
+            )
     );
     padding-block-end: calc(
         var(
@@ -253,23 +230,14 @@ governing permissions and limitations under the License.
                 var(--spectrum-toast-spacing-block-end)
             )
     );
-    padding-block-start: calc(
-        var(
-                --mod-toast-spacing-top-edge-to-text,
-                var(--spectrum-toast-spacing-top-edge-to-text)
-            ) -
-            var(
-                --mod-toast-spacing-block-start,
-                var(--spectrum-toast-spacing-block-start)
-            )
-    );
+    padding-inline-start: 0;
     padding-inline-end: var(
         --mod-toast-spacing-text-to-action-button-horizontal,
         var(--spectrum-toast-spacing-text-to-action-button-horizontal)
     );
-    padding-inline-start: 0;
-    text-align: start;
+    display: inline-block;
 }
+
 .content:lang(ja),
 .content:lang(ko),
 .content:lang(zh) {
@@ -278,60 +246,66 @@ governing permissions and limitations under the License.
         var(--spectrum-toast-line-height-cjk)
     );
 }
+
 .buttons {
-    align-items: flex-start;
     border-inline-start-color: var(
         --mod-toast-divider-color,
         var(--spectrum-toast-divider-color)
     );
-    display: flex;
     flex: none;
-    margin-block-end: var(
-        --mod-toast-spacing-bottom-edge-to-divider,
-        var(--spectrum-toast-spacing-bottom-edge-to-divider)
-    );
+    align-items: flex-start;
     margin-block-start: var(
         --mod-toast-spacing-top-edge-to-divider,
         var(--spectrum-toast-spacing-top-edge-to-divider)
+    );
+    margin-block-end: var(
+        --mod-toast-spacing-bottom-edge-to-divider,
+        var(--spectrum-toast-spacing-bottom-edge-to-divider)
     );
     padding-inline-end: var(
         --mod-toast-spacing-close-button,
         var(--spectrum-toast-spacing-close-button)
     );
+    display: flex;
 }
+
 .buttons .spectrum-CloseButton {
     align-self: flex-start;
 }
+
 .body {
-    align-items: center;
-    align-self: center;
-    display: flex;
-    flex: auto;
     flex-wrap: wrap;
-    padding-block-end: var(
-        --mod-toast-spacing-block-end,
-        var(--spectrum-toast-spacing-block-end)
-    );
+    flex: auto;
+    align-self: center;
+    align-items: center;
     padding-block-start: var(
         --mod-toast-spacing-block-start,
         var(--spectrum-toast-spacing-block-start)
     );
+    padding-block-end: var(
+        --mod-toast-spacing-block-end,
+        var(--spectrum-toast-spacing-block-end)
+    );
+    display: flex;
 }
+
 .body ::slotted([slot='action']) {
-    margin-inline-end: var(
-        --mod-toast-spacing-text-and-action-button-to-divider,
-        var(--spectrum-toast-spacing-text-and-action-button-to-divider)
-    );
-}
-:host([dir='ltr']) .body ::slotted([slot='action']) {
     margin-inline-start: auto;
-}
-:host([dir='rtl']) .body ::slotted([slot='action']) {
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)
     );
 }
+
+.body ::slotted([slot='action']:dir(rtl)),
+:host([dir='rtl']) .body ::slotted([slot='action']) {
+    margin-inline-end: auto;
+    margin-inline-end: var(
+        --mod-toast-spacing-text-and-action-button-to-divider,
+        var(--spectrum-toast-spacing-text-and-action-button-to-divider)
+    );
+}
+
 .body + .buttons {
     border-inline-start-style: solid;
     border-inline-start-width: 1px;
@@ -340,6 +314,7 @@ governing permissions and limitations under the License.
         var(--spectrum-toast-spacing-close-button)
     );
 }
+
 :host {
     --spectrum-toast-background-color-default: var(
         --system-spectrum-toast-background-color-default

@@ -16,23 +16,40 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
-import { Tab, TabsOverflow } from '@spectrum-web-components/tabs';
+import { Tab, Tabs, TabsOverflow } from '@spectrum-web-components/tabs';
 import { ActionButton } from '@spectrum-web-components/action-button';
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
-import { html, nothing } from '@spectrum-web-components/base';
+import {
+    ElementSize,
+    ElementSizes,
+    html,
+    nothing,
+} from '@spectrum-web-components/base';
 import { repeat } from 'lit/directives/repeat.js';
 
-const renderTabsOverflow = async (
-    count: number,
-    size: string,
-    includeTabPanel: boolean
-): Promise<HTMLDivElement> => {
+type OverflowProperties = {
+    count: number;
+    size: ElementSize;
+    includeTabPanel: boolean;
+    selected?: number;
+    autoscroll?: boolean;
+    labelPrev?: string;
+    labelNext?: string;
+};
+
+const renderTabsOverflow = async ({
+    count,
+    size,
+    includeTabPanel,
+    selected = 1,
+    autoscroll = false,
+}: OverflowProperties): Promise<HTMLDivElement> => {
     const tabsContainer = await fixture<HTMLDivElement>(
         html`
             <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow>
-                    <sp-tabs size=${size} selected="1" enableTabsScroll=${true}>
+                <sp-tabs-overflow ?autoscroll=${autoscroll}>
+                    <sp-tabs size=${size} selected=${selected}>
                         ${repeat(
                             new Array(count),
                             (item) => item,
@@ -73,7 +90,7 @@ describe('TabsOverflow', () => {
         const el = await fixture<TabsOverflow>(
             html`
                 <sp-tabs-overflow>
-                    <sp-tabs size="m" selected="1" enableTabsScroll=${true}>
+                    <sp-tabs size="m" selected="1">
                         <sp-tab label="Tab Item 1" value="1"></sp-tab>
                         <sp-tab label="Tab Item 2" value="2"></sp-tab>
                         <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
@@ -89,7 +106,11 @@ describe('TabsOverflow', () => {
     });
 
     it('show render left and right buttons in shadowDom', async () => {
-        const el = await renderTabsOverflow(20, 'l', true);
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+        });
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
             'sp-tabs-overflow'
@@ -105,7 +126,11 @@ describe('TabsOverflow', () => {
     });
 
     it('reflect proper sp-tab size', async () => {
-        const el = await renderTabsOverflow(20, 'm', true);
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.M,
+            includeTabPanel: true,
+        });
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
             'sp-tabs-overflow'
@@ -115,7 +140,11 @@ describe('TabsOverflow', () => {
     });
 
     it('should scroll when the button is clicked', async () => {
-        const el = await renderTabsOverflow(20, 'l', true);
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+        });
         await elementUpdated(el);
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
@@ -156,5 +185,116 @@ describe('TabsOverflow', () => {
         const slot = el.shadowRoot.querySelector('slot');
         const slotContent = slot?.assignedElements() || '';
         expect(slotContent[0].toString()).to.not.contains('Tabs');
+    });
+
+    it('should automatically bring the selected tab into view', async () => {
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.L,
+            includeTabPanel: false,
+            selected: 10,
+        });
+        await elementUpdated(el);
+
+        // Grab the list of tabs.
+        const tabsEl = el.querySelector('sp-tabs') as Tabs;
+
+        // Grab the coordonates of the selected tab.
+        const selectedTab = tabsEl.querySelector(
+            `[role="tab"][value="10"]`
+        ) as Tab;
+        expect(selectedTab).to.exist;
+        const selectedTabPosition = selectedTab.getBoundingClientRect();
+
+        // Selected tab is in the viewport, offset left is greater than 0 and less than the width of the tabs.
+        expect(selectedTabPosition.left).to.be.greaterThan(0);
+        expect(selectedTabPosition.left).to.be.lessThan(tabsEl.clientWidth);
+
+        // First tab is not in the viewport anymore, its offset left is less than 0.
+        const firstTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
+        const firstTabPosition = firstTab.getBoundingClientRect();
+        expect(firstTabPosition.left).to.be.lessThan(0);
+    });
+
+    it('prev and next buttons have default labels', async () => {
+        const el = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.M,
+            includeTabPanel: true,
+        });
+        await elementUpdated(el);
+
+        const spTabsOverflows: TabsOverflow = el.querySelector(
+            'sp-tabs-overflow'
+        ) as TabsOverflow;
+        const leftButton = spTabsOverflows.shadowRoot.querySelector(
+            '.left-scroll'
+        ) as ActionButton;
+        const rightButton = spTabsOverflows.shadowRoot.querySelector(
+            '.right-scroll'
+        ) as ActionButton;
+
+        expect(leftButton?.getAttribute('aria-label')).to.equal(
+            'Scroll to previous tabs'
+        );
+        expect(rightButton?.getAttribute('aria-label')).to.equal(
+            'Scroll to next tabs'
+        );
+    });
+
+    it('prev and next buttons labels overwritten via attributes', async () => {
+        const tabsContainer = await fixture<HTMLDivElement>(
+            html`
+                <div class="container" style="width: 200px; height: 150px;">
+                    <sp-tabs-overflow
+                        label-previous="custom label prev"
+                        label-next="custom label next"
+                    >
+                        <sp-tabs size=${ElementSizes.M} selected=${1}>
+                            ${repeat(
+                                new Array(20),
+                                (item) => item,
+                                (_item, index) =>
+                                    html`
+                                        <sp-tab
+                                            label=${`Tab Item ${index + 1}`}
+                                            value=${index + 1}
+                                        ></sp-tab>
+                                    `
+                            )}
+                            ${repeat(
+                                new Array(20),
+                                (item) => item,
+                                (_item, index) =>
+                                    html`
+                                        <sp-tab-panel value=${index + 1}>
+                                            Content for Tab Item ${index + 1}
+                                        </sp-tab-panel>
+                                    `
+                            )}
+                        </sp-tabs>
+                    </sp-tabs-overflow>
+                </div>
+            `
+        );
+        await elementUpdated(tabsContainer);
+        const el = tabsContainer;
+
+        const spTabsOverflows: TabsOverflow = el.querySelector(
+            'sp-tabs-overflow'
+        ) as TabsOverflow;
+        const leftButton = spTabsOverflows.shadowRoot.querySelector(
+            '.left-scroll'
+        ) as ActionButton;
+        const rightButton = spTabsOverflows.shadowRoot.querySelector(
+            '.right-scroll'
+        ) as ActionButton;
+
+        expect(leftButton?.getAttribute('aria-label')).to.equal(
+            'custom label prev'
+        );
+        expect(rightButton?.getAttribute('aria-label')).to.equal(
+            'custom label next'
+        );
     });
 });

@@ -18,7 +18,6 @@ import {
     html,
     nextFrame,
     oneEvent,
-    waitUntil,
 } from '@open-wc/testing';
 
 import {
@@ -32,7 +31,6 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { isWebKit } from '@spectrum-web-components/shared';
 
 export const runOverlayTriggerTests = (type: string): void => {
     describe(`Overlay Trigger - ${type}`, () => {
@@ -48,6 +46,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                                     justify-content: center;
                                 }
                             </style>
+                            <input type="text" />
                             <overlay-trigger id="trigger" placement="top">
                                 <sp-button
                                     id="outer-button"
@@ -107,12 +106,6 @@ export const runOverlayTriggerTests = (type: string): void => {
                         </div>
                     `
                 );
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
 
                 this.innerTrigger = this.testDiv.querySelector(
                     '#inner-trigger'
@@ -135,6 +128,16 @@ export const runOverlayTriggerTests = (type: string): void => {
                 this.hoverContent = this.testDiv.querySelector(
                     '#hover-content'
                 ) as HTMLDivElement;
+
+                await Promise.all([
+                    this.innerTrigger.updateComplete,
+                    this.outerTrigger.updateComplete,
+                    this.innerButton.updateComplete,
+                    this.outerButton.updateComplete,
+                    this.innerClickContent.updateComplete,
+                    this.outerClickContent.updateComplete,
+                ]);
+                this.testDiv.querySelector('input').focus();
             });
 
             it('opens a popover', async function () {
@@ -343,10 +346,6 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
 
             it('opens a nested popover', async function () {
-                if (isWebKit()) {
-                    // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
-                    this.skip();
-                }
                 expect(
                     await isOnTopLayer(this.outerClickContent),
                     'hover not available at point'
@@ -451,7 +450,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(
                     document.activeElement === this.innerButton,
-                    'outer popover recieved focus'
+                    `outer popover recieved focus: ${document.activeElement?.localName}`
                 ).to.be.true;
             });
 
@@ -473,21 +472,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(
                     await isOnTopLayer(this.outerClickContent),
-                    'outer click content available at point'
-                ).to.be.true;
-                expect(
-                    await isOnTopLayer(this.innerClickContent),
-                    'inner click content available at point'
-                ).to.be.true;
-
-                // Why does this make the test pass in Chromium? 🤷🏻‍♂️
-                await sendKeys({
-                    press: 'Space',
-                });
-
-                expect(
-                    await isOnTopLayer(this.outerClickContent),
-                    'outer click content available at point'
+                    'outer click content available at point, 1'
                 ).to.be.true;
                 expect(
                     await isOnTopLayer(this.innerClickContent),
@@ -502,11 +487,11 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(
                     await isOnTopLayer(this.outerClickContent),
-                    'outer click content available at point'
+                    'outer click content available at point, 2'
                 ).to.be.true;
                 expect(
                     await isOnTopLayer(this.innerClickContent),
-                    'inner click content not available at point'
+                    'inner click content not available at point, 1'
                 ).to.be.false;
 
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
@@ -521,15 +506,11 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
                 expect(
                     await isOnTopLayer(this.innerClickContent),
-                    'inner click content not available at point'
+                    'inner click content not available at point, 2'
                 ).to.be.false;
             });
 
             it('click closes an open popover', async function () {
-                if (isWebKit()) {
-                    // breaks on https://bugs.webkit.org/show_bug.cgi?id=263081 skip for now.
-                    this.skip();
-                }
                 this.outerTrigger.type = 'auto';
                 this.innerTrigger.type = 'auto';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
@@ -717,164 +698,6 @@ export const runOverlayTriggerTests = (type: string): void => {
                     }
                 });
                 await Promise.all(closes);
-            });
-            it.skip('manages multiple layers of `type="modal"', async () => {
-                const el = await fixture(html`
-                    <overlay-trigger type="modal">
-                        <sp-button slot="trigger" variant="accent">
-                            Toggle Dialog
-                        </sp-button>
-                        <sp-popover slot="click-content">
-                            <sp-dialog no-divider>
-                                <overlay-trigger>
-                                    <sp-button slot="trigger" variant="primary">
-                                        Toggle Dialog
-                                    </sp-button>
-                                    <sp-popover slot="click-content">
-                                        <sp-dialog no-divider>
-                                            <overlay-trigger type="modal">
-                                                <sp-button
-                                                    slot="trigger"
-                                                    variant="secondary"
-                                                >
-                                                    Toggle Dialog
-                                                </sp-button>
-                                                <sp-popover
-                                                    slot="click-content"
-                                                >
-                                                    <sp-dialog no-divider>
-                                                        <p>
-                                                            When you get this
-                                                            deep, this
-                                                            ActiveOverlay should
-                                                            be the only one in
-                                                            [slot="open"].
-                                                        </p>
-                                                        <p>
-                                                            All of the rest of
-                                                            the ActiveOverlay
-                                                            elements should have
-                                                            had their [slot]
-                                                            attribute removed.
-                                                        </p>
-                                                        <p>
-                                                            Closing this
-                                                            ActiveOverlay should
-                                                            replace them...
-                                                        </p>
-                                                    </sp-dialog>
-                                                </sp-popover>
-                                            </overlay-trigger>
-                                        </sp-dialog>
-                                    </sp-popover>
-                                </overlay-trigger>
-                            </sp-dialog>
-                        </sp-popover>
-                    </overlay-trigger>
-                `);
-                const overlayTriggers = [
-                    ...el.querySelectorAll('overlay-trigger'),
-                ];
-                let activeOverlays = [
-                    ...document.querySelectorAll('active-overlay'),
-                ];
-                const triggers = [
-                    ...el.querySelectorAll('sp-button[slot="trigger"]'),
-                ] as Button[];
-
-                expect(activeOverlays.length, 'no previous overlays').to.equal(
-                    0
-                );
-
-                let open = oneEvent(triggers[0], 'sp-opened');
-                triggers[0]?.click();
-                await open;
-                await elementUpdated(overlayTriggers[0]);
-                activeOverlays = [
-                    ...document.querySelectorAll('active-overlay'),
-                ];
-                expect(
-                    activeOverlays.length,
-                    'The first `active-overlay` element has been added.'
-                ).to.equal(1);
-                expect(
-                    activeOverlays[0].slot,
-                    'first overlay, first time'
-                ).to.equal('open');
-
-                open = oneEvent(triggers[1], 'sp-opened');
-                triggers[1]?.click();
-                await open;
-                await elementUpdated(overlayTriggers[1]);
-                activeOverlays = [
-                    ...document.querySelectorAll('active-overlay'),
-                ];
-                expect(
-                    activeOverlays.length,
-                    'The second `active-overlay` element has been added.'
-                ).to.equal(2);
-
-                expect(
-                    activeOverlays[0].slot,
-                    'first overlay, second time'
-                ).to.equal('open');
-                expect(
-                    activeOverlays[1].slot,
-                    'second overlay, second time'
-                ).to.equal('open');
-
-                open = oneEvent(triggers[2], 'sp-opened');
-                triggers[2]?.click();
-                await open;
-                await elementUpdated(overlayTriggers[2]);
-                activeOverlays = [
-                    ...document.querySelectorAll('active-overlay'),
-                ];
-                expect(
-                    activeOverlays.length,
-                    'The third `active-overlay` element has been added.'
-                ).to.equal(3);
-
-                expect(
-                    activeOverlays[0].hasAttribute('slot'),
-                    'first overlay, third time'
-                ).to.be.false;
-                expect(
-                    activeOverlays[1].hasAttribute('slot'),
-                    'second overlay, third time'
-                ).to.be.false;
-                expect(
-                    activeOverlays[2].slot,
-                    'third overlay, third time'
-                ).to.equal('open');
-
-                await nextFrame();
-                const closed = oneEvent(triggers[2], 'sp-closed');
-                sendMouse({
-                    steps: [
-                        {
-                            type: 'click',
-                            position: [1, 1],
-                        },
-                    ],
-                });
-                await closed;
-                await elementUpdated(overlayTriggers[2]);
-                activeOverlays = [
-                    ...document.querySelectorAll('active-overlay'),
-                ];
-                expect(
-                    activeOverlays.length,
-                    'The third `active-overlay` element has been removed.'
-                ).to.equal(2);
-
-                await waitUntil(() => {
-                    return activeOverlays[0].slot === 'open';
-                }, 'first overlay, last time');
-                expect(
-                    activeOverlays[1].slot,
-                    'second overlay, last time'
-                ).to.equal('open');
             });
         });
     });

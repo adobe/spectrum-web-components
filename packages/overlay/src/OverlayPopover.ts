@@ -17,15 +17,19 @@ import type { SpectrumElement } from '@spectrum-web-components/base';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { Constructor, OpenableElement } from './overlay-types.js';
 import {
-    BeforetoggleClosedEvent,
-    BeforetoggleOpenEvent,
     guaranteedAllTransitionend,
     nextFrame,
-    OverlayStateEvent,
     overlayTimer,
 } from './AbstractOverlay.js';
+import {
+    BeforetoggleClosedEvent,
+    BeforetoggleOpenEvent,
+    OverlayStateEvent,
+} from './events.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
+
+const supportsOverlayAuto = CSS.supports('(overlay: auto)');
 
 function isOpen(el: HTMLElement): boolean {
     let popoverOpen = false;
@@ -122,7 +126,9 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             targetOpenState: boolean
         ): Promise<void> {
             await nextFrame();
-            await this.shouldHidePopover(targetOpenState);
+            if (!supportsOverlayAuto) {
+                await this.shouldHidePopover(targetOpenState);
+            }
             await this.shouldShowPopover(targetOpenState);
             await nextFrame();
         }
@@ -205,6 +211,16 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                             );
                         }
                         this.state = targetOpenState ? 'opened' : 'closed';
+                        this.returnFocus();
+                        // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
+                        await nextFrame();
+                        await nextFrame();
+                        if (
+                            targetOpenState === this.open &&
+                            targetOpenState === false
+                        ) {
+                            this.requestSlottable();
+                        }
                     };
                     if (this.open !== targetOpenState) {
                         return;

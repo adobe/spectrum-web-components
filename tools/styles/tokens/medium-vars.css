@@ -12,7 +12,6 @@
     --spectrum-arrow-icon-size-400: 16px;
     --spectrum-arrow-icon-size-500: 18px;
     --spectrum-arrow-icon-size-600: 20px;
-    --spectrum-asterisk-icon-size-75: 8px;
     --spectrum-asterisk-icon-size-100: 8px;
     --spectrum-asterisk-icon-size-200: 10px;
     --spectrum-asterisk-icon-size-300: 10px;
@@ -59,7 +58,6 @@
     --spectrum-field-label-top-to-asterisk-medium: 12px;
     --spectrum-field-label-top-to-asterisk-large: 15px;
     --spectrum-field-label-top-to-asterisk-extra-large: 19px;
-    --spectrum-field-label-top-margin-small: 0px;
     --spectrum-field-label-top-margin-medium: 4px;
     --spectrum-field-label-top-margin-large: 5px;
     --spectrum-field-label-top-margin-extra-large: 5px;
@@ -71,7 +69,6 @@
     --spectrum-help-text-top-to-workflow-icon-medium: 3px;
     --spectrum-help-text-top-to-workflow-icon-large: 6px;
     --spectrum-help-text-top-to-workflow-icon-extra-large: 9px;
-    --spectrum-status-light-dot-size-small: 8px;
     --spectrum-status-light-dot-size-medium: 8px;
     --spectrum-status-light-dot-size-large: 10px;
     --spectrum-status-light-dot-size-extra-large: 10px;
@@ -79,8 +76,6 @@
     --spectrum-status-light-top-to-dot-medium: 12px;
     --spectrum-status-light-top-to-dot-large: 15px;
     --spectrum-status-light-top-to-dot-extra-large: 19px;
-    --spectrum-action-button-edge-to-hold-icon-extra-small: 3px;
-    --spectrum-action-button-edge-to-hold-icon-small: 3px;
     --spectrum-action-button-edge-to-hold-icon-medium: 4px;
     --spectrum-action-button-edge-to-hold-icon-large: 5px;
     --spectrum-action-button-edge-to-hold-icon-extra-large: 6px;
@@ -215,10 +210,8 @@
     --spectrum-coach-mark-title-size: var(--spectrum-heading-size-xs);
     --spectrum-coach-mark-body-size: var(--spectrum-body-size-s);
     --spectrum-coach-mark-pagination-body-size: var(--spectrum-body-size-s);
-    --spectrum-accordion-top-to-text-compact-small: 2px;
     --spectrum-accordion-top-to-text-regular-small: 5px;
     --spectrum-accordion-small-top-to-text-spacious: 9px;
-    --spectrum-accordion-top-to-text-compact-medium: 4px;
     --spectrum-accordion-top-to-text-regular-medium: 8px;
     --spectrum-accordion-top-to-text-spacious-medium: 12px;
     --spectrum-accordion-top-to-text-compact-large: 4px;
@@ -240,10 +233,6 @@
     --spectrum-accordion-bottom-to-text-regular-extra-large: 12px;
     --spectrum-accordion-bottom-to-text-spacious-extra-large: 16px;
     --spectrum-accordion-minimum-width: 200px;
-    --spectrum-accordion-disclosure-indicator-to-text: 0px;
-    --spectrum-accordion-edge-to-disclosure-indicator: 0px;
-    --spectrum-accordion-edge-to-text: 0px;
-    --spectrum-accordion-focus-indicator-gap: 0px;
     --spectrum-accordion-content-area-top-to-content: 8px;
     --spectrum-accordion-content-area-bottom-to-content: 16px;
     --spectrum-color-handle-size: 16px;
@@ -280,7 +269,6 @@
     --spectrum-table-row-bottom-to-text-medium-spacious: 16px;
     --spectrum-table-row-bottom-to-text-large-spacious: 18px;
     --spectrum-table-row-bottom-to-text-extra-large-spacious: 21px;
-    --spectrum-table-edge-to-content: 16px;
     --spectrum-table-checkbox-to-text: 24px;
     --spectrum-table-header-row-checkbox-to-top-small: 10px;
     --spectrum-table-header-row-checkbox-to-top-medium: 9px;

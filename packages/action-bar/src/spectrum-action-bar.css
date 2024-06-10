@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-actionbar-height: var(--spectrum-action-bar-height);
     --spectrum-actionbar-corner-radius: var(--spectrum-corner-radius-100);
@@ -44,6 +45,7 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-shadow-blur: var(--spectrum-drop-shadow-blur);
     --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
 }
+
 :host:lang(ja),
 :host:lang(ko),
 :host:lang(zh) {
@@ -51,27 +53,28 @@ governing permissions and limitations under the License.
         --spectrum-cjk-line-height-100
     );
 }
+
 @media (forced-colors: active) {
-    :host {
-        --highcontrast-actionbar-popover-border-color: CanvasText;
-    }
+    :host,
     :host([emphasized]) #popover {
         --highcontrast-actionbar-popover-border-color: CanvasText;
     }
 }
+
 :host {
-    block-size: 0;
-    box-sizing: border-box;
-    inset-block-end: 0;
-    opacity: 0;
     padding: 0
         var(
             --mod-actionbar-spacing-outer-edge,
             var(--spectrum-actionbar-spacing-outer-edge)
         );
-    pointer-events: none;
     z-index: 1;
+    box-sizing: border-box;
+    pointer-events: none;
+    opacity: 0;
+    block-size: 0;
+    inset-block-end: 0;
 }
+
 :host([open]) {
     block-size: calc(
         var(
@@ -81,12 +84,14 @@ governing permissions and limitations under the License.
     );
     opacity: 1;
 }
+
 #popover {
-    background-color: var(
-        --mod-actionbar-popover-background-color,
-        var(--spectrum-actionbar-popover-background-color)
-    );
     block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
+    box-sizing: border-box;
+    border-radius: var(
+        --mod-actionbar-corner-radius,
+        var(--spectrum-actionbar-corner-radius)
+    );
     border-color: var(
         --highcontrast-actionbar-popover-border-color,
         var(
@@ -94,12 +99,10 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbar-popover-border-color)
         )
     );
-    border-radius: var(
-        --mod-actionbar-corner-radius,
-        var(--spectrum-actionbar-corner-radius)
+    background-color: var(
+        --mod-actionbar-popover-background-color,
+        var(--spectrum-actionbar-popover-background-color)
     );
-    box-sizing: border-box;
-    display: flex;
     filter: drop-shadow(
         var(
                 --mod-actionbar-shadow-horizontal,
@@ -118,36 +121,39 @@ governing permissions and limitations under the License.
                 var(--spectrum-actionbar-shadow-color)
             )
     );
+    pointer-events: auto;
     flex-direction: row;
     inline-size: 100%;
     margin: auto;
     padding-block: 0;
-    pointer-events: auto;
+    display: flex;
     position: relative;
 }
+
 .close-button {
     flex-shrink: 0;
     margin-block-start: var(
         --mod-actionbar-spacing-close-button-top,
         var(--spectrum-actionbar-spacing-close-button-top)
     );
-    margin-inline-end: var(
-        --mod-actionbar-spacing-close-button-end,
-        var(--spectrum-actionbar-spacing-close-button-end)
-    );
     margin-inline-start: var(
         --mod-actionbar-spacing-close-button-start,
         var(--spectrum-actionbar-spacing-close-button-start)
     );
-}
-.field-label {
-    color: var(
-        --mod-actionbar-item-counter-color,
-        var(--spectrum-actionbar-item-counter-color)
+    margin-inline-end: var(
+        --mod-actionbar-spacing-close-button-end,
+        var(--spectrum-actionbar-spacing-close-button-end)
     );
+}
+
+.field-label {
     font-size: var(
         --mod-actionbar-item-counter-font-size,
         var(--spectrum-actionbar-item-counter-font-size)
+    );
+    color: var(
+        --mod-actionbar-item-counter-color,
+        var(--spectrum-actionbar-item-counter-color)
     );
     line-height: var(
         --mod-actionbar-item-counter-line-height,
@@ -163,6 +169,7 @@ governing permissions and limitations under the License.
     );
     padding: 0;
 }
+
 .field-label:lang(ja),
 .field-label:lang(ko),
 .field-label:lang(zh) {
@@ -171,38 +178,44 @@ governing permissions and limitations under the License.
         var(--spectrum-actionbar-item-counter-line-height-cjk)
     );
 }
+
 .action-group {
     margin-block-start: var(
         --mod-actionbar-spacing-action-group-top,
         var(--spectrum-actionbar-spacing-action-group-top)
     );
+    margin-inline-start: auto;
     margin-inline-end: var(
         --mod-actionbar-spacing-action-group-end,
         var(--spectrum-actionbar-spacing-action-group-end)
     );
-    margin-inline-start: auto;
 }
+
 :host([emphasized]) #popover {
+    filter: none;
     background-color: var(
         --mod-actionbar-emphasized-background-color,
         var(--spectrum-actionbar-emphasized-background-color)
     );
     border-color: #0000;
-    filter: none;
 }
+
 :host([emphasized]) .field-label {
     color: var(
         --mod-actionbar-emphasized-item-counter-color,
         var(--spectrum-actionbar-emphasized-item-counter-color)
     );
 }
+
 :host([variant='sticky']) {
-    inset-inline: 0;
     position: sticky;
+    inset-inline: 0;
 }
+
 :host([variant='fixed']) {
     position: fixed;
 }
+
 :host([flexible]) #popover {
     inline-size: auto;
 }

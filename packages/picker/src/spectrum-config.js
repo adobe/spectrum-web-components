@@ -32,6 +32,7 @@ const config = {
                 converter.classToId('spectrum-Picker', 'button'),
                 converter.classToAttribute('spectrum-Picker--quiet'),
                 converter.classToAttribute('is-disabled', 'disabled'),
+                converter.classToAttribute('is-loading', 'pending'),
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('is-focused', 'focused'),
@@ -46,7 +47,15 @@ const config = {
                     'size'
                 ),
                 converter.classToClass('spectrum-Picker-menuIcon', 'picker'),
+                converter.classToClass(
+                    'spectrum-Picker--sideLabel',
+                    'label-inline'
+                ),
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
+                converter.classToClass(
+                    'spectrum-ProgressCircle',
+                    'progress-circle'
+                ),
                 converter.classToClass('is-placeholder', 'placeholder'),
                 converter.classToClass(
                     'spectrum-Picker-validationIcon',
@@ -93,6 +102,19 @@ const config = {
                             replace: builder.class('icon'),
                         },
                     ],
+                },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.class('spectrum-Picker--quiet')]],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.attribute('quiet')]],
+                    },
+                    hoist: true,
                 },
             ],
         },

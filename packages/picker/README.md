@@ -357,6 +357,44 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 ```
 
+### Side Label
+
+```html
+<sp-field-label side-aligned="start" for="picker-sideLabel">
+    Standard:
+</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    id="picker-sideLabel"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label side-aligned="start" for="picker-sideLabel-quiet">
+    Quiet:
+</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    quiet
+    id="picker-sideLabel-quiet"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
 ### Disabled
 
 ```html
@@ -376,7 +414,7 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 <br />
 <br />
-<sp-field-label for="picker-disabled">Quiet:</sp-field-label>
+<sp-field-label for="picker-disabled-quiet">Quiet:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     disabled
@@ -390,6 +428,34 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
     <sp-menu-divider></sp-menu-divider>
     <sp-menu-item>Save selection</sp-menu-item>
     <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+### Pending
+
+When in pending state, `<sp-picker>` elements will not respond to click events and will be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
+
+```html
+<sp-field-label for="picker-loading">Standard:</sp-field-label>
+<sp-picker id="picker-loading" label="Loading blending modes..." pending>
+    <sp-menu-item>Pass through</sp-menu-item>
+    <sp-menu-item>Normal</sp-menu-item>
+    <sp-menu-item>Multiply</sp-menu-item>
+    <sp-menu-item>Screen</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label for="picker-loading-quiet">Quiet:</sp-field-label>
+<sp-picker
+    id="picker-loading-quiet"
+    label="Loading blending modes..."
+    pending
+    quiet
+>
+    <sp-menu-item>Pass through</sp-menu-item>
+    <sp-menu-item>Normal</sp-menu-item>
+    <sp-menu-item>Multiply</sp-menu-item>
+    <sp-menu-item>Screen</sp-menu-item>
 </sp-picker>
 ```
 

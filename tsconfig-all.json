@@ -38,6 +38,7 @@
         { "path": "packages/color-loupe" },
         { "path": "packages/color-slider" },
         { "path": "packages/color-wheel" },
+        { "path": "packages/combobox" },
         { "path": "packages/dialog" },
         { "path": "packages/divider" },
         { "path": "packages/dropzone" },
@@ -89,6 +90,7 @@
         { "path": "tools/reactive-controllers" },
         { "path": "tools/shared" },
         { "path": "tools/styles" },
-        { "path": "tools/theme" }
+        { "path": "tools/theme" },
+        { "path": "tools/truncated" }
     ]
 }

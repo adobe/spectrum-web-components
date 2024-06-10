@@ -66,6 +66,10 @@ slot[name='description'] {
     width: auto;
 }
 
+:host([horizontal]) sp-asset {
+    height: inherit;
+}
+
 sp-quick-actions {
     z-index: 1;
 }

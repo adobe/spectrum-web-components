@@ -11,24 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Menu-back.focus-visible {
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) *
-                var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
-}
+
 .spectrum-Menu-back:focus-visible {
     box-shadow: inset
         calc(
@@ -47,46 +30,45 @@ governing permissions and limitations under the License.
             )
         );
 }
+
 .chevron {
-    align-self: center;
     block-size: var(--spectrum-menu-item-checkmark-height);
-    grid-area: chevronArea;
     inline-size: var(--spectrum-menu-item-checkmark-width);
+    grid-area: o;
+    align-self: center;
     margin-inline-end: var(
         --mod-menu-item-text-to-control,
         var(--spectrum-menu-item-text-to-control)
     );
 }
+
+.chevron:dir(rtl),
 :host([dir='rtl']) .chevron {
     transform: rotate(-180deg);
 }
+
 .spectrum-Menu-back {
-    align-items: center;
-    display: flex;
-    flex-flow: wrap;
-    padding-block: var(--mod-menu-back-padding-block-start, 0)
-        var(--mod-menu-back-padding-block-end, 0);
     padding-inline: var(--mod-menu-back-padding-inline-start, 0)
         var(
             --mod-menu-back-padding-inline-end,
             var(--spectrum-menu-item-label-inline-edge-to-content)
         );
+    padding-block: var(--mod-menu-back-padding-block-start, 0)
+        var(--mod-menu-back-padding-block-end, 0);
+    flex-flow: wrap;
+    align-items: center;
+    display: flex;
 }
+
 .spectrum-Menu-backButton {
+    cursor: pointer;
     background: none;
     border: 0;
-    cursor: pointer;
-    display: inline-flex;
     margin: 0;
     padding: 0;
+    display: inline-flex;
 }
-.spectrum-Menu-backButton.focus-visible {
-    outline: var(--spectrum-focus-indicator-thickness) solid
-        var(--spectrum-focus-indicator-color);
-    outline-offset: calc(
-        (var(--spectrum-focus-indicator-thickness) + 1px) * -1
-    );
-}
+
 .spectrum-Menu-backButton:focus-visible {
     outline: var(--spectrum-focus-indicator-thickness) solid
         var(--spectrum-focus-indicator-color);
@@ -94,6 +76,7 @@ governing permissions and limitations under the License.
         (var(--spectrum-focus-indicator-thickness) + 1px) * -1
     );
 }
+
 .spectrum-Menu-backHeading {
     color: var(
         --highcontrast-menu-item-color-default,
@@ -102,7 +85,6 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-section-header-color)
         )
     );
-    display: block;
     font-size: var(
         --mod-menu-section-header-font-size,
         var(--spectrum-menu-section-header-font-size)
@@ -115,16 +97,10 @@ governing permissions and limitations under the License.
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
     );
+    display: block;
 }
+
 .spectrum-Menu-backIcon {
-    fill: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
     margin-block: var(
         --mod-menu-back-icon-margin-block,
         var(--spectrum-menu-back-icon-margin)
@@ -132,5 +108,13 @@ governing permissions and limitations under the License.
     margin-inline: var(
         --mod-menu-back-icon-margin-inline,
         var(--spectrum-menu-back-icon-margin)
+    );
+    fill: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(--mod-menu-back-icon-color-default)
     );
 }

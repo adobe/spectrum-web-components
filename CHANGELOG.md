@@ -3,6 +3,175 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+### Bug Fixes
+
+-   **coachmark,overlay:** adjust imports of overlay and coachmark ([#4455](https://github.com/adobe/spectrum-web-components/issues/4455)) ([39706da](https://github.com/adobe/spectrum-web-components/commit/39706dafe58a598a86d7dc33629409f086a9694e))
+-   **number-field:** select full value when using Tab to enter a field with a unit ([#4340](https://github.com/adobe/spectrum-web-components/issues/4340)) ([a9d5cef](https://github.com/adobe/spectrum-web-components/commit/a9d5cef4a69af4f3f357bacbfdae9465d3e80fa5))
+-   **overlay:** ensure hint Overlays within shadow roots open as expected ([#4443](https://github.com/adobe/spectrum-web-components/issues/4443)) ([7dd64b9](https://github.com/adobe/spectrum-web-components/commit/7dd64b92e58ad2fd3a36986f24022728e3cb4c36))
+-   **overlay:** ensure that passing "open" to the directive manages a single strategy ([#4474](https://github.com/adobe/spectrum-web-components/issues/4474)) ([15d6ac7](https://github.com/adobe/spectrum-web-components/commit/15d6ac71d586eb496b591fa5b097707961600f75))
+-   **overlay:** persist "host" in directive rendered Overlay content ([#4475](https://github.com/adobe/spectrum-web-components/issues/4475)) ([5d189c2](https://github.com/adobe/spectrum-web-components/commit/5d189c2adf91545eb64a0136fa02d7c8caee8f48))
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **action-bar:** include focus-visible polyfilling ([#4273](https://github.com/adobe/spectrum-web-components/issues/4273)) ([fd71ca1](https://github.com/adobe/spectrum-web-components/commit/fd71ca1d8482026d8ddc9f6fa11553cdbecdac48))
+-   **action-menu:** allow menu groups to handle their own selections ([#4397](https://github.com/adobe/spectrum-web-components/issues/4397)) ([5a19051](https://github.com/adobe/spectrum-web-components/commit/5a190518814f85cfd2e345ad6a0add1378c05bf4))
+-   **base:** move lit imports to base ([#4416](https://github.com/adobe/spectrum-web-components/issues/4416)) ([b7cb07e](https://github.com/adobe/spectrum-web-components/commit/b7cb07e98e17754c83d3e0112aac9728139e043b))
+-   **color-area:** providing x and y attributes renders color handle correctly ([#4240](https://github.com/adobe/spectrum-web-components/issues/4240)) ([9eb5056](https://github.com/adobe/spectrum-web-components/commit/9eb5056d962dd2694e4a2d6100388a5becba91fe))
+-   **combobox:** add missing React TS typings ([#4419](https://github.com/adobe/spectrum-web-components/issues/4419)) ([fd9b485](https://github.com/adobe/spectrum-web-components/commit/fd9b485ee969318d21b0f79ec0c0f902034eccde))
+-   **combobox:** allow numeric values and trigger change event on keybo… ([#4405](https://github.com/adobe/spectrum-web-components/issues/4405)) ([235ae7c](https://github.com/adobe/spectrum-web-components/commit/235ae7ca9eed35800a834af1005eb0c8d892b9f1))
+-   **combobox:** correct package.json listings ([35a69a2](https://github.com/adobe/spectrum-web-components/commit/35a69a2923eec3f9f7bac867752d869e5fe988c1))
+-   **combobox:** process styles for invalid state ([#4344](https://github.com/adobe/spectrum-web-components/issues/4344)) ([c2b952e](https://github.com/adobe/spectrum-web-components/commit/c2b952e4e6558c99e15e2503702375bc9b0539d5))
+-   **link:** added feature to stop click propagation for disabled link ([#4251](https://github.com/adobe/spectrum-web-components/issues/4251)) ([64f26a5](https://github.com/adobe/spectrum-web-components/commit/64f26a5d2dd729d5cbae2418fd8bca8481ed6cf6))
+-   **number-field, slider:** floating point roundoff precision bug ([#4263](https://github.com/adobe/spectrum-web-components/issues/4263)) ([74480ef](https://github.com/adobe/spectrum-web-components/commit/74480efd47305a7d41d0e20682d8dcba1c129f2f))
+-   **number-field:** handles values greater than 1000 ([#4417](https://github.com/adobe/spectrum-web-components/issues/4417)) ([45d69d0](https://github.com/adobe/spectrum-web-components/commit/45d69d0bb927bd18c3d58c757c40c14768b70a82))
+-   **overlay:** prevent "receivesFocus=false" overlays from returning focus ([607819f](https://github.com/adobe/spectrum-web-components/commit/607819f053113a21cccfbc97d775551ef11bfc4a))
+-   **picker-button:** update quiet styles ([#4383](https://github.com/adobe/spectrum-web-components/issues/4383)) ([42bf291](https://github.com/adobe/spectrum-web-components/commit/42bf291f9301c139c960cfc7ffb69ece08d945f3))
+-   revert back netlify to v15 ([#4446](https://github.com/adobe/spectrum-web-components/issues/4446)) ([7835eb8](https://github.com/adobe/spectrum-web-components/commit/7835eb828af5ae1ea442e8e2897bff1829ea335a))
+-   **slider,overlay:** ensure that pointer events in Slider are handled as expected in Overlay ([#4438](https://github.com/adobe/spectrum-web-components/issues/4438)) ([db193e8](https://github.com/adobe/spectrum-web-components/commit/db193e84d1ee300faaed47a5a4026b73a8d9fb30))
+-   **styles,theme:** add S2 tokens and theme ([#4241](https://github.com/adobe/spectrum-web-components/issues/4241)) ([a29e4a2](https://github.com/adobe/spectrum-web-components/commit/a29e4a298090e39e009c434e48113fb8a7e90d14)), closes [#4232](https://github.com/adobe/spectrum-web-components/issues/4232) [#4228](https://github.com/adobe/spectrum-web-components/issues/4228)
+-   **textfield:** textarea actually grows with multiline ([#4271](https://github.com/adobe/spectrum-web-components/issues/4271)) ([d8d0e84](https://github.com/adobe/spectrum-web-components/commit/d8d0e843b3bcab345dd7d46ad055e2bb5445ec36))
+-   **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+-   **tooltip:** fix infinite loop in self-managed tooltips ([#4269](https://github.com/adobe/spectrum-web-components/issues/4269)) ([b66ee49](https://github.com/adobe/spectrum-web-components/commit/b66ee495029cd8af8a20e6d450301c4368330c3b))
+-   update dependency @ctrl/tinycolor to v4.1.0 ([#4357](https://github.com/adobe/spectrum-web-components/issues/4357)) ([a0e2182](https://github.com/adobe/spectrum-web-components/commit/a0e21829d5ed6da7502fca3a06a19e3613125ba3))
+-   update dependency @floating-ui/dom to v1.6.3 ([#4322](https://github.com/adobe/spectrum-web-components/issues/4322)) ([3ba0018](https://github.com/adobe/spectrum-web-components/commit/3ba001825bf91ce1eddd8a576e6762292fff479b))
+-   update dependency @floating-ui/dom to v1.6.4 ([#4326](https://github.com/adobe/spectrum-web-components/issues/4326)) ([8183df3](https://github.com/adobe/spectrum-web-components/commit/8183df3590ae948260503372a9455616f2869c4c))
+-   update dependency @floating-ui/dom to v1.6.5 ([#4399](https://github.com/adobe/spectrum-web-components/issues/4399)) ([bc8df32](https://github.com/adobe/spectrum-web-components/commit/bc8df3287f6b1500b0a98f2e59aebbe88f7d6096))
+-   update dependency @floating-ui/utils to v0.2.2 ([#4327](https://github.com/adobe/spectrum-web-components/issues/4327)) ([81b570d](https://github.com/adobe/spectrum-web-components/commit/81b570d48a7c6a5c82e414621e1d67501a3bbd63))
+-   update dependency @internationalized/number to v3.5.1 ([#4323](https://github.com/adobe/spectrum-web-components/issues/4323)) ([56d5a63](https://github.com/adobe/spectrum-web-components/commit/56d5a63ac2f86dc3eb136ef208791b9555f79ce3))
+-   update dependency @internationalized/number to v3.5.2 ([#4390](https://github.com/adobe/spectrum-web-components/issues/4390)) ([4d10460](https://github.com/adobe/spectrum-web-components/commit/4d1046079d948fb00ba5f3ff6b26ff50236a4387))
+-   update dependency @web/dev-server-rollup to v0.6.2 ([#4400](https://github.com/adobe/spectrum-web-components/issues/4400)) ([08ee7f7](https://github.com/adobe/spectrum-web-components/commit/08ee7f7786412465a16ff085bbf9ace127cb2f08))
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **color-area:** providing x and y attributes renders color handle correctly ([#4240](https://github.com/adobe/spectrum-web-components/issues/4240)) ([9eb5056](https://github.com/adobe/spectrum-web-components/commit/9eb5056d962dd2694e4a2d6100388a5becba91fe))
+-   **combobox:** correct package.json listings ([35a69a2](https://github.com/adobe/spectrum-web-components/commit/35a69a2923eec3f9f7bac867752d869e5fe988c1))
+-   **link:** added feature to stop click propagation for disabled link ([#4251](https://github.com/adobe/spectrum-web-components/issues/4251)) ([64f26a5](https://github.com/adobe/spectrum-web-components/commit/64f26a5d2dd729d5cbae2418fd8bca8481ed6cf6))
+-   **number-field, slider:** floating point roundoff precision bug ([#4263](https://github.com/adobe/spectrum-web-components/issues/4263)) ([74480ef](https://github.com/adobe/spectrum-web-components/commit/74480efd47305a7d41d0e20682d8dcba1c129f2f))
+-   **overlay:** prevent "receivesFocus=false" overlays from returning focus ([607819f](https://github.com/adobe/spectrum-web-components/commit/607819f053113a21cccfbc97d775551ef11bfc4a))
+-   **textfield:** textarea actually grows with multiline ([#4271](https://github.com/adobe/spectrum-web-components/issues/4271)) ([d8d0e84](https://github.com/adobe/spectrum-web-components/commit/d8d0e843b3bcab345dd7d46ad055e2bb5445ec36))
+-   **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+-   **tooltip:** fix infinite loop in self-managed tooltips ([#4269](https://github.com/adobe/spectrum-web-components/issues/4269)) ([b66ee49](https://github.com/adobe/spectrum-web-components/commit/b66ee495029cd8af8a20e6d450301c4368330c3b))
+-   update dependency @ctrl/tinycolor to v4.1.0 ([#4357](https://github.com/adobe/spectrum-web-components/issues/4357)) ([a0e2182](https://github.com/adobe/spectrum-web-components/commit/a0e21829d5ed6da7502fca3a06a19e3613125ba3))
+-   update dependency @floating-ui/dom to v1.6.3 ([#4322](https://github.com/adobe/spectrum-web-components/issues/4322)) ([3ba0018](https://github.com/adobe/spectrum-web-components/commit/3ba001825bf91ce1eddd8a576e6762292fff479b))
+-   update dependency @floating-ui/dom to v1.6.4 ([#4326](https://github.com/adobe/spectrum-web-components/issues/4326)) ([8183df3](https://github.com/adobe/spectrum-web-components/commit/8183df3590ae948260503372a9455616f2869c4c))
+-   update dependency @floating-ui/utils to v0.2.2 ([#4327](https://github.com/adobe/spectrum-web-components/issues/4327)) ([81b570d](https://github.com/adobe/spectrum-web-components/commit/81b570d48a7c6a5c82e414621e1d67501a3bbd63))
+-   update dependency @internationalized/number to v3.5.1 ([#4323](https://github.com/adobe/spectrum-web-components/issues/4323)) ([56d5a63](https://github.com/adobe/spectrum-web-components/commit/56d5a63ac2f86dc3eb136ef208791b9555f79ce3))
+
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @adobe/spectrum-web-components
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **coachmark:** add "step-count" slot for custom/internationalized pagination content ([#4215](https://github.com/adobe/spectrum-web-components/issues/4215)) ([f4136a6](https://github.com/adobe/spectrum-web-components/commit/f4136a61d1e43ea32a4d9b8d83da3df828b32094))
+-   **dialog-wrapper:** add dismiss-label attribute for the close button's label ([#4154](https://github.com/adobe/spectrum-web-components/issues/4154)) ([c450a09](https://github.com/adobe/spectrum-web-components/commit/c450a098addaa1442f619cf892cdab1de96dbcaa))
+-   **reactive-controllers:** add DependencyManagerController ([c7f7dea](https://github.com/adobe/spectrum-web-components/commit/c7f7dead131c9c2594a181ac62294683b6c7fd63))
+-   **shared:** ensure the "updateComplete" in Focusable is stable ([885b4a5](https://github.com/adobe/spectrum-web-components/commit/885b4a5e12430910bb0dbacddc865081fe46d9a1))
+-   **slider:** skip variant="filled" css when fill-start ([#4217](https://github.com/adobe/spectrum-web-components/issues/4217)) ([b6d389d](https://github.com/adobe/spectrum-web-components/commit/b6d389d1be04284b30e395bd2fab2dcd2c65da63))
+-   **table:** Add aria-rowcount to virtualized tables ([#4156](https://github.com/adobe/spectrum-web-components/issues/4156)) ([b4136ab](https://github.com/adobe/spectrum-web-components/commit/b4136abf29bae6c7a5358bb8f4211feb95ca7690))
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **action-group:** manage Action Button selection through multiple slots ([4d02b46](https://github.com/adobe/spectrum-web-components/commit/4d02b469ffee693d23b67e68b1b63ad0b5c5eccc))
+-   allowing split view to have a custom aria label ([#4155](https://github.com/adobe/spectrum-web-components/issues/4155)) ([d9abed7](https://github.com/adobe/spectrum-web-components/commit/d9abed716633b10fa3e985e91239f4ebad3f6c91))
+-   **badge:** expand and update variant availability and mod override usage ([#4162](https://github.com/adobe/spectrum-web-components/issues/4162)) ([19e1a49](https://github.com/adobe/spectrum-web-components/commit/19e1a49079f67d5946a6779bd70838b69c726c4a))
+-   **button:** prevent pointer interaction of child/slotted content ([2cd5823](https://github.com/adobe/spectrum-web-components/commit/2cd5823649f71ca849df0eb39d01d64034a4af70))
+-   **color-field:** added missing dependencies ([#4141](https://github.com/adobe/spectrum-web-components/issues/4141)) ([b3bb23a](https://github.com/adobe/spectrum-web-components/commit/b3bb23a68958e728b2133dc5e5d309b8975f6da9))
+-   **menu:** release synthetic "click" promise to unblock keyboard interactions ([f8aecf3](https://github.com/adobe/spectrum-web-components/commit/f8aecf33cfa94ee1e1b791dc203fc46ead84eb10))
+-   **overlay:** prevent focus based hover interaction without :focus-visible ([79337ff](https://github.com/adobe/spectrum-web-components/commit/79337ff0c8df69203877732ce0541d9f1d49f33d))
+-   **overlay:** prioritize non-"hint" Overlays on the same trigger ([b9833f3](https://github.com/adobe/spectrum-web-components/commit/b9833f3e22cfc89c34a98bd235c30f207b013781))
+-   **picker:** add loading state to the picker ([#3110](https://github.com/adobe/spectrum-web-components/issues/3110)) ([d91e2c9](https://github.com/adobe/spectrum-web-components/commit/d91e2c9f3530c3c911832ea3a401fddc23e7854a))
+-   **picker:** allow open/close in tablet ([dcfc96e](https://github.com/adobe/spectrum-web-components/commit/dcfc96e779c0dd6005f4697450d1edcf7809e8ea))
+-   **picker:** correctly process the CSS for the quiet hover effect ([#4167](https://github.com/adobe/spectrum-web-components/issues/4167)) ([eb282fa](https://github.com/adobe/spectrum-web-components/commit/eb282fad1d1b4f5e7c2bce65df6ca56f46e6870e))
+-   **progress-bar:** remove aria-label only if set by label and label is empty; add tests ([d351451](https://github.com/adobe/spectrum-web-components/commit/d351451bba6be99eeddbf9fe55a29104fd86d809))
+-   **progress-circle:** remove aria-label only when set by label and changed label is empty ([cdd181a](https://github.com/adobe/spectrum-web-components/commit/cdd181abec29d90b6adea24569b05400f931b3ae))
+-   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+-   **swatch:** allow Swatch Group to manage selection through multiple slots ([f333379](https://github.com/adobe/spectrum-web-components/commit/f3333795070c009523c4af750480ae288e17091f))
+-   **tab-overflow:** improve tab navigation experience and support custom aria labels ([#4165](https://github.com/adobe/spectrum-web-components/issues/4165)) ([9c9bf95](https://github.com/adobe/spectrum-web-components/commit/9c9bf952cf2a1e4a0c5bc35e63e46f5d5bd6afe8))
+-   **theme:** deprecate lightest and darkest color stops ([#4179](https://github.com/adobe/spectrum-web-components/issues/4179)) ([0c01a66](https://github.com/adobe/spectrum-web-components/commit/0c01a66627bbc46b459bda7680c6dcb9ea9c1b66))
+-   **truncated:** add truncated package ([#4163](https://github.com/adobe/spectrum-web-components/issues/4163)) ([4ba0480](https://github.com/adobe/spectrum-web-components/commit/4ba0480e2c471d8bba14eb898963ab0dca2f2d5a))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
+### Reverts
+
+-   Revert "Truncated element (#4125)" (#4160) ([da88bbe](https://github.com/adobe/spectrum-web-components/commit/da88bbe416a3ee5a991acdbceec2d698222e5f6a)), closes [#4125](https://github.com/adobe/spectrum-web-components/issues/4125) [#4160](https://github.com/adobe/spectrum-web-components/issues/4160)
+
+## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
+
+### Bug Fixes
+
+-   **button:** add missing progress-circle dependency ([#4086](https://github.com/adobe/spectrum-web-components/issues/4086)) ([2dfeeb3](https://github.com/adobe/spectrum-web-components/commit/2dfeeb3c5f1febec269fef00933cc65a1d0a0c43))
+-   **color-field:** add color-field package ([#3870](https://github.com/adobe/spectrum-web-components/issues/3870)) ([5081634](https://github.com/adobe/spectrum-web-components/commit/508163476cbe47a4450b2448fcd47ecd237c8085))
+-   **menu:** fix css for `disabled` "value" slots in menu items ([#4113](https://github.com/adobe/spectrum-web-components/issues/4113)) ([3c5855d](https://github.com/adobe/spectrum-web-components/commit/3c5855d606739b29c7da7a6250cc7636ee15fad1))
+-   **overlay:** ensure "manual" Overlays ignore "light dismiss" when [popover] is not supported ([#4121](https://github.com/adobe/spectrum-web-components/issues/4121)) ([eb5e1ad](https://github.com/adobe/spectrum-web-components/commit/eb5e1ad78ebde99443929aa985a38297ebb16f4e))
+-   **overlay:** leverage "transition-behavior" to persist top-layer content while closing ([#4050](https://github.com/adobe/spectrum-web-components/issues/4050)) ([e3dea14](https://github.com/adobe/spectrum-web-components/commit/e3dea14fa382b4e02f61ae8b651e89cd92c348f8))
+-   **picker:** support inline labeling of quiet Picker ([#3704](https://github.com/adobe/spectrum-web-components/issues/3704)) ([3372286](https://github.com/adobe/spectrum-web-components/commit/337228659bfcd831700ce782254e5cb539c503d2))
+-   **slider:** double click on slider handle to reset slider position ([#3991](https://github.com/adobe/spectrum-web-components/issues/3991)) ([64c594a](https://github.com/adobe/spectrum-web-components/commit/64c594a7c305bd4946bb5801341366a1e751a614))
+
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+### Bug Fixes
+
+-   **menu:** correct disabled menu item's chevron to appropriate colour ([#4052](https://github.com/adobe/spectrum-web-components/issues/4052)) ([30f5bb5](https://github.com/adobe/spectrum-web-components/commit/30f5bb58d376822f990545970581ebee943738f7))
+-   **picker:** correct implementation of "disabled", expand stories and documentation ([#4040](https://github.com/adobe/spectrum-web-components/issues/4040)) ([84c2fef](https://github.com/adobe/spectrum-web-components/commit/84c2fef72cb8be6d77ce62c21ed6d9d0d866d849))
+-   **progress-circle:** ensure size can be applied to non-"size" attribute bearing elements ([2bc1065](https://github.com/adobe/spectrum-web-components/commit/2bc10652ff9d7337c15eb8b3704678d0f2c700c9))
+-   **slider:** revert handle ui at min/max values ([#4042](https://github.com/adobe/spectrum-web-components/issues/4042)) ([da13af7](https://github.com/adobe/spectrum-web-components/commit/da13af78feb313a2c0aade65f87404cfa81fac72))
+-   **tabs:** bring selected tab into view ([#4032](https://github.com/adobe/spectrum-web-components/issues/4032)) ([a187057](https://github.com/adobe/spectrum-web-components/commit/a187057afa7ac073fe45117ebd0bc2315e6fea5e))
+-   **textfield:** clearly mark/support "multiline" as a requirement of "grows" ([a3e464d](https://github.com/adobe/spectrum-web-components/commit/a3e464d7ceda90ad241641916180ab6e8ea119dc))
+-   **top-nav:** focus loupe on :focus-visible only ([50d6870](https://github.com/adobe/spectrum-web-components/commit/50d687075257db5dd9ab121a980c9d27418a33d3))
+
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Bug Fixes
+
+-   **popover:** correct tip delivery size ([#4018](https://github.com/adobe/spectrum-web-components/issues/4018)) ([4ff403e](https://github.com/adobe/spectrum-web-components/commit/4ff403e0d58c3014a7adedd6b22dd164e23cdfd2))
+-   **slider:** high contrast improvements for filled track ([#3952](https://github.com/adobe/spectrum-web-components/issues/3952)) ([782560d](https://github.com/adobe/spectrum-web-components/commit/782560d98c3431c9f4467c4b93857133f30dc0d6))
+-   support generating random IDs outside of secure contexts ([485a67c](https://github.com/adobe/spectrum-web-components/commit/485a67c5401094705b711350f8ee74182a6dd64b))
+-   **tray:** only allow "click" events when they "pointerdown"ed on the Underlay ([#4020](https://github.com/adobe/spectrum-web-components/issues/4020)) ([4f9aa4a](https://github.com/adobe/spectrum-web-components/commit/4f9aa4aac837fc56ab1876aa693bd9d82f0ba26f))
+
+### Features
+
+-   **coachmark:** rename "sp-coachmark" to "sp-coachmark-indicator", add "sp-coachmark" ([#3639](https://github.com/adobe/spectrum-web-components/issues/3639)) ([a94389c](https://github.com/adobe/spectrum-web-components/commit/a94389cac1a31e5f0b02b187c93fd3489dc0f40f))
+-   **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
+
+### Performance Improvements
+
+-   **combobox:** prevent initial list render and update tests to prove that reduces render time ([3dc5b1f](https://github.com/adobe/spectrum-web-components/commit/3dc5b1f77fbe9d5b20178a3641b0c73da0cdad35))
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **button:** use larger icons in Close Button ([c4aa02c](https://github.com/adobe/spectrum-web-components/commit/c4aa02c8a1c6456f8d9805ba02d74c7e4ecefaa3))
+-   **combobox:** add combobox pattern ([#3894](https://github.com/adobe/spectrum-web-components/issues/3894)) ([47d7d71](https://github.com/adobe/spectrum-web-components/commit/47d7d71bc9e17b67452d45b9495c970dac15ff89)), closes [#3887](https://github.com/adobe/spectrum-web-components/issues/3887)
+-   **menu:** process ":active" styles ([7917583](https://github.com/adobe/spectrum-web-components/commit/79175833e8121cef1419b547802721324472965d))
+-   **slider:** reimplement gradient slider track application ([a10b91e](https://github.com/adobe/spectrum-web-components/commit/a10b91ed168ba58f02349e05e1c49898e8686206))
+-   **tabs:** account for the indicator bar in the overflow decorator ([f4a8744](https://github.com/adobe/spectrum-web-components/commit/f4a8744ed5cb38608ae856539ce7c34ca212b3d4))
+-   **theme:** expose version property ([#3978](https://github.com/adobe/spectrum-web-components/issues/3978)) ([d42bb71](https://github.com/adobe/spectrum-web-components/commit/d42bb710fab1857dabad80b982ad046a41251569))
+-   **theme:** include custom Spectrum color tokens in Express color tokens ([370a1f1](https://github.com/adobe/spectrum-web-components/commit/370a1f1df67dba51fd1110a5e850a8600f5a03dd))
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+### Bug Fixes
+
+-   **overlay:** clean position data on close ([edac590](https://github.com/adobe/spectrum-web-components/commit/edac59003ecc1af8dc4aa91c00c9593e8792e63f))
+-   **picker,action-menu,split-button:** update interaction model ([#3935](https://github.com/adobe/spectrum-web-components/issues/3935)) ([bae7d52](https://github.com/adobe/spectrum-web-components/commit/bae7d527e513d2588267c62cc70f5e1c1289f903))
+-   **shared:** update and expand attribute coverage in likeAnchor ([5cb5f1d](https://github.com/adobe/spectrum-web-components/commit/5cb5f1d67c3afe4d62941632d65177a2cd8804c6))
+-   **slider:** add "fill-start" attribute/property and associated "variant="filled" visual delivery ([#3876](https://github.com/adobe/spectrum-web-components/issues/3876)) ([2c3e35e](https://github.com/adobe/spectrum-web-components/commit/2c3e35e858bbc10f162f719ada1356c516111050))
+
 ## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
 
 ### Bug Fixes

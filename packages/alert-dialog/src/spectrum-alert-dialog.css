@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-alert-dialog-min-width: var(
         --spectrum-alert-dialog-minimum-width
@@ -59,86 +60,89 @@ governing permissions and limitations under the License.
     --spectrum-alert-dialog-divider-to-description: var(--spectrum-spacing-300);
     --spectrum-alert-dialog-title-to-icon: var(--spectrum-spacing-300);
     --mod-buttongroup-justify-content: flex-end;
-}
-:host {
     box-sizing: border-box;
-    display: flex;
-    inline-size: -moz-fit-content;
-    inline-size: fit-content;
-    max-block-size: inherit;
-    max-inline-size: var(
-        --mod-alert-dialog-max-width,
-        var(--spectrum-alert-dialog-max-width)
-    );
     min-inline-size: var(
         --mod-alert-dialog-min-width,
         var(--spectrum-alert-dialog-min-width)
     );
-    outline: none;
+    max-inline-size: var(
+        --mod-alert-dialog-max-width,
+        var(--spectrum-alert-dialog-max-width)
+    );
+    max-block-size: inherit;
     padding: var(
         --mod-alert-dialog-padding,
         var(--spectrum-alert-dialog-padding)
     );
+    outline: none;
+    inline-size: fit-content;
+    display: flex;
 }
+
 .icon {
+    inline-size: var(
+        --mod-alert-dialog-icon-size,
+        var(--spectrum-alert-dialog-icon-size)
+    );
     block-size: var(
         --mod-alert-dialog-icon-size,
         var(--spectrum-alert-dialog-icon-size)
     );
     flex-shrink: 0;
-    inline-size: var(
-        --mod-alert-dialog-icon-size,
-        var(--spectrum-alert-dialog-icon-size)
-    );
     margin-inline-start: var(
         --mod-alert-dialog-title-to-icon,
         var(--spectrum-alert-dialog-title-to-icon)
     );
 }
+
 :host([variant='warning']) {
     --mod-icon-color: var(
         --mod-alert-dialog-warning-icon-color,
         var(--spectrum-alert-dialog-warning-icon-color)
     );
 }
+
 :host([variant='error']) {
     --mod-icon-color: var(
         --mod-alert-dialog-error-icon-color,
         var(--spectrum-alert-dialog-error-icon-color)
     );
 }
+
 .grid {
     display: grid;
 }
+
 .header {
+    justify-content: space-between;
     align-items: baseline;
     display: flex;
-    justify-content: space-between;
 }
+
 ::slotted([slot='heading']) {
-    color: var(
-        --mod-alert-dialog-title-color,
-        var(--spectrum-alert-dialog-title-color)
-    );
     font-family: var(
         --mod-alert-dialog-title-font-family,
         var(--spectrum-alert-dialog-title-font-family)
-    );
-    font-size: var(
-        --mod-alert-dialog-title-font-size,
-        var(--spectrum-alert-dialog-title-font-size)
-    );
-    font-style: var(
-        --mod-alert-dialog-title-font-style,
-        var(--spectrum-alert-dialog-title-font-style)
     );
     font-weight: var(
         --mod-alert-dialog-title-font-weight,
         var(--spectrum-alert-dialog-title-font-weight)
     );
+    font-style: var(
+        --mod-alert-dialog-title-font-style,
+        var(--spectrum-alert-dialog-title-font-style)
+    );
+    font-size: var(
+        --mod-alert-dialog-title-font-size,
+        var(--spectrum-alert-dialog-title-font-size)
+    );
     line-height: var(
         --mod-alert-dialog-title-line-height,
         var(--spectrum-alert-dialog-title-line-height)
+    );
+    color: var(
+        --mod-alert-dialog-title-color,
+        var(--spectrum-alert-dialog-title-color)
     );
     margin: 0;
     margin-block-end: var(
@@ -146,43 +150,45 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-dialog-title-to-divider)
     );
 }
+
 .content {
-    -webkit-overflow-scrolling: touch;
-    color: var(
-        --mod-alert-dialog-body-color,
-        var(--spectrum-alert-dialog-body-color)
-    );
     font-family: var(
         --mod-alert-dialog-body-font-family,
         var(--spectrum-alert-dialog-body-font-family)
-    );
-    font-size: var(
-        --mod-alert-dialog-body-font-size,
-        var(--spectrum-alert-dialog-body-font-size)
-    );
-    font-style: var(
-        --mod-alert-dialog-body-font-style,
-        var(--spectrum-alert-dialog-body-font-style)
     );
     font-weight: var(
         --mod-alert-dialog-body-font-weight,
         var(--spectrum-alert-dialog-body-font-weight)
     );
+    font-style: var(
+        --mod-alert-dialog-body-font-style,
+        var(--spectrum-alert-dialog-body-font-style)
+    );
+    font-size: var(
+        --mod-alert-dialog-body-font-size,
+        var(--spectrum-alert-dialog-body-font-size)
+    );
     line-height: var(
         --mod-alert-dialog-body-line-height,
         var(--spectrum-alert-dialog-body-line-height)
     );
-    margin: 0;
-    margin-block-end: var(
-        --mod-alert-dialog-description-to-buttons,
-        var(--spectrum-alert-dialog-description-to-buttons)
+    color: var(
+        --mod-alert-dialog-body-color,
+        var(--spectrum-alert-dialog-body-color)
     );
+    -webkit-overflow-scrolling: touch;
+    margin: 0;
     margin-block-start: var(
         --mod-alert-dialog-divider-to-description,
         var(--spectrum-alert-dialog-divider-to-description)
     );
+    margin-block-end: var(
+        --mod-alert-dialog-description-to-buttons,
+        var(--spectrum-alert-dialog-description-to-buttons)
+    );
     overflow-y: auto;
 }
+
 @media (forced-colors: active) {
     :host {
         border: solid;

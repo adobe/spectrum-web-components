@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #list {
     --spectrum-sidenav-focus-ring-size: var(
         --spectrum-focus-indicator-thickness
@@ -112,34 +113,30 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
     --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
 }
+
 #list:lang(ja),
 #list:lang(ko),
 #list:lang(zh) {
     --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
-}
-#list:lang(ja),
-#list:lang(ko),
-#list:lang(zh) {
     --spectrum-sidenav-top-level-line-height: var(
         --spectrum-cjk-line-height-100
     );
-}
-#list:lang(ja),
-#list:lang(ko),
-#list:lang(zh) {
     --spectrum-sidenav-header-line-height: var(--spectrum-cjk-line-height-100);
 }
+
 #list {
-    display: flex;
     flex-direction: column;
-    list-style-type: none;
     margin: 0;
     padding: 0;
-}
-:host {
     list-style-type: none;
-    margin-inline: 0;
+    display: flex;
 }
+
+:host {
+    margin-inline: 0;
+    list-style-type: none;
+}
+
 :host([disabled]) #item-link {
     background-color: var(
         --highcontrast-sidenav-background-disabled,
@@ -158,6 +155,7 @@ governing permissions and limitations under the License.
     cursor: default;
     pointer-events: none;
 }
+
 :host([selected]) #item-link {
     background-color: var(
         --highcontrast-sidenav-item-background-default-selected,
@@ -174,19 +172,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([selected]) #item-link:hover {
-    background-color: var(
-        --highcontrast-sidenav-background-hover-selected,
-        var(
-            --mod-sidenav-background-hover-selected,
-            var(--spectrum-sidenav-background-hover-selected)
-        )
-    );
-    color: var(
-        --mod-sidenav-content-color-hover-selected,
-        var(--spectrum-sidenav-content-color-hover-selected)
-    );
-}
+
 :host([selected]) #item-link:active {
     background-color: var(
         --highcontrast-sidenav-item-background-down-selected,
@@ -200,20 +186,7 @@ governing permissions and limitations under the License.
         var(--spectrum-sidenav-content-color-down-selected)
     );
 }
-:host([selected]) #item-link.focus-visible,
-:host([selected]) #item-link.is-keyboardFocused {
-    background-color: var(
-        --highcontrast-sidenav-background-key-focus-selected,
-        var(
-            --mod-sidenav-background-key-focus-selected,
-            var(--spectrum-sidenav-background-key-focus-selected)
-        )
-    );
-    color: var(
-        --mod-sidenav-content-color-key-focus-selected,
-        var(--spectrum-sidenav-content-color-key-focus-selected)
-    );
-}
+
 :host([selected]) #item-link.is-keyboardFocused,
 :host([selected]) #item-link:focus-visible {
     background-color: var(
@@ -228,7 +201,23 @@ governing permissions and limitations under the License.
         var(--spectrum-sidenav-content-color-key-focus-selected)
     );
 }
+
 #item-link {
+    padding-inline: var(
+        --mod-sidenav-inline-padding,
+        var(--spectrum-sidenav-inline-padding)
+    );
+    box-sizing: border-box;
+    word-break: break-word;
+    hyphens: auto;
+    cursor: pointer;
+    transition:
+        background-color var(--spectrum-animation-duration-100) ease-out,
+        color var(--spectrum-animation-duration-100) ease-out;
+    border-radius: var(
+        --mod-sidenav-border-radius,
+        var(--spectrum-sidenav-border-radius)
+    );
     background-color: var(
         --highcontrast-sidenav-background-default,
         var(
@@ -236,11 +225,6 @@ governing permissions and limitations under the License.
             var(--spectrum-sidenav-background-default)
         )
     );
-    border-radius: var(
-        --mod-sidenav-border-radius,
-        var(--spectrum-sidenav-border-radius)
-    );
-    box-sizing: border-box;
     color: var(
         --highcontrast-sidenav-content-color-default,
         var(
@@ -248,32 +232,11 @@ governing permissions and limitations under the License.
             var(--spectrum-sidenav-content-color-default)
         )
     );
-    cursor: pointer;
-    display: inline-flex;
-    font-family: var(
-        --mod-sidenav-text-font-family,
-        var(--spectrum-sidenav-text-font-family)
-    );
-    font-size: var(
-        --mod-sidenav-text-font-size,
-        var(--spectrum-sidenav-text-font-size)
-    );
-    font-style: var(
-        --mod-sidenav-text-font-style,
-        var(--spectrum-sidenav-text-font-style)
-    );
-    font-weight: var(
-        --mod-sidenav-text-font-weight,
-        var(--spectrum-sidenav-text-font-weight)
-    );
-    hyphens: auto;
     inline-size: var(--mod-sidenav-width, var(--spectrum-sidenav-width));
-    justify-content: start;
-    line-height: var(
-        --mod-sidenav-text-line-height,
-        var(--spectrum-sidenav-text-line-height)
+    min-inline-size: var(
+        --mod-sidenav-min-width,
+        var(--spectrum-sidenav-min-width)
     );
-    margin-block-end: var(--mod-sidenav-gap, var(--spectrum-sidenav-gap));
     max-inline-size: var(
         --mod-sidenav-max-width,
         var(--spectrum-sidenav-max-width)
@@ -282,38 +245,52 @@ governing permissions and limitations under the License.
         --mod-sidenav-min-height,
         var(--spectrum-sidenav-min-height)
     );
-    min-inline-size: var(
-        --mod-sidenav-min-width,
-        var(--spectrum-sidenav-min-width)
+    font-family: var(
+        --mod-sidenav-text-font-family,
+        var(--spectrum-sidenav-text-font-family)
     );
-    padding-inline: var(
-        --mod-sidenav-inline-padding,
-        var(--spectrum-sidenav-inline-padding)
+    font-size: var(
+        --mod-sidenav-text-font-size,
+        var(--spectrum-sidenav-text-font-size)
     );
-    position: relative;
+    font-weight: var(
+        --mod-sidenav-text-font-weight,
+        var(--spectrum-sidenav-text-font-weight)
+    );
+    font-style: var(
+        --mod-sidenav-text-font-style,
+        var(--spectrum-sidenav-text-font-style)
+    );
+    line-height: var(
+        --mod-sidenav-text-line-height,
+        var(--spectrum-sidenav-text-line-height)
+    );
+    justify-content: start;
+    margin-block-end: var(--mod-sidenav-gap, var(--spectrum-sidenav-gap));
     -webkit-text-decoration: none;
     text-decoration: none;
-    transition: background-color var(--spectrum-animation-duration-100) ease-out,
-        color var(--spectrum-animation-duration-100) ease-out;
-    word-break: break-word;
+    display: inline-flex;
+    position: relative;
 }
+
 #item-link #link-text {
-    margin-block-end: var(
-        --mod-sidenav-bottom-to-label,
-        var(--spectrum-sidenav-bottom-to-label)
-    );
     margin-block-start: var(
         --mod-sidenav-top-to-label,
         var(--spectrum-sidenav-top-to-label)
     );
+    margin-block-end: var(
+        --mod-sidenav-bottom-to-label,
+        var(--spectrum-sidenav-bottom-to-label)
+    );
 }
+
 #item-link ::slotted([slot='icon']) {
-    block-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
-    flex-shrink: 0;
     inline-size: var(
         --mod-sidenav-icon-size,
         var(--spectrum-sidenav-icon-size)
     );
+    block-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
+    flex-shrink: 0;
     margin-block-start: var(
         --mod-sidenav-top-to-icon,
         var(--spectrum-sidenav-top-to-icon)
@@ -323,22 +300,40 @@ governing permissions and limitations under the License.
         var(--spectrum-sidenav-icon-spacing)
     );
 }
-#item-link:hover {
-    background-color: var(
-        --highcontrast-sidenav-background-hover,
-        var(
-            --mod-sidenav-background-hover,
-            var(--spectrum-sidenav-background-hover)
-        )
-    );
-    color: var(
-        --highcontrast-sidenav-content-color-hover,
-        var(
-            --mod-sidenav-content-color-hover,
-            var(--spectrum-sidenav-content-color-hover)
-        )
-    );
+
+@media (hover: hover) {
+    :host([selected]) #item-link:hover {
+        background-color: var(
+            --highcontrast-sidenav-background-hover-selected,
+            var(
+                --mod-sidenav-background-hover-selected,
+                var(--spectrum-sidenav-background-hover-selected)
+            )
+        );
+        color: var(
+            --mod-sidenav-content-color-hover-selected,
+            var(--spectrum-sidenav-content-color-hover-selected)
+        );
+    }
+
+    #item-link:hover {
+        background-color: var(
+            --highcontrast-sidenav-background-hover,
+            var(
+                --mod-sidenav-background-hover,
+                var(--spectrum-sidenav-background-hover)
+            )
+        );
+        color: var(
+            --highcontrast-sidenav-content-color-hover,
+            var(
+                --mod-sidenav-content-color-hover,
+                var(--spectrum-sidenav-content-color-hover)
+            )
+        );
+    }
 }
+
 #item-link:active {
     background-color: var(
         --highcontrast-sidenav-item-background-down,
@@ -355,55 +350,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-#item-link.focus-visible,
-#item-link.is-keyboardFocused {
-    background-color: var(
-        --highcontrast-sidenav-background-key-focus,
-        var(
-            --mod-sidenav-background-key-focus,
-            var(--spectrum-sidenav-background-key-focus)
-        )
-    );
-    color: var(
-        --highcontrast-sidenav-content-color-key-focus,
-        var(
-            --mod-sidenav-content-color-key-focus,
-            var(--spectrum-sidenav-content-color-key-focus)
-        )
-    );
-    outline: var(
-            --highcontrast-sidenav-focus-ring-color,
-            var(
-                --mod-sidenav-focus-ring-color,
-                var(--spectrum-sidenav-focus-ring-color)
-            )
-        )
-        solid
-        var(
-            --mod-sidenav-focus-ring-size,
-            var(--spectrum-sidenav-focus-ring-size)
-        );
-    outline-offset: var(
-        --mod-sidenav-focus-ring-gap,
-        var(--spectrum-sidenav-focus-ring-gap)
-    );
-}
+
 #item-link.is-keyboardFocused,
 #item-link:focus-visible {
-    background-color: var(
-        --highcontrast-sidenav-background-key-focus,
-        var(
-            --mod-sidenav-background-key-focus,
-            var(--spectrum-sidenav-background-key-focus)
-        )
-    );
-    color: var(
-        --highcontrast-sidenav-content-color-key-focus,
-        var(
-            --mod-sidenav-content-color-key-focus,
-            var(--spectrum-sidenav-content-color-key-focus)
-        )
-    );
     outline: var(
             --highcontrast-sidenav-focus-ring-color,
             var(
@@ -420,12 +369,84 @@ governing permissions and limitations under the License.
         --mod-sidenav-focus-ring-gap,
         var(--spectrum-sidenav-focus-ring-gap)
     );
+    background-color: var(
+        --highcontrast-sidenav-background-key-focus,
+        var(
+            --mod-sidenav-background-key-focus,
+            var(--spectrum-sidenav-background-key-focus)
+        )
+    );
+    color: var(
+        --highcontrast-sidenav-content-color-key-focus,
+        var(
+            --mod-sidenav-content-color-key-focus,
+            var(--spectrum-sidenav-content-color-key-focus)
+        )
+    );
 }
+
+#item-link[data-level] {
+    font-family: var(
+        --mod-sidenav-top-level-font-family,
+        var(--spectrum-sidenav-top-level-font-family)
+    );
+    font-weight: var(
+        --mod-sidenav-top-level-font-weight,
+        var(--spectrum-sidenav-top-level-font-weight)
+    );
+    font-style: var(
+        --mod-sidenav-top-level-font-style,
+        var(--spectrum-sidenav-top-level-font-style)
+    );
+    font-size: var(
+        --mod-sidenav-top-level-font-size,
+        var(--spectrum-sidenav-top-level-font-size)
+    );
+    line-height: var(
+        --mod-sidenav-top-level-line-height,
+        var(--spectrum-sidenav-top-level-line-height)
+    );
+}
+
+#item-link:not([data-level='0']) {
+    font-weight: var(
+        --mod-sidenav-text-font-weight,
+        var(--spectrum-sidenav-text-font-weight)
+    );
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-second-level,
+        var(--spectrum-sidenav-start-to-content-second-level)
+    );
+}
+
+#item-link[data-level='2'] {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-third-level,
+        var(--spectrum-sidenav-start-to-content-third-level)
+    );
+}
+
+.spectrum-SideNav--hasIcon#item-link:not([data-level='0']) {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-with-icon-second-level,
+        var(--spectrum-sidenav-start-to-content-with-icon-second-level)
+    );
+}
+
+.spectrum-SideNav--hasIcon#item-link[data-level='2'] {
+    padding-inline-start: var(
+        --mod-sidenav-start-to-content-with-icon-third-level,
+        var(--spectrum-sidenav-start-to-content-with-icon-third-level)
+    );
+}
+
 @media (forced-colors: active) {
     #list ::slotted([slot='icon']) {
         forced-color-adjust: preserve-parent-color;
     }
+
     :host {
+        forced-color-adjust: none;
         --highcontrast-sidenav-content-disabled-color: GrayText;
         --highcontrast-sidenav-focus-ring-color: Highlight;
         --highcontrast-sidenav-content-color-default-selected: SelectedItemText;
@@ -440,6 +461,5 @@ governing permissions and limitations under the License.
         --highcontrast-sidenav-top-level-font-color: ButtonText;
         --highcontrast-sidenav-content-color-default: ButtonText;
         --highcontrast-sidenav-content-color-down: HighlightText;
-        forced-color-adjust: none;
     }
 }

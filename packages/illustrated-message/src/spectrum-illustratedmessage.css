@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-illustrated-message-description-max-inline-size: var(
         --spectrum-illustrated-message-maximum-width
@@ -65,6 +66,7 @@ governing permissions and limitations under the License.
         --spectrum-body-color
     );
 }
+
 :host:lang(ja),
 :host:lang(ko),
 :host:lang(zh) {
@@ -72,25 +74,26 @@ governing permissions and limitations under the License.
         --spectrum-illustrated-message-cjk-title-size
     );
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-illustrated-message-illustration-color: CanvasText;
         --highcontrast-illustrated-message-illustration-accent-color: Highlight;
     }
 }
+
 :host {
-    align-items: center;
-    block-size: 100%;
     display: var(--mod-illustrated-message-display, flex);
+    text-align: center;
+    pointer-events: var(--mod-illustrated-message-pointer-events, auto);
+    max-inline-size: var(--mod-illustrated-message-content-maximum-width);
     flex-direction: column;
     justify-content: center;
-    max-inline-size: var(--mod-illustrated-message-content-maximum-width);
-    pointer-events: var(--mod-illustrated-message-pointer-events, auto);
-    text-align: center;
+    align-items: center;
+    block-size: 100%;
 }
+
 #illustration {
-    fill: currentColor;
-    stroke: currentColor;
     color: var(
         --highcontrast-illustrated-message-illustration-color,
         var(
@@ -98,14 +101,15 @@ governing permissions and limitations under the License.
             var(--spectrum-illustrated-message-illustration-color)
         )
     );
+    fill: currentColor;
+    stroke: currentColor;
     margin-block-end: var(
         --mod-illustrated-message-title-to-heading,
         var(--spectrum-illustrated-message-title-to-heading)
     );
 }
+
 .spectrum-IllustratedMessage-accent {
-    fill: currentColor;
-    stroke: currentColor;
     color: var(
         --highcontrast-illustrated-message-illustration-accent-color,
         var(
@@ -113,77 +117,81 @@ governing permissions and limitations under the License.
             var(--spectrum-illustrated-message-illustration-accent-color)
         )
     );
+    fill: currentColor;
+    stroke: currentColor;
 }
+
 #heading {
-    color: var(
-        --mod-illustrated-message-title-color,
-        var(--spectrum-illustrated-message-title-color)
-    );
     font-family: var(
         --mod-illustrated-message-title-font-family,
         var(--spectrum-illustrated-message-title-font-family)
-    );
-    font-size: var(
-        --mod-illustrated-message-title-font-size,
-        var(--spectrum-illustrated-message-title-font-size)
-    );
-    font-style: var(
-        --mod-illustrated-message-title-font-style,
-        var(--spectrum-illustrated-message-title-font-style)
     );
     font-weight: var(
         --mod-illustrated-message-title-font-weight,
         var(--spectrum-illustrated-message-title-font-weight)
     );
+    font-style: var(
+        --mod-illustrated-message-title-font-style,
+        var(--spectrum-illustrated-message-title-font-style)
+    );
+    font-size: var(
+        --mod-illustrated-message-title-font-size,
+        var(--spectrum-illustrated-message-title-font-size)
+    );
     line-height: var(
         --mod-illustrated-message-title-line-height,
         var(--spectrum-illustrated-message-title-line-height)
     );
-    margin-block-end: var(--mod-illustrated-message-heading-to-body, 0);
-    margin-block-start: 0;
+    color: var(
+        --mod-illustrated-message-title-color,
+        var(--spectrum-illustrated-message-title-color)
+    );
     max-inline-size: var(
         --mod-illustrated-message-heading-max-inline-size,
         var(--spectrum-illustrated-message-heading-max-inline-size)
     );
+    margin-block-start: 0;
+    margin-block-end: var(--mod-illustrated-message-heading-to-body, 0);
 }
+
 #description {
-    color: var(
-        --mod-illustrated-message-description-color,
-        var(--spectrum-illustrated-message-description-color)
+    position: var(--mod-illustrated-message-description-position);
+    z-index: var(--mod-illustrated-message-description-z-index);
+    pointer-events: var(
+        --mod-illustrated-message-description-pointer-events,
+        auto
     );
     font-family: var(
         --mod-illustrated-message-description-font-family,
         var(--spectrum-illustrated-message-description-font-family)
     );
-    font-size: var(
-        --mod-illustrated-message-description-font-size,
-        var(--spectrum-illustrated-message-description-font-size)
+    font-weight: var(
+        --mod-illustrated-message-description-font-weight,
+        var(--spectrum-illustrated-message-description-font-weight)
     );
     font-style: var(
         --mod-illustrated-message-description-font-style,
         var(--spectrum-illustrated-message-description-font-style)
     );
-    font-weight: var(
-        --mod-illustrated-message-description-font-weight,
-        var(--spectrum-illustrated-message-description-font-weight)
+    font-size: var(
+        --mod-illustrated-message-description-font-size,
+        var(--spectrum-illustrated-message-description-font-size)
     );
     line-height: var(
         --mod-illustrated-message-description-line-height,
         var(--spectrum-illustrated-message-description-line-height)
     );
-    margin-block-end: 0;
-    margin-block-start: var(
-        --mod-illustrated-message-heading-to-description,
-        var(--spectrum-illustrated-message-heading-to-description)
+    color: var(
+        --mod-illustrated-message-description-color,
+        var(--spectrum-illustrated-message-description-color)
     );
     max-inline-size: var(
         --mod-illustrated-message-description-max-inline-size,
         var(--spectrum-illustrated-message-description-max-inline-size)
     );
-    pointer-events: var(
-        --mod-illustrated-message-description-pointer-events,
-        auto
+    margin-block-start: var(
+        --mod-illustrated-message-heading-to-description,
+        var(--spectrum-illustrated-message-heading-to-description)
     );
-    position: var(--mod-illustrated-message-description-position);
-    z-index: var(--mod-illustrated-message-description-z-index);
+    margin-block-end: 0;
 }

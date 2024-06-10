@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import './router.js';
+import './components/demo-container.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
@@ -44,6 +45,12 @@ import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/field-group/sp-field-group.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import '@spectrum-web-components/card/sp-card.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 
 if ('requestIdleCallback' in window) {
     requestIdleCallback(() => {
@@ -65,8 +72,8 @@ class StyledElement extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    background-color: var(--spectrum-global-color-gray-50);
-                    color: var(--spectrum-global-color-gray-800);
+                    background-color: var(--spectrum-gray-50);
+                    color: var(--spectrum-gray-800);
                     border: 1px solid;
                     padding: 2em;
                 }

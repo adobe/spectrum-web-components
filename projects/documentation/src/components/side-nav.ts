@@ -36,27 +36,12 @@ export class SideNav extends LitElement {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    public toggle(event: MouseEvent | KeyboardEvent) {
-        if (
-            event.type === 'keydown' &&
-            (event as KeyboardEvent).code !== 'Enter' &&
-            (event as KeyboardEvent).code !== 'Space'
-        ) {
-            return;
-        }
+    public toggle() {
         this.open = !this.open;
     }
 
-    handleKeydown = (event: KeyboardEvent) => {
-        if (
-            event.code === 'Escape' &&
-            (event.target! as Element).closest(
-                '[role="listbox"],[role="menu"]'
-            ) === null
-        ) {
-            this.open = false;
-        }
-    };
+    @property({ type: Boolean })
+    public isNarrow = false;
 
     public override focus() {
         const target = document.querySelector(
@@ -71,26 +56,34 @@ export class SideNav extends LitElement {
         target.focus();
     }
 
+    handleTransitionEvent(event: TransitionEvent): void {
+        this.dispatchEvent(new TransitionEvent(event.type));
+    }
+
     override render(): TemplateResult {
         return html`
-            <sp-underlay
-                class="scrim"
-                @click=${this.toggle}
-                ?open=${this.open}
-            ></sp-underlay>
-            <aside>
+            ${this.isNarrow
+                ? html`
+                      <sp-underlay
+                          class="scrim"
+                          @close=${this.toggle}
+                          ?open=${this.open}
+                          @transitionrun=${this.handleTransitionEvent}
+                          @transitionend=${this.handleTransitionEvent}
+                          @transitioncancel=${this.handleTransitionEvent}
+                      ></sp-underlay>
+                  `
+                : html``}
+            <aside
+                @transitionrun=${this.handleTransitionEvent}
+                @transitionend=${this.handleTransitionEvent}
+                @transitioncancel=${this.handleTransitionEvent}
+            >
                 <div id="nav-header">
                     <div id="logo-container">
                         <slot name="logo"></slot>
                     </div>
-                    <docs-search
-                        tabindex=${ifDefined(
-                            !this.open &&
-                                matchMedia('(max-width: 960px)').matches
-                                ? -1
-                                : undefined
-                        )}
-                    ></docs-search>
+                    <docs-search></docs-search>
                 </div>
                 <div class="navigation">
                     <slot></slot>
@@ -102,18 +95,7 @@ export class SideNav extends LitElement {
     override updated(changes: PropertyValues) {
         if (changes.has('open')) {
             if (!this.open && changes.get('open')) {
-                this.dispatchEvent(new Event('close'));
-                this.ownerDocument.removeEventListener(
-                    'keydown',
-                    this.handleKeydown,
-                    true
-                );
-            } else if (this.open && !changes.get('open')) {
-                this.ownerDocument.addEventListener(
-                    'keydown',
-                    this.handleKeydown,
-                    true
-                );
+                this.dispatchEvent(new Event('close', { bubbles: true }));
             }
         }
     }

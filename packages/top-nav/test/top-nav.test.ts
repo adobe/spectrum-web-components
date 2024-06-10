@@ -16,6 +16,7 @@ import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
 import { Default, Selected } from '../stories/top-nav.stories.js';
 import { spy } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('TopNav', () => {
     testForLitDevWarnings(async () => await fixture<TopNav>(Default()));
@@ -46,10 +47,13 @@ describe('TopNav', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('updates indicator size when Nav Item conten changes', async () => {
+    it('updates indicator size when Nav Item content changes', async () => {
         const el = await fixture<TopNav>(Selected());
 
         await elementUpdated(el);
+
+        const items = [...el.querySelectorAll('sp-top-nav-item')];
+        await Promise.all(items.map((item) => elementUpdated(item)));
 
         const indicator = el.shadowRoot.querySelector(
             '#selection-indicator'
@@ -63,10 +67,14 @@ describe('TopNav', () => {
 
         // Wait for slotchange time before continuing the test.
         await nextFrame();
+        await nextFrame();
 
         const { width: widthEnd } = indicator.getBoundingClientRect();
 
-        expect(widthStart).to.be.greaterThan(widthEnd);
+        expect(
+            widthStart,
+            `${widthStart} is not greater than ${widthEnd}`
+        ).to.be.greaterThan(widthEnd);
     });
     it('can have an item removed', async () => {
         const el = await fixture<TopNav>(Selected());
@@ -100,6 +108,34 @@ describe('TopNavItem', () => {
         await elementUpdated(el);
 
         el.click();
+
+        expect(clickSpy.called).to.be.true;
+        expect(clickSpy.calledWith(anchor)).to.be.true;
+    });
+    it('`<a>` accepts click across full item area', async () => {
+        const clickSpy = spy();
+        const test = await fixture<TopNav>(Selected());
+        const el = test.querySelector(
+            'sp-top-nav-item:nth-of-type(4)'
+        ) as TopNavItem;
+        const anchor = el.focusElement;
+        test.addEventListener('click', (event: Event) => {
+            event.preventDefault();
+            const target = event.composedPath()[0];
+            clickSpy(target);
+        });
+        await elementUpdated(el);
+        const rect = el.getBoundingClientRect();
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [rect.left + rect.width / 2, rect.top + 1],
+                },
+            ],
+        });
+        await elementUpdated(test);
 
         expect(clickSpy.called).to.be.true;
         expect(clickSpy.calledWith(anchor)).to.be.true;

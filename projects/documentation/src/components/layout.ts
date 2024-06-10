@@ -21,25 +21,27 @@ import {
 import {
     property,
     queryAsync,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import type {
     Color,
     Scale,
+    SystemVariant,
     Theme,
-    ThemeVariant,
 } from '@spectrum-web-components/theme';
 import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import {
+    type OverlayTriggerOptions,
+    trigger,
+} from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
 
-import type { SideNav } from './side-nav.js';
 import './adobe-logo.js';
 import type { CodeExample } from './code-example.js';
 import './code-example.js';
@@ -50,15 +52,15 @@ import {
     DARK_MODE,
     IS_MOBILE,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import type { ActionButton } from '@spectrum-web-components/bundle';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
 const SWC_THEME_THEME_KEY = 'swc-docs:theme:theme';
+const SWC_THEME_SYSTEM_KEY = 'swc-docs:theme:system';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
 const COLOR_FALLBACK = matchMedia(DARK_MODE).matches ? 'dark' : 'light';
 const SCALE_FALLBACK = matchMedia(IS_MOBILE).matches ? 'large' : 'medium';
-const THEME_FALLBACK = 'spectrum';
+const SYSTEM_FALLBACK = 'spectrum';
 const DIR_FALLBACK = 'ltr';
 const DEFAULT_COLOR = (
     window.localStorage
@@ -70,11 +72,13 @@ const DEFAULT_SCALE = (
         ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_FALLBACK
         : SCALE_FALLBACK
 ) as Scale;
-const DEFAULT_THEME = (
+const DEFAULT_SYSTEM = (
     window.localStorage
-        ? localStorage.getItem(SWC_THEME_THEME_KEY) || THEME_FALLBACK
-        : THEME_FALLBACK
-) as ThemeVariant;
+        ? localStorage.getItem(SWC_THEME_THEME_KEY) ||
+          localStorage.getItem(SWC_THEME_SYSTEM_KEY) ||
+          SYSTEM_FALLBACK
+        : SYSTEM_FALLBACK
+) as SystemVariant;
 const DEFAULT_DIR = (
     window.localStorage
         ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
@@ -83,20 +87,17 @@ const DEFAULT_DIR = (
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
-const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
-    var fragmentName = `${name}-${flavor}`;
+const lazyStyleFragment = (
+    name: Color | Scale,
+    system: SystemVariant
+): void => {
+    var fragmentName = `${name}-${system}`;
     switch (fragmentName) {
-        case 'darkest-spectrum':
-            import('@spectrum-web-components/theme/theme-darkest.js');
-            break;
-        case 'dark-spectrum':
+        case 'dark-spectrum' || 'darkest-spectrum':
             import('@spectrum-web-components/theme/theme-dark.js');
             break;
-        case 'light-spectrum':
+        case 'light-spectrum' || 'lightest-spectrum':
             import('@spectrum-web-components/theme/theme-light.js');
-            break;
-        case 'lightest-spectrum':
-            import('@spectrum-web-components/theme/theme-lightest.js');
             break;
         case 'medium-spectrum':
             import('@spectrum-web-components/theme/scale-medium.js');
@@ -104,23 +105,37 @@ const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
         case 'large-spectrum':
             import('@spectrum-web-components/theme/scale-large.js');
             break;
-        case 'darkest-express':
-            import('@spectrum-web-components/theme/express/theme-darkest.js');
-            break;
-        case 'dark-express':
+        case 'dark-express' || 'darkest-express':
             import('@spectrum-web-components/theme/express/theme-dark.js');
             break;
-        case 'light-express':
+        case 'light-express' || 'lightest-express':
             import('@spectrum-web-components/theme/express/theme-light.js');
-            break;
-        case 'lightest-express':
-            import('@spectrum-web-components/theme/express/theme-lightest.js');
             break;
         case 'medium-express':
             import('@spectrum-web-components/theme/express/scale-medium.js');
             break;
         case 'large-express':
             import('@spectrum-web-components/theme/express/scale-large.js');
+            break;
+        case 'light-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/theme-light-core-tokens.js'
+            );
+            break;
+        case 'dark-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/theme-dark-core-tokens.js'
+            );
+            break;
+        case 'medium-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/scale-medium-core-tokens.js'
+            );
+            break;
+        case 'large-spectrum-two':
+            import(
+                '@spectrum-web-components/theme/spectrum-two/scale-large-core-tokens.js'
+            );
             break;
     }
 };
@@ -129,10 +144,10 @@ const loadDefaults = () => {
     if (
         DEFAULT_COLOR !== COLOR_FALLBACK ||
         DEFAULT_SCALE !== SCALE_FALLBACK ||
-        DEFAULT_THEME !== THEME_FALLBACK
+        DEFAULT_SYSTEM !== SYSTEM_FALLBACK
     ) {
-        lazyStyleFragment(DEFAULT_COLOR, DEFAULT_THEME);
-        lazyStyleFragment(DEFAULT_SCALE, DEFAULT_THEME);
+        lazyStyleFragment(DEFAULT_COLOR, DEFAULT_SYSTEM);
+        lazyStyleFragment(DEFAULT_SCALE, DEFAULT_SYSTEM);
     }
 };
 
@@ -146,7 +161,7 @@ export class LayoutElement extends LitElement {
         return [layoutStyles];
     }
 
-    @property({ attribute: false })
+    @state()
     private alerts: Map<
         HTMLElement,
         {
@@ -165,17 +180,17 @@ export class LayoutElement extends LitElement {
     @property({ type: Boolean })
     public open = false;
 
-    @property({ type: Boolean })
-    public settings = false;
-
-    @property({ type: Boolean, attribute: false })
+    @state()
     private isNarrow = isNarrowMediaQuery.matches;
+
+    @property({ attribute: false })
+    public theme: SystemVariant = DEFAULT_SYSTEM;
 
     @property({ attribute: false })
     public scale: Scale = DEFAULT_SCALE;
 
     @property({ attribute: false })
-    public theme: ThemeVariant = DEFAULT_THEME;
+    public system: SystemVariant = DEFAULT_SYSTEM;
 
     @queryAsync('sp-theme')
     private themeRoot!: Theme;
@@ -190,31 +205,14 @@ export class LayoutElement extends LitElement {
 
     private _themeTrackers = new Map<HTMLElement, TrackTheme['callback']>();
 
-    handleMatchMediaChange = (event: MediaQueryListEvent) => {
+    private handleMatchMediaChange = (event: MediaQueryListEvent) => {
         this.isNarrow = event.matches;
     };
 
-    handleEscapeKey = (event: KeyboardEvent) => {
-        if (
-            event.key === 'Escape' &&
-            (event.target! as Element).closest(
-                '[role="listbox"],[role="menu"]'
-            ) === null
-        ) {
-            if (this.settings) {
-                this.toggleSettings();
-            } else if (this.open) {
-                this.toggleNav();
-            }
-        }
-    };
-
-    toggleNav() {
-        this.open = !this.open;
-    }
-
-    toggleSettings() {
-        this.settings = !this.settings;
+    private closeSettings(event: Event & { target: HTMLElement }) {
+        event.target.parentElement?.dispatchEvent(
+            new Event('close', { bubbles: true })
+        );
     }
 
     private updateColor(event: Event) {
@@ -226,8 +224,8 @@ export class LayoutElement extends LitElement {
         this.scale = (event.target as Picker).value as Scale;
     }
 
-    private updateTheme(event: Event) {
-        this.theme = (event.target as Picker).value as ThemeVariant;
+    private updateSystem(event: Event) {
+        this.system = (event.target as Picker).value as SystemVariant;
     }
 
     private updateDirection(event: Event) {
@@ -273,16 +271,19 @@ export class LayoutElement extends LitElement {
                  * every additional alert.
                  */
 
-                element: (count: number, message: string) => html`
-                    <sp-toast
-                        .timeout=${count}
-                        variant="info"
-                        @close=${close}
-                        open
-                    >
-                        ${message} ${count > 1 ? `(${count} alerts)` : ''}
-                    </sp-toast>
-                `,
+                element: (count: number, message: string) => {
+                    import('@spectrum-web-components/toast/sp-toast.js');
+                    return html`
+                        <sp-toast
+                            .timeout=${count}
+                            variant="info"
+                            @close=${close}
+                            open
+                        >
+                            ${message} ${count > 1 ? `(${count} alerts)` : ''}
+                        </sp-toast>
+                    `;
+                },
             });
         }
         const alert = this.alerts.get(target);
@@ -294,14 +295,7 @@ export class LayoutElement extends LitElement {
         this.requestUpdate();
     }
 
-    public override focus() {
-        (this.shadowRoot!.querySelector('docs-side-nav')! as SideNav).focus();
-    }
-
-    private _sidenavRendered = false;
-
     private get sideNav(): TemplateResult {
-        const displaysNavContent = !this.isNarrow || this.open;
         const navContent = html`
             <slot name="logo" slot="logo">
                 <a id="logo" href="index.html">
@@ -315,88 +309,66 @@ export class LayoutElement extends LitElement {
             </slot>
             <slot name="side-nav"></slot>
         `;
-        this._sidenavRendered = this._sidenavRendered || displaysNavContent;
-        if (this._sidenavRendered) {
-            import('./side-nav.js');
-        }
+        import('./side-nav.js');
         return html`
-            <docs-side-nav
-                id="side-nav"
-                ?inert=${this.isNarrow && !this.open}
-                ?open=${this.open}
-                @close=${this.open ? this.toggleNav : undefined}
-            >
-                ${this._sidenavRendered ? navContent : nothing}
+            <docs-side-nav id="side-nav" .isNarrow=${this.isNarrow}>
+                ${navContent}
             </docs-side-nav>
         `;
     }
 
     private get settingsContent(): TemplateResult {
-        if (this.settings || !this.isNarrow) {
-            import('./settings.js');
-        }
-        return (
-            this.isNarrow
-                ? html`
-                      <sp-underlay
-                          class="scrim"
-                          ?open=${this.settings}
-                          @click=${this.toggleSettings}
-                          ?hidden=${!this.isNarrow}
-                      ></sp-underlay>
-                      <aside
-                          aria-label="Settings"
-                          ?inert=${!this.settings}
-                          class=${this.settings ? 'show' : ''}
-                      >
-                          <header>
-                              <sp-action-button
-                                  quiet
-                                  label="Close Settings"
-                                  @click=${this.toggleSettings}
-                                  id="close-settings-id"
-                              >
-                                  <sp-icon-close slot="icon"></sp-icon-close>
-                              </sp-action-button>
-                          </header>
-                          ${this.manageTheme}
-                      </aside>
-                  `
-                : nothing
-        ) as TemplateResult;
+        import('@spectrum-web-components/underlay/sp-underlay.js');
+        return html`
+            <sp-underlay
+                class="scrim"
+                @close=${this.closeSettings}
+            ></sp-underlay>
+            <aside aria-label="Settings">
+                ${this.manageTheme}
+                <header>
+                    <sp-action-button
+                        quiet
+                        label="Close Settings"
+                        @click=${this.closeSettings}
+                        id="close-settings-id"
+                    >
+                        <sp-icon-close slot="icon"></sp-icon-close>
+                    </sp-action-button>
+                </header>
+            </aside>
+        `;
     }
 
     private get manageTheme(): TemplateResult {
+        import('./settings.js');
         return html`
             <div class="manage-theme" role="form" aria-label="Settings">
                 <div class="theme-control">
-                    <sp-field-label for="theme-theme">Theme</sp-field-label>
+                    <sp-field-label for="theme-system">System</sp-field-label>
                     <sp-picker
-                        id="theme-theme"
+                        id="theme-system"
                         quiet
-                        value=${this.theme}
-                        @change=${this.updateTheme}
+                        value=${this.system}
+                        @change=${this.updateSystem}
                     >
                         <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
-                        <sp-menu-item value="express">
-                            Spectrum Express
+                        <sp-menu-item value="express">Express</sp-menu-item>
+                        <sp-menu-item value="spectrum-two">
+                            Spectrum 2
                         </sp-menu-item>
                     </sp-picker>
                 </div>
                 <div class="theme-control">
-                    <sp-field-label for="theme-color">
-                        Color Theme
-                    </sp-field-label>
+                    <sp-field-label for="theme-color">Color</sp-field-label>
                     <sp-picker
                         id="theme-color"
                         quiet
                         value=${this.color}
                         @change=${this.updateColor}
                     >
-                        <sp-menu-item value="lightest">Lightest</sp-menu-item>
                         <sp-menu-item value="light">Light</sp-menu-item>
                         <sp-menu-item value="dark">Dark</sp-menu-item>
-                        <sp-menu-item value="darkest">Darkest</sp-menu-item>
                     </sp-picker>
                 </div>
                 <div class="theme-control">
@@ -431,60 +403,54 @@ export class LayoutElement extends LitElement {
         `;
     }
 
+    private get header(): TemplateResult {
+        const triggerOptions: Partial<OverlayTriggerOptions> = {
+            overlayOptions: {
+                type: 'modal',
+            },
+            insertionOptions: {
+                el: () =>
+                    this.shadowRoot?.querySelector('#body') as HTMLElement,
+                where: 'afterbegin',
+            },
+        };
+        return html`
+            <header>
+                <sp-action-button
+                    quiet
+                    label="Open Navigation"
+                    id="toggle-nav-id"
+                    ${trigger(() => this.sideNav, triggerOptions)}
+                >
+                    <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                </sp-action-button>
+                <sp-action-button
+                    quiet
+                    label="Open Settings"
+                    id="toggle-settings-id"
+                    ${trigger(() => this.settingsContent, triggerOptions)}
+                >
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                </sp-action-button>
+            </header>
+        `;
+    }
+
     override render() {
         return html`
             <sp-theme
                 .color=${this.color}
                 .scale=${this.scale}
-                .theme=${this.theme}
+                .system=${this.system}
                 dir=${this.dir}
                 id="app"
                 @sp-track-theme=${this.handleTrackTheme}
             >
-                ${this.isNarrow
-                    ? html`
-                          <header>
-                              <sp-action-button
-                                  quiet
-                                  label=${this.open
-                                      ? 'Close Navigation'
-                                      : 'Open Navigation'}
-                                  tabindex=${this.isNarrow && this.open
-                                      ? '-1'
-                                      : '0'}
-                                  ?inert=${this.isNarrow && this.settings}
-                                  @click=${this.toggleNav}
-                                  id="toggle-nav-id"
-                              >
-                                  <sp-icon-show-menu
-                                      slot="icon"
-                                  ></sp-icon-show-menu>
-                              </sp-action-button>
-
-                              <sp-action-button
-                                  quiet
-                                  label=${this.settings
-                                      ? 'Close Settings'
-                                      : 'Open Settings'}
-                                  tabindex=${this.isNarrow && this.settings
-                                      ? '-1'
-                                      : '0'}
-                                  ?inert=${this.isNarrow && this.open}
-                                  @click=${this.toggleSettings}
-                                  id="toggle-settings-id"
-                              >
-                                  <sp-icon-settings
-                                      slot="icon"
-                                  ></sp-icon-settings>
-                              </sp-action-button>
-                          </header>
-                      `
-                    : html``}
+                ${this.isNarrow ? this.header : html``}
                 <div id="body">
-                    ${this.sideNav} ${this.settingsContent}
+                    ${this.isNarrow ? html`` : this.sideNav}
                     <div
                         id="page"
-                        ?inert=${this.isNarrow && (this.open || this.settings)}
                         @alert=${this.addAlert}
                         @copy-text=${this.copyText}
                     >
@@ -526,17 +492,11 @@ export class LayoutElement extends LitElement {
                 ...this.querySelectorAll('code-example'),
             ] as CodeExample[];
             examples.forEach((example) => {
-                example.codeTheme =
-                    this.color === 'dark' || this.color === 'darkest'
-                        ? 'dark'
-                        : 'light';
+                example.codeTheme = this.color;
             });
             (
                 document.querySelector('html') as HTMLHtmlElement
-            ).style.colorScheme =
-                this.color === 'dark' || this.color === 'darkest'
-                    ? 'dark'
-                    : 'light';
+            ).style.colorScheme = this.color;
         }
         if (changes.has('scale')) {
             if (window.localStorage) {
@@ -546,62 +506,20 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
-        if (changes.has('theme')) {
+        if (changes.has('system')) {
             if (window.localStorage) {
-                localStorage.setItem(SWC_THEME_THEME_KEY, this.theme);
+                localStorage.setItem(SWC_THEME_SYSTEM_KEY, this.system);
             }
-            if (changes.get('theme')) {
+            if (changes.get('system')) {
                 loadStyleFragments = true;
             }
         }
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
-        if (changes.has('open')) {
-            this.open
-                ? this.focus()
-                : (
-                      this.shadowRoot!.querySelector(
-                          '#toggle-nav-id'
-                      ) as ActionButton
-                  )?.focus();
-        }
-
-        if (changes.has('settings')) {
-            if (typeof changes.get('settings') !== 'undefined') {
-                (
-                    this.shadowRoot!.querySelector(
-                        this.settings
-                            ? '#close-settings-id'
-                            : '#toggle-settings-id'
-                    ) as ActionButton
-                )?.focus();
-            }
-            if (this.settings && this.isNarrow) {
-                this.ownerDocument!.addEventListener(
-                    'keydown',
-                    this.handleEscapeKey,
-                    true
-                );
-            } else {
-                this.ownerDocument!.removeEventListener(
-                    'keydown',
-                    this.handleEscapeKey,
-                    true
-                );
-            }
-        }
-
-        if (changes.has('isNarrow')) {
-            if (!this.isNarrow) {
-                this.open = false;
-                this.settings = false;
-            }
-        }
-
         if (loadStyleFragments) {
-            lazyStyleFragment(this.color, this.theme);
-            lazyStyleFragment(this.scale, this.theme);
+            lazyStyleFragment(this.color, this.system);
+            lazyStyleFragment(this.scale, this.system);
         }
     }
 }

@@ -141,8 +141,8 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('bottom');
     });
 
-    xit('occludes content behind the overlay', async () => {
-        // currently fails for no reason in Firefox locally, and most browsers in CI.
+    it('occludes content behind the overlay', async () => {
+        // currently fails most browsers in CI.
         ({ overlayTrigger, button, popover } = await initTest());
         const textfield = document.createElement('sp-textfield');
         overlayTrigger.insertAdjacentElement('afterend', textfield);

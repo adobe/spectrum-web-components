@@ -16,12 +16,12 @@ import {
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { Constructor, OpenableElement } from './overlay-types.js';
+import { guaranteedAllTransitionend, nextFrame } from './AbstractOverlay.js';
 import {
     BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
-    guaranteedAllTransitionend,
     OverlayStateEvent,
-} from './AbstractOverlay.js';
+} from './events.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 
@@ -32,9 +32,6 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
             await this.managePosition();
-            if (this.open !== targetOpenState) {
-                return;
-            }
             if (this.open !== targetOpenState) {
                 return;
             }
@@ -110,7 +107,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     // The browser will error in this case.
                     return;
                 }
-                const reportChange = (): void => {
+                const reportChange = async (): Promise<void> => {
                     const hasVirtualTrigger =
                         this.triggerElement instanceof VirtualTrigger;
                     this.dispatchEvent(
@@ -134,6 +131,16 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         );
                     }
                     this.state = targetOpenState ? 'opened' : 'closed';
+                    this.returnFocus();
+                    // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
+                    await nextFrame();
+                    await nextFrame();
+                    if (
+                        targetOpenState === this.open &&
+                        targetOpenState === false
+                    ) {
+                        this.requestSlottable();
+                    }
                 };
                 if (!targetOpenState && this.dialogEl.open) {
                     this.dialogEl.addEventListener(

@@ -17,7 +17,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ifDefined,
+    styleMap,
+} from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
@@ -79,8 +82,9 @@ export class ColorArea extends SpectrumElement {
             v: this.y,
         }),
         applyColorToState: ({ s, v }) => {
-            this.x = s;
-            this.y = v;
+            this._x = s;
+            this._y = v;
+            this.requestUpdate();
         },
     });
 
@@ -128,6 +132,7 @@ export class ColorArea extends SpectrumElement {
             this._x = x;
         }
         this.requestUpdate('x', oldValue);
+        this.colorController.applyColorFromState();
     }
 
     private _x = 1;
@@ -150,6 +155,7 @@ export class ColorArea extends SpectrumElement {
             this._y = y;
         }
         this.requestUpdate('y', oldValue);
+        this.colorController.applyColorFromState();
     }
 
     private _y = 1;
@@ -442,15 +448,15 @@ export class ColorArea extends SpectrumElement {
             }
         ).format(this.y);
 
+        const style = {
+            background: `linear-gradient(to top, black 0%, hsla(${this.hue}, 100%, 0.01%, 0) 100%),linear-gradient(to right, white 0%, hsla(${this.hue}, 100%, 0.01%, 0) 100%), hsl(${this.hue}, 100%, 50%);`,
+        };
+
         return html`
             <div
                 @pointerdown=${this.handleAreaPointerdown}
                 class="gradient"
-                style="background:
-                    linear-gradient(to top, black 0%, hsla(${this
-                    .hue}, 100%, 0.01%, 0) 100%),
-                    linear-gradient(to right, white 0%, hsla(${this
-                    .hue}, 100%, 0.01%, 0) 100%), hsl(${this.hue}, 100%, 50%);"
+                style=${styleMap(style)}
             >
                 <slot name="gradient"></slot>
             </div>

@@ -19,6 +19,7 @@ import {
     queryAssignedNodes,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { Menu } from './Menu.js';
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
@@ -68,8 +69,7 @@ export class MenuGroup extends Menu {
             }
             if (headerElement) {
                 this.headerId =
-                    this.headerId ||
-                    `sp-menu-group-label-${crypto.randomUUID().slice(0, 8)}`;
+                    this.headerId || `sp-menu-group-label-${randomID()}`;
                 const headerId = headerElement.id || this.headerId;
                 if (!headerElement.id) {
                     headerElement.id = headerId;

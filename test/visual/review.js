@@ -18,7 +18,7 @@ import { hideBin } from 'yargs/helpers';
 import crypto from 'crypto';
 import slugify from '@sindresorhus/slugify';
 
-const { commit, theme, branch } = yargs(hideBin(process.argv)).argv;
+const { commit, system, branch } = yargs(hideBin(process.argv)).argv;
 
 const getHash = (context) => {
     const md5 = crypto.createHash('md5');
@@ -27,7 +27,7 @@ const getHash = (context) => {
 };
 
 const vrts = [];
-const themes = ['Classic', 'Express'];
+const themes = ['Spectrum', 'Express', 'Spectrum-two'];
 const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
@@ -38,7 +38,13 @@ vrts.push([
     )}--spectrum-web-components.netlify.app/review/`,
 ]);
 themes.map((theme) =>
-    colors.map((color) =>
+    colors.map((color) => {
+        if (
+            theme === 'Spectrum-two' &&
+            (color === 'Lightest' || color === 'Darkest')
+        ) {
+            return;
+        }
         scales.map((scale) =>
             directions.map((direction) => {
                 const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
@@ -49,8 +55,8 @@ themes.map((theme) =>
                     )}--spectrum-web-components.netlify.app/review/`,
                 ]);
             })
-        )
-    )
+        );
+    })
 );
 
 function cleanURL(url) {
@@ -178,7 +184,7 @@ async function main() {
                 branch
             )}--spectrum-web-components.netlify.app`,
             commit,
-            theme,
+            system,
             vrts,
         },
         tests,

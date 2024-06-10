@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 @import url('./spectrum-checkmark.css');
 @import url('./spectrum-chevron.css');
 @import url('./spectrum-menu-item.css');
-@import url('./spectrum-itemLabel.css');
 
 :host([hidden]) {
     display: none;
@@ -21,6 +20,26 @@ governing permissions and limitations under the License.
 
 :host([disabled]) {
     pointer-events: none;
+}
+
+:host([disabled]) [name='value']::slotted(*) {
+    color: var(
+        --highcontrast-menu-item-color-disabled,
+        var(
+            --mod-menu-item-label-icon-color-disabled,
+            var(--spectrum-menu-item-label-icon-color-disabled)
+        )
+    );
+}
+
+:host([has-submenu][disabled]) .chevron {
+    color: var(
+        --highcontrast-menu-item-color-disabled,
+        var(
+            --mod-menu-item-label-icon-color-disabled,
+            var(--spectrum-menu-item-label-icon-color-disabled)
+        )
+    );
 }
 
 #button {

@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/picker/sp-picker.js';
-import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
@@ -24,6 +24,9 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
+import { handleChange, StoryArgs, Template } from './template.js';
+import { argTypes } from './args.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export default {
     title: 'Picker',
@@ -33,33 +36,11 @@ export default {
         invalid: false,
         open: false,
         quiet: false,
+        pending: false,
     },
     argTypes: {
+        ...argTypes,
         onChange: { action: 'change' },
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
         open: {
             name: 'open',
             type: { name: 'boolean', required: false },
@@ -70,8 +51,8 @@ export default {
             },
             control: 'boolean',
         },
-        quiet: {
-            name: 'quiet',
+        pending: {
+            name: 'pending',
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
@@ -84,26 +65,11 @@ export default {
     },
 };
 
-interface StoryArgs {
-    disabled?: boolean;
-    invalid?: boolean;
-    open?: boolean;
-    quiet?: boolean;
-    showText?: boolean;
-    onChange?: (val: string) => void;
-    [prop: string]: unknown;
-}
-
-const handleChange =
-    ({ onChange }: StoryArgs) =>
-    (event: Event): void => {
-        const picker = event.target as Picker;
-        if (onChange) onChange(picker.value);
-    };
-
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-1">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             id="picker-1"
             @change=${handleChange(args)}
@@ -129,10 +95,22 @@ export const Default = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+export const disabled = (args: StoryArgs): TemplateResult => Template(args);
+disabled.args = {
+    disabled: true,
+};
+
+export const invalid = (args: StoryArgs): TemplateResult => Template(args);
+invalid.args = {
+    invalid: true,
+};
+
 export const tooltip = (args: StoryArgs): TemplateResult => {
     const { open, ...rest } = args;
     return html`
-        <sp-field-label for="picker-1">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             id="picker-1"
             @change=${handleChange(args)}
@@ -169,6 +147,40 @@ tooltip.args = {
     open: true,
 };
 tooltip.decorators = [isOverlayOpen];
+
+export const leftSideLabel = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label
+            side-aligned="start"
+            for="picker-1"
+            size=${ifDefined(args.size)}
+        >
+            Where do you live?
+        </sp-field-label>
+        <sp-picker
+            id="picker-1"
+            @change=${handleChange(args)}
+            label="Select a Country with a very long label, too long, in fact"
+            ${spreadProps(args)}
+        >
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
 
 export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
     return html`
@@ -221,7 +233,9 @@ export const slottedLabel = (args: StoryArgs): TemplateResult => {
 
 export const quiet = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             ${spreadProps(args)}
             id="picker-quiet"
@@ -246,13 +260,46 @@ quiet.args = {
     quiet: true,
 };
 
+export const quietSideLabel = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label
+            side-aligned="start"
+            for="picker-quiet-sidelabel"
+            size=${ifDefined(args.size)}
+        >
+            Where do you live?
+        </sp-field-label>
+        <sp-picker
+            ${spreadProps(args)}
+            id="picker-quiet-sidelabel"
+            @change=${handleChange(args)}
+            label="Pick an item"
+        >
+            <sp-menu-item value="1">Item 1</sp-menu-item>
+            <sp-menu-item value="2">Item 2</sp-menu-item>
+            <sp-menu-item value="3">Item 3</sp-menu-item>
+            <sp-menu-item value="4">Item 4</sp-menu-item>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+quietSideLabel.args = {
+    quiet: true,
+};
+
 export const icons = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
@@ -276,11 +323,11 @@ export const icons = (args: StoryArgs): TemplateResult => {
 
 export const iconsNone = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
@@ -309,16 +356,16 @@ iconsNone.decorators = [isOverlayOpen];
 
 export const iconValue = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
             icons="only"
-            style="--spectrum-picker-width: 100px"
+            style="width: 100px"
             value="2"
         >
             <sp-menu-item value="1">
@@ -339,15 +386,15 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
 
 export const iconsOnly = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-quiet">
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
         </sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
-            style="--spectrum-picker-width: 100px"
+            style="width: 100px"
             value="3"
         >
             <sp-menu-item value="1">
@@ -375,12 +422,9 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 clear: left;
                 margin-bottom: 15px;
             }
-            .backdrop-filter-test {
-                backdrop-filter: saturate(80%);
-            }
         </style>
         <fieldset class="backdrop-filter-test">
-            <sp-field-label for="picker-open">
+            <sp-field-label for="picker-open" size=${ifDefined(args.size)}>
                 Where do you live?
             </sp-field-label>
             <sp-picker
@@ -401,7 +445,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
             </sp-picker>
         </fieldset>
         <fieldset>
-            <sp-field-label for="picker-closed">
+            <sp-field-label for="picker-closed" size=${ifDefined(args.size)}>
                 Where do you live?
             </sp-field-label>
             <sp-picker
@@ -422,9 +466,95 @@ Open.args = {
 };
 Open.decorators = [isOverlayOpen];
 
+export const OpenShowingEdgeCase = (args: StoryArgs): TemplateResult => {
+    return html`
+        <style>
+            fieldset {
+                float: left;
+                clear: left;
+                margin-bottom: 15px;
+            }
+            /* Enforce CSS stacking to test "transition-behavior: allow-discrete" */
+            /* Breaks the story in non-[popover] supporting browsers */
+            fieldset:nth-of-type(2) {
+                position: relative;
+                z-index: 2;
+            }
+            .backdrop-filter-test {
+                backdrop-filter: saturate(80%);
+            }
+        </style>
+        <p>
+            In browser that do not support
+            <code>[popover]</code>
+            , the following "open"
+            <code>sp-picker</code>
+            will display behind both the closed
+            <code>sp-picker</code>
+            as well as the
+            <code>fieldset</code>
+            that contains it.
+        </p>
+        <p>
+            Learn more about this situation in our
+            <sp-link
+                href="https://opensource.adobe.com/spectrum-web-components/components/overlay/#fallback-support"
+            >
+                documentation site
+            </sp-link>
+            .
+        </p>
+        <fieldset class="backdrop-filter-test">
+            <sp-field-label for="picker-open" size=${ifDefined(args.size)}>
+                Where do you live?
+            </sp-field-label>
+            <sp-picker
+                id="picker-open"
+                label="Open picker"
+                ${spreadProps(args)}
+                @change=${handleChange(args)}
+            >
+                <span slot="label">
+                    Select a Country with a very long label, too long, in fact
+                </span>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-picker>
+        </fieldset>
+        <fieldset>
+            <sp-field-label for="picker-closed" size=${ifDefined(args.size)}>
+                Where do you live?
+            </sp-field-label>
+            <sp-picker
+                id="picker-closed"
+                label="Picker that displays below the options"
+                @change=${handleChange(args)}
+            >
+                <span slot="label">
+                    Other menu that goes behind the open one
+                </span>
+                <sp-menu-item>Not so many options...</sp-menu-item>
+            </sp-picker>
+        </fieldset>
+    `;
+};
+OpenShowingEdgeCase.args = {
+    open: true,
+};
+OpenShowingEdgeCase.decorators = [isOverlayOpen];
+OpenShowingEdgeCase.swc_vrt = {
+    skip: true,
+};
+
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="picker-initial">Where do you live?</sp-field-label>
+        <sp-field-label for="picker-initial" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
             id="picker-initial"
             @change=${handleChange(args)}
@@ -468,7 +598,7 @@ export const readonly = (args: StoryArgs): TemplateResult => {
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';
     return html`
-        <sp-field-label for="picker-state">
+        <sp-field-label for="picker-state" size=${ifDefined(args.size)}>
             What state do you live in?
         </sp-field-label>
         <sp-picker

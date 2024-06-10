@@ -100,6 +100,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.selectedItems = [];
         this.selectedItemsMap.clear();
         this.childItems.forEach((item) => {
+            if (this !== item.menuData.selectionRoot) {
+                return;
+            }
             item.selected = this.selected.includes(item.value);
             if (item.selected) {
                 this.selectedItems.push(item);
@@ -121,7 +124,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
-    private selectedItemsMap = new Map() as Map<MenuItem, boolean>;
+    private selectedItemsMap = new Map<MenuItem, boolean>();
 
     public get childItems(): MenuItem[] {
         if (!this.cachedChildItems) {
@@ -344,6 +347,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handleClick(event: Event): void {
         if (this.willSynthesizeClick) {
             cancelAnimationFrame(this.willSynthesizeClick);
+            this.willSynthesizeClick = 0;
             return;
         }
         this.handlePointerBasedSelection(event);
@@ -352,6 +356,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handlePointerup(event: Event): void {
         this.willSynthesizeClick = requestAnimationFrame(() => {
             event.target?.dispatchEvent(new Event('click'));
+            this.willSynthesizeClick = 0;
         });
         this.handlePointerBasedSelection(event);
     }
@@ -568,9 +573,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     protected navigateWithinMenu(event: KeyboardEvent): void {
-        const { code } = event;
+        const { key } = event;
         const lastFocusedItem = this.childItems[this.focusedItemIndex];
-        const direction = code === 'ArrowDown' ? 1 : -1;
+        const direction = key === 'ArrowDown' ? 1 : -1;
         const itemToFocus = this.focusMenuItemByOffset(direction);
         if (itemToFocus === lastFocusedItem) {
             return;
@@ -581,13 +586,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     protected navigateBetweenRelatedMenus(event: KeyboardEvent): void {
-        const { code } = event;
+        const { key } = event;
         const shouldOpenSubmenu =
-            (this.isLTR && code === 'ArrowRight') ||
-            (!this.isLTR && code === 'ArrowLeft');
+            (this.isLTR && key === 'ArrowRight') ||
+            (!this.isLTR && key === 'ArrowLeft');
         const shouldCloseSelfAsSubmenu =
-            (this.isLTR && code === 'ArrowLeft') ||
-            (!this.isLTR && code === 'ArrowRight');
+            (this.isLTR && key === 'ArrowLeft') ||
+            (!this.isLTR && key === 'ArrowRight');
         if (shouldOpenSubmenu) {
             event.stopPropagation();
             const lastFocusedItem = this.childItems[this.focusedItemIndex];
@@ -615,7 +620,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (lastFocusedItem) {
             lastFocusedItem.focused = true;
         }
-        const { code } = event;
+        const { key } = event;
         if (
             event.shiftKey &&
             event.target !== this &&
@@ -637,11 +642,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             document.addEventListener('keyup', replaceTabindex);
             this.addEventListener('focusout', replaceTabindex);
         }
-        if (code === 'Tab') {
+        if (key === 'Tab') {
             this.prepareToCleanUp();
             return;
         }
-        if (code === 'Space') {
+        if (key === ' ') {
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
@@ -650,17 +655,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 return;
             }
         }
-        if (code === 'Space' || code === 'Enter') {
+        if (key === ' ' || key === 'Enter') {
             const childItem = this.childItems[this.focusedItemIndex];
             if (
                 childItem &&
                 childItem.menuData.selectionRoot === event.target
             ) {
+                event.preventDefault();
                 childItem.click();
             }
             return;
         }
-        if (code === 'ArrowDown' || code === 'ArrowUp') {
+        if (key === 'ArrowDown' || key === 'ArrowUp') {
             const childItem = this.childItems[this.focusedItemIndex];
             if (
                 childItem &&
@@ -830,13 +836,19 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handleSlotchange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
-        const assignedElement = target.assignedElements({
+        const assignedElements = target.assignedElements({
             flatten: true,
         }) as MenuItem[];
-        if (this.childItems.length !== assignedElement.length) {
-            assignedElement.forEach((item) => {
+        if (this.childItems.length !== assignedElements.length) {
+            assignedElements.forEach((item) => {
                 if (typeof item.triggerUpdate !== 'undefined') {
                     item.triggerUpdate();
+                } else if (
+                    typeof (item as unknown as Menu).childItems !== 'undefined'
+                ) {
+                    (item as unknown as Menu).childItems.forEach((child) => {
+                        child.triggerUpdate();
+                    });
                 }
             });
         }
@@ -912,8 +924,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
         this.updateComplete.then(() => this.updateItemFocus());
     }
+
     public override disconnectedCallback(): void {
         this.cachedChildItems = undefined;
+        this.selectedItems = [];
+        this.selectedItemsMap.clear();
+        this.childItemSet.clear();
+        this.descendentOverlays = new Map<Overlay, Overlay>();
         super.disconnectedCallback();
     }
 

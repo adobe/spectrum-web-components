@@ -19,9 +19,6 @@ import path from 'path';
 import fs from 'fs';
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
-import postcss from 'postcss';
-import reporter from 'postcss-reporter';
-import { postCSSPlugins } from '../scripts/css-processing.cjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -590,11 +587,6 @@ async function processComponent(componentPath) {
             },
         });
 
-        const outputCss = await postcss([
-            ...postCSSPlugins(),
-            reporter(),
-        ]).process(code.toString());
-
         fs.writeFileSync(
             outputPath,
             `/*
@@ -610,8 +602,8 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-${outputCss}
-`
+${code}
+`.replace(/\/\*\![\w|\W]*\*\//, '')
         );
     }
 }

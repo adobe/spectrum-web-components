@@ -11,10 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-UIIcon-TripleGripper100 {
-    height: var(--spectrum-alias-ui-icon-triplegripper-size-100-width);
-    width: var(
-        --spectrum-alias-ui-icon-triplegripper-size-100-height,
-        var(--spectrum-global-dimension-size-100)
-    );
-}

@@ -102,13 +102,16 @@ import { Slider } from '@spectrum-web-components/slider';
 ></sp-slider>
 ```
 
-### Filled Offset with only fill-start
+### fill-start
+
+When both `fill-start` and `variant="filled"` are used in `<sp-slider>`, the `fill-start` property takes priority, and the `variant="filled"` css will not apply.
 
 ```html
 <sp-slider
     label="Slider Label"
     max="1"
     fill-start
+    variant="filled"
     min="0"
     value=".5"
     step="0.01"
@@ -117,6 +120,7 @@ import { Slider } from '@spectrum-web-components/slider';
     label="Slider Label"
     max="1"
     fill-start
+    variant="filled"
     min="0"
     value=".5"
     step="0.01"
@@ -124,7 +128,7 @@ import { Slider } from '@spectrum-web-components/slider';
 ></sp-slider>
 ```
 
-### Filled Offset with fill-start value
+### fill-start with value
 
 ```html
 <sp-slider
@@ -135,6 +139,7 @@ import { Slider } from '@spectrum-web-components/slider';
     value=".3"
     step="0.1"
     fill-start="0.7"
+    variant="filled"
 ></sp-slider>
 <sp-slider
     id="fill-start-slider"
@@ -144,6 +149,7 @@ import { Slider } from '@spectrum-web-components/slider';
     value=".7"
     step="0.1"
     fill-start="0.25"
+    variant="filled"
 ></sp-slider>
 <sp-slider
     label="Slider Label"
@@ -152,6 +158,7 @@ import { Slider } from '@spectrum-web-components/slider';
     value=".7"
     step="0.1"
     fill-start="0.25"
+    variant="filled"
     disabled
 ></sp-slider>
 ```
@@ -231,6 +238,19 @@ An `<sp-slider>` element can be paired with an `<sp-number-field>` element via t
 <sp-slider quiet editable value="50"></sp-slider>
 <sp-slider quiet disabled editable value="50"></sp-slider>
 ```
+
+#### Default value
+
+Slider will reset to its `default-value` when the user double clicks on the slider handle or if the user presses the `escape` key when the slider handle is focused.
+
+```html
+<sp-slider value="50" default-value="20"></sp-slider>
+```
+
+Note: If a slider with `default-value` attribute is contained in a modal and the slider-handle is focused then the following interaction will occur on pressing the `escape` key:
+
+-   If the slider value is different from the default value then the slider value will be reset to the default value and the modal will not be closed.
+-   If the slider value is equal to the default value then the modal will be closed.
 
 #### Indeterminate
 

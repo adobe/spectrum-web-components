@@ -972,6 +972,41 @@ describe('SplitView', () => {
         expect(testPanel).to.be.null;
     });
 
+    it('allows a custom label when resizable if specified', async () => {
+        const customLabel = 'Resizable Split View Custom Label';
+        const defaultLabel = 'Resize the panels';
+        let el = await fixture<SplitView>(
+            html`
+                <sp-split-view
+                    resizable
+                    label=${customLabel}
+                    primary-min="50"
+                    secondary-min="50"
+                >
+                    <div>First panel</div>
+                    <div>Second panel</div>
+                </sp-split-view>
+            `
+        );
+        expect(el.label).to.equal(customLabel);
+        let splitter = el.shadowRoot.querySelector(
+            '#splitter'
+        ) as HTMLDivElement;
+        expect(splitter.ariaLabel).to.equal(customLabel);
+
+        // If custom label not provided, should fall back to default label
+        el = await fixture<SplitView>(
+            html`
+                <sp-split-view resizable primary-min="50" secondary-min="50">
+                    <div>First panel</div>
+                    <div>Second panel</div>
+                </sp-split-view>
+            `
+        );
+        splitter = el.shadowRoot.querySelector('#splitter') as HTMLDivElement;
+        expect(splitter.ariaLabel).to.equal(defaultLabel);
+    });
+
     it('keeps the splitter pos when removing and re-adding a panel', async () => {
         let pointerId = -1;
         const el = await fixture<SplitView>(

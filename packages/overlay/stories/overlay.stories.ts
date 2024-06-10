@@ -29,6 +29,7 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -161,11 +162,7 @@ const template = ({
             type=${ifDefined(type)}
         >
             <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
-            <sp-popover
-                slot="click-content"
-                placement="${placement}"
-                tip
-            >
+            <sp-popover slot="click-content" placement="${placement}" tip>
                 <sp-dialog no-divider>
                     <sp-slider
                         value="5"
@@ -173,31 +170,23 @@ const template = ({
                         min="0"
                         max="20"
                         label="Awesomeness"
+                        default-value="10"
                     ></sp-slider>
                     <div id="styled-div">
                         The background of this div should be blue
                     </div>
                     <overlay-trigger id="inner-trigger" placement="bottom">
                         <sp-button slot="trigger">Press Me</sp-button>
-                        <sp-popover
-                            slot="click-content"
-                            placement="bottom"
-                            tip
-                        >
+                        <sp-popover slot="click-content" placement="bottom" tip>
                             <sp-dialog size="s" no-divider>
                                 Another Popover
                             </sp-dialog>
                         </sp-popover>
 
-                            <sp-tooltip
-                                slot="hover-content"
-                                delayed
-                                tip="bottom"
-                            >
-                                Click to open another popover.
-                            </sp-tooltip>
-                        </overlay-trigger>
-                    </div>
+                        <sp-tooltip slot="hover-content" delayed tip="bottom">
+                            Click to open another popover.
+                        </sp-tooltip>
+                    </overlay-trigger>
                 </sp-dialog>
             </sp-popover>
             <sp-tooltip
@@ -552,11 +541,11 @@ export const customizedClickContent = (
     args: Properties
 ): TemplateResult => html`
     <style>
-        overlay-trigger {
+        sp-popover {
             --styled-div-background-color: var(
-                --spectrum-semantic-cta-background-color-default
+                --spectrum-accent-background-color-default
             );
-            --spectrum-button-m-accent-fill-texticon-background-color: rebeccapurple;
+            --mod-button-background-color-default: rebeccapurple;
         }
     </style>
     ${template({
@@ -642,22 +631,22 @@ export const deepNesting = (): TemplateResult => {
         ${storyStyles}
         <sp-theme
             color=${outter}
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
             scale=${window.__swc_hack_knobs__.defaultScale}
             dir=${window.__swc_hack_knobs__.defaultDirection}
         >
             <sp-theme
                 color=${color}
-                theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+                system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 scale=${window.__swc_hack_knobs__.defaultScale}
                 dir=${window.__swc_hack_knobs__.defaultDirection}
             >
                 <recursive-popover
                     tabindex=""
                     style="
-                        background-color: var(--spectrum-global-color-gray-100);
-                        color: var(--spectrum-global-color-gray-800);
-                        padding: var(--spectrum-global-dimension-size-225);
+                        background-color: var(--spectrum-gray-100);
+                        color: var(--spectrum-gray-800);
+                        padding: calc(var(--swc-scale-factor) * 22px);
                     "
                 ></recursive-popover>
             </sp-theme>
@@ -792,8 +781,8 @@ export const detachedElement = (): TemplateResult => {
         div.setAttribute(
             'style',
             `
-            background-color: var(--spectrum-global-color-gray-50);
-            color: var(--spectrum-global-color-gray-800);
+            background-color: var(--spectrum-gray-50);
+            color: var(--spectrum-gray-800);
             border: 1px solid;
             padding: 2em;
         `
@@ -935,7 +924,7 @@ export const longpress = (): TemplateResult => {
                         )}
                     selects="single"
                     vertical
-                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,calc(var(--swc-scale-factor) * 10px)) / 2);"
                 >
                     <sp-action-button>
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>

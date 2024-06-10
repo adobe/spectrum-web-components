@@ -10,63 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, fixture, nextFrame } from '@open-wc/testing';
-import { html, render } from '@spectrum-web-components/base';
-import { Default } from '../stories/grid.stories';
+import { Default } from '../stories/grid.stories.js';
+import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-async function usedHeapMB(): Promise<number> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const memorySample = performance.measureUserAgentSpecificMemory();
-    return (await memorySample).bytes / (1024 * 1024);
-}
-
-describe('Grid memory usage', () => {
-    it('releases references on disconnect', async function () {
-        if (!window.gc || !('measureUserAgentSpecificMemory' in performance))
-            this.skip();
-
-        this.timeout(10000);
-
-        const iterations = 50;
-        let active = false;
-
-        const el = await fixture<HTMLElement>(
-            html`
-                <div></div>
-            `
-        );
-
-        async function toggle(
-            forced: boolean | undefined = undefined
-        ): Promise<void> {
-            active = forced != null ? forced : !active;
-            render(active ? Default() : html``, el);
-            await nextFrame();
-            await nextFrame();
-        }
-
-        // "shake things out" to get a good first reading
-        for (let i = 0; i < 5; i++) {
-            await toggle();
-        }
-        await toggle(false);
-        const beforeMB = await usedHeapMB();
-
-        for (let i = 0; i < iterations; i++) {
-            await toggle();
-        }
-        await toggle(false);
-        const afterMB = await usedHeapMB();
-
-        /**
-         * An actually leak here shapes up to be more than 10MB per test,
-         * we could be more linient later, if needed, but the test currently
-         * shows less heap after the test cycle.
-         */
-        expect(
-            afterMB - beforeMB,
-            `before: ${beforeMB}, after: ${afterMB}`
-        ).to.be.lt(0);
-    });
-});
+testForMemoryLeaks(Default());

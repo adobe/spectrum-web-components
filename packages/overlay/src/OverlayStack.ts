@@ -60,13 +60,14 @@ class OverlayStack {
      * @param event {ClickEvent}
      */
     handlePointerup = (): void => {
-        if (!this.stack.length) return;
-        if (!this.pointerdownPath?.length) return;
-
         // Test against the composed path in `pointerdown` in case the visitor moved their
         // pointer during the course of the interaction.
+        // Ensure that this value is cleared even if the work in this method goes undone.
         const composedPath = this.pointerdownPath;
         this.pointerdownPath = undefined;
+        if (!this.stack.length) return;
+        if (!composedPath?.length) return;
+
         const lastIndex = this.stack.length - 1;
         const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
@@ -116,6 +117,10 @@ class OverlayStack {
             return;
         }
         if (supportsPopover) return;
+        if (last?.type === 'manual') {
+            // Manual Overlays should not close on "light dismiss".
+            return;
+        }
 
         if (!last) return;
         this.closeOverlay(last);
@@ -137,9 +142,9 @@ class OverlayStack {
      * When overlays are added manage the open state of exisiting overlays appropriately:
      * - 'modal': should close other overlays
      * - 'page': should close other overlays
-     * - 'hint': shouldn't close other overlays
      * - 'auto': should close other 'auto' overlays and other 'hint' overlays, but not 'manual' overlays
      * - 'manual': shouldn't close other overlays
+     * - 'hint': shouldn't close other overlays and give way to all other overlays on a trigger
      */
     add(overlay: Overlay): void {
         if (this.stack.includes(overlay)) {
@@ -176,6 +181,17 @@ class OverlayStack {
             );
             overlay.dispatchEvent(queryPathEvent);
         } else if (overlay.type === 'hint') {
+            const hasPrevious = this.stack.some((overlayEl) => {
+                return (
+                    overlayEl.type !== 'manual' &&
+                    overlayEl.triggerElement &&
+                    overlayEl.triggerElement === overlay.triggerElement
+                );
+            });
+            if (hasPrevious) {
+                overlay.open = false;
+                return;
+            }
             this.stack.forEach((overlayEl) => {
                 if (overlayEl.type === 'hint') {
                     this.closeOverlay(overlayEl);

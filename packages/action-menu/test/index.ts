@@ -29,12 +29,16 @@ import {
     ignoreResizeObserverLoopError,
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
-import { tooltipDescriptionAndPlacement } from '../stories/action-menu.stories';
+import {
+    iconOnly,
+    tooltipDescriptionAndPlacement,
+} from '../stories/action-menu.stories.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
+import { sendKeys } from '@web/test-runner-commands';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -306,6 +310,46 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(button).to.have.attribute('aria-haspopup', 'true');
             expect(button).to.have.attribute('aria-expanded', 'true');
             expect(button).to.have.attribute('aria-controls', 'menu');
+        });
+        it('opens repeatedly with Menu in the correct location', async function () {
+            const el = await fixture<ActionMenu>(
+                iconOnly({
+                    ...iconOnly.args,
+                    align: 'end',
+                })
+            );
+
+            await elementUpdated(el);
+
+            el.focus();
+            await elementUpdated(el);
+            let opened = oneEvent(el, 'sp-opened');
+            await sendKeys({ press: 'ArrowRight' });
+            await sendKeys({ press: 'ArrowLeft' });
+            await sendKeys({ press: 'Space' });
+            await opened;
+
+            const firstRect = (
+                el as unknown as { overlayElement: Overlay }
+            ).overlayElement.dialogEl.getBoundingClientRect();
+
+            let closed = oneEvent(el, 'sp-closed');
+            await sendKeys({ press: 'Space' });
+            await closed;
+
+            opened = oneEvent(el, 'sp-opened');
+            await sendKeys({ press: 'Space' });
+            await opened;
+
+            const secondRect = (
+                el as unknown as { overlayElement: Overlay }
+            ).overlayElement.dialogEl.getBoundingClientRect();
+
+            closed = oneEvent(el, 'sp-closed');
+            await sendKeys({ press: 'Space' });
+            await closed;
+
+            expect(firstRect).to.deep.equal(secondRect);
         });
         it('opens and selects in a single pointer button interaction', async () => {
             const el = await actionMenuFixture();
@@ -617,7 +661,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(openSpy.callCount).to.equal(1);
         });
         it('opens, then closes, on subsequent clicks', async function () {
-            this.retries(0);
             const el = await actionMenuFixture();
             const rect = el.getBoundingClientRect();
 

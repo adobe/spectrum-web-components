@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { TemplateResult } from '@spectrum-web-components/base';
 import { AccordionMarkup } from './';
+import { argTypes } from './args.js';
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
@@ -25,44 +26,7 @@ export default {
         size: 'm',
         density: undefined,
     },
-    argTypes: {
-        open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the second accordion item is open.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        density: {
-            name: 'density',
-            type: { name: 'string', required: false },
-            description: 'The density at which to display accordion items.',
-            table: {
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                options: ['compact', 'spacious', undefined],
-                type: 'select',
-            },
-        },
-        size: {
-            name: 'size',
-            type: { name: 'string', required: false },
-            description: 'The size at which to display accordion items.',
-            table: {
-                defaultValue: { summary: 'm' },
-            },
-            control: {
-                options: ['s', 'm', 'l', 'xl'],
-                type: 'select',
-            },
-        },
-    },
+    argTypes,
 };
 
 type Properties = {

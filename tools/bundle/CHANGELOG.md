@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **color-field:** added missing dependencies ([#4141](https://github.com/adobe/spectrum-web-components/issues/4141)) ([b3bb23a](https://github.com/adobe/spectrum-web-components/commit/b3bb23a68958e728b2133dc5e5d309b8975f6da9))
+-   **truncated:** add truncated package ([#4163](https://github.com/adobe/spectrum-web-components/issues/4163)) ([4ba0480](https://github.com/adobe/spectrum-web-components/commit/4ba0480e2c471d8bba14eb898963ab0dca2f2d5a))
+
+### Reverts
+
+-   Revert "Truncated element (#4125)" (#4160) ([da88bbe](https://github.com/adobe/spectrum-web-components/commit/da88bbe416a3ee5a991acdbceec2d698222e5f6a)), closes [#4125](https://github.com/adobe/spectrum-web-components/issues/4125) [#4160](https://github.com/adobe/spectrum-web-components/issues/4160)
+
+## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
+
+### Bug Fixes
+
+-   **color-field:** add color-field package ([#3870](https://github.com/adobe/spectrum-web-components/issues/3870)) ([5081634](https://github.com/adobe/spectrum-web-components/commit/508163476cbe47a4450b2448fcd47ecd237c8085))
+
+## [0.41.1](https://github.com/adobe/spectrum-web-components/compare/v0.41.0...v0.41.1) (2024-02-22)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+
+### Features
+
+-   **coachmark:** rename "sp-coachmark" to "sp-coachmark-indicator", add "sp-coachmark" ([#3639](https://github.com/adobe/spectrum-web-components/issues/3639)) ([a94389c](https://github.com/adobe/spectrum-web-components/commit/a94389cac1a31e5f0b02b187c93fd3489dc0f40f))
+
+## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
+
+### Bug Fixes
+
+-   **combobox:** add combobox pattern ([#3894](https://github.com/adobe/spectrum-web-components/issues/3894)) ([47d7d71](https://github.com/adobe/spectrum-web-components/commit/47d7d71bc9e17b67452d45b9495c970dac15ff89)), closes [#3887](https://github.com/adobe/spectrum-web-components/issues/3887)
+
+## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
 ## [0.40.3](https://github.com/adobe/spectrum-web-components/compare/v0.40.2...v0.40.3) (2024-01-11)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

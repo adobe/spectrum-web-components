@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-colorwheel-width: var(--spectrum-color-wheel-width);
     --spectrum-colorwheel-min-width: var(--spectrum-color-wheel-minimum-width);
@@ -31,16 +32,25 @@ governing permissions and limitations under the License.
             var(--spectrum-colorwheel-track-width) / 2
     );
 }
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-colorwheel-border-color-disabled: GrayText;
         --highcontrast-colorwheel-fill-color-disabled: Canvas;
-    }
-    :host {
         forced-color-adjust: none;
     }
 }
+
 :host {
+    min-inline-size: var(
+        --mod-colorwheel-min-width,
+        var(--spectrum-colorwheel-min-width)
+    );
+    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
+    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
     --track-width: var(
         --mod-colorwheel-track-width,
         var(--spectrum-colorwheel-track-width)
@@ -49,74 +59,74 @@ governing permissions and limitations under the License.
         --mod-colorwheel-border-width,
         var(--spectrum-colorwheel-border-width)
     );
-    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
-    cursor: default;
     display: block;
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
-    min-inline-size: var(
-        --mod-colorwheel-min-width,
-        var(--spectrum-colorwheel-min-width)
-    );
     position: relative;
-    -webkit-user-select: none;
-    user-select: none;
 }
+
 :host([focused]) {
-    z-index: 2;
+    z-index: 1;
 }
+
 :host([disabled]) {
     pointer-events: none;
 }
+
 :host([dragged]) {
-    z-index: 2;
+    z-index: 1;
 }
+
 .inner {
-    block-size: var(
-        --mod-colorwheel-colorarea-container-size,
-        var(--spectrum-colorwheel-colorarea-container-size)
-    );
-    display: flex;
     inline-size: var(
         --mod-colorwheel-colorarea-container-size,
         var(--spectrum-colorwheel-colorarea-container-size)
     );
+    block-size: var(
+        --mod-colorwheel-colorarea-container-size,
+        var(--spectrum-colorwheel-colorarea-container-size)
+    );
+    margin: auto;
+    display: flex;
+    position: absolute;
     inset-block: 0;
     inset-inline: 0;
-    margin: auto;
-    position: absolute;
 }
+
 .colorarea-container {
-    align-items: center;
-    block-size: auto;
-    display: flex;
-    inline-size: 100%;
-    justify-content: center;
     margin: var(
         --mod-colorwheel-colorarea-margin,
         var(--spectrum-colorwheel-colorarea-margin)
     );
+    justify-content: center;
+    align-items: center;
+    block-size: auto;
+    inline-size: 100%;
+    display: flex;
 }
+
 .slider {
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
     block-size: 100%;
     inline-size: 100%;
+    margin: 0;
+    position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
-    margin: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    z-index: 0;
 }
+
 .handle {
+    transform: translate(var(--spectrum-colorwheel-colorhandle-position));
     inset-block-start: 50%;
     inset-inline: 50%;
-    transform: translate(var(--spectrum-colorwheel-colorhandle-position));
 }
+
 .border {
     background-color: var(
         --mod-colorwheel-border-color,
         var(--spectrum-colorwheel-border-color)
     );
+    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
     block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
     clip-path: path(
         evenodd,
@@ -125,9 +135,9 @@ governing permissions and limitations under the License.
             var(--spectrum-colorwheel-path-borders)
         )
     );
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
     position: relative;
 }
+
 :host([disabled]) .border {
     background-color: var(
         --highcontrast-colorwheel-border-color-disabled,
@@ -137,7 +147,14 @@ governing permissions and limitations under the License.
         )
     );
 }
+
 .wheel {
+    inset-block: var(--spectrum-colorwheel-border-width);
+    inset-inline: var(--spectrum-colorwheel-border-width);
+    clip-path: path(
+        evenodd,
+        var(--mod-colorwheel-path, var(--spectrum-colorwheel-path))
+    );
     background: conic-gradient(
         from 90deg,
         red,
@@ -154,15 +171,11 @@ governing permissions and limitations under the License.
         #ff0080,
         red
     );
-    clip-path: path(
-        evenodd,
-        var(--mod-colorwheel-path, var(--spectrum-colorwheel-path))
-    );
-    inset-block: var(--spectrum-colorwheel-border-width);
-    inset-inline: var(--spectrum-colorwheel-border-width);
     position: absolute;
 }
+
 :host([disabled]) .wheel {
+    pointer-events: none;
     background: var(
         --highcontrast-colorwheel-fill-color-disabled,
         var(
@@ -170,5 +183,4 @@ governing permissions and limitations under the License.
             var(--spectrum-colorwheel-fill-color-disabled)
         )
     );
-    pointer-events: none;
 }

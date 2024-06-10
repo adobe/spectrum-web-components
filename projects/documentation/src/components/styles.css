@@ -10,51 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import '@spectrum-web-components/styles/core-global.css';
 @import '@spectrum-web-components/styles/tokens/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
-@import '@spectrum-web-components/styles/typography.css';
+@import '@spectrum-web-components/styles/src/spectrum-heading.css';
+@import '@spectrum-web-components/styles/src/spectrum-body.css';
+@import '@spectrum-web-components/styles/src/spectrum-code.css';
 @import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
-
-@import '@spectrum-web-components/styles/scale-medium.css' screen and
-        (min-width: 701px) and (min-height: 701px),
-    (hover: hover), (pointer: fine);
-@import '@spectrum-web-components/styles/tokens/medium-vars.css' screen and
-        (min-width: 701px) and (min-height: 701px),
-    (hover: hover), (pointer: fine);
-@import '@spectrum-web-components/styles/tokens/spectrum/custom-medium-vars.css'
-        screen and (min-width: 701px) and (min-height: 701px),
-    (hover: hover), (pointer: fine);
-@import '@spectrum-web-components/styles/tokens/spectrum/medium-vars.css' screen
-        and (min-width: 701px) and (min-height: 701px),
-    (hover: hover), (pointer: fine);
-@import '@spectrum-web-components/styles/scale-large.css' screen and
-        (max-width: 700px) and (hover: none) and (pointer: coarse),
-    (max-height: 700px) and (hover: none) and (pointer: coarse);
-@import '@spectrum-web-components/styles/tokens/large-vars.css' screen and
-        (max-width: 700px) and (hover: none) and (pointer: coarse),
-    (max-height: 700px) and (hover: none) and (pointer: coarse);
-@import '@spectrum-web-components/styles/tokens/spectrum/custom-large-vars.css'
-        screen and (max-width: 700px) and (hover: none) and (pointer: coarse),
-    (max-height: 700px) and (hover: none) and (pointer: coarse);
-@import '@spectrum-web-components/styles/tokens/spectrum/large-vars.css' screen
-        and (max-width: 700px) and (hover: none) and (pointer: coarse),
-    (max-height: 700px) and (hover: none) and (pointer: coarse);
-
-@import '@spectrum-web-components/styles/theme-dark.css' screen and
-    (prefers-color-scheme: dark);
-@import '@spectrum-web-components/styles/tokens/dark-vars.css' screen and
-    (prefers-color-scheme: dark);
-@import 'prismjs/themes/prism-okaidia.css' screen and
-    (prefers-color-scheme: dark);
-@import '@spectrum-web-components/styles/theme-light.css' screen and
-    (prefers-color-scheme: light);
-@import '@spectrum-web-components/styles/tokens/light-vars.css' screen and
-    (prefers-color-scheme: light);
-@import 'prismjs/themes/prism.css' screen and (prefers-color-scheme: light);
-
+@import './inline-alert.css';
 @import './fonts.css';
+
+:root,
+:host {
+    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+
+    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-font-style: var(--spectrum-default-font-style);
+    --spectrum-font-size: var(--spectrum-font-size-100);
+
+    font-family: var(--spectrum-font-family);
+    font-style: var(--spectrum-font-style);
+    font-size: var(--spectrum-font-size);
+}
 
 body {
     margin: 0;
@@ -68,14 +50,12 @@ body {
         right: 0;
         min-height: 100vh;
         box-sizing: border-box;
-        padding: 92px 0 24px
-            calc(var(--spectrum-global-dimension-size-2400) + 48px);
+        padding: 92px 0 24px calc(var(--swc-scale-factor) * 192px + 48px);
         background: linear-gradient(
             to right,
-            var(--spectrum-global-color-gray-75) 0,
-            var(--spectrum-global-color-gray-75)
-                calc(var(--spectrum-global-dimension-size-2400) + 48px),
-            transparent calc(var(--spectrum-global-dimension-size-2400) + 48px),
+            var(--spectrum-gray-75) 0,
+            var(--spectrum-gray-75) calc(var(--swc-scale-factor) * 192px + 48px),
+            transparent calc(var(--swc-scale-factor) * 192px + 48px),
             transparent
         );
         overflow: hidden;
@@ -86,7 +66,7 @@ body {
         max-width: 1080px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0 var(--spectrum-global-dimension-size-700) 0;
+        padding: 0 calc(var(--swc-scale-factor) * 56px) 0;
     }
 
     docs-page:not(:defined) > main {
@@ -95,15 +75,15 @@ body {
 
     docs-page:not(:defined) #logo {
         position: absolute;
-        right: calc(100% - var(--spectrum-global-dimension-size-2400) - 48px);
+        right: calc(100% - var(--swc-scale-factor) * 192px - 48px);
         top: 0;
     }
 
     docs-page:not(:defined) sp-sidenav {
         position: absolute;
-        width: var(--spectrum-global-dimension-size-2400);
+        width: calc(var(--swc-scale-factor) * 192px);
         top: 145px;
-        right: calc(100% - var(--spectrum-global-dimension-size-2400) - 48px);
+        right: calc(100% - var(--swc-scale-factor) * 192px - 48px);
         padding: 0 24px 24px;
         height: calc(100vh - 143px);
     }
@@ -113,14 +93,14 @@ body {
     }
 
     sp-sidenav:not(:defined) {
-        width: var(--spectrum-global-dimension-size-2400);
+        width: calc(var(--swc-scale-factor) * 192px);
     }
 }
 
 @media screen and (max-width: 960px) {
     docs-page:not(:defined) {
         display: block;
-        padding: 71px var(--spectrum-global-dimension-size-300) 24px;
+        padding: 71px calc(var(--swc-scale-factor) * 24px) 24px;
         overflow: hidden;
     }
 
@@ -129,7 +109,7 @@ body {
         position: absolute;
         width: 100%;
         top: 60px;
-        border-bottom: 1px solid var(--spectrum-global-color-gray-200);
+        border-bottom: 1px solid var(--spectrum-gray-200);
         left: 0;
     }
 
@@ -171,14 +151,14 @@ body {
 #logo {
     outline: none;
     margin-bottom: -11px;
-    padding: var(--spectrum-global-dimension-size-350)
-        var(--spectrum-global-dimension-size-300);
+    padding: calc(var(--swc-scale-factor) * 28px)
+        calc(var(--swc-scale-factor) * 24px);
     border-radius: 4px;
     display: flex;
     flex-direction: row;
-    color: var(--spectrum-global-color-gray-800);
+    color: var(--spectrum-gray-800);
     text-decoration: none;
-    width: var(--spectrum-global-dimension-size-2400);
+    width: calc(var(--swc-scale-factor) * 192px);
     position: relative;
 }
 
@@ -202,19 +182,19 @@ body {
     margin: -3px 0 0;
     font-family: var(
         --spectrum-alias-body-text-font-family,
-        var(--spectrum-global-font-family-base)
+        var(--spectrum-font-family)
     );
 }
 
 #logo:focus-visible::before {
     content: '';
     position: absolute;
-    top: calc(var(--spectrum-global-dimension-size-350) - 4px);
-    right: calc(var(--spectrum-global-dimension-size-300) - 4px);
-    bottom: calc(var(--spectrum-global-dimension-size-350) - 4px);
-    left: calc(var(--spectrum-global-dimension-size-300) - 4px);
+    top: calc((var(--swc-scale-factor) * 28px) - 4px);
+    right: calc((var(--swc-scale-factor) * 24px) - 4px);
+    bottom: calc((var(--swc-scale-factor) * 28px) - 4px);
+    left: calc((var(--swc-scale-factor) * 24px) - 4px);
     border: 2px solid
-        var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
+        var(--spectrum-alias-focus-color, var(--spectrum-blue-400));
     border-radius: 4px;
 }
 
@@ -235,49 +215,37 @@ sp-tabs:not(:defined) {
 }
 
 sp-tab:not(:defined) {
-    margin-top: var(
-        --spectrum-heading-s-margin-top,
-        var(--spectrum-alias-heading-s-margin-top)
-    );
-    margin-bottom: var(
-        --spectrum-heading-s-margin-bottom,
-        var(--spectrum-global-dimension-size-65)
-    );
     color: var(
-        --spectrum-heading-s-text-color,
-        var(--spectrum-alias-heading-text-color)
+        --highcontrast-heading-font-color,
+        var(--mod-heading-font-color, var(--spectrum-heading-font-color))
     );
     font-family: var(
-        --spectrum-heading-m-text-font-family,
-        var(--spectrum-alias-body-text-font-family)
+        --mod-heading-sans-serif-font-family,
+        var(--spectrum-heading-sans-serif-font-family)
+    );
+    font-size: var(--mod-heading-font-size, var(--spectrum-heading-font-size));
+    font-style: var(
+        --mod-heading-sans-serif-font-style,
+        var(--spectrum-heading-sans-serif-font-style)
     );
     font-weight: var(
-        --spectrum-heading-m-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    font-size: var(
-        --spectrum-heading-s-text-size,
-        var(--spectrum-alias-heading-s-text-size)
+        --mod-heading-sans-serif-font-weight,
+        var(--spectrum-heading-sans-serif-font-weight)
     );
     line-height: var(
-        --spectrum-heading-s-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
+        --mod-heading-line-height,
+        var(--spectrum-heading-line-height)
     );
-    font-style: var(
-        --spectrum-heading-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    text-transform: var(--spectrum-heading-s-text-transform, none);
+
+    --spectrum-heading-font-size: var(--spectrum-heading-size-s);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
 }
 
 docs-page sp-button:not(:defined) {
     visibility: hidden;
-    line-height: 23px;
-    padding: 10px 0 12px;
+    padding: calc(var(--swc-scale-factor) * 10px) 0
+        calc(var(--swc-scale-factor) * 12px);
+    line-height: calc(var(--swc-scale-factor) * 23px);
     border: 2px solid;
     display: inline-block;
 }
@@ -481,14 +449,14 @@ sp-sidenav-item:not(:defined) span {
 
 sp-sidenav-item:not(:defined) span,
 sp-sidenav > sp-sidenav-item[multilevel]:not(:defined) > a {
-    font-weight: var(--spectrum-global-font-weight-bold);
+    font-weight: var(--spectrum-bold-font-weight);
 }
 
 sp-sidenav-item:not(:defined) span,
 sp-sidenav > sp-sidenav-item:not(:defined) > a {
     padding-left: var(
         --spectrum-sidenav-item-padding-x,
-        var(--spectrum-global-dimension-size-150)
+        calc(var(--swc-scale-factor) * 12px)
     );
 }
 
@@ -499,11 +467,11 @@ sp-sidenav-item[expanded]
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation-level2,
-                var(--spectrum-global-dimension-size-300)
+                calc(var(--swc-scale-factor) * 24px)
             ) +
             var(
                 --spectrum-sidenav-item-padding-x,
-                var(--spectrum-global-dimension-size-150)
+                calc(var(--swc-scale-factor) * 12px)
             )
     );
 }
@@ -516,11 +484,11 @@ sp-sidenav-item:not(:defined) a {
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation-level1,
-                var(--spectrum-global-dimension-size-150)
+                calc(var(--swc-scale-factor) * 12px)
             ) +
             var(
                 --spectrum-sidenav-item-padding-x,
-                var(--spectrum-global-dimension-size-150)
+                calc(var(--swc-scale-factor) * 12px)
             )
     );
 }
@@ -549,8 +517,8 @@ sp-divider[size='s']:not(:defined) {
 }
 
 .hero .spectrum-Heading {
-    margin: var(--spectrum-global-dimension-size-100) 0
-        var(--spectrum-global-dimension-size-200) 0;
+    margin: calc(var(--swc-scale-factor) * 8px) 0
+        calc(var(--swc-scale-factor) * 16px) 0;
 }
 
 #hero-buttons {
@@ -620,7 +588,7 @@ sp-divider[size='s']:not(:defined) {
 
 #title-header h1,
 .hero h1 {
-    margin: var(--spectrum-global-dimension-size-100) 0;
+    margin: calc(var(--swc-scale-factor) * 8px) 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -632,7 +600,7 @@ sp-divider[size='s']:not(:defined) {
 }
 
 .spectrum-Body code {
-    color: var(--spectrum-global-color-blue-700);
+    color: var(--spectrum-blue-700);
 }
 
 .spectrum-Article .spectrum-Heading1--display {
@@ -654,18 +622,18 @@ article {
 }
 
 .table-container > sp-table-body {
-    --spectrum-table-row-background-color: var(--spectrum-global-color-gray-75);
+    --spectrum-table-row-background-color: var(--spectrum-gray-75);
 }
 
 .table-container {
     overflow: auto;
-    margin: 0 calc(-1 * var(--spectrum-global-dimension-size-700));
+    margin: 0 calc(-1 * (var(--swc-scale-factor) * 56px));
 }
 
 .table-container > sp-table {
     max-width: 1080px;
     width: min-content;
-    padding: 0 var(--spectrum-global-dimension-size-700);
+    padding: 0 calc(var(--swc-scale-factor) * 56px);
     box-sizing: border-box;
     align-items: stretch;
     min-width: 100%;
@@ -675,7 +643,7 @@ article {
 .table-container sp-table-head-cell {
     box-sizing: border-box;
     word-break: break-word;
-    min-width: var(--spectrum-global-dimension-size-1250);
+    min-width: calc(var(--swc-scale-factor) * 100px);
 }
 
 sp-table.attributes sp-table-cell,
@@ -684,7 +652,7 @@ sp-table.attributes sp-table-head-cell {
 }
 
 sp-table .description {
-    min-width: var(--spectrum-global-dimension-size-1600);
+    min-width: calc(var(--swc-scale-factor) * 128px);
 }
 
 sp-table.attributes .description {
@@ -712,19 +680,19 @@ sp-table.events .description {
 }
 
 .headerContainer > sp-divider[size='l'] {
-    margin-bottom: var(--spectrum-global-dimension-size-300);
+    margin-bottom: calc(var(--swc-scale-factor) * 24px);
 }
 
 .headerContainer:first-child > sp-divider[size='l'] {
-    margin-bottom: var(--spectrum-global-dimension-size-300);
+    margin-bottom: calc(var(--swc-scale-factor) * 24px);
 }
 
 .headerContainer > sp-divider[size='m'] {
-    margin-bottom: var(--spectrum-global-dimension-size-200);
+    margin-bottom: calc(var(--swc-scale-factor) * 16px);
 }
 
 .headerContainer > sp-divider[size='s'] {
-    margin-bottom: var(--spectrum-global-dimension-size-150);
+    margin-bottom: calc(var(--swc-scale-factor) * 12px);
 }
 
 [id] > .header-anchor {
@@ -737,8 +705,8 @@ h2[id],
 h3[id],
 h4[id],
 tr[id] {
-    scroll-margin-top: var(--spectrum-global-dimension-static-size-1200);
-    scroll-snap-margin-top: var(--spectrum-global-dimension-static-size-1200);
+    scroll-margin-top: calc(var(--swc-scale-factor) * 96px);
+    scroll-snap-margin-top: calc(var(--swc-scale-factor) * 96px);
 }
 
 /*! purgecss start ignore */
@@ -749,8 +717,7 @@ tr[id] {
 
 sp-link img {
     box-shadow: 0 2px 0 0 transparent;
-    transition: box-shadow var(--spectrum-global-animation-duration-300)
-        ease-in-out;
+    transition: box-shadow var(--spectrum-animation-duration-300) ease-in-out;
 }
 
 sp-link.focus-visible img {
@@ -783,8 +750,8 @@ code-example:not(:defined) {
     max-width: 100%;
     padding: 0.75rem 1.5rem;
     border-radius: 0 0 6px 6px;
-    border-top: 1px solid var(--spectrum-global-color-gray-100);
-    background: var(--spectrum-global-color-gray-75);
+    border-top: 1px solid var(--spectrum-gray-100);
+    background: var(--spectrum-gray-75);
     overflow: hidden;
     line-height: 1.3em;
     overflow-x: auto;
@@ -827,9 +794,8 @@ docs-page:defined .section {
     overflow: hidden;
     opacity: 1;
     height: 100%;
-    transition: opacity var(--spectrum-global-animation-duration-300)
-            ease-in-out,
-        transform var(--spectrum-global-animation-duration-300) ease-in-out;
+    transition: opacity var(--spectrum-animation-duration-300) ease-in-out,
+        transform var(--spectrum-animation-duration-300) ease-in-out;
 }
 
 docs-page:defined .section:not([selected]) {
@@ -840,13 +806,12 @@ docs-page:defined .section:not([selected]) {
     transform: translateY(
         var(
             --spectrum-dropdown-flyout-menu-offset-y,
-            var(--spectrum-global-dimension-size-75)
+            calc(var(--swc-scale-factor) * 6px)
         )
     );
-    transition: opacity var(--spectrum-global-animation-duration-300)
-            ease-in-out,
-        transform var(--spectrum-global-animation-duration-300) ease-in-out,
-        height 0s ease var(--spectrum-global-animation-duration-300);
+    transition: opacity var(--spectrum-animation-duration-300) ease-in-out,
+        transform var(--spectrum-animation-duration-300) ease-in-out,
+        height 0s ease var(--spectrum-animation-duration-300);
 }
 
 docs-page:not(:defined) .section,
@@ -871,10 +836,11 @@ sp-tabs[selected='api'] sp-tab-panel[value='api'] {
 
 sp-tabs::part(tablist) {
     overflow: auto visible;
+    overflow-y: clip;
 }
 
 .spectrum-Typography sp-tab-panel .spectrum-Body--sizeM:first-child {
-    margin-top: var(--spectrum-global-dimension-size-300);
+    margin-top: calc(var(--swc-scale-factor) * 24px);
 }
 
 main > sp-tabs > sp-tab:only-of-type {
@@ -907,8 +873,8 @@ sp-tab-panel:not(.section):focus code-example:after {
     position: absolute;
     top: 0;
     left: 0;
-    border-left: var(--spectrum-global-dimension-static-size-25) solid
-        var(--spectrum-global-color-static-blue-600);
+    border-left: calc(var(--swc-scale-factor) * 2px) solid
+        var(--spectrum-blue-600);
 }
 
 .for-github {
@@ -926,7 +892,7 @@ icons-demo {
     height: 400px;
     overflow: hidden auto;
     position: relative;
-    gap: var(--spectrum-global-dimension-static-size-200);
+    gap: calc(var(--swc-scale-factor) * 16px);
 }
 
 icons-demo::part(search) {
@@ -935,14 +901,14 @@ icons-demo::part(search) {
     left: 0;
     margin: 0 -1.5em;
     background: inherit;
-    background: var(--spectrum-global-color-gray-50);
+    background: var(--spectrum-gray-50);
     padding: 0.75rem 1.5em;
     z-index: 2;
 }
 
 icons-demo::part(icon) {
-    padding: calc(0.5 * var(--spectrum-global-dimension-static-size-200)) 0;
-    gap: var(--spectrum-global-dimension-static-size-200);
+    padding: calc(0.5 * (var(--swc-scale-factor) * 16px)) 0;
+    gap: calc(var(--swc-scale-factor) * 16px);
 }
 
 custom-vars-viewer:not(:defined) {
@@ -951,11 +917,116 @@ custom-vars-viewer:not(:defined) {
 }
 
 docs-page:not(:defined) {
-    background-color: var(--spectrum-global-color-gray-50);
-    color: var(--spectrum-global-color-gray-800);
+    background-color: var(--spectrum-gray-50);
+    color: var(--spectrum-gray-800);
 }
 
-sp-link:not(:defined) {
+sp-link {
     color: var(--spectrum-accent-content-color-default);
     text-decoration: underline;
+}
+
+.demo-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    border: 1px solid rgb(63, 63, 63);
+    border-radius: 6px;
+}
+
+.deprecation-container {
+    margin: 2em 0;
+}
+
+.demo-container:not(.with-demo) {
+    display: none;
+}
+
+.demo-container:not(.with-controls) {
+    grid-template-columns: 1fr;
+}
+
+.demo-preview {
+    display: flex;
+    min-height: 200px;
+    align-items: center;
+}
+
+.demo-config {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 1px solid rgb(63, 63, 63);
+    padding: 16px;
+    max-height: 215px;
+    overflow: auto;
+    justify-content: start;
+}
+
+.control-container {
+    margin-bottom: 1rem;
+}
+
+.demo-config sp-picker:not(:defined) {
+    display: none;
+}
+
+.usage-links {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 16px;
+    border-radius: 6px;
+    margin: 2rem 0 0 0;
+    container-type: inline-size;
+}
+
+.usage-links :is(h2, h3) {
+    all: unset;
+}
+
+.usage-links sp-card {
+    flex-basis: calc(25% - 16px);
+    flex-grow: 1;
+}
+
+.component-data sp-icon,
+.component-data sp-icon svg {
+    width: 36px;
+    height: 36px;
+}
+
+p:has([alt='See it on NPM!']) {
+    display: none;
+}
+
+@container (max-width: 848px) {
+    .usage-links sp-card {
+        flex-basis: calc(50% - 16px);
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .usage-links {
+        flex-direction: row;
+    }
+
+    .demo-preview {
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .demo-container {
+        grid-template-columns: 1fr;
+    }
+    .demo-config {
+        display: none;
+    }
+}
+
+@media (scripting: none) {
+    .component-data {
+        display: none;
+    }
 }

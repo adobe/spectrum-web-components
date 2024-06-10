@@ -50,10 +50,13 @@ export class Search extends Textfield {
     public override label = 'Search';
 
     @property()
-    public method?: 'GET' | 'POST' | 'dialog';
+    public method?: 'get' | 'post' | 'dialog';
 
     @property()
     public override placeholder = 'Search';
+
+    @property({ type: Boolean })
+    public holdValueOnEscape!: boolean;
 
     @query('#form')
     public form!: HTMLFormElement;
@@ -72,6 +75,9 @@ export class Search extends Textfield {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+        if (code === 'Escape' && this.holdValueOnEscape) {
+            return;
+        }
         if (!this.value || code !== 'Escape') {
             return;
         }
@@ -130,7 +136,10 @@ export class Search extends Textfield {
 
     public override firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
-        this.inputElement.setAttribute('type', 'search');
+        // if holdValueOnEscape is not set, default to search type
+        if (!this.hasAttribute('holdValueOnEscape')) {
+            this.inputElement.setAttribute('type', 'search');
+        }
     }
 
     public override willUpdate(): void {

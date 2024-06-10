@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #list {
     --spectrum-tabs-item-height: var(--spectrum-tab-item-height-medium);
     --spectrum-tabs-item-horizontal-spacing: var(
@@ -70,6 +71,7 @@ governing permissions and limitations under the License.
     --spectrum-tabs-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-tabs-animation-ease: var(--spectrum-animation-ease-in-out);
 }
+
 :host([emphasized]) #list {
     --mod-tabs-color-selected: var(
         --mod-tabs-color-selected-emphasized,
@@ -88,30 +90,37 @@ governing permissions and limitations under the License.
         var(--spectrum-accent-content-color-default)
     );
 }
+
 :host([direction^='vertical']) #list {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical,
         right
     );
 }
+
 :host([direction^='vertical-right']) #list {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical-right,
         left
     );
 }
+
+:host([direction^='vertical']) #list:dir(rtl),
 :host([dir='rtl'][direction^='vertical']) #list {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical,
         left
     );
 }
+
+:host([direction^='vertical-right']) #list:dir(rtl),
 :host([dir='rtl'][direction^='vertical-right']) #list {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical,
         right
     );
 }
+
 :host([compact]) #list {
     --mod-tabs-item-height: var(
         --mod-tabs-item-height-compact,
@@ -130,7 +139,10 @@ governing permissions and limitations under the License.
         var(--spectrum-tab-item-top-to-workflow-icon-compact-medium)
     );
 }
+
 #list {
+    z-index: 0;
+    vertical-align: top;
     background: linear-gradient(
         to
             var(
@@ -148,56 +160,27 @@ governing permissions and limitations under the License.
         transparent
             var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size))
     );
-    display: flex;
     margin: 0;
     padding-block: 0;
+    display: flex;
     position: relative;
-    vertical-align: top;
-    z-index: 0;
 }
+
 ::slotted([selected]:not([slot])) {
     color: var(
         --highcontrast-tabs-color-selected,
         var(--mod-tabs-color-selected, var(--spectrum-tabs-color-selected))
     );
 }
-::slotted(:not([slot])).is-disabled {
+
+::slotted([disabled]:not([slot])) {
+    cursor: default;
     color: var(
         --highcontrast-tabs-color-disabled,
         var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled))
     );
-    cursor: default;
 }
-::slotted(:not([slot])).focus-visible {
-    color: var(
-        --highcontrast-tabs-color-key-focus,
-        var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
-    );
-}
-::slotted(:not([slot])):focus-visible {
-    color: var(
-        --highcontrast-tabs-color-key-focus,
-        var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
-    );
-}
-::slotted(:not([slot])).focus-visible:before {
-    border-color: var(
-        --highcontrast-tabs-focus-indicator-color,
-        var(
-            --mod-tabs-focus-indicator-color,
-            var(--spectrum-tabs-focus-indicator-color)
-        )
-    );
-}
-::slotted(:not([slot])):focus-visible:before {
-    border-color: var(
-        --highcontrast-tabs-focus-indicator-color,
-        var(
-            --mod-tabs-focus-indicator-color,
-            var(--spectrum-tabs-focus-indicator-color)
-        )
-    );
-}
+
 #selection-indicator {
     background-color: var(
         --highcontrast-tabs-selection-indicator-color,
@@ -206,85 +189,94 @@ governing permissions and limitations under the License.
             var(--spectrum-tabs-selection-indicator-color)
         )
     );
-    border-radius: var(
-        --mod-tabs-divider-border-radius,
-        var(--spectrum-tabs-divider-border-radius)
-    );
-    inset-inline-start: 0;
-    position: absolute;
-    transform-origin: 0 0;
+    z-index: 0;
     transition: transform
         var(
             --mod-tabs-animation-duration,
             var(--spectrum-tabs-animation-duration)
         )
         var(--mod-tabs-animation-ease, var(--spectrum-tabs-animation-ease));
-    z-index: 0;
+    transform-origin: 0 0;
+    border-radius: var(
+        --mod-tabs-divider-border-radius,
+        var(--spectrum-tabs-divider-border-radius)
+    );
+    position: absolute;
+    inset-inline-start: 0;
 }
+
 :host([direction^='horizontal']) #list {
     align-items: center;
 }
+
 :host([direction^='horizontal']) #list ::slotted(:not([slot])) {
     vertical-align: top;
 }
-:host([direction^='horizontal'])
-    #list
-    ::slotted(:not([slot]):not(:first-child)) {
+
+:host([direction^='horizontal']) ::slotted(:not(:first-child)) {
     margin-inline-start: var(
         --mod-tabs-item-horizontal-spacing,
         var(--spectrum-tabs-item-horizontal-spacing)
     );
 }
+
 :host([direction^='horizontal']) #list #selection-indicator {
     block-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
-    inset-block-end: 0;
     position: absolute;
+    inset-block-end: 0;
 }
+
 :host([direction^='horizontal'][compact]) #list {
+    box-sizing: initial;
     align-items: end;
-    box-sizing: content-box;
 }
+
 :host([quiet]) #list {
     background: none;
     border-color: #0000;
     display: inline-flex;
 }
+
 :host([quiet]) #selection-indicator {
     padding-inline-start: var(
         --mod-tabs-start-to-item-quiet,
         var(--spectrum-tabs-start-to-item-quiet)
     );
 }
-:host([direction^='vertical-right']) #list,
-:host([direction^='vertical']) #list {
-    display: inline-flex;
+
+:host([direction^='vertical']) #list,
+:host([direction^='vertical-right']) #list {
     flex-direction: column;
     padding: 0;
+    display: inline-flex;
 }
+
 :host([direction^='vertical-right'][quiet]) #list,
 :host([direction^='vertical'][quiet]) #list {
     border-color: #0000;
 }
-:host([direction^='vertical-right']) #list ::slotted(:not([slot])),
-:host([direction^='vertical']) #list ::slotted(:not([slot])) {
+
+:host([direction^='vertical']) #list ::slotted(:not([slot])),
+:host([direction^='vertical-right']) #list ::slotted(:not([slot])) {
     block-size: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
     line-height: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
     margin-block-end: var(
         --mod-tabs-item-vertical-spacing,
         var(--spectrum-tabs-item-vertical-spacing)
     );
-    margin-inline-end: var(
+    margin-inline-start: var(
         --mod-tabs-start-to-edge,
         var(--spectrum-tabs-start-to-edge)
     );
-    margin-inline-start: var(
+    margin-inline-end: var(
         --mod-tabs-start-to-edge,
         var(--spectrum-tabs-start-to-edge)
     );
     padding-block: 0;
 }
-:host([direction^='vertical-right']) #list ::slotted(:not([slot])):before,
-:host([direction^='vertical']) #list ::slotted(:not([slot])):before {
+
+:host([direction^='vertical']) #list ::slotted(:not([slot])):before,
+:host([direction^='vertical-right']) #list ::slotted(:not([slot])):before {
     inset-inline-start: calc(
         var(
                 --mod-tabs-focus-indicator-gap,
@@ -292,19 +284,22 @@ governing permissions and limitations under the License.
             ) * -1
     );
 }
-:host([direction^='vertical-right']) #list #selection-indicator,
-:host([direction^='vertical']) #list #selection-indicator {
+
+:host([direction^='vertical']) #list #selection-indicator,
+:host([direction^='vertical-right']) #list #selection-indicator {
     inline-size: var(
         --mod-tabs-divider-size,
         var(--spectrum-tabs-divider-size)
     );
+    position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
-    position: absolute;
 }
+
 :host([direction^='vertical-right']) #list #selection-indicator {
     inset-inline: auto 0;
 }
+
 @media (forced-colors: active) {
     #list {
         --highcontrast-tabs-divider-background-color: var(--spectrum-gray-500);
@@ -318,19 +313,13 @@ governing permissions and limitations under the License.
         --highcontrast-tabs-color-disabled: GrayText;
         forced-color-adjust: none;
     }
+
     #list ::slotted([selected]:not([slot])):before {
         background-color: var(
             --highcontrast-tabs-focus-indicator-background-color
         );
     }
-    #list ::slotted([selected]:not([slot])).focus-visible,
-    #list ::slotted([selected]:not([slot])):focus {
-        color: var(--highcontrast-tabs-color-selected);
-    }
-    #list ::slotted([selected]:not([slot])):focus,
-    #list ::slotted([selected]:not([slot])):focus-visible {
-        color: var(--highcontrast-tabs-color-selected);
-    }
+
     :host([direction^='vertical'][compact])
         #list
         #list
@@ -338,6 +327,7 @@ governing permissions and limitations under the License.
         block-size: 100%;
         inset-block-start: 0;
     }
+
     :host([quiet]) #list {
         background: linear-gradient(
             to
@@ -359,6 +349,7 @@ governing permissions and limitations under the License.
         );
     }
 }
+
 #list {
     --spectrum-tabs-font-weight: var(--system-spectrum-tabs-font-weight);
 }

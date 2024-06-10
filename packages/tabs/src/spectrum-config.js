@@ -29,6 +29,65 @@ const config = {
             fileName: 'tabs',
             components: [
                 {
+                    // .spectrum-Tabs--horizontal .spectrum-Tabs-item + :not(.spectrum-Tabs-selectionIndicator)
+                    find: [
+                        builder.class('spectrum-Tabs--horizontal'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Tabs-item'),
+                        builder.combinator('+'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [
+                                    builder.class(
+                                        'spectrum-Tabs-selectionIndicator'
+                                    ),
+                                ],
+                            ],
+                        },
+                    ],
+                    replace: [
+                        //:host([direction^='horizontal']) ::slotted(:not([slot])):not(.spectrum-Tabs-selectionIndicator)
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    builder.attribute(
+                                        'direction',
+                                        'horizontal',
+                                        'prefix'
+                                    ),
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'not',
+                                        selectors: [
+                                            [
+                                                builder.pseudoClass(
+                                                    'first-child'
+                                                ),
+                                            ],
+                                        ],
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                    collapseSelector: true,
+                },
+                {
                     exactSelector: true,
                     find: [builder.class('spectrum-Tabs--quiet')],
                     replace: [
@@ -207,6 +266,21 @@ const config = {
                         ],
                     },
                 },
+                {
+                    find: builder.class('is-disabled'),
+                    replace: {
+                        type: 'pseudo-element',
+                        kind: 'slotted',
+                        selector: [
+                            builder.attribute('disabled'),
+                            {
+                                type: 'pseudo-class',
+                                kind: 'not',
+                                selectors: [[builder.attribute('slot')]],
+                            },
+                        ],
+                    },
+                },
             ],
             excludeByComponents: [
                 builder.class('spectrum-Tabs-itemLabel'),
@@ -228,6 +302,29 @@ const config = {
                     builder.class('spectrum-Tabs-item'),
                     builder.class('focus-ring'),
                     builder.pseudoElement('before'),
+                ],
+                [
+                    builder.class('spectrum-Tabs-item'),
+                    builder.pseudoClass('focus-visible'),
+                ],
+                [
+                    builder.class('spectrum-Tabs-item'),
+                    builder.pseudoClass('focus-visible'),
+                    builder.pseudoElement('before'),
+                ],
+                [
+                    // .spectrum-Tabs .is-selected:focus
+                    builder.class('spectrum-Tabs'),
+                    builder.combinator(' '),
+                    builder.class('is-selected'),
+                    builder.pseudoClass('focus'),
+                ],
+                [
+                    // .spectrum-Tabs .is-selected:focus-visible
+                    builder.class('spectrum-Tabs'),
+                    builder.combinator(' '),
+                    builder.class('is-selected'),
+                    builder.pseudoClass('focus-visible'),
                 ],
             ],
         },

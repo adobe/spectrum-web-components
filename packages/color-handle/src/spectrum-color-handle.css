@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-colorhandle-size: var(--spectrum-color-handle-size);
     --spectrum-colorhandle-focused-size: var(
@@ -48,21 +49,26 @@ governing permissions and limitations under the License.
         --spectrum-disabled-background-color
     );
     --mod-opacity-checkerboard-position: 50%;
-}
-:host {
+    z-index: 1;
+    box-sizing: border-box;
+    inline-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));
     block-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));
+    margin-inline: calc(
+        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1
+    );
+    margin-block: calc(
+        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1
+    );
+    border-width: var(
+        --mod-colorhandle-border-width,
+        var(--spectrum-colorhandle-border-width)
+    );
     border-color: var(
         --highcontrast-colorhandle-border-color,
         var(
             --mod-colorhandle-border-color,
             var(--spectrum-colorhandle-border-color)
         )
-    );
-    border-radius: 100%;
-    border-style: solid;
-    border-width: var(
-        --mod-colorhandle-border-width,
-        var(--spectrum-colorhandle-border-width)
     );
     box-shadow: 0 0 0
         var(
@@ -73,16 +79,6 @@ governing permissions and limitations under the License.
             --mod-colorhandle-outer-border-color,
             var(--spectrum-colorhandle-outer-border-color)
         );
-    box-sizing: border-box;
-    display: block;
-    inline-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));
-    margin-block: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1 / 2
-    );
-    margin-inline: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1 / 2
-    );
-    position: absolute;
     transition: all
         var(
             --mod-colorhandle-animation-duration,
@@ -92,19 +88,20 @@ governing permissions and limitations under the License.
             --mod-colorhandle-animation-easing,
             var(--spectrum-colorhandle-animation-easing)
         );
-    z-index: 1;
-}
-:host:after {
-    block-size: var(
-        --mod-colorhandle-hitarea-size,
-        var(--spectrum-colorhandle-hitarea-size)
-    );
-    border-radius: var(--mod-colorhandle-hitarea-border-radius, 100%);
-    content: '';
+    border-style: solid;
+    border-radius: 100%;
     display: block;
-    inline-size: var(
-        --mod-colorhandle-hitarea-size,
-        var(--spectrum-colorhandle-hitarea-size)
+    position: absolute;
+}
+
+:host:after {
+    content: '';
+    inset-inline: calc(
+        50% -
+            var(
+                --mod-colorhandle-hitarea-size,
+                var(--spectrum-colorhandle-hitarea-size)
+            ) / 2
     );
     inset-block: calc(
         50% -
@@ -113,59 +110,40 @@ governing permissions and limitations under the License.
                 var(--spectrum-colorhandle-hitarea-size)
             ) / 2
     );
-    inset-inline: calc(
-        50% -
-            var(
-                --mod-colorhandle-hitarea-size,
-                var(--spectrum-colorhandle-hitarea-size)
-            ) / 2
+    inline-size: var(
+        --mod-colorhandle-hitarea-size,
+        var(--spectrum-colorhandle-hitarea-size)
     );
+    block-size: var(
+        --mod-colorhandle-hitarea-size,
+        var(--spectrum-colorhandle-hitarea-size)
+    );
+    border-radius: var(--mod-colorhandle-hitarea-border-radius, 100%);
+    display: block;
     position: absolute;
 }
-:host(.focus-visible),
-:host([focused]) {
-    block-size: var(
-        --mod-colorhandle-focused-size,
-        var(--spectrum-colorhandle-focused-size)
-    );
+
+:host([focused]),
+:host(:focus-visible) {
     inline-size: var(
         --mod-colorhandle-focused-size,
         var(--spectrum-colorhandle-focused-size)
     );
-    margin-block: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1
-    );
-    margin-inline: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1
-    );
-    outline: none;
-}
-:host(:focus-visible),
-:host([focused]) {
     block-size: var(
         --mod-colorhandle-focused-size,
         var(--spectrum-colorhandle-focused-size)
     );
-    inline-size: var(
-        --mod-colorhandle-focused-size,
-        var(--spectrum-colorhandle-focused-size)
+    margin-inline: calc(
+        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1
     );
     margin-block: calc(
         var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1
     );
-    margin-inline: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1
-    );
     outline: none;
 }
+
 :host([disabled]) {
-    background: var(
-        --highcontrast-colorhandle-fill-color-disabled,
-        var(
-            --mod-colorhandle-fill-color-disabled,
-            var(--spectrum-colorhandle-fill-color-disabled)
-        )
-    );
+    pointer-events: none;
     border-color: var(
         --highcontrast-colorhandle-border-color-disabled,
         var(
@@ -173,16 +151,21 @@ governing permissions and limitations under the License.
             var(--spectrum-colorhandle-border-color-disabled)
         )
     );
+    background: var(
+        --highcontrast-colorhandle-fill-color-disabled,
+        var(
+            --mod-colorhandle-fill-color-disabled,
+            var(--spectrum-colorhandle-fill-color-disabled)
+        )
+    );
     box-shadow: none;
-    pointer-events: none;
 }
+
 :host([disabled]) .inner {
     display: none;
 }
+
 .inner {
-    background-color: var(--spectrum-picked-color);
-    block-size: 100%;
-    border-radius: 100%;
     box-shadow: inset 0 0 0
         var(
             --mod-colorhandle-inner-border-width,
@@ -192,12 +175,17 @@ governing permissions and limitations under the License.
             --mod-colorhandle-inner-border-color,
             var(--spectrum-colorhandle-inner-border-color)
         );
+    background-color: var(--spectrum-picked-color);
+    border-radius: 100%;
+    block-size: 100%;
     inline-size: 100%;
 }
+
 @media (forced-colors: active) {
     :host {
         forced-color-adjust: none;
     }
+
     :host([disabled]) {
         --highcontrast-colorhandle-border-color-disabled: GrayText;
         --highcontrast-colorhandle-fill-color-disabled: Canvas;

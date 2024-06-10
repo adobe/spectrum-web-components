@@ -15,86 +15,65 @@ governing permissions and limitations under the License.
 :host([invalid]) .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-key-focus,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-red-600)
     );
     --spectrum-clearbutton-medium-icon-color-hover: var(
         --spectrum-clearbutton-medium-icon-color
     );
     --spectrum-clearbutton-medium-icon-color-down: var(
         --spectrum-tag-deletable-icon-color-error-down,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-red-700)
     );
 }
 
 :host([invalid]):hover .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-hover,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-red-600)
     );
     --spectrum-clearbutton-medium-icon-color-hover: var(
         --spectrum-clearbutton-medium-icon-color
     );
     --spectrum-clearbutton-medium-icon-color-down: var(
         --spectrum-tag-deletable-icon-color-error-down,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-red-700)
     );
 }
 
-:host([invalid]):active .clear-button {
+:host([invalid]:is(:active, [active])) .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-hover,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-red-600)
     );
     --spectrum-clearbutton-medium-icon-color-hover: var(
         --spectrum-clearbutton-medium-icon-color
     );
     --spectrum-clearbutton-medium-icon-color-down: var(
         --spectrum-tag-deletable-icon-color-error-down,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-red-700)
     );
+}
+
+:host([size='xs']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 
 :host([size='s']) {
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-s
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-s
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75
-    );
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
 :host([size='m']) {
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-m
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-m
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-100
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-100
-    );
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
 }
 
 :host([size='l']) {
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-l
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-l
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-200
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-200
-    );
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
+}
+
+:host([size='xl']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
+}
+
+:host([size='xxl']) {
+    --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
 }

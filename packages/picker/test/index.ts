@@ -39,11 +39,13 @@ import {
 } from '@web/test-runner-commands';
 import {
     Default,
+    disabled,
     iconsOnly,
     noVisibleLabel,
     slottedLabel,
     tooltip,
 } from '../stories/picker.stories.js';
+import { M as pending } from '../stories/picker-pending.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     ignoreResizeObserverLoopError,
@@ -57,6 +59,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import type { Menu } from '@spectrum-web-components/menu';
 import { Tooltip } from '@spectrum-web-components/tooltip';
+import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 
 export type TestablePicker = { optionsMenu: Menu };
 
@@ -69,28 +72,22 @@ const isMenuActiveElement = function (el: Picker): boolean {
 export function runPickerTests(): void {
     let el: Picker;
     const pickerFixture = async (): Promise<Picker> => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <sp-theme scale="medium" color="light">
-                    <sp-field-label for="picker">
-                        Where do you live?
-                    </sp-field-label>
-                    <sp-picker
-                        id="picker"
-                        style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
-                    >
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item value="option-2">
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-picker>
-                </sp-theme>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <sp-theme scale="medium" color="light">
+                <sp-field-label for="picker">Where do you live?</sp-field-label>
+                <sp-picker
+                    id="picker"
+                    style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
+                >
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-picker>
+            </sp-theme>
+        `);
 
         return test.querySelector('sp-picker') as Picker;
     };
@@ -192,18 +189,25 @@ export function runPickerTests(): void {
                 </div>
             `);
             const el = test.querySelector('sp-picker') as Picker;
+            await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
-            type NamedNode = { name: string };
+            type NamedNode = { name: string; description: string };
             let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
                 children: NamedNode[];
             };
 
+            let name = 'Where do you live?';
+
+            let node = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === name
+            );
+
             expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) => node.name === 'Where do you live?'
-                ),
-                '`name` is the label text'
+                node,
+                `node not available: ${JSON.stringify(snapshot, null, '  ')}`
             ).to.not.be.null;
 
             el.value = 'option-2';
@@ -215,12 +219,16 @@ export function runPickerTests(): void {
                 children: NamedNode[];
             };
 
+            name = 'Select Inverse Where do you live?';
+
+            node = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === name
+            );
+
             expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) => node.name === 'Select Inverse Where do you live?'
-                ),
-                '`name` is the the selected item text plus the label text'
+                node,
+                `node not available: ${JSON.stringify(snapshot, null, '  ')}`
             ).to.not.be.null;
         });
     });
@@ -475,6 +483,45 @@ export function runPickerTests(): void {
             await sendKeys({ press: 'ArrowRight' });
             await sendKeys({ press: 'ArrowLeft' });
             await sendKeys({ press: 'ArrowDown' });
+            await opened;
+
+            expect(el.open).to.be.true;
+            expect(firstItem.focused, 'should be visually focused').to.be.true;
+
+            const closed = oneEvent(el, 'sp-closed');
+            await sendKeys({
+                press: 'Escape',
+            });
+            await closed;
+
+            expect(el.open).to.be.false;
+            expect(
+                document.activeElement === el,
+                `focused ${document.activeElement?.localName} instead of back on Picker`
+            ).to.be.true;
+            expect(
+                el.shadowRoot.activeElement === el.button,
+                `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
+            ).to.be.true;
+            await waitUntil(
+                () => !firstItem.focused,
+                'finally, not visually focused'
+            );
+        });
+        it('opens with visible focus on a menu item on `Space`', async function () {
+            const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+            await elementUpdated(el);
+
+            expect(firstItem.focused, 'should not visually focused').to.be
+                .false;
+
+            el.focus();
+            await elementUpdated(el);
+            const opened = oneEvent(el, 'sp-opened');
+            await sendKeys({ press: 'ArrowRight' });
+            await sendKeys({ press: 'ArrowLeft' });
+            await sendKeys({ press: 'Space' });
             await opened;
 
             expect(el.open).to.be.true;
@@ -770,11 +817,14 @@ export function runPickerTests(): void {
                 preventChangeSpy();
             });
 
+            const changed = oneEvent(el, 'change');
             secondItem.click();
-            // What is the time all about and how can it be better measured?
-            await nextFrame();
-            await nextFrame();
-            expect(preventChangeSpy.calledOnce).to.be.true;
+            // The `change` event is dispatched _after_ the `updateComplete` promise.
+            await changed;
+            expect(
+                preventChangeSpy.calledOnce,
+                preventChangeSpy.callCount.toString()
+            ).to.be.true;
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open).to.be.true;
         });
@@ -1226,30 +1276,28 @@ export function runPickerTests(): void {
     });
     describe('grouped', async () => {
         const groupedFixture = async (): Promise<Picker> => {
-            return fixture<Picker>(
-                html`
-                    <sp-picker
-                        quiet
-                        label="I would like to use Spectrum Web Components"
-                        value="0"
-                    >
-                        <sp-menu-group>
-                            <span slot="header">Timeline</span>
-                            <sp-menu-item value="0" id="should-be-selected">
-                                Immediately
-                            </sp-menu-item>
-                            <sp-menu-item value="1">
-                                I'm already using them
-                            </sp-menu-item>
-                            <sp-menu-item value="2">Soon</sp-menu-item>
-                            <sp-menu-item value="3">
-                                As part of my next project
-                            </sp-menu-item>
-                            <sp-menu-item value="4">In the future</sp-menu-item>
-                        </sp-menu-group>
-                    </sp-picker>
-                `
-            );
+            return fixture<Picker>(html`
+                <sp-picker
+                    quiet
+                    label="I would like to use Spectrum Web Components"
+                    value="0"
+                >
+                    <sp-menu-group>
+                        <span slot="header">Timeline</span>
+                        <sp-menu-item value="0" id="should-be-selected">
+                            Immediately
+                        </sp-menu-item>
+                        <sp-menu-item value="1">
+                            I'm already using them
+                        </sp-menu-item>
+                        <sp-menu-item value="2">Soon</sp-menu-item>
+                        <sp-menu-item value="3">
+                            As part of my next project
+                        </sp-menu-item>
+                        <sp-menu-item value="4">In the future</sp-menu-item>
+                    </sp-menu-group>
+                </sp-picker>
+            `);
         };
         beforeEach(async () => {
             el = await groupedFixture();
@@ -1264,29 +1312,27 @@ export function runPickerTests(): void {
     });
     describe('slotted label', () => {
         const pickerFixture = async (): Promise<Picker> => {
-            const test = await fixture<Picker>(
-                html`
-                    <div>
-                        <sp-field-label for="picker-slotted">
-                            Where do you live?
-                        </sp-field-label>
-                        <sp-picker id="picker-slotted">
-                            <span slot="label">
-                                Select a Country with a very long label, too
-                                long in fact
-                            </span>
-                            <sp-menu-item>Deselect</sp-menu-item>
-                            <sp-menu-item value="option-2">
-                                Select Inverse
-                            </sp-menu-item>
-                            <sp-menu-item>Feather...</sp-menu-item>
-                            <sp-menu-item>Select and Mask...</sp-menu-item>
-                            <sp-menu-item>Save Selection</sp-menu-item>
-                            <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                        </sp-picker>
-                    </div>
-                `
-            );
+            const test = await fixture<Picker>(html`
+                <div>
+                    <sp-field-label for="picker-slotted">
+                        Where do you live?
+                    </sp-field-label>
+                    <sp-picker id="picker-slotted">
+                        <span slot="label">
+                            Select a Country with a very long label, too long in
+                            fact
+                        </span>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item value="option-2">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                    </sp-picker>
+                </div>
+            `);
 
             return test.querySelector('sp-picker') as Picker;
         };
@@ -1327,36 +1373,53 @@ export function runPickerTests(): void {
         });
 
         const pickerFixture = async (): Promise<Picker> => {
-            const test = await fixture<Picker>(
-                html`
-                    <div>
-                        <sp-field-label for="picker-deprecated">
-                            Where do you live?
-                        </sp-field-label>
-                        <sp-picker
-                            id="picker-deprecated"
-                            label="Select a Country with a very long label, too long in fact"
-                        >
-                            <sp-menu>
-                                <sp-menu-item>Deselect</sp-menu-item>
-                                <sp-menu-item value="option-2">
-                                    Select Inverse
-                                </sp-menu-item>
-                                <sp-menu-item>Feather...</sp-menu-item>
-                                <sp-menu-item>Select and Mask...</sp-menu-item>
-                                <sp-menu-item>Save Selection</sp-menu-item>
-                                <sp-menu-item disabled>
-                                    Make Work Path
-                                </sp-menu-item>
-                            </sp-menu>
-                        </sp-picker>
-                    </div>
-                `
-            );
+            const test = await fixture<Picker>(html`
+                <div>
+                    <sp-field-label for="picker-deprecated">
+                        Where do you live?
+                    </sp-field-label>
+                    <sp-picker
+                        id="picker-deprecated"
+                        label="Select a Country with a very long label, too long in fact"
+                    >
+                        <sp-menu>
+                            <sp-menu-item>Deselect</sp-menu-item>
+                            <sp-menu-item value="option-2">
+                                Select Inverse
+                            </sp-menu-item>
+                            <sp-menu-item>Feather...</sp-menu-item>
+                            <sp-menu-item>Select and Mask...</sp-menu-item>
+                            <sp-menu-item>Save Selection</sp-menu-item>
+                            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                        </sp-menu>
+                    </sp-picker>
+                </div>
+            `);
 
             return test.querySelector('sp-picker') as Picker;
         };
-        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+        it('does not warn in Dev Mode when accessible elements leveraged', async () => {
+            const test = await fixture<Picker>(html`
+                <div>
+                    <sp-field-label for="test">Test label</sp-field-label>
+                    <sp-picker id="test">
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                    </sp-picker>
+                </div>
+            `);
+
+            el = test.querySelector('sp-picker') as Picker;
+
+            await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
+
+            expect(consoleWarnStub.called).to.be.false;
+        });
+        it('warns in Dev Mode when accessible attributes are not leveraged', async function () {
+            this.retries(0);
             el = await fixture<Picker>(html`
                 <sp-picker>
                     <sp-menu-item>Feather...</sp-menu-item>
@@ -1366,6 +1429,8 @@ export function runPickerTests(): void {
             `);
 
             await elementUpdated(el);
+            await nextFrame();
+            await nextFrame();
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
@@ -1529,21 +1594,19 @@ export function runPickerTests(): void {
         expect(el1.open).to.be.false;
     });
     it('displays selected item text by default', async () => {
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    value="inverse"
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
-                    <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                value="inverse"
+                label="Select a Country with a very long label, too long in fact"
+            >
+                <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+                <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-picker>
+        `);
         await nextFrame();
 
         await elementUpdated(el);
@@ -1592,21 +1655,19 @@ export function runPickerTests(): void {
         ).to.equal(secondItem.id);
     });
     it('resets value when item not available', async () => {
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    value="missing"
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
-                    <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                value="missing"
+                label="Select a Country with a very long label, too long in fact"
+            >
+                <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+                <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-picker>
+        `);
 
         await elementUpdated(el);
         await waitUntil(() => el.value === '');
@@ -1617,20 +1678,15 @@ export function runPickerTests(): void {
     it('allows event listeners on child items', async () => {
         const mouseenterSpy = spy();
         const handleMouseenter = (): void => mouseenterSpy();
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu-item
-                        value="deselect"
-                        @mouseenter=${handleMouseenter}
-                    >
-                        Deselect Text
-                    </sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                label="Select a Country with a very long label, too long in fact"
+            >
+                <sp-menu-item value="deselect" @mouseenter=${handleMouseenter}>
+                    Deselect Text
+                </sp-menu-item>
+            </sp-picker>
+        `);
 
         await elementUpdated(el);
 
@@ -1661,17 +1717,15 @@ export function runPickerTests(): void {
         const handleOpenedSpy = (event: Event): void => openedSpy(event);
         const handleClosedSpy = (event: Event): void => closedSpy(event);
 
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    label="Select a Country with a very long label, too long in fact"
-                    @sp-opened=${handleOpenedSpy}
-                    @sp-closed=${handleClosedSpy}
-                >
-                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
-                </sp-picker>
-            `
-        );
+        const el = await fixture<Picker>(html`
+            <sp-picker
+                label="Select a Country with a very long label, too long in fact"
+                @sp-opened=${handleOpenedSpy}
+                @sp-closed=${handleClosedSpy}
+            >
+                <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+            </sp-picker>
+        `);
 
         await elementUpdated(el);
         const opened = oneEvent(el, 'sp-opened');
@@ -1734,5 +1788,101 @@ export function runPickerTests(): void {
         expect(document.activeElement === el).to.be.false;
         expect(tooltipEl.open).to.be.false;
         expect(el.open).to.be.false;
+    });
+    describe('disabled', function () {
+        beforeEach(async function () {
+            const test = await fixture(html`
+                <div>${disabled(disabled.args)}</div>
+            `);
+            this.label = test.querySelector('sp-field-label') as FieldLabel;
+            this.el = test.querySelector('sp-picker') as Picker;
+            await elementUpdated(this.elel);
+        });
+        it('does not recieve focus from an `<sp-field-label>`', async function () {
+            expect(this.el.disabled).to.be.true;
+            expect(this.el.focused).to.be.false;
+
+            this.label.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.focused).to.be.false;
+        });
+        it('does not open from `click()`', async function () {
+            expect(this.el.disabled).to.be.true;
+            expect(this.el.open).to.be.false;
+
+            this.el.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.open).to.be.false;
+        });
+        it('does not open from `sendMouse()`', async function () {
+            expect(this.el.disabled).to.be.true;
+            expect(this.el.open).to.be.false;
+
+            const boundingRect = this.el.button.getBoundingClientRect();
+
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            // Synthetic delay for "open" but not "sp-open" as it would never come.
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+
+            expect(this.el.open).to.be.false;
+        });
+    });
+    describe('pending', function () {
+        beforeEach(async function () {
+            const test = await fixture(html`
+                <div>${pending({ pending: true })}</div>
+            `);
+            this.label = test.querySelector('sp-field-label') as FieldLabel;
+            this.el = test.querySelector('sp-picker') as Picker;
+            await elementUpdated(this.elel);
+        });
+        it('receives focus from an `<sp-field-label>`', async function () {
+            expect(this.el.focused).to.be.false;
+
+            this.label.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.focused).to.be.true;
+        });
+        it('does not open from `click()`', async function () {
+            expect(this.el.open).to.be.false;
+
+            this.el.click();
+            await elementUpdated(this.el);
+
+            expect(this.el.open).to.be.false;
+        });
+        it('manages its "name" value in the accessibility tree when [pending]', async () => {
+            type NamedNode = { name: string; role: string };
+            const snapshot = (await a11ySnapshot(
+                {}
+            )) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+
+            expect(
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) =>
+                        node.name ===
+                        'Pending Choose your neighborhood Where do you live?'
+                )
+            ).to.not.be.null;
+        });
     });
 }

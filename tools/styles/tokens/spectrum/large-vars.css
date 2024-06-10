@@ -44,10 +44,8 @@
     --spectrum-slider-bottom-to-handle-medium: 10px;
     --spectrum-slider-bottom-to-handle-large: 14px;
     --spectrum-slider-bottom-to-handle-extra-large: 17px;
-    --spectrum-corner-radius-75: 2px;
     --spectrum-corner-radius-100: 5px;
     --spectrum-corner-radius-200: 10px;
-    --spectrum-drop-shadow-x: 0px;
     --spectrum-drop-shadow-y: 2px;
     --spectrum-drop-shadow-blur: 6px;
 }

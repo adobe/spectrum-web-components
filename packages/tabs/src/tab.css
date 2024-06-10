@@ -12,6 +12,13 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-tab.css');
 
+:host {
+    scroll-margin-inline: var(
+        --mod-tabs-item-horizontal-spacing,
+        var(--spectrum-tabs-item-horizontal-spacing)
+    );
+}
+
 :host([disabled]) {
     pointer-events: none;
 }
@@ -59,12 +66,13 @@ governing permissions and limitations under the License.
 
 :host([dir][vertical]) slot[name='icon'] + #item-label {
     margin-inline-start: 0;
-    margin-block-start: calc(
-        var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
-    );
-    margin-block-end: calc(
-        var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2
-    );
+    margin-block: calc(
+            var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
+        )
+        calc(
+            var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) /
+                2
+        );
 }
 
 :host([vertical]) ::slotted([slot='icon']) {

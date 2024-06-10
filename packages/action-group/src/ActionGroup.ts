@@ -170,13 +170,12 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     }
 
     private deselectSelectedButtons(): void {
-        const selected = [
-            ...this.querySelectorAll('[selected]'),
-        ] as ActionButton[];
-        selected.forEach((el) => {
-            el.selected = false;
-            el.tabIndex = -1;
-            el.setAttribute(
+        this.buttons.forEach((button) => {
+            if (!button.selected) return;
+
+            button.selected = false;
+            button.tabIndex = -1;
+            button.setAttribute(
                 this.selects ? 'aria-checked' : /* c8 ignore */ 'aria-pressed',
                 'false'
             );

@@ -101,7 +101,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (variant === this.variant) {
             return;
         }
-        if (variants.includes(variant)) {
+        if (variants.includes(variant) && this.fillStart === undefined) {
             this.setAttribute('variant', variant);
             this._variant = variant;
         } else {
@@ -362,7 +362,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
      * @description calculates the fill width
      * @param fillStartValue
      * @param currentValue
-     * @param cachedValue
      * @returns
      */
     private getOffsetWidth(
@@ -409,6 +408,14 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             ></div>
         `;
     }
+    private renderHandle(): TemplateResult {
+        if (this.variant === 'tick') {
+            return html``;
+        }
+        return html`
+            ${this.handleController.render()}
+        `;
+    }
 
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
@@ -417,12 +424,13 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         ];
         const trackItems = [
             { id: 'track0', html: this.renderTrackSegment(...segments[0]) },
+            { id: 'fill', html: this.renderFillOffset() },
             { id: 'ramp', html: this.renderRamp() },
+            { id: 'handles', html: this.renderHandle() },
             ...segments.slice(1).map(([start, end], index) => ({
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
             })),
-            { id: 'fill', html: this.renderFillOffset() },
         ];
 
         return html`
@@ -435,27 +443,42 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                         ['pointerup', 'pointercancel', 'pointerleave'],
                         this.handlePointerup,
                     ],
+                    streamOutside: ['dblclick', this.handleDoubleClick],
                 })}
             >
                 <div id="controls">
-                    ${this.renderTicks()}
-                    <div class="trackContainer">
-                        ${repeat(
-                            trackItems,
-                            (item) => item.id,
-                            (item) => item.html
-                        )}
-                    </div>
-                    <div class="handleContainer">
-                        ${repeat(
-                            handleItems,
-                            (item) => item.id,
-                            (item) => item.html
-                        )}
-                    </div>
+                    ${this.variant === 'tick'
+                        ? html`
+                              ${this.renderTicks()}
+                              <div class="trackContainer">
+                                  ${repeat(
+                                      trackItems,
+                                      (item) => item.id,
+                                      (item) => item.html
+                                  )}
+                              </div>
+                              <div class="handleContainer">
+                                  ${repeat(
+                                      handleItems,
+                                      (item) => item.id,
+                                      (item) => item.html
+                                  )}
+                              </div>
+                          `
+                        : html`
+                              ${repeat(
+                                  trackItems,
+                                  (item) => item.id,
+                                  (item) => item.html
+                              )}
+                          `}
                 </div>
             </div>
         `;
+    }
+
+    protected handleDoubleClick(event: PointerEvent): void {
+        this.handleController.handleDoubleClick(event);
     }
 
     protected handlePointerdown(event: PointerEvent): void {
@@ -501,12 +524,8 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         const size = end - start;
         const styles: StyleInfo = {
             width: `${size * 100}%`,
-            ...(this.handleController.size > 1 && {
-                '--spectrum-slider-track-background-size': `${
-                    (1 / size) * 100
-                }%`,
-                '--spectrum-slider-track-segment-position': `${start * 100}%`,
-            }),
+            '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
+            '--spectrum-slider-track-segment-position': `${start * 100}%`,
         };
         return styles;
     }

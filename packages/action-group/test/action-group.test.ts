@@ -81,21 +81,23 @@ customElements.define('emphasized-action-group', EmphasizedActionGroup);
 async function singleSelectedActionGroup(
     selected: string[]
 ): Promise<ActionGroup> {
-    const el = await fixture<ActionGroup>(html`
-        <sp-action-group
-            label="Selects User-Chosen Buttons"
-            selects="single"
-            .selected=${selected}
-        >
-            <sp-action-button value="first" class="first">
-                First
-            </sp-action-button>
-            <sp-action-button value="second" class="second">
-                <div slot="icon" style="width: 10px; height: 10px;"></div>
-                Second
-            </sp-action-button>
-        </sp-action-group>
-    `);
+    const el = await fixture<ActionGroup>(
+        html`
+            <sp-action-group
+                label="Selects User-Chosen Buttons"
+                selects="single"
+                .selected=${selected}
+            >
+                <sp-action-button value="first" class="first">
+                    First
+                </sp-action-button>
+                <sp-action-button value="second" class="second">
+                    <div slot="icon" style="width: 10px; height: 10px;"></div>
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `
+    );
     return el;
 }
 
@@ -590,13 +592,15 @@ describe('ActionGroup', () => {
         expect(el.selected, '"Third" selected').to.deep.equal(['Third']);
     });
     it('manages [selects="single"] selection through multiple slots', async () => {
-        const test = await fixture<HTMLDivElement>(html`
-            <div>
-                <sp-action-button>First</sp-action-button>
-                <sp-action-button>Second</sp-action-button>
-                <sp-action-button selected>Third</sp-action-button>
-            </div>
-        `);
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <sp-action-button>First</sp-action-button>
+                    <sp-action-button>Second</sp-action-button>
+                    <sp-action-button selected>Third</sp-action-button>
+                </div>
+            `
+        );
 
         const firstItem = test.querySelector(
             'sp-action-button'

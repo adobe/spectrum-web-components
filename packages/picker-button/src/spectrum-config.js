@@ -134,6 +134,7 @@ const config = {
             fileName: 'picker-button',
             components: [
                 converter.classToClass('spectrum-PickerButton', 'root'),
+                converter.classToAttribute('is-focused', 'focused'),
                 {
                     find: [builder.pseudoClass('focus')],
                     replace: [
@@ -194,7 +195,31 @@ const config = {
                     },
                     hoist: true,
                 },
-                converter.pseudoToAttribute('active', 'active'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.notToAttribute('is-invalid', 'invalid'),
                 ...converter.enumerateAttributes(
@@ -210,7 +235,7 @@ const config = {
                     'rounded'
                 ),
                 converter.classToAttribute(
-                    'spectrum-PickerButton--low',
+                    'spectrum-PickerButton--quiet',
                     'quiet'
                 ),
                 converter.classToClass('spectrum-PickerButton--uiicononly'),

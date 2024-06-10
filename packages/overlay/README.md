@@ -31,6 +31,8 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
+
+<!-- Opening an overlay via a click interaction -->
 <sp-overlay trigger="trigger@click" placement="bottom">
     <sp-popover>
         <sp-dialog>
@@ -39,11 +41,18 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
         </sp-dialog>
     </sp-popover>
 </sp-overlay>
+
+<!-- Opening an overlay via a hover interaction -->
+<sp-overlay trigger="trigger@hover" placement="bottom">
+    <sp-tooltip>
+        I'm a tooltip and I'm triggered by hovering over the button!
+    </sp-tooltip>
+</sp-overlay>
 ```
 
 When a `<sp-overlay>` element is opened, it will pass that state to its direct children elements as the property `open`, which it will set to `true`. Elements should react to this by initiating any transition between closed and open that they see fit. Similarly, `open` will be set to `false` when the `<sp-overlay>` element is closed.
 
-### Action bar
+### Action Bar
 
 ```html
 <style>
@@ -168,18 +177,122 @@ When a `triggerElement` is present, either through an ID reference established v
 -   **if a `triggerInteraction` is available**, either through the `id@interaction` IDL on the `trigger` attribute or directly setting the `triggerInteraction` property, the `<sp-overlay>` will be bound to the resolved `triggerElement` via the `triggerInteraction` provided
 -   **if a `placement` is available** when the `<sp-overlay>` is `open` and displaying its contents, those contents will be positioned relative to the `triggerElement` as per that `placement`
     -   **if an `offset` is also available** the `<sp-overlay>` will distance itself from the `triggerElement` in accordance with the value of the `offset`
-    -   **if you have a `placement` but not a `triggerElement`** the `<sp-overlay>` will not be positioned due to their being nothing for the `plaement` to reference when so doing
+    -   **if you have a `placement` but not a `triggerElement`** the `<sp-overlay>` will not be positioned due to their being nothing for the `placement` to reference when so doing
 -   **if no `placement` is available** the content will not be placed with the expectation that the content itself or the consuming application will handle placement of the overlaid content. This is commonly what will happen for `type="modal"` and `type="page"` overlays as they are likely meant to cover the entire screen, whether visibly (via an `<sp-underlay>`, an element that includes one, or similar) or figuratively (as when modal content is not delivered with a backdrop or scrim).
 
-### Type
+### Overlay types
 
 The `type` of an Overlay outlines a number of things about the interaction model within which is works.
 
--   `'modal'` Overlays are opened with the `showModal()` method on a `<dialog>` element, which causes the Overlay to accept focus and trap the tab stop within the content of said Overlay.
--   `'page'` Overlays will act in a similar manner to a `'modal'` Overlay, however they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
--   `'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ to place interactive content within this type of Overlay.
--   `'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus but will close when losing that focus, or when interacting with other parts of the page.
--   `'manual'` Overlays act much like `"auto"` Overlays, but do not close when losing focus or interacting with other parts of the page. When a `"manual"` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.
+### Modal
+
+`'modal'` Overlays are opened with the `showModal()` method on a `<dialog>` element, which causes the Overlay to accept focus and trap the tab stop within the content of said Overlay.
+
+They should be used when you need to ensure that the user has interacted with the content of the Overlay before continuing with their work. This is commonly used for dialogs that require a user to confirm or cancel an action before continuing.
+
+```html
+<sp-button id="trigger">open modal</sp-button>
+<sp-overlay trigger="trigger@click" type="modal">
+    <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+        <p>I am a modal type overlay.</p>
+        <sp-field-label>Enter your email</sp-field-label>
+        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+        <sp-action-button
+            onClick="
+                this.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            "
+        >
+            Sign in
+        </sp-action-button>
+    </sp-dialog-wrapper>
+</sp-overlay>
+```
+
+### Page
+
+`'page'` Overlays will act in a similar manner to a `'modal'` Overlay, however they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
+
+A page overlay could be used for a full-screen menu on a mobile website. When the user clicks on the menu button, the entire screen is covered with the menu options.
+
+```html
+<sp-button id="trigger">open page</sp-button>
+<sp-overlay trigger="trigger@click" type="page">
+    <sp-dialog-wrapper
+        headline="Full screen menu"
+        mode="fullscreenTakeover"
+        cancel-label="Close"
+    >
+        <p>I am a page type overlay.</p>
+    </sp-dialog-wrapper>
+</sp-overlay>
+```
+
+### Hint
+
+`'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ to place interactive content within this type of Overlay.
+
+This overlay type does not accept focus and does not interfere with the user's interaction with the rest of the page.
+
+```html
+<sp-button id="trigger">open hint</sp-button>
+<sp-overlay trigger="trigger@hover" type="hint">
+    <sp-tooltip>
+        I am a hint type overlay. I am not interactive and will close when the
+        user interacts with the page.
+    </sp-tooltip>
+</sp-overlay>
+```
+
+### Auto
+
+`'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus but will close when losing that focus, or when interacting with other parts of the page.
+
+```html
+<style>
+    sp-toast {
+        position: fixed;
+        top: 1em;
+        right: 1em;
+    }
+</style>
+<sp-button id="trigger">open auto</sp-button>
+<sp-overlay trigger="trigger@click" type="auto">
+    <sp-toast variant="info">
+        This is information that you should read.
+    </sp-toast>
+</sp-overlay>
+```
+
+### Manual
+
+`'manual'` Overlays act much like `'auto'` Overlays, but do not close when losing focus or interacting with other parts of the page.
+
+Note: When a `'manual'` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.
+
+```html
+<style>
+    .chat-container {
+        position: fixed;
+        bottom: 1em;
+        left: 1em;
+    }
+</style>
+<sp-button id="trigger">open manual</sp-button>
+<sp-overlay trigger="trigger@click" type="manual">
+    <sp-popover class="chat-container">
+        <sp-dialog dismissable>
+            <span slot="heading">Chat Window</span>
+            <sp-textfield placeholder="Enter your message"></sp-textfield>
+            <sp-action-button>Send</sp-action-button>
+        </sp-dialog>
+    </sp-popover>
+</sp-overlay>
+```
 
 ### Events
 

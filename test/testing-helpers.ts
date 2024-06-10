@@ -16,7 +16,7 @@ import {
     nextFrame,
     fixture as owcFixture,
 } from '@open-wc/testing';
-import { html } from '@spectrum-web-components/base';
+import { html, render } from '@spectrum-web-components/base';
 import { SinonStub, spy, stub } from 'sinon';
 import type { HookFunction } from 'mocha';
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -49,6 +49,61 @@ export async function testForLitDevWarnings(
                 consoleWarnStub.called,
                 consoleWarnStub.getCall(0)?.args.join(', ')
             ).to.be.false;
+        });
+    });
+}
+
+export async function testForMemoryLeaks(
+    element: TemplateResult
+): Promise<void> {
+    describe('Memory usage', () => {
+        it('releases references on disconnect', async function () {
+            if (
+                !window.gc ||
+                !('measureUserAgentSpecificMemory' in performance)
+            )
+                this.skip();
+
+            this.timeout(10000);
+
+            const iterations = 50;
+            let active = false;
+
+            // Call fixture with 'htmlString' as the additional argument
+            const el = await fixture<HTMLElement>(html`
+                <div></div>
+            `);
+
+            async function toggle(
+                forced: boolean | undefined = undefined
+            ): Promise<void> {
+                active = forced != null ? forced : !active;
+                render(active ? element : html``, el);
+                await nextFrame();
+                await nextFrame();
+            }
+
+            // "shake things out" to get a good first reading
+            for (let i = 0; i < 5; i++) {
+                await toggle();
+            }
+            await toggle(false);
+            const beforeMB = await usedHeapMB();
+
+            for (let i = 0; i < iterations; i++) {
+                await toggle();
+            }
+            await toggle(false);
+            const afterMB = await usedHeapMB();
+
+            expect(
+                afterMB.dom - beforeMB.dom,
+                `DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}`
+            ).to.be.lte(0);
+            expect(
+                afterMB.js - beforeMB.js,
+                `JS | before: ${beforeMB.js}, after: ${afterMB.js}`
+            ).to.be.lte(0);
         });
     });
 }
@@ -155,40 +210,44 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
         composed: true,
         bubbles: true,
     });
-    element.addEventListener(queryEvent.type, (event: Event) => {
-        const closestDialog = ([...event.composedPath()] as HTMLElement[]).find(
-            (el) => {
+    element.addEventListener(
+        queryEvent.type,
+        (event: Event) => {
+            const closestDialog = (
+                [...event.composedPath()] as HTMLElement[]
+            ).find((el) => {
                 return (
                     el.classList?.contains('dialog') &&
                     el.part?.contains('dialog')
                 );
+            });
+            if (!closestDialog) {
+                resolve(false);
+                return;
             }
-        );
-        if (!closestDialog) {
-            resolve(false);
-            return;
-        }
-        let popoverOpen = false;
-        try {
-            popoverOpen = closestDialog.matches(':popover-open');
-        } catch (error) {}
-        let open = false;
-        try {
-            open = closestDialog.matches(':open');
-        } catch (error) {}
-        let modal = false;
-        try {
-            modal = closestDialog.matches(':modal');
-        } catch (error) {}
-        let polyfill = false;
-        if (!popoverOpen && !open && !modal) {
-            const style = getComputedStyle(closestDialog);
-            polyfill =
-                style.getPropertyValue('--sp-overlay-open') === 'true' &&
-                style.getPropertyValue('position') === 'fixed';
-        }
-        resolve(popoverOpen || open || modal || polyfill);
-    });
+            let popoverOpen = false;
+            try {
+                popoverOpen = closestDialog.matches(':popover-open');
+            } catch (error) {}
+            let open = false;
+            try {
+                open = closestDialog.matches(':open');
+            } catch (error) {}
+            let modal = false;
+            try {
+                modal = closestDialog.matches(':modal');
+            } catch (error) {}
+            let polyfill = false;
+            if (!popoverOpen && !open && !modal) {
+                const style = getComputedStyle(closestDialog);
+                polyfill =
+                    style.getPropertyValue('--sp-overlay-open') === 'true' &&
+                    style.getPropertyValue('position') === 'fixed';
+            }
+            resolve(popoverOpen || open || modal || polyfill);
+        },
+        { once: true }
+    );
     element.dispatchEvent(queryEvent);
     return found;
 }
@@ -231,7 +290,7 @@ export async function fixture<T extends Element>(
     dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
-        <sp-theme theme="spectrum" scale="medium" color="light">
+        <sp-theme system="spectrum" scale="medium" color="light">
             ${story}
             <style>
                 sp-theme {
@@ -268,4 +327,53 @@ export async function fixture<T extends Element>(
     `);
     document.documentElement.dir = dir;
     return test.children[0] as T;
+}
+
+export async function usedHeapMB(): Promise<
+    Record<'dom' | 'js' | 'shared' | 'total', number>
+> {
+    // @ts-ignore
+    const memorySample = performance.measureUserAgentSpecificMemory();
+    const result = (await memorySample) as {
+        bytes: number;
+        breakdown: {
+            attribution: string;
+            bytes: number;
+            types: ('DOM' | 'JS' | 'Shared')[];
+        }[];
+    };
+    return {
+        total: result.bytes,
+        js:
+            result.breakdown.find((entry) => entry.types.includes('JS'))
+                ?.bytes || 0,
+        dom:
+            result.breakdown.find((entry) => entry.types.includes('DOM'))
+                ?.bytes || 0,
+        shared:
+            result.breakdown.find((entry) => entry.types.includes('Shared'))
+                ?.bytes || 0,
+    };
+}
+
+export function detectOS(): string | null {
+    const userAgent = window.navigator.userAgent;
+    const platform = window.navigator.platform;
+    const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+    const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
+    const iosPlatforms = ['iPhone', 'iPad', 'iPod'];
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+        return 'Mac OS';
+    } else if (iosPlatforms.indexOf(platform) !== -1) {
+        return 'iOS';
+    } else if (windowsPlatforms.indexOf(platform) !== -1) {
+        return 'Windows';
+    } else if (/Android/.test(userAgent)) {
+        return 'Android';
+    } else if (/Linux/.test(platform)) {
+        return 'Linux';
+    }
+
+    return null;
 }

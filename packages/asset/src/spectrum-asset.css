@@ -11,52 +11,54 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
-    align-items: center;
-    display: flex;
-    height: 100%;
     justify-content: center;
-    width: 100%;
+    align-items: center;
+    block-size: 100%;
+    inline-size: 100%;
+    display: flex;
 }
+
 ::slotted(*) {
-    max-height: 100%;
-    max-width: 100%;
     object-fit: contain;
-    transition: opacity var(--spectrum-global-animation-duration-100, 0.13s);
+    transition: opacity var(--spectrum-animation-duration-100);
+    max-block-size: 100%;
+    max-inline-size: 100%;
 }
+
 .file,
 .folder {
-    height: 100%;
-    margin: var(
-        --spectrum-asset-icon-margin,
-        var(--spectrum-global-dimension-size-250)
+    inline-size: max(
+        var(--mod-asset-icon-min-width, 48px),
+        min(100%, var(--mod-asset-icon-max-width, 80px))
     );
-    max-width: var(
-        --spectrum-asset-icon-max-width,
-        var(--spectrum-global-dimension-static-size-1000)
-    );
-    min-width: var(
-        --spectrum-asset-icon-min-width,
-        var(--spectrum-global-dimension-size-600)
-    );
-    width: 100%;
+    margin: var(--mod-asset-icon-margin, 20px);
+    block-size: 100%;
 }
+
 .folderBackground {
     fill: var(
-        --spectrum-asset-folder-background-color,
-        var(--spectrum-global-color-gray-300)
+        --highcontrast-asset-folder-background-color,
+        var(--mod-asset-folder-background-color, var(--spectrum-gray-300))
     );
 }
+
 .fileBackground {
     fill: var(
-        --spectrum-asset-file-background-color,
-        var(--spectrum-global-color-gray-50)
+        --highcontrast-asset-file-background-color,
+        var(--mod-asset-file-background-color, var(--spectrum-gray-50))
     );
 }
+
 .fileOutline,
 .folderOutline {
-    fill: var(
-        --spectrum-asset-icon-outline-color,
-        var(--spectrum-global-color-gray-500)
-    );
+    fill: var(--mod-asset-icon-outline-color, var(--spectrum-gray-500));
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-asset-folder-background-color: currentColor;
+        --highcontrast-asset-file-background-color: currentColor;
+    }
 }

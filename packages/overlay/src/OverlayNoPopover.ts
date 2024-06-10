@@ -17,13 +17,15 @@ import type { SpectrumElement } from '@spectrum-web-components/base';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { Constructor, OpenableElement } from './overlay-types.js';
 import {
-    BeforetoggleClosedEvent,
-    BeforetoggleOpenEvent,
-    forcePaint,
     guaranteedAllTransitionend,
-    OverlayStateEvent,
+    nextFrame,
     overlayTimer,
 } from './AbstractOverlay.js';
+import {
+    BeforetoggleClosedEvent,
+    BeforetoggleOpenEvent,
+    OverlayStateEvent,
+} from './events.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 
@@ -53,7 +55,8 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
         protected override async ensureOnDOM(
             _targetOpenState: boolean
         ): Promise<void> {
-            forcePaint();
+            // force the browser to paint
+            document.body.offsetHeight;
         }
 
         protected override async makeTransition(
@@ -91,37 +94,51 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
                     }
                 });
             };
-            const finish = (el: OpenableElement, index: number) => (): void => {
-                if (this.open !== targetOpenState) {
-                    return;
-                }
-                const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
-                el.dispatchEvent(
-                    new OverlayStateEvent(eventName, this, {
-                        interaction: this.type,
-                    })
-                );
-                if (index > 0) {
-                    return;
-                }
-                const hasVirtualTrigger =
-                    this.triggerElement instanceof VirtualTrigger;
-                this.dispatchEvent(
-                    new OverlayStateEvent(eventName, this, {
-                        interaction: this.type,
-                        publish: hasVirtualTrigger,
-                    })
-                );
-                if (this.triggerElement && !hasVirtualTrigger) {
-                    (this.triggerElement as HTMLElement).dispatchEvent(
+            const finish =
+                (el: OpenableElement, index: number) =>
+                async (): Promise<void> => {
+                    if (this.open !== targetOpenState) {
+                        return;
+                    }
+                    const eventName = targetOpenState
+                        ? 'sp-opened'
+                        : 'sp-closed';
+                    el.dispatchEvent(
                         new OverlayStateEvent(eventName, this, {
                             interaction: this.type,
-                            publish: true,
                         })
                     );
-                }
-                this.state = targetOpenState ? 'opened' : 'closed';
-            };
+                    if (index > 0) {
+                        return;
+                    }
+                    const hasVirtualTrigger =
+                        this.triggerElement instanceof VirtualTrigger;
+                    this.dispatchEvent(
+                        new OverlayStateEvent(eventName, this, {
+                            interaction: this.type,
+                            publish: hasVirtualTrigger,
+                        })
+                    );
+                    if (this.triggerElement && !hasVirtualTrigger) {
+                        (this.triggerElement as HTMLElement).dispatchEvent(
+                            new OverlayStateEvent(eventName, this, {
+                                interaction: this.type,
+                                publish: true,
+                            })
+                        );
+                    }
+                    this.state = targetOpenState ? 'opened' : 'closed';
+                    this.returnFocus();
+                    // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
+                    await nextFrame();
+                    await nextFrame();
+                    if (
+                        targetOpenState === this.open &&
+                        targetOpenState === false
+                    ) {
+                        this.requestSlottable();
+                    }
+                };
             this.elements.forEach((el, index) => {
                 guaranteedAllTransitionend(
                     el,
