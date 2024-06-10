@@ -18,7 +18,7 @@ interface UpdateTabIndexes {
 }
 
 export class RovingTabindexController<
-    T extends HTMLElement
+    T extends HTMLElement,
 > extends FocusGroupController<T> {
     protected override set focused(focused: boolean) {
         if (focused === this.focused) return;
@@ -73,16 +73,15 @@ export class RovingTabindexController<
                     selfManageFocusElement: boolean;
                 };
                 if (typeCastEl.selfManageFocusElement) {
-                    el.setAttribute('tabindex', '0');
-                    el.focus();
-                } else {
-                    const { tabIndex, removeTabIndex } = getTabIndex(el);
-                    if (!removeTabIndex) {
-                        el.tabIndex = tabIndex;
-                        return;
-                    }
-                    el.removeAttribute('tabindex');
+                    return;
                 }
+                const { tabIndex, removeTabIndex } = getTabIndex(el);
+                if (!removeTabIndex) {
+                    el.tabIndex = tabIndex;
+                    return;
+                }
+                el.removeAttribute('tabindex');
+
                 const updatable = el as unknown as {
                     requestUpdate?: () => void;
                 };

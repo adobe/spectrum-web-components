@@ -117,7 +117,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     protected optionsMenu!: Menu;
 
-    public selfManageFocusElement = false;
+    private _selfManageFocusElement = false;
+
+    public override get selfManageFocusElement(): boolean {
+        return this._selfManageFocusElement;
+    }
 
     @query('sp-overlay')
     protected overlayElement!: Overlay;
@@ -336,10 +340,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
         if (this.open) {
-            this.selfManageFocusElement = true;
-            this.setAttribute('tabindex', '0');
+            this._selfManageFocusElement = true;
         } else {
-            this.selfManageFocusElement = false;
+            this._selfManageFocusElement = false;
         }
     }
 
@@ -403,7 +406,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 // and the expected event series has not completed.
                 this.overlayElement.manuallyKeepOpen();
             }
-            this.selfManageFocusElement = false;
+            this._selfManageFocusElement = false;
         }
         if (!this.open) {
             this.optionsMenu.updateSelectedItemIndex();
@@ -717,7 +720,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .selected=${this.value ? [this.value] : []}
                 size=${this.size}
                 @sp-menu-item-added-or-updated=${this.shouldManageSelection}
-                tabindex="0"
             >
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>

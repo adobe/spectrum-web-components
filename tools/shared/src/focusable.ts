@@ -112,6 +112,11 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.manipulatingTabindex = true;
             this.setAttribute('tabindex', '-1');
             this.removeAttribute('focusable');
+
+            if (this.selfManageFocusElement) {
+                return;
+            }
+
             if (tabIndex !== -1) {
                 this._tabIndex = tabIndex;
                 this.manageFocusElementTabindex(tabIndex);
@@ -167,6 +172,13 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
      */
     public get focusElement(): DisableableElement {
         throw new Error('Must implement focusElement getter!');
+    }
+
+    /**
+     * @private
+     */
+    public get selfManageFocusElement(): boolean {
+        return false;
     }
 
     public override focus(options?: FocusOptions): void {
