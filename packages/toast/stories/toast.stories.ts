@@ -23,6 +23,7 @@ const toast = ({
     variant = '',
     open = true,
     content = '',
+    label = '',
 }): TemplateResult => html`
     <sp-toast
         variant=${variant as
@@ -33,6 +34,7 @@ const toast = ({
             | 'error'
             | 'warning'}
         ?open=${open}
+        label=${label}
     >
         ${content}
         <sp-button
@@ -52,6 +54,7 @@ export default {
     args: {
         content: 'This is a toast message.',
         open: true,
+        label: 'testLabel',
     },
     argTypes: {
         content: {
@@ -75,6 +78,15 @@ export default {
                 type: 'boolean',
             },
         },
+        label: {
+            name: 'label',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
     },
 };
 
@@ -82,6 +94,7 @@ interface Properties {
     variant: '' | 'negative' | 'positive' | 'info' | 'error' | 'warning';
     open: boolean;
     content: string;
+    label: string;
     onClose: (event: Event) => void;
 }
 
@@ -89,16 +102,18 @@ export const Default = ({
     variant,
     open,
     content,
+    label,
 }: Properties): TemplateResult => {
-    return toast({ variant, open, content });
+    return toast({ variant, open, content, label });
 };
 
 const variantDemo = ({
     variant,
     open,
     content,
+    label,
 }: Properties): TemplateResult => {
-    return toast({ variant, open, content });
+    return toast({ variant, open, content, label });
 };
 
 export const Positive = (args: Properties): TemplateResult =>
