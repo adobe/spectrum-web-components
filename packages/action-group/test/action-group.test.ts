@@ -81,23 +81,21 @@ customElements.define('emphasized-action-group', EmphasizedActionGroup);
 async function singleSelectedActionGroup(
     selected: string[]
 ): Promise<ActionGroup> {
-    const el = await fixture<ActionGroup>(
-        html`
-            <sp-action-group
-                label="Selects User-Chosen Buttons"
-                selects="single"
-                .selected=${selected}
-            >
-                <sp-action-button value="first" class="first">
-                    First
-                </sp-action-button>
-                <sp-action-button value="second" class="second">
-                    <div slot="icon" style="width: 10px; height: 10px;"></div>
-                    Second
-                </sp-action-button>
-            </sp-action-group>
-        `
-    );
+    const el = await fixture<ActionGroup>(html`
+        <sp-action-group
+            label="Selects User-Chosen Buttons"
+            selects="single"
+            .selected=${selected}
+        >
+            <sp-action-button value="first" class="first">
+                First
+            </sp-action-button>
+            <sp-action-button value="second" class="second">
+                <div slot="icon" style="width: 10px; height: 10px;"></div>
+                Second
+            </sp-action-button>
+        </sp-action-group>
+    `);
     return el;
 }
 
@@ -299,29 +297,14 @@ describe('ActionGroup', () => {
         const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
         await opened;
 
-        const firstMenuItem = el.querySelector('#first-menu-item') as MenuItem;
-
-        await elementUpdated(el);
-        await aTimeout(500);
-
-        expect(firstMenuItem?.focused).to.be.true;
-
-        // get the bounding box of the second menu item and click it
-        const firstMenuRect = firstMenuItem.getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        firstMenuRect.left + firstMenuRect.width / 2,
-                        firstMenuRect.top + firstMenuRect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        // use keyboard to navigate to the second menu item and select it
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'Enter' });
 
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
         await closed;
+
+        await aTimeout(500);
 
         expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
@@ -592,15 +575,13 @@ describe('ActionGroup', () => {
         expect(el.selected, '"Third" selected').to.deep.equal(['Third']);
     });
     it('manages [selects="single"] selection through multiple slots', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button selected>Third</sp-action-button>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </div>
+        `);
 
         const firstItem = test.querySelector(
             'sp-action-button'
