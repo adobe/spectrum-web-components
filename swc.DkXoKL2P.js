@@ -1,2 +1,0 @@
-const e=document.querySelector(".icon-search");new IntersectionObserver((async(n,o)=>{0!==n[0].intersectionRatio&&(import("./swc.BG2GK3_z.js"),import("./swc.D8YHiF2H.js").then((({iconManifest:n})=>{e.icons=n})),o.disconnect())}),{rootMargin:"20px"}).observe(e);
-//# sourceMappingURL=swc.Dd2RFflV.js.map
