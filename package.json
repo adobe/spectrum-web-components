@@ -31,7 +31,7 @@
         "docs:review": "alex packages/**/*.md",
         "docs:start": "yarn workspace documentation serve --watch",
         "find": "test -f custom-elements.json",
-        "gen-react-wrapper": "rm -fr react && yarn changeset version && yarn changeset publish && yarn cem-react-wrapper && node ./scripts/generate-icon-react-wrapper.js",
+        "gen-react-wrapper": "node ./tasks/gen-react-wrapper.js",
         "get-ready": "yarn build",
         "icons": "wireit",
         "icons:ui": "wireit",
