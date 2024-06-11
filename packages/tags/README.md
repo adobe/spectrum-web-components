@@ -71,15 +71,15 @@ import {
 <sp-tags>
     <sp-tag>
         Tag 1
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+        <sp-icon-search slot="icon" size="s"></sp-icon-search>
     </sp-tag>
     <sp-tag invalid>
         Tag 2
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+        <sp-icon-search slot="icon" size="s"></sp-icon-search>
     </sp-tag>
     <sp-tag disabled>
         Tag 3
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+        <sp-icon-search slot="icon" size="s"></sp-icon-search>
     </sp-tag>
 </sp-tags>
 ```

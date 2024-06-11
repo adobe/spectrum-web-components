@@ -38,7 +38,7 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-circle.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import type {
     Menu,
@@ -459,9 +459,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                       `}
                 ${this.invalid && !this.pending
                     ? html`
-                          <sp-icon-alert
+                          <sp-icon-alert-circle
                               class="validation-icon"
-                          ></sp-icon-alert>
+                          ></sp-icon-alert-circle>
                       `
                     : nothing}
                 ${when(this.pending, () => {

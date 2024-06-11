@@ -122,15 +122,15 @@ Use the `deletable` attribute to signify `<sp-tag>` elements that can be removed
 <sp-tags>
     <sp-tag deletable>
         Tag 1
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+        <sp-icon-search slot="icon" size="s"></sp-icon-search>
     </sp-tag>
     <sp-tag invalid deletable>
         Tag 2
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+        <sp-icon-search slot="icon" size="s"></sp-icon-search>
     </sp-tag>
     <sp-tag disabled deletable>
         Tag 3
-        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+        <sp-icon-search slot="icon" size="s"></sp-icon-search>
     </sp-tag>
 </sp-tags>
 ```

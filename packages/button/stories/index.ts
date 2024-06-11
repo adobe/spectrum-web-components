@@ -14,7 +14,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
 import {
     ButtonTreatments,
     ButtonVariants,
@@ -136,7 +136,7 @@ export function renderButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     const icon = Object.assign({}, properties, {
         content: html`
-            <sp-icon-help slot="icon"></sp-icon-help>
+            <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             Click Me
         `,
     });
@@ -154,7 +154,7 @@ export function renderIconButtonSet(properties: Properties): TemplateResult {
     const iconOnly = Object.assign({}, properties, {
         iconOnly: true,
         content: html`
-            <sp-icon-help slot="icon"></sp-icon-help>
+            <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         `,
     });
     return html`
@@ -181,7 +181,7 @@ export const renderWithIcon = (props: Properties): TemplateResult => {
             ${renderButtonSet({
                 ...props,
                 content: html`
-                    <sp-icon-help slot="icon"></sp-icon-help>
+                    <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
                     Help
                 `,
             })}
@@ -202,7 +202,7 @@ export const renderWithIconOnly = (props: Properties): TemplateResult => {
         ${renderIconButtonSet({
             ...props,
             content: html`
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             `,
         })}
     `;
@@ -219,7 +219,9 @@ export const renderIconSizeOverridden = (
             variant=${variant}
             treatment=${treatment}
         >
-            <sp-icon-help slot="icon" size="s">Testing</sp-icon-help>
+            <sp-icon-help-circle slot="icon" size="s">
+                Testing
+            </sp-icon-help-circle>
         </sp-button>
         <h1>For testing purposes only</h1>
         <p>

@@ -75,7 +75,7 @@ placing an icon element to the `icon` slot.
 <sp-button-group>
     <sp-button variant="primary">Label only</sp-button>
     <sp-button variant="primary">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button variant="primary">
@@ -93,7 +93,7 @@ placing an icon element to the `icon` slot.
         SVG Icon + Label
     </sp-button>
     <sp-button variant="primary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -111,11 +111,11 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 <sp-button-group style="min-width: max-content">
     <sp-button variant="accent">Label only</sp-button>
     <sp-button variant="accent">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button variant="accent" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -128,11 +128,11 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 <sp-button-group style="min-width: max-content">
     <sp-button variant="primary">Label only</sp-button>
     <sp-button variant="primary">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button variant="primary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -145,11 +145,11 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 <sp-button-group style="min-width: max-content">
     <sp-button variant="secondary">Label only</sp-button>
     <sp-button variant="secondary">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button variant="secondary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -162,11 +162,11 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 <sp-button-group style="min-width: max-content">
     <sp-button variant="negative">Label only</sp-button>
     <sp-button variant="negative">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button variant="negative" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -179,11 +179,11 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 <sp-button-group style="min-width: max-content">
     <sp-button static="black">Label only</sp-button>
     <sp-button static="black">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button static="black" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -196,11 +196,11 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 <sp-button-group style="min-width: max-content">
     <sp-button static="white">Label only</sp-button>
     <sp-button static="white">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button static="white" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -252,11 +252,11 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 >
     <sp-button treatment="outline" static="black">Label only</sp-button>
     <sp-button treatment="outline" static="black">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button treatment="outline" static="black" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```
@@ -271,11 +271,11 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 >
     <sp-button treatment="outline" static="white">Label only</sp-button>
     <sp-button treatment="outline" static="white">
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         Icon + Label
     </sp-button>
     <sp-button treatment="outline" static="white" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
+        <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
     </sp-button>
 </sp-button-group>
 ```

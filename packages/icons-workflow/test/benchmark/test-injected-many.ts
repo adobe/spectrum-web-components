@@ -11,42 +11,42 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/icon/sp-icon.js';
-import { AbcIcon } from '@spectrum-web-components/icons-workflow/src/icons/ABC.js';
-import { ActionsIcon } from '@spectrum-web-components/icons-workflow/src/icons/Actions.js';
-import { DisplayAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/DisplayAdvert.js';
-import { PrintAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/PrintAdvert.js';
+import { AccessibilityIcon } from '@spectrum-web-components/icons-workflow/src/icons/Accessibility.js';
 import { AddIcon } from '@spectrum-web-components/icons-workflow/src/icons/Add.js';
-import { AddCircleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddCircle.js';
+import { AddContentIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddContent.js';
 import { AddToIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddTo.js';
 import { AddToSelectionIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddToSelection.js';
-import { AEMScreensIcon } from '@spectrum-web-components/icons-workflow/src/icons/AEMScreens.js';
-import { AirplaneIcon } from '@spectrum-web-components/icons-workflow/src/icons/Airplane.js';
-import { AlertIcon } from '@spectrum-web-components/icons-workflow/src/icons/Alert.js';
-import { AlertAddIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertAdd.js';
-import { AlertCheckIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertCheck.js';
 import { AlertCircleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertCircle.js';
-import { AlertCircleFilledIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertCircleFilled.js';
-import { AlgorithmIcon } from '@spectrum-web-components/icons-workflow/src/icons/Algorithm.js';
-import { AliasIcon } from '@spectrum-web-components/icons-workflow/src/icons/Alias.js';
-import { ArrowLeftIcon } from '@spectrum-web-components/icons-workflow/src/icons/ArrowLeft.js';
-import { AlignCenterIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignCenter.js';
-import { AlignTopIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignTop.js';
+import { AlertTriangleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertTriangle.js';
 import { AlignBottomIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignBottom.js';
+import { AlignCenterIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignCenter.js';
 import { AlignLeftIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignLeft.js';
+import { AlignMiddleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignMiddle.js';
+import { AlignOnGridIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignOnGrid.js';
 import { AlignRightIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignRight.js';
-import { AnnotateIcon } from '@spectrum-web-components/icons-workflow/src/icons/Annotate.js';
-import { AnnotatePenIcon } from '@spectrum-web-components/icons-workflow/src/icons/AnnotatePen.js';
+import { AlignTopIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignTop.js';
+import { AllCapsIcon } from '@spectrum-web-components/icons-workflow/src/icons/AllCaps.js';
+import { AnimationIcon } from '@spectrum-web-components/icons-workflow/src/icons/Animation.js';
+import { AnimationNoIcon } from '@spectrum-web-components/icons-workflow/src/icons/AnimationNo.js';
+import { AppGearIcon } from '@spectrum-web-components/icons-workflow/src/icons/AppGear.js';
+import { AppsIcon } from '@spectrum-web-components/icons-workflow/src/icons/Apps.js';
+import { AppsAllIcon } from '@spectrum-web-components/icons-workflow/src/icons/AppsAll.js';
+import { AppsInYourPlanIcon } from '@spectrum-web-components/icons-workflow/src/icons/AppsInYourPlan.js';
+import { ArchiveIcon } from '@spectrum-web-components/icons-workflow/src/icons/Archive.js';
+import { ArrowHeadToolIcon } from '@spectrum-web-components/icons-workflow/src/icons/ArrowHeadTool.js';
+import { ArtboardIcon } from '@spectrum-web-components/icons-workflow/src/icons/Artboard.js';
+import { AspectRatioIcon } from '@spectrum-web-components/icons-workflow/src/icons/AspectRatio.js';
 import { AssetIcon } from '@spectrum-web-components/icons-workflow/src/icons/Asset.js';
-import { AssetsAddedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsAdded.js';
-import { AssetsDownloadedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsDownloaded.js';
-import { AssetsExpiredIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsExpired.js';
-import { AssetsLinkedPublishedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsLinkedPublished.js';
-import { AssetsModifiedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsModified.js';
-import { AssetsPublishedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsPublished.js';
-import { BookIcon } from '@spectrum-web-components/icons-workflow/src/icons/Book.js';
-import { BookmarkIcon } from '@spectrum-web-components/icons-workflow/src/icons/Bookmark.js';
-import { BookmarkSingleIcon } from '@spectrum-web-components/icons-workflow/src/icons/BookmarkSingle.js';
-import { BookmarkSingleOutlineIcon } from '@spectrum-web-components/icons-workflow/src/icons/BookmarkSingleOutline.js';
+import { AttachIcon } from '@spectrum-web-components/icons-workflow/src/icons/Attach.js';
+import { AutoSelectSubjectIcon } from '@spectrum-web-components/icons-workflow/src/icons/AutoSelectSubject.js';
+import { BackgroundIcon } from '@spectrum-web-components/icons-workflow/src/icons/Background.js';
+import { BellIcon } from '@spectrum-web-components/icons-workflow/src/icons/Bell.js';
+import { BellRotatedIcon } from '@spectrum-web-components/icons-workflow/src/icons/BellRotated.js';
+import { BetaAppIcon } from '@spectrum-web-components/icons-workflow/src/icons/BetaApp.js';
+import { BinocularsIcon } from '@spectrum-web-components/icons-workflow/src/icons/Binoculars.js';
+import { BriefcaseIcon } from '@spectrum-web-components/icons-workflow/src/icons/Briefcase.js';
+import { BrushIcon } from '@spectrum-web-components/icons-workflow/src/icons/Brush.js';
+import { BugIcon } from '@spectrum-web-components/icons-workflow/src/icons/Bug.js';
 import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-workflow/src/custom-tag.js';
 import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
@@ -54,40 +54,40 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 setCustomTemplateLiteralTag(html);
 
 measureFixtureCreation(html`
-    <sp-icon>${AbcIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${ActionsIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${DisplayAdvertIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${PrintAdvertIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AccessibilityIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AddIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AddCircleIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AddContentIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AddToIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AddToSelectionIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AEMScreensIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AirplaneIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertAddIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertCheckIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AlertCircleIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlertCircleFilledIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlgorithmIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AliasIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${ArrowLeftIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlignCenterIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AlignTopIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AlertTriangleIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AlignBottomIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AlignCenterIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AlignLeftIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AlignMiddleIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AlignOnGridIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AlignRightIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AnnotateIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AnnotatePenIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AlignTopIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AllCapsIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AnimationIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AnimationNoIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AppGearIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AppsIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AppsAllIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AppsInYourPlanIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${ArchiveIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${ArrowHeadToolIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${ArtboardIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AspectRatioIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AssetIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsAddedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsDownloadedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsExpiredIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsLinkedPublishedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsModifiedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AssetsPublishedIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookmarkIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookmarkSingleIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${BookmarkSingleOutlineIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AttachIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${AutoSelectSubjectIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BackgroundIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BellIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BellRotatedIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BetaAppIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BinocularsIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BriefcaseIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BrushIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${BugIcon({ hidden: true })}</sp-icon>
 `);
