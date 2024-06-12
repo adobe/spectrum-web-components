@@ -218,7 +218,7 @@ export class NumberField extends TextfieldBase {
         const separators = this.valueBeforeFocus
             .split('')
             .filter((char) => this.decimalsChars.has(char));
-        const uniqueSeparatorCount = new Set(separators).size;
+        const uniqueSeparators = new Set(separators);
 
         if (isIPhone() && this.inputElement.inputMode === 'decimal') {
             const parts = this.numberFormatter.formatToParts(1000.1);
@@ -226,10 +226,10 @@ export class NumberField extends TextfieldBase {
                 (part) => part.type === 'decimal'
             )!.value;
 
-            if (uniqueSeparatorCount === 1) {
-                const isDecimalSeparator = separators[0] === replacementDecimal;
+            for (const separator of uniqueSeparators) {
+                const isDecimalSeparator = separator === replacementDecimal;
                 if (!isDecimalSeparator && !this.isIntentDecimal) {
-                    value = value.replace(separators[0], '');
+                    value = value.replace(new RegExp(separator, 'g'), '');
                 }
             }
 
