@@ -49,8 +49,7 @@ governing permissions and limitations under the License.
     );
     inline-size: var(--spectrum-colorloupe-width);
     block-size: var(--spectrum-colorloupe-height);
-    transform: translate(
-        0,
+    transform: translateY(
         var(
             --mod-colorloupe-animation-distance,
             var(--spectrum-colorloupe-animation-distance)
@@ -77,7 +76,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-colorloupe-drop-shadow-color)
             )
     );
-    transition: transform 0.1s ease-in-out, opacity 0.125s ease-in-out;
+    transition:
+        transform 0.1s ease-in-out,
+        opacity 0.125s ease-in-out;
     position: absolute;
     inset-block-end: calc(
         var(--spectrum-color-handle-size) -
@@ -87,6 +88,7 @@ governing permissions and limitations under the License.
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2);
 }
 
+:host:dir(rtl),
 :host([dir='rtl']) {
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2 - 1px);
 }

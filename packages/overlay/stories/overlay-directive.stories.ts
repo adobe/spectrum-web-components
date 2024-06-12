@@ -8,9 +8,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import {
     OverlayContentTypes,
+    OverlayOpenCloseDetail,
     Placement,
     TriggerInteractions,
 } from '@spectrum-web-components/overlay';
@@ -46,6 +51,7 @@ import '../../../projects/story-decorator/src/types.js';
 import './overlay-story-components.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { state } from '@spectrum-web-components/base/src/decorators.js';
 
 const storyStyles = html`
     <style>
@@ -180,10 +186,9 @@ const template = ({
                     </div>
                     <sp-button
                         ${tooltip(
-                            () =>
-                                html`
-                                    Click to open another popover.
-                                `
+                            () => html`
+                                Click to open another popover.
+                            `
                         )}
                         ${trigger(
                             () => html`
@@ -264,5 +269,87 @@ insertionOptions.args = {
 } as Properties;
 
 insertionOptions.swc_vrt = {
+    skip: true,
+};
+
+class ManagedOverlayTrigger extends LitElement {
+    @state()
+    private isRenderOverlay = false;
+
+    @state()
+    private isOpenState = false;
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-button
+                @click=${() => {
+                    this.isRenderOverlay = !this.isRenderOverlay;
+                }}
+            >
+                Toggle Overlay Render Button
+            </sp-button>
+
+            <sp-button
+                @click=${() => {
+                    this.isRenderOverlay = true;
+                    this.isOpenState = true;
+                }}
+            >
+                Create Overlay Render Button And Open Overlay
+            </sp-button>
+
+            ${this.isRenderOverlay ? this.renderOverlayButton() : html``}
+        `;
+    }
+
+    private renderOverlayButton(): TemplateResult {
+        return html`
+            <sp-button
+                ?selected=${this.isOpenState}
+                ${trigger(
+                    () => html`
+                        <sp-popover
+                            @sp-opened=${(
+                                event: CustomEvent<OverlayOpenCloseDetail>
+                            ) => {
+                                if (event.target !== event.currentTarget) {
+                                    return;
+                                }
+                                console.log('sp-opened');
+                                this.isOpenState = true;
+                            }}
+                            @sp-closed=${(
+                                event: CustomEvent<OverlayOpenCloseDetail>
+                            ) => {
+                                if (event.target !== event.currentTarget) {
+                                    return;
+                                }
+                                console.log('sp-closed');
+                                this.isOpenState = false;
+                            }}
+                        >
+                            <h1>My Test Popover</h1>
+                        </sp-popover>
+                    `,
+                    {
+                        triggerInteraction: 'click',
+                        overlayOptions: { placement: 'bottom-end' },
+                        open: this.isOpenState,
+                    }
+                )}
+            >
+                Toggle Popover
+            </sp-button>
+        `;
+    }
+}
+
+customElements.define('managed-overlay-trigger', ManagedOverlayTrigger);
+
+export const managedOverlayTrigger = (): TemplateResult => html`
+    <managed-overlay-trigger></managed-overlay-trigger>
+`;
+
+managedOverlayTrigger.swc_vrt = {
     skip: true,
 };

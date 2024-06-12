@@ -187,6 +187,10 @@ governing permissions and limitations under the License.
         --mod-progressbar-line-height,
         var(--spectrum-progressbar-line-height)
     );
+    color: var(
+        --mod-progressbar-text-color,
+        var(--spectrum-progressbar-text-color)
+    );
     margin-block-start: var(
         --mod-progressbar-spacing-top-to-text,
         var(--spectrum-progressbar-spacing-top-to-text)
@@ -198,22 +202,14 @@ governing permissions and limitations under the License.
 }
 
 .label:lang(ja),
-.label:lang(zh),
 .label:lang(ko),
+.label:lang(zh),
 .percentage:lang(ja),
-.percentage:lang(zh),
-.percentage:lang(ko) {
+.percentage:lang(ko),
+.percentage:lang(zh) {
     line-height: var(
         --mod-progressbar-line-height-cjk,
         var(--spectrum-progressbar-line-height-cjk)
-    );
-}
-
-.label,
-.percentage {
-    color: var(
-        --mod-progressbar-text-color,
-        var(--spectrum-progressbar-text-color)
     );
 }
 
@@ -309,16 +305,13 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white']) .fill {
-    color: var(
-        --mod-progressbar-label-and-value-white,
-        var(--spectrum-progressbar-label-and-value-white)
-    );
     background-color: var(
         --mod-progressbar-fill-color-white,
         var(--spectrum-progressbar-fill-color-white)
     );
 }
 
+:host([static='white']) .fill,
 :host([static='white']) .label,
 :host([static='white']) .percentage {
     color: var(
@@ -331,8 +324,8 @@ governing permissions and limitations under the License.
     background-color: var(--spectrum-progressbar-track-color-white);
 }
 
-:host([dir='ltr'][indeterminate]) .fill {
-    animation: indeterminate-loop-ltr
+:host([indeterminate]) .fill {
+    animation: a
         var(
             --mod-progressbar-animation-duration-indeterminate,
             var(--spectrum-progressbar-animation-duration-indeterminate)
@@ -340,8 +333,9 @@ governing permissions and limitations under the License.
         infinite;
 }
 
+:host([indeterminate]) .fill:dir(rtl),
 :host([dir='rtl'][indeterminate]) .fill {
-    animation: indeterminate-loop-rtl
+    animation: b
         var(
             --mod-progressbar-animation-duration-indeterminate,
             var(--spectrum-progressbar-animation-duration-indeterminate)
@@ -349,8 +343,8 @@ governing permissions and limitations under the License.
         infinite;
 }
 
-@keyframes indeterminate-loop-ltr {
-    from {
+@keyframes a {
+    0% {
         transform: translate(
             calc(
                 var(
@@ -371,8 +365,8 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes indeterminate-loop-rtl {
-    from {
+@keyframes b {
+    0% {
         transform: translate(
             var(
                 --mod-progressbar-size-default,

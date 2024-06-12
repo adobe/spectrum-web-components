@@ -67,37 +67,30 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-thickness
     );
     --spectrum-card-selected-background-opacity: 0.1;
+    --spectrum-card-preview-border-width-selected: var(
+        --spectrum-border-width-100
+    );
+    --spectrum-card-preview-background-color: var(
+        --spectrum-background-base-color
+    );
+    --spectrum-card-preview-background-color-hover: var(--spectrum-gray-300);
+    --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
+    --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
 }
 
-:host([variant='quiet']),
-:host([variant='gallery']) {
+:host([variant='gallery']),
+:host([variant='quiet']) {
     --mod-card-content-margin-top: var(
-        --spectrum-card-content-margin-top-quiet,
+        --mod-card-content-margin-top-quiet,
         var(--spectrum-spacing-100)
     );
     --mod-card-minimum-width: var(
-        --spectrum-card-minimum-width-quiet,
+        --mod-card-minimum-width-quiet,
         var(--spectrum-card-minimum-width)
-    );
-    --spectrum-card-preview-border-width: var(--spectrum-border-width-100);
-}
-
-:host([variant='quiet']),
-:host([variant='gallery']),
-:host([horizontal]) {
-    --mod-card-background-color: var(
-        --spectrum-card-background-color-quiet,
-        var(--spectrum-background-base-color)
-    );
-    --spectrum-card-background-color-hover: var(
-        --spectrum-card-background-color-hover-quiet,
-        var(--spectrum-gray-300)
     );
 }
 
 :host {
-    --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
-    --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
     box-sizing: border-box;
     min-inline-size: var(
         --mod-card-minimum-width,
@@ -116,16 +109,21 @@ governing permissions and limitations under the License.
     background-color: var(
         --highcontrast-card-background-color,
         var(
-            --mod-spectrum-card-background-color,
-            var(--spectrum-card-background-color)
+            --mod-card-background-color,
+            var(
+                --mod-spectrum-card-background-color,
+                var(--spectrum-card-background-color)
+            )
         )
     );
     flex-direction: column;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
 }
 
+:host:after,
 :host:before {
     content: '';
     block-size: 100%;
@@ -136,14 +134,11 @@ governing permissions and limitations under the License.
 }
 
 :host:after {
-    content: '';
     border-radius: var(
         --mod-card-corner-radius,
         var(--spectrum-card-corner-radius)
     );
     border: 0 solid #0000;
-    block-size: 100%;
-    inline-size: 100%;
     margin-block-start: calc(
         var(
                 --mod-card-focus-indicator-width,
@@ -156,9 +151,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-card-focus-indicator-width)
             ) * -1
     );
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline: 0;
+    inset-inline-end: 0;
 }
 
 :host(:focus-visible) {
@@ -243,12 +236,12 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([focused]) .quick-actions,
 :host([focused]) .actions,
-:host([selected]) .quick-actions,
+:host([focused]) .quick-actions,
 :host([selected]) .actions,
-:host(:focus) .quick-actions,
-:host(:focus) .actions {
+:host([selected]) .quick-actions,
+:host(:focus) .actions,
+:host(:focus) .quick-actions {
     visibility: visible;
     opacity: 1;
     pointer-events: all;
@@ -319,7 +312,7 @@ governing permissions and limitations under the License.
         var(--spectrum-card-preview-minimum-height)
     );
     box-sizing: border-box;
-    background-position: center;
+    background-position: 50%;
     background-size: cover;
     background-color: var(
         --mod-card-background-color,
@@ -343,6 +336,7 @@ governing permissions and limitations under the License.
     align-items: center;
     display: flex;
     position: relative;
+    overflow: hidden;
 }
 
 .spectrum-Divider {
@@ -430,22 +424,26 @@ governing permissions and limitations under the License.
         --mod-card-title-line-height,
         var(--spectrum-card-title-line-height)
     );
-    color: var(
-        --highcontrast-card-title-font-color,
-        var(--mod-card-title-font-color, var(--spectrum-card-title-font-color))
-    );
     padding-inline-end: var(
         --mod-card-title-padding-right,
         var(--spectrum-card-title-padding-right)
     );
 }
 
-.subtitle {
+.subtitle,
+.title {
     color: var(
         --highcontrast-card-title-font-color,
         var(--mod-card-title-font-color, var(--spectrum-card-title-font-color))
     );
+}
+
+.subtitle {
     text-transform: none;
+}
+
+.subtitle,
+.subtitle + ::slotted([slot='description']):before {
     padding-inline-end: var(
         --mod-card-subtitle-padding-right,
         var(--spectrum-card-subtitle-padding-right)
@@ -454,10 +452,6 @@ governing permissions and limitations under the License.
 
 .subtitle + ::slotted([slot='description']):before {
     content: '•';
-    padding-inline-end: var(
-        --mod-card-subtitle-padding-right,
-        var(--spectrum-card-subtitle-padding-right)
-    );
 }
 
 ::slotted([slot='description']) {
@@ -477,6 +471,10 @@ governing permissions and limitations under the License.
         --mod-card-body-font-style,
         var(--spectrum-card-body-font-style)
     );
+}
+
+::slotted([slot='description']),
+::slotted([slot='footer']) {
     line-height: var(
         --mod-card-body-line-height,
         var(--spectrum-card-body-line-height)
@@ -488,14 +486,6 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='footer']) {
-    color: var(
-        --highcontrast-card-body-font-color,
-        var(--mod-card-body-font-color, var(--spectrum-card-body-font-color))
-    );
-    line-height: var(
-        --mod-card-body-line-height,
-        var(--spectrum-card-body-line-height)
-    );
     border-block-start: var(
             --mod-card-border-width,
             var(--spectrum-card-border-width)
@@ -561,13 +551,13 @@ governing permissions and limitations under the License.
         solid transparent;
 }
 
-:host([variant='quiet']:focus):after,
-:host([variant='quiet'][focused]):after {
+:host([variant='quiet'][focused]):after,
+:host([variant='quiet']:focus):after {
     border-width: 0;
 }
 
-:host([variant='quiet']:focus) #preview:after,
-:host([variant='quiet'][focused]) #preview:after {
+:host([variant='quiet'][focused]) #preview:after,
+:host([variant='quiet']:focus) #preview:after {
     border-color: var(
         --mod-card-focus-indicator-color,
         var(--spectrum-card-focus-indicator-color)
@@ -576,8 +566,11 @@ governing permissions and limitations under the License.
 
 :host([variant='quiet'][selected]) #preview {
     border: var(
-            --mod-card-preview-border-width,
-            var(--spectrum-card-preview-border-width)
+            --mod-card-preview-border-width-selected,
+            var(
+                --mod-card-preview-border-width,
+                var(--spectrum-card-preview-border-width-selected)
+            )
         )
         solid;
     border-color: var(
@@ -589,13 +582,13 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([variant='quiet']),
-:host([variant='gallery']) {
+:host([variant='gallery']),
+:host([variant='quiet']) {
     min-inline-size: var(
         --mod-card-minimum-width,
         var(--spectrum-card-minimum-width)
     );
-    background-color: #0000;
+    background-color: initial;
     border-width: 0;
     border-color: #0000;
     border-radius: 0;
@@ -603,20 +596,23 @@ governing permissions and limitations under the License.
     overflow: visible;
 }
 
-:host([variant='quiet']):before,
-:host([variant='gallery']):before {
+:host([variant='gallery']):before,
+:host([variant='quiet']):before {
     display: none;
 }
 
-:host([variant='quiet']) #preview,
-:host([variant='gallery']) #preview {
+:host([variant='gallery']) #preview,
+:host([variant='quiet']) #preview {
     border-radius: var(
         --mod-card-corner-radius,
         var(--spectrum-card-corner-radius)
     );
     background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
+        --mod-card-preview-background-color,
+        var(
+            --mod-card-background-color,
+            var(--spectrum-card-preview-background-color)
+        )
     );
     min-block-size: var(
         --mod-card-preview-minimum-height,
@@ -625,8 +621,11 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     transition: background-color
         var(
-            --mod-animation-duration-100,
-            var(--spectrum-animation-duration-100)
+            --mod-card-animation-duration,
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
         );
     flex: 1;
     inline-size: 100%;
@@ -635,8 +634,8 @@ governing permissions and limitations under the License.
     overflow: visible;
 }
 
-:host([variant='quiet']) #preview:before,
-:host([variant='gallery']) #preview:before {
+:host([variant='gallery']) #preview:before,
+:host([variant='quiet']) #preview:before {
     content: '';
     block-size: 100%;
     inline-size: 100%;
@@ -645,8 +644,8 @@ governing permissions and limitations under the License.
     inset-inline-start: 0;
 }
 
-:host([variant='quiet']) #preview:after,
-:host([variant='gallery']) #preview:after {
+:host([variant='gallery']) #preview:after,
+:host([variant='quiet']) #preview:after {
     content: '';
     border-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) +
@@ -675,24 +674,27 @@ governing permissions and limitations under the License.
     inset-inline: 0;
 }
 
-:host([variant='quiet'][drop-target]),
-:host([variant='gallery'][drop-target]) {
+:host([variant='gallery'][drop-target]),
+:host([variant='quiet'][drop-target]) {
+    background-color: initial;
     box-shadow: none;
-    background-color: #0000;
     border-color: #0000;
 }
 
-:host([variant='quiet'][drop-target]) #preview,
-:host([variant='gallery'][drop-target]) #preview {
+:host([variant='gallery'][drop-target]) #preview,
+:host([variant='quiet'][drop-target]) #preview {
     background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
+        --mod-card-preview-background-color,
+        var(
+            --mod-card-background-color,
+            var(--spectrum-card-preview-background-color)
+        )
     );
     transition: none;
 }
 
-:host([variant='quiet'][drop-target]) #preview:before,
-:host([variant='gallery'][drop-target]) #preview:before {
+:host([variant='gallery'][drop-target]) #preview:before,
+:host([variant='quiet'][drop-target]) #preview:before {
     border-color: var(
         --mod-card-focus-indicator-color,
         var(--spectrum-card-focus-indicator-color)
@@ -704,8 +706,8 @@ governing permissions and limitations under the License.
         );
 }
 
-:host([variant='quiet'][selected]) #preview:before,
-:host([variant='gallery'][selected]) #preview:before {
+:host([variant='gallery'][selected]) #preview:before,
+:host([variant='quiet'][selected]) #preview:before {
     background-color: rgba(
         var(
             --mod-card-selected-background-color-rgb,
@@ -718,8 +720,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([variant='quiet']) .body,
-:host([variant='gallery']) .body {
+:host([variant='gallery']) .body,
+:host([variant='quiet']) .body {
     margin-block-start: var(
         --mod-card-content-margin-top,
         var(--spectrum-card-content-margin-top)
@@ -727,8 +729,8 @@ governing permissions and limitations under the License.
     padding: 0;
 }
 
-:host([variant='quiet']) ::slotted([slot='footer']),
-:host([variant='gallery']) ::slotted([slot='footer']) {
+:host([variant='gallery']) ::slotted([slot='footer']),
+:host([variant='quiet']) ::slotted([slot='footer']) {
     margin-inline: 0;
 }
 
@@ -737,13 +739,6 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    :host(:hover) .quick-actions,
-    :host(:hover) .actions {
-        visibility: visible;
-        opacity: 1;
-        pointer-events: all;
-    }
-
     :host(:hover) {
         border-color: var(
             --highcontrast-card-border-color-hover,
@@ -754,16 +749,26 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([variant='quiet']:hover),
-    :host([variant='gallery']:hover) {
+    :host(:hover) .actions,
+    :host(:hover) .quick-actions {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    :host([variant='gallery']:hover),
+    :host([variant='quiet']:hover) {
         border-color: #0000;
     }
 
-    :host([variant='quiet']:hover) #preview,
-    :host([variant='gallery']:hover) #preview {
+    :host([variant='gallery']:hover) #preview,
+    :host([variant='quiet']:hover) #preview {
         background-color: var(
-            --mod-card-background-color-hover,
-            var(--spectrum-card-background-color-hover)
+            --mod-card-preview-background-color-hover,
+            var(
+                --mod-card-background-color-hover,
+                var(--spectrum-card-preview-background-color-hover)
+            )
         );
     }
 
@@ -781,8 +786,8 @@ governing permissions and limitations under the License.
         var(--spectrum-card-horizontal-preview-padding)
     );
     background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
+        --mod-card-preview-background-color,
+        var(--spectrum-card-preview-background-color)
     );
     border-color: var(
         --mod-card-border-color,
@@ -805,8 +810,8 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([horizontal]) .header,
-:host([horizontal]) .content {
+:host([horizontal]) .content,
+:host([horizontal]) .header {
     block-size: auto;
     margin-block-start: 0;
 }

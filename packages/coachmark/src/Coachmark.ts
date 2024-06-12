@@ -21,7 +21,7 @@ import coachmarkStyles from './coachmark.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import { Popover } from '@spectrum-web-components/popover';
-import { join } from 'lit/directives/join.js';
+import { join } from '@spectrum-web-components/base/src/directives.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type { Placement } from '@spectrum-web-components/overlay';
 import { MediaType } from './CoachmarkItem.js';

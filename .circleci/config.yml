@@ -3,14 +3,14 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.42.1
+            - image: mcr.microsoft.com/playwright:v1.44.0
         resource_class: large
         environment:
             NODE_ENV: development
 parameters:
     current_golden_images_hash:
         type: string
-        default: fa04f9511c2ba8d512fa189d6e511f3c6c51d933
+        default: dee4a3674e6e3f676e0e388854f079b24a79ef3c
     wireit_cache_name:
         type: string
         default: wireit
@@ -85,7 +85,7 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_theme >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_theme >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail
@@ -146,12 +146,23 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
+                  name: Run unit tests
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
             - store_test_results:
                   path: /root/project/results/
             - store_artifacts:
                   path: coverage
+
+    test-chromium-memory:
+        executor: node
+
+        steps:
+            - downstream
+            - run:
+                  name: Run memory tests
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
+            - store_test_results:
+                  path: /root/project/results/
 
     test-firefox:
         executor: node
@@ -218,7 +229,7 @@ jobs:
                   keys:
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
                       - v2-golden-images-main-hcm-
-                      - v2-golden-images-main-classic-lightest-medium-ltr-
+                      - v2-golden-images-main-spectrum-lightest-medium-ltr-
             - run:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
@@ -248,7 +259,7 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="hcm"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail
@@ -304,6 +315,7 @@ workflows:
     build:
         jobs:
             - test-chromium
+            - test-chromium-memory
             - test-firefox
             - test-webkit
             - lint
@@ -321,8 +333,21 @@ workflows:
                   name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          theme: [classic, express]
+                          theme: [spectrum, express]
                           color: [lightest, light, dark, darkest]
+                          scale: [medium, large]
+                          dir: [ltr, rtl]
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - visual:
+                  name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+                  matrix:
+                      parameters:
+                          # Spectrum-two doesn't support the lightest and darkest themes
+                          theme: [spectrum-two]
+                          color: [light, dark]
                           scale: [medium, large]
                           dir: [ltr, rtl]
                   filters:

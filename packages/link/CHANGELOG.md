@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **link:** added feature to stop click propagation for disabled link ([#4251](https://github.com/adobe/spectrum-web-components/issues/4251)) ([64f26a5](https://github.com/adobe/spectrum-web-components/commit/64f26a5d2dd729d5cbae2418fd8bca8481ed6cf6))
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **link:** added feature to stop click propagation for disabled link ([#4251](https://github.com/adobe/spectrum-web-components/issues/4251)) ([64f26a5](https://github.com/adobe/spectrum-web-components/commit/64f26a5d2dd729d5cbae2418fd8bca8481ed6cf6))
+
 ## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
 
 **Note:** Version bump only for package @spectrum-web-components/link

@@ -21,6 +21,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { stub } from 'sinon';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -35,18 +36,50 @@ type TestableButtonType = {
 describe('Button', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Button>(
-                html`
-                    <sp-button tabindex="0">Button</sp-button>
-                `
-            )
-    );
-    it('loads default', async () => {
-        const el = await fixture<Button>(
-            html`
+            await fixture<Button>(html`
                 <sp-button tabindex="0">Button</sp-button>
-            `
-        );
+            `)
+    );
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('warns in devMode when white/black variant is provided', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button tabindex="0" variant="white">Button</sp-button>
+            `);
+
+            await elementUpdated(el);
+            expect(consoleWarnStub.called).to.be.true;
+
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('deprecated'),
+                'confirm deprecated variant warning'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-button',
+                    type: 'api',
+                    level: 'default',
+                },
+            });
+        });
+    });
+    it('loads default', async () => {
+        const el = await fixture<Button>(html`
+            <sp-button tabindex="0">Button</sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -58,25 +91,21 @@ describe('Button', () => {
         expect(el.getAttribute('variant')).to.equal('accent');
     });
     it('loads default w/ element content', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button label="Button"><svg></svg></sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button label="Button"><svg></svg></sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         await expect(el).to.be.accessible();
     });
     it('loads default w/ an icon', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button label="">
-                    Button
-                    <svg slot="icon"></svg>
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button label="">
+                Button
+                <svg slot="icon"></svg>
+            </sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -85,24 +114,20 @@ describe('Button', () => {
         await expect(el).to.be.accessible();
     });
     it('loads default only icon', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button label="Button" icon-only>
-                    <svg slot="icon"></svg>
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button label="Button" icon-only>
+                <svg slot="icon"></svg>
+            </sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         await expect(el).to.be.accessible();
     });
     it('has a stable/predictable `updateComplete`', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div></div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div></div>
+        `);
 
         let keydownTime = -1;
         let updateComplete1 = -1;
@@ -133,11 +158,9 @@ describe('Button', () => {
         expect(updateComplete2).lte(keydownTime);
     });
     it('manages "role"', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button>Button</sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button>Button</sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el.getAttribute('role')).to.equal('button');
@@ -154,14 +177,12 @@ describe('Button', () => {
     });
     it('allows label to be toggled', async () => {
         const testNode = document.createTextNode('Button');
-        const el = await fixture<Button>(
-            html`
-                <sp-button>
-                    ${testNode}
-                    <svg slot="icon"></svg>
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button>
+                ${testNode}
+                <svg slot="icon"></svg>
+            </sp-button>
+        `);
 
         await elementUpdated(el);
 
@@ -182,24 +203,18 @@ describe('Button', () => {
         expect(labelTestableEl.hasLabel, 'label is returned').to.be.true;
     });
     it('loads with href', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url">With Href</sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button href="test_url">With Href</sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('With Href');
     });
     it('loads with href and target', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url" target="_blank">
-                    With Target
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button href="test_url" target="_blank">With Target</sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -207,13 +222,9 @@ describe('Button', () => {
     });
     it('accepts shit+tab interactions', async () => {
         let focusedCount = 0;
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url" target="_blank">
-                    With Target
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button href="test_url" target="_blank">With Target</sp-button>
+        `);
 
         await elementUpdated(el);
         const input = document.createElement('input');
@@ -244,11 +255,9 @@ describe('Button', () => {
     });
     it('manages `disabled`', async () => {
         const clickSpy = spy();
-        const el = await fixture<Button>(
-            html`
-                <sp-button @click=${() => clickSpy()}>Button</sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button @click=${() => clickSpy()}>Button</sp-button>
+        `);
 
         await elementUpdated(el);
         el.click();
@@ -275,11 +284,9 @@ describe('Button', () => {
         expect(clickSpy.calledOnce).to.be.true;
     });
     it('`disabled` manages `tabindex`', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button disabled>Button</sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button disabled>Button</sp-button>
+        `);
 
         await elementUpdated(el);
         expect(el.tabIndex).to.equal(-1);
@@ -298,13 +305,9 @@ describe('Button', () => {
         expect(el.getAttribute('tabindex')).to.equal('-1');
     });
     it('manages `aria-disabled`', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url" target="_blank">
-                    With Target
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button href="test_url" target="_blank">With Target</sp-button>
+        `);
 
         await elementUpdated(el);
 
@@ -321,19 +324,17 @@ describe('Button', () => {
         expect(el.hasAttribute('aria-disabled'), 'finally not').to.be.false;
     });
     it('manages aria-label from disabled state', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button
-                    href="test_url"
-                    target="_blank"
-                    label="clickable"
-                    disabled
-                    pending-label="Pending Button"
-                >
-                    Click me
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button
+                href="test_url"
+                target="_blank"
+                label="clickable"
+                disabled
+                pending-label="Pending Button"
+            >
+                Click me
+            </sp-button>
+        `);
 
         await elementUpdated(el);
 
@@ -356,18 +357,16 @@ describe('Button', () => {
     });
 
     it('manages aria-label from pending state', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button
-                    href="test_url"
-                    target="_blank"
-                    label="clickable"
-                    pending
-                >
-                    Click me
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button
+                href="test_url"
+                target="_blank"
+                label="clickable"
+                pending
+            >
+                Click me
+            </sp-button>
+        `);
         await elementUpdated(el);
         expect(el.getAttribute('aria-label')).to.equal('Pending');
 
@@ -388,18 +387,16 @@ describe('Button', () => {
     });
 
     it('manages aria-label set from outside', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button
-                    href="test_url"
-                    target="_blank"
-                    aria-label="test"
-                    pending-label="Pending Button"
-                >
-                    Click me
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button
+                href="test_url"
+                target="_blank"
+                aria-label="test"
+                pending-label="Pending Button"
+            >
+                Click me
+            </sp-button>
+        `);
         await elementUpdated(el);
         expect(el.getAttribute('aria-label')).to.equal('test');
 
@@ -425,11 +422,9 @@ describe('Button', () => {
     });
 
     it('updates pending label accessibly', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url" target="_blank">Button</sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button href="test_url" target="_blank">Button</sp-button>
+        `);
 
         await elementUpdated(el);
         el.pending = true;
@@ -474,13 +469,9 @@ describe('Button', () => {
     });
 
     it('manages tabIndex while disabled', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url" target="_blank">
-                    With Target
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button href="test_url" target="_blank">With Target</sp-button>
+        `);
 
         await elementUpdated(el);
 
@@ -503,13 +494,9 @@ describe('Button', () => {
     });
     it('swallows `click` interaction when `[disabled]`', async () => {
         const clickSpy = spy();
-        const el = await fixture<Button>(
-            html`
-                <sp-button disabled @click=${() => clickSpy()}>
-                    Button
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button disabled @click=${() => clickSpy()}>Button</sp-button>
+        `);
 
         await elementUpdated(el);
         expect(clickSpy.callCount).to.equal(0);
@@ -521,11 +508,9 @@ describe('Button', () => {
     });
     it('translates keyboard interactions to click', async () => {
         const clickSpy = spy();
-        const el = await fixture<Button>(
-            html`
-                <sp-button @click=${() => clickSpy()}>Button</sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button @click=${() => clickSpy()}>Button</sp-button>
+        `);
 
         await elementUpdated(el);
 
@@ -652,22 +637,20 @@ describe('Button', () => {
     it('proxies clicks by "type"', async () => {
         const submitSpy = spy();
         const resetSpy = spy();
-        const test = await fixture<HTMLFormElement>(
-            html`
-                <form
-                    @submit=${(event: Event): void => {
-                        event.preventDefault();
-                        submitSpy();
-                    }}
-                    @reset=${(event: Event): void => {
-                        event.preventDefault();
-                        resetSpy();
-                    }}
-                >
-                    <sp-button>Button</sp-button>
-                </form>
-            `
-        );
+        const test = await fixture<HTMLFormElement>(html`
+            <form
+                @submit=${(event: Event): void => {
+                    event.preventDefault();
+                    submitSpy();
+                }}
+                @reset=${(event: Event): void => {
+                    event.preventDefault();
+                    resetSpy();
+                }}
+            >
+                <sp-button>Button</sp-button>
+            </form>
+        `);
         const el = test.querySelector('sp-button') as Button;
 
         await elementUpdated(el);
@@ -697,11 +680,9 @@ describe('Button', () => {
     });
     it('proxies click by [href]', async () => {
         const clickSpy = spy();
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url">With Href</sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button href="test_url">With Href</sp-button>
+        `);
 
         await elementUpdated(el);
         (
@@ -720,13 +701,11 @@ describe('Button', () => {
         expect(clickSpy.callCount).to.equal(1);
     });
     it('manages "active" while focused', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button label="Button">
-                    <svg slot="icon"></svg>
-                </sp-button>
-            `
-        );
+        const el = await fixture<Button>(html`
+            <sp-button label="Button">
+                <svg slot="icon"></svg>
+            </sp-button>
+        `);
 
         await elementUpdated(el);
         el.focus();
@@ -744,11 +723,9 @@ describe('Button', () => {
     });
     describe('deprecated variants and attributes', () => {
         it('manages [quiet]', async () => {
-            const el = await fixture<Button>(
-                html`
-                    <sp-button quiet>Button</sp-button>
-                `
-            );
+            const el = await fixture<Button>(html`
+                <sp-button quiet>Button</sp-button>
+            `);
 
             await elementUpdated(el);
             expect(el.treatment).to.equal('outline');
@@ -759,21 +736,17 @@ describe('Button', () => {
             expect(el.treatment).to.equal('fill');
         });
         it('upgrades [variant="cta"] to [variant="accent"]', async () => {
-            const el = await fixture<Button>(
-                html`
-                    <sp-button variant="cta">Button</sp-button>
-                `
-            );
+            const el = await fixture<Button>(html`
+                <sp-button variant="cta">Button</sp-button>
+            `);
 
             await elementUpdated(el);
             expect(el.variant).to.equal('accent');
         });
         it('manages [variant="overBackground"]', async () => {
-            const el = await fixture<Button>(
-                html`
-                    <sp-button variant="overBackground">Button</sp-button>
-                `
-            );
+            const el = await fixture<Button>(html`
+                <sp-button variant="overBackground">Button</sp-button>
+            `);
 
             await elementUpdated(el);
             expect(el.hasAttribute('variant')).to.not.equal('overBackground');
@@ -781,11 +754,9 @@ describe('Button', () => {
             expect(el.static).to.equal('white');
         });
         it('forces [variant="accent"]', async () => {
-            const el = await fixture<Button>(
-                html`
-                    <sp-button variant="not-supported">Button</sp-button>
-                `
-            );
+            const el = await fixture<Button>(html`
+                <sp-button variant="not-supported">Button</sp-button>
+            `);
 
             await elementUpdated(el);
             expect(el.variant).to.equal('accent');

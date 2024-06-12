@@ -30,6 +30,7 @@
     "./typography.js": "./typography.js",
     "./src/*": "./src/*",
     "./tokens/*": "./tokens/*",
+    "./tokens-v2/*": "./tokens-v2/*",
     "./src/spectrum-base.css": "./src/spectrum-base.css",
     "./src/spectrum-body.css": "./src/spectrum-body.css",
     "./src/spectrum-code.css": "./src/spectrum-code.css",
@@ -48,5 +49,10 @@
     "./tokens/spectrum/custom-vars.css": "./tokens/spectrum/custom-vars.css",
     "./tokens/spectrum/global-vars.css": "./tokens/spectrum/global-vars.css",
     "./tokens/spectrum/large-vars.css": "./tokens/spectrum/large-vars.css",
-    "./tokens/spectrum/medium-vars.css": "./tokens/spectrum/medium-vars.css"
+    "./tokens/spectrum/medium-vars.css": "./tokens/spectrum/medium-vars.css",
+    "./tokens-v2/spectrum/custom-large-vars.css": "./tokens-v2/spectrum/custom-large-vars.css",
+    "./tokens-v2/spectrum/custom-medium-vars.css": "./tokens-v2/spectrum/custom-medium-vars.css",
+    "./tokens-v2/spectrum/custom-vars.css": "./tokens-v2/spectrum/custom-vars.css",
+    "./tokens-v2/spectrum/custom-dark-vars.css": "./tokens-v2/spectrum/custom-dark-vars.css",
+    "./tokens-v2/spectrum/custom-light-vars.css": "./tokens-v2/spectrum/custom-light-vars.css"
 }

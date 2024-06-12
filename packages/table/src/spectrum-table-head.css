@@ -17,7 +17,7 @@ governing permissions and limitations under the License.
 }
 
 :host .spectrum-Table-scroller {
-    z-index: 2;
+    z-index: 1;
     position: sticky;
-    top: 0;
+    inset-block-start: 0;
 }

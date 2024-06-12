@@ -72,7 +72,13 @@ async function main() {
                 },
             }),
         ],
-        external: ['@spectrum-web-components/*'],
+        external: [
+            '@spectrum-web-components/*',
+            'lit-html',
+            'lit-element',
+            'lit',
+            '@lit/reactive-element',
+        ],
     });
     process.exit(0);
 }

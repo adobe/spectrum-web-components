@@ -57,8 +57,8 @@ governing permissions and limitations under the License.
     margin-block: 0;
 }
 
-.spectrum-Code strong,
-.spectrum-Code .spectrum-Code-strong {
+.spectrum-Code .spectrum-Code-strong,
+.spectrum-Code strong {
     font-style: var(
         --mod-code-strong-font-style,
         var(--spectrum-code-strong-font-style)
@@ -69,8 +69,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code em,
-.spectrum-Code .spectrum-Code-emphasized {
+.spectrum-Code .spectrum-Code-emphasized,
+.spectrum-Code em {
     font-style: var(
         --mod-code-emphasized-font-style,
         var(--spectrum-code-emphasized-font-style)
@@ -94,9 +94,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh),
 .spectrum-Code:lang(ja),
-.spectrum-Code:lang(ko) {
+.spectrum-Code:lang(ko),
+.spectrum-Code:lang(zh) {
     font-family: var(
         --mod-code-cjk-font-family,
         var(--spectrum-code-cjk-font-family)
@@ -119,12 +119,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh) strong,
-.spectrum-Code:lang(zh) .spectrum-Code-strong,
-.spectrum-Code:lang(ja) strong,
 .spectrum-Code:lang(ja) .spectrum-Code-strong,
+.spectrum-Code:lang(ja) strong,
+.spectrum-Code:lang(ko) .spectrum-Code-strong,
 .spectrum-Code:lang(ko) strong,
-.spectrum-Code:lang(ko) .spectrum-Code-strong {
+.spectrum-Code:lang(zh) .spectrum-Code-strong,
+.spectrum-Code:lang(zh) strong {
     font-style: var(
         --mod-code-cjk-strong-font-style,
         var(--spectrum-code-cjk-strong-font-style)
@@ -135,12 +135,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh) em,
-.spectrum-Code:lang(zh) .spectrum-Code-emphasized,
-.spectrum-Code:lang(ja) em,
 .spectrum-Code:lang(ja) .spectrum-Code-emphasized,
+.spectrum-Code:lang(ja) em,
+.spectrum-Code:lang(ko) .spectrum-Code-emphasized,
 .spectrum-Code:lang(ko) em,
-.spectrum-Code:lang(ko) .spectrum-Code-emphasized {
+.spectrum-Code:lang(zh) .spectrum-Code-emphasized,
+.spectrum-Code:lang(zh) em {
     font-style: var(
         --mod-code-cjk-emphasized-font-style,
         var(--spectrum-code-cjk-emphasized-font-style)
@@ -151,15 +151,15 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh) .spectrum-Code-strong.spectrum-Code-emphasized,
-.spectrum-Code:lang(zh) em strong,
-.spectrum-Code:lang(zh) strong em,
 .spectrum-Code:lang(ja) .spectrum-Code-strong.spectrum-Code-emphasized,
 .spectrum-Code:lang(ja) em strong,
 .spectrum-Code:lang(ja) strong em,
 .spectrum-Code:lang(ko) .spectrum-Code-strong.spectrum-Code-emphasized,
 .spectrum-Code:lang(ko) em strong,
-.spectrum-Code:lang(ko) strong em {
+.spectrum-Code:lang(ko) strong em,
+.spectrum-Code:lang(zh) .spectrum-Code-strong.spectrum-Code-emphasized,
+.spectrum-Code:lang(zh) em strong,
+.spectrum-Code:lang(zh) strong em {
     font-style: var(
         --mod-code-cjk-strong-emphasized-font-style,
         var(--spectrum-code-cjk-strong-emphasized-font-style)

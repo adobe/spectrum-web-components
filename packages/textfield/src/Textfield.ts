@@ -37,7 +37,7 @@ import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
-export type TextfieldType = typeof textfieldTypes[number];
+export type TextfieldType = (typeof textfieldTypes)[number];
 
 /**
  * @fires input - The value of the element has changed.
@@ -197,6 +197,8 @@ export class TextfieldBase extends ManageHelpText(
      */
     @property({ type: String, reflect: true })
     public autocomplete?:
+        | 'list'
+        | 'none'
         | HTMLInputElement['autocomplete']
         | HTMLTextAreaElement['autocomplete'];
 
@@ -268,6 +270,8 @@ export class TextfieldBase extends ManageHelpText(
         this.focused = !this.readonly && false;
     }
 
+    protected handleInputElementPointerdown(): void {}
+
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
@@ -288,12 +292,12 @@ export class TextfieldBase extends ManageHelpText(
         return this.value.toString();
     }
 
+    // prettier-ignore
     private get renderMultiline(): TemplateResult {
         return html`
             ${this.multiline && this.grows && this.rows === -1
                 ? html`
-                      <div id="sizer" class="input" aria-hidden="true">
-                          ${this.value}&#8203;
+                      <div id="sizer" class="input" aria-hidden="true">${this.value}&#8203;
                       </div>
                   `
                 : nothing}
@@ -353,6 +357,7 @@ export class TextfieldBase extends ManageHelpText(
                 .value=${live(this.displayValue)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
+                @pointerdown=${this.handleInputElementPointerdown}
                 @focus=${this.onFocus}
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}

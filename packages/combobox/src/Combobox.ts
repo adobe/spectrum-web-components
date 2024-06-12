@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     type SpectrumElement,
     TemplateResult,
@@ -26,6 +27,7 @@ import {
     ifDefined,
     live,
     repeat,
+    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -73,6 +75,14 @@ export class Combobox extends Textfield {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /** Whether the items are currently loading. */
+    @property({ type: Boolean, reflect: true })
+    public pending = false;
+
+    /** Defines a string value that labels the Combobox while it is in pending state. */
+    @property({ type: String, attribute: 'pending-label' })
+    public pendingLabel = 'Pending';
+
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
 
@@ -108,16 +118,19 @@ export class Combobox extends Textfield {
     }
 
     private scrollToActiveDescendant(): void {
-        const activeEl = this.shadowRoot.querySelector(
-            `#${this.activeDescendant?.value}`
-        ) as HTMLElement;
+        if (!this.activeDescendant) {
+            return;
+        }
+        const activeEl = this.shadowRoot.getElementById(
+            this.activeDescendant.value
+        );
         if (activeEl) {
             activeEl.scrollIntoView({ block: 'nearest' });
         }
     }
 
     public handleComboboxKeydown(event: KeyboardEvent): void {
-        if (this.readonly) {
+        if (this.readonly || this.pending) {
             return;
         }
         if (event.altKey && event.code === 'ArrowDown') {
@@ -210,11 +223,17 @@ export class Combobox extends Textfield {
         if (!this.activeDescendant) {
             return;
         }
-        this.value = this.activeDescendant.itemText;
+
+        const activeEl = this.shadowRoot.getElementById(
+            this.activeDescendant.value
+        );
+        if (activeEl) {
+            activeEl.click();
+        }
     }
 
     public filterAvailableOptions(): void {
-        if (this.autocomplete === 'none') {
+        if (this.autocomplete === 'none' || this.pending) {
             return;
         }
         const valueLowerCase = this.value.toLowerCase();
@@ -228,8 +247,10 @@ export class Combobox extends Textfield {
 
     public override handleInput(event: Event): void {
         super.handleInput(event);
-        this.activeDescendant = undefined;
-        this.open = true;
+        if (!this.pending) {
+            this.activeDescendant = undefined;
+            this.open = true;
+        }
     }
 
     protected handleMenuChange(event: PointerEvent & { target: Menu }): void {
@@ -255,7 +276,7 @@ export class Combobox extends Textfield {
     }
 
     public toggleOpen(): void {
-        if (this.readonly) {
+        if (this.readonly || this.pending) {
             this.open = false;
             return;
         }
@@ -302,6 +323,17 @@ export class Combobox extends Textfield {
         const appliedLabel = this.label || this.appliedLabel;
 
         return html`
+            ${this.pending
+                ? html`
+                      <span
+                          aria-hidden="true"
+                          class="visually-hidden"
+                          id="pending-label"
+                      >
+                          ${this.pendingLabel}
+                      </span>
+                  `
+                : nothing}
             ${this.value
                 ? html`
                       <span
@@ -323,6 +355,20 @@ export class Combobox extends Textfield {
         `;
     }
 
+    protected renderLoader(): TemplateResult {
+        import(
+            '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+        );
+        return html`
+            <sp-progress-circle
+                size="s"
+                indeterminate
+                aria-hidden="true"
+                class="progress-circle"
+            ></sp-progress-circle>
+        `;
+    }
+
     protected override renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
@@ -341,7 +387,7 @@ export class Combobox extends Textfield {
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="applied-label label"
+                aria-labelledby="pending-label applied-label label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
@@ -369,6 +415,10 @@ export class Combobox extends Textfield {
                 ?required=${this.required}
                 ?readonly=${this.readonly}
             />
+            ${when(
+                this.pending && !this.disabled && !this.readonly,
+                this.renderLoader
+            )}
         `;
     }
 
@@ -393,6 +443,7 @@ export class Combobox extends Textfield {
                     : ''}"
                 ?disabled=${this.disabled}
                 ?focused=${this.focused}
+                ?quiet=${this.quiet}
                 size=${this.size}
             ></sp-picker-button>
             <sp-overlay
@@ -500,10 +551,13 @@ export class Combobox extends Textfield {
             this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
         >
     ): void {
-        if (changed.has('open')) {
+        if (changed.has('open') && !this.pending) {
             this.manageListOverlay();
         }
         if (!this.focused && this.open) {
+            this.open = false;
+        }
+        if (changed.has('pending') && this.pending) {
             this.open = false;
         }
         if (changed.has('activeDescendant')) {

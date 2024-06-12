@@ -9,9 +9,7 @@ updates:
           timezone: 'America/Los_Angeles'
       open-pull-requests-limit: 5
       reviewers:
-          - 'hunterloftis'
-          - 'najikahalsema'
-          - 'westbrook'
+          - 'adobe/swc-maintainers'
       groups:
           # Specify a name for the group, which will be used in pull request titles
           # and branch names
@@ -34,6 +32,10 @@ updates:
           spectrumcss-ecosystem:
               patterns:
                   - '@spectrum-css/*'
+          web-and-open-wc-ecosystem:
+              patterns:
+                  - '@open-wc/*'
+                  - '@web/*'
 
     - package-ecosystem: 'github-actions'
       directory: '/'

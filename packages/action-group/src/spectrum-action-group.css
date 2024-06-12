@@ -18,16 +18,16 @@ governing permissions and limitations under the License.
     --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
 }
 
-:host([size='xs']),
-:host([size='s']) {
+:host([size='s']),
+:host([size='xs']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-75
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
 
-:host,
 :host([size='l']),
+:host,
 :host([size='xl']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-100
@@ -173,14 +173,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([compact]:not([quiet])[vertical]) ::slotted(*) {
+:host([compact][vertical]:not([quiet])) ::slotted(*) {
     border-radius: var(
         --mod-actiongroup-border-radius-reset,
         var(--spectrum-actiongroup-border-radius-reset)
     );
 }
 
-:host([compact]:not([quiet])[vertical]) ::slotted(:first-child) {
+:host([compact][vertical]:not([quiet])) ::slotted(:first-child) {
     --mod-actionbutton-focus-indicator-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
@@ -212,7 +212,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([compact]:not([quiet])[vertical]) ::slotted(:not(:first-child)) {
+:host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)) {
     margin-block-start: var(
         --mod-actiongroup-button-spacing-reset,
         var(--spectrum-actiongroup-button-spacing-reset)
@@ -231,7 +231,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([compact]:not([quiet])[vertical]) ::slotted(:last-child) {
+:host([compact][vertical]:not([quiet])) ::slotted(:last-child) {
     --mod-actionbutton-focus-indicator-border-radius: 0px 0px
         var(
             --mod-actiongroup-border-radius,

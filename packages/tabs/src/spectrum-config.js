@@ -29,6 +29,65 @@ const config = {
             fileName: 'tabs',
             components: [
                 {
+                    // .spectrum-Tabs--horizontal .spectrum-Tabs-item + :not(.spectrum-Tabs-selectionIndicator)
+                    find: [
+                        builder.class('spectrum-Tabs--horizontal'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Tabs-item'),
+                        builder.combinator('+'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [
+                                    builder.class(
+                                        'spectrum-Tabs-selectionIndicator'
+                                    ),
+                                ],
+                            ],
+                        },
+                    ],
+                    replace: [
+                        //:host([direction^='horizontal']) ::slotted(:not([slot])):not(.spectrum-Tabs-selectionIndicator)
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    builder.attribute(
+                                        'direction',
+                                        'horizontal',
+                                        'prefix'
+                                    ),
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'not',
+                                        selectors: [
+                                            [
+                                                builder.pseudoClass(
+                                                    'first-child'
+                                                ),
+                                            ],
+                                        ],
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                    collapseSelector: true,
+                },
+                {
                     exactSelector: true,
                     find: [builder.class('spectrum-Tabs--quiet')],
                     replace: [

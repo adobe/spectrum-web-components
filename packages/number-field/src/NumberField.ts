@@ -323,7 +323,7 @@ export class NumberField extends TextfieldBase {
 
         this.requestUpdate();
         this._value = this.validateInput(value);
-        this.inputElement.value = value.toString();
+        this.inputElement.value = this.numberFormatter.format(value);
 
         this.inputElement.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
@@ -430,6 +430,17 @@ export class NumberField extends TextfieldBase {
         });
     }
 
+    private hasRecentlyReceivedPointerDown = false;
+
+    protected override handleInputElementPointerdown(): void {
+        this.hasRecentlyReceivedPointerDown = true;
+        this.updateComplete.then(() => {
+            requestAnimationFrame(() => {
+                this.hasRecentlyReceivedPointerDown = false;
+            });
+        });
+    }
+
     protected override handleInput(event: Event): void {
         if (this.isComposing) {
             event.stopPropagation();
@@ -495,7 +506,9 @@ export class NumberField extends TextfieldBase {
         // Step shouldn't validate when 0...
         if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
-            const moduloStep = (value - min) % this.step;
+            const moduloStep = parseFloat(
+                this.valueFormatter.format((value - min) % this.step)
+            );
             const fallsOnStep = moduloStep === 0;
             if (!fallsOnStep) {
                 const overUnder = Math.round(moduloStep / this.step);
@@ -510,6 +523,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
+            value = parseFloat(this.valueFormatter.format(value));
         }
         value *= signMultiplier;
         return value;
@@ -560,9 +574,27 @@ export class NumberField extends TextfieldBase {
             : this._numberFormatter;
     }
 
+    protected clearValueFormatterCache(): void {
+        this._valueFormatter = undefined;
+    }
+    protected get valueFormatter(): NumberFormatter {
+        if (!this._valueFormatter) {
+            const digitsAfterDecimal = this.step
+                ? this.step != Math.floor(this.step)
+                    ? this.step.toString().split('.')[1].length
+                    : 0
+                : 0;
+            this._valueFormatter = new NumberFormatter('en', {
+                useGrouping: false,
+                maximumFractionDigits: digitsAfterDecimal,
+            });
+        }
+
+        return this._valueFormatter;
+    }
     private _numberFormatter?: NumberFormatter;
     private _numberFormatterFocused?: NumberFormatter;
-
+    private _valueFormatter?: NumberFormatter;
     protected get numberParser(): NumberParser {
         if (!this._numberParser || !this._numberParserFocused) {
             const {
@@ -685,6 +717,9 @@ export class NumberField extends TextfieldBase {
             );
             this.value = value;
         }
+        if (changes.has('step')) {
+            this.clearValueFormatterCache();
+        }
         super.update(changes);
     }
 
@@ -731,6 +766,15 @@ export class NumberField extends TextfieldBase {
                 }
             }
             this.inputElement.inputMode = inputMode;
+        }
+        if (
+            changes.has('focused') &&
+            this.focused &&
+            !this.hasRecentlyReceivedPointerDown &&
+            !!this.formatOptions.unit
+        ) {
+            // Normalize keyboard focus entry between unit and non-unit bearing Number Fields
+            this.setSelectionRange(0, this.displayValue.length);
         }
     }
 }

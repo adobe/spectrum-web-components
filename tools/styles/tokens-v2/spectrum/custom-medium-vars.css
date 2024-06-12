@@ -1,0 +1,121 @@
+:host,
+:root {
+    /* edge-to-visual-only is used for icon-only buttons */
+    --spectrum-edge-to-visual-only-75: 4px;
+    --spectrum-edge-to-visual-only-100: 7px;
+    --spectrum-edge-to-visual-only-200: 10px;
+    --spectrum-edge-to-visual-only-300: 13px;
+
+    --spectrum-slider-tick-mark-height: 10px;
+    --spectrum-slider-ramp-track-height: 16px;
+
+    --spectrum-colorwheel-path: 'M 95 95 m -95 0 a 95 95 0 1 0 190 0 a 95 95 0 1 0 -190 0.2 M 95 95 m -73 0 a 73 73 0 1 0 146 0 a 73 73 0 1 0 -146 0';
+    --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
+    --spectrum-colorwheel-colorarea-container-size: 144px;
+
+    --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-primary);
+
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 28px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 32px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 38px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-extra-large: 45px;
+
+    --spectrum-menu-item-checkmark-height-small: 10px;
+    --spectrum-menu-item-checkmark-height-medium: 10px;
+    --spectrum-menu-item-checkmark-height-large: 12px;
+    --spectrum-menu-item-checkmark-height-extra-large: 14px;
+
+    --spectrum-menu-item-checkmark-width-small: 10px;
+    --spectrum-menu-item-checkmark-width-medium: 10px;
+    --spectrum-menu-item-checkmark-width-large: 12px;
+    --spectrum-menu-item-checkmark-width-extra-large: 14px;
+
+    --spectrum-rating-icon-spacing: var(--spectrum-spacing-75);
+
+    --spectrum-button-top-to-text-small: 5px;
+    --spectrum-button-bottom-to-text-small: 4px;
+    --spectrum-button-top-to-text-medium: 7px;
+    --spectrum-button-bottom-to-text-medium: 8px;
+    --spectrum-button-top-to-text-large: 10px;
+    --spectrum-button-bottom-to-text-large: 10px;
+    --spectrum-button-top-to-text-extra-large: 13px;
+    --spectrum-button-bottom-to-text-extra-large: 13px;
+
+    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-text-to-button-vertical: var(
+        --spectrum-spacing-100
+    );
+
+    --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
+    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
+
+    --spectrum-coach-indicator-gap: 6px;
+    --spectrum-coach-indicator-ring-diameter: var(--spectrum-spacing-300);
+    --spectrum-coach-indicator-quiet-ring-diameter: var(--spectrum-spacing-100);
+
+    --spectrum-coachmark-buttongroup-display: flex;
+    --spectrum-coachmark-buttongroup-mobile-display: none;
+    --spectrum-coachmark-menu-display: inline-flex;
+    --spectrum-coachmark-menu-mobile-display: none;
+    --spectrum-well-padding: var(--spectrum-spacing-300);
+    --spectrum-well-margin-top: var(--spectrum-spacing-75);
+    --spectrum-well-min-width: 240px;
+    --spectrum-well-border-radius: var(--spectrum-spacing-75);
+
+    --spectrum-icon-chevron-size-50: 6px;
+    /* XXL and XXS icon sizes are not within the design spec and are planned to be deprecated in Spectrum 2. */
+    --spectrum-workflow-icon-size-xxl: 32px;
+    --spectrum-workflow-icon-size-xxs: 12px;
+
+    --spectrum-treeview-item-indentation-medium: var(--spectrum-spacing-300);
+    --spectrum-treeview-item-indentation-small: var(--spectrum-spacing-200);
+    --spectrum-treeview-item-indentation-large: 20px;
+    --spectrum-treeview-item-indentation-extra-large: var(
+        --spectrum-spacing-400
+    );
+    --spectrum-treeview-indicator-inset-block-start: 5px;
+    --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 0px;
+
+    --spectrum-dialog-confirm-entry-animation-distance: 20px;
+    --spectrum-dialog-confirm-hero-height: 128px;
+    --spectrum-dialog-confirm-border-radius: 4px;
+    --spectrum-dialog-confirm-title-text-size: 18px;
+    --spectrum-dialog-confirm-description-text-size: 14px;
+    --spectrum-dialog-confirm-padding-grid: 40px;
+
+    --spectrum-datepicker-initial-width: 128px;
+    --spectrum-datepicker-generic-padding: var(--spectrum-spacing-200);
+    --spectrum-datepicker-dash-line-height: 24px;
+    --spectrum-datepicker-width-quiet-first: 72px;
+    --spectrum-datepicker-width-quiet-second: 16px;
+    --spectrum-datepicker-datetime-width-first: 36px;
+    --spectrum-datepicker-invalid-icon-to-button: 8px;
+    --spectrum-datepicker-invalid-icon-to-button-quiet: 7px;
+    --spectrum-datepicker-input-datetime-width: var(--spectrum-spacing-400);
+
+    --spectrum-pagination-textfield-width: var(--spectrum-spacing-700);
+    --spectrum-pagination-item-inline-spacing: 5px;
+
+    --spectrum-dial-border-radius: 16px;
+    --spectrum-dial-handle-position: 8px;
+    --spectrum-dial-handle-block-margin: 16px;
+    --spectrum-dial-handle-inline-margin: 16px;
+    --spectrum-dial-controls-margin: 8px;
+    --spectrum-dial-label-gap-y: 5px;
+    --spectrum-dial-label-container-top-to-text: 4px;
+
+    --spectrum-assetcard-focus-ring-border-radius: 8px;
+    --spectrum-assetcard-selectionindicator-margin: 12px;
+    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xs);
+    --spectrum-assetcard-header-content-font-size: var(
+        --spectrum-heading-size-xs
+    );
+    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-s);
+
+    --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
+
+    --spectrum-ui-icon-medium-display: block;
+    --spectrum-ui-icon-large-display: none;
+}

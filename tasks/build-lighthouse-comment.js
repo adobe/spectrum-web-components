@@ -19,10 +19,10 @@ const mainURL = 'https://main--spectrum-web-components.netlify.app/';
 const winnerSign = ' 🏆';
 
 const totalIndex = 0;
+const fontIndex = 1;
 const scriptIndex = 2;
 const stylesheetIndex = 3;
 const documentIndex = 4;
-const thirdPartyIndex = 8;
 
 const formatResourceByIndex = (index, resource, resourcesRaw, winner) =>
     resource === 'transferSize'
@@ -56,11 +56,11 @@ const formatResources = (resource, resourcesRaw, winners) => ({
         resourcesRaw,
         winners.document
     ),
-    thirdParty: formatResourceByIndex(
-        thirdPartyIndex,
+    font: formatResourceByIndex(
+        fontIndex,
         resource,
         resourcesRaw,
-        winners.thirdParty
+        winners.font
     ),
 });
 
@@ -105,13 +105,7 @@ const getWinners = (test, context, competitorA, competitorB) => ({
         competitorA,
         competitorB
     ),
-    thirdParty: getWinnerByIndex(
-        thirdPartyIndex,
-        test,
-        context,
-        competitorA,
-        competitorB
-    ),
+    font: getWinnerByIndex(fontIndex, test, context, competitorA, competitorB),
 });
 
 const getAllWiners = (context, competitorA, competitorB) => ({
@@ -198,7 +192,7 @@ export const buildLighthouseComment = (links, manifest, assertionResults) => {
 | Scripts | ${latestResources.size.scripts} | ${mainResources.size.scripts} | ${branchResources.size.scripts} |
 | Stylesheet | ${latestResources.size.stylesheet} | ${mainResources.size.stylesheet} | ${branchResources.size.stylesheet} |
 | Document | ${latestResources.size.document} | ${mainResources.size.document} | ${branchResources.size.document} |
-| Third Party | ${latestResources.size.thirdParty} | ${mainResources.size.thirdParty} | ${branchResources.size.thirdParty} |
+| Font | ${latestResources.size.font} | ${mainResources.size.font} | ${branchResources.size.font} |
 
 ### Request Count
 
@@ -208,7 +202,7 @@ export const buildLighthouseComment = (links, manifest, assertionResults) => {
 | Scripts | ${latestResources.count.scripts} | ${mainResources.count.scripts} | ${branchResources.count.scripts} |
 | Stylesheet | ${latestResources.count.stylesheet} | ${mainResources.count.stylesheet} | ${branchResources.count.stylesheet} |
 | Document | ${latestResources.count.document} | ${mainResources.count.document} | ${branchResources.count.document} |
-| Third Party | ${latestResources.count.thirdParty} | ${mainResources.count.thirdParty} | ${branchResources.count.thirdParty} |
+| Font | ${latestResources.count.font} | ${mainResources.count.font} | ${branchResources.count.font} |
 `;
     /* eslint-enable prettier/prettier */
     return comment;

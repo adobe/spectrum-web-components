@@ -127,6 +127,31 @@ const config = {
                 converter.classToClass('spectrum-Slider-track', 'track'),
                 converter.classToClass('is-focused', 'handle-highlight'),
                 converter.classToClass('is-dragged', 'dragging'),
+                {
+                    find: [
+                        // .spectrum-Slider-handle:before:dir(rtl)
+                        builder.class('spectrum-Slider-handle'),
+                        builder.pseudoElement('before'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'dir',
+                            direction: 'rtl',
+                        },
+                    ],
+                    replace: [
+                        // .handle:dir(rtl):before
+                        {
+                            replace: builder.class('handle'),
+                        },
+                        {
+                            type: 'pseudo-class',
+                            kind: 'dir',
+                            direction: 'rtl',
+                        },
+                        builder.pseudoElement('before'),
+                    ],
+                    collapseSelector: true,
+                },
             ],
         },
     ],

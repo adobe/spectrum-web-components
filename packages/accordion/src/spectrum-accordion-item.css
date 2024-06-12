@@ -22,12 +22,7 @@ governing permissions and limitations under the License.
         --mod-accordion-item-width,
         var(--spectrum-accordion-item-width)
     );
-    margin: 0;
-    position: relative;
-}
-
-:host(:first-child) {
-    border-block-start: 1px solid #0000;
+    border-block-end: 1px solid #0000;
     border-color: var(
         --mod-accordion-divider-color,
         var(--spectrum-accordion-divider-color)
@@ -36,10 +31,12 @@ governing permissions and limitations under the License.
         --mod-accordion-divider-thickness,
         var(--spectrum-divider-thickness-small)
     );
+    margin: 0;
+    position: relative;
 }
 
-:host {
-    border-block-end: 1px solid #0000;
+:host(:first-child) {
+    border-block-start: 1px solid #0000;
     border-color: var(
         --mod-accordion-divider-color,
         var(--spectrum-accordion-divider-color)
@@ -96,6 +93,7 @@ governing permissions and limitations under the License.
     );
 }
 
+.iconContainer:dir(rtl),
 :host([dir='rtl']) .iconContainer {
     transform: scaleX(-1);
 }
@@ -182,6 +180,14 @@ governing permissions and limitations under the License.
     );
     appearance: none;
     text-align: start;
+    color: var(
+        --mod-accordion-item-header-color-default,
+        var(--spectrum-accordion-item-header-color-default)
+    );
+    background-color: var(
+        --mod-accordion-background-color-default,
+        var(--spectrum-accordion-background-color-default)
+    );
     border: 0;
     justify-content: flex-start;
     align-items: center;
@@ -212,17 +218,6 @@ governing permissions and limitations under the License.
     content: '';
     position: absolute;
     inset-inline-start: 0;
-}
-
-#header {
-    color: var(
-        --mod-accordion-item-header-color-default,
-        var(--spectrum-accordion-item-header-color-default)
-    );
-    background-color: var(
-        --mod-accordion-background-color-default,
-        var(--spectrum-accordion-background-color-default)
-    );
 }
 
 #header:focus-visible {
@@ -272,21 +267,18 @@ governing permissions and limitations under the License.
         --mod-accordion-item-header-disabled-color,
         var(--spectrum-accordion-item-header-disabled-color)
     );
-    background-color: #0000;
+    background-color: initial;
 }
 
 @media (hover: hover) {
     #header:hover {
-        color: var(
-            --mod-accordion-item-header-color-hover,
-            var(--spectrum-accordion-item-header-color-hover)
-        );
         background-color: var(
             --mod-accordion-background-color-hover,
             var(--spectrum-accordion-background-color-hover)
         );
     }
 
+    #header:hover,
     #header:hover + .iconContainer {
         color: var(
             --mod-accordion-item-header-color-hover,
@@ -306,7 +298,7 @@ governing permissions and limitations under the License.
             --mod-accordion-item-header-disabled-color,
             var(--spectrum-accordion-item-header-disabled-color)
         );
-        background-color: #0000;
+        background-color: initial;
     }
 }
 
@@ -335,7 +327,7 @@ governing permissions and limitations under the License.
 
 :host([open]) > #heading > .iconContainer > .indicator,
 :host([open]) > .iconContainer > .indicator {
-    transform: var(--spectrum-logical-rotation) rotate(90deg);
+    transform: var(--spectrum-logical-rotation,) rotate(90deg);
 }
 
 :host([open]) > #content {
