@@ -226,6 +226,51 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 Value Less than Fill Start
             </sp-slider>
         </div>
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="150"
+                min="-50"
+                value="25"
+                step="1"
+                fill-start="0"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                ...=${spreadProps(args)}
+            >
+                Fill start with fill-start="0" within range -50 to 150
+            </sp-slider>
+        </div>
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="100"
+                min="-50"
+                value="-25"
+                step="1"
+                fill-start="0"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                .normalization=${{
+                    toNormalized: (value: number): number => {
+                        if (value === 0) return 0.5;
+                        return value < 0
+                            ? 0.5 - (value / -50) * 0.5
+                            : 0.5 + (value / 100) * 0.5;
+                    },
+                    fromNormalized: (value: number): number => {
+                        if (value === 0.5) return 0;
+                        return value < 0.5
+                            ? (1 - value / 0.5) * -50
+                            : ((value - 0.5) / 0.5) * 100;
+                    },
+                }}
+                ...=${spreadProps(args)}
+            >
+                Fill start with fill-start="0" and normalization function within
+                range -50 to 100
+            </sp-slider>
+        </div>
     `;
 };
 
