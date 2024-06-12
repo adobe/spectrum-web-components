@@ -66,15 +66,9 @@ class OverlayStack {
         const composedPath = this.pointerdownPath;
         const lastOverlay = this.lastOverlay;
         this.pointerdownPath = undefined;
-<<<<<<< lehelen19/4553-prevent-modal-overlays-from-closing-and-fix-memory-leak
         this.lastOverlay = undefined;
         if (!this.stack.length) return;
         if (!composedPath?.length) return;
-=======
-        if (!this.stack.length) return;
-        if (!composedPath?.length) return;
-
->>>>>>> main
         const lastIndex = this.stack.length - 1;
         const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
