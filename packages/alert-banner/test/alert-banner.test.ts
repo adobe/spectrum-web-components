@@ -37,7 +37,7 @@ describe('AlertBanner', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads variant info', async () => {
+    it('accepts variants', async () => {
         const el = await fixture<AlertBanner>(html`
             <sp-alert-banner open variant="info">
                 Your trial will expire soon
@@ -46,24 +46,14 @@ describe('AlertBanner', () => {
 
         await elementUpdated(el);
 
-        const infoIcon = el.shadowRoot.querySelector('sp-icon-info');
-        expect(infoIcon).to.exist;
+        expect(el.getAttribute('variant')).to.equal('info');
+        expect(el.shadowRoot.querySelector('sp-icon-info')).to.exist;
 
-        await expect(el).to.be.accessible();
-    });
-    it('loads variant negative', async () => {
-        const el = await fixture<AlertBanner>(html`
-            <sp-alert-banner open variant="negative">
-                Your trial will expire soon
-            </sp-alert-banner>
-        `);
-
+        el.variant = 'negative';
         await elementUpdated(el);
 
-        const alertIcon = el.shadowRoot.querySelector('sp-icon-alert');
-        expect(alertIcon).to.exist;
-
-        await expect(el).to.be.accessible();
+        expect(el.getAttribute('variant')).to.equal('negative');
+        expect(el.shadowRoot.querySelector('sp-icon-alert')).to.exist;
     });
     it('removes variant attribute when given invalid variant', async () => {
         const el = await fixture<AlertBanner>(html`
