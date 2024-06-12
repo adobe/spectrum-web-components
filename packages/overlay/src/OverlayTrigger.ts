@@ -70,6 +70,9 @@ export class OverlayTrigger extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    @property({ attribute: 'receives-focus' })
+    public receivesFocus: 'true' | 'false' | 'auto' = 'auto';
+
     @state()
     private clickContent: HTMLElement[] = [];
 
@@ -197,6 +200,7 @@ export class OverlayTrigger extends SpectrumElement {
                 .triggerInteraction=${'click'}
                 .type=${this.type !== 'modal' ? 'auto' : 'modal'}
                 @beforetoggle=${this.handleBeforetoggle}
+                .receivesFocus=${this.receivesFocus}
             >
                 ${slot}
             </sp-overlay>
@@ -222,6 +226,7 @@ export class OverlayTrigger extends SpectrumElement {
                 .triggerInteraction=${'hover'}
                 .type=${'hint'}
                 @beforetoggle=${this.handleBeforetoggle}
+                .receivesFocus=${this.receivesFocus}
             >
                 ${slot}
             </sp-overlay>
@@ -246,6 +251,7 @@ export class OverlayTrigger extends SpectrumElement {
                 .triggerInteraction=${'longpress'}
                 .type=${'auto'}
                 @beforetoggle=${this.handleBeforetoggle}
+                .receivesFocus=${this.receivesFocus}
             >
                 ${slot}
             </sp-overlay>
