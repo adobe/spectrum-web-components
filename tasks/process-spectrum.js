@@ -451,6 +451,14 @@ async function processComponent(componentPath) {
             if (fs.existsSync(bridgepath)) {
                 let bridgeCss = fs.readFileSync(bridgepath, 'utf8');
 
+                const systemsPath = path.join(
+                    ...(Array.isArray(conversion.outPackage)
+                        ? conversion.outPackage
+                        : ['packages', conversion.outPackage]),
+                    'src',
+                    `system-overrides.css`
+                );
+
                 const { code } = transform({
                     code: Buffer.from(bridgeCss),
                     visitor: {
@@ -636,14 +644,9 @@ async function processComponent(componentPath) {
                             }
                         },
                     },
+                    filename: systemsPath,
                 });
-                const systemsPath = path.join(
-                    ...(Array.isArray(conversion.outPackage)
-                        ? conversion.outPackage
-                        : ['packages', conversion.outPackage]),
-                    'src',
-                    `system-overrides.css`
-                );
+
                 fs.writeFileSync(
                     systemsPath,
                     `/*
@@ -826,6 +829,7 @@ governing permissions and limitations under the License.
                     }
                 },
             },
+            filename: outputPath,
         });
 
         fs.writeFileSync(
