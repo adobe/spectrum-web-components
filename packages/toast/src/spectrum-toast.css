@@ -13,6 +13,9 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    --spectrum-toast-background-color-default: var(
+        --spectrum-neutral-subdued-background-color-default
+    );
     --spectrum-toast-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-toast-font-size: var(--spectrum-font-size-100);
     --spectrum-toast-corner-radius: var(--spectrum-corner-radius-100);
@@ -297,8 +300,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.body ::slotted([slot='action']:dir(rtl)),
-:host([dir='rtl']) .body ::slotted([slot='action']) {
+.body ::slotted([slot='action']:dir(rtl)) {
     margin-inline-end: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
@@ -312,11 +314,5 @@ governing permissions and limitations under the License.
     padding-inline-start: var(
         --mod-toast-spacing-close-button,
         var(--spectrum-toast-spacing-close-button)
-    );
-}
-
-:host {
-    --spectrum-toast-background-color-default: var(
-        --system-spectrum-toast-background-color-default
     );
 }

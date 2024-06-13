@@ -13,6 +13,10 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    --spectrum-checkbox-control-color-default: var(--spectrum-gray-600);
+    --spectrum-checkbox-control-color-hover: var(--spectrum-gray-700);
+    --spectrum-checkbox-control-color-down: var(--spectrum-gray-800);
+    --spectrum-checkbox-control-color-focus: var(--spectrum-gray-700);
     --spectrum-checkbox-content-color-default: var(
         --spectrum-neutral-content-color-default
     );
@@ -34,7 +38,7 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-control-color-disabled: var(
         --spectrum-disabled-content-color
     );
-    --spectrum-checkbox-checkmark-color: var(--spectrum-gray-75);
+    --spectrum-checkbox-checkmark-color: var(--spectrum-gray-50);
     --spectrum-checkbox-invalid-color-default: var(
         --spectrum-negative-color-900
     );
@@ -841,19 +845,4 @@ governing permissions and limitations under the License.
         --highcontrast-checkbox-disabled-color-default: GrayText;
         --highcontrast-checkbox-focus-indicator-color: CanvasText;
     }
-}
-
-:host {
-    --spectrum-checkbox-control-color-default: var(
-        --system-spectrum-checkbox-control-color-default
-    );
-    --spectrum-checkbox-control-color-hover: var(
-        --system-spectrum-checkbox-control-color-hover
-    );
-    --spectrum-checkbox-control-color-down: var(
-        --system-spectrum-checkbox-control-color-down
-    );
-    --spectrum-checkbox-control-color-focus: var(
-        --system-spectrum-checkbox-control-color-focus
-    );
 }

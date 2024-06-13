@@ -30,7 +30,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-swatch-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
     --spectrum-swatch-border-color-selected: var(--spectrum-gray-900);
-    --spectrum-swatch-inner-border-color-selected: var(--spectrum-gray-50);
+    --spectrum-swatch-inner-border-color-selected: var(--spectrum-gray-25);
     --spectrum-swatch-disabled-icon-border-color: var(
         --spectrum-swatch-disabled-icon-border-color
     );

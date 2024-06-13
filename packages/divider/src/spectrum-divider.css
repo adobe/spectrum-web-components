@@ -17,8 +17,8 @@ governing permissions and limitations under the License.
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-medium
     );
-    --spectrum-divider-background-color-small: var(--spectrum-gray-300);
-    --spectrum-divider-background-color-medium: var(--spectrum-gray-300);
+    --spectrum-divider-background-color-small: var(--spectrum-gray-200);
+    --spectrum-divider-background-color-medium: var(--spectrum-gray-200);
     --spectrum-divider-background-color-large: var(--spectrum-gray-800);
     --spectrum-divider-background-color-small-static-white: var(
         --spectrum-transparent-white-300

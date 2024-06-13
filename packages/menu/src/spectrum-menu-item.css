@@ -252,8 +252,7 @@ governing permissions and limitations under the License.
         );
 }
 
-:host:dir(rtl),
-:host([dir='rtl']) {
+:host:dir(rtl) {
     --spectrum-menu-item-focus-indicator-direction-scalar: -1;
 }
 
@@ -561,8 +560,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.chevron:dir(rtl),
-:host([dir='rtl']) .chevron {
+.chevron:dir(rtl) {
     transform: rotate(-180deg);
 }
 

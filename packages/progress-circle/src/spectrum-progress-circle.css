@@ -511,7 +511,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --spectrum-progress-circle-track-border-color: var(--spectrum-gray-300);
+    --spectrum-progress-circle-track-border-color: var(--spectrum-gray-200);
     --spectrum-progress-circle-fill-border-color: var(
         --spectrum-accent-content-color-default
     );

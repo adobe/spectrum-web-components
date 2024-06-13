@@ -88,8 +88,7 @@ governing permissions and limitations under the License.
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2);
 }
 
-:host:dir(rtl),
-:host([dir='rtl']) {
+:host:dir(rtl) {
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2 - 1px);
 }
 

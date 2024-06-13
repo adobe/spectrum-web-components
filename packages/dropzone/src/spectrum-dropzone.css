@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
     --spectrum-drop-zone-heading-to-body: var(--spectrum-spacing-75);
     --spectrum-drop-zone-border-width: var(--spectrum-border-width-200);
     --spectrum-drop-zone-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-drop-zone-border-color: var(--spectrum-gray-300);
+    --spectrum-drop-zone-border-color: var(--spectrum-gray-200);
     --spectrum-drop-zone-heading-font-family: var(
         --spectrum-sans-font-family-stack
     );

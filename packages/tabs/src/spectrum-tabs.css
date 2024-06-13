@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 #list {
+    --spectrum-tabs-font-weight: var(--spectrum-default-font-weight);
     --spectrum-tabs-item-height: var(--spectrum-tab-item-height-medium);
     --spectrum-tabs-item-horizontal-spacing: var(
         --spectrum-tab-item-to-tab-item-horizontal-medium
@@ -65,7 +66,7 @@ governing permissions and limitations under the License.
         --spectrum-neutral-subdued-content-color-down
     );
     --spectrum-tabs-list-background-direction: top;
-    --spectrum-tabs-divider-background-color: var(--spectrum-gray-300);
+    --spectrum-tabs-divider-background-color: var(--spectrum-gray-200);
     --spectrum-tabs-divider-size: var(--spectrum-border-width-200);
     --spectrum-tabs-divider-border-radius: 1px;
     --spectrum-tabs-animation-duration: var(--spectrum-animation-duration-100);
@@ -105,16 +106,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([direction^='vertical']) #list:dir(rtl),
-:host([dir='rtl'][direction^='vertical']) #list {
+:host([direction^='vertical']) #list:dir(rtl) {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical,
         left
     );
 }
 
-:host([direction^='vertical-right']) #list:dir(rtl),
-:host([dir='rtl'][direction^='vertical-right']) #list {
+:host([direction^='vertical-right']) #list:dir(rtl) {
     --mod-tabs-list-background-direction: var(
         --mod-tabs-list-background-direction-vertical,
         right
@@ -348,8 +347,4 @@ governing permissions and limitations under the License.
                 var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size))
         );
     }
-}
-
-#list {
-    --spectrum-tabs-font-weight: var(--system-spectrum-tabs-font-weight);
 }

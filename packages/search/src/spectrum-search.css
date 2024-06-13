@@ -13,6 +13,15 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    --spectrum-search-border-color-default: var(--spectrum-gray-500);
+    --spectrum-search-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-search-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-search-border-color-focus-hover: var(--spectrum-gray-900);
+    --spectrum-search-border-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-100
+    );
     --spectrum-search-inline-size: var(--spectrum-field-width);
     --spectrum-search-block-size: var(--spectrum-component-height-100);
     --spectrum-search-button-inline-size: var(--spectrum-search-block-size);
@@ -50,7 +59,7 @@ governing permissions and limitations under the License.
         --spectrum-neutral-content-color-key-focus
     );
     --spectrum-search-border-width: var(--spectrum-border-width-100);
-    --spectrum-search-background-color: var(--spectrum-gray-50);
+    --spectrum-search-background-color: var(--spectrum-gray-25);
     --spectrum-search-color-disabled: var(--spectrum-disabled-content-color);
     --spectrum-search-background-color-disabled: var(
         --spectrum-disabled-background-color
@@ -145,18 +154,30 @@ governing permissions and limitations under the License.
 }
 
 :host([size='s']) {
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-75
+    );
     --spectrum-search-block-size: var(--spectrum-component-height-75);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-75);
 }
 
 :host([size='l']) {
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-200
+    );
     --spectrum-search-block-size: var(--spectrum-component-height-200);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-200);
 }
 
 :host([size='xl']) {
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-300
+    );
     --spectrum-search-block-size: var(--spectrum-component-height-300);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-300);
@@ -220,15 +241,12 @@ governing permissions and limitations under the License.
 }
 
 #button {
-    border-radius: var(
-        --mod-search-border-radius,
-        var(--spectrum-search-border-radius)
-    );
     position: absolute;
     inset-block-start: 0;
     inset-inline-end: 0;
 }
 
+#button,
 #button .spectrum-ClearButton-fill {
     border-radius: var(
         --mod-search-border-radius,
@@ -387,65 +405,5 @@ governing permissions and limitations under the License.
                 --mod-search-quiet-button-offset,
                 var(--spectrum-search-quiet-button-offset)
             )
-    );
-}
-
-:host {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-edge-to-visual
-    );
-    --spectrum-search-border-color-default: var(
-        --system-spectrum-search-border-color-default
-    );
-    --spectrum-search-border-color-hover: var(
-        --system-spectrum-search-border-color-hover
-    );
-    --spectrum-search-border-color-focus: var(
-        --system-spectrum-search-border-color-focus
-    );
-    --spectrum-search-border-color-focus-hover: var(
-        --system-spectrum-search-border-color-focus-hover
-    );
-    --spectrum-search-border-color-key-focus: var(
-        --system-spectrum-search-border-color-key-focus
-    );
-}
-
-:host([size='s']) {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizes-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizes-edge-to-visual
-    );
-}
-
-:host {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizem-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizem-edge-to-visual
-    );
-}
-
-:host([size='l']) {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizel-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizel-edge-to-visual
-    );
-}
-
-:host([size='xl']) {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizexl-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizexl-edge-to-visual
     );
 }

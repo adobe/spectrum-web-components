@@ -42,7 +42,7 @@ governing permissions and limitations under the License.
     --spectrum-progressbar-text-color: var(
         --spectrum-neutral-content-color-default
     );
-    --spectrum-progressbar-track-color: var(--spectrum-gray-300);
+    --spectrum-progressbar-track-color: var(--spectrum-gray-200);
     --spectrum-progressbar-fill-color: var(--spectrum-accent-color-900);
     --spectrum-progressbar-fill-color-positive: var(
         --spectrum-positive-visual-color
@@ -333,8 +333,7 @@ governing permissions and limitations under the License.
         infinite;
 }
 
-:host([indeterminate]) .fill:dir(rtl),
-:host([dir='rtl'][indeterminate]) .fill {
+:host([indeterminate]) .fill:dir(rtl) {
     animation: b
         var(
             --mod-progressbar-animation-duration-indeterminate,
