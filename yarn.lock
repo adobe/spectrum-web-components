@@ -5908,15 +5908,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-10.1.0.tgz#07e397d18ec1c7d9c919e8aae464686862b91f47"
   integrity sha512-TxkSE8ZvmIj80oCuPRbWHxJQna0/PeowjfXBrHBoKT7pJKF9LfWD2K+AIHwNVYJfaGCPJxsRlZUsldL7PmzfJw==
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@^14.0.0-next.3":
-  version "14.0.0-next.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-14.0.0-next.3.tgz#3b1effbd2ec41e0f21bf449f1479c834513c5777"
-  integrity sha512-Hcirt+qa13RDhQ2X/IwtKh6Q8oFizyyUXfF4PqreXzaTZuBKNmWxte/p21k6BYUupVTGqI1UFcGBQ/omLXIkvw==
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@^15.0.0-s2-foundations.0":
+  version "15.0.0-s2-foundations.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.0.tgz#0fa9fba70466ce289930f1fb3afb1cdcd0359b97"
+  integrity sha512-lnaos/Mebl11w3/+/yyDiBe3jlbAK6bn8SCDweFa3vQ0mIaH9YFaHYd4mk9WsInW/eY/dqTrzeQsFs99k26GXQ==
 
-"@spectrum-css/tokens@^@spectrum-css/tokens@14.3.0":
-  version "14.3.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-14.3.0.tgz#8e48447f830d4a7a06c684313cb647f1ad46b17e"
-  integrity sha512-4LO++ivbfulQc93ic1wwnCy6k2eyVQVTU7tOHY3zaPGyFood39dCHXcl0RmPo1UObZll8d9zIZDyrLD5wRqgvA==
+"@spectrum-css/tokens@^@spectrum-css/tokens@14.3.1":
+  version "14.3.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-14.3.1.tgz#52079bad1a9d6329bfcba00702c579366a83c72e"
+  integrity sha512-YQBEvccp5jC9dxNMSLb708ucrxY64nExvFfJ0iQ+ddlAraOykFFoCTGcQ5UvSNp31Dp348H05PB7zRoStl0Jdg==
 
 "@spectrum-css/tooltip@^6.1.1":
   version "6.1.1"
