@@ -63,6 +63,10 @@ sp-overlay {
     pointer-events: none;
 }
 
+sp-popover {
+    max-block-size: var(--sp-picker-popover-max-block-size);
+}
+
 sp-menu {
     pointer-events: initial;
 }
