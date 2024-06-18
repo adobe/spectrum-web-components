@@ -344,6 +344,25 @@ describe('sp-overlay', () => {
                 expect(this.auto.open).to.be.false;
                 expect(this.manual.open).to.be.true;
             });
+            it('does not close "modal" overlays when opening', async function () {
+                let opened = oneEvent(this.modal, 'sp-opened');
+                this.modal.open = true;
+                await opened;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+
+                opened = oneEvent(this.manual, 'sp-opened');
+                this.manual.open = true;
+                await opened;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
+            });
         });
     });
     describe('[type="page"]', () => {
