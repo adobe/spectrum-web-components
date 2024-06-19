@@ -272,16 +272,13 @@ governing permissions and limitations under the License.
 
 @media (hover: hover) {
     #header:hover {
-        color: var(
-            --mod-accordion-item-header-color-hover,
-            var(--spectrum-accordion-item-header-color-hover)
-        );
         background-color: var(
             --mod-accordion-background-color-hover,
             var(--spectrum-accordion-background-color-hover)
         );
     }
 
+    #header:hover,
     #header:hover + .iconContainer {
         color: var(
             --mod-accordion-item-header-color-hover,

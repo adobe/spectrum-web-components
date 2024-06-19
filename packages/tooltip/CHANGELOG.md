@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+### Bug Fixes
+
+-   **overlay:** ensure hint Overlays within shadow roots open as expected ([#4443](https://github.com/adobe/spectrum-web-components/issues/4443)) ([7dd64b9](https://github.com/adobe/spectrum-web-components/commit/7dd64b92e58ad2fd3a36986f24022728e3cb4c36))
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+### Bug Fixes
+
+-   **overlay:** ensure hint Overlays within shadow roots open as expected ([#4443](https://github.com/adobe/spectrum-web-components/issues/4443)) ([7dd64b9](https://github.com/adobe/spectrum-web-components/commit/7dd64b92e58ad2fd3a36986f24022728e3cb4c36))
+
 ## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
 
 ### Bug Fixes

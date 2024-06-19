@@ -29,18 +29,14 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 describe('Tooltip', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Tooltip>(
-                html`
-                    <sp-tooltip>Help text.</sp-tooltip>
-                `
-            )
+            await fixture<Tooltip>(html`
+                <sp-tooltip>Help text.</sp-tooltip>
+            `)
     );
     it('loads', async () => {
-        const el = await fixture<Tooltip>(
-            html`
-                <sp-tooltip>Help text.</sp-tooltip>
-            `
-        );
+        const el = await fixture<Tooltip>(html`
+            <sp-tooltip>Help text.</sp-tooltip>
+        `);
 
         await elementUpdated(el);
 
@@ -55,16 +51,12 @@ describe('Tooltip', () => {
                 },
             ],
         });
-        const button = await fixture<Button>(
-            html`
-                <sp-button>
-                    This is a button.
-                    <sp-tooltip self-managed placement="top">
-                        Help text.
-                    </sp-tooltip>
-                </sp-button>
-            `
-        );
+        const button = await fixture<Button>(html`
+            <sp-button>
+                This is a button.
+                <sp-tooltip self-managed placement="top">Help text.</sp-tooltip>
+            </sp-button>
+        `);
 
         const el = button.querySelector('sp-tooltip') as Tooltip;
 
@@ -88,15 +80,50 @@ describe('Tooltip', () => {
 
         expect(el.open).to.be.false;
     });
+    it('self manages through a shadow boundary', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div></div>
+        `);
+        test.attachShadow({ mode: 'open' });
+        if (!test.shadowRoot) return;
+        test.shadowRoot.innerHTML = `
+            <sp-button>
+                This is a button.
+                <sp-tooltip self-managed placement="top">
+                    Help text.
+                </sp-tooltip>
+            </sp-button>
+        `;
+
+        const button = test.shadowRoot.querySelector('sp-button') as Button;
+        const el = test.shadowRoot.querySelector('sp-tooltip') as Tooltip;
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        const opened = oneEvent(button, 'sp-opened');
+        button.focus();
+        await opened;
+
+        expect(el.open).to.be.true;
+        await expect(button).to.be.accessible();
+
+        const closed = oneEvent(button, 'sp-closed');
+        button.blur();
+        await closed;
+
+        expect(el.open).to.be.false;
+    });
     it('cleans up when self manages', async () => {
-        const button = await fixture<Button>(
-            html`
-                <sp-button>
-                    This is a button.
-                    <sp-tooltip self-managed>Help text.</sp-tooltip>
-                </sp-button>
-            `
-        );
+        const button = await fixture<Button>(html`
+            <sp-button>
+                This is a button.
+                <sp-tooltip self-managed>Help text.</sp-tooltip>
+            </sp-button>
+        `);
 
         const el = button.querySelector('sp-tooltip') as Tooltip;
 
@@ -117,14 +144,12 @@ describe('Tooltip', () => {
         expect(el.open).to.be.false;
     });
     it('cleans up when self managed and removed', async () => {
-        const button = await fixture<Button>(
-            html`
-                <sp-button>
-                    This is a button.
-                    <sp-tooltip self-managed>Help text.</sp-tooltip>
-                </sp-button>
-            `
-        );
+        const button = await fixture<Button>(html`
+            <sp-button>
+                This is a button.
+                <sp-tooltip self-managed>Help text.</sp-tooltip>
+            </sp-button>
+        `);
 
         const el = button.querySelector('sp-tooltip') as Tooltip;
 
@@ -144,11 +169,9 @@ describe('Tooltip', () => {
         expect(el.open).to.be.false;
     });
     it('accepts variants', async () => {
-        const el = await fixture<Tooltip>(
-            html`
-                <sp-tooltip variant="negative">Help text.</sp-tooltip>
-            `
-        );
+        const el = await fixture<Tooltip>(html`
+            <sp-tooltip variant="negative">Help text.</sp-tooltip>
+        `);
 
         await elementUpdated(el);
 
@@ -177,11 +200,9 @@ describe('Tooltip', () => {
         expect(el.hasAttribute('variant')).to.be.false;
     });
     it('validates variants', async () => {
-        const el = await fixture<Tooltip>(
-            html`
-                <sp-tooltip variant="other">Help text.</sp-tooltip>
-            `
-        );
+        const el = await fixture<Tooltip>(html`
+            <sp-tooltip variant="other">Help text.</sp-tooltip>
+        `);
 
         await elementUpdated(el);
 
@@ -204,11 +225,9 @@ describe('Tooltip', () => {
     });
 
     it('surfaces tip element', async () => {
-        const el = await fixture<Tooltip>(
-            html`
-                <sp-tooltip placement="top">Help text.</sp-tooltip>
-            `
-        );
+        const el = await fixture<Tooltip>(html`
+            <sp-tooltip placement="top">Help text.</sp-tooltip>
+        `);
 
         await elementUpdated(el);
 
@@ -226,11 +245,9 @@ describe('Tooltip', () => {
             documentEventsSpy.restore();
         });
         it('does not attach event listeners if no trigger was found', async function () {
-            const el = await fixture<Tooltip>(
-                html`
-                    <sp-tooltip self-managed>Help text.</sp-tooltip>
-                `
-            );
+            const el = await fixture<Tooltip>(html`
+                <sp-tooltip self-managed>Help text.</sp-tooltip>
+            `);
 
             await elementUpdated(el);
             let calls = documentEventsSpy.callCount;
@@ -257,13 +274,11 @@ describe('Tooltip', () => {
         });
 
         it('warns when incorrectly using `self-managed`', async () => {
-            const el = await fixture<Tooltip>(
-                html`
-                    <sp-tooltip variant="negative" self-managed>
-                        Help text.
-                    </sp-tooltip>
-                `
-            );
+            const el = await fixture<Tooltip>(html`
+                <sp-tooltip variant="negative" self-managed>
+                    Help text.
+                </sp-tooltip>
+            `);
 
             await elementUpdated(el);
 

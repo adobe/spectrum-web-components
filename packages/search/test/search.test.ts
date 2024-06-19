@@ -20,29 +20,23 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Search', () => {
     testForLitDevWarnings(
         async () =>
-            await litFixture<Search>(
-                html`
-                    <sp-search></sp-search>
-                `
-            )
+            await litFixture<Search>(html`
+                <sp-search></sp-search>
+            `)
     );
     it('loads accessibly', async () => {
-        const el = await litFixture<Search>(
-            html`
-                <sp-search></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search></sp-search>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('can be cleared', async () => {
-        const el = await litFixture<Search>(
-            html`
-                <sp-search value="Test"></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search value="Test"></sp-search>
+        `);
 
         await elementUpdated(el);
         expect(el.value).to.equal('Test');
@@ -56,11 +50,9 @@ describe('Search', () => {
         expect(el.value).to.equal('');
     });
     it('captures keyboard events to the clear button', async () => {
-        const el = await litFixture<Search>(
-            html`
-                <sp-search value="Test"></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search value="Test"></sp-search>
+        `);
 
         await elementUpdated(el);
         expect(el.value).to.equal('Test');
@@ -84,15 +76,13 @@ describe('Search', () => {
             const target = event.target as HTMLInputElement;
             changeSpy(target.value);
         };
-        const el = await litFixture<Search>(
-            html`
-                <sp-search
-                    value="Test"
-                    @change=${handleChange}
-                    @input=${handleInput}
-                ></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search
+                value="Test"
+                @change=${handleChange}
+                @input=${handleInput}
+            ></sp-search>
+        `);
 
         await elementUpdated(el);
         expect(el.value).to.equal('Test');
@@ -122,15 +112,13 @@ describe('Search', () => {
             const target = event.target as HTMLInputElement;
             changeSpy(target.value);
         };
-        const el = await litFixture<Search>(
-            html`
-                <sp-search
-                    value="Test"
-                    @change=${handleChange}
-                    @input=${handleInput}
-                ></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search
+                value="Test"
+                @change=${handleChange}
+                @input=${handleInput}
+            ></sp-search>
+        `);
 
         await elementUpdated(el);
         expect(el.value).to.equal('Test');
@@ -151,12 +139,45 @@ describe('Search', () => {
         expect(changeSpy.calledOnce, 'one change').to.be.true;
         expect(changeSpy.calledWith(''), 'was blank').to.be.true;
     });
+    it('cannot be cleared via "Escape" if holdValueOnEscape is true', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const handleInput = (event: Event): void => {
+            const target = event.target as HTMLInputElement;
+            inputSpy(target.value);
+        };
+        const handleChange = (event: Event): void => {
+            const target = event.target as HTMLInputElement;
+            changeSpy(target.value);
+        };
+        const el = await litFixture<Search>(html`
+            <sp-search
+                value="Test"
+                @change=${handleChange}
+                @input=${handleInput}
+                holdValueOnEscape
+            ></sp-search>
+        `);
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('Test');
+        el.focusElement.dispatchEvent(spaceEvent());
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('Test');
+
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        el.focusElement.dispatchEvent(escapeEvent());
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Test');
+    });
     it('cannot be multiline', async () => {
-        const el = await litFixture<Search>(
-            html`
-                <sp-search multiline></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search multiline></sp-search>
+        `);
 
         await elementUpdated(el);
 
@@ -170,11 +191,9 @@ describe('Search', () => {
     });
     it('accepts `placeholder` and `label` properties', async () => {
         const testString = 'Search for images';
-        const el = await litFixture<Search>(
-            html`
-                <sp-search></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search></sp-search>
+        `);
 
         await elementUpdated(el);
         el.placeholder = testString;
@@ -186,15 +205,13 @@ describe('Search', () => {
         expect(el.focusElement.getAttribute('aria-label')).to.equal(testString);
     });
     it('can have default prevented', async () => {
-        const el = await litFixture<Search>(
-            html`
-                <sp-search
-                    @submit=${(event: Event) => {
-                        event.preventDefault();
-                    }}
-                ></sp-search>
-            `
-        );
+        const el = await litFixture<Search>(html`
+            <sp-search
+                @submit=${(event: Event) => {
+                    event.preventDefault();
+                }}
+            ></sp-search>
+        `);
 
         await elementUpdated(el);
         const searchForm = (
