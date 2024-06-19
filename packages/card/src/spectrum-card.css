@@ -23,10 +23,10 @@ governing permissions and limitations under the License.
     --spectrum-card-subtitle-padding-right: var(--spectrum-spacing-100);
     --spectrum-card-border-width: var(--spectrum-border-width-100);
     --spectrum-card-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-card-border-color: var(--spectrum-gray-200);
-    --spectrum-card-border-color-hover: var(--spectrum-gray-300);
+    --spectrum-card-border-color: var(--spectrum-gray-100);
+    --spectrum-card-border-color-hover: var(--spectrum-gray-200);
     --spectrum-card-border-color-selected: var(--spectrum-blue-700);
-    --spectrum-card-divider-color: var(--spectrum-gray-300);
+    --spectrum-card-divider-color: var(--spectrum-gray-200);
     --spectrum-card-title-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-card-title-font-size: var(--spectrum-heading-size-xxs);
     --spectrum-card-title-font-weight: var(
@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
     --spectrum-card-preview-background-color: var(
         --spectrum-background-base-color
     );
-    --spectrum-card-preview-background-color-hover: var(--spectrum-gray-300);
+    --spectrum-card-preview-background-color-hover: var(--spectrum-gray-200);
     --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
     --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
 }

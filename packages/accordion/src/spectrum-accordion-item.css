@@ -93,8 +93,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.iconContainer:dir(rtl),
-:host([dir='rtl']) .iconContainer {
+.iconContainer:dir(rtl) {
     transform: scaleX(-1);
 }
 

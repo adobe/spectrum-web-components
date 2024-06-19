@@ -17,8 +17,9 @@ governing permissions and limitations under the License.
     --spectrum-splitview-vertical-gripper-width: 50%;
     --spectrum-splitview-vertical-gripper-outer-width: 100%;
     --spectrum-splitview-vertical-gripper-reset: 0;
-    --spectrum-splitview-background-color: var(--spectrum-gray-100);
-    --spectrum-splitview-handle-background-color: var(--spectrum-gray-300);
+    --spectrum-splitview-background-color: var(--spectrum-gray-75);
+    --spectrum-splitview-content-color: var(--spectrum-body-color);
+    --spectrum-splitview-handle-background-color: var(--spectrum-gray-200);
     --spectrum-splitview-handle-background-color-hover: var(
         --spectrum-gray-400
     );
@@ -44,6 +45,10 @@ governing permissions and limitations under the License.
     background-color: var(
         --mod-splitview-background-color,
         var(--spectrum-splitview-background-color)
+    );
+    color: var(
+        --mod-splitview-content-color,
+        var(--spectrum-splitview-content-color)
     );
     block-size: 100%;
 }

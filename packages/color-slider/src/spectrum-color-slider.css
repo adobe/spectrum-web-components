@@ -163,8 +163,7 @@ governing permissions and limitations under the License.
     inline-size: 100%;
 }
 
-.gradient:dir(rtl),
-:host([dir='rtl']) .gradient {
+.gradient:dir(rtl) {
     transform: scaleX(-1);
 }
 

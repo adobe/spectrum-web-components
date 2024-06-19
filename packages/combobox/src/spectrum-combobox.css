@@ -13,6 +13,11 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    --spectrum-combobox-border-color-default: var(--spectrum-gray-500);
+    --spectrum-combobox-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-combobox-border-color-focus: var(--spectrum-gray-500);
+    --spectrum-combobox-border-color-focus-hover: var(--spectrum-gray-600);
+    --spectrum-combobox-border-color-key-focus: var(--spectrum-gray-600);
     --spectrum-combobox-inline-size: var(--spectrum-field-width);
     --spectrum-combobox-block-size: var(--spectrum-component-height-100);
     --spectrum-combobox-min-inline-size: calc(
@@ -415,8 +420,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.progress-circle:dir(rtl),
-:host([dir='rtl']) .progress-circle {
+.progress-circle:dir(rtl) {
     inset-inline-start: calc(
         var(
                 --mod-combobox-spacing-inline-icon-to-button,
@@ -832,23 +836,5 @@ governing permissions and limitations under the License.
                 --mod-combobox-button-inline-offset,
                 var(--spectrum-combobox-button-inline-offset, 0px)
             )
-    );
-}
-
-:host {
-    --spectrum-combobox-border-color-default: var(
-        --system-spectrum-combobox-border-color-default
-    );
-    --spectrum-combobox-border-color-hover: var(
-        --system-spectrum-combobox-border-color-hover
-    );
-    --spectrum-combobox-border-color-focus: var(
-        --system-spectrum-combobox-border-color-focus
-    );
-    --spectrum-combobox-border-color-focus-hover: var(
-        --system-spectrum-combobox-border-color-focus-hover
-    );
-    --spectrum-combobox-border-color-key-focus: var(
-        --system-spectrum-combobox-border-color-key-focus
     );
 }

@@ -40,14 +40,14 @@ governing permissions and limitations under the License.
 .folderBackground {
     fill: var(
         --highcontrast-asset-folder-background-color,
-        var(--mod-asset-folder-background-color, var(--spectrum-gray-300))
+        var(--mod-asset-folder-background-color, var(--spectrum-gray-200))
     );
 }
 
 .fileBackground {
     fill: var(
         --highcontrast-asset-file-background-color,
-        var(--mod-asset-file-background-color, var(--spectrum-gray-50))
+        var(--mod-asset-file-background-color, var(--spectrum-gray-25))
     );
 }
 

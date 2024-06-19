@@ -13,6 +13,17 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 .root {
+    --spectrum-picker-button-background-color: var(--spectrum-gray-50);
+    --spectrum-picker-button-background-color-hover: var(--spectrum-gray-100);
+    --spectrum-picker-button-background-color-down: var(--spectrum-gray-200);
+    --spectrum-picker-button-background-color-key-focus: var(
+        --spectrum-gray-100
+    );
+    --spectrum-picker-button-border-color: inherit;
+    --spectrum-picker-button-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-picker-button-border-radius-rounded-sided: 0;
+    --spectrum-picker-button-border-radius-sided: 0;
+    --spectrum-picker-button-border-width: var(--spectrum-border-width-100);
     --spectrum-picker-button-height: var(--spectrum-component-height-100);
     --spectrum-picker-button-width: var(--spectrum-component-height-100);
     --spectrum-picker-button-gap: var(--spectrum-text-to-visual-50);
@@ -434,34 +445,4 @@ governing permissions and limitations under the License.
 
 .textuiicon .spectrum-PickerButton-fill {
     inline-size: auto;
-}
-
-.root {
-    --spectrum-picker-button-background-color: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-background-color
-    );
-    --spectrum-picker-button-background-color-hover: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-background-color-hover
-    );
-    --spectrum-picker-button-background-color-down: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-background-color-down
-    );
-    --spectrum-picker-button-background-color-key-focus: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-background-color-key-focus
-    );
-    --spectrum-picker-button-border-color: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-border-color
-    );
-    --spectrum-picker-button-border-radius: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-border-radius
-    );
-    --spectrum-picker-button-border-radius-rounded-sided: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-rounded-sided
-    );
-    --spectrum-picker-button-border-radius-sided: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-border-radius-sided
-    );
-    --spectrum-picker-button-border-width: var(
-        --system-spectrum-pickerbutton-spectrum-picker-button-border-width
-    );
 }

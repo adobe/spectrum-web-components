@@ -22,7 +22,7 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-item-counter-color: var(
         --spectrum-neutral-content-color-default
     );
-    --spectrum-actionbar-popover-background-color: var(--spectrum-gray-50);
+    --spectrum-actionbar-popover-background-color: var(--spectrum-gray-25);
     --spectrum-actionbar-popover-border-color: var(--spectrum-gray-400);
     --spectrum-actionbar-emphasized-background-color: var(
         --spectrum-informative-background-color-default

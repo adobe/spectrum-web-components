@@ -109,8 +109,7 @@ governing permissions and limitations under the License.
     inset-block-start: 0;
 }
 
-.handle:dir(rtl),
-:host([dir='rtl']) .handle {
+.handle:dir(rtl) {
     inset-inline-end: 0;
 }
 
