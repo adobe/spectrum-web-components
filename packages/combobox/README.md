@@ -174,6 +174,28 @@ The popup menu items are filtered to only those completing the currently-input v
 </sp-combobox>
 ```
 
+### Quiet
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color" quiet>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+### Pending
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color" pending>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
 ## Focus and Accessibility
 
 The combobox supports both mouse and keyboard navigation.

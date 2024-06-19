@@ -28,20 +28,26 @@ export type TestableCombobox = HTMLElement & {
     options: ComboboxOption[];
     shadowRoot: ShadowRoot;
     value: string;
+    pending: boolean;
+};
+
+export type AccessibleNamedNode = {
+    description: string;
+    name: string;
+    role: string;
+    value?: string;
 };
 
 export const comboboxFixture = async (): Promise<TestableCombobox> => {
-    const el = await fixture<TestableCombobox>(
-        html`
-            <sp-combobox
-                .autocomplete=${'list'}
-                label="Combobox"
-                .options=${fruits}
-            >
-                Combobox
-            </sp-combobox>
-        `
-    );
+    const el = await fixture<TestableCombobox>(html`
+        <sp-combobox
+            .autocomplete=${'list'}
+            label="Combobox"
+            .options=${fruits}
+        >
+            Combobox
+        </sp-combobox>
+    `);
 
     return el;
 };
