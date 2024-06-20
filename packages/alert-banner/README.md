@@ -87,7 +87,7 @@ The component dispatches a `close` event to announce that the alert banner has b
 
 ## Accessibility
 
-The `sp-alert-banner` element is rendered with a `role` of `alert`, to inform screen readers and notify users accordingly. When rendering the element on a page, it should be placed in a container with a `role` of `region`. The component should not interfere with the user’s current workflow by changing page focus.
+The `sp-alert-banner` element is rendered with a `role` of `alert`, to inform screen readers and notify users accordingly. When rendering an alert that is dismissable or has actions on a page, it should be placed in a container with a `role` of `region` and that region should be labelled for screen readers users to quickly navigate.
 
 The alert banner supports keyboard interaction as follows:
 
@@ -95,3 +95,5 @@ The alert banner supports keyboard interaction as follows:
 -   _Tab + Shift_ should place focus on the previous interactive element.
 -   _Space_ or _Enter_ should trigger the interaction if one of the buttons is focused, thus dismissing the alert in case of the close button or triggering the corresponding contextual action.
 -   _Esc_ will dismiss an alert banner if it’s a dismissible alert.
+
+Once focus is on the alert banner, arrow keys can be used to navigate between the close button and the slotted action buttons.
