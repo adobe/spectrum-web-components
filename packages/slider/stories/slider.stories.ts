@@ -226,6 +226,13 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 Value Less than Fill Start
             </sp-slider>
         </div>
+    `;
+};
+
+export const FillStartWithNegativeMinRange = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
                 max="150"
@@ -238,7 +245,7 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 .formatOptions=${{ style: 'number' }}
                 ...=${spreadProps(args)}
             >
-                Fill start with fill-start="0" within range -50 to 150
+                Fill start with "0" and within range -50 to 150
             </sp-slider>
         </div>
         <div style="width: 500px; margin-inline: 20px;">
@@ -267,8 +274,8 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 }}
                 ...=${spreadProps(args)}
             >
-                Fill start with fill-start="0" and normalization function within
-                range -50 to 100
+                Fill start with "0" and normalization function within range -50
+                to 100
             </sp-slider>
         </div>
     `;
