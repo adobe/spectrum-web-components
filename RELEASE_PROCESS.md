@@ -25,9 +25,8 @@ The docs site will publish automatically if the `#publish` string is included in
 
 If publishing fails with an error, check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt. If they have, then `yarn changeset-publish` will no longer work. Instead, you'll need to run:
 
-```
-yarn changeset-publish from-package
-```
+`yarn publish`
+in each package.
 
 ## Publishing the docs site manually
 
