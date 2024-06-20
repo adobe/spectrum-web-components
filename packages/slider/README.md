@@ -130,6 +130,8 @@ When both `fill-start` and `variant="filled"` are used in `<sp-slider>`, the `fi
 
 ### fill-start with value
 
+Any number (including `0`) can be used as a fill-start value. If a [custom normalization](#advanced-normalization) function is provided, it will also normalize all fill-related params.
+
 ```html
 <sp-slider
     id="fill-start-slider"
@@ -149,6 +151,15 @@ When both `fill-start` and `variant="filled"` are used in `<sp-slider>`, the `fi
     value=".7"
     step="0.1"
     fill-start="0.25"
+    variant="filled"
+></sp-slider>
+<sp-slider
+    label="Fill Start with 0"
+    max="1"
+    min="-1"
+    value=".7"
+    step="0.1"
+    fill-start="0"
     variant="filled"
 ></sp-slider>
 <sp-slider
