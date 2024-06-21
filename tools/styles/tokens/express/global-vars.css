@@ -49,6 +49,7 @@
     --spectrum-heading-serif-emphasized-font-weight: var(
         --spectrum-black-font-weight
     );
+    --system: express;
 }
 
 :host,

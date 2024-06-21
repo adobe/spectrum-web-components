@@ -27,6 +27,7 @@ const config = {
             inPackage: '@spectrum-css/button',
             outPackage: 'button',
             fileName: 'button',
+            systemOverrides: true,
             excludeByComponents: [
                 builder.element('a'),
                 {

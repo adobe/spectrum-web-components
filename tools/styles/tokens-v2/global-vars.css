@@ -4,6 +4,7 @@
     --spectrum-static-white-focus-indicator-color: var(--spectrum-white);
     --spectrum-static-black-focus-indicator-color: var(--spectrum-black);
     --spectrum-overlay-color: var(--spectrum-black);
+    --spectrum-drop-shadow-color: var(--spectrum-drop-shadow-color-100);
     --spectrum-opacity-disabled: 0.3;
     --spectrum-background-base-color: var(--spectrum-gray-25);
     --spectrum-background-layer-1-color: var(--spectrum-gray-50);
@@ -96,6 +97,16 @@
     --spectrum-negative-border-color-key-focus: var(
         --spectrum-negative-color-1000
     );
+    --spectrum-title-color: var(--spectrum-gray-900);
+    --spectrum-drop-shadow-emphasized-default-color: var(
+        --spectrum-drop-shadow-color-100
+    );
+    --spectrum-drop-shadow-emphasized-hover-color: var(
+        --spectrum-drop-shadow-color-200
+    );
+    --spectrum-drop-shadow-elevated-color: var(
+        --spectrum-drop-shadow-color-200
+    );
     --spectrum-swatch-border-color: var(--spectrum-gray-900);
     --spectrum-swatch-border-opacity: 0.51;
     --spectrum-swatch-disabled-icon-border-color: var(--spectrum-black);
@@ -105,15 +116,13 @@
     --spectrum-thumbnail-opacity-disabled: var(--spectrum-opacity-disabled);
     --spectrum-opacity-checkerboard-square-light: var(--spectrum-white);
     --spectrum-avatar-opacity-disabled: var(--spectrum-opacity-disabled);
-    --spectrum-color-area-border-color: var(--spectrum-gray-1000);
+    --spectrum-color-area-border-color: var(--spectrum-gray-900);
     --spectrum-color-area-border-opacity: 0.1;
-    --spectrum-color-slider-border-color: var(--spectrum-gray-1000);
+    --spectrum-color-slider-border-color: var(--spectrum-gray-900);
     --spectrum-color-slider-border-opacity: 0.1;
     --spectrum-color-loupe-drop-shadow-color: var(
         --spectrum-transparent-black-300
     );
-    --spectrum-color-loupe-drop-shadow-y: 2px;
-    --spectrum-color-loupe-drop-shadow-blur: 8px;
     --spectrum-color-loupe-inner-border: var(--spectrum-transparent-black-200);
     --spectrum-color-loupe-outer-border: var(--spectrum-white);
     --spectrum-card-selection-background-color: var(--spectrum-gray-100);
@@ -310,11 +319,9 @@
     --spectrum-icon-color-primary-default: var(
         --spectrum-neutral-content-color-default
     );
+    --spectrum-asterisk-icon-size-75: 8px;
     --spectrum-radio-button-selection-indicator: 4px;
     --spectrum-field-label-top-margin-small: 0px;
-    --spectrum-field-label-top-margin-medium: 0px;
-    --spectrum-field-label-top-margin-large: 0px;
-    --spectrum-field-label-top-margin-extra-large: 0px;
     --spectrum-field-label-to-component: 0px;
     --spectrum-help-text-to-component: 0px;
     --spectrum-status-light-dot-size-small: 8px;
@@ -370,23 +377,21 @@
         --spectrum-alert-banner-bottom-to-text
     );
     --spectrum-color-area-border-width: var(--spectrum-border-width-100);
-    --spectrum-color-area-border-rounding: var(
-        --spectrum-corner-radius-medium-size-small
-    );
+    --spectrum-color-area-border-rounding: var(--spectrum-corner-radius-100);
     --spectrum-color-wheel-color-area-margin: 12px;
     --spectrum-color-slider-border-width: 1px;
-    --spectrum-color-slider-border-rounding: var(
-        --spectrum-corner-radius-medium-size-small
-    );
+    --spectrum-color-slider-border-rounding: 4px;
     --spectrum-floating-action-button-drop-shadow-blur: 12px;
     --spectrum-floating-action-button-drop-shadow-y: 4px;
     --spectrum-illustrated-message-maximum-width: 380px;
-    --spectrum-search-field-minimum-width-multiplier: 4;
+    --spectrum-search-field-minimum-width-multiplier: 3;
     --spectrum-color-loupe-height: 64px;
     --spectrum-color-loupe-width: 48px;
     --spectrum-color-loupe-bottom-to-color-handle: 12px;
     --spectrum-color-loupe-outer-border-width: var(--spectrum-border-width-200);
     --spectrum-color-loupe-inner-border-width: 1px;
+    --spectrum-color-loupe-drop-shadow-y: 2px;
+    --spectrum-color-loupe-drop-shadow-blur: 8px;
     --spectrum-card-minimum-width: 100px;
     --spectrum-card-preview-minimum-height: 130px;
     --spectrum-card-selection-background-size: 40px;
@@ -501,104 +506,7 @@
     --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
         --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
     );
-    --spectrum-asterisk-icon-size-75: 8px;
-    --spectrum-divider-vertical-minimum-height: 200px;
-    --spectrum-divider-horizontal-minimum-width: 200px;
-    --spectrum-tooltip-tip-corner-radius: 1px;
-    --spectrum-tag-minimum-width-multiplier: 1;
-    --spectrum-tag-maximum-width-multiplier: 7;
-    --spectrum-title-cjk-emphasized-font-style: var(
-        --spectrum-default-font-style
-    );
-    --spectrum-title-cjk-emphasized-font-weight: var(
-        --spectrum-extra-bold-font-weight
-    );
-    --spectrum-title-cjk-font-family: var(--spectrum-cjk-font-family);
-    --spectrum-title-cjk-font-style: var(--spectrum-default-font-style);
-    --spectrum-title-cjk-font-weight: var(--spectrum-bold-font-weight);
-    --spectrum-title-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-title-cjk-size-l: var(--spectrum-font-size-200);
-    --spectrum-title-cjk-size-m: var(--spectrum-font-size-100);
-    --spectrum-title-cjk-size-s: var(--spectrum-font-size-75);
-    --spectrum-title-cjk-size-xl: var(--spectrum-font-size-300);
-    --spectrum-title-cjk-size-xs: var(--spectrum-font-size-50);
-    --spectrum-title-cjk-size-xxl: var(--spectrum-font-size-400);
-    --spectrum-title-cjk-size-xxxl: var(--spectrum-font-size-500);
-    --spectrum-title-cjk-strong-emphasized-font-style: var(
-        --spectrum-default-font-style
-    );
-    --spectrum-title-cjk-strong-emphasized-font-weight: var(
-        --spectrum-extra-bold-font-weight
-    );
-    --spectrum-title-cjk-strong-font-style: var(--spectrum-default-font-style);
-    --spectrum-title-cjk-strong-font-weight: var(
-        --spectrum-extra-bold-font-weight
-    );
-    --spectrum-title-line-height: var(--spectrum-line-height-100);
-    --spectrum-title-margin-bottom-multiplier: 0.25;
-    --spectrum-title-margin-top-multiplier: 0.88888889;
-    --spectrum-title-sans-serif-emphasized-font-style: var(
-        --spectrum-italic-font-style
-    );
-    --spectrum-title-sans-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
-    --spectrum-title-sans-serif-font-family: var(
-        --spectrum-sans-serif-font-family
-    );
-    --spectrum-title-sans-serif-font-style: var(--spectrum-default-font-style);
-    --spectrum-title-sans-serif-font-weight: var(--spectrum-bold-font-weight);
-    --spectrum-title-sans-serif-strong-emphasized-font-style: var(
-        --spectrum-italic-font-style
-    );
-    --spectrum-title-sans-serif-strong-emphasized-font-weight: var(
-        --spectrum-extra-bold-font-weight
-    );
-    --spectrum-title-sans-serif-strong-font-style: var(
-        --spectrum-default-font-style
-    );
-    --spectrum-title-sans-serif-strong-font-weight: var(
-        --spectrum-extra-bold-font-weight
-    );
-    --spectrum-title-serif-emphasized-font-style: var(
-        --spectrum-italic-font-style
-    );
-    --spectrum-title-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
-    --spectrum-title-serif-font-family: var(--spectrum-serif-font-family);
-    --spectrum-title-serif-font-style: var(--spectrum-default-font-style);
-    --spectrum-title-serif-font-weight: var(--spectrum-bold-font-weight);
-    --spectrum-title-serif-strong-emphasized-font-style: var(
-        --spectrum-italic-font-style
-    );
-    --spectrum-title-serif-strong-emphasized-font-weight: var(
-        --spectrum-black-font-weight
-    );
-    --spectrum-title-serif-strong-font-style: var(
-        --spectrum-default-font-style
-    );
-    --spectrum-title-serif-strong-font-weight: var(
-        --spectrum-black-font-weight
-    );
-    --spectrum-title-size-l: var(--spectrum-font-size-300);
-    --spectrum-title-size-m: var(--spectrum-font-size-200);
-    --spectrum-title-size-s: var(--spectrum-font-size-100);
-    --spectrum-title-size-xl: var(--spectrum-font-size-400);
-    --spectrum-title-size-xs: var(--spectrum-font-size-75);
-    --spectrum-title-size-xxl: var(--spectrum-font-size-500);
-    --spectrum-title-size-xxxl: var(--spectrum-font-size-600);
-    --spectrum-corner-radius-0: 0px;
-    --spectrum-corner-radius-75: 3px;
-    --spectrum-corner-radius-100: 4px;
-    --spectrum-corner-radius-200: 5px;
-    --spectrum-corner-radius-300: 6px;
-    --spectrum-corner-radius-400: 7px;
-    --spectrum-corner-radius-500: 8px;
-    --spectrum-corner-radius-600: 9px;
-    --spectrum-corner-radius-700: 10px;
-    --spectrum-corner-radius-800: 16px;
-    --spectrum-corner-radius-1000: 0.5;
+    --spectrum-corner-radius-75: 2px;
     --spectrum-drop-shadow-x: 0px;
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
@@ -623,48 +531,8 @@
     --spectrum-field-edge-to-border-quiet: 0px;
     --spectrum-field-edge-to-alert-icon-quiet: 0px;
     --spectrum-field-edge-to-validation-icon-quiet: 0px;
-    --spectrum-side-label-character-count-top-margin-small: 0px;
-    --spectrum-side-label-character-count-top-margin-medium: 0px;
-    --spectrum-side-label-character-count-top-margin-large: 0px;
-    --spectrum-side-label-character-count-top-margin-extra-large: 0px;
     --spectrum-text-underline-thickness: 1px;
     --spectrum-text-underline-gap: 1px;
-    --spectrum-component-size-width-ratio-down: 0.3333;
-    --spectrum-component-size-minimum-perspective-down: 24px;
-    --spectrum-component-size-difference-down: -2px;
-    --spectrum-corner-radius-none: var(--spectrum-corner-radius-0);
-    --spectrum-corner-radius-small-default: var(--spectrum-corner-radius-100);
-    --spectrum-corner-radius-medium-default: var(--spectrum-corner-radius-500);
-    --spectrum-corner-radius-large-default: var(--spectrum-corner-radius-700);
-    --spectrum-corner-radius-extra-large-default: var(
-        --spectrum-corner-radius-800
-    );
-    --spectrum-corner-radius-full: var(--spectrum-corner-radius-1000);
-    --spectrum-corner-radius-small-size-small: var(--spectrum-corner-radius-75);
-    --spectrum-corner-radius-small-size-medium: var(
-        --spectrum-corner-radius-100
-    );
-    --spectrum-corner-radius-small-size-large: var(
-        --spectrum-corner-radius-200
-    );
-    --spectrum-corner-radius-small-size-extra-large: var(
-        --spectrum-corner-radius-300
-    );
-    --spectrum-corner-radius-medium-size-extra-small: var(
-        --spectrum-corner-radius-300
-    );
-    --spectrum-corner-radius-medium-size-small: var(
-        --spectrum-corner-radius-400
-    );
-    --spectrum-corner-radius-medium-size-medium: var(
-        --spectrum-corner-radius-500
-    );
-    --spectrum-corner-radius-medium-size-large: var(
-        --spectrum-corner-radius-600
-    );
-    --spectrum-corner-radius-medium-size-extra-large: var(
-        --spectrum-corner-radius-700
-    );
     --spectrum-accent-color-100: var(--spectrum-blue-100);
     --spectrum-accent-color-200: var(--spectrum-blue-200);
     --spectrum-accent-color-300: var(--spectrum-blue-300);
@@ -1245,4 +1113,49 @@
     --spectrum-code-line-height: var(--spectrum-line-height-200);
     --spectrum-code-cjk-line-height: var(--spectrum-cjk-line-height-200);
     --spectrum-code-color: var(--spectrum-gray-800);
+    --system: spectrum;
+
+    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
+    --spectrum-animation-duration-0: 0ms;
+    --spectrum-animation-duration-100: 130ms;
+    --spectrum-animation-duration-200: 160ms;
+    --spectrum-animation-duration-300: 190ms;
+    --spectrum-animation-duration-400: 220ms;
+    --spectrum-animation-duration-500: 250ms;
+    --spectrum-animation-duration-600: 300ms;
+    --spectrum-animation-duration-700: 350ms;
+    --spectrum-animation-duration-800: 400ms;
+    --spectrum-animation-duration-900: 450ms;
+    --spectrum-animation-duration-1000: 500ms;
+    --spectrum-animation-duration-2000: 1000ms;
+    --spectrum-animation-duration-4000: 2000ms;
+    --spectrum-animation-duration-6000: 3000ms;
+    --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
+    --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
+    --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
+    --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
+
+    --spectrum-sans-font-family-stack: adobe-clean,
+        var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
+        'Lucida Grande', sans-serif;
+    --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
+
+    --spectrum-serif-font-family-stack: adobe-clean-serif,
+        var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
+    --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
+
+    --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
+
+    --spectrum-cjk-font-family-stack: adobe-clean-han-japanese,
+        var(--spectrum-cjk-font-family), sans-serif;
+    --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
+    --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
+    --spectrum-docs-static-white-background-color: rgba(
+        var(--spectrum-docs-static-white-background-color-rgb)
+    );
+    --spectrum-docs-static-black-background-color-rgb: 206, 247, 243;
+    --spectrum-docs-static-black-background-color: rgba(
+        var(--spectrum-docs-static-black-background-color-rgb)
+    );
 }
