@@ -3,4 +3,4 @@ import{i as e}from"./swc.DpYYvrpg.js";import{S as i,n as s}from"./swc.BvXu6tu0.j
 `;var c=Object.defineProperty,t=(e,i,s,o)=>{for(var r,t=void 0,n=e.length-1;n>=0;n--)(r=e[n])&&(t=r(i,s,t)||t);return t&&c(i,s,t),t};class n extends i{constructor(){super(...arguments),this.label=""}static get styles(){return[r]}update(e){e.has("label")&&(this.label?this.removeAttribute("aria-hidden"):this.setAttribute("aria-hidden","true")),super.update(e)}render(){return o`
             <slot></slot>
         `}}t([s()],n.prototype,"label"),t([s({reflect:!0})],n.prototype,"size");export{n as I};
-//# sourceMappingURL=swc.BOVycppD.js.map
+//# sourceMappingURL=swc.QaQoh6nY.js.map

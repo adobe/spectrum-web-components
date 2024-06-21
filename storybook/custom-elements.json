@@ -94,6 +94,21 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/alert-banner/sp-alert-banner.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-alert-banner",
+          "declaration": {
+            "name": "AlertBanner",
+            "module": "/packages/alert-banner/src/AlertBanner.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/alert-dialog/sp-alert-dialog.js",
       "declarations": [],
       "exports": [
@@ -5742,6 +5757,320 @@
           "declaration": {
             "name": "ActionMenu",
             "module": "packages/action-menu/src/ActionMenu.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/alert-banner/src/AlertBanner.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AlertBanner",
+          "slots": [
+            {
+              "description": "The alert banner text context",
+              "name": ""
+            },
+            {
+              "description": "Slot for the button element that surfaces the contextual action a user can take",
+              "name": "action"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls the display of the alert banner",
+              "parameters": [
+                {
+                  "name": "open",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "dismissible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to include an icon-only close button to dismiss the alert banner",
+              "parameters": [
+                {
+                  "name": "dismissible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "attribute": "dismissible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "privacy": "public",
+              "description": "The variant applies specific styling when set to `negative` or `info`;\n`variant` attribute is removed when it's passed an invalid variant.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "AlertBannerVariants"
+              },
+              "attribute": "variant"
+            },
+            {
+              "kind": "field",
+              "name": "_variant",
+              "type": {
+                "text": "AlertBannerVariants"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "method",
+              "name": "isValidVariant",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderIcon",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "shouldClose",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleKeydown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "VERSION",
+              "static": true,
+              "default": "version",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "tools/base/src/Base.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "close",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Announces the alert banner has been closed"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls the display of the alert banner",
+              "parameters": [
+                {
+                  "name": "open",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "fieldName": "open"
+            },
+            {
+              "name": "dismissible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to include an icon-only close button to dismiss the alert banner",
+              "parameters": [
+                {
+                  "name": "dismissible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "fieldName": "dismissible"
+            },
+            {
+              "name": "variant",
+              "description": "The variant applies specific styling when set to `negative` or `info`;\n`variant` attribute is removed when it's passed an invalid variant.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "AlertBannerVariants"
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-alert-banner",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AlertBanner",
+          "declaration": {
+            "name": "AlertBanner",
+            "module": "packages/alert-banner/src/AlertBanner.js"
           }
         }
       ]
@@ -29776,6 +30105,30 @@
               "readonly": true
             },
             {
+              "kind": "field",
+              "name": "decimalsChars",
+              "privacy": "private",
+              "default": "new Set(['.', ','])"
+            },
+            {
+              "kind": "field",
+              "name": "valueBeforeFocus",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "isIntentDecimal",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
               "kind": "method",
               "name": "convertValueToNumber",
               "privacy": "private",
@@ -30194,7 +30547,7 @@
                 {
                   "name": "event",
                   "type": {
-                    "text": "Event"
+                    "text": "InputEvent"
                   }
                 }
               ],
@@ -64172,6 +64525,63 @@
           "declaration": {
             "name": "*",
             "package": "./ActionMenu.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/alert-banner/src/alert-banner.css.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n    :host{--spectrum-alert-banner-min-height:var(--spectrum-alert-banner-minimum-height);--spectrum-alert-banner-max-inline-size:var(--spectrum-alert-banner-width);--spectrum-alert-banner-size:auto;--spectrum-alert-banner-font-size:var(--spectrum-font-size-100);--spectrum-alert-banner-icon-size:var(--spectrum-workflow-icon-size-100);--spectrum-alert-banner-icon-to-text:var(--spectrum-text-to-visual-300);--spectrum-alert-banner-start-edge:var(--spectrum-spacing-300);--spectrum-alert-banner-text-to-button-horizontal:var(--spectrum-spacing-300);--spectrum-alert-banner-text-to-divider:var(--spectrum-spacing-300);--spectrum-alert-banner-top-icon:var(--spectrum-alert-banner-top-to-workflow-icon);--spectrum-alert-banner-top-text:var(--spectrum-alert-banner-top-to-text);--spectrum-alert-banner-bottom-text:var(--spectrum-alert-banner-bottom-to-text);--spectrum-alert-banner-informative-background:var(--spectrum-informative-background-color-default);--spectrum-alert-banner-negative-background:var(--spectrum-negative-background-color-default);--spectrum-alert-banner-font-color:var(--spectrum-white);--mod-divider-vertical-margin:var(--mod-alert-banner-edge-to-divider,var(--spectrum-alert-banner-edge-to-divider));--mod-divider-vertical-height:auto;--mod-divider-vertical-align:stretch;--mod-button-margin-block:var(--mod-alert-banner-edge-to-button,var(--spectrum-alert-banner-edge-to-button));--mod-button-margin-right:var(--mod-alert-banner-text-to-divider,var(--spectrum-alert-banner-text-to-divider));--mod-button-margin-left:auto;--mod-closebutton-margin-inline:var(--mod-alert-banner-close-button-spacing,var(--spectrum-alert-banner-close-button-spacing));--mod-closebutton-margin-top:var(--mod-alert-banner-close-button-spacing,var(--spectrum-alert-banner-close-button-spacing));--mod-closebutton-align-self:flex-start;inline-size:var(--mod-alert-banner-size,var(--spectrum-alert-banner-size));max-inline-size:var(--mod-alert-banner-max-inline-size,var(--spectrum-alert-banner-max-inline-size));min-block-size:var(--mod-alert-banner-min-height,var(--spectrum-alert-banner-min-height));font-size:var(--mod-alert-banner-font-size,var(--spectrum-alert-banner-font-size));color:var(--mod-alert-banner-font-color,var(--spectrum-alert-banner-font-color));background-color:var(--mod-alert-banner-netural-background,var(--spectrum-alert-banner-netural-background));border:var(--highcontrast-alert-banner-border-width,0)solid var(--highcontrast-alert-banner-border-color,transparent);justify-content:space-between;display:none}:host([open]){display:flex}:host([variant=info]){background-color:var(--mod-alert-banner-informative-background,var(--spectrum-alert-banner-informative-background))}:host([variant=negative]){background-color:var(--mod-alert-banner-negative-background,var(--spectrum-alert-banner-negative-background))}.body{gap:max(calc(var(--mod-alert-banner-text-to-button-vertical,var(--spectrum-alert-banner-text-to-button-vertical)) - var(--mod-alert-banner-edge-to-button,var(--spectrum-alert-banner-edge-to-button))),0px);flex-wrap:wrap;align-items:center;inline-size:100%;margin-inline-start:var(--mod-alert-banner-start-edge,var(--spectrum-alert-banner-start-edge));display:flex}.content{display:flex}.end{align-items:center;display:flex}.type{inline-size:var(--mod-alert-banner-icon-size,var(--spectrum-alert-banner-icon-size));block-size:var(--mod-alert-banner-icon-size,var(--spectrum-alert-banner-icon-size));flex-shrink:0;margin-block-start:var(--mod-alert-banner-top-icon,var(--spectrum-alert-banner-top-icon));margin-inline-end:var(--mod-alert-banner-icon-to-text,var(--spectrum-alert-banner-icon-to-text))}.text{margin-block-start:var(--mod-alert-banner-top-text,var(--spectrum-alert-banner-top-text));margin-block-end:var(--mod-alert-banner-bottom-text,var(--spectrum-alert-banner-bottom-text));margin-inline-end:var(--mod-alert-banner-text-to-button-horizontal,var(--spectrum-alert-banner-text-to-button-horizontal))}@media (forced-colors:active){:host{--highcontrast-alert-banner-border-color:CanvasText;--highcontrast-alert-banner-border-width:var(--spectrum-border-width-100)}}:host{--spectrum-alert-banner-netural-background:var(--system-spectrum-alertbanner-spectrum-alert-banner-netural-background)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/alert-banner/src/alert-banner.css.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/alert-banner/src/index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./AlertBanner.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/alert-banner/src/spectrum-alert-banner.css.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n    :host{--spectrum-alert-banner-min-height:var(--spectrum-alert-banner-minimum-height);--spectrum-alert-banner-max-inline-size:var(--spectrum-alert-banner-width);--spectrum-alert-banner-size:auto;--spectrum-alert-banner-font-size:var(--spectrum-font-size-100);--spectrum-alert-banner-icon-size:var(--spectrum-workflow-icon-size-100);--spectrum-alert-banner-icon-to-text:var(--spectrum-text-to-visual-300);--spectrum-alert-banner-start-edge:var(--spectrum-spacing-300);--spectrum-alert-banner-text-to-button-horizontal:var(--spectrum-spacing-300);--spectrum-alert-banner-text-to-divider:var(--spectrum-spacing-300);--spectrum-alert-banner-top-icon:var(--spectrum-alert-banner-top-to-workflow-icon);--spectrum-alert-banner-top-text:var(--spectrum-alert-banner-top-to-text);--spectrum-alert-banner-bottom-text:var(--spectrum-alert-banner-bottom-to-text);--spectrum-alert-banner-informative-background:var(--spectrum-informative-background-color-default);--spectrum-alert-banner-negative-background:var(--spectrum-negative-background-color-default);--spectrum-alert-banner-font-color:var(--spectrum-white);--mod-divider-vertical-margin:var(--mod-alert-banner-edge-to-divider,var(--spectrum-alert-banner-edge-to-divider));--mod-divider-vertical-height:auto;--mod-divider-vertical-align:stretch;--mod-button-margin-block:var(--mod-alert-banner-edge-to-button,var(--spectrum-alert-banner-edge-to-button));--mod-button-margin-right:var(--mod-alert-banner-text-to-divider,var(--spectrum-alert-banner-text-to-divider));--mod-button-margin-left:auto;--mod-closebutton-margin-inline:var(--mod-alert-banner-close-button-spacing,var(--spectrum-alert-banner-close-button-spacing));--mod-closebutton-margin-top:var(--mod-alert-banner-close-button-spacing,var(--spectrum-alert-banner-close-button-spacing));--mod-closebutton-align-self:flex-start;inline-size:var(--mod-alert-banner-size,var(--spectrum-alert-banner-size));max-inline-size:var(--mod-alert-banner-max-inline-size,var(--spectrum-alert-banner-max-inline-size));min-block-size:var(--mod-alert-banner-min-height,var(--spectrum-alert-banner-min-height));font-size:var(--mod-alert-banner-font-size,var(--spectrum-alert-banner-font-size));color:var(--mod-alert-banner-font-color,var(--spectrum-alert-banner-font-color));background-color:var(--mod-alert-banner-netural-background,var(--spectrum-alert-banner-netural-background));border:var(--highcontrast-alert-banner-border-width,0)solid var(--highcontrast-alert-banner-border-color,transparent);justify-content:space-between;display:none}:host([open]){display:flex}:host([variant=info]){background-color:var(--mod-alert-banner-informative-background,var(--spectrum-alert-banner-informative-background))}:host([variant=negative]){background-color:var(--mod-alert-banner-negative-background,var(--spectrum-alert-banner-negative-background))}.body{gap:max(calc(var(--mod-alert-banner-text-to-button-vertical,var(--spectrum-alert-banner-text-to-button-vertical)) - var(--mod-alert-banner-edge-to-button,var(--spectrum-alert-banner-edge-to-button))),0px);flex-wrap:wrap;align-items:center;inline-size:100%;margin-inline-start:var(--mod-alert-banner-start-edge,var(--spectrum-alert-banner-start-edge));display:flex}.content{display:flex}.end{align-items:center;display:flex}.type{inline-size:var(--mod-alert-banner-icon-size,var(--spectrum-alert-banner-icon-size));block-size:var(--mod-alert-banner-icon-size,var(--spectrum-alert-banner-icon-size));flex-shrink:0;margin-block-start:var(--mod-alert-banner-top-icon,var(--spectrum-alert-banner-top-icon));margin-inline-end:var(--mod-alert-banner-icon-to-text,var(--spectrum-alert-banner-icon-to-text))}.text{margin-block-start:var(--mod-alert-banner-top-text,var(--spectrum-alert-banner-top-text));margin-block-end:var(--mod-alert-banner-bottom-text,var(--spectrum-alert-banner-bottom-text));margin-inline-end:var(--mod-alert-banner-text-to-button-horizontal,var(--spectrum-alert-banner-text-to-button-horizontal))}@media (forced-colors:active){:host{--highcontrast-alert-banner-border-color:CanvasText;--highcontrast-alert-banner-border-width:var(--spectrum-border-width-100)}}:host{--spectrum-alert-banner-netural-background:var(--system-spectrum-alertbanner-spectrum-alert-banner-netural-background)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/alert-banner/src/spectrum-alert-banner.css.js"
           }
         }
       ]

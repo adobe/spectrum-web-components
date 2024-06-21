@@ -12,4 +12,4 @@ import{c as e,a as t,r as i}from"./swc.vweuFVat.js";import"./swc.CF3oWBYX.js";im
                       `:c}
             </label>
         `}firstUpdated(e){super.firstUpdated(e),this.addEventListener("click",this.handleClick)}willUpdate(e){this.hasAttribute("id")||this.setAttribute("id",`${this.tagName.toLowerCase()}-${i()}`),e.has("for")&&(this.resolvedElement.selector=this.for?`#${this.for}`:""),(e.has("id")||e.has(r))&&this.manageTarget()}}f([m({type:Boolean,reflect:!0})],g.prototype,"disabled"),f([m({type:String})],g.prototype,"id"),f([m({type:String})],g.prototype,"for"),f([m({type:Boolean,reflect:!0})],g.prototype,"required"),f([d("slot")],g.prototype,"slotEl"),f([m({type:String,reflect:!0,attribute:"side-aligned"})],g.prototype,"sideAligned"),p("sp-field-label",g);
-//# sourceMappingURL=swc.DzaB6kNX.js.map
+//# sourceMappingURL=swc.OyNZzz-k.js.map

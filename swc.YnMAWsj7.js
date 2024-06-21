@@ -46,4 +46,4 @@ import{R as e}from"./swc.ChFnD8LO.js";import{i as t}from"./swc.DpYYvrpg.js";impo
                 </div>
             </nav>
         `}willUpdate(){if(!this.hasUpdated){const e=this.querySelector("[selected]");e&&(this.value=e.value)}}updated(e){super.updated(e),e.has("manageTabIndex")&&(this.manageTabIndex?this.rovingTabindexController.manage():this.rovingTabindexController.unmanage())}}y([n({type:Boolean,reflect:!0,attribute:"manage-tab-index"})],w.prototype,"manageTabIndex"),y([n({reflect:!0})],w.prototype,"value"),y([n({reflect:!0})],w.prototype,"variant"),y([n({reflect:!0})],w.prototype,"label"),c("sp-sidenav",w),c("sp-sidenav-item",h);export{b as S};
-//# sourceMappingURL=swc.DnRjH9u8.js.map
+//# sourceMappingURL=swc.D213eQvw.js.map

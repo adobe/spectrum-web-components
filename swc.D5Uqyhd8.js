@@ -21,4 +21,4 @@ import{S as o,c as t}from"./swc.DTOM5SD8.js";import{i as c}from"./swc.DpYYvrpg.j
             class="icon spectrum-UIIcon-Cross500"
         ></sp-icon-cross500>
     `};class d extends(s(o,{noDefaultSize:!0})){constructor(){super(...arguments),this.variant=""}static get styles(){return[...super.styles,a,t]}get buttonContent(){return[l[this.size]()]}}u([r({reflect:!0})],d.prototype,"variant"),u([r({type:String,reflect:!0})],d.prototype,"static"),n("sp-close-button",d);
-//# sourceMappingURL=swc.BqhIdEw-.js.map
+//# sourceMappingURL=swc.BQarGZef.js.map

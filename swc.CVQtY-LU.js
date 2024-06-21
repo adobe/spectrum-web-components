@@ -49,4 +49,4 @@ import{c as r,S as e}from"./swc.DTOM5SD8.js";import{i as o}from"./swc.DpYYvrpg.j
                       `:s}
             </form>
         `}firstUpdated(r){super.firstUpdated(r),this.hasAttribute("holdValueOnEscape")||this.inputElement.setAttribute("type","search")}willUpdate(){this.multiline=!1}}f([a()],k.prototype,"action"),f([a()],k.prototype,"label"),f([a()],k.prototype,"method"),f([a()],k.prototype,"placeholder"),f([a({type:Boolean})],k.prototype,"holdValueOnEscape"),f([l("#form")],k.prototype,"form"),i("sp-search",k);
-//# sourceMappingURL=swc.CmjI4nve.js.map
+//# sourceMappingURL=swc.BdfHB9-d.js.map

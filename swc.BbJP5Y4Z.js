@@ -6,4 +6,4 @@ import"./swc.JsxEZzYO.js";import{i as t}from"./swc.DpYYvrpg.js";import{S as e}fr
                   `:r}
             <div class="text"><slot></slot></div>
         `}}a([c({type:Boolean,reflect:!0})],i.prototype,"icon"),a([c({reflect:!0})],i.prototype,"variant"),p("sp-help-text",i);
-//# sourceMappingURL=swc.jUagLLx3.js.map
+//# sourceMappingURL=swc.D9TeTzEY.js.map
