@@ -119,9 +119,9 @@ const importers = {
   './packages/meter/stories/meter.stories.js': () => import('./meter.stories--C1RlOE3.js'),
   './packages/number-field/stories/number-field-sizes.stories.js': () => import('./number-field-sizes.stories-DS99ezV9.js'),
   './packages/number-field/stories/number-field.stories.js': () => import('./number-field.stories-D5qdbYE3.js'),
-  './packages/overlay/stories/overlay-directive.stories.js': () => import('./overlay-directive.stories-L1Tj-0hd.js'),
-  './packages/overlay/stories/overlay-element.stories.js': () => import('./overlay-element.stories-KNsv64xp.js'),
-  './packages/overlay/stories/overlay.stories.js': () => import('./overlay.stories-fb_QuPfh.js'),
+  './packages/overlay/stories/overlay-directive.stories.js': () => import('./overlay-directive.stories-BZGv7FiK.js'),
+  './packages/overlay/stories/overlay-element.stories.js': () => import('./overlay-element.stories-yDiEGsRC.js'),
+  './packages/overlay/stories/overlay.stories.js': () => import('./overlay.stories-3kSdyyUO.js'),
   './packages/picker-button/stories/picker-button-sizes.stories.js': () => import('./picker-button-sizes.stories-kzJGZRlI.js'),
   './packages/picker-button/stories/picker-button.stories.js': () => import('./picker-button.stories-CGvS543N.js'),
   './packages/picker/stories/picker-pending.stories.js': () => import('./picker-pending.stories-BjnnQ1ZH.js'),
@@ -137,8 +137,8 @@ const importers = {
   './packages/search/stories/search-sizes.stories.js': () => import('./search-sizes.stories-Bhtl-Y8A.js'),
   './packages/search/stories/search.stories.js': () => import('./search.stories-1ycrZHb0.js'),
   './packages/sidenav/stories/sidenav.stories.js': () => import('./sidenav.stories-DSDMp9og.js'),
-  './packages/slider/stories/slider-sizes.stories.js': () => import('./slider-sizes.stories-BwTvQTpY.js'),
-  './packages/slider/stories/slider.stories.js': () => import('./slider.stories-C7C3a6Ei.js'),
+  './packages/slider/stories/slider-sizes.stories.js': () => import('./slider-sizes.stories-CYAT6GaG.js'),
+  './packages/slider/stories/slider.stories.js': () => import('./slider.stories-D20bougd.js'),
   './packages/split-button/stories/split-button-accent-field.stories.js': () => import('./split-button-accent-field.stories-B91w-ss2.js'),
   './packages/split-button/stories/split-button-accent-more.stories.js': () => import('./split-button-accent-more.stories-CUSUp0yU.js'),
   './packages/split-button/stories/split-button-primary-field.stories.js': () => import('./split-button-primary-field.stories-BNSBtK20.js'),
@@ -178,7 +178,7 @@ const importers = {
   './packages/underlay/stories/underlay.stories.js': () => import('./underlay.stories-Ble-uqXQ.js'),
   './tools/grid/stories/grid.stories.js': () => import('./grid.stories-CstbPp1n.js'),
   './tools/styles/stories/styles.stories.js': () => import('./styles.stories-BR8no7dI.js'),
-  './tools/theme/stories/theme.stories.js': () => import('./theme.stories-BXcb7Xkn.js'),
+  './tools/theme/stories/theme.stories.js': () => import('./theme.stories-Cthyc0dZ.js'),
   './tools/truncated/stories/truncated.stories.js': () => import('./truncated.stories-bxkB6OqC.js')
 };
 
@@ -198,7 +198,7 @@ const getProjectAnnotations = async () => {
     import('./preview-BT9ta7nr.js'),
     import('./preview-CDagOaLU.js'),
     import('./preview-CtQuewXd.js'),
-    import('./preview-jz6sYXmA.js')
+    import('./preview-ChcRmP8W.js')
   ]);
   return __STORYBOOK_MODULE_PREVIEW_API__.composeConfigs(configs);
 };

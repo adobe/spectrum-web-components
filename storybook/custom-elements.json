@@ -43849,6 +43849,15 @@
               ]
             },
             {
+              "kind": "field",
+              "name": "activeHandleModel",
+              "type": {
+                "text": "ModelValue"
+              },
+              "privacy": "public",
+              "readonly": true
+            },
+            {
               "kind": "method",
               "name": "getActiveHandleElements",
               "privacy": "private",
@@ -44618,24 +44627,6 @@
                 },
                 {
                   "name": "currentValue",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getOffsetPosition",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "number"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
                   "type": {
                     "text": "number"
                   }
