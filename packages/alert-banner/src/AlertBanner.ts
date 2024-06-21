@@ -23,7 +23,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import styles from './alert-banner.css.js';
 
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
-export type AlertBannerVariants = typeof VALID_VARIANTS[number];
+export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];
 
 /**
  * @element sp-alert-banner
