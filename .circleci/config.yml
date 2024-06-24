@@ -95,7 +95,8 @@ commands:
                       cd test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo hash
+                      echo $hash
+                      echo "Current directory is: $(pwd)"
                       yarn netlify deploy --alias=$hash
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -219,7 +220,7 @@ jobs:
                   cd projects/documentation/dist
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --dir=.
+                  yarn netlify deploy --alias=$branch
 
     hcm-visual:
         executor: node
@@ -271,8 +272,9 @@ jobs:
                       cd test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo hash
-                      yarn netlify deploy --alias=$hash --dir=.
+                      echo $hash
+                      echo "Current directory is: $(pwd)"
+                      yarn netlify deploy --alias=$hash
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
