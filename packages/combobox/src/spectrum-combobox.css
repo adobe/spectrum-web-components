@@ -393,7 +393,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Combobox-progress-circle {
+.progress-circle {
     position: absolute;
     inset-block-start: var(
         --mod-combobox-block-spacing-edge-to-progress-circle,
@@ -415,8 +415,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Combobox-progress-circle:dir(rtl),
-:host([dir='rtl']) .spectrum-Combobox-progress-circle {
+.progress-circle:dir(rtl),
+:host([dir='rtl']) .progress-circle {
     inset-inline-start: calc(
         var(
                 --mod-combobox-spacing-inline-icon-to-button,
@@ -710,7 +710,7 @@ governing permissions and limitations under the License.
 }
 
 :host([invalid]) #textfield #input,
-#textfield.is-loading #input {
+:host([pending]) #textfield #input {
     padding-inline-end: calc(
         var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
             var(
@@ -762,9 +762,9 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled]) .spectrum-Textfield .icon,
-.spectrum-Textfield.is-loading .icon,
-.spectrum-Textfield.is-readOnly .icon {
+:host([disabled]) #textfield .icon,
+:host([pending]) #textfield .icon,
+#textfield.is-readOnly .icon {
     display: none;
 }
 
@@ -816,7 +816,7 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet][invalid]) #textfield #input,
-:host([quiet]) #textfield.is-loading #input {
+:host([quiet][pending]) #textfield #input {
     padding-inline-end: calc(
         var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
             var(

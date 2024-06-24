@@ -210,18 +210,46 @@ export class NumberField extends TextfieldBase {
         );
     }
 
+    private decimalsChars = new Set(['.', ',']);
+    private valueBeforeFocus: string = '';
+    private isIntentDecimal: boolean = false;
+
     private convertValueToNumber(value: string): number {
-        if (isIPhone() && this.inputElement.inputMode === 'decimal') {
+        const separators = this.valueBeforeFocus
+            .split('')
+            .filter((char) => this.decimalsChars.has(char));
+        const uniqueSeparators = new Set(separators);
+
+        if (
+            isIPhone() &&
+            this.inputElement.inputMode === 'decimal' &&
+            value !== this.valueBeforeFocus
+        ) {
             const parts = this.numberFormatter.formatToParts(1000.1);
-            const sourceDecimal = value
-                .split('')
-                .find((char) => char === ',' || char === '.');
+
             const replacementDecimal = parts.find(
                 (part) => part.type === 'decimal'
-            )?.value;
-            if (sourceDecimal && replacementDecimal) {
-                value = value.replace(sourceDecimal, replacementDecimal);
+            )!.value;
+
+            for (const separator of uniqueSeparators) {
+                const isDecimalSeparator = separator === replacementDecimal;
+                if (!isDecimalSeparator && !this.isIntentDecimal) {
+                    value = value.replace(new RegExp(separator, 'g'), '');
+                }
             }
+
+            let hasReplacedDecimal = false;
+            const valueChars = value.split('');
+            for (let index = valueChars.length - 1; index >= 0; index--) {
+                const char = valueChars[index];
+                if (this.decimalsChars.has(char)) {
+                    if (!hasReplacedDecimal) {
+                        valueChars[index] = replacementDecimal;
+                        hasReplacedDecimal = true;
+                    } else valueChars[index] = '';
+                }
+            }
+            value = valueChars.join('');
         }
         return this.numberParser.parse(value);
     }
@@ -379,12 +407,14 @@ export class NumberField extends TextfieldBase {
         this._trackingValue = this.inputValue;
         this.keyboardFocused = !this.readonly && true;
         this.addEventListener('wheel', this.onScroll, { passive: false });
+        this.valueBeforeFocus = this.inputElement.value;
     }
 
     protected override onBlur(_event: FocusEvent): void {
         super.onBlur(_event);
         this.keyboardFocused = !this.readonly && false;
         this.removeEventListener('wheel', this.onScroll);
+        this.isIntentDecimal = false;
     }
 
     private handleFocusin(): void {
@@ -441,7 +471,7 @@ export class NumberField extends TextfieldBase {
         });
     }
 
-    protected override handleInput(event: Event): void {
+    protected override handleInput(event: InputEvent): void {
         if (this.isComposing) {
             event.stopPropagation();
             return;
@@ -454,6 +484,9 @@ export class NumberField extends TextfieldBase {
                 ''
             );
         }
+        if (event.data && this.decimalsChars.has(event.data))
+            this.isIntentDecimal = true;
+
         const { value: originalValue, selectionStart } = this.inputElement;
         const value = originalValue
             .split('')

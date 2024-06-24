@@ -40,9 +40,11 @@ const config = {
                     'size'
                 ),
                 converter.classToAttribute('spectrum-Combobox--quiet'),
+                converter.classToClass('spectrum-Combobox-progress-circle'),
                 converter.classToClass('spectrum-Combobox-button'),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-invalid', 'invalid'),
+                converter.classToAttribute('is-loading', 'pending'),
                 converter.classToAttribute(
                     'is-keyboardFocused',
                     'keyboard-focused'
@@ -102,6 +104,7 @@ const config = {
                 },
                 converter.classToId('spectrum-Combobox-input'),
                 converter.classToId('spectrum-Combobox-textfield'),
+                converter.classToId('spectrum-Textfield', 'textfield'),
                 converter.classToClass(
                     'spectrum-Textfield-validationIcon',
                     'icon'
