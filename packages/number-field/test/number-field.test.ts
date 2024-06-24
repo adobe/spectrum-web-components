@@ -117,6 +117,40 @@ describe('NumberField', () => {
             expect(el.focusElement.value).to.equal('13 377 331');
         });
     });
+    xit('correctly interprets decimal point on iPhone', async () => {
+        // setUserAgent is not currently supported by Playwright
+        await setUserAgent(
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'
+        );
+        const el = await getElFrom(decimals({ value: 1234 }));
+        expect(el.formattedValue).to.equal('1,234');
+
+        el.focus();
+        await sendKeys({ press: 'Backspace' });
+        el.blur();
+        expect(el.formattedValue).to.equal('123');
+
+        el.focus();
+        await sendKeys({ type: '45' });
+        el.blur();
+        expect(el.formattedValue).to.equal('12,345');
+
+        el.focus();
+        await sendKeys({ type: ',6' });
+        el.blur();
+        expect(el.formattedValue).to.equal('12,345.6');
+
+        el.focus();
+        await sendKeys({ type: ',7' });
+        el.blur();
+        expect(el.formattedValue).to.equal('123,456.7');
+
+        el.focus();
+        await sendKeys({ press: 'Backspace' });
+        await sendKeys({ press: 'Backspace' });
+        el.blur();
+        expect(el.formattedValue).to.equal('123,456');
+    });
     describe('Step', () => {
         it('can be 0', async () => {
             const el = await getElFrom(
