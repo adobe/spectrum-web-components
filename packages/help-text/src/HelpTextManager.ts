@@ -40,7 +40,10 @@ export class HelpTextManager {
         // `pass-through-help-text-${this.instanceCount}` makes the slot effectively unreachable from
         // the outside allowing the `help-text` slot to be preferred while `negative === false`.
         return html`
-            <div id=${ifDefined(this.isInternal ? this.id : undefined)}>
+            <div
+                id=${ifDefined(this.isInternal ? this.id : undefined)}
+                aria-live="assertive"
+            >
                 <slot
                     name=${negative
                         ? 'negative-help-text'
