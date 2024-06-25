@@ -1,5 +1,4 @@
 # logging / private config
-lerna-debug.log
 yarn-error.log
 .DS_STORE
 .DS_Store
