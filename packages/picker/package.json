@@ -25,6 +25,18 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/DesktopController.js": {
+            "development": "./src/DesktopController.dev.js",
+            "default": "./src/DesktopController.js"
+        },
+        "./src/InteractionController.js": {
+            "development": "./src/InteractionController.dev.js",
+            "default": "./src/InteractionController.js"
+        },
+        "./src/MobileController.js": {
+            "development": "./src/MobileController.dev.js",
+            "default": "./src/MobileController.js"
+        },
         "./src/Picker.js": {
             "development": "./src/Picker.dev.js",
             "default": "./src/Picker.js"
@@ -34,6 +46,10 @@
             "default": "./src/index.js"
         },
         "./src/picker.css.js": "./src/picker.css.js",
+        "./src/strategies.js": {
+            "development": "./src/strategies.dev.js",
+            "default": "./src/strategies.js"
+        },
         "./sync/index.js": {
             "development": "./sync/index.dev.js",
             "default": "./sync/index.js"
