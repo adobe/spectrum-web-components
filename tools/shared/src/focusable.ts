@@ -175,7 +175,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     /**
-     * @private
+     * @public
+     * @returns {boolean} whether the component should manage its focusElement tab-index or not
+     * Needed for action-menu to be supported in action-group in an accessible way
      */
     public get selfManageFocusElement(): boolean {
         return false;
