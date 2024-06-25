@@ -23,6 +23,7 @@ export type StoryArgs = {
     multiline?: boolean;
     showRoot?: boolean;
     'max-visible-items': number;
+    nrOfItems: number;
 };
 
 // Some dummy folder structure
@@ -65,14 +66,11 @@ export const getResizableStyles = (): TemplateResult => {
     `;
 };
 
-export const Template = (
-    nrOfItems: number,
-    args: StoryArgs
-): TemplateResult => html`
+export const Template = (args: StoryArgs): TemplateResult => html`
     <sp-breadcrumbs
         ${spreadProps(args)}
         max-visible-items=${ifDefined(args['max-visible-items'])}
     >
-        ${getBreadcrumbs(nrOfItems)}
+        ${getBreadcrumbs(args.nrOfItems)}
     </sp-breadcrumbs>
 `;

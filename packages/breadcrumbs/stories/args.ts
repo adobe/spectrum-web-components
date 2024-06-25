@@ -66,4 +66,15 @@ export const argTypes = {
             type: 'number',
         },
     },
+    nrOfItems: {
+        name: 'nrOfItems',
+        type: { name: 'number', required: false },
+        table: {
+            type: { summary: 'number' },
+            defaultValue: { summary: '4' },
+        },
+        control: {
+            type: 'number',
+        },
+    },
 };

@@ -32,7 +32,8 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host([dir='rtl']) .separator {
+:host([dir='rtl']) .separator,
+.separator:dir(rtl) {
     transform: scaleX(-1);
 }
 

@@ -42,6 +42,9 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     @property({ attribute: 'is-menu', type: Boolean })
     public isMenu = false;
 
+    @property({ type: Boolean })
+    public isLastOfType = false;
+
     public override get focusElement(): HTMLElement & {
         disabled?: boolean | undefined;
     } {
@@ -49,34 +52,45 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     }
 
     protected renderLink(): TemplateResult {
+        return this.isLastOfType
+            ? html`
+                  <span><slot></slot></span>
+              `
+            : html`
+                  <a
+                      id="anchor"
+                      part="link"
+                      class=${classMap({
+                          link: true,
+                          'is-disabled': this.disabled,
+                      })}
+                      aria-disabled=${this.disabled}
+                      href=${ifDefined(this.href)}
+                  >
+                      <slot></slot>
+                  </a>
+              `;
+    }
+
+    private renderSeparator(): TemplateResult {
         return html`
-            <a
-                id="anchor"
-                part="link"
-                class=${classMap({
-                    link: true,
-                    'is-disabled': this.disabled,
-                })}
-                aria-disabled=${this.disabled}
-                href=${ifDefined(this.href)}
-            >
-                <slot></slot>
-            </a>
+            <sp-icon-chevron100
+                part="separator"
+                size="xs"
+                class="separator spectrum-UIIcon-ChevronRight100"
+            ></sp-icon-chevron100>
         `;
     }
 
     protected override render(): TemplateResult {
+        // console.log(this.isLastOfType);
         return html`
             ${this.isMenu
                 ? html`
                       <slot></slot>
                   `
                 : this.renderLink()}
-            <sp-icon-chevron100
-                part="separator"
-                size="xs"
-                class="separator spectrum-UIIcon-ChevronRight100"
-            ></sp-icon-chevron100>
+            ${this.isLastOfType ? '' : this.renderSeparator()}
         `;
     }
 }

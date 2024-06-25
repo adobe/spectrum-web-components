@@ -12,11 +12,10 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-breadcrumbs-item.css');
 
-:host {
-    align-items: center;
-}
-
 .link.is-disabled {
     pointer-events: none;
 }
 
+:host([hidden]) {
+    display: none;
+}

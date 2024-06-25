@@ -67,20 +67,20 @@ const config = {
                     builder.class('spectrum-Breadcrumbs-item'),
                 ],
                 /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item:last-of-type */
-                [
-                    builder.class('spectrum-Breadcrumbs--multiline'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Breadcrumbs-item'),
-                    builder.pseudoClass('last-of-type'),
-                ],
+                // [
+                //     builder.class('spectrum-Breadcrumbs--multiline'),
+                //     builder.combinator(' '),
+                //     builder.class('spectrum-Breadcrumbs-item'),
+                //     builder.pseudoClass('last-of-type'),
+                // ],
                 /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item > .spectrum-ActionButton */
-                [
-                    builder.class('spectrum-Breadcrumbs--multiline'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Breadcrumbs-item'),
-                    builder.combinator('child'),
-                    builder.class('spectrum-ActionButton'),
-                ],
+                // [
+                //     builder.class('spectrum-Breadcrumbs--multiline'),
+                //     builder.combinator(' '),
+                //     builder.class('spectrum-Breadcrumbs-item'),
+                //     builder.combinator('child'),
+                //     builder.class('spectrum-ActionButton'),
+                // ],
             ],
             components: [
                 converter.classToId('spectrum-Breadcrumbs', 'list'),
@@ -124,19 +124,16 @@ const config = {
                     find: [builder.class('spectrum-Breadcrumbs-item')],
                     replace: [
                         {
-                            replace: builder.element('sp-breadcrumb-item'),
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [
+                                    builder.element('sp-breadcrumb-item'),
+                                ],
+                            },
                         },
                     ],
                 },
-                {
-                    find: [builder.class('spectrum-ActionButton')],
-                    replace: [
-                        {
-                            replace: builder.element('sp-action-menu'),
-                        },
-                    ],
-                },
-
                 {
                     find: [
                         builder.class('spectrum-Breadcrumbs-item'),
@@ -144,10 +141,14 @@ const config = {
                     ],
                     replace: [
                         {
-                            replace: builder.element('sp-breadcrumb-item'),
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [builder.pseudoClass('last-of-type')],
+                            },
                         },
                         {
-                            replace: builder.pseudoClass('last-of-type'),
+                            replace: builder.combinator(' '),
                         },
                     ],
                 },
@@ -161,10 +162,10 @@ const config = {
                 builder.class('spectrum-Breadcrumbs'),
                 builder.class('spectrum-Breadcrumbs--compact'),
                 builder.class('spectrum-Breadcrumbs--multiline'),
-                {
-                    type: 'pseudo-class',
-                    kind: 'dir',
-                },
+                // {
+                //     type: 'pseudo-class',
+                //     kind: 'dir',
+                // },
                 {
                     type: 'pseudo-class',
                     kind: 'last-of-type',

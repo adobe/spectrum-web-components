@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
 Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -12,33 +13,33 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     property,
+    query,
     queryAssignedElements,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/truncated/sp-truncated.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
-
+import { ActionMenu } from '@spectrum-web-components/action-menu';
+import { BreadcrumbItem as BreadcrumbElement } from './BreadcrumbItem.js';
 import { createRef, Ref, ref } from 'lit/directives/ref.js';
-import { BreadcrumbItem as BreadCrumbElement } from './BreadcrumbItem.js';
+
 import styles from './breadcrumbs.css.js';
 import '../sp-breadcrumb-item.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-const MAX_VISIBLE_ITEMS = 4;
+const MAX_VISIBLE_ITEMS = 8;
 
 export type BreadcrumbItem = {
-    label: string;
-    href: string;
+    label?: string;
+    href?: string;
     offsetWidth: number;
     isVisible: boolean; // false if displayed in menu overlay
 };
@@ -97,27 +98,25 @@ export class Breadcrumbs extends SpectrumElement {
     public multiline = false;
 
     @queryAssignedElements({ selector: 'sp-breadcrumb-item' })
-    private scrollContent!: BreadCrumbElement[];
+    private breadcrumbsElements!: BreadcrumbElement[];
+
+    @query('#list')
+    private list!: HTMLUListElement;
 
     @state()
     private items: BreadcrumbItem[] = [];
 
+    @state()
+    private visibleItems = 0;
+
     private resizeObserver: ResizeObserver | undefined;
-
-    private containerWidth = 0;
-
-    private breadcrumbElements: BreadCrumbElement[] = [];
+    private firstRender = true;
+    private paddings = 0;
 
     private menuRef: Ref<ActionMenu> = createRef();
 
     private get hasMenu(): boolean {
-        return this.visibleItemsCount < this.breadcrumbElements.length;
-    }
-
-    private get visibleItemsCount(): number {
-        return this.items.reduce((acc, item) => {
-            return item.isVisible ? acc + 1 : acc;
-        }, 0);
+        return this.visibleItems < this.breadcrumbsElements.length;
     }
 
     override connectedCallback(): void {
@@ -127,21 +126,38 @@ export class Breadcrumbs extends SpectrumElement {
             this.setAttribute('role', 'navigation');
         }
 
-        this.resizeObserver = new ResizeObserver(() => {
-            const visibleItemsChanged = this.startUpdateVisibleItems();
+        this.updateComplete.then(() => {
+            // Calculate the paddings only once, since these are not changing.
+            const listStyles = window.getComputedStyle(this.list);
+            this.paddings =
+                parseFloat(listStyles.paddingLeft) +
+                parseFloat(listStyles.paddingRight);
 
-            if (visibleItemsChanged) {
-                this.startUpdateVisibleItems();
+            if (this.showRoot) {
+                this.breadcrumbsElements[0].setAttribute('slot', 'root');
             }
+        });
 
-            this.requestUpdate();
+        this.resizeObserver = new ResizeObserver(() => {
+            if (this.firstRender) {
+                // Don't adjust overflow on first render, it is adjused in slotChangeHandler
+                this.firstRender = false;
+                return;
+            }
+            this.adjustOverflow();
         });
 
         this.resizeObserver.observe(this);
     }
 
+    public override disconnectedCallback(): void {
+        this.resizeObserver?.unobserve(this);
+        super.disconnectedCallback();
+    }
+
     override updated(changes: PropertyValues): void {
         super.updated(changes);
+        // console.log('updated was called', changes)
 
         // Update `aria-label` when `label` available
         if (
@@ -154,207 +170,91 @@ export class Breadcrumbs extends SpectrumElement {
                 this.removeAttribute('aria-label');
             }
         }
+
+        // Breadcrumbs items were added / removed, or available space changed
+        if (changes.has('visibleItems') || changes.has('items')) {
+            this.items.forEach((item, index) => {
+                this.breadcrumbsElements[index].isLastOfType =
+                    index === this.breadcrumbsElements.length - 1;
+
+                if (!item.isVisible) {
+                    this.breadcrumbsElements[index].setAttribute('hidden', '');
+                } else {
+                    this.breadcrumbsElements[index].removeAttribute('hidden');
+                }
+            });
+        }
     }
 
-    override disconnectedCallback(): void {
-        this.resizeObserver?.disconnect();
-        this.items = [];
-        super.disconnectedCallback();
+    private calculateBreadcrumbItemsWidth(): void {
+        this.items = this.breadcrumbsElements.map((el) => {
+            let width = el.offsetWidth;
+
+            // We need to temporarily remove the hidden attribute to calculate the width
+            if (el.hasAttribute('hidden')) {
+                el.removeAttribute('hidden');
+                width = el.offsetWidth;
+                el.setAttribute('hidden', '');
+            }
+
+            return {
+                label: el.innerText,
+                href: el.href,
+                offsetWidth: width,
+                isVisible: true,
+            };
+        });
     }
 
-    private startUpdateVisibleItems(): boolean {
-        this.setWidths();
-        const cacheVisibleItemsCount = this.visibleItemsCount;
+    private adjustOverflow(): void {
+        let occupiedSpace = 0;
+        let newVisibleItems = 0;
+        const availableSpace = this.list.clientWidth - this.paddings;
 
-        this.setVisibilityOfItemsBasedOnAvailableWidth();
-        this.setMenuItemsIfMaxIsReached();
-
-        return cacheVisibleItemsCount != this.visibleItemsCount;
-    }
-
-    private setVisibilityOfItemsBasedOnAvailableWidth(): void {
-        let availableWidth = 0;
+        // console.log('this.hasMenu', this.hasMenu);
 
         if (this.hasMenu && this.menuRef.value) {
             if (this.showRoot) {
-                availableWidth += this.menuRef.value.offsetWidth || 0;
+                occupiedSpace += this.menuRef.value.offsetWidth || 0;
             } else {
-                availableWidth += this.menuRef.value.offsetWidth || 0;
+                occupiedSpace += this.menuRef.value.offsetWidth || 0;
             }
         }
 
         if (this.showRoot) {
-            availableWidth += this.items[0].offsetWidth;
-            this.items[0].isVisible = true;
+            occupiedSpace += this.items[0].offsetWidth;
         }
+        // console.log(this.items);
 
-        if (this.multiline) {
-            availableWidth += this.items[this.items.length - 1].offsetWidth;
-        }
-
-        const start = this.showRoot ? 1 : 0;
-        for (let i = this.items.length - 2; i > start; i--) {
-            availableWidth += this.items[i].offsetWidth;
-            if (availableWidth < this.containerWidth) {
+        const start = 0;
+        for (let i = this.items.length - 1; i >= start; i--) {
+            occupiedSpace += this.items[i].offsetWidth;
+            if (
+                occupiedSpace < availableSpace &&
+                newVisibleItems < this.maxVisibleItems
+            ) {
                 this.items[i].isVisible = true;
+                newVisibleItems++;
             } else {
                 // No more space so we hide the rest
-                for (let j = i; j > start; j--) {
+                for (let j = i; j >= start; j--) {
                     this.items[j].isVisible = false;
                 }
                 break;
             }
         }
-    }
 
-    private setMenuItemsIfMaxIsReached(): void {
-        let menuItemsCount = 0;
-        if (this.items.length > this.maxVisibleItems) {
-            menuItemsCount = this.items.length - this.maxVisibleItems;
-            if (this.hasMenu) {
-                menuItemsCount++;
-            }
+        // Setting the visible items count will trigger an update
+        if (newVisibleItems !== this.visibleItems) {
+            this.visibleItems = newVisibleItems;
         }
-
-        if (menuItemsCount > 0 && this.showRoot) {
-            for (let i = 1; i < menuItemsCount + 1; i++) {
-                this.items[i].isVisible = false;
-            }
-        } else if (menuItemsCount > 0) {
-            for (let i = 0; i < menuItemsCount; i++) {
-                this.items[i].isVisible = false;
-            }
-        }
-    }
-
-    private mapChildrenToBreadcrumbItems(
-        childrenElements: BreadCrumbElement[]
-    ): BreadcrumbItem[] {
-        const items: BreadcrumbItem[] = [];
-
-        Array.from(childrenElements).map((child) => {
-            items.push({
-                label: child.textContent?.trim() || '',
-                href: child.getAttribute('href') || '',
-                isVisible: true,
-                offsetWidth: child.offsetWidth,
-            });
-        });
-
-        return items;
-    }
-
-    // Add a small difference to the measure so CSS wrap won't break the layout
-    private setWidths(): void {
-        this.containerWidth = this.getContentWidth(this) - 10;
-    }
-
-    private getContentWidth(element: HTMLElement): number {
-        const styles = getComputedStyle(element);
-
-        return (
-            element.clientWidth -
-            parseFloat(styles.paddingLeft) -
-            parseFloat(styles.paddingRight)
-        );
-    }
-
-    private getVisibleBreadcrumbs(): BreadcrumbItem[] {
-        return this.items.filter((item) => {
-            return item.isVisible;
-        });
-    }
-
-    private renderBreadcrumbItems(): TemplateResult[] {
-        const visibleBreadcrumbs = this.getVisibleBreadcrumbs();
-        const breadcrumbItems: TemplateResult[] = [];
-
-        // Skip root as it is by default rendered inside render()
-        let i = this.showRoot ? 1 : 0;
-
-        for (i; i < visibleBreadcrumbs.length - 1; i++) {
-            breadcrumbItems.push(
-                this.getBreadcrumb(
-                    visibleBreadcrumbs[i].label,
-                    this.disabled,
-                    visibleBreadcrumbs[i].href
-                )
-            );
-        }
-
-        breadcrumbItems.push(this.getLastBreadcrumb());
-
-        return breadcrumbItems;
-    }
-
-    private getLastBreadcrumb(): TemplateResult {
-        const lastItem = this.items[this.items.length - 1];
-        return html`
-            <sp-breadcrumb-item role="listitem">
-                <div style="display: grid">
-                    <sp-truncated>${lastItem.label}</sp-truncated>
-                </div>
-            </sp-breadcrumb-item>
-        `;
-    }
-
-    private getMenuItems(): TemplateResult[] {
-        return this.items
-            .filter((item) => {
-                return !item.isVisible;
-            })
-            .map((item) => {
-                return html`
-                    <sp-menu-item href=${item.href}>${item.label}</sp-menu-item>
-                `;
-            });
-    }
-
-    private async slotChangeHandler(): Promise<void> {
-        if (this.scrollContent.length === 0) {
-            return;
-        }
-
-        this.breadcrumbElements = this.scrollContent;
-
-        await Promise.all(
-            this.breadcrumbElements.map((el) => el.updateComplete)
-        );
-
-        this.items = this.mapChildrenToBreadcrumbItems(this.scrollContent);
-        this.startUpdateVisibleItems();
-
-        const breadCrumbItems = this.querySelectorAll('sp-breadcrumb-item');
-        breadCrumbItems.forEach((child) => {
-            this.removeChild(child);
-        });
-    }
-
-    protected renderRootBreadcrumb(): TemplateResult {
-        return this.getBreadcrumb(
-            this.items[0].label,
-            this.disabled,
-            this.items[0].href
-        );
-    }
-
-    protected getBreadcrumb(
-        label: string,
-        disabled?: boolean,
-        href?: string
-    ): TemplateResult {
-        return html`
-            <sp-breadcrumb-item
-                role="listitem"
-                ?disabled=${disabled}
-                href=${ifDefined(href)}
-            >
-                ${label}
-            </sp-breadcrumb-item>
-        `;
     }
 
     protected renderMenu(): TemplateResult {
+        const menuItems = this.items
+            .filter((item) => !item.isVisible)
+            .reverse();
+
         return html`
             <sp-breadcrumb-item
                 role="listitem"
@@ -371,27 +271,38 @@ export class Breadcrumbs extends SpectrumElement {
                         <sp-icon-folder-open class="icon"></sp-icon-folder-open>
                     </slot>
 
-                    ${this.getMenuItems()}
+                    ${menuItems.map(
+                        (item) => html`
+                            <sp-menu-item href=${ifDefined(item.href)}>
+                                ${item.label}
+                            </sp-menu-item>
+                        `
+                    )}
                 </sp-action-menu>
             </sp-breadcrumb-item>
         `;
     }
 
+    private async slotChangeHandler(): Promise<void> {
+        if (this.breadcrumbsElements.length === 0) {
+            return;
+        }
+
+        await Promise.all(
+            this.breadcrumbsElements.map((el) => el.updateComplete)
+        );
+
+        this.calculateBreadcrumbItemsWidth();
+        this.adjustOverflow();
+    }
+
     protected override render(): TemplateResult {
         return html`
-            ${this.items.length === 0
-                ? html`
-                      <slot @slotchange=${this.slotChangeHandler}></slot>
-                  `
-                : html`
-                      <ul id="list">
-                          ${this.showRoot
-                              ? this.renderRootBreadcrumb()
-                              : nothing}
-                          ${this.hasMenu ? this.renderMenu() : nothing}
-                          ${this.renderBreadcrumbItems()}
-                      </ul>
-                  `}
+            <ul id="list">
+                <slot name="root"></slot>
+                ${this.hasMenu ? this.renderMenu() : ''}
+                <slot @slotchange=${this.slotChangeHandler}></slot>
+            </ul>
         `;
     }
 }
