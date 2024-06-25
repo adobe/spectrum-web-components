@@ -51,6 +51,7 @@ export class InteractionController implements ReactiveController {
         if (this.overlay) {
             // If there already is an Overlay, apply the value of `open` directly.
             if (this.host.dependencyManager.loaded) {
+                this.overlay.willPreventClose = this.preventNextToggle !== 'no';
                 this.overlay.open = open;
             }
             this.host.open = open;
