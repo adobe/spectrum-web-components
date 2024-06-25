@@ -275,6 +275,13 @@
 
 :host,
 :root {
+    --system-spectrum-alertbanner-spectrum-alert-banner-netural-background: var(
+        --spectrum-neutral-subdued-background-color-default
+    );
+}
+
+:host,
+:root {
     --system-spectrum-button-background-color-default: var(--spectrum-gray-75);
     --system-spectrum-button-background-color-hover: var(--spectrum-gray-200);
     --system-spectrum-button-background-color-down: var(--spectrum-gray-300);

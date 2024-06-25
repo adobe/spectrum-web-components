@@ -187,6 +187,51 @@ describe('Virtualized Table', () => {
         expect(tableHeadCell1.getAttribute('sort-direction')).to.equal('asc');
     });
 
+    it('dispatches `sorted` events using the keyboard', async () => {
+        const test = await fixture<Table>(virtualized());
+        const el = test.shadowRoot?.querySelector('sp-table') as Table;
+
+        const tableHeadCell1 = el.querySelector(
+            '[sortable][sort-direction]'
+        ) as TableHeadCell;
+        const tableHeadCell2 = el.querySelector(
+            '[sortable]:not([sort-direction])'
+        ) as TableHeadCell;
+
+        tableHeadCell2.focus();
+        await nextFrame();
+        await sendKeys({
+            press: 'Enter',
+        });
+        await nextFrame();
+
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('asc');
+
+        tableHeadCell2.focus();
+        await nextFrame();
+        await sendKeys({
+            press: 'Space',
+        });
+        await nextFrame();
+
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('desc');
+
+        tableHeadCell1.focus();
+        await nextFrame();
+        await sendKeys({
+            press: 'Enter',
+        });
+        await nextFrame();
+
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell1.getAttribute('sort-direction')).to.equal('asc');
+    });
+
     it('dispatches `change` events', async () => {
         const changeSpy = spy();
         const el = await fixture<Table>(html`
