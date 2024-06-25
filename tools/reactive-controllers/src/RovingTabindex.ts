@@ -18,7 +18,7 @@ interface UpdateTabIndexes {
 }
 
 export class RovingTabindexController<
-    T extends HTMLElement
+    T extends HTMLElement,
 > extends FocusGroupController<T> {
     protected override set focused(focused: boolean) {
         if (focused === this.focused) return;

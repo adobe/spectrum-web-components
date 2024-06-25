@@ -117,6 +117,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     protected optionsMenu!: Menu;
 
+    private _selfManageFocusElement = false;
+
+    public override get selfManageFocusElement(): boolean {
+        return this._selfManageFocusElement;
+    }
+
     @query('sp-overlay')
     protected overlayElement!: Overlay;
 
@@ -333,6 +339,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
+        if (this.open) {
+            this._selfManageFocusElement = true;
+        } else {
+            this._selfManageFocusElement = false;
+        }
     }
 
     public close(): void {
@@ -395,6 +406,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 // and the expected event series has not completed.
                 this.overlayElement.manuallyKeepOpen();
             }
+            this._selfManageFocusElement = false;
         }
         if (!this.open) {
             this.optionsMenu.updateSelectedItemIndex();

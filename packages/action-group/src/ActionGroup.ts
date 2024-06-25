@@ -57,7 +57,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     public _buttons: ActionButton[] = [];
 
-    protected _buttonSelector = 'sp-action-button';
+    protected _buttonSelector = 'sp-action-button, sp-action-menu';
 
     constructor() {
         super();
