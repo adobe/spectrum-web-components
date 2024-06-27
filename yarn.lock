@@ -5613,6 +5613,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-6.1.1.tgz#84753483d249e27e71facd4d0053c3d3cb5677ad"
   integrity sha512-dkMroSrS+Ju4IUzVur+qr6ew1EvydCG4djZzn4Il4tdEZ5nguTaD0GYtyXpzNqyzQWgWSJCv8f9K7rQU6NHSTA==
 
+"@spectrum-css/alertbanner@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/alertbanner/-/alertbanner-2.2.0.tgz#c39feb201fe56b5acc2c1d85340c426431481e39"
+  integrity sha512-UjvegcmMUquXnJvpFSX5O6/qI+2tVgjBQ824e769kpj4V3Rf93HMPWn0MbTyMvEfdPADTZKbMd5iyFQjmE7Mhg==
+
 "@spectrum-css/alertdialog@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/alertdialog/-/alertdialog-2.1.1.tgz#765494d9809c255f7ee8758b94c9fcb254050006"
@@ -5949,7 +5954,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.42.5"
+  version "0.43.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
@@ -10163,10 +10168,10 @@ chrome-trace-event@^1.0.2:
   dependencies:
     tslib "^1.9.0"
 
-chromedriver@^124.0.0:
-  version "124.0.2"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-124.0.2.tgz#16fe2be83eb7c4e567be1d7cb99e17c8a8569741"
-  integrity sha512-TIcIH7tp81qGCWNprQMnmUm15zGUvX/39IiBy3JJMH/UFiimf2lqiWhdQ6LtbnW8BsPFFuEhEfnI733YXg8mxg==
+chromedriver@^126.0.2:
+  version "126.0.2"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-126.0.2.tgz#0c0840cd1ba00b73fa16d4292fa739860ee20ec8"
+  integrity sha512-61R0w7C+uJVCykabdqWsvitne2rg3MTI8xOKJosk+YbKdyLeGHYiCCeU82ZsUY+v9qnN1p48THcthgKubxPRWQ==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.6.7"

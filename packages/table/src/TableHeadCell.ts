@@ -46,6 +46,9 @@ export class TableHeadCell extends SpectrumElement {
         return [styles, arrowStyles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public active = false;
+
     @property({ reflect: true })
     public override role = 'columnheader';
 
@@ -57,6 +60,47 @@ export class TableHeadCell extends SpectrumElement {
 
     @property({ attribute: 'sort-key' })
     public sortKey = '';
+
+    protected handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                event.preventDefault();
+                this.addEventListener('keyup', this.handleKeyup);
+                this.active = true;
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
+
+    private handleKeypress(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Enter':
+            case 'NumpadEnter':
+                this.click();
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
+
+    protected handleKeyup(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                this.active = false;
+                this.removeEventListener('keyup', this.handleKeyup);
+                this.click();
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
 
     protected handleClick(): void {
         if (!this.sortable) return;
@@ -93,6 +137,8 @@ export class TableHeadCell extends SpectrumElement {
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('keypress', this.handleKeypress);
     }
 
     protected override update(changes: PropertyValues): void {
