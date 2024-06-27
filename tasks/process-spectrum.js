@@ -169,7 +169,8 @@ async function processComponent(componentPath) {
      */
     for await (const conversion of conversions) {
         const sourcePath = require.resolve(conversion.inPackage);
-        const sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+        var sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+
         const outputPath = path.join(
             ...(Array.isArray(conversion.outPackage)
                 ? conversion.outPackage

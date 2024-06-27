@@ -133,6 +133,10 @@ governing permissions and limitations under the License.
                 )
         )
     );
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
 }
 
 :host:dir(rtl) {
@@ -282,11 +286,4 @@ governing permissions and limitations under the License.
     --spectrum-accordion-item-header-bottom-to-text-space: var(
         --spectrum-accordion-bottom-to-text-regular-extra-large
     );
-}
-
-:host {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: block;
 }

@@ -33,21 +33,23 @@ governing permissions and limitations under the License.
         var(--mod-asset-icon-min-width, 48px),
         min(100%, var(--mod-asset-icon-max-width, 80px))
     );
+    margin: 20px;
     margin: var(--mod-asset-icon-margin, 20px);
     block-size: 100%;
+    inline-size: max(48px, min(100%, 80px));
 }
 
 .folderBackground {
     fill: var(
         --highcontrast-asset-folder-background-color,
-        var(--mod-asset-folder-background-color, var(--spectrum-gray-300))
+        var(--mod-asset-folder-background-color, var(--spectrum-gray-200))
     );
 }
 
 .fileBackground {
     fill: var(
         --highcontrast-asset-file-background-color,
-        var(--mod-asset-file-background-color, var(--spectrum-gray-50))
+        var(--mod-asset-file-background-color, var(--spectrum-gray-25))
     );
 }
 

@@ -12,54 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
-:host {
-    --spectrum-toast-font-weight: var(--spectrum-regular-font-weight);
-    --spectrum-toast-font-size: var(--spectrum-font-size-100);
-    --spectrum-toast-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-toast-block-size: var(--spectrum-toast-height);
-    --spectrum-toast-max-inline-size: var(--spectrum-toast-maximum-width);
-    --spectrum-toast-border-width: var(--spectrum-border-width-100);
-    --spectrum-toast-line-height: var(--spectrum-line-height-100);
-    --spectrum-toast-line-height-cjk: var(--spectrum-cjk-line-height-100);
-    --spectrum-toast-spacing-icon-to-text: var(--spectrum-text-to-visual-100);
-    --spectrum-toast-spacing-start-edge-to-text-and-icon: var(
-        --spectrum-spacing-300
-    );
-    --spectrum-toast-spacing-text-and-action-button-to-divider: var(
-        --spectrum-spacing-300
-    );
-    --spectrum-toast-spacing-top-edge-to-divider: var(--spectrum-spacing-100);
-    --spectrum-toast-spacing-bottom-edge-to-divider: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-toast-spacing-top-edge-to-icon: var(
-        --spectrum-toast-top-to-workflow-icon
-    );
-    --spectrum-toast-spacing-text-to-action-button-horizontal: var(
-        --spectrum-spacing-300
-    );
-    --spectrum-toast-spacing-close-button: var(--spectrum-spacing-100);
-    --spectrum-toast-spacing-block-start: var(--spectrum-spacing-100);
-    --spectrum-toast-spacing-block-end: var(--spectrum-spacing-100);
-    --spectrum-toast-spacing-top-edge-to-text: var(
-        --spectrum-toast-top-to-text
-    );
-    --spectrum-toast-spacing-bottom-edge-to-text: var(
-        --spectrum-toast-bottom-to-text
-    );
-    --spectrum-toast-negative-background-color-default: var(
-        --spectrum-negative-background-color-default
-    );
-    --spectrum-toast-positive-background-color-default: var(
-        --spectrum-positive-background-color-default
-    );
-    --spectrum-toast-informative-background-color-default: var(
-        --spectrum-informative-background-color-default
-    );
-    --spectrum-toast-text-and-icon-color: var(--spectrum-white);
-    --spectrum-toast-divider-color: var(--spectrum-transparent-white-300);
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-toast-border-color: ButtonText;
@@ -73,17 +25,13 @@ governing permissions and limitations under the License.
 
 :host {
     box-sizing: border-box;
-    min-block-size: var(
-        --mod-toast-block-size,
-        var(--spectrum-toast-block-size)
-    );
     max-inline-size: var(
         --mod-toast-max-inline-size,
         var(--spectrum-toast-max-inline-size)
     );
-    border-radius: var(
-        --mod-toast-corner-radius,
-        var(--spectrum-toast-corner-radius)
+    min-block-size: var(
+        --mod-toast-block-size,
+        var(--spectrum-toast-block-size)
     );
     font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
     font-weight: var(
@@ -91,6 +39,13 @@ governing permissions and limitations under the License.
         var(--spectrum-toast-font-weight)
     );
     -webkit-font-smoothing: antialiased;
+    color: var(
+        --highcontrast-toast-background-color-default,
+        var(
+            --mod-toast-background-color-default,
+            var(--spectrum-toast-background-color-default)
+        )
+    );
     background-color: var(
         --highcontrast-toast-background-color-default,
         var(
@@ -98,12 +53,9 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-background-color-default)
         )
     );
-    color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
+    border-radius: var(
+        --mod-toast-corner-radius,
+        var(--spectrum-toast-corner-radius)
     );
     flex-direction: row;
     align-items: stretch;
@@ -297,8 +249,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.body ::slotted([slot='action']:dir(rtl)),
-:host([dir='rtl']) .body ::slotted([slot='action']) {
+.body ::slotted([slot='action']:dir(rtl)) {
     margin-inline-end: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
@@ -317,6 +268,51 @@ governing permissions and limitations under the License.
 
 :host {
     --spectrum-toast-background-color-default: var(
-        --system-spectrum-toast-background-color-default
+        --spectrum-neutral-subdued-background-color-default
     );
+    --spectrum-toast-font-weight: var(--spectrum-regular-font-weight);
+    --spectrum-toast-font-size: var(--spectrum-font-size-100);
+    --spectrum-toast-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-toast-block-size: var(--spectrum-toast-height);
+    --spectrum-toast-max-inline-size: var(--spectrum-toast-maximum-width);
+    --spectrum-toast-border-width: var(--spectrum-border-width-100);
+    --spectrum-toast-line-height: var(--spectrum-line-height-100);
+    --spectrum-toast-line-height-cjk: var(--spectrum-cjk-line-height-100);
+    --spectrum-toast-spacing-icon-to-text: var(--spectrum-text-to-visual-100);
+    --spectrum-toast-spacing-start-edge-to-text-and-icon: var(
+        --spectrum-spacing-300
+    );
+    --spectrum-toast-spacing-text-and-action-button-to-divider: var(
+        --spectrum-spacing-300
+    );
+    --spectrum-toast-spacing-top-edge-to-divider: var(--spectrum-spacing-100);
+    --spectrum-toast-spacing-bottom-edge-to-divider: var(
+        --spectrum-spacing-100
+    );
+    --spectrum-toast-spacing-top-edge-to-icon: var(
+        --spectrum-toast-top-to-workflow-icon
+    );
+    --spectrum-toast-spacing-text-to-action-button-horizontal: var(
+        --spectrum-spacing-300
+    );
+    --spectrum-toast-spacing-close-button: var(--spectrum-spacing-100);
+    --spectrum-toast-spacing-block-start: var(--spectrum-spacing-100);
+    --spectrum-toast-spacing-block-end: var(--spectrum-spacing-100);
+    --spectrum-toast-spacing-top-edge-to-text: var(
+        --spectrum-toast-top-to-text
+    );
+    --spectrum-toast-spacing-bottom-edge-to-text: var(
+        --spectrum-toast-bottom-to-text
+    );
+    --spectrum-toast-negative-background-color-default: var(
+        --spectrum-negative-background-color-default
+    );
+    --spectrum-toast-positive-background-color-default: var(
+        --spectrum-positive-background-color-default
+    );
+    --spectrum-toast-informative-background-color-default: var(
+        --spectrum-informative-background-color-default
+    );
+    --spectrum-toast-text-and-icon-color: var(--spectrum-white);
+    --spectrum-toast-divider-color: var(--spectrum-transparent-white-300);
 }

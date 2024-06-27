@@ -13,34 +13,15 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
-    --spectrum-splitview-vertical-width: 100%;
-    --spectrum-splitview-vertical-gripper-width: 50%;
-    --spectrum-splitview-vertical-gripper-outer-width: 100%;
-    --spectrum-splitview-vertical-gripper-reset: 0;
-    --spectrum-splitview-background-color: var(--spectrum-gray-100);
-    --spectrum-splitview-handle-background-color: var(--spectrum-gray-300);
-    --spectrum-splitview-handle-background-color-hover: var(
-        --spectrum-gray-400
-    );
-    --spectrum-splitview-handle-background-color-down: var(--spectrum-gray-800);
-    --spectrum-splitview-handle-background-color-focus: var(
-        --spectrum-focus-indicator-color
-    );
-    --spectrum-splitview-handle-width: var(--spectrum-border-width-200);
-    --spectrum-splitview-gripper-border-radius: var(
-        --spectrum-corner-radius-75
-    );
-    --spectrum-splitview-gripper-width: var(--spectrum-border-width-400);
-    --spectrum-splitview-gripper-height: 16px;
-    --spectrum-splitview-gripper-border-width-horizontal: 3px;
-    --spectrum-splitview-gripper-border-width-vertical: var(
-        --spectrum-border-width-400
-    );
     display: flex;
     overflow: hidden;
 }
 
 ::slotted(*) {
+    color: var(
+        --mod-splitview-content-color,
+        var(--spectrum-splitview-content-color)
+    );
     background-color: var(
         --mod-splitview-background-color,
         var(--spectrum-splitview-background-color)
@@ -49,20 +30,8 @@ governing permissions and limitations under the License.
 }
 
 #gripper {
-    content: '';
-    border-radius: var(
-        --mod-splitview-gripper-border-radius,
-        var(--spectrum-splitview-gripper-border-radius)
-    );
-    border-style: solid;
-    border-color: var(
-        --highcontrast-splitview-handle-background-color,
-        var(
-            --mod-splitview-handle-background-color,
-            var(--spectrum-splitview-handle-background-color)
-        )
-    );
     touch-action: none;
+    content: '';
     inline-size: var(
         --mod-splitview-gripper-width,
         var(--spectrum-splitview-gripper-width)
@@ -71,6 +40,14 @@ governing permissions and limitations under the License.
         --mod-splitview-gripper-height,
         var(--spectrum-splitview-gripper-height)
     );
+    border-color: var(
+        --highcontrast-splitview-handle-background-color,
+        var(
+            --mod-splitview-handle-background-color,
+            var(--spectrum-splitview-handle-background-color)
+        )
+    );
+    border-style: solid;
     border-block-width: var(
         --mod-splitview-gripper-border-width-vertical,
         var(--spectrum-splitview-gripper-border-width-vertical)
@@ -78,6 +55,10 @@ governing permissions and limitations under the License.
     border-inline-width: var(
         --mod-splitview-gripper-border-width-horizontal,
         var(--spectrum-splitview-gripper-border-width-horizontal)
+    );
+    border-radius: var(
+        --mod-splitview-gripper-border-radius,
+        var(--spectrum-splitview-gripper-border-radius)
     );
     display: block;
     position: absolute;
@@ -117,6 +98,13 @@ governing permissions and limitations under the License.
 }
 
 #splitter {
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 1;
+    inline-size: var(
+        --mod-splitview-handle-width,
+        var(--spectrum-splitview-handle-width)
+    );
     background-color: var(
         --highcontrast-splitview-handle-background-color,
         var(
@@ -124,13 +112,6 @@ governing permissions and limitations under the License.
             var(--spectrum-splitview-handle-background-color)
         )
     );
-    -webkit-user-select: none;
-    user-select: none;
-    inline-size: var(
-        --mod-splitview-handle-width,
-        var(--spectrum-splitview-handle-width)
-    );
-    z-index: 1;
     block-size: 100%;
     position: relative;
 }
@@ -431,4 +412,31 @@ governing permissions and limitations under the License.
         --highcontrast-splitview-handle-background-color-down: CanvasText;
         --highcontrast-splitview-handle-background-color-focus: Highlight;
     }
+}
+
+:host {
+    --spectrum-splitview-vertical-width: 100%;
+    --spectrum-splitview-vertical-gripper-width: 50%;
+    --spectrum-splitview-vertical-gripper-outer-width: 100%;
+    --spectrum-splitview-vertical-gripper-reset: 0;
+    --spectrum-splitview-background-color: var(--spectrum-gray-75);
+    --spectrum-splitview-content-color: var(--spectrum-body-color);
+    --spectrum-splitview-handle-background-color: var(--spectrum-gray-200);
+    --spectrum-splitview-handle-background-color-hover: var(
+        --spectrum-gray-400
+    );
+    --spectrum-splitview-handle-background-color-down: var(--spectrum-gray-800);
+    --spectrum-splitview-handle-background-color-focus: var(
+        --spectrum-focus-indicator-color
+    );
+    --spectrum-splitview-handle-width: var(--spectrum-border-width-200);
+    --spectrum-splitview-gripper-border-radius: var(
+        --spectrum-corner-radius-75
+    );
+    --spectrum-splitview-gripper-width: var(--spectrum-border-width-400);
+    --spectrum-splitview-gripper-height: 16px;
+    --spectrum-splitview-gripper-border-width-horizontal: 3px;
+    --spectrum-splitview-gripper-border-width-vertical: var(
+        --spectrum-border-width-400
+    );
 }

@@ -12,7 +12,219 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
+@media (forced-colors: active) {
+    #textfield #textfield,
+    #textfield #textfield .input {
+        --highcontrast-search-color-default: CanvasText;
+        --highcontrast-search-color-hover: CanvasText;
+        --highcontrast-search-color-focus: CanvasText;
+        --highcontrast-search-color-disabled: GrayText;
+    }
+
+    #textfield #button .spectrum-ClearButton-fill {
+        forced-color-adjust: none;
+        background-color: initial;
+    }
+}
+
+#textfield {
+    inline-size: var(
+        --mod-search-inline-size,
+        var(--spectrum-search-inline-size)
+    );
+    min-inline-size: var(
+        --mod-search-min-inline-size,
+        var(--spectrum-search-min-inline-size)
+    );
+    display: inline-block;
+    position: relative;
+}
+
+#textfield .spectrum-HelpText {
+    margin-block-start: var(
+        --mod-search-to-help-text,
+        var(--spectrum-search-to-help-text)
+    );
+}
+
+#button {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+}
+
+#button,
+#button .spectrum-ClearButton-fill {
+    border-radius: var(
+        --mod-search-border-radius,
+        var(--spectrum-search-border-radius)
+    );
+}
+
+#textfield.is-disabled #button {
+    display: none;
+}
+
+#textfield {
+    inline-size: 100%;
+}
+
+.icon-search {
+    --spectrum-search-color: var(
+        --highcontrast-search-color-default,
+        var(--mod-search-color-default, var(--spectrum-search-color-default))
+    );
+    color: var(--spectrum-search-color);
+    margin-block: auto;
+    display: block;
+    position: absolute;
+    inset-block: 0;
+}
+
+#textfield.is-focused .icon-search {
+    --spectrum-search-color: var(
+        --highcontrast-search-color-focus,
+        var(--mod-search-color-focus, var(--spectrum-search-color-focus))
+    );
+}
+
+#textfield.is-keyboardFocused .icon-search {
+    --spectrum-search-color: var(
+        --highcontrast-search-color-focus,
+        var(
+            --mod-search-color-key-focus,
+            var(--spectrum-search-color-key-focus)
+        )
+    );
+}
+
+#textfield.is-disabled .icon-search {
+    --spectrum-search-color: var(
+        --highcontrast-search-color-disabled,
+        var(--mod-search-color-disabled, var(--spectrum-search-color-disabled))
+    );
+}
+
+@media (hover: hover) {
+    #textfield:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-hover,
+            var(--mod-search-color-hover, var(--spectrum-search-color-hover))
+        );
+    }
+
+    #textfield.is-focused:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-focus,
+            var(
+                --mod-search-color-focus-hover,
+                var(--spectrum-search-color-focus-hover)
+            )
+        );
+    }
+
+    #textfield.is-disabled:hover .icon-search {
+        --spectrum-search-color: var(
+            --highcontrast-search-color-disabled,
+            var(
+                --mod-search-color-disabled,
+                var(--spectrum-search-color-disabled)
+            )
+        );
+    }
+}
+
+.input {
+    block-size: var(--mod-search-block-size, var(--spectrum-search-block-size));
+    font-style: var(--mod-search-font-style, var(--spectrum-search-font-style));
+    line-height: var(
+        --mod-search-line-height,
+        var(--spectrum-search-line-height)
+    );
+    appearance: none;
+    padding-block-start: calc(
+        var(--mod-search-top-to-text, var(--spectrum-search-top-to-text)) -
+            var(--mod-search-border-width, var(--spectrum-search-border-width))
+    );
+    padding-block-end: calc(
+        var(--mod-search-bottom-to-text, var(--spectrum-search-bottom-to-text)) -
+            var(--mod-search-border-width, var(--spectrum-search-border-width))
+    );
+}
+
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+    appearance: none;
+}
+
+:host(:not([quiet])) #textfield .icon-search {
+    inset-inline-start: var(
+        --mod-search-edge-to-visual,
+        var(--spectrum-search-edge-to-visual)
+    );
+}
+
+:host(:not([quiet])) #textfield .input {
+    padding-inline-start: calc(
+        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) -
+            var(--mod-search-border-width, var(--spectrum-search-border-width)) +
+            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
+            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
+    );
+    padding-inline-end: calc(
+        var(
+                --mod-search-button-inline-size,
+                var(--spectrum-search-button-inline-size)
+            ) -
+            var(--mod-search-border-width, var(--spectrum-search-border-width))
+    );
+}
+
+:host([quiet]) #button {
+    transform: translateX(
+        var(
+            --mod-search-quiet-button-offset,
+            var(--spectrum-search-quiet-button-offset)
+        )
+    );
+}
+
+:host([quiet]) #textfield .input {
+    border-radius: var(
+        --mod-search-border-radius,
+        var(--spectrum-search-border-radius)
+    );
+    padding-block-start: var(
+        --mod-search-top-to-text,
+        var(--spectrum-search-top-to-text)
+    );
+    padding-inline-start: calc(
+        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) +
+            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
+            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
+    );
+    padding-inline-end: calc(
+        var(
+                --mod-search-button-inline-size,
+                var(--spectrum-search-button-inline-size)
+            ) -
+            var(
+                --mod-search-quiet-button-offset,
+                var(--spectrum-search-quiet-button-offset)
+            )
+    );
+}
+
 :host {
+    --spectrum-search-border-color-default: var(--spectrum-gray-500);
+    --spectrum-search-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-search-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-search-border-color-focus-hover: var(--spectrum-gray-900);
+    --spectrum-search-border-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-100
+    );
     --spectrum-search-inline-size: var(--spectrum-field-width);
     --spectrum-search-block-size: var(--spectrum-component-height-100);
     --spectrum-search-button-inline-size: var(--spectrum-search-block-size);
@@ -50,7 +262,7 @@ governing permissions and limitations under the License.
         --spectrum-neutral-content-color-key-focus
     );
     --spectrum-search-border-width: var(--spectrum-border-width-100);
-    --spectrum-search-background-color: var(--spectrum-gray-50);
+    --spectrum-search-background-color: var(--spectrum-gray-25);
     --spectrum-search-color-disabled: var(--spectrum-disabled-content-color);
     --spectrum-search-background-color-disabled: var(
         --spectrum-disabled-background-color
@@ -145,18 +357,30 @@ governing permissions and limitations under the License.
 }
 
 :host([size='s']) {
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-75
+    );
     --spectrum-search-block-size: var(--spectrum-component-height-75);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-75);
 }
 
 :host([size='l']) {
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-200
+    );
     --spectrum-search-block-size: var(--spectrum-component-height-200);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-200);
 }
 
 :host([size='xl']) {
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-300
+    );
     --spectrum-search-block-size: var(--spectrum-component-height-300);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-300);
@@ -181,271 +405,5 @@ governing permissions and limitations under the License.
     --spectrum-search-border-radius: 0;
     --spectrum-search-edge-to-visual: var(
         --spectrum-field-edge-to-visual-quiet
-    );
-}
-
-@media (forced-colors: active) {
-    #textfield #textfield,
-    #textfield #textfield .input {
-        --highcontrast-search-color-default: CanvasText;
-        --highcontrast-search-color-hover: CanvasText;
-        --highcontrast-search-color-focus: CanvasText;
-        --highcontrast-search-color-disabled: GrayText;
-    }
-
-    #textfield #button .spectrum-ClearButton-fill {
-        forced-color-adjust: none;
-        background-color: initial;
-    }
-}
-
-#textfield {
-    inline-size: var(
-        --mod-search-inline-size,
-        var(--spectrum-search-inline-size)
-    );
-    min-inline-size: var(
-        --mod-search-min-inline-size,
-        var(--spectrum-search-min-inline-size)
-    );
-    display: inline-block;
-    position: relative;
-}
-
-#textfield .spectrum-HelpText {
-    margin-block-start: var(
-        --mod-search-to-help-text,
-        var(--spectrum-search-to-help-text)
-    );
-}
-
-#button {
-    border-radius: var(
-        --mod-search-border-radius,
-        var(--spectrum-search-border-radius)
-    );
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-end: 0;
-}
-
-#button .spectrum-ClearButton-fill {
-    border-radius: var(
-        --mod-search-border-radius,
-        var(--spectrum-search-border-radius)
-    );
-}
-
-#textfield.is-disabled #button {
-    display: none;
-}
-
-#textfield {
-    inline-size: 100%;
-}
-
-.icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-default,
-        var(--mod-search-color-default, var(--spectrum-search-color-default))
-    );
-    color: var(--spectrum-search-color);
-    margin-block: auto;
-    display: block;
-    position: absolute;
-    inset-block: 0;
-}
-
-#textfield.is-focused .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-focus,
-        var(--mod-search-color-focus, var(--spectrum-search-color-focus))
-    );
-}
-
-#textfield.is-keyboardFocused .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-focus,
-        var(
-            --mod-search-color-key-focus,
-            var(--spectrum-search-color-key-focus)
-        )
-    );
-}
-
-#textfield.is-disabled .icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-disabled,
-        var(--mod-search-color-disabled, var(--spectrum-search-color-disabled))
-    );
-}
-
-@media (hover: hover) {
-    #textfield:hover .icon-search {
-        --spectrum-search-color: var(
-            --highcontrast-search-color-hover,
-            var(--mod-search-color-hover, var(--spectrum-search-color-hover))
-        );
-    }
-
-    #textfield.is-focused:hover .icon-search {
-        --spectrum-search-color: var(
-            --highcontrast-search-color-focus,
-            var(
-                --mod-search-color-focus-hover,
-                var(--spectrum-search-color-focus-hover)
-            )
-        );
-    }
-
-    #textfield.is-disabled:hover .icon-search {
-        --spectrum-search-color: var(
-            --highcontrast-search-color-disabled,
-            var(
-                --mod-search-color-disabled,
-                var(--spectrum-search-color-disabled)
-            )
-        );
-    }
-}
-
-.input {
-    appearance: none;
-    block-size: var(--mod-search-block-size, var(--spectrum-search-block-size));
-    font-style: var(--mod-search-font-style, var(--spectrum-search-font-style));
-    line-height: var(
-        --mod-search-line-height,
-        var(--spectrum-search-line-height)
-    );
-    padding-block-start: calc(
-        var(--mod-search-top-to-text, var(--spectrum-search-top-to-text)) -
-            var(--mod-search-border-width, var(--spectrum-search-border-width))
-    );
-    padding-block-end: calc(
-        var(--mod-search-bottom-to-text, var(--spectrum-search-bottom-to-text)) -
-            var(--mod-search-border-width, var(--spectrum-search-border-width))
-    );
-}
-
-.input::-webkit-search-cancel-button,
-.input::-webkit-search-decoration {
-    appearance: none;
-}
-
-:host(:not([quiet])) #textfield .icon-search {
-    inset-inline-start: var(
-        --mod-search-edge-to-visual,
-        var(--spectrum-search-edge-to-visual)
-    );
-}
-
-:host(:not([quiet])) #textfield .input {
-    padding-inline-start: calc(
-        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) -
-            var(--mod-search-border-width, var(--spectrum-search-border-width)) +
-            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
-            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
-    );
-    padding-inline-end: calc(
-        var(
-                --mod-search-button-inline-size,
-                var(--spectrum-search-button-inline-size)
-            ) -
-            var(--mod-search-border-width, var(--spectrum-search-border-width))
-    );
-}
-
-:host([quiet]) #button {
-    transform: translateX(
-        var(
-            --mod-search-quiet-button-offset,
-            var(--spectrum-search-quiet-button-offset)
-        )
-    );
-}
-
-:host([quiet]) #textfield .input {
-    border-radius: var(
-        --mod-search-border-radius,
-        var(--spectrum-search-border-radius)
-    );
-    padding-block-start: var(
-        --mod-search-top-to-text,
-        var(--spectrum-search-top-to-text)
-    );
-    padding-inline-start: calc(
-        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) +
-            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
-            var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
-    );
-    padding-inline-end: calc(
-        var(
-                --mod-search-button-inline-size,
-                var(--spectrum-search-button-inline-size)
-            ) -
-            var(
-                --mod-search-quiet-button-offset,
-                var(--spectrum-search-quiet-button-offset)
-            )
-    );
-}
-
-:host {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-edge-to-visual
-    );
-    --spectrum-search-border-color-default: var(
-        --system-spectrum-search-border-color-default
-    );
-    --spectrum-search-border-color-hover: var(
-        --system-spectrum-search-border-color-hover
-    );
-    --spectrum-search-border-color-focus: var(
-        --system-spectrum-search-border-color-focus
-    );
-    --spectrum-search-border-color-focus-hover: var(
-        --system-spectrum-search-border-color-focus-hover
-    );
-    --spectrum-search-border-color-key-focus: var(
-        --system-spectrum-search-border-color-key-focus
-    );
-}
-
-:host([size='s']) {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizes-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizes-edge-to-visual
-    );
-}
-
-:host {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizem-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizem-edge-to-visual
-    );
-}
-
-:host([size='l']) {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizel-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizel-edge-to-visual
-    );
-}
-
-:host([size='xl']) {
-    --spectrum-search-border-radius: var(
-        --system-spectrum-search-sizexl-border-radius
-    );
-    --spectrum-search-edge-to-visual: var(
-        --system-spectrum-search-sizexl-edge-to-visual
     );
 }

@@ -825,4 +825,13 @@
         0.15
     );
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-swatch-border-color-rgb: 255, 255, 255;
+
+    --spectrum-swatch-border-color-opacity: 51%;
+
+    --spectrum-swatch-border-color: rgba(
+        var(--spectrum-swatch-border-color-rgb),
+        var(--spectrum-swatch-border-color-opacity)
+    );
 }

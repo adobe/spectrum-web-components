@@ -18,6 +18,21 @@ governing permissions and limitations under the License.
             var(
                     --mod-menu-item-focus-indicator-width,
                     var(--spectrum-menu-item-focus-indicator-width)
+                ) * 1
+        )
+        0 0 0
+        var(
+            --highcontrast-menu-item-focus-indicator-color,
+            var(
+                --mod-menu-item-focus-indicator-color,
+                var(--spectrum-menu-item-focus-indicator-color)
+            )
+        );
+    box-shadow: inset
+        calc(
+            var(
+                    --mod-menu-item-focus-indicator-width,
+                    var(--spectrum-menu-item-focus-indicator-width)
                 ) *
                 var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
         )
@@ -32,25 +47,6 @@ governing permissions and limitations under the License.
 }
 
 .header {
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-section-header-color,
-            var(--spectrum-menu-section-header-color)
-        )
-    );
-    font-size: var(
-        --mod-menu-section-header-font-size,
-        var(--spectrum-menu-section-header-font-size)
-    );
-    font-weight: var(
-        --mod-menu-section-header-font-weight,
-        var(--spectrum-menu-section-header-font-weight)
-    );
-    line-height: var(
-        --mod-menu-section-header-line-height,
-        var(--spectrum-menu-section-header-line-height)
-    );
     min-inline-size: var(
         --mod-menu-section-header-min-width,
         var(--spectrum-menu-section-header-min-width)
@@ -73,18 +69,43 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
-    grid-area: c / 1 / c / -1;
+    font-size: var(
+        --mod-menu-section-header-font-size,
+        var(--spectrum-menu-section-header-font-size)
+    );
+    font-weight: var(
+        --mod-menu-section-header-font-weight,
+        var(--spectrum-menu-section-header-font-weight)
+    );
+    line-height: var(
+        --mod-menu-section-header-line-height,
+        var(--spectrum-menu-section-header-line-height)
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-section-header-color,
+            var(--spectrum-menu-section-header-color)
+        )
+    );
+    grid-area: sectionHeadingArea / 1 / sectionHeadingArea / -1;
     display: block;
 }
 
 .spectrum-Menu-back {
+    padding-block: 0;
+    padding-block: var(--mod-menu-back-padding-block-start, 0)
+        var(--mod-menu-back-padding-block-end, 0);
+    padding-inline: 0
+        var(
+            --mod-menu-back-padding-inline-end,
+            var(--spectrum-menu-item-label-inline-edge-to-content)
+        );
     padding-inline: var(--mod-menu-back-padding-inline-start, 0)
         var(
             --mod-menu-back-padding-inline-end,
             var(--spectrum-menu-item-label-inline-edge-to-content)
         );
-    padding-block: var(--mod-menu-back-padding-block-start, 0)
-        var(--mod-menu-back-padding-block-end, 0);
     flex-flow: wrap;
     align-items: center;
     display: flex;
@@ -112,13 +133,6 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-backHeading {
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-back-heading-color,
-            var(--spectrum-menu-section-header-color)
-        )
-    );
     font-size: var(
         --mod-menu-section-header-font-size,
         var(--spectrum-menu-section-header-font-size)
@@ -130,6 +144,13 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-back-heading-color,
+            var(--spectrum-menu-section-header-color)
+        )
     );
     display: block;
 }
@@ -143,11 +164,11 @@ governing permissions and limitations under the License.
         --mod-menu-back-icon-margin-inline,
         var(--spectrum-menu-back-icon-margin)
     );
-    fill: var(
+    color: var(
         --highcontrast-menu-item-color-default,
         var(--mod-menu-back-icon-color-default)
     );
-    color: var(
+    fill: var(
         --highcontrast-menu-item-color-default,
         var(--mod-menu-back-icon-color-default)
     );

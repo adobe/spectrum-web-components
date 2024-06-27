@@ -13,6 +13,808 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    -webkit-user-select: none;
+    user-select: none;
+    box-sizing: border-box;
+    block-size: var(--mod-tag-height, var(--spectrum-tag-height));
+    color: var(
+        --highcontrast-tag-content-color,
+        var(--mod-tag-content-color, var(--spectrum-tag-content-color))
+    );
+    vertical-align: bottom;
+    background-color: var(
+        --highcontrast-tag-background-color,
+        var(--mod-tag-background-color, var(--spectrum-tag-background-color))
+    );
+    border-color: var(
+        --highcontrast-tag-border-color,
+        var(--mod-tag-border-color, var(--spectrum-tag-border-color))
+    );
+    border-style: solid;
+    border-width: var(--mod-tag-border-width, var(--spectrum-tag-border-width));
+    border-radius: var(
+        --mod-tag-corner-radius,
+        var(--spectrum-tag-corner-radius)
+    );
+    transition:
+        border-color
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
+            ease-in-out,
+        color
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
+            ease-in-out,
+        box-shadow
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
+            ease-in-out,
+        background-color
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
+            ease-in-out;
+    outline: none;
+    align-items: center;
+    max-inline-size: 100%;
+    padding-inline-start: calc(
+        var(
+                --mod-tag-spacing-inline-start,
+                var(--spectrum-tag-spacing-inline-start)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    padding-inline-end: 0;
+    display: inline-flex;
+    position: relative;
+}
+
+::slotted([slot='icon']) {
+    inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
+    block-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
+    margin-block-start: calc(
+        var(
+                --mod-tag-icon-spacing-block-start,
+                var(--spectrum-tag-icon-spacing-block-start)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-block-end: calc(
+        var(
+                --mod-tag-icon-spacing-block-end,
+                var(--spectrum-tag-icon-spacing-block-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-inline-end: var(
+        --mod-tag-icon-spacing-inline-end,
+        var(--spectrum-tag-icon-spacing-inline-end)
+    );
+}
+
+::slotted([slot='avatar']) {
+    margin-block-start: calc(
+        var(
+                --mod-tag-avatar-spacing-block-start,
+                var(--spectrum-tag-avatar-spacing-block-start)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-block-end: calc(
+        var(
+                --mod-tag-avatar-spacing-block-end,
+                var(--spectrum-tag-avatar-spacing-block-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-inline-end: var(
+        --mod-tag-avatar-spacing-inline-end,
+        var(--spectrum-tag-avatar-spacing-inline-end)
+    );
+}
+
+.clear-button {
+    --mod-clear-button-width: fit-content;
+    --spectrum-clearbutton-fill-size: fit-content;
+    --spectrum-clearbutton-fill-background-color: transparent;
+    box-sizing: border-box;
+    color: currentColor;
+    margin-inline-start: calc(
+        var(
+                --mod-tag-clear-button-spacing-inline-start,
+                var(--spectrum-tag-clear-button-spacing-inline-start)
+            ) +
+            var(
+                --mod-tag-label-spacing-inline-end,
+                var(--spectrum-tag-label-spacing-inline-end)
+            ) * -1
+    );
+    margin-inline-end: calc(
+        var(
+                --mod-tag-clear-button-spacing-inline-end,
+                var(--spectrum-tag-clear-button-spacing-inline-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    padding-block-start: calc(
+        var(
+                --mod-tag-clear-button-spacing-block,
+                var(--spectrum-tag-clear-button-spacing-block)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    padding-block-end: calc(
+        var(
+                --mod-tag-clear-button-spacing-block,
+                var(--spectrum-tag-clear-button-spacing-block)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+}
+
+.clear-button .spectrum-ClearButton-fill {
+    inline-size: var(
+        --mod-clearbutton-fill-size,
+        var(--spectrum-clearbutton-fill-size)
+    );
+    block-size: var(
+        --mod-clearbutton-fill-size,
+        var(--spectrum-clearbutton-fill-size)
+    );
+    background-color: var(
+        --mod-clearbutton-fill-background-color,
+        var(--spectrum-clearbutton-fill-background-color)
+    );
+}
+
+.label {
+    cursor: default;
+    box-sizing: border-box;
+    font-size: var(--mod-tag-font-size, var(--spectrum-tag-font-size));
+    font-weight: var(
+        --mod-tag-label-font-weight,
+        var(--spectrum-tag-label-font-weight)
+    );
+    line-height: var(
+        --mod-tag-label-line-height,
+        var(--spectrum-tag-label-line-height)
+    );
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: auto;
+    block-size: 100%;
+    margin-inline-end: calc(
+        var(
+                --mod-tag-label-spacing-inline-end,
+                var(--spectrum-tag-label-spacing-inline-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    padding-block-start: calc(
+        var(
+                --mod-tag-label-spacing-block,
+                var(--spectrum-tag-label-spacing-block)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    overflow: hidden;
+}
+
+:host(:is(:active, [active])) {
+    color: var(
+        --highcontrast-tag-content-color-active,
+        var(
+            --mod-tag-content-color-active,
+            var(--spectrum-tag-content-color-active)
+        )
+    );
+    background-color: var(
+        --highcontrast-tag-background-color-active,
+        var(
+            --mod-tag-background-color-active,
+            var(--spectrum-tag-background-color-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-active,
+        var(
+            --mod-tag-border-color-active,
+            var(--spectrum-tag-border-color-active)
+        )
+    );
+}
+
+:host([focused]),
+:host(:focus-visible) {
+    color: var(
+        --highcontrast-tag-content-color-focus,
+        var(
+            --mod-tag-content-color-focus,
+            var(--spectrum-tag-content-color-focus)
+        )
+    );
+    background-color: var(
+        --highcontrast-tag-background-color-focus,
+        var(
+            --mod-tag-background-color-focus,
+            var(--spectrum-tag-background-color-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-focus,
+        var(
+            --mod-tag-border-color-focus,
+            var(--spectrum-tag-border-color-focus)
+        )
+    );
+}
+
+:host([focused]):after,
+:host(:focus-visible):after {
+    pointer-events: none;
+    content: '';
+    border-color: var(
+        --highcontrast-tag-focus-ring-color,
+        var(--mod-tag-focus-ring-color, var(--spectrum-tag-focus-ring-color))
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-tag-focus-ring-thickness,
+        var(--spectrum-tag-focus-ring-thickness)
+    );
+    border-radius: calc(
+        var(--mod-tag-corner-radius, var(--spectrum-tag-corner-radius)) +
+            var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) +
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    display: inline-block;
+    position: absolute;
+    inset-block-start: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+    inset-block-end: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+    inset-inline-start: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+    inset-inline-end: calc(
+        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
+            var(
+                --mod-tag-focus-ring-thickness,
+                var(--spectrum-tag-focus-ring-thickness)
+            )
+    );
+}
+
+:host([selected]) {
+    color: var(
+        --highcontrast-tag-content-color-selected,
+        var(
+            --mod-tag-content-color-selected,
+            var(--spectrum-tag-content-color-selected)
+        )
+    );
+    background-color: var(
+        --highcontrast-tag-background-color-selected,
+        var(
+            --mod-tag-background-color-selected,
+            var(--spectrum-tag-background-color-selected)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-selected,
+        var(
+            --mod-tag-border-color-selected,
+            var(--spectrum-tag-border-color-selected)
+        )
+    );
+}
+
+:host([selected]:is(:active, [active])) {
+    background-color: var(
+        --highcontrast-tag-background-color-selected-active,
+        var(
+            --mod-tag-background-color-selected-active,
+            var(--spectrum-tag-background-color-selected-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-selected-active,
+        var(
+            --mod-tag-border-color-selected-active,
+            var(--spectrum-tag-border-color-selected-active)
+        )
+    );
+}
+
+:host([selected][focused]),
+:host([selected]:focus-visible) {
+    background-color: var(
+        --highcontrast-tag-background-color-selected-focus,
+        var(
+            --mod-tag-background-color-selected-focus,
+            var(--spectrum-tag-background-color-selected-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-selected-focus,
+        var(
+            --mod-tag-border-color-selected-focus,
+            var(--spectrum-tag-border-color-selected-focus)
+        )
+    );
+}
+
+:host([invalid]) {
+    color: var(
+        --highcontrast-tag-content-color-invalid,
+        var(
+            --mod-tag-content-color-invalid,
+            var(--spectrum-tag-content-color-invalid)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid,
+        var(
+            --mod-tag-border-color-invalid,
+            var(--spectrum-tag-border-color-invalid)
+        )
+    );
+}
+
+:host([invalid]:is(:active, [active])) {
+    color: var(
+        --highcontrast-tag-content-color-invalid-active,
+        var(
+            --mod-tag-content-color-invalid-active,
+            var(--spectrum-tag-content-color-invalid-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-active,
+        var(
+            --mod-tag-border-color-invalid-active,
+            var(--spectrum-tag-border-color-invalid-active)
+        )
+    );
+}
+
+:host([invalid][focused]),
+:host([invalid]:focus-visible) {
+    color: var(
+        --highcontrast-tag-content-color-invalid-focus,
+        var(
+            --mod-tag-content-color-invalid-focus,
+            var(--spectrum-tag-content-color-invalid-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-focus,
+        var(
+            --mod-tag-border-color-invalid-focus,
+            var(--spectrum-tag-border-color-invalid-focus)
+        )
+    );
+}
+
+:host([invalid][selected]) {
+    color: var(
+        --highcontrast-tag-content-color-invalid-selected,
+        var(
+            --mod-tag-content-color-invalid-selected,
+            var(--spectrum-tag-content-color-invalid-selected)
+        )
+    );
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected,
+        var(
+            --mod-tag-background-color-invalid-selected,
+            var(--spectrum-tag-background-color-invalid-selected)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected,
+        var(
+            --mod-tag-border-color-invalid-selected,
+            var(--spectrum-tag-border-color-invalid-selected)
+        )
+    );
+}
+
+:host([invalid][selected]:is(:active, [active])) {
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-active,
+        var(
+            --mod-tag-background-color-invalid-selected-active,
+            var(--spectrum-tag-background-color-invalid-selected-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected-active,
+        var(
+            --mod-tag-border-color-invalid-selected-active,
+            var(--spectrum-tag-border-color-invalid-selected-active)
+        )
+    );
+}
+
+:host([invalid][selected][focused]),
+:host([invalid][selected]:focus-visible) {
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-focus,
+        var(
+            --mod-tag-background-color-invalid-selected-focus,
+            var(--spectrum-tag-background-color-invalid-selected-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected-focus,
+        var(
+            --mod-tag-border-color-invalid-selected-focus,
+            var(--spectrum-tag-border-color-invalid-selected-focus)
+        )
+    );
+}
+
+:host([emphasized]) {
+    color: var(
+        --highcontrast-tag-content-color-emphasized,
+        var(
+            --mod-tag-content-color-emphasized,
+            var(--spectrum-tag-content-color-emphasized)
+        )
+    );
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized,
+        var(
+            --mod-tag-background-color-emphasized,
+            var(--spectrum-tag-background-color-emphasized)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized,
+        var(
+            --mod-tag-border-color-emphasized,
+            var(--spectrum-tag-border-color-emphasized)
+        )
+    );
+}
+
+@media (hover: hover) {
+    :host(:hover) {
+        color: var(
+            --highcontrast-tag-content-color-hover,
+            var(
+                --mod-tag-content-color-hover,
+                var(--spectrum-tag-content-color-hover)
+            )
+        );
+        background-color: var(
+            --highcontrast-tag-background-color-hover,
+            var(
+                --mod-tag-background-color-hover,
+                var(--spectrum-tag-background-color-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-tag-border-color-hover,
+            var(
+                --mod-tag-border-color-hover,
+                var(--spectrum-tag-border-color-hover)
+            )
+        );
+    }
+
+    :host([selected]:hover) {
+        color: var(
+            --highcontrast-tag-content-color-selected,
+            var(
+                --mod-tag-content-color-selected,
+                var(--spectrum-tag-content-color-selected)
+            )
+        );
+        background-color: var(
+            --highcontrast-tag-background-color-selected-hover,
+            var(
+                --mod-tag-background-color-selected-hover,
+                var(--spectrum-tag-background-color-selected-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-tag-border-color-selected-hover,
+            var(
+                --mod-tag-border-color-selected-hover,
+                var(--spectrum-tag-border-color-selected-hover)
+            )
+        );
+    }
+
+    :host([invalid]:hover) {
+        color: var(
+            --highcontrast-tag-content-color-invalid-hover,
+            var(
+                --mod-tag-content-color-invalid-hover,
+                var(--spectrum-tag-content-color-invalid-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-tag-border-color-invalid-hover,
+            var(
+                --mod-tag-border-color-invalid-hover,
+                var(--spectrum-tag-border-color-invalid-hover)
+            )
+        );
+    }
+
+    :host([invalid][selected]:hover) {
+        color: var(
+            --highcontrast-tag-content-color-invalid-selected,
+            var(
+                --mod-tag-content-color-invalid-selected,
+                var(--spectrum-tag-content-color-invalid-selected)
+            )
+        );
+        background-color: var(
+            --highcontrast-tag-background-color-invalid-selected-hover,
+            var(
+                --mod-tag-background-color-invalid-selected-hover,
+                var(--spectrum-tag-background-color-invalid-selected-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-tag-border-color-invalid-selected-hover,
+            var(
+                --mod-tag-border-color-invalid-selected-hover,
+                var(--spectrum-tag-border-color-invalid-selected-hover)
+            )
+        );
+    }
+
+    :host([emphasized]:hover) {
+        color: var(
+            --highcontrast-tag-content-color-emphasized,
+            var(
+                --mod-tag-content-color-emphasized,
+                var(--spectrum-tag-content-color-emphasized)
+            )
+        );
+        background-color: var(
+            --highcontrast-tag-background-color-emphasized-hover,
+            var(
+                --mod-tag-background-color-emphasized-hover,
+                var(--spectrum-tag-background-color-emphasized-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-tag-border-color-emphasized-hover,
+            var(
+                --mod-tag-border-color-emphasized-hover,
+                var(--spectrum-tag-border-color-emphasized-hover)
+            )
+        );
+    }
+}
+
+:host([emphasized]:is(:active, [active])) {
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-active,
+        var(
+            --mod-tag-background-color-emphasized-active,
+            var(--spectrum-tag-background-color-emphasized-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized-active,
+        var(
+            --mod-tag-border-color-emphasized-active,
+            var(--spectrum-tag-border-color-emphasized-active)
+        )
+    );
+}
+
+:host([emphasized][focused]),
+:host([emphasized]:focus-visible) {
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-focus,
+        var(
+            --mod-tag-background-color-emphasized-focus,
+            var(--spectrum-tag-background-color-emphasized-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized-focus,
+        var(
+            --mod-tag-border-color-emphasized-focus,
+            var(--spectrum-tag-border-color-emphasized-focus)
+        )
+    );
+}
+
+:host([disabled]) {
+    pointer-events: none;
+    color: var(
+        --highcontrast-tag-content-color-disabled,
+        var(
+            --mod-tag-content-color-disabled,
+            var(--spectrum-tag-content-color-disabled)
+        )
+    );
+    background-color: var(
+        --highcontrast-tag-background-color-disabled,
+        var(
+            --mod-tag-background-color-disabled,
+            var(--spectrum-tag-background-color-disabled)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-disabled,
+        var(
+            --mod-tag-border-color-disabled,
+            var(--spectrum-tag-border-color-disabled)
+        )
+    );
+}
+
+:host([disabled]) ::slotted([slot='avatar']) {
+    opacity: var(
+        --mod-avatar-opacity-disabled,
+        var(--spectrum-avatar-opacity-disabled)
+    );
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-tag-border-color: ButtonText;
+        --highcontrast-tag-border-color-hover: ButtonText;
+        --highcontrast-tag-border-color-active: ButtonText;
+        --highcontrast-tag-border-color-focus: Highlight;
+        --highcontrast-tag-background-color: ButtonFace;
+        --highcontrast-tag-background-color-hover: ButtonFace;
+        --highcontrast-tag-background-color-active: ButtonFace;
+        --highcontrast-tag-background-color-focus: ButtonFace;
+        --highcontrast-tag-content-color: ButtonText;
+        --highcontrast-tag-content-color-hover: ButtonText;
+        --highcontrast-tag-content-color-active: ButtonText;
+        --highcontrast-tag-content-color-focus: ButtonText;
+        --highcontrast-tag-focus-ring-color: Highlight;
+        forced-color-adjust: none;
+    }
+
+    :host([selected]) {
+        --highcontrast-tag-border-color-selected: Highlight;
+        --highcontrast-tag-border-color-selected-hover: Highlight;
+        --highcontrast-tag-border-color-selected-active: Highlight;
+        --highcontrast-tag-border-color-selected-focus: Highlight;
+        --highcontrast-tag-background-color-selected: Highlight;
+        --highcontrast-tag-background-color-selected-hover: Highlight;
+        --highcontrast-tag-background-color-selected-active: Highlight;
+        --highcontrast-tag-background-color-selected-focus: Highlight;
+        --highcontrast-tag-content-color-selected: HighlightText;
+    }
+
+    :host([disabled]) {
+        --highcontrast-tag-border-color-disabled: GrayText;
+        --highcontrast-tag-background-color-disabled: ButtonFace;
+        --highcontrast-tag-content-color-disabled: GrayText;
+    }
+
+    :host([invalid]) {
+        --highcontrast-tag-border-color-invalid: Highlight;
+        --highcontrast-tag-border-color-invalid-hover: Highlight;
+        --highcontrast-tag-border-color-invalid-active: Highlight;
+        --highcontrast-tag-border-color-invalid-focus: Highlight;
+        --highcontrast-tag-content-color-invalid: CanvasText;
+        --highcontrast-tag-content-color-invalid-hover: CanvasText;
+        --highcontrast-tag-content-color-invalid-active: CanvasText;
+        --highcontrast-tag-content-color-invalid-focus: CanvasText;
+    }
+
+    :host([invalid][selected]) {
+        --highcontrast-tag-border-color-invalid-selected: Highlight;
+        --highcontrast-tag-border-color-invalid-selected-hover: Highlight;
+        --highcontrast-tag-border-color-invalid-selected-focus: Highlight;
+        --highcontrast-tag-border-color-invalid-selected-active: Highlight;
+        --highcontrast-tag-background-color-invalid-selected: Highlight;
+        --highcontrast-tag-background-color-invalid-selected-hover: Highlight;
+        --highcontrast-tag-background-color-invalid-selected-active: Highlight;
+        --highcontrast-tag-background-color-invalid-selected-focus: Highlight;
+        --highcontrast-tag-content-color-invalid-selected: HighlightText;
+    }
+
+    :host([emphasized]) {
+        --highcontrast-tag-border-color-emphasized: Highlight;
+        --highcontrast-tag-border-color-emphasized-hover: Highlight;
+        --highcontrast-tag-border-color-emphasized-active: Highlight;
+        --highcontrast-tag-border-color-emphasized-focus: Highlight;
+        --highcontrast-tag-background-color-emphasized: ButtonFace;
+        --highcontrast-tag-background-color-emphasized-hover: ButtonFace;
+        --highcontrast-tag-background-color-emphasized-active: ButtonFace;
+        --highcontrast-tag-background-color-emphasized-focus: ButtonFace;
+        --highcontrast-tag-content-color-emphasized: CanvasText;
+    }
+}
+
+:host {
+    --spectrum-tag-border-color: var(--spectrum-gray-700);
+    --spectrum-tag-border-color-hover: var(--spectrum-gray-800);
+    --spectrum-tag-border-color-active: var(--spectrum-gray-900);
+    --spectrum-tag-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-tag-size-small-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-size-medium-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-size-large-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-background-color: var(--spectrum-gray-50);
+    --spectrum-tag-background-color-hover: var(--spectrum-gray-50);
+    --spectrum-tag-background-color-active: var(--spectrum-gray-100);
+    --spectrum-tag-background-color-focus: var(--spectrum-gray-50);
+    --spectrum-tag-content-color: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
+    --spectrum-tag-content-color-hover: var(
+        --spectrum-neutral-subdued-content-color-hover
+    );
+    --spectrum-tag-content-color-active: var(
+        --spectrum-neutral-subdued-content-color-down
+    );
+    --spectrum-tag-content-color-focus: var(
+        --spectrum-neutral-subdued-content-color-key-focus
+    );
+    --spectrum-tag-border-color-selected: var(
+        --spectrum-neutral-subdued-background-color-default
+    );
+    --spectrum-tag-border-color-selected-hover: var(
+        --spectrum-neutral-subdued-background-color-hover
+    );
+    --spectrum-tag-border-color-selected-active: var(
+        --spectrum-neutral-subdued-background-color-down
+    );
+    --spectrum-tag-border-color-selected-focus: var(
+        --spectrum-neutral-subdued-background-color-key-focus
+    );
+    --spectrum-tag-border-color-disabled: transparent;
+    --spectrum-tag-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-tag-size-small-spacing-inline-start: var(
+        --spectrum-component-edge-to-visual-75
+    );
+    --spectrum-tag-size-small-label-spacing-inline-end: var(
+        --spectrum-component-edge-to-text-75
+    );
+    --spectrum-tag-size-small-clear-button-spacing-inline-end: var(
+        --spectrum-component-edge-to-visual-75
+    );
+    --spectrum-tag-size-medium-spacing-inline-start: var(
+        --spectrum-component-edge-to-visual-100
+    );
+    --spectrum-tag-size-medium-label-spacing-inline-end: var(
+        --spectrum-component-edge-to-text-100
+    );
+    --spectrum-tag-size-medium-clear-button-spacing-inline-end: var(
+        --spectrum-component-edge-to-visual-100
+    );
+    --spectrum-tag-size-large-spacing-inline-start: var(
+        --spectrum-component-edge-to-visual-200
+    );
+    --spectrum-tag-size-large-label-spacing-inline-end: var(
+        --spectrum-component-edge-to-text-200
+    );
+    --spectrum-tag-size-large-clear-button-spacing-inline-end: var(
+        --spectrum-component-edge-to-visual-200
+    );
     --spectrum-avatar-opacity-disabled: 0.3;
     --spectrum-tag-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-tag-border-width: var(--spectrum-border-width-100);
@@ -23,7 +825,7 @@ governing permissions and limitations under the License.
     --spectrum-tag-focus-ring-color: var(--spectrum-focus-indicator-color);
     --spectrum-tag-label-line-height: var(--spectrum-line-height-100);
     --spectrum-tag-label-font-weight: var(--spectrum-regular-font-weight);
-    --spectrum-tag-content-color-selected: var(--spectrum-gray-50);
+    --spectrum-tag-content-color-selected: var(--spectrum-gray-25);
     --spectrum-tag-background-color-selected: var(
         --spectrum-neutral-background-color-selected-default
     );
@@ -259,830 +1061,5 @@ governing permissions and limitations under the License.
     );
     --spectrum-tag-clear-button-spacing-inline-end: var(
         --spectrum-tag-size-large-clear-button-spacing-inline-end
-    );
-}
-
-:host {
-    border-color: var(
-        --highcontrast-tag-border-color,
-        var(--mod-tag-border-color, var(--spectrum-tag-border-color))
-    );
-    background-color: var(
-        --highcontrast-tag-background-color,
-        var(--mod-tag-background-color, var(--spectrum-tag-background-color))
-    );
-    color: var(
-        --highcontrast-tag-content-color,
-        var(--mod-tag-content-color, var(--spectrum-tag-content-color))
-    );
-    border-radius: var(
-        --mod-tag-corner-radius,
-        var(--spectrum-tag-corner-radius)
-    );
-    border-width: var(--mod-tag-border-width, var(--spectrum-tag-border-width));
-    block-size: var(--mod-tag-height, var(--spectrum-tag-height));
-    box-sizing: border-box;
-    vertical-align: bottom;
-    -webkit-user-select: none;
-    user-select: none;
-    transition:
-        border-color
-            var(
-                --mod-tag-animation-duration,
-                var(--spectrum-tag-animation-duration)
-            )
-            ease-in-out,
-        color
-            var(
-                --mod-tag-animation-duration,
-                var(--spectrum-tag-animation-duration)
-            )
-            ease-in-out,
-        box-shadow
-            var(
-                --mod-tag-animation-duration,
-                var(--spectrum-tag-animation-duration)
-            )
-            ease-in-out,
-        background-color
-            var(
-                --mod-tag-animation-duration,
-                var(--spectrum-tag-animation-duration)
-            )
-            ease-in-out;
-    border-style: solid;
-    outline: none;
-    align-items: center;
-    max-inline-size: 100%;
-    padding-inline-start: calc(
-        var(
-                --mod-tag-spacing-inline-start,
-                var(--spectrum-tag-spacing-inline-start)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    padding-inline-end: 0;
-    display: inline-flex;
-    position: relative;
-}
-
-::slotted([slot='icon']) {
-    block-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
-    inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
-    margin-block-start: calc(
-        var(
-                --mod-tag-icon-spacing-block-start,
-                var(--spectrum-tag-icon-spacing-block-start)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    margin-block-end: calc(
-        var(
-                --mod-tag-icon-spacing-block-end,
-                var(--spectrum-tag-icon-spacing-block-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    margin-inline-end: var(
-        --mod-tag-icon-spacing-inline-end,
-        var(--spectrum-tag-icon-spacing-inline-end)
-    );
-}
-
-::slotted([slot='avatar']) {
-    margin-block-start: calc(
-        var(
-                --mod-tag-avatar-spacing-block-start,
-                var(--spectrum-tag-avatar-spacing-block-start)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    margin-block-end: calc(
-        var(
-                --mod-tag-avatar-spacing-block-end,
-                var(--spectrum-tag-avatar-spacing-block-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    margin-inline-end: var(
-        --mod-tag-avatar-spacing-inline-end,
-        var(--spectrum-tag-avatar-spacing-inline-end)
-    );
-}
-
-.clear-button {
-    box-sizing: border-box;
-    color: currentColor;
-    --mod-clear-button-width: fit-content;
-    --spectrum-clearbutton-fill-size: fit-content;
-    --spectrum-clearbutton-fill-background-color: transparent;
-    margin-inline-start: calc(
-        var(
-                --mod-tag-clear-button-spacing-inline-start,
-                var(--spectrum-tag-clear-button-spacing-inline-start)
-            ) +
-            var(
-                --mod-tag-label-spacing-inline-end,
-                var(--spectrum-tag-label-spacing-inline-end)
-            ) * -1
-    );
-    margin-inline-end: calc(
-        var(
-                --mod-tag-clear-button-spacing-inline-end,
-                var(--spectrum-tag-clear-button-spacing-inline-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    padding-block-start: calc(
-        var(
-                --mod-tag-clear-button-spacing-block,
-                var(--spectrum-tag-clear-button-spacing-block)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    padding-block-end: calc(
-        var(
-                --mod-tag-clear-button-spacing-block,
-                var(--spectrum-tag-clear-button-spacing-block)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-}
-
-.clear-button .spectrum-ClearButton-fill {
-    background-color: var(
-        --mod-clearbutton-fill-background-color,
-        var(--spectrum-clearbutton-fill-background-color)
-    );
-    inline-size: var(
-        --mod-clearbutton-fill-size,
-        var(--spectrum-clearbutton-fill-size)
-    );
-    block-size: var(
-        --mod-clearbutton-fill-size,
-        var(--spectrum-clearbutton-fill-size)
-    );
-}
-
-.label {
-    box-sizing: border-box;
-    line-height: var(
-        --mod-tag-label-line-height,
-        var(--spectrum-tag-label-line-height)
-    );
-    font-weight: var(
-        --mod-tag-label-font-weight,
-        var(--spectrum-tag-label-font-weight)
-    );
-    font-size: var(--mod-tag-font-size, var(--spectrum-tag-font-size));
-    cursor: default;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    flex: auto;
-    block-size: 100%;
-    margin-inline-end: calc(
-        var(
-                --mod-tag-label-spacing-inline-end,
-                var(--spectrum-tag-label-spacing-inline-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    padding-block-start: calc(
-        var(
-                --mod-tag-label-spacing-block,
-                var(--spectrum-tag-label-spacing-block)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    overflow: hidden;
-}
-
-:host(:is(:active, [active])) {
-    border-color: var(
-        --highcontrast-tag-border-color-active,
-        var(
-            --mod-tag-border-color-active,
-            var(--spectrum-tag-border-color-active)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-active,
-        var(
-            --mod-tag-background-color-active,
-            var(--spectrum-tag-background-color-active)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-active,
-        var(
-            --mod-tag-content-color-active,
-            var(--spectrum-tag-content-color-active)
-        )
-    );
-}
-
-:host([focused]),
-:host(:focus-visible) {
-    border-color: var(
-        --highcontrast-tag-border-color-focus,
-        var(
-            --mod-tag-border-color-focus,
-            var(--spectrum-tag-border-color-focus)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-focus,
-        var(
-            --mod-tag-background-color-focus,
-            var(--spectrum-tag-background-color-focus)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-focus,
-        var(
-            --mod-tag-content-color-focus,
-            var(--spectrum-tag-content-color-focus)
-        )
-    );
-}
-
-:host([focused]):after,
-:host(:focus-visible):after {
-    content: '';
-    border-color: var(
-        --highcontrast-tag-focus-ring-color,
-        var(--mod-tag-focus-ring-color, var(--spectrum-tag-focus-ring-color))
-    );
-    border-radius: calc(
-        var(--mod-tag-corner-radius, var(--spectrum-tag-corner-radius)) +
-            var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) +
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    );
-    border-width: var(
-        --mod-tag-focus-ring-thickness,
-        var(--spectrum-tag-focus-ring-thickness)
-    );
-    pointer-events: none;
-    border-style: solid;
-    display: inline-block;
-    position: absolute;
-    inset-block-start: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
-    inset-block-end: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
-    inset-inline-start: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
-    inset-inline-end: calc(
-        var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) * -1 -
-            var(--mod-tag-border-width, var(--spectrum-tag-border-width)) -
-            var(
-                --mod-tag-focus-ring-thickness,
-                var(--spectrum-tag-focus-ring-thickness)
-            )
-    );
-}
-
-:host([selected]) {
-    border-color: var(
-        --highcontrast-tag-border-color-selected,
-        var(
-            --mod-tag-border-color-selected,
-            var(--spectrum-tag-border-color-selected)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-selected,
-        var(
-            --mod-tag-background-color-selected,
-            var(--spectrum-tag-background-color-selected)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-selected,
-        var(
-            --mod-tag-content-color-selected,
-            var(--spectrum-tag-content-color-selected)
-        )
-    );
-}
-
-:host([selected]:is(:active, [active])) {
-    border-color: var(
-        --highcontrast-tag-border-color-selected-active,
-        var(
-            --mod-tag-border-color-selected-active,
-            var(--spectrum-tag-border-color-selected-active)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-selected-active,
-        var(
-            --mod-tag-background-color-selected-active,
-            var(--spectrum-tag-background-color-selected-active)
-        )
-    );
-}
-
-:host([selected][focused]),
-:host([selected]:focus-visible) {
-    border-color: var(
-        --highcontrast-tag-border-color-selected-focus,
-        var(
-            --mod-tag-border-color-selected-focus,
-            var(--spectrum-tag-border-color-selected-focus)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-selected-focus,
-        var(
-            --mod-tag-background-color-selected-focus,
-            var(--spectrum-tag-background-color-selected-focus)
-        )
-    );
-}
-
-:host([invalid]) {
-    border-color: var(
-        --highcontrast-tag-border-color-invalid,
-        var(
-            --mod-tag-border-color-invalid,
-            var(--spectrum-tag-border-color-invalid)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-invalid,
-        var(
-            --mod-tag-content-color-invalid,
-            var(--spectrum-tag-content-color-invalid)
-        )
-    );
-}
-
-:host([invalid]:is(:active, [active])) {
-    border-color: var(
-        --highcontrast-tag-border-color-invalid-active,
-        var(
-            --mod-tag-border-color-invalid-active,
-            var(--spectrum-tag-border-color-invalid-active)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-invalid-active,
-        var(
-            --mod-tag-content-color-invalid-active,
-            var(--spectrum-tag-content-color-invalid-active)
-        )
-    );
-}
-
-:host([invalid][focused]),
-:host([invalid]:focus-visible) {
-    border-color: var(
-        --highcontrast-tag-border-color-invalid-focus,
-        var(
-            --mod-tag-border-color-invalid-focus,
-            var(--spectrum-tag-border-color-invalid-focus)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-invalid-focus,
-        var(
-            --mod-tag-content-color-invalid-focus,
-            var(--spectrum-tag-content-color-invalid-focus)
-        )
-    );
-}
-
-:host([invalid][selected]) {
-    border-color: var(
-        --highcontrast-tag-border-color-invalid-selected,
-        var(
-            --mod-tag-border-color-invalid-selected,
-            var(--spectrum-tag-border-color-invalid-selected)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-invalid-selected,
-        var(
-            --mod-tag-background-color-invalid-selected,
-            var(--spectrum-tag-background-color-invalid-selected)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-invalid-selected,
-        var(
-            --mod-tag-content-color-invalid-selected,
-            var(--spectrum-tag-content-color-invalid-selected)
-        )
-    );
-}
-
-:host([invalid][selected]:is(:active, [active])) {
-    border-color: var(
-        --highcontrast-tag-border-color-invalid-selected-active,
-        var(
-            --mod-tag-border-color-invalid-selected-active,
-            var(--spectrum-tag-border-color-invalid-selected-active)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-invalid-selected-active,
-        var(
-            --mod-tag-background-color-invalid-selected-active,
-            var(--spectrum-tag-background-color-invalid-selected-active)
-        )
-    );
-}
-
-:host([invalid][selected][focused]),
-:host([invalid][selected]:focus-visible) {
-    border-color: var(
-        --highcontrast-tag-border-color-invalid-selected-focus,
-        var(
-            --mod-tag-border-color-invalid-selected-focus,
-            var(--spectrum-tag-border-color-invalid-selected-focus)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-invalid-selected-focus,
-        var(
-            --mod-tag-background-color-invalid-selected-focus,
-            var(--spectrum-tag-background-color-invalid-selected-focus)
-        )
-    );
-}
-
-:host([emphasized]) {
-    border-color: var(
-        --highcontrast-tag-border-color-emphasized,
-        var(
-            --mod-tag-border-color-emphasized,
-            var(--spectrum-tag-border-color-emphasized)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-emphasized,
-        var(
-            --mod-tag-background-color-emphasized,
-            var(--spectrum-tag-background-color-emphasized)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-emphasized,
-        var(
-            --mod-tag-content-color-emphasized,
-            var(--spectrum-tag-content-color-emphasized)
-        )
-    );
-}
-
-@media (hover: hover) {
-    :host(:hover) {
-        border-color: var(
-            --highcontrast-tag-border-color-hover,
-            var(
-                --mod-tag-border-color-hover,
-                var(--spectrum-tag-border-color-hover)
-            )
-        );
-        background-color: var(
-            --highcontrast-tag-background-color-hover,
-            var(
-                --mod-tag-background-color-hover,
-                var(--spectrum-tag-background-color-hover)
-            )
-        );
-        color: var(
-            --highcontrast-tag-content-color-hover,
-            var(
-                --mod-tag-content-color-hover,
-                var(--spectrum-tag-content-color-hover)
-            )
-        );
-    }
-
-    :host([selected]:hover) {
-        border-color: var(
-            --highcontrast-tag-border-color-selected-hover,
-            var(
-                --mod-tag-border-color-selected-hover,
-                var(--spectrum-tag-border-color-selected-hover)
-            )
-        );
-        background-color: var(
-            --highcontrast-tag-background-color-selected-hover,
-            var(
-                --mod-tag-background-color-selected-hover,
-                var(--spectrum-tag-background-color-selected-hover)
-            )
-        );
-        color: var(
-            --highcontrast-tag-content-color-selected,
-            var(
-                --mod-tag-content-color-selected,
-                var(--spectrum-tag-content-color-selected)
-            )
-        );
-    }
-
-    :host([invalid]:hover) {
-        border-color: var(
-            --highcontrast-tag-border-color-invalid-hover,
-            var(
-                --mod-tag-border-color-invalid-hover,
-                var(--spectrum-tag-border-color-invalid-hover)
-            )
-        );
-        color: var(
-            --highcontrast-tag-content-color-invalid-hover,
-            var(
-                --mod-tag-content-color-invalid-hover,
-                var(--spectrum-tag-content-color-invalid-hover)
-            )
-        );
-    }
-
-    :host([invalid][selected]:hover) {
-        border-color: var(
-            --highcontrast-tag-border-color-invalid-selected-hover,
-            var(
-                --mod-tag-border-color-invalid-selected-hover,
-                var(--spectrum-tag-border-color-invalid-selected-hover)
-            )
-        );
-        background-color: var(
-            --highcontrast-tag-background-color-invalid-selected-hover,
-            var(
-                --mod-tag-background-color-invalid-selected-hover,
-                var(--spectrum-tag-background-color-invalid-selected-hover)
-            )
-        );
-        color: var(
-            --highcontrast-tag-content-color-invalid-selected,
-            var(
-                --mod-tag-content-color-invalid-selected,
-                var(--spectrum-tag-content-color-invalid-selected)
-            )
-        );
-    }
-
-    :host([emphasized]:hover) {
-        border-color: var(
-            --highcontrast-tag-border-color-emphasized-hover,
-            var(
-                --mod-tag-border-color-emphasized-hover,
-                var(--spectrum-tag-border-color-emphasized-hover)
-            )
-        );
-        background-color: var(
-            --highcontrast-tag-background-color-emphasized-hover,
-            var(
-                --mod-tag-background-color-emphasized-hover,
-                var(--spectrum-tag-background-color-emphasized-hover)
-            )
-        );
-        color: var(
-            --highcontrast-tag-content-color-emphasized,
-            var(
-                --mod-tag-content-color-emphasized,
-                var(--spectrum-tag-content-color-emphasized)
-            )
-        );
-    }
-}
-
-:host([emphasized]:is(:active, [active])) {
-    border-color: var(
-        --highcontrast-tag-border-color-emphasized-active,
-        var(
-            --mod-tag-border-color-emphasized-active,
-            var(--spectrum-tag-border-color-emphasized-active)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-emphasized-active,
-        var(
-            --mod-tag-background-color-emphasized-active,
-            var(--spectrum-tag-background-color-emphasized-active)
-        )
-    );
-}
-
-:host([emphasized][focused]),
-:host([emphasized]:focus-visible) {
-    border-color: var(
-        --highcontrast-tag-border-color-emphasized-focus,
-        var(
-            --mod-tag-border-color-emphasized-focus,
-            var(--spectrum-tag-border-color-emphasized-focus)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-emphasized-focus,
-        var(
-            --mod-tag-background-color-emphasized-focus,
-            var(--spectrum-tag-background-color-emphasized-focus)
-        )
-    );
-}
-
-:host([disabled]) {
-    border-color: var(
-        --highcontrast-tag-border-color-disabled,
-        var(
-            --mod-tag-border-color-disabled,
-            var(--spectrum-tag-border-color-disabled)
-        )
-    );
-    background-color: var(
-        --highcontrast-tag-background-color-disabled,
-        var(
-            --mod-tag-background-color-disabled,
-            var(--spectrum-tag-background-color-disabled)
-        )
-    );
-    color: var(
-        --highcontrast-tag-content-color-disabled,
-        var(
-            --mod-tag-content-color-disabled,
-            var(--spectrum-tag-content-color-disabled)
-        )
-    );
-    pointer-events: none;
-}
-
-:host([disabled]) ::slotted([slot='avatar']) {
-    opacity: var(
-        --mod-avatar-opacity-disabled,
-        var(--spectrum-avatar-opacity-disabled)
-    );
-}
-
-@media (forced-colors: active) {
-    :host {
-        forced-color-adjust: none;
-        --highcontrast-tag-border-color: ButtonText;
-        --highcontrast-tag-border-color-hover: ButtonText;
-        --highcontrast-tag-border-color-active: ButtonText;
-        --highcontrast-tag-border-color-focus: Highlight;
-        --highcontrast-tag-background-color: ButtonFace;
-        --highcontrast-tag-background-color-hover: ButtonFace;
-        --highcontrast-tag-background-color-active: ButtonFace;
-        --highcontrast-tag-background-color-focus: ButtonFace;
-        --highcontrast-tag-content-color: ButtonText;
-        --highcontrast-tag-content-color-hover: ButtonText;
-        --highcontrast-tag-content-color-active: ButtonText;
-        --highcontrast-tag-content-color-focus: ButtonText;
-        --highcontrast-tag-focus-ring-color: Highlight;
-    }
-
-    :host([selected]) {
-        --highcontrast-tag-border-color-selected: Highlight;
-        --highcontrast-tag-border-color-selected-hover: Highlight;
-        --highcontrast-tag-border-color-selected-active: Highlight;
-        --highcontrast-tag-border-color-selected-focus: Highlight;
-        --highcontrast-tag-background-color-selected: Highlight;
-        --highcontrast-tag-background-color-selected-hover: Highlight;
-        --highcontrast-tag-background-color-selected-active: Highlight;
-        --highcontrast-tag-background-color-selected-focus: Highlight;
-        --highcontrast-tag-content-color-selected: HighlightText;
-    }
-
-    :host([disabled]) {
-        --highcontrast-tag-border-color-disabled: GrayText;
-        --highcontrast-tag-background-color-disabled: ButtonFace;
-        --highcontrast-tag-content-color-disabled: GrayText;
-    }
-
-    :host([invalid]) {
-        --highcontrast-tag-border-color-invalid: Highlight;
-        --highcontrast-tag-border-color-invalid-hover: Highlight;
-        --highcontrast-tag-border-color-invalid-active: Highlight;
-        --highcontrast-tag-border-color-invalid-focus: Highlight;
-        --highcontrast-tag-content-color-invalid: CanvasText;
-        --highcontrast-tag-content-color-invalid-hover: CanvasText;
-        --highcontrast-tag-content-color-invalid-active: CanvasText;
-        --highcontrast-tag-content-color-invalid-focus: CanvasText;
-    }
-
-    :host([invalid][selected]) {
-        --highcontrast-tag-border-color-invalid-selected: Highlight;
-        --highcontrast-tag-border-color-invalid-selected-hover: Highlight;
-        --highcontrast-tag-border-color-invalid-selected-focus: Highlight;
-        --highcontrast-tag-border-color-invalid-selected-active: Highlight;
-        --highcontrast-tag-background-color-invalid-selected: Highlight;
-        --highcontrast-tag-background-color-invalid-selected-hover: Highlight;
-        --highcontrast-tag-background-color-invalid-selected-active: Highlight;
-        --highcontrast-tag-background-color-invalid-selected-focus: Highlight;
-        --highcontrast-tag-content-color-invalid-selected: HighlightText;
-    }
-
-    :host([emphasized]) {
-        --highcontrast-tag-border-color-emphasized: Highlight;
-        --highcontrast-tag-border-color-emphasized-hover: Highlight;
-        --highcontrast-tag-border-color-emphasized-active: Highlight;
-        --highcontrast-tag-border-color-emphasized-focus: Highlight;
-        --highcontrast-tag-background-color-emphasized: ButtonFace;
-        --highcontrast-tag-background-color-emphasized-hover: ButtonFace;
-        --highcontrast-tag-background-color-emphasized-active: ButtonFace;
-        --highcontrast-tag-background-color-emphasized-focus: ButtonFace;
-        --highcontrast-tag-content-color-emphasized: CanvasText;
-    }
-}
-
-:host {
-    --spectrum-tag-border-color: var(--system-spectrum-tag-border-color);
-    --spectrum-tag-border-color-hover: var(
-        --system-spectrum-tag-border-color-hover
-    );
-    --spectrum-tag-border-color-active: var(
-        --system-spectrum-tag-border-color-active
-    );
-    --spectrum-tag-border-color-focus: var(
-        --system-spectrum-tag-border-color-focus
-    );
-    --spectrum-tag-size-small-corner-radius: var(
-        --system-spectrum-tag-size-small-corner-radius
-    );
-    --spectrum-tag-size-medium-corner-radius: var(
-        --system-spectrum-tag-size-medium-corner-radius
-    );
-    --spectrum-tag-size-large-corner-radius: var(
-        --system-spectrum-tag-size-large-corner-radius
-    );
-    --spectrum-tag-background-color: var(
-        --system-spectrum-tag-background-color
-    );
-    --spectrum-tag-background-color-hover: var(
-        --system-spectrum-tag-background-color-hover
-    );
-    --spectrum-tag-background-color-active: var(
-        --system-spectrum-tag-background-color-active
-    );
-    --spectrum-tag-background-color-focus: var(
-        --system-spectrum-tag-background-color-focus
-    );
-    --spectrum-tag-content-color: var(--system-spectrum-tag-content-color);
-    --spectrum-tag-content-color-hover: var(
-        --system-spectrum-tag-content-color-hover
-    );
-    --spectrum-tag-content-color-active: var(
-        --system-spectrum-tag-content-color-active
-    );
-    --spectrum-tag-content-color-focus: var(
-        --system-spectrum-tag-content-color-focus
-    );
-    --spectrum-tag-border-color-selected: var(
-        --system-spectrum-tag-border-color-selected
-    );
-    --spectrum-tag-border-color-selected-hover: var(
-        --system-spectrum-tag-border-color-selected-hover
-    );
-    --spectrum-tag-border-color-selected-active: var(
-        --system-spectrum-tag-border-color-selected-active
-    );
-    --spectrum-tag-border-color-selected-focus: var(
-        --system-spectrum-tag-border-color-selected-focus
-    );
-    --spectrum-tag-border-color-disabled: var(
-        --system-spectrum-tag-border-color-disabled
-    );
-    --spectrum-tag-background-color-disabled: var(
-        --system-spectrum-tag-background-color-disabled
-    );
-    --spectrum-tag-size-small-spacing-inline-start: var(
-        --system-spectrum-tag-size-small-spacing-inline-start
-    );
-    --spectrum-tag-size-small-label-spacing-inline-end: var(
-        --system-spectrum-tag-size-small-label-spacing-inline-end
-    );
-    --spectrum-tag-size-small-clear-button-spacing-inline-end: var(
-        --system-spectrum-tag-size-small-clear-button-spacing-inline-end
-    );
-    --spectrum-tag-size-medium-spacing-inline-start: var(
-        --system-spectrum-tag-size-medium-spacing-inline-start
-    );
-    --spectrum-tag-size-medium-label-spacing-inline-end: var(
-        --system-spectrum-tag-size-medium-label-spacing-inline-end
-    );
-    --spectrum-tag-size-medium-clear-button-spacing-inline-end: var(
-        --system-spectrum-tag-size-medium-clear-button-spacing-inline-end
-    );
-    --spectrum-tag-size-large-spacing-inline-start: var(
-        --system-spectrum-tag-size-large-spacing-inline-start
-    );
-    --spectrum-tag-size-large-label-spacing-inline-end: var(
-        --system-spectrum-tag-size-large-label-spacing-inline-end
-    );
-    --spectrum-tag-size-large-clear-button-spacing-inline-end: var(
-        --system-spectrum-tag-size-large-clear-button-spacing-inline-end
     );
 }

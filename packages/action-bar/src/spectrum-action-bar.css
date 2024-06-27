@@ -12,48 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
-:host {
-    --spectrum-actionbar-height: var(--spectrum-action-bar-height);
-    --spectrum-actionbar-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-actionbar-item-counter-font-size: var(--spectrum-font-size-100);
-    --spectrum-actionbar-item-counter-line-height: var(
-        --spectrum-line-height-100
-    );
-    --spectrum-actionbar-item-counter-color: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-actionbar-popover-background-color: var(--spectrum-gray-50);
-    --spectrum-actionbar-popover-border-color: var(--spectrum-gray-400);
-    --spectrum-actionbar-emphasized-background-color: var(
-        --spectrum-informative-background-color-default
-    );
-    --spectrum-actionbar-emphasized-item-counter-color: var(--spectrum-white);
-    --spectrum-actionbar-spacing-outer-edge: var(--spectrum-spacing-300);
-    --spectrum-actionbar-spacing-close-button-top: var(--spectrum-spacing-100);
-    --spectrum-actionbar-spacing-close-button-start: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actionbar-spacing-close-button-end: var(--spectrum-spacing-75);
-    --spectrum-actionbar-spacing-item-counter-top: var(
-        --spectrum-action-bar-top-to-item-counter
-    );
-    --spectrum-actionbar-spacing-item-counter-end: var(--spectrum-spacing-400);
-    --spectrum-actionbar-spacing-action-group-top: var(--spectrum-spacing-100);
-    --spectrum-actionbar-spacing-action-group-end: var(--spectrum-spacing-100);
-    --spectrum-actionbar-shadow-horizontal: var(--spectrum-drop-shadow-x);
-    --spectrum-actionbar-shadow-vertical: var(--spectrum-drop-shadow-y);
-    --spectrum-actionbar-shadow-blur: var(--spectrum-drop-shadow-blur);
-    --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
-}
-
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
-    --spectrum-actionbar-item-counter-line-height-cjk: var(
-        --spectrum-cjk-line-height-100
-    );
-}
-
 @media (forced-colors: active) {
     :host,
     :host([emphasized]) #popover {
@@ -62,14 +20,14 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    pointer-events: none;
+    z-index: 1;
+    box-sizing: border-box;
     padding: 0
         var(
             --mod-actionbar-spacing-outer-edge,
             var(--spectrum-actionbar-spacing-outer-edge)
         );
-    z-index: 1;
-    box-sizing: border-box;
-    pointer-events: none;
     opacity: 0;
     block-size: 0;
     inset-block-end: 0;
@@ -86,19 +44,9 @@ governing permissions and limitations under the License.
 }
 
 #popover {
-    block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
+    pointer-events: auto;
     box-sizing: border-box;
-    border-radius: var(
-        --mod-actionbar-corner-radius,
-        var(--spectrum-actionbar-corner-radius)
-    );
-    border-color: var(
-        --highcontrast-actionbar-popover-border-color,
-        var(
-            --mod-actionbar-popover-border-color,
-            var(--spectrum-actionbar-popover-border-color)
-        )
-    );
+    block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     background-color: var(
         --mod-actionbar-popover-background-color,
         var(--spectrum-actionbar-popover-background-color)
@@ -121,7 +69,17 @@ governing permissions and limitations under the License.
                 var(--spectrum-actionbar-shadow-color)
             )
     );
-    pointer-events: auto;
+    border-color: var(
+        --highcontrast-actionbar-popover-border-color,
+        var(
+            --mod-actionbar-popover-border-color,
+            var(--spectrum-actionbar-popover-border-color)
+        )
+    );
+    border-radius: var(
+        --mod-actionbar-corner-radius,
+        var(--spectrum-actionbar-corner-radius)
+    );
     flex-direction: row;
     inline-size: 100%;
     margin: auto;
@@ -151,13 +109,13 @@ governing permissions and limitations under the License.
         --mod-actionbar-item-counter-font-size,
         var(--spectrum-actionbar-item-counter-font-size)
     );
-    color: var(
-        --mod-actionbar-item-counter-color,
-        var(--spectrum-actionbar-item-counter-color)
-    );
     line-height: var(
         --mod-actionbar-item-counter-line-height,
         var(--spectrum-actionbar-item-counter-line-height)
+    );
+    color: var(
+        --mod-actionbar-item-counter-color,
+        var(--spectrum-actionbar-item-counter-color)
     );
     margin-block-start: var(
         --mod-actionbar-spacing-item-counter-top,
@@ -192,11 +150,11 @@ governing permissions and limitations under the License.
 }
 
 :host([emphasized]) #popover {
-    filter: none;
     background-color: var(
         --mod-actionbar-emphasized-background-color,
         var(--spectrum-actionbar-emphasized-background-color)
     );
+    filter: none;
     border-color: #0000;
 }
 
@@ -218,4 +176,46 @@ governing permissions and limitations under the License.
 
 :host([flexible]) #popover {
     inline-size: auto;
+}
+
+:host {
+    --spectrum-actionbar-height: var(--spectrum-action-bar-height);
+    --spectrum-actionbar-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-actionbar-item-counter-font-size: var(--spectrum-font-size-100);
+    --spectrum-actionbar-item-counter-line-height: var(
+        --spectrum-line-height-100
+    );
+    --spectrum-actionbar-item-counter-color: var(
+        --spectrum-neutral-content-color-default
+    );
+    --spectrum-actionbar-popover-background-color: var(--spectrum-gray-25);
+    --spectrum-actionbar-popover-border-color: var(--spectrum-gray-400);
+    --spectrum-actionbar-emphasized-background-color: var(
+        --spectrum-informative-background-color-default
+    );
+    --spectrum-actionbar-emphasized-item-counter-color: var(--spectrum-white);
+    --spectrum-actionbar-spacing-outer-edge: var(--spectrum-spacing-300);
+    --spectrum-actionbar-spacing-close-button-top: var(--spectrum-spacing-100);
+    --spectrum-actionbar-spacing-close-button-start: var(
+        --spectrum-spacing-100
+    );
+    --spectrum-actionbar-spacing-close-button-end: var(--spectrum-spacing-75);
+    --spectrum-actionbar-spacing-item-counter-top: var(
+        --spectrum-action-bar-top-to-item-counter
+    );
+    --spectrum-actionbar-spacing-item-counter-end: var(--spectrum-spacing-400);
+    --spectrum-actionbar-spacing-action-group-top: var(--spectrum-spacing-100);
+    --spectrum-actionbar-spacing-action-group-end: var(--spectrum-spacing-100);
+    --spectrum-actionbar-shadow-horizontal: var(--spectrum-drop-shadow-x);
+    --spectrum-actionbar-shadow-vertical: var(--spectrum-drop-shadow-y);
+    --spectrum-actionbar-shadow-blur: var(--spectrum-drop-shadow-blur);
+    --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
+}
+
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+    --spectrum-actionbar-item-counter-line-height-cjk: var(
+        --spectrum-cjk-line-height-100
+    );
 }

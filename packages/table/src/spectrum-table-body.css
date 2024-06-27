@@ -22,11 +22,7 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
-    );
-    outline-style: solid;
+    --mod-table-border-color: transparent;
     outline-color: var(
         --highcontrast-table-focus-indicator-color,
         var(
@@ -34,7 +30,11 @@ governing permissions and limitations under the License.
             var(--spectrum-table-drop-zone-outline-color)
         )
     );
-    --mod-table-border-color: transparent;
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
 }
 
 :host {

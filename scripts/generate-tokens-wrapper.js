@@ -142,72 +142,24 @@ const processTokens = (srcPath, tokensDir) => {
     } catch (er) {}
 };
 
-const processPackages = async (srcPath, tokensDir, index) => {
-    if (tokensDir === 'tokens') {
-        const packagename = tokenPackages[index];
+const processPackages = async (tokensDir, index) => {
+    const packagename = tokenPackages[index];
 
-        let componentLevelTokensPath = path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            tokensDir,
-            'dist',
-            'css',
-            'components'
-        );
-        const spectrumPath = path.join(
-            componentLevelTokensPath,
-            'spectrum',
-            packagename + '.css'
-        );
-        // check if spectrumPath exists
-        if (fs.existsSync(spectrumPath)) {
-            let spectrum = fs.readFileSync(spectrumPath, 'utf8');
-            spectrum = removeImporantComments(targetHost(spectrum));
-            fs.appendFileSync(
-                path.join(
-                    __dirname,
-                    '..',
-                    'tools',
-                    'styles',
-                    tokensDir,
-                    'spectrum',
-                    'global-vars.css'
-                ),
-                spectrum
-            );
-        }
-
-        const expressPath = path.join(
-            componentLevelTokensPath,
-            'express',
-            packagename + '.css'
-        );
-
-        // check if expressPath exists
-        if (fs.existsSync(expressPath)) {
-            let express = fs.readFileSync(expressPath, 'utf8');
-            express = removeImporantComments(targetHost(express));
-            fs.appendFileSync(
-                path.join(
-                    __dirname,
-                    '..',
-                    'tools',
-                    'styles',
-                    tokensDir,
-                    'express',
-                    'global-vars.css'
-                ),
-                express
-            );
-        }
-        return;
-    }
-
-    const packageName = tokenPackages[index];
-    const spectrumPath = path.join(srcPath, 'spectrum.css');
-
+    let componentLevelTokensPath = path.join(
+        __dirname,
+        '..',
+        'node_modules',
+        '@spectrum-css',
+        tokensDir,
+        'dist',
+        'css',
+        'components'
+    );
+    const spectrumPath = path.join(
+        componentLevelTokensPath,
+        'spectrum',
+        packagename + '.css'
+    );
     // check if spectrumPath exists
     if (fs.existsSync(spectrumPath)) {
         let spectrum = fs.readFileSync(spectrumPath, 'utf8');
@@ -226,12 +178,16 @@ const processPackages = async (srcPath, tokensDir, index) => {
         );
     }
 
-    // spectrum-2 doesn't need express package tokens
+    // s2 doesn't need express tokens
     if (tokensDir === 'tokens-v2') {
         return;
     }
 
-    const expressPath = path.join(srcPath, 'express.css');
+    const expressPath = path.join(
+        componentLevelTokensPath,
+        'express',
+        packagename + '.css'
+    );
 
     // check if expressPath exists
     if (fs.existsSync(expressPath)) {
@@ -249,29 +205,6 @@ const processPackages = async (srcPath, tokensDir, index) => {
             ),
             express
         );
-    }
-
-    const varsPaths = path.join(
-        __dirname,
-        '..',
-        'tools',
-        'styles',
-        '**',
-        '*.css'
-    );
-    const varsRegExp = new RegExp(`\\s*--spectrum-${packageName}[^;}]*;*`, 'g');
-    const aliasRegExp = new RegExp(
-        `\\s*--spectrum-alias-${packageName}[^;}]*;*`,
-        'g'
-    );
-    const varsWithoutTokens = await fg([varsPaths], {
-        ignore: ['**/tokens/**/*.css'],
-    });
-    for (const varsPath of varsWithoutTokens) {
-        let css = fs.readFileSync(varsPath, 'utf8');
-        css = css.replaceAll(varsRegExp, '');
-        css = css.replaceAll(aliasRegExp, '');
-        fs.writeFileSync(varsPath, css);
     }
 };
 
@@ -314,7 +247,7 @@ export async function generateTokensWrapper(spectrumVersion) {
     }
 
     const processes = packagePaths.map((path, index) => {
-        return processPackages(path, tokensDir, index);
+        return processPackages(tokensDir, index);
     });
     await Promise.all(processes);
 }

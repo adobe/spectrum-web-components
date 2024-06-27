@@ -727,7 +727,7 @@
     --spectrum-icon-color-red-primary-default: var(--spectrum-red-900);
     --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-400);
     --spectrum-menu-item-background-color-default-rgb: 0, 0, 0;
-    --spectrum-menu-item-background-color-default-opacity: 0;
+    --spectrum-menu-item-background-color-default-opacity: 0%;
     --spectrum-menu-item-background-color-default: rgba(
         var(--spectrum-menu-item-background-color-default-rgb),
         var(--spectrum-menu-item-background-color-default-opacity)
@@ -825,4 +825,13 @@
         0.1
     );
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
+
+    --spectrum-swatch-border-color-rgb: 0, 0, 0;
+
+    --spectrum-swatch-border-color-opacity: 51%;
+
+    --spectrum-swatch-border-color: rgba(
+        var(--spectrum-swatch-border-color-rgb),
+        var(--spectrum-swatch-border-color-opacity)
+    );
 }

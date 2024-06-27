@@ -13,6 +13,20 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+}
+
+@media (forced-colors: active) {
+    .spectrum-Icon {
+        forced-color-adjust: preserve-parent-color;
+    }
+}
+
+:host {
     --spectrum-sidenav-focus-ring-size: var(
         --spectrum-focus-indicator-thickness
     );
@@ -56,15 +70,15 @@ governing permissions and limitations under the License.
     );
     --spectrum-sidenav-background-disabled: transparent;
     --spectrum-sidenav-background-default: transparent;
-    --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
-    --spectrum-sidenav-item-background-down: var(--spectrum-gray-300);
-    --spectrum-sidenav-background-key-focus: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-hover: var(--spectrum-gray-100);
+    --spectrum-sidenav-item-background-down: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-key-focus: var(--spectrum-gray-100);
     --spectrum-sidenav-item-background-default-selected: var(
-        --spectrum-gray-200
+        --spectrum-gray-100
     );
-    --spectrum-sidenav-background-hover-selected: var(--spectrum-gray-300);
-    --spectrum-sidenav-item-background-down-selected: var(--spectrum-gray-300);
-    --spectrum-sidenav-background-key-focus-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-hover-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-item-background-down-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-key-focus-selected: var(--spectrum-gray-100);
     --spectrum-sidenav-header-color: var(--spectrum-gray-600);
     --spectrum-sidenav-content-disabled-color: var(
         --spectrum-disabled-content-color
@@ -122,18 +136,4 @@ governing permissions and limitations under the License.
         --spectrum-cjk-line-height-100
     );
     --spectrum-sidenav-header-line-height: var(--spectrum-cjk-line-height-100);
-}
-
-:host {
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    display: flex;
-}
-
-@media (forced-colors: active) {
-    .spectrum-Icon {
-        forced-color-adjust: preserve-parent-color;
-    }
 }

@@ -13,6 +13,57 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 #list {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+}
+
+#heading {
+    padding-inline: var(
+        --mod-sidenav-inline-padding,
+        var(--spectrum-sidenav-inline-padding)
+    );
+    font-size: var(
+        --mod-sidenav-header-font-size,
+        var(--spectrum-sidenav-header-font-size)
+    );
+    font-weight: var(
+        --mod-sidenav-header-font-weight,
+        var(--spectrum-sidenav-header-font-weight)
+    );
+    font-style: var(
+        --mod-sidenav-header-font-style,
+        var(--spectrum-sidenav-header-font-style)
+    );
+    line-height: var(
+        --mod-sidenav-header-line-height,
+        var(--spectrum-sidenav-header-line-height)
+    );
+    color: var(
+        --mod-sidenav-header-color,
+        var(--spectrum-sidenav-header-color)
+    );
+    margin-block-start: calc(
+        var(
+                --mod-sidenav-heading-top-margin,
+                var(--spectrum-sidenav-heading-top-margin)
+            ) - var(--mod-sidenav-gap, var(--spectrum-sidenav-gap))
+    );
+    margin-block-end: var(
+        --mod-sidenav-heading-bottom-margin,
+        var(--spectrum-sidenav-heading-bottom-margin)
+    );
+}
+
+@media (forced-colors: active) {
+    #list .spectrum-Icon {
+        forced-color-adjust: preserve-parent-color;
+    }
+}
+
+#list {
     --spectrum-sidenav-focus-ring-size: var(
         --spectrum-focus-indicator-thickness
     );
@@ -56,15 +107,15 @@ governing permissions and limitations under the License.
     );
     --spectrum-sidenav-background-disabled: transparent;
     --spectrum-sidenav-background-default: transparent;
-    --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
-    --spectrum-sidenav-item-background-down: var(--spectrum-gray-300);
-    --spectrum-sidenav-background-key-focus: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-hover: var(--spectrum-gray-100);
+    --spectrum-sidenav-item-background-down: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-key-focus: var(--spectrum-gray-100);
     --spectrum-sidenav-item-background-default-selected: var(
-        --spectrum-gray-200
+        --spectrum-gray-100
     );
-    --spectrum-sidenav-background-hover-selected: var(--spectrum-gray-300);
-    --spectrum-sidenav-item-background-down-selected: var(--spectrum-gray-300);
-    --spectrum-sidenav-background-key-focus-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-hover-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-item-background-down-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-key-focus-selected: var(--spectrum-gray-100);
     --spectrum-sidenav-header-color: var(--spectrum-gray-600);
     --spectrum-sidenav-content-disabled-color: var(
         --spectrum-disabled-content-color
@@ -122,55 +173,4 @@ governing permissions and limitations under the License.
         --spectrum-cjk-line-height-100
     );
     --spectrum-sidenav-header-line-height: var(--spectrum-cjk-line-height-100);
-}
-
-#list {
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    display: flex;
-}
-
-#heading {
-    padding-inline: var(
-        --mod-sidenav-inline-padding,
-        var(--spectrum-sidenav-inline-padding)
-    );
-    color: var(
-        --mod-sidenav-header-color,
-        var(--spectrum-sidenav-header-color)
-    );
-    font-size: var(
-        --mod-sidenav-header-font-size,
-        var(--spectrum-sidenav-header-font-size)
-    );
-    font-weight: var(
-        --mod-sidenav-header-font-weight,
-        var(--spectrum-sidenav-header-font-weight)
-    );
-    font-style: var(
-        --mod-sidenav-header-font-style,
-        var(--spectrum-sidenav-header-font-style)
-    );
-    line-height: var(
-        --mod-sidenav-header-line-height,
-        var(--spectrum-sidenav-header-line-height)
-    );
-    margin-block-start: calc(
-        var(
-                --mod-sidenav-heading-top-margin,
-                var(--spectrum-sidenav-heading-top-margin)
-            ) - var(--mod-sidenav-gap, var(--spectrum-sidenav-gap))
-    );
-    margin-block-end: var(
-        --mod-sidenav-heading-bottom-margin,
-        var(--spectrum-sidenav-heading-bottom-margin)
-    );
-}
-
-@media (forced-colors: active) {
-    #list .spectrum-Icon {
-        forced-color-adjust: preserve-parent-color;
-    }
 }

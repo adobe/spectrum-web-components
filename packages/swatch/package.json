@@ -75,8 +75,8 @@
         "@spectrum-web-components/shared": "^0.42.5"
     },
     "devDependencies": {
-        "@spectrum-css/swatch": "^6.1.0",
-        "@spectrum-css/swatchgroup": "^3.1.0"
+        "@spectrum-css/swatch": "^7.0.0-s2-foundations.3",
+        "@spectrum-css/swatchgroup": "^4.0.0-s2-foundations.3"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

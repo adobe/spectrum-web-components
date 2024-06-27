@@ -26,11 +26,24 @@ governing permissions and limitations under the License.
             var(--spectrum-table-icon-color-default)
         )
     );
+    cursor: auto;
+    cursor: var(--mod-table-cursor-header-default, initial);
     box-sizing: border-box;
-    text-align: start;
-    vertical-align: var(
-        --mod-table-header-vertical-align,
-        var(--spectrum-table-header-vertical-align)
+    block-size: var(
+        --mod-table-min-header-height,
+        var(--spectrum-table-min-header-height)
+    );
+    padding-block: var(
+            --mod-table-header-top-to-text,
+            var(--spectrum-table-header-top-to-text)
+        )
+        var(
+            --mod-table-header-bottom-to-text,
+            var(--spectrum-table-header-bottom-to-text)
+        );
+    padding-inline: var(
+        --mod-table-cell-inline-space,
+        var(--spectrum-table-cell-inline-space)
     );
     font-family: var(
         --mod-table-header-font-family,
@@ -48,26 +61,16 @@ governing permissions and limitations under the License.
         --mod-table-header-line-height,
         var(--spectrum-table-row-line-height)
     );
-    text-transform: var(--mod-table-header-text-transform, none);
-    block-size: var(
-        --mod-table-min-header-height,
-        var(--spectrum-table-min-header-height)
-    );
-    padding-block: var(
-            --mod-table-header-top-to-text,
-            var(--spectrum-table-header-top-to-text)
-        )
-        var(
-            --mod-table-header-bottom-to-text,
-            var(--spectrum-table-header-bottom-to-text)
-        );
-    padding-inline: var(
-        --mod-table-cell-inline-space,
-        var(--spectrum-table-cell-inline-space)
-    );
     color: var(
         --mod-table-header-text-color,
         var(--spectrum-table-header-text-color)
+    );
+    text-align: start;
+    text-transform: none;
+    text-transform: var(--mod-table-header-text-transform, none);
+    vertical-align: var(
+        --mod-table-header-vertical-align,
+        var(--spectrum-table-header-vertical-align)
     );
     background-color: var(
         --mod-table-header-background-color,
@@ -82,7 +85,6 @@ governing permissions and limitations under the License.
             )
         )
         ease-in-out;
-    cursor: var(--mod-table-cursor-header-default, initial);
     border-radius: 0;
     outline: 0;
 }
@@ -98,27 +100,6 @@ governing permissions and limitations under the License.
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
     box-sizing: border-box;
-    font-size: var(
-        --mod-table-row-font-size,
-        var(--spectrum-table-row-font-size)
-    );
-    font-weight: var(
-        --mod-table-row-font-weight,
-        var(--spectrum-table-row-font-weight)
-    );
-    line-height: var(
-        --mod-table-row-line-height,
-        var(--spectrum-table-row-line-height)
-    );
-    vertical-align: var(
-        --mod-table-default-vertical-align,
-        var(--spectrum-table-default-vertical-align)
-    );
-    color: var(
-        --highcontrast-table-row-text-color,
-        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
-    );
-    background-color: var(--spectrum-table-cell-background-color);
     block-size: var(
         --mod-table-min-row-height,
         var(--spectrum-table-min-row-height)
@@ -138,6 +119,27 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-outer-border-inline-width)
             )
     );
+    font-size: var(
+        --mod-table-row-font-size,
+        var(--spectrum-table-row-font-size)
+    );
+    font-weight: var(
+        --mod-table-row-font-weight,
+        var(--spectrum-table-row-font-weight)
+    );
+    line-height: var(
+        --mod-table-row-line-height,
+        var(--spectrum-table-row-line-height)
+    );
+    color: var(
+        --highcontrast-table-row-text-color,
+        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
+    );
+    vertical-align: var(
+        --mod-table-default-vertical-align,
+        var(--spectrum-table-default-vertical-align)
+    );
+    background-color: var(--spectrum-table-cell-background-color);
 }
 
 :host(:not([head-cell])),
@@ -149,11 +151,6 @@ governing permissions and limitations under the License.
 :host(:not([head-cell]):focus-visible),
 :host([head-cell][focused]),
 :host([head-cell]:focus-visible) {
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
-    );
-    outline-style: solid;
     outline-color: var(
         --highcontrast-table-cell-focus-indicator-color,
         var(
@@ -163,6 +160,17 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-focus-indicator-color)
             )
         )
+    );
+    outline-style: solid;
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1
     );
     outline-offset: calc(
         var(

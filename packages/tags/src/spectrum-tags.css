@@ -13,8 +13,6 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
-    --spectrum-tag-group-item-margin-block: var(--spectrum-spacing-75);
-    --spectrum-tag-group-item-margin-inline: var(--spectrum-spacing-75);
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -31,4 +29,9 @@ governing permissions and limitations under the License.
         --mod-tag-group-item-margin-inline,
         var(--spectrum-tag-group-item-margin-inline)
     );
+}
+
+:host {
+    --spectrum-tag-group-item-margin-block: var(--spectrum-spacing-75);
+    --spectrum-tag-group-item-margin-inline: var(--spectrum-spacing-75);
 }

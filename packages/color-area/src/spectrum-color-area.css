@@ -12,21 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
-:host {
-    --spectrum-colorarea-border-radius: var(
-        --spectrum-color-area-border-rounding
-    );
-    --spectrum-colorarea-border-color: #0000001a;
-    --spectrum-colorarea-disabled-background-color: var(
-        --spectrum-disabled-background-color
-    );
-    --spectrum-colorarea-border-width: var(--spectrum-color-area-border-width);
-    --spectrum-colorarea-height: var(--spectrum-color-area-height);
-    --spectrum-colorarea-width: var(--spectrum-color-area-width);
-    --spectrum-colorarea-min-width: var(--spectrum-color-area-minimum-width);
-    --spectrum-colorarea-min-height: var(--spectrum-color-area-minimum-height);
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-colorarea-border-color-disabled: GrayText;
@@ -44,20 +29,16 @@ governing permissions and limitations under the License.
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
+    box-sizing: border-box;
+    inline-size: var(--mod-colorarea-width, var(--spectrum-colorarea-width));
     min-inline-size: var(
         --mod-colorarea-min-width,
         var(--spectrum-colorarea-min-width)
     );
+    block-size: var(--mod-colorarea-height, var(--spectrum-colorarea-height));
     min-block-size: var(
         --mod-colorarea-min-height,
         var(--spectrum-colorarea-min-height)
-    );
-    inline-size: var(--mod-colorarea-width, var(--spectrum-colorarea-width));
-    block-size: var(--mod-colorarea-height, var(--spectrum-colorarea-height));
-    box-sizing: border-box;
-    border-radius: var(
-        --mod-colorarea-border-radius,
-        var(--spectrum-colorarea-border-radius)
     );
     border: var(
             --mod-colorarea-border-width,
@@ -71,6 +52,10 @@ governing permissions and limitations under the License.
                 var(--spectrum-colorarea-border-color)
             )
         );
+    border-radius: var(
+        --mod-colorarea-border-radius,
+        var(--spectrum-colorarea-border-radius)
+    );
     display: inline-block;
     position: relative;
 }
@@ -109,8 +94,7 @@ governing permissions and limitations under the License.
     inset-block-start: 0;
 }
 
-.handle:dir(rtl),
-:host([dir='rtl']) .handle {
+.handle:dir(rtl) {
     inset-inline-end: 0;
 }
 
@@ -124,13 +108,28 @@ governing permissions and limitations under the License.
 }
 
 .slider {
-    opacity: 0;
-    z-index: 0;
     pointer-events: none;
+    z-index: 0;
+    opacity: 0;
     block-size: 100%;
     inline-size: 100%;
     margin: 0;
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
+}
+
+:host {
+    --spectrum-colorarea-border-radius: var(
+        --spectrum-color-area-border-rounding
+    );
+    --spectrum-colorarea-border-color: #0000001a;
+    --spectrum-colorarea-disabled-background-color: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-colorarea-border-width: var(--spectrum-color-area-border-width);
+    --spectrum-colorarea-height: var(--spectrum-color-area-height);
+    --spectrum-colorarea-width: var(--spectrum-color-area-width);
+    --spectrum-colorarea-min-width: var(--spectrum-color-area-minimum-width);
+    --spectrum-colorarea-min-height: var(--spectrum-color-area-minimum-height);
 }

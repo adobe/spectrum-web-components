@@ -12,36 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
-:host {
-    --spectrum-link-animation-duration: var(--spectrum-animation-duration-100);
-    --spectrum-link-text-color-primary-default: var(
-        --spectrum-accent-content-color-default
-    );
-    --spectrum-link-text-color-primary-hover: var(
-        --spectrum-accent-content-color-hover
-    );
-    --spectrum-link-text-color-primary-active: var(
-        --spectrum-accent-content-color-down
-    );
-    --spectrum-link-text-color-primary-focus: var(
-        --spectrum-accent-content-color-key-focus
-    );
-    --spectrum-link-text-color-secondary-default: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-link-text-color-secondary-hover: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --spectrum-link-text-color-secondary-active: var(
-        --spectrum-neutral-content-color-down
-    );
-    --spectrum-link-text-color-secondary-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-    --spectrum-link-text-color-white: var(--spectrum-white);
-    --spectrum-link-text-color-black: var(--spectrum-black);
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-link-text-color-primary-default: LinkText;
@@ -58,15 +28,6 @@ governing permissions and limitations under the License.
 }
 
 a {
-    background-color: initial;
-    -webkit-text-decoration-skip: objects;
-    text-decoration-skip: objects;
-    transition: color
-        var(
-            --mod-link-animation-duration,
-            var(--spectrum-link-animation-duration)
-        )
-        ease-in-out;
     cursor: pointer;
     color: var(
         --highcontrast-link-text-color-primary-default,
@@ -75,6 +36,15 @@ a {
             var(--spectrum-link-text-color-primary-default)
         )
     );
+    background-color: initial;
+    transition: color
+        var(
+            --mod-link-animation-duration,
+            var(--spectrum-link-animation-duration)
+        )
+        ease-in-out;
+    -webkit-text-decoration-skip: objects;
+    text-decoration-skip: objects;
     outline: none;
     -webkit-text-decoration: underline;
     text-decoration: underline;
@@ -98,8 +68,11 @@ a:focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
-    text-decoration: underline double;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-decoration-color: inherit;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
+    text-decoration-style: double;
 }
 
 :host([variant='secondary']) a {
@@ -200,4 +173,34 @@ a:focus-visible {
             )
         );
     }
+}
+
+:host {
+    --spectrum-link-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-link-text-color-primary-default: var(
+        --spectrum-accent-content-color-default
+    );
+    --spectrum-link-text-color-primary-hover: var(
+        --spectrum-accent-content-color-hover
+    );
+    --spectrum-link-text-color-primary-active: var(
+        --spectrum-accent-content-color-down
+    );
+    --spectrum-link-text-color-primary-focus: var(
+        --spectrum-accent-content-color-key-focus
+    );
+    --spectrum-link-text-color-secondary-default: var(
+        --spectrum-neutral-content-color-default
+    );
+    --spectrum-link-text-color-secondary-hover: var(
+        --spectrum-neutral-content-color-hover
+    );
+    --spectrum-link-text-color-secondary-active: var(
+        --spectrum-neutral-content-color-down
+    );
+    --spectrum-link-text-color-secondary-focus: var(
+        --spectrum-neutral-content-color-key-focus
+    );
+    --spectrum-link-text-color-white: var(--spectrum-white);
+    --spectrum-link-text-color-black: var(--spectrum-black);
 }
