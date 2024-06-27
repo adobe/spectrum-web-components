@@ -69,8 +69,6 @@ An `<sp-color-area>`’s height and width can be customized appropriately for it
 An `<sp-color-area>` renders accessible labels for each axis: _"saturation"_ and _"luminosity"_.
 Specify `label-x` and `label-y` attributes to override these defaults.
 
-The `label` attribute is **deprecated** in favor of separately labeling each axis.
-
 ```html
 <sp-color-area
     label-x="Color intensity"
