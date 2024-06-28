@@ -34,6 +34,7 @@
             "default": "./src/index.js"
         },
         "./src/popover.css.js": "./src/popover.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-popover.js": {
             "development": "./sp-popover.dev.js",
             "default": "./sp-popover.js"

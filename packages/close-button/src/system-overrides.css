@@ -10,10 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-infield-button.css');
-@import url('./system-overrides.css');
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
-    box-sizing: border-box;
-    user-select: none;
+    --spectrum-closebutton-background-color-default: var(
+        --system-spectrum-closebutton-background-color-default
+    );
+    --spectrum-closebutton-background-color-hover: var(
+        --system-spectrum-closebutton-background-color-hover
+    );
+    --spectrum-closebutton-background-color-down: var(
+        --system-spectrum-closebutton-background-color-down
+    );
+    --spectrum-closebutton-background-color-focus: var(
+        --system-spectrum-closebutton-background-color-focus
+    );
 }

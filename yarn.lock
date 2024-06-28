@@ -5933,7 +5933,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-6.1.1.tgz#6d64b8be31f3e79febb250a285e011271c914f7a"
   integrity sha512-PlEvTRqkcQQHCILLZHZvpCWLhq/1sboQ7snLEL+9l3lW4hEdKWzrn4OqZl+S8In5bxF8osmrquvfBJKBY8qrZw==
 
-"@spectrum-css/ui-icons@^2.0.0-s2-foundations.5":
+"@spectrum-css/ui-icons@^2.0.0-s2-foundations.4":
   version "2.0.0-s2-foundations.4"
   resolved "https://registry.yarnpkg.com/@spectrum-css/ui-icons/-/ui-icons-2.0.0-s2-foundations.4.tgz#b8af4aeaecf1fc699115b6f93e83f201cea5611a"
   integrity sha512-3umNpulTtz5t2xIsMlyrX6pBGo6QTUTd0MRcD/n83h/9gQ4y+jy8U9u6WrM/M/C1awVQJl2gcFs0+L8mEaR2sA==

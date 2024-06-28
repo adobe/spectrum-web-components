@@ -425,7 +425,7 @@ async function processComponent(componentPath) {
             return buildSelectorsV2(selectorMetadata);
         };
 
-        if (conversion.systemOverrides) {
+        if (conversion.systemOverrides !== false) {
             // swc package name
             const swcPackagename = conversion.fileName;
 

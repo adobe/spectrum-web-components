@@ -42,6 +42,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-checkbox.js": {
             "development": "./sp-checkbox.dev.js",
             "default": "./sp-checkbox.js"

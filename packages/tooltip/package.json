@@ -33,6 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./src/tooltip-directive.js": {
             "development": "./src/tooltip-directive.dev.js",
             "default": "./src/tooltip-directive.js"
