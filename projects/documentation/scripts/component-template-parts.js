@@ -107,6 +107,36 @@ tags:
 ---`;
 }
 
+export function changelogDestinationTemplate(componentName, componentHeading) {
+    return `---
+layout: changelog.njk
+title: '${nameToTitle(componentName)} changelog: Spectrum Web Components'
+displayName: ${nameToTitle(componentName)}
+componentName: ${componentName}
+componentHeading: ${componentHeading}
+tags:
+- component-changelog
+---`;
+}
+
+export function changelogPartialTemplate(
+    componentName,
+    componentHeading,
+    body
+) {
+    return `---
+layout: partial.njk
+title: '${nameToTitle(componentName)}: Spectrum Web Components'
+displayName: ${nameToTitle(componentName)}
+componentName: ${componentName}
+componentHeading: ${componentHeading}
+partType: changelog
+tags:
+- ${componentName}
+---
+${body}`;
+}
+
 export function apiPartialTemplate(componentName, componentHeading, tag) {
     return `---
 layout: partial.njk

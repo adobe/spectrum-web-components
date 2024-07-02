@@ -17,6 +17,8 @@ import { fileURLToPath } from 'url';
 import {
     apiDestinationTemplate,
     apiPartialTemplate,
+    changelogDestinationTemplate,
+    changelogPartialTemplate,
     exampleDestinationTemplate,
     examplePartialTemplate,
 } from './component-template-parts.js';
@@ -68,6 +70,52 @@ const findDeprecationNotice = async function (filePath) {
         }
     }
 };
+
+export async function processChangelog(mdPath) {
+    const fileName = extractFileNameRegExp.exec(mdPath)[0];
+
+    if (fileName !== 'CHANGELOG.md') {
+        return;
+    }
+    const componentName = extractPackageNameRegExp.exec(mdPath)[1];
+    let changelogContent = fs.readFileSync(mdPath).toString();
+    changelogContent = changelogContent[0].split('\n').slice(4).join('\n');
+
+    const isComponent = mdPath.includes('/packages/');
+    const destinationPath = isComponent
+        ? componentDestinationPath
+        : toolDestinationPath;
+
+    let componentHeading = componentName;
+    componentHeading = 'sp-' + componentHeading;
+
+    const changelogDestinationFile = path.resolve(
+        destinationPath,
+        componentName,
+        'changelog.md'
+    );
+
+    const changelogPartialFile = path.resolve(
+        destinationPath,
+        componentName,
+        'changelog-content.md'
+    );
+
+    if (fs.existsSync(changelogDestinationFile)) {
+        fs.writeFileSync(
+            changelogDestinationFile,
+            changelogDestinationTemplate(componentName, componentHeading)
+        );
+        fs.writeFileSync(
+            changelogPartialFile,
+            changelogPartialTemplate(
+                componentName,
+                componentHeading,
+                changelogContent
+            )
+        );
+    }
+}
 
 export async function processREADME(mdPath) {
     const fileName = extractFileNameRegExp.exec(mdPath)[0];
@@ -233,6 +281,7 @@ async function main() {
         `${projectDir}/(packages|tools)/**/*.md`
     )) {
         await processREADME(mdPath);
+        await processChangelog(mdPath);
     }
 }
 
