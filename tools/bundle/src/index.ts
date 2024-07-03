@@ -14,6 +14,7 @@ export * from '@spectrum-web-components/action-bar';
 export * from '@spectrum-web-components/action-button';
 export * from '@spectrum-web-components/action-group';
 export * from '@spectrum-web-components/action-menu';
+export * from '@spectrum-web-components/alert-banner';
 export * from '@spectrum-web-components/avatar';
 export * from '@spectrum-web-components/asset';
 export * from '@spectrum-web-components/badge';

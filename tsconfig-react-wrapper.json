@@ -12,6 +12,8 @@
         { "path": "react/action-button" },
         { "path": "react/action-group" },
         { "path": "react/action-menu" },
+        { "path": "react/alert-banner" },
+        { "path": "react/alert-dialog" },
         { "path": "react/asset" },
         { "path": "react/avatar" },
         { "path": "react/banner" },
@@ -22,10 +24,13 @@
         { "path": "react/checkbox" },
         { "path": "react/coachmark" },
         { "path": "react/color-area" },
+        { "path": "react/color-field" },
         { "path": "react/color-handle" },
         { "path": "react/color-loupe" },
         { "path": "react/color-slider" },
         { "path": "react/color-wheel" },
+        { "path": "react/combobox" },
+        { "path": "react/contextual-help" },
         { "path": "react/dialog" },
         { "path": "react/divider" },
         { "path": "react/dropzone" },
@@ -38,6 +43,7 @@
         { "path": "react/icons-ui" },
         { "path": "react/icons-workflow" },
         { "path": "react/illustrated-message" },
+        { "path": "react/infield-button" },
         { "path": "react/link" },
         { "path": "react/menu" },
         { "path": "react/meter" },
@@ -68,6 +74,7 @@
         { "path": "react/tooltip" },
         { "path": "react/top-nav" },
         { "path": "react/tray" },
+        { "path": "react/truncated" },
         { "path": "react/underlay" }
     ]
 }

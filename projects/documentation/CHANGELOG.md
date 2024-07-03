@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+**Note:** Version bump only for package documentation
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+**Note:** Version bump only for package documentation
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **combobox:** add missing React TS typings ([#4419](https://github.com/adobe/spectrum-web-components/issues/4419)) ([fd9b485](https://github.com/adobe/spectrum-web-components/commit/fd9b485ee969318d21b0f79ec0c0f902034eccde))
+-   **styles,theme:** add S2 tokens and theme ([#4241](https://github.com/adobe/spectrum-web-components/issues/4241)) ([a29e4a2](https://github.com/adobe/spectrum-web-components/commit/a29e4a298090e39e009c434e48113fb8a7e90d14)), closes [#4232](https://github.com/adobe/spectrum-web-components/issues/4232) [#4228](https://github.com/adobe/spectrum-web-components/issues/4228)
+-   **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+
 ## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
 
 **Note:** Version bump only for package documentation

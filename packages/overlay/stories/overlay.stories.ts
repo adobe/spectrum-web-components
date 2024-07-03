@@ -46,6 +46,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
@@ -631,13 +632,13 @@ export const deepNesting = (): TemplateResult => {
         ${storyStyles}
         <sp-theme
             color=${outter}
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
             scale=${window.__swc_hack_knobs__.defaultScale}
             dir=${window.__swc_hack_knobs__.defaultDirection}
         >
             <sp-theme
                 color=${color}
-                theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+                system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 scale=${window.__swc_hack_knobs__.defaultScale}
                 dir=${window.__swc_hack_knobs__.defaultDirection}
             >
@@ -970,6 +971,51 @@ export const modalLoose = (): TemplateResult => {
             </sp-dialog>
         </overlay-trigger>
         ${extraText}
+    `;
+};
+
+export const modalNoFocus = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="modal" receives-focus="false">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog-wrapper
+                underlay
+                slot="click-content"
+                headline="Wrapped Dialog w/ Hero Image"
+                size="s"
+            >
+                <p>
+                    The
+                    <code>sp-dialog-wrapper</code>
+                    element has been prepared for use in an
+                    <code>overlay-trigger</code>
+                    element by it's combination of modal, underlay, etc. styles
+                    and features.
+                </p>
+                <sp-button-group style="margin-inline-start: auto">
+                    <sp-button
+                        data-test-id="dialog-cancel-btn"
+                        variant="secondary"
+                        treatment="outline"
+                        size="l"
+                        @click=${(event: Event & { target: DialogWrapper }) =>
+                            event.target.dispatchEvent(closeEvent)}
+                    >
+                        ${'Cancel'}
+                    </sp-button>
+                    <sp-button
+                        data-test-id="dialog-override-btn"
+                        variant="negative"
+                        size="l"
+                        @click=${(event: Event & { target: DialogWrapper }) =>
+                            event.target.dispatchEvent(closeEvent)}
+                    >
+                        ${'Override'}
+                    </sp-button>
+                </sp-button-group>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
     `;
 };
 

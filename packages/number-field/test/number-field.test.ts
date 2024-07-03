@@ -15,7 +15,6 @@ import {
     aTimeout,
     elementUpdated,
     expect,
-    fixture,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
@@ -25,6 +24,7 @@ import {
     currency,
     decimals,
     Default,
+    germanDecimals,
     indeterminate,
     percents,
     pixels,
@@ -47,7 +47,11 @@ import { spy } from 'sinon';
 import { clickBySelector, getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { isMac } from '@spectrum-web-components/shared/src/platform.js';
 
 describe('NumberField', () => {
     before(async () => {
@@ -113,6 +117,40 @@ describe('NumberField', () => {
             expect(el.focusElement.value).to.equal('13 377 331');
         });
     });
+    xit('correctly interprets decimal point on iPhone', async () => {
+        // setUserAgent is not currently supported by Playwright
+        await setUserAgent(
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'
+        );
+        const el = await getElFrom(decimals({ value: 1234 }));
+        expect(el.formattedValue).to.equal('1,234');
+
+        el.focus();
+        await sendKeys({ press: 'Backspace' });
+        el.blur();
+        expect(el.formattedValue).to.equal('123');
+
+        el.focus();
+        await sendKeys({ type: '45' });
+        el.blur();
+        expect(el.formattedValue).to.equal('12,345');
+
+        el.focus();
+        await sendKeys({ type: ',6' });
+        el.blur();
+        expect(el.formattedValue).to.equal('12,345.6');
+
+        el.focus();
+        await sendKeys({ type: ',7' });
+        el.blur();
+        expect(el.formattedValue).to.equal('123,456.7');
+
+        el.focus();
+        await sendKeys({ press: 'Backspace' });
+        await sendKeys({ press: 'Backspace' });
+        el.blur();
+        expect(el.formattedValue).to.equal('123,456');
+    });
     describe('Step', () => {
         it('can be 0', async () => {
             const el = await getElFrom(
@@ -130,7 +168,25 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('5');
             expect(el.focusElement.value).to.equal('5');
         });
+        it('respects other locales', async () => {
+            const el = await getElFrom(
+                germanDecimals({
+                    step: 0.01,
+                })
+            );
+            el.value = 2.42;
+            await elementUpdated(el);
+            el.size = 'xl';
+            expect(el.value).to.equal(2.42);
+            expect(el.formattedValue).to.equal('+2,42');
+            expect(el.focusElement.value).to.equal('+2,42');
 
+            await clickBySelector(el, '.step-up');
+
+            expect(el.value).to.equal(2.43);
+            expect(el.formattedValue).to.equal('+2,43');
+            expect(el.focusElement.value).to.equal('+2,43');
+        });
         it('supports both positive and negative decimal values', async () => {
             const el = await getElFrom(
                 Default({
@@ -145,6 +201,31 @@ describe('NumberField', () => {
             expect(el.value).to.equal(-2.4);
             expect(el.valueAsString).to.equal('-2.4');
             expect(el.focusElement.value).to.equal('-2.4');
+        });
+        it('correctly handles max values greater than 1000 with step=1', async () => {
+            const el = await getElFrom(
+                Default({
+                    step: 1,
+                    min: 0,
+                    max: 200000,
+                    value: 999,
+                })
+            );
+
+            await clickBySelector(el, '.step-up');
+
+            expect(el.value).to.equal(1000);
+            expect(el.valueAsString).to.equal('1000');
+            expect(el.formattedValue).to.equal('1,000');
+            expect(el.focusElement.value).to.equal('1,000');
+
+            el.value = 15000;
+            await elementUpdated(el);
+
+            expect(el.value).to.equal(15000);
+            expect(el.valueAsString).to.equal('15000');
+            expect(el.formattedValue).to.equal('15,000');
+            expect(el.focusElement.value).to.equal('15,000');
         });
     });
     describe('Increments', () => {
@@ -164,6 +245,7 @@ describe('NumberField', () => {
             expect(el.value).to.be.NaN;
             expect(el.focusElement.value).to.equal('');
         });
+
         it('via pointer', async () => {
             await clickBySelector(el, '.step-up');
             expect(el.formattedValue).to.equal('0');
@@ -847,6 +929,87 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('17 inches');
             expect(el.valueAsString).to.equal('17');
             expect(el.value).to.equal(17);
+        });
+        it('does not select all on click based `focus`', async function () {
+            this.retries(0);
+            const modifier = isMac() ? 'Meta' : 'Control';
+            const el = await getElFrom(units({ value: 17 }));
+            expect(el.value).to.equal(17);
+            const rect = el.focusElement.getBoundingClientRect();
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            rect.left + rect.width / 8,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.focused).to.be.true;
+            await sendKeys({
+                press: `${modifier}+KeyC`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: `${modifier}+KeyV`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.value, 'copy/paste changed the value').to.equal(17);
+        });
+        it('selects all on `Tab` based `focus`', async function () {
+            this.retries(0);
+            const modifier = isMac() ? 'Meta' : 'Control';
+            const el = await getElFrom(units({ value: 17 }));
+            const input = document.createElement('input');
+            el.insertAdjacentElement('beforebegin', input);
+            input.focus();
+            await sendKeys({
+                press: 'Tab',
+            });
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.focused).to.be.true;
+            await sendKeys({
+                press: `${modifier}+KeyC`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: 'ArrowRight',
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            await sendKeys({
+                press: `${modifier}+KeyV`,
+            });
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.value, 'copy/paste did not change the value').to.equal(
+                1717
+            );
         });
         it('manages units not supported by the browser', async () => {
             const el = await getElFrom(pixels({ value: 17 }));

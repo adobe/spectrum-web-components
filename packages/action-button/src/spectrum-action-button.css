@@ -31,7 +31,8 @@ governing permissions and limitations under the License.
     text-transform: none;
     vertical-align: top;
     -webkit-appearance: button;
-    transition: background
+    transition:
+        background
             var(
                 --mod-button-animation-duration,
                 var(
@@ -73,9 +74,9 @@ governing permissions and limitations under the License.
     justify-content: center;
     align-items: center;
     margin: 0;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
-    position: relative;
     overflow: visible;
 }
 
@@ -135,8 +136,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='rtl']),
-:host:dir(rtl) {
+:host:dir(rtl),
+:host([dir='rtl']) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -341,12 +342,12 @@ governing permissions and limitations under the License.
 }
 
 @media (forced-colors: active) {
-    :host:after {
-        forced-color-adjust: none;
-    }
-
     :host {
         --highcontrast-actionbutton-focus-indicator-color: ButtonText;
+    }
+
+    :host:after {
+        forced-color-adjust: none;
     }
 
     :host([selected]) {
@@ -367,8 +368,8 @@ governing permissions and limitations under the License.
         --highcontrast-actionbutton-content-color-disabled: GrayText;
     }
 
-    :host([selected]) ::slotted([slot='icon']),
     :host([selected]) .hold-affordance,
+    :host([selected]) ::slotted([slot='icon']),
     :host([selected]) #label {
         forced-color-adjust: none;
     }

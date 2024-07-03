@@ -53,13 +53,13 @@ const config = {
                     builder.pseudoClass('last-of-type'),
                 ],
                 /* .spectrum-Breadcrumbs--compact .spectrum-Breadcrumbs-item > .spectrum-ActionButton */
-                [
-                    builder.class('spectrum-Breadcrumbs--compact'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Breadcrumbs-item'),
-                    builder.combinator('child'),
-                    builder.class('spectrum-ActionButton'),
-                ],
+                // [
+                //     builder.class('spectrum-Breadcrumbs--compact'),
+                //     builder.combinator(' '),
+                //     builder.class('spectrum-Breadcrumbs-item'),
+                //     builder.combinator('child'),
+                //     builder.class('spectrum-ActionButton'),
+                // ],
                 /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item */
                 [
                     builder.class('spectrum-Breadcrumbs--multiline'),

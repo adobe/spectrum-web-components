@@ -1,6 +1,6 @@
 {
     "name": "swc-templates",
-    "version": "0.42.2",
+    "version": "0.43.0",
     "private": true,
     "description": "Templates for generating a Spectrum Web Component package.",
     "license": "Apache-2.0",
@@ -10,7 +10,7 @@
         "plop": "plop"
     },
     "devDependencies": {
-        "plop": "^3.0.5"
+        "plop": "^4.0.0"
     },
     "customElements": "custom-elements.json"
 }

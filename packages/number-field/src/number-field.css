@@ -65,7 +65,14 @@ governing permissions and limitations under the License.
 }
 
 :host([hide-stepper]:not([quiet])) #textfield input {
-    border: var(--spectrum-textfield-border-width) solid
-        var(--spectrum-textfield-border-color);
+    border: var(
+            --mod-textfield-border-width,
+            var(--spectrum-textfield-border-width)
+        )
+        solid
+        var(
+            --mod-textfield-border-color,
+            var(--spectrum-textfield-border-color)
+        );
     border-radius: var(--spectrum-textfield-corner-radius);
 }

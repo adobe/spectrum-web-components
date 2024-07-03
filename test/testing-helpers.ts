@@ -54,7 +54,7 @@ export async function testForLitDevWarnings(
 }
 
 export async function testForMemoryLeaks(
-    element: () => Promise<HTMLElement>
+    element: TemplateResult
 ): Promise<void> {
     describe('Memory usage', () => {
         it('releases references on disconnect', async function () {
@@ -70,11 +70,9 @@ export async function testForMemoryLeaks(
             let active = false;
 
             // Call fixture with 'htmlString' as the additional argument
-            const el = await fixture<HTMLElement>(
-                html`
-                    <div></div>
-                `
-            );
+            const el = await fixture<HTMLElement>(html`
+                <div></div>
+            `);
 
             async function toggle(
                 forced: boolean | undefined = undefined
@@ -292,7 +290,7 @@ export async function fixture<T extends Element>(
     dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
-        <sp-theme theme="spectrum" scale="medium" color="light">
+        <sp-theme system="spectrum" scale="medium" color="light">
             ${story}
             <style>
                 sp-theme {

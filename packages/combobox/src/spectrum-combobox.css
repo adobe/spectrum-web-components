@@ -315,6 +315,8 @@ governing permissions and limitations under the License.
             var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) /
             2
     );
+    --mod-picker-button-background-color-quiet: transparent;
+    --mod-picker-button-border-color-quiet: transparent;
 }
 
 :host([quiet][size='s']) {
@@ -341,11 +343,6 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([quiet]) {
-    --mod-picker-button-background-color-quiet: transparent;
-    --mod-picker-button-border-color-quiet: transparent;
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-combobox-border-color-highlight: Highlight;
@@ -357,7 +354,7 @@ governing permissions and limitations under the License.
     }
 
     .button.spectrum-PickerButton--quiet .spectrum-PickerButton-icon {
-        color: canvastext;
+        color: initial;
     }
 }
 
@@ -396,7 +393,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Combobox-progress-circle {
+.progress-circle {
     position: absolute;
     inset-block-start: var(
         --mod-combobox-block-spacing-edge-to-progress-circle,
@@ -418,7 +415,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='rtl']) .spectrum-Combobox-progress-circle {
+.progress-circle:dir(rtl),
+:host([dir='rtl']) .progress-circle {
     inset-inline-start: calc(
         var(
                 --mod-combobox-spacing-inline-icon-to-button,
@@ -467,7 +465,11 @@ governing permissions and limitations under the License.
 
 :host([keyboard-focused])
     .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
-.button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):focus-visible,
+.button:not(
+        :disabled,
+        .is-invalid,
+        .spectrum-PickerButton--quiet
+    ):focus-visible,
 :host([keyboard-focused])
     .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
     --mod-picker-button-border-color: var(
@@ -539,7 +541,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Combobox-textfield {
+#textfield {
     inline-size: 100%;
 }
 
@@ -612,8 +614,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Combobox-textfield #input,
-#input:focus {
+#input:focus,
+:host([focused]) #textfield #input {
     --mod-textfield-background-color: var(
         --mod-combobox-background-color-focus
     );
@@ -632,12 +634,20 @@ governing permissions and limitations under the License.
         );
     }
 
-    .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):focus:hover,
     :host([focused])
-        .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet):hover,
-    :host(:hover):has(:focus)
-        .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
+        .button:not(
+            :disabled,
+            .is-invalid,
+            .spectrum-PickerButton--quiet
+        ):hover,
+    .button:not(
+            :disabled,
+            .is-invalid,
+            .spectrum-PickerButton--quiet
+        ):focus:hover,
     :host([focused]:hover)
+        .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet),
+    :host(:hover):has(:focus)
         .button:not(:disabled, .is-invalid, .spectrum-PickerButton--quiet) {
         --mod-picker-button-border-color: var(
             --highcontrast-combobox-border-color-highlight,
@@ -661,13 +671,13 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([invalid])
-        .button:not(:disabled, .spectrum-PickerButton--quiet):focus:hover,
     :host([invalid][focused])
         .button:not(:disabled, .spectrum-PickerButton--quiet):hover,
-    :host([invalid]:hover):has(:focus)
-        .button:not(:disabled, .spectrum-PickerButton--quiet),
+    :host([invalid])
+        .button:not(:disabled, .spectrum-PickerButton--quiet):focus:hover,
     :host([focused][invalid]:hover)
+        .button:not(:disabled, .spectrum-PickerButton--quiet),
+    :host([invalid]:hover):has(:focus)
         .button:not(:disabled, .spectrum-PickerButton--quiet) {
         --mod-picker-button-border-color: var(
             --highcontrast-combobox-border-color-invalid,
@@ -678,29 +688,29 @@ governing permissions and limitations under the License.
         );
     }
 
-    .spectrum-Combobox-textfield #input,
-    #input:hover {
+    #input:hover,
+    #textfield:hover #input {
         --mod-textfield-background-color: var(
             --mod-combobox-background-color-hover
         );
     }
 
-    .spectrum-Combobox-textfield #input:hover,
-    #input:focus:hover {
+    #input:focus:hover,
+    :host([focused]) #textfield #input:hover {
         --mod-textfield-background-color: var(
             --mod-combobox-background-color-focus-hover
         );
     }
 }
 
-.spectrum-Combobox-textfield #input {
+:host([keyboard-focused]) #textfield #input {
     --mod-textfield-background-color: var(
         --mod-combobox-background-color-key-focus
     );
 }
 
-.spectrum-Combobox-textfield #input,
-.spectrum-Combobox-textfield #input {
+:host([invalid]) #textfield #input,
+:host([pending]) #textfield #input {
     padding-inline-end: calc(
         var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
             var(
@@ -723,7 +733,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Combobox-textfield .spectrum-Textfield-validationIcon {
+:host([invalid]) #textfield .icon {
     inline-size: var(
         --mod-combobox-icon-size,
         var(--spectrum-combobox-icon-size)
@@ -752,9 +762,9 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled]) .spectrum-Textfield .spectrum-Textfield-validationIcon,
-.spectrum-Textfield.is-readOnly .spectrum-Textfield-validationIcon,
-.spectrum-Textfield.is-loading .spectrum-Textfield-validationIcon {
+:host([disabled]) #textfield .icon,
+:host([pending]) #textfield .icon,
+#textfield.is-readOnly .icon {
     display: none;
 }
 
@@ -762,7 +772,7 @@ governing permissions and limitations under the License.
     border-radius: 0;
 }
 
-:host([quiet]) .spectrum-Combobox-textfield .spectrum-Textfield-validationIcon {
+:host([quiet][invalid]) #textfield .icon {
     inset-inline-end: var(
         --mod-combobox-button-width,
         var(--spectrum-combobox-button-width)
@@ -805,8 +815,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([quiet]) .spectrum-Combobox-textfield #input,
-:host([quiet]) .spectrum-Combobox-textfield #input {
+:host([quiet][invalid]) #textfield #input,
+:host([quiet][pending]) #textfield #input {
     padding-inline-end: calc(
         var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
             var(

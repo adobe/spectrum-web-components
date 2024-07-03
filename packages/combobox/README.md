@@ -147,6 +147,55 @@ Whenever the currently-typed input exactly matches the `value` of a popup menu i
 
 The popup menu items are filtered to only those completing the currently-input value.
 
+## States
+
+### Disabled
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color" disabled>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+### Invalid
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color" invalid>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+    <sp-help-text slot="negative-help-text">
+        Choose or add at least one color.
+    </sp-help-text>
+</sp-combobox>
+```
+
+### Quiet
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color" quiet>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+### Pending
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color" pending>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
 ## Focus and Accessibility
 
 The combobox supports both mouse and keyboard navigation.

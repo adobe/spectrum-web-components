@@ -25,6 +25,13 @@ const config = {
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-a11y',
+        // Conditionally add the addon-designs addon temporarily
+        // https://storybook.js.org/addons/@storybook/addon-designs/
+        ...(process.env.NODE_ENV === 'development'
+            ? ['@storybook/addon-designs']
+            : []),
+        // https://geometricpanda.github.io/storybook-addon-badges/
+        '@geometricpanda/storybook-addon-badges',
     ],
     framework: {
         name: '@web/storybook-framework-web-components',

@@ -27,12 +27,11 @@ governing permissions and limitations under the License.
     max-inline-size: 100%;
 }
 
-.folder,
-.file {
-    inline-size: clamp(
+.file,
+.folder {
+    inline-size: max(
         var(--mod-asset-icon-min-width, 48px),
-        100%,
-        var(--mod-asset-icon-max-width, 80px)
+        min(100%, var(--mod-asset-icon-max-width, 80px))
     );
     margin: var(--mod-asset-icon-margin, 20px);
     block-size: 100%;
@@ -52,8 +51,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.folderOutline,
-.fileOutline {
+.fileOutline,
+.folderOutline {
     fill: var(--mod-asset-icon-outline-color, var(--spectrum-gray-500));
 }
 

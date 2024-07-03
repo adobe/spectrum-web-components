@@ -33,18 +33,17 @@ export class HoverController extends InteractionController {
     pointerentered = false;
 
     handleTargetFocusin(): void {
-        // eslint-disable-next-line @spectrum-web-components/document-active-element
-        if (!document.activeElement?.matches(':focus-visible')) {
+        if (!this.target.matches(':focus-visible')) {
             return;
         }
-        this.host.open = true;
+        this.open = true;
         this.focusedin = true;
     }
 
     handleTargetFocusout(): void {
         this.focusedin = false;
         if (this.pointerentered) return;
-        this.host.open = false;
+        this.open = false;
     }
 
     handleTargetPointerenter(): void {
@@ -52,8 +51,8 @@ export class HoverController extends InteractionController {
             clearTimeout(this.hoverTimeout);
             this.hoverTimeout = undefined;
         }
-        if (this.host.disabled) return;
-        this.host.open = true;
+        if (this.overlay?.disabled) return;
+        this.open = true;
         this.pointerentered = true;
     }
 
@@ -76,11 +75,11 @@ export class HoverController extends InteractionController {
 
     override prepareDescription(): void {
         // require "content" to apply relationship
-        if (!this.host.elements.length) return;
+        if (!this.overlay.elements.length) return;
 
         const triggerRoot = this.target.getRootNode();
-        const contentRoot = this.host.elements[0].getRootNode();
-        const overlayRoot = this.host.getRootNode();
+        const contentRoot = this.overlay.elements[0].getRootNode();
+        const overlayRoot = this.overlay.getRootNode();
         if (triggerRoot === overlayRoot) {
             this.prepareOverlayRelativeDescription();
         } else if (triggerRoot === contentRoot) {
@@ -92,7 +91,7 @@ export class HoverController extends InteractionController {
         const releaseDescription = conditionAttributeWithId(
             this.target,
             'aria-describedby',
-            [this.host.id]
+            [this.overlay.id]
         );
         this.releaseDescription = () => {
             releaseDescription();
@@ -102,10 +101,10 @@ export class HoverController extends InteractionController {
 
     private prepareContentRelativeDescription(): void {
         const elementIds: string[] = [];
-        const appliedIds = this.host.elements.map((el) => {
+        const appliedIds = this.overlay.elements.map((el) => {
             elementIds.push(el.id);
             if (!el.id) {
-                el.id = `${this.host.tagName.toLowerCase()}-helper-${randomID()}`;
+                el.id = `${this.overlay.tagName.toLowerCase()}-helper-${randomID()}`;
             }
             return el.id;
         });
@@ -117,7 +116,7 @@ export class HoverController extends InteractionController {
         );
         this.releaseDescription = () => {
             releaseDescription();
-            this.host.elements.map((el, index) => {
+            this.overlay.elements.map((el, index) => {
                 el.id = this.elementIds[index];
             });
             this.releaseDescription = noop;
@@ -130,7 +129,7 @@ export class HoverController extends InteractionController {
         if (this.focusedin && triggerElement.matches(':focus-visible')) return;
 
         this.hoverTimeout = setTimeout(() => {
-            this.host.open = false;
+            this.open = false;
         }, HOVER_DELAY);
     }
 
@@ -159,12 +158,22 @@ export class HoverController extends InteractionController {
             () => this.handleTargetPointerleave(),
             { signal }
         );
-        this.host.addEventListener(
+        if (this.overlay) {
+            this.initOverlay();
+        }
+    }
+
+    override initOverlay(): void {
+        if (!this.abortController) {
+            return;
+        }
+        const { signal } = this.abortController;
+        this.overlay.addEventListener(
             'pointerenter',
             () => this.handleHostPointerenter(),
             { signal }
         );
-        this.host.addEventListener(
+        this.overlay.addEventListener(
             'pointerleave',
             () => this.handleHostPointerleave(),
             { signal }

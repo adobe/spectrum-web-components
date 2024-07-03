@@ -44,13 +44,7 @@ a:focus-visible {
     inset-block-start: calc(
         var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
     );
-    inset-inline-end: calc(
-        var(
-                --mod-tabs-focus-indicator-gap,
-                var(--spectrum-tabs-focus-indicator-gap)
-            ) * -1
-    );
-    inset-inline-start: calc(
+    inset-inline: calc(
         var(
                 --mod-tabs-focus-indicator-gap,
                 var(--spectrum-tabs-focus-indicator-gap)
@@ -96,14 +90,8 @@ a:focus-visible {
 
 #item-label {
     margin-block: 0;
-    padding-block-end: var(
-        --mod-tabs-bottom-to-text,
-        var(--spectrum-tabs-bottom-to-text)
-    );
-    padding-block-start: var(
-        --mod-tabs-top-to-text,
-        var(--spectrum-tabs-top-to-text)
-    );
+    padding-block: var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text))
+        var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text));
 }
 
 slot {

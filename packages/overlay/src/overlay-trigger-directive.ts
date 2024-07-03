@@ -10,23 +10,25 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    ElementPart,
+    type ElementPart,
     nothing,
     render,
-    TemplateResult,
+    type RenderOptions,
+    type TemplateResult,
 } from '@spectrum-web-components/base';
-import { directive } from 'lit/async-directive.js';
-import { Overlay, strategies } from './Overlay.js';
-import { OverlayOptions, TriggerInteraction } from './overlay-types.js';
-import { ClickController } from './ClickController.js';
-import { HoverController } from './HoverController.js';
-import { LongpressController } from './LongpressController.js';
-import '../sp-overlay.js';
+import { directive } from '@spectrum-web-components/base/src/async-directive.js';
+import { strategies } from './strategies.js';
+import type { OverlayOptions, TriggerInteraction } from './overlay-types.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
 import {
     removeSlottableRequest,
-    SlottableRequestEvent,
+    type SlottableRequestEvent,
 } from './slottable-request-event.js';
 import { SlottableRequestDirective } from './slottable-request-directive.js';
+import { AbstractOverlay } from './AbstractOverlay.js';
+import { InteractionTypes } from './InteractionController.js';
 
 export type InsertionOptions = {
     el: HTMLElement | (() => HTMLElement);
@@ -41,13 +43,13 @@ export type OverlayTriggerOptions = {
 };
 
 export class OverlayTriggerDirective extends SlottableRequestDirective {
-    private overlay = new Overlay();
-    private strategy?: ClickController | HoverController | LongpressController;
+    private host?: object;
+    private overlay!: AbstractOverlay;
+    private strategy!: ClickController | HoverController | LongpressController;
 
     protected defaultOptions: OverlayTriggerOptions = {
         triggerInteraction: 'click',
         overlayOptions: {
-            placement: 'top-start',
             type: 'auto',
             offset: 0,
         },
@@ -78,12 +80,12 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
         };
         this.insertionOptions = options?.insertionOptions;
         this.template = template;
+        this.host = part.options?.host;
         let newTarget = false;
         const triggerInteraction = (options?.triggerInteraction ||
             this.defaultOptions.triggerInteraction) as TriggerInteraction;
         const newStrategy =
-            (this.strategy?.type as unknown as TriggerInteraction) !==
-            triggerInteraction;
+            InteractionTypes[this.strategy?.type] !== triggerInteraction;
         if (this.target !== part.element) {
             this.target = part.element as HTMLElement;
             newTarget = true;
@@ -92,11 +94,15 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
             this.strategy?.abort();
             this.strategy = new strategies[
                 triggerInteraction as TriggerInteraction
-            ](this.overlay, this.target, true);
+            ](this.target, {
+                isPersistent: true,
+                handleOverlayReady: (overlay: AbstractOverlay) => {
+                    this.listenerHost = this.overlay = overlay;
+                    this.init();
+                },
+            });
         }
-        this.listenerHost = this.overlay;
-        this.init();
-        this.overlay.open = options?.open ?? false;
+        this.strategy.open = options?.open ?? false;
     }
 
     override handleSlottableRequest(event: SlottableRequestEvent): void {
@@ -104,12 +110,20 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
         if (event.target !== event.currentTarget) return;
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
-        render(willRemoveSlottable ? undefined : this.template(), this.overlay);
+        const options = {} as RenderOptions;
+        if (this.host) {
+            options.host = this.host;
+        }
+        render(
+            willRemoveSlottable ? undefined : this.template(),
+            this.overlay,
+            options
+        );
 
         if (willRemoveSlottable) {
             this.overlay.remove();
         } else {
-            Overlay.applyOptions(this.overlay, {
+            AbstractOverlay.applyOptions(this.overlay, {
                 ...this.options,
                 trigger: this.target,
             });

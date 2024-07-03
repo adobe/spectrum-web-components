@@ -103,10 +103,13 @@ governing permissions and limitations under the License.
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
+    vertical-align: top;
+    z-index: 0;
     margin: 0;
     padding: 0;
     display: block;
     position: relative;
+    overflow: hidden;
 }
 
 :host:before {
@@ -218,12 +221,6 @@ governing permissions and limitations under the License.
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
-    overflow: hidden;
-}
-
-:host {
-    vertical-align: top;
-    z-index: 0;
     overflow: hidden;
 }
 
@@ -345,7 +342,7 @@ governing permissions and limitations under the License.
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
-    background-position: center;
+    background-position: 50%;
     background-size: cover;
     block-size: 100%;
     inline-size: 100%;
