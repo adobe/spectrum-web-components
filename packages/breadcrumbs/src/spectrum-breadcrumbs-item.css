@@ -32,8 +32,8 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host([dir='rtl']) .separator,
-.separator:dir(rtl) {
+.separator:dir(rtl),
+:host([dir='rtl']) .separator {
     transform: scaleX(-1);
 }
 
@@ -88,7 +88,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.link {
+.item-link {
     cursor: default;
     box-sizing: border-box;
     border-radius: var(
@@ -111,12 +111,13 @@ governing permissions and limitations under the License.
         --mod-breadcrumbs-text-spacing-block-end,
         var(--spectrum-breadcrumbs-text-spacing-block-end)
     );
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: block;
     position: relative;
 }
 
-.link.is-disabled {
+.item-link.is-disabled {
     color: var(
         --highcontrast-breadcrumbs-text-color-disabled,
         var(
@@ -126,13 +127,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([href]) .link,
-:host([tabindex='0']) .link {
+:host([href]) .item-link,
+:host([tabindex='0']) .item-link {
     cursor: pointer;
 }
 
-:host([href]) .link:focus-visible,
-:host([tabindex='0']) .link:focus-visible {
+:host([href]) .item-link:focus-visible,
+:host([tabindex='0']) .item-link:focus-visible {
+    -webkit-text-decoration: underline;
     text-decoration: underline;
     text-decoration-thickness: var(
         --mod-breadcrumbs-text-decoration-thickness,
@@ -145,8 +147,9 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    :host([href]) .link:hover,
-    :host([tabindex='0']) .link:hover {
+    :host([href]) .item-link:hover,
+    :host([tabindex='0']) .item-link:hover {
+        -webkit-text-decoration: underline;
         text-decoration: underline;
         text-decoration-thickness: var(
             --mod-breadcrumbs-text-decoration-thickness,
@@ -159,8 +162,8 @@ governing permissions and limitations under the License.
     }
 }
 
-:host .is-dragged .link:before,
-.link:focus-visible:before {
+:host .is-dragged .item-link:before,
+.item-link:focus-visible:before {
     box-sizing: border-box;
     inline-size: calc(
         100% +

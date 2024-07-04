@@ -22,28 +22,6 @@ export const argTypes = {
             type: 'boolean',
         },
     },
-    multiline: {
-        name: 'multiline',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
-    },
-    disabled: {
-        name: 'disabled',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
-    },
     label: {
         name: 'label',
         type: { name: 'string', required: false },
@@ -77,4 +55,5 @@ export const argTypes = {
             type: 'number',
         },
     },
+    onChange: { action: 'change' },
 };

@@ -16,69 +16,6 @@ governing permissions and limitations under the License.
     display: block;
 }
 
-/* ::slotted(sp-breadcrumb-item:first-of-type) > sp-action-menu {
-    margin-inline-start: var(
-        --mod-breadcrumbs-action-button-spacing-inline-start,
-        var(--spectrum-breadcrumbs-action-button-spacing-inline-start)
-    );
-} */
-
-:host([compact]) ::slotted(sp-breadcrumb-item) {
-    --mod-breadcrumbs-icon-spacing-block: var(
-        --mod-breadcrumbs-icon-spacing-block-compact,
-        var(--spectrum-breadcrumbs-icon-spacing-block-compact)
-    );
-    --mod-breadcrumbs-text-spacing-block-start: var(
-        --mod-breadcrumbs-text-spacing-block-start-compact,
-        var(--spectrum-breadcrumbs-text-spacing-block-start-compact)
-    );
-    --mod-breadcrumbs-text-spacing-block-end: var(
-        --mod-breadcrumbs-text-spacing-block-end-compact,
-        var(--spectrum-breadcrumbs-text-spacing-block-end-compact)
-    );
-}
-
-/* 
-:host([multiline]) sp-breadcrumb-item::part(separator) {
-    margin-block-start: var(
-        --mod-breadcrumbs-icon-spacing-block-start-multiline,
-        var(--spectrum-breadcrumbs-icon-spacing-block-start-multiline)
-    );
-    margin-block-end: var(
-        --mod-breadcrumbs-icon-spacing-block-between-multiline,
-        var(--spectrum-breadcrumbs-icon-spacing-block-between-multiline)
-    );
-} */
-
-:host([multiline]) ::slotted(sp-breadcrumb-item) {
-    --mod-breadcrumbs-text-spacing-block-start: var(
-        --mod-breadcrumbs-text-spacing-block-start-multiline,
-        var(--spectrum-breadcrumbs-text-spacing-block-start-multiline)
-    );
-    --mod-breadcrumbs-text-spacing-block-end: var(
-        --mod-breadcrumbs-text-spacing-block-between-multiline,
-        var(--spectrum-breadcrumbs-text-spacing-block-between-multiline)
-    );
-
-    /* 
-    margin-block-start: var(
-        --mod-breadcrumbs-text-spacing-block-start-multiline,
-        var(--spectrum-breadcrumbs-text-spacing-block-start-multiline)
-    );
-    margin-block-end: var(
-        --mod-breadcrumbs-text-spacing-block-between-multiline,
-        var(--spectrum-breadcrumbs-text-spacing-block-between-multiline)
-    ); */
-}
-
-:host([multiline]) ::slotted(sp-breadcrumb-item:last-of-type) {
-    --mod-breadcrumbs-text-spacing-block-start: 0;
-    --mod-breadcrumbs-text-spacing-block-end: var(
-        --mod-breadcrumbs-text-spacing-block-end-multiline,
-        var(--spectrum-breadcrumbs-text-spacing-block-end-multiline)
-    );
-}
-
 :host([dir]) slot[slot='icon']::slotted([slot='icon']),
 :host([dir]) slot[slot='icon'] .icon {
     margin-inline: calc(
@@ -106,18 +43,3 @@ governing permissions and limitations under the License.
                 ) * -1
         );
 }
-
-/*
-
-:host([multiline]) sp-breadcrumb-item > sp-action-menu {
-    margin-block-start: var(
-        --mod-breadcrumbs-action-button-spacing-block-multiline,
-        var(--spectrum-breadcrumbs-action-button-spacing-block-multiline)
-    );
-    margin-block-end: var(
-        --mod-breadcrumbs-action-button-spacing-block-between-multiline,
-        var(
-            --spectrum-breadcrumbs-action-button-spacing-block-between-multiline
-        )
-    );
-} */

@@ -14,7 +14,7 @@ import { html, type TemplateResult } from '@spectrum-web-components/base';
 import '../sp-breadcrumbs.js';
 import '../sp-breadcrumb-item.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export type StoryArgs = {
     label?: string;
@@ -24,6 +24,7 @@ export type StoryArgs = {
     showRoot?: boolean;
     'max-visible-items': number;
     nrOfItems: number;
+    onChange: () => void;
 };
 
 // Some dummy folder structure
@@ -38,16 +39,26 @@ const dummyOrganizer = [
     '18x24',
 ];
 
+export const getBreadcrumbsWithLinks = (count: number): TemplateResult[] => {
+    const breadcrumbs: TemplateResult[] = [];
+    for (let i = 0; i < count; i++) {
+        breadcrumbs.push(html`
+            <sp-breadcrumb-item href=${window.location.href}>
+                ${dummyOrganizer[i] || `Breadcrumb ${i}`}
+            </sp-breadcrumb-item>
+        `);
+    }
+    return breadcrumbs;
+};
+
 export const getBreadcrumbs = (count: number): TemplateResult[] => {
     const breadcrumbs: TemplateResult[] = [];
     for (let i = 0; i < count; i++) {
-        breadcrumbs.push(
-            html`
-                <sp-breadcrumb-item href=${window.location.href}>
-                    ${dummyOrganizer[i] || `Breadcrumb ${i}`}
-                </sp-breadcrumb-item>
-            `
-        );
+        breadcrumbs.push(html`
+            <sp-breadcrumb-item value=${i}>
+                ${dummyOrganizer[i] || `Breadcrumb ${i}`}
+            </sp-breadcrumb-item>
+        `);
     }
     return breadcrumbs;
 };
@@ -70,6 +81,7 @@ export const Template = (args: StoryArgs): TemplateResult => html`
     <sp-breadcrumbs
         ${spreadProps(args)}
         max-visible-items=${ifDefined(args['max-visible-items'])}
+        @change=${args.onChange}
     >
         ${getBreadcrumbs(args.nrOfItems)}
     </sp-breadcrumbs>

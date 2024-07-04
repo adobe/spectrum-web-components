@@ -5643,10 +5643,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/breadcrumb@^8.2.3":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/breadcrumb/-/breadcrumb-8.2.3.tgz#8fd23f5df49dfb0a57d421433afe4b1fc24501bb"
-  integrity sha512-XYWJiv7z29sOnp/Ou2ykWd1wbhMXIM5DjBmamIDtbNWSDai0+tz6BHeS0geAkvcCHQ6FiblZ9JzLgm893uBSKQ==
+"@spectrum-css/breadcrumb@^9.1.1":
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/breadcrumb/-/breadcrumb-9.1.1.tgz#ba22ae0dc5c9d60c9e3851f3880071d23f4eeb45"
+  integrity sha512-yRDQuHCtcQ09e51FNhpILRpFQ8JE1SkRDyeoiY2gnvsygwA3tVVc+B0RVxyELHeUzzbloskcSrk1LS4ZeaCiwg==
 
 "@spectrum-css/button@^13.1.1":
   version "13.1.1"
@@ -17944,7 +17944,7 @@ lit-html@^2.8.0:
     lit-element "^4.0.4"
     lit-html "^3.1.2"
 
-lit@^2.1.3, lit@^2.5.0:
+lit@^2.1.3:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/lit/-/lit-2.8.0.tgz#4d838ae03059bf9cafa06e5c61d8acc0081e974e"
   integrity sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA==

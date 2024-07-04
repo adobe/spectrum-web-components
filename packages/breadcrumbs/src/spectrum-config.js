@@ -39,87 +39,9 @@ const config = {
                     builder.class('spectrum-Breadcrumbs-item'),
                     builder.pseudoClass('last-of-type'),
                 ],
-                /* .spectrum-Breadcrumbs--compact .spectrum-Breadcrumbs-item */
-                [
-                    builder.class('spectrum-Breadcrumbs--compact'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Breadcrumbs-item'),
-                ],
-                /* .spectrum-Breadcrumbs--compact .spectrum-Breadcrumbs-item:last-of-type */
-                [
-                    builder.class('spectrum-Breadcrumbs--compact'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Breadcrumbs-item'),
-                    builder.pseudoClass('last-of-type'),
-                ],
-                /* .spectrum-Breadcrumbs--compact .spectrum-Breadcrumbs-item > .spectrum-ActionButton */
-                // [
-                //     builder.class('spectrum-Breadcrumbs--compact'),
-                //     builder.combinator(' '),
-                //     builder.class('spectrum-Breadcrumbs-item'),
-                //     builder.combinator('child'),
-                //     builder.class('spectrum-ActionButton'),
-                // ],
-                /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item */
-                [
-                    builder.class('spectrum-Breadcrumbs--multiline'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Breadcrumbs-item'),
-                ],
-                /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item:last-of-type */
-                // [
-                //     builder.class('spectrum-Breadcrumbs--multiline'),
-                //     builder.combinator(' '),
-                //     builder.class('spectrum-Breadcrumbs-item'),
-                //     builder.pseudoClass('last-of-type'),
-                // ],
-                /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item > .spectrum-ActionButton */
-                // [
-                //     builder.class('spectrum-Breadcrumbs--multiline'),
-                //     builder.combinator(' '),
-                //     builder.class('spectrum-Breadcrumbs-item'),
-                //     builder.combinator('child'),
-                //     builder.class('spectrum-ActionButton'),
-                // ],
             ],
             components: [
                 converter.classToId('spectrum-Breadcrumbs', 'list'),
-                {
-                    find: [builder.class('spectrum-Breadcrumbs--compact')],
-                    replace: [
-                        {
-                            replace: {
-                                type: 'pseudo-class',
-                                kind: 'host',
-                                selectors: [builder.attribute('compact')],
-                            },
-                        },
-                        {
-                            replace: builder.combinator('descendant'),
-                        },
-                        {
-                            replace: builder.id('list'),
-                        },
-                    ],
-                },
-                {
-                    find: [builder.class('spectrum-Breadcrumbs--multiline')],
-                    replace: [
-                        {
-                            replace: {
-                                type: 'pseudo-class',
-                                kind: 'host',
-                                selectors: [builder.attribute('multiline')],
-                            },
-                        },
-                        {
-                            replace: builder.combinator('descendant'),
-                        },
-                        {
-                            replace: builder.id('list'),
-                        },
-                    ],
-                },
                 {
                     find: [builder.class('spectrum-Breadcrumbs-item')],
                     replace: [
@@ -162,10 +84,6 @@ const config = {
                 builder.class('spectrum-Breadcrumbs'),
                 builder.class('spectrum-Breadcrumbs--compact'),
                 builder.class('spectrum-Breadcrumbs--multiline'),
-                // {
-                //     type: 'pseudo-class',
-                //     kind: 'dir',
-                // },
                 {
                     type: 'pseudo-class',
                     kind: 'last-of-type',
@@ -181,7 +99,25 @@ const config = {
                     'spectrum-Breadcrumbs-itemSeparator',
                     'separator'
                 ),
-                converter.classToClass('spectrum-Breadcrumbs-itemLink', 'link'),
+                converter.classToClass(
+                    'spectrum-Breadcrumbs-itemLink',
+                    'item-link'
+                ),
+                {
+                    find: [
+                        builder.class('spectrum-Breadcrumbs-itemLink'),
+                        builder.attribute('href'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('item-link'),
+                            hoist: false,
+                        },
+                        {
+                            replace: builder.attribute('href'),
+                        },
+                    ],
+                },
                 {
                     find: [builder.class('spectrum-ActionButton')],
                     replace: [

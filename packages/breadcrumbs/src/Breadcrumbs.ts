@@ -23,7 +23,6 @@ import {
     queryAssignedElements,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/truncated/sp-truncated.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -33,9 +32,9 @@ import { createRef, Ref, ref } from 'lit/directives/ref.js';
 
 import styles from './breadcrumbs.css.js';
 import '../sp-breadcrumb-item.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-const MAX_VISIBLE_ITEMS = 8;
+const MAX_VISIBLE_ITEMS = 4;
 
 export type BreadcrumbItem = {
     label?: string;
@@ -48,7 +47,8 @@ export type BreadcrumbItem = {
  * @element sp-breadcrumbs
  *
  * @slot icon - change the default icon of the action menu
- *
+ * @slot root - Breadcrumb item to always display
+ * @slot - Breadcrumb items
  */
 export class Breadcrumbs extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -60,12 +60,6 @@ export class Breadcrumbs extends SpectrumElement {
      */
     @property({ type: Boolean, attribute: 'show-root' })
     public showRoot = false;
-
-    /**
-     * Disable state for breadcrumbs
-     */
-    @property({ type: Boolean })
-    public disabled = false;
 
     /**
      * Override the maximum number of visible items
@@ -85,20 +79,11 @@ export class Breadcrumbs extends SpectrumElement {
     @property({ type: String, attribute: 'menu-label' })
     public menuLabel = 'More items';
 
-    /**
-     * Reduce the height of the breadcrumbs
-     */
-    @property({ type: Boolean, reflect: true })
-    public compact = false;
-
-    /**
-     * Wrap the last breadcrumb element to a new line
-     */
-    @property({ type: Boolean, reflect: true })
-    public multiline = false;
-
     @queryAssignedElements({ selector: 'sp-breadcrumb-item' })
     private breadcrumbsElements!: BreadcrumbElement[];
+
+    @queryAssignedElements({ slot: 'root', selector: 'sp-breadcrumb-item' })
+    private rootElement!: BreadcrumbElement[];
 
     @query('#list')
     private list!: HTMLUListElement;
@@ -157,7 +142,6 @@ export class Breadcrumbs extends SpectrumElement {
 
     override updated(changes: PropertyValues): void {
         super.updated(changes);
-        // console.log('updated was called', changes)
 
         // Update `aria-label` when `label` available
         if (
@@ -211,20 +195,14 @@ export class Breadcrumbs extends SpectrumElement {
         let newVisibleItems = 0;
         const availableSpace = this.list.clientWidth - this.paddings;
 
-        // console.log('this.hasMenu', this.hasMenu);
-
         if (this.hasMenu && this.menuRef.value) {
-            if (this.showRoot) {
-                occupiedSpace += this.menuRef.value.offsetWidth || 0;
-            } else {
-                occupiedSpace += this.menuRef.value.offsetWidth || 0;
-            }
+            occupiedSpace += this.menuRef.value.offsetWidth || 0;
         }
 
-        if (this.showRoot) {
-            occupiedSpace += this.items[0].offsetWidth;
+        // 'showRoot = true' makes the first breadcrumb always visible
+        if (this.showRoot && this.rootElement.length > 0) {
+            occupiedSpace += this.rootElement[0].offsetWidth;
         }
-        // console.log(this.items);
 
         const start = 0;
         for (let i = this.items.length - 1; i >= start; i--) {
@@ -244,6 +222,12 @@ export class Breadcrumbs extends SpectrumElement {
             }
         }
 
+        // Show _at least_ one visible breadcrumb item
+        if (newVisibleItems === 0) {
+            this.items[this.items.length - 1].isVisible = true;
+            newVisibleItems++;
+        }
+
         // Setting the visible items count will trigger an update
         if (newVisibleItems !== this.visibleItems) {
             this.visibleItems = newVisibleItems;
@@ -256,14 +240,9 @@ export class Breadcrumbs extends SpectrumElement {
             .reverse();
 
         return html`
-            <sp-breadcrumb-item
-                role="listitem"
-                is-menu
-                ?disabled=${this.disabled}
-            >
+            <sp-breadcrumb-item role="listitem" is-menu>
                 <sp-action-menu
                     ${ref(this.menuRef)}
-                    ?disabled=${this.disabled}
                     quiet
                     label=${this.menuLabel}
                 >

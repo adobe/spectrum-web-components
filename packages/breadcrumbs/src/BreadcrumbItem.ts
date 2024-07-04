@@ -16,20 +16,19 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    classMap,
-    ifDefined,
-} from '@spectrum-web-components/base/src/directives.js';
-import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 
 import styles from './breadcrumb-item.css.js';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+export interface BreadcrumbSelectDetail {
+    value: string;
+}
 
 export class BreadcrumbItem extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
@@ -39,37 +38,73 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     @query('#anchor')
     anchorElement!: HTMLAnchorElement;
 
+    @property({ type: String })
+    public get value(): string {
+        return this._value || '';
+    }
+
+    public set value(value: string) {
+        if (value === this._value) {
+            return;
+        }
+        this._value = value || '';
+        if (this._value) {
+            this.setAttribute('value', this._value);
+        } else {
+            this.removeAttribute('value');
+        }
+    }
+
+    private _value = '';
+
     @property({ attribute: 'is-menu', type: Boolean })
     public isMenu = false;
 
     @property({ type: Boolean })
     public isLastOfType = false;
 
-    public override get focusElement(): HTMLElement & {
-        disabled?: boolean | undefined;
-    } {
+    public override get focusElement(): HTMLElement {
         return this.anchorElement || this;
     }
 
+    protected handleClick(event?: Event): void {
+        if (!this.href && event) {
+            event.preventDefault();
+        }
+
+        if (!this.href || event?.defaultPrevented) {
+            const selectDetail: BreadcrumbSelectDetail = {
+                value: this.value,
+            };
+
+            const selectionEvent = new CustomEvent('change', {
+                bubbles: true,
+                composed: true,
+                detail: selectDetail,
+            });
+
+            this.dispatchEvent(selectionEvent);
+        }
+    }
+
     protected renderLink(): TemplateResult {
-        return this.isLastOfType
-            ? html`
-                  <span><slot></slot></span>
-              `
-            : html`
-                  <a
-                      id="anchor"
-                      part="link"
-                      class=${classMap({
-                          link: true,
-                          'is-disabled': this.disabled,
-                      })}
-                      aria-disabled=${this.disabled}
-                      href=${ifDefined(this.href)}
-                  >
-                      <slot></slot>
-                  </a>
-              `;
+        if (this.isLastOfType) {
+            return html`
+                <span aria-current="page"><slot></slot></span>
+            `;
+        }
+
+        return html`
+            <a
+                id="anchor"
+                class="item-link"
+                href=${this.href || '#'}
+                tabindex="0"
+                @click=${this.handleClick}
+            >
+                <slot></slot>
+            </a>
+        `;
     }
 
     private renderSeparator(): TemplateResult {
@@ -83,7 +118,6 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     }
 
     protected override render(): TemplateResult {
-        // console.log(this.isLastOfType);
         return html`
             ${this.isMenu
                 ? html`

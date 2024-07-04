@@ -195,50 +195,20 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([compact]) #list {
+.spectrum-Breadcrumbs--compact {
     block-size: var(
         --mod-breadcrumbs-block-size-compact,
         var(--spectrum-breadcrumbs-block-size-compact)
     );
 }
 
-:host([multiline]) #list {
+.spectrum-Breadcrumbs--multiline {
     block-size: var(
         --mod-breadcrumbs-block-size-multiline,
         var(--spectrum-breadcrumbs-block-size-multiline)
     );
     flex-wrap: wrap;
     align-content: center;
-}
-
-:host([compact]) ::slotted(sp-breadcrumb-item) {
-    font-family: var(
-        --mod-breadcrumbs-font-family-compact,
-        var(--spectrum-breadcrumbs-font-family-compact)
-    );
-    font-size: var(
-        --mod-breadcrumbs-font-size-compact,
-        var(--spectrum-breadcrumbs-font-size-compact)
-    );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight-compact,
-        var(--spectrum-breadcrumbs-font-weight-compact)
-    );
-}
-
-:host([multiline]) ::slotted(sp-breadcrumb-item) {
-    font-family: var(
-        --mod-breadcrumbs-font-family-multiline,
-        var(--spectrum-breadcrumbs-font-family-multiline)
-    );
-    font-size: var(
-        --mod-breadcrumbs-font-size-multiline,
-        var(--spectrum-breadcrumbs-font-size-multiline)
-    );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight-multiline,
-        var(--spectrum-breadcrumbs-font-weight-multiline)
-    );
 }
 
 ::slotted(:last-of-type) {
@@ -253,20 +223,5 @@ governing permissions and limitations under the License.
     font-weight: var(
         --mod-breadcrumbs-font-weight-current,
         var(--spectrum-breadcrumbs-font-weight-current)
-    );
-}
-
-:host([compact]) ::slotted(:last-of-type) {
-    font-family: var(
-        --mod-breadcrumbs-font-family-compact-current,
-        var(--spectrum-breadcrumbs-font-family-compact-current)
-    );
-    font-size: var(
-        --mod-breadcrumbs-font-size-compact-current,
-        var(--spectrum-breadcrumbs-font-size-compact-current)
-    );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight-compact-current,
-        var(--spectrum-breadcrumbs-font-weight-compact-current)
     );
 }

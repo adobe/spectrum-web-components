@@ -16,6 +16,7 @@ import '../sp-breadcrumbs.js';
 import '../sp-breadcrumb-item.js';
 import {
     getBreadcrumbs,
+    getBreadcrumbsWithLinks,
     getResizableStyles,
     StoryArgs,
     Template,
@@ -27,9 +28,6 @@ export default {
     component: 'sp-breadcrumbs',
     args: {
         'max-visible-items': 4,
-        compact: false,
-        multiline: false,
-        disabled: false,
         nrOfItems: 4,
     },
     ...argTypes,
@@ -37,75 +35,20 @@ export default {
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
-export const compact = (args: StoryArgs): TemplateResult => Template(args);
-compact.args = {
-    compact: true,
-};
-
-// export const multiline = (args: StoryArgs): TemplateResult => Template(4, args);
-// multiline.args = {
-//     multiline: true,
-// };
-
-// export const disabledMultiline = (args: StoryArgs): TemplateResult =>
-//     Template(4, args);
-// disabledMultiline.args = {
-//     disabled: true,
-//     multiline: true,
-// };
-
 export const showRoot = (args: StoryArgs): TemplateResult => Template(args);
 showRoot.args = {
     showRoot: true,
     nrOfItems: 8,
 };
 
-export const showRootCompact = (args: StoryArgs): TemplateResult =>
-    Template(args);
-showRootCompact.args = {
-    showRoot: true,
-    compact: true,
-    nrOfItems: 8,
+export const Links = (): TemplateResult => {
+    return html`
+        <sp-breadcrumbs>${getBreadcrumbsWithLinks(4)}</sp-breadcrumbs>
+    `;
 };
-
-// export const showRootMultiline = (args: StoryArgs): TemplateResult =>
-//     Template(8, args);
-// showRootMultiline.args = {
-//     showRoot: true,
-//     multiline: true,
-// };
-
-// export const customMaximumVisibleItems = (args: StoryArgs): TemplateResult =>
-//     Template(8, args);
-// customMaximumVisibleItems.args = {
-//     'max-visible-items': 6,
-// };
-
-// export const customMenuIcon = (): TemplateResult => {
-//     return html`
-//         <sp-breadcrumbs>
-//             <sp-icon-settings slot="icon"></sp-icon-settings>
-//             ${getBreadcrumbs(6)}
-//         </sp-breadcrumbs>
-//     `;
-// };
-
-// export const test = (args: StoryArgs): TemplateResult => {
-//     return html`
-//         <sp-breadcrumbs show-root disabled>
-//             ${getBreadcrumbs(args.nrOfItems)}
-//         </sp-breadcrumbs>
-//     `;
-// };
 
 export const resizableBehavior = (): TemplateResult => {
     return html`
-        <!-- <div class="resizable-container">
-            ${getResizableStyles()}
-            
-            <sp-breadcrumbs multiline>${getBreadcrumbs(7)}</sp-breadcrumbs>
-        </div>
-        <br /> -->
         <div class="resizable-container">
             ${getResizableStyles()}
 
