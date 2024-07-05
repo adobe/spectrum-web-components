@@ -79,7 +79,19 @@ export async function processChangelog(mdPath) {
     }
     const componentName = extractPackageNameRegExp.exec(mdPath)[1];
     let changelogContent = fs.readFileSync(mdPath).toString();
-    changelogContent = changelogContent[0].split('\n').slice(4).join('\n');
+    changelogContent = changelogContent.split('\n').slice(4).join('\n');
+
+    // Replace minor version headings: from double ## to ###
+    changelogContent = changelogContent.replace(
+        /^## \[(\d+\.\d+\.\d+)\]\((.*?)\) \((.*?)\)/gm,
+        '### [$1]($2) ($3)'
+    );
+
+    // Replace major version headings: from single # to ##
+    changelogContent = changelogContent.replace(
+        /^# \[(\d+\.\d+\.\d+)\]\((.*?)\) \((.*?)\)/gm,
+        '## [$1]($2) ($3)'
+    );
 
     const isComponent = mdPath.includes('/packages/');
     const destinationPath = isComponent
@@ -101,7 +113,7 @@ export async function processChangelog(mdPath) {
         'changelog-content.md'
     );
 
-    if (fs.existsSync(changelogDestinationFile)) {
+    if (fs.existsSync(path.resolve(destinationPath, componentName))) {
         fs.writeFileSync(
             changelogDestinationFile,
             changelogDestinationTemplate(componentName, componentHeading)
