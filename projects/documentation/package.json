@@ -226,7 +226,6 @@
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"
             ],
-            "clean": "if-file-deleted",
             "output": [
                 "content/components/*.md",
                 "content/components/*.11tydata.js",
