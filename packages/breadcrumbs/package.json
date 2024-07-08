@@ -42,6 +42,10 @@
         "./sp-breadcrumbs.js": {
             "development": "./sp-breadcrumbs.dev.js",
             "default": "./sp-breadcrumbs.js"
+        },
+        "./sp-breadcrumb-item.js": {
+            "development": "./sp-breadcrumb-item.dev.js",
+            "default": "./sp-breadcrumb-item.js"
         }
     },
     "scripts": {

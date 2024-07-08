@@ -11,17 +11,6 @@ governing permissions and limitations under the License.
 */
 
 export const argTypes = {
-    compact: {
-        name: 'compact',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
-    },
     label: {
         name: 'label',
         type: { name: 'string', required: false },

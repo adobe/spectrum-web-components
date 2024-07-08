@@ -11,16 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import { html, type TemplateResult } from '@spectrum-web-components/base';
-import '../sp-breadcrumbs.js';
-import '../sp-breadcrumb-item.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import '../sp-breadcrumbs.js';
+import '../sp-breadcrumb-item.js';
 
 export type StoryArgs = {
     label?: string;
-    compact?: boolean;
-    disabled?: boolean;
-    multiline?: boolean;
     showRoot?: boolean;
     'max-visible-items': number;
     nrOfItems: number;

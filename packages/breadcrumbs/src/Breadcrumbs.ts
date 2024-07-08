@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
 Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -36,7 +35,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 const MAX_VISIBLE_ITEMS = 4;
 
-export type BreadcrumbItem = {
+type BreadcrumbItem = {
     label?: string;
     href?: string;
     offsetWidth: number;
