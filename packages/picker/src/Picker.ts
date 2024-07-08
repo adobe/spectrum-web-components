@@ -351,9 +351,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             | undefined;
     }
 
-    protected handleSlottableRequest = (
-        _event: SlottableRequestEvent
-    ): void => {};
+    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
 
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {

@@ -150,6 +150,10 @@ export class InteractionController implements ReactiveController {
             this.overlay.receivesFocus = 'true';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;
+            this.overlay.addEventListener(
+                'slottable-request',
+                this.host.handleSlottableRequest
+            );
         }
     }
 

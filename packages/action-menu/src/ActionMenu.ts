@@ -63,7 +63,7 @@ export class ActionMenu extends ObserveSlotPresence(
         return this.slotContentIsPresent;
     }
 
-    protected override handleSlottableRequest = (
+    public override handleSlottableRequest = (
         event: SlottableRequestEvent
     ): void => {
         this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
