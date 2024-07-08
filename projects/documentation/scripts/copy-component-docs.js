@@ -113,20 +113,20 @@ export async function processChangelog(mdPath) {
         'changelog-content.md'
     );
 
-    if (fs.existsSync(path.resolve(destinationPath, componentName))) {
-        fs.writeFileSync(
-            changelogDestinationFile,
-            changelogDestinationTemplate(componentName, componentHeading)
-        );
-        fs.writeFileSync(
-            changelogPartialFile,
-            changelogPartialTemplate(
-                componentName,
-                componentHeading,
-                changelogContent
-            )
-        );
-    }
+    const componentPath = path.resolve(destinationPath, componentName);
+    fs.mkdirSync(componentPath, { recursive: true });
+    fs.writeFileSync(
+        changelogDestinationFile,
+        changelogDestinationTemplate(componentName, componentHeading)
+    );
+    fs.writeFileSync(
+        changelogPartialFile,
+        changelogPartialTemplate(
+            componentName,
+            componentHeading,
+            changelogContent
+        )
+    );
 }
 
 export async function processREADME(mdPath) {
