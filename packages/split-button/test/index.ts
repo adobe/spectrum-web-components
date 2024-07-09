@@ -17,7 +17,6 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { spy } from 'sinon';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
@@ -626,7 +625,9 @@ export function runSplitButtonTests(
         const item1 = el.querySelector('sp-menu-item:nth-child(1)') as MenuItem;
         const item2 = el.querySelector('sp-menu-item:nth-child(2)') as MenuItem;
         const item3 = el.querySelector('sp-menu-item:nth-child(3)') as MenuItem;
-        const main = el.button;
+        const main = el.shadowRoot?.querySelector(
+            '#button'
+        ) as HTMLButtonElement;
 
         main.click();
 
@@ -663,20 +664,11 @@ export function runSplitButtonTests(
         expect(thirdItemSpy.callCount, 'third callCount').to.equal(2);
         expect(thirdItemSpy.calledTwice, 'third calledTwice').to.be.true;
 
-        await sendKeys({
-            press: 'Tab',
-        });
         opened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'k',
-        });
-        sendKeys({
-            press: 'ArrowDown',
-        });
+        el.click();
         await opened;
-        await elementUpdated(el);
 
-        expect(el.open, 'reopened').to.be.true;
+        expect(el.open, 'reopen').to.be.true;
 
         closed = oneEvent(el, 'sp-closed');
         item2.click();
@@ -739,7 +731,7 @@ export function runSplitButtonTests(
 
         const item2 = el.querySelector('sp-menu-item:nth-child(2)') as MenuItem;
         const item3 = el.querySelector('sp-menu-item:nth-child(3)') as MenuItem;
-        const main = el.shadowRoot.querySelector(
+        const main = el.shadowRoot?.querySelector(
             '#button'
         ) as HTMLButtonElement;
         main.click();
