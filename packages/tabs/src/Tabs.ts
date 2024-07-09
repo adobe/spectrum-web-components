@@ -245,7 +245,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
-    public async scrollToSelection(): Promise<void> {
+    public async scrollToSelectionIfNecessary(): Promise<void> {
         if (!this.enableTabsScroll || !this.selected) {
             return;
         }
@@ -254,7 +254,26 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         const selectedTab = this.tabs.find(
             (tab) => tab.value === this.selected
         );
-        selectedTab?.scrollIntoView();
+
+        // Keep the selection always in the viewport.
+        if (selectedTab) {
+            const selectionOffsetRight =
+                selectedTab.offsetLeft + selectedTab.offsetWidth;
+            const containerScrollRight =
+                this.tabList.scrollLeft + this.tabList.offsetWidth;
+
+            if (containerScrollRight < selectionOffsetRight) {
+                this.scrollTabs(
+                    selectionOffsetRight - containerScrollRight,
+                    'instant'
+                );
+            } else if (selectedTab.offsetLeft < this.tabList.scrollLeft) {
+                this.scrollTabs(
+                    selectedTab.offsetLeft - this.tabList.scrollLeft,
+                    'instant'
+                );
+            }
+        }
     }
 
     protected override updated(
@@ -263,7 +282,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         super.updated(changedProperties);
 
         if (changedProperties.has('selected')) {
-            this.scrollToSelection();
+            this.scrollToSelectionIfNecessary();
         }
     }
 
