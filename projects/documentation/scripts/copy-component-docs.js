@@ -88,11 +88,18 @@ export async function processChangelog(mdPath) {
     );
 
     // Replace major version headings: from single # to ##
+    // Updated to handle optional link
     changelogContent = changelogContent.replace(
-        /^# \[(\d+\.\d+\.\d+)\]\((.*?)\) \((.*?)\)/gm,
-        '## [$1]($2) ($3)'
+        /^#\s*(?:\[\s*)?(\d+\.\d+\.\d+)(?:\s*\]\((.*?)\))?\s*\((\d{4}-\d{2}-\d{2})\)/gm,
+        (match, version, link, date) => {
+            // If there's no link, format without it
+            if (!link) {
+                return `## ${version} (${date})`;
+            }
+            // If there is a link, include it in the format
+            return `## [${version}](${link}) (${date})`;
+        }
     );
-
     const isComponent = mdPath.includes('/packages/');
     const destinationPath = isComponent
         ? componentDestinationPath
