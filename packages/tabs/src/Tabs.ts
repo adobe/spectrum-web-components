@@ -257,19 +257,28 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
         // Keep the selection always in the viewport.
         if (selectedTab) {
+            // Making use of silblings in order to scroll with the --spectrum-tabs-item-horizontal-spacing space distance as well.
+            const nextTab = selectedTab.nextElementSibling as Tab | null;
+            const prevTab = selectedTab.previousElementSibling as Tab | null;
+
             const selectionOffsetRight =
                 selectedTab.offsetLeft + selectedTab.offsetWidth;
             const containerScrollRight =
                 this.tabList.scrollLeft + this.tabList.offsetWidth;
 
+            // Selection is not visible, it is on the right side of the viewport.
             if (containerScrollRight < selectionOffsetRight) {
                 this.scrollTabs(
-                    selectionOffsetRight - containerScrollRight,
+                    nextTab
+                        ? nextTab.offsetLeft - containerScrollRight
+                        : containerScrollRight,
                     'instant'
                 );
+                // Selection is not visible, it is on the left side of the viewport.
             } else if (selectedTab.offsetLeft < this.tabList.scrollLeft) {
                 this.scrollTabs(
-                    selectedTab.offsetLeft - this.tabList.scrollLeft,
+                    (prevTab ? prevTab.offsetLeft + prevTab.offsetWidth : 0) -
+                        this.tabList.scrollLeft,
                     'instant'
                 );
             }
