@@ -48,18 +48,6 @@ export const emphasized = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-menu label="More Actions" slot="buttons">
-                <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item>Two</sp-menu-item>
-                <sp-menu-item>
-                    Select some items
-                    <sp-menu slot="submenu" selects="multiple">
-                        <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected>B</sp-menu-item>
-                        <sp-menu-item>C</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-            </sp-action-menu>
         </sp-action-bar>
     `;
 };
@@ -77,18 +65,6 @@ export const fixed = (): TemplateResult => {
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-menu label="More Actions" slot="buttons">
-                <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item>Two</sp-menu-item>
-                <sp-menu-item>
-                    Select some items
-                    <sp-menu slot="submenu" selects="multiple">
-                        <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected>B</sp-menu-item>
-                        <sp-menu-item>C</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-            </sp-action-menu>
         </sp-action-bar>
     `;
 };
@@ -96,6 +72,17 @@ export const fixed = (): TemplateResult => {
 export const flexible = (): TemplateResult => {
     return html`
         <sp-action-bar open flexible emphasized>
+            2 selected
+            <sp-action-button slot="buttons" label="Edit">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+            </sp-action-button>
+        </sp-action-bar>
+    `;
+};
+
+export const hasActionMenuAsChild = (): TemplateResult => {
+    return html`
+        <sp-action-bar open>
             2 selected
             <sp-action-button slot="buttons" label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>

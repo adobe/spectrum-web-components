@@ -611,13 +611,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (event.defaultPrevented) {
             return;
         }
-
         const lastFocusedItem = this.childItems[this.focusedItemIndex];
         if (lastFocusedItem) {
             lastFocusedItem.focused = true;
         }
         const { key } = event;
-
         if (
             event.shiftKey &&
             event.target !== this &&
