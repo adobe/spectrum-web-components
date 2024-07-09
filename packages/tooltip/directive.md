@@ -14,9 +14,17 @@ Import the `trigger` directive as follows:
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 ```
 
-## Types
+## Arguments
 
-The `tooltip()` directive accepts two arguments: a required method returning the `TemplateResult` defining the content of the open overlay and an options object. The options object is expects a partial of the following:
+The `trigger()` directive accepts two arguments:
+
+-   a required method returning the `TemplateResult` defining the content of the open overlay
+
+```ts
+() => TemplateResult;
+```
+
+-   an optional options object which is shaped as follows:
 
 ```ts
 {
@@ -30,7 +38,7 @@ The `tooltip()` directive accepts two arguments: a required method returning the
 
 The `triggerInteraction` is applied as `hover` when using the `tooltip()` directive.
 
-The options are of type `OverlayOptions` (outlined [here](https://opensource.adobe.com/spectrum-web-components/components/imperative-api/#overlayoptions)) and `InsertionOptions` are leveraged to outline where in the DOM the Overlay should be inserted:
+`OverlayOptions` are leveraged in the same way as outlined [here](https://opensource.adobe.com/spectrum-web-components/components/imperative-api/#overlayoptions) and `InsertionOptions` are leveraged to outline where in the DOM the Overlay should be inserted:
 
 ```ts
 type InsertionOptions = {
@@ -39,22 +47,60 @@ type InsertionOptions = {
 };
 ```
 
-#### Consumption via `lit-html`
+## Consumption via `lit-html`
+
+The `tooltip()` directive will automatically wrap whatever content you provide in an `<sp-tooltip>` element for you, so you will not need to supply one in this case.
 
 Pass a `TemplateResult` into the `tooltip()` directive, as follows in order to have it rendered to the DOM when the associated Tooltip is about to open and the removed after the Tooltip has closed.
 
-```js
-import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+```html-live
 
-// ...
+<div id="root"></div>
 
-const renderOverlayContent = () => html`
-    <p>Tooltip content</p>
-`;
+<script type="module">
+    import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+    import { html, render } from 'lit-html';
 
-const template = html`
-    <sp-button ${tooltip(renderOverlayContent)}>Trigger</sp-button>
-`;
+    const renderOverlayContent = () => html`
+        <p>Tooltip content</p>
+    `;
+
+    const template = html`
+        <sp-button ${tooltip(renderOverlayContent, {
+            variant: 'negative'
+        })}>Trigger</sp-button>
+    `;
+
+
+    customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            const appRoot = document.querySelector('#root');
+            appRoot.innerHTML = '';
+            render(template, appRoot);
+        });
+    });
+</script>
 ```
 
-The `tooltip()` directive will automatically wrap whatever content you provide in an `<sp-tooltip>` element for you, so you will not need to supply one in this case.
+<script type="module">
+    import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+    import { html, render } from 'lit-html';
+
+    const renderOverlayContent = () => html`
+        <p>Tooltip content</p>
+    `;
+
+    const template = html`
+        <sp-button ${tooltip(renderOverlayContent, {
+            variant: 'negative'
+        })}>Trigger</sp-button>
+    `;
+
+    customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            const appRoot = document.querySelector('#root');
+            appRoot.innerHTML = '';
+            render(template, appRoot);
+        });
+    });
+</script>
