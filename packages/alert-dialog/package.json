@@ -67,7 +67,7 @@
         "@spectrum-web-components/shared": "^0.43.0"
     },
     "devDependencies": {
-        "@spectrum-css/alertdialog": "^3.0.0-s2-foundations.6"
+        "@spectrum-css/alertdialog": "^3.0.0-s2-foundations.7"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
