@@ -18,14 +18,31 @@ governing permissions and limitations under the License.
         --mod-fieldlabel-min-height,
         var(--spectrum-fieldlabel-min-height)
     );
+    margin-block: 0;
+    margin-block: var(
+        --mod-fieldlabel-margin-block,
+        var(--mod-fieldlabel-margin-block-start, 0)
+            var(--mod-fieldlabel-margin-block-end, 0)
+    );
+    margin-inline: 0;
+    margin-inline: var(
+        --mod-fieldlabel-margin-inline,
+        var(--mod-fieldlabel-margin-inline-start, 0)
+            var(--mod-fieldlabel-margin-inline-end, 0)
+    );
     padding-block: var(
-            --mod-field-label-top-to-text,
-            var(--spectrum-fieldlabel-top-to-text)
-        )
+        --mod-fieldlabel-padding-block,
         var(
-            --mod-field-label-bottom-to-text,
-            var(--spectrum-fieldlabel-bottom-to-text)
-        );
+                --mod-field-label-top-to-text,
+                var(--spectrum-fieldlabel-top-to-text)
+            )
+            var(
+                --mod-field-label-bottom-to-text,
+                var(--spectrum-fieldlabel-bottom-to-text)
+            )
+    );
+    padding-inline: 0;
+    padding-inline: var(--mod-fieldlabel-padding-inline, 0);
     font-size: var(
         --mod-fieldlabel-font-size,
         var(--spectrum-fieldlabel-font-size)
@@ -40,15 +57,14 @@ governing permissions and limitations under the License.
         --mod-fieldlabel-line-height,
         var(--spectrum-fieldlabel-line-height)
     );
-    color: var(--spectrum-fieldlabel-color);
-    padding-inline: 0;
+    color: var(--mod-fieldlabel-color, var(--spectrum-fieldlabel-color));
     display: block;
 }
 
 :host(:lang(ja)),
 :host(:lang(ko)),
 :host(:lang(zh)) {
-    line-height: var(
+    --mod-fieldlabel-line-height: var(
         --mod-fieldlabel-line-height-cjk,
         var(--spectrum-fieldlabel-line-height-cjk)
     );
@@ -130,6 +146,7 @@ governing permissions and limitations under the License.
     );
 }
 
+:host,
 :host {
     --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
     --spectrum-fieldlabel-top-to-text: var(--spectrum-component-top-to-text-75);

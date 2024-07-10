@@ -22,35 +22,219 @@ governing permissions and limitations under the License.
         --mod-accordion-item-height,
         var(--spectrum-accordion-item-height)
     );
-    border-color: var(
-        --mod-accordion-divider-color,
-        var(--spectrum-accordion-divider-color)
-    );
+    border-style: solid;
+    border-color: #0000;
     border-width: var(
         --mod-accordion-divider-thickness,
         var(--spectrum-divider-thickness-small)
     );
-    border-block-end: 1px solid #0000;
+    border-block-end-color: var(
+        --mod-accordion-divider-color,
+        var(--spectrum-accordion-divider-color)
+    );
     margin: 0;
     position: relative;
 }
 
-:host(:first-child) {
-    border-color: var(
+:host(:first-of-type) {
+    border-block-start-color: var(
         --mod-accordion-divider-color,
         var(--spectrum-accordion-divider-color)
     );
-    border-width: var(
-        --mod-accordion-divider-thickness,
-        var(--spectrum-divider-thickness-small)
+}
+
+:host([open]) > #heading > .iconContainer > .indicator,
+:host([open]) > .iconContainer > .indicator {
+    transform: rotate(90deg);
+    transform: var(--spectrum-logical-rotation,) rotate(90deg);
+}
+
+:host([open]) > #content {
+    display: block;
+}
+
+:host([disabled]) #header {
+    cursor: default;
+}
+
+:host([disabled]) #header,
+:host([disabled]) #header:focus-visible {
+    color: var(
+        --mod-accordion-item-header-disabled-color,
+        var(--spectrum-accordion-item-header-disabled-color)
     );
-    border-block-start: 1px solid #0000;
+    background-color: initial;
+}
+
+:host([disabled]) #header + .iconContainer {
+    color: var(
+        --mod-accordion-item-header-disabled-color,
+        var(--spectrum-accordion-item-header-disabled-color)
+    );
+}
+
+:host([disabled]) #content {
+    color: var(
+        --mod-accordion-item-content-disabled-color,
+        var(--spectrum-accordion-item-content-disabled-color)
+    );
 }
 
 #heading {
     box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: center;
     margin: 0;
+    display: flex;
     position: relative;
+}
+
+#header {
+    cursor: pointer;
+    box-sizing: border-box;
+    min-block-size: var(
+        --mod-accordion-min-block-size,
+        var(--spectrum-accordion-min-block-size)
+    );
+    padding-block: var(
+            --mod-accordion-item-header-top-to-text-space,
+            var(--spectrum-accordion-item-header-top-to-text-space)
+        )
+        var(
+            --mod-accordion-item-header-bottom-to-text-space,
+            var(--spectrum-accordion-item-header-bottom-to-text-space)
+        );
+    font-family: var(
+        --mod-accordion-item-header-font,
+        var(--spectrum-accordion-item-header-font)
+    );
+    font-size: var(
+        --mod-accordion-item-header-font-size,
+        var(--spectrum-accordion-item-header-font-size)
+    );
+    font-weight: var(
+        --mod-accordion-item-header-font-weight,
+        var(--spectrum-accordion-item-header-font-weight)
+    );
+    font-style: var(
+        --mod-accordion-item-header-font-style,
+        var(--spectrum-accordion-item-header-font-style)
+    );
+    line-height: var(
+        --mod-accordion-item-header-line-height,
+        var(--spectrum-accordion-item-header-line-height)
+    );
+    color: var(
+        --mod-accordion-item-header-color-default,
+        var(--spectrum-accordion-item-header-color-default)
+    );
+    text-align: start;
+    text-overflow: ellipsis;
+    appearance: none;
+    background-color: var(
+        --mod-accordion-background-color-default,
+        var(--spectrum-accordion-background-color-default)
+    );
+    border: none;
+    order: 2;
+    inline-size: 100%;
+    padding-inline-start: calc(
+        var(
+                --mod-accordion-disclosure-indicator-to-text-space,
+                var(--spectrum-accordion-disclosure-indicator-to-text-space)
+            ) +
+            var(
+                --mod-accordion-disclosure-indicator-height,
+                var(--spectrum-accordion-disclosure-indicator-height)
+            )
+    );
+    padding-inline-end: var(
+        --mod-accordion-edge-to-text-space,
+        var(--spectrum-accordion-edge-to-text-space)
+    );
+}
+
+#header:focus {
+    outline: none;
+}
+
+#header:focus:after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+}
+
+@media (hover: hover) {
+    :host([open]) #header:hover {
+        background-color: var(
+            --mod-accordion-background-color-hover,
+            var(--spectrum-accordion-background-color-hover)
+        );
+    }
+
+    :host([disabled]) #header:hover {
+        color: var(
+            --mod-accordion-item-header-disabled-color,
+            var(--spectrum-accordion-item-header-disabled-color)
+        );
+        background-color: initial;
+    }
+
+    #header:hover {
+        background-color: var(
+            --mod-accordion-background-color-hover,
+            var(--spectrum-accordion-background-color-hover)
+        );
+    }
+
+    #header:hover,
+    #header:hover + .iconContainer {
+        color: var(
+            --mod-accordion-item-header-color-hover,
+            var(--spectrum-accordion-item-header-color-hover)
+        );
+    }
+}
+
+#header:focus-visible {
+    color: var(
+        --mod-accordion-item-header-color-key-focus,
+        var(--spectrum-accordion-item-header-color-key-focus)
+    );
+    background-color: var(
+        --mod-accordion-background-color-key-focus,
+        var(--spectrum-accordion-background-color-key-focus)
+    );
+    border-radius: var(
+        --mod-accordion-corner-radius,
+        var(--spectrum-accordion-corner-radius)
+    );
+    outline: var(
+            --mod-accordion-focus-indicator-thickness,
+            var(--spectrum-accordion-focus-indicator-thickness)
+        )
+        solid
+        var(
+            --mod-accordion-focus-indicator-color,
+            var(--spectrum-accordion-focus-indicator-color)
+        );
+    outline-offset: calc(
+        var(
+                --mod-accordion-focus-indicator-gap,
+                var(--spectrum-accordion-focus-indicator-gap)
+            ) * -1
+    );
+}
+
+#header:active {
+    color: var(
+        --mod-accordion-item-header-color-down,
+        var(--spectrum-accordion-item-header-color-down)
+    );
+    background-color: var(
+        --mod-accordion-background-color-down,
+        var(--spectrum-accordion-background-color-down)
+    );
 }
 
 .iconContainer {
@@ -66,6 +250,7 @@ governing permissions and limitations under the License.
         --mod-accordion-item-header-color-default,
         var(--spectrum-accordion-item-header-color-default)
     );
+    order: 1;
     justify-content: center;
     align-items: center;
     padding-inline-start: var(
@@ -141,180 +326,6 @@ governing permissions and limitations under the License.
     display: none;
 }
 
-#header {
-    cursor: pointer;
-    box-sizing: border-box;
-    min-block-size: var(
-        --mod-accordion-min-block-size,
-        var(--spectrum-accordion-min-block-size)
-    );
-    padding-block: var(
-            --mod-accordion-item-header-top-to-text-space,
-            var(--spectrum-accordion-item-header-top-to-text-space)
-        )
-        var(
-            --mod-accordion-item-header-bottom-to-text-space,
-            var(--spectrum-accordion-item-header-bottom-to-text-space)
-        );
-    font-family: var(
-        --mod-accordion-item-header-font,
-        var(--spectrum-accordion-item-header-font)
-    );
-    font-size: var(
-        --mod-accordion-item-header-font-size,
-        var(--spectrum-accordion-item-header-font-size)
-    );
-    font-weight: var(
-        --mod-accordion-item-header-font-weight,
-        var(--spectrum-accordion-item-header-font-weight)
-    );
-    font-style: var(
-        --mod-accordion-item-header-font-style,
-        var(--spectrum-accordion-item-header-font-style)
-    );
-    line-height: var(
-        --mod-accordion-item-header-line-height,
-        var(--spectrum-accordion-item-header-line-height)
-    );
-    color: var(
-        --mod-accordion-item-header-color-default,
-        var(--spectrum-accordion-item-header-color-default)
-    );
-    text-align: start;
-    text-overflow: ellipsis;
-    appearance: none;
-    background-color: var(
-        --mod-accordion-background-color-default,
-        var(--spectrum-accordion-background-color-default)
-    );
-    border: 0;
-    justify-content: flex-start;
-    align-items: center;
-    inline-size: 100%;
-    padding-inline-start: calc(
-        var(
-                --mod-accordion-disclosure-indicator-to-text-space,
-                var(--spectrum-accordion-disclosure-indicator-to-text-space)
-            ) +
-            var(
-                --mod-accordion-disclosure-indicator-height,
-                var(--spectrum-accordion-disclosure-indicator-height)
-            )
-    );
-    padding-inline-end: var(
-        --mod-accordion-edge-to-text-space,
-        var(--spectrum-accordion-edge-to-text-space)
-    );
-    display: flex;
-    position: relative;
-}
-
-#header:focus {
-    outline: none;
-}
-
-#header:focus:after {
-    content: '';
-    position: absolute;
-    inset-inline-start: 0;
-}
-
-#header:focus-visible {
-    color: var(
-        --mod-accordion-item-header-color-key-focus,
-        var(--spectrum-accordion-item-header-color-key-focus)
-    );
-    background-color: var(
-        --mod-accordion-background-color-key-focus,
-        var(--spectrum-accordion-background-color-key-focus)
-    );
-    border-radius: var(
-        --mod-accordion-corner-radius,
-        var(--spectrum-accordion-corner-radius)
-    );
-    outline: var(
-            --mod-accordion-focus-indicator-thickness,
-            var(--spectrum-accordion-focus-indicator-thickness)
-        )
-        solid
-        var(
-            --mod-accordion-focus-indicator-color,
-            var(--spectrum-accordion-focus-indicator-color)
-        );
-    outline-offset: calc(
-        var(
-                --mod-accordion-focus-indicator-gap,
-                var(--spectrum-accordion-focus-indicator-gap)
-            ) * -1
-    );
-}
-
-#header:active {
-    color: var(
-        --mod-accordion-item-header-color-down,
-        var(--spectrum-accordion-item-header-color-down)
-    );
-    background-color: var(
-        --mod-accordion-background-color-down,
-        var(--spectrum-accordion-background-color-down)
-    );
-}
-
-:host([disabled]) #header,
-:host([disabled]) #header:focus-visible {
-    color: var(
-        --mod-accordion-item-header-disabled-color,
-        var(--spectrum-accordion-item-header-disabled-color)
-    );
-    background-color: initial;
-}
-
-@media (hover: hover) {
-    #header:hover {
-        background-color: var(
-            --mod-accordion-background-color-hover,
-            var(--spectrum-accordion-background-color-hover)
-        );
-    }
-
-    #header:hover,
-    #header:hover + .iconContainer {
-        color: var(
-            --mod-accordion-item-header-color-hover,
-            var(--spectrum-accordion-item-header-color-hover)
-        );
-    }
-
-    :host([open]) #header:hover {
-        background-color: var(
-            --mod-accordion-background-color-hover,
-            var(--spectrum-accordion-background-color-hover)
-        );
-    }
-
-    :host([disabled]) #header:hover {
-        color: var(
-            --mod-accordion-item-header-disabled-color,
-            var(--spectrum-accordion-item-header-disabled-color)
-        );
-        background-color: initial;
-    }
-}
-
-:host([disabled]) #header + .iconContainer {
-    color: var(
-        --mod-accordion-item-header-disabled-color,
-        var(--spectrum-accordion-item-header-disabled-color)
-    );
-}
-
-:host([disabled]) #content {
-    color: var(
-        --mod-accordion-item-content-disabled-color,
-        var(--spectrum-accordion-item-content-disabled-color)
-    );
-}
-
 @media (forced-colors: active) {
     #header:after {
         content: '';
@@ -322,18 +333,4 @@ governing permissions and limitations under the License.
         position: absolute;
         inset-inline-start: 0;
     }
-}
-
-:host([open]) > #heading > .iconContainer > .indicator,
-:host([open]) > .iconContainer > .indicator {
-    transform: rotate(90deg);
-    transform: var(--spectrum-logical-rotation,) rotate(90deg);
-}
-
-:host([open]) > #content {
-    display: block;
-}
-
-:host([disabled]) #header {
-    cursor: default;
 }

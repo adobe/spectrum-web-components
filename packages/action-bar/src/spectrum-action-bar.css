@@ -20,54 +20,110 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --mod-closebutton-margin-block-start: var(
+        --mod-actionbar-spacing-close-button-top,
+        var(--spectrum-actionbar-spacing-close-button-top)
+    );
+    --mod-closebutton-margin-inline-start: var(
+        --mod-actionbar-spacing-close-button-start,
+        var(--spectrum-actionbar-spacing-close-button-start)
+    );
+    --mod-closebutton-margin-inline-end: var(
+        --mod-actionbar-spacing-close-button-end,
+        var(--spectrum-actionbar-spacing-close-button-end)
+    );
+    --mod-closebutton-flex-shrink: 0;
+    --mod-field-label-top-to-text: 0;
+    --mod-field-label-bottom-to-text: 0;
+    --mod-fieldlabel-font-size: var(
+        --mod-actionbar-item-counter-font-size,
+        var(--spectrum-actionbar-item-counter-font-size)
+    );
+    --mod-fieldlabel-line-height: var(
+        --mod-actionbar-item-counter-line-height,
+        var(--spectrum-actionbar-item-counter-line-height)
+    );
+    --mod-fieldlabel-line-height-cjk: var(
+        --mod-actionbar-item-counter-line-height-cjk,
+        var(--spectrum-actionbar-item-counter-line-height-cjk)
+    );
+    --mod-fieldlabel-color: var(
+        --mod-actionbar-item-counter-color,
+        var(--spectrum-actionbar-item-counter-color)
+    );
+    --mod-fieldlabel-margin-block-start: var(
+        --mod-actionbar-spacing-item-counter-top,
+        var(--spectrum-actionbar-spacing-item-counter-top)
+    );
+    --mod-fieldlabel-margin-inline-end: var(
+        --mod-actionbar-spacing-item-counter-end,
+        var(--spectrum-actionbar-spacing-item-counter-end)
+    );
+    --mod-actiongroup-margin-block-start: var(
+        --mod-actionbar-spacing-action-group-top,
+        var(--spectrum-actionbar-spacing-action-group-top)
+    );
+    --mod-actiongroup-margin-inline-start: auto;
+    --mod-actiongroup-margin-inline-end: var(
+        --mod-actionbar-spacing-action-group-end,
+        var(--spectrum-actionbar-spacing-action-group-end)
+    );
     pointer-events: none;
+    position: var(--mod-actionbar-position);
     z-index: 1;
     box-sizing: border-box;
+    block-size: var(--mod-actionbar-block-size, 0);
     padding: 0
         var(
             --mod-actionbar-spacing-outer-edge,
             var(--spectrum-actionbar-spacing-outer-edge)
         );
     opacity: 0;
+    opacity: var(--mod-actionbar-opacity, 0);
     block-size: 0;
     inset-block-end: 0;
+    inset-inline: 0;
 }
 
 :host([open]) {
-    block-size: calc(
+    --mod-actionbar-block-size: calc(
         var(
                 --mod-actionbar-spacing-outer-edge,
                 var(--spectrum-actionbar-spacing-outer-edge)
             ) + var(--mod-actionbar-height, var(--spectrum-actionbar-height))
     );
-    opacity: 1;
+    --mod-actionbar-opacity: 1;
 }
 
 #popover {
     pointer-events: auto;
     box-sizing: border-box;
+    inline-size: var(--mod-actionbar-popover-inline-size, 100%);
     block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     background-color: var(
         --mod-actionbar-popover-background-color,
         var(--spectrum-actionbar-popover-background-color)
     );
-    filter: drop-shadow(
-        var(
-                --mod-actionbar-shadow-horizontal,
-                var(--spectrum-actionbar-shadow-horizontal)
-            )
+    filter: var(
+        --mod-actionbar-popover-filter,
+        drop-shadow(
             var(
-                --mod-actionbar-shadow-vertical,
-                var(--spectrum-actionbar-shadow-vertical)
-            )
-            var(
-                --mod-actionbar-shadow-blur,
-                var(--spectrum-actionbar-shadow-blur)
-            )
-            var(
-                --mod-actionbar-shadow-color,
-                var(--spectrum-actionbar-shadow-color)
-            )
+                    --mod-actionbar-shadow-horizontal,
+                    var(--spectrum-actionbar-shadow-horizontal)
+                )
+                var(
+                    --mod-actionbar-shadow-vertical,
+                    var(--spectrum-actionbar-shadow-vertical)
+                )
+                var(
+                    --mod-actionbar-shadow-blur,
+                    var(--spectrum-actionbar-shadow-blur)
+                )
+                var(
+                    --mod-actionbar-shadow-color,
+                    var(--spectrum-actionbar-shadow-color)
+                )
+        )
     );
     border-color: var(
         --highcontrast-actionbar-popover-border-color,
@@ -88,94 +144,29 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-.close-button {
-    flex-shrink: 0;
-    margin-block-start: var(
-        --mod-actionbar-spacing-close-button-top,
-        var(--spectrum-actionbar-spacing-close-button-top)
-    );
-    margin-inline-start: var(
-        --mod-actionbar-spacing-close-button-start,
-        var(--spectrum-actionbar-spacing-close-button-start)
-    );
-    margin-inline-end: var(
-        --mod-actionbar-spacing-close-button-end,
-        var(--spectrum-actionbar-spacing-close-button-end)
-    );
-}
-
-.field-label {
-    font-size: var(
-        --mod-actionbar-item-counter-font-size,
-        var(--spectrum-actionbar-item-counter-font-size)
-    );
-    line-height: var(
-        --mod-actionbar-item-counter-line-height,
-        var(--spectrum-actionbar-item-counter-line-height)
-    );
-    color: var(
-        --mod-actionbar-item-counter-color,
-        var(--spectrum-actionbar-item-counter-color)
-    );
-    margin-block-start: var(
-        --mod-actionbar-spacing-item-counter-top,
-        var(--spectrum-actionbar-spacing-item-counter-top)
-    );
-    margin-inline-end: var(
-        --mod-actionbar-spacing-item-counter-end,
-        var(--spectrum-actionbar-spacing-item-counter-end)
-    );
-    padding: 0;
-}
-
-.field-label:lang(ja),
-.field-label:lang(ko),
-.field-label:lang(zh) {
-    line-height: var(
-        --mod-actionbar-item-counter-line-height-cjk,
-        var(--spectrum-actionbar-item-counter-line-height-cjk)
-    );
-}
-
-.action-group {
-    margin-block-start: var(
-        --mod-actionbar-spacing-action-group-top,
-        var(--spectrum-actionbar-spacing-action-group-top)
-    );
-    margin-inline-start: auto;
-    margin-inline-end: var(
-        --mod-actionbar-spacing-action-group-end,
-        var(--spectrum-actionbar-spacing-action-group-end)
-    );
-}
-
-:host([emphasized]) #popover {
-    background-color: var(
+:host([emphasized]) {
+    --mod-actionbar-popover-background-color: var(
         --mod-actionbar-emphasized-background-color,
         var(--spectrum-actionbar-emphasized-background-color)
     );
-    filter: none;
-    border-color: #0000;
-}
-
-:host([emphasized]) .field-label {
-    color: var(
+    --mod-actionbar-popover-filter: none;
+    --mod-actionbar-popover-border-color: transparent;
+    --mod-fieldlabel-color: var(
         --mod-actionbar-emphasized-item-counter-color,
         var(--spectrum-actionbar-emphasized-item-counter-color)
     );
 }
 
 :host([variant='sticky']) {
-    position: sticky;
-    inset-inline: 0;
+    --mod-actionbar-position: sticky;
 }
 
 :host([variant='fixed']) {
-    position: fixed;
+    --mod-actionbar-position: fixed;
 }
 
-:host([flexible]) #popover {
-    inline-size: auto;
+:host([flexible]) {
+    --mod-actionbar-popover-inline-size: auto;
 }
 
 :host {
@@ -187,6 +178,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-actionbar-item-counter-color: var(
         --spectrum-neutral-content-color-default
+    );
+    --spectrum-actionbar-item-counter-line-height-cjk: var(
+        --spectrum-cjk-line-height-100
     );
     --spectrum-actionbar-popover-background-color: var(--spectrum-gray-25);
     --spectrum-actionbar-popover-border-color: var(--spectrum-gray-400);
@@ -210,12 +204,4 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-shadow-vertical: var(--spectrum-drop-shadow-y);
     --spectrum-actionbar-shadow-blur: var(--spectrum-drop-shadow-blur);
     --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
-}
-
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
-    --spectrum-actionbar-item-counter-line-height-cjk: var(
-        --spectrum-cjk-line-height-100
-    );
 }

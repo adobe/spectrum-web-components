@@ -16,7 +16,7 @@ governing permissions and limitations under the License.
     inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
     text-indent: 0;
     text-overflow: ellipsis;
-    appearance: textfield;
+    -moz-appearance: textfield;
     grid-template-rows: auto auto auto;
     grid-template-columns: auto auto;
     margin: 0;
@@ -302,27 +302,27 @@ governing permissions and limitations under the License.
     text-indent: 0;
     text-overflow: ellipsis;
     vertical-align: top;
-    appearance: textfield;
     background-color: var(
         --mod-textfield-background-color,
         var(--spectrum-textfield-background-color)
     );
-    border: var(
-            --mod-textfield-border-width,
-            var(--spectrum-textfield-border-width)
-        )
-        solid
+    border-color: var(
+        --highcontrast-textfield-border-color,
         var(
-            --highcontrast-textfield-border-color,
-            var(
-                --mod-textfield-border-color,
-                var(--spectrum-textfield-border-color)
-            )
-        );
+            --mod-textfield-border-color,
+            var(--spectrum-textfield-border-color)
+        )
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-textfield-border-width,
+        var(--spectrum-textfield-border-width)
+    );
     border-radius: var(
         --mod-textfield-corner-radius,
         var(--spectrum-textfield-corner-radius)
     );
+    appearance: none;
     transition: border-color
         var(
             --mod-texfield-animation-duration,
@@ -335,9 +335,15 @@ governing permissions and limitations under the License.
     margin: 0;
 }
 
-.input::-ms-clear {
-    block-size: 0;
-    inline-size: 0;
+.input,
+:host([type='number']) .input {
+    -moz-appearance: textfield;
+}
+
+:host([type='number']) .input::-webkit-inner-spin-button,
+:host([type='number']) .input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .input::-webkit-inner-spin-button,
@@ -382,12 +388,6 @@ governing permissions and limitations under the License.
 .input:lang(ja)::placeholder,
 .input:lang(ko)::placeholder,
 .input:lang(zh)::placeholder {
-    font-style: normal;
-}
-
-.input:lang(ja)::-moz-placeholder,
-.input:lang(ko)::-moz-placeholder,
-.input:lang(zh)::-moz-placeholder {
     font-style: normal;
 }
 

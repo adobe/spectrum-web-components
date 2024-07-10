@@ -13,6 +13,27 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    --spectrum-accordion-min-block-size: max(
+        var(--mod-accordion-item-height, var(--spectrum-accordion-item-height)),
+        calc(
+            var(
+                    --mod-accordion-item-header-top-to-text-space,
+                    var(--spectrum-accordion-item-header-top-to-text-space)
+                ) +
+                var(
+                    --mod-accordion-item-header-bottom-to-text-space,
+                    var(--spectrum-accordion-item-header-bottom-to-text-space)
+                ) +
+                var(
+                    --mod-accordion-item-header-font-size,
+                    var(--spectrum-accordion-item-header-font-size)
+                ) *
+                var(
+                    --mod-accordion-item-header-line-height,
+                    var(--spectrum-accordion-item-header-line-height)
+                )
+        )
+    );
     --spectrum-accordion-item-height: var(--spectrum-component-height-200);
     --spectrum-accordion-item-width: var(--spectrum-accordion-minimum-width);
     --spectrum-accordion-disclosure-indicator-height: var(
@@ -112,27 +133,6 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-color
     );
     --spectrum-accordion-divider-color: var(--spectrum-gray-200);
-    --spectrum-accordion-min-block-size: max(
-        var(--mod-accordion-item-height, var(--spectrum-accordion-item-height)),
-        calc(
-            var(
-                    --mod-accordion-item-header-top-to-text-space,
-                    var(--spectrum-accordion-item-header-top-to-text-space)
-                ) +
-                var(
-                    --mod-accordion-item-header-bottom-to-text-space,
-                    var(--spectrum-accordion-item-header-bottom-to-text-space)
-                ) +
-                var(
-                    --mod-accordion-item-header-font-size,
-                    var(--spectrum-accordion-item-header-font-size)
-                ) *
-                var(
-                    --mod-accordion-item-header-line-height,
-                    var(--spectrum-accordion-item-header-line-height)
-                )
-        )
-    );
     margin: 0;
     padding: 0;
     list-style: none;

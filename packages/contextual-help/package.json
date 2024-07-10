@@ -65,7 +65,7 @@
         "@spectrum-web-components/popover": "^0.43.0"
     },
     "devDependencies": {
-        "@spectrum-css/contextualhelp": "^4.0.0-s2-foundations.5"
+        "@spectrum-css/contextualhelp": "^4.0.0-s2-foundations.6"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

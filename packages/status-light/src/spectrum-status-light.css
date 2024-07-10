@@ -20,6 +20,7 @@ governing permissions and limitations under the License.
     }
 
     :host:before {
+        forced-color-adjust: none;
         border: var(
                 --mod-statuslight-border-width,
                 var(--spectrum-statuslight-border-width)

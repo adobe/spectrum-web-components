@@ -80,8 +80,7 @@ governing permissions and limitations under the License.
 }
 
 #button::-moz-focus-inner {
-    border: 0;
-    margin-block: -2px;
+    border-style: none;
     padding: 0;
 }
 
