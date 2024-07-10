@@ -34,6 +34,7 @@
             "default": "./src/index.js"
         },
         "./src/split-view.css.js": "./src/split-view.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./src/types.js": {
             "development": "./src/types.dev.js",
             "default": "./src/types.js"

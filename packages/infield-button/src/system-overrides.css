@@ -14,33 +14,237 @@ governing permissions and limitations under the License.
 
 :host {
     --spectrum-infield-button-border-width: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-border-width
+        --system-infieldbutton-infield-button-border-width
     );
     --spectrum-infield-button-border-color: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-border-color
+        --system-infieldbutton-infield-button-border-color
     );
     --spectrum-infield-button-border-radius: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-border-radius
+        --system-infieldbutton-infield-button-border-radius
     );
     --spectrum-infield-button-border-radius-reset: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-border-radius-reset
+        --system-infieldbutton-infield-button-border-radius-reset
     );
     --spectrum-infield-button-stacked-top-border-radius-start-start: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-stacked-top-border-radius-start-start
+        --system-infieldbutton-infield-button-stacked-top-border-radius-start-start
     );
     --spectrum-infield-button-stacked-bottom-border-radius-end-start: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-stacked-bottom-border-radius-end-start
+        --system-infieldbutton-infield-button-stacked-bottom-border-radius-end-start
     );
     --spectrum-infield-button-background-color: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-background-color
+        --system-infieldbutton-infield-button-background-color
     );
     --spectrum-infield-button-background-color-hover: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-background-color-hover
+        --system-infieldbutton-infield-button-background-color-hover
     );
     --spectrum-infield-button-background-color-down: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-background-color-down
+        --system-infieldbutton-infield-button-background-color-down
     );
     --spectrum-infield-button-background-color-key-focus: var(
-        --system-spectrum-infieldbutton-spectrum-infield-button-background-color-key-focus
+        --system-infieldbutton-infield-button-background-color-key-focus
+    );
+    --spectrum-infield-button-height: var(
+        --system-infieldbutton-infield-button-height
+    );
+    --spectrum-infield-button-width: var(
+        --system-infieldbutton-infield-button-width
+    );
+    --spectrum-infield-button-stacked-border-radius-reset: var(
+        --system-infieldbutton-infield-button-stacked-border-radius-reset
+    );
+    --spectrum-infield-button-edge-to-fill: var(
+        --system-infieldbutton-infield-button-edge-to-fill
+    );
+    --spectrum-infield-button-inner-edge-to-fill: var(
+        --system-infieldbutton-infield-button-inner-edge-to-fill
+    );
+    --spectrum-infield-button-fill-padding: var(
+        --system-infieldbutton-infield-button-fill-padding
+    );
+    --spectrum-infield-button-stacked-fill-padding-inline: var(
+        --system-infieldbutton-infield-button-stacked-fill-padding-inline
+    );
+    --spectrum-infield-button-stacked-fill-padding-outer: var(
+        --system-infieldbutton-infield-button-stacked-fill-padding-outer
+    );
+    --spectrum-infield-button-stacked-fill-padding-inner: var(
+        --system-infieldbutton-infield-button-stacked-fill-padding-inner
+    );
+    --spectrum-infield-button-animation-duration: var(
+        --system-infieldbutton-infield-button-animation-duration
+    );
+    --spectrum-infield-button-icon-color: var(
+        --system-infieldbutton-infield-button-icon-color
+    );
+    --spectrum-infield-button-icon-color-hover: var(
+        --system-infieldbutton-infield-button-icon-color-hover
+    );
+    --spectrum-infield-button-icon-color-down: var(
+        --system-infieldbutton-infield-button-icon-color-down
+    );
+    --spectrum-infield-button-icon-color-key-focus: var(
+        --system-infieldbutton-infield-button-icon-color-key-focus
+    );
+    --spectrum-infield-button-fill-justify-content: var(
+        --system-infieldbutton-infield-button-fill-justify-content
+    );
+}
+
+:host([disabled]) {
+    --mod-infield-button-background-color: var(
+        --system-infieldbutton-disabled-infield-button-background-color
+    );
+    --mod-infield-button-background-color-hover: var(
+        --system-infieldbutton-disabled-infield-button-background-color-hover
+    );
+    --mod-infield-button-background-color-down: var(
+        --system-infieldbutton-disabled-infield-button-background-color-down
+    );
+    --mod-infield-button-border-color: var(
+        --system-infieldbutton-disabled-infield-button-border-color
+    );
+    --mod-infield-button-icon-color: var(
+        --system-infieldbutton-disabled-infield-button-icon-color
+    );
+    --mod-infield-button-icon-color-hover: var(
+        --system-infieldbutton-disabled-infield-button-icon-color-hover
+    );
+    --mod-infield-button-icon-color-down: var(
+        --system-infieldbutton-disabled-infield-button-icon-color-down
+    );
+    --mod-infield-button-icon-color-key-focus: var(
+        --system-infieldbutton-disabled-infield-button-icon-color-key-focus
+    );
+}
+
+:host([size='s']) {
+    --spectrum-infield-button-height: var(
+        --system-infieldbutton-size-s-infield-button-height
+    );
+    --spectrum-infield-button-width: var(
+        --system-infieldbutton-size-s-infield-button-width
+    );
+    --spectrum-infield-button-stacked-fill-padding-inline: var(
+        --system-infieldbutton-size-s-infield-button-stacked-fill-padding-inline
+    );
+    --spectrum-infield-button-stacked-fill-padding-outer: var(
+        --system-infieldbutton-size-s-infield-button-stacked-fill-padding-outer
+    );
+    --spectrum-infield-button-stacked-fill-padding-inner: var(
+        --system-infieldbutton-size-s-infield-button-stacked-fill-padding-inner
+    );
+}
+
+:host([size='l']) {
+    --spectrum-infield-button-height: var(
+        --system-infieldbutton-size-l-infield-button-height
+    );
+    --spectrum-infield-button-width: var(
+        --system-infieldbutton-size-l-infield-button-width
+    );
+    --spectrum-infield-button-stacked-fill-padding-inline: var(
+        --system-infieldbutton-size-l-infield-button-stacked-fill-padding-inline
+    );
+    --spectrum-infield-button-stacked-fill-padding-outer: var(
+        --system-infieldbutton-size-l-infield-button-stacked-fill-padding-outer
+    );
+    --spectrum-infield-button-stacked-fill-padding-inner: var(
+        --system-infieldbutton-size-l-infield-button-stacked-fill-padding-inner
+    );
+}
+
+:host([size='xl']) {
+    --spectrum-infield-button-height: var(
+        --system-infieldbutton-size-xl-infield-button-height
+    );
+    --spectrum-infield-button-width: var(
+        --system-infieldbutton-size-xl-infield-button-width
+    );
+    --spectrum-infield-button-stacked-fill-padding-inline: var(
+        --system-infieldbutton-size-xl-infield-button-stacked-fill-padding-inline
+    );
+    --spectrum-infield-button-stacked-fill-padding-outer: var(
+        --system-infieldbutton-size-xl-infield-button-stacked-fill-padding-outer
+    );
+    --spectrum-infield-button-stacked-fill-padding-inner: var(
+        --system-infieldbutton-size-xl-infield-button-stacked-fill-padding-inner
+    );
+}
+
+:host([block='start']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-top-infield-button-width
+    );
+}
+
+:host([block='end']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-bottom-infield-button-width
+    );
+}
+
+:host([block='start'][size='s']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-top-size-s-infield-button-width
+    );
+}
+
+:host([block='end'][size='s']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-bottom-size-s-infield-button-width
+    );
+}
+
+:host([block='start'][size='l']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-top-size-l-infield-button-width
+    );
+}
+
+:host([block='end'][size='l']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-bottom-size-l-infield-button-width
+    );
+}
+
+:host([block='start'][size='xl']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-top-size-xl-infield-button-width
+    );
+}
+
+:host([block='end'][size='xl']) {
+    --mod-infield-button-width: var(
+        --system-infieldbutton-bottom-size-xl-infield-button-width
+    );
+}
+
+:host([quiet]) {
+    --mod-infield-button-background-color: var(
+        --system-infieldbutton-quiet-infield-button-background-color
+    );
+    --mod-infield-button-background-color-hover: var(
+        --system-infieldbutton-quiet-infield-button-background-color-hover
+    );
+    --mod-infield-button-background-color-down: var(
+        --system-infieldbutton-quiet-infield-button-background-color-down
+    );
+    --mod-infield-button-background-color-key-focus: var(
+        --system-infieldbutton-quiet-infield-button-background-color-key-focus
+    );
+    --mod-infield-border-color: var(
+        --system-infieldbutton-quiet-infield-border-color
+    );
+    --mod-infield-button-border-width: var(
+        --system-infieldbutton-quiet-infield-button-border-width
+    );
+}
+
+:host([quiet][disabled]) {
+    --mod-infield-button-background-color: var(
+        --system-infieldbutton-quiet-disabled-infield-button-background-color
+    );
+    --mod-infield-button-border-color: var(
+        --system-infieldbutton-quiet-disabled-infield-button-border-color
     );
 }

@@ -44,6 +44,7 @@
         "./src/sidenav-heading.css.js": "./src/sidenav-heading.css.js",
         "./src/sidenav-item.css.js": "./src/sidenav-item.css.js",
         "./src/sidenav.css.js": "./src/sidenav.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-sidenav.js": {
             "development": "./sp-sidenav.dev.js",
             "default": "./sp-sidenav.js"

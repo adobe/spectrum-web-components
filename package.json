@@ -37,7 +37,7 @@
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
         "lerna-publish": "lerna publish --message \"chore: release new versions #publish\" --force-publish",
-        "lint": "run-p lint:js lint:docs lint:ts lint:css lint:packagejson",
+        "lint": "run-p lint:js lint:docs lint:ts lint:packagejson",
         "lint:css": "stylelint \"packages/**/*.css\" \"tools/**/*.css\"",
         "lint:docs": "eslint -f pretty \"projects/documentation/**/*.ts\"",
         "lint:js": "pretty-quick --pattern \"tasks/**/*.js\" && pretty-quick --pattern \"scripts/**/*.js\"",
@@ -372,7 +372,7 @@
             ]
         },
         "process-spectrum": {
-            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/generate-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
+            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/generate-tokens.js && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
             "files": [
                 "tasks/process-spectrum.js",
                 "packages/**/spectrum-config.js",

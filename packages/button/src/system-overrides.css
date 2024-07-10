@@ -13,1007 +13,1123 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    --spectrum-button-animation-duration: var(
+        --system-button-animation-duration
+    );
+    --spectrum-button-border-radius: var(--system-button-border-radius);
+    --spectrum-button-border-width: var(--system-button-border-width);
+    --spectrum-button-line-height: var(--system-button-line-height);
+    --spectrum-button-focus-ring-gap: var(--system-button-focus-ring-gap);
+    --spectrum-button-focus-ring-border-radius: var(
+        --system-button-focus-ring-border-radius
+    );
+    --spectrum-button-focus-ring-thickness: var(
+        --system-button-focus-ring-thickness
+    );
+    --spectrum-button-focus-indicator-color: var(
+        --system-button-focus-indicator-color
+    );
+    --spectrum-button-intended-icon-size: var(
+        --system-button-intended-icon-size
+    );
+    --mod-progress-circle-position: var(
+        --system-button-progress-circle-position
+    );
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-background-color-default
+        --system-button-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-background-color-hover
+        --system-button-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-background-color-down
+        --system-button-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-background-color-focus
+        --system-button-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-border-color-default
+        --system-button-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-border-color-hover
+        --system-button-border-color-hover
     );
-    --spectrum-button-border-color-down: var(
-        --system-spectrum-button-border-color-down
-    );
+    --spectrum-button-border-color-down: var(--system-button-border-color-down);
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-border-color-focus
+        --system-button-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-content-color-default
+        --system-button-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-content-color-hover
+        --system-button-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-content-color-down
+        --system-button-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-content-color-focus
+        --system-button-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-background-color-disabled
+        --system-button-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-border-color-disabled
+        --system-button-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-content-color-disabled
+        --system-button-content-color-disabled
     );
 }
 
 :host([variant='accent']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-accent-background-color-default
+        --system-button-accent-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-accent-background-color-hover
+        --system-button-accent-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-accent-background-color-down
+        --system-button-accent-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-accent-background-color-focus
+        --system-button-accent-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-accent-border-color-default
+        --system-button-accent-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-accent-border-color-hover
+        --system-button-accent-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-accent-border-color-down
+        --system-button-accent-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-accent-border-color-focus
+        --system-button-accent-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-accent-content-color-default
+        --system-button-accent-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-accent-content-color-hover
+        --system-button-accent-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-accent-content-color-down
+        --system-button-accent-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-accent-content-color-focus
+        --system-button-accent-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-accent-background-color-disabled
+        --system-button-accent-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-accent-border-color-disabled
+        --system-button-accent-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-accent-content-color-disabled
+        --system-button-accent-content-color-disabled
     );
 }
 
 :host([variant='accent'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-accent-outline-background-color-default
+        --system-button-accent-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-accent-outline-background-color-hover
+        --system-button-accent-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-accent-outline-background-color-down
+        --system-button-accent-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-accent-outline-background-color-focus
+        --system-button-accent-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-accent-outline-border-color-default
+        --system-button-accent-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-accent-outline-border-color-hover
+        --system-button-accent-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-accent-outline-border-color-down
+        --system-button-accent-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-accent-outline-border-color-focus
+        --system-button-accent-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-accent-outline-content-color-default
+        --system-button-accent-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-accent-outline-content-color-hover
+        --system-button-accent-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-accent-outline-content-color-down
+        --system-button-accent-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-accent-outline-content-color-focus
+        --system-button-accent-outline-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-accent-outline-background-color-disabled
+        --system-button-accent-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-accent-outline-border-color-disabled
+        --system-button-accent-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-accent-outline-content-color-disabled
+        --system-button-accent-outline-content-color-disabled
     );
 }
 
 :host([variant='negative']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-negative-background-color-default
+        --system-button-negative-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-negative-background-color-hover
+        --system-button-negative-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-negative-background-color-down
+        --system-button-negative-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-negative-background-color-focus
+        --system-button-negative-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-negative-border-color-default
+        --system-button-negative-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-negative-border-color-hover
+        --system-button-negative-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-negative-border-color-down
+        --system-button-negative-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-negative-border-color-focus
+        --system-button-negative-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-negative-content-color-default
+        --system-button-negative-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-negative-content-color-hover
+        --system-button-negative-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-negative-content-color-down
+        --system-button-negative-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-negative-content-color-focus
+        --system-button-negative-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-negative-background-color-disabled
+        --system-button-negative-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-negative-border-color-disabled
+        --system-button-negative-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-negative-content-color-disabled
+        --system-button-negative-content-color-disabled
     );
 }
 
 :host([variant='negative'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-negative-outline-background-color-default
+        --system-button-negative-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-negative-outline-background-color-hover
+        --system-button-negative-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-negative-outline-background-color-down
+        --system-button-negative-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-negative-outline-background-color-focus
+        --system-button-negative-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-negative-outline-border-color-default
+        --system-button-negative-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-negative-outline-border-color-hover
+        --system-button-negative-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-negative-outline-border-color-down
+        --system-button-negative-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-negative-outline-border-color-focus
+        --system-button-negative-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-negative-outline-content-color-default
+        --system-button-negative-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-negative-outline-content-color-hover
+        --system-button-negative-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-negative-outline-content-color-down
+        --system-button-negative-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-negative-outline-content-color-focus
+        --system-button-negative-outline-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-negative-outline-background-color-disabled
+        --system-button-negative-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-negative-outline-border-color-disabled
+        --system-button-negative-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-negative-outline-content-color-disabled
+        --system-button-negative-outline-content-color-disabled
     );
 }
 
 :host([variant='primary']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-primary-background-color-default
+        --system-button-primary-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-primary-background-color-hover
+        --system-button-primary-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-primary-background-color-down
+        --system-button-primary-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-primary-background-color-focus
+        --system-button-primary-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-primary-border-color-default
+        --system-button-primary-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-primary-border-color-hover
+        --system-button-primary-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-primary-border-color-down
+        --system-button-primary-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-primary-border-color-focus
+        --system-button-primary-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-primary-content-color-default
+        --system-button-primary-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-primary-content-color-hover
+        --system-button-primary-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-primary-content-color-down
+        --system-button-primary-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-primary-content-color-focus
+        --system-button-primary-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-primary-background-color-disabled
+        --system-button-primary-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-primary-border-color-disabled
+        --system-button-primary-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-primary-content-color-disabled
+        --system-button-primary-content-color-disabled
     );
 }
 
 :host([variant='primary'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-primary-outline-background-color-default
+        --system-button-primary-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-primary-outline-background-color-hover
+        --system-button-primary-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-primary-outline-background-color-down
+        --system-button-primary-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-primary-outline-background-color-focus
+        --system-button-primary-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-primary-outline-border-color-default
+        --system-button-primary-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-primary-outline-border-color-hover
+        --system-button-primary-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-primary-outline-border-color-down
+        --system-button-primary-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-primary-outline-border-color-focus
+        --system-button-primary-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-primary-outline-content-color-default
+        --system-button-primary-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-primary-outline-content-color-hover
+        --system-button-primary-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-primary-outline-content-color-down
+        --system-button-primary-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-primary-outline-content-color-focus
+        --system-button-primary-outline-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-primary-outline-background-color-disabled
+        --system-button-primary-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-primary-outline-border-color-disabled
+        --system-button-primary-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-primary-outline-content-color-disabled
+        --system-button-primary-outline-content-color-disabled
     );
 }
 
 :host([variant='secondary']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-secondary-background-color-default
+        --system-button-secondary-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-secondary-background-color-hover
+        --system-button-secondary-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-secondary-background-color-down
+        --system-button-secondary-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-secondary-background-color-focus
+        --system-button-secondary-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-secondary-border-color-default
+        --system-button-secondary-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-secondary-border-color-hover
+        --system-button-secondary-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-secondary-border-color-down
+        --system-button-secondary-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-secondary-border-color-focus
+        --system-button-secondary-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-secondary-content-color-default
+        --system-button-secondary-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-secondary-content-color-hover
+        --system-button-secondary-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-secondary-content-color-down
+        --system-button-secondary-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-secondary-content-color-focus
+        --system-button-secondary-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-secondary-background-color-disabled
+        --system-button-secondary-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-secondary-border-color-disabled
+        --system-button-secondary-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-secondary-content-color-disabled
+        --system-button-secondary-content-color-disabled
     );
 }
 
 :host([variant='secondary'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-secondary-outline-background-color-default
+        --system-button-secondary-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-secondary-outline-background-color-hover
+        --system-button-secondary-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-secondary-outline-background-color-down
+        --system-button-secondary-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-secondary-outline-background-color-focus
+        --system-button-secondary-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-secondary-outline-border-color-default
+        --system-button-secondary-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-secondary-outline-border-color-hover
+        --system-button-secondary-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-secondary-outline-border-color-down
+        --system-button-secondary-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-secondary-outline-border-color-focus
+        --system-button-secondary-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-secondary-outline-content-color-default
+        --system-button-secondary-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-secondary-outline-content-color-hover
+        --system-button-secondary-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-secondary-outline-content-color-down
+        --system-button-secondary-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-secondary-outline-content-color-focus
+        --system-button-secondary-outline-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-secondary-outline-background-color-disabled
+        --system-button-secondary-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-secondary-outline-border-color-disabled
+        --system-button-secondary-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-secondary-outline-content-color-disabled
+        --system-button-secondary-outline-content-color-disabled
     );
 }
 
 :host([quiet]) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-quiet-background-color-default
+        --system-button-quiet-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-quiet-background-color-hover
+        --system-button-quiet-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-quiet-background-color-down
+        --system-button-quiet-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-quiet-background-color-focus
+        --system-button-quiet-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-quiet-border-color-default
+        --system-button-quiet-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-quiet-border-color-hover
+        --system-button-quiet-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-quiet-border-color-down
+        --system-button-quiet-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-quiet-border-color-focus
+        --system-button-quiet-border-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-quiet-background-color-disabled
+        --system-button-quiet-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-quiet-border-color-disabled
+        --system-button-quiet-border-color-disabled
     );
 }
 
 :host([selected]) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-selected-background-color-default
+        --system-button-selected-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-selected-background-color-hover
+        --system-button-selected-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-selected-background-color-down
+        --system-button-selected-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-selected-background-color-focus
+        --system-button-selected-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-selected-border-color-default
+        --system-button-selected-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-selected-border-color-hover
+        --system-button-selected-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-selected-border-color-down
+        --system-button-selected-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-selected-border-color-focus
+        --system-button-selected-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-selected-content-color-default
+        --system-button-selected-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-selected-content-color-hover
+        --system-button-selected-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-selected-content-color-down
+        --system-button-selected-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-selected-content-color-focus
+        --system-button-selected-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-selected-background-color-disabled
+        --system-button-selected-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-selected-border-color-disabled
+        --system-button-selected-border-color-disabled
     );
 }
 
 :host([selected][emphasized]) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-selected-emphasized-background-color-default
+        --system-button-selected-emphasized-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-selected-emphasized-background-color-hover
+        --system-button-selected-emphasized-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-selected-emphasized-background-color-down
+        --system-button-selected-emphasized-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-selected-emphasized-background-color-focus
+        --system-button-selected-emphasized-background-color-focus
     );
 }
 
 :host([static='black'][quiet]) {
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticblack-quiet-border-color-default
+        --system-button-static-black-quiet-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticblack-quiet-border-color-hover
+        --system-button-static-black-quiet-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticblack-quiet-border-color-down
+        --system-button-static-black-quiet-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticblack-quiet-border-color-focus
+        --system-button-static-black-quiet-border-color-focus
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticblack-quiet-border-color-disabled
+        --system-button-static-black-quiet-border-color-disabled
     );
 }
 
 :host([static='white'][quiet]) {
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticwhite-quiet-border-color-default
+        --system-button-static-white-quiet-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticwhite-quiet-border-color-hover
+        --system-button-static-white-quiet-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticwhite-quiet-border-color-down
+        --system-button-static-white-quiet-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticwhite-quiet-border-color-focus
+        --system-button-static-white-quiet-border-color-focus
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticwhite-quiet-border-color-disabled
+        --system-button-static-white-quiet-border-color-disabled
     );
 }
 
 :host([static='white']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticwhite-background-color-default
+        --system-button-static-white-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticwhite-background-color-hover
+        --system-button-static-white-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticwhite-background-color-down
+        --system-button-static-white-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticwhite-background-color-focus
+        --system-button-static-white-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticwhite-border-color-default
+        --system-button-static-white-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticwhite-border-color-hover
+        --system-button-static-white-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticwhite-border-color-down
+        --system-button-static-white-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticwhite-border-color-focus
+        --system-button-static-white-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticwhite-content-color-default
+        --system-button-static-white-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticwhite-content-color-hover
+        --system-button-static-white-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticwhite-content-color-down
+        --system-button-static-white-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticwhite-content-color-focus
+        --system-button-static-white-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticwhite-focus-indicator-color
+        --system-button-static-white-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticwhite-background-color-disabled
+        --system-button-static-white-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticwhite-border-color-disabled
+        --system-button-static-white-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticwhite-content-color-disabled
+        --system-button-static-white-content-color-disabled
     );
 }
 
 :host([static='white'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticwhite-outline-background-color-default
+        --system-button-static-white-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticwhite-outline-background-color-hover
+        --system-button-static-white-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticwhite-outline-background-color-down
+        --system-button-static-white-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticwhite-outline-background-color-focus
+        --system-button-static-white-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticwhite-outline-border-color-default
+        --system-button-static-white-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticwhite-outline-border-color-hover
+        --system-button-static-white-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticwhite-outline-border-color-down
+        --system-button-static-white-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticwhite-outline-border-color-focus
+        --system-button-static-white-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticwhite-outline-content-color-default
+        --system-button-static-white-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticwhite-outline-content-color-hover
+        --system-button-static-white-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticwhite-outline-content-color-down
+        --system-button-static-white-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticwhite-outline-content-color-focus
+        --system-button-static-white-outline-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticwhite-outline-focus-indicator-color
+        --system-button-static-white-outline-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticwhite-outline-background-color-disabled
+        --system-button-static-white-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticwhite-outline-border-color-disabled
+        --system-button-static-white-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticwhite-outline-content-color-disabled
+        --system-button-static-white-outline-content-color-disabled
     );
 }
 
 :host([static='white'][selected]) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticwhite-selected-background-color-default
+        --system-button-static-white-selected-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticwhite-selected-background-color-hover
+        --system-button-static-white-selected-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticwhite-selected-background-color-down
+        --system-button-static-white-selected-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticwhite-selected-background-color-focus
+        --system-button-static-white-selected-background-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --mod-button-static-content-color,
-        var(--system-spectrum-button-staticwhite-selected-content-color-default)
+        --system-button-static-white-selected-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --mod-button-static-content-color,
-        var(--system-spectrum-button-staticwhite-selected-content-color-hover)
+        --system-button-static-white-selected-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --mod-button-static-content-color,
-        var(--system-spectrum-button-staticwhite-selected-content-color-down)
+        --system-button-static-white-selected-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --mod-button-static-content-color,
-        var(--system-spectrum-button-staticwhite-selected-content-color-focus)
+        --system-button-static-white-selected-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticwhite-selected-background-color-disabled
+        --system-button-static-white-selected-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticwhite-selected-border-color-disabled
+        --system-button-static-white-selected-border-color-disabled
     );
 }
 
 :host([static='white'][variant='secondary']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticwhite-secondary-background-color-default
+        --system-button-static-white-secondary-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticwhite-secondary-background-color-hover
+        --system-button-static-white-secondary-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticwhite-secondary-background-color-down
+        --system-button-static-white-secondary-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticwhite-secondary-background-color-focus
+        --system-button-static-white-secondary-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticwhite-secondary-border-color-default
+        --system-button-static-white-secondary-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticwhite-secondary-border-color-hover
+        --system-button-static-white-secondary-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticwhite-secondary-border-color-down
+        --system-button-static-white-secondary-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticwhite-secondary-border-color-focus
+        --system-button-static-white-secondary-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticwhite-secondary-content-color-default
+        --system-button-static-white-secondary-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticwhite-secondary-content-color-hover
+        --system-button-static-white-secondary-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticwhite-secondary-content-color-down
+        --system-button-static-white-secondary-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticwhite-secondary-content-color-focus
+        --system-button-static-white-secondary-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticwhite-secondary-focus-indicator-color
+        --system-button-static-white-secondary-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticwhite-secondary-background-color-disabled
+        --system-button-static-white-secondary-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticwhite-secondary-border-color-disabled
+        --system-button-static-white-secondary-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticwhite-secondary-content-color-disabled
+        --system-button-static-white-secondary-content-color-disabled
     );
 }
 
 :host([static='white'][variant='secondary'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticwhite-secondary-outline-background-color-default
+        --system-button-static-white-secondary-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticwhite-secondary-outline-background-color-hover
+        --system-button-static-white-secondary-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticwhite-secondary-outline-background-color-down
+        --system-button-static-white-secondary-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticwhite-secondary-outline-background-color-focus
+        --system-button-static-white-secondary-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticwhite-secondary-outline-border-color-default
+        --system-button-static-white-secondary-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticwhite-secondary-outline-border-color-hover
+        --system-button-static-white-secondary-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticwhite-secondary-outline-border-color-down
+        --system-button-static-white-secondary-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticwhite-secondary-outline-border-color-focus
+        --system-button-static-white-secondary-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticwhite-secondary-outline-content-color-default
+        --system-button-static-white-secondary-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticwhite-secondary-outline-content-color-hover
+        --system-button-static-white-secondary-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticwhite-secondary-outline-content-color-down
+        --system-button-static-white-secondary-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticwhite-secondary-outline-content-color-focus
+        --system-button-static-white-secondary-outline-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticwhite-secondary-outline-focus-indicator-color
+        --system-button-static-white-secondary-outline-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticwhite-secondary-outline-background-color-disabled
+        --system-button-static-white-secondary-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticwhite-secondary-outline-border-color-disabled
+        --system-button-static-white-secondary-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticwhite-secondary-outline-content-color-disabled
+        --system-button-static-white-secondary-outline-content-color-disabled
     );
 }
 
 :host([static='black']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticblack-background-color-default
+        --system-button-static-black-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticblack-background-color-hover
+        --system-button-static-black-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticblack-background-color-down
+        --system-button-static-black-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticblack-background-color-focus
+        --system-button-static-black-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticblack-border-color-default
+        --system-button-static-black-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticblack-border-color-hover
+        --system-button-static-black-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticblack-border-color-down
+        --system-button-static-black-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticblack-border-color-focus
+        --system-button-static-black-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticblack-content-color-default
+        --system-button-static-black-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticblack-content-color-hover
+        --system-button-static-black-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticblack-content-color-down
+        --system-button-static-black-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticblack-content-color-focus
+        --system-button-static-black-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticblack-focus-indicator-color
+        --system-button-static-black-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticblack-background-color-disabled
+        --system-button-static-black-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticblack-border-color-disabled
+        --system-button-static-black-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticblack-content-color-disabled
+        --system-button-static-black-content-color-disabled
     );
 }
 
 :host([static='black'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticblack-outline-background-color-default
+        --system-button-static-black-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticblack-outline-background-color-hover
+        --system-button-static-black-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticblack-outline-background-color-down
+        --system-button-static-black-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticblack-outline-background-color-focus
+        --system-button-static-black-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticblack-outline-border-color-default
+        --system-button-static-black-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticblack-outline-border-color-hover
+        --system-button-static-black-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticblack-outline-border-color-down
+        --system-button-static-black-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticblack-outline-border-color-focus
+        --system-button-static-black-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticblack-outline-content-color-default
+        --system-button-static-black-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticblack-outline-content-color-hover
+        --system-button-static-black-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticblack-outline-content-color-down
+        --system-button-static-black-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticblack-outline-content-color-focus
+        --system-button-static-black-outline-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticblack-outline-focus-indicator-color
+        --system-button-static-black-outline-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticblack-outline-background-color-disabled
+        --system-button-static-black-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticblack-outline-border-color-disabled
+        --system-button-static-black-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticblack-outline-content-color-disabled
+        --system-button-static-black-outline-content-color-disabled
     );
 }
 
 :host([static='black'][variant='secondary']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticblack-secondary-background-color-default
+        --system-button-static-black-secondary-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticblack-secondary-background-color-hover
+        --system-button-static-black-secondary-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticblack-secondary-background-color-down
+        --system-button-static-black-secondary-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticblack-secondary-background-color-focus
+        --system-button-static-black-secondary-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticblack-secondary-border-color-default
+        --system-button-static-black-secondary-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticblack-secondary-border-color-hover
+        --system-button-static-black-secondary-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticblack-secondary-border-color-down
+        --system-button-static-black-secondary-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticblack-secondary-border-color-focus
+        --system-button-static-black-secondary-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticblack-secondary-content-color-default
+        --system-button-static-black-secondary-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticblack-secondary-content-color-hover
+        --system-button-static-black-secondary-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticblack-secondary-content-color-down
+        --system-button-static-black-secondary-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticblack-secondary-content-color-focus
+        --system-button-static-black-secondary-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticblack-secondary-focus-indicator-color
+        --system-button-static-black-secondary-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticblack-secondary-background-color-disabled
+        --system-button-static-black-secondary-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticblack-secondary-border-color-disabled
+        --system-button-static-black-secondary-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticblack-secondary-content-color-disabled
+        --system-button-static-black-secondary-content-color-disabled
     );
 }
 
 :host([static='black'][variant='secondary'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
-        --system-spectrum-button-staticblack-secondary-outline-background-color-default
+        --system-button-static-black-secondary-outline-background-color-default
     );
     --spectrum-button-background-color-hover: var(
-        --system-spectrum-button-staticblack-secondary-outline-background-color-hover
+        --system-button-static-black-secondary-outline-background-color-hover
     );
     --spectrum-button-background-color-down: var(
-        --system-spectrum-button-staticblack-secondary-outline-background-color-down
+        --system-button-static-black-secondary-outline-background-color-down
     );
     --spectrum-button-background-color-focus: var(
-        --system-spectrum-button-staticblack-secondary-outline-background-color-focus
+        --system-button-static-black-secondary-outline-background-color-focus
     );
     --spectrum-button-border-color-default: var(
-        --system-spectrum-button-staticblack-secondary-outline-border-color-default
+        --system-button-static-black-secondary-outline-border-color-default
     );
     --spectrum-button-border-color-hover: var(
-        --system-spectrum-button-staticblack-secondary-outline-border-color-hover
+        --system-button-static-black-secondary-outline-border-color-hover
     );
     --spectrum-button-border-color-down: var(
-        --system-spectrum-button-staticblack-secondary-outline-border-color-down
+        --system-button-static-black-secondary-outline-border-color-down
     );
     --spectrum-button-border-color-focus: var(
-        --system-spectrum-button-staticblack-secondary-outline-border-color-focus
+        --system-button-static-black-secondary-outline-border-color-focus
     );
     --spectrum-button-content-color-default: var(
-        --system-spectrum-button-staticblack-secondary-outline-content-color-default
+        --system-button-static-black-secondary-outline-content-color-default
     );
     --spectrum-button-content-color-hover: var(
-        --system-spectrum-button-staticblack-secondary-outline-content-color-hover
+        --system-button-static-black-secondary-outline-content-color-hover
     );
     --spectrum-button-content-color-down: var(
-        --system-spectrum-button-staticblack-secondary-outline-content-color-down
+        --system-button-static-black-secondary-outline-content-color-down
     );
     --spectrum-button-content-color-focus: var(
-        --system-spectrum-button-staticblack-secondary-outline-content-color-focus
+        --system-button-static-black-secondary-outline-content-color-focus
     );
     --spectrum-button-focus-indicator-color: var(
-        --system-spectrum-button-staticblack-secondary-outline-focus-indicator-color
+        --system-button-static-black-secondary-outline-focus-indicator-color
     );
     --spectrum-button-background-color-disabled: var(
-        --system-spectrum-button-staticblack-secondary-outline-background-color-disabled
+        --system-button-static-black-secondary-outline-background-color-disabled
     );
     --spectrum-button-border-color-disabled: var(
-        --system-spectrum-button-staticblack-secondary-outline-border-color-disabled
+        --system-button-static-black-secondary-outline-border-color-disabled
     );
     --spectrum-button-content-color-disabled: var(
-        --system-spectrum-button-staticblack-secondary-outline-content-color-disabled
+        --system-button-static-black-secondary-outline-content-color-disabled
+    );
+}
+
+:host([size='s']) {
+    --spectrum-button-min-width: var(--system-button-size-s-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-s-border-radius);
+    --spectrum-button-height: var(--system-button-size-s-height);
+    --spectrum-button-font-size: var(--system-button-size-s-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-s-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-s-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-s-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-s-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-s-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-s-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-s-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-s-intended-icon-size
+    );
+}
+
+:host {
+    --spectrum-button-min-width: var(--system-button-size-m-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-m-border-radius);
+    --spectrum-button-height: var(--system-button-size-m-height);
+    --spectrum-button-font-size: var(--system-button-size-m-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-m-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-m-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-m-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-m-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-m-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-m-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-m-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-m-intended-icon-size
+    );
+}
+
+:host([size='l']) {
+    --spectrum-button-min-width: var(--system-button-size-l-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-l-border-radius);
+    --spectrum-button-height: var(--system-button-size-l-height);
+    --spectrum-button-font-size: var(--system-button-size-l-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-l-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-l-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-l-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-l-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-l-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-l-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-l-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-l-intended-icon-size
+    );
+}
+
+:host([size='xl']) {
+    --spectrum-button-min-width: var(--system-button-size-xl-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-xl-border-radius);
+    --spectrum-button-height: var(--system-button-size-xl-height);
+    --spectrum-button-font-size: var(--system-button-size-xl-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-xl-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-xl-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-xl-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-xl-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-xl-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-xl-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-xl-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-xl-intended-icon-size
     );
 }

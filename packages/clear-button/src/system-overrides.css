@@ -14,15 +14,119 @@ governing permissions and limitations under the License.
 
 :host {
     --spectrum-clear-button-background-color: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color
+        --system-clearbutton-clear-button-background-color
     );
     --spectrum-clear-button-background-color-hover: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color-hover
+        --system-clearbutton-clear-button-background-color-hover
     );
     --spectrum-clear-button-background-color-down: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color-down
+        --system-clearbutton-clear-button-background-color-down
     );
     --spectrum-clear-button-background-color-key-focus: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color-key-focus
+        --system-clearbutton-clear-button-background-color-key-focus
+    );
+    --spectrum-clear-button-height: var(
+        --system-clearbutton-clear-button-height
+    );
+    --spectrum-clear-button-width: var(--system-clearbutton-clear-button-width);
+    --spectrum-clear-button-padding: var(
+        --system-clearbutton-clear-button-padding
+    );
+    --spectrum-clear-button-icon-color: var(
+        --system-clearbutton-clear-button-icon-color
+    );
+    --spectrum-clear-button-icon-color-hover: var(
+        --system-clearbutton-clear-button-icon-color-hover
+    );
+    --spectrum-clear-button-icon-color-down: var(
+        --system-clearbutton-clear-button-icon-color-down
+    );
+    --spectrum-clear-button-icon-color-key-focus: var(
+        --system-clearbutton-clear-button-icon-color-key-focus
+    );
+}
+
+:host([size='s']) {
+    --spectrum-clear-button-height: var(
+        --system-clearbutton-size-s-clear-button-height
+    );
+    --spectrum-clear-button-width: var(
+        --system-clearbutton-size-s-clear-button-width
+    );
+}
+
+:host([size='l']) {
+    --spectrum-clear-button-height: var(
+        --system-clearbutton-size-l-clear-button-height
+    );
+    --spectrum-clear-button-width: var(
+        --system-clearbutton-size-l-clear-button-width
+    );
+}
+
+:host([size='xl']) {
+    --spectrum-clear-button-height: var(
+        --system-clearbutton-size-xl-clear-button-height
+    );
+    --spectrum-clear-button-width: var(
+        --system-clearbutton-size-xl-clear-button-width
+    );
+}
+
+:host .spectrum-ClearButton--quiet {
+    --mod-clear-button-background-color: var(
+        --system-clearbutton-quiet-clear-button-background-color
+    );
+    --mod-clear-button-background-color-hover: var(
+        --system-clearbutton-quiet-clear-button-background-color-hover
+    );
+    --mod-clear-button-background-color-down: var(
+        --system-clearbutton-quiet-clear-button-background-color-down
+    );
+    --mod-clear-button-background-color-key-focus: var(
+        --system-clearbutton-quiet-clear-button-background-color-key-focus
+    );
+}
+
+:host([variant='overBackground']) {
+    --mod-clear-button-icon-color: var(
+        --system-clearbutton-over-background-clear-button-icon-color
+    );
+    --mod-clear-button-icon-color-hover: var(
+        --system-clearbutton-over-background-clear-button-icon-color-hover
+    );
+    --mod-clear-button-icon-color-down: var(
+        --system-clearbutton-over-background-clear-button-icon-color-down
+    );
+    --mod-clear-button-icon-color-key-focus: var(
+        --system-clearbutton-over-background-clear-button-icon-color-key-focus
+    );
+    --mod-clear-button-background-color: var(
+        --system-clearbutton-over-background-clear-button-background-color
+    );
+    --mod-clear-button-background-color-hover: var(
+        --system-clearbutton-over-background-clear-button-background-color-hover
+    );
+    --mod-clear-button-background-color-down: var(
+        --system-clearbutton-over-background-clear-button-background-color-down
+    );
+    --mod-clear-button-background-color-key-focus: var(
+        --system-clearbutton-over-background-clear-button-background-color-key-focus
+    );
+}
+
+:host([disabled]),
+:host([disabled]) {
+    --mod-clear-button-icon-color: var(
+        --system-clearbutton-disabled-clear-button-icon-color
+    );
+    --mod-clear-button-icon-color-hover: var(
+        --system-clearbutton-disabled-clear-button-icon-color-hover
+    );
+    --mod-clear-button-icon-color-down: var(
+        --system-clearbutton-disabled-clear-button-icon-color-down
+    );
+    --mod-clear-button-background-color: var(
+        --system-clearbutton-disabled-clear-button-background-color
     );
 }

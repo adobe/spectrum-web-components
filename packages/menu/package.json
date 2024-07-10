@@ -49,6 +49,7 @@
         "./src/menu-group.css.js": "./src/menu-group.css.js",
         "./src/menu-item.css.js": "./src/menu-item.css.js",
         "./src/menu.css.js": "./src/menu.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-menu.js": {
             "development": "./sp-menu.dev.js",
             "default": "./sp-menu.js"

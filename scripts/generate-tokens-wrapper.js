@@ -38,17 +38,26 @@ const tokenPackages = [
     'actiongroup',
     'alertbanner',
     'alertdialog',
+    'asset',
     'avatar',
     'badge',
+    'banner',
     'button',
     'buttongroup',
     'checkbox',
+    'card',
+    'clearbutton',
     'closebutton',
+    'coachmark',
     'colorarea',
+    'colorfield',
     'colorhandle',
     'colorloupe',
+    'colorslider',
     'colorwheel',
     'combobox',
+    'contextualhelp',
+    'dialog',
     'divider',
     'dropzone',
     'fieldgroup',
@@ -58,15 +67,20 @@ const tokenPackages = [
     'infieldbutton',
     'link',
     'menu',
+    'meter',
+    'modal',
+    'numberfield',
     'picker',
     'pickerbutton',
     'popover',
     'progressbar',
     'progresscircle',
+    'quickactions',
     'radio',
     'search',
     'sidenav',
     'slider',
+    'splitbutton',
     'splitview',
     'statuslight',
     'stepper',
@@ -80,6 +94,7 @@ const tokenPackages = [
     'thumbnail',
     'toast',
     'tooltip',
+    'topnav',
     'tray',
     'underlay',
 ];
@@ -97,7 +112,7 @@ const packagePaths = tokenPackages.map((packageName) => {
 });
 
 const spectrumThemeSelectorRegExp =
-    /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?\{/g;
+    /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large|legacy)?,?(\n|\s)*)?)+\s?\{/g;
 const importantCommentRegExp = /\/\*![^*]*\*+([^\/*][^*]*\*+)*\//g;
 
 const targetHost = (css) => {
@@ -144,6 +159,10 @@ const processTokens = (srcPath, tokensDir) => {
 };
 
 const processPackages = async (tokensDir, index) => {
+    if (tokensDir === 'tokens') {
+        return;
+    }
+
     const packagename = tokenPackages[index];
 
     let componentLevelTokensPath = path.join(
@@ -179,9 +198,27 @@ const processPackages = async (tokensDir, index) => {
         );
     }
 
-    // s2 doesn't need express tokens
-    if (tokensDir === 'tokens-v2') {
-        return;
+    const legacyPath = path.join(
+        componentLevelTokensPath,
+        'legacy',
+        packagename + '.css'
+    );
+    // check if legacyPath exists
+    if (fs.existsSync(legacyPath)) {
+        let legacy = fs.readFileSync(legacyPath, 'utf8');
+        legacy = removeImporantComments(targetHost(legacy));
+        fs.appendFileSync(
+            path.join(
+                __dirname,
+                '..',
+                'tools',
+                'styles',
+                'tokens',
+                'spectrum',
+                'global-vars.css'
+            ),
+            legacy
+        );
     }
 
     const expressPath = path.join(
@@ -189,7 +226,6 @@ const processPackages = async (tokensDir, index) => {
         'express',
         packagename + '.css'
     );
-
     // check if expressPath exists
     if (fs.existsSync(expressPath)) {
         let express = fs.readFileSync(expressPath, 'utf8');
@@ -200,7 +236,7 @@ const processPackages = async (tokensDir, index) => {
                 '..',
                 'tools',
                 'styles',
-                tokensDir,
+                'tokens',
                 'express',
                 'global-vars.css'
             ),

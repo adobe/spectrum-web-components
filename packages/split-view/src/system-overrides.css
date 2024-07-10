@@ -1,0 +1,54 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
+:host {
+    --spectrum-splitview-vertical-width: var(--system-splitview-vertical-width);
+    --spectrum-splitview-vertical-gripper-width: var(
+        --system-splitview-vertical-gripper-width
+    );
+    --spectrum-splitview-vertical-gripper-outer-width: var(
+        --system-splitview-vertical-gripper-outer-width
+    );
+    --spectrum-splitview-vertical-gripper-reset: var(
+        --system-splitview-vertical-gripper-reset
+    );
+    --spectrum-splitview-background-color: var(
+        --system-splitview-background-color
+    );
+    --spectrum-splitview-content-color: var(--system-splitview-content-color);
+    --spectrum-splitview-handle-background-color: var(
+        --system-splitview-handle-background-color
+    );
+    --spectrum-splitview-handle-background-color-hover: var(
+        --system-splitview-handle-background-color-hover
+    );
+    --spectrum-splitview-handle-background-color-down: var(
+        --system-splitview-handle-background-color-down
+    );
+    --spectrum-splitview-handle-background-color-focus: var(
+        --system-splitview-handle-background-color-focus
+    );
+    --spectrum-splitview-handle-width: var(--system-splitview-handle-width);
+    --spectrum-splitview-gripper-border-radius: var(
+        --system-splitview-gripper-border-radius
+    );
+    --spectrum-splitview-gripper-width: var(--system-splitview-gripper-width);
+    --spectrum-splitview-gripper-height: var(--system-splitview-gripper-height);
+    --spectrum-splitview-gripper-border-width-horizontal: var(
+        --system-splitview-gripper-border-width-horizontal
+    );
+    --spectrum-splitview-gripper-border-width-vertical: var(
+        --system-splitview-gripper-border-width-vertical
+    );
+}

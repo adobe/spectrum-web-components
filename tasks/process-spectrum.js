@@ -437,7 +437,7 @@ async function processComponent(componentPath) {
                 '..',
                 'node_modules',
                 '@spectrum-css',
-                'tokens',
+                'tokens-v2',
                 'dist',
                 'css',
                 'components'

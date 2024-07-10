@@ -1,0 +1,48 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
+:host {
+    --spectrum-colorhandle-size: var(--system-colorhandle-size);
+    --spectrum-colorhandle-focused-size: var(--system-colorhandle-focused-size);
+    --spectrum-colorhandle-hitarea-size: var(--system-colorhandle-hitarea-size);
+    --spectrum-colorhandle-animation-duration: var(
+        --system-colorhandle-animation-duration
+    );
+    --spectrum-colorhandle-animation-easing: var(
+        --system-colorhandle-animation-easing
+    );
+    --spectrum-colorhandle-outer-border-color: var(
+        --system-colorhandle-outer-border-color
+    );
+    --spectrum-colorhandle-outer-border-width: var(
+        --system-colorhandle-outer-border-width
+    );
+    --spectrum-colorhandle-inner-border-color: var(
+        --system-colorhandle-inner-border-color
+    );
+    --spectrum-colorhandle-inner-border-width: var(
+        --system-colorhandle-inner-border-width
+    );
+    --spectrum-colorhandle-border-width: var(--system-colorhandle-border-width);
+    --spectrum-colorhandle-border-color: var(--system-colorhandle-border-color);
+    --spectrum-colorhandle-border-color-disabled: var(
+        --system-colorhandle-border-color-disabled
+    );
+    --spectrum-colorhandle-fill-color-disabled: var(
+        --system-colorhandle-fill-color-disabled
+    );
+    --mod-opacity-checkerboard-position: var(
+        --system-colorhandle-opacity-checkerboard-position
+    );
+}

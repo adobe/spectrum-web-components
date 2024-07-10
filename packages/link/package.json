@@ -34,6 +34,7 @@
             "default": "./src/index.js"
         },
         "./src/link.css.js": "./src/link.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-link.js": {
             "development": "./sp-link.dev.js",
             "default": "./sp-link.js"

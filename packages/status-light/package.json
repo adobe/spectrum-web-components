@@ -34,6 +34,7 @@
             "default": "./src/index.js"
         },
         "./src/status-light.css.js": "./src/status-light.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-status-light.js": {
             "development": "./sp-status-light.dev.js",
             "default": "./sp-status-light.js"

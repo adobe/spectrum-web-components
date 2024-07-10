@@ -39,6 +39,7 @@
         },
         "./src/swatch-group.css.js": "./src/swatch-group.css.js",
         "./src/swatch.css.js": "./src/swatch.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-swatch.js": {
             "development": "./sp-swatch.dev.js",
             "default": "./sp-swatch.js"

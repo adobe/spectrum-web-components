@@ -46,6 +46,7 @@
             "development": "./src/manage-help-text.dev.js",
             "default": "./src/manage-help-text.js"
         },
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./help-text-manager.js": {
             "development": "./help-text-manager.dev.js",
             "default": "./help-text-manager.js"

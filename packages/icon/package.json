@@ -48,6 +48,7 @@
         "./src/spectrum-icon-double-gripper.css.js": "./src/spectrum-icon-double-gripper.css.js",
         "./src/spectrum-icon-single-gripper.css.js": "./src/spectrum-icon-single-gripper.css.js",
         "./src/spectrum-icon-triple-gripper.css.js": "./src/spectrum-icon-triple-gripper.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-icon.js": {
             "development": "./sp-icon.dev.js",
             "default": "./sp-icon.js"

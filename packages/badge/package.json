@@ -34,6 +34,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-badge.js": {
             "development": "./sp-badge.dev.js",
             "default": "./sp-badge.js"

@@ -34,6 +34,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-color-loupe.js": {
             "development": "./sp-color-loupe.dev.js",
             "default": "./sp-color-loupe.js"

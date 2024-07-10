@@ -65,6 +65,7 @@
             "development": "./typography.dev.js",
             "default": "./typography.js"
         },
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./src/spectrum-base.css": "./src/spectrum-base.css",
         "./src/spectrum-body.css": "./src/spectrum-body.css",
         "./src/spectrum-code.css": "./src/spectrum-code.css",
