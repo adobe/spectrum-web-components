@@ -251,42 +251,41 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
 
         await this.updateComplete;
-        const selectedTab = this.tabs.find(
+
+        const selectedIndex = this.tabs.findIndex(
             (tab) => tab.value === this.selected
         );
 
         // Keep the selection always in the viewport.
-        if (selectedTab) {
-            // Making use of silblings in order to scroll with the --spectrum-tabs-item-horizontal-spacing space distance as well.
-            const siblings = [
-                selectedTab.previousElementSibling,
-                selectedTab.nextElementSibling,
-            ] as (Tab | null)[];
-            if (this.dir === 'rtl') {
-                siblings.reverse();
-            }
-            const [prevTab, nextTab] = siblings;
-
-            const selectionOffsetRight =
+        if (selectedIndex !== -1 && this.tabList) {
+            const selectedTab = this.tabs[selectedIndex];
+            const selectionEnd =
                 selectedTab.offsetLeft + selectedTab.offsetWidth;
-            const containerScrollRight =
+            const viewportEnd =
                 this.tabList.scrollLeft + this.tabList.offsetWidth;
+            const selectionStart = selectedTab.offsetLeft;
+            const viewportStart = this.tabList.scrollLeft;
 
-            // Selection is not visible, it is on the right side of the viewport.
-            if (containerScrollRight < selectionOffsetRight) {
-                this.scrollTabs(
-                    nextTab
-                        ? nextTab.offsetLeft - containerScrollRight
-                        : containerScrollRight,
-                    'instant'
-                );
-                // Selection is not visible, it is on the left side of the viewport.
-            } else if (selectedTab.offsetLeft < this.tabList.scrollLeft) {
-                this.scrollTabs(
-                    (prevTab ? prevTab.offsetLeft + prevTab.offsetWidth : 0) -
-                        this.tabList.scrollLeft,
-                    'instant'
-                );
+            if (selectionEnd > viewportEnd) {
+                // Selection is on the right side, not visible.
+                const nextTab =
+                    this.tabs[selectedIndex + (this.dir === 'rtl' ? -1 : 1)];
+                const scrollTarget = nextTab
+                    ? nextTab.offsetLeft - this.tabList.offsetWidth
+                    : viewportEnd;
+
+                this.tabList.scrollTo({ left: scrollTarget });
+            } else if (selectionStart < viewportStart) {
+                // Selection is on the left side, not visible.
+                const prevTab =
+                    this.tabs[selectedIndex + (this.dir === 'rtl' ? 1 : -1)];
+                const leftmostElement =
+                    this.dir === 'rtl' ? -this.tabList.offsetWidth : 0;
+                const scrollTarget = prevTab
+                    ? prevTab.offsetLeft + prevTab.offsetWidth
+                    : leftmostElement;
+
+                this.tabList.scrollTo({ left: scrollTarget });
             }
         }
     }
