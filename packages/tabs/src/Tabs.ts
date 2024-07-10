@@ -258,8 +258,14 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // Keep the selection always in the viewport.
         if (selectedTab) {
             // Making use of silblings in order to scroll with the --spectrum-tabs-item-horizontal-spacing space distance as well.
-            const nextTab = selectedTab.nextElementSibling as Tab | null;
-            const prevTab = selectedTab.previousElementSibling as Tab | null;
+            const siblings = [
+                selectedTab.previousElementSibling,
+                selectedTab.nextElementSibling,
+            ] as (Tab | null)[];
+            if (this.dir === 'rtl') {
+                siblings.reverse();
+            }
+            const [prevTab, nextTab] = siblings;
 
             const selectionOffsetRight =
                 selectedTab.offsetLeft + selectedTab.offsetWidth;
