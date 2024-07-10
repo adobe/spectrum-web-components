@@ -245,7 +245,36 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
-    public async scrollToSelectionIfNecessary(): Promise<void> {
+    private getNecessaryAutoScroll(index: number): number {
+        const selectedTab = this.tabs[index];
+        const selectionEnd = selectedTab.offsetLeft + selectedTab.offsetWidth;
+        const viewportEnd = this.tabList.scrollLeft + this.tabList.offsetWidth;
+        const selectionStart = selectedTab.offsetLeft;
+        const viewportStart = this.tabList.scrollLeft;
+
+        // If the tab is already visible, the necessary scroll factor is 0.
+        let scrollTarget = 0;
+
+        if (selectionEnd > viewportEnd) {
+            // Selection is on the right side, not visible.
+            const nextTab = this.tabs[index + (this.dir === 'rtl' ? -1 : 1)];
+            scrollTarget = nextTab
+                ? nextTab.offsetLeft - this.tabList.offsetWidth
+                : viewportEnd;
+        } else if (selectionStart < viewportStart) {
+            // Selection is on the left side, not visible.
+            const prevTab = this.tabs[index + (this.dir === 'rtl' ? 1 : -1)];
+            const leftmostElement =
+                this.dir === 'rtl' ? -this.tabList.offsetWidth : 0;
+            scrollTarget = prevTab
+                ? prevTab.offsetLeft + prevTab.offsetWidth
+                : leftmostElement;
+        }
+
+        return scrollTarget;
+    }
+
+    public async maybeScrollToSelection(): Promise<void> {
         if (!this.enableTabsScroll || !this.selected) {
             return;
         }
@@ -256,35 +285,12 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
             (tab) => tab.value === this.selected
         );
 
-        // Keep the selection always in the viewport.
         if (selectedIndex !== -1 && this.tabList) {
-            const selectedTab = this.tabs[selectedIndex];
-            const selectionEnd =
-                selectedTab.offsetLeft + selectedTab.offsetWidth;
-            const viewportEnd =
-                this.tabList.scrollLeft + this.tabList.offsetWidth;
-            const selectionStart = selectedTab.offsetLeft;
-            const viewportStart = this.tabList.scrollLeft;
+            // We have a selection, calculate the scroll needed to bring it into view
+            const scrollTarget = this.getNecessaryAutoScroll(selectedIndex);
 
-            if (selectionEnd > viewportEnd) {
-                // Selection is on the right side, not visible.
-                const nextTab =
-                    this.tabs[selectedIndex + (this.dir === 'rtl' ? -1 : 1)];
-                const scrollTarget = nextTab
-                    ? nextTab.offsetLeft - this.tabList.offsetWidth
-                    : viewportEnd;
-
-                this.tabList.scrollTo({ left: scrollTarget });
-            } else if (selectionStart < viewportStart) {
-                // Selection is on the left side, not visible.
-                const prevTab =
-                    this.tabs[selectedIndex + (this.dir === 'rtl' ? 1 : -1)];
-                const leftmostElement =
-                    this.dir === 'rtl' ? -this.tabList.offsetWidth : 0;
-                const scrollTarget = prevTab
-                    ? prevTab.offsetLeft + prevTab.offsetWidth
-                    : leftmostElement;
-
+            // scrollTarget = 0 means it is already into view.
+            if (scrollTarget !== 0) {
                 this.tabList.scrollTo({ left: scrollTarget });
             }
         }
@@ -296,7 +302,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         super.updated(changedProperties);
 
         if (changedProperties.has('selected')) {
-            this.scrollToSelectionIfNecessary();
+            this.maybeScrollToSelection();
         }
     }
 
