@@ -77,15 +77,4 @@ governing permissions and limitations under the License.
     );
     --spectrum-coachmark-step-font-size: var(--system-coachmark-step-font-size);
     --spectrum-coachmark-step-to-bottom: var(--system-coachmark-step-to-bottom);
-    --mod-buttongroup-justify-content: var(
-        --system-coachmark-buttongroup-justify-content
-    );
-    --mod-popover-border-width: var(--system-coachmark-popover-border-width);
-    --mod-popover-corner-radius: var(--system-coachmark-popover-corner-radius);
-    --mod-popover-content-area-spacing-vertical: var(
-        --system-coachmark-popover-content-area-spacing-vertical
-    );
-    --mod-button-edge-to-visual-only: var(
-        --system-coachmark-button-edge-to-visual-only
-    );
 }

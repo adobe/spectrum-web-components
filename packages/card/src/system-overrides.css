@@ -96,18 +96,20 @@ governing permissions and limitations under the License.
 
 :host .spectrum--lightest {
     --spectrum-card-selected-background-color-rgb: var(
-        --system--lightest-descendant-of-card-card-selected-background-color-rgb
+        --system-card-lightest-descendant-of-selected-background-color-rgb
     );
 }
 
 :host([variant='quiet']) {
-    --mod-card-content-margin-top: var(--system-card-quiet-content-margin-top);
-    --mod-card-minimum-width: var(--system-card-quiet-minimum-width);
+    --spectrum-card-content-margin-top: var(
+        --system-card-quiet-content-margin-top
+    );
+    --spectrum-card-minimum-width: var(--system-card-quiet-minimum-width);
 }
 
 :host([variant='gallery']) {
-    --mod-card-content-margin-top: var(
+    --spectrum-card-content-margin-top: var(
         --system-card-gallery-content-margin-top
     );
-    --mod-card-minimum-width: var(--system-card-gallery-minimum-width);
+    --spectrum-card-minimum-width: var(--system-card-gallery-minimum-width);
 }

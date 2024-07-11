@@ -27,19 +27,19 @@ governing permissions and limitations under the License.
 
 :host([variant='neutral']) {
     --spectrum-helptext-content-color-default: var(
-        --system-helptext-neutral-content-color-default
+        --system-help-text-neutral-content-color-default
     );
     --spectrum-helptext-icon-color-default: var(
-        --system-helptext-neutral-icon-color-default
+        --system-help-text-neutral-icon-color-default
     );
 }
 
 :host([variant='negative']) {
     --spectrum-helptext-content-color-default: var(
-        --system-helptext-negative-content-color-default
+        --system-help-text-negative-content-color-default
     );
     --spectrum-helptext-icon-color-default: var(
-        --system-helptext-negative-icon-color-default
+        --system-help-text-negative-icon-color-default
     );
 }
 

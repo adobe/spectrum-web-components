@@ -803,6 +803,8 @@
     --system-actionbutton-static-white-quiet-border-color-disabled: transparent;
 }
 
+/*# sourceMappingURL=spectrum.css.map */
+
 :host,
 :root {
     --system-actiongroup-gap-size-compact: 0;
@@ -816,8 +818,8 @@
         --spectrum-neutral-subdued-background-color-default
     );
 }
-/*# sourceMappingURL=legacy.css.map */
-/*# sourceMappingURL=legacy.css.map */
+/*# sourceMappingURL=spectrum.css.map */
+/*# sourceMappingURL=spectrum.css.map */
 
 :host,
 :root {

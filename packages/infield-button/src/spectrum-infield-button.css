@@ -394,35 +394,35 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled]) {
-    --mod-infield-button-background-color: var(
+    --spectrum-infield-button-background-color: var(
         --mod-infield-button-background-color-disabled,
         var(--spectrum-disabled-background-color)
     );
-    --mod-infield-button-background-color-hover: var(
+    --spectrum-infield-button-background-color-hover: var(
         --mod-infield-button-background-color-hover-disabled,
         var(--spectrum-disabled-background-color)
     );
-    --mod-infield-button-background-color-down: var(
+    --spectrum-infield-button-background-color-down: var(
         --mod-infield-button-background-color-down-disabled,
         var(--spectrum-disabled-background-color)
     );
-    --mod-infield-button-border-color: var(
+    --spectrum-infield-button-border-color: var(
         --mod-infield-button-border-color-disabled,
         var(--spectrum-disabled-background-color)
     );
-    --mod-infield-button-icon-color: var(
+    --spectrum-infield-button-icon-color: var(
         --mod-infield-button-icon-color-disabled,
         var(--spectrum-disabled-content-color)
     );
-    --mod-infield-button-icon-color-hover: var(
+    --spectrum-infield-button-icon-color-hover: var(
         --mod-infield-button-icon-color-hover-disabled,
         var(--spectrum-disabled-content-color)
     );
-    --mod-infield-button-icon-color-down: var(
+    --spectrum-infield-button-icon-color-down: var(
         --mod-infield-button-icon-color-down-disabled,
         var(--spectrum-disabled-content-color)
     );
-    --mod-infield-button-icon-color-key-focus: var(
+    --spectrum-infield-button-icon-color-key-focus: var(
         --mod-infield-button-icon-color-key-focus-disabled,
         var(--spectrum-disabled-content-color)
     );
@@ -472,7 +472,7 @@ governing permissions and limitations under the License.
 
 :host([block='end']),
 :host([block='start']) {
-    --mod-infield-button-width: var(
+    --spectrum-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-medium)
     );
@@ -480,7 +480,7 @@ governing permissions and limitations under the License.
 
 :host([block='end'][size='s']),
 :host([block='start'][size='s']) {
-    --mod-infield-button-width: var(
+    --spectrum-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-small)
     );
@@ -488,7 +488,7 @@ governing permissions and limitations under the License.
 
 :host([block='end'][size='l']),
 :host([block='start'][size='l']) {
-    --mod-infield-button-width: var(
+    --spectrum-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-large)
     );
@@ -496,45 +496,45 @@ governing permissions and limitations under the License.
 
 :host([block='end'][size='xl']),
 :host([block='start'][size='xl']) {
-    --mod-infield-button-width: var(
+    --spectrum-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-extra-large)
     );
 }
 
 :host([quiet]) {
-    --mod-infield-button-background-color: var(
+    --spectrum-infield-button-background-color: var(
         --mod-infield-button-background-color-quiet,
         transparent
     );
-    --mod-infield-button-background-color-hover: var(
+    --spectrum-infield-button-background-color-hover: var(
         --mod-infield-button-background-color-hover-quiet,
         transparent
     );
-    --mod-infield-button-background-color-down: var(
+    --spectrum-infield-button-background-color-down: var(
         --mod-infield-button-background-color-down-quiet,
         transparent
     );
-    --mod-infield-button-background-color-key-focus: var(
+    --spectrum-infield-button-background-color-key-focus: var(
         --mod-infield-button-background-color-key-focus-quiet,
         transparent
     );
-    --mod-infield-border-color: var(
+    --spectrum-infield-border-color: var(
         --mod-infield-border-color-quiet,
         transparent
     );
-    --mod-infield-button-border-width: var(
+    --spectrum-infield-button-border-width: var(
         --mod-infield-button-border-width-quiet,
         0
     );
 }
 
 :host([quiet][disabled]) {
-    --mod-infield-button-background-color: var(
+    --spectrum-infield-button-background-color: var(
         --mod-infield-button-background-color-quiet-disabled,
         transparent
     );
-    --mod-infield-button-border-color: var(
+    --spectrum-infield-button-border-color: var(
         --mod-infield-button-border-color-quiet-disabled,
         transparent
     );

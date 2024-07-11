@@ -172,3 +172,10 @@ governing permissions and limitations under the License.
     --spectrum-search-border-radius: var(--system-search-quiet-border-radius);
     --spectrum-search-edge-to-visual: var(--system-search-quiet-edge-to-visual);
 }
+
+:host([size='m']) {
+    --spectrum-search-border-radius: var(--system-search-size-m-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-m-edge-to-visual
+    );
+}

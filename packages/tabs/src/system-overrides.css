@@ -64,41 +64,69 @@ governing permissions and limitations under the License.
 }
 
 :host([emphasized]) #list {
-    --mod-tabs-color-selected: var(--system-tabs-emphasized-color-selected);
-    --mod-tabs-color-hover: var(--system-tabs-emphasized-color-hover);
-    --mod-tabs-color-key-focus: var(--system-tabs-emphasized-color-key-focus);
-    --mod-tabs-selection-indicator-color: var(
+    --spectrum-tabs-color-selected: var(
+        --system-tabs-emphasized-color-selected
+    );
+    --spectrum-tabs-color-hover: var(--system-tabs-emphasized-color-hover);
+    --spectrum-tabs-color-key-focus: var(
+        --system-tabs-emphasized-color-key-focus
+    );
+    --spectrum-tabs-selection-indicator-color: var(
         --system-tabs-emphasized-selection-indicator-color
     );
 }
 
-:host([direction^='vertical']) #list {
-    --mod-tabs-list-background-direction: var(
+:host([direction^='vertical']) #list #list {
+    --spectrum-tabs-list-background-direction: var(
         --system-tabs-vertical-list-background-direction
     );
 }
 
-:host([direction^='vertical-right']) #list {
-    --mod-tabs-list-background-direction: var(
+:host([direction^='vertical-right']) #list #list {
+    --spectrum-tabs-list-background-direction: var(
         --system-tabs-vertical-right-list-background-direction
     );
 }
 
-:host([direction^='vertical']) #list:dir(rtl) {
-    --mod-tabs-list-background-direction: var(
+:host([direction^='vertical']) #list #list:dir(rtl) {
+    --spectrum-tabs-list-background-direction: var(
         --system-tabs-vertical-dir-rtl-list-background-direction
     );
 }
 
-:host([direction^='vertical-right']) #list:dir(rtl) {
-    --mod-tabs-list-background-direction: var(
+:host([direction^='vertical-right']) #list #list:dir(rtl) {
+    --spectrum-tabs-list-background-direction: var(
         --system-tabs-vertical-right-dir-rtl-list-background-direction
     );
 }
 
 :host([compact]) #list {
-    --mod-tabs-item-height: var(--system-tabs-compact-item-height);
-    --mod-tabs-top-to-text: var(--system-tabs-compact-top-to-text);
-    --mod-tabs-bottom-to-text: var(--system-tabs-compact-bottom-to-text);
-    --mod-tabs-top-to-icon: var(--system-tabs-compact-top-to-icon);
+    --spectrum-tabs-item-height: var(--system-tabs-compact-item-height);
+    --spectrum-tabs-top-to-text: var(--system-tabs-compact-top-to-text);
+    --spectrum-tabs-bottom-to-text: var(--system-tabs-compact-bottom-to-text);
+    --spectrum-tabs-top-to-icon: var(--system-tabs-compact-top-to-icon);
+}
+
+:host([direction^='vertical']) #list {
+    --spectrum-tabs-list-background-direction: var(
+        --system-tabs-vertical-list-background-direction
+    );
+}
+
+:host([direction^='vertical-right']) #list {
+    --spectrum-tabs-list-background-direction: var(
+        --system-tabs-vertical-right-list-background-direction
+    );
+}
+
+:host([direction^='vertical']) #list:dir(rtl) {
+    --spectrum-tabs-list-background-direction: var(
+        --system-tabs-vertical-dir-rtl-list-background-direction
+    );
+}
+
+:host([direction^='vertical-right']) #list:dir(rtl) {
+    --spectrum-tabs-list-background-direction: var(
+        --system-tabs-vertical-right-dir-rtl-list-background-direction
+    );
 }

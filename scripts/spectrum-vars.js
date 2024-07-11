@@ -53,7 +53,7 @@ const processCSSData = async (
     from,
     usedVariables = undefined
 ) => {
-    /* lit-html is a JS litteral, so `\` escapes by default.
+    /* lit-html is a JS literal, so `\` escapes by default.
      * for there to be unicode characters, the escape must
      * escape itself...
      */
@@ -116,6 +116,7 @@ const processCSS = async (
 
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
+// TODO: we need to revisit whether we need these
 const spectrumPaths = [
     path.resolve(
         path.join(
@@ -212,7 +213,7 @@ async function processSpectrumVars() {
             'typography',
             'dist'
         );
-        const srcPath = path.join(typographyPath, 'index-vars.css');
+        const srcPath = path.join(typographyPath, 'index.css');
         const dstPath = path.resolve(
             path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
         );
