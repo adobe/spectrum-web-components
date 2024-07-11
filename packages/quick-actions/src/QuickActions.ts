@@ -48,7 +48,7 @@ export class QuickActions extends SpectrumElement {
         if (window.__swc.DEBUG) {
             window.__swc.warn(
                 this,
-                `<${this.localName}> is deprecated. Use an Action bar to allow users to perform actions on either a single or multiple items at the same time, instead.`,
+                `<${this.localName}> is deprecated and will be removed in the SWC 1.0 release. Use an Action bar to allow users to perform actions on either a single or multiple items at the same time, instead.`,
                 'https://opensource.adobe.com/spectrum-web-components/components/quick-actions/#deprecation',
                 { level: 'deprecation' }
             );
