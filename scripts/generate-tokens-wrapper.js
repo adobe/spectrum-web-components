@@ -143,7 +143,19 @@ const removeImportantComments = (css) => {
 const processTokens = (srcPath, tokensDir) => {
     let css = fs.readFileSync(srcPath, 'utf8');
     const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
+    const outputPath = path.join(
+        __dirname,
+        '..',
+        'tools',
+        'styles',
+        tokensDir,
+        fileName
+    );
     css = removeImportantComments(targetHost(css));
+
+    if (fileName === 'actiongroup') {
+        console.log(`\n\n${tokensDir}\n${srcPath}\ngoes to\n${outputPath}`);
+    }
 
     try {
         fs.writeFileSync(
@@ -176,10 +188,29 @@ const processPackages = async (tokensDir, index) => {
                 type,
                 packagename + '.css'
             );
+            const outputPath = path.join(
+                __dirname,
+                '..',
+                'tools',
+                'styles',
+                outputDir,
+                outputType,
+                'global-vars.css'
+            );
+
+            if (packagename === 'actiongroup') {
+                console.log(
+                    `\n\n${type} (${tokensDir})\n${spectrumPath}\ngoes to\n${outputPath}`
+                );
+            }
 
             // check if spectrumPath exists
             if (fs.existsSync(spectrumPath)) {
                 let content = fs.readFileSync(spectrumPath, 'utf8');
+
+                if (packagename === 'actiongroup') {
+                    console.log(`\n\n${content}\n\n`);
+                }
                 content = removeImportantComments(targetHost(content));
                 fs.appendFileSync(
                     path.join(
