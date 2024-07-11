@@ -132,7 +132,7 @@ const targetHost = (css) => {
     return css.replaceAll(spectrumThemeSelectorRegExp, ':host,\n:root {');
 };
 
-const removeImporantComments = (css) => {
+const removeImportantComments = (css) => {
     /**
      * Spectrum CSS uses /*! comments that are "not" removable.
      * These comments pile up in merged files, so we _need_ to remove them.
@@ -143,7 +143,7 @@ const removeImporantComments = (css) => {
 const processTokens = (srcPath, tokensDir) => {
     let css = fs.readFileSync(srcPath, 'utf8');
     const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
-    css = removeImporantComments(targetHost(css));
+    css = removeImportantComments(targetHost(css));
 
     try {
         fs.writeFileSync(
@@ -180,7 +180,7 @@ const processPackages = async (tokensDir, index) => {
             // check if spectrumPath exists
             if (fs.existsSync(spectrumPath)) {
                 let content = fs.readFileSync(spectrumPath, 'utf8');
-                content = removeImporantComments(targetHost(content));
+                content = removeImportantComments(targetHost(content));
                 fs.appendFileSync(
                     path.join(
                         __dirname,
