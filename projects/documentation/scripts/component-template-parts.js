@@ -133,7 +133,7 @@ ${
               'Attributes and Properties',
               tag.attributes.filter((attribute) => {
                   const member = tag.members.find((member) => {
-                      return member.name === attribute.name;
+                      return member.name === attribute.fieldName;
                   });
                   return member?.privacy === 'public';
               }),
