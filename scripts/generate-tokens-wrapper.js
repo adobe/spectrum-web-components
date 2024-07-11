@@ -170,6 +170,7 @@ const processPackages = async (tokensDir, index) => {
     return Promise.all(
         ['spectrum', 'express', 'spectrum-two'].map((type) => {
             const outputDir = type !== 'spectrum-two' ? 'tokens' : 'tokens-v2';
+            const outputType = outputDir === 'tokens-v2' ? 'spectrum' : type;
             const spectrumPath = path.join(
                 componentLevelTokensPath,
                 type,
@@ -187,7 +188,7 @@ const processPackages = async (tokensDir, index) => {
                         'tools',
                         'styles',
                         outputDir,
-                        type,
+                        outputType,
                         'global-vars.css'
                     ),
                     content
