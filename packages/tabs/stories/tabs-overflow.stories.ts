@@ -36,8 +36,16 @@ export const autoscrollOnlyHorizontally = (
     args: OverflowProperties
 ): TemplateResult => {
     return html`
-        <div style="height: 100vh">There are some tabs down here!</div>
-        ${renderTabsOverflowExample(args)}
+        <style>
+            .container {
+                height: 500px;
+                overflow-y: scroll;
+            }
+        </style>
+        <div class="container">
+            <div style="height: 500px">There are some tabs down here!</div>
+            ${renderTabsOverflowExample(args)}
+        </div>
     `;
 };
 autoscrollOnlyHorizontally.args = {

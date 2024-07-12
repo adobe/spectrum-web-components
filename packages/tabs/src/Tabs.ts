@@ -245,20 +245,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
-    private getGapBetweenTabs(): number {
-        const tabs = this.tabs;
-        if (tabs.length < 2) {
-            return 0;
-        }
-
-        const firstTab = tabs[0];
-        const secondTab = tabs[1];
-
-        return (
-            secondTab.offsetLeft - firstTab.offsetLeft - firstTab.offsetWidth
-        );
-    }
-
     private getNecessaryAutoScroll(index: number): number {
         const selectedTab = this.tabs[index];
         const selectionEnd = selectedTab.offsetLeft + selectedTab.offsetWidth;
@@ -266,18 +252,23 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         const selectionStart = selectedTab.offsetLeft;
         const viewportStart = this.tabList.scrollLeft;
 
-        // Take into account the CSS margin between two tabs.
-        const margin = this.getGapBetweenTabs();
-
         // If the tab is already visible, the necessary scroll factor is 0.
         let scrollTarget = 0;
 
         if (selectionEnd > viewportEnd) {
             // Selection is on the right side, not visible.
-            scrollTarget = selectionEnd - this.tabList.offsetWidth + margin;
+            const nextTab = this.tabs[index + (this.dir === 'rtl' ? -1 : 1)];
+            scrollTarget = nextTab
+                ? nextTab.offsetLeft - this.tabList.offsetWidth
+                : viewportEnd;
         } else if (selectionStart < viewportStart) {
             // Selection is on the left side, not visible.
-            scrollTarget = selectionStart - margin;
+            const prevTab = this.tabs[index + (this.dir === 'rtl' ? 1 : -1)];
+            const leftmostElement =
+                this.dir === 'rtl' ? -this.tabList.offsetWidth : 0;
+            scrollTarget = prevTab
+                ? prevTab.offsetLeft + prevTab.offsetWidth
+                : leftmostElement;
         }
 
         return scrollTarget;
