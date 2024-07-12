@@ -33,7 +33,6 @@ type OverflowProperties = {
     size: ElementSize;
     includeTabPanel: boolean;
     selected?: number;
-    autoscroll?: boolean;
     labelPrev?: string;
     labelNext?: string;
 };
@@ -43,62 +42,54 @@ const renderTabsOverflow = async ({
     size,
     includeTabPanel,
     selected = 1,
-    autoscroll = false,
 }: OverflowProperties): Promise<HTMLDivElement> => {
-    const tabsContainer = await fixture<HTMLDivElement>(
-        html`
-            <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow ?autoscroll=${autoscroll}>
-                    <sp-tabs size=${size} selected=${selected}>
-                        ${repeat(
-                            new Array(count),
-                            (item) => item,
-                            (_item, index) =>
-                                html`
-                                    <sp-tab
-                                        label=${`Tab Item ${index + 1}`}
-                                        value=${index + 1}
-                                    ></sp-tab>
-                                `
-                        )}
-                        ${includeTabPanel
-                            ? html`
-                                  ${repeat(
-                                      new Array(count),
-                                      (item) => item,
-                                      (_item, index) =>
-                                          html`
-                                              <sp-tab-panel value=${index + 1}>
-                                                  Content for Tab Item
-                                                  ${index + 1}
-                                              </sp-tab-panel>
-                                          `
-                                  )}
-                              `
-                            : nothing}
-                    </sp-tabs>
-                </sp-tabs-overflow>
-            </div>
-        `
-    );
+    const tabsContainer = await fixture<HTMLDivElement>(html`
+        <div class="container" style="width: 200px; height: 150px;">
+            <sp-tabs-overflow>
+                <sp-tabs size=${size} selected=${selected}>
+                    ${repeat(
+                        new Array(count),
+                        (item) => item,
+                        (_item, index) => html`
+                            <sp-tab
+                                label=${`Tab Item ${index + 1}`}
+                                value=${index + 1}
+                            ></sp-tab>
+                        `
+                    )}
+                    ${includeTabPanel
+                        ? html`
+                              ${repeat(
+                                  new Array(count),
+                                  (item) => item,
+                                  (_item, index) => html`
+                                      <sp-tab-panel value=${index + 1}>
+                                          Content for Tab Item ${index + 1}
+                                      </sp-tab-panel>
+                                  `
+                              )}
+                          `
+                        : nothing}
+                </sp-tabs>
+            </sp-tabs-overflow>
+        </div>
+    `);
     await elementUpdated(tabsContainer);
     return tabsContainer;
 };
 
 describe('TabsOverflow', () => {
     it('loads default tabs-overflow accessibly', async () => {
-        const el = await fixture<TabsOverflow>(
-            html`
-                <sp-tabs-overflow>
-                    <sp-tabs size="m" selected="1">
-                        <sp-tab label="Tab Item 1" value="1"></sp-tab>
-                        <sp-tab label="Tab Item 2" value="2"></sp-tab>
-                        <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
-                        <sp-tab-panel value="2">Tab Content 2</sp-tab-panel>
-                    </sp-tabs>
-                </sp-tabs-overflow>
-            `
-        );
+        const el = await fixture<TabsOverflow>(html`
+            <sp-tabs-overflow>
+                <sp-tabs size="m" selected="1">
+                    <sp-tab label="Tab Item 1" value="1"></sp-tab>
+                    <sp-tab label="Tab Item 2" value="2"></sp-tab>
+                    <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
+                    <sp-tab-panel value="2">Tab Content 2</sp-tab-panel>
+                </sp-tabs>
+            </sp-tabs-overflow>
+        `);
 
         await elementUpdated(el);
 
@@ -173,13 +164,11 @@ describe('TabsOverflow', () => {
     });
 
     it('should fail properly if slot is not sp-tabs', async () => {
-        const el = await fixture<TabsOverflow>(
-            html`
-                <sp-tabs-overflow>
-                    <div>Some div</div>
-                </sp-tabs-overflow>
-            `
-        );
+        const el = await fixture<TabsOverflow>(html`
+            <sp-tabs-overflow>
+                <div>Some div</div>
+            </sp-tabs-overflow>
+        `);
 
         await elementUpdated(el);
         const slot = el.shadowRoot.querySelector('slot');
@@ -243,40 +232,36 @@ describe('TabsOverflow', () => {
     });
 
     it('prev and next buttons labels overwritten via attributes', async () => {
-        const tabsContainer = await fixture<HTMLDivElement>(
-            html`
-                <div class="container" style="width: 200px; height: 150px;">
-                    <sp-tabs-overflow
-                        label-previous="custom label prev"
-                        label-next="custom label next"
-                    >
-                        <sp-tabs size=${ElementSizes.M} selected=${1}>
-                            ${repeat(
-                                new Array(20),
-                                (item) => item,
-                                (_item, index) =>
-                                    html`
-                                        <sp-tab
-                                            label=${`Tab Item ${index + 1}`}
-                                            value=${index + 1}
-                                        ></sp-tab>
-                                    `
-                            )}
-                            ${repeat(
-                                new Array(20),
-                                (item) => item,
-                                (_item, index) =>
-                                    html`
-                                        <sp-tab-panel value=${index + 1}>
-                                            Content for Tab Item ${index + 1}
-                                        </sp-tab-panel>
-                                    `
-                            )}
-                        </sp-tabs>
-                    </sp-tabs-overflow>
-                </div>
-            `
-        );
+        const tabsContainer = await fixture<HTMLDivElement>(html`
+            <div class="container" style="width: 200px; height: 150px;">
+                <sp-tabs-overflow
+                    label-previous="custom label prev"
+                    label-next="custom label next"
+                >
+                    <sp-tabs size=${ElementSizes.M} selected=${1}>
+                        ${repeat(
+                            new Array(20),
+                            (item) => item,
+                            (_item, index) => html`
+                                <sp-tab
+                                    label=${`Tab Item ${index + 1}`}
+                                    value=${index + 1}
+                                ></sp-tab>
+                            `
+                        )}
+                        ${repeat(
+                            new Array(20),
+                            (item) => item,
+                            (_item, index) => html`
+                                <sp-tab-panel value=${index + 1}>
+                                    Content for Tab Item ${index + 1}
+                                </sp-tab-panel>
+                            `
+                        )}
+                    </sp-tabs>
+                </sp-tabs-overflow>
+            </div>
+        `);
         await elementUpdated(tabsContainer);
         const el = tabsContainer;
 

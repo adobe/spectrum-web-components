@@ -245,6 +245,20 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
+    private getGapBetweenTabs(): number {
+        const tabs = this.tabs;
+        if (tabs.length < 2) {
+            return 0;
+        }
+
+        const firstTab = tabs[0];
+        const secondTab = tabs[1];
+
+        return (
+            secondTab.offsetLeft - firstTab.offsetLeft - firstTab.offsetWidth
+        );
+    }
+
     private getNecessaryAutoScroll(index: number): number {
         const selectedTab = this.tabs[index];
         const selectionEnd = selectedTab.offsetLeft + selectedTab.offsetWidth;
@@ -252,29 +266,24 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         const selectionStart = selectedTab.offsetLeft;
         const viewportStart = this.tabList.scrollLeft;
 
+        // Take into account the CSS margin between two tabs.
+        const margin = this.getGapBetweenTabs();
+
         // If the tab is already visible, the necessary scroll factor is 0.
         let scrollTarget = 0;
 
         if (selectionEnd > viewportEnd) {
             // Selection is on the right side, not visible.
-            const nextTab = this.tabs[index + (this.dir === 'rtl' ? -1 : 1)];
-            scrollTarget = nextTab
-                ? nextTab.offsetLeft - this.tabList.offsetWidth
-                : viewportEnd;
+            scrollTarget = selectionEnd - this.tabList.offsetWidth + margin;
         } else if (selectionStart < viewportStart) {
             // Selection is on the left side, not visible.
-            const prevTab = this.tabs[index + (this.dir === 'rtl' ? 1 : -1)];
-            const leftmostElement =
-                this.dir === 'rtl' ? -this.tabList.offsetWidth : 0;
-            scrollTarget = prevTab
-                ? prevTab.offsetLeft + prevTab.offsetWidth
-                : leftmostElement;
+            scrollTarget = selectionStart - margin;
         }
 
         return scrollTarget;
     }
 
-    public async maybeScrollToSelection(): Promise<void> {
+    public async scrollToSelection(): Promise<void> {
         if (!this.enableTabsScroll || !this.selected) {
             return;
         }
@@ -302,7 +311,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         super.updated(changedProperties);
 
         if (changedProperties.has('selected')) {
-            this.maybeScrollToSelection();
+            this.scrollToSelection();
         }
     }
 
