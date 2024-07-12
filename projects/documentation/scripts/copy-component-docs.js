@@ -299,8 +299,8 @@ async function main() {
     for await (const mdPath of globby.stream(
         `${projectDir}/(packages|tools)/**/*.md`
     )) {
-        await processREADME(mdPath);
-        await processChangelog(mdPath);
+        processREADME(mdPath);
+        processChangelog(mdPath);
     }
 }
 

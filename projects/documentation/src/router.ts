@@ -19,24 +19,23 @@ tabs.addEventListener('change', (event: Event) => {
     const { pathname } = location;
     const isAPI = pathname.search('api') > -1;
     const isChangelog = pathname.search('changelog') > -1;
+    const parseURLRegex = /\/api\/?|\/changelog\/?/;
     switch (selected) {
         case 'api': {
             if (isAPI) return;
-            const dest =
-                pathname.replace(/\/api\/?|\/changelog\/?/, '/') + 'api/';
+            const dest = pathname.replace(parseURLRegex, '/') + 'api/';
             history.pushState({}, document.title, dest);
             break;
         }
         case 'changelog': {
             if (isChangelog) return;
-            const dest =
-                pathname.replace(/\/api\/?|\/changelog\/?/, '/') + 'changelog/';
+            const dest = pathname.replace(parseURLRegex, '/') + 'changelog/';
             history.pushState({}, document.title, dest);
             break;
         }
         case 'examples': {
             if (!isAPI && !isChangelog) return;
-            const dest = pathname.replace(/\/api\/?|\/changelog\/?/, '/');
+            const dest = pathname.replace(parseURLRegex, '/');
             history.pushState({}, document.title, dest);
             break;
         }
