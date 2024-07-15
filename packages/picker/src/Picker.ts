@@ -124,6 +124,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     public optionsMenu!: Menu;
 
+    private _selfManageFocusElement = false;
+
+    public override get selfManageFocusElement(): boolean {
+        return this._selfManageFocusElement;
+    }
+
     @query('sp-overlay')
     public overlayElement!: Overlay;
 
@@ -303,6 +309,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (this.strategy) {
             this.strategy.open = this.open;
         }
+        if (this.open) {
+            this._selfManageFocusElement = true;
+        } else {
+            this._selfManageFocusElement = false;
+        }
     }
 
     public close(): void {
@@ -351,7 +362,34 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             | undefined;
     }
 
-    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
+    protected handleBeforetoggle(
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            if (this.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.pointerdownState) {
+                // Prevent browser driven closure while opening the Picker
+                // and the expected event series has not completed.
+                this.overlayElement.manuallyKeepOpen();
+            }
+            this._selfManageFocusElement = false;
+        }
+        if (!this.open) {
+            this.optionsMenu.updateSelectedItemIndex();
+            this.optionsMenu.closeDescendentOverlays();
+        }
+    }
+
+    protected handleSlottableRequest = (
+        _event: SlottableRequestEvent
+    ): void => {};
 
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
