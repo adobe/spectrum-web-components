@@ -67,6 +67,38 @@ export const ScaledIndicator = {
 };
 
 /**
+ * Given that the scroll needs to be on the right side of the viewport.
+ * Returns the coordonate x it needs to scroll so that the tab with given index is visible.
+ */
+function calculateScrollTargetForRightSide(
+    index: number,
+    direction: 'rtl' | 'ltr',
+    tabs: Tab[],
+    container: HTMLDivElement
+): number {
+    const nextIndex = index + (direction === 'rtl' ? -1 : 1);
+    const nextTab = tabs[nextIndex];
+    const viewportEnd = container.scrollLeft + container.offsetWidth;
+    return nextTab ? nextTab.offsetLeft - container.offsetWidth : viewportEnd;
+}
+
+/**
+ * Given that the scroll needs to be on the left side of the viewport.
+ * Returns the coordonate x it needs to scroll so that the tab with given index is visible.
+ */
+function calculateScrollTargetForLeftSide(
+    index: number,
+    direction: 'rtl' | 'ltr',
+    tabs: Tab[],
+    container: HTMLDivElement
+): number {
+    const prevIndex = index + (direction === 'rtl' ? 1 : -1);
+    const prevTab = tabs[prevIndex];
+    const leftmostElement = direction === 'rtl' ? -container.offsetWidth : 0;
+    return prevTab ? prevTab.offsetLeft + prevTab.offsetWidth : leftmostElement;
+}
+
+/**
  * @element sp-tabs
  *
  * @slot - Tab elements to manage as a group
@@ -252,26 +284,25 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         const selectionStart = selectedTab.offsetLeft;
         const viewportStart = this.tabList.scrollLeft;
 
-        // If the tab is already visible, the necessary scroll factor is 0.
-        let scrollTarget = 0;
-
         if (selectionEnd > viewportEnd) {
             // Selection is on the right side, not visible.
-            const nextTab = this.tabs[index + (this.dir === 'rtl' ? -1 : 1)];
-            scrollTarget = nextTab
-                ? nextTab.offsetLeft - this.tabList.offsetWidth
-                : viewportEnd;
+            return calculateScrollTargetForRightSide(
+                index,
+                this.dir,
+                this.tabs,
+                this.tabList
+            );
         } else if (selectionStart < viewportStart) {
             // Selection is on the left side, not visible.
-            const prevTab = this.tabs[index + (this.dir === 'rtl' ? 1 : -1)];
-            const leftmostElement =
-                this.dir === 'rtl' ? -this.tabList.offsetWidth : 0;
-            scrollTarget = prevTab
-                ? prevTab.offsetLeft + prevTab.offsetWidth
-                : leftmostElement;
+            return calculateScrollTargetForLeftSide(
+                index,
+                this.dir,
+                this.tabs,
+                this.tabList
+            );
         }
 
-        return scrollTarget;
+        return -1;
     }
 
     public async scrollToSelection(): Promise<void> {
@@ -289,8 +320,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
             // We have a selection, calculate the scroll needed to bring it into view
             const scrollTarget = this.getNecessaryAutoScroll(selectedIndex);
 
-            // scrollTarget = 0 means it is already into view.
-            if (scrollTarget !== 0) {
+            // scrollTarget = -1 means it is already into view.
+            if (scrollTarget !== -1) {
                 this.tabList.scrollTo({ left: scrollTarget });
             }
         }
