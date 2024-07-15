@@ -1879,6 +1879,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -3139,6 +3157,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -3617,7 +3653,7 @@
                 "text": "string"
               },
               "privacy": "protected",
-              "default": "'sp-action-button'"
+              "default": "'sp-action-button, sp-action-menu'"
             },
             {
               "kind": "field",
@@ -4520,6 +4556,37 @@
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
               }
             },
             {
@@ -6799,6 +6866,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -8260,6 +8345,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -9138,6 +9241,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -10024,6 +10145,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -10941,6 +11080,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -11817,6 +11974,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -13681,6 +13856,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -14903,15 +15096,6 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
               "name": "labelX",
               "type": {
                 "text": "string"
@@ -15425,13 +15609,6 @@
               },
               "default": "false",
               "fieldName": "focused"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "label"
             },
             {
               "name": "label-x",
@@ -16300,6 +16477,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -17707,6 +17902,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "blur",
               "privacy": "public",
@@ -18495,6 +18708,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -19919,6 +20150,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -24999,6 +25248,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -25672,6 +25939,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -29119,6 +29404,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -31294,6 +31597,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -35532,6 +35853,33 @@
             },
             {
               "kind": "field",
+              "name": "_selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "overlayElement",
               "type": {
                 "text": "Overlay"
@@ -36825,6 +37173,37 @@
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
               }
             },
             {
@@ -38683,6 +39062,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -41554,6 +41951,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -42443,6 +42858,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "manageAutoFocus",
               "privacy": "protected",
@@ -43228,6 +43661,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -45162,6 +45613,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -45981,6 +46450,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -46738,6 +47225,37 @@
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
               }
             },
             {
@@ -49112,6 +49630,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -50014,6 +50550,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -51530,6 +52084,17 @@
           "members": [
             {
               "kind": "field",
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "active",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "role",
               "type": {
                 "text": "string"
@@ -51569,6 +52134,60 @@
               "privacy": "public",
               "default": "''",
               "attribute": "sort-key"
+            },
+            {
+              "kind": "method",
+              "name": "handleKeydown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleKeypress",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleKeyup",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
             },
             {
               "kind": "method",
@@ -51664,6 +52283,14 @@
             }
           ],
           "attributes": [
+            {
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "active"
+            },
             {
               "name": "role",
               "type": {
@@ -52937,6 +53564,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -54517,6 +55162,24 @@
               }
             },
             {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -55695,6 +56358,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -57837,6 +58518,24 @@
               },
               "privacy": "private",
               "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
               "inheritedFrom": {
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
@@ -61189,6 +61888,15 @@
             },
             {
               "kind": "field",
+              "name": "prevIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "-1"
+            },
+            {
+              "kind": "field",
               "name": "direction",
               "type": {
                 "text": "DirectionTypes"
@@ -61394,7 +62102,7 @@
             },
             {
               "kind": "method",
-              "name": "isRelatedTargetAnElement",
+              "name": "isRelatedTargetOrContainAnElement",
               "return": {
                 "type": {
                   "text": "boolean"
@@ -61897,6 +62605,19 @@
             },
             {
               "kind": "field",
+              "name": "prevIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "-1",
+              "inheritedFrom": {
+                "name": "FocusGroupController",
+                "module": "tools/reactive-controllers/src/FocusGroup.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "direction",
               "type": {
                 "text": "DirectionTypes"
@@ -62163,7 +62884,7 @@
             },
             {
               "kind": "method",
-              "name": "isRelatedTargetAnElement",
+              "name": "isRelatedTargetOrContainAnElement",
               "return": {
                 "type": {
                   "text": "boolean"
@@ -63191,6 +63912,20 @@
                 "text": "DisableableElement"
               },
               "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "readonly": true
             },
             {
