@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
+    --mod-buttongroup-justify-content: flex-end;
     box-sizing: border-box;
     min-inline-size: var(
         --mod-alert-dialog-min-width,
@@ -195,5 +196,4 @@ governing permissions and limitations under the License.
     --spectrum-alert-dialog-title-to-divider: var(--spectrum-spacing-200);
     --spectrum-alert-dialog-divider-to-description: var(--spectrum-spacing-300);
     --spectrum-alert-dialog-title-to-icon: var(--spectrum-spacing-300);
-    --mod-buttongroup-justify-content: flex-end;
 }

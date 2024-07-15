@@ -20,9 +20,6 @@ governing permissions and limitations under the License.
     --spectrum-button-border-width: var(--system-button-border-width);
     --spectrum-button-line-height: var(--system-button-line-height);
     --spectrum-button-focus-ring-gap: var(--system-button-focus-ring-gap);
-    --spectrum-button-focus-ring-border-radius: var(
-        --system-button-focus-ring-border-radius
-    );
     --spectrum-button-focus-ring-thickness: var(
         --system-button-focus-ring-thickness
     );
@@ -31,9 +28,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-intended-icon-size: var(
         --system-button-intended-icon-size
-    );
-    --mod-progress-circle-position: var(
-        --system-button-progress-circle-position
     );
     --spectrum-button-background-color-default: var(
         --system-button-background-color-default
@@ -77,6 +71,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-content-color-disabled: var(
         --system-button-content-color-disabled
+    );
+    --spectrum-button-focus-ring-border-radius: var(
+        --system-button-focus-ring-border-radius
     );
 }
 

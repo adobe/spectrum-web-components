@@ -73,7 +73,4 @@ governing permissions and limitations under the License.
     --spectrum-alert-dialog-title-to-icon: var(
         --system-alertdialog-alert-dialog-title-to-icon
     );
-    --mod-buttongroup-justify-content: var(
-        --system-alertdialog-buttongroup-justify-content
-    );
 }

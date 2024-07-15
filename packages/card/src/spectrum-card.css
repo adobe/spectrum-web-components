@@ -20,13 +20,7 @@ governing permissions and limitations under the License.
     );
     background-color: var(
         --highcontrast-card-background-color,
-        var(
-            --mod-card-background-color,
-            var(
-                --mod-spectrum-card-background-color,
-                var(--spectrum-card-background-color)
-            )
-        )
+        var(--mod-card-background-color, var(--spectrum-card-background-color))
     );
     border: var(--mod-card-border-width, var(--spectrum-card-border-width))
         solid transparent;
@@ -133,7 +127,7 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
-    --mod-card-background-color: var(
+    --spectrum-card-background-color: var(
         --spectrum-card-background-color-quiet,
         var(--spectrum-background-base-color)
     );
@@ -832,11 +826,11 @@ governing permissions and limitations under the License.
 
 :host([variant='gallery']),
 :host([variant='quiet']) {
-    --mod-card-content-margin-top: var(
+    --spectrum-card-content-margin-top: var(
         --mod-card-content-margin-top-quiet,
         var(--spectrum-spacing-100)
     );
-    --mod-card-minimum-width: var(
+    --spectrum-card-minimum-width: var(
         --mod-card-minimum-width-quiet,
         var(--spectrum-card-minimum-width)
     );

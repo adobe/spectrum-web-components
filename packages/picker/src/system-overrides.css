@@ -19,14 +19,14 @@ governing permissions and limitations under the License.
     --spectrum-picker-background-color-default-open: var(
         --system-picker-background-color-default-open
     );
+    --spectrum-picker-background-color-active: var(
+        --system-picker-background-color-active
+    );
     --spectrum-picker-background-color-hover: var(
         --system-picker-background-color-hover
     );
     --spectrum-picker-background-color-hover-open: var(
         --system-picker-background-color-hover-open
-    );
-    --spectrum-picker-background-color-active: var(
-        --system-picker-background-color-active
     );
     --spectrum-picker-background-color-key-focus: var(
         --system-picker-background-color-key-focus

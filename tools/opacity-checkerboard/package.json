@@ -47,7 +47,7 @@
         "@spectrum-web-components/base": "^0.43.0"
     },
     "devDependencies": {
-        "@spectrum-css/opacitycheckerboard": "^3.0.0-s2-foundations.6"
+        "@spectrum-css/opacitycheckerboard": "^3.0.0-s2-foundations.8"
     },
     "types": "./src/opacity-checkerboard.d.ts",
     "sideEffects": [

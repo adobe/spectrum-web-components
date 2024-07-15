@@ -132,11 +132,11 @@ governing permissions and limitations under the License.
 }
 
 :host([dragged]) {
-    --mod-drop-zone-border-style: var(
+    --spectrum-drop-zone-border-style: var(
         --mod-drop-zone-border-style--dragged,
         var(--mod-drop-zone-border-style-dragged, solid)
     );
-    --mod-drop-zone-background-color: rgba(
+    --spectrum-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
         var(
             --mod-drop-zone-background-color-opacity,
@@ -157,7 +157,7 @@ governing permissions and limitations under the License.
 }
 
 :host .is-filled {
-    --mod-drop-zone-background-color: rgba(
+    --spectrum-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
         var(
             --mod-drop-zone-background-color-opacity-filled,
@@ -168,11 +168,11 @@ governing permissions and limitations under the License.
 }
 
 :host([dragged]) .is-filled {
-    --mod-drop-zone-content-display: flex;
+    --spectrum-drop-zone-content-display: flex;
 }
 
 :host(:focus-visible) {
-    --mod-drop-zone-border-style: solid;
+    --spectrum-drop-zone-border-style: solid;
     --spectrum-drop-zone-border-color: var(
         --highcontrast-drop-zone-border-color-hover,
         var(

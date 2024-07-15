@@ -59,25 +59,4 @@ governing permissions and limitations under the License.
     --spectrum-alert-banner-font-color: var(
         --system-alertbanner-alert-banner-font-color
     );
-    --mod-divider-vertical-margin: var(
-        --system-alertbanner-divider-vertical-margin
-    );
-    --mod-divider-vertical-height: var(
-        --system-alertbanner-divider-vertical-height
-    );
-    --mod-divider-vertical-align: var(
-        --system-alertbanner-divider-vertical-align
-    );
-    --mod-button-margin-block: var(--system-alertbanner-button-margin-block);
-    --mod-button-margin-right: var(--system-alertbanner-button-margin-right);
-    --mod-button-margin-left: var(--system-alertbanner-button-margin-left);
-    --mod-closebutton-margin-inline: var(
-        --system-alertbanner-closebutton-margin-inline
-    );
-    --mod-closebutton-margin-top: var(
-        --system-alertbanner-closebutton-margin-top
-    );
-    --mod-closebutton-align-self: var(
-        --system-alertbanner-closebutton-align-self
-    );
 }

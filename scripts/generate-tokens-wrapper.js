@@ -177,7 +177,7 @@ const processPackages = async (tokensDir, index) => {
     );
     const spectrumPath = path.join(
         componentLevelTokensPath,
-        'spectrum',
+        'spectrum-two',
         packagename + '.css'
     );
     // check if spectrumPath exists
@@ -200,7 +200,7 @@ const processPackages = async (tokensDir, index) => {
 
     const legacyPath = path.join(
         componentLevelTokensPath,
-        'legacy',
+        'spectrum',
         packagename + '.css'
     );
     // check if legacyPath exists

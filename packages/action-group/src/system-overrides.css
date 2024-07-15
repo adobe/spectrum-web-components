@@ -31,49 +31,55 @@ governing permissions and limitations under the License.
     --spectrum-actiongroup-border-radius: var(
         --system-actiongroup-border-radius
     );
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --system-actiongroup-horizontal-spacing-regular
+    );
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --system-actiongroup-vertical-spacing-regular
+    );
 }
 
 :host([size='xs']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-actiongroup-size-xs-horizontal-spacing-regular
+        --system-action-group-size-xs-horizontal-spacing-regular
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-actiongroup-size-xs-vertical-spacing-regular
+        --system-action-group-size-xs-vertical-spacing-regular
     );
 }
 
 :host([size='s']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-actiongroup-size-s-horizontal-spacing-regular
+        --system-action-group-size-s-horizontal-spacing-regular
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-actiongroup-size-s-vertical-spacing-regular
+        --system-action-group-size-s-vertical-spacing-regular
     );
 }
 
 :host {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-actiongroup-size-m-horizontal-spacing-regular
+        --system-action-group-size-m-horizontal-spacing-regular
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-actiongroup-size-m-vertical-spacing-regular
+        --system-action-group-size-m-vertical-spacing-regular
     );
 }
 
 :host([size='l']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-actiongroup-size-l-horizontal-spacing-regular
+        --system-action-group-size-l-horizontal-spacing-regular
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-actiongroup-size-l-vertical-spacing-regular
+        --system-action-group-size-l-vertical-spacing-regular
     );
 }
 
 :host([size='xl']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-actiongroup-size-xl-horizontal-spacing-regular
+        --system-action-group-size-xl-horizontal-spacing-regular
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-actiongroup-size-xl-vertical-spacing-regular
+        --system-action-group-size-xl-vertical-spacing-regular
     );
 }

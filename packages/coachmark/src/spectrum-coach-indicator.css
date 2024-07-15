@@ -233,48 +233,48 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) {
-    --mod-coach-indicator-min-inline-size: calc(
+    --spectrum-coach-indicator-min-inline-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter)
             ) * 2.75
     );
-    --mod-coach-indicator-min-block-size: calc(
+    --spectrum-coach-indicator-min-block-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter)
             ) * 2.75
     );
-    --mod-coach-indicator-inline-size: calc(
+    --spectrum-coach-indicator-inline-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter)
             ) * 2.75
     );
-    --mod-coach-indicator-block-size: calc(
+    --spectrum-coach-indicator-block-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter)
             ) * 2.75
     );
-    --mod-coach-indicator-ring-inline-size: var(
+    --spectrum-coach-indicator-ring-inline-size: var(
         --mod-coach-indicator-quiet-ring-diameter,
         var(--spectrum-coach-indicator-quiet-ring-diameter)
     );
-    --mod-coach-indicator-ring-block-size: var(
+    --spectrum-coach-indicator-ring-block-size: var(
         --mod-coach-indicator-quiet-ring-diameter,
         var(--spectrum-coach-indicator-quiet-ring-diameter)
     );
-    --mod-coach-indicator-top: calc(
+    --spectrum-coach-indicator-top: calc(
         var(--mod-coach-indicator-min-inline-size) / 3 -
             var(--spectrum-coach-indicator-ring-border-size)
     );
-    --mod-coach-indicator-left: calc(
+    --spectrum-coach-indicator-left: calc(
         var(--mod-coach-indicator-min-inline-size) / 3 -
             var(--spectrum-coach-indicator-ring-border-size)
     );
-    --mod-coach-indicator-animation-name: pulse-quiet;
-    --mod-coach-indicator-inner-animation-delay-multiple: var(
+    --spectrum-coach-indicator-animation-name: pulse-quiet;
+    --spectrum-coach-indicator-inner-animation-delay-multiple: var(
         --mod-coach-indicator-quiet-animation-ring-inner-delay-multiple,
         var(
             --spectrum-coach-indicator-quiet-animation-ring-inner-delay-multiple
