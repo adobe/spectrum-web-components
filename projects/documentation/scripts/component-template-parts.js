@@ -107,6 +107,36 @@ tags:
 ---`;
 }
 
+export function changelogDestinationTemplate(componentName, componentHeading) {
+    return `---
+layout: changelog.njk
+title: '${nameToTitle(componentName)} changelog: Spectrum Web Components'
+displayName: ${nameToTitle(componentName)}
+componentName: ${componentName}
+componentHeading: ${componentHeading}
+tags:
+- component-changelog
+---`;
+}
+
+export function changelogPartialTemplate(
+    componentName,
+    componentHeading,
+    body
+) {
+    return `---
+layout: partial.njk
+title: '${nameToTitle(componentName)}: Spectrum Web Components'
+displayName: ${nameToTitle(componentName)}
+componentName: ${componentName}
+componentHeading: ${componentHeading}
+partType: changelog
+tags:
+- ${componentName}
+---
+${body}`;
+}
+
 export function apiPartialTemplate(componentName, componentHeading, tag) {
     return `---
 layout: partial.njk
@@ -133,7 +163,7 @@ ${
               'Attributes and Properties',
               tag.attributes.filter((attribute) => {
                   const member = tag.members.find((member) => {
-                      return member.name === attribute.name;
+                      return member.name === attribute.fieldName;
                   });
                   return member?.privacy === 'public';
               }),
