@@ -53,6 +53,8 @@ export class FocusGroupController<T extends HTMLElement>
 
     private _currentIndex = -1;
 
+    private prevIndex = -1;
+
     get direction(): DirectionTypes {
         return this._direction();
     }
@@ -187,6 +189,8 @@ export class FocusGroupController<T extends HTMLElement>
             focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
+            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            focusElement.tabIndex = 0;
             focusElement.focus(options);
         }
     }
@@ -207,6 +211,7 @@ export class FocusGroupController<T extends HTMLElement>
     setCurrentIndexCircularly(diff: number): void {
         const { length } = this.elements;
         let steps = length;
+        this.prevIndex = this.currentIndex;
         // start at a possibly not 0 index
         let nextIndex = (length + this.currentIndex + diff) % length;
         while (
@@ -234,14 +239,23 @@ export class FocusGroupController<T extends HTMLElement>
         this.focused = false;
     }
 
-    isRelatedTargetAnElement(event: FocusEvent): boolean {
+    isRelatedTargetOrContainAnElement(event: FocusEvent): boolean {
         const relatedTarget = event.relatedTarget as null | Element;
-        return !this.elements.includes(relatedTarget as T);
+
+        const isRelatedTargetAnElement = this.elements.includes(
+            relatedTarget as T
+        );
+        const isRelatedTargetContainedWithinElements = this.elements.some(
+            (el) => el.contains(relatedTarget)
+        );
+        return !(
+            isRelatedTargetAnElement || isRelatedTargetContainedWithinElements
+        );
     }
 
     handleFocusin = (event: FocusEvent): void => {
         if (!this.isEventWithinListenerScope(event)) return;
-        if (this.isRelatedTargetAnElement(event)) {
+        if (this.isRelatedTargetOrContainAnElement(event)) {
             this.hostContainsFocus();
         }
         const path = event.composedPath() as T[];
@@ -250,11 +264,12 @@ export class FocusGroupController<T extends HTMLElement>
             targetIndex = this.elements.indexOf(el);
             return targetIndex !== -1;
         });
+        this.prevIndex = this.currentIndex;
         this.currentIndex = targetIndex > -1 ? targetIndex : this.currentIndex;
     };
 
     handleFocusout = (event: FocusEvent): void => {
-        if (this.isRelatedTargetAnElement(event)) {
+        if (this.isRelatedTargetOrContainAnElement(event)) {
             this.hostNoLongerContainsFocus();
         }
     };
@@ -279,6 +294,7 @@ export class FocusGroupController<T extends HTMLElement>
             return;
         }
         let diff = 0;
+        this.prevIndex = this.currentIndex;
         switch (event.code) {
             case 'ArrowRight':
                 diff += 1;
