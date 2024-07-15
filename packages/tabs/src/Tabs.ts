@@ -70,7 +70,7 @@ export const ScaledIndicator = {
  * Given that the scroll needs to be on the right side of the viewport.
  * Returns the coordonate x it needs to scroll so that the tab with given index is visible.
  */
-function calculateScrollTargetForRightSide(
+export function calculateScrollTargetForRightSide(
     index: number,
     direction: 'rtl' | 'ltr',
     tabs: Tab[],
@@ -86,7 +86,7 @@ function calculateScrollTargetForRightSide(
  * Given that the scroll needs to be on the left side of the viewport.
  * Returns the coordonate x it needs to scroll so that the tab with given index is visible.
  */
-function calculateScrollTargetForLeftSide(
+export function calculateScrollTargetForLeftSide(
     index: number,
     direction: 'rtl' | 'ltr',
     tabs: Tab[],
