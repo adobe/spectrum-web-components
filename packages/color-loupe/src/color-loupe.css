@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-color-loupe.css');
+@import url('./system-overrides.css');
 
 svg {
     width: inherit;
