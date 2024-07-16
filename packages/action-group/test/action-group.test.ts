@@ -279,18 +279,7 @@ describe('ActionGroup', () => {
 
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
-        const actionMenuRect = actionMenu.getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        actionMenuRect.left + actionMenuRect.width / 2,
-                        actionMenuRect.top + actionMenuRect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        actionMenu.click();
 
         await elementUpdated(el);
 
