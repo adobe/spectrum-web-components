@@ -179,11 +179,10 @@ async function processComponent(componentPath) {
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
     for await (const conversion of conversions) {
-        const sourcePath = require.resolve(conversion.inPackage);
-        var sourceCSS = fs.readFileSync(
-            sourcePath.replace('index.css', 'index-base.css'),
-            'utf-8'
-        );
+        const sourcePath = require
+            .resolve(conversion.inPackage)
+            .replace('index.css', 'index-base.css');
+        var sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
 
         const outputPath = path.join(
             ...(Array.isArray(conversion.outPackage)
