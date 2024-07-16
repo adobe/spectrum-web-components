@@ -117,7 +117,8 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-.item-link.is-disabled {
+.item-link.is-disabled,
+:host([aria-disabled='true']) .item-link {
     color: var(
         --highcontrast-breadcrumbs-text-color-disabled,
         var(

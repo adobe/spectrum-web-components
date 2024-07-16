@@ -67,6 +67,14 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
         return this.anchorElement || this;
     }
 
+    override connectedCallback(): void {
+        super.connectedCallback();
+
+        if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'listitem');
+        }
+    }
+
     protected handleClick(event?: Event): void {
         if (!this.href && event) {
             event.preventDefault();
@@ -90,7 +98,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     protected renderLink(): TemplateResult {
         if (this.isLastOfType) {
             return html`
-                <span aria-current="page"><slot></slot></span>
+                <span aria-current="page" class="item-link"><slot></slot></span>
             `;
         }
 

@@ -30,7 +30,7 @@ export default {
         'max-visible-items': 4,
         nrOfItems: 4,
     },
-    ...argTypes,
+    argTypes,
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
@@ -43,7 +43,7 @@ showRoot.args = {
 
 export const Links = (): TemplateResult => {
     return html`
-        <sp-breadcrumbs>${getBreadcrumbsWithLinks(4)}</sp-breadcrumbs>
+        <sp-breadcrumbs>${getBreadcrumbsWithLinks(8)}</sp-breadcrumbs>
     `;
 };
 

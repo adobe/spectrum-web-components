@@ -104,21 +104,6 @@ const config = {
                     'item-link'
                 ),
                 {
-                    find: [
-                        builder.class('spectrum-Breadcrumbs-itemLink'),
-                        builder.attribute('href'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.class('item-link'),
-                            hoist: false,
-                        },
-                        {
-                            replace: builder.attribute('href'),
-                        },
-                    ],
-                },
-                {
                     find: [builder.class('spectrum-ActionButton')],
                     replace: [
                         {

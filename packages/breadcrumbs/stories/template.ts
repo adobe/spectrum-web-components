@@ -19,7 +19,7 @@ import '../sp-breadcrumb-item.js';
 export type StoryArgs = {
     label?: string;
     showRoot?: boolean;
-    'max-visible-items': number;
+    'max-visible-items'?: number;
     nrOfItems: number;
     onChange: () => void;
 };

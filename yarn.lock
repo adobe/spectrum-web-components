@@ -5643,10 +5643,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/breadcrumb@^9.1.1":
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/breadcrumb/-/breadcrumb-9.1.1.tgz#ba22ae0dc5c9d60c9e3851f3880071d23f4eeb45"
-  integrity sha512-yRDQuHCtcQ09e51FNhpILRpFQ8JE1SkRDyeoiY2gnvsygwA3tVVc+B0RVxyELHeUzzbloskcSrk1LS4ZeaCiwg==
+"@spectrum-css/breadcrumb@^9.1.2":
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/breadcrumb/-/breadcrumb-9.1.2.tgz#94cf327c1ff579674868463a0d213e16f15ec0d1"
+  integrity sha512-wGWWFF19X4cD1MJ47r7vnKkry/Aobdh4iCgVRZPQ6Qby0vIbQNsbkYGPkqS5H6hHQwKpTuYfQ+ZukTxn2IcGsA==
 
 "@spectrum-css/button@^13.1.1":
   version "13.1.1"

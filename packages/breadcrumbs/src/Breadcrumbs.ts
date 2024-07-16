@@ -26,7 +26,10 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
-import { BreadcrumbItem as BreadcrumbElement } from './BreadcrumbItem.js';
+import {
+    BreadcrumbItem as BreadcrumbElement,
+    BreadcrumbSelectDetail,
+} from './BreadcrumbItem.js';
 import { createRef, Ref, ref } from 'lit/directives/ref.js';
 
 import styles from './breadcrumbs.css.js';
@@ -38,6 +41,7 @@ const MAX_VISIBLE_ITEMS = 4;
 type BreadcrumbItem = {
     label?: string;
     href?: string;
+    value: string;
     offsetWidth: number;
     isVisible: boolean; // false if displayed in menu overlay
 };
@@ -70,7 +74,7 @@ export class Breadcrumbs extends SpectrumElement {
      * Accessible name for the Breadcrumbs component
      */
     @property({ type: String })
-    public label = 'Breadcrumbs';
+    public label = '';
 
     /**
      * Change the default label of the action menu
@@ -95,7 +99,6 @@ export class Breadcrumbs extends SpectrumElement {
 
     private resizeObserver: ResizeObserver | undefined;
     private firstRender = true;
-    private paddings = 0;
 
     private menuRef: Ref<ActionMenu> = createRef();
 
@@ -111,12 +114,6 @@ export class Breadcrumbs extends SpectrumElement {
         }
 
         this.updateComplete.then(() => {
-            // Calculate the paddings only once, since these are not changing.
-            const listStyles = window.getComputedStyle(this.list);
-            this.paddings =
-                parseFloat(listStyles.paddingLeft) +
-                parseFloat(listStyles.paddingRight);
-
             if (this.showRoot) {
                 this.breadcrumbsElements[0].setAttribute('slot', 'root');
             }
@@ -142,16 +139,8 @@ export class Breadcrumbs extends SpectrumElement {
     override updated(changes: PropertyValues): void {
         super.updated(changes);
 
-        // Update `aria-label` when `label` available
-        if (
-            changes.has('label') &&
-            (this.label || typeof changes.get('label') !== 'undefined')
-        ) {
-            if (this.label.length) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
+        if (changes.has('label')) {
+            this.setAttribute('aria-label', this.label || 'Breadcrumbs');
         }
 
         // Breadcrumbs items were added / removed, or available space changed
@@ -170,7 +159,7 @@ export class Breadcrumbs extends SpectrumElement {
     }
 
     private calculateBreadcrumbItemsWidth(): void {
-        this.items = this.breadcrumbsElements.map((el) => {
+        this.items = this.breadcrumbsElements.map((el, index) => {
             let width = el.offsetWidth;
 
             // We need to temporarily remove the hidden attribute to calculate the width
@@ -183,6 +172,7 @@ export class Breadcrumbs extends SpectrumElement {
             return {
                 label: el.innerText,
                 href: el.href,
+                value: el.value || index.toString(),
                 offsetWidth: width,
                 isVisible: true,
             };
@@ -192,7 +182,7 @@ export class Breadcrumbs extends SpectrumElement {
     private adjustOverflow(): void {
         let occupiedSpace = 0;
         let newVisibleItems = 0;
-        const availableSpace = this.list.clientWidth - this.paddings;
+        const availableSpace = this.list.clientWidth;
 
         if (this.hasMenu && this.menuRef.value) {
             occupiedSpace += this.menuRef.value.offsetWidth || 0;
@@ -233,25 +223,43 @@ export class Breadcrumbs extends SpectrumElement {
         }
     }
 
-    protected renderMenu(): TemplateResult {
-        const menuItems = this.items
-            .filter((item) => !item.isVisible)
-            .reverse();
+    protected handleMenuChange(event: Event & { target: ActionMenu }): void {
+        event.stopPropagation();
 
+        const selectDetail: BreadcrumbSelectDetail = {
+            value: event.target.value,
+        };
+
+        const selectionEvent = new CustomEvent('change', {
+            bubbles: true,
+            composed: true,
+            detail: selectDetail,
+        });
+
+        this.dispatchEvent(selectionEvent);
+    }
+
+    protected renderMenu(): TemplateResult {
         return html`
             <sp-breadcrumb-item role="listitem" is-menu>
                 <sp-action-menu
                     ${ref(this.menuRef)}
                     quiet
                     label=${this.menuLabel}
+                    selects="single"
+                    value=${this.items[this.items.length - 1].value}
+                    @change=${this.handleMenuChange}
                 >
                     <slot slot="icon" name="icon">
                         <sp-icon-folder-open class="icon"></sp-icon-folder-open>
                     </slot>
 
-                    ${menuItems.map(
+                    ${this.items.map(
                         (item) => html`
-                            <sp-menu-item href=${ifDefined(item.href)}>
+                            <sp-menu-item
+                                href=${ifDefined(item.href)}
+                                value=${item.value}
+                            >
                                 ${item.label}
                             </sp-menu-item>
                         `
