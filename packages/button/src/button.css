@@ -87,7 +87,6 @@ sp-progress-circle {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    background-color: red;
 }
 
 :host([pending]:not([disabled])) sp-progress-circle {
