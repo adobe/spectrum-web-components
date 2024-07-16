@@ -155,17 +155,6 @@ function conditionSelector(newSelector) {
     return selector;
 }
 
-const cssMod = (srcPath) => {
-    const [, css] = srcPath.split('node_modules/');
-    return css;
-};
-
-const css2swc = (process, srcPath, outPutPath) => {
-    const [, css] = srcPath.split('node_modules/');
-    const [, swc] = outPutPath.split('SWC alt/');
-    console.log(`${process}\t${css}\t${swc}`);
-};
-
 async function processComponent(componentPath) {
     const { default: config } = await import(
         path.join(componentPath, 'spectrum-config.js')
@@ -660,9 +649,6 @@ async function processComponent(componentPath) {
                     },
                     filename: systemsPath,
                 });
-                console.log(
-                    `component bridge\t${cssMod(bridgepath)}\t${systemsPath}`
-                );
                 fs.writeFileSync(
                     systemsPath,
                     `/*
@@ -847,7 +833,6 @@ governing permissions and limitations under the License.
             },
             filename: outputPath,
         });
-        console.log(`component\t${cssMod(sourcePath)}\t${outputPath}`);
         fs.writeFileSync(
             outputPath,
             `/*

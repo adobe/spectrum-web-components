@@ -140,12 +140,6 @@ const removeImportantComments = (css) => {
     return css.replaceAll(importantCommentRegExp, '');
 };
 
-const css2swc = (process, srcPath, outPutPath) => {
-    const [, css] = srcPath.split('node_modules/');
-    const [, swc] = outPutPath.split('SWC alt/');
-    console.log(`${process}\t${css}\t${swc}`);
-};
-
 /**
  * copies @spectrum-css/dist/css/*.css and @spectrum-css/dist/css/**\/*.css
  * replaces classes with :root, :host, and pastes them into
@@ -171,7 +165,6 @@ const processTokens = (srcPath, tokensDir) => {
             path.join(__dirname, '..', 'tools', 'styles', tokensDir, fileName),
             css
         );
-        css2swc('tokens', srcPath, outputPath);
     } catch (er) {}
 };
 
@@ -211,10 +204,6 @@ const processPackages = async (tokensDir, index) => {
             // check if spectrumPath exists
             if (fs.existsSync(spectrumPath)) {
                 let content = fs.readFileSync(spectrumPath, 'utf8');
-
-                if (packagename === 'actiongroup') {
-                    css2swc('packages', spectrumPath, outputPath);
-                }
                 content = removeImportantComments(targetHost(content));
                 fs.appendFileSync(
                     path.join(
@@ -240,12 +229,6 @@ export async function generateTokensWrapper(spectrumVersion) {
     console.log(`\n\n${spectrumVersion}`);
     const isSpectrumOne = Boolean(spectrumVersion === 'spectrum');
     const tokensDir = isSpectrumOne ? 'tokens' : 'tokens-v2';
-
-    css2swc(
-        'making directory',
-        'node_modules/ ',
-        path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'spectrum')
-    );
     fs.mkdirSync(
         path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'spectrum'),
         {
@@ -253,11 +236,6 @@ export async function generateTokensWrapper(spectrumVersion) {
         }
     );
     if (isSpectrumOne) {
-        css2swc(
-            'making directory',
-            'node_modules/ ',
-            path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'express')
-        );
         fs.mkdirSync(
             path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'express'),
             {
@@ -274,8 +252,6 @@ export async function generateTokensWrapper(spectrumVersion) {
         'spectrum',
         'global-vars.css'
     );
-
-    css2swc('emptying file', 'node_modules/ ', outputPath);
 
     fs.writeFileSync(
         path.join(
