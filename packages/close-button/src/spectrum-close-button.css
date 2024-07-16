@@ -143,7 +143,7 @@ governing permissions and limitations under the License.
     align-self: var(--mod-closebutton-align-self);
     inline-size: var(
         --mod-closebutton-width,
-        var(--spectrum-closebutton-width)
+        var(--spectrum-closebutton-width, var(--spectrum-closebutton-height))
     );
     block-size: var(
         --mod-closebutton-height,

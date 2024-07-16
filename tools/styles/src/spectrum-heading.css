@@ -12,6 +12,17 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
+.spectrum-Typography .spectrum-Heading {
+    --spectrum-heading-margin-start: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-top-multiplier)
+    );
+    --spectrum-heading-margin-end: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-bottom-multiplier)
+    );
+}
+
 @media (forced-colors: active) {
     .spectrum-Heading {
         --highcontrast-heading-font-color: Text;
@@ -19,6 +30,12 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Heading {
+    margin-block-start: 0;
+    margin-block-start: var(
+        --mod-heading-margin-start,
+        var(--spectrum-heading-margin-start, 0)
+    );
+    margin-block-end: 0;
     font-family: var(
         --mod-heading-sans-serif-font-family,
         var(--spectrum-heading-sans-serif-font-family)
@@ -40,7 +57,10 @@ governing permissions and limitations under the License.
         --highcontrast-heading-font-color,
         var(--mod-heading-font-color, var(--spectrum-heading-font-color))
     );
-    margin-block: 0;
+    margin-block-end: var(
+        --mod-heading-margin-end,
+        var(--spectrum-heading-margin-end, 0)
+    );
 }
 
 .spectrum-Heading .spectrum-Heading-strong,
@@ -537,16 +557,5 @@ governing permissions and limitations under the License.
     font-style: var(
         --mod-heading-serif-light-strong-emphasized-font-style,
         var(--spectrum-heading-serif-light-strong-emphasized-font-style)
-    );
-}
-
-.spectrum-Typography .spectrum-Heading {
-    margin-block-start: var(
-        --mod-heading-margin-start,
-        var(--spectrum-heading-margin-start)
-    );
-    margin-block-end: var(
-        --mod-heading-margin-end,
-        var(--spectrum-heading-margin-end)
     );
 }

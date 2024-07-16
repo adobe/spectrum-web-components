@@ -14,36 +14,36 @@ governing permissions and limitations under the License.
 
 :host([size='s']) {
     --spectrum-buttongroup-spacing-horizontal: var(
-        --system-buttongroup-size-s-spacing-horizontal
+        --system-button-group-size-s-spacing-horizontal
     );
     --spectrum-buttongroup-spacing-vertical: var(
-        --system-buttongroup-size-s-spacing-vertical
+        --system-button-group-size-s-spacing-vertical
     );
 }
 
 :host {
     --spectrum-buttongroup-spacing-horizontal: var(
-        --system-buttongroup-size-m-spacing-horizontal
+        --system-button-group-size-m-spacing-horizontal
     );
     --spectrum-buttongroup-spacing-vertical: var(
-        --system-buttongroup-size-m-spacing-vertical
+        --system-button-group-size-m-spacing-vertical
     );
 }
 
 :host([size='l']) {
     --spectrum-buttongroup-spacing-horizontal: var(
-        --system-buttongroup-size-l-spacing-horizontal
+        --system-button-group-size-l-spacing-horizontal
     );
     --spectrum-buttongroup-spacing-vertical: var(
-        --system-buttongroup-size-l-spacing-vertical
+        --system-button-group-size-l-spacing-vertical
     );
 }
 
 :host([size='xl']) {
     --spectrum-buttongroup-spacing-horizontal: var(
-        --system-buttongroup-size-xl-spacing-horizontal
+        --system-button-group-size-xl-spacing-horizontal
     );
     --spectrum-buttongroup-spacing-vertical: var(
-        --system-buttongroup-size-xl-spacing-vertical
+        --system-button-group-size-xl-spacing-vertical
     );
 }

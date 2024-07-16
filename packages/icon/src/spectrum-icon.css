@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
 :host {
     pointer-events: none;
     transform: var(--spectrum-icon-transform);
-    color: var(--mod-icon-color, inherit);
+    color: var(--mod-icon-color, var(--spectrum-icon-color, inherit));
     fill: currentColor;
     display: inline-block;
 }

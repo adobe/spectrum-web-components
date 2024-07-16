@@ -106,6 +106,40 @@ governing permissions and limitations under the License.
     );
 }
 
+.root.is-disabled,
+:host([disabled]) .root {
+    --spectrum-picker-button-background-color: var(
+        --spectrum-picker-button-background-color-disabled
+    );
+    --spectrum-picker-button-background-color-hover: var(
+        --spectrum-picker-button-background-color-hover-disabled
+    );
+    --spectrum-picker-button-background-color-down: var(
+        --spectrum-picker-button-background-color-down-disabled
+    );
+    --spectrum-picker-button-border-color: var(
+        --spectrum-picker-button-border-color-disabled
+    );
+    --spectrum-picker-button-font-color: var(
+        --spectrum-picker-button-font-color-disabled
+    );
+    --spectrum-picker-button-font-color-hover: var(
+        --spectrum-picker-button-font-color-hover-disabled
+    );
+    --spectrum-picker-button-font-color-down: var(
+        --spectrum-picker-button-font-color-down-disabled
+    );
+    --spectrum-picker-button-icon-color: var(
+        --spectrum-picker-button-icon-color-disabled
+    );
+    --spectrum-picker-button-icon-color-hover: var(
+        --spectrum-picker-button-icon-color-hover-disabled
+    );
+    --spectrum-picker-button-icon-color-down: var(
+        --spectrum-picker-button-icon-color-down-disabled
+    );
+}
+
 :host([position='right']) .spectrum-PickerButton-fill {
     border-start-start-radius: var(
         --mod-picker-button-border-radius-sided,

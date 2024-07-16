@@ -10,22 +10,56 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-:root,
-:host {
+.spectrum-Typography {
     font-family: var(--spectrum-font-family);
     font-size: var(--spectrum-font-size);
     font-style: var(--spectrum-font-style);
 }
 
-.spectrum:lang(ar) {
+.spectrum-Typography:lang(ar) {
     font-family: var(--spectrum-font-family-ar);
 }
 
-.spectrum:lang(he) {
+.spectrum-Typography:lang(he) {
     font-family: var(--spectrum-font-family-he);
 }
 
+.spectrum-Typography .spectrum-Heading {
+    --spectrum-heading-margin-start: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-top-multiplier)
+    );
+    --spectrum-heading-margin-end: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-bottom-multiplier)
+    );
+}
+
+.spectrum-Typography .spectrum-Body {
+    --spectrum-body-margin-end: calc(
+        var(--mod-body-font-size, var(--spectrum-body-font-size)) *
+            var(--spectrum-body-margin-multiplier)
+    );
+}
+
+.spectrum-Typography .spectrum-Detail {
+    --spectrum-detail-margin-start: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-top-multiplier)
+    );
+    --spectrum-detail-margin-end: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-bottom-multiplier)
+    );
+}
+
 .spectrum-Heading {
+    margin-block-start: 0;
+    margin-block-start: var(
+        --mod-heading-margin-start,
+        var(--spectrum-heading-margin-start, 0)
+    );
+    margin-block-end: 0;
     font-family: var(
         --mod-heading-sans-serif-font-family,
         var(--spectrum-heading-sans-serif-font-family)
@@ -47,7 +81,10 @@
         --highcontrast-heading-font-color,
         var(--mod-heading-font-color, var(--spectrum-heading-font-color))
     );
-    margin-block: 0;
+    margin-block-end: var(
+        --mod-heading-margin-end,
+        var(--spectrum-heading-margin-end, 0)
+    );
 }
 
 .spectrum-Heading .spectrum-Heading-strong,
@@ -547,18 +584,13 @@
     );
 }
 
-.spectrum-Typography .spectrum-Heading {
-    margin-block-start: var(
-        --mod-heading-margin-start,
-        var(--spectrum-heading-margin-start)
-    );
-    margin-block-end: var(
-        --mod-heading-margin-end,
-        var(--spectrum-heading-margin-end)
-    );
-}
-
 .spectrum-Body {
+    margin-block-start: 0;
+    margin-block-start: var(
+        --mod-body-margin-start,
+        var(--mod-body-margin, var(--spectrum-body-margin-start, 0))
+    );
+    margin-block-end: 0;
     font-family: var(
         --mod-body-sans-serif-font-family,
         var(--spectrum-body-sans-serif-font-family)
@@ -577,7 +609,10 @@
         --highcontrast-body-font-color,
         var(--mod-body-font-color, var(--spectrum-body-font-color))
     );
-    margin-block: 0;
+    margin-block-end: var(
+        --mod-body-margin-end,
+        var(--mod-body-margin, var(--spectrum-body-margin-end, 0))
+    );
 }
 
 .spectrum-Body .spectrum-Body-strong,
@@ -745,11 +780,13 @@
     );
 }
 
-.spectrum-Typography .spectrum-Body {
-    margin-block-end: var(--mod-body-margin, var(--spectrum-body-margin));
-}
-
 .spectrum-Detail {
+    margin-block-start: 0;
+    margin-block-start: var(
+        --mod-detail-margin-start,
+        var(--spectrum-detail-margin-start, 0)
+    );
+    margin-block-end: 0;
     font-family: var(
         --mod-detail-sans-serif-font-family,
         var(--spectrum-detail-sans-serif-font-family)
@@ -776,7 +813,10 @@
         --mod-detail-letter-spacing,
         var(--spectrum-detail-letter-spacing)
     );
-    margin-block: 0;
+    margin-block-end: var(
+        --mod-detail-margin-end,
+        var(--spectrum-detail-margin-end, 0)
+    );
 }
 
 .spectrum-Detail .spectrum-Detail-strong,
@@ -1098,18 +1138,13 @@
     );
 }
 
-.spectrum-Typography .spectrum-Detail {
-    margin-block-start: var(
-        --mod-detail-margin-start,
-        var(--spectrum-detail-margin-start)
-    );
-    margin-block-end: var(
-        --mod-detail-margin-end,
-        var(--spectrum-detail-margin-end)
-    );
-}
-
 .spectrum-Code {
+    margin-block-start: 0;
+    margin-block-start: var(
+        --mod-code-margin-start,
+        var(--spectrum-code-margin-end, 0)
+    );
+    margin-block-end: 0;
     font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
     font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
     font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
@@ -1119,7 +1154,10 @@
         --highcontrast-code-font-color,
         var(--mod-code-font-color, var(--spectrum-code-font-color))
     );
-    margin-block: 0;
+    margin-block-end: var(
+        --mod-code-margin-end,
+        var(--spectrum-code-margin-end, 0)
+    );
 }
 
 .spectrum-Code .spectrum-Code-strong,
@@ -1258,14 +1296,6 @@
     --spectrum-heading-cjk-font-family: var(--spectrum-cjk-font-family-stack);
     --spectrum-heading-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
     --spectrum-heading-font-color: var(--spectrum-heading-color);
-    --spectrum-heading-margin-start: calc(
-        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
-            var(--spectrum-heading-margin-top-multiplier)
-    );
-    --spectrum-heading-margin-end: calc(
-        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
-            var(--spectrum-heading-margin-bottom-multiplier)
-    );
 }
 
 .spectrum-Heading--sizeXXS {
@@ -1316,10 +1346,6 @@
     --spectrum-body-serif-font-family: var(--spectrum-serif-font-family-stack);
     --spectrum-body-cjk-font-family: var(--spectrum-cjk-font-family-stack);
     --spectrum-body-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
-    --spectrum-body-margin: calc(
-        var(--mod-body-font-size, var(--spectrum-body-font-size)) *
-            var(--spectrum-body-margin-multiplier)
-    );
     --spectrum-body-font-color: var(--spectrum-body-color);
 }
 
@@ -1360,14 +1386,6 @@
         --spectrum-serif-font-family-stack
     );
     --spectrum-detail-cjk-font-family: var(--spectrum-cjk-font-family-stack);
-    --spectrum-detail-margin-start: calc(
-        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
-            var(--spectrum-detail-margin-top-multiplier)
-    );
-    --spectrum-detail-margin-end: calc(
-        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
-            var(--spectrum-detail-margin-bottom-multiplier)
-    );
     --spectrum-detail-font-color: var(--spectrum-detail-color);
 }
 

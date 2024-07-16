@@ -35,3 +35,7 @@ governing permissions and limitations under the License.
 :host([size='xl']) {
     --spectrum-icon-size: var(--system-icon-size-xl-size);
 }
+
+:host([size='xxl']) {
+    --spectrum-icon-size: var(--system-icon-size-xxl-size);
+}

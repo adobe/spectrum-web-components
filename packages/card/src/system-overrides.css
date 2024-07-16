@@ -96,7 +96,7 @@ governing permissions and limitations under the License.
 
 :host .spectrum--lightest {
     --spectrum-card-selected-background-color-rgb: var(
-        --system-card-lightest-descendant-of-selected-background-color-rgb
+        --system-card-lightest-selected-background-color-rgb
     );
 }
 

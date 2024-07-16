@@ -13,8 +13,6 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
-    --spectrum-divider-thickness: var(--system-divider-thickness);
-    --spectrum-divider-background-color: var(--system-divider-background-color);
     --spectrum-divider-background-color-small: var(
         --system-divider-background-color-small
     );
@@ -42,6 +40,8 @@ governing permissions and limitations under the License.
     --spectrum-divider-background-color-large-static-black: var(
         --system-divider-background-color-large-static-black
     );
+    --spectrum-divider-thickness: var(--system-divider-thickness);
+    --spectrum-divider-background-color: var(--system-divider-background-color);
 }
 
 :host([size='s']) {

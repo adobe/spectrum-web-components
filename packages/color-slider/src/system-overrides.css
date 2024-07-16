@@ -14,21 +14,21 @@ governing permissions and limitations under the License.
 
 :host {
     --spectrum-color-slider-handle-margin-block: var(
-        --system-colorslider-color-slider-handle-margin-block
+        --system-color-slider-handle-margin-block
     );
     --spectrum-color-slider-border-color-rgba: var(
-        --system-colorslider-color-slider-border-color-rgba
+        --system-color-slider-border-color-rgba
     );
     --spectrum-color-slider-checkerboard-size: var(
-        --system-colorslider-color-slider-checkerboard-size
+        --system-color-slider-checkerboard-size
     );
     --spectrum-color-slider-checkerboard-dark-color: var(
-        --system-colorslider-color-slider-checkerboard-dark-color
+        --system-color-slider-checkerboard-dark-color
     );
     --spectrum-color-slider-checkerboard-light-color: var(
-        --system-colorslider-color-slider-checkerboard-light-color
+        --system-color-slider-checkerboard-light-color
     );
     --mod-colorhandle-hitarea-border-radius: var(
-        --system-colorslider-colorhandle-hitarea-border-radius
+        --system-color-slider-colorhandle-hitarea-border-radius
     );
 }
