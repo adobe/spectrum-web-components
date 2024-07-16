@@ -362,34 +362,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             | undefined;
     }
 
-    protected handleBeforetoggle(
-        event: Event & {
-            target: Overlay;
-            newState: 'open' | 'closed';
-        }
-    ): void {
-        if (event.composedPath()[0] !== event.target) {
-            return;
-        }
-        if (event.newState === 'closed') {
-            if (this.preventNextToggle === 'no') {
-                this.open = false;
-            } else if (!this.pointerdownState) {
-                // Prevent browser driven closure while opening the Picker
-                // and the expected event series has not completed.
-                this.overlayElement.manuallyKeepOpen();
-            }
-            this._selfManageFocusElement = false;
-        }
-        if (!this.open) {
-            this.optionsMenu.updateSelectedItemIndex();
-            this.optionsMenu.closeDescendentOverlays();
-        }
-    }
-
-    protected handleSlottableRequest = (
-        _event: SlottableRequestEvent
-    ): void => {};
+    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
 
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
