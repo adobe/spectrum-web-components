@@ -162,36 +162,3 @@ governing permissions and limitations under the License.
         );
     }
 }
-
-:host {
-    --spectrum-alert-banner-netural-background: var(
-        --spectrum-neutral-subdued-background-color-default
-    );
-    --spectrum-alert-banner-min-height: var(
-        --spectrum-alert-banner-minimum-height
-    );
-    --spectrum-alert-banner-max-inline-size: var(--spectrum-alert-banner-width);
-    --spectrum-alert-banner-size: auto;
-    --spectrum-alert-banner-font-size: var(--spectrum-font-size-100);
-    --spectrum-alert-banner-icon-size: var(--spectrum-workflow-icon-size-100);
-    --spectrum-alert-banner-icon-to-text: var(--spectrum-text-to-visual-300);
-    --spectrum-alert-banner-start-edge: var(--spectrum-spacing-300);
-    --spectrum-alert-banner-text-to-button-horizontal: var(
-        --spectrum-spacing-300
-    );
-    --spectrum-alert-banner-text-to-divider: var(--spectrum-spacing-300);
-    --spectrum-alert-banner-top-icon: var(
-        --spectrum-alert-banner-top-to-workflow-icon
-    );
-    --spectrum-alert-banner-top-text: var(--spectrum-alert-banner-top-to-text);
-    --spectrum-alert-banner-bottom-text: var(
-        --spectrum-alert-banner-bottom-to-text
-    );
-    --spectrum-alert-banner-informative-background: var(
-        --spectrum-informative-background-color-default
-    );
-    --spectrum-alert-banner-negative-background: var(
-        --spectrum-negative-background-color-default
-    );
-    --spectrum-alert-banner-font-color: var(--spectrum-white);
-}

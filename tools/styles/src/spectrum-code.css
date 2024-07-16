@@ -143,30 +143,3 @@ governing permissions and limitations under the License.
         var(--spectrum-code-cjk-strong-emphasized-font-style)
     );
 }
-
-.spectrum-Code {
-    --spectrum-code-font-family: var(--spectrum-code-font-family-stack);
-    --spectrum-code-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
-    --spectrum-code-font-color: var(--spectrum-code-color);
-}
-
-.spectrum-Code--sizeXS {
-    --spectrum-code-font-size: var(--spectrum-code-size-xs);
-}
-
-.spectrum-Code--sizeS {
-    --spectrum-code-font-size: var(--spectrum-code-size-s);
-}
-
-.spectrum-Code,
-.spectrum-Code--sizeM {
-    --spectrum-code-font-size: var(--spectrum-code-size-m);
-}
-
-.spectrum-Code--sizeL {
-    --spectrum-code-font-size: var(--spectrum-code-size-l);
-}
-
-.spectrum-Code--sizeXL {
-    --spectrum-code-font-size: var(--spectrum-code-size-xl);
-}
