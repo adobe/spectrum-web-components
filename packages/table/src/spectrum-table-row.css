@@ -239,7 +239,7 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
-    --mod-table-border-color: var(
+    --spectrum-table-border-color: var(
         --highcontrast-table-focus-indicator-color,
         transparent
     );

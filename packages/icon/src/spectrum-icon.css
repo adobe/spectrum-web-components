@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
 :host {
     pointer-events: none;
     transform: var(--spectrum-icon-transform);
-    color: var(--mod-icon-color, inherit);
+    color: var(--mod-icon-color, var(--spectrum-icon-color, inherit));
     fill: currentColor;
     display: inline-block;
 }
@@ -45,28 +45,4 @@ governing permissions and limitations under the License.
     :host {
         forced-color-adjust: auto;
     }
-}
-
-:host {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
-}
-
-:host([size='xxs']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-xxs);
-}
-
-:host([size='xs']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
-}
-
-:host([size='s']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
-}
-
-:host([size='l']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
-}
-
-:host([size='xl']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
 }

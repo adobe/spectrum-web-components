@@ -144,11 +144,6 @@ governing permissions and limitations under the License.
     --spectrum-table-selected-cell-background-color-focus: var(
         --system-table-selected-cell-background-color-focus
     );
-    --mod-thumbnail-size: var(--system-table-thumbnail-size);
-}
-
-:host:dir(rtl) {
-    --spectrum-logical-rotation: var(--system-table-dir-rtl-logical-rotation);
 }
 
 :host([size='s']) {
@@ -290,157 +285,165 @@ governing permissions and limitations under the License.
 }
 
 :host([density='compact']) {
-    --mod-table-min-row-height: var(--system-table-compact-min-row-height);
-    --mod-table-row-top-to-text: var(--system-table-compact-row-top-to-text);
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-min-row-height: var(--system-table-compact-min-row-height);
+    --spectrum-table-row-top-to-text: var(
+        --system-table-compact-row-top-to-text
+    );
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-compact-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-compact-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-compact-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(--system-table-compact-thumbnail-size);
+    --spectrum-table-thumbnail-size: var(--system-table-compact-thumbnail-size);
 }
 
 :host([density='compact'][size='s']) {
-    --mod-table-min-row-height: var(
+    --spectrum-table-min-row-height: var(
         --system-table-compact-size-s-min-row-height
     );
-    --mod-table-row-top-to-text: var(
+    --spectrum-table-row-top-to-text: var(
         --system-table-compact-size-s-row-top-to-text
     );
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-compact-size-s-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-compact-size-s-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-compact-size-s-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(
+    --spectrum-table-thumbnail-size: var(
         --system-table-compact-size-s-thumbnail-size
     );
 }
 
 :host([density='compact'][size='l']) {
-    --mod-table-min-row-height: var(
+    --spectrum-table-min-row-height: var(
         --system-table-compact-size-l-min-row-height
     );
-    --mod-table-row-top-to-text: var(
+    --spectrum-table-row-top-to-text: var(
         --system-table-compact-size-l-row-top-to-text
     );
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-compact-size-l-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-compact-size-l-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-compact-size-l-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(
+    --spectrum-table-thumbnail-size: var(
         --system-table-compact-size-l-thumbnail-size
     );
 }
 
 :host([density='compact'][size='xl']) {
-    --mod-table-min-row-height: var(
+    --spectrum-table-min-row-height: var(
         --system-table-compact-size-xl-min-row-height
     );
-    --mod-table-row-top-to-text: var(
+    --spectrum-table-row-top-to-text: var(
         --system-table-compact-size-xl-row-top-to-text
     );
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-compact-size-xl-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-compact-size-xl-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-compact-size-xl-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(
+    --spectrum-table-thumbnail-size: var(
         --system-table-compact-size-xl-thumbnail-size
     );
 }
 
 :host([density='spacious']) {
-    --mod-table-min-row-height: var(--system-table-spacious-min-row-height);
-    --mod-table-row-top-to-text: var(--system-table-spacious-row-top-to-text);
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-min-row-height: var(
+        --system-table-spacious-min-row-height
+    );
+    --spectrum-table-row-top-to-text: var(
+        --system-table-spacious-row-top-to-text
+    );
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-spacious-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-spacious-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-spacious-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(--system-table-spacious-thumbnail-size);
+    --spectrum-table-thumbnail-size: var(
+        --system-table-spacious-thumbnail-size
+    );
 }
 
 :host([density='spacious'][size='s']) {
-    --mod-table-min-row-height: var(
+    --spectrum-table-min-row-height: var(
         --system-table-spacious-size-s-min-row-height
     );
-    --mod-table-row-top-to-text: var(
+    --spectrum-table-row-top-to-text: var(
         --system-table-spacious-size-s-row-top-to-text
     );
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-spacious-size-s-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-spacious-size-s-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-spacious-size-s-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(
+    --spectrum-table-thumbnail-size: var(
         --system-table-spacious-size-s-thumbnail-size
     );
 }
 
 :host([density='spacious'][size='l']) {
-    --mod-table-min-row-height: var(
+    --spectrum-table-min-row-height: var(
         --system-table-spacious-size-l-min-row-height
     );
-    --mod-table-row-top-to-text: var(
+    --spectrum-table-row-top-to-text: var(
         --system-table-spacious-size-l-row-top-to-text
     );
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-spacious-size-l-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-spacious-size-l-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-spacious-size-l-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(
+    --spectrum-table-thumbnail-size: var(
         --system-table-spacious-size-l-thumbnail-size
     );
 }
 
 :host([density='spacious'][size='xl']) {
-    --mod-table-min-row-height: var(
+    --spectrum-table-min-row-height: var(
         --system-table-spacious-size-xl-min-row-height
     );
-    --mod-table-row-top-to-text: var(
+    --spectrum-table-row-top-to-text: var(
         --system-table-spacious-size-xl-row-top-to-text
     );
-    --mod-table-row-bottom-to-text: var(
+    --spectrum-table-row-bottom-to-text: var(
         --system-table-spacious-size-xl-row-bottom-to-text
     );
-    --mod-table-row-checkbox-block-spacing: var(
+    --spectrum-table-row-checkbox-block-spacing: var(
         --system-table-spacious-size-xl-row-checkbox-block-spacing
     );
-    --mod-table-thumbnail-block-spacing: var(
+    --spectrum-table-thumbnail-block-spacing: var(
         --system-table-spacious-size-xl-thumbnail-block-spacing
     );
-    --mod-table-thumbnail-size: var(
+    --spectrum-table-thumbnail-size: var(
         --system-table-spacious-size-xl-thumbnail-size
     );
 }
@@ -455,14 +458,14 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) {
-    --mod-table-border-radius: var(--system-table-quiet-border-radius);
-    --mod-table-outer-border-inline-width: var(
+    --spectrum-table-border-radius: var(--system-table-quiet-border-radius);
+    --spectrum-table-outer-border-inline-width: var(
         --system-table-quiet-outer-border-inline-width
     );
-    --mod-table-header-background-color: var(
+    --spectrum-table-header-background-color: var(
         --system-table-quiet-header-background-color
     );
-    --mod-table-row-background-color: var(
+    --spectrum-table-row-background-color: var(
         --system-table-quiet-row-background-color
     );
 }

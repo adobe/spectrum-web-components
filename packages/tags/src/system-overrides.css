@@ -217,6 +217,14 @@ governing permissions and limitations under the License.
     --spectrum-tag-clear-button-spacing-block: var(
         --system-tag-clear-button-spacing-block
     );
+    --spectrum-tag-corner-radius: var(--system-tag-corner-radius);
+    --spectrum-tag-spacing-inline-start: var(--system-tag-spacing-inline-start);
+    --spectrum-tag-label-spacing-inline-end: var(
+        --system-tag-label-spacing-inline-end
+    );
+    --spectrum-tag-clear-button-spacing-inline-end: var(
+        --system-tag-clear-button-spacing-inline-end
+    );
 }
 
 :host([size='s']) {

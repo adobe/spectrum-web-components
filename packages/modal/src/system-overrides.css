@@ -14,25 +14,25 @@ governing permissions and limitations under the License.
 
 :host {
     --spectrum-modal-confirm-exit-animation-delay: var(
-        --system-al-mod-confirm-exit-animation-delay
+        --system-modal-confirm-exit-animation-delay
     );
-    --spectrum-modal-fullscreen-margin: var(--system-al-mod-fullscreen-margin);
-    --spectrum-modal-max-height: var(--system-al-mod-max-height);
-    --spectrum-modal-max-width: var(--system-al-mod-max-width);
-    --spectrum-modal-background-color: var(--system-al-mod-background-color);
+    --spectrum-modal-fullscreen-margin: var(--system-modal-fullscreen-margin);
+    --spectrum-modal-max-height: var(--system-modal-max-height);
+    --spectrum-modal-max-width: var(--system-modal-max-width);
+    --spectrum-modal-background-color: var(--system-modal-background-color);
     --spectrum-modal-confirm-border-radius: var(
-        --system-al-mod-confirm-border-radius
+        --system-modal-confirm-border-radius
     );
     --spectrum-modal-confirm-exit-animation-duration: var(
-        --system-al-mod-confirm-exit-animation-duration
+        --system-modal-confirm-exit-animation-duration
     );
     --spectrum-modal-confirm-entry-animation-duration: var(
-        --system-al-mod-confirm-entry-animation-duration
+        --system-modal-confirm-entry-animation-duration
     );
     --spectrum-modal-confirm-entry-animation-delay: var(
-        --system-al-mod-confirm-entry-animation-delay
+        --system-modal-confirm-entry-animation-delay
     );
     --spectrum-modal-transition-animation-duration: var(
-        --system-al-mod-transition-animation-duration
+        --system-modal-transition-animation-duration
     );
 }

@@ -27,17 +27,12 @@ governing permissions and limitations under the License.
         --system-textfield-border-color-keyboard-focus
     );
     --spectrum-textfield-border-width: var(--system-textfield-border-width);
-    --spectrum-textfield-input-line-height: var(
-        --system-textfield-input-line-height
-    );
     --spectrum-texfield-animation-duration: var(
         --system-textfield-texfield-animation-duration
     );
     --spectrum-textfield-width: var(--system-textfield-width);
     --spectrum-textfield-min-width: var(--system-textfield-min-width);
     --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius);
-    --spectrum-textfield-height: var(--system-textfield-height);
-    --spectrum-textfield-spacing-inline: var(--system-textfield-spacing-inline);
     --spectrum-textfield-spacing-inline-quiet: var(
         --system-textfield-spacing-inline-quiet
     );
@@ -53,70 +48,28 @@ governing permissions and limitations under the License.
     --spectrum-textfield-label-spacing-block: var(
         --system-textfield-label-spacing-block
     );
-    --spectrum-textfield-label-spacing-block-quiet: var(
-        --system-textfield-label-spacing-block-quiet
-    );
-    --spectrum-textfield-label-spacing-inline-side-label: var(
-        --system-textfield-label-spacing-inline-side-label
-    );
     --spectrum-textfield-helptext-spacing-block: var(
         --system-textfield-helptext-spacing-block
-    );
-    --spectrum-textfield-icon-size-invalid: var(
-        --system-textfield-icon-size-invalid
-    );
-    --spectrum-textfield-icon-size-valid: var(
-        --system-textfield-icon-size-valid
-    );
-    --spectrum-textfield-icon-spacing-inline-start-invalid: var(
-        --system-textfield-icon-spacing-inline-start-invalid
-    );
-    --spectrum-textfield-icon-spacing-inline-end-invalid: var(
-        --system-textfield-icon-spacing-inline-end-invalid
     );
     --spectrum-textfield-icon-spacing-inline-end-quiet-invalid: var(
         --system-textfield-icon-spacing-inline-end-quiet-invalid
     );
-    --spectrum-textfield-icon-spacing-block-invalid: var(
-        --system-textfield-icon-spacing-block-invalid
-    );
-    --spectrum-textfield-icon-spacing-inline-start-valid: var(
-        --system-textfield-icon-spacing-inline-start-valid
-    );
-    --spectrum-textfield-icon-spacing-inline-end-valid: var(
-        --system-textfield-icon-spacing-inline-end-valid
-    );
     --spectrum-textfield-icon-spacing-inline-end-quiet-valid: var(
         --system-textfield-icon-spacing-inline-end-quiet-valid
     );
-    --spectrum-textfield-icon-spacing-block-valid: var(
-        --system-textfield-icon-spacing-block-valid
-    );
     --spectrum-textfield-font-family: var(--system-textfield-font-family);
     --spectrum-textfield-font-weight: var(--system-textfield-font-weight);
-    --spectrum-textfield-placeholder-font-size: var(
-        --system-textfield-placeholder-font-size
-    );
     --spectrum-textfield-character-count-font-family: var(
         --system-textfield-character-count-font-family
     );
     --spectrum-textfield-character-count-font-weight: var(
         --system-textfield-character-count-font-weight
     );
-    --spectrum-textfield-character-count-font-size: var(
-        --system-textfield-character-count-font-size
-    );
     --spectrum-textfield-character-count-spacing-inline: var(
         --system-textfield-character-count-spacing-inline
     );
-    --spectrum-textfield-character-count-spacing-block: var(
-        --system-textfield-character-count-spacing-block
-    );
     --spectrum-textfield-character-count-spacing-inline-side: var(
         --system-textfield-character-count-spacing-inline-side
-    );
-    --spectrum-textfield-character-count-spacing-block-side: var(
-        --system-textfield-character-count-spacing-block-side
     );
     --spectrum-textfield-focus-indicator-width: var(
         --system-textfield-focus-indicator-width
@@ -190,12 +143,59 @@ governing permissions and limitations under the License.
     --spectrum-text-area-min-block-size: var(
         --system-textfield-text-area-min-block-size
     );
+    --spectrum-textfield-height: var(--system-textfield-height);
+    --spectrum-textfield-label-spacing-block-quiet: var(
+        --system-textfield-label-spacing-block-quiet
+    );
+    --spectrum-textfield-label-spacing-inline-side-label: var(
+        --system-textfield-label-spacing-inline-side-label
+    );
+    --spectrum-textfield-placeholder-font-size: var(
+        --system-textfield-placeholder-font-size
+    );
+    --spectrum-textfield-spacing-inline: var(--system-textfield-spacing-inline);
+    --spectrum-textfield-icon-size-invalid: var(
+        --system-textfield-icon-size-invalid
+    );
+    --spectrum-textfield-icon-size-valid: var(
+        --system-textfield-icon-size-valid
+    );
+    --spectrum-textfield-icon-spacing-inline-end-invalid: var(
+        --system-textfield-icon-spacing-inline-end-invalid
+    );
+    --spectrum-textfield-icon-spacing-inline-end-valid: var(
+        --system-textfield-icon-spacing-inline-end-valid
+    );
+    --spectrum-textfield-icon-spacing-block-invalid: var(
+        --system-textfield-icon-spacing-block-invalid
+    );
+    --spectrum-textfield-icon-spacing-block-valid: var(
+        --system-textfield-icon-spacing-block-valid
+    );
+    --spectrum-textfield-icon-spacing-inline-start-invalid: var(
+        --system-textfield-icon-spacing-inline-start-invalid
+    );
+    --spectrum-textfield-icon-spacing-inline-start-valid: var(
+        --system-textfield-icon-spacing-inline-start-valid
+    );
+    --spectrum-textfield-character-count-font-size: var(
+        --system-textfield-character-count-font-size
+    );
+    --spectrum-textfield-character-count-spacing-block: var(
+        --system-textfield-character-count-spacing-block
+    );
+    --spectrum-textfield-character-count-spacing-block-quiet: var(
+        --system-textfield-character-count-spacing-block-quiet
+    );
+    --spectrum-textfield-character-count-spacing-block-side: var(
+        --system-textfield-character-count-spacing-block-side
+    );
     --spectrum-text-area-min-block-size-quiet: var(
         --system-textfield-text-area-min-block-size-quiet
     );
 }
 
-:host([size='s']) {
+:host([size='s']) #textfield {
     --spectrum-textfield-height: var(--system-textfield-size-s-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-s-label-spacing-block-quiet
@@ -250,7 +250,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host {
+:host #textfield {
     --spectrum-textfield-height: var(--system-textfield-size-m-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-m-label-spacing-block-quiet
@@ -305,7 +305,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([size='l']) {
+:host([size='l']) #textfield {
     --spectrum-textfield-height: var(--system-textfield-size-l-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-l-label-spacing-block-quiet
@@ -360,7 +360,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([size='xl']) {
+:host([size='xl']) #textfield {
     --spectrum-textfield-height: var(--system-textfield-size-xl-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-xl-label-spacing-block-quiet

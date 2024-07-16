@@ -168,7 +168,9 @@ async function processComponent(componentPath) {
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
     for await (const conversion of conversions) {
-        const sourcePath = require.resolve(conversion.inPackage);
+        const sourcePath = require
+            .resolve(conversion.inPackage)
+            .replace('index.css', 'index-base.css');
         var sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
 
         const outputPath = path.join(
@@ -647,7 +649,6 @@ async function processComponent(componentPath) {
                     },
                     filename: systemsPath,
                 });
-
                 fs.writeFileSync(
                     systemsPath,
                     `/*
@@ -832,7 +833,6 @@ governing permissions and limitations under the License.
             },
             filename: outputPath,
         });
-
         fs.writeFileSync(
             outputPath,
             `/*

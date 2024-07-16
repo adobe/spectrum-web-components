@@ -75,14 +75,3 @@ governing permissions and limitations under the License.
         --highcontrast-contextual-help-body-color: CanvasText;
     }
 }
-
-:host {
-    --spectrum-contextual-help-padding: var(--spectrum-spacing-400);
-    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
-    --spectrum-contextual-help-link-spacing: var(--spectrum-spacing-300);
-    --spectrum-contextual-help-heading-size: var(
-        --spectrum-contextual-help-title-size
-    );
-    --spectrum-contextual-help-heading-color: var(--spectrum-heading-color);
-    --spectrum-contextual-help-body-color: var(--spectrum-body-color);
-}

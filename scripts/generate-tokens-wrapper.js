@@ -132,7 +132,7 @@ const targetHost = (css) => {
     return css.replaceAll(spectrumThemeSelectorRegExp, ':host,\n:root {');
 };
 
-const removeImporantComments = (css) => {
+const removeImportantComments = (css) => {
     /**
      * Spectrum CSS uses /*! comments that are "not" removable.
      * These comments pile up in merged files, so we _need_ to remove them.
@@ -140,15 +140,25 @@ const removeImporantComments = (css) => {
     return css.replaceAll(importantCommentRegExp, '');
 };
 
+/**
+ * copies @spectrum-css/dist/css/*.css and @spectrum-css/dist/css/**\/*.css
+ * replaces classes with :root, :host, and pastes them into
+ * corresponding /tools/styles/*.css and /tools/styles/tokens/**\/*.css
+ * @param {string} srcPath @spectrum-css/dist/css path
+ * @param {*} tokensDir styles/tokens path
+ */
 const processTokens = (srcPath, tokensDir) => {
     let css = fs.readFileSync(srcPath, 'utf8');
     const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
-    css = removeImporantComments(targetHost(css));
-
-    // s2 doesn't need express tokens
-    if (tokensDir === 'tokens-v2' && fileName.startsWith('express')) {
-        return;
-    }
+    const outputPath = path.join(
+        __dirname,
+        '..',
+        'tools',
+        'styles',
+        tokensDir,
+        fileName
+    );
+    css = removeImportantComments(targetHost(css));
 
     try {
         fs.writeFileSync(
@@ -159,10 +169,6 @@ const processTokens = (srcPath, tokensDir) => {
 };
 
 const processPackages = async (tokensDir, index) => {
-    if (tokensDir === 'tokens') {
-        return;
-    }
-
     const packagename = tokenPackages[index];
 
     let componentLevelTokensPath = path.join(
@@ -175,89 +181,61 @@ const processPackages = async (tokensDir, index) => {
         'css',
         'components'
     );
-    const spectrumPath = path.join(
-        componentLevelTokensPath,
-        'spectrum',
-        packagename + '.css'
-    );
-    // check if spectrumPath exists
-    if (fs.existsSync(spectrumPath)) {
-        let spectrum = fs.readFileSync(spectrumPath, 'utf8');
-        spectrum = removeImporantComments(targetHost(spectrum));
-        fs.appendFileSync(
-            path.join(
-                __dirname,
-                '..',
-                'tools',
-                'styles',
-                tokensDir,
-                'spectrum',
-                'global-vars.css'
-            ),
-            spectrum
-        );
-    }
 
-    const legacyPath = path.join(
-        componentLevelTokensPath,
-        'legacy',
-        packagename + '.css'
-    );
-    // check if legacyPath exists
-    if (fs.existsSync(legacyPath)) {
-        let legacy = fs.readFileSync(legacyPath, 'utf8');
-        legacy = removeImporantComments(targetHost(legacy));
-        fs.appendFileSync(
-            path.join(
+    return Promise.all(
+        ['spectrum', 'express', 'spectrum-two'].map((type) => {
+            const outputDir = type !== 'spectrum-two' ? 'tokens' : 'tokens-v2';
+            const outputType = outputDir === 'tokens-v2' ? 'spectrum' : type;
+            const spectrumPath = path.join(
+                componentLevelTokensPath,
+                type,
+                packagename + '.css'
+            );
+            const outputPath = path.join(
                 __dirname,
                 '..',
                 'tools',
                 'styles',
-                'tokens',
-                'spectrum',
+                outputDir,
+                outputType,
                 'global-vars.css'
-            ),
-            legacy
-        );
-    }
+            );
 
-    const expressPath = path.join(
-        componentLevelTokensPath,
-        'express',
-        packagename + '.css'
+            // check if spectrumPath exists
+            if (fs.existsSync(spectrumPath)) {
+                let content = fs.readFileSync(spectrumPath, 'utf8');
+                content = removeImportantComments(targetHost(content));
+                fs.appendFileSync(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'tools',
+                        'styles',
+                        outputDir,
+                        outputType,
+                        'global-vars.css'
+                    ),
+                    content
+                );
+            }
+        })
     );
-    // check if expressPath exists
-    if (fs.existsSync(expressPath)) {
-        let express = fs.readFileSync(expressPath, 'utf8');
-        express = removeImporantComments(targetHost(express));
-        fs.appendFileSync(
-            path.join(
-                __dirname,
-                '..',
-                'tools',
-                'styles',
-                'tokens',
-                'express',
-                'global-vars.css'
-            ),
-            express
-        );
-    }
 };
 
 /**
  * Core entry function
  */
 export async function generateTokensWrapper(spectrumVersion) {
-    const tokensDir = spectrumVersion === 'spectrum' ? 'tokens' : 'tokens-v2';
+    console.log(`\n\n${spectrumVersion}`);
+    const isSpectrumOne = Boolean(spectrumVersion === 'spectrum');
+    const tokensDir = isSpectrumOne ? 'tokens' : 'tokens-v2';
     fs.mkdirSync(
         path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'spectrum'),
         {
             recursive: true,
         }
     );
-
-    if (spectrumVersion === 'spectrum') {
+    if (isSpectrumOne) {
         fs.mkdirSync(
             path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'express'),
             {
@@ -265,6 +243,15 @@ export async function generateTokensWrapper(spectrumVersion) {
             }
         );
     }
+    const outputPath = path.join(
+        __dirname,
+        '..',
+        'tools',
+        'styles',
+        tokensDir,
+        'spectrum',
+        'global-vars.css'
+    );
 
     fs.writeFileSync(
         path.join(
@@ -278,13 +265,13 @@ export async function generateTokensWrapper(spectrumVersion) {
         ),
         ''
     );
-
     for (const tokensPath of await fg([`${tokensRoot(tokensDir)}`])) {
-        processTokens(tokensPath, tokensDir);
+        processTokens(tokensPath, tokensDir, isSpectrumOne);
     }
-
-    const processes = packagePaths.map((path, index) => {
-        return processPackages(tokensDir, index);
-    });
-    await Promise.all(processes);
+    if (isSpectrumOne) return;
+    return Promise.all(
+        packagePaths.map((_, index) => {
+            return processPackages(tokensDir, index);
+        })
+    );
 }

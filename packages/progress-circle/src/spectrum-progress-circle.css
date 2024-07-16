@@ -659,37 +659,3 @@ governing permissions and limitations under the License.
         transform: rotate(270deg);
     }
 }
-
-:host {
-    --spectrum-progress-circle-track-border-color: var(--spectrum-gray-200);
-    --spectrum-progress-circle-fill-border-color: var(
-        --spectrum-accent-content-color-default
-    );
-    --spectrum-progress-circle-track-border-color-over-background: var(
-        --spectrum-transparent-white-300
-    );
-    --spectrum-progress-circle-fill-border-color-over-background: var(
-        --spectrum-transparent-white-900
-    );
-    --spectrum-progress-circle-size: var(
-        --spectrum-progress-circle-size-medium
-    );
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-medium
-    );
-    --spectrum-progress-circle-track-border-style: solid;
-}
-
-:host([size='s']) {
-    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-small);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-small
-    );
-}
-
-:host([size='l']) {
-    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-large
-    );
-}

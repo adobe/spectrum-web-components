@@ -83,11 +83,8 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-control-selected-color-focus: var(
         --system-checkbox-control-selected-color-focus
     );
-    --spectrum-checkbox-font-size: var(--system-checkbox-font-size);
     --spectrum-checkbox-line-height: var(--system-checkbox-line-height);
     --spectrum-checkbox-line-height-cjk: var(--system-checkbox-line-height-cjk);
-    --spectrum-checkbox-height: var(--system-checkbox-height);
-    --spectrum-checkbox-control-size: var(--system-checkbox-control-size);
     --spectrum-checkbox-control-corner-radius: var(
         --system-checkbox-control-corner-radius
     );
@@ -101,11 +98,14 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-selected-border-width: var(
         --system-checkbox-selected-border-width
     );
-    --spectrum-checkbox-top-to-text: var(--system-checkbox-top-to-text);
-    --spectrum-checkbox-text-to-control: var(--system-checkbox-text-to-control);
     --spectrum-checkbox-animation-duration: var(
         --system-checkbox-animation-duration
     );
+    --spectrum-checkbox-font-size: var(--system-checkbox-font-size);
+    --spectrum-checkbox-height: var(--system-checkbox-height);
+    --spectrum-checkbox-control-size: var(--system-checkbox-control-size);
+    --spectrum-checkbox-top-to-text: var(--system-checkbox-top-to-text);
+    --spectrum-checkbox-text-to-control: var(--system-checkbox-text-to-control);
 }
 
 :host([size='s']) {
@@ -117,6 +117,18 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-top-to-text: var(--system-checkbox-size-s-top-to-text);
     --spectrum-checkbox-text-to-control: var(
         --system-checkbox-size-s-text-to-control
+    );
+}
+
+:host {
+    --spectrum-checkbox-font-size: var(--system-checkbox-size-m-font-size);
+    --spectrum-checkbox-height: var(--system-checkbox-size-m-height);
+    --spectrum-checkbox-control-size: var(
+        --system-checkbox-size-m-control-size
+    );
+    --spectrum-checkbox-top-to-text: var(--system-checkbox-size-m-top-to-text);
+    --spectrum-checkbox-text-to-control: var(
+        --system-checkbox-size-m-text-to-control
     );
 }
 
