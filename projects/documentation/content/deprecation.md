@@ -77,7 +77,7 @@ const enableScrollIntoView = () => {
 ```js
 window.__swc.warn(
     this,
-    `<${this.localName}> is deprecated. Use a Button Group to show any additional actions related to the most critical action.`,
+    `<${this.localName}> is deprecated and will be removed in the SWC 1.0 release. Use a Button Group to show any additional actions related to the most critical action.`,
     'https://opensource.adobe.com/spectrum-web-components/components/split-button/#deprecation',
     { level: 'deprecation' }
 );
@@ -99,7 +99,7 @@ window.__swc.warn(
 {
     "name": "@spectrum-web-components/split-button",
     "version": "0.0.1",
-    "deprecationNotice": "@spectrum-web-components/split-button is deprecated."
+    "deprecationNotice": "@spectrum-web-components/split-button is deprecated and will be removed in the SWC 1.0 release."
 }
 ```
 

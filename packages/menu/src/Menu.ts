@@ -587,6 +587,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected navigateBetweenRelatedMenus(event: KeyboardEvent): void {
         const { key } = event;
+        event.stopPropagation();
         const shouldOpenSubmenu =
             (this.isLTR && key === 'ArrowRight') ||
             (!this.isLTR && key === 'ArrowLeft');
@@ -594,7 +595,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             (this.isLTR && key === 'ArrowLeft') ||
             (!this.isLTR && key === 'ArrowRight');
         if (shouldOpenSubmenu) {
-            event.stopPropagation();
             const lastFocusedItem = this.childItems[this.focusedItemIndex];
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
@@ -602,7 +602,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 lastFocusedItem.openOverlay();
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
-            event.stopPropagation();
             this.dispatchEvent(new Event('close', { bubbles: true }));
             this.updateSelectedItemIndex();
         }
