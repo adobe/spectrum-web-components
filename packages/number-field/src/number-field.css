@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-number-field.css');
-@import url('./system-overrides.css');
 
 :host {
     inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
