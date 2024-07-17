@@ -14,49 +14,33 @@ governing permissions and limitations under the License.
 
 :host {
     --spectrum-alert-banner-netural-background: var(
-        --system-alertbanner-alert-banner-netural-background
+        --system-alert-banner-netural-background
     );
-    --spectrum-alert-banner-min-height: var(
-        --system-alertbanner-alert-banner-min-height
-    );
+    --spectrum-alert-banner-min-height: var(--system-alert-banner-min-height);
     --spectrum-alert-banner-max-inline-size: var(
-        --system-alertbanner-alert-banner-max-inline-size
+        --system-alert-banner-max-inline-size
     );
-    --spectrum-alert-banner-size: var(--system-alertbanner-alert-banner-size);
-    --spectrum-alert-banner-font-size: var(
-        --system-alertbanner-alert-banner-font-size
-    );
-    --spectrum-alert-banner-icon-size: var(
-        --system-alertbanner-alert-banner-icon-size
-    );
+    --spectrum-alert-banner-size: var(--system-alert-banner-size);
+    --spectrum-alert-banner-font-size: var(--system-alert-banner-font-size);
+    --spectrum-alert-banner-icon-size: var(--system-alert-banner-icon-size);
     --spectrum-alert-banner-icon-to-text: var(
-        --system-alertbanner-alert-banner-icon-to-text
+        --system-alert-banner-icon-to-text
     );
-    --spectrum-alert-banner-start-edge: var(
-        --system-alertbanner-alert-banner-start-edge
-    );
+    --spectrum-alert-banner-start-edge: var(--system-alert-banner-start-edge);
     --spectrum-alert-banner-text-to-button-horizontal: var(
-        --system-alertbanner-alert-banner-text-to-button-horizontal
+        --system-alert-banner-text-to-button-horizontal
     );
     --spectrum-alert-banner-text-to-divider: var(
-        --system-alertbanner-alert-banner-text-to-divider
+        --system-alert-banner-text-to-divider
     );
-    --spectrum-alert-banner-top-icon: var(
-        --system-alertbanner-alert-banner-top-icon
-    );
-    --spectrum-alert-banner-top-text: var(
-        --system-alertbanner-alert-banner-top-text
-    );
-    --spectrum-alert-banner-bottom-text: var(
-        --system-alertbanner-alert-banner-bottom-text
-    );
+    --spectrum-alert-banner-top-icon: var(--system-alert-banner-top-icon);
+    --spectrum-alert-banner-top-text: var(--system-alert-banner-top-text);
+    --spectrum-alert-banner-bottom-text: var(--system-alert-banner-bottom-text);
     --spectrum-alert-banner-informative-background: var(
-        --system-alertbanner-alert-banner-informative-background
+        --system-alert-banner-informative-background
     );
     --spectrum-alert-banner-negative-background: var(
-        --system-alertbanner-alert-banner-negative-background
+        --system-alert-banner-negative-background
     );
-    --spectrum-alert-banner-font-color: var(
-        --system-alertbanner-alert-banner-font-color
-    );
+    --spectrum-alert-banner-font-color: var(--system-alert-banner-font-color);
 }

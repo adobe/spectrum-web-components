@@ -13,19 +13,19 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
-    --spectrum-colorwheel-width: var(--system-colorwheel-width);
-    --spectrum-colorwheel-min-width: var(--system-colorwheel-min-width);
-    --spectrum-colorwheel-height: var(--system-colorwheel-height);
-    --spectrum-colorwheel-border-color: var(--system-colorwheel-border-color);
-    --spectrum-colorwheel-border-width: var(--system-colorwheel-border-width);
+    --spectrum-colorwheel-width: var(--system-color-wheel-width);
+    --spectrum-colorwheel-min-width: var(--system-color-wheel-min-width);
+    --spectrum-colorwheel-height: var(--system-color-wheel-height);
+    --spectrum-colorwheel-border-color: var(--system-color-wheel-border-color);
+    --spectrum-colorwheel-border-width: var(--system-color-wheel-border-width);
     --spectrum-colorwheel-fill-color-disabled: var(
-        --system-colorwheel-fill-color-disabled
+        --system-color-wheel-fill-color-disabled
     );
-    --spectrum-colorwheel-track-width: var(--system-colorwheel-track-width);
+    --spectrum-colorwheel-track-width: var(--system-color-wheel-track-width);
     --spectrum-colorwheel-colorarea-margin: var(
-        --system-colorwheel-colorarea-margin
+        --system-color-wheel-colorarea-margin
     );
     --spectrum-colorwheel-colorhandle-position: var(
-        --system-colorwheel-colorhandle-position
+        --system-color-wheel-colorhandle-position
     );
 }

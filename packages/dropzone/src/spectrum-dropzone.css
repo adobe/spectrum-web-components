@@ -111,7 +111,10 @@ governing permissions and limitations under the License.
         var(--spectrum-drop-zone-border-color)
     );
     border-style: dashed;
-    border-style: var(--mod-drop-zone-border-style, dashed);
+    border-style: var(
+        --mod-drop-zone-border-style,
+        var(--spectrum-drop-zone-border-style, dashed)
+    );
     border-width: var(
         --mod-drop-zone-border-width,
         var(--spectrum-drop-zone-border-width)
@@ -133,8 +136,8 @@ governing permissions and limitations under the License.
 
 :host([dragged]) {
     --spectrum-drop-zone-border-style: var(
-        --mod-drop-zone-border-style--dragged,
-        var(--mod-drop-zone-border-style-dragged, solid)
+        --mod-drop-zone-border-style-dragged,
+        solid
     );
     --spectrum-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
@@ -186,7 +189,10 @@ governing permissions and limitations under the License.
 .spectrum-DropZone-content {
     z-index: 1;
     display: none;
-    display: var(--mod-drop-zone-content-display, none);
+    display: var(
+        --mod-drop-zone-content-display,
+        var(--spectrum-drop-zone-content-display, none)
+    );
     justify-content: center;
     align-items: center;
     block-size: 100%;

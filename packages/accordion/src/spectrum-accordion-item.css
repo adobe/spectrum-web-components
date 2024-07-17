@@ -92,10 +92,7 @@ governing permissions and limitations under the License.
 #header {
     cursor: pointer;
     box-sizing: border-box;
-    min-block-size: var(
-        --mod-accordion-min-block-size,
-        var(--spectrum-accordion-min-block-size)
-    );
+    min-block-size: var(--mod-accordion-min-block-size, var(--_min-block-size));
     padding-block: var(
             --mod-accordion-item-header-top-to-text-space,
             var(--spectrum-accordion-item-header-top-to-text-space)
@@ -263,10 +260,7 @@ governing permissions and limitations under the License.
         0px,
         calc(
             (
-                    var(
-                            --mod-accordion-min-block-size,
-                            var(--spectrum-accordion-min-block-size)
-                        ) -
+                    var(--mod-accordion-min-block-size, var(--_min-block-size)) -
                         var(
                             --mod-accordion-disclosure-indicator-height,
                             var(

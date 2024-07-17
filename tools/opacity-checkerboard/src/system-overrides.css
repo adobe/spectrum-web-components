@@ -14,15 +14,15 @@ governing permissions and limitations under the License.
 
 .opacity-checkerboard {
     --spectrum-opacity-checkerboard-dark: var(
-        --system-opacitycheckerboard-opacity-checkerboard-dark
+        --system-opacity-checkerboard-dark
     );
     --spectrum-opacity-checkerboard-light: var(
-        --system-opacitycheckerboard-opacity-checkerboard-light
+        --system-opacity-checkerboard-light
     );
     --spectrum-opacity-checkerboard-size: var(
-        --system-opacitycheckerboard-opacity-checkerboard-size
+        --system-opacity-checkerboard-size
     );
     --spectrum-opacity-checkerboard-position: var(
-        --system-opacitycheckerboard-opacity-checkerboard-position
+        --system-opacity-checkerboard-position
     );
 }

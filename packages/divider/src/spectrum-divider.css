@@ -100,10 +100,6 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
-    --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-medium
-    );
     --spectrum-divider-background-color-small: var(--spectrum-gray-200);
     --spectrum-divider-background-color-medium: var(--spectrum-gray-200);
     --spectrum-divider-background-color-large: var(--spectrum-gray-800);
@@ -130,20 +126,24 @@ governing permissions and limitations under the License.
 :host([size='s']) {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
     --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-small
+        --spectrum-divider-background-color-small,
+        var(--spectrum-gray-200)
     );
 }
 
+:host,
 :host {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
     --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-medium
+        --spectrum-divider-background-color-medium,
+        var(--spectrum-gray-200)
     );
 }
 
 :host([size='l']) {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
     --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-large
+        --spectrum-divider-background-color-large,
+        var(--spectrum-gray-800)
     );
 }

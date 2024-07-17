@@ -13,26 +13,26 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 :host {
-    --spectrum-fieldlabel-min-height: var(--system-fieldlabel-min-height);
-    --spectrum-fieldlabel-color: var(--system-fieldlabel-color);
+    --spectrum-fieldlabel-min-height: var(--system-field-label-min-height);
+    --spectrum-fieldlabel-color: var(--system-field-label-color);
     --spectrum-field-label-text-to-asterisk: var(
-        --system-fieldlabel-field-label-text-to-asterisk
+        --system-field-label-text-to-asterisk
     );
-    --spectrum-fieldlabel-font-weight: var(--system-fieldlabel-font-weight);
-    --spectrum-fieldlabel-line-height: var(--system-fieldlabel-line-height);
+    --spectrum-fieldlabel-font-weight: var(--system-field-label-font-weight);
+    --spectrum-fieldlabel-line-height: var(--system-field-label-line-height);
     --spectrum-fieldlabel-line-height-cjk: var(
-        --system-fieldlabel-line-height-cjk
+        --system-field-label-line-height-cjk
     );
-    --spectrum-fieldlabel-top-to-text: var(--system-fieldlabel-top-to-text);
+    --spectrum-fieldlabel-top-to-text: var(--system-field-label-top-to-text);
     --spectrum-fieldlabel-bottom-to-text: var(
-        --system-fieldlabel-bottom-to-text
+        --system-field-label-bottom-to-text
     );
-    --spectrum-fieldlabel-font-size: var(--system-fieldlabel-font-size);
+    --spectrum-fieldlabel-font-size: var(--system-field-label-font-size);
     --spectrum-fieldlabel-side-margin-block-start: var(
-        --system-fieldlabel-side-margin-block-start
+        --system-field-label-side-margin-block-start
     );
     --spectrum-fieldlabel-side-padding-right: var(
-        --system-fieldlabel-side-padding-right
+        --system-field-label-side-padding-right
     );
 }
 
