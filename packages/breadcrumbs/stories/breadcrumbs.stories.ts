@@ -36,20 +36,32 @@ export default {
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
-export const ShowRoot = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-breadcrumbs show-root max-visible-items=${6}>
-            ${getBreadcrumbs(args.nrOfItems)}
-        </sp-breadcrumbs>
-    `;
-};
-
 export const Links = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-breadcrumbs>
             ${getBreadcrumbsWithLinks(args.nrOfItems)}
         </sp-breadcrumbs>
     `;
+};
+
+export const CollapsibleBehaviour = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-breadcrumbs>${getBreadcrumbs(args.nrOfItems)}</sp-breadcrumbs>
+    `;
+};
+CollapsibleBehaviour.args = {
+    nrOfItems: 6,
+};
+
+export const ShowRoot = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-breadcrumbs show-root>
+            ${getBreadcrumbs(args.nrOfItems)}
+        </sp-breadcrumbs>
+    `;
+};
+ShowRoot.args = {
+    nrOfItems: 6,
 };
 
 export const resizableBehavior = (args: StoryArgs): TemplateResult => {

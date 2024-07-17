@@ -32,38 +32,42 @@ import { Breadcrumbs, BreadcrumbItem } from '@spectrum-web-components/breadcrumb
 </sp-breadcrumbs>
 ```
 
-As recommended by [Spectrum Design](https://spectrum.adobe.com/page/breadcrumbs/#Don%E2%80%99t-show-too-many-breadcrumbs-at-once), by default the maximum visible breadcrumbs is 4. If you want to override this, you can use the `max-visible-items` attribute.
+## Links
+
+By default, `sp-breadcrumbs` emits a `change` event when clicking on one of its children.
+However, there may be cases in which these should redirect to another page. This can be achieved by using the `href` attribute instead of `value`.
+Please note that the `change` event will no longer be triggered in this case.
+
+```html
+<sp-breadcrumbs>
+    <sp-breadcrumb-item href="https://opensource.adobe.com/home">
+        Home
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href="https://opensource.adobe.com/trend">
+        Trend
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href="https://opensource.adobe.com/assets">
+        March 2019 Assets
+    </sp-breadcrumb-item>
+</sp-breadcrumbs>
+```
 
 ## Overflowing
 
 When the space is limited or the maximum number of visible items is reached, the component will render the first breadcrumbs inside an action menu. If needed, the last breadcrumb item will be truncated and will render a tooltip with the full text.
 
+As recommended by [Spectrum Design](https://spectrum.adobe.com/page/breadcrumbs/#Don%E2%80%99t-show-too-many-breadcrumbs-at-once), by default the maximum visible breadcrumbs is 4. If you want to override this, you can use the `max-visible-items` attribute.
+
 ```html
-<sp-breadcrumbs show-root>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/stuff">
-        Your stuff
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/team">
-        Team
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/inprogress">
-        In progress
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/files">
-        Files
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/trend">
-        Trend
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/winter">
-        Winter
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/assets">
-        Assets
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/18x24">
-        18x24
-    </sp-breadcrumb-item>
+<sp-breadcrumbs>
+    <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="team">Team</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="in_progress">In progress</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -73,24 +77,12 @@ The `show-root` attribute will always render the root breadcrumb item, even if t
 
 ```html
 <sp-breadcrumbs show-root>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/stuff">
-        Your stuff
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/files">
-        Files
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/trend">
-        Trend
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/winter">
-        Winter
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/assets">
-        Assets
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/18x24">
-        18x24
-    </sp-breadcrumb-item>
+    <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="team">Files</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="18x24">18x24</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
 
@@ -102,20 +94,10 @@ The component offers the possibility to replace the action menu's icon with a cu
 <sp-breadcrumbs menu-label="Settings">
     <sp-icon-settings slot="icon"></sp-icon-settings>
 
-    <sp-breadcrumb-item href="https://opensource.adobe.com/displays">
-        Displays
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/main">
-        Main display
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/brightness">
-        Brightness
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/presets">
-        Presets
-    </sp-breadcrumb-item>
-    <sp-breadcrumb-item href="https://opensource.adobe.com/1">
-        Preset #1
-    </sp-breadcrumb-item>
+    <sp-breadcrumb-item value="displays">Displays</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="main">Main display</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="brightness">Brightness</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="presets">Presets</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="1">Preset #1</sp-breadcrumb-item>
 </sp-breadcrumbs>
 ```
