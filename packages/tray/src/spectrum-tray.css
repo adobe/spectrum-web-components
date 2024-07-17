@@ -11,10 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 .tray {
     --mod-modal-max-width: 100%;
     box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
     max-block-size: calc(
         100vh -
             var(
@@ -67,8 +68,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-tray-exit-animation-delay)
             );
     outline: none;
-    inline-size: 100%;
-    max-inline-size: 100%;
     margin-block-start: var(
         --mod-tray-spacing-edge-to-tray-safe-zone,
         var(--spectrum-tray-spacing-edge-to-tray-safe-zone)

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host,
     :host([size='l']),
@@ -28,6 +27,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    inline-size: 100%;
     block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
     background-color: var(
         --mod-divider-background-color,
@@ -42,7 +42,6 @@ governing permissions and limitations under the License.
         --mod-divider-thickness,
         var(--spectrum-divider-thickness)
     );
-    inline-size: 100%;
     overflow: visible;
 }
 
@@ -94,9 +93,9 @@ governing permissions and limitations under the License.
         --mod-divider-thickness,
         var(--spectrum-divider-thickness)
     );
+    block-size: 100%;
     block-size: var(--mod-divider-vertical-height, 100%);
     margin-block: var(--mod-divider-vertical-margin);
-    block-size: 100%;
 }
 
 :host {

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-progress-circle-fill-border-color: Highlight;
@@ -67,8 +66,8 @@ governing permissions and limitations under the License.
 }
 
 .fills {
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
@@ -122,8 +121,8 @@ governing permissions and limitations under the License.
 .fillMask1,
 .fillMask2 {
     transform-origin: 100%;
-    block-size: 100%;
     inline-size: 50%;
+    block-size: 100%;
     position: absolute;
     overflow: hidden;
     transform: rotate(180deg);
@@ -132,8 +131,8 @@ governing permissions and limitations under the License.
 .fillSubMask1,
 .fillSubMask2 {
     transform-origin: 100%;
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
     overflow: hidden;
     transform: rotate(-180deg);
 }

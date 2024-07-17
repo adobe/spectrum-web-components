@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
+    max-inline-size: 100%;
     min-block-size: var(--mod-checkbox-height, var(--spectrum-checkbox-height));
     color: var(
         --highcontrast-checkbox-content-color-default,
@@ -23,7 +23,6 @@ governing permissions and limitations under the License.
     );
     vertical-align: top;
     align-items: flex-start;
-    max-inline-size: 100%;
     display: inline-flex;
     position: relative;
 }
@@ -303,6 +302,18 @@ governing permissions and limitations under the License.
         );
     }
 
+    :host([emphasized][indeterminate]:hover) #box:before,
+    :host([emphasized][indeterminate]:hover) #input:checked + #box:before,
+    :host([emphasized]:hover) #input:checked + #box:before {
+        border-color: var(
+            --highcontrast-checkbox-color-hover,
+            var(
+                --mod-checkbox-emphasized-color-hover,
+                var(--spectrum-checkbox-emphasized-color-hover)
+            )
+        );
+    }
+
     :host([emphasized][invalid][invalid][indeterminate]:hover) #box:before,
     :host([emphasized][invalid][invalid][indeterminate]:hover)
         #input:checked
@@ -407,13 +418,13 @@ governing permissions and limitations under the License.
     cursor: pointer;
     z-index: 1;
     box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 100%;
     color: var(
         --mod-checkbox-control-color-default,
         var(--spectrum-checkbox-control-color-default)
     );
     opacity: 0.0001;
-    block-size: 100%;
-    inline-size: 100%;
     margin: 0;
     padding: 0;
     font-family: inherit;

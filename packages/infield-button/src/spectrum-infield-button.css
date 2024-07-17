@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host(:is(:active, [active])):not(:disabled),
     :host(:focus-visible):not(:disabled) {
@@ -47,6 +46,8 @@ governing permissions and limitations under the License.
 }
 
 .fill {
+    inline-size: 100%;
+    block-size: 100%;
     padding: var(
         --mod-infield-button-fill-padding,
         var(--spectrum-infield-button-fill-padding)
@@ -83,8 +84,6 @@ governing permissions and limitations under the License.
         --mod-infield-button-border-radius,
         var(--spectrum-infield-button-border-radius)
     );
-    block-size: 100%;
-    inline-size: 100%;
 }
 
 ::slotted(*) {

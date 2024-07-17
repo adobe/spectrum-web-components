@@ -11,12 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
+    max-inline-size: 100%;
     min-block-size: var(--mod-switch-height, var(--spectrum-switch-min-height));
     vertical-align: top;
     align-items: flex-start;
-    max-inline-size: 100%;
     display: inline-flex;
     position: relative;
 }
@@ -25,9 +24,9 @@ governing permissions and limitations under the License.
     cursor: pointer;
     z-index: 1;
     box-sizing: border-box;
-    opacity: 0;
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
+    opacity: 0;
     margin: 0;
     padding: 0;
     position: absolute;
@@ -610,54 +609,54 @@ governing permissions and limitations under the License.
     }
 
     #input:not(:checked) + #switch {
-        box-shadow: inset 0 0 0 1px buttontext;
+        box-shadow: inset 0 0 0 1px ButtonText;
     }
 
     @media (hover: hover) {
         :host(:hover) #input:not(:checked) + #switch {
-            box-shadow: inset 0 0 0 1px highlight;
+            box-shadow: inset 0 0 0 1px Highlight;
         }
 
         :host([disabled][checked]:hover) #input + #switch,
         :host([disabled][checked]:hover) #input + #switch {
-            background-color: graytext;
-            box-shadow: inset 0 0 0 1px graytext;
+            background-color: GrayText;
+            box-shadow: inset 0 0 0 1px GrayText;
         }
 
         :host([disabled][checked]:hover) #input + #switch:before,
         :host([disabled][checked]:hover) #input + #switch:before {
-            background-color: buttonface;
-            border-color: graytext;
+            background-color: ButtonFace;
+            border-color: GrayText;
         }
     }
 
     :host([disabled]) #input:not(:checked) + #switch,
     :host([disabled]) #input:not(:checked) + #switch {
-        background-color: buttonface;
-        box-shadow: inset 0 0 0 1px graytext;
+        background-color: ButtonFace;
+        box-shadow: inset 0 0 0 1px GrayText;
     }
 
     :host([disabled]) #input:not(:checked) + #switch:before,
     :host([disabled]) #input:not(:checked) + #switch:before {
-        background-color: buttonface;
-        border-color: graytext;
+        background-color: ButtonFace;
+        border-color: GrayText;
     }
 
     :host([disabled][checked]) #input + #switch,
     :host([disabled][checked]) #input + #switch {
-        background-color: graytext;
-        box-shadow: inset 0 0 0 1px graytext;
+        background-color: GrayText;
+        box-shadow: inset 0 0 0 1px GrayText;
     }
 
     :host([disabled][checked]) #input + #switch:before,
     :host([disabled][checked]) #input + #switch:before {
-        background-color: buttonface;
-        border-color: graytext;
+        background-color: ButtonFace;
+        border-color: GrayText;
     }
 
     :host([disabled]) #input ~ #label,
     :host([disabled]) #input ~ #label {
-        color: graytext;
+        color: GrayText;
     }
 }
 

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-illustrated-message-illustration-color: CanvasText;
@@ -25,11 +24,11 @@ governing permissions and limitations under the License.
     display: flex;
     display: var(--mod-illustrated-message-display, flex);
     max-inline-size: var(--mod-illustrated-message-content-maximum-width);
+    block-size: 100%;
     text-align: center;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
 }
 
 #illustration {
@@ -65,7 +64,6 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-heading-max-inline-size,
         var(--spectrum-illustrated-message-heading-max-inline-size)
     );
-    margin-block: 0;
     font-family: var(
         --mod-illustrated-message-title-font-family,
         var(--spectrum-illustrated-message-title-font-family)
@@ -90,6 +88,7 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-title-color,
         var(--spectrum-illustrated-message-title-color)
     );
+    margin-block-start: 0;
     margin-block-end: var(--mod-illustrated-message-heading-to-body, 0);
 }
 

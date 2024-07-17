@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-button-animation-duration: var(
         --system-button-animation-duration
@@ -74,6 +73,106 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-focus-ring-border-radius: var(
         --system-button-focus-ring-border-radius
+    );
+}
+
+:host([size='s']) {
+    --spectrum-button-min-width: var(--system-button-size-s-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-s-border-radius);
+    --spectrum-button-height: var(--system-button-size-s-height);
+    --spectrum-button-font-size: var(--system-button-size-s-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-s-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-s-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-s-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-s-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-s-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-s-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-s-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-s-intended-icon-size
+    );
+}
+
+:host {
+    --spectrum-button-min-width: var(--system-button-size-m-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-m-border-radius);
+    --spectrum-button-height: var(--system-button-size-m-height);
+    --spectrum-button-font-size: var(--system-button-size-m-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-m-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-m-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-m-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-m-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-m-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-m-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-m-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-m-intended-icon-size
+    );
+}
+
+:host([size='l']) {
+    --spectrum-button-min-width: var(--system-button-size-l-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-l-border-radius);
+    --spectrum-button-height: var(--system-button-size-l-height);
+    --spectrum-button-font-size: var(--system-button-size-l-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-l-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-l-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-l-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-l-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-l-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-l-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-l-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-l-intended-icon-size
+    );
+}
+
+:host([size='xl']) {
+    --spectrum-button-min-width: var(--system-button-size-xl-min-width);
+    --spectrum-button-border-radius: var(--system-button-size-xl-border-radius);
+    --spectrum-button-height: var(--system-button-size-xl-height);
+    --spectrum-button-font-size: var(--system-button-size-xl-font-size);
+    --spectrum-button-edge-to-visual: var(
+        --system-button-size-xl-edge-to-visual
+    );
+    --spectrum-button-edge-to-visual-only: var(
+        --system-button-size-xl-edge-to-visual-only
+    );
+    --spectrum-button-edge-to-text: var(--system-button-size-xl-edge-to-text);
+    --spectrum-button-padding-label-to-icon: var(
+        --system-button-size-xl-padding-label-to-icon
+    );
+    --spectrum-button-top-to-text: var(--system-button-size-xl-top-to-text);
+    --spectrum-button-bottom-to-text: var(
+        --system-button-size-xl-bottom-to-text
+    );
+    --spectrum-button-top-to-icon: var(--system-button-size-xl-top-to-icon);
+    --spectrum-button-intended-icon-size: var(
+        --system-button-size-xl-intended-icon-size
     );
 }
 

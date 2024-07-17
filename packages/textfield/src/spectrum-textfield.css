@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 #textfield {
     inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
     text-indent: 0;
@@ -28,11 +27,11 @@ governing permissions and limitations under the License.
 :host([quiet]) #textfield:after {
     pointer-events: none;
     content: '';
+    inline-size: 100%;
     block-size: var(
         --mod-textfield-focus-indicator-width,
         var(--spectrum-textfield-focus-indicator-width)
     );
-    inline-size: 100%;
     position: absolute;
     inset-block-end: calc(
         (
@@ -201,6 +200,7 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Textfield-characterCount {
+    inline-size: auto;
     font-family: var(
         --mod-textfield-character-count-font-family,
         var(--spectrum-textfield-character-count-font-family)
@@ -216,7 +216,6 @@ governing permissions and limitations under the License.
     grid-area: 1 / 2 / auto / span 1;
     justify-content: flex-end;
     align-items: flex-end;
-    inline-size: auto;
     margin-block-end: var(
         --mod-textfield-character-count-spacing-block,
         var(--spectrum-textfield-character-count-spacing-block)
@@ -244,6 +243,7 @@ governing permissions and limitations under the License.
 
 .input {
     box-sizing: border-box;
+    inline-size: 100%;
     min-inline-size: var(
         --mod-textfield-min-width,
         var(--spectrum-textfield-min-width)
@@ -343,7 +343,6 @@ governing permissions and limitations under the License.
         ease-in-out;
     outline: none;
     grid-area: 2 / 1 / auto / span 2;
-    inline-size: 100%;
     margin: 0;
 }
 

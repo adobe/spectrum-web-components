@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-menu-item-background-color-default: ButtonFace;
@@ -35,8 +34,8 @@ governing permissions and limitations under the License.
 
 :host {
     box-sizing: border-box;
-    inline-size: var(--mod-menu-inline-size, auto);
     inline-size: auto;
+    inline-size: var(--mod-menu-inline-size, auto);
     margin: 0;
     padding: 0;
     list-style-type: none;

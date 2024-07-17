@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-colorwheel-border-color-disabled: GrayText;
@@ -71,23 +70,23 @@ governing permissions and limitations under the License.
 }
 
 .colorarea-container {
+    inline-size: 100%;
+    block-size: auto;
     margin: var(
         --mod-colorwheel-colorarea-margin,
         var(--spectrum-colorwheel-colorarea-margin)
     );
     justify-content: center;
     align-items: center;
-    block-size: auto;
-    inline-size: 100%;
     display: flex;
 }
 
 .slider {
     pointer-events: none;
     z-index: 0;
-    opacity: 0;
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
+    opacity: 0;
     margin: 0;
     position: absolute;
     inset-block-start: 0;

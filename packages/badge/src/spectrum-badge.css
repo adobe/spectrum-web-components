@@ -11,15 +11,15 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host {
-        border-color: canvastext;
+        border-color: CanvasText;
     }
 }
 
 :host {
     cursor: default;
+    inline-size: auto;
     min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -33,7 +33,6 @@ governing permissions and limitations under the License.
         var(--spectrum-badge-corner-radius)
     );
     border: 1px solid #0000;
-    inline-size: auto;
     display: inline-flex;
     position: relative;
 }

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     cursor: pointer;
     inline-size: var(
@@ -96,6 +95,8 @@ governing permissions and limitations under the License.
 }
 
 .fill {
+    inline-size: 100%;
+    block-size: 100%;
     background-color: var(
         --mod-clear-button-background-color,
         var(--spectrum-clear-button-background-color)
@@ -103,8 +104,6 @@ governing permissions and limitations under the License.
     border-radius: 100%;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
-    inline-size: 100%;
     display: flex;
 }
 

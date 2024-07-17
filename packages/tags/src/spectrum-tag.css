@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
+    max-inline-size: 100%;
     block-size: var(--mod-tag-height, var(--spectrum-tag-height));
     color: var(
         --highcontrast-tag-content-color,
@@ -63,7 +63,6 @@ governing permissions and limitations under the License.
             ease-in-out;
     outline: none;
     align-items: center;
-    max-inline-size: 100%;
     padding-inline-start: calc(
         var(
                 --mod-tag-spacing-inline-start,
@@ -169,6 +168,7 @@ governing permissions and limitations under the License.
 .label {
     cursor: default;
     box-sizing: border-box;
+    block-size: 100%;
     font-size: var(--mod-tag-font-size, var(--spectrum-tag-font-size));
     font-weight: var(
         --mod-tag-label-font-weight,
@@ -181,7 +181,6 @@ governing permissions and limitations under the License.
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: auto;
-    block-size: 100%;
     margin-inline-end: calc(
         var(
                 --mod-tag-label-spacing-inline-end,

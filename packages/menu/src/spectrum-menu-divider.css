@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-menu-divider-thickness: var(--spectrum-divider-thickness-medium);
+    inline-size: auto;
     margin-block: var(
         --mod-menu-section-divider-margin-block,
         max(
@@ -28,7 +28,6 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
-    inline-size: auto;
     overflow: visible;
 }
 

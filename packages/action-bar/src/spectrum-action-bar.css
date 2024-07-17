@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host,
     :host([emphasized]) #popover {
@@ -72,6 +71,7 @@ governing permissions and limitations under the License.
     position: var(--mod-actionbar-position);
     z-index: 1;
     box-sizing: border-box;
+    block-size: 0;
     block-size: var(--mod-actionbar-block-size, 0);
     padding: 0
         var(
@@ -80,7 +80,6 @@ governing permissions and limitations under the License.
         );
     opacity: 0;
     opacity: var(--mod-actionbar-opacity, 0);
-    block-size: 0;
     inset-block-end: 0;
     inset-inline: 0;
 }
@@ -98,6 +97,7 @@ governing permissions and limitations under the License.
 #popover {
     pointer-events: auto;
     box-sizing: border-box;
+    inline-size: 100%;
     inline-size: var(--mod-actionbar-popover-inline-size, 100%);
     block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     background-color: var(
@@ -137,7 +137,6 @@ governing permissions and limitations under the License.
         var(--spectrum-actionbar-corner-radius)
     );
     flex-direction: row;
-    inline-size: 100%;
     margin: auto;
     padding-block: 0;
     display: flex;

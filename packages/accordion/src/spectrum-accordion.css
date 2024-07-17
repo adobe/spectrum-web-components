@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --_min-block-size: max(
         var(--mod-accordion-item-height, var(--spectrum-accordion-item-height)),
@@ -34,6 +33,13 @@ governing permissions and limitations under the License.
                 )
         )
     );
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+}
+
+:host {
     --spectrum-accordion-item-height: var(--spectrum-component-height-200);
     --spectrum-accordion-item-width: var(--spectrum-accordion-minimum-width);
     --spectrum-accordion-disclosure-indicator-height: var(
@@ -133,10 +139,6 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-color
     );
     --spectrum-accordion-divider-color: var(--spectrum-gray-200);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: block;
 }
 
 :host:dir(rtl) {

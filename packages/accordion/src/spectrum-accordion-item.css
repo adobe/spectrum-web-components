@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     z-index: inherit;
     min-inline-size: var(
@@ -92,6 +91,7 @@ governing permissions and limitations under the License.
 #header {
     cursor: pointer;
     box-sizing: border-box;
+    inline-size: 100%;
     min-block-size: var(--mod-accordion-min-block-size, var(--_min-block-size));
     padding-block: var(
             --mod-accordion-item-header-top-to-text-space,
@@ -134,7 +134,6 @@ governing permissions and limitations under the License.
     );
     border: none;
     order: 2;
-    inline-size: 100%;
     padding-inline-start: calc(
         var(
                 --mod-accordion-disclosure-indicator-to-text-space,

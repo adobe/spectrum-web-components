@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     pointer-events: none;
     transform: var(--spectrum-icon-transform);
+    color: inherit;
     color: var(--mod-icon-color, var(--spectrum-icon-color, inherit));
     fill: currentColor;
     display: inline-block;

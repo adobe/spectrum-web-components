@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 ::slotted([slot='icon']) {
     color: var(
         --highcontrast-menu-item-color-default,
@@ -131,6 +130,10 @@ governing permissions and limitations under the License.
 
 #label {
     grid-area: submenuItemLabelArea;
+}
+
+::slotted([slot='value']) {
+    grid-area: submenuItemValueArea;
 }
 
 :host([focused]),

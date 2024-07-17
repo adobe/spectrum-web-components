@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     box-sizing: border-box;
     min-inline-size: var(
@@ -42,8 +41,8 @@ governing permissions and limitations under the License.
 :host:after,
 :host:before {
     content: '';
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
@@ -531,11 +530,11 @@ governing permissions and limitations under the License.
         --mod-card-minimum-width,
         var(--spectrum-card-minimum-width)
     );
+    block-size: 100%;
     background-color: initial;
     border-width: 0;
     border-color: #0000;
     border-radius: 0;
-    block-size: 100%;
     overflow: visible;
 }
 
@@ -547,6 +546,7 @@ governing permissions and limitations under the License.
 :host([variant='gallery']) #preview,
 :host([variant='quiet']) #preview {
     box-sizing: border-box;
+    inline-size: 100%;
     min-block-size: var(
         --mod-card-preview-minimum-height,
         var(--spectrum-card-preview-minimum-height)
@@ -571,7 +571,6 @@ governing permissions and limitations under the License.
             )
         );
     flex: 1;
-    inline-size: 100%;
     margin: 0 auto;
     position: relative;
     overflow: visible;
@@ -582,8 +581,8 @@ governing permissions and limitations under the License.
 :host([variant='quiet']) #preview:after,
 :host([variant='quiet']) #preview:before {
     content: '';
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
@@ -721,6 +720,7 @@ governing permissions and limitations under the License.
 }
 
 :host([horizontal]) #preview {
+    min-block-size: 0;
     padding: var(
         --mod-card-horizontal-preview-padding,
         var(--spectrum-card-horizontal-preview-padding)
@@ -746,7 +746,6 @@ governing permissions and limitations under the License.
     flex-shrink: 0;
     justify-content: center;
     align-items: center;
-    min-block-size: 0;
     display: flex;
 }
 

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 #button {
     cursor: pointer;
     -webkit-user-select: none;
@@ -120,6 +119,7 @@ governing permissions and limitations under the License.
         var(--spectrum-picker-minimum-width-multiplier) *
             var(--mod-picker-block-size, var(--spectrum-picker-block-size))
     );
+    max-inline-size: 100%;
     block-size: var(--mod-picker-block-size, var(--spectrum-picker-block-size));
     color: var(
         --highcontrast-picker-content-color-default,
@@ -168,7 +168,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-picker-animation-duration)
             )
             ease-in-out;
-    max-inline-size: 100%;
     margin-block-start: var(
         --mod-picker-spacing-label-to-picker,
         var(--spectrum-picker-spacing-label-to-picker)
@@ -605,6 +604,8 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) #button {
+    inline-size: auto;
+    min-inline-size: 0;
     padding-inline: var(
         --mod-picker-spacing-edge-to-text-quiet,
         var(--spectrum-picker-spacing-edge-to-text-quiet)
@@ -620,8 +621,6 @@ governing permissions and limitations under the License.
     background-color: var(--highcontrast-picker-background-color, transparent);
     border: none;
     border-radius: 0;
-    inline-size: auto;
-    min-inline-size: 0;
     margin-block-start: calc(
         var(
                 --mod-picker-spacing-label-to-picker-quiet,
@@ -642,9 +641,9 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) #button:after {
-    border: none;
-    block-size: auto;
     inline-size: auto;
+    block-size: auto;
+    border: none;
 }
 
 @media (hover: hover) {

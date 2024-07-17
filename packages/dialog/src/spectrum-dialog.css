@@ -11,17 +11,17 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     box-sizing: border-box;
+    inline-size: -moz-fit-content;
+    inline-size: fit-content;
     min-inline-size: var(
         --mod-dialog-min-inline-size,
         var(--spectrum-dialog-min-inline-size)
     );
+    max-inline-size: 100%;
     max-block-size: inherit;
     outline: none;
-    inline-size: fit-content;
-    max-inline-size: 100%;
     display: flex;
 }
 
@@ -134,8 +134,8 @@ governing permissions and limitations under the License.
 }
 
 .divider {
-    grid-area: divider;
     inline-size: 100%;
+    grid-area: divider;
     margin-block-start: var(
         --mod-dialog-confirm-divider-block-spacing-end,
         var(--spectrum-dialog-confirm-divider-block-spacing-end)
@@ -311,20 +311,20 @@ governing permissions and limitations under the License.
 }
 
 :host([mode='fullscreen']) {
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
 }
 
 :host([mode='fullscreenTakeover']) {
-    border-radius: 0;
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
+    border-radius: 0;
 }
 
 :host([mode='fullscreen']),
 :host([mode='fullscreenTakeover']) {
-    max-block-size: none;
     max-inline-size: none;
+    max-block-size: none;
 }
 
 :host([mode='fullscreen']) .grid,

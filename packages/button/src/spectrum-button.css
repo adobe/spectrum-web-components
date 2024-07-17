@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --mod-progress-circle-position: absolute;
     cursor: pointer;
@@ -29,9 +28,6 @@ governing permissions and limitations under the License.
     min-block-size: var(--mod-button-height, var(--spectrum-button-height));
     margin-block: 0;
     margin-block: var(--mod-button-margin-block, 0);
-    margin-inline-start: 0;
-    margin-inline-start: var(--mod-button-margin-left, 0);
-    margin-inline-end: 0;
     padding-block: 0;
     padding-inline: var(
         --mod-button-edge-to-text,
@@ -128,6 +124,7 @@ governing permissions and limitations under the License.
             ease-out;
     justify-content: center;
     align-items: center;
+    margin-inline-start: var(--mod-button-margin-left, 0);
     margin-inline-end: var(--mod-button-margin-right, 0);
     -webkit-text-decoration: none;
     text-decoration: none;
@@ -371,17 +368,6 @@ governing permissions and limitations under the License.
                 --spectrum-icon-block-size,
                 var(--spectrum-button-intended-icon-size)
             )
-    );
-    margin-block-start: var(
-        --mod-button-icon-margin-block-start,
-        max(
-            0px,
-            var(--mod-button-top-to-icon, var(--spectrum-button-top-to-icon)) -
-                var(
-                    --mod-button-border-width,
-                    var(--spectrum-button-border-width)
-                ) + (0px / 2)
-        )
     );
     color: inherit;
     flex-shrink: 0;
