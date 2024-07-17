@@ -224,11 +224,9 @@ export class Breadcrumbs extends SpectrumElement {
         }
     }
 
-    protected handleMenuChange(event: Event & { target: ActionMenu }): void {
-        event.stopPropagation();
-
+    private announceChange(value: string): void {
         const selectDetail: BreadcrumbSelectDetail = {
-            value: event.target.value,
+            value,
         };
 
         const selectionEvent = new CustomEvent('change', {
@@ -238,6 +236,18 @@ export class Breadcrumbs extends SpectrumElement {
         });
 
         this.dispatchEvent(selectionEvent);
+    }
+
+    private handleSelect(
+        event: CustomEvent<BreadcrumbSelectDetail> & { target: BreadcrumbItem }
+    ): void {
+        event.stopPropagation();
+        this.announceChange(event.detail.value);
+    }
+
+    private handleMenuChange(event: Event & { target: ActionMenu }): void {
+        event.stopPropagation();
+        this.announceChange(event.target.value);
     }
 
     protected renderMenu(): TemplateResult {
@@ -285,7 +295,7 @@ export class Breadcrumbs extends SpectrumElement {
 
     protected override render(): TemplateResult {
         return html`
-            <ul id="list">
+            <ul id="list" @breadcrumb-select=${this.handleSelect}>
                 <slot name="root"></slot>
                 ${this.hasMenu ? this.renderMenu() : ''}
                 <slot @slotchange=${this.slotChangeHandler}></slot>

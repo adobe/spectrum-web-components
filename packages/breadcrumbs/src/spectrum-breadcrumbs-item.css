@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
-.separator {
+#separator {
     margin-block: var(
         --mod-breadcrumbs-icon-spacing-block,
         var(--spectrum-breadcrumbs-icon-spacing-block)
@@ -32,8 +32,8 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-.separator:dir(rtl),
-:host([dir='rtl']) .separator {
+#separator:dir(rtl),
+:host([dir='rtl']) #separator {
     transform: scaleX(-1);
 }
 
@@ -88,7 +88,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.item-link {
+#item-link {
     cursor: default;
     box-sizing: border-box;
     border-radius: var(
@@ -117,8 +117,8 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-.item-link.is-disabled,
-:host([aria-disabled='true']) .item-link {
+#item-link.is-disabled,
+:host([aria-disabled='true']) #item-link {
     color: var(
         --highcontrast-breadcrumbs-text-color-disabled,
         var(
@@ -128,13 +128,13 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([href]) .item-link,
-:host([tabindex='0']) .item-link {
+:host([href]) #item-link,
+:host([tabindex='0']) #item-link {
     cursor: pointer;
 }
 
-:host([href]) .item-link:focus-visible,
-:host([tabindex='0']) .item-link:focus-visible {
+:host([href]) #item-link:focus-visible,
+:host([tabindex='0']) #item-link:focus-visible {
     -webkit-text-decoration: underline;
     text-decoration: underline;
     text-decoration-thickness: var(
@@ -148,8 +148,8 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    :host([href]) .item-link:hover,
-    :host([tabindex='0']) .item-link:hover {
+    :host([href]) #item-link:hover,
+    :host([tabindex='0']) #item-link:hover {
         -webkit-text-decoration: underline;
         text-decoration: underline;
         text-decoration-thickness: var(
@@ -163,8 +163,8 @@ governing permissions and limitations under the License.
     }
 }
 
-:host .is-dragged .item-link:before,
-.item-link:focus-visible:before {
+:host .is-dragged #item-link:before,
+#item-link:focus-visible:before {
     box-sizing: border-box;
     inline-size: calc(
         100% +

@@ -19,10 +19,15 @@ import {
 
 import { spy } from 'sinon';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
+import {
+    Breadcrumbs,
+    BreadcrumbSelectDetail,
+} from '@spectrum-web-components/breadcrumbs';
 import { getBreadcrumbs } from '../stories/template.js';
-import { Breadcrumbs, BreadcrumbSelectDetail } from '..';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import '../sp-breadcrumbs.js';
+
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 
 describe('Breadcrumbs', () => {
     testForLitDevWarnings(

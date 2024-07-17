@@ -15,10 +15,7 @@ import {
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
@@ -35,27 +32,8 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
         return [styles, chevronStyles];
     }
 
-    @query('#anchor')
-    anchorElement!: HTMLAnchorElement;
-
-    @property({ type: String })
-    public get value(): string {
-        return this._value || '';
-    }
-
-    public set value(value: string) {
-        if (value === this._value) {
-            return;
-        }
-        this._value = value || '';
-        if (this._value) {
-            this.setAttribute('value', this._value);
-        } else {
-            this.removeAttribute('value');
-        }
-    }
-
-    private _value = '';
+    @property()
+    public value: string | undefined = undefined;
 
     @property({ attribute: 'is-menu', type: Boolean })
     public isMenu = false;
@@ -64,7 +42,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     public isLastOfType = false;
 
     public override get focusElement(): HTMLElement {
-        return this.anchorElement || this;
+        return this.shadowRoot.querySelector('#item-link') as HTMLElement;
     }
 
     override connectedCallback(): void {
@@ -75,37 +53,42 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
         }
     }
 
+    private announceSelected(value: string): void {
+        const selectDetail: BreadcrumbSelectDetail = {
+            value,
+        };
+
+        const selectionEvent = new CustomEvent('breadcrumb-select', {
+            bubbles: true,
+            composed: true,
+            detail: selectDetail,
+        });
+
+        this.dispatchEvent(selectionEvent);
+    }
+
     protected handleClick(event?: Event): void {
         if (!this.href && event) {
             event.preventDefault();
         }
 
         if (!this.href || event?.defaultPrevented) {
-            const selectDetail: BreadcrumbSelectDetail = {
-                value: this.value,
-            };
-
-            const selectionEvent = new CustomEvent('change', {
-                bubbles: true,
-                composed: true,
-                detail: selectDetail,
-            });
-
-            this.dispatchEvent(selectionEvent);
+            if (this.value) {
+                this.announceSelected(this.value);
+            }
         }
     }
 
     protected renderLink(): TemplateResult {
         if (this.isLastOfType) {
             return html`
-                <span aria-current="page" class="item-link"><slot></slot></span>
+                <span aria-current="page" id="item-link"><slot></slot></span>
             `;
         }
 
         return html`
             <a
-                id="anchor"
-                class="item-link"
+                id="item-link"
                 href=${this.href || '#'}
                 tabindex="0"
                 @click=${this.handleClick}
@@ -118,9 +101,9 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     private renderSeparator(): TemplateResult {
         return html`
             <sp-icon-chevron100
-                part="separator"
+                id="separator"
                 size="xs"
-                class="separator spectrum-UIIcon-ChevronRight100"
+                class="spectrum-UIIcon-ChevronRight100"
             ></sp-icon-chevron100>
         `;
     }

@@ -95,11 +95,11 @@ const config = {
             ],
             components: [
                 converter.classToHost('spectrum-Breadcrumbs-item'),
-                converter.classToClass(
+                converter.classToId(
                     'spectrum-Breadcrumbs-itemSeparator',
                     'separator'
                 ),
-                converter.classToClass(
+                converter.classToId(
                     'spectrum-Breadcrumbs-itemLink',
                     'item-link'
                 ),
