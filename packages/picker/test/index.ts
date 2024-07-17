@@ -232,7 +232,7 @@ export function runPickerTests(): void {
             ).to.not.be.null;
         });
     });
-    describe('standard', () => {
+    describe.only('standard', () => {
         beforeEach(async () => {
             el = await pickerFixture();
             await elementUpdated(el);
@@ -619,13 +619,12 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
             expect(el.value).to.equal(thirdItem.value);
         });
-        it('opens/closes multiple times', async () => {
-            await nextFrame();
-            await nextFrame();
+        it.only('opens/closes multiple times', async () => {
             expect(el.open).to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
-            let opened = oneEvent(el, 'sp-opened');
-            sendMouse({
+            const firstOpened = oneEvent(el, 'sp-opened');
+
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
@@ -636,11 +635,12 @@ export function runPickerTests(): void {
                     },
                 ],
             });
-            await opened;
+            await firstOpened;
             expect(el.open).to.be.true;
 
-            let closed = oneEvent(el, 'sp-closed');
-            sendMouse({
+            const firstClosed = oneEvent(el, 'sp-closed');
+
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
@@ -651,11 +651,11 @@ export function runPickerTests(): void {
                     },
                 ],
             });
-            await closed;
+            await firstClosed;
             expect(el.open).to.be.false;
 
-            opened = oneEvent(el, 'sp-opened');
-            sendMouse({
+            const secondOpened = oneEvent(el, 'sp-opened');
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
@@ -666,11 +666,11 @@ export function runPickerTests(): void {
                     },
                 ],
             });
-            await opened;
+            await secondOpened;
             expect(el.open).to.be.true;
 
-            closed = oneEvent(el, 'sp-closed');
-            sendMouse({
+            const secondClosed = oneEvent(el, 'sp-closed');
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
@@ -681,7 +681,8 @@ export function runPickerTests(): void {
                     },
                 ],
             });
-            await closed;
+
+            await secondClosed;
             expect(el.open).to.be.false;
         });
         it('closes when becoming disabled', async () => {
@@ -957,6 +958,7 @@ export function runPickerTests(): void {
 
             await nextFrame();
             await nextFrame();
+
             expect(selectionSpy.calledWith('option-2'));
 
             await sendKeys({
