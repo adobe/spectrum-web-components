@@ -250,9 +250,9 @@ Default.swc_vrt = {
     skip: true,
 };
 
-export const congifured = (args: Properties): TemplateResult => template(args);
+export const configured = (args: Properties): TemplateResult => template(args);
 
-congifured.swc_vrt = {
+configured.swc_vrt = {
     skip: true,
 };
 
