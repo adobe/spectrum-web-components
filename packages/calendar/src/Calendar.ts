@@ -365,8 +365,9 @@ export class Calendar extends SpectrumElement {
      * defined location (Sunday, Monday, etc.)
      */
     private setWeekdays(): void {
+        const weekStart = startOfWeek(this.currentDate, this.locale);
+
         this.weekdays = [...new Array(daysInWeek).keys()].map((dayIndex) => {
-            const weekStart = startOfWeek(this.currentDate, this.locale);
             const date = weekStart.add({ days: dayIndex });
 
             return {

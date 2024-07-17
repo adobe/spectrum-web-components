@@ -404,17 +404,17 @@ export class InputSegments extends TextfieldBase {
             return;
         }
 
+        const typedValue = this.numberParser.parse(data);
+
         if (
-            data === ' ' || // Space is considered “valid number” by the following validations... 🤦🏻‍♂️
             !this.numberParser.isValidPartialNumber(data) ||
-            isNaN(Number(data))
+            isNaN(typedValue)
         ) {
             this.updateContent(segment, event);
             return;
         }
 
         const isDate = dateSegmentTypes.includes(segment.type);
-        const typedValue = this.numberParser.parse(data);
         const isAmPmHour = this.is12HourClock && segment.type === 'hour';
 
         segment.value = isAmPmHour
@@ -776,8 +776,10 @@ export class InputSegments extends TextfieldBase {
             return;
         }
 
-        // We always use the first day of a month unless a specific day is specified
-        let day = this.daySegment?.value ?? 1;
+        // We always use the first day of the month unless a specific day is specified
+        let day =
+            this.daySegment?.value ??
+            getMinimumDayInMonth(this.currentDateTime);
 
         // We always use the first month of the year unless a specific month is specified
         let month =
@@ -862,15 +864,7 @@ export class InputSegments extends TextfieldBase {
         date.setMinutes(minute);
         date.setSeconds(second);
 
-        const options: Intl.DateTimeFormatOptions = {
-            month: '2-digit',
-            day: '2-digit',
-            hour: 'numeric',
-            minute: '2-digit',
-            second: '2-digit',
-        };
-
-        const formatted = new DateFormatter(this.locale, options)
+        const formatted = this.formatter
             .formatToParts(date)
             .find((part) => part.type === segment.type)?.value;
 

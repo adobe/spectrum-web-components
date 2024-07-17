@@ -24,7 +24,6 @@ import styles from './date-time-picker.css.js';
 
 // TODO: Load dependencies lazily when possible
 import '@spectrum-web-components/calendar/sp-calendar.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-calendar.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
