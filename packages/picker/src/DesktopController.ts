@@ -33,7 +33,6 @@ export class DesktopController extends InteractionController {
                 this.target.removeEventListener('click', cleanup);
                 requestAnimationFrame(() => {
                     // Complete cleanup on the second animation frame so that `click` can go first.
-                    // this.preventNextToggle = 'no';
                     this.preventNextToggle = 'no';
                 });
             });
@@ -57,7 +56,7 @@ export class DesktopController extends InteractionController {
             // event didn't already toggle the Picker state before doing so.
             return;
         }
-        this.open = !this.open;
+        this.host.toggle();
     }
 
     override init(): void {

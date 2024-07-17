@@ -48,21 +48,12 @@ export class InteractionController implements ReactiveController {
     public set open(open: boolean) {
         if (this._open === open) return;
         this._open = open;
+
         if (this.overlay) {
-            // If there already is an Overlay, apply the value of `open` directly.
-            if (this.host.dependencyManager.loaded) {
-                this.overlay.willPreventClose = this.preventNextToggle !== 'no';
-                this.overlay.open = open;
-            }
             this.host.open = open;
             return;
         }
-        if (!open) {
-            this.host.open = open;
-            // When `open` moves to `false` and there is not yet an Overlay,
-            // assume that no Overlay and a closed Overlay are the same and return early.
-            return;
-        }
+
         // When there is no Overlay and `open` is moving to `true`, lazily import/create
         // an Overlay and apply that state to it.
         customElements
@@ -72,11 +63,8 @@ export class InteractionController implements ReactiveController {
                     '@spectrum-web-components/overlay/src/Overlay.js'
                 );
                 this.overlay = new Overlay();
-                this.host.requestUpdate();
-                if (this.host.dependencyManager.loaded) {
-                    this.overlay.open = open;
-                }
                 this.host.open = true;
+                this.host.requestUpdate();
             });
         import('@spectrum-web-components/overlay/sp-overlay.js');
     }
@@ -192,9 +180,10 @@ export class InteractionController implements ReactiveController {
         if (
             this.overlay &&
             this.host.dependencyManager.loaded &&
-            this.host.open
+            this.host.open !== this.overlay.open
         ) {
-            this.overlay.open = true;
+            this.overlay.willPreventClose = this.preventNextToggle !== 'no';
+            this.overlay.open = this.host.open;
         }
     }
 }
