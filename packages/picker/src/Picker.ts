@@ -51,6 +51,7 @@ import {
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
@@ -145,6 +146,20 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ attribute: false })
     public get selectedItem(): MenuItem | undefined {
         return this._selectedItem;
+    }
+
+    protected pendingStateController: PendingStateController<this>;
+
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this, {
+            pending: () => this.pending,
+            onPendingChange: (pending: boolean) => {
+                if (pending) {
+                    this.open = false;
+                }
+            },
+        });
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {
@@ -335,7 +350,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly || this.pending) {
+        if (this.readonly || this.pendingStateController.getPending()) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -469,14 +484,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid && !this.pending
+                ${this.invalid && !this.pendingStateController.getPending()
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pending, () => {
+                ${when(this.pendingStateController.getPending(), () => {
                     import(
                         '@spectrum-web-components/progress-circle/sp-progress-circle.js'
                     );
@@ -595,9 +610,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (changes.has('disabled') && this.disabled) {
             this.open = false;
         }
-        if (changes.has('pending') && this.pending) {
-            this.open = false;
-        }
+        // if (changes.has('pending') && this.pending) {
+        //     this.open = false;
+        // }
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
             // await the same here.
@@ -874,7 +889,11 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
+        if (
+            !code.startsWith('Arrow') ||
+            this.readonly ||
+            this.pendingStateController.getPending()
+        ) {
             return;
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {
