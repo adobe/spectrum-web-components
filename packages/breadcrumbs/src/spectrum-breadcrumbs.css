@@ -210,18 +210,3 @@ governing permissions and limitations under the License.
     flex-wrap: wrap;
     align-content: center;
 }
-
-::slotted(:last-of-type) {
-    font-family: var(
-        --mod-breadcrumbs-font-family-current,
-        var(--spectrum-breadcrumbs-font-family-current)
-    );
-    font-size: var(
-        --mod-breadcrumbs-font-size-current,
-        var(--spectrum-breadcrumbs-font-size-current)
-    );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight-current,
-        var(--spectrum-breadcrumbs-font-weight-current)
-    );
-}

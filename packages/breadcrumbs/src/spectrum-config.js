@@ -33,13 +33,7 @@ const config = {
                 builder.class('spectrum-Breadcrumbs-itemLink'),
                 builder.class('spectrum-Breadcrumbs-item'),
             ],
-            includeByWholeSelector: [
-                /* spectrum-Breadcrumbs-item:last-of-type */
-                [
-                    builder.class('spectrum-Breadcrumbs-item'),
-                    builder.pseudoClass('last-of-type'),
-                ],
-            ],
+            includeByWholeSelector: [],
             components: [
                 converter.classToId('spectrum-Breadcrumbs', 'list'),
                 {
@@ -56,24 +50,6 @@ const config = {
                         },
                     ],
                 },
-                {
-                    find: [
-                        builder.class('spectrum-Breadcrumbs-item'),
-                        builder.pseudoClass('last-of-type'),
-                    ],
-                    replace: [
-                        {
-                            replace: {
-                                type: 'pseudo-element',
-                                kind: 'slotted',
-                                selector: [builder.pseudoClass('last-of-type')],
-                            },
-                        },
-                        {
-                            replace: builder.combinator(' '),
-                        },
-                    ],
-                },
             ],
         },
         {
@@ -84,17 +60,47 @@ const config = {
                 builder.class('spectrum-Breadcrumbs'),
                 builder.class('spectrum-Breadcrumbs--compact'),
                 builder.class('spectrum-Breadcrumbs--multiline'),
-                {
-                    type: 'pseudo-class',
-                    kind: 'last-of-type',
-                },
-                {
-                    type: 'pseudo-class',
-                    kind: 'first-of-type',
-                },
             ],
             components: [
                 converter.classToHost('spectrum-Breadcrumbs-item'),
+                {
+                    find: builder.pseudoClass('first-of-type'),
+                    replace: builder.pseudoClass('first-of-type'),
+                    hoist: true,
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Accordion-itemHeader'),
+                        builder.pseudoClass('hover'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('header'),
+                        },
+                        {
+                            replace: builder.pseudoClass('hover'),
+                        },
+                    ],
+                },
+                {
+                    find: [builder.pseudoClass('last-of-type')],
+                    replace: [
+                        // :host(:not[is-menu]:last-of-type)
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'not',
+                                selectors: [[builder.attribute('is-menu')]],
+                            },
+                            hoist: true,
+                        },
+                        {
+                            replace: builder.pseudoClass('last-of-type'),
+                            hoist: true,
+                        },
+                    ],
+                    hoist: true,
+                },
                 converter.classToId(
                     'spectrum-Breadcrumbs-itemSeparator',
                     'separator'
@@ -133,6 +139,18 @@ const config = {
                             },
                         },
                     ],
+                },
+                // :host([href]) -> #item-link[href]
+                {
+                    hoist: false,
+                    find: builder.attribute('href'),
+                    replace: builder.attribute('href'),
+                },
+                // :host([tabindex="0"]) -> #item-link[tabindex="0"]
+                {
+                    hoist: false,
+                    find: builder.attribute('tabindex'),
+                    replace: builder.attribute('tabindex'),
                 },
             ],
         },

@@ -15,10 +15,11 @@ import {
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 
 import styles from './breadcrumb-item.css.js';
@@ -73,24 +74,21 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
         }
 
         if (!this.href || event?.defaultPrevented) {
-            if (this.value) {
+            if (this.value && !this.isLastOfType) {
                 this.announceSelected(this.value);
             }
         }
     }
 
     protected renderLink(): TemplateResult {
-        if (this.isLastOfType) {
-            return html`
-                <span aria-current="page" id="item-link"><slot></slot></span>
-            `;
-        }
-
         return html`
             <a
                 id="item-link"
-                href=${this.href || '#'}
-                tabindex="0"
+                href=${ifDefined(!this.isLastOfType ? this.href : undefined)}
+                tabindex=${ifDefined(!this.isLastOfType ? 0 : undefined)}
+                aria-current=${ifDefined(
+                    this.isLastOfType ? 'page' : undefined
+                )}
                 @click=${this.handleClick}
             >
                 <slot></slot>
@@ -115,7 +113,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
                       <slot></slot>
                   `
                 : this.renderLink()}
-            ${this.isLastOfType ? '' : this.renderSeparator()}
+            ${this.renderSeparator()}
         `;
     }
 }

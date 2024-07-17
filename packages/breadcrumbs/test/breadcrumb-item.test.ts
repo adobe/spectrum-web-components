@@ -99,30 +99,4 @@ describe('Breadcrumb Item', () => {
         expect(changeSpy.callCount).to.equal(1);
         expect(changeSpy).to.have.been.calledWith('home');
     });
-
-    it('should display separator', async () => {
-        const el = await fixture<BreadcrumbItem>(html`
-            <sp-breadcrumb-item value="https://adobe.com/home">
-                Home
-            </sp-breadcrumb-item>
-        `);
-
-        await elementUpdated(el);
-
-        const separator = el.shadowRoot.querySelector('#separator');
-        expect(separator).to.exist;
-    });
-
-    it('should not display separator is element is the last one', async () => {
-        const el = await fixture<BreadcrumbItem>(html`
-            <sp-breadcrumb-item isLastOfType value="https://adobe.com/home">
-                Home
-            </sp-breadcrumb-item>
-        `);
-
-        await elementUpdated(el);
-
-        const separator = el.shadowRoot.querySelector('#separator');
-        expect(separator).to.not.exist;
-    });
 });
