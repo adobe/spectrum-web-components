@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-sidenav-focus-ring-size: var(--system-side-nav-focus-ring-size);
     --spectrum-sidenav-focus-ring-gap: var(--system-side-nav-focus-ring-gap);
