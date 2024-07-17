@@ -44,5 +44,16 @@ export const argTypes = {
             type: 'number',
         },
     },
+    showRoot: {
+        name: 'showRoot',
+        type: { name: 'boolean', required: false },
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
     onChange: { action: 'change' },
 };

@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import { html, type TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import '../sp-breadcrumbs.js';
-import '../sp-breadcrumb-item.js';
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 
 export type StoryArgs = {
     label?: string;
@@ -80,6 +80,9 @@ export const Template = (args: StoryArgs): TemplateResult => html`
         max-visible-items=${ifDefined(args['max-visible-items'])}
         @change=${args.onChange}
     >
-        ${getBreadcrumbs(args.nrOfItems)}
+        <sp-breadcrumb-item value="0">Your stuff</sp-breadcrumb-item>
+        <sp-breadcrumb-item value="1">Files</sp-breadcrumb-item>
+        <sp-breadcrumb-item value="2">Team</sp-breadcrumb-item>
+        <sp-breadcrumb-item value="3">In progress</sp-breadcrumb-item>
     </sp-breadcrumbs>
 `;

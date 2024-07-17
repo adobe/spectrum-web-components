@@ -12,8 +12,6 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 
-import '../sp-breadcrumbs.js';
-import '../sp-breadcrumb-item.js';
 import {
     getBreadcrumbs,
     getBreadcrumbsWithLinks,
@@ -22,6 +20,8 @@ import {
     Template,
 } from './template.js';
 import { argTypes } from './args.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Breadcrumbs',
@@ -29,30 +29,41 @@ export default {
     args: {
         'max-visible-items': 4,
         nrOfItems: 4,
+        'show-root': false,
     },
     argTypes,
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
-export const showRoot = (args: StoryArgs): TemplateResult => Template(args);
-showRoot.args = {
-    showRoot: true,
-    nrOfItems: 8,
-};
-
-export const Links = (): TemplateResult => {
+export const ShowRoot = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-breadcrumbs>${getBreadcrumbsWithLinks(8)}</sp-breadcrumbs>
+        <sp-breadcrumbs show-root max-visible-items=${6}>
+            ${getBreadcrumbs(args.nrOfItems)}
+        </sp-breadcrumbs>
     `;
 };
 
-export const resizableBehavior = (): TemplateResult => {
+export const Links = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-breadcrumbs>
+            ${getBreadcrumbsWithLinks(args.nrOfItems)}
+        </sp-breadcrumbs>
+    `;
+};
+
+export const resizableBehavior = (args: StoryArgs): TemplateResult => {
     return html`
         <div class="resizable-container">
             ${getResizableStyles()}
 
-            <sp-breadcrumbs>${getBreadcrumbs(4)}</sp-breadcrumbs>
+            <sp-breadcrumbs
+                ${spreadProps(args)}
+                max-visible-items=${ifDefined(args['max-visible-items'])}
+                @change=${args.onChange}
+            >
+                ${getBreadcrumbs(args.nrOfItems)}
+            </sp-breadcrumbs>
         </div>
     `;
 };
