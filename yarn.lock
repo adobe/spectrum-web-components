@@ -5933,10 +5933,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-4.0.0-s2-foundations.9.tgz#5d52dd9385da63b6f39056a53a1070596c832411"
   integrity sha512-QQ9rRVwjvQBq3mwY8okWNladmCYoJ1VDE/2SP9wbAR4djNq+beY3LVLYJBPjnoLc9R2yH/IpvqaJZVPEelsElQ==
 
-"@spectrum-css/typography@^6.1.0":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-6.1.1.tgz#6d64b8be31f3e79febb250a285e011271c914f7a"
-  integrity sha512-PlEvTRqkcQQHCILLZHZvpCWLhq/1sboQ7snLEL+9l3lW4hEdKWzrn4OqZl+S8In5bxF8osmrquvfBJKBY8qrZw==
+"@spectrum-css/typography@^7.0.0-s2-foundations.9":
+  version "7.0.0-s2-foundations.9"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-7.0.0-s2-foundations.9.tgz#9a3ad483cdbb16e4dfbc0724e9f71f5b9de9855b"
+  integrity sha512-32sifKkXzFHpMJL9Ev2BMVTyHN4LA2hv6ScrCzJfz2cjPTV3oCQ4GYa5LUMvrxXEBS3r3+3LP/J2KCtTyes96Q==
 
 "@spectrum-css/ui-icons@^2.0.0-s2-foundations.4":
   version "2.0.0-s2-foundations.4"
