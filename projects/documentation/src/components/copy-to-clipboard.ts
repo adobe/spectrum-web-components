@@ -51,6 +51,11 @@ export function copyNode(node: Element): Promise<void> {
     return Promise.resolve();
 }
 
+/**
+ * scans the custom elements in the copied text and returns custom-elements array starting with sp
+ * @param text
+ * @returns customElements which need to be added to the import statements
+ */
 function extractNodeCustomElements(text: string): Set<string> {
     const customElements = new Set<string>();
     const regex = /<sp-[a-zA-Z-]+/g;
@@ -61,6 +66,11 @@ function extractNodeCustomElements(text: string): Set<string> {
     return customElements;
 }
 
+/**
+ * Function to generate import statements for each element used in the copied text
+ * @param elements
+ * @returns list of import statements of each element
+ */
 function generateImportStatements(elements: Set<string>): string {
     let imports = '';
     elements.forEach((element) => {
