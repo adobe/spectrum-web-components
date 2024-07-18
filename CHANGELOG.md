@@ -8,37 +8,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 -   add keyboard handlers to sp-table-cell-head ([#4473](https://github.com/adobe/spectrum-web-components/issues/4473)) ([794263e](https://github.com/adobe/spectrum-web-components/commit/794263ed93fb498a8f4c9f22a02408c6ebbf5170))
--   **coachmark,overlay:** adjust imports of overlay and coachmark ([#4455](https://github.com/adobe/spectrum-web-components/issues/4455)) ([39706da](https://github.com/adobe/spectrum-web-components/commit/39706dafe58a598a86d7dc33629409f086a9694e))
--   duplicate code to empty global-vars before generating ([#4507](https://github.com/adobe/spectrum-web-components/issues/4507)) ([83215b6](https://github.com/adobe/spectrum-web-components/commit/83215b6cf47b13b5632e02e7d647fede4314be99))
--   **menu:** enable numpad arrow and Enter keys ([#4492](https://github.com/adobe/spectrum-web-components/issues/4492)) ([012c411](https://github.com/adobe/spectrum-web-components/commit/012c4116dac62031e5a329cf4da7fb9cd149bfdf))
 -   **number-field:** multiple separators use-cases in decimal inputs in iOS devices ([#4571](https://github.com/adobe/spectrum-web-components/issues/4571)) ([6319da8](https://github.com/adobe/spectrum-web-components/commit/6319da80a21511735d9e9518125dbc2a24364f88))
--   **number-field:** select full value when using Tab to enter a field with a unit ([#4340](https://github.com/adobe/spectrum-web-components/issues/4340)) ([a9d5cef](https://github.com/adobe/spectrum-web-components/commit/a9d5cef4a69af4f3f357bacbfdae9465d3e80fa5))
--   **number-field:** updated number field to respect all locales ([#4508](https://github.com/adobe/spectrum-web-components/issues/4508)) ([cc6e928](https://github.com/adobe/spectrum-web-components/commit/cc6e928bc6797280f119994b1908f17bbcb574e3))
--   **overlay:** ensure hint Overlays within shadow roots open as expected ([#4443](https://github.com/adobe/spectrum-web-components/issues/4443)) ([7dd64b9](https://github.com/adobe/spectrum-web-components/commit/7dd64b92e58ad2fd3a36986f24022728e3cb4c36))
--   **overlay:** ensure that passing "open" to the directive manages a single strategy ([#4474](https://github.com/adobe/spectrum-web-components/issues/4474)) ([15d6ac7](https://github.com/adobe/spectrum-web-components/commit/15d6ac71d586eb496b591fa5b097707961600f75))
--   **overlay:** persist "host" in directive rendered Overlay content ([#4475](https://github.com/adobe/spectrum-web-components/issues/4475)) ([5d189c2](https://github.com/adobe/spectrum-web-components/commit/5d189c2adf91545eb64a0136fa02d7c8caee8f48))
--   **swatch:** sync aria-label with changes in label, color, and mixed state ([#4519](https://github.com/adobe/spectrum-web-components/issues/4519)) ([50aef31](https://github.com/adobe/spectrum-web-components/commit/50aef31ab049fecb3567cd5df9613b1d9bffb593))
 
 ### Features
 
 -   **action-bar:** support for action-menus ([#3780](https://github.com/adobe/spectrum-web-components/issues/3780)) ([4aff599](https://github.com/adobe/spectrum-web-components/commit/4aff5995f6a22eefae0dd8e580d743c27ceb2c2d))
 -   **alert-banner:** add alert banner component ([#4266](https://github.com/adobe/spectrum-web-components/issues/4266)) ([10d456e](https://github.com/adobe/spectrum-web-components/commit/10d456ec3c79f7eb534b0ba66e426c3b0994aab5))
--   **combobox:** add `pending` state ([#4462](https://github.com/adobe/spectrum-web-components/issues/4462)) ([2d0c388](https://github.com/adobe/spectrum-web-components/commit/2d0c388cfde52bd5695b3d6db4b0425987ea6f85))
--   **contextual-help:** add contextual help pattern ([#4285](https://github.com/adobe/spectrum-web-components/issues/4285)) ([a259aa3](https://github.com/adobe/spectrum-web-components/commit/a259aa35ee4e8a7fba7afb21e806f13bffceeaf3))
--   Silder: adjust fillStart calculation for value=0 and normalization function ([#4573](https://github.com/adobe/spectrum-web-components/issues/4573)) ([369fee7](https://github.com/adobe/spectrum-web-components/commit/369fee7065f42008d9b356a98235ac8180655a96)), closes [#4558](https://github.com/adobe/spectrum-web-components/issues/4558)
+-   **sp-slider:** adjust fillStart calculation for value=0 and normalization function ([#4573](https://github.com/adobe/spectrum-web-components/issues/4573)) ([369fee7](https://github.com/adobe/spectrum-web-components/commit/369fee7065f42008d9b356a98235ac8180655a96)), closes [#4558](https://github.com/adobe/spectrum-web-components/issues/4558)
 
 # [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
 
 ### Bug Fixes
 
--   **coachmark,overlay:** adjust imports of overlay and coachmark ([#4455](https://github.com/adobe/spectrum-web-components/issues/4455)) ([39706da](https://github.com/adobe/spectrum-web-components/commit/39706dafe58a598a86d7dc33629409f086a9694e))
 -   duplicate code to empty global-vars before generating ([#4507](https://github.com/adobe/spectrum-web-components/issues/4507)) ([83215b6](https://github.com/adobe/spectrum-web-components/commit/83215b6cf47b13b5632e02e7d647fede4314be99))
 -   **menu:** enable numpad arrow and Enter keys ([#4492](https://github.com/adobe/spectrum-web-components/issues/4492)) ([012c411](https://github.com/adobe/spectrum-web-components/commit/012c4116dac62031e5a329cf4da7fb9cd149bfdf))
--   **number-field:** select full value when using Tab to enter a field with a unit ([#4340](https://github.com/adobe/spectrum-web-components/issues/4340)) ([a9d5cef](https://github.com/adobe/spectrum-web-components/commit/a9d5cef4a69af4f3f357bacbfdae9465d3e80fa5))
 -   **number-field:** updated number field to respect all locales ([#4508](https://github.com/adobe/spectrum-web-components/issues/4508)) ([cc6e928](https://github.com/adobe/spectrum-web-components/commit/cc6e928bc6797280f119994b1908f17bbcb574e3))
--   **overlay:** ensure hint Overlays within shadow roots open as expected ([#4443](https://github.com/adobe/spectrum-web-components/issues/4443)) ([7dd64b9](https://github.com/adobe/spectrum-web-components/commit/7dd64b92e58ad2fd3a36986f24022728e3cb4c36))
--   **overlay:** ensure that passing "open" to the directive manages a single strategy ([#4474](https://github.com/adobe/spectrum-web-components/issues/4474)) ([15d6ac7](https://github.com/adobe/spectrum-web-components/commit/15d6ac71d586eb496b591fa5b097707961600f75))
--   **overlay:** persist "host" in directive rendered Overlay content ([#4475](https://github.com/adobe/spectrum-web-components/issues/4475)) ([5d189c2](https://github.com/adobe/spectrum-web-components/commit/5d189c2adf91545eb64a0136fa02d7c8caee8f48))
 -   **swatch:** sync aria-label with changes in label, color, and mixed state ([#4519](https://github.com/adobe/spectrum-web-components/issues/4519)) ([50aef31](https://github.com/adobe/spectrum-web-components/commit/50aef31ab049fecb3567cd5df9613b1d9bffb593))
 
 ### Features
