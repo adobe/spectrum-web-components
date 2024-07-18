@@ -133,7 +133,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Meter {
+:host {
     --spectrum-progressbar-size-default: var(
         --system-meter-progressbar-size-default
     );

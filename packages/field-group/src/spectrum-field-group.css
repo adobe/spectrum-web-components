@@ -44,8 +44,3 @@ governing permissions and limitations under the License.
 :host([horizontal]) .group .spectrum-HelpText {
     flex-basis: 100%;
 }
-
-:host {
-    --spectrum-fieldgroup-margin: var(--spectrum-spacing-300);
-    --spectrum-fieldgroup-readonly-delimiter: ',';
-}

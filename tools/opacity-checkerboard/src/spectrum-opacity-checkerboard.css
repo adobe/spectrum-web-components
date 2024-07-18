@@ -47,16 +47,3 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
 }
-
-.opacity-checkerboard {
-    --spectrum-opacity-checkerboard-dark: var(
-        --spectrum-opacity-checkerboard-square-dark
-    );
-    --spectrum-opacity-checkerboard-light: var(
-        --spectrum-opacity-checkerboard-square-light
-    );
-    --spectrum-opacity-checkerboard-size: var(
-        --spectrum-opacity-checkerboard-square-size
-    );
-    --spectrum-opacity-checkerboard-position: left top;
-}

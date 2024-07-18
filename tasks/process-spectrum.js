@@ -168,7 +168,9 @@ async function processComponent(componentPath) {
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
     for await (const conversion of conversions) {
-        const sourcePath = require.resolve(conversion.inPackage);
+        const sourcePath = require
+            .resolve(conversion.inPackage)
+            .replace('index.css', 'index-base.css');
         var sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
 
         const outputPath = path.join(
@@ -424,30 +426,20 @@ async function processComponent(componentPath) {
             const selectorMetadata = selectors.map(processSelectorV2);
             return buildSelectorsV2(selectorMetadata);
         };
-
         if (conversion.systemOverrides !== false) {
-            // swc package name
-            const swcPackagename = conversion.fileName;
+            const bridgepath = require
+                .resolve(conversion.inPackage)
+                .replace('index.css', 'index-theme.css');
 
-            // action-button to actionbutton
-            const cssPackagename = swcPackagename.replace(/-/g, '');
+            // Skip if the conversion is for the same package
 
-            let componentLevelTokensPath = path.join(
-                __dirname,
-                '..',
-                'node_modules',
-                '@spectrum-css',
-                'tokens-v2',
-                'dist',
-                'css',
-                'components'
-            );
+            const outPackageFileName = Array.isArray(conversion.outPackage)
+                ? conversion.outPackage.join(' ')
+                : conversion.outPackage;
 
-            const bridgepath = path.join(
-                componentLevelTokensPath,
-                'bridge',
-                cssPackagename + '.css'
-            );
+            if (conversion.fileName.includes(outPackageFileName)) {
+                return;
+            }
 
             if (fs.existsSync(bridgepath)) {
                 let bridgeCss = fs.readFileSync(bridgepath, 'utf8');

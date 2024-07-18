@@ -34,6 +34,7 @@
             "default": "./src/index.js"
         },
         "./src/split-button.css.js": "./src/split-button.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-split-button.js": {
             "development": "./sp-split-button.dev.js",
             "default": "./sp-split-button.js"

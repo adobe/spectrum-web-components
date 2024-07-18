@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
-.opacity-checkerboard {
+:host {
     --spectrum-opacity-checkerboard-dark: var(
         --system-opacity-checkerboard-dark
     );

@@ -34,6 +34,7 @@
             "default": "./src/index.js"
         },
         "./src/meter.css.js": "./src/meter.css.js",
+        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-meter.js": {
             "development": "./sp-meter.dev.js",
             "default": "./sp-meter.js"

@@ -72,12 +72,3 @@ governing permissions and limitations under the License.
         --highcontrast-asset-file-background-color: currentColor;
     }
 }
-
-:host {
-    --spectrum-asset-transition-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --spectrum-asset-folder-background-color: var(--spectrum-gray-200);
-    --spectrum-asset-file-background-color: var(--spectrum-gray-25);
-    --spectrum-asset-icon-outline-color: var(--spectrum-gray-500);
-}

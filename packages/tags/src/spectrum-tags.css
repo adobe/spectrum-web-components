@@ -29,8 +29,3 @@ governing permissions and limitations under the License.
         var(--spectrum-tag-group-item-margin-inline)
     );
 }
-
-:host {
-    --spectrum-tag-group-item-margin-block: var(--spectrum-spacing-75);
-    --spectrum-tag-group-item-margin-inline: var(--spectrum-spacing-75);
-}

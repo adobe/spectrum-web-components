@@ -11,78 +11,100 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
-    --spectrum-coachmark-min-width: var(--system-coach-mark-min-width);
-    --spectrum-coachmark-width: var(--system-coach-mark-width);
-    --spectrum-coachmark-max-width: var(--system-coach-mark-max-width);
-    --spectrum-coachmark-media-height: var(--system-coach-mark-media-height);
-    --spectrum-coachmark-media-min-height: var(
-        --system-coach-mark-media-min-height
+    --spectrum-coach-indicator-ring-border-size: var(
+        --system-coach-indicator-ring-border-size
     );
-    --spectrum-coachmark-border-size: var(--system-coach-mark-border-size);
-    --spectrum-coachmark-border-radius: var(--system-coach-mark-border-radius);
-    --spectrum-coachmark-padding: var(--system-coach-mark-padding);
-    --spectrum-coachmark-heading-to-action-button: var(
-        --system-coach-mark-heading-to-action-button
+    --spectrum-coach-indicator-min-inline-size: var(
+        --system-coach-indicator-min-inline-size
     );
-    --spectrum-coachmark-header-to-body: var(
-        --system-coach-mark-header-to-body
+    --spectrum-coach-indicator-min-block-size: var(
+        --system-coach-indicator-min-block-size
     );
-    --spectrum-coachmark-body-to-footer: var(
-        --system-coach-mark-body-to-footer
+    --spectrum-coach-indicator-inline-size: var(
+        --system-coach-indicator-inline-size
     );
-    --spectrum-coachmark-title-color: var(--system-coach-mark-title-color);
-    --spectrum-coachmark-title-font-family: var(
-        --system-coach-mark-title-font-family
+    --spectrum-coach-indicator-block-size: var(
+        --system-coach-indicator-block-size
     );
-    --spectrum-coachmark-title-font-style: var(
-        --system-coach-mark-title-font-style
+    --spectrum-coach-indicator-ring-inline-size: var(
+        --system-coach-indicator-ring-inline-size
     );
-    --spectrum-coachmark-title-text-font-weight: var(
-        --system-coach-mark-title-text-font-weight
+    --spectrum-coach-indicator-ring-block-size: var(
+        --system-coach-indicator-ring-block-size
     );
-    --spectrum-coachmark-title-font-size: var(
-        --system-coach-mark-title-font-size
+    --spectrum-coach-indicator-top: var(--system-coach-indicator-top);
+    --spectrum-coach-indicator-left: var(--system-coach-indicator-left);
+    --spectrum-coach-animation-indicator-ring-duration: var(
+        --system-coach-indicator-coach-animation-indicator-ring-duration
     );
-    --spectrum-coachmark-title-text-line-height: var(
-        --system-coach-mark-title-text-line-height
+    --spectrum-coach-animation-indicator-ring-inner-delay-multiple: var(
+        --system-coach-indicator-coach-animation-indicator-ring-inner-delay-multiple
     );
-    --spectrum-coachmark-content-font-color: var(
-        --system-coach-mark-content-font-color
+    --spectrum-coach-animation-indicator-ring-center-delay-multiple: var(
+        --system-coach-indicator-coach-animation-indicator-ring-center-delay-multiple
     );
-    --spectrum-coachmark-content-font-weight: var(
-        --system-coach-mark-content-font-weight
+    --spectrum-coach-animation-indicator-ring-outer-delay-multiple: var(
+        --system-coach-indicator-coach-animation-indicator-ring-outer-delay-multiple
     );
-    --spectrum-coachmark-content-font-family: var(
-        --system-coach-mark-content-font-family
+    --spectrum-coach-indicator-quiet-animation-ring-inner-delay-multiple: var(
+        --system-coach-indicator-quiet-animation-ring-inner-delay-multiple
     );
-    --spectrum-coachmark-content-font-style: var(
-        --system-coach-mark-content-font-style
+    --spectrum-coach-indicator-animation-name: var(
+        --system-coach-indicator-animation-name
     );
-    --spectrum-coachmark-content-line-height: var(
-        --system-coach-mark-content-line-height
+    --spectrum-coach-indicator-inner-animation-delay-multiple: var(
+        --system-coach-indicator-inner-animation-delay-multiple
     );
-    --spectrum-coachmark-content-font-size: var(
-        --system-coach-mark-content-font-size
+    --spectrum-coach-indicator-animation-keyframe-0-scale: var(
+        --system-coach-indicator-animation-keyframe-0-scale
     );
-    --spectrum-coachmark-step-color: var(--system-coach-mark-step-color);
-    --spectrum-coachmark-step-font-weight: var(
-        --system-coach-mark-step-font-weight
+    --spectrum-coach-indicator-animation-keyframe-0-opacity: var(
+        --system-coach-indicator-animation-keyframe-0-opacity
     );
-    --spectrum-coachmark-step-font-family: var(
-        --system-coach-mark-step-font-family
+    --spectrum-coach-indicator-animation-keyframe-50-scale: var(
+        --system-coach-indicator-animation-keyframe-50-scale
     );
-    --spectrum-coachmark-step-font-style: var(
-        --system-coach-mark-step-font-style
+    --spectrum-coach-indicator-animation-keyframe-50-opacity: var(
+        --system-coach-indicator-animation-keyframe-50-opacity
     );
-    --spectrum-coachmark-step-line-height: var(
-        --system-coach-mark-step-line-height
+    --spectrum-coach-indicator-animation-keyframe-100-scale: var(
+        --system-coach-indicator-animation-keyframe-100-scale
     );
-    --spectrum-coachmark-step-font-size: var(
-        --system-coach-mark-step-font-size
+    --spectrum-coach-indicator-animation-keyframe-100-opacity: var(
+        --system-coach-indicator-animation-keyframe-100-opacity
     );
-    --spectrum-coachmark-step-to-bottom: var(
-        --system-coach-mark-step-to-bottom
+    --spectrum-coach-indicator-quiet-animation-keyframe-0-scale: var(
+        --system-coach-indicator-quiet-animation-keyframe-0-scale
+    );
+}
+
+:host([quiet]),
+:host([quiet]) {
+    --spectrum-coach-indicator-min-inline-size: var(
+        --system-coach-indicator-quiet-min-inline-size
+    );
+    --spectrum-coach-indicator-min-block-size: var(
+        --system-coach-indicator-quiet-min-block-size
+    );
+    --spectrum-coach-indicator-inline-size: var(
+        --system-coach-indicator-quiet-inline-size
+    );
+    --spectrum-coach-indicator-block-size: var(
+        --system-coach-indicator-quiet-block-size
+    );
+    --spectrum-coach-indicator-ring-inline-size: var(
+        --system-coach-indicator-quiet-ring-inline-size
+    );
+    --spectrum-coach-indicator-ring-block-size: var(
+        --system-coach-indicator-quiet-ring-block-size
+    );
+    --spectrum-coach-indicator-top: var(--system-coach-indicator-quiet-top);
+    --spectrum-coach-indicator-left: var(--system-coach-indicator-quiet-left);
+    --spectrum-coach-indicator-animation-name: var(
+        --system-coach-indicator-quiet-animation-name
+    );
+    --spectrum-coach-indicator-inner-animation-delay-multiple: var(
+        --system-coach-indicator-quiet-inner-animation-delay-multiple
     );
 }
