@@ -14,7 +14,7 @@ import type { Page } from 'playwright';
 export type Step = {
     type: 'move' | 'down' | 'up' | 'click' | 'wheel';
     position?: [number, number];
-    options?: { button?: 'left' | 'right' | 'middle' };
+    options?: { button?: 'left' | 'right' | 'middle'; delay?: number };
 };
 
 export function sendMousePlugin() {

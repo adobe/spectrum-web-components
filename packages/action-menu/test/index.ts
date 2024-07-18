@@ -660,6 +660,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                             rect.top + rect.height / 2,
                         ],
                         type: 'click',
+                        options: { delay: 100 },
                     },
                 ],
             });
@@ -678,6 +679,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                             rect.top + rect.height / 2,
                         ],
                         type: 'click',
+                        options: { delay: 100 },
                     },
                 ],
             });

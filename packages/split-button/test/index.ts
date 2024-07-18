@@ -261,6 +261,7 @@ export function runSplitButtonTests(
                         rect.top + rect.height / 2,
                     ],
                     type: 'click',
+                    options: { delay: 100 },
                 },
             ],
         });
@@ -279,6 +280,7 @@ export function runSplitButtonTests(
                         rect.top + rect.height / 2,
                     ],
                     type: 'click',
+                    options: { delay: 100 },
                 },
             ],
         });
@@ -319,9 +321,11 @@ export function runSplitButtonTests(
                         boundingRect.x + boundingRect.width / 2,
                         boundingRect.y + boundingRect.height / 2,
                     ],
+                    options: { delay: 100 },
                 },
                 {
                     type: 'down',
+                    options: { delay: 100 },
                 },
             ],
         });
@@ -337,9 +341,11 @@ export function runSplitButtonTests(
                         thirdItemRect.x + thirdItemRect.width / 2,
                         thirdItemRect.y + thirdItemRect.height / 2,
                     ],
+                    options: { delay: 100 },
                 },
                 {
                     type: 'up',
+                    options: { delay: 100 },
                 },
             ],
         });
@@ -428,9 +434,11 @@ export function runSplitButtonTests(
                         boundingRect.x + boundingRect.width / 2,
                         boundingRect.y + boundingRect.height / 2,
                     ],
+                    options: { delay: 100 },
                 },
                 {
                     type: 'down',
+                    options: { delay: 100 },
                 },
             ],
         });
@@ -446,9 +454,11 @@ export function runSplitButtonTests(
                         thirdItemRect.x + thirdItemRect.width / 2,
                         thirdItemRect.y + thirdItemRect.height / 2,
                     ],
+                    options: { delay: 100 },
                 },
                 {
                     type: 'up',
+                    options: { delay: 100 },
                 },
             ],
         });
@@ -479,6 +489,7 @@ export function runSplitButtonTests(
                         rect.top + rect.height / 2,
                     ],
                     type: 'click',
+                    options: { delay: 100 },
                 },
             ],
         });
@@ -497,6 +508,7 @@ export function runSplitButtonTests(
                         rect.top + rect.height / 2,
                     ],
                     type: 'click',
+                    options: { delay: 100 },
                 },
             ],
         });

@@ -633,6 +633,7 @@ export function runPickerTests(): void {
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
+                        options: { delay: 100 },
                     },
                 ],
             });
@@ -648,6 +649,7 @@ export function runPickerTests(): void {
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
+                        options: { delay: 100 },
                     },
                 ],
             });
@@ -663,6 +665,7 @@ export function runPickerTests(): void {
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
+                        options: { delay: 100 },
                     },
                 ],
             });
@@ -678,6 +681,7 @@ export function runPickerTests(): void {
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
+                        options: { delay: 100 },
                     },
                 ],
             });
