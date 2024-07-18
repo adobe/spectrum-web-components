@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-icon.css');
+@import url('./system-overrides.css');
 
 :host {
     --spectrum-icon-size: inherit;

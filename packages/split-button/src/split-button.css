@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-split-button.css');
+@import url('./system-overrides.css');
 
 :host > sp-menu {
     display: none;
