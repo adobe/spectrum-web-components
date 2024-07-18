@@ -31,7 +31,7 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
  * @element sp-action-menu
  *
  * @slot - menu items to be listed in the Action Menu
- * @slot icon - The icon to use for Action Menu
+ * @slot icon - The icon to use for the Action Menu
  * @slot label - The label to use for the Action Menu
  * @slot label-only - The label to use for the Action Menu (no icon space reserved)
  * @slot tooltip - Tooltip to to be applied to the Action Button
