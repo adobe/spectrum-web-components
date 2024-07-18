@@ -34,7 +34,7 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
  * @slot icon - The icon to use for the Action Menu
  * @slot label - The label to use for the Action Menu
  * @slot label-only - The label to use for the Action Menu (no icon space reserved)
- * @slot tooltip - Tooltip to to be applied to the Action Button
+ * @slot tooltip - Tooltip to be applied to the Action Button
  * @attr selects - By default `sp-action-menu` does not manage a selection. If
  *   you'd like for a selection to be held by the `sp-menu` that it presents in
  *   its overlay, use `selects="single" to activate this functionality.
