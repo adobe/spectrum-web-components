@@ -16,7 +16,13 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
-import { Tab, Tabs, TabsOverflow } from '@spectrum-web-components/tabs';
+import {
+    calculateScrollTargetForLeftSide,
+    calculateScrollTargetForRightSide,
+    Tab,
+    Tabs,
+    TabsOverflow,
+} from '@spectrum-web-components/tabs';
 import { ActionButton } from '@spectrum-web-components/action-button';
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
@@ -33,7 +39,6 @@ type OverflowProperties = {
     size: ElementSize;
     includeTabPanel: boolean;
     selected?: number;
-    autoscroll?: boolean;
     labelPrev?: string;
     labelNext?: string;
 };
@@ -43,62 +48,54 @@ const renderTabsOverflow = async ({
     size,
     includeTabPanel,
     selected = 1,
-    autoscroll = false,
 }: OverflowProperties): Promise<HTMLDivElement> => {
-    const tabsContainer = await fixture<HTMLDivElement>(
-        html`
-            <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow ?autoscroll=${autoscroll}>
-                    <sp-tabs size=${size} selected=${selected}>
-                        ${repeat(
-                            new Array(count),
-                            (item) => item,
-                            (_item, index) =>
-                                html`
-                                    <sp-tab
-                                        label=${`Tab Item ${index + 1}`}
-                                        value=${index + 1}
-                                    ></sp-tab>
-                                `
-                        )}
-                        ${includeTabPanel
-                            ? html`
-                                  ${repeat(
-                                      new Array(count),
-                                      (item) => item,
-                                      (_item, index) =>
-                                          html`
-                                              <sp-tab-panel value=${index + 1}>
-                                                  Content for Tab Item
-                                                  ${index + 1}
-                                              </sp-tab-panel>
-                                          `
-                                  )}
-                              `
-                            : nothing}
-                    </sp-tabs>
-                </sp-tabs-overflow>
-            </div>
-        `
-    );
+    const tabsContainer = await fixture<HTMLDivElement>(html`
+        <div class="container" style="width: 200px; height: 150px;">
+            <sp-tabs-overflow>
+                <sp-tabs size=${size} selected=${selected}>
+                    ${repeat(
+                        new Array(count),
+                        (item) => item,
+                        (_item, index) => html`
+                            <sp-tab
+                                label=${`Tab Item ${index + 1}`}
+                                value=${index + 1}
+                            ></sp-tab>
+                        `
+                    )}
+                    ${includeTabPanel
+                        ? html`
+                              ${repeat(
+                                  new Array(count),
+                                  (item) => item,
+                                  (_item, index) => html`
+                                      <sp-tab-panel value=${index + 1}>
+                                          Content for Tab Item ${index + 1}
+                                      </sp-tab-panel>
+                                  `
+                              )}
+                          `
+                        : nothing}
+                </sp-tabs>
+            </sp-tabs-overflow>
+        </div>
+    `);
     await elementUpdated(tabsContainer);
     return tabsContainer;
 };
 
 describe('TabsOverflow', () => {
     it('loads default tabs-overflow accessibly', async () => {
-        const el = await fixture<TabsOverflow>(
-            html`
-                <sp-tabs-overflow>
-                    <sp-tabs size="m" selected="1">
-                        <sp-tab label="Tab Item 1" value="1"></sp-tab>
-                        <sp-tab label="Tab Item 2" value="2"></sp-tab>
-                        <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
-                        <sp-tab-panel value="2">Tab Content 2</sp-tab-panel>
-                    </sp-tabs>
-                </sp-tabs-overflow>
-            `
-        );
+        const el = await fixture<TabsOverflow>(html`
+            <sp-tabs-overflow>
+                <sp-tabs size="m" selected="1">
+                    <sp-tab label="Tab Item 1" value="1"></sp-tab>
+                    <sp-tab label="Tab Item 2" value="2"></sp-tab>
+                    <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
+                    <sp-tab-panel value="2">Tab Content 2</sp-tab-panel>
+                </sp-tabs>
+            </sp-tabs-overflow>
+        `);
 
         await elementUpdated(el);
 
@@ -173,13 +170,11 @@ describe('TabsOverflow', () => {
     });
 
     it('should fail properly if slot is not sp-tabs', async () => {
-        const el = await fixture<TabsOverflow>(
-            html`
-                <sp-tabs-overflow>
-                    <div>Some div</div>
-                </sp-tabs-overflow>
-            `
-        );
+        const el = await fixture<TabsOverflow>(html`
+            <sp-tabs-overflow>
+                <div>Some div</div>
+            </sp-tabs-overflow>
+        `);
 
         await elementUpdated(el);
         const slot = el.shadowRoot.querySelector('slot');
@@ -200,20 +195,42 @@ describe('TabsOverflow', () => {
         const tabsEl = el.querySelector('sp-tabs') as Tabs;
 
         // Grab the coordonates of the selected tab.
-        const selectedTab = tabsEl.querySelector(
+        let selectedTab = tabsEl.querySelector(
             `[role="tab"][value="10"]`
         ) as Tab;
         expect(selectedTab).to.exist;
-        const selectedTabPosition = selectedTab.getBoundingClientRect();
+        let selectedTabPosition = selectedTab.getBoundingClientRect();
 
         // Selected tab is in the viewport, offset left is greater than 0 and less than the width of the tabs.
         expect(selectedTabPosition.left).to.be.greaterThan(0);
-        expect(selectedTabPosition.left).to.be.lessThan(tabsEl.clientWidth);
+        expect(selectedTabPosition.left).to.be.lessThan(tabsEl.offsetWidth);
 
         // First tab is not in the viewport anymore, its offset left is less than 0.
         const firstTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
         const firstTabPosition = firstTab.getBoundingClientRect();
         expect(firstTabPosition.left).to.be.lessThan(0);
+
+        // Make the component automatically scroll left by selecting the first tab.
+        tabsEl.selected = '1';
+        await elementUpdated(tabsEl);
+
+        selectedTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
+        expect(selectedTab).to.exist;
+        selectedTabPosition = selectedTab.getBoundingClientRect();
+
+        // First tab is in the viewport, offset left is greater than 0 and less than the width of the tabs.
+        expect(selectedTabPosition.left).to.be.greaterThan(0);
+        expect(selectedTabPosition.left).to.be.lessThan(tabsEl.offsetWidth);
+
+        // Tab nr. 10 is not in the viewport anymore.
+        const previousSelection = tabsEl.querySelector(
+            `[role="tab"][value="10"]`
+        ) as Tab;
+        const previousSelectionPosition =
+            previousSelection.getBoundingClientRect();
+        expect(previousSelectionPosition.left).to.be.greaterThan(
+            tabsEl.offsetWidth
+        );
     });
 
     it('prev and next buttons have default labels', async () => {
@@ -243,40 +260,36 @@ describe('TabsOverflow', () => {
     });
 
     it('prev and next buttons labels overwritten via attributes', async () => {
-        const tabsContainer = await fixture<HTMLDivElement>(
-            html`
-                <div class="container" style="width: 200px; height: 150px;">
-                    <sp-tabs-overflow
-                        label-previous="custom label prev"
-                        label-next="custom label next"
-                    >
-                        <sp-tabs size=${ElementSizes.M} selected=${1}>
-                            ${repeat(
-                                new Array(20),
-                                (item) => item,
-                                (_item, index) =>
-                                    html`
-                                        <sp-tab
-                                            label=${`Tab Item ${index + 1}`}
-                                            value=${index + 1}
-                                        ></sp-tab>
-                                    `
-                            )}
-                            ${repeat(
-                                new Array(20),
-                                (item) => item,
-                                (_item, index) =>
-                                    html`
-                                        <sp-tab-panel value=${index + 1}>
-                                            Content for Tab Item ${index + 1}
-                                        </sp-tab-panel>
-                                    `
-                            )}
-                        </sp-tabs>
-                    </sp-tabs-overflow>
-                </div>
-            `
-        );
+        const tabsContainer = await fixture<HTMLDivElement>(html`
+            <div class="container" style="width: 200px; height: 150px;">
+                <sp-tabs-overflow
+                    label-previous="custom label prev"
+                    label-next="custom label next"
+                >
+                    <sp-tabs size=${ElementSizes.M} selected=${1}>
+                        ${repeat(
+                            new Array(20),
+                            (item) => item,
+                            (_item, index) => html`
+                                <sp-tab
+                                    label=${`Tab Item ${index + 1}`}
+                                    value=${index + 1}
+                                ></sp-tab>
+                            `
+                        )}
+                        ${repeat(
+                            new Array(20),
+                            (item) => item,
+                            (_item, index) => html`
+                                <sp-tab-panel value=${index + 1}>
+                                    Content for Tab Item ${index + 1}
+                                </sp-tab-panel>
+                            `
+                        )}
+                    </sp-tabs>
+                </sp-tabs-overflow>
+            </div>
+        `);
         await elementUpdated(tabsContainer);
         const el = tabsContainer;
 
@@ -296,5 +309,56 @@ describe('TabsOverflow', () => {
         expect(rightButton?.getAttribute('aria-label')).to.equal(
             'custom label next'
         );
+    });
+});
+
+describe('calculateScrollTargetForRightSide', () => {
+    const container = { offsetWidth: 100, scrollLeft: 0 } as HTMLDivElement;
+    const tabs = [
+        { offsetLeft: 0, offsetWidth: 100 }, // currently selected tab
+        { offsetLeft: 100, offsetWidth: 100 },
+        { offsetLeft: 200, offsetWidth: 100 },
+    ] as Tab[];
+
+    it('correctly aligns tab on the right side of the viewport', () => {
+        // Where do I need to scroll on the x axis to get the tab at index 2 to be visible?
+        expect(
+            calculateScrollTargetForRightSide(2, 'ltr', tabs, container)
+        ).to.equal(100); // You need to scroll 100px more
+
+        // Repeat for RTL
+        expect(
+            calculateScrollTargetForRightSide(2, 'rtl', tabs, container)
+        ).to.equal(0); // You need to scroll at the begining of the scrollable area
+    });
+});
+
+describe('calculateScrollTargetForLeftSide', () => {
+    const container = { offsetWidth: 100, scrollLeft: 200 } as HTMLDivElement;
+    const tabs = [
+        { offsetLeft: -200, offsetWidth: 100 },
+        { offsetLeft: -100, offsetWidth: 100 },
+        { offsetLeft: 0, offsetWidth: 100 }, // currently selected tab
+    ] as Tab[];
+
+    it('correctly aligns tab on the left side of the viewport', () => {
+        // Where do I need to scroll on the x axis to get the tab at index 1 to be visible?
+        expect(
+            calculateScrollTargetForLeftSide(1, 'ltr', tabs, container)
+        ).to.equal(-100); // you need to scroll back -100px
+
+        // Where do I need to scroll on the x axis to get the first tab to be visible?
+        expect(
+            calculateScrollTargetForLeftSide(0, 'ltr', tabs, container)
+        ).to.equal(0); // you need to scroll to the begining of the scrollable area
+
+        // Repeat for RTL
+        expect(
+            calculateScrollTargetForLeftSide(1, 'rtl', tabs, container)
+        ).to.equal(100);
+
+        expect(
+            calculateScrollTargetForLeftSide(0, 'rtl', tabs, container)
+        ).to.equal(0);
     });
 });

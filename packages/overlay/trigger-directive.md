@@ -14,9 +14,17 @@ Import the `trigger` directive as follows:
 import { trigger } from '@spectrum-web-components/overlay';
 ```
 
-## Types
+## Arguments
 
-The `trigger()` directive accepts two arguments: a required method returning the `TemplateResult` defining the content of the open overlay and an options object. The options object is shaped as follows:
+The `trigger()` directive accepts two arguments:
+
+-   a required method returning the `TemplateResult` defining the content of the open overlay
+
+```ts
+() => TemplateResult;
+```
+
+-   an optional options object which is shaped as follows:
 
 ```ts
 {
@@ -27,7 +35,7 @@ The `trigger()` directive accepts two arguments: a required method returning the
 }
 ```
 
-The options are of type `OverlayOptions` (outlined [here](https://opensource.adobe.com/spectrum-web-components/components/imperative-api/#overlayoptions)) and `InsertionOptions` are leveraged to outline where in the DOM the Overlay should be inserted:
+`OverlayOptions` are leveraged in the same way as outlined [here](https://opensource.adobe.com/spectrum-web-components/components/imperative-api/#overlayoptions) and `InsertionOptions` are leveraged to outline where in the DOM the Overlay should be inserted:
 
 ```ts
 type InsertionOptions = {
@@ -36,26 +44,79 @@ type InsertionOptions = {
 };
 ```
 
-#### Consumption via `lit-html`
+## Examples
 
 Pass a `TemplateResult` into the `trigger()` directive, as follows in order to have it rendered to the DOM when the associated Overlay is about to open and the removed after the Overlay has closed.
 
-```js
-import { trigger } from '@spectrum-web-components/overlay';
+```html-live
 
-// ...
+<div id="root"></div>
 
-const renderOverlayContent = () => html`
-    <sp-popover>
-        <p>
-            This content will display within the Overlay and
-            <em>only</em>
-            be on the DOM when the Overlay is open.
-        </p>
-    </sp-popover>
-`;
+<script type="module">
+    import { trigger } from '@spectrum-web-components/overlay';
+    import { html, render } from 'lit-html';
 
-const template = html`
-    <sp-button ${trigger(renderOverlayContent)}>Trigger</sp-button>
-`;
+    const renderOverlayContent = () => html`
+        <sp-popover>
+            <p>
+                This content will display within the Overlay and
+                <em>only</em>
+                be on the DOM when the Overlay is open.
+            </p>
+        </sp-popover>
+    `;
+
+    const template = html`
+        <sp-button ${trigger(renderOverlayContent, {
+            open: false,
+            triggerInteraction: 'click',
+            overlayOptions: {
+                placement: 'bottom',
+                offset: 6,
+            }
+        })}>Trigger</sp-button>
+    `;
+
+    customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            const appRoot = document.querySelector('#root');
+            appRoot.innerHTML = '';
+            render(template, appRoot);
+        });
+    });
+</script>
 ```
+
+<script type="module">
+    import { trigger } from '@spectrum-web-components/overlay';
+    import { html, render } from 'lit-html';
+
+    const renderOverlayContent = () => html`
+        <sp-popover>
+            <p>
+                This content will display within the Overlay and
+                <em>only</em>
+                be on the DOM when the Overlay is open.
+            </p>
+        </sp-popover>
+    `;
+
+    const template = html`
+        <sp-button ${trigger(renderOverlayContent, {
+            open: false,
+            triggerInteraction: 'click',
+            overlayOptions: {
+                placement: 'bottom',
+                offset: 6,
+            }
+        })}>Trigger</sp-button>
+    `;
+
+    customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            const appRoot = document.querySelector('#root');
+            appRoot.innerHTML = '';
+            render(template, appRoot);
+        });
+    });
+</script>
