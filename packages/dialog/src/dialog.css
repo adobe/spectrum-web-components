@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-dialog.css');
-@import url('./system-overrides.css');
+@import url('./dialog-overrides.css');
 
 :host {
     --swc-alert-dialog-error-icon-color: var(--spectrum-negative-visual-color);

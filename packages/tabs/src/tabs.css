@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tabs.css');
-@import url('./system-overrides.css');
+@import url('./tabs-overrides.css');
 
 :host {
     display: grid;

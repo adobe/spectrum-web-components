@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-illustratedmessage.css');
-@import url('./system-overrides.css');
+@import url('./illustratedmessage-overrides.css');
 
 /* Ensure that SVGs with viewBox attributes size correctly. */
 ::slotted(svg[viewBox]) {

@@ -437,10 +437,6 @@ async function processComponent(componentPath) {
                 ? conversion.outPackage.join(' ')
                 : conversion.outPackage;
 
-            if (conversion.fileName.includes(outPackageFileName)) {
-                return;
-            }
-
             if (fs.existsSync(bridgepath)) {
                 let bridgeCss = fs.readFileSync(bridgepath, 'utf8');
 
@@ -449,7 +445,7 @@ async function processComponent(componentPath) {
                         ? conversion.outPackage
                         : ['packages', conversion.outPackage]),
                     'src',
-                    `system-overrides.css`
+                    `${conversion.fileName}-overrides.css`
                 );
 
                 const { code } = transform({

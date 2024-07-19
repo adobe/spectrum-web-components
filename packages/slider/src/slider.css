@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-slider.css');
-@import url('./system-overrides.css');
+@import url('./slider-overrides.css');
 
 /*
  * Removes blue outline from :host when it is being focused.

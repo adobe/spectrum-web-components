@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tab.css');
-@import url('./system-overrides.css');
+@import url('./tab-overrides.css');
 
 :host {
     scroll-margin-inline: var(

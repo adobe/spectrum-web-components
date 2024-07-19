@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-radio.css');
-@import url('./system-overrides.css');
+@import url('./radio-overrides.css');
 
 :host(:focus) {
     outline: none;

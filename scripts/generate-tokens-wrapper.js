@@ -64,6 +64,7 @@ const tokenPackages = [
     'fieldlabel',
     'helptext',
     'illustratedmessage',
+    'icon',
     'infieldbutton',
     'link',
     'menu',
@@ -183,7 +184,6 @@ const processPackages = async (tokensDir, index) => {
                 type,
                 packagename + '.css'
             );
-
             // check if cssFilePath exists
             if (fs.existsSync(cssFilePath)) {
                 let content = fs.readFileSync(cssFilePath, 'utf8');

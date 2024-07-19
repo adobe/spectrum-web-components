@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-avatar.css');
-@import url('./system-overrides.css');
+@import url('./avatar-overrides.css');
 
 img {
     vertical-align: top;

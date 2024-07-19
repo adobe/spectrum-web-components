@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-color-wheel.css');
-@import url('./system-overrides.css');
+@import url('./color-wheel-overrides.css');
 
 :host {
     touch-action: none;
