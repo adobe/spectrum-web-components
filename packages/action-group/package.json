@@ -29,12 +29,12 @@
             "development": "./src/ActionGroup.dev.js",
             "default": "./src/ActionGroup.js"
         },
+        "./src/action-group-overrides.css.js": "./src/action-group-overrides.css.js",
         "./src/action-group.css.js": "./src/action-group.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-action-group.js": {
             "development": "./sp-action-group.dev.js",
             "default": "./sp-action-group.js"

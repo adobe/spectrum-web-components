@@ -45,10 +45,12 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
+        "./src/tab-overrides.css.js": "./src/tab-overrides.css.js",
         "./src/tab-panel.css.js": "./src/tab-panel.css.js",
         "./src/tab.css.js": "./src/tab.css.js",
         "./src/tabs-overflow.css.js": "./src/tabs-overflow.css.js",
+        "./src/tabs-overrides.css.js": "./src/tabs-overrides.css.js",
+        "./src/tabs-sizes-overrides.css.js": "./src/tabs-sizes-overrides.css.js",
         "./src/tabs-sizes.css.js": "./src/tabs-sizes.css.js",
         "./src/tabs.css.js": "./src/tabs.css.js",
         "./sp-tabs.js": {

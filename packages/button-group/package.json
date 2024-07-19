@@ -29,12 +29,12 @@
             "development": "./src/ButtonGroup.dev.js",
             "default": "./src/ButtonGroup.js"
         },
+        "./src/button-group-overrides.css.js": "./src/button-group-overrides.css.js",
         "./src/button-group.css.js": "./src/button-group.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-button-group.js": {
             "development": "./sp-button-group.dev.js",
             "default": "./sp-button-group.js"

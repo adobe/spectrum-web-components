@@ -29,12 +29,12 @@
             "development": "./src/Asset.dev.js",
             "default": "./src/Asset.js"
         },
+        "./src/asset-overrides.css.js": "./src/asset-overrides.css.js",
         "./src/asset.css.js": "./src/asset.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-asset.js": {
             "development": "./sp-asset.dev.js",
             "default": "./sp-asset.js"

@@ -29,12 +29,12 @@
             "development": "./src/Divider.dev.js",
             "default": "./src/Divider.js"
         },
+        "./src/divider-overrides.css.js": "./src/divider-overrides.css.js",
         "./src/divider.css.js": "./src/divider.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-divider.js": {
             "development": "./sp-divider.dev.js",
             "default": "./sp-divider.js"

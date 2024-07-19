@@ -29,12 +29,12 @@
             "development": "./src/ColorSlider.dev.js",
             "default": "./src/ColorSlider.js"
         },
+        "./src/color-slider-overrides.css.js": "./src/color-slider-overrides.css.js",
         "./src/color-slider.css.js": "./src/color-slider.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./src/types.js": {
             "development": "./src/types.dev.js",
             "default": "./src/types.js"

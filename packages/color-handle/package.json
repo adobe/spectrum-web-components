@@ -29,12 +29,12 @@
             "development": "./src/ColorHandle.dev.js",
             "default": "./src/ColorHandle.js"
         },
+        "./src/color-handle-overrides.css.js": "./src/color-handle-overrides.css.js",
         "./src/color-handle.css.js": "./src/color-handle.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-color-handle.js": {
             "development": "./sp-color-handle.dev.js",
             "default": "./sp-color-handle.js"

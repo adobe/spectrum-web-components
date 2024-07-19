@@ -33,8 +33,8 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/search-overrides.css.js": "./src/search-overrides.css.js",
         "./src/search.css.js": "./src/search.css.js",
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-search.js": {
             "development": "./sp-search.dev.js",
             "default": "./sp-search.js"

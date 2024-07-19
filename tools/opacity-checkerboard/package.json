@@ -22,9 +22,10 @@
     "exports": {
         ".": "./src/opacity-checkerboard.css.js",
         "./package.json": "./package.json",
+        "./src/is-opacity-checkerboard-overrides.css.js": "./src/is-opacity-checkerboard-overrides.css.js",
         "./src/is-opacity-checkerboard.css.js": "./src/is-opacity-checkerboard.css.js",
-        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js",
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js"
+        "./src/opacity-checkerboard-overrides.css.js": "./src/opacity-checkerboard-overrides.css.js",
+        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

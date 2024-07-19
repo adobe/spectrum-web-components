@@ -33,8 +33,8 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/quick-actions-overrides.css.js": "./src/quick-actions-overrides.css.js",
         "./src/quick-actions.css.js": "./src/quick-actions.css.js",
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-quick-actions.js": {
             "development": "./sp-quick-actions.dev.js",
             "default": "./sp-quick-actions.js"

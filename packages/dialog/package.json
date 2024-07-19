@@ -37,12 +37,12 @@
             "development": "./src/DialogWrapper.dev.js",
             "default": "./src/DialogWrapper.js"
         },
+        "./src/dialog-overrides.css.js": "./src/dialog-overrides.css.js",
         "./src/dialog.css.js": "./src/dialog.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-dialog.js": {
             "development": "./sp-dialog.dev.js",
             "default": "./sp-dialog.js"

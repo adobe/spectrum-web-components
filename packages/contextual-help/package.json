@@ -29,12 +29,12 @@
             "development": "./src/ContextualHelp.dev.js",
             "default": "./src/ContextualHelp.js"
         },
+        "./src/contextual-help-overrides.css.js": "./src/contextual-help-overrides.css.js",
         "./src/contextual-help.css.js": "./src/contextual-help.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-contextual-help.js": {
             "development": "./sp-contextual-help.dev.js",
             "default": "./sp-contextual-help.js"

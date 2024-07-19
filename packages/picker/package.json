@@ -33,8 +33,8 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/picker-overrides.css.js": "./src/picker-overrides.css.js",
         "./src/picker.css.js": "./src/picker.css.js",
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sync/index.js": {
             "development": "./sync/index.dev.js",
             "default": "./sync/index.js"

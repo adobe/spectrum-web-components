@@ -65,7 +65,13 @@
             "development": "./typography.dev.js",
             "default": "./typography.js"
         },
+        "./src/body-overrides.css.js": "./src/body-overrides.css.js",
+        "./src/code-overrides.css.js": "./src/code-overrides.css.js",
+        "./src/detail-overrides.css.js": "./src/detail-overrides.css.js",
+        "./src/heading-overrides.css.js": "./src/heading-overrides.css.js",
+        "./src/lang-overrides.css.js": "./src/lang-overrides.css.js",
         "./src/system-overrides.css.js": "./src/system-overrides.css.js",
+        "./src/typography-overrides.css.js": "./src/typography-overrides.css.js",
         "./src/spectrum-base.css": "./src/spectrum-base.css",
         "./src/spectrum-body.css": "./src/spectrum-body.css",
         "./src/spectrum-code.css": "./src/spectrum-code.css",

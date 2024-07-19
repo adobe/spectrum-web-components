@@ -29,12 +29,12 @@
             "development": "./src/Avatar.dev.js",
             "default": "./src/Avatar.js"
         },
+        "./src/avatar-overrides.css.js": "./src/avatar-overrides.css.js",
         "./src/avatar.css.js": "./src/avatar.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-avatar.js": {
             "development": "./sp-avatar.dev.js",
             "default": "./sp-avatar.js"

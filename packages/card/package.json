@@ -29,12 +29,12 @@
             "development": "./src/Card.dev.js",
             "default": "./src/Card.js"
         },
+        "./src/card-overrides.css.js": "./src/card-overrides.css.js",
         "./src/card.css.js": "./src/card.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-card.js": {
             "development": "./sp-card.dev.js",
             "default": "./sp-card.js"

@@ -29,12 +29,12 @@
             "development": "./src/ActionButton.dev.js",
             "default": "./src/ActionButton.js"
         },
+        "./src/action-button-overrides.css.js": "./src/action-button-overrides.css.js",
         "./src/action-button.css.js": "./src/action-button.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-action-button.js": {
             "development": "./sp-action-button.dev.js",
             "default": "./sp-action-button.js"

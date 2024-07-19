@@ -46,12 +46,12 @@
             "default": "./src/StyledButton.js"
         },
         "./src/button-base.css.js": "./src/button-base.css.js",
+        "./src/button-overrides.css.js": "./src/button-overrides.css.js",
         "./src/button.css.js": "./src/button.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-button.js": {
             "development": "./sp-button.dev.js",
             "default": "./sp-button.js"

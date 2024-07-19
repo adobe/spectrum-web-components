@@ -41,8 +41,8 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/slider-overrides.css.js": "./src/slider-overrides.css.js",
         "./src/slider.css.js": "./src/slider.css.js",
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-slider.js": {
             "development": "./sp-slider.dev.js",
             "default": "./sp-slider.js"

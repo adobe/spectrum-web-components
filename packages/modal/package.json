@@ -22,9 +22,10 @@
     "exports": {
         ".": "./src/modal-wrapper.css.js",
         "./package.json": "./package.json",
+        "./src/modal-overrides.css.js": "./src/modal-overrides.css.js",
+        "./src/modal-wrapper-overrides.css.js": "./src/modal-wrapper-overrides.css.js",
         "./src/modal-wrapper.css.js": "./src/modal-wrapper.css.js",
-        "./src/modal.css.js": "./src/modal.css.js",
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js"
+        "./src/modal.css.js": "./src/modal.css.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

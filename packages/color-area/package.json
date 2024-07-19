@@ -29,12 +29,12 @@
             "development": "./src/ColorArea.dev.js",
             "default": "./src/ColorArea.js"
         },
+        "./src/color-area-overrides.css.js": "./src/color-area-overrides.css.js",
         "./src/color-area.css.js": "./src/color-area.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./src/types.js": {
             "development": "./src/types.dev.js",
             "default": "./src/types.js"

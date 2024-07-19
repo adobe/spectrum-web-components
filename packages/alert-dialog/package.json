@@ -29,12 +29,12 @@
             "development": "./src/AlertDialog.dev.js",
             "default": "./src/AlertDialog.js"
         },
+        "./src/alert-dialog-overrides.css.js": "./src/alert-dialog-overrides.css.js",
         "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-alert-dialog.js": {
             "development": "./sp-alert-dialog.dev.js",
             "default": "./sp-alert-dialog.js"

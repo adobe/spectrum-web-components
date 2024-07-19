@@ -29,12 +29,12 @@
             "development": "./src/Combobox.dev.js",
             "default": "./src/Combobox.js"
         },
+        "./src/combobox-overrides.css.js": "./src/combobox-overrides.css.js",
         "./src/combobox.css.js": "./src/combobox.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-combobox.js": {
             "development": "./sp-combobox.dev.js",
             "default": "./sp-combobox.js"

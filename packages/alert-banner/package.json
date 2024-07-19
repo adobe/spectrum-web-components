@@ -29,12 +29,12 @@
             "development": "./src/AlertBanner.dev.js",
             "default": "./src/AlertBanner.js"
         },
+        "./src/alert-banner-overrides.css.js": "./src/alert-banner-overrides.css.js",
         "./src/alert-banner.css.js": "./src/alert-banner.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-alert-banner.js": {
             "development": "./sp-alert-banner.dev.js",
             "default": "./sp-alert-banner.js"

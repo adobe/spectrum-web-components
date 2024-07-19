@@ -33,8 +33,8 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/infield-button-overrides.css.js": "./src/infield-button-overrides.css.js",
         "./src/infield-button.css.js": "./src/infield-button.css.js",
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-infield-button.js": {
             "development": "./sp-infield-button.dev.js",
             "default": "./sp-infield-button.js"

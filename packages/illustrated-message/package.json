@@ -30,11 +30,11 @@
             "default": "./src/IllustratedMessage.js"
         },
         "./src/illustrated-message.css.js": "./src/illustrated-message.css.js",
+        "./src/illustratedmessage-overrides.css.js": "./src/illustratedmessage-overrides.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-illustrated-message.js": {
             "development": "./sp-illustrated-message.dev.js",
             "default": "./sp-illustrated-message.js"

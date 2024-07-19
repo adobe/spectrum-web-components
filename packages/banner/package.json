@@ -29,12 +29,12 @@
             "development": "./src/Banner.dev.js",
             "default": "./src/Banner.js"
         },
+        "./src/banner-overrides.css.js": "./src/banner-overrides.css.js",
         "./src/banner.css.js": "./src/banner.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/system-overrides.css.js": "./src/system-overrides.css.js",
         "./sp-banner.js": {
             "development": "./sp-banner.dev.js",
             "default": "./sp-banner.js"
