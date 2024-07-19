@@ -431,12 +431,6 @@ async function processComponent(componentPath) {
                 .resolve(conversion.inPackage)
                 .replace('index.css', 'index-theme.css');
 
-            // Skip if the conversion is for the same package
-
-            const outPackageFileName = Array.isArray(conversion.outPackage)
-                ? conversion.outPackage.join(' ')
-                : conversion.outPackage;
-
             if (fs.existsSync(bridgepath)) {
                 let bridgeCss = fs.readFileSync(bridgepath, 'utf8');
 
@@ -635,6 +629,11 @@ async function processComponent(componentPath) {
                     },
                     filename: systemsPath,
                 });
+
+                // if the code is an empty buffer then don't write the file
+                if (code.length === 1) {
+                    return;
+                }
 
                 fs.writeFileSync(
                     systemsPath,

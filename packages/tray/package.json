@@ -34,7 +34,6 @@
             "default": "./src/index.js"
         },
         "./src/tray-overrides.css.js": "./src/tray-overrides.css.js",
-        "./src/tray-wrapper-overrides.css.js": "./src/tray-wrapper-overrides.css.js",
         "./src/tray.css.js": "./src/tray.css.js",
         "./sp-tray.js": {
             "development": "./sp-tray.dev.js",

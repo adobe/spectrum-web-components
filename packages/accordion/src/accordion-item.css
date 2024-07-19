@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-accordion-item.css');
-@import url('./accordion-item-overrides.css');
 
 :host {
     display: block;
