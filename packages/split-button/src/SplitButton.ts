@@ -118,7 +118,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         if (window.__swc.DEBUG) {
             window.__swc.warn(
                 this,
-                `<${this.localName}> is deprecated. Use a Button Group to show any additional actions related to the most critical action.`,
+                `<${this.localName}> is deprecated and will be removed in the SWC 1.0 release. Use a Button Group to show any additional actions related to the most critical action.`,
                 'https://opensource.adobe.com/spectrum-web-components/components/split-button/#deprecation',
                 { level: 'deprecation' }
             );
