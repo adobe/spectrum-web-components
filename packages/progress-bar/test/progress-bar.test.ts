@@ -69,7 +69,17 @@ describe('ProgressBar', () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar label="myLabel" indeterminate></sp-progress-bar>
         `);
-        expect(el.shadowRoot.textContent?.trim()).to.equal('myLabel');
+        expect(el.getAttribute('label')).to.equal('myLabel');
+    });
+
+    it('renders nothing when both content and label is absent', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="myLabel" indeterminate></sp-progress-bar>
+        `);
+        el.removeAttribute('label');
+        el.shadowRoot.textContent = '';
+        expect(el.getAttribute('label')).to.equal(null);
+        expect(el.shadowRoot.textContent?.trim()).to.equal('');
     });
 
     it('accepts a changing progress', async () => {
