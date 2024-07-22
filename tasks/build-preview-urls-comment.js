@@ -19,9 +19,7 @@ import crypto from 'crypto';
 const getChangedPackages = () => {
     let command;
     try {
-        command = execSync(
-            'yarn --silent lerna ls --since origin/main --json --loglevel silent'
-        );
+        command = execSync('yarn changeset since --base origin/main --json');
     } catch (error) {
         console.log(error.message);
         console.log(error.stdout.toString());

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+    "changelog": [
+        "@changesets/changelog-github",
+        {
+            "repo": "adobe/spectrum-web-components"
+        }
+    ],
+    "commit": false,
+    "fixed": [["@spectrum-web-components/*"]],
+    "linked": [],
+    "access": "public",
+    "baseBranch": "main",
+    "updateInternalDependencies": "patch",
+    "ignore": []
+}

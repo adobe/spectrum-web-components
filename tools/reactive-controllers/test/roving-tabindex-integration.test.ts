@@ -27,81 +27,73 @@ import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 const createTabs = async (): Promise<Tabs> => {
-    const tabs = await fixture<Tabs>(
-        html`
-            <sp-tabs selected="second">
-                <sp-tab label="Tab 1" value="first"></sp-tab>
-                <sp-tab label="Tab 2" value="second"></sp-tab>
-                <sp-tab label="Tab 3" value="third"></sp-tab>
-                <sp-tab-panel value="first">
-                    <sp-action-group selects="single">
-                        <sp-action-button selected value="1">
-                            Single Button 1
-                        </sp-action-button>
-                        <sp-action-button value="2">
-                            Single Button 2
-                        </sp-action-button>
-                        <sp-action-button value="3">
-                            Single Button 3
-                        </sp-action-button>
-                    </sp-action-group>
-                </sp-tab-panel>
-                <sp-tab-panel value="second">
-                    <sp-action-group selects="multiple">
-                        <sp-action-button value="1">
-                            Multiple Button 1
-                        </sp-action-button>
-                        <sp-action-button selected value="2">
-                            Multiple Button 2
-                        </sp-action-button>
-                        <sp-action-button selected value="3">
-                            Multiple Button 3
-                        </sp-action-button>
-                    </sp-action-group>
-                </sp-tab-panel>
-                <sp-tab-panel value="third">
-                    <sp-action-group>
-                        <sp-action-button value="1">
-                            None Button 1
-                        </sp-action-button>
-                        <sp-action-button value="2">
-                            None Button 2
-                        </sp-action-button>
-                        <sp-action-button selected value="3">
-                            None Button 3
-                        </sp-action-button>
-                    </sp-action-group>
-                </sp-tab-panel>
-            </sp-tabs>
-        `
-    );
+    const tabs = await fixture<Tabs>(html`
+        <sp-tabs selected="second">
+            <sp-tab label="Tab 1" value="first"></sp-tab>
+            <sp-tab label="Tab 2" value="second"></sp-tab>
+            <sp-tab label="Tab 3" value="third"></sp-tab>
+            <sp-tab-panel value="first">
+                <sp-action-group selects="single">
+                    <sp-action-button selected value="1">
+                        Single Button 1
+                    </sp-action-button>
+                    <sp-action-button value="2">
+                        Single Button 2
+                    </sp-action-button>
+                    <sp-action-button value="3">
+                        Single Button 3
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-tab-panel>
+            <sp-tab-panel value="second">
+                <sp-action-group selects="multiple">
+                    <sp-action-button value="1">
+                        Multiple Button 1
+                    </sp-action-button>
+                    <sp-action-button selected value="2">
+                        Multiple Button 2
+                    </sp-action-button>
+                    <sp-action-button selected value="3">
+                        Multiple Button 3
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-tab-panel>
+            <sp-tab-panel value="third">
+                <sp-action-group>
+                    <sp-action-button value="1">None Button 1</sp-action-button>
+                    <sp-action-button value="2">None Button 2</sp-action-button>
+                    <sp-action-button selected value="3">
+                        None Button 3
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-tab-panel>
+        </sp-tabs>
+    `);
     await elementUpdated(tabs);
     return tabs;
 };
 
 const createGroup = async (): Promise<ActionGroup> => {
-    const group = await fixture<ActionGroup>(
-        html`
-            <sp-action-group>
-                <sp-action-button>Button 1</sp-action-button>
-                <sp-action-button>Longer Button 2</sp-action-button>
-                <sp-action-button>Short 3</sp-action-button>
-                <sp-action-menu label="More Actions">
-                    <sp-menu-item>One</sp-menu-item>
-                    <sp-menu-item>Two</sp-menu-item>
-                    <sp-menu-item>Three</sp-menu-item>
-                    <sp-menu-item>
-                        Select some items
-                        <sp-menu slot="submenu" selects="multiple">
-                            <sp-menu-item>A</sp-menu-item>
-                            <sp-menu-item selected>B</sp-menu-item>
-                            <sp-menu-item>C</sp-menu-item>
-                        </sp-menu>
-                    </sp-menu-item>
-                </sp-action-menu>
-            </sp-action-group>
-        `
-    );
+    const group = await fixture<ActionGroup>(html`
+        <sp-action-group>
+            <sp-action-button>Button 1</sp-action-button>
+            <sp-action-button>Longer Button 2</sp-action-button>
+            <sp-action-button>Short 3</sp-action-button>
+            <sp-action-menu label="More Actions">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item>Three</sp-menu-item>
+                <sp-menu-item>
+                    Select some items
+                    <sp-menu slot="submenu" selects="multiple">
+                        <sp-menu-item>A</sp-menu-item>
+                        <sp-menu-item selected>B</sp-menu-item>
+                        <sp-menu-item>C</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-action-menu>
+        </sp-action-group>
+    `);
     await elementUpdated(group);
     return group;
 };
@@ -272,15 +264,13 @@ describe('Action Menu inside of Action Group', () => {
 
 describe('tabIndex is cached properly', () => {
     it('cache is managed properly', async () => {
-        const menuEl = await fixture<ActionMenu>(
-            html`
-                <sp-action-menu label="More Actions">
-                    <sp-menu-item>One</sp-menu-item>
-                    <sp-menu-item>Two</sp-menu-item>
-                    <sp-menu-item>Three</sp-menu-item>
-                </sp-action-menu>
-            `
-        );
+        const menuEl = await fixture<ActionMenu>(html`
+            <sp-action-menu label="More Actions">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item>Three</sp-menu-item>
+            </sp-action-menu>
+        `);
 
         expect(menuEl.tabIndex).to.equal(0);
         expect(menuEl.focusElement?.tabIndex).to.equal(0);
