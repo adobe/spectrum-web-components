@@ -265,6 +265,11 @@ withGif.swc_vrt = {
     skip: true,
 };
 
+withGif.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const withKeys = (props: Properties): TemplateResult => {
     const {
         modifierKeys = ['⇧ Shift', '⌘'],

@@ -250,10 +250,20 @@ Default.swc_vrt = {
     skip: true,
 };
 
+Default.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const configured = (args: Properties): TemplateResult => template(args);
 
 configured.swc_vrt = {
     skip: true,
+};
+
+configured.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const insertionOptions = (args: Properties = {}): TemplateResult => html`
@@ -270,6 +280,11 @@ insertionOptions.args = {
 
 insertionOptions.swc_vrt = {
     skip: true,
+};
+
+insertionOptions.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 class ManagedOverlayTrigger extends LitElement {
@@ -352,4 +367,9 @@ export const managedOverlayTrigger = (): TemplateResult => html`
 
 managedOverlayTrigger.swc_vrt = {
     skip: true,
+};
+
+managedOverlayTrigger.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
