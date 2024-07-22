@@ -43,10 +43,9 @@ export const Default = ({
     return html`
         <sp-button
             ${tooltip(
-                () =>
-                    html`
-                        ${text || 'Tooltip'}
-                    `,
+                () => html`
+                    ${text || 'Tooltip'}
+                `,
                 {
                     open,
                     overlayOptions: { placement },
@@ -132,4 +131,9 @@ Default.argTypes = {
 };
 Default.swc_vrt = {
     skip: true,
+};
+
+Default.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
