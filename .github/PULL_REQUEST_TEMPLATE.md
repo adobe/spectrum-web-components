@@ -28,8 +28,13 @@
     1. Go here
     2. Do this
 -   [ ] _Test case 2_
+
     1. Go here
     2. Do this
+
+-   [ ] Did it pass in Desktop?
+-   [ ] Did it pass in Mobile?
+-   [ ] Did it pass in iPad?
 
 ## Screenshots (if appropriate)
 
