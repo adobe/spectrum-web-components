@@ -29,6 +29,11 @@ export const parameters = {
             title: 'Deprecated',
         },
     },
+    chromatic: {
+        forcedColors: 'none',
+        prefersReducedMotion: 'no-preference',
+        pauseAnimationAtEnd: true,
+    },
 };
 
 export const decorators = [swcThemeDecorator];
