@@ -445,6 +445,11 @@ max20.swc_vrt = {
     skip: true,
 };
 
+max20.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const editable = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
@@ -502,6 +507,11 @@ editableWithDefaultValue.swc_vrt = {
     skip: true,
 };
 
+editableWithDefaultValue.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const editableWithFractionValue = (
     args: StoryArgs = {}
 ): TemplateResult => {
@@ -526,6 +536,11 @@ export const editableWithFractionValue = (
 
 editableWithFractionValue.swc_vrt = {
     skip: true,
+};
+
+editableWithFractionValue.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {

@@ -641,3 +641,8 @@ lazyHero.args = {
 lazyHero.swc_vrt = {
     skip: true,
 };
+
+lazyHero.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};

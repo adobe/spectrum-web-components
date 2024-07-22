@@ -83,6 +83,11 @@ imageIconSrcError.swc_vrt = {
     skip: true,
 };
 
+imageIconSrcError.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const svgIcon = (): TemplateResult => {
     return html`
         ${sizes.map(

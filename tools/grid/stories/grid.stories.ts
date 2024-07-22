@@ -157,6 +157,11 @@ Default.swc_vrt = {
     skip: true,
 };
 
+Default.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const sized = (
     { gap, padding } = { gap: 10, padding: 10 }
 ): TemplateResult => {
@@ -255,6 +260,11 @@ sized.swc_vrt = {
     skip: true,
 };
 
+sized.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 class MyParent extends SpectrumElement {
     static override styles = [
         css`
@@ -296,4 +306,9 @@ export const scrollParentInAssignedSlot = (): TemplateResult => {
 
 scrollParentInAssignedSlot.swc_vrt = {
     skip: true,
+};
+
+scrollParentInAssignedSlot.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };

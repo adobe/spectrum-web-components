@@ -432,6 +432,11 @@ groupsWithSelects.swc_vrt = {
     skip: true,
 };
 
+groupsWithSelects.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const directive = (): TemplateResult => {
     const renderSubmenu = (): TemplateResult => html`
         <sp-menu-item>Submenu Item 1</sp-menu-item>
@@ -465,4 +470,9 @@ export const directive = (): TemplateResult => {
 
 directive.swc_vrt = {
     skip: true,
+};
+
+directive.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };

@@ -147,15 +147,12 @@ class MyPicker extends XElement {
                 // MenuItem.childrenItem
                 // Using .value for the key will workaround the issue
                 (blendModeOption) => blendModeOption,
-                (blendModeOption: BlendModeOption) =>
-                    html`
-                        <sp-menu-item value=${blendModeOption.value}>
-                            ${blendModeOption.title}
-                            <span slot="value">
-                                ${blendModeOption.subtitle}
-                            </span>
-                        </sp-menu-item>
-                    `
+                (blendModeOption: BlendModeOption) => html`
+                    <sp-menu-item value=${blendModeOption.value}>
+                        ${blendModeOption.title}
+                        <span slot="value">${blendModeOption.subtitle}</span>
+                    </sp-menu-item>
+                `
             )}
         `;
     }
@@ -186,4 +183,9 @@ export const disconnectedChildItems = (): TemplateResult => html`
 
 disconnectedChildItems.swc_vrt = {
     skip: true,
+};
+
+disconnectedChildItems.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
