@@ -21,7 +21,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController, ReactiveElement } from 'lit';
+import { html, ReactiveController, ReactiveElement, TemplateResult } from 'lit';
+import('@spectrum-web-components/progress-circle/sp-progress-circle.js');
 
 type PendingStateConfig = {
     pending: () => boolean;
@@ -47,6 +48,17 @@ export class PendingStateController<T extends ReactiveElement>
         return this.pending();
     }
 
+    public renderPendingState(pendingLabel: string): TemplateResult {
+        return html`
+            <sp-progress-circle
+                id="loader"
+                size="s"
+                indeterminate
+                aria-valuetext=${pendingLabel}
+                class="progress-circle"
+            ></sp-progress-circle>
+        `;
+    }
     hostConnected(): void {
         this.checkPendingState();
     }

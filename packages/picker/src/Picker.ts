@@ -154,8 +154,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         super();
         this.pendingStateController = new PendingStateController(this, {
             pending: () => this.pending,
-            onPendingChange: (pending: boolean) => {
-                if (pending) {
+            onPendingChange: (isPending: boolean) => {
+                if (isPending) {
                     this.open = false;
                 }
             },
@@ -492,19 +492,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                       `
                     : nothing}
                 ${when(this.pendingStateController.getPending(), () => {
-                    import(
-                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+                    return this.pendingStateController.renderPendingState(
+                        this.pendingLabel
                     );
-                    // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
-                    return html`
-                        <sp-progress-circle
-                            id="loader"
-                            size="s"
-                            indeterminate
-                            aria-valuetext=${this.pendingLabel}
-                            class="progress-circle"
-                        ></sp-progress-circle>
-                    `;
                 })}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
@@ -561,7 +551,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
-    protected override render(): TemplateResult {
+    protected render(): TemplateResult {
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
@@ -874,7 +864,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  * @fires sp-closed - Announces that the overlay has been closed
  */
 export class Picker extends PickerBase {
-    public static override get styles(): CSSResultArray {
+    public static get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
 
