@@ -288,7 +288,6 @@ describe('ActionGroup', () => {
                         actionMenuRect.top + actionMenuRect.height / 2,
                     ],
                     type: 'click',
-                    options: { delay: 100 },
                 },
             ],
         });

@@ -38,6 +38,7 @@ export function sendMousePlugin() {
                     const page = session.browser.getPage(session.id);
                     for (const step of payload.steps) {
                         step.options = step.options || {};
+                        step.options.delay = 1;
                         if (step.position) {
                             await page.mouse[step.type](
                                 Math.round(step.position[0]),

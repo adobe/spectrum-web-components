@@ -783,7 +783,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         );
     };
 
-    protected bindEvents(): void {
+    public bindEvents(): void {
         this.strategy?.abort();
         if (this.isMobile.matches) {
             this.strategy = new strategies['mobile'](this.button, this);
