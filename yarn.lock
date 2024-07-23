@@ -5758,10 +5758,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-6.0.0-s2-foundations.9.tgz#fd5b67a447d4d07fbc3d4fe601b453296c55539e"
   integrity sha512-2I7jblprICWOgBPht2Atqxf/2pqlXGJCCt4tD+Lavhte7lJJq35j0nVWHJwQNI6D8Vq9Mgg2A17u0exbK7PhAA==
 
-"@spectrum-css/icon@^8.0.0-s2-foundations.9":
-  version "8.0.0-s2-foundations.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-8.0.0-s2-foundations.9.tgz#d319ffd78eada622906910cdbebeab7bd8f359c7"
-  integrity sha512-sv+ZGG5FUER6h3QZ5oLN3NGr3z0/dtIPcGq+ba9IoVIGdiGEV3xdVyIVdEIHzB8eHX2A09TCpvpqBJOLjUJ7hA==
+"@spectrum-css/icon@^8.0.0-s2-foundations.10", "@spectrum-css/icon@^8.0.0-s2-foundations.9":
+  version "8.0.0-s2-foundations.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-8.0.0-s2-foundations.10.tgz#0436e29601a9c84ada9c1beefbc347627a2fa24f"
+  integrity sha512-/doJ5A4LEWOghbVkNFsFEpFjf9kiGIh27p9H7OIHOBQGPzSgzy/tDr+NH2DtE0kMqjKBTKCyaix+8sMde6oxhQ==
 
 "@spectrum-css/illustratedmessage@^8.0.0-s2-foundations.9":
   version "8.0.0-s2-foundations.9"
@@ -5933,10 +5933,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-4.0.0-s2-foundations.9.tgz#5d52dd9385da63b6f39056a53a1070596c832411"
   integrity sha512-QQ9rRVwjvQBq3mwY8okWNladmCYoJ1VDE/2SP9wbAR4djNq+beY3LVLYJBPjnoLc9R2yH/IpvqaJZVPEelsElQ==
 
-"@spectrum-css/typography@^7.0.0-s2-foundations.9":
-  version "7.0.0-s2-foundations.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-7.0.0-s2-foundations.9.tgz#9a3ad483cdbb16e4dfbc0724e9f71f5b9de9855b"
-  integrity sha512-32sifKkXzFHpMJL9Ev2BMVTyHN4LA2hv6ScrCzJfz2cjPTV3oCQ4GYa5LUMvrxXEBS3r3+3LP/J2KCtTyes96Q==
+"@spectrum-css/typography@^7.0.0-s2-foundations.10":
+  version "7.0.0-s2-foundations.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-7.0.0-s2-foundations.10.tgz#35712d18be9c429e8bdbe7e0ee7d5f5bb8c5c91d"
+  integrity sha512-4N1GuRvRY3nsl7yXq36MYiG5NC0n6fdKDzLYGXNzENx6O59XwY5C+bhtgWBRohxyx3QvP3zWZCDHCWRvCae89g==
 
 "@spectrum-css/ui-icons@^2.0.0-s2-foundations.4":
   version "2.0.0-s2-foundations.4"
@@ -5954,7 +5954,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.43.0"
+  version "0.44.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"

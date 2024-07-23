@@ -11,13 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Typography .spectrum-Body {
-    --spectrum-body-margin-end: calc(
-        var(--mod-body-font-size, var(--spectrum-body-font-size)) *
-            var(--spectrum-body-margin-multiplier)
-    );
-}
-
 @media (forced-colors: active) {
     .spectrum-Body {
         --highcontrast-body-font-color: Text;

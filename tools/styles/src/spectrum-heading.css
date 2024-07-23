@@ -11,17 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Typography .spectrum-Heading {
-    --spectrum-heading-margin-start: calc(
-        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
-            var(--spectrum-heading-margin-top-multiplier)
-    );
-    --spectrum-heading-margin-end: calc(
-        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
-            var(--spectrum-heading-margin-bottom-multiplier)
-    );
-}
-
 @media (forced-colors: active) {
     .spectrum-Heading {
         --highcontrast-heading-font-color: Text;

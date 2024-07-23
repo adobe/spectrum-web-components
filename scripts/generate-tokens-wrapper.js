@@ -98,6 +98,7 @@ const tokenPackages = [
     'topnav',
     'tray',
     'underlay',
+    'typography',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

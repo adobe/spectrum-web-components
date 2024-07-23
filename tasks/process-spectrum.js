@@ -632,7 +632,7 @@ async function processComponent(componentPath) {
 
                 // if the code is an empty buffer then don't write the file
                 if (code.length === 1) {
-                    return;
+                    continue;
                 }
 
                 fs.writeFileSync(

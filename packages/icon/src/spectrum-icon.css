@@ -12,33 +12,30 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-icon-inline-size: var(
+        --mod-icon-inline-size,
+        var(--mod-icon-size, var(--spectrum-icon-size))
+    );
+    --spectrum-icon-block-size: var(
+        --mod-icon-block-size,
+        var(--mod-icon-size, var(--spectrum-icon-size))
+    );
     pointer-events: none;
-    transform: var(--spectrum-icon-transform);
+    transform: none;
+    transform: var(--spectrum-icon-transform, none);
     color: inherit;
-    color: var(--mod-icon-color, var(--spectrum-icon-color, inherit));
+    color: var(--mod-icon-color, inherit);
     fill: currentColor;
     display: inline-block;
 }
 
-:host(:not(:root)) {
-    overflow: hidden;
+:host {
+    inline-size: var(--spectrum-icon-inline-size);
+    block-size: var(--spectrum-icon-block-size);
 }
 
-:host {
-    inline-size: var(
-        --spectrum-icon-inline-size,
-        var(
-            --mod-icon-inline-size,
-            var(--mod-icon-size, var(--spectrum-icon-size))
-        )
-    );
-    block-size: var(
-        --spectrum-icon-block-size,
-        var(
-            --mod-icon-block-size,
-            var(--mod-icon-size, var(--spectrum-icon-size))
-        )
-    );
+:host(:not(:root)) {
+    overflow: hidden;
 }
 
 @media (forced-colors: active) {
