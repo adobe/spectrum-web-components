@@ -300,32 +300,32 @@ export const withKeys = (props: Properties): TemplateResult => {
     `;
 };
 
-export const withShortCut = (props: Properties): TemplateResult => {
-    const { currentStep = 2, totalSteps = 8 } = props;
-    return html`
-        <sp-coachmark
-            open
-            primary-cta="Next"
-            secondary-cta="Previous"
-            current-step=${currentStep}
-            total-steps=${totalSteps}
-            shortcut-key="Z"
-            .content=${{
-                title: 'Coachmark Shortcut',
-                description:
-                    'This is a Coachmark with nothing but text in it. Kind of lonely in here',
-            }}
-        >
-            <div slot="step-count">${currentStep} of ${totalSteps}</div>
-            <sp-action-menu
-                placement="bottom-end"
-                quiet
-                slot="actions"
-                label="More Actions"
-            >
-                <sp-menu-item>Skip tour</sp-menu-item>
-                <sp-menu-item>Restart tour</sp-menu-item>
-            </sp-action-menu>
-        </sp-coachmark>
-    `;
-};
+// export const withShortCut = (props: Properties): TemplateResult => {
+//     const { currentStep = 2, totalSteps = 8 } = props;
+//     return html`
+//         <sp-coachmark
+//             open
+//             primary-cta="Next"
+//             secondary-cta="Previous"
+//             current-step=${currentStep}
+//             total-steps=${totalSteps}
+//             shortcut-key="Z"
+//             .content=${{
+//                 title: 'Coachmark Shortcut',
+//                 description:
+//                     'This is a Coachmark with nothing but text in it. Kind of lonely in here',
+//             }}
+//         >
+//             <div slot="step-count">${currentStep} of ${totalSteps}</div>
+//             <sp-action-menu
+//                 placement="bottom-end"
+//                 quiet
+//                 slot="actions"
+//                 label="More Actions"
+//             >
+//                 <sp-menu-item>Skip tour</sp-menu-item>
+//                 <sp-menu-item>Restart tour</sp-menu-item>
+//             </sp-action-menu>
+//         </sp-coachmark>
+//     `;
+// };
