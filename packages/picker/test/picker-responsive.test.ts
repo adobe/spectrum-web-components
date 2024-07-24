@@ -54,12 +54,11 @@ describe('Picker, responsive', () => {
             await elementUpdated(el);
         });
 
-        it.only('is a Tray in mobile', async () => {
+        it('is a Tray in mobile', async () => {
             /**
              * This is a hack to set the `isMobile` property to true so that we can test the MobileController
              */
             el.isMobile.matches = true;
-            el.requestUpdate();
             el.bindEvents();
 
             /**

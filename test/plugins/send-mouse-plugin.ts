@@ -38,6 +38,8 @@ export function sendMousePlugin() {
                     const page = session.browser.getPage(session.id);
                     for (const step of payload.steps) {
                         step.options = step.options || {};
+                        // adding a delay to make sure the consecutive mouse events are not too fast
+                        // picker open/close tests were failing without this
                         step.options.delay = 1;
                         if (step.position) {
                             await page.mouse[step.type](
