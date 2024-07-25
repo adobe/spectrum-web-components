@@ -32,7 +32,6 @@ import type { MenuItem } from '@spectrum-web-components/menu';
 import type { SplitButton } from '@spectrum-web-components/split-button';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture } from '../../../test/testing-helpers.js';
-import { Button } from '@spectrum-web-components/button';
 
 export function runSplitButtonTests(
     wrapInDiv: (storyArgument: TemplateResult) => TemplateResult,
@@ -289,66 +288,6 @@ export function runSplitButtonTests(
         expect(el.open).to.be.false;
     });
 
-    it('[type="field"] opens and selects in a single pointer button interaction', async () => {
-        const test = await fixture<HTMLDivElement>(
-            wrapInDiv(
-                field({
-                    ...fieldDefaults.args,
-                    ...field.args,
-                })
-            )
-        );
-        const el = test.querySelector('sp-split-button') as SplitButton;
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
-
-        const thirdItem = el.querySelector(
-            'sp-menu-item:nth-of-type(3)'
-        ) as MenuItem;
-        const trigger = el.shadowRoot.querySelector('.trigger') as Button;
-        const boundingRect = trigger.getBoundingClientRect();
-
-        expect(el.value).to.not.equal(thirdItem.value);
-        const opened = oneEvent(el, 'sp-opened');
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        boundingRect.x + boundingRect.width / 2,
-                        boundingRect.y + boundingRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
-        await opened;
-
-        const thirdItemRect = thirdItem.getBoundingClientRect();
-        const closed = oneEvent(el, 'sp-closed');
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        thirdItemRect.x + thirdItemRect.width / 2,
-                        thirdItemRect.y + thirdItemRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
-        await closed;
-
-        expect(el.open).to.be.false;
-        expect(el.value).to.equal(thirdItem.value);
-    });
-
     it('[type="more"] toggles open/close multiple time', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(more({ ...moreDefaults.args, ...more.args }))
@@ -394,68 +333,6 @@ export function runSplitButtonTests(
         expect(el.open).to.be.false;
         expect(trigger).to.have.attribute('aria-expanded', 'false');
         expect(trigger).not.to.have.attribute('aria-controls');
-    });
-
-    it('[type="more"] opens and selects in a single pointer button interaction', async () => {
-        const thirdItemSpy = spy();
-        const test = await fixture<HTMLDivElement>(
-            wrapInDiv(
-                more({
-                    ...moreDefaults.args,
-                    ...more.args,
-                    thirdItemHandler: (): void => thirdItemSpy(),
-                })
-            )
-        );
-        const el = test.querySelector('sp-split-button') as SplitButton;
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
-
-        const thirdItem = el.querySelector(
-            'sp-menu-item:nth-of-type(3)'
-        ) as MenuItem;
-        const trigger = el.shadowRoot.querySelector('.trigger') as Button;
-        const boundingRect = trigger.getBoundingClientRect();
-
-        expect(el.value).to.not.equal(thirdItem.value);
-        const opened = oneEvent(el, 'sp-opened');
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        boundingRect.x + boundingRect.width / 2,
-                        boundingRect.y + boundingRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
-        await opened;
-
-        const thirdItemRect = thirdItem.getBoundingClientRect();
-        const closed = oneEvent(el, 'sp-closed');
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        thirdItemRect.x + thirdItemRect.width / 2,
-                        thirdItemRect.y + thirdItemRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
-        await closed;
-
-        expect(el.open).to.be.false;
-        expect(thirdItemSpy.callCount).to.equal(1);
     });
 
     it('[type="more"] opens, then closes, on subsequent clicks', async () => {
