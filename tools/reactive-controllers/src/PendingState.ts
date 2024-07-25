@@ -29,28 +29,23 @@ type PendingStateConfig = {
     onPendingChange: (pending: boolean) => void;
 };
 
-/**
- * Represents a controller that manages the pending state of a reactive element.
- *
- * @template T - The type of the reactive element.
- */
-/**
- * Represents a controller for managing the pending state of a reactive element.
- *
- * @template T - The type of the reactive element.
- */
+export interface HostWithPendingState extends ReactiveElement {
+    pendingLabel?: string;
+    pending?: boolean;
+}
+
 /**
  * Represents a controller for managing the pending state of a reactive element.
  *
  * @template T - The type of the reactive element.
  */
-export class PendingStateController<T extends ReactiveElement>
+export class PendingStateController<T extends HostWithPendingState>
     implements ReactiveController
 {
     /**
      * The host element that this controller is attached to.
      */
-    private host: T;
+    public host: T;
 
     /**
      * A function that returns a boolean indicating whether the host is in a pending state.
@@ -93,9 +88,8 @@ export class PendingStateController<T extends ReactiveElement>
      * @param pendingLabel - The label to display for the pending state. Defaults to 'pending label'.
      * @returns A TemplateResult representing the pending state UI.
      */
-    public renderPendingState(
-        pendingLabel: string = 'pending label'
-    ): TemplateResult {
+    public renderPendingState(): TemplateResult {
+        const pendingLabel = this.host.pendingLabel || 'Pending';
         return html`
             <sp-progress-circle
                 id="loader"

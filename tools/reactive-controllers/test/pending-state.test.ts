@@ -12,20 +12,22 @@ governing permissions and limitations under the License.
 */
 
 import { expect, fixture, html } from '@open-wc/testing';
-import { ReactiveElement } from 'lit';
-import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
+import {
+    HostWithPendingState,
+    PendingStateController,
+} from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import sinon from 'sinon';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 
 describe('PendingStateController', () => {
-    let host: ReactiveElement;
+    let host: HostWithPendingState;
     let pending: sinon.SinonStub;
     let onPendingChange: sinon.SinonStub;
-    let controller: PendingStateController<ReactiveElement>;
+    let controller: PendingStateController<HostWithPendingState>;
 
     beforeEach(async () => {
-        host = await fixture<ReactiveElement>(html`
+        host = await fixture<HostWithPendingState>(html`
             <sp-picker pending></sp-picker>
         `);
         pending = sinon.stub();
@@ -50,7 +52,8 @@ describe('PendingStateController', () => {
     describe('renderPendingState', () => {
         it('should render the pending state UI', async () => {
             const pendingLabel = 'Custom Pending Label';
-            const templateResult = controller.renderPendingState(pendingLabel);
+            host.pendingLabel = pendingLabel;
+            const templateResult = controller.renderPendingState();
 
             const renderedElement = await fixture(html`
                 ${templateResult}
@@ -71,8 +74,8 @@ describe('PendingStateController', () => {
         });
 
         it('should render the default pending state UI if no label is provided', async () => {
+            host.pendingLabel = undefined;
             const templateResult = controller.renderPendingState();
-
             const renderedElement = await fixture(html`
                 ${templateResult}
             `);
@@ -81,7 +84,7 @@ describe('PendingStateController', () => {
                     id="loader"
                     size="s"
                     indeterminate
-                    aria-valuetext="pending label"
+                    aria-valuetext="Pending"
                     class="progress-circle"
                 ></sp-progress-circle>
             `);
@@ -100,6 +103,50 @@ describe('PendingStateController', () => {
                 );
 
                 expect(renderedAttr.value).to.equal(expectedAttr?.value);
+            }
+        });
+
+        it('should toggle the pending state on and off and preserve the component state correctly', async () => {
+            // Set initial pending state to true
+            host.setAttribute('pending', 'true');
+            await host.updateComplete;
+            let progressCircle =
+                host.shadowRoot?.querySelector('sp-progress-circle');
+            expect(progressCircle).to.not.be.null;
+            host.removeAttribute('pending');
+            await host.updateComplete;
+            progressCircle =
+                host.shadowRoot?.querySelector('sp-progress-circle');
+            expect(progressCircle).to.be.null;
+            host.setAttribute('pending', 'true');
+            await host.updateComplete;
+            progressCircle =
+                host.shadowRoot?.querySelector('sp-progress-circle');
+            expect(progressCircle).to.not.be.null;
+            const expectedElement = await fixture(html`
+                <sp-progress-circle
+                    id="loader"
+                    size="s"
+                    indeterminate
+                    aria-valuetext="Pending"
+                    class="progress-circle"
+                ></sp-progress-circle>
+            `);
+
+            const renderedAttributes = progressCircle?.attributes;
+            const expectedAttributes = expectedElement.attributes;
+            expect(renderedAttributes?.length).to.equal(
+                expectedAttributes.length
+            );
+            if (renderedAttributes) {
+                for (let i = 0; i < renderedAttributes.length; i++) {
+                    const renderedAttr = renderedAttributes[i];
+                    const expectedAttr = expectedAttributes.getNamedItem(
+                        renderedAttr.name
+                    );
+
+                    expect(renderedAttr.value).to.equal(expectedAttr?.value);
+                }
             }
         });
     });

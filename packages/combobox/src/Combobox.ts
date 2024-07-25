@@ -438,9 +438,7 @@ export class Combobox extends Textfield {
                     !this.disabled &&
                     !this.readonly,
                 () => {
-                    return this.pendingStateController.renderPendingState(
-                        this.pendingLabel
-                    );
+                    return this.pendingStateController.renderPendingState();
                 }
             )}
         `;

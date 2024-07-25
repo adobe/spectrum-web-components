@@ -492,9 +492,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                       `
                     : nothing}
                 ${when(this.pendingStateController.isPending(), () => {
-                    return this.pendingStateController.renderPendingState(
-                        this.pendingLabel
-                    );
+                    return this.pendingStateController.renderPendingState();
                 })}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
@@ -600,9 +598,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (changes.has('disabled') && this.disabled) {
             this.open = false;
         }
-        // if (changes.has('pending') && this.pending) {
-        //     this.open = false;
-        // }
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
             // await the same here.
