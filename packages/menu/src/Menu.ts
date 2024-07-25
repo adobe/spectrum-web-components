@@ -342,22 +342,21 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
-    private willSynthesizeClick = 0;
+    // if the click and pointerup events are on the same target, we should not
+    // handle the click event.
+    private pointerUpTarget = null as EventTarget | null;
 
     private handleClick(event: Event): void {
-        if (this.willSynthesizeClick) {
-            cancelAnimationFrame(this.willSynthesizeClick);
-            this.willSynthesizeClick = 0;
+        if (this.pointerUpTarget === event.target) {
+            this.pointerUpTarget = null;
             return;
         }
         this.handlePointerBasedSelection(event);
     }
 
     private handlePointerup(event: Event): void {
-        this.willSynthesizeClick = requestAnimationFrame(() => {
-            event.target?.dispatchEvent(new Event('click'));
-            this.willSynthesizeClick = 0;
-        });
+        event.target?.dispatchEvent(new Event('click'));
+        this.pointerUpTarget = event.target;
         this.handlePointerBasedSelection(event);
     }
 
