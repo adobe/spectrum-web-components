@@ -122,7 +122,7 @@ export class PendingStateController<T extends ReactiveElement>
     }
 
     /**
-     * Checks the pending state and calls the onPendingChange callback with the new state.
+     * Checks the pending state and calls the onPendingChange callback with the new state everytime the state is changed.
      */
     private checkPendingState(): void {
         const isPending = this.pending();
