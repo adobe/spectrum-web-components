@@ -32,6 +32,30 @@ import { Breadcrumbs, BreadcrumbItem } from '@spectrum-web-components/breadcrumb
 </sp-breadcrumbs>
 ```
 
+## Disabled
+
+`sp-breadcrumb-item` can have a disabled state
+
+```html
+<sp-breadcrumbs>
+    <sp-breadcrumb-item disabled value="1">Home</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="2">Trend</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="3">March 2019 Assets</sp-breadcrumb-item>
+</sp-breadcrumbs>
+```
+
+## Compact
+
+When needing to optimize for functional space of `sp-breadcrumbs`, the compact option is useful for reducing the height of the breadcrumbs while still maintaining the proper user context.
+
+```html
+<sp-breadcrumbs compact>
+    <sp-breadcrumb-item disabled value="1">Home</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="2">Trend</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="3">March 2019 Assets</sp-breadcrumb-item>
+</sp-breadcrumbs>
+```
+
 ## Links
 
 By default, `sp-breadcrumbs` emits a `change` event when clicking on one of its children.

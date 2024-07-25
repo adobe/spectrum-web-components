@@ -17,6 +17,8 @@ import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 
 export type StoryArgs = {
+    compact?: boolean;
+    disabled?: boolean;
     label?: string;
     showRoot?: boolean;
     'max-visible-items'?: number;
@@ -79,9 +81,12 @@ export const Template = (args: StoryArgs): TemplateResult => html`
         ${spreadProps(args)}
         max-visible-items=${ifDefined(args['max-visible-items'])}
         @change=${args.onChange}
+        ?compact=${args.compact}
     >
         <sp-breadcrumb-item value="0">Your stuff</sp-breadcrumb-item>
-        <sp-breadcrumb-item value="1">Files</sp-breadcrumb-item>
+        <sp-breadcrumb-item ?disabled=${args.disabled} value="1">
+            Files
+        </sp-breadcrumb-item>
         <sp-breadcrumb-item value="2">Team</sp-breadcrumb-item>
         <sp-breadcrumb-item value="3">In progress</sp-breadcrumb-item>
     </sp-breadcrumbs>

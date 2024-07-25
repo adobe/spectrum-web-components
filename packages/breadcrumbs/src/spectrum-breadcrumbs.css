@@ -173,7 +173,7 @@ governing permissions and limitations under the License.
     }
 }
 
-#list {
+.list {
     block-size: var(
         --mod-breadcrumbs-block-size,
         var(--spectrum-breadcrumbs-block-size)

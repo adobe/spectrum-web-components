@@ -36,6 +36,16 @@ export default {
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
+export const Disabled = (args: StoryArgs): TemplateResult => Template(args);
+Disabled.args = {
+    disabled: true,
+};
+
+export const Compact = (args: StoryArgs): TemplateResult => Template(args);
+Compact.args = {
+    compact: true,
+};
+
 export const Links = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-breadcrumbs>

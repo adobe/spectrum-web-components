@@ -31,6 +31,7 @@ import {
     BreadcrumbSelectDetail,
 } from './BreadcrumbItem.js';
 import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { classMap } from '@spectrum-web-components/base/src/directives.js';
 
 import styles from './breadcrumbs.css.js';
 import '../sp-breadcrumb-item.js';
@@ -82,6 +83,12 @@ export class Breadcrumbs extends SpectrumElement {
      */
     @property({ type: String, attribute: 'menu-label' })
     public menuLabel = 'More items';
+
+    /**
+     *  compact option is useful for reducing the height of the breadcrumbs
+     */
+    @property({ type: Boolean })
+    public compact = false;
 
     @queryAssignedElements({ selector: 'sp-breadcrumb-item' })
     private breadcrumbsElements!: BreadcrumbElement[];
@@ -294,8 +301,15 @@ export class Breadcrumbs extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
+        const classes = {
+            breadcrumbs: true,
+            'spectrum-Breadcrumbs--compact': this.compact,
+        };
         return html`
-            <ul id="list" @breadcrumb-select=${this.handleSelect}>
+            <ul
+                @breadcrumb-select=${this.handleSelect}
+                class=${classMap(classes)}
+            >
                 <slot name="root"></slot>
                 ${this.hasMenu ? this.renderMenu() : ''}
                 <slot @slotchange=${this.slotChangeHandler}></slot>

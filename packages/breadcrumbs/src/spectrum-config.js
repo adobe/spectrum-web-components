@@ -35,7 +35,7 @@ const config = {
             ],
             includeByWholeSelector: [],
             components: [
-                converter.classToId('spectrum-Breadcrumbs', 'list'),
+                converter.classToClass('spectrum-Breadcrumbs', 'list'),
                 {
                     find: [builder.class('spectrum-Breadcrumbs-item')],
                     replace: [
