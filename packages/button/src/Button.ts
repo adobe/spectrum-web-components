@@ -233,7 +233,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         return html`
             ${this.buttonContent}
             ${when(this.pendingStateController.isPending(), () => {
-                this.pendingStateController.renderPendingState(
+                return this.pendingStateController.renderPendingState(
                     this.pendingLabel
                 );
             })}
