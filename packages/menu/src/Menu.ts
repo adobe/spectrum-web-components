@@ -355,7 +355,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerup(event: Event): void {
-        event.target?.dispatchEvent(new Event('click'));
         this.pointerUpTarget = event.target;
         this.handlePointerBasedSelection(event);
     }
