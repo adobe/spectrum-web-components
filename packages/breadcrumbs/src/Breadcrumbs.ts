@@ -302,7 +302,7 @@ export class Breadcrumbs extends SpectrumElement {
 
     protected override render(): TemplateResult {
         const classes = {
-            breadcrumbs: true,
+            list: true,
             'spectrum-Breadcrumbs--compact': this.compact,
         };
         return html`

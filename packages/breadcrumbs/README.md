@@ -34,7 +34,7 @@ import { Breadcrumbs, BreadcrumbItem } from '@spectrum-web-components/breadcrumb
 
 ## Disabled
 
-`sp-breadcrumb-item` can have a disabled state
+`sp-breadcrumb-item` can have a `disabled` state which disables the events from the disabled item.
 
 ```html
 <sp-breadcrumbs>
@@ -50,7 +50,7 @@ When needing to optimize for functional space of `sp-breadcrumbs`, the compact o
 
 ```html
 <sp-breadcrumbs compact>
-    <sp-breadcrumb-item disabled value="1">Home</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="1">Home</sp-breadcrumb-item>
     <sp-breadcrumb-item value="2">Trend</sp-breadcrumb-item>
     <sp-breadcrumb-item value="3">March 2019 Assets</sp-breadcrumb-item>
 </sp-breadcrumbs>

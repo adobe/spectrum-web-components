@@ -18,20 +18,16 @@ export const argTypes = {
             type: { summary: 'string' },
             defaultValue: { summary: 'Breadcrumbs' },
         },
-        control: {
-            type: 'text',
-        },
+        control: 'text',
     },
-    'max-visible-items': {
+    maxVisibleItems: {
         name: 'max-visible-items',
         type: { name: 'number', required: false },
         table: {
             type: { summary: 'number' },
             defaultValue: { summary: '4' },
         },
-        control: {
-            type: 'number',
-        },
+        control: 'number',
     },
     nrOfItems: {
         name: 'nrOfItems',
@@ -40,9 +36,7 @@ export const argTypes = {
             type: { summary: 'number' },
             defaultValue: { summary: '4' },
         },
-        control: {
-            type: 'number',
-        },
+        control: 'number',
     },
     showRoot: {
         name: 'showRoot',
