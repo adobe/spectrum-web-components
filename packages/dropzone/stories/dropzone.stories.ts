@@ -18,6 +18,7 @@ import { defineElement } from '@spectrum-web-components/base/src/define-element.
 import { state } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import { illustration } from '../test/test-svg';
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import '@spectrum-web-components/link/sp-link.js';
@@ -27,10 +28,22 @@ export default {
     title: 'Dropzone',
     args: {
         isDragged: false,
+        isFilled: false,
     },
     argTypes: {
         isDragged: {
             name: 'isDragged',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        isFilled: {
+            name: 'isFilled',
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
@@ -45,6 +58,7 @@ export default {
 
 type StoryArgs = {
     isDragged?: boolean;
+    isFilled?: boolean;
 };
 
 export const Default = (args: StoryArgs): TemplateResult => {
@@ -104,6 +118,23 @@ export const Dragged = (args: StoryArgs): TemplateResult => {
 };
 Dragged.args = {
     isDragged: true,
+};
+
+export const Filled = (args: StoryArgs): TemplateResult => {
+    return html`
+        <style>
+            sp-action-button {
+                margin-block-end: 32px;
+            }
+        </style>
+        <sp-action-button draggable="true">Drag me!</sp-action-button>
+        <sp-dropzone id="dropzone" ?filled=${args.isFilled}>
+            <div>Drop file here to replace</div>
+        </sp-dropzone>
+    `;
+};
+Filled.args = {
+    isFilled: true,
 };
 
 class ControlledDropzone extends LitElement {

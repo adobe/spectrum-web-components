@@ -29,7 +29,7 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 ## Example
 
 ```html
-<sp-dropzone id="dropzone-1" style="width: 400px; height: 200px">
+<sp-dropzone id="dropzone-1" style="width: 400px;">
     <sp-illustrated-message heading="Drag and Drop Your File">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 When a file is dragged over the `<sp-dropzone>` element, it will display with the `dragged` attribute, as follows:
 
 ```html
-<sp-dropzone id="dropzone" dragged style="width: 400px; height: 200px">
+<sp-dropzone id="dropzone" dragged style="width: 400px;">
     <sp-illustrated-message heading="Drag and Drop Your File">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +101,22 @@ When a file is dragged over the `<sp-dropzone>` element, it will display with th
             Search Adobe Stock
         </sp-link>
     </div>
+</sp-dropzone>
+```
+
+### Filled
+
+When the `<sp-dropzone>` is in a filled state, set the `filled` attribute, as follows:
+
+```html
+<style>
+    sp-action-button {
+        margin-block-end: 32px;
+    }
+</style>
+<sp-action-button draggable="true">Drag me!</sp-action-button>
+<sp-dropzone id="dropzone" filled>
+    <div>Drop file here to replace</div>
 </sp-dropzone>
 ```
 
