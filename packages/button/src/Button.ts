@@ -20,6 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
@@ -61,10 +62,34 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
 
+    protected pendingStateController: PendingStateController<this>;
+
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this, {
+            pending: () => this.pending,
+            onPendingChange: (isPending: boolean) => {
+                if (
+                    isPending &&
+                    this.pendingLabel !== this.getAttribute('aria-label')
+                ) {
+                    if (!this.disabled) {
+                        this.cachedAriaLabel =
+                            this.getAttribute('aria-label') || '';
+                        this.setAttribute('aria-label', this.pendingLabel);
+                    }
+                } else if (!isPending && this.cachedAriaLabel) {
+                    this.setAttribute('aria-label', this.cachedAriaLabel);
+                } else if (!isPending && this.cachedAriaLabel === '') {
+                    this.removeAttribute('aria-label');
+                }
+            },
+        });
+    }
     private cachedAriaLabel: string | null = null;
 
     public override click(): void {
-        if (this.pending) {
+        if (this.pendingStateController.isPending()) {
             return;
         }
         super.click();
@@ -165,7 +190,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
         if (changed.has('pending')) {
             if (
-                this.pending &&
+                this.pendingStateController.isPending() &&
                 this.pendingLabel !== this.getAttribute('aria-label')
             ) {
                 if (!this.disabled) {
@@ -173,9 +198,15 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         this.getAttribute('aria-label') || '';
                     this.setAttribute('aria-label', this.pendingLabel);
                 }
-            } else if (!this.pending && this.cachedAriaLabel) {
+            } else if (
+                !this.pendingStateController.isPending() &&
+                this.cachedAriaLabel
+            ) {
                 this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (!this.pending && this.cachedAriaLabel === '') {
+            } else if (
+                !this.pendingStateController.isPending() &&
+                this.cachedAriaLabel === ''
+            ) {
                 this.removeAttribute('aria-label');
             }
         }
@@ -185,7 +216,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 !this.disabled &&
                 this.pendingLabel !== this.getAttribute('aria-label')
             ) {
-                if (this.pending) {
+                if (this.pendingStateController.isPending()) {
                     this.cachedAriaLabel =
                         this.getAttribute('aria-label') || '';
                     this.setAttribute('aria-label', this.pendingLabel);
@@ -201,17 +232,10 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
-            ${when(this.pending, () => {
-                import(
-                    '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+            ${when(this.pendingStateController.isPending(), () => {
+                this.pendingStateController.renderPendingState(
+                    this.pendingLabel
                 );
-                return html`
-                    <sp-progress-circle
-                        indeterminate
-                        static="white"
-                        aria-hidden="true"
-                    ></sp-progress-circle>
-                `;
             })}
         `;
     }

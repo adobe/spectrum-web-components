@@ -350,7 +350,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly || this.pendingStateController.getPending()) {
+        if (this.readonly || this.pendingStateController.isPending()) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -484,14 +484,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid && !this.pendingStateController.getPending()
+                ${this.invalid && !this.pendingStateController.isPending()
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pendingStateController.getPending(), () => {
+                ${when(this.pendingStateController.isPending(), () => {
                     return this.pendingStateController.renderPendingState(
                         this.pendingLabel
                     );
@@ -551,7 +551,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
@@ -864,7 +864,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  * @fires sp-closed - Announces that the overlay has been closed
  */
 export class Picker extends PickerBase {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
 
@@ -882,7 +882,7 @@ export class Picker extends PickerBase {
         if (
             !code.startsWith('Arrow') ||
             this.readonly ||
-            this.pendingStateController.getPending()
+            this.pendingStateController.isPending()
         ) {
             return;
         }
