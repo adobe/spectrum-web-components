@@ -48,6 +48,7 @@ const tokenPackages = [
     'card',
     'clearbutton',
     'closebutton',
+    'coachindicator',
     'coachmark',
     'colorarea',
     'colorfield',
@@ -185,6 +186,7 @@ const processPackages = async (tokensDir, index) => {
                 type,
                 packagename + '.css'
             );
+            console.log(cssFilePath);
             // check if cssFilePath exists
             if (fs.existsSync(cssFilePath)) {
                 let content = fs.readFileSync(cssFilePath, 'utf8');
