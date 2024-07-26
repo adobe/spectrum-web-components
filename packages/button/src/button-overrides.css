@@ -12,22 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-button-animation-duration: var(
-        --system-button-animation-duration
-    );
-    --spectrum-button-border-radius: var(--system-button-border-radius);
-    --spectrum-button-border-width: var(--system-button-border-width);
-    --spectrum-button-line-height: var(--system-button-line-height);
-    --spectrum-button-focus-ring-gap: var(--system-button-focus-ring-gap);
-    --spectrum-button-focus-ring-thickness: var(
-        --system-button-focus-ring-thickness
-    );
-    --spectrum-button-focus-indicator-color: var(
-        --system-button-focus-indicator-color
-    );
-    --spectrum-button-intended-icon-size: var(
-        --system-button-intended-icon-size
-    );
     --spectrum-button-background-color-default: var(
         --system-button-background-color-default
     );
@@ -71,8 +55,24 @@ governing permissions and limitations under the License.
     --spectrum-button-content-color-disabled: var(
         --system-button-content-color-disabled
     );
+    --spectrum-button-animation-duration: var(
+        --system-button-animation-duration
+    );
+    --spectrum-button-border-radius: var(--system-button-border-radius);
+    --spectrum-button-border-width: var(--system-button-border-width);
+    --spectrum-button-line-height: var(--system-button-line-height);
+    --spectrum-button-focus-ring-gap: var(--system-button-focus-ring-gap);
     --spectrum-button-focus-ring-border-radius: var(
         --system-button-focus-ring-border-radius
+    );
+    --spectrum-button-focus-ring-thickness: var(
+        --system-button-focus-ring-thickness
+    );
+    --spectrum-button-focus-indicator-color: var(
+        --system-button-focus-indicator-color
+    );
+    --spectrum-button-intended-icon-size: var(
+        --system-button-intended-icon-size
     );
 }
 

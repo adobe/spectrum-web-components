@@ -12,6 +12,13 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-coach-indicator-animation-keyframe-0-scale: 1;
+    --spectrum-coach-indicator-animation-keyframe-0-opacity: 0;
+    --spectrum-coach-indicator-animation-keyframe-50-scale: 1.5;
+    --spectrum-coach-indicator-animation-keyframe-50-opacity: 1;
+    --spectrum-coach-indicator-animation-keyframe-100-scale: 2;
+    --spectrum-coach-indicator-animation-keyframe-100-opacity: 0;
+    --spectrum-coach-indicator-quiet-animation-keyframe-0-scale: 0.8;
     inline-size: var(
         --mod-coach-indicator-inline-size,
         var(--spectrum-coach-indicator-inline-size)

@@ -57,7 +57,6 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --flow-direction: 1;
     --spectrum-popover-filter: drop-shadow(
         var(
                 --mod-popover-shadow-horizontal,
@@ -101,10 +100,6 @@ governing permissions and limitations under the License.
     flex-direction: column;
     display: inline-flex;
     position: absolute;
-}
-
-:host:dir(rtl) {
-    --flow-direction: -1;
 }
 
 :host([tip]) #tip .triangle {

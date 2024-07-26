@@ -18,6 +18,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --spectrum-avatar-border-radius: var(--spectrum-avatar-block-size);
     -webkit-user-select: none;
     user-select: none;
     inline-size: var(
@@ -51,6 +52,7 @@ governing permissions and limitations under the License.
     );
 }
 
+:host(:not([disabled])) .is-focused:after,
 :host(:not([disabled])) .link:focus-visible:after {
     pointer-events: none;
     content: '';

@@ -11,37 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-stepper-border-color: CanvasText;
-        --highcontrast-stepper-border-color-hover: Highlight;
-        --highcontrast-stepper-border-color-focus: Highlight;
-        --highcontrast-stepper-border-color-focus-hover: Highlight;
-        --highcontrast-stepper-border-color-keyboard-focus: CanvasText;
-        --highcontrast-stepper-button-background-color-default: Canvas;
-        --highcontrast-stepper-button-background-color-hover: Canvas;
-        --highcontrast-stepper-button-background-color-focus: Canvas;
-        --highcontrast-stepper-button-background-color-keyboard-focus: Canvas;
-        --highcontrast-stepper-focus-indicator-color: Highlight;
-    }
-
-    :host([disabled]) #textfield {
-        --highcontrast-stepper-border-color: GrayText;
-        --highcontrast-stepper-buttons-border-width: var(
-            --mod-stepper-border-width,
-            var(--spectrum-stepper-border-width)
-        );
-    }
-
-    :host([invalid]) #textfield {
-        --highcontrast-stepper-border-color: Highlight;
-        --highcontrast-stepper-border-color-hover: Highlight;
-        --highcontrast-stepper-border-color-focus: Highlight;
-        --highcontrast-stepper-border-color-focus-hover: Highlight;
-        --highcontrast-stepper-border-color-keyboard-focus: Highlight;
-    }
-}
-
 #textfield {
     --mod-infield-button-border-color: var(
         --highcontrast-stepper-border-color,

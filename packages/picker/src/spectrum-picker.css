@@ -476,11 +476,11 @@ governing permissions and limitations under the License.
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: auto;
-    margin-block-start: var(
+    padding-block-start: var(
         --mod-picker-spacing-top-to-text,
         var(--spectrum-picker-spacing-top-to-text)
     );
-    margin-block-end: calc(
+    padding-block-end: calc(
         var(
                 --mod-picker-spacing-bottom-to-text,
                 var(--spectrum-picker-spacing-bottom-to-text)

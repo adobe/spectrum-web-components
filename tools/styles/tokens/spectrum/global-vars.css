@@ -1195,18 +1195,6 @@
 
 :host,
 :root {
-    --system-button-animation-duration: var(--spectrum-animation-duration-100);
-    --system-button-border-radius: var(--spectrum-corner-radius-100);
-    --system-button-border-width: var(--spectrum-border-width-200);
-    --system-button-line-height: 1.2;
-    --system-button-focus-ring-gap: var(--spectrum-focus-indicator-gap);
-    --system-button-focus-ring-thickness: var(
-        --spectrum-focus-indicator-thickness
-    );
-    --system-button-focus-indicator-color: var(
-        --spectrum-focus-indicator-color
-    );
-    --system-button-intended-icon-size: var(--spectrum-workflow-icon-size-50);
     --system-button-background-color-default: var(--spectrum-gray-75);
     --system-button-background-color-hover: var(--spectrum-gray-200);
     --system-button-background-color-down: var(--spectrum-gray-300);
@@ -1245,14 +1233,14 @@
     --system-button-size-s-font-size: var(--spectrum-font-size-75);
     --system-button-size-s-edge-to-visual: calc(
         var(--spectrum-component-pill-edge-to-visual-75) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-s-edge-to-visual-only: var(
         --spectrum-component-pill-edge-to-visual-only-75
     );
     --system-button-size-s-edge-to-text: calc(
         var(--spectrum-component-pill-edge-to-text-75) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-s-padding-label-to-icon: var(
         --spectrum-text-to-visual-75
@@ -1280,14 +1268,14 @@
     --system-button-size-m-font-size: var(--spectrum-font-size-100);
     --system-button-size-m-edge-to-visual: calc(
         var(--spectrum-component-pill-edge-to-visual-100) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-m-edge-to-visual-only: var(
         --spectrum-component-pill-edge-to-visual-only-100
     );
     --system-button-size-m-edge-to-text: calc(
         var(--spectrum-component-pill-edge-to-text-100) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-m-padding-label-to-icon: var(
         --spectrum-text-to-visual-100
@@ -1315,14 +1303,14 @@
     --system-button-size-l-font-size: var(--spectrum-font-size-200);
     --system-button-size-l-edge-to-visual: calc(
         var(--spectrum-component-pill-edge-to-visual-200) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-l-edge-to-visual-only: var(
         --spectrum-component-pill-edge-to-visual-only-200
     );
     --system-button-size-l-edge-to-text: calc(
         var(--spectrum-component-pill-edge-to-text-200) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-l-padding-label-to-icon: var(
         --spectrum-text-to-visual-200
@@ -1350,14 +1338,14 @@
     --system-button-size-xl-font-size: var(--spectrum-font-size-300);
     --system-button-size-xl-edge-to-visual: calc(
         var(--spectrum-component-pill-edge-to-visual-300) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-xl-edge-to-visual-only: var(
         --spectrum-component-pill-edge-to-visual-only-300
     );
     --system-button-size-xl-edge-to-text: calc(
         var(--spectrum-component-pill-edge-to-text-300) -
-            var(--system-button-border-width)
+            var(--spectrum-button-border-width)
     );
     --system-button-size-xl-padding-label-to-icon: var(
         --spectrum-text-to-visual-300
