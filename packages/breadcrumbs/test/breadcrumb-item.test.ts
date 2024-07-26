@@ -32,6 +32,13 @@ describe('Breadcrumb Item', () => {
         expect(el.getAttribute('role')).to.equal('listitem');
     });
 
+    it('should render a disabled item', async () => {
+        const el = await fixture<BreadcrumbItem>(html`
+            <sp-breadcrumb-item value="home" disabled>Home</sp-breadcrumb-item>
+        `);
+        expect(el.hasAttribute('aria-disabled')).to.be.true;
+    });
+
     it('should manage aria-current', async () => {
         const el = await fixture<BreadcrumbItem>(html`
             <sp-breadcrumbs>

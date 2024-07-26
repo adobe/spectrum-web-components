@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
@@ -115,5 +116,15 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
                 : this.renderLink()}
             ${this.renderSeparator()}
         `;
+    }
+
+    protected override updated(changes: PropertyValues): void {
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
+        }
     }
 }
