@@ -86,6 +86,17 @@ export class Combobox extends Textfield {
 
     protected pendingStateController: PendingStateController<this>;
 
+    /**
+     * Initializes the `PendingStateController` for the Combobox component.
+     *
+     * The `PendingStateController` manages the pending state of the Combobox.
+     * It takes two parameters:
+     * - `pending`: A function that returns the current pending state.
+     * - `onPendingChange`: A callback function that is invoked when the pending state changes.
+     *
+     * When the pending state changes to `true`, the `open` property of the Combobox is set to `false`.
+     *
+     */
     constructor() {
         super();
         this.pendingStateController = new PendingStateController(this, {

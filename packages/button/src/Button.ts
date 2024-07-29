@@ -64,6 +64,23 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
     protected pendingStateController: PendingStateController<this>;
 
+    /**
+     * Initializes the `PendingStateController` for the Button component.
+     *
+     * The `PendingStateController` manages the pending state of the Button.
+     * It takes two parameters:
+     * - `pending`: A function that returns the current pending state.
+     * - `onPendingChange`: A callback function that is invoked when the pending state changes.
+     *
+     * When the pending state changes:
+     * - If `isPending` is `true` and the `pendingLabel` is different from the current `aria-label`:
+     *   - If the button is not disabled, it caches the current `aria-label` and sets the `aria-label` to `pendingLabel`.
+     * - If `isPending` is `false` and there is a cached `aria-label`:
+     *   - It restores the cached `aria-label`.
+     * - If `isPending` is `false` and the cached `aria-label` is an empty string:
+     *   - It removes the `aria-label` attribute.
+     *
+     */
     constructor() {
         super();
         this.pendingStateController = new PendingStateController(this, {
