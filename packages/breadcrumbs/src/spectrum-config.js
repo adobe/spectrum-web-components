@@ -33,9 +33,24 @@ const config = {
                 builder.class('spectrum-Breadcrumbs-itemLink'),
                 builder.class('spectrum-Breadcrumbs-item'),
             ],
-            includeByWholeSelector: [],
+            includeByWholeSelector: [
+                /* .spectrum-Breadcrumbs--compact .spectrum-Breadcrumbs-item */
+                [
+                    builder.class('spectrum-Breadcrumbs--compact'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Breadcrumbs-item'),
+                ],
+                /* .spectrum-Breadcrumbs--compact .spectrum-Breadcrumbs-item:last-of-type */
+                [
+                    builder.class('spectrum-Breadcrumbs--compact'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Breadcrumbs-item'),
+                    builder.pseudoClass('last-of-type'),
+                ],
+            ],
             components: [
-                converter.classToClass('spectrum-Breadcrumbs', 'list'),
+                converter.classToId('spectrum-Breadcrumbs', 'list'),
+                converter.classToAttribute('spectrum-Breadcrumbs--compact'),
                 {
                     find: [builder.class('spectrum-Breadcrumbs-item')],
                     replace: [
@@ -47,6 +62,42 @@ const config = {
                                     builder.element('sp-breadcrumb-item'),
                                 ],
                             },
+                        },
+                    ],
+                },
+                {
+                    find: [builder.class('spectrum-Breadcrumbs--compact')],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('compact')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('list'),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Breadcrumbs-item'),
+                        builder.pseudoClass('last-of-type'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-element',
+                                kind: 'slotted',
+                                selector: [builder.pseudoClass('last-of-type')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator(' '),
                         },
                     ],
                 },

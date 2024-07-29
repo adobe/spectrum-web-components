@@ -173,7 +173,7 @@ governing permissions and limitations under the License.
     }
 }
 
-.list {
+#list {
     block-size: var(
         --mod-breadcrumbs-block-size,
         var(--spectrum-breadcrumbs-block-size)
@@ -195,7 +195,7 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-.spectrum-Breadcrumbs--compact {
+:host([compact]) #list {
     block-size: var(
         --mod-breadcrumbs-block-size-compact,
         var(--spectrum-breadcrumbs-block-size-compact)
@@ -209,4 +209,34 @@ governing permissions and limitations under the License.
     );
     flex-wrap: wrap;
     align-content: center;
+}
+
+:host([compact]) ::slotted(sp-breadcrumb-item) {
+    font-family: var(
+        --mod-breadcrumbs-font-family-compact,
+        var(--spectrum-breadcrumbs-font-family-compact)
+    );
+    font-size: var(
+        --mod-breadcrumbs-font-size-compact,
+        var(--spectrum-breadcrumbs-font-size-compact)
+    );
+    font-weight: var(
+        --mod-breadcrumbs-font-weight-compact,
+        var(--spectrum-breadcrumbs-font-weight-compact)
+    );
+}
+
+:host([compact]) ::slotted(:last-of-type) {
+    font-family: var(
+        --mod-breadcrumbs-font-family-compact-current,
+        var(--spectrum-breadcrumbs-font-family-compact-current)
+    );
+    font-size: var(
+        --mod-breadcrumbs-font-size-compact-current,
+        var(--spectrum-breadcrumbs-font-size-compact-current)
+    );
+    font-weight: var(
+        --mod-breadcrumbs-font-weight-compact-current,
+        var(--spectrum-breadcrumbs-font-weight-compact-current)
+    );
 }

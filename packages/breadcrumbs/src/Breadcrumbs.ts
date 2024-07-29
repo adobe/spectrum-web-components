@@ -31,7 +31,6 @@ import {
     BreadcrumbSelectDetail,
 } from './BreadcrumbItem.js';
 import { createRef, Ref, ref } from 'lit/directives/ref.js';
-import { classMap } from '@spectrum-web-components/base/src/directives.js';
 
 import styles from './breadcrumbs.css.js';
 import '../sp-breadcrumb-item.js';
@@ -301,15 +300,8 @@ export class Breadcrumbs extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
-        const classes = {
-            list: true,
-            'spectrum-Breadcrumbs--compact': this.compact,
-        };
         return html`
-            <ul
-                @breadcrumb-select=${this.handleSelect}
-                class=${classMap(classes)}
-            >
+            <ul @breadcrumb-select=${this.handleSelect} id="list">
                 <slot name="root"></slot>
                 ${this.hasMenu ? this.renderMenu() : ''}
                 <slot @slotchange=${this.slotChangeHandler}></slot>
