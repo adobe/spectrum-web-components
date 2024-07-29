@@ -69,4 +69,41 @@ describe('ContextualHelp', () => {
         popover = el.shadowRoot?.querySelector('sp-popover');
         expect(el.shadowRoot?.querySelector('sp-popover')).not.to.exist;
     });
+    it('returns the label if set', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+        el.label = 'Custom Label';
+        expect(el.buttonAriaLabel).to.equal('Custom Label');
+    });
+
+    it('returns "Help" if variant is "help" and label is not set', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+        el.variant = 'help';
+        expect(el.buttonAriaLabel).to.equal('Help');
+    });
+
+    it('returns "Informations" if variant is not "help" and label is not set', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+        expect(el.buttonAriaLabel).to.equal('Informations');
+    });
+    it('renders correctly when actualPlacement is undefined', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
+        // Simulate mobile environment
+        el.isMobile.matches = true;
+
+        await elementUpdated(el);
+
+        const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
+        expect(trigger).to.exist;
+        expect(trigger).to.have.attribute('aria-label', 'Informations');
+
+        const overlay = el.shadowRoot?.querySelector(
+            'sp-overlay'
+        ) as HTMLElement;
+        expect(overlay).to.exist;
+        expect(overlay).to.have.attribute('trigger', 'trigger@click');
+        expect(overlay).to.have.attribute('receives-focus', 'true');
+        expect(overlay).to.have.property('offset', el.offset);
+        expect(overlay).to.have.property('open', el.open);
+    });
 });
