@@ -15,6 +15,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { ContextualHelp } from '../src/ContextualHelp.js';
 import { ContextualHelpMarkup } from '../stories';
+import { render, TemplateResult } from 'lit';
 
 describe('ContextualHelp', () => {
     testForLitDevWarnings(
@@ -105,5 +106,31 @@ describe('ContextualHelp', () => {
         expect(overlay).to.have.attribute('receives-focus', 'true');
         expect(overlay).to.have.property('offset', el.offset);
         expect(overlay).to.have.property('open', el.open);
+    });
+    it('renders dialog content when isMobile.matches is true', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
+        // Simulate mobile environment
+        el.isMobile.matches = true;
+
+        await elementUpdated(el);
+
+        const template: TemplateResult = el['renderOverlayContent']();
+
+        // Render the template to a temporary container to inspect its content
+        const container = document.createElement('div');
+        render(template, container);
+
+        const dialogBase = container.querySelector('sp-dialog-base');
+        const dialog = container.querySelector('sp-dialog');
+        const headingSlot = container.querySelector('slot[name="heading"]');
+        const linkSlot = container.querySelector('slot[name="link"]');
+
+        expect(dialogBase).to.exist;
+        expect(dialog).to.exist;
+        expect(dialog).to.have.attribute('dismissable');
+        expect(dialog).to.have.attribute('size', 's');
+        expect(headingSlot).to.exist;
+        expect(linkSlot).to.exist;
     });
 });
