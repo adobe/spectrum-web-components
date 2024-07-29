@@ -175,6 +175,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             onPendingChange: (isPending: boolean) => {
                 if (isPending) {
                     this.open = false;
+                    this.strategy.open = false;
                 }
             },
         });
@@ -543,15 +544,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 this.strategy.open = false;
             }
         }
-<<<<<<< HEAD
-=======
-        if (changes.has('pending') && this.pending) {
-            if (this.strategy) {
-                this.open = false;
-                this.strategy.open = false;
-            }
-        }
->>>>>>> main
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
             // await the same here.
