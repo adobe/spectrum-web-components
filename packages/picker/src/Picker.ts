@@ -175,7 +175,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             onPendingChange: (isPending: boolean) => {
                 if (isPending) {
                     this.open = false;
-                    this.strategy.open = false;
+                    if (this.strategy) {
+                        this.strategy.open = false;
+                    }
                 }
             },
         });
