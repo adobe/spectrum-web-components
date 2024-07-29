@@ -122,14 +122,8 @@ Dragged.args = {
 
 export const Filled = (args: StoryArgs): TemplateResult => {
     return html`
-        <style>
-            sp-action-button {
-                margin-block-end: 32px;
-            }
-        </style>
-        <sp-action-button draggable="true">Drag me!</sp-action-button>
         <sp-dropzone id="dropzone" ?filled=${args.isFilled}>
-            <div>Drop file here to replace</div>
+            Filled dropzone
         </sp-dropzone>
     `;
 };
@@ -138,7 +132,8 @@ Filled.args = {
 };
 
 class ControlledDropzone extends LitElement {
-    private fileName = 'mock_file.png';
+    @state()
+    private beingDraggedOver: boolean = false;
 
     @state()
     private input?: string = undefined;
@@ -146,15 +141,29 @@ class ControlledDropzone extends LitElement {
     override render(): TemplateResult {
         return html`
             <span>
-                ${this.renderMockFile()}
+                <sp-action-button
+                    draggable="true"
+                    style="margin-block-end: 16px;"
+                >
+                    Drag me
+                </sp-action-button>
                 <sp-dropzone
                     tabindex="0"
                     id="dropzone"
                     drop-effect="copy"
-                    ?dragged=${this.input !== undefined}
+                    ?filled=${this.input !== undefined}
                     @sp-dropzone-drop=${this.onChange}
+                    @sp-dropzone-dragover=${this.onDragOver}
+                    @sp-dropzone-dragleave=${this.onDragLeave}
                 >
-                    <sp-illustrated-message heading="Drag and Drop Your File">
+                    <sp-illustrated-message
+                        style="--mod-illustrated-message-display: flex;"
+                        heading=${this.input !== undefined
+                            ? this.beingDraggedOver
+                                ? 'Drop here to replace!'
+                                : 'You dropped something!'
+                            : 'Drag and drop your file'}
+                    >
                         ${illustration}
                     </sp-illustrated-message>
                     <div>
@@ -174,41 +183,22 @@ class ControlledDropzone extends LitElement {
                             @change=${this.onChange}
                         />
                     </div>
-                    ${this.renderUploadButton()}
                 </sp-dropzone>
             </span>
         `;
     }
 
-    private renderMockFile(): TemplateResult {
-        return this.input === undefined
-            ? html`
-                  <sp-action-button
-                      draggable="true"
-                      style="margin-bottom: 16px;"
-                  >
-                      Drag ${this.fileName}
-                  </sp-action-button>
-              `
-            : html`
-                  <sp-action-button style="margin-bottom: 16px;">
-                      Added ${this.fileName}
-                  </sp-action-button>
-              `;
-    }
-
-    private renderUploadButton(): TemplateResult | null {
-        return this.input === undefined
-            ? null
-            : html`
-                  <sp-action-button autofocus style="margin-top: 16px;">
-                      Upload ${this.fileName}
-                  </sp-action-button>
-              `;
-    }
-
     private onChange(): void {
-        this.input = this.fileName;
+        this.input = 'mock-file';
+        this.beingDraggedOver = false;
+    }
+
+    private onDragOver(): void {
+        this.beingDraggedOver = true;
+    }
+
+    private onDragLeave(): void {
+        this.beingDraggedOver = false;
     }
 }
 defineElement('controlled-dropzone', ControlledDropzone);
