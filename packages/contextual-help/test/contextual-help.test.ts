@@ -89,7 +89,6 @@ describe('ContextualHelp', () => {
     it('renders correctly when actualPlacement is undefined', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
 
-        // Simulate mobile environment
         el.isMobile.matches = true;
 
         await elementUpdated(el);
@@ -110,14 +109,12 @@ describe('ContextualHelp', () => {
     it('renders dialog content when isMobile.matches is true', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
 
-        // Simulate mobile environment
         el.isMobile.matches = true;
 
         await elementUpdated(el);
 
         const template: TemplateResult = el['renderOverlayContent']();
 
-        // Render the template to a temporary container to inspect its content
         const container = document.createElement('div');
         render(template, container);
 
