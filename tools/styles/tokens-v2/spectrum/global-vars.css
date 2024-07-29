@@ -2380,6 +2380,100 @@
 
 :host,
 :root {
+    --system-coach-indicator-ring-border-size: var(--spectrum-border-width-200);
+    --system-coach-indicator-min-inline-size: calc(
+        var(--spectrum-coach-indicator-ring-diameter) * 3
+    );
+    --system-coach-indicator-min-block-size: calc(
+        var(--spectrum-coach-indicator-ring-diameter) * 3
+    );
+    --system-coach-indicator-inline-size: var(
+        --system-coach-indicator-min-inline-size
+    );
+    --system-coach-indicator-block-size: var(
+        --system-coach-indicator-min-block-size
+    );
+    --system-coach-indicator-ring-inline-size: var(
+        --spectrum-coach-indicator-ring-diameter
+    );
+    --system-coach-indicator-ring-block-size: var(
+        --spectrum-coach-indicator-ring-diameter
+    );
+    --system-coach-indicator-top: calc(
+        var(--system-coach-indicator-block-size) / 3 -
+            var(--system-coach-indicator-ring-border-size)
+    );
+    --system-coach-indicator-left: calc(
+        var(--system-coach-indicator-inline-size) / 3 -
+            var(--system-coach-indicator-ring-border-size)
+    );
+    --system-coach-indicator-coach-animation-indicator-ring-duration: var(
+        --spectrum-animation-duration-6000
+    );
+    --system-coach-indicator-coach-animation-indicator-ring-inner-delay-multiple: -0.5;
+    --system-coach-indicator-coach-animation-indicator-ring-center-delay-multiple: -0.66;
+    --system-coach-indicator-coach-animation-indicator-ring-outer-delay-multiple: -1;
+    --system-coach-indicator-quiet-animation-ring-inner-delay-multiple: -0.33;
+    --system-coach-indicator-animation-name: pulse;
+    --system-coach-indicator-inner-animation-delay-multiple: var(
+        --system-coach-indicator-coach-animation-indicator-ring-inner-delay-multiple
+    );
+    --system-coach-indicator-animation-keyframe-0-scale: 1;
+    --system-coach-indicator-animation-keyframe-0-opacity: 0;
+    --system-coach-indicator-animation-keyframe-50-scale: 1.5;
+    --system-coach-indicator-animation-keyframe-50-opacity: 1;
+    --system-coach-indicator-animation-keyframe-100-scale: 2;
+    --system-coach-indicator-animation-keyframe-100-opacity: 0;
+    --system-coach-indicator-quiet-animation-keyframe-0-scale: 0.8;
+    --system-coach-indicator-quiet-min-inline-size: calc(
+        var(
+                --mod-coach-indicator-quiet-ring-diameter,
+                var(--spectrum-coach-indicator-quiet-ring-diameter)
+            ) * 2.75
+    );
+    --system-coach-indicator-quiet-min-block-size: calc(
+        var(
+                --mod-coach-indicator-quiet-ring-diameter,
+                var(--spectrum-coach-indicator-quiet-ring-diameter)
+            ) * 2.75
+    );
+    --system-coach-indicator-quiet-inline-size: calc(
+        var(
+                --mod-coach-indicator-quiet-ring-diameter,
+                var(--spectrum-coach-indicator-quiet-ring-diameter)
+            ) * 2.75
+    );
+    --system-coach-indicator-quiet-block-size: calc(
+        var(
+                --mod-coach-indicator-quiet-ring-diameter,
+                var(--spectrum-coach-indicator-quiet-ring-diameter)
+            ) * 2.75
+    );
+    --system-coach-indicator-quiet-ring-inline-size: var(
+        --mod-coach-indicator-quiet-ring-diameter,
+        var(--spectrum-coach-indicator-quiet-ring-diameter)
+    );
+    --system-coach-indicator-quiet-ring-block-size: var(
+        --mod-coach-indicator-quiet-ring-diameter,
+        var(--spectrum-coach-indicator-quiet-ring-diameter)
+    );
+    --system-coach-indicator-quiet-top: calc(
+        var(--mod-coach-indicator-min-inline-size) / 3 -
+            var(--system-coach-indicator-ring-border-size)
+    );
+    --system-coach-indicator-quiet-left: calc(
+        var(--mod-coach-indicator-min-inline-size) / 3 -
+            var(--system-coach-indicator-ring-border-size)
+    );
+    --system-coach-indicator-quiet-animation-name: pulse-quiet;
+    --system-coach-indicator-quiet-inner-animation-delay-multiple: var(
+        --mod-coach-indicator-quiet-animation-ring-inner-delay-multiple,
+        var(--system-coach-indicator-quiet-animation-ring-inner-delay-multiple)
+    );
+}
+
+:host,
+:root {
     --system-coach-mark-min-width: var(--spectrum-coach-mark-minimum-width);
     --system-coach-mark-width: var(--spectrum-coach-mark-width);
     --system-coach-mark-max-width: var(--spectrum-coach-mark-maximum-width);

@@ -44,9 +44,3 @@ governing permissions and limitations under the License.
     width: 100%;
     height: auto;
 }
-
-/* stylelint-disable */
-.button-group.button-group--noFooter {
-    grid-area: f/f/g/g;
-}
-/* stylelint-enable */
