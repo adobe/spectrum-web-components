@@ -26,18 +26,14 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Grid', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<HTMLDivElement>(
-                html`
-                    <div>${Default()}</div>
-                `
-            )
+            await fixture<HTMLDivElement>(html`
+                <div>${Default()}</div>
+            `)
     );
     it('loads default grid accessibly', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>${Default()}</div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${Default()}</div>
+        `);
         const el = test.querySelector('sp-grid') as Grid;
 
         await elementUpdated(el);
@@ -45,18 +41,17 @@ describe('Grid', () => {
         await expect(el).to.be.accessible();
     });
     it('accepts focus', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>${Default()}</div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${Default()}</div>
+        `);
         const el = test.querySelector('sp-grid') as Grid;
 
         await elementUpdated(el);
 
         expect(el.tabIndex).to.equal(0);
 
-        el.focus();
+        await sendKeys({ press: 'Tab' });
+        await sendKeys({ press: 'Tab' });
 
         await nextFrame();
         await nextFrame();
@@ -66,18 +61,17 @@ describe('Grid', () => {
         ).to.be.true;
     });
     it('does not focus when clicking grid', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <sp-theme color="light" scale="medium">${Default()}</sp-theme>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <sp-theme color="light" scale="medium">${Default()}</sp-theme>
+        `);
         const el = test.querySelector('sp-grid') as Grid;
 
         await elementUpdated(el);
 
         expect(el.tabIndex).to.equal(0);
 
-        el.focus();
+        await sendKeys({ press: 'Tab' });
+        await sendKeys({ press: 'Tab' });
 
         await nextFrame();
         await nextFrame();
@@ -104,11 +98,9 @@ describe('Grid', () => {
         ).to.be.false;
     });
     it('allows to tab in and out', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>${Default()}</div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${Default()}</div>
+        `);
         const el = test.querySelector('sp-grid') as Grid;
         const firstInput = test.querySelector('#first-input') as HTMLElement;
         const lastInput = test.querySelector('#last-input') as HTMLElement;
@@ -159,11 +151,9 @@ describe('Grid', () => {
         expect(el.tabIndex).to.equal(-1);
     });
     it('manages roving tabindex', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>${Default()}</div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${Default()}</div>
+        `);
         const el = test.querySelector('sp-grid') as Grid;
 
         await elementUpdated(el);
@@ -223,11 +213,9 @@ describe('Grid', () => {
         expect(focused.focused).to.be.true;
     });
     it('manages selection', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>${Default()}</div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${Default()}</div>
+        `);
         const el = test.querySelector('sp-grid') as Grid;
 
         await elementUpdated(el);
@@ -302,11 +290,9 @@ describe('Grid', () => {
         expect(el.selected).to.deep.equal([{ id: 4 }]);
     });
     it('does not claim lit-virtualizer on the global registry', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>${Default()}</div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${Default()}</div>
+        `);
         const el = test.querySelector('sp-grid') as Grid;
 
         await elementUpdated(el);
