@@ -190,6 +190,7 @@ export class FocusGroupController<T extends HTMLElement>
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
             elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            focusElement.setAttribute('tabindex', '0');
             focusElement.tabIndex = 0;
             focusElement.focus(options);
         }
@@ -229,6 +230,8 @@ export class FocusGroupController<T extends HTMLElement>
     hostContainsFocus(): void {
         this.host.addEventListener('focusout', this.handleFocusout);
         this.host.addEventListener('keydown', this.handleKeydown);
+        this.elementEnterAction(this.elements[this.currentIndex]);
+        this.focus();
         this.focused = true;
     }
 
@@ -255,9 +258,7 @@ export class FocusGroupController<T extends HTMLElement>
 
     handleFocusin = (event: FocusEvent): void => {
         if (!this.isEventWithinListenerScope(event)) return;
-        if (this.isRelatedTargetOrContainAnElement(event)) {
-            this.hostContainsFocus();
-        }
+
         const path = event.composedPath() as T[];
         let targetIndex = -1;
         path.find((el) => {
@@ -266,6 +267,10 @@ export class FocusGroupController<T extends HTMLElement>
         });
         this.prevIndex = this.currentIndex;
         this.currentIndex = targetIndex > -1 ? targetIndex : this.currentIndex;
+
+        if (this.isRelatedTargetOrContainAnElement(event)) {
+            this.hostContainsFocus();
+        }
     };
 
     handleFocusout = (event: FocusEvent): void => {

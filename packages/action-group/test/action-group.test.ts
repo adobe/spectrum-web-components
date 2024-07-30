@@ -166,7 +166,7 @@ describe('ActionGroup', () => {
         expect(document.activeElement?.id).to.equal('first');
 
         // expect all the elements of the focus group to have a tabIndex of -1
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
@@ -253,7 +253,7 @@ describe('ActionGroup', () => {
         await aTimeout(500);
 
         // expect all the elements of the focus group to have a tabIndex of -1
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
