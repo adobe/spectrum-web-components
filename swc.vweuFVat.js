@@ -1,2 +1,2 @@
 function t(t,r,e){const i=t.getAttribute(r);let n=i?i.split(/\s+/):[];n=n.filter((t=>!e.find((r=>t===r)))),n.length?t.setAttribute(r,n.join(" ")):t.removeAttribute(r)}function r(r,e,i){const n=Array.isArray(i)?i:[i],s=r.getAttribute(e),o=s?s.split(/\s+/):[];return n.every((t=>o.indexOf(t)>-1))?()=>{}:(o.push(...n),r.setAttribute(e,o.join(" ")),()=>t(r,e,n))}function e(){return Array.from(crypto.getRandomValues(new Uint8Array(4)),(t=>`0${(255&t).toString(16)}`.slice(-2))).join("")}export{t as a,r as c,e as r};
-//# sourceMappingURL=swc.BVCVdaS8.js.map
+//# sourceMappingURL=swc.0DD836zN.js.map

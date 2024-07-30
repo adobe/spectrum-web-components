@@ -1294,21 +1294,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/tray/sp-tray.js",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-tray",
-          "declaration": {
-            "name": "Tray",
-            "module": "/packages/tray/src/Tray.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/underlay/sp-underlay.js",
       "declarations": [],
       "exports": [
@@ -1318,6 +1303,21 @@
           "declaration": {
             "name": "Underlay",
             "module": "/packages/underlay/src/Underlay.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/tray/sp-tray.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-tray",
+          "declaration": {
+            "name": "Tray",
+            "module": "/packages/tray/src/Tray.js"
           }
         }
       ]
@@ -4139,6 +4139,10 @@
               "name": "label"
             },
             {
+              "description": "The label to use for the Action Menu (no icon space reserved)",
+              "name": "label-only"
+            },
+            {
               "description": "Tooltip to to be applied to the the Action Button",
               "name": "tooltip"
             }
@@ -4216,7 +4220,7 @@
             {
               "kind": "field",
               "name": "handleSlottableRequest",
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -4334,8 +4338,20 @@
             {
               "kind": "field",
               "name": "isMobile",
-              "privacy": "protected",
+              "privacy": "public",
               "default": "new MatchMediaController(this, IS_MOBILE)",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "strategy",
+              "type": {
+                "text": "DesktopController | MobileController"
+              },
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -4367,7 +4383,7 @@
             {
               "kind": "field",
               "name": "dependencyManager",
-              "privacy": "private",
+              "privacy": "public",
               "default": "new DependencyManagerController(this)",
               "inheritedFrom": {
                 "name": "PickerBase",
@@ -4552,7 +4568,7 @@
               "type": {
                 "text": "Menu"
               },
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -4595,7 +4611,7 @@
               "type": {
                 "text": "Overlay"
               },
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -4735,99 +4751,6 @@
               }
             },
             {
-              "kind": "field",
-              "name": "preventNextToggle",
-              "type": {
-                "text": "'no' | 'maybe' | 'yes'"
-              },
-              "privacy": "protected",
-              "default": "'no'",
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pointerdownState",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonPointerdown",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "FocusEvent"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleActivate",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "optional": true,
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -4878,6 +4801,28 @@
                   "name": "event",
                   "type": {
                     "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
                   }
                 }
               ],
@@ -5039,28 +4984,6 @@
                   "name": "event",
                   "type": {
                     "text": "Event & { target: HTMLSlotElement }"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleBeforetoggle",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
                   }
                 }
               ],
@@ -5338,6 +5261,20 @@
               "kind": "field",
               "name": "handleEnterKeydown",
               "privacy": "protected",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "bindEvents",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -22946,8 +22883,20 @@
               },
               "privacy": "public",
               "default": "false",
+              "description": "Indicates that files are currently being dragged over the dropzone.",
               "attribute": "dragged",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "isFilled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Set this property to indicate that the component is in a filled state.",
+              "attribute": "filled"
             },
             {
               "kind": "field",
@@ -23129,7 +23078,17 @@
                 "text": "boolean"
               },
               "default": "false",
+              "description": "Indicates that files are currently being dragged over the dropzone.",
               "fieldName": "isDragged"
+            },
+            {
+              "name": "filled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Set this property to indicate that the component is in a filled state.",
+              "fieldName": "isFilled"
             }
           ],
           "superclass": {
@@ -26616,12 +26575,9 @@
             },
             {
               "kind": "field",
-              "name": "willSynthesizeClick",
-              "type": {
-                "text": "number"
-              },
+              "name": "pointerUpTarget",
               "privacy": "private",
-              "default": "0"
+              "default": "null"
             },
             {
               "kind": "method",
@@ -27739,12 +27695,9 @@
             },
             {
               "kind": "field",
-              "name": "willSynthesizeClick",
-              "type": {
-                "text": "number"
-              },
+              "name": "pointerUpTarget",
               "privacy": "private",
-              "default": "0",
+              "default": "null",
               "inheritedFrom": {
                 "name": "Menu",
                 "module": "packages/menu/src/Menu.js"
@@ -32840,18 +32793,22 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
               "name": "preventNextToggle",
               "type": {
-                "text": "boolean"
+                "text": "'no' | 'maybe' | 'yes'"
               },
-              "privacy": "private",
+              "privacy": "public",
               "default": "false",
-              "description": "An overlay with a `click` interaction should not close on click `triggerElement`.\nWhen a click is initiated (`pointerdown`), apply `preventNextToggle` when the\noverlay is `open` to prevent from toggling the overlay when the click event\npropagates later in the interaction."
+              "description": "An overlay with a `click` interaction should not close on click `triggerElement`.\nWhen a click is initiated (`pointerdown`), apply `preventNextToggle` when the\noverlay is `open` to prevent from toggling the overlay when the click event\npropagates later in the interaction.",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
             },
             {
               "kind": "method",
@@ -32865,10 +32822,23 @@
             {
               "kind": "method",
               "name": "handlePointerdown",
+              "privacy": "public",
               "return": {
                 "type": {
                   "text": "void"
                 }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -32881,7 +32851,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -32892,7 +32862,45 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pointerdownState",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "enterKeydownOn",
+              "type": {
+                "text": "EventTarget | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -32904,25 +32912,12 @@
               "readonly": true,
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
-              "name": "handleOverlayReady",
-              "type": {
-                "text": "(overlay: AbstractOverlay) => void | undefined"
-              },
-              "privacy": "private",
-              "default": "handleOverlayReady",
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLazilyOpen",
+              "name": "_open",
               "type": {
                 "text": "boolean"
               },
@@ -32930,7 +32925,7 @@
               "default": "false",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -32940,23 +32935,10 @@
                 "text": "boolean"
               },
               "privacy": "public",
-              "description": "Set `open` against the associated Overlay lazily.",
+              "description": "Set `open`",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "overlay",
-              "type": {
-                "text": "AbstractOverlay"
-              },
-              "privacy": "public",
-              "default": "overlay",
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -32968,41 +32950,19 @@
               "privacy": "private",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
-              "name": "isPersistent",
+              "name": "overlay",
               "type": {
-                "text": "boolean"
+                "text": "AbstractOverlay"
               },
-              "privacy": "protected",
-              "default": "!!isPersistent",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "prepareDescription",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "_",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33015,20 +32975,29 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "method",
-              "name": "shouldCompleteOpen",
+              "name": "handleBeforetoggle",
+              "privacy": "protected",
               "return": {
                 "type": {
                   "text": "void"
                 }
               },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
+                  }
+                }
+              ],
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33041,7 +33010,51 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleActivate",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33054,7 +33067,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33067,7 +33080,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33080,7 +33093,39 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "default": "target",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             }
           ],
@@ -33118,7 +33163,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33215,18 +33260,6 @@
                 "type": {
                   "text": "void"
                 }
-              },
-              "parameters": [
-                {
-                  "name": "_",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
               }
             },
             {
@@ -33269,7 +33302,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33282,7 +33315,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33293,7 +33326,58 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "preventNextToggle",
+              "type": {
+                "text": "'no' | 'maybe' | 'yes'"
+              },
+              "privacy": "public",
+              "default": "'no'",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pointerdownState",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "enterKeydownOn",
+              "type": {
+                "text": "EventTarget | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33305,25 +33389,12 @@
               "readonly": true,
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
-              "name": "handleOverlayReady",
-              "type": {
-                "text": "(overlay: AbstractOverlay) => void | undefined"
-              },
-              "privacy": "private",
-              "default": "handleOverlayReady",
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLazilyOpen",
+              "name": "_open",
               "type": {
                 "text": "boolean"
               },
@@ -33331,7 +33402,7 @@
               "default": "false",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33341,23 +33412,10 @@
                 "text": "boolean"
               },
               "privacy": "public",
-              "description": "Set `open` against the associated Overlay lazily.",
+              "description": "Set `open`",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "overlay",
-              "type": {
-                "text": "AbstractOverlay"
-              },
-              "privacy": "public",
-              "default": "overlay",
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33369,20 +33427,19 @@
               "privacy": "private",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
-              "name": "isPersistent",
+              "name": "overlay",
               "type": {
-                "text": "boolean"
+                "text": "AbstractOverlay"
               },
-              "privacy": "protected",
-              "default": "!!isPersistent",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33395,20 +33452,95 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "method",
-              "name": "shouldCompleteOpen",
+              "name": "handleBeforetoggle",
+              "privacy": "protected",
               "return": {
                 "type": {
                   "text": "void"
                 }
               },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
+                  }
+                }
+              ],
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerdown",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleActivate",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33421,7 +33553,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33434,7 +33566,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33447,7 +33579,39 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "default": "target",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             }
           ],
@@ -33671,7 +33835,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33683,7 +33847,7 @@
               "readonly": true,
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33706,7 +33870,7 @@
               "default": "noop",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33729,6 +33893,7 @@
             {
               "kind": "method",
               "name": "handlePointerdown",
+              "privacy": "public",
               "return": {
                 "type": {
                   "text": "void"
@@ -33741,7 +33906,11 @@
                     "text": "PointerEvent"
                   }
                 }
-              ]
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
             },
             {
               "kind": "field",
@@ -33799,11 +33968,7 @@
                     "text": "HTMLElement"
                   }
                 }
-              ],
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
-              }
+              ]
             },
             {
               "kind": "method",
@@ -33812,10 +33977,6 @@
                 "type": {
                   "text": "void"
                 }
-              },
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
               }
             },
             {
@@ -33828,7 +33989,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33839,25 +34000,63 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
-              "name": "handleOverlayReady",
+              "name": "preventNextToggle",
               "type": {
-                "text": "(overlay: AbstractOverlay) => void | undefined"
+                "text": "'no' | 'maybe' | 'yes'"
               },
-              "privacy": "private",
-              "default": "handleOverlayReady",
+              "privacy": "public",
+              "default": "'no'",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
-              "name": "isLazilyOpen",
+              "name": "pointerdownState",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "enterKeydownOn",
+              "type": {
+                "text": "EventTarget | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_open",
               "type": {
                 "text": "boolean"
               },
@@ -33865,7 +34064,7 @@
               "default": "false",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33875,23 +34074,10 @@
                 "text": "boolean"
               },
               "privacy": "public",
-              "description": "Set `open` against the associated Overlay lazily.",
+              "description": "Set `open`",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "overlay",
-              "type": {
-                "text": "AbstractOverlay"
-              },
-              "privacy": "public",
-              "default": "overlay",
-              "inheritedFrom": {
-                "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33903,20 +34089,41 @@
               "privacy": "private",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
               "kind": "field",
-              "name": "isPersistent",
+              "name": "overlay",
               "type": {
-                "text": "boolean"
+                "text": "AbstractOverlay"
               },
-              "privacy": "protected",
-              "default": "!!isPersistent",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleBeforetoggle",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33929,7 +34136,51 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleActivate",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33942,7 +34193,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33955,7 +34206,7 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
               }
             },
             {
@@ -33968,7 +34219,39 @@
               },
               "inheritedFrom": {
                 "name": "InteractionController",
-                "module": "packages/overlay/src/InteractionController.js"
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "default": "target",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
               }
             }
           ],
@@ -35664,6 +35947,996 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/picker/src/DesktopController.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DesktopController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "InteractionTypes"
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerdown",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleActivate",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "optional": true,
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "init",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "abortController",
+              "type": {
+                "text": "AbortController"
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "preventNextToggle",
+              "type": {
+                "text": "'no' | 'maybe' | 'yes'"
+              },
+              "privacy": "public",
+              "default": "'no'",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pointerdownState",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "enterKeydownOn",
+              "type": {
+                "text": "EventTarget | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "activelyOpening",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "description": "Set `open`",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_overlay",
+              "type": {
+                "text": "AbstractOverlay"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "overlay",
+              "type": {
+                "text": "AbstractOverlay"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "releaseDescription",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleBeforetoggle",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "initOverlay",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "abort",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostConnected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "default": "target",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "InteractionController",
+            "module": "/packages/picker/src/InteractionController.js"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DesktopController",
+          "declaration": {
+            "name": "DesktopController",
+            "module": "packages/picker/src/DesktopController.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/picker/src/InteractionController.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "InteractionController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "abortController",
+              "type": {
+                "text": "AbortController"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "preventNextToggle",
+              "type": {
+                "text": "'no' | 'maybe' | 'yes'"
+              },
+              "privacy": "public",
+              "default": "'no'"
+            },
+            {
+              "kind": "field",
+              "name": "pointerdownState",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "enterKeydownOn",
+              "type": {
+                "text": "EventTarget | null"
+              },
+              "privacy": "public",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "activelyOpening",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "description": "Set `open`"
+            },
+            {
+              "kind": "field",
+              "name": "_overlay",
+              "type": {
+                "text": "AbstractOverlay"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "overlay",
+              "type": {
+                "text": "AbstractOverlay"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "InteractionTypes"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "releaseDescription",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleBeforetoggle",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "initOverlay",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerdown",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleActivate",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "init",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "abort",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostConnected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "default": "target"
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InteractionController",
+          "declaration": {
+            "name": "InteractionController",
+            "module": "packages/picker/src/InteractionController.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/picker/src/MobileController.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MobileController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "InteractionTypes"
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleClick",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerdown",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "init",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "abortController",
+              "type": {
+                "text": "AbortController"
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "preventNextToggle",
+              "type": {
+                "text": "'no' | 'maybe' | 'yes'"
+              },
+              "privacy": "public",
+              "default": "'no'",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pointerdownState",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "enterKeydownOn",
+              "type": {
+                "text": "EventTarget | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "activelyOpening",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "description": "Set `open`",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_overlay",
+              "type": {
+                "text": "AbstractOverlay"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "overlay",
+              "type": {
+                "text": "AbstractOverlay"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "releaseDescription",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleBeforetoggle",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "initOverlay",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleActivate",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "abort",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostConnected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "default": "target",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host",
+              "inheritedFrom": {
+                "name": "InteractionController",
+                "module": "packages/picker/src/InteractionController.js"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "InteractionController",
+            "module": "/packages/picker/src/InteractionController.js"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MobileController",
+          "declaration": {
+            "name": "MobileController",
+            "module": "packages/picker/src/MobileController.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/picker/src/Picker.js",
       "declarations": [
         {
@@ -35682,8 +36955,16 @@
             {
               "kind": "field",
               "name": "isMobile",
-              "privacy": "protected",
+              "privacy": "public",
               "default": "new MatchMediaController(this, IS_MOBILE)"
+            },
+            {
+              "kind": "field",
+              "name": "strategy",
+              "type": {
+                "text": "DesktopController | MobileController"
+              },
+              "privacy": "public"
             },
             {
               "kind": "field",
@@ -35703,7 +36984,7 @@
             {
               "kind": "field",
               "name": "dependencyManager",
-              "privacy": "private",
+              "privacy": "public",
               "default": "new DependencyManagerController(this)"
             },
             {
@@ -35849,7 +37130,7 @@
               "type": {
                 "text": "Menu"
               },
-              "privacy": "protected"
+              "privacy": "public"
             },
             {
               "kind": "field",
@@ -35884,7 +37165,7 @@
               "type": {
                 "text": "Overlay"
               },
-              "privacy": "protected"
+              "privacy": "public"
             },
             {
               "kind": "field",
@@ -36006,79 +37287,6 @@
               }
             },
             {
-              "kind": "field",
-              "name": "preventNextToggle",
-              "type": {
-                "text": "'no' | 'maybe' | 'yes'"
-              },
-              "privacy": "protected",
-              "default": "'no'"
-            },
-            {
-              "kind": "field",
-              "name": "pointerdownState",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonPointerdown",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "FocusEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleActivate",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "optional": true,
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -36125,6 +37333,24 @@
                   "name": "event",
                   "type": {
                     "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
                   }
                 }
               ]
@@ -36255,27 +37481,9 @@
               ]
             },
             {
-              "kind": "method",
-              "name": "handleBeforetoggle",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
-                  }
-                }
-              ]
-            },
-            {
               "kind": "field",
               "name": "handleSlottableRequest",
-              "privacy": "protected"
+              "privacy": "public"
             },
             {
               "kind": "method",
@@ -36487,6 +37695,16 @@
               "kind": "field",
               "name": "handleEnterKeydown",
               "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "bindEvents",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -36938,8 +38156,20 @@
             {
               "kind": "field",
               "name": "isMobile",
-              "privacy": "protected",
+              "privacy": "public",
               "default": "new MatchMediaController(this, IS_MOBILE)",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "strategy",
+              "type": {
+                "text": "DesktopController | MobileController"
+              },
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -36971,7 +38201,7 @@
             {
               "kind": "field",
               "name": "dependencyManager",
-              "privacy": "private",
+              "privacy": "public",
               "default": "new DependencyManagerController(this)",
               "inheritedFrom": {
                 "name": "PickerBase",
@@ -37169,7 +38399,7 @@
               "type": {
                 "text": "Menu"
               },
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -37212,7 +38442,7 @@
               "type": {
                 "text": "Overlay"
               },
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -37378,99 +38608,6 @@
               }
             },
             {
-              "kind": "field",
-              "name": "preventNextToggle",
-              "type": {
-                "text": "'no' | 'maybe' | 'yes'"
-              },
-              "privacy": "protected",
-              "default": "'no'",
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pointerdownState",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonPointerdown",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "FocusEvent"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleActivate",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "optional": true,
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -37521,6 +38658,28 @@
                   "name": "event",
                   "type": {
                     "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
                   }
                 }
               ],
@@ -37669,31 +38828,9 @@
               }
             },
             {
-              "kind": "method",
-              "name": "handleBeforetoggle",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
               "kind": "field",
               "name": "handleSlottableRequest",
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -37981,6 +39118,20 @@
               "kind": "field",
               "name": "handleEnterKeydown",
               "privacy": "protected",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "bindEvents",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -46915,6 +48066,18 @@
             },
             {
               "kind": "field",
+              "name": "button",
+              "type": {
+                "text": "HTMLButtonElement"
+              },
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "focusElement",
               "type": {
                 "text": "DisableableElement"
@@ -46990,8 +48153,20 @@
             {
               "kind": "field",
               "name": "isMobile",
-              "privacy": "protected",
+              "privacy": "public",
               "default": "new MatchMediaController(this, IS_MOBILE)",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "strategy",
+              "type": {
+                "text": "DesktopController | MobileController"
+              },
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -47010,20 +48185,8 @@
             },
             {
               "kind": "field",
-              "name": "button",
-              "type": {
-                "text": "HTMLButtonElement"
-              },
-              "privacy": "public",
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "field",
               "name": "dependencyManager",
-              "privacy": "private",
+              "privacy": "public",
               "default": "new DependencyManagerController(this)",
               "inheritedFrom": {
                 "name": "PickerBase",
@@ -47221,7 +48384,7 @@
               "type": {
                 "text": "Menu"
               },
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -47264,7 +48427,7 @@
               "type": {
                 "text": "Overlay"
               },
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -47391,99 +48554,6 @@
               }
             },
             {
-              "kind": "field",
-              "name": "preventNextToggle",
-              "type": {
-                "text": "'no' | 'maybe' | 'yes'"
-              },
-              "privacy": "protected",
-              "default": "'no'",
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pointerdownState",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonPointerdown",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "FocusEvent"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleActivate",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "optional": true,
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
               "kind": "method",
               "name": "focus",
               "privacy": "public",
@@ -47534,6 +48604,28 @@
                   "name": "event",
                   "type": {
                     "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "FocusEvent"
                   }
                 }
               ],
@@ -47704,31 +48796,9 @@
               }
             },
             {
-              "kind": "method",
-              "name": "handleBeforetoggle",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & {\n            target: Overlay;\n            newState: 'open' | 'closed';\n        }"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PickerBase",
-                "module": "packages/picker/src/Picker.js"
-              }
-            },
-            {
               "kind": "field",
               "name": "handleSlottableRequest",
-              "privacy": "protected",
+              "privacy": "public",
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -47975,6 +49045,20 @@
               "kind": "field",
               "name": "handleEnterKeydown",
               "privacy": "protected",
+              "inheritedFrom": {
+                "name": "PickerBase",
+                "module": "packages/picker/src/Picker.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "bindEvents",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
               "inheritedFrom": {
                 "name": "PickerBase",
                 "module": "packages/picker/src/Picker.js"
@@ -53128,6 +54212,78 @@
           "default": "{\n    baseSize: 100 as const,\n    noSelectionStyle: 'transform: translateX(0px) scaleX(0) scaleY(0)',\n\n    transformX(left: number, width: number): string {\n        const scale = width / this.baseSize;\n        return `transform: translateX(${left}px) scaleX(${scale});`;\n    },\n\n    transformY(top: number, height: number): string {\n        const scale = height / this.baseSize;\n        return `transform: translateY(${top}px) scaleY(${scale});`;\n    },\n\n    baseStyles(): CSSResult {\n        return css`\n            :host([direction='vertical-right']) #selection-indicator,\n            :host([direction='vertical']) #selection-indicator {\n                height: ${this.baseSize}px;\n            }\n            :host([dir][direction='horizontal']) #selection-indicator {\n                width: ${this.baseSize}px;\n            }\n        `;\n    },\n}"
         },
         {
+          "kind": "function",
+          "name": "calculateScrollTargetForRightSide",
+          "return": {
+            "type": {
+              "text": "number"
+            }
+          },
+          "parameters": [
+            {
+              "name": "index",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "direction",
+              "type": {
+                "text": "'rtl' | 'ltr'"
+              }
+            },
+            {
+              "name": "tabs",
+              "type": {
+                "text": "Tab[]"
+              }
+            },
+            {
+              "name": "container",
+              "type": {
+                "text": "HTMLDivElement"
+              }
+            }
+          ],
+          "description": "Given that the scroll needs to be on the right side of the viewport.\nReturns the coordonate x it needs to scroll so that the tab with given index is visible."
+        },
+        {
+          "kind": "function",
+          "name": "calculateScrollTargetForLeftSide",
+          "return": {
+            "type": {
+              "text": "number"
+            }
+          },
+          "parameters": [
+            {
+              "name": "index",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "direction",
+              "type": {
+                "text": "'rtl' | 'ltr'"
+              }
+            },
+            {
+              "name": "tabs",
+              "type": {
+                "text": "Tab[]"
+              }
+            },
+            {
+              "name": "container",
+              "type": {
+                "text": "HTMLDivElement"
+              }
+            }
+          ],
+          "description": "Given that the scroll needs to be on the left side of the viewport.\nReturns the coordonate x it needs to scroll so that the tab with given index is visible."
+        },
+        {
           "kind": "class",
           "description": "",
           "name": "Tabs",
@@ -53367,6 +54523,24 @@
                 "name": "Focusable",
                 "module": "tools/shared/src/focusable.js"
               }
+            },
+            {
+              "kind": "method",
+              "name": "getNecessaryAutoScroll",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "number"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
             },
             {
               "kind": "method",
@@ -53905,6 +55079,22 @@
           "name": "ScaledIndicator",
           "declaration": {
             "name": "ScaledIndicator",
+            "module": "packages/tabs/src/Tabs.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "calculateScrollTargetForRightSide",
+          "declaration": {
+            "name": "calculateScrollTargetForRightSide",
+            "module": "packages/tabs/src/Tabs.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "calculateScrollTargetForLeftSide",
+          "declaration": {
+            "name": "calculateScrollTargetForLeftSide",
             "module": "packages/tabs/src/Tabs.js"
           }
         },
@@ -66667,7 +67857,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n    :host{--spectrum-drop-zone-padding:var(--spectrum-spacing-400);--spectrum-drop-zone-illustration-to-heading:var(--spectrum-spacing-400);--spectrum-drop-zone-heading-to-body:var(--spectrum-spacing-75);--spectrum-drop-zone-border-width:var(--spectrum-border-width-200);--spectrum-drop-zone-corner-radius:var(--spectrum-corner-radius-100);--spectrum-drop-zone-border-color:var(--spectrum-gray-300);--spectrum-drop-zone-heading-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-heading-font-weight:var(--spectrum-heading-sans-serif-font-weight);--spectrum-drop-zone-heading-font-style:var(--spectrum-heading-sans-serif-font-style);--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-title-size);--spectrum-drop-zone-heading-line-height:var(--spectrum-heading-line-height);--spectrum-drop-zone-heading-color:var(--spectrum-heading-color);--spectrum-drop-zone-body-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-body-font-weight:var(--spectrum-body-sans-serif-font-weight);--spectrum-drop-zone-body-font-style:var(--spectrum-body-sans-serif-font-style);--spectrum-drop-zone-body-font-size:var(--spectrum-drop-zone-body-size);--spectrum-drop-zone-body-line-height:var(--spectrum-body-line-height);--spectrum-drop-zone-body-color:var(--spectrum-body-color);--spectrum-drop-zone-background-color:var(--spectrum-drop-zone-background-color-rgb);--spectrum-drop-zone-border-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-illustration-color:var(--spectrum-neutral-visual-color);--spectrum-drop-zone-illustration-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-height:var(--spectrum-component-height-300);--spectrum-drop-zone-content-max-width:var(--spectrum-drop-zone-content-maximum-width);--spectrum-drop-zone-content-edge-to-text:var(--spectrum-component-edge-to-text-300);--spectrum-drop-zone-content-top-to-text:var(--spectrum-component-top-to-text-300);--spectrum-drop-zone-content-bottom-to-text:var(--spectrum-component-bottom-to-text-300);--spectrum-drop-zone-content-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-content-font-weight:var(--spectrum-bold-font-weight);--spectrum-drop-zone-content-font-style:var(--spectrum-default-font-style);--spectrum-drop-zone-content-font-size:var(--spectrum-font-size-300);--spectrum-drop-zone-content-line-height:var(--spectrum-line-height-100);--spectrum-drop-zone-content-background-color:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-color:var(--spectrum-white);--mod-illustrated-message-content-maximum-width:var(--mod-drop-zone-content-maximum-width,var(--spectrum-drop-zone-content-maximum-width));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color,var(--spectrum-drop-zone-illustration-color));--mod-illustrated-message-title-to-heading:var(--mod-drop-zone-illustration-to-heading,var(--spectrum-drop-zone-illustration-to-heading));--mod-illustrated-message-heading-to-body:var(--mod-drop-zone-heading-to-body,var(--spectrum-drop-zone-heading-to-body));--mod-illustrated-message-title-font-family:var(--mod-drop-zone-heading-font-family,var(--spectrum-drop-zone-heading-font-family));--mod-illustrated-message-title-font-weight:var(--mod-drop-zone-heading-font-weight,var(--spectrum-drop-zone-heading-font-weight));--mod-illustrated-message-title-font-style:var(--mod-drop-zone-heading-font-style,var(--spectrum-drop-zone-heading-font-style));--mod-illustrated-message-title-font-size:var(--mod-drop-zone-heading-font-size,var(--spectrum-drop-zone-heading-font-size));--mod-illustrated-message-title-line-height:var(--mod-drop-zone-heading-line-height,var(--spectrum-drop-zone-heading-line-height));--mod-illustrated-message-title-color:var(--mod-drop-zone-heading-color,var(--spectrum-drop-zone-heading-color));--mod-illustrated-message-description-position:relative;--mod-illustrated-message-description-z-index:1;--mod-illustrated-message-heading-to-description:0;--mod-illustrated-message-description-font-family:var(--mod-drop-zone-body-font-family,var(--spectrum-drop-zone-body-font-family));--mod-illustrated-message-description-font-weight:var(--mod-drop-zone-body-font-weight,var(--spectrum-drop-zone-body-font-weight));--mod-illustrated-message-description-font-style:var(--mod-drop-zone-body-font-style,var(--spectrum-drop-zone-body-font-style));--mod-illustrated-message-description-font-size:var(--mod-drop-zone-body-font-size,var(--spectrum-drop-zone-body-font-size));--mod-illustrated-message-description-line-height:var(--mod-drop-zone-body-line-height,var(--spectrum-drop-zone-body-line-height));--mod-illustrated-message-description-color:var(--mod-drop-zone-body-color,var(--spectrum-drop-zone-body-color));--mod-actionbutton-font-size:var(--mod-drop-zone-content-font-size,var(--spectrum-drop-zone-content-font-size));--mod-actionbutton-label-color:var(--mod-drop-zone-content-color,var(--spectrum-drop-zone-content-color));--mod-actionbutton-edge-to-text:var(--mod-drop-zone-content-edge-to-text,var(--spectrum-drop-zone-content-edge-to-text))}:host:lang(ja),:host:lang(ko),:host:lang(zh){--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-cjk-title-size)}:host{box-sizing:border-box;inline-size:var(--mod-drop-zone-width,var(--spectrum-drop-zone-width));padding:calc(var(--mod-drop-zone-padding,var(--spectrum-drop-zone-padding)) - var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width)));text-align:center;border-color:var(--mod-drop-zone-border-color,var(--spectrum-drop-zone-border-color));border-width:var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width));border-radius:var(--mod-drop-zone-corner-radius,var(--spectrum-drop-zone-corner-radius));border-style:var(--mod-drop-zone-border-style,dashed);background-size:cover;background-color:var(--mod-drop-zone-background-color,var(--spectrum-drop-zone-background-color))}:host([dragged]){--mod-drop-zone-border-style:var(--mod-drop-zone-border-style--dragged,var(--mod-drop-zone-border-style-dragged,solid));--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity,var(--spectrum-drop-zone-background-color-opacity)));--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color-hover,var(--spectrum-drop-zone-illustration-color-hover))}:host .is-filled{--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity-filled,var(--spectrum-drop-zone-background-color-opacity-filled)));--mod-illustrated-message-display:none}:host([dragged]) .is-filled{--mod-drop-zone-content-display:flex}:host(:focus-visible){--mod-drop-zone-border-style:solid;--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));outline:0}.spectrum-DropZone-content{display:var(--mod-drop-zone-content-display,none);z-index:1;justify-content:center;align-items:center;block-size:100%;position:relative}.spectrum-DropZone-button{box-sizing:border-box;block-size:var(--mod-drop-zone-content-height,var(--spectrum-drop-zone-content-height));max-inline-size:var(--mod-drop-zone-content-max-width,var(--spectrum-drop-zone-content-max-width));font-family:var(--mod-drop-zone-content-font-family,var(--spectrum-drop-zone-content-font-family));font-weight:var(--mod-drop-zone-content-font-weight,var(--spectrum-drop-zone-content-font-weight));font-style:var(--mod-drop-zone-content-font-style,var(--spectrum-drop-zone-content-font-style));line-height:var(--mod-drop-zone-content-line-height,var(--spectrum-drop-zone-content-line-height));border:none;padding-block-start:var(--mod-drop-zone-content-top-to-text,var(--spectrum-drop-zone-content-top-to-text));padding-block-end:var(--mod-drop-zone-content-bottom-to-text,var(--spectrum-drop-zone-content-bottom-to-text))}.spectrum-DropZone-button,.spectrum-DropZone-button:focus{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}@media (hover:hover){.spectrum-DropZone-button:hover{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}}@media (forced-colors:active){:host{--highcontrast-drop-zone-illustration-color:CanvasText;--highcontrast-drop-zone-border-color-hover:Highlight;--highcontrast-illustrated-message-illustration-color:var(--highcontrast-drop-zone-illustration-color)}}:host{display:block}::slotted(*){font-family:var(--mod-drop-zone-body-font-family,var(--spectrum-drop-zone-body-font-family));font-size:var(--mod-drop-zone-body-font-size,var(--spectrum-drop-zone-body-font-size));font-weight:var(--mod-drop-zone-body-font-weight,var(--spectrum-drop-zone-body-font-weight));line-height:var(--mod-drop-zone-body-line-height,var(--spectrum-drop-zone-body-line-height));font-style:var(--spectrum-drop-zone-body-font-style,var(--spectrum-drop-zone-body-font-style));margin-top:0;margin-bottom:0}\n`"
+          "default": "css`\n    :host{--spectrum-drop-zone-padding:var(--spectrum-spacing-400);--spectrum-drop-zone-illustration-to-heading:var(--spectrum-spacing-400);--spectrum-drop-zone-heading-to-body:var(--spectrum-spacing-75);--spectrum-drop-zone-border-width:var(--spectrum-border-width-200);--spectrum-drop-zone-corner-radius:var(--spectrum-corner-radius-100);--spectrum-drop-zone-border-color:var(--spectrum-gray-300);--spectrum-drop-zone-heading-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-heading-font-weight:var(--spectrum-heading-sans-serif-font-weight);--spectrum-drop-zone-heading-font-style:var(--spectrum-heading-sans-serif-font-style);--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-title-size);--spectrum-drop-zone-heading-line-height:var(--spectrum-heading-line-height);--spectrum-drop-zone-heading-color:var(--spectrum-heading-color);--spectrum-drop-zone-body-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-body-font-weight:var(--spectrum-body-sans-serif-font-weight);--spectrum-drop-zone-body-font-style:var(--spectrum-body-sans-serif-font-style);--spectrum-drop-zone-body-font-size:var(--spectrum-drop-zone-body-size);--spectrum-drop-zone-body-line-height:var(--spectrum-body-line-height);--spectrum-drop-zone-body-color:var(--spectrum-body-color);--spectrum-drop-zone-background-color:var(--spectrum-drop-zone-background-color-rgb);--spectrum-drop-zone-border-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-illustration-color:var(--spectrum-neutral-visual-color);--spectrum-drop-zone-illustration-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-height:var(--spectrum-component-height-300);--spectrum-drop-zone-content-max-width:var(--spectrum-drop-zone-content-maximum-width);--spectrum-drop-zone-content-edge-to-text:var(--spectrum-component-edge-to-text-300);--spectrum-drop-zone-content-top-to-text:var(--spectrum-component-top-to-text-300);--spectrum-drop-zone-content-bottom-to-text:var(--spectrum-component-bottom-to-text-300);--spectrum-drop-zone-content-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-content-font-weight:var(--spectrum-bold-font-weight);--spectrum-drop-zone-content-font-style:var(--spectrum-default-font-style);--spectrum-drop-zone-content-font-size:var(--spectrum-font-size-300);--spectrum-drop-zone-content-line-height:var(--spectrum-line-height-100);--spectrum-drop-zone-content-background-color:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-color:var(--spectrum-white);--mod-illustrated-message-content-maximum-width:var(--mod-drop-zone-content-maximum-width,var(--spectrum-drop-zone-content-maximum-width));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color,var(--spectrum-drop-zone-illustration-color));--mod-illustrated-message-title-to-heading:var(--mod-drop-zone-illustration-to-heading,var(--spectrum-drop-zone-illustration-to-heading));--mod-illustrated-message-heading-to-body:var(--mod-drop-zone-heading-to-body,var(--spectrum-drop-zone-heading-to-body));--mod-illustrated-message-title-font-family:var(--mod-drop-zone-heading-font-family,var(--spectrum-drop-zone-heading-font-family));--mod-illustrated-message-title-font-weight:var(--mod-drop-zone-heading-font-weight,var(--spectrum-drop-zone-heading-font-weight));--mod-illustrated-message-title-font-style:var(--mod-drop-zone-heading-font-style,var(--spectrum-drop-zone-heading-font-style));--mod-illustrated-message-title-font-size:var(--mod-drop-zone-heading-font-size,var(--spectrum-drop-zone-heading-font-size));--mod-illustrated-message-title-line-height:var(--mod-drop-zone-heading-line-height,var(--spectrum-drop-zone-heading-line-height));--mod-illustrated-message-title-color:var(--mod-drop-zone-heading-color,var(--spectrum-drop-zone-heading-color));--mod-illustrated-message-description-position:relative;--mod-illustrated-message-description-z-index:1;--mod-illustrated-message-heading-to-description:0;--mod-illustrated-message-description-font-family:var(--mod-drop-zone-body-font-family,var(--spectrum-drop-zone-body-font-family));--mod-illustrated-message-description-font-weight:var(--mod-drop-zone-body-font-weight,var(--spectrum-drop-zone-body-font-weight));--mod-illustrated-message-description-font-style:var(--mod-drop-zone-body-font-style,var(--spectrum-drop-zone-body-font-style));--mod-illustrated-message-description-font-size:var(--mod-drop-zone-body-font-size,var(--spectrum-drop-zone-body-font-size));--mod-illustrated-message-description-line-height:var(--mod-drop-zone-body-line-height,var(--spectrum-drop-zone-body-line-height));--mod-illustrated-message-description-color:var(--mod-drop-zone-body-color,var(--spectrum-drop-zone-body-color));--mod-actionbutton-font-size:var(--mod-drop-zone-content-font-size,var(--spectrum-drop-zone-content-font-size));--mod-actionbutton-label-color:var(--mod-drop-zone-content-color,var(--spectrum-drop-zone-content-color));--mod-actionbutton-edge-to-text:var(--mod-drop-zone-content-edge-to-text,var(--spectrum-drop-zone-content-edge-to-text))}:host:lang(ja),:host:lang(ko),:host:lang(zh){--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-cjk-title-size)}:host{box-sizing:border-box;inline-size:var(--mod-drop-zone-width,var(--spectrum-drop-zone-width));padding:calc(var(--mod-drop-zone-padding,var(--spectrum-drop-zone-padding)) - var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width)));text-align:center;border-color:var(--mod-drop-zone-border-color,var(--spectrum-drop-zone-border-color));border-width:var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width));border-radius:var(--mod-drop-zone-corner-radius,var(--spectrum-drop-zone-corner-radius));border-style:var(--mod-drop-zone-border-style,dashed);background-size:cover;background-color:var(--mod-drop-zone-background-color,var(--spectrum-drop-zone-background-color))}:host([dragged]){--mod-drop-zone-border-style:var(--mod-drop-zone-border-style--dragged,var(--mod-drop-zone-border-style-dragged,solid));--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity,var(--spectrum-drop-zone-background-color-opacity)));--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color-hover,var(--spectrum-drop-zone-illustration-color-hover))}:host([filled]){--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity-filled,var(--spectrum-drop-zone-background-color-opacity-filled)));--mod-illustrated-message-display:none}:host([filled][dragged]){--mod-drop-zone-content-display:flex}:host(:focus-visible){--mod-drop-zone-border-style:solid;--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));outline:0}.spectrum-DropZone-content{display:var(--mod-drop-zone-content-display,none);z-index:1;justify-content:center;align-items:center;block-size:100%;position:relative}.spectrum-DropZone-button{box-sizing:border-box;block-size:var(--mod-drop-zone-content-height,var(--spectrum-drop-zone-content-height));max-inline-size:var(--mod-drop-zone-content-max-width,var(--spectrum-drop-zone-content-max-width));font-family:var(--mod-drop-zone-content-font-family,var(--spectrum-drop-zone-content-font-family));font-weight:var(--mod-drop-zone-content-font-weight,var(--spectrum-drop-zone-content-font-weight));font-style:var(--mod-drop-zone-content-font-style,var(--spectrum-drop-zone-content-font-style));line-height:var(--mod-drop-zone-content-line-height,var(--spectrum-drop-zone-content-line-height));border:none;padding-block-start:var(--mod-drop-zone-content-top-to-text,var(--spectrum-drop-zone-content-top-to-text));padding-block-end:var(--mod-drop-zone-content-bottom-to-text,var(--spectrum-drop-zone-content-bottom-to-text))}.spectrum-DropZone-button,.spectrum-DropZone-button:focus{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}@media (hover:hover){.spectrum-DropZone-button:hover{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}}@media (forced-colors:active){:host{--highcontrast-drop-zone-illustration-color:CanvasText;--highcontrast-drop-zone-border-color-hover:Highlight;--highcontrast-illustrated-message-illustration-color:var(--highcontrast-drop-zone-illustration-color)}}:host{display:block}::slotted(*){font-family:var(--mod-drop-zone-body-font-family,var(--spectrum-drop-zone-body-font-family));font-size:var(--mod-drop-zone-body-font-size,var(--spectrum-drop-zone-body-font-size));font-weight:var(--mod-drop-zone-body-font-weight,var(--spectrum-drop-zone-body-font-weight));line-height:var(--mod-drop-zone-body-line-height,var(--spectrum-drop-zone-body-line-height));font-style:var(--spectrum-drop-zone-body-font-style,var(--spectrum-drop-zone-body-font-style));margin-top:0;margin-bottom:0}\n`"
         }
       ],
       "exports": [
@@ -66703,7 +67893,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n    :host{--spectrum-drop-zone-padding:var(--spectrum-spacing-400);--spectrum-drop-zone-illustration-to-heading:var(--spectrum-spacing-400);--spectrum-drop-zone-heading-to-body:var(--spectrum-spacing-75);--spectrum-drop-zone-border-width:var(--spectrum-border-width-200);--spectrum-drop-zone-corner-radius:var(--spectrum-corner-radius-100);--spectrum-drop-zone-border-color:var(--spectrum-gray-300);--spectrum-drop-zone-heading-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-heading-font-weight:var(--spectrum-heading-sans-serif-font-weight);--spectrum-drop-zone-heading-font-style:var(--spectrum-heading-sans-serif-font-style);--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-title-size);--spectrum-drop-zone-heading-line-height:var(--spectrum-heading-line-height);--spectrum-drop-zone-heading-color:var(--spectrum-heading-color);--spectrum-drop-zone-body-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-body-font-weight:var(--spectrum-body-sans-serif-font-weight);--spectrum-drop-zone-body-font-style:var(--spectrum-body-sans-serif-font-style);--spectrum-drop-zone-body-font-size:var(--spectrum-drop-zone-body-size);--spectrum-drop-zone-body-line-height:var(--spectrum-body-line-height);--spectrum-drop-zone-body-color:var(--spectrum-body-color);--spectrum-drop-zone-background-color:var(--spectrum-drop-zone-background-color-rgb);--spectrum-drop-zone-border-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-illustration-color:var(--spectrum-neutral-visual-color);--spectrum-drop-zone-illustration-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-height:var(--spectrum-component-height-300);--spectrum-drop-zone-content-max-width:var(--spectrum-drop-zone-content-maximum-width);--spectrum-drop-zone-content-edge-to-text:var(--spectrum-component-edge-to-text-300);--spectrum-drop-zone-content-top-to-text:var(--spectrum-component-top-to-text-300);--spectrum-drop-zone-content-bottom-to-text:var(--spectrum-component-bottom-to-text-300);--spectrum-drop-zone-content-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-content-font-weight:var(--spectrum-bold-font-weight);--spectrum-drop-zone-content-font-style:var(--spectrum-default-font-style);--spectrum-drop-zone-content-font-size:var(--spectrum-font-size-300);--spectrum-drop-zone-content-line-height:var(--spectrum-line-height-100);--spectrum-drop-zone-content-background-color:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-color:var(--spectrum-white);--mod-illustrated-message-content-maximum-width:var(--mod-drop-zone-content-maximum-width,var(--spectrum-drop-zone-content-maximum-width));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color,var(--spectrum-drop-zone-illustration-color));--mod-illustrated-message-title-to-heading:var(--mod-drop-zone-illustration-to-heading,var(--spectrum-drop-zone-illustration-to-heading));--mod-illustrated-message-heading-to-body:var(--mod-drop-zone-heading-to-body,var(--spectrum-drop-zone-heading-to-body));--mod-illustrated-message-title-font-family:var(--mod-drop-zone-heading-font-family,var(--spectrum-drop-zone-heading-font-family));--mod-illustrated-message-title-font-weight:var(--mod-drop-zone-heading-font-weight,var(--spectrum-drop-zone-heading-font-weight));--mod-illustrated-message-title-font-style:var(--mod-drop-zone-heading-font-style,var(--spectrum-drop-zone-heading-font-style));--mod-illustrated-message-title-font-size:var(--mod-drop-zone-heading-font-size,var(--spectrum-drop-zone-heading-font-size));--mod-illustrated-message-title-line-height:var(--mod-drop-zone-heading-line-height,var(--spectrum-drop-zone-heading-line-height));--mod-illustrated-message-title-color:var(--mod-drop-zone-heading-color,var(--spectrum-drop-zone-heading-color));--mod-illustrated-message-description-position:relative;--mod-illustrated-message-description-z-index:1;--mod-illustrated-message-heading-to-description:0;--mod-illustrated-message-description-font-family:var(--mod-drop-zone-body-font-family,var(--spectrum-drop-zone-body-font-family));--mod-illustrated-message-description-font-weight:var(--mod-drop-zone-body-font-weight,var(--spectrum-drop-zone-body-font-weight));--mod-illustrated-message-description-font-style:var(--mod-drop-zone-body-font-style,var(--spectrum-drop-zone-body-font-style));--mod-illustrated-message-description-font-size:var(--mod-drop-zone-body-font-size,var(--spectrum-drop-zone-body-font-size));--mod-illustrated-message-description-line-height:var(--mod-drop-zone-body-line-height,var(--spectrum-drop-zone-body-line-height));--mod-illustrated-message-description-color:var(--mod-drop-zone-body-color,var(--spectrum-drop-zone-body-color));--mod-actionbutton-font-size:var(--mod-drop-zone-content-font-size,var(--spectrum-drop-zone-content-font-size));--mod-actionbutton-label-color:var(--mod-drop-zone-content-color,var(--spectrum-drop-zone-content-color));--mod-actionbutton-edge-to-text:var(--mod-drop-zone-content-edge-to-text,var(--spectrum-drop-zone-content-edge-to-text))}:host:lang(ja),:host:lang(ko),:host:lang(zh){--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-cjk-title-size)}:host{box-sizing:border-box;inline-size:var(--mod-drop-zone-width,var(--spectrum-drop-zone-width));padding:calc(var(--mod-drop-zone-padding,var(--spectrum-drop-zone-padding)) - var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width)));text-align:center;border-color:var(--mod-drop-zone-border-color,var(--spectrum-drop-zone-border-color));border-width:var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width));border-radius:var(--mod-drop-zone-corner-radius,var(--spectrum-drop-zone-corner-radius));border-style:var(--mod-drop-zone-border-style,dashed);background-size:cover;background-color:var(--mod-drop-zone-background-color,var(--spectrum-drop-zone-background-color))}:host([dragged]){--mod-drop-zone-border-style:var(--mod-drop-zone-border-style--dragged,var(--mod-drop-zone-border-style-dragged,solid));--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity,var(--spectrum-drop-zone-background-color-opacity)));--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color-hover,var(--spectrum-drop-zone-illustration-color-hover))}:host .is-filled{--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity-filled,var(--spectrum-drop-zone-background-color-opacity-filled)));--mod-illustrated-message-display:none}:host([dragged]) .is-filled{--mod-drop-zone-content-display:flex}:host(:focus-visible){--mod-drop-zone-border-style:solid;--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));outline:0}.spectrum-DropZone-content{display:var(--mod-drop-zone-content-display,none);z-index:1;justify-content:center;align-items:center;block-size:100%;position:relative}.spectrum-DropZone-button{box-sizing:border-box;block-size:var(--mod-drop-zone-content-height,var(--spectrum-drop-zone-content-height));max-inline-size:var(--mod-drop-zone-content-max-width,var(--spectrum-drop-zone-content-max-width));font-family:var(--mod-drop-zone-content-font-family,var(--spectrum-drop-zone-content-font-family));font-weight:var(--mod-drop-zone-content-font-weight,var(--spectrum-drop-zone-content-font-weight));font-style:var(--mod-drop-zone-content-font-style,var(--spectrum-drop-zone-content-font-style));line-height:var(--mod-drop-zone-content-line-height,var(--spectrum-drop-zone-content-line-height));border:none;padding-block-start:var(--mod-drop-zone-content-top-to-text,var(--spectrum-drop-zone-content-top-to-text));padding-block-end:var(--mod-drop-zone-content-bottom-to-text,var(--spectrum-drop-zone-content-bottom-to-text))}.spectrum-DropZone-button,.spectrum-DropZone-button:focus{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}@media (hover:hover){.spectrum-DropZone-button:hover{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}}@media (forced-colors:active){:host{--highcontrast-drop-zone-illustration-color:CanvasText;--highcontrast-drop-zone-border-color-hover:Highlight;--highcontrast-illustrated-message-illustration-color:var(--highcontrast-drop-zone-illustration-color)}}\n`"
+          "default": "css`\n    :host{--spectrum-drop-zone-padding:var(--spectrum-spacing-400);--spectrum-drop-zone-illustration-to-heading:var(--spectrum-spacing-400);--spectrum-drop-zone-heading-to-body:var(--spectrum-spacing-75);--spectrum-drop-zone-border-width:var(--spectrum-border-width-200);--spectrum-drop-zone-corner-radius:var(--spectrum-corner-radius-100);--spectrum-drop-zone-border-color:var(--spectrum-gray-300);--spectrum-drop-zone-heading-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-heading-font-weight:var(--spectrum-heading-sans-serif-font-weight);--spectrum-drop-zone-heading-font-style:var(--spectrum-heading-sans-serif-font-style);--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-title-size);--spectrum-drop-zone-heading-line-height:var(--spectrum-heading-line-height);--spectrum-drop-zone-heading-color:var(--spectrum-heading-color);--spectrum-drop-zone-body-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-body-font-weight:var(--spectrum-body-sans-serif-font-weight);--spectrum-drop-zone-body-font-style:var(--spectrum-body-sans-serif-font-style);--spectrum-drop-zone-body-font-size:var(--spectrum-drop-zone-body-size);--spectrum-drop-zone-body-line-height:var(--spectrum-body-line-height);--spectrum-drop-zone-body-color:var(--spectrum-body-color);--spectrum-drop-zone-background-color:var(--spectrum-drop-zone-background-color-rgb);--spectrum-drop-zone-border-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-illustration-color:var(--spectrum-neutral-visual-color);--spectrum-drop-zone-illustration-color-hover:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-height:var(--spectrum-component-height-300);--spectrum-drop-zone-content-max-width:var(--spectrum-drop-zone-content-maximum-width);--spectrum-drop-zone-content-edge-to-text:var(--spectrum-component-edge-to-text-300);--spectrum-drop-zone-content-top-to-text:var(--spectrum-component-top-to-text-300);--spectrum-drop-zone-content-bottom-to-text:var(--spectrum-component-bottom-to-text-300);--spectrum-drop-zone-content-font-family:var(--spectrum-sans-font-family-stack);--spectrum-drop-zone-content-font-weight:var(--spectrum-bold-font-weight);--spectrum-drop-zone-content-font-style:var(--spectrum-default-font-style);--spectrum-drop-zone-content-font-size:var(--spectrum-font-size-300);--spectrum-drop-zone-content-line-height:var(--spectrum-line-height-100);--spectrum-drop-zone-content-background-color:var(--spectrum-accent-visual-color);--spectrum-drop-zone-content-color:var(--spectrum-white);--mod-illustrated-message-content-maximum-width:var(--mod-drop-zone-content-maximum-width,var(--spectrum-drop-zone-content-maximum-width));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color,var(--spectrum-drop-zone-illustration-color));--mod-illustrated-message-title-to-heading:var(--mod-drop-zone-illustration-to-heading,var(--spectrum-drop-zone-illustration-to-heading));--mod-illustrated-message-heading-to-body:var(--mod-drop-zone-heading-to-body,var(--spectrum-drop-zone-heading-to-body));--mod-illustrated-message-title-font-family:var(--mod-drop-zone-heading-font-family,var(--spectrum-drop-zone-heading-font-family));--mod-illustrated-message-title-font-weight:var(--mod-drop-zone-heading-font-weight,var(--spectrum-drop-zone-heading-font-weight));--mod-illustrated-message-title-font-style:var(--mod-drop-zone-heading-font-style,var(--spectrum-drop-zone-heading-font-style));--mod-illustrated-message-title-font-size:var(--mod-drop-zone-heading-font-size,var(--spectrum-drop-zone-heading-font-size));--mod-illustrated-message-title-line-height:var(--mod-drop-zone-heading-line-height,var(--spectrum-drop-zone-heading-line-height));--mod-illustrated-message-title-color:var(--mod-drop-zone-heading-color,var(--spectrum-drop-zone-heading-color));--mod-illustrated-message-description-position:relative;--mod-illustrated-message-description-z-index:1;--mod-illustrated-message-heading-to-description:0;--mod-illustrated-message-description-font-family:var(--mod-drop-zone-body-font-family,var(--spectrum-drop-zone-body-font-family));--mod-illustrated-message-description-font-weight:var(--mod-drop-zone-body-font-weight,var(--spectrum-drop-zone-body-font-weight));--mod-illustrated-message-description-font-style:var(--mod-drop-zone-body-font-style,var(--spectrum-drop-zone-body-font-style));--mod-illustrated-message-description-font-size:var(--mod-drop-zone-body-font-size,var(--spectrum-drop-zone-body-font-size));--mod-illustrated-message-description-line-height:var(--mod-drop-zone-body-line-height,var(--spectrum-drop-zone-body-line-height));--mod-illustrated-message-description-color:var(--mod-drop-zone-body-color,var(--spectrum-drop-zone-body-color));--mod-actionbutton-font-size:var(--mod-drop-zone-content-font-size,var(--spectrum-drop-zone-content-font-size));--mod-actionbutton-label-color:var(--mod-drop-zone-content-color,var(--spectrum-drop-zone-content-color));--mod-actionbutton-edge-to-text:var(--mod-drop-zone-content-edge-to-text,var(--spectrum-drop-zone-content-edge-to-text))}:host:lang(ja),:host:lang(ko),:host:lang(zh){--spectrum-drop-zone-heading-font-size:var(--spectrum-drop-zone-cjk-title-size)}:host{box-sizing:border-box;inline-size:var(--mod-drop-zone-width,var(--spectrum-drop-zone-width));padding:calc(var(--mod-drop-zone-padding,var(--spectrum-drop-zone-padding)) - var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width)));text-align:center;border-color:var(--mod-drop-zone-border-color,var(--spectrum-drop-zone-border-color));border-width:var(--mod-drop-zone-border-width,var(--spectrum-drop-zone-border-width));border-radius:var(--mod-drop-zone-corner-radius,var(--spectrum-drop-zone-corner-radius));border-style:var(--mod-drop-zone-border-style,dashed);background-size:cover;background-color:var(--mod-drop-zone-background-color,var(--spectrum-drop-zone-background-color))}:host([dragged]){--mod-drop-zone-border-style:var(--mod-drop-zone-border-style--dragged,var(--mod-drop-zone-border-style-dragged,solid));--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity,var(--spectrum-drop-zone-background-color-opacity)));--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));--mod-illustrated-message-illustration-color:var(--mod-drop-zone-illustration-color-hover,var(--spectrum-drop-zone-illustration-color-hover))}:host([filled]){--mod-drop-zone-background-color:rgba(var(--spectrum-drop-zone-background-color),var(--mod-drop-zone-background-color-opacity-filled,var(--spectrum-drop-zone-background-color-opacity-filled)));--mod-illustrated-message-display:none}:host([filled][dragged]){--mod-drop-zone-content-display:flex}:host(:focus-visible){--mod-drop-zone-border-style:solid;--spectrum-drop-zone-border-color:var(--highcontrast-drop-zone-border-color-hover,var(--mod-drop-zone-border-color-hover,var(--spectrum-drop-zone-border-color-hover)));outline:0}.spectrum-DropZone-content{display:var(--mod-drop-zone-content-display,none);z-index:1;justify-content:center;align-items:center;block-size:100%;position:relative}.spectrum-DropZone-button{box-sizing:border-box;block-size:var(--mod-drop-zone-content-height,var(--spectrum-drop-zone-content-height));max-inline-size:var(--mod-drop-zone-content-max-width,var(--spectrum-drop-zone-content-max-width));font-family:var(--mod-drop-zone-content-font-family,var(--spectrum-drop-zone-content-font-family));font-weight:var(--mod-drop-zone-content-font-weight,var(--spectrum-drop-zone-content-font-weight));font-style:var(--mod-drop-zone-content-font-style,var(--spectrum-drop-zone-content-font-style));line-height:var(--mod-drop-zone-content-line-height,var(--spectrum-drop-zone-content-line-height));border:none;padding-block-start:var(--mod-drop-zone-content-top-to-text,var(--spectrum-drop-zone-content-top-to-text));padding-block-end:var(--mod-drop-zone-content-bottom-to-text,var(--spectrum-drop-zone-content-bottom-to-text))}.spectrum-DropZone-button,.spectrum-DropZone-button:focus{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}@media (hover:hover){.spectrum-DropZone-button:hover{background-color:var(--mod-drop-zone-content-background-color,var(--spectrum-drop-zone-content-background-color))}}@media (forced-colors:active){:host{--highcontrast-drop-zone-illustration-color:CanvasText;--highcontrast-drop-zone-border-color-hover:Highlight;--highcontrast-illustrated-message-illustration-color:var(--highcontrast-drop-zone-illustration-color)}}\n`"
         }
       ],
       "exports": [
@@ -77172,6 +78362,30 @@
           "declaration": {
             "name": "styles",
             "module": "packages/picker/src/spectrum-picker.css.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/picker/src/strategies.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "strategies",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    desktop: DesktopController,\n    mobile: MobileController,\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "strategies",
+          "declaration": {
+            "name": "strategies",
+            "module": "packages/picker/src/strategies.js"
           }
         }
       ]
