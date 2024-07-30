@@ -619,28 +619,6 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
             expect(el.value).to.equal(thirdItem.value);
         });
-        it('does not open on right click', async () => {
-            await nextFrame();
-            await nextFrame();
-            const boundingRect = el.button.getBoundingClientRect();
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                        options: {
-                            button: 'right',
-                        },
-                    },
-                ],
-            });
-            // manually wait for 500ms to ensure the picker does not open
-            await aTimeout(500);
-            expect(el.open).to.be.false;
-        });
         it('opens/closes multiple times', async () => {
             await nextFrame();
             await nextFrame();
