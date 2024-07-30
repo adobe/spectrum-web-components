@@ -1,0 +1,29 @@
+name: PR Title Check
+
+on:
+    pull_request:
+        types: [opened, edited, synchronize]
+
+jobs:
+    title-check:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Check out the code
+              uses: actions/checkout@v2
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '14'
+
+            - name: Validate PR Title
+              id: validate_title
+              run: |
+                  TITLE=${{ github.event.pull_request.title }}
+                  echo "$TITLE" | npx commitlint --verbose
+              continue-on-error: true
+
+            - name: Fail PR if title is invalid
+              if: steps.validate_title.outputs.conclusion == 'failure'
+              run: exit 1
