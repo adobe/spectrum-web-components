@@ -101,11 +101,6 @@ export class Combobox extends Textfield {
         super();
         this.pendingStateController = new PendingStateController(this, {
             pending: () => this.pending,
-            onPendingChange: (isPending: boolean) => {
-                if (isPending) {
-                    this.open = false;
-                }
-            },
         });
     }
 
@@ -588,6 +583,9 @@ export class Combobox extends Textfield {
             this.manageListOverlay();
         }
         if (!this.focused && this.open) {
+            this.open = false;
+        }
+        if (changed.has('pending') && this.pending) {
             this.open = false;
         }
         if (changed.has('activeDescendant')) {

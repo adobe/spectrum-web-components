@@ -172,14 +172,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         super();
         this.pendingStateController = new PendingStateController(this, {
             pending: () => this.pending,
-            onPendingChange: (isPending: boolean) => {
-                if (isPending) {
-                    this.open = false;
-                    if (this.strategy) {
-                        this.strategy.open = false;
-                    }
-                }
-            },
         });
     }
 
@@ -541,6 +533,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
+            if (this.strategy) {
+                this.open = false;
+                this.strategy.open = false;
+            }
+        }
+        if (changes.has('pending') && this.pending) {
             if (this.strategy) {
                 this.open = false;
                 this.strategy.open = false;

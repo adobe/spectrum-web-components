@@ -23,7 +23,6 @@ import '@spectrum-web-components/picker/sp-picker.js';
 describe('PendingStateController', () => {
     let host: HostWithPendingState;
     let pending: sinon.SinonStub;
-    let onPendingChange: sinon.SinonStub;
     let controller: PendingStateController<HostWithPendingState>;
 
     beforeEach(async () => {
@@ -31,10 +30,8 @@ describe('PendingStateController', () => {
             <sp-picker pending></sp-picker>
         `);
         pending = sinon.stub();
-        onPendingChange = sinon.stub();
         controller = new PendingStateController(host, {
             pending,
-            onPendingChange,
         });
     });
 
@@ -155,7 +152,6 @@ describe('PendingStateController', () => {
         it('should check the pending state', () => {
             controller.hostConnected();
             expect(pending).to.have.been.called;
-            expect(onPendingChange).to.have.been.called;
         });
     });
 
@@ -163,7 +159,6 @@ describe('PendingStateController', () => {
         it('should check the pending state', () => {
             controller.hostUpdated();
             expect(pending).to.have.been.called;
-            expect(onPendingChange).to.have.been.called;
         });
     });
 });
