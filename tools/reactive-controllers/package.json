@@ -49,6 +49,10 @@
             "development": "./src/MatchMedia.dev.js",
             "default": "./src/MatchMedia.js"
         },
+        "./src/PendingState.js": {
+            "development": "./src/PendingState.dev.js",
+            "default": "./src/PendingState.js"
+        },
         "./src/RovingTabindex.js": {
             "development": "./src/RovingTabindex.dev.js",
             "default": "./src/RovingTabindex.js"

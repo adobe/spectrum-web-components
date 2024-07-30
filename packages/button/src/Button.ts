@@ -20,6 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
@@ -61,10 +62,51 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
 
+    protected pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Button component.
+     *
+     * The `PendingStateController` manages the pending state of the Button.
+     * It takes two parameters:
+     * - `pending`: A function that returns the current pending state.
+     * - `onPendingChange`: A callback function that is invoked when the pending state changes.
+     *
+     * When the pending state changes:
+     * - If `isPending` is `true` and the `pendingLabel` is different from the current `aria-label`:
+     *   - If the button is not disabled, it caches the current `aria-label` and sets the `aria-label` to `pendingLabel`.
+     * - If `isPending` is `false` and there is a cached `aria-label`:
+     *   - It restores the cached `aria-label`.
+     * - If `isPending` is `false` and the cached `aria-label` is an empty string:
+     *   - It removes the `aria-label` attribute.
+     *
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this, {
+            pending: () => this.pending,
+            onPendingChange: (isPending: boolean) => {
+                if (
+                    isPending &&
+                    this.pendingLabel !== this.getAttribute('aria-label')
+                ) {
+                    if (!this.disabled) {
+                        this.cachedAriaLabel =
+                            this.getAttribute('aria-label') || '';
+                        this.setAttribute('aria-label', this.pendingLabel);
+                    }
+                } else if (!isPending && this.cachedAriaLabel) {
+                    this.setAttribute('aria-label', this.cachedAriaLabel);
+                } else if (!isPending && this.cachedAriaLabel === '') {
+                    this.removeAttribute('aria-label');
+                }
+            },
+        });
+    }
     private cachedAriaLabel: string | null = null;
 
     public override click(): void {
-        if (this.pending) {
+        if (this.pendingStateController.isPending()) {
             return;
         }
         super.click();
@@ -165,7 +207,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
         if (changed.has('pending')) {
             if (
-                this.pending &&
+                this.pendingStateController.isPending() &&
                 this.pendingLabel !== this.getAttribute('aria-label')
             ) {
                 if (!this.disabled) {
@@ -173,9 +215,15 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         this.getAttribute('aria-label') || '';
                     this.setAttribute('aria-label', this.pendingLabel);
                 }
-            } else if (!this.pending && this.cachedAriaLabel) {
+            } else if (
+                !this.pendingStateController.isPending() &&
+                this.cachedAriaLabel
+            ) {
                 this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (!this.pending && this.cachedAriaLabel === '') {
+            } else if (
+                !this.pendingStateController.isPending() &&
+                this.cachedAriaLabel === ''
+            ) {
                 this.removeAttribute('aria-label');
             }
         }
@@ -185,7 +233,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 !this.disabled &&
                 this.pendingLabel !== this.getAttribute('aria-label')
             ) {
-                if (this.pending) {
+                if (this.pendingStateController.isPending()) {
                     this.cachedAriaLabel =
                         this.getAttribute('aria-label') || '';
                     this.setAttribute('aria-label', this.pendingLabel);
@@ -201,17 +249,8 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
-            ${when(this.pending, () => {
-                import(
-                    '@spectrum-web-components/progress-circle/sp-progress-circle.js'
-                );
-                return html`
-                    <sp-progress-circle
-                        indeterminate
-                        static="white"
-                        aria-hidden="true"
-                    ></sp-progress-circle>
-                `;
+            ${when(this.pendingStateController.isPending(), () => {
+                return this.pendingStateController.renderPendingState();
             })}
         `;
     }

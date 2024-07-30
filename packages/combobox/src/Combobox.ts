@@ -34,6 +34,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -83,6 +84,31 @@ export class Combobox extends Textfield {
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
+    protected pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Combobox component.
+     *
+     * The `PendingStateController` manages the pending state of the Combobox.
+     * It takes two parameters:
+     * - `pending`: A function that returns the current pending state.
+     * - `onPendingChange`: A callback function that is invoked when the pending state changes.
+     *
+     * When the pending state changes to `true`, the `open` property of the Combobox is set to `false`.
+     *
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this, {
+            pending: () => this.pending,
+            onPendingChange: (isPending: boolean) => {
+                if (isPending) {
+                    this.open = false;
+                }
+            },
+        });
+    }
+
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
 
@@ -130,7 +156,7 @@ export class Combobox extends Textfield {
     }
 
     public handleComboboxKeydown(event: KeyboardEvent): void {
-        if (this.readonly || this.pending) {
+        if (this.readonly || this.pendingStateController.isPending()) {
             return;
         }
         if (event.altKey && event.code === 'ArrowDown') {
@@ -233,7 +259,10 @@ export class Combobox extends Textfield {
     }
 
     public filterAvailableOptions(): void {
-        if (this.autocomplete === 'none' || this.pending) {
+        if (
+            this.autocomplete === 'none' ||
+            this.pendingStateController.isPending()
+        ) {
             return;
         }
         const valueLowerCase = this.value.toLowerCase();
@@ -247,7 +276,7 @@ export class Combobox extends Textfield {
 
     public override handleInput(event: Event): void {
         super.handleInput(event);
-        if (!this.pending) {
+        if (!this.pendingStateController.isPending()) {
             this.activeDescendant = undefined;
             this.open = true;
         }
@@ -276,7 +305,7 @@ export class Combobox extends Textfield {
     }
 
     public toggleOpen(): void {
-        if (this.readonly || this.pending) {
+        if (this.readonly || this.pendingStateController.isPending()) {
             this.open = false;
             return;
         }
@@ -323,7 +352,7 @@ export class Combobox extends Textfield {
         const appliedLabel = this.label || this.appliedLabel;
 
         return html`
-            ${this.pending
+            ${this.pendingStateController.isPending()
                 ? html`
                       <span
                           aria-hidden="true"
@@ -416,8 +445,12 @@ export class Combobox extends Textfield {
                 ?readonly=${this.readonly}
             />
             ${when(
-                this.pending && !this.disabled && !this.readonly,
-                this.renderLoader
+                this.pendingStateController.isPending() &&
+                    !this.disabled &&
+                    !this.readonly,
+                () => {
+                    return this.pendingStateController.renderPendingState();
+                }
             )}
         `;
     }
@@ -551,13 +584,10 @@ export class Combobox extends Textfield {
             this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
         >
     ): void {
-        if (changed.has('open') && !this.pending) {
+        if (changed.has('open') && !this.pendingStateController.isPending()) {
             this.manageListOverlay();
         }
         if (!this.focused && this.open) {
-            this.open = false;
-        }
-        if (changed.has('pending') && this.pending) {
             this.open = false;
         }
         if (changed.has('activeDescendant')) {

@@ -52,6 +52,7 @@ import {
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
@@ -152,6 +153,34 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ attribute: false })
     public get selectedItem(): MenuItem | undefined {
         return this._selectedItem;
+    }
+
+    protected pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Picker component.
+     *
+     * The `PendingStateController` manages the pending state of the Picker.
+     * It takes two parameters:
+     * - `pending`: A function that returns the current pending state.
+     * - `onPendingChange`: A callback function that is invoked when the pending state changes.
+     *
+     * When the pending state changes to `true`, the `open` property of the Picker is set to `false`.
+     *
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this, {
+            pending: () => this.pending,
+            onPendingChange: (isPending: boolean) => {
+                if (isPending) {
+                    this.open = false;
+                    if (this.strategy) {
+                        this.strategy.open = false;
+                    }
+                }
+            },
+        });
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {
@@ -302,7 +331,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly || this.pending) {
+        if (this.readonly || this.pendingStateController.isPending()) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -415,27 +444,15 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid && !this.pending
+                ${this.invalid && !this.pendingStateController.isPending()
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pending, () => {
-                    import(
-                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
-                    );
-                    // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
-                    return html`
-                        <sp-progress-circle
-                            id="loader"
-                            size="s"
-                            indeterminate
-                            aria-valuetext=${this.pendingLabel}
-                            class="progress-circle"
-                        ></sp-progress-circle>
-                    `;
+                ${when(this.pendingStateController.isPending(), () => {
+                    return this.pendingStateController.renderPendingState();
                 })}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
@@ -524,12 +541,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
-            if (this.strategy) {
-                this.open = false;
-                this.strategy.open = false;
-            }
-        }
-        if (changes.has('pending') && this.pending) {
             if (this.strategy) {
                 this.open = false;
                 this.strategy.open = false;
@@ -831,7 +842,11 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
+        if (
+            !code.startsWith('Arrow') ||
+            this.readonly ||
+            this.pendingStateController.isPending()
+        ) {
             return;
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {
