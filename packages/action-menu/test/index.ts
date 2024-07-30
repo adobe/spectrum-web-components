@@ -408,6 +408,26 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await elementUpdated(el);
             expect(el.open).to.be.true;
         });
+        it('does not open on right click', async () => {
+            const el = await actionMenuFixture();
+            await elementUpdated(el);
+
+            const rect = el.getBoundingClientRect();
+            await sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'click',
+                        options: { button: 'right' },
+                    },
+                ],
+            });
+            await aTimeout(50);
+            expect(el.open).to.be.false;
+        });
         it('toggles open/close multiple time', async () => {
             const el = await actionMenuFixture();
 
