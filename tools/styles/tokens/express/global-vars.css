@@ -580,35 +580,35 @@
     --system-action-button-quiet-border-color-focus: transparent;
     --system-action-button-quiet-background-color-disabled: transparent;
     --system-action-button-quiet-border-color-disabled: transparent;
-    --system-action-button-emphasized-background-color-default-selected: var(
+    --system-action-button-emphasized-selected-background-color-default: var(
         --mod-actionbutton-background-color-default-selected-emphasized,
         var(--spectrum-accent-background-color-default)
     );
-    --system-action-button-emphasized-background-color-hover-selected: var(
+    --system-action-button-emphasized-selected-background-color-hover: var(
         --mod-actionbutton-background-color-hover-selected-emphasized,
         var(--spectrum-accent-background-color-hover)
     );
-    --system-action-button-emphasized-background-color-down-selected: var(
+    --system-action-button-emphasized-selected-background-color-down: var(
         --mod-actionbutton-background-color-down-selected-emphasized,
         var(--spectrum-accent-background-color-down)
     );
-    --system-action-button-emphasized-background-color-focus-selected: var(
+    --system-action-button-emphasized-selected-background-color-focus: var(
         --mod-actionbutton-background-color-focus-selected-emphasized,
         var(--spectrum-accent-background-color-key-focus)
     );
-    --system-action-button-emphasized-content-color-default-selected: var(
+    --system-action-button-emphasized-selected-content-color-default: var(
         --mod-actionbutton-content-color-default-selected-emphasized,
         var(--spectrum-white)
     );
-    --system-action-button-emphasized-content-color-hover-selected: var(
+    --system-action-button-emphasized-selected-content-color-hover: var(
         --mod-actionbutton-content-color-hover-selected-emphasized,
         var(--spectrum-white)
     );
-    --system-action-button-emphasized-content-color-down-selected: var(
+    --system-action-button-emphasized-selected-content-color-down: var(
         --mod-actionbutton-content-color-down-selected-emphasized,
         var(--spectrum-white)
     );
-    --system-action-button-emphasized-content-color-focus-selected: var(
+    --system-action-button-emphasized-selected-content-color-focus: var(
         --mod-actionbutton-content-color-focus-selected-emphasized,
         var(--spectrum-white)
     );

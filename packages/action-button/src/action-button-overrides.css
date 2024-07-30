@@ -314,30 +314,30 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([emphasized]) {
-    --spectrum-actionbutton-background-color-default-selected: var(
-        --system-action-button-emphasized-background-color-default-selected
+:host([emphasized][selected]) {
+    --spectrum-actionbutton-background-color-default: var(
+        --system-action-button-emphasized-selected-background-color-default
     );
-    --spectrum-actionbutton-background-color-hover-selected: var(
-        --system-action-button-emphasized-background-color-hover-selected
+    --spectrum-actionbutton-background-color-hover: var(
+        --system-action-button-emphasized-selected-background-color-hover
     );
-    --spectrum-actionbutton-background-color-down-selected: var(
-        --system-action-button-emphasized-background-color-down-selected
+    --spectrum-actionbutton-background-color-down: var(
+        --system-action-button-emphasized-selected-background-color-down
     );
-    --spectrum-actionbutton-background-color-focus-selected: var(
-        --system-action-button-emphasized-background-color-focus-selected
+    --spectrum-actionbutton-background-color-focus: var(
+        --system-action-button-emphasized-selected-background-color-focus
     );
-    --spectrum-actionbutton-content-color-default-selected: var(
-        --system-action-button-emphasized-content-color-default-selected
+    --spectrum-actionbutton-content-color-default: var(
+        --system-action-button-emphasized-selected-content-color-default
     );
-    --spectrum-actionbutton-content-color-hover-selected: var(
-        --system-action-button-emphasized-content-color-hover-selected
+    --spectrum-actionbutton-content-color-hover: var(
+        --system-action-button-emphasized-selected-content-color-hover
     );
-    --spectrum-actionbutton-content-color-down-selected: var(
-        --system-action-button-emphasized-content-color-down-selected
+    --spectrum-actionbutton-content-color-down: var(
+        --system-action-button-emphasized-selected-content-color-down
     );
-    --spectrum-actionbutton-content-color-focus-selected: var(
-        --system-action-button-emphasized-content-color-focus-selected
+    --spectrum-actionbutton-content-color-focus: var(
+        --system-action-button-emphasized-selected-content-color-focus
     );
 }
 
@@ -581,33 +581,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-actionbutton-content-color-focus: var(
         --system-action-button-selected-content-color-focus
-    );
-}
-
-:host([emphasized][selected]) {
-    --spectrum-actionbutton-background-color-default: var(
-        --system-action-button-emphasized-selected-background-color-default
-    );
-    --spectrum-actionbutton-background-color-hover: var(
-        --system-action-button-emphasized-selected-background-color-hover
-    );
-    --spectrum-actionbutton-background-color-down: var(
-        --system-action-button-emphasized-selected-background-color-down
-    );
-    --spectrum-actionbutton-background-color-focus: var(
-        --system-action-button-emphasized-selected-background-color-focus
-    );
-    --spectrum-actionbutton-content-color-default: var(
-        --system-action-button-emphasized-selected-content-color-default
-    );
-    --spectrum-actionbutton-content-color-hover: var(
-        --system-action-button-emphasized-selected-content-color-hover
-    );
-    --spectrum-actionbutton-content-color-down: var(
-        --system-action-button-emphasized-selected-content-color-down
-    );
-    --spectrum-actionbutton-content-color-focus: var(
-        --system-action-button-emphasized-selected-content-color-focus
     );
 }
 
