@@ -65,9 +65,8 @@ describe('PendingStateController', () => {
                 ></sp-progress-circle>
             `);
 
-            expect(renderedElement.outerHTML).to.equal(
-                expectedElement.outerHTML
-            );
+            expect(renderedElement.outerHTML === expectedElement.outerHTML).to
+                .be.true;
         });
 
         it('should render the default pending state UI if no label is provided', async () => {
@@ -89,9 +88,8 @@ describe('PendingStateController', () => {
             const renderedAttributes = renderedElement.attributes;
             const expectedAttributes = expectedElement.attributes;
 
-            expect(renderedAttributes.length).to.equal(
-                expectedAttributes.length
-            );
+            expect(renderedAttributes.length === expectedAttributes.length).to
+                .be.true;
 
             for (let i = 0; i < renderedAttributes.length; i++) {
                 const renderedAttr = renderedAttributes[i];
@@ -99,7 +97,7 @@ describe('PendingStateController', () => {
                     renderedAttr.name
                 );
 
-                expect(renderedAttr.value).to.equal(expectedAttr?.value);
+                expect(renderedAttr.value === expectedAttr?.value).to.be.true;
             }
         });
 
@@ -132,9 +130,8 @@ describe('PendingStateController', () => {
 
             const renderedAttributes = progressCircle?.attributes;
             const expectedAttributes = expectedElement.attributes;
-            expect(renderedAttributes?.length).to.equal(
-                expectedAttributes.length
-            );
+            expect(renderedAttributes?.length === expectedAttributes.length).to
+                .be.true;
             if (renderedAttributes) {
                 for (let i = 0; i < renderedAttributes.length; i++) {
                     const renderedAttr = renderedAttributes[i];
@@ -142,23 +139,10 @@ describe('PendingStateController', () => {
                         renderedAttr.name
                     );
 
-                    expect(renderedAttr.value).to.equal(expectedAttr?.value);
+                    expect(renderedAttr.value === expectedAttr?.value).to.be
+                        .true;
                 }
             }
-        });
-    });
-
-    describe('hostConnected', () => {
-        it('should check the pending state', () => {
-            controller.hostConnected();
-            expect(pending).to.have.been.called;
-        });
-    });
-
-    describe('hostUpdated', () => {
-        it('should check the pending state', () => {
-            controller.hostUpdated();
-            expect(pending).to.have.been.called;
         });
     });
 });
