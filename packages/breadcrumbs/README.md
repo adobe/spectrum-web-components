@@ -95,13 +95,15 @@ As recommended by [Spectrum Design](https://spectrum.adobe.com/page/breadcrumbs/
 </sp-breadcrumbs>
 ```
 
-### Show Root
+### Show root
 
-The `show-root` attribute will always render the root breadcrumb item, even if the breadcrumbs are overflowing.
+Use the "root" slot to always render the first breadcrumb item, even if the breadcrumbs are overflowing.
 
 ```html
-<sp-breadcrumbs show-root>
-    <sp-breadcrumb-item value="your_stuff">Your stuff</sp-breadcrumb-item>
+<sp-breadcrumbs>
+    <sp-breadcrumb-item slot="root" value="your_stuff">
+        Your stuff
+    </sp-breadcrumb-item>
     <sp-breadcrumb-item value="team">Files</sp-breadcrumb-item>
     <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
     <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>

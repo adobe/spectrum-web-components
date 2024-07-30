@@ -65,7 +65,10 @@ CollapsibleBehaviour.args = {
 
 export const ShowRoot = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-breadcrumbs show-root>
+        <sp-breadcrumbs>
+            <sp-breadcrumb-item value="Home" slot="root">
+                Home
+            </sp-breadcrumb-item>
             ${getBreadcrumbs(args.nrOfItems)}
         </sp-breadcrumbs>
     `;

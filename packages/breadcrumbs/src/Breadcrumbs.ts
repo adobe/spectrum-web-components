@@ -22,6 +22,7 @@ import {
     queryAssignedElements,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -33,7 +34,6 @@ import {
 import { createRef, Ref, ref } from 'lit/directives/ref.js';
 
 import styles from './breadcrumbs.css.js';
-import '../sp-breadcrumb-item.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 const MAX_VISIBLE_ITEMS = 4;
@@ -58,12 +58,6 @@ export class Breadcrumbs extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
-
-    /**
-     * Always display the first breadcrumb
-     */
-    @property({ type: Boolean, attribute: 'show-root' })
-    public showRoot = false;
 
     /**
      * Override the maximum number of visible items
@@ -110,7 +104,7 @@ export class Breadcrumbs extends SpectrumElement {
     private menuRef: Ref<ActionMenu> = createRef();
 
     private get hasMenu(): boolean {
-        return this.visibleItems < this.breadcrumbsElements.length;
+        return this.visibleItems < (this.breadcrumbsElements?.length ?? 0);
     }
 
     override connectedCallback(): void {
@@ -119,12 +113,6 @@ export class Breadcrumbs extends SpectrumElement {
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'navigation');
         }
-
-        this.updateComplete.then(() => {
-            if (this.showRoot) {
-                this.breadcrumbsElements[0].setAttribute('slot', 'root');
-            }
-        });
 
         this.resizeObserver = new ResizeObserver(() => {
             if (this.firstRender) {
@@ -156,11 +144,10 @@ export class Breadcrumbs extends SpectrumElement {
                 this.breadcrumbsElements[index].isLastOfType =
                     index === this.breadcrumbsElements.length - 1;
 
-                if (!item.isVisible) {
-                    this.breadcrumbsElements[index].setAttribute('hidden', '');
-                } else {
-                    this.breadcrumbsElements[index].removeAttribute('hidden');
-                }
+                this.breadcrumbsElements[index].toggleAttribute(
+                    'hidden',
+                    !item.isVisible
+                );
             });
         }
     }
@@ -195,8 +182,7 @@ export class Breadcrumbs extends SpectrumElement {
             occupiedSpace += this.menuRef.value.offsetWidth || 0;
         }
 
-        // 'showRoot = true' makes the first breadcrumb always visible
-        if (this.showRoot && this.rootElement.length > 0) {
+        if (this.rootElement.length > 0) {
             occupiedSpace += this.rootElement[0].offsetWidth;
         }
 

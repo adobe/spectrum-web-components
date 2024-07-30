@@ -93,10 +93,13 @@ describe('Breadcrumbs', () => {
         expect(menuitems.length).to.equal(4);
         expect(menu.getAttribute('value')).to.equal('3');
     });
-    it('should always show the first breadcrumb if show-root = true', async () => {
+    it('should always show the first breadcrumb if slot="root" is populated', async () => {
         const el = await fixture<Breadcrumbs>(html`
-            <sp-breadcrumbs max-visible-items=${3} show-root>
-                ${getBreadcrumbs(5)}
+            <sp-breadcrumbs max-visible-items=${3}>
+                <sp-breadcrumb-item value="Home" slot="root">
+                    Home
+                </sp-breadcrumb-item>
+                ${getBreadcrumbs(4)}
             </sp-breadcrumbs>
         `);
 
