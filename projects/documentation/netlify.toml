@@ -1,5 +1,6 @@
 [build]
   command = "yarn docs:build"
+  publish = "./"
 
 [[headers]]
   for = "/storybook/*.json"
