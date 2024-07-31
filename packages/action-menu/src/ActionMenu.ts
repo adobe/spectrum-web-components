@@ -64,7 +64,7 @@ export class ActionMenu extends ObserveSlotPresence(
         return this.slotContentIsPresent;
     }
 
-    protected override handleSlottableRequest = (
+    public override handleSlottableRequest = (
         event: SlottableRequestEvent
     ): void => {
         this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
@@ -113,8 +113,6 @@ export class ActionMenu extends ObserveSlotPresence(
                 class="button"
                 size=${this.size}
                 @blur=${this.handleButtonBlur}
-                @click=${this.handleActivate}
-                @pointerdown=${this.handleButtonPointerdown}
                 @focus=${this.handleButtonFocus}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,

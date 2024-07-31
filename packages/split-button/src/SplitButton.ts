@@ -72,6 +72,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
 
+    // PickerBase has an interactionStrategy that needs the trigger button from the split button
+    @query('.trigger')
+    public override button!: HTMLButtonElement;
+
     public override get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
@@ -154,8 +158,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                     class="button trigger ${this.variant}"
                     @blur=${this.handleButtonBlur}
-                    @click=${this.handleActivate}
-                    @pointerdown=${this.handleButtonPointerdown}
                     @focus=${this.handleButtonFocus}
                     @keydown=${{
                         handleEvent: this.handleEnterKeydown,
