@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
 import sinon, { spy } from 'sinon';
 
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { Calendar } from '../src/Calendar.js';
+import { Calendar } from '@spectrum-web-components/calendar';
 
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 
+const DEFAULT_LOCALE = 'en-US';
 const CALENDAR_TITLE_SELECTOR = '[data-test-id="calendar-title"]';
 const NEXT_BUTTON_SELECTOR = '[data-test-id="next-btn"]';
 const PREV_BUTTON_SELECTOR = '[data-test-id="prev-btn"]';
@@ -38,7 +38,7 @@ describe('Calendar', () => {
     );
 
     async function getCalendar({
-        locale = defaultLocale,
+        locale = DEFAULT_LOCALE,
         disabled = false,
     } = {}): Promise<Calendar> {
         const wrapped = await fixture<HTMLElement>(html`

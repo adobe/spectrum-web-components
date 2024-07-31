@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { DateTimePicker } from '../src/DateTimePicker.js';
+import { DateTimePicker } from '@spectrum-web-components/date-time-picker';
 
 describe('DateTimePicker', () => {
     testForLitDevWarnings(
