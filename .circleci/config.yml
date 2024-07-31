@@ -217,6 +217,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
+                  yarn docs:build
                   yarn netlify deploy --alias=$branch --cwd projects/documentation/dist
 
     hcm-visual:
