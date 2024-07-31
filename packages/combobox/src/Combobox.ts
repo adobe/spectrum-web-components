@@ -99,9 +99,7 @@ export class Combobox extends Textfield {
      */
     constructor() {
         super();
-        this.pendingStateController = new PendingStateController(this, {
-            pending: () => this.pending,
-        });
+        this.pendingStateController = new PendingStateController(this);
     }
 
     @query('slot:not([name])')

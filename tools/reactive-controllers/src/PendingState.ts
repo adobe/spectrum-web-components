@@ -13,13 +13,9 @@ governing permissions and limitations under the License.
 import { html, ReactiveController, ReactiveElement, TemplateResult } from 'lit';
 import('@spectrum-web-components/progress-circle/sp-progress-circle.js');
 
-type PendingStateConfig = {
-    pending: () => boolean;
-};
-
 export interface HostWithPendingState extends ReactiveElement {
     pendingLabel?: string;
-    pending?: boolean;
+    pending: boolean;
 }
 
 /**
@@ -38,7 +34,6 @@ export class PendingStateController<T extends HostWithPendingState>
     /**
      * A function that returns a boolean indicating whether the host is in a pending state.
      */
-    private pending: () => boolean;
 
     /**
      * A callback function that is called when the pending state changes.
@@ -52,10 +47,8 @@ export class PendingStateController<T extends HostWithPendingState>
      * @param host - The host element that this controller is attached to.
      * @param config - The configuration object containing the pending function and onPendingChange callback.
      */
-    constructor(host: T, { pending }: PendingStateConfig) {
+    constructor(host: T) {
         this.host = host;
-        this.pending = pending;
-
         this.host.addController(this);
     }
 
@@ -65,7 +58,7 @@ export class PendingStateController<T extends HostWithPendingState>
      * @returns A boolean indicating whether the host is in a pending state.
      */
     public isPending(): boolean {
-        return this.pending();
+        return this.host.pending;
     }
 
     /**

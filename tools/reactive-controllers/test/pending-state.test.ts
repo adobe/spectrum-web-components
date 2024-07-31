@@ -22,28 +22,17 @@ import '@spectrum-web-components/picker/sp-picker.js';
 
 describe('PendingStateController', () => {
     let host: HostWithPendingState;
-    let pending: sinon.SinonStub;
     let controller: PendingStateController<HostWithPendingState>;
 
     beforeEach(async () => {
         host = await fixture<HostWithPendingState>(html`
             <sp-picker pending></sp-picker>
         `);
-        pending = sinon.stub();
-        controller = new PendingStateController(host, {
-            pending,
-        });
+        controller = new PendingStateController(host);
     });
 
     afterEach(() => {
         sinon.restore();
-    });
-
-    describe('isPending', () => {
-        it('should call the pending function', () => {
-            controller.isPending();
-            expect(pending).to.have.been.called;
-        });
     });
 
     describe('renderPendingState', () => {

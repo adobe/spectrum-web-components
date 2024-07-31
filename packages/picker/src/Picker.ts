@@ -170,9 +170,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
      */
     constructor() {
         super();
-        this.pendingStateController = new PendingStateController(this, {
-            pending: () => this.pending,
-        });
+        this.pendingStateController = new PendingStateController(this);
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {

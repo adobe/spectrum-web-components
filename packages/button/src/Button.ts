@@ -73,9 +73,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
      */
     constructor() {
         super();
-        this.pendingStateController = new PendingStateController(this, {
-            pending: () => this.pending,
-        });
+        this.pendingStateController = new PendingStateController(this);
     }
 
     private cachedAriaLabel: string | null = null;
