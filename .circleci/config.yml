@@ -214,13 +214,10 @@ jobs:
                   name: Generate Docs
                   command: yarn docs:preview
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run:
-                  name: Generate Docs build
-                  command: yarn docs:build
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --cwd . projects/documentation/dist
+                  yarn netlify deploy --alias=$branch --cwd projects/documentation/dist
 
     hcm-visual:
         executor: node
