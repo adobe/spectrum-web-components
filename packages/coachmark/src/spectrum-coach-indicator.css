@@ -12,13 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-coach-indicator-animation-keyframe-0-scale: 1;
-    --spectrum-coach-indicator-animation-keyframe-0-opacity: 0;
-    --spectrum-coach-indicator-animation-keyframe-50-scale: 1.5;
-    --spectrum-coach-indicator-animation-keyframe-50-opacity: 1;
-    --spectrum-coach-indicator-animation-keyframe-100-scale: 2;
-    --spectrum-coach-indicator-animation-keyframe-100-opacity: 0;
-    --spectrum-coach-indicator-quiet-animation-keyframe-0-scale: 0.8;
     inline-size: var(
         --mod-coach-indicator-inline-size,
         var(--spectrum-coach-indicator-inline-size)
@@ -139,5 +132,51 @@ governing permissions and limitations under the License.
 @media (prefers-reduced-motion: reduce) {
     .ring {
         animation: none;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(
+            var(--spectrum-coach-indicator-animation-keyframe-0-scale)
+        );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
+    }
+
+    50% {
+        transform: scale(
+            var(--spectrum-coach-indicator-animation-keyframe-50-scale)
+        );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
+    }
+
+    to {
+        transform: scale(
+            var(--spectrum-coach-indicator-animation-keyframe-100-scale)
+        );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
+    }
+}
+
+@keyframes pulse-quiet {
+    0% {
+        transform: scale(
+            var(--spectrum-coach-indicator-quiet-animation-keyframe-0-scale)
+        );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
+    }
+
+    50% {
+        transform: scale(
+            var(--spectrum-coach-indicator-animation-keyframe-50-scale)
+        );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
+    }
+
+    to {
+        transform: scale(
+            var(--spectrum-coach-indicator-animation-keyframe-100-scale)
+        );
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
     }
 }

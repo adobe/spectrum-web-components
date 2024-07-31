@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-actionbutton-focus-indicator-border-radius: calc(
+        var(--spectrum-actionbutton-border-radius) +
+            var(--spectrum-actionbutton-focus-indicator-gap)
+    );
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;

@@ -95,16 +95,11 @@ governing permissions and limitations under the License.
 }
 
 #popover {
-    pointer-events: auto;
-    box-sizing: border-box;
-    inline-size: 100%;
-    inline-size: var(--mod-actionbar-popover-inline-size, 100%);
-    block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
-    background-color: var(
+    --mod-popover-background-color: var(
         --mod-actionbar-popover-background-color,
         var(--spectrum-actionbar-popover-background-color)
     );
-    filter: var(
+    --mod-popover-filter: var(
         --mod-actionbar-popover-filter,
         drop-shadow(
             var(
@@ -125,17 +120,21 @@ governing permissions and limitations under the License.
                 )
         )
     );
-    border-color: var(
+    --mod-popover-border-color: var(
         --highcontrast-actionbar-popover-border-color,
         var(
             --mod-actionbar-popover-border-color,
             var(--spectrum-actionbar-popover-border-color)
         )
     );
-    border-radius: var(
+    --mod-popover-corner-radius: var(
         --mod-actionbar-corner-radius,
         var(--spectrum-actionbar-corner-radius)
     );
+    pointer-events: auto;
+    inline-size: 100%;
+    inline-size: var(--mod-actionbar-popover-inline-size, 100%);
+    block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     flex-direction: row;
     margin: auto;
     padding-block: 0;

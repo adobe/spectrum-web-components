@@ -11,45 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    pointer-events: none;
-    visibility: hidden;
-    opacity: 0;
-    transition:
-        transform 0.13s ease-in-out,
-        opacity 0.13s ease-in-out,
-        visibility 0s linear 0.13s;
-    transition:
-        transform
-            var(
-                --mod-overlay-animation-duration,
-                var(--spectrum-animation-duration-100, 0.13s)
-            )
-            ease-in-out,
-        opacity
-            var(
-                --mod-overlay-animation-duration,
-                var(--spectrum-animation-duration-100, 0.13s)
-            )
-            ease-in-out,
-        visibility 0s linear
-            var(
-                --mod-overlay-animation-duration,
-                var(--spectrum-animation-duration-100, 0.13s)
-            );
-}
-
-:host([open]) {
-    pointer-events: auto;
-    visibility: visible;
-    opacity: 1;
-    transition-delay: 0s;
-    transition-delay: var(
-        --mod-overlay-animation-duration-opened,
-        var(--spectrum-animation-duration-0, 0s)
-    );
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-popover-border-color: CanvasText;
@@ -72,12 +33,15 @@ governing permissions and limitations under the License.
                 var(--spectrum-popover-shadow-color)
             )
     );
+    pointer-events: none;
     box-sizing: border-box;
     padding: var(
             --mod-popover-content-area-spacing-vertical,
             var(--spectrum-popover-content-area-spacing-vertical)
         )
         0;
+    visibility: hidden;
+    opacity: 0;
     background-color: var(
         --mod-popover-background-color,
         var(--spectrum-popover-background-color)
@@ -96,6 +60,28 @@ governing permissions and limitations under the License.
         --mod-popover-corner-radius,
         var(--spectrum-popover-corner-radius)
     );
+    transition:
+        transform 0.13s ease-in-out,
+        opacity 0.13s ease-in-out,
+        visibility 0s linear 0.13s;
+    transition:
+        transform
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        opacity
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        visibility 0s linear
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            );
     outline: none;
     flex-direction: column;
     display: inline-flex;
@@ -119,6 +105,17 @@ governing permissions and limitations under the License.
     stroke-width: var(
         --mod-popover-border-width,
         var(--spectrum-popover-border-width)
+    );
+}
+
+:host([open]) {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+    transition-delay: var(
+        --mod-overlay-animation-duration-opened,
+        var(--spectrum-animation-duration-0, 0s)
     );
 }
 

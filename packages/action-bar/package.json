@@ -65,7 +65,7 @@
         "@spectrum-web-components/popover": "^0.44.0"
     },
     "devDependencies": {
-        "@spectrum-css/actionbar": "^9.0.0-s2-foundations.10"
+        "@spectrum-css/actionbar": "^9.0.0-s2-foundations.11"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
