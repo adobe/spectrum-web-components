@@ -94,9 +94,8 @@ commands:
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo $hash
-                      echo "Current directory is: $(pwd)"
-                      yarn netlify deploy --filter=@spectrum-web-components
+                      echo hash
+                      yarn netlify deploy --alias=$hash --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
@@ -216,7 +215,6 @@ jobs:
                   command: yarn docs:preview
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
-                  cd projects/documentation/dist
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch
@@ -268,12 +266,10 @@ jobs:
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
-                      cd test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo $hash
-                      echo "Current directory is: $(pwd)"
-                      yarn netlify deploy --alias=$hash
+                      echo hash
+                      yarn netlify deploy --alias=$hash --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
