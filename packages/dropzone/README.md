@@ -106,7 +106,7 @@ When a file is dragged over the `<sp-dropzone>` element, it will display with th
 
 ### Filled
 
-When the `<sp-dropzone>` is in a filled state, set the `filled` attribute, as follows:
+When the `<sp-dropzone>` is in a filled state, set the `filled` attribute, as demonstrated in the example below:
 
 ```html-live
 
