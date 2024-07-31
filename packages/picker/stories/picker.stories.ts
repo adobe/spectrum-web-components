@@ -550,6 +550,11 @@ OpenShowingEdgeCase.swc_vrt = {
     skip: true,
 };
 
+OpenShowingEdgeCase.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-initial" size=${ifDefined(args.size)}>

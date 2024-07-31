@@ -5954,7 +5954,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.43.0"
+  version "0.44.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
@@ -10150,6 +10150,11 @@ chownr@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
+
+chromatic@^11.5.6:
+  version "11.5.6"
+  resolved "https://registry.yarnpkg.com/chromatic/-/chromatic-11.5.6.tgz#9d243235ff079307f5e8b9682ab5315ee48e5cf8"
+  integrity sha512-ycX/hlZLs69BltwwBNsEXr+As6x5/0rlwp6W/CiHMZ3tpm7dmkd+hQCsb8JGHb1h49W3qPOKQ/Lh9evqcJ1yeQ==
 
 chrome-launcher@^0.15.0:
   version "0.15.2"

@@ -37,18 +37,15 @@ const iconOptions: {
     }) => TemplateResult | string;
 } = {
     '': () => html``,
-    negative: () =>
-        html`
-            <sp-icon-alert slot="icon"></sp-icon-alert>
-        `,
-    positive: () =>
-        html`
-            <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
-        `,
-    info: () =>
-        html`
-            <sp-icon-info slot="icon"></sp-icon-info>
-        `,
+    negative: () => html`
+        <sp-icon-alert slot="icon"></sp-icon-alert>
+    `,
+    positive: () => html`
+        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+    `,
+    info: () => html`
+        <sp-icon-info slot="icon"></sp-icon-info>
+    `,
 };
 
 export default {
@@ -451,4 +448,9 @@ export const draggable = (): TemplateResult => {
 
 draggable.swc_vrt = {
     skip: true,
+};
+
+draggable.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
