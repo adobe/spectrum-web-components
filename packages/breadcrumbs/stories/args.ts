@@ -42,14 +42,5 @@ export const argTypes = {
         },
         control: 'number',
     },
-    nrOfItems: {
-        name: 'nrOfItems',
-        type: { name: 'number', required: false },
-        table: {
-            type: { summary: 'number' },
-            defaultValue: { summary: '4' },
-        },
-        control: 'number',
-    },
     onChange: { action: 'change' },
 };

@@ -36,8 +36,6 @@ import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import styles from './breadcrumbs.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-const MAX_VISIBLE_ITEMS = 4;
-
 type BreadcrumbItem = {
     label?: string;
     href?: string;
@@ -63,7 +61,7 @@ export class Breadcrumbs extends SpectrumElement {
      * Override the maximum number of visible items
      */
     @property({ type: Number, attribute: 'max-visible-items' })
-    public maxVisibleItems = MAX_VISIBLE_ITEMS;
+    public maxVisibleItems = 4;
 
     /**
      * Accessible name for the Breadcrumbs component
@@ -138,8 +136,18 @@ export class Breadcrumbs extends SpectrumElement {
             this.setAttribute('aria-label', this.label || 'Breadcrumbs');
         }
 
+        /**
+         * Re-run the calculation of how many breadcrumbs fit in the available space.
+         * maxVisibleItems may allow us to show more items, or less
+         * compact affects the space each item occupies
+         */
+        if (changes.has('maxVisibleItems') || changes.has('compact')) {
+            this.calculateBreadcrumbItemsWidth();
+            this.adjustOverflow();
+        }
+
         // Breadcrumbs items were added / removed, or available space changed
-        if (changes.has('visibleItems') || changes.has('items')) {
+        if (changes.has('visibleItems')) {
             this.items.forEach((item, index) => {
                 this.breadcrumbsElements[index].isLastOfType =
                     index === this.breadcrumbsElements.length - 1;
@@ -152,11 +160,18 @@ export class Breadcrumbs extends SpectrumElement {
         }
     }
 
+    /**
+     * We need to understand how much space (px) each breadcrumb item occupies,
+     * in order to know if it fits the available horizontal space.
+     */
     private calculateBreadcrumbItemsWidth(): void {
         this.items = this.breadcrumbsElements.map((el, index) => {
             let width = el.offsetWidth;
 
-            // We need to temporarily remove the hidden attribute to calculate the width
+            /**
+             * For breadcrumbs which are hidden,
+             * we need to temporarily remove the hidden attribute to calculate the width.
+             */
             if (el.hasAttribute('hidden')) {
                 el.removeAttribute('hidden');
                 width = el.offsetWidth;
@@ -173,15 +188,20 @@ export class Breadcrumbs extends SpectrumElement {
         });
     }
 
+    /**
+     * Calculate which breadcrumbs fit in the viewport, and which should be hidden.
+     */
     private adjustOverflow(): void {
         let occupiedSpace = 0;
         let newVisibleItems = 0;
         const availableSpace = this.list.clientWidth;
 
+        // Menu will always be visible if it exists.
         if (this.hasMenu && this.menuRef.value) {
             occupiedSpace += this.menuRef.value.offsetWidth || 0;
         }
 
+        // Root will always be visible if it exists.
         if (this.rootElement.length > 0) {
             occupiedSpace += this.rootElement[0].offsetWidth;
         }
@@ -191,12 +211,13 @@ export class Breadcrumbs extends SpectrumElement {
             occupiedSpace += this.items[i].offsetWidth;
             if (
                 occupiedSpace < availableSpace &&
-                newVisibleItems < this.maxVisibleItems
+                newVisibleItems < Math.max(this.maxVisibleItems, 1)
             ) {
+                // There is still enough space for this breadcrumb.
                 this.items[i].isVisible = true;
                 newVisibleItems++;
             } else {
-                // No more space so we hide the rest
+                // No more space so we hide the rest.
                 for (let j = i; j >= start; j--) {
                     this.items[j].isVisible = false;
                 }
@@ -204,13 +225,13 @@ export class Breadcrumbs extends SpectrumElement {
             }
         }
 
-        // Show _at least_ one visible breadcrumb item
+        // Show _at least_ one visible breadcrumb item.
         if (newVisibleItems === 0) {
             this.items[this.items.length - 1].isVisible = true;
             newVisibleItems++;
         }
 
-        // Setting the visible items count will trigger an update
+        // Setting the visible items count will trigger an update.
         if (newVisibleItems !== this.visibleItems) {
             this.visibleItems = newVisibleItems;
         }
@@ -242,6 +263,12 @@ export class Breadcrumbs extends SpectrumElement {
         this.announceChange(event.target.value);
     }
 
+    /**
+     * The truncation menu when there is not enough space to display all the breadcrumbs.
+     * It displays all options within a breadcrumb.
+     * Items are listed with the hierarchy ordered from top (root) to bottom
+     * and include the currently selected item.
+     */
     protected renderMenu(): TemplateResult {
         return html`
             <sp-breadcrumb-item role="listitem" is-menu>
@@ -272,8 +299,14 @@ export class Breadcrumbs extends SpectrumElement {
         `;
     }
 
+    /**
+     * Breadcrumbs were added / removed, we need to recalculate the width of each item
+     * and adjust the overflow accordingly.
+     */
     private async slotChangeHandler(): Promise<void> {
         if (this.breadcrumbsElements.length === 0) {
+            this.items = [];
+            this.visibleItems = 0;
             return;
         }
 

@@ -28,8 +28,6 @@ export default {
     component: 'sp-breadcrumbs',
     args: {
         'max-visible-items': 4,
-        nrOfItems: 4,
-        'show-root': false,
     },
     argTypes,
 };
@@ -48,33 +46,29 @@ Compact.args = {
 
 export const Links = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-breadcrumbs>
-            ${getBreadcrumbsWithLinks(args.nrOfItems)}
+        <sp-breadcrumbs
+            ${spreadProps(args)}
+            max-visible-items=${ifDefined(args['max-visible-items'])}
+            @change=${args.onChange}
+        >
+            ${getBreadcrumbsWithLinks(4)}
         </sp-breadcrumbs>
     `;
-};
-
-export const CollapsibleBehaviour = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-breadcrumbs>${getBreadcrumbs(args.nrOfItems)}</sp-breadcrumbs>
-    `;
-};
-CollapsibleBehaviour.args = {
-    nrOfItems: 6,
 };
 
 export const ShowRoot = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-breadcrumbs>
+        <sp-breadcrumbs
+            ${spreadProps(args)}
+            max-visible-items=${ifDefined(args['max-visible-items'])}
+            @change=${args.onChange}
+        >
             <sp-breadcrumb-item value="Home" slot="root">
                 Home
             </sp-breadcrumb-item>
-            ${getBreadcrumbs(args.nrOfItems)}
+            ${getBreadcrumbs(6)}
         </sp-breadcrumbs>
     `;
-};
-ShowRoot.args = {
-    nrOfItems: 6,
 };
 
 export const resizableBehavior = (args: StoryArgs): TemplateResult => {
@@ -87,7 +81,7 @@ export const resizableBehavior = (args: StoryArgs): TemplateResult => {
                 max-visible-items=${ifDefined(args['max-visible-items'])}
                 @change=${args.onChange}
             >
-                ${getBreadcrumbs(args.nrOfItems)}
+                ${getBreadcrumbs(4)}
             </sp-breadcrumbs>
         </div>
     `;

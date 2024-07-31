@@ -20,9 +20,7 @@ export type StoryArgs = {
     compact?: boolean;
     disabled?: boolean;
     label?: string;
-    showRoot?: boolean;
     'max-visible-items'?: number;
-    nrOfItems: number;
     onChange: () => void;
 };
 
