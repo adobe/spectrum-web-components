@@ -63,7 +63,7 @@ governing permissions and limitations under the License.
         --mod-menu-item-checkmark-width,
         var(--spectrum-menu-item-checkmark-width)
     );
-    grid-area: e;
+    grid-area: checkmarkArea;
     align-self: start;
     margin-block-start: calc(
         var(
