@@ -1,28 +1,18 @@
-:root,
-:host {
-    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-font-style: var(--spectrum-default-font-style);
-    --spectrum-font-size: var(--spectrum-font-size-100);
+.spectrum-Typography {
     font-family: var(--spectrum-font-family);
     font-size: var(--spectrum-font-size);
     font-style: var(--spectrum-font-style);
 }
 
-.spectrum:lang(ar) {
+.spectrum-Typography:lang(ar) {
     font-family: var(--spectrum-font-family-ar);
 }
 
-.spectrum:lang(he) {
+.spectrum-Typography:lang(he) {
     font-family: var(--spectrum-font-family-he);
 }
 
-.spectrum .spectrum-Heading {
+.spectrum-Typography .spectrum-Heading {
     --spectrum-heading-margin-start: calc(
         var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
             var(--spectrum-heading-margin-top-multiplier)
@@ -33,14 +23,14 @@
     );
 }
 
-.spectrum .spectrum-Body {
+.spectrum-Typography .spectrum-Body {
     --spectrum-body-margin-end: calc(
         var(--mod-body-font-size, var(--spectrum-body-font-size)) *
             var(--spectrum-body-margin-multiplier)
     );
 }
 
-.spectrum .spectrum-Detail {
+.spectrum-Typography .spectrum-Detail {
     --spectrum-detail-margin-start: calc(
         var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
             var(--spectrum-detail-margin-top-multiplier)
