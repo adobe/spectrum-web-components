@@ -43,31 +43,3 @@ governing permissions and limitations under the License.
     width: 100%;
     height: auto;
 }
-
-.grid {
-    grid-template-areas:
-        'a a a a a a'
-        '. . . . . .'
-        '. b c c i .'
-        '. d d d d .'
-        '. e e e e .'
-        '. f f g g .'
-        '. . . . . .';
-}
-
-:host([dismissable]) .grid {
-    grid-template-areas:
-        'a a a a a a a'
-        '. . . . . l l'
-        '. b c c i l l'
-        '. d d d d d .'
-        '. e e e e e .'
-        '. f f g g g .'
-        '. . . . . . .';
-}
-
-/* stylelint-disable */
-.button-group.button-group--noFooter {
-    grid-area: f/f/g/g;
-}
-/* stylelint-enable */
