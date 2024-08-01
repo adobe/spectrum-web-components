@@ -318,18 +318,22 @@
     --system-action-button-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
-    --system-action-button-focus-indicator-border-radius: calc(
-        var(--system-action-button-border-radius) +
-            var(--system-action-button-focus-indicator-gap)
+    --system-action-button-quiet-background-color-default: transparent;
+    --system-action-button-quiet-background-color-hover: var(
+        --spectrum-gray-100
     );
-    --system-action-button-selected-border-color-default: transparent;
-    --system-action-button-selected-border-color-hover: transparent;
-    --system-action-button-selected-border-color-down: transparent;
-    --system-action-button-selected-border-color-focus: transparent;
-    --system-action-button-selected-background-color-disabled: var(
-        --spectrum-disabled-background-color
+    --system-action-button-quiet-background-color-down: var(
+        --spectrum-gray-200
     );
-    --system-action-button-selected-border-color-disabled: transparent;
+    --system-action-button-quiet-background-color-focus: var(
+        --spectrum-gray-100
+    );
+    --system-action-button-quiet-border-color-default: transparent;
+    --system-action-button-quiet-border-color-hover: transparent;
+    --system-action-button-quiet-border-color-down: transparent;
+    --system-action-button-quiet-border-color-focus: transparent;
+    --system-action-button-quiet-background-color-disabled: transparent;
+    --system-action-button-quiet-border-color-disabled: transparent;
     --system-action-button-selected-background-color-default: var(
         --mod-actionbutton-background-color-default-selected,
         var(--spectrum-neutral-background-color-selected-default)
@@ -348,19 +352,59 @@
     );
     --system-action-button-selected-content-color-default: var(
         --mod-actionbutton-content-color-default-selected,
-        var(--spectrum-gray-25)
+        var(--spectrum-gray-50)
     );
     --system-action-button-selected-content-color-hover: var(
         --mod-actionbutton-content-color-hover-selected,
-        var(--spectrum-gray-25)
+        var(--spectrum-gray-50)
     );
     --system-action-button-selected-content-color-down: var(
         --mod-actionbutton-content-color-down-selected,
-        var(--spectrum-gray-25)
+        var(--spectrum-gray-50)
     );
     --system-action-button-selected-content-color-focus: var(
         --mod-actionbutton-content-color-focus-selected,
-        var(--spectrum-gray-25)
+        var(--spectrum-gray-50)
+    );
+    --system-action-button-selected-border-color-default: transparent;
+    --system-action-button-selected-border-color-hover: transparent;
+    --system-action-button-selected-border-color-down: transparent;
+    --system-action-button-selected-border-color-focus: transparent;
+    --system-action-button-selected-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --system-action-button-selected-border-color-disabled: transparent;
+    --system-action-button-selected-emphasized-background-color-default: var(
+        --mod-actionbutton-background-color-default-selected-emphasized,
+        var(--spectrum-accent-background-color-default)
+    );
+    --system-action-button-selected-emphasized-background-color-hover: var(
+        --mod-actionbutton-background-color-hover-selected-emphasized,
+        var(--spectrum-accent-background-color-hover)
+    );
+    --system-action-button-selected-emphasized-background-color-down: var(
+        --mod-actionbutton-background-color-down-selected-emphasized,
+        var(--spectrum-accent-background-color-down)
+    );
+    --system-action-button-selected-emphasized-background-color-focus: var(
+        --mod-actionbutton-background-color-focus-selected-emphasized,
+        var(--spectrum-accent-background-color-key-focus)
+    );
+    --system-action-button-selected-emphasized-content-color-default: var(
+        --mod-actionbutton-content-color-default-selected-emphasized,
+        var(--spectrum-white)
+    );
+    --system-action-button-selected-emphasized-content-color-hover: var(
+        --mod-actionbutton-content-color-hover-selected-emphasized,
+        var(--spectrum-white)
+    );
+    --system-action-button-selected-emphasized-content-color-down: var(
+        --mod-actionbutton-content-color-down-selected-emphasized,
+        var(--spectrum-white)
+    );
+    --system-action-button-selected-emphasized-content-color-focus: var(
+        --mod-actionbutton-content-color-focus-selected-emphasized,
+        var(--spectrum-white)
     );
     --system-action-button-size-xs-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-50) * 2 +
@@ -520,54 +564,16 @@
         var(--spectrum-component-edge-to-visual-only-300) -
             var(--system-action-button-border-width)
     );
-    --system-action-button-quiet-background-color-default: transparent;
-    --system-action-button-quiet-background-color-hover: var(
-        --spectrum-gray-100
-    );
-    --system-action-button-quiet-background-color-down: var(
-        --spectrum-gray-200
-    );
-    --system-action-button-quiet-background-color-focus: var(
-        --spectrum-gray-100
-    );
-    --system-action-button-quiet-border-color-default: transparent;
-    --system-action-button-quiet-border-color-hover: transparent;
-    --system-action-button-quiet-border-color-down: transparent;
-    --system-action-button-quiet-border-color-focus: transparent;
-    --system-action-button-quiet-background-color-disabled: transparent;
-    --system-action-button-quiet-border-color-disabled: transparent;
-    --system-action-button-emphasized-selected-background-color-default: var(
-        --mod-actionbutton-background-color-default-selected-emphasized,
-        var(--spectrum-accent-background-color-default)
-    );
-    --system-action-button-emphasized-selected-background-color-hover: var(
-        --mod-actionbutton-background-color-hover-selected-emphasized,
-        var(--spectrum-accent-background-color-hover)
-    );
-    --system-action-button-emphasized-selected-background-color-down: var(
-        --mod-actionbutton-background-color-down-selected-emphasized,
-        var(--spectrum-accent-background-color-down)
-    );
-    --system-action-button-emphasized-selected-background-color-focus: var(
-        --mod-actionbutton-background-color-focus-selected-emphasized,
-        var(--spectrum-accent-background-color-key-focus)
-    );
-    --system-action-button-emphasized-selected-content-color-default: var(
-        --mod-actionbutton-content-color-default-selected-emphasized,
-        var(--spectrum-white)
-    );
-    --system-action-button-emphasized-selected-content-color-hover: var(
-        --mod-actionbutton-content-color-hover-selected-emphasized,
-        var(--spectrum-white)
-    );
-    --system-action-button-emphasized-selected-content-color-down: var(
-        --mod-actionbutton-content-color-down-selected-emphasized,
-        var(--spectrum-white)
-    );
-    --system-action-button-emphasized-selected-content-color-focus: var(
-        --mod-actionbutton-content-color-focus-selected-emphasized,
-        var(--spectrum-white)
-    );
+    --system-action-button-static-black-quiet-border-color-default: transparent;
+    --system-action-button-static-white-quiet-border-color-default: transparent;
+    --system-action-button-static-black-quiet-border-color-hover: transparent;
+    --system-action-button-static-white-quiet-border-color-hover: transparent;
+    --system-action-button-static-black-quiet-border-color-down: transparent;
+    --system-action-button-static-white-quiet-border-color-down: transparent;
+    --system-action-button-static-black-quiet-border-color-focus: transparent;
+    --system-action-button-static-white-quiet-border-color-focus: transparent;
+    --system-action-button-static-black-quiet-border-color-disabled: transparent;
+    --system-action-button-static-white-quiet-border-color-disabled: transparent;
     --system-action-button-static-black-background-color-default: transparent;
     --system-action-button-static-black-background-color-hover: var(
         --spectrum-transparent-black-300
@@ -624,7 +630,7 @@
     --system-action-button-static-black-selected-background-color-focus: var(
         --spectrum-transparent-black-900
     );
-    --system-action-button-static-black-selected-content-color-default: var(
+    --system-action-button-static-black-selected-content-color-defaul-selectedt: var(
         --mod-actionbutton-static-content-color,
         var(--spectrum-white)
     );
@@ -720,17 +726,6 @@
         --spectrum-disabled-static-white-background-color
     );
     --system-action-button-static-white-selected-border-color-disabled: transparent;
-    --system-action-button-static-black-quiet-border-color-default: transparent;
-    --system-action-button-static-white-quiet-border-color-default: transparent;
-    --system-action-button-static-black-quiet-border-color-hover: transparent;
-    --system-action-button-static-white-quiet-border-color-hover: transparent;
-    --system-action-button-static-black-quiet-border-color-down: transparent;
-    --system-action-button-static-white-quiet-border-color-down: transparent;
-    --system-action-button-static-black-quiet-border-color-focus: transparent;
-    --system-action-button-static-white-quiet-border-color-focus: transparent;
-    --system-action-button-static-black-quiet-border-color-disabled: transparent;
-    --system-action-button-static-white-quiet-border-color-disabled: transparent;
-    --system-action-button-dir-rtl-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
 :host,
