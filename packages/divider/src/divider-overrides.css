@@ -40,26 +40,16 @@ governing permissions and limitations under the License.
         --system-divider-background-color-large-static-black
     );
     --spectrum-divider-thickness: var(--system-divider-thickness);
-    --spectrum-divider-background-color: var(--system-divider-background-color);
 }
 
 :host([size='s']) {
     --spectrum-divider-thickness: var(--system-divider-size-s-thickness);
-    --spectrum-divider-background-color: var(
-        --system-divider-size-s-background-color
-    );
 }
 
 :host {
     --spectrum-divider-thickness: var(--system-divider-size-m-thickness);
-    --spectrum-divider-background-color: var(
-        --system-divider-size-m-background-color
-    );
 }
 
 :host([size='l']) {
     --spectrum-divider-thickness: var(--system-divider-size-l-thickness);
-    --spectrum-divider-background-color: var(
-        --system-divider-size-l-background-color
-    );
 }

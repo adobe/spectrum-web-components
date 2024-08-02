@@ -135,25 +135,6 @@ governing permissions and limitations under the License.
 }
 
 :host([invalid]) #textfield {
-    --spectrum-stepper-border-color: var(--system-stepper-invalid-border-color);
-    --spectrum-stepper-border-color-hover: var(
-        --system-stepper-invalid-border-color-hover
-    );
-    --spectrum-stepper-border-color-focus: var(
-        --system-stepper-invalid-border-color-focus
-    );
-    --spectrum-stepper-border-color-focus-hover: var(
-        --system-stepper-invalid-border-color-focus-hover
-    );
-    --spectrum-stepper-border-color-keyboard-focus: var(
-        --system-stepper-invalid-border-color-keyboard-focus
-    );
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-infield-button-border-color
-    );
-    --mod-textfield-icon-spacing-inline-start-invalid: var(
-        --system-stepper-invalid-textfield-icon-spacing-inline-start-invalid
-    );
     --mod-stepper-border-color: var(--system-stepper-invalid-border-color);
     --mod-stepper-border-color-hover: var(
         --system-stepper-invalid-border-color-hover
@@ -166,6 +147,12 @@ governing permissions and limitations under the License.
     );
     --mod-stepper-border-color-keyboard-focus: var(
         --system-stepper-invalid-border-color-keyboard-focus
+    );
+    --mod-infield-button-border-color: var(
+        --system-stepper-invalid-infield-button-border-color
+    );
+    --mod-textfield-icon-spacing-inline-start-invalid: var(
+        --system-stepper-invalid-textfield-icon-spacing-inline-start-invalid
     );
 }
 

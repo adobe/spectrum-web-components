@@ -200,24 +200,70 @@
         --spectrum-focus-indicator-color
     );
     --system-accordion-divider-color: var(--spectrum-gray-200);
-    --system-accordion-dir-rtl-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
-    --system-accordion-lang-ja-item-header-line-height: var(
+    --system-accordion-item-header-line-height-cjk: var(
         --spectrum-cjk-line-height-100
     );
-    --system-accordion-lang-zh-item-header-line-height: var(
+    --system-accordion-item-content-line-height-cjk: var(
         --spectrum-cjk-line-height-100
     );
-    --system-accordion-lang-ko-item-header-line-height: var(
-        --spectrum-cjk-line-height-100
+    --system-accordion-item-height-size-s: var(--spectrum-component-height-100);
+    --system-accordion-disclosure-indicator-height-size-s: var(
+        --spectrum-component-height-75
     );
-    --system-accordion-lang-ja-item-content-line-height: var(
-        --spectrum-cjk-line-height-100
+    --system-accordion-component-edge-to-text-size-s: var(
+        --spectrum-component-edge-to-text-50
     );
-    --system-accordion-lang-zh-item-content-line-height: var(
-        --spectrum-cjk-line-height-100
+    --system-accordion-item-header-font-size-size-s: var(
+        --spectrum-font-size-200
     );
-    --system-accordion-lang-ko-item-content-line-height: var(
-        --spectrum-cjk-line-height-100
+    --system-accordion-item-content-font-size-size-s: var(
+        --spectrum-body-size-xs
+    );
+    --system-accordion-item-header-top-to-text-space-size-s: var(
+        --spectrum-accordion-top-to-text-regular-small
+    );
+    --system-accordion-item-header-bottom-to-text-space-size-s: var(
+        --spectrum-accordion-bottom-to-text-regular-small
+    );
+    --system-accordion-item-height-size-l: var(--spectrum-component-height-300);
+    --system-accordion-disclosure-indicator-height-size-l: var(
+        --spectrum-component-height-200
+    );
+    --system-accordion-component-edge-to-text-size-l: var(
+        --spectrum-component-edge-to-text-100
+    );
+    --system-accordion-item-header-font-size-size-l: var(
+        --spectrum-font-size-500
+    );
+    --system-accordion-item-content-font-size-size-l: var(
+        --spectrum-body-size-m
+    );
+    --system-accordion-item-header-top-to-text-space-size-l: var(
+        --spectrum-accordion-top-to-text-regular-large
+    );
+    --system-accordion-item-header-bottom-to-text-space-size-l: var(
+        --spectrum-accordion-bottom-to-text-regular-large
+    );
+    --system-accordion-item-height-size-xl: var(
+        --spectrum-component-height-400
+    );
+    --system-accordion-disclosure-indicator-height-size-xl: var(
+        --spectrum-component-height-300
+    );
+    --system-accordion-component-edge-to-text-size-xl: var(
+        --spectrum-component-edge-to-text-200
+    );
+    --system-accordion-item-header-font-size-size-xl: var(
+        --spectrum-font-size-700
+    );
+    --system-accordion-item-content-font-size-size-xl: var(
+        --spectrum-body-size-l
+    );
+    --system-accordion-item-header-top-to-text-space-size-xl: var(
+        --spectrum-accordion-top-to-text-regular-extra-large
+    );
+    --system-accordion-item-header-bottom-to-text-space-size-xl: var(
+        --spectrum-accordion-bottom-to-text-regular-extra-large
     );
     --system-accordion-compact-item-height: var(
         --spectrum-component-height-100
@@ -228,31 +274,31 @@
     --system-accordion-compact-item-header-bottom-to-text-space: var(
         --spectrum-accordion-bottom-to-text-compact-medium
     );
-    --system-accordion-compact-size-s-item-height: var(
+    --system-accordion-compact-item-height-size-s: var(
         --spectrum-component-height-75
     );
-    --system-accordion-compact-size-s-item-header-top-to-text-space: var(
+    --system-accordion-compact-item-header-top-to-text-space-size-s: var(
         --spectrum-accordion-top-to-text-compact-small
     );
-    --system-accordion-compact-size-s-item-header-bottom-to-text-space: var(
+    --system-accordion-compact-item-header-bottom-to-text-space-size-s: var(
         --spectrum-accordion-bottom-to-text-compact-small
     );
-    --system-accordion-compact-size-l-item-height: var(
+    --system-accordion-compact-item-height-size-l: var(
         --spectrum-component-height-200
     );
-    --system-accordion-compact-size-l-item-header-top-to-text-space: var(
+    --system-accordion-compact-item-header-top-to-text-space-size-l: var(
         --spectrum-accordion-top-to-text-compact-large
     );
-    --system-accordion-compact-size-l-item-header-bottom-to-text-space: var(
+    --system-accordion-compact-item-header-bottom-to-text-space-size-l: var(
         --spectrum-accordion-bottom-to-text-compact-large
     );
-    --system-accordion-compact-size-xl-item-height: var(
+    --system-accordion-compact-item-height-size-xl: var(
         --spectrum-component-height-300
     );
-    --system-accordion-compact-size-xl-item-header-top-to-text-space: var(
+    --system-accordion-compact-item-header-top-to-text-space-size-xl: var(
         --spectrum-accordion-top-to-text-compact-extra-large
     );
-    --system-accordion-compact-size-xl-item-header-bottom-to-text-space: var(
+    --system-accordion-compact-item-header-bottom-to-text-space-size-xl: var(
         --spectrum-accordion-bottom-to-text-compact-extra-large
     );
     --system-accordion-spacious-item-header-line-height: 1.278;
@@ -262,85 +308,26 @@
     --system-accordion-spacious-item-header-bottom-to-text-space: var(
         --spectrum-accordion-bottom-to-text-spacious-medium
     );
-    --system-accordion-spacious-size-s-item-header-line-height: 1.25;
-    --system-accordion-spacious-size-s-item-header-top-to-text-space: var(
-        --spectrum-accordion-small-top-to-text-spacious
-    );
-    --system-accordion-spacious-size-s-item-header-bottom-to-text-space: var(
-        --spectrum-accordion-bottom-to-text-spacious-small
-    );
-    --system-accordion-spacious-size-l-item-header-line-height: 1.273;
-    --system-accordion-spacious-size-l-item-header-top-to-text-space: var(
+    --system-accordion-spacious-item-header-line-height-size-l: 1.273;
+    --system-accordion-spacious-item-header-top-to-text-space-size-l: var(
         --spectrum-accordion-top-to-text-spacious-large
     );
-    --system-accordion-spacious-size-l-item-header-bottom-to-text-space: var(
+    --system-accordion-spacious-item-header-bottom-to-text-space-size-l: var(
         --spectrum-accordion-bottom-to-text-spacious-large
     );
-    --system-accordion-spacious-size-xl-item-header-line-height: 1.25;
-    --system-accordion-spacious-size-xl-item-header-top-to-text-space: var(
+    --system-accordion-spacious-item-header-line-height-size-xl: 1.25;
+    --system-accordion-spacious-item-header-top-to-text-space-size-xl: var(
         --spectrum-accordion-top-to-text-spacious-extra-large
     );
-    --system-accordion-spacious-size-xl-item-header-bottom-to-text-space: var(
+    --system-accordion-spacious-item-header-bottom-to-text-space-size-xl: var(
         --spectrum-accordion-bottom-to-text-spacious-extra-large
     );
-    --system-accordion-size-s-item-height: var(--spectrum-component-height-100);
-    --system-accordion-size-s-disclosure-indicator-height: var(
-        --spectrum-component-height-75
+    --system-accordion-spacious-item-header-line-height-size-s: 1.25;
+    --system-accordion-spacious-item-header-top-to-text-spac-size-se: var(
+        --spectrum-accordion-small-top-to-text-spacious
     );
-    --system-accordion-size-s-component-edge-to-text: var(
-        --spectrum-component-edge-to-text-50
-    );
-    --system-accordion-size-s-item-header-font-size: var(
-        --spectrum-font-size-200
-    );
-    --system-accordion-size-s-item-content-font-size: var(
-        --spectrum-body-size-xs
-    );
-    --system-accordion-size-s-item-header-top-to-text-space: var(
-        --spectrum-accordion-top-to-text-regular-small
-    );
-    --system-accordion-size-s-item-header-bottom-to-text-space: var(
-        --spectrum-accordion-bottom-to-text-regular-small
-    );
-    --system-accordion-size-l-item-height: var(--spectrum-component-height-300);
-    --system-accordion-size-l-disclosure-indicator-height: var(
-        --spectrum-component-height-200
-    );
-    --system-accordion-size-l-component-edge-to-text: var(
-        --spectrum-component-edge-to-text-100
-    );
-    --system-accordion-size-l-item-header-font-size: var(
-        --spectrum-font-size-500
-    );
-    --system-accordion-size-l-item-content-font-size: var(
-        --spectrum-body-size-m
-    );
-    --system-accordion-size-l-item-header-top-to-text-space: var(
-        --spectrum-accordion-top-to-text-regular-large
-    );
-    --system-accordion-size-l-item-header-bottom-to-text-space: var(
-        --spectrum-accordion-bottom-to-text-regular-large
-    );
-    --system-accordion-size-xl-item-height: var(
-        --spectrum-component-height-400
-    );
-    --system-accordion-size-xl-disclosure-indicator-height: var(
-        --spectrum-component-height-300
-    );
-    --system-accordion-size-xl-component-edge-to-text: var(
-        --spectrum-component-edge-to-text-200
-    );
-    --system-accordion-size-xl-item-header-font-size: var(
-        --spectrum-font-size-700
-    );
-    --system-accordion-size-xl-item-content-font-size: var(
-        --spectrum-body-size-l
-    );
-    --system-accordion-size-xl-item-header-top-to-text-space: var(
-        --spectrum-accordion-top-to-text-regular-extra-large
-    );
-    --system-accordion-size-xl-item-header-bottom-to-text-space: var(
-        --spectrum-accordion-bottom-to-text-regular-extra-large
+    --system-accordion-spacious-item-header-bottom-to-text-space-size-s: var(
+        --spectrum-accordion-bottom-to-text-spacious-small
     );
 }
 
@@ -402,6 +389,29 @@
     );
     --system-action-button-border-radius: var(--spectrum-corner-radius-100);
     --system-action-button-border-width: var(--spectrum-border-width-100);
+    --system-action-button-min-width: calc(
+        var(--spectrum-component-edge-to-visual-only-100) * 2 +
+            var(--spectrum-workflow-icon-size-100)
+    );
+    --system-action-button-height: var(--spectrum-component-height-100);
+    --system-action-button-icon-size: var(--spectrum-workflow-icon-size-100);
+    --system-action-button-font-size: var(--spectrum-font-size-100);
+    --system-action-button-text-to-visual: var(--spectrum-text-to-visual-100);
+    --system-action-button-edge-to-hold-icon: var(
+        --spectrum-action-button-edge-to-hold-icon-medium
+    );
+    --system-action-button-edge-to-visual: calc(
+        var(--spectrum-component-edge-to-visual-100) -
+            var(--system-action-button-border-width)
+    );
+    --system-action-button-edge-to-text: calc(
+        var(--spectrum-component-edge-to-text-100) -
+            var(--system-action-button-border-width)
+    );
+    --system-action-button-edge-to-visual-only: calc(
+        var(--spectrum-component-edge-to-visual-only-100) -
+            var(--system-action-button-border-width)
+    );
     --system-action-button-content-color-default: var(
         --spectrum-neutral-content-color-default
     );
@@ -456,7 +466,7 @@
         var(--spectrum-neutral-background-color-selected-key-focus)
     );
     --system-action-button-selected-content-color-default: var(
-        --mod-actionbutton-content-color-default-selected,
+        --system-action-button-static-black-selected-content-color-default-selected,
         var(--spectrum-gray-50)
     );
     --system-action-button-selected-content-color-hover: var(
@@ -565,50 +575,27 @@
         var(--spectrum-component-edge-to-visual-only-75) -
             var(--system-action-button-border-width)
     );
-    --system-action-button-min-width: calc(
-        var(--spectrum-component-edge-to-visual-only-100) * 2 +
-            var(--spectrum-workflow-icon-size-100)
-    );
     --system-action-button-size-m-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-100) * 2 +
             var(--spectrum-workflow-icon-size-100)
     );
-    --system-action-button-height: var(--spectrum-component-height-100);
     --system-action-button-size-m-height: var(--spectrum-component-height-100);
-    --system-action-button-icon-size: var(--spectrum-workflow-icon-size-100);
     --system-action-button-size-m-icon-size: var(
         --spectrum-workflow-icon-size-100
     );
-    --system-action-button-font-size: var(--spectrum-font-size-100);
     --system-action-button-size-m-font-size: var(--spectrum-font-size-100);
-    --system-action-button-text-to-visual: var(--spectrum-text-to-visual-100);
     --system-action-button-size-m-text-to-visual: var(
         --spectrum-text-to-visual-100
     );
-    --system-action-button-edge-to-hold-icon: var(
-        --spectrum-action-button-edge-to-hold-icon-medium
-    );
     --system-action-button-size-m-edge-to-hold-icon: var(
         --spectrum-action-button-edge-to-hold-icon-medium
-    );
-    --system-action-button-edge-to-visual: calc(
-        var(--spectrum-component-edge-to-visual-100) -
-            var(--system-action-button-border-width)
     );
     --system-action-button-size-m-edge-to-visual: calc(
         var(--spectrum-component-edge-to-visual-100) -
             var(--system-action-button-border-width)
     );
-    --system-action-button-edge-to-text: calc(
-        var(--spectrum-component-edge-to-text-100) -
-            var(--system-action-button-border-width)
-    );
     --system-action-button-size-m-edge-to-text: calc(
         var(--spectrum-component-edge-to-text-100) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-100) -
             var(--system-action-button-border-width)
     );
     --system-action-button-size-m-edge-to-visual-only: calc(
@@ -735,7 +722,7 @@
     --system-action-button-static-black-selected-background-color-focus: var(
         --spectrum-transparent-black-900
     );
-    --system-action-button-static-black-selected-content-color-defaul-selectedt: var(
+    --system-action-button-static-black-selected-content-color-default-selected: var(
         --mod-actionbutton-static-content-color,
         var(--spectrum-white)
     );
@@ -1201,6 +1188,21 @@
 
 :host,
 :root {
+    --system-button-animation-duration: var(--spectrum-animation-duration-100);
+    --system-button-border-radius: var(--spectrum-corner-radius-100);
+    --system-button-border-width: var(--spectrum-border-width-200);
+    --system-button-line-height: 1.2;
+    --system-button-focus-ring-gap: var(--spectrum-focus-indicator-gap);
+    --system-button-focus-ring-border-radius: calc(
+        var(--system-button-border-radius) + var(--system-button-focus-ring-gap)
+    );
+    --system-button-focus-ring-thickness: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --system-button-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
+    --system-button-intended-icon-size: var(--spectrum-workflow-icon-size-50);
     --system-button-background-color-default: var(--spectrum-gray-75);
     --system-button-background-color-hover: var(--spectrum-gray-200);
     --system-button-background-color-down: var(--spectrum-gray-300);
@@ -1227,146 +1229,6 @@
     );
     --system-button-content-color-disabled: var(
         --spectrum-disabled-content-color
-    );
-    --system-button-size-s-min-width: calc(
-        var(--spectrum-component-height-75) *
-            var(--spectrum-button-minimum-width-multiplier)
-    );
-    --system-button-size-s-border-radius: var(
-        --spectrum-component-pill-edge-to-text-75
-    );
-    --system-button-size-s-height: var(--spectrum-component-height-75);
-    --system-button-size-s-font-size: var(--spectrum-font-size-75);
-    --system-button-size-s-edge-to-visual: calc(
-        var(--spectrum-component-pill-edge-to-visual-75) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-s-edge-to-visual-only: var(
-        --spectrum-component-pill-edge-to-visual-only-75
-    );
-    --system-button-size-s-edge-to-text: calc(
-        var(--spectrum-component-pill-edge-to-text-75) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-s-padding-label-to-icon: var(
-        --spectrum-text-to-visual-75
-    );
-    --system-button-size-s-top-to-text: var(
-        --spectrum-button-top-to-text-small
-    );
-    --system-button-size-s-bottom-to-text: var(
-        --spectrum-button-bottom-to-text-small
-    );
-    --system-button-size-s-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-75
-    );
-    --system-button-size-s-intended-icon-size: var(
-        --spectrum-workflow-icon-size-75
-    );
-    --system-button-size-m-min-width: calc(
-        var(--spectrum-component-height-100) *
-            var(--spectrum-button-minimum-width-multiplier)
-    );
-    --system-button-size-m-border-radius: var(
-        --spectrum-component-pill-edge-to-text-100
-    );
-    --system-button-size-m-height: var(--spectrum-component-height-100);
-    --system-button-size-m-font-size: var(--spectrum-font-size-100);
-    --system-button-size-m-edge-to-visual: calc(
-        var(--spectrum-component-pill-edge-to-visual-100) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-m-edge-to-visual-only: var(
-        --spectrum-component-pill-edge-to-visual-only-100
-    );
-    --system-button-size-m-edge-to-text: calc(
-        var(--spectrum-component-pill-edge-to-text-100) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-m-padding-label-to-icon: var(
-        --spectrum-text-to-visual-100
-    );
-    --system-button-size-m-top-to-text: var(
-        --spectrum-button-top-to-text-medium
-    );
-    --system-button-size-m-bottom-to-text: var(
-        --spectrum-button-bottom-to-text-medium
-    );
-    --system-button-size-m-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
-    --system-button-size-m-intended-icon-size: var(
-        --spectrum-workflow-icon-size-100
-    );
-    --system-button-size-l-min-width: calc(
-        var(--spectrum-component-height-200) *
-            var(--spectrum-button-minimum-width-multiplier)
-    );
-    --system-button-size-l-border-radius: var(
-        --spectrum-component-pill-edge-to-text-200
-    );
-    --system-button-size-l-height: var(--spectrum-component-height-200);
-    --system-button-size-l-font-size: var(--spectrum-font-size-200);
-    --system-button-size-l-edge-to-visual: calc(
-        var(--spectrum-component-pill-edge-to-visual-200) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-l-edge-to-visual-only: var(
-        --spectrum-component-pill-edge-to-visual-only-200
-    );
-    --system-button-size-l-edge-to-text: calc(
-        var(--spectrum-component-pill-edge-to-text-200) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-l-padding-label-to-icon: var(
-        --spectrum-text-to-visual-200
-    );
-    --system-button-size-l-top-to-text: var(
-        --spectrum-button-top-to-text-large
-    );
-    --system-button-size-l-bottom-to-text: var(
-        --spectrum-button-bottom-to-text-large
-    );
-    --system-button-size-l-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-200
-    );
-    --system-button-size-l-intended-icon-size: var(
-        --spectrum-workflow-icon-size-200
-    );
-    --system-button-size-xl-min-width: calc(
-        var(--spectrum-component-height-300) *
-            var(--spectrum-button-minimum-width-multiplier)
-    );
-    --system-button-size-xl-border-radius: var(
-        --spectrum-component-pill-edge-to-text-300
-    );
-    --system-button-size-xl-height: var(--spectrum-component-height-300);
-    --system-button-size-xl-font-size: var(--spectrum-font-size-300);
-    --system-button-size-xl-edge-to-visual: calc(
-        var(--spectrum-component-pill-edge-to-visual-300) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-xl-edge-to-visual-only: var(
-        --spectrum-component-pill-edge-to-visual-only-300
-    );
-    --system-button-size-xl-edge-to-text: calc(
-        var(--spectrum-component-pill-edge-to-text-300) -
-            var(--spectrum-button-border-width)
-    );
-    --system-button-size-xl-padding-label-to-icon: var(
-        --spectrum-text-to-visual-300
-    );
-    --system-button-size-xl-top-to-text: var(
-        --spectrum-button-top-to-text-extra-large
-    );
-    --system-button-size-xl-bottom-to-text: var(
-        --spectrum-button-bottom-to-text-extra-large
-    );
-    --system-button-size-xl-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-300
-    );
-    --system-button-size-xl-intended-icon-size: var(
-        --spectrum-workflow-icon-size-300
     );
     --system-button-accent-background-color-default: var(
         --spectrum-accent-background-color-default
@@ -1641,9 +1503,9 @@
         --spectrum-disabled-content-color
     );
     --system-button-quiet-background-color-default: transparent;
-    --system-button-quiet-background-color-hover: var(--spectrum-gray-200);
-    --system-button-quiet-background-color-down: var(--spectrum-gray-300);
-    --system-button-quiet-background-color-focus: var(--spectrum-gray-200);
+    --system-button-quiet-background-color-hover: var(--spectrum-gray-100);
+    --system-button-quiet-background-color-down: var(--spectrum-gray-200);
+    --system-button-quiet-background-color-focus: var(--spectrum-gray-100);
     --system-button-quiet-border-color-default: transparent;
     --system-button-quiet-border-color-hover: transparent;
     --system-button-quiet-border-color-down: transparent;
@@ -2040,6 +1902,146 @@
     --system-button-static-black-secondary-outline-content-color-disabled: var(
         --spectrum-disabled-static-black-content-color
     );
+    --system-button-size-s-min-width: calc(
+        var(--spectrum-component-height-75) *
+            var(--spectrum-button-minimum-width-multiplier)
+    );
+    --system-button-size-s-border-radius: var(
+        --spectrum-component-pill-edge-to-text-75
+    );
+    --system-button-size-s-height: var(--spectrum-component-height-75);
+    --system-button-size-s-font-size: var(--spectrum-font-size-75);
+    --system-button-size-s-edge-to-visual: calc(
+        var(--spectrum-component-pill-edge-to-visual-75) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-s-edge-to-visual-only: var(
+        --spectrum-component-pill-edge-to-visual-only-75
+    );
+    --system-button-size-s-edge-to-text: calc(
+        var(--spectrum-component-pill-edge-to-text-75) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-s-padding-label-to-icon: var(
+        --spectrum-text-to-visual-75
+    );
+    --system-button-size-s-top-to-text: var(
+        --spectrum-button-top-to-text-small
+    );
+    --system-button-size-s-bottom-to-text: var(
+        --spectrum-button-bottom-to-text-small
+    );
+    --system-button-size-s-top-to-icon: var(
+        --spectrum-component-top-to-workflow-icon-75
+    );
+    --system-button-size-s-intended-icon-size: var(
+        --spectrum-workflow-icon-size-75
+    );
+    --system-button-size-m-min-width: calc(
+        var(--spectrum-component-height-100) *
+            var(--spectrum-button-minimum-width-multiplier)
+    );
+    --system-button-size-m-border-radius: var(
+        --spectrum-component-pill-edge-to-text-100
+    );
+    --system-button-size-m-height: var(--spectrum-component-height-100);
+    --system-button-size-m-font-size: var(--spectrum-font-size-100);
+    --system-button-size-m-edge-to-visual: calc(
+        var(--spectrum-component-pill-edge-to-visual-100) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-m-edge-to-visual-only: var(
+        --spectrum-component-pill-edge-to-visual-only-100
+    );
+    --system-button-size-m-edge-to-text: calc(
+        var(--spectrum-component-pill-edge-to-text-100) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-m-padding-label-to-icon: var(
+        --spectrum-text-to-visual-100
+    );
+    --system-button-size-m-top-to-text: var(
+        --spectrum-button-top-to-text-medium
+    );
+    --system-button-size-m-bottom-to-text: var(
+        --spectrum-button-bottom-to-text-medium
+    );
+    --system-button-size-m-top-to-icon: var(
+        --spectrum-component-top-to-workflow-icon-100
+    );
+    --system-button-size-m-intended-icon-size: var(
+        --spectrum-workflow-icon-size-100
+    );
+    --system-button-size-l-min-width: calc(
+        var(--spectrum-component-height-200) *
+            var(--spectrum-button-minimum-width-multiplier)
+    );
+    --system-button-size-l-border-radius: var(
+        --spectrum-component-pill-edge-to-text-200
+    );
+    --system-button-size-l-height: var(--spectrum-component-height-200);
+    --system-button-size-l-font-size: var(--spectrum-font-size-200);
+    --system-button-size-l-edge-to-visual: calc(
+        var(--spectrum-component-pill-edge-to-visual-200) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-l-edge-to-visual-only: var(
+        --spectrum-component-pill-edge-to-visual-only-200
+    );
+    --system-button-size-l-edge-to-text: calc(
+        var(--spectrum-component-pill-edge-to-text-200) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-l-padding-label-to-icon: var(
+        --spectrum-text-to-visual-200
+    );
+    --system-button-size-l-top-to-text: var(
+        --spectrum-button-top-to-text-large
+    );
+    --system-button-size-l-bottom-to-text: var(
+        --spectrum-button-bottom-to-text-large
+    );
+    --system-button-size-l-top-to-icon: var(
+        --spectrum-component-top-to-workflow-icon-200
+    );
+    --system-button-size-l-intended-icon-size: var(
+        --spectrum-workflow-icon-size-200
+    );
+    --system-button-size-xl-min-width: calc(
+        var(--spectrum-component-height-300) *
+            var(--spectrum-button-minimum-width-multiplier)
+    );
+    --system-button-size-xl-border-radius: var(
+        --spectrum-component-pill-edge-to-text-300
+    );
+    --system-button-size-xl-height: var(--spectrum-component-height-300);
+    --system-button-size-xl-font-size: var(--spectrum-font-size-300);
+    --system-button-size-xl-edge-to-visual: calc(
+        var(--spectrum-component-pill-edge-to-visual-300) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-xl-edge-to-visual-only: var(
+        --spectrum-component-pill-edge-to-visual-only-300
+    );
+    --system-button-size-xl-edge-to-text: calc(
+        var(--spectrum-component-pill-edge-to-text-300) -
+            var(--system-button-border-width)
+    );
+    --system-button-size-xl-padding-label-to-icon: var(
+        --spectrum-text-to-visual-300
+    );
+    --system-button-size-xl-top-to-text: var(
+        --spectrum-button-top-to-text-extra-large
+    );
+    --system-button-size-xl-bottom-to-text: var(
+        --spectrum-button-bottom-to-text-extra-large
+    );
+    --system-button-size-xl-top-to-icon: var(
+        --spectrum-component-top-to-workflow-icon-300
+    );
+    --system-button-size-xl-intended-icon-size: var(
+        --spectrum-workflow-icon-size-300
+    );
 }
 
 :host,
@@ -2247,9 +2249,6 @@
     --system-card-dark-selected-background-color-rgb: var(
         --spectrum-blue-500-rgb
     );
-    --system-card-darkest-selected-background-color-rgb: var(
-        --spectrum-blue-600-rgb
-    );
     --system-card-quiet-content-margin-top: var(
         --mod-card-content-margin-top-quiet,
         var(--spectrum-spacing-100)
@@ -2396,27 +2395,32 @@
         --spectrum-focus-indicator-color
     );
     --system-close-button-height: var(--spectrum-component-height-100);
+    --system-close-button-width: var(--spectrum-closebutton-height);
     --system-close-button-size: var(--system-close-button-size-400);
     --system-close-button-border-radius: var(--system-close-button-size-400);
     --system-close-button-animation-duration: var(
         --spectrum-animation-duration-100
     );
     --system-closebutton-size-s-height: var(--spectrum-component-height-75);
+    --system-closebutton-size-s-width: var(--spectrum-closebutton-height);
     --system-closebutton-size-s-size: var(--system-close-button-size-300);
     --system-closebutton-size-s-border-radius: var(
         --system-close-button-size-300
     );
     --system-closebutton-size-m-height: var(--spectrum-component-height-100);
+    --system-closebutton-size-m-width: var(--spectrum-closebutton-height);
     --system-closebutton-size-m-size: var(--system-close-button-size-400);
     --system-closebutton-size-m-border-radius: var(
         --system-close-button-size-400
     );
     --system-closebutton-size-l-height: var(--spectrum-component-height-200);
+    --system-closebutton-size-l-width: var(--spectrum-closebutton-height);
     --system-closebutton-size-l-size: var(--system-close-button-size-500);
     --system-closebutton-size-l-border-radius: var(
         --system-close-button-size-500
     );
     --system-closebutton-size-xl-height: var(--spectrum-component-height-300);
+    --system-closebutton-size-xl-width: var(--spectrum-closebutton-height);
     --system-closebutton-size-xl-size: var(--system-close-button-size-600);
     --system-closebutton-size-xl-border-radius: var(
         --system-close-button-size-600
@@ -3143,25 +3147,9 @@
         --spectrum-transparent-black-800
     );
     --system-divider-size-s-thickness: var(--spectrum-divider-thickness-small);
-    --system-divider-size-s-background-color: var(
-        --system-divider-background-color-small,
-        var(--spectrum-gray-300)
-    );
     --system-divider-thickness: var(--spectrum-divider-thickness-medium);
     --system-divider-size-m-thickness: var(--spectrum-divider-thickness-medium);
-    --system-divider-background-color: var(
-        --system-divider-background-color-medium,
-        var(--spectrum-gray-300)
-    );
-    --system-divider-size-m-background-color: var(
-        --system-divider-background-color-medium,
-        var(--spectrum-gray-300)
-    );
     --system-divider-size-l-thickness: var(--spectrum-divider-thickness-large);
-    --system-divider-size-l-background-color: var(
-        --system-divider-background-color-large,
-        var(--spectrum-gray-800)
-    );
 }
 
 :host,
@@ -3239,8 +3227,12 @@
 
 :host,
 :root {
+    --system-field-label-min-height: var(--spectrum-component-height-75);
     --system-field-label-color: var(
         --spectrum-neutral-subdued-content-color-default
+    );
+    --system-field-label-text-to-asterisk: var(
+        --spectrum-field-label-text-to-asterisk-medium
     );
     --system-field-label-font-weight: var(--spectrum-regular-font-weight);
     --system-field-label-line-height: var(--spectrum-line-height-100);
@@ -3260,7 +3252,6 @@
     --system-field-label-size-s-text-to-asterisk: var(
         --spectrum-field-label-text-to-asterisk-small
     );
-    --system-field-label-min-height: var(--spectrum-component-height-75);
     --system-field-label-size-m-min-height: var(--spectrum-component-height-75);
     --system-field-label-top-to-text: var(--spectrum-component-top-to-text-75);
     --system-field-label-size-m-top-to-text: var(
@@ -3282,9 +3273,6 @@
     );
     --system-field-label-side-padding-right: var(--spectrum-spacing-200);
     --system-field-label-size-m-side-padding-right: var(--spectrum-spacing-200);
-    --system-field-label-text-to-asterisk: var(
-        --spectrum-field-label-text-to-asterisk-medium
-    );
     --system-field-label-size-m-text-to-asterisk: var(
         --spectrum-field-label-text-to-asterisk-medium
     );
@@ -3506,7 +3494,6 @@
     --system-icon-size-s-size: var(--spectrum-workflow-icon-size-75);
     --system-icon-size-l-size: var(--spectrum-workflow-icon-size-200);
     --system-icon-size-xl-size: var(--spectrum-workflow-icon-size-300);
-    --system-icon-size-xxl-size: var(--spectrum-workflow-icon-size-xxl);
     --system-ui-icon-chevron-right-50-icon-size: var(
         --spectrum-chevron-icon-size-50
     );
@@ -4804,7 +4791,7 @@
         --spectrum-progress-bar-thickness-small
     );
     --system-meter-size-s-progressbar-thickness: var(
-        --spectrum-progress-bar-thickness-small
+        --system-progress-bar-meter-thickness-s
     );
     --system-progress-bar-size-s-spacing-top-to-text: var(
         --spectrum-component-top-to-text-75
@@ -4834,13 +4821,13 @@
         --spectrum-progress-bar-thickness-large
     );
     --system-meter-size-l-progressbar-thickness: var(
-        --spectrum-progress-bar-thickness-large
+        --system-progress-bar-meter-thickness-l
     );
     --system-progress-bar-size-l-spacing-top-to-text: var(
         --spectrum-component-top-to-text-200
     );
     --system-meter-size-l-progressbar-spacing-top-to-text: var(
-        --spectrum-component-top-to-text-200
+        --spectrum-component-top-to-text-75
     );
     --system-progress-bar-size-xl-size-default: var(
         --system-progress-bar-size-2800
@@ -4863,15 +4850,6 @@
     --system-meter-progressbar-min-size: var(
         --mod-meter-min-width,
         var(--system-progress-bar-meter-min-width)
-    );
-    --system-meter-size-s-progressbar-thickness: var(
-        --system-progress-bar-meter-thickness-s
-    );
-    --system-meter-size-l-progressbar-thickness: var(
-        --system-progress-bar-meter-thickness-l
-    );
-    --system-meter-size-l-progressbar-spacing-top-to-text: var(
-        --spectrum-component-top-to-text-75
     );
 }
 
@@ -5059,15 +5037,15 @@
 
 :host,
 :root {
+    --system-search-border-radius: var(--spectrum-corner-radius-100);
+    --system-search-edge-to-visual: var(
+        --spectrum-component-edge-to-visual-100
+    );
     --system-search-border-color-default: var(--spectrum-gray-500);
     --system-search-border-color-hover: var(--spectrum-gray-600);
     --system-search-border-color-focus: var(--spectrum-gray-800);
     --system-search-border-color-focus-hover: var(--spectrum-gray-900);
     --system-search-border-color-key-focus: var(--spectrum-gray-900);
-    --system-search-border-radius: var(--spectrum-corner-radius-100);
-    --system-search-edge-to-visual: var(
-        --spectrum-component-edge-to-visual-100
-    );
     --system-search-inline-size: var(--spectrum-field-width);
     --system-search-block-size: var(--spectrum-component-height-100);
     --system-search-button-inline-size: var(--system-search-block-size);
@@ -5112,6 +5090,90 @@
     );
     --system-search-border-color-disabled: var(
         --spectrum-disabled-background-color
+    );
+    --system-search-textfield-font-family: var(
+        --mod-search-font-family,
+        var(--system-search-font-family)
+    );
+    --system-search-textfield-font-weight: var(
+        --mod-search-font-weight,
+        var(--system-search-font-weight)
+    );
+    --system-search-textfield-corner-radius: var(
+        --mod-search-border-radius,
+        var(--system-search-border-radius)
+    );
+    --system-search-textfield-border-width: var(
+        --mod-search-border-width,
+        var(--system-search-border-width)
+    );
+    --system-search-textfield-focus-indicator-gap: var(
+        --mod-search-focus-indicator-gap,
+        var(--system-search-focus-indicator-gap)
+    );
+    --system-search-textfield-focus-indicator-width: var(
+        --mod-search-focus-indicator-thickness,
+        var(--system-search-focus-indicator-thickness)
+    );
+    --system-search-textfield-focus-indicator-color: var(
+        --mod-search-focus-indicator-color,
+        var(--system-search-focus-indicator-color)
+    );
+    --system-search-textfield-text-color-default: var(
+        --mod-search-color-default,
+        var(--system-search-color-default)
+    );
+    --system-search-textfield-text-color-hover: var(
+        --mod-search-color-hover,
+        var(--system-search-color-hover)
+    );
+    --system-search-textfield-text-color-focus: var(
+        --mod-search-color-focus,
+        var(--system-search-color-focus)
+    );
+    --system-search-textfield-text-color-focus-hover: var(
+        --mod-search-color-focus-hover,
+        var(--system-search-color-focus-hover)
+    );
+    --system-search-textfield-text-color-keyboard-focus: var(
+        --mod-search-color-key-focus,
+        var(--system-search-color-key-focus)
+    );
+    --system-search-textfield-text-color-disabled: var(
+        --mod-search-color-disabled,
+        var(--system-search-color-disabled)
+    );
+    --system-search-textfield-border-color: var(
+        --mod-search-border-color-default,
+        var(--system-search-border-color-default)
+    );
+    --system-search-textfield-border-color-hover: var(
+        --mod-search-border-color-hover,
+        var(--system-search-border-color-hover)
+    );
+    --system-search-textfield-border-color-focus: var(
+        --mod-search-border-color-focus,
+        var(--system-search-border-color-focus)
+    );
+    --system-search-textfield-border-color-focus-hover: var(
+        --mod-search-border-color-focus-hover,
+        var(--system-search-border-color-focus-hover)
+    );
+    --system-search-textfield-border-color-keyboard-focus: var(
+        --mod-search-border-color-key-focus,
+        var(--system-search-border-color-key-focus)
+    );
+    --system-search-textfield-border-color-disabled: var(
+        --mod-search-border-color-disabled,
+        var(--system-search-border-color-disabled)
+    );
+    --system-search-textfield-background-color: var(
+        --mod-search-background-color,
+        var(--system-search-background-color)
+    );
+    --system-search-textfield-background-color-disabled: var(
+        --mod-search-background-color-disabled,
+        var(--system-search-background-color-disabled)
     );
     --system-search-size-s-border-radius: var(--spectrum-corner-radius-100);
     --system-search-size-s-edge-to-visual: var(
@@ -5680,6 +5742,21 @@
         var(--system-stepper-button-width) / 2
     );
     --system-stepper-animation-duration: var(--spectrum-animation-duration-100);
+    --system-stepper-infield-button-border-color: var(
+        --highcontrast-stepper-border-color,
+        var(
+            --mod-stepper-buttons-border-color,
+            var(--system-stepper-buttons-border-color)
+        )
+    );
+    --system-stepper-infield-button-border-width: var(
+        --mod-stepper-button-border-width,
+        var(--system-stepper-button-border-width)
+    );
+    --system-stepper-textfield-border-width: var(
+        --mod-stepper-border-width,
+        var(--system-stepper-border-width)
+    );
     --system-stepper-size-s-button-width: var(
         --spectrum-in-field-button-width-stacked-small
     );
@@ -5810,9 +5887,6 @@
     --system-swatch-size-l-slash-thickness: var(
         --spectrum-swatch-slash-thickness-large
     );
-    --system-light-swatch-border-color: rgba(0, 0, 0, 0.51);
-    --system-dark-swatch-border-color: rgba(255, 255, 255, 0.51);
-    --system-darkest-swatch-border-color: rgba(255, 255, 255, 0.51);
 }
 
 :host,
@@ -6790,7 +6864,7 @@
     --system-tag-focus-ring-color: var(--spectrum-focus-indicator-color);
     --system-tag-label-line-height: var(--spectrum-line-height-100);
     --system-tag-label-font-weight: var(--spectrum-regular-font-weight);
-    --system-tag-content-color-selected: var(--spectrum-gray-50);
+    --system-tag-content-color-selected: var(--spectrum-gray-25);
     --system-tag-background-color-selected: var(
         --spectrum-neutral-background-color-selected-default
     );
@@ -6876,6 +6950,30 @@
     );
     --system-tag-content-color-emphasized: var(--spectrum-white);
     --system-tag-content-color-disabled: var(--spectrum-disabled-content-color);
+    --system-tag-icon-spacing-inline-end: var(--spectrum-text-to-visual-100);
+    --system-tag-icon-size: var(--spectrum-workflow-icon-size-100);
+    --system-tag-icon-spacing-block-start: var(
+        --spectrum-component-top-to-workflow-icon-100
+    );
+    --system-tag-icon-spacing-block-end: var(
+        --spectrum-component-top-to-workflow-icon-100
+    );
+    --system-tag-avatar-spacing-block-start: var(
+        --spectrum-tag-top-to-avatar-medium
+    );
+    --system-tag-avatar-spacing-block-end: var(
+        --spectrum-tag-top-to-avatar-medium
+    );
+    --system-tag-avatar-spacing-inline-end: var(--spectrum-text-to-visual-100);
+    --system-tag-label-spacing-block: var(--spectrum-component-top-to-text-100);
+    --system-tag-clear-button-spacing-inline-start: var(
+        --spectrum-text-to-visual-100
+    );
+    --system-tag-height: var(--spectrum-component-height-100);
+    --system-tag-font-size: var(--spectrum-font-size-100);
+    --system-tag-clear-button-spacing-block: var(
+        --spectrum-tag-top-to-cross-icon-medium
+    );
     --system-tag-size-s-height: var(--spectrum-component-height-75);
     --system-tag-size-s-font-size: var(--spectrum-font-size-75);
     --system-tag-size-s-icon-size: var(--spectrum-workflow-icon-size-75);
@@ -6918,78 +7016,44 @@
     --system-tag-size-s-clear-button-spacing-inline-end: var(
         --system-tag-size-small-clear-button-spacing-inline-end
     );
-    --system-tag-height: var(--spectrum-component-height-100);
     --system-tag-size-m-height: var(--spectrum-component-height-100);
-    --system-tag-font-size: var(--spectrum-font-size-100);
     --system-tag-size-m-font-size: var(--spectrum-font-size-100);
-    --system-tag-icon-size: var(--spectrum-workflow-icon-size-100);
     --system-tag-size-m-icon-size: var(--spectrum-workflow-icon-size-100);
-    --system-tag-clear-button-spacing-inline-start: var(
-        --spectrum-text-to-visual-100
-    );
     --system-tag-size-m-clear-button-spacing-inline-start: var(
         --spectrum-text-to-visual-100
-    );
-    --system-tag-clear-button-spacing-block: var(
-        --spectrum-tag-top-to-cross-icon-medium
     );
     --system-tag-size-m-clear-button-spacing-block: var(
         --spectrum-tag-top-to-cross-icon-medium
     );
-    --system-tag-icon-spacing-block-start: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
     --system-tag-size-m-icon-spacing-block-start: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
-    --system-tag-icon-spacing-block-end: var(
         --spectrum-component-top-to-workflow-icon-100
     );
     --system-tag-size-m-icon-spacing-block-end: var(
         --spectrum-component-top-to-workflow-icon-100
     );
-    --system-tag-icon-spacing-inline-end: var(--spectrum-text-to-visual-100);
     --system-tag-size-m-icon-spacing-inline-end: var(
         --spectrum-text-to-visual-100
     );
-    --system-tag-avatar-spacing-block-start: var(
-        --spectrum-tag-top-to-avatar-medium
-    );
     --system-tag-size-m-avatar-spacing-block-start: var(
-        --spectrum-tag-top-to-avatar-medium
-    );
-    --system-tag-avatar-spacing-block-end: var(
         --spectrum-tag-top-to-avatar-medium
     );
     --system-tag-size-m-avatar-spacing-block-end: var(
         --spectrum-tag-top-to-avatar-medium
     );
-    --system-tag-avatar-spacing-inline-end: var(--spectrum-text-to-visual-100);
     --system-tag-size-m-avatar-spacing-inline-end: var(
         --spectrum-text-to-visual-100
     );
-    --system-tag-label-spacing-block: var(--spectrum-component-top-to-text-100);
     --system-tag-size-m-label-spacing-block: var(
         --spectrum-component-top-to-text-100
     );
-    --system-tag-corner-radius: var(--system-tag-size-medium-corner-radius);
     --system-tag-size-m-corner-radius: var(
         --system-tag-size-medium-corner-radius
-    );
-    --system-tag-spacing-inline-start: var(
-        --system-tag-size-medium-spacing-inline-start
     );
     --system-tag-size-m-spacing-inline-start: var(
         --system-tag-size-medium-spacing-inline-start
     );
-    --system-tag-label-spacing-inline-end: var(
-        --system-tag-size-medium-label-spacing-inline-end
-    );
     --system-tag-size-m-label-spacing-inline-end: var(
         --system-tag-size-medium-label-spacing-inline-end
-    );
-    --system-tag-clear-button-spacing-inline-end: var(
-        --system-tag-size-medium-clear-button-spacing-inline-end
     );
     --system-tag-size-m-clear-button-spacing-inline-end: var(
         --system-tag-size-medium-clear-button-spacing-inline-end
@@ -7096,7 +7160,7 @@
         --spectrum-focus-indicator-thickness
     );
     --system-textfield-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
-    --system-textfield-background-color: var(--spectrum-gray-50);
+    --system-textfield-background-color: var(--spectrum-gray-25);
     --system-textfield-text-color-default: var(
         --spectrum-neutral-content-color-default
     );
@@ -7584,13 +7648,10 @@
         --spectrum-animation-ease-out
     );
     --system-underlay-background-exit-animation-duration: var(
-        --spectrum-animation-duration-100
+        --spectrum-animation-duration-300
     );
     --system-underlay-background-entry-animation-duration: var(
         --spectrum-animation-duration-600
-    );
-    --system-underlay-background-exit-animation-duration: var(
-        --spectrum-animation-duration-300
     );
     --system-underlay-background-exit-animation-delay: var(
         --spectrum-animation-duration-200

@@ -45,6 +45,25 @@ governing permissions and limitations under the License.
     overflow: visible;
 }
 
+:host([size='s']) {
+    --spectrum-divider-background-color: var(
+        --spectrum-divider-background-color-small
+    );
+}
+
+:host,
+:host {
+    --spectrum-divider-background-color: var(
+        --spectrum-divider-background-color-medium
+    );
+}
+
+:host([size='l']) {
+    --spectrum-divider-background-color: var(
+        --spectrum-divider-background-color-large
+    );
+}
+
 :host([static='white'][size='s']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-small-static-white,

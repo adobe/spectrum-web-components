@@ -79,7 +79,6 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([quiet]),
 :host([quiet]) {
     --spectrum-coach-indicator-min-inline-size: var(
         --system-coach-indicator-quiet-min-inline-size

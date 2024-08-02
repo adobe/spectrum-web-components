@@ -441,8 +441,8 @@ governing permissions and limitations under the License.
     --mod-actionbutton-background-color-focus: var(
         --system-action-button-static-black-selected-background-color-focus
     );
-    --mod-actionbutton-content-color-defaul-selectedt: var(
-        --system-action-button-static-black-selected-content-color-defaul-selectedt
+    --mod-actionbutton-content-color-default-selected: var(
+        --system-action-button-static-black-selected-content-color-default-selected
     );
     --mod-actionbutton-content-color-hover: var(
         --system-action-button-static-black-selected-content-color-hover
