@@ -360,8 +360,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerBasedSelection(event: Event): void {
-        // If the event is a right click, we should not handle the click event.
-        if (event instanceof MouseEvent && event.button === 2) {
+        // Only handle left clicks
+        if (event instanceof MouseEvent && event.button !== 0) {
             return;
         }
 
