@@ -101,7 +101,7 @@ governing permissions and limitations under the License.
         --mod-dialog-confirm-border-radius,
         var(--spectrum-dialog-confirm-border-radius)
     );
-    grid-area: a;
+    grid-area: hero;
     overflow: hidden;
 }
 
@@ -122,12 +122,12 @@ governing permissions and limitations under the License.
             var(--spectrum-dialog-confirm-padding-grid)
         );
     grid-template-areas:
-        'a a a a a a'
+        'hero hero hero hero hero hero'
         '. . . . . .'
-        '. b c c c .'
-        '. d d d d .'
-        '. e e e e .'
-        '. f f g g .'
+        '. heading header header header .'
+        '. divider divider divider divider .'
+        '. content content content content .'
+        '. footer footer buttonGroup buttonGroup .'
         '. . . . . .';
     inline-size: 100%;
     display: grid;
@@ -151,7 +151,7 @@ governing permissions and limitations under the License.
         var(--spectrum-dialog-confirm-title-text-color)
     );
     outline: none;
-    grid-area: b;
+    grid-area: heading;
     margin: 0;
     padding-inline-end: var(
         --mod-dialog-confirm-gap-size,
@@ -160,21 +160,21 @@ governing permissions and limitations under the License.
 }
 
 .no-header::slotted([slot='heading']) {
-    grid-area: h / h / i / i;
+    grid-area: heading-start / heading-start / header-end / header-end;
     padding-inline-end: 0;
 }
 
 .header {
     box-sizing: border-box;
     outline: none;
-    grid-area: c;
+    grid-area: header;
     justify-content: flex-end;
     align-items: center;
     display: flex;
 }
 
 .divider {
-    grid-area: d;
+    grid-area: divider;
     inline-size: 100%;
     margin-block-start: var(
         --mod-dialog-confirm-divider-block-spacing-end,
@@ -251,14 +251,14 @@ governing permissions and limitations under the License.
             var(--spectrum-dialog-confirm-description-margin)
         );
     outline: none;
-    grid-area: e;
+    grid-area: content;
     overflow-y: auto;
 }
 
 .footer {
     outline: none;
     flex-wrap: wrap;
-    grid-area: f;
+    grid-area: footer;
     padding-block-start: var(
         --mod-dialog-confirm-footer-padding-top,
         var(--spectrum-dialog-confirm-footer-padding-top)
@@ -272,7 +272,7 @@ governing permissions and limitations under the License.
 }
 
 .button-group {
-    grid-area: g;
+    grid-area: buttonGroup;
     justify-content: flex-end;
     padding-block-start: var(
         --mod-dialog-confirm-buttongroup-padding-top,
@@ -286,7 +286,7 @@ governing permissions and limitations under the License.
 }
 
 .button-group.button-group--noFooter {
-    grid-area: j / j / k / k;
+    grid-area: footer-start / footer-start / buttonGroup-end / buttonGroup-end;
 }
 
 :host([dismissable]) .grid {
@@ -316,12 +316,12 @@ governing permissions and limitations under the License.
             var(--spectrum-dialog-confirm-padding-grid)
         );
     grid-template-areas:
-        'a a a a a a a'
-        '. . . . . l l'
-        '. b c c m l l'
-        '. d d d d d .'
-        '. e e e e e .'
-        '. f f g g g .'
+        'hero hero hero hero hero hero hero'
+        '. . . . . closeButton closeButton'
+        '. heading header header typeIcon closeButton closeButton'
+        '. divider divider divider divider divider .'
+        '. content content content content content .'
+        '. footer footer buttonGroup buttonGroup buttonGroup .'
         '. . . . . . .';
 }
 
@@ -334,11 +334,11 @@ governing permissions and limitations under the License.
         --mod-dialog-confirm-description-text-color,
         var(--spectrum-dialog-confirm-description-text-color)
     );
-    grid-area: f / f / g / g;
+    grid-area: footer / footer / buttonGroup / buttonGroup;
 }
 
 .close-button {
-    grid-area: l;
+    grid-area: closeButton;
     place-self: start end;
     margin-block-start: var(
         --mod-dialog-confirm-close-button-padding,
@@ -389,9 +389,9 @@ governing permissions and limitations under the License.
         );
     grid-template-areas:
         '. . . . .'
-        '. b c g .'
-        '. d d d .'
-        '. e e e .'
+        '. heading header buttonGroup .'
+        '. divider divider divider .'
+        '. content content content .'
         '. . . . .';
     display: grid;
 }
@@ -423,7 +423,7 @@ governing permissions and limitations under the License.
 
 :host([mode='fullscreen']) .button-group,
 :host([mode='fullscreenTakeover']) .button-group {
-    grid-area: g;
+    grid-area: buttonGroup;
     align-self: start;
 }
 
@@ -436,13 +436,13 @@ governing permissions and limitations under the License.
             )
             auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
-            'a a a a a a'
+            'hero hero hero hero hero hero'
             '. . . . . .'
-            '. b b b b .'
-            '. c c c c .'
-            '. d d d d .'
-            '. e e e e .'
-            '. f f g g .'
+            '. heading heading heading heading .'
+            '. header header header header .'
+            '. divider divider divider divider .'
+            '. content content content content .'
+            '. footer footer buttonGroup buttonGroup .'
             '. . . . . .';
     }
 
@@ -477,13 +477,13 @@ governing permissions and limitations under the License.
                 var(--spectrum-dialog-confirm-padding-grid)
             );
         grid-template-areas:
-            'a a a a a a a'
-            '. . . . . l l'
-            '. b b b b l l'
-            '. c c c c c .'
-            '. d d d d d .'
-            '. e e e e e .'
-            '. f f g g g .'
+            'hero hero hero hero hero hero hero'
+            '. . . . . closeButton closeButton'
+            '. heading heading heading heading closeButton closeButton'
+            '. header header header header header .'
+            '. divider divider divider divider divider .'
+            '. content content content content content .'
+            '. footer footer buttonGroup buttonGroup buttonGroup .'
             '. . . . . . .';
     }
 
@@ -513,11 +513,11 @@ governing permissions and limitations under the License.
             );
         grid-template-areas:
             '. . .'
-            '. b .'
-            '. c .'
-            '. d .'
-            '. e .'
-            '. g .'
+            '. heading .'
+            '. header .'
+            '. divider .'
+            '. content .'
+            '. buttonGroup .'
             '. . .';
         display: grid;
     }
