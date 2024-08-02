@@ -86,7 +86,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
             <a
                 id="item-link"
                 href=${ifDefined(!this.isLastOfType ? this.href : undefined)}
-                tabindex=${ifDefined(!this.isLastOfType ? 0 : undefined)}
+                tabindex=${0}
                 aria-current=${ifDefined(
                     this.isLastOfType ? 'page' : undefined
                 )}
