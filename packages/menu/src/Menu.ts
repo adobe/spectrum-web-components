@@ -360,6 +360,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerBasedSelection(event: Event): void {
+        // If the event is a right click, we should not handle the click event.
+        if (event instanceof MouseEvent && event.button === 2) {
+            return;
+        }
+
         const path = event.composedPath();
         const target = path.find((el) => {
             /* c8 ignore next 3 */
