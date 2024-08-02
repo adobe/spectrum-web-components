@@ -228,7 +228,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host .is-filled {
+:host([filled]) {
     --mod-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
         var(
@@ -239,7 +239,7 @@ governing permissions and limitations under the License.
     --mod-illustrated-message-display: none;
 }
 
-:host([dragged]) .is-filled {
+:host([filled][dragged]) {
     --mod-drop-zone-content-display: flex;
 }
 
