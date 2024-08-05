@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 ::slotted([slot='icon']) {
     fill: var(
         --highcontrast-menu-item-color-default,
@@ -121,16 +120,20 @@ governing permissions and limitations under the License.
 
 :host {
     grid-template:
-        '. a . b c . . .' 1fr
-        'd a e f g h i j'
-        '. . . . k . . .'
-        '. . . . l . . .'
+        '. chevronAreaCollapsible . headingIconArea sectionHeadingArea . . .' 1fr
+        'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn'
+        '. . . . descriptionArea . . .'
+        '. . . . submenuArea . . .'
         / auto auto auto auto 1fr auto auto auto;
     display: grid;
 }
 
 #label {
-    grid-area: m;
+    grid-area: submenuItemLabelArea;
+}
+
+::slotted([slot='value']) {
+    grid-area: submenuItemValueArea;
 }
 
 :host([focused]),
@@ -349,12 +352,12 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
-    grid-area: f;
+    grid-area: iconArea;
     align-self: start;
 }
 
 .spectrum-Menu-item--collapsible ::slotted([slot='icon']) {
-    grid-area: b;
+    grid-area: headingIconArea;
 }
 
 :host .is-selectableMultiple {
@@ -362,16 +365,16 @@ governing permissions and limitations under the License.
 }
 
 .is-selectableMultiple .spectrum-Menu-itemCheckbox {
-    grid-area: e;
+    grid-area: checkmarkArea;
 }
 
 .checkmark {
-    grid-area: e;
+    grid-area: checkmarkArea;
     align-self: start;
 }
 
 .spectrum-Menu-itemSelection {
-    grid-area: d;
+    grid-area: selectedArea;
 }
 
 #label {
@@ -386,15 +389,15 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-item-label-content-color-default)
         )
     );
-    grid-area: g;
+    grid-area: labelArea;
 }
 
 ::slotted([slot='value']) {
-    grid-area: h;
+    grid-area: valueArea;
 }
 
 .spectrum-Menu-itemActions {
-    grid-area: i;
+    grid-area: actionsArea;
     align-self: start;
     margin-inline-start: var(
         --mod-menu-item-label-to-value-area-min-spacing,
@@ -405,20 +408,20 @@ governing permissions and limitations under the License.
 .chevron {
     block-size: var(--spectrum-menu-item-checkmark-height);
     inline-size: var(--spectrum-menu-item-checkmark-width);
-    grid-area: o;
+    grid-area: chevronArea;
     align-self: center;
 }
 
 .spectrum-Menu-item--collapsible .chevron {
-    grid-area: a;
+    grid-area: chevronAreaCollapsible;
 }
 
 [name='description']::slotted(*) {
-    grid-area: k;
+    grid-area: descriptionArea;
 }
 
 :host([has-submenu]) .chevron {
-    grid-area: j;
+    grid-area: chevronAreaDrillIn;
 }
 
 .icon:not(.chevron, .checkmark) {
