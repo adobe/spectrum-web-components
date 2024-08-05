@@ -150,6 +150,44 @@ import { Picker } from '@spectrum-web-components/picker';
 </sp-tab-panel>
 </sp-tabs>
 
+## Side Label
+
+```html
+<sp-field-label side-aligned="start" for="picker-sideLabel">
+    Standard:
+</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    id="picker-sideLabel"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label side-aligned="start" for="picker-sideLabel-quiet">
+    Quiet:
+</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    quiet
+    id="picker-sideLabel-quiet"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
 ## Icons
 
 `<sp-menu-item>`s in an `<sp-picker>` that are provided content addressed to their `icon` slot will be passed to the `<sp-picker>` element when that item is chosen.
@@ -330,44 +368,6 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 ```
 
-### Side Label
-
-```html
-<sp-field-label side-aligned="start" for="picker-sideLabel">
-    Standard:
-</sp-field-label>
-<sp-picker
-    label="Select a Country with a very long label, too long in fact"
-    id="picker-sideLabel"
->
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item disabled>Make work path</sp-menu-item>
-</sp-picker>
-<br />
-<br />
-<sp-field-label side-aligned="start" for="picker-sideLabel-quiet">
-    Quiet:
-</sp-field-label>
-<sp-picker
-    label="Select a Country with a very long label, too long in fact"
-    quiet
-    id="picker-sideLabel-quiet"
->
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item disabled>Make work path</sp-menu-item>
-</sp-picker>
-```
-
 ### Disabled
 
 ```html
@@ -436,15 +436,13 @@ When in pending state, `<sp-picker>` elements will not respond to click events a
 
 ### Include a label
 
-To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element.
-
-In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert. For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
+To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element. For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
 
 ```html
-<sp-field-label for="uses-sp-field-label">Uses `<sp-field-label>`:</sp-field-label>
-<sp-picker
-    id="uses-sp-field-label"
->
+<sp-field-label for="uses-sp-field-label">
+    Uses &lt;sp-field-label&gt;:
+</sp-field-label>
+<sp-picker id="uses-sp-field-label">
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
     <sp-menu-item>Feather...</sp-menu-item>
@@ -455,10 +453,7 @@ In rare cases where context is sufficient and a label could be absent, make sure
 </sp-picker>
 <br />
 <br />
-<sp-picker
-    label="Uses label attribute"
-    id="uses-label-attribute"
->
+<sp-picker label="Uses label attribute" id="uses-label-attribute">
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
     <sp-menu-item>Feather...</sp-menu-item>
@@ -469,10 +464,8 @@ In rare cases where context is sufficient and a label could be absent, make sure
 </sp-picker>
 <br />
 <br />
-<sp-picker
-    id="uses-label-slot"
->
-    <span slot="label">Uses label slot</slot>
+<sp-picker id="uses-label-slot">
+    <span slot="label">Uses label slot</span>
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
     <sp-menu-item>Feather...</sp-menu-item>
@@ -482,6 +475,8 @@ In rare cases where context is sufficient and a label could be absent, make sure
     <sp-menu-item disabled>Make work path</sp-menu-item>
 </sp-picker>
 ```
+
+In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert.
 
 ### Use help text to show context
 
@@ -499,11 +494,11 @@ Since one gets replaced by the other, the language of the help text and error te
 
 ```html demo
 <sp-field-label for="text">Preferred contact method:</sp-field-label>
-<sp-picker
-    id="text"
-    label="Select contact method"
-    aria-describedby="help-text"
-></sp-picker>
+<sp-picker id="text" label="Select contact method" aria-describedby="help-text">
+    <sp-menu-item>Phone</sp-menu-item>
+    <sp-menu-item>Text</sp-menu-item>
+    <sp-menu-item>Email</sp-menu-item>
+</sp-picker>
 <sp-help-text id="help-text">
     Choose the best way to contact you in case there's an issue with your
     account.
@@ -515,9 +510,15 @@ Since one gets replaced by the other, the language of the help text and error te
 </sp-field-label>
 <sp-picker
     id="error-text"
+    invalid
     label="Select contact method"
+    required
     aria-describedby="error-help-text"
-></sp-picker>
+>
+    <sp-menu-item>Phone</sp-menu-item>
+    <sp-menu-item>Text</sp-menu-item>
+    <sp-menu-item>Email</sp-menu-item>
+</sp-picker>
 <sp-help-text id="error-help-text" variant="negative">
     Select a contact method.
 </sp-help-text>
