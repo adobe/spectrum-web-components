@@ -502,7 +502,7 @@ describe('Menu', () => {
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
         expect(el.value).to.equal('Second');
     });
-    it('does not make a selection on a right click', async () => {
+    it('does not make a selection on a right/middle mouse click', async () => {
         const changeSpy = spy();
         const el = await fixture<Menu>(html`
             <sp-menu
@@ -527,7 +527,7 @@ describe('Menu', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
 
-        // send right mouse click to the firstItem
+        // send right mouse click to the secondItem
         const rect = secondItem.getBoundingClientRect();
         sendMouse({
             steps: [
@@ -539,6 +539,26 @@ describe('Menu', () => {
                     type: 'click',
                     options: {
                         button: 'right',
+                    },
+                },
+            ],
+        });
+        await elementUpdated(el);
+        await elementUpdated(secondItem);
+        await aTimeout(150);
+        expect(changeSpy.callCount, 'no change').to.equal(0);
+
+        // send middle mouse click to the secondItem
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                    options: {
+                        button: 'middle',
                     },
                 },
             ],
