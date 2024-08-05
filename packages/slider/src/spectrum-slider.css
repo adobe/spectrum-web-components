@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-medium);
@@ -257,11 +256,11 @@ governing permissions and limitations under the License.
 .fill:before,
 .track:before {
     content: '';
+    block-size: 100%;
     border-start-start-radius: 0;
     border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: 0;
-    block-size: 100%;
     display: block;
 }
 
@@ -431,9 +430,9 @@ governing permissions and limitations under the License.
 }
 
 #ramp svg {
-    transform: var(--spectrum-logical-rotation);
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
+    transform: var(--spectrum-logical-rotation);
 }
 
 .handle {
@@ -583,10 +582,10 @@ governing permissions and limitations under the License.
 }
 
 #label-container {
+    inline-size: auto;
     font-size: var(--mod-slider-font-size, var(--spectrum-slider-font-size));
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     align-items: center;
-    inline-size: auto;
     margin-block-start: var(
         --mod-slider-label-top-to-text,
         var(--spectrum-slider-label-top-to-text)
@@ -1140,8 +1139,8 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]) #ramp + .handle {
-        fill: buttonface;
-        background-color: buttonface;
+        fill: ButtonFace;
+        background-color: ButtonFace;
     }
 }
 

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-actionbar-height: var(--spectrum-action-bar-height);
     --spectrum-actionbar-corner-radius: var(--spectrum-corner-radius-100);
@@ -70,8 +69,8 @@ governing permissions and limitations under the License.
     z-index: 1;
     box-sizing: border-box;
     pointer-events: none;
-    opacity: 0;
     block-size: 0;
+    opacity: 0;
     inset-block-end: 0;
 }
 
@@ -88,6 +87,7 @@ governing permissions and limitations under the License.
 #popover {
     block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     box-sizing: border-box;
+    inline-size: 100%;
     border-radius: var(
         --mod-actionbar-corner-radius,
         var(--spectrum-actionbar-corner-radius)
@@ -123,7 +123,6 @@ governing permissions and limitations under the License.
     );
     pointer-events: auto;
     flex-direction: row;
-    inline-size: 100%;
     margin: auto;
     padding-block: 0;
     display: flex;

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-dialog-fullscreen-header-text-size: 28px;
     --spectrum-dialog-min-inline-size: 288px;
@@ -54,14 +53,15 @@ governing permissions and limitations under the License.
     );
     --spectrum-dialog-confirm-divider-height: var(--spectrum-spacing-50);
     box-sizing: border-box;
+    inline-size: -moz-fit-content;
+    inline-size: fit-content;
     min-inline-size: var(
         --mod-dialog-min-inline-size,
         var(--spectrum-dialog-min-inline-size)
     );
+    max-inline-size: 100%;
     max-block-size: inherit;
     outline: none;
-    inline-size: fit-content;
-    max-inline-size: 100%;
     display: flex;
 }
 
@@ -121,6 +121,7 @@ governing permissions and limitations under the License.
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );
+    inline-size: 100%;
     grid-template-areas:
         'hero hero hero hero hero hero'
         '. . . . . .'
@@ -129,7 +130,6 @@ governing permissions and limitations under the License.
         '. content content content content .'
         '. footer footer buttonGroup buttonGroup .'
         '. . . . . .';
-    inline-size: 100%;
     display: grid;
 }
 
@@ -174,8 +174,8 @@ governing permissions and limitations under the License.
 }
 
 .divider {
-    grid-area: divider;
     inline-size: 100%;
+    grid-area: divider;
     margin-block-start: var(
         --mod-dialog-confirm-divider-block-spacing-end,
         var(--spectrum-dialog-confirm-divider-block-spacing-end)
@@ -351,14 +351,14 @@ governing permissions and limitations under the License.
 }
 
 :host([mode='fullscreen']) {
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
 }
 
 :host([mode='fullscreenTakeover']) {
-    border-radius: 0;
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
+    border-radius: 0;
 }
 
 :host([mode='fullscreen']),
