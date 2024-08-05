@@ -2,7 +2,7 @@
 
 An `<sp-picker>` is an alternative to HTML's `<select>` element. Use `<sp-menu-item>` elements to outline the options that will be made available to the user when interacting with the `<sp-picker>` element.
 
-### Usage
+## Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/picker?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/picker)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/picker)
@@ -37,34 +37,28 @@ import { Picker } from '@spectrum-web-components/picker';
 <sp-tab-panel value="s">
 
 ```html demo
-<sp-field-group>
-    <div>
-        <sp-field-label for="picker-s" size="s">Selection type:</sp-field-label>
-        <sp-picker id="picker-s" size="s" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-    <div>
-        <sp-field-label for="picker-s-quiet" size="s">
-            Selection type:
-        </sp-field-label>
-        <sp-picker id="picker-s-quiet" quiet size="s" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-</sp-field-group>
+<sp-field-label for="picker-s" size="s">Selection type:</sp-field-label>
+<sp-picker id="picker-s" size="s" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label for="picker-s-quiet" size="s">Selection type:</sp-field-label>
+<sp-picker id="picker-s-quiet" quiet size="s" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
 ```
 
 </sp-tab-panel>
@@ -72,34 +66,28 @@ import { Picker } from '@spectrum-web-components/picker';
 <sp-tab-panel value="m">
 
 ```html demo
-<sp-field-group>
-    <div>
-        <sp-field-label for="picker-m" size="m">Selection type:</sp-field-label>
-        <sp-picker id="picker-m" size="m" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-    <div>
-        <sp-field-label for="picker-m-quiet" size="m">
-            Selection type:
-        </sp-field-label>
-        <sp-picker id="picker-m-quiet" quiet size="m" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-</sp-field-group>
+<sp-field-label for="picker-m" size="m">Selection type:</sp-field-label>
+<sp-picker id="picker-m" size="m" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label for="picker-m-quiet" size="m">Selection type:</sp-field-label>
+<sp-picker id="picker-m-quiet" quiet size="m" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
 ```
 
 </sp-tab-panel>
@@ -107,34 +95,27 @@ import { Picker } from '@spectrum-web-components/picker';
 <sp-tab-panel value="l">
 
 ```html demo
-<sp-field-group>
-    <div>
-        <sp-field-label for="picker-l" size="l">Selection type:</sp-field-label>
-        <sp-picker id="picker-l" size="l" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-    <div>
-        <sp-field-label for="picker-l-quiet" size="l">
-            Selection type:
-        </sp-field-label>
-        <sp-picker id="picker-l-quiet" quiet size="l" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-</sp-field-group>
+<sp-picker id="picker-l" size="l" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label for="picker-l-quiet" size="l">Selection type:</sp-field-label>
+<sp-picker id="picker-l-quiet" quiet size="l" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
 ```
 
 </sp-tab-panel>
@@ -142,36 +123,28 @@ import { Picker } from '@spectrum-web-components/picker';
 <sp-tab-panel value="xl">
 
 ```html demo
-<sp-field-group>
-    <div>
-        <sp-field-label for="picker-xl" size="xl">
-            Selection type:
-        </sp-field-label>
-        <sp-picker id="picker-xl" size="xl" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-    <div>
-        <sp-field-label for="picker-xl-quiet" size="xl">
-            Selection type:
-        </sp-field-label>
-        <sp-picker id="picker-xl-quiet" quiet size="xl" label="Selection type">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save selection</sp-menu-item>
-            <sp-menu-item disabled>Make work path</sp-menu-item>
-        </sp-picker>
-    </div>
-</sp-field-group>
+<sp-field-label for="picker-xl" size="xl">Selection type:</sp-field-label>
+<sp-picker id="picker-xl" size="xl" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label for="picker-xl-quiet" size="xl">Selection type:</sp-field-label>
+<sp-picker id="picker-xl-quiet" quiet size="xl" label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
 ```
 
 </sp-tab-panel>
@@ -459,6 +432,93 @@ When in pending state, `<sp-picker>` elements will not respond to click events a
 </sp-picker>
 ```
 
-## Accessibility
+## Accessibility guidelines
 
-To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element. For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
+### Include a label
+
+To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element.
+
+In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert. For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
+
+```html
+<sp-field-label for="uses-sp-field-label">Uses `<sp-field-label>`:</sp-field-label>
+<sp-picker
+    id="uses-sp-field-label"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-picker
+    label="Uses label attribute"
+    id="uses-label-attribute"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-picker
+    id="uses-label-slot"
+>
+    <span slot="label">Uses label slot</slot>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+### Use help text to show context
+
+A picker’s description in the help text is can communicate what to select or how to select an option. This includes information such as:
+
+-   An overall description of the picker options
+-   Hints for what kind of information to choose
+-   More context for why a user needs to make a selection
+
+The help text’s message should not simply restate the same information in the label in order to prompt someone to interact with a picker. Don’t add help text if it isn’t actually relevant or meaningful to a user in order to try to maintain layout continuity with other inputs that require help text.
+
+The help text area also displays an error message. When a picker already includes help text and an error is triggered, the help text is replaced with error text. Once the error is resolved, the help text description reappears below the picker.
+
+Since one gets replaced by the other, the language of the help text and error text need to work together to convey the same messaging. Help text explains the requirement or adds supplementary context for how to complete the interaction. Error text tells a user how to fix the error by re-stating the selection requirements or describing the necessary interaction. Make sure that the help text and the error text include the same essential information so that it isn’t lost if one replaces the other (e.g., minimum requirements).
+
+```html demo
+<sp-field-label for="text">Preferred contact method:</sp-field-label>
+<sp-picker
+    id="text"
+    label="Select contact method"
+    aria-describedby="help-text"
+></sp-picker>
+<sp-help-text id="help-text">
+    Choose the best way to contact you in case there's an issue with your
+    account.
+</sp-help-text>
+<br />
+<br />
+<sp-field-label for="error-text" required invalid>
+    Preferred contact method:
+</sp-field-label>
+<sp-picker
+    id="error-text"
+    label="Select contact method"
+    aria-describedby="error-help-text"
+></sp-picker>
+<sp-help-text id="error-help-text" variant="negative">
+    Select a contact method.
+</sp-help-text>
+```
