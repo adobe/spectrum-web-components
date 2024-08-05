@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-splitview-vertical-width: 100%;
     --spectrum-splitview-vertical-gripper-width: 50%;
@@ -41,11 +40,11 @@ governing permissions and limitations under the License.
 }
 
 ::slotted(*) {
+    block-size: 100%;
     background-color: var(
         --mod-splitview-background-color,
         var(--spectrum-splitview-background-color)
     );
-    block-size: 100%;
 }
 
 #gripper {
@@ -130,8 +129,8 @@ governing permissions and limitations under the License.
         --mod-splitview-handle-width,
         var(--spectrum-splitview-handle-width)
     );
-    z-index: 1;
     block-size: 100%;
+    z-index: 1;
     position: relative;
 }
 
@@ -305,11 +304,11 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) ::slotted(*) {
+    block-size: auto;
     inline-size: var(
         --mod-splitview-vertical-width,
         var(--spectrum-splitview-vertical-width)
     );
-    block-size: auto;
 }
 
 :host([vertical]) #gripper {
