@@ -9,6 +9,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **progress-bar:** removed duplicate label ([#4494](https://github.com/adobe/spectrum-web-components/issues/4494)) ([39b6622](https://github.com/adobe/spectrum-web-components/commit/39b6622658270400c6e44909096d0c6a9be5a040))
 -   **tabs:** prevent vertical auto scroll ([#4613](https://github.com/adobe/spectrum-web-components/issues/4613)) ([e1ef097](https://github.com/adobe/spectrum-web-components/commit/e1ef097bc4c4a1e888de028f40b6f2bb5ea2d7b8))
+-   **overlay** replace at() polyfill ([#4628](https://github.com/adobe/spectrum-web-components/issues/4628)) ([8cef2c6](https://github.com/adobe/spectrum-web-components/commit/8cef2c639433248257a72bfc2c98d0663e265b09))
+
+-   **picker** Picker in mobile that opens under the options that will be displayed will automatically close (make a selection) ([4227](https://github.com/adobe/spectrum-web-components/issues/4227)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+
+-   **action-menu** (iOS) sp-card (supplied with an actions slot) action menu opens tray and on menu item selection in tray, if other card is behind it registers click on it as well ([4461] (https://github.com/adobe/spectrum-web-components/issues/4461)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+
+-   **tray** sp-tray retracts automatically when opened with less items in iOS simulator ([4572] (https://github.com/adobe/spectrum-web-components/issues/4572)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+
+-   **action-menu** Multiple change events dispatched from ActionMenu tray in mobile device ([4459] (https://github.com/adobe/spectrum-web-components/issues/4459)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
 
 ### Features
 

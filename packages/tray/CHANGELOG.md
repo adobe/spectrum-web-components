@@ -5,6 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
 
+### Bug Fixes
+
+-   **tray** sp-tray retracts automatically when opened with less items in iOS simulator ([4572] (https://github.com/adobe/spectrum-web-components/issues/4572)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+
 **Note:** Version bump only for package @spectrum-web-components/tray
 
 # [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
