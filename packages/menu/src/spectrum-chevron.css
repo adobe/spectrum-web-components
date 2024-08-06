@@ -33,7 +33,7 @@ governing permissions and limitations under the License.
 .chevron {
     block-size: var(--spectrum-menu-item-checkmark-height);
     inline-size: var(--spectrum-menu-item-checkmark-width);
-    grid-area: chevronArea;
+    grid-area: o;
     align-self: center;
     margin-inline-end: var(
         --mod-menu-item-text-to-control,

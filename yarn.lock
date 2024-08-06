@@ -5113,10 +5113,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/contextualhelp/-/contextualhelp-2.1.5.tgz#a1c012ecf251b36af2a77271070a0e4176747072"
   integrity sha512-omL3G/odcnpBRMbu0LRW/QjQ57cpI+bWOE2cjTb4l6PeqKt2zhmFpIusYVFq/DmTZxj2zh8f/W6tcriwgYd93Q==
 
-"@spectrum-css/dialog@^10.1.2":
-  version "10.1.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-10.1.2.tgz#1598bd263a74be821504aa4951aff94edf00f6c4"
-  integrity sha512-/Fg1h3RkuffOaTAAAkwN64apNrBAhn/z/5ZxAsBwnomcKYqEtnU1mO2ztbn1n+n79WacW0MPw3C6h1BsuxmD5g==
+"@spectrum-css/dialog@^10.1.0":
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-10.1.0.tgz#a5027f04c64559c4708f10b6007d7dcc67b66999"
+  integrity sha512-0TDFuId2pmKnN8+2T2OInj/vXAlbId4dQIJm1mn1KnR834jes+yA75Z7bnaD/4GvkGDfptA6kz+I0agRlGvezQ==
 
 "@spectrum-css/divider@^3.1.0":
   version "3.1.0"
@@ -5168,10 +5168,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-5.1.0.tgz#6e15b557836b370e181edc39c0e2e40a7c0944df"
   integrity sha512-UP3g/iRnMOpp3/QsqCTwZhfuhEs44P6ActHqYpGPGSj0goT/R2F3VWi+YtYLBy8uSzsjdl61WFw32fg9ZBb9zQ==
 
-"@spectrum-css/menu@^7.1.4":
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-7.1.4.tgz#61b250bc0408e5d00ec042c684f575eda77f62b0"
-  integrity sha512-OXRmHiWd8AqCF7nrT1MhWjN+Ri+d7VFub7ZUwAxhPRBYOXur5GQbx89nrzF0DUlV+h8pIEtV1hC3tUzRQc8c+Q==
+"@spectrum-css/menu@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-7.1.3.tgz#245732fd02464c37aa541e0b2ef32bf9337886ec"
+  integrity sha512-VpXnrHerfsFn5uKYwlLyKgmU4+x7ojTBxCzY07wi7XwhBYmYdguGzZWcQTOIEhU1BRNzkY+DR3m2yq+dLu0Slg==
 
 "@spectrum-css/modal@^5.1.0":
   version "5.1.0"
@@ -5344,7 +5344,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.45.0"
+  version "0.43.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"

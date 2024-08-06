@@ -120,16 +120,16 @@ governing permissions and limitations under the License.
 
 :host {
     grid-template:
-        '. chevronAreaCollapsible . headingIconArea sectionHeadingArea . . .' 1fr
-        'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn'
-        '. . . . descriptionArea . . .'
-        '. . . . submenuArea . . .'
+        '. a . b c . . .' 1fr
+        'd a e f g h i j'
+        '. . . . k . . .'
+        '. . . . l . . .'
         / auto auto auto auto 1fr auto auto auto;
     display: grid;
 }
 
 #label {
-    grid-area: submenuItemLabelArea;
+    grid-area: m;
 }
 
 ::slotted([slot='value']) {
@@ -352,12 +352,12 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
-    grid-area: iconArea;
+    grid-area: f;
     align-self: start;
 }
 
 .spectrum-Menu-item--collapsible ::slotted([slot='icon']) {
-    grid-area: headingIconArea;
+    grid-area: b;
 }
 
 :host .is-selectableMultiple {
@@ -365,16 +365,16 @@ governing permissions and limitations under the License.
 }
 
 .is-selectableMultiple .spectrum-Menu-itemCheckbox {
-    grid-area: checkmarkArea;
+    grid-area: e;
 }
 
 .checkmark {
-    grid-area: checkmarkArea;
+    grid-area: e;
     align-self: start;
 }
 
 .spectrum-Menu-itemSelection {
-    grid-area: selectedArea;
+    grid-area: d;
 }
 
 #label {
@@ -389,15 +389,15 @@ governing permissions and limitations under the License.
             var(--spectrum-menu-item-label-content-color-default)
         )
     );
-    grid-area: labelArea;
+    grid-area: g;
 }
 
 ::slotted([slot='value']) {
-    grid-area: valueArea;
+    grid-area: h;
 }
 
 .spectrum-Menu-itemActions {
-    grid-area: actionsArea;
+    grid-area: i;
     align-self: start;
     margin-inline-start: var(
         --mod-menu-item-label-to-value-area-min-spacing,
@@ -408,20 +408,20 @@ governing permissions and limitations under the License.
 .chevron {
     block-size: var(--spectrum-menu-item-checkmark-height);
     inline-size: var(--spectrum-menu-item-checkmark-width);
-    grid-area: chevronArea;
+    grid-area: o;
     align-self: center;
 }
 
 .spectrum-Menu-item--collapsible .chevron {
-    grid-area: chevronAreaCollapsible;
+    grid-area: a;
 }
 
 [name='description']::slotted(*) {
-    grid-area: descriptionArea;
+    grid-area: k;
 }
 
 :host([has-submenu]) .chevron {
-    grid-area: chevronAreaDrillIn;
+    grid-area: j;
 }
 
 .icon:not(.chevron, .checkmark) {
