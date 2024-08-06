@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-drop-zone-padding: var(--spectrum-spacing-400);
     --spectrum-drop-zone-illustration-to-heading: var(--spectrum-spacing-400);
@@ -228,7 +227,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host .is-filled {
+:host([filled]) {
     --mod-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
         var(
@@ -239,7 +238,7 @@ governing permissions and limitations under the License.
     --mod-illustrated-message-display: none;
 }
 
-:host([dragged]) .is-filled {
+:host([filled][dragged]) {
     --mod-drop-zone-content-display: flex;
 }
 
@@ -257,10 +256,10 @@ governing permissions and limitations under the License.
 
 .spectrum-DropZone-content {
     display: var(--mod-drop-zone-content-display, none);
+    block-size: 100%;
     z-index: 1;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
     position: relative;
 }
 

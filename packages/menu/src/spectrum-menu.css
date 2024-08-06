@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-100);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-100);
@@ -432,7 +431,7 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
-    grid-area: c / 1 / c / -1;
+    grid-area: sectionHeadingArea / 1 / sectionHeadingArea / -1;
     display: block;
 }
 

@@ -25,9 +25,9 @@
                     {% endif %}
                 </sp-picker>
                 {% elif demoControl.control === 'text' %}
-                    <sp-textfield value="{{ demoControl.table.defaultValue.summary }}"></sp-textfield>
+                    <sp-textfield class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-textfield>
                 {% elif demoControl.control === 'number' %}
-                    <sp-number-field value="{{ demoControl.table.defaultValue.summary }}"></sp-number-field>
+                    <sp-number-field class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-number-field>
                 {% endif %}
             </div>
         {% endfor %}</sp-field-group>{% endif %}

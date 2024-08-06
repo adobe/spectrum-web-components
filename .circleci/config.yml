@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 1dfeeaaaeb1eacac0bc3ef4a0aa30a0414d86025
+        default: a52f23a5b75a5d9fbeff7e534f997c1d2be4690d
     wireit_cache_name:
         type: string
         default: wireit
@@ -95,7 +95,7 @@ commands:
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
                       echo hash
-                      yarn netlify deploy --alias=$hash --dir=test/visual
+                      yarn netlify deploy --alias=$hash --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
@@ -217,7 +217,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch
+                  yarn netlify deploy --alias=$branch --cwd projects/documentation
 
     hcm-visual:
         executor: node
@@ -269,7 +269,7 @@ jobs:
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
                       echo hash
-                      yarn netlify deploy --alias=$hash --dir=test/visual
+                      yarn netlify deploy --alias=$hash --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always

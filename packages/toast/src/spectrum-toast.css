@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-toast-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-toast-font-size: var(--spectrum-font-size-100);
@@ -299,7 +298,6 @@ governing permissions and limitations under the License.
 
 .body ::slotted([slot='action']:dir(rtl)),
 :host([dir='rtl']) .body ::slotted([slot='action']) {
-    margin-inline-end: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)
