@@ -230,9 +230,9 @@ export class FocusGroupController<T extends HTMLElement>
     hostContainsFocus(): void {
         this.host.addEventListener('focusout', this.handleFocusout);
         this.host.addEventListener('keydown', this.handleKeydown);
-        this.elementEnterAction(this.elements[this.currentIndex]);
-        this.focus();
+
         this.focused = true;
+        this.focus();
     }
 
     hostNoLongerContainsFocus(): void {
