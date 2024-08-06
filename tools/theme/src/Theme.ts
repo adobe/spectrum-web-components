@@ -257,24 +257,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
     }
 
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    get theme(): SystemVariant | '' {
-        if (!this.system) {
-            this.removeAttribute('system');
-        }
-        return this.system;
-    }
-
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    set theme(newValue: SystemVariant | '') {
-        this.system = newValue;
-        this.requestUpdate();
-    }
-
     private _color: Color | '' = '';
 
     /**
