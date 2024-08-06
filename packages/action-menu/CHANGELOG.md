@@ -7,9 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-menu** (iOS) sp-card (supplied with an actions slot) action menu opens tray and on menu item selection in tray, if other card is behind it registers click on it as well ([4461] (https://github.com/adobe/spectrum-web-components/issues/4461)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+-   **action-menu** clicking a menu item in an ActionMenu tray doesn't register a click behind it ([4461] (https://github.com/adobe/spectrum-web-components/issues/4461)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
 
--   **action-menu** Multiple change events dispatched from ActionMenu tray in mobile device ([4459] (https://github.com/adobe/spectrum-web-components/issues/4459)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+-   **action-menu** ActionMenu tray in mobile device doesn't dispatch multiple events ([4459] (https://github.com/adobe/spectrum-web-components/issues/4459)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu
 
