@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-card-background-color: var(--spectrum-background-layer-2-color);
     --spectrum-card-body-spacing: var(--spectrum-spacing-400);
@@ -584,6 +583,7 @@ governing permissions and limitations under the License.
 
 :host([variant='gallery']),
 :host([variant='quiet']) {
+    block-size: 100%;
     min-inline-size: var(
         --mod-card-minimum-width,
         var(--spectrum-card-minimum-width)
@@ -592,7 +592,6 @@ governing permissions and limitations under the License.
     border-width: 0;
     border-color: #0000;
     border-radius: 0;
-    block-size: 100%;
     overflow: visible;
 }
 
@@ -618,6 +617,7 @@ governing permissions and limitations under the License.
         --mod-card-preview-minimum-height,
         var(--spectrum-card-preview-minimum-height)
     );
+    inline-size: 100%;
     box-sizing: border-box;
     transition: background-color
         var(
@@ -628,7 +628,6 @@ governing permissions and limitations under the License.
             )
         );
     flex: 1;
-    inline-size: 100%;
     margin: 0 auto;
     position: relative;
     overflow: visible;
@@ -647,6 +646,8 @@ governing permissions and limitations under the License.
 :host([variant='gallery']) #preview:after,
 :host([variant='quiet']) #preview:after {
     content: '';
+    block-size: 100%;
+    inline-size: 100%;
     border-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) +
             var(
@@ -655,8 +656,6 @@ governing permissions and limitations under the License.
             )
     );
     border: 0 solid #0000;
-    block-size: 100%;
-    inline-size: 100%;
     margin-block-start: calc(
         var(
                 --mod-card-focus-indicator-width,
@@ -781,6 +780,7 @@ governing permissions and limitations under the License.
 }
 
 :host([horizontal]) #preview {
+    min-block-size: 0;
     padding: var(
         --mod-card-horizontal-preview-padding,
         var(--spectrum-card-horizontal-preview-padding)
@@ -806,7 +806,6 @@ governing permissions and limitations under the License.
     flex-shrink: 0;
     justify-content: center;
     align-items: center;
-    min-block-size: 0;
     display: flex;
 }
 

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-badge-corner-radius: var(--spectrum-corner-radius-100);
     --spectrum-badge-line-height: var(--spectrum-line-height-100);
@@ -200,12 +199,13 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
-        border-color: canvastext;
+        border-color: CanvasText;
     }
 }
 
 :host {
     min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
+    inline-size: auto;
     vertical-align: middle;
     cursor: default;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -219,7 +219,6 @@ governing permissions and limitations under the License.
         var(--spectrum-badge-label-icon-color)
     );
     border: 1px solid #0000;
-    inline-size: auto;
     display: inline-flex;
     position: relative;
 }

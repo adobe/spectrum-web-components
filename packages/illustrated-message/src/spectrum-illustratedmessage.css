@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-illustrated-message-description-max-inline-size: var(
         --spectrum-illustrated-message-maximum-width
@@ -83,6 +82,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    block-size: 100%;
     display: var(--mod-illustrated-message-display, flex);
     text-align: center;
     pointer-events: var(--mod-illustrated-message-pointer-events, auto);
@@ -90,7 +90,6 @@ governing permissions and limitations under the License.
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
 }
 
 #illustration {
