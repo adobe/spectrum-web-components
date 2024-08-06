@@ -230,9 +230,7 @@ export class FocusGroupController<T extends HTMLElement>
     hostContainsFocus(): void {
         this.host.addEventListener('focusout', this.handleFocusout);
         this.host.addEventListener('keydown', this.handleKeydown);
-
         this.focused = true;
-        this.focus();
     }
 
     hostNoLongerContainsFocus(): void {
@@ -270,6 +268,24 @@ export class FocusGroupController<T extends HTMLElement>
 
         if (this.isRelatedTargetOrContainAnElement(event)) {
             this.hostContainsFocus();
+        }
+    };
+
+    handleClick = (): void => {
+        // Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
+        const elements = this.elements;
+        if (!elements.length) return;
+        let focusElement = elements[this.currentIndex];
+        if (this.currentIndex < 0) {
+            return;
+        }
+        if (!focusElement || !this.isFocusableElement(focusElement)) {
+            this.setCurrentIndexCircularly(1);
+            focusElement = elements[this.currentIndex];
+        }
+        if (focusElement && this.isFocusableElement(focusElement)) {
+            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            focusElement.setAttribute('tabindex', '0');
         }
     };
 
@@ -349,6 +365,7 @@ export class FocusGroupController<T extends HTMLElement>
 
     addEventListeners(): void {
         this.host.addEventListener('focusin', this.handleFocusin);
+        this.host.addEventListener('click', this.handleClick);
     }
 
     removeEventListeners(): void {
