@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-picker>` is an alternative to HTML's `<select>` element. Use `<sp-menu-item>` elements to outline the options that will be made available to the user when interacting with the `<sp-picker>` element.
+An `<sp-picker>` is an alternative to HTML's `<select>` element. Use [`<sp-menu-item>`](../menu-item) elements to outline the options that will be made available to the user when interacting with the `<sp-picker>` element.
 
 ## Usage
 
@@ -30,7 +30,227 @@ When looking to leverage the `Picker` base class as a type and/or for extension 
 import { Picker } from '@spectrum-web-components/picker';
 ```
 
-## Sizes
+## Features
+
+### Labels
+
+To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element.
+
+For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
+
+<sp-tabs selected="sp-field-label" auto label="Label options">
+<sp-tab value="sp-field-label">Uses &lt;sp-field-label&gt;</sp-tab>
+<sp-tab-panel value="sp-field-label">
+
+```html demo
+<sp-field-label for="uses-sp-field-label">Selection type:</sp-field-label>
+<sp-picker id="uses-sp-field-label">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="label-attribute">Uses label attribute</sp-tab>
+<sp-tab-panel value="label-attribute">
+
+```html demo
+<sp-picker label="Selection type" id="uses-label-attribute">
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="label-slot">Uses label slot</sp-tab>
+<sp-tab-panel value="label-slot">
+
+```html demo
+<sp-picker id="uses-label-slot">
+    <span slot="label">Selection type:</span>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+### Icons
+
+`<sp-menu-item>`s in an `<sp-picker>` that are provided content addressed to their `icon` slot will be passed to the `<sp-picker>` element when that item is chosen.
+
+```html
+<sp-field-label for="picker-icons">Choose an action...</sp-field-label>
+<sp-picker label="What would you like to do?" value="item-2" id="picker-icons">
+    <sp-menu-item>
+        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
+        Save
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
+        Finish
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
+        Review
+    </sp-menu-item>
+</sp-picker>
+```
+
+When you use `<sp-menu-item>` elements without text content, you will need to be sure to use the `value` attribute so that the `<sp-picker>` element can differentiate between the available options. Further, it is important that you apply accessible labeling to the `[slot="icon"]` content as follows:
+
+```html
+<sp-field-label for="picker-icons-only">Choose an action...</sp-field-label>
+<sp-picker
+    label="What would you like to do?"
+    value="item-2"
+    id="picker-icons-only"
+>
+    <sp-menu-item value="item-1">
+        <sp-icon-save-floppy slot="icon" label="Save"></sp-icon-save-floppy>
+    </sp-menu-item>
+    <sp-menu-item value="item-2">
+        <sp-icon-stopwatch slot="icon" label="Finish"></sp-icon-stopwatch>
+    </sp-menu-item>
+    <sp-menu-item value="item-3">
+        <sp-icon-user-activity
+            slot="icon"
+            label="Review"
+        ></sp-icon-user-activity>
+    </sp-menu-item>
+</sp-picker>
+```
+
+#### Advanced icon management
+
+The `icons` attribute allows you to manage how the selected item will appear. Set `icons` to `only` display only the selected item's icon in the `<sp-picker>` element or `none` to display the selected item text without the icon `<sp-picker>`.
+
+When using `icons="only"` and your `<sp-menu-item>` elements still have text content, that content will be applied to `<sp-picker>` element in a non-visible way.
+
+<sp-tabs selected="only" auto label="Icons Attribute Options">
+<sp-tab value="only">Only</sp-tab>
+<sp-tab-panel value="only">
+
+```html demo
+<sp-field-label for="picker-icons-value">Choose an action...</sp-field-label>
+<sp-picker
+    label="What would you like to do?"
+    value="save"
+    id="picker-icons-value"
+    icons="only"
+>
+    <sp-menu-item value="save">
+        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
+        Save
+    </sp-menu-item>
+    <sp-menu-item value="finish">
+        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
+        Finish
+    </sp-menu-item>
+    <sp-menu-item value="review">
+        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
+        Review
+    </sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="none">None</sp-tab>
+<sp-tab-panel value="none">
+
+```html demo
+<sp-field-label for="picker-icons-none">Choose an action...</sp-field-label>
+<sp-picker
+    label="What would you like to do?"
+    value="save"
+    id="picker-icons-none"
+    icons="none"
+>
+    <sp-menu-item value="save">
+        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
+        Save
+    </sp-menu-item>
+    <sp-menu-item value="finish">
+        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
+        Finish
+    </sp-menu-item>
+    <sp-menu-item value="review">
+        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
+        Review
+    </sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+## Value
+
+When the `value` of an `<sp-picker>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.
+
+<sp-tabs selected="matching-value" auto label="Selected">
+<sp-tab value="matching-value">Matching value</sp-tab>
+<sp-tab-panel value="matching-value">
+
+```html demo
+<sp-field-label for="picker-value">Selection type:</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    value="item-2"
+    id="picker-value"
+>
+    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+    <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+    <sp-menu-item disabled value="item-6">Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="matching-item-text">Matching itemText</sp-tab>
+<sp-tab-panel value="matching-item-text">
+
+```html demo
+<sp-field-label for="picker-item-text">Selection type:</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    value="Feather..."
+    id="picker-item-text"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+## Variants
+
+### Sizes
 
 <sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
@@ -150,7 +370,7 @@ import { Picker } from '@spectrum-web-components/picker';
 </sp-tab-panel>
 </sp-tabs>
 
-## Side Label
+### Side Label
 
 <sp-tabs selected="standard-side-label" auto label="Side-aligned option">
 <sp-tab value="standard-side-label">Side label, standard</sp-tab>
@@ -194,164 +414,6 @@ import { Picker } from '@spectrum-web-components/picker';
     <sp-menu-divider></sp-menu-divider>
     <sp-menu-item>Save selection</sp-menu-item>
     <sp-menu-item disabled>Make work path</sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-</sp-tabs>
-
-## Icons
-
-`<sp-menu-item>`s in an `<sp-picker>` that are provided content addressed to their `icon` slot will be passed to the `<sp-picker>` element when that item is chosen.
-
-```html
-<sp-field-label for="picker-icons">Choose an action...</sp-field-label>
-<sp-picker label="What would you like to do?" value="item-2" id="picker-icons">
-    <sp-menu-item>
-        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
-        Save
-    </sp-menu-item>
-    <sp-menu-item>
-        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
-        Finish
-    </sp-menu-item>
-    <sp-menu-item>
-        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
-        Review
-    </sp-menu-item>
-</sp-picker>
-```
-
-When you use `<sp-menu-item>` elements without text content, you will need to be sure to use the `value` attribute so that the `<sp-picker>` element can differentiate between the available options. Further, it is important that you apply accessible labeling to the `[slot="icon"]` content as follows:
-
-```html
-<sp-field-label for="picker-icons-only">Choose an action...</sp-field-label>
-<sp-picker
-    label="What would you like to do?"
-    value="item-2"
-    id="picker-icons-only"
->
-    <sp-menu-item value="item-1">
-        <sp-icon-save-floppy slot="icon" label="Save"></sp-icon-save-floppy>
-    </sp-menu-item>
-    <sp-menu-item value="item-2">
-        <sp-icon-stopwatch slot="icon" label="Finish"></sp-icon-stopwatch>
-    </sp-menu-item>
-    <sp-menu-item value="item-3">
-        <sp-icon-user-activity
-            slot="icon"
-            label="Review"
-        ></sp-icon-user-activity>
-    </sp-menu-item>
-</sp-picker>
-```
-
-### Advanced icon management
-
-The `icons` attribute allows you to manage how the selected item will appear. Set `icons` to `only` display only the selected item's icon in the `<sp-picker>` element or `none` to display the selected item text without the icon `<sp-picker>`.
-
-When using `icons="only"` and your `<sp-menu-item>` elements still have text content, that content will be applied to `<sp-picker>` element in a non-visible way.
-
-<sp-tabs selected="only" auto label="Icons Attribute Options">
-<sp-tab value="only">Only</sp-tab>
-<sp-tab-panel value="only">
-
-```html demo
-<sp-field-label for="picker-icons-value">Choose an action...</sp-field-label>
-<sp-picker
-    label="What would you like to do?"
-    value="save"
-    id="picker-icons-value"
-    icons="only"
->
-    <sp-menu-item value="save">
-        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
-        Save
-    </sp-menu-item>
-    <sp-menu-item value="finish">
-        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
-        Finish
-    </sp-menu-item>
-    <sp-menu-item value="review">
-        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
-        Review
-    </sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-<sp-tab value="none">None</sp-tab>
-<sp-tab-panel value="none">
-
-```html demo
-<sp-field-label for="picker-icons-none">Choose an action...</sp-field-label>
-<sp-picker
-    label="What would you like to do?"
-    value="save"
-    id="picker-icons-none"
-    icons="none"
->
-    <sp-menu-item value="save">
-        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
-        Save
-    </sp-menu-item>
-    <sp-menu-item value="finish">
-        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
-        Finish
-    </sp-menu-item>
-    <sp-menu-item value="review">
-        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
-        Review
-    </sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-</sp-tabs>
-
-## Value
-
-When the `value` of an `<sp-picker>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.
-
-<sp-tabs selected="matching-value" auto label="Selected">
-<sp-tab value="matching-value">Matching value</sp-tab>
-<sp-tab-panel value="matching-value">
-
-```html demo
-<sp-field-label for="picker-value">Selection type:</sp-field-label>
-<sp-picker
-    label="Select a Country with a very long label, too long in fact"
-    value="item-2"
-    id="picker-value"
->
-    <sp-menu-item value="item-1">Deselect</sp-menu-item>
-    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-    <sp-menu-item value="item-3">Feather...</sp-menu-item>
-    <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item value="item-5">Save selection</sp-menu-item>
-    <sp-menu-item disabled value="item-6">Make work path</sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-<sp-tab value="matching-item-text">Matching itemText</sp-tab>
-<sp-tab-panel value="matching-item-text">
-
-```html demo
-<sp-field-label for="picker-item-text">Selection type:</sp-field-label>
-<sp-picker
-    label="Select a Country with a very long label, too long in fact"
-    value="Feather..."
-    id="picker-item-text"
->
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item>Make work path</sp-menu-item>
 </sp-picker>
 ```
 
@@ -499,61 +561,6 @@ When in pending state, `<sp-picker>` elements will not respond to click events a
 ## Accessibility guidelines
 
 ### Include a label
-
-To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element. For an accessible label that renders within the bounds of the picker itself, but still fulfills the accessibility contract, use the `label` attribute or a `<span slot="label">` as a child element of `<sp-picker>`.
-
-<sp-tabs selected="sp-field-label" auto label="Label options">
-<sp-tab value="sp-field-label">Uses &lt;sp-field-label&gt;</sp-tab>
-<sp-tab-panel value="sp-field-label">
-
-```html demo
-<sp-field-label for="uses-sp-field-label">Selection:</sp-field-label>
-<sp-picker id="uses-sp-field-label">
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item disabled>Make work path</sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-<sp-tab value="label-attribute">Uses label attribute</sp-tab>
-<sp-tab-panel value="label-attribute">
-
-```html demo
-<sp-picker label="Selection" id="uses-label-attribute">
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item disabled>Make work path</sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-<sp-tab value="label-slot">Uses label slot</sp-tab>
-<sp-tab-panel value="label-slot">
-
-```html demo
-<sp-picker id="uses-label-slot">
-    <span slot="label">Selection</span>
-    <sp-menu-item>Deselect</sp-menu-item>
-    <sp-menu-item>Select inverse</sp-menu-item>
-    <sp-menu-item>Feather...</sp-menu-item>
-    <sp-menu-item>Select and mask...</sp-menu-item>
-    <sp-menu-divider></sp-menu-divider>
-    <sp-menu-item>Save selection</sp-menu-item>
-    <sp-menu-item disabled>Make work path</sp-menu-item>
-</sp-picker>
-```
-
-</sp-tab-panel>
-</sp-tabs>
 
 In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert.
 
