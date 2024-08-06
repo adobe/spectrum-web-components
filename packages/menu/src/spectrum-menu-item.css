@@ -133,7 +133,7 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='value']) {
-    grid-area: submenuItemValueArea;
+    grid-area: n;
 }
 
 :host([focused]),
