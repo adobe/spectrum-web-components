@@ -65,7 +65,7 @@ jobs:
 
             - name: Lighthouse CI Action
               id: lighthouse
-              uses: treosh/lighthouse-ci-action@v11
+              uses: treosh/lighthouse-ci-action@v12
               with:
                   budgetPath: '.github/lighthouse/budgets.json'
                   configPath: '.github/lighthouse/lighthouserc.json'
