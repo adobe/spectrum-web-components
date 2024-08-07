@@ -133,7 +133,11 @@ When displayed as a descendent of an element that manages selection (e.g. `<sp-a
 
 In the following example, the selected `<sp-menu-item>` represents a `value` of `Text that is really long and useful to a visitor, but not exactly good to use in your application or component state.` for the ancestor element.
 
-```html
+<sp-tabs selected="picker-text" auto label="Long text values">
+<sp-tab value="picker-text">Picker</sp-tab>
+<sp-tab-panel value="picker-text">
+
+```html demo
 <sp-field-label for="picker-content">Value attribute usage:</sp-field-label>
 <sp-picker
     id="picker-content"
@@ -146,7 +150,13 @@ In the following example, the selected `<sp-menu-item>` represents a `value` of 
     </sp-menu-item>
     <sp-menu-item>Not selected</sp-menu-item>
 </sp-picker>
+```
 
+</sp-tab-panel>
+<sp-tab value="action-text">Action menu</sp-tab>
+<sp-tab-panel value="action-text">
+
+```html demo
 <sp-action-menu
     value="Text that is really long and useful to a visitor, but not exactly good to use in your application or component state."
 >
@@ -159,9 +169,16 @@ In the following example, the selected `<sp-menu-item>` represents a `value` of 
 </sp-action-menu>
 ```
 
+</sp-tab-panel>
+</sp-tabs>
+
 When the `value` attribute is leveraged, the selected `<sp-menu-item>` represents a `value` of `short-key` for the `<sp-action-menu>` element.
 
-```html
+<sp-tabs selected="picker-short-key" auto label="Using short-key">
+<sp-tab value="picker-short-key">Picker</sp-tab>
+<sp-tab-panel value="picker-short-key">
+
+```html demo
 <sp-field-label for="picker-value">Value attribute usage:</sp-field-label>
 <sp-picker id="picker-value" value="short-key">
     <span slot="label">Menu items examples</span>
@@ -171,6 +188,13 @@ When the `value` attribute is leveraged, the selected `<sp-menu-item>` represent
         to use in your application or component state.
     </sp-menu-item>
 </sp-picker>
+```
+
+</sp-tab-panel>
+<sp-tab value="action-short-key">Action menu</sp-tab>
+<sp-tab-panel value="action-short-key">
+
+```html demo
 <sp-action-menu value="short-key">
     <span slot="label">Menu items examples</span>
     <sp-menu-item value="not-selected">Not selected</sp-menu-item>
@@ -180,6 +204,9 @@ When the `value` attribute is leveraged, the selected `<sp-menu-item>` represent
     </sp-menu-item>
 </sp-action-menu>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Submenu
 
