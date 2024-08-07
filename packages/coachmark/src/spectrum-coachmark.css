@@ -13,8 +13,10 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --mod-buttongroup-justify-content: flex-end;
-    --mod-popover-border-width: var(--spectrum-border-width-100);
-    --mod-popover-corner-radius: var(--spectrum-corner-radius-100);
+    --mod-popover-border-width: var(--spectrum-coachmark-popover-border-width);
+    --mod-popover-corner-radius: var(
+        --spectrum-coachmark-popover-corner-radius
+    );
     --mod-popover-content-area-spacing-vertical: 0;
     --mod-button-edge-to-visual-only: 9px;
     inline-size: var(--mod-coachmark-width, var(--spectrum-coachmark-width));
@@ -34,7 +36,9 @@ governing permissions and limitations under the License.
 }
 
 .buttongroup-mobile {
-    --mod-buttongroup-spacing-horizontal: var(--spectrum-spacing-100);
+    --mod-buttongroup-spacing-horizontal: var(
+        --spectrum-coachmark-buttongroup-spacing-horizontal
+    );
     display: var(--spectrum-coachmark-buttongroup-mobile-display);
 }
 

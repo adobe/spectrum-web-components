@@ -84,4 +84,13 @@ governing permissions and limitations under the License.
     --spectrum-coachmark-step-to-bottom: var(
         --system-coach-mark-step-to-bottom
     );
+    --spectrum-coachmark-popover-border-width: var(
+        --system-coach-mark-popover-border-width
+    );
+    --spectrum-coachmark-popover-corner-radius: var(
+        --system-coach-mark-popover-corner-radius
+    );
+    --spectrum-coachmark-buttongroup-spacing-horizontal: var(
+        --system-coach-mark-buttongroup-spacing-horizontal
+    );
 }

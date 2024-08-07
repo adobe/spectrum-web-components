@@ -220,6 +220,36 @@ governing permissions and limitations under the License.
     }
 }
 
+:host([positive]) .spectrum-Meter .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-positive,
+            var(--spectrum-progressbar-fill-color-positive)
+        )
+    );
+}
+
+:host([notice]) .spectrum-Meter .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-notice,
+            var(--spectrum-progressbar-fill-color-notice)
+        )
+    );
+}
+
+:host([negative]) .spectrum-Meter .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-negative,
+            var(--spectrum-progressbar-fill-color-negative)
+        )
+    );
+}
+
 @keyframes indeterminate-loop-rtl {
     0% {
         transform: translate(

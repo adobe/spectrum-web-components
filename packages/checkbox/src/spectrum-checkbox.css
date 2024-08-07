@@ -521,6 +521,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-control-size)
             )
     );
+    --spectrum-checkbox-selected-border-width: calc(
+        var(--spectrum-checkbox-control-size) / 2
+    );
     margin: calc(
             var(--mod-checkbox-spacing, var(--spectrum-checkbox-spacing)) / 2
         )

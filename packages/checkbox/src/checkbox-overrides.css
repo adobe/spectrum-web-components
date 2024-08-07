@@ -94,9 +94,6 @@ governing permissions and limitations under the License.
         --system-checkbox-focus-indicator-thickness
     );
     --spectrum-checkbox-border-width: var(--system-checkbox-border-width);
-    --spectrum-checkbox-selected-border-width: var(
-        --system-checkbox-selected-border-width
-    );
     --spectrum-checkbox-animation-duration: var(
         --system-checkbox-animation-duration
     );

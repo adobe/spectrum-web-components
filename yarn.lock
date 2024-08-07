@@ -5658,10 +5658,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-9.0.0-s2-foundations.12.tgz#5f27ab146c24be8481ca8ad609d203b1199bd303"
   integrity sha512-m1LJ5rTKrq7JeAA5HFTUefN07NGHTNHVYM/yKRdBIUGe7S+UL5XACghVFpMtMmXCWSiGlwuUFWqmochLHWVJFQ==
 
-"@spectrum-css/checkbox@^10.0.0-s2-foundations.12":
-  version "10.0.0-s2-foundations.12"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-10.0.0-s2-foundations.12.tgz#d08f05643a3ea80b3f9ce41d4c6e0441d28497b8"
-  integrity sha512-E9ixJzrtnkAglxiBHftU0fcgQXO1LT/Ja2/+177G1+50zBRKr59c58tJ045bial/l/HGEIgiS+3T+UyJqjSBMQ==
+"@spectrum-css/checkbox@^10.0.0-s2-foundations.13":
+  version "10.0.0-s2-foundations.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-10.0.0-s2-foundations.13.tgz#16bc4b49b18fac8610ef2e876c0e185db5b14f74"
+  integrity sha512-bbhlSDgdjd4mFVFO7vJZlMyCzZWb/Oasn31KUsZ2rftfng+Oom6JEBzR6KTwqVi2W42uQFSaPTn6trMIua6ePQ==
 
 "@spectrum-css/clearbutton@^7.0.0-s2-foundations.12":
   version "7.0.0-s2-foundations.12"
@@ -5678,10 +5678,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/coachindicator/-/coachindicator-3.0.0-s2-foundations.12.tgz#2db481926c5b19207ae30a8b7a253c4f10e29a44"
   integrity sha512-8+WxU7ePGBxQdMScSWFF54XPffQI1y8kaXmQ2dr48+gesjBpDLgkIk2kfZSZ8u5ZXQVvl9aBOFBuSHdZRSQC7Q==
 
-"@spectrum-css/coachmark@^8.0.0-s2-foundations.12":
-  version "8.0.0-s2-foundations.12"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-8.0.0-s2-foundations.12.tgz#f832c96a55124ebfbcd24bf548552ffbaa44a347"
-  integrity sha512-i1rSRO2z1GpFFXD38htHGy3PJ2r3Q1jo76cyLOilXoADBulhJptZNTlin4En4TdcPMPPI2l+Le+pIcqObPq+Bg==
+"@spectrum-css/coachmark@^8.0.0-s2-foundations.13":
+  version "8.0.0-s2-foundations.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-8.0.0-s2-foundations.13.tgz#06b1c83bed311a7f058e60603e5ef20fc077956a"
+  integrity sha512-zaQ/vxd+J3iZAQeQIotbY2/kCfkLCK/PW13bGY3k2sX+zhTXrdfMYcOoE8U6IkuwJ6N/LTy63+xqyQCbyuUnnA==
 
 "@spectrum-css/colorarea@^6.0.0-s2-foundations.12":
   version "6.0.0-s2-foundations.12"
@@ -5808,10 +5808,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-8.0.0-s2-foundations.12.tgz#e3965e72366027b26eef252e7c2bb8de5a11c093"
   integrity sha512-LnWwAA0C7+/zDbEYhMGiHPXU0bAiFwIoaYDRG53kzdZcekDfFH8YaBqksuv4lyMXPjAhBU62NiKZA6VDjdarBg==
 
-"@spectrum-css/progressbar@^5.0.0-s2-foundations.12":
-  version "5.0.0-s2-foundations.12"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-5.0.0-s2-foundations.12.tgz#5e810218d953bd718b8b560c5409ce83d1a1bffa"
-  integrity sha512-Qm77m1hu5pfnXVYlaUMf2R9ZybGE6Zm1BKX4qFwsLrc1SPe3BZY5iI6gEBTLcpcOJuf7/gCaujLR2PsIUU/AmQ==
+"@spectrum-css/progressbar@^5.0.0-s2-foundations.13":
+  version "5.0.0-s2-foundations.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-5.0.0-s2-foundations.13.tgz#332b07271c2946a64772f2ba366d5afe19e9db16"
+  integrity sha512-JI6ayQMn3xSvqhmc0N+X/AQjZyB2lf+iuGK1ihTc+JXfxIVYFFn1x6CZ58KK38rhmyTo9cBdX/sOW/HBYbVUVg==
 
 "@spectrum-css/progresscircle@^4.0.0-s2-foundations.12":
   version "4.0.0-s2-foundations.12"
