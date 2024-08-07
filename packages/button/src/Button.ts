@@ -76,8 +76,6 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         this.pendingStateController = new PendingStateController(this);
     }
 
-    private cachedAriaLabel: string | null = null;
-
     public override click(): void {
         if (this.pendingStateController.isPending()) {
             return;
@@ -173,50 +171,17 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
+        if (this.pendingStateController.isPending()) {
+            this.pendingStateController.hostUpdated();
+        }
+    }
+
+    protected override update(changes: PropertyValues): void {
+        super.update(changes);
     }
 
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
-
-        if (changed.has('pending')) {
-            if (
-                this.pendingStateController.isPending() &&
-                this.pendingLabel !== this.getAttribute('aria-label')
-            ) {
-                if (!this.disabled) {
-                    this.cachedAriaLabel =
-                        this.getAttribute('aria-label') || '';
-                    this.setAttribute('aria-label', this.pendingLabel);
-                }
-            } else if (
-                !this.pendingStateController.isPending() &&
-                this.cachedAriaLabel
-            ) {
-                this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (
-                !this.pendingStateController.isPending() &&
-                this.cachedAriaLabel === ''
-            ) {
-                this.removeAttribute('aria-label');
-            }
-        }
-
-        if (changed.has('disabled')) {
-            if (
-                !this.disabled &&
-                this.pendingLabel !== this.getAttribute('aria-label')
-            ) {
-                if (this.pendingStateController.isPending()) {
-                    this.cachedAriaLabel =
-                        this.getAttribute('aria-label') || '';
-                    this.setAttribute('aria-label', this.pendingLabel);
-                }
-            } else if (this.disabled && this.cachedAriaLabel) {
-                this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (this.disabled && this.cachedAriaLabel == '') {
-                this.removeAttribute('aria-label');
-            }
-        }
     }
 
     protected override renderButton(): TemplateResult {

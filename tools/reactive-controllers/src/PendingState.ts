@@ -13,9 +13,13 @@ governing permissions and limitations under the License.
 import { html, ReactiveController, ReactiveElement, TemplateResult } from 'lit';
 import('@spectrum-web-components/progress-circle/sp-progress-circle.js');
 
+/**
+ * Represents a host element with pending state.
+ */
 export interface HostWithPendingState extends ReactiveElement {
     pendingLabel?: string;
     pending: boolean;
+    disabled: boolean;
 }
 
 /**
@@ -60,7 +64,7 @@ export class PendingStateController<T extends HostWithPendingState>
     public isPending(): boolean {
         return this.host.pending;
     }
-
+    private cachedAriaLabel: string | null = null;
     /**
      * Renders the pending state UI.
      *
@@ -81,16 +85,44 @@ export class PendingStateController<T extends HostWithPendingState>
     }
 
     /**
+     * Updates the ARIA label of the host element based on the pending state.
+     * If the element is in a pending state and the current aria-label attribute
+     * is not equal to the pending label, the aria-label attribute is updated to
+     * the pending label. If the element is not in a pending state, the aria-label
+     * attribute is reset to its original value if it was cached, or removed if it
+     * was not cached.
+     */
+    private updateAriaLabel(): void {
+        if (this.isPending() && !this.host.disabled) {
+            this.cachedAriaLabel = this.host.getAttribute('aria-label');
+            this.host.setAttribute(
+                'aria-label',
+                this.host.pendingLabel || 'Pending'
+            );
+        } else if (!this.isPending()) {
+            if (this.cachedAriaLabel) {
+                this.host.setAttribute('aria-label', this.cachedAriaLabel);
+            } else {
+                this.host.removeAttribute('aria-label');
+            }
+        } else if (this.host.disabled) {
+            if (this.cachedAriaLabel) {
+                this.host.setAttribute('aria-label', this.cachedAriaLabel);
+            }
+        }
+    }
+    /**
      * Called when the host element is connected to the DOM.
      */
-    hostConnected(): void {}
+    hostConnected(): void {
+        this.cachedAriaLabel = this.host.getAttribute('aria-label');
+        this.updateAriaLabel();
+    }
 
     /**
      * Called when the host element is updated.
      */
-    hostUpdated(): void {}
-
-    /**
-     * Checks the pending state and calls the onPendingChange callback with the new state everytime the state is changed.
-     */
+    hostUpdated(): void {
+        this.updateAriaLabel();
+    }
 }
