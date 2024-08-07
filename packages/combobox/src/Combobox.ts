@@ -149,7 +149,7 @@ export class Combobox extends Textfield {
     }
 
     public handleComboboxKeydown(event: KeyboardEvent): void {
-        if (this.readonly || this.pendingStateController.isPending()) {
+        if (this.readonly || this.pendingStateController.isPending) {
             return;
         }
         if (event.altKey && event.code === 'ArrowDown') {
@@ -254,7 +254,7 @@ export class Combobox extends Textfield {
     public filterAvailableOptions(): void {
         if (
             this.autocomplete === 'none' ||
-            this.pendingStateController.isPending()
+            this.pendingStateController.isPending
         ) {
             return;
         }
@@ -269,7 +269,7 @@ export class Combobox extends Textfield {
 
     public override handleInput(event: Event): void {
         super.handleInput(event);
-        if (!this.pendingStateController.isPending()) {
+        if (!this.pendingStateController.isPending) {
             this.activeDescendant = undefined;
             this.open = true;
         }
@@ -298,7 +298,7 @@ export class Combobox extends Textfield {
     }
 
     public toggleOpen(): void {
-        if (this.readonly || this.pendingStateController.isPending()) {
+        if (this.readonly || this.pendingStateController.isPending) {
             this.open = false;
             return;
         }
@@ -345,7 +345,7 @@ export class Combobox extends Textfield {
         const appliedLabel = this.label || this.appliedLabel;
 
         return html`
-            ${this.pendingStateController.isPending()
+            ${this.pendingStateController.isPending
                 ? html`
                       <span
                           aria-hidden="true"
@@ -438,7 +438,7 @@ export class Combobox extends Textfield {
                 ?readonly=${this.readonly}
             />
             ${when(
-                this.pendingStateController.isPending() &&
+                this.pendingStateController.isPending &&
                     !this.disabled &&
                     !this.readonly,
                 () => {
@@ -577,7 +577,7 @@ export class Combobox extends Textfield {
             this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
         >
     ): void {
-        if (changed.has('open') && !this.pendingStateController.isPending()) {
+        if (changed.has('open') && !this.pendingStateController.isPending) {
             this.manageListOverlay();
         }
         if (!this.focused && this.open) {

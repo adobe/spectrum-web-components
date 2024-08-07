@@ -77,7 +77,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     }
 
     public override click(): void {
-        if (this.pendingStateController.isPending()) {
+        if (this.pendingStateController.isPending) {
             return;
         }
         super.click();
@@ -171,7 +171,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
-        if (this.pendingStateController.isPending()) {
+        if (this.pendingStateController.isPending) {
             this.pendingStateController.hostUpdated();
         }
     }
@@ -187,7 +187,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
-            ${when(this.pendingStateController.isPending(), () => {
+            ${when(this.pendingStateController.isPending, () => {
                 return this.pendingStateController.renderPendingState();
             })}
         `;

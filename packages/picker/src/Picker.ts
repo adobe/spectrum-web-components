@@ -321,7 +321,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly || this.pendingStateController.isPending()) {
+        if (this.readonly || this.pendingStateController.isPending) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -434,14 +434,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid && !this.pendingStateController.isPending()
+                ${this.invalid && !this.pendingStateController.isPending
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pendingStateController.isPending(), () => {
+                ${when(this.pendingStateController.isPending, () => {
                     return this.pendingStateController.renderPendingState();
                 })}
                 <sp-icon-chevron100
@@ -841,7 +841,7 @@ export class Picker extends PickerBase {
         if (
             !code.startsWith('Arrow') ||
             this.readonly ||
-            this.pendingStateController.isPending()
+            this.pendingStateController.isPending
         ) {
             return;
         }

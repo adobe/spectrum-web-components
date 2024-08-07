@@ -61,7 +61,15 @@ export class PendingStateController<T extends HostWithPendingState>
      *
      * @returns A boolean indicating whether the host is in a pending state.
      */
-    public isPending(): boolean {
+    // public isPending: boolean {
+    //     return this.host.pending;
+    // }
+    /**
+     * Getter for the current pending state.
+     *
+     * @returns A boolean indicating whether the host is in a pending state.
+     */
+    get isPending(): boolean {
         return this.host.pending;
     }
     private cachedAriaLabel: string | null = null;
@@ -93,13 +101,13 @@ export class PendingStateController<T extends HostWithPendingState>
      * was not cached.
      */
     private updateAriaLabel(): void {
-        if (this.isPending() && !this.host.disabled) {
+        if (this.isPending && !this.host.disabled) {
             this.cachedAriaLabel = this.host.getAttribute('aria-label');
             this.host.setAttribute(
                 'aria-label',
                 this.host.pendingLabel || 'Pending'
             );
-        } else if (!this.isPending()) {
+        } else if (!this.isPending) {
             if (this.cachedAriaLabel) {
                 this.host.setAttribute('aria-label', this.cachedAriaLabel);
             } else {
