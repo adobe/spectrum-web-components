@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/icons/sp-icons-large.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
-import '../../iconset/stories/icons-demo.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
@@ -28,18 +27,14 @@ interface Properties {
     color: string;
 }
 
-export const listMedium = ({ color }: Properties): TemplateResult => html`
-    <icons-demo style="color: ${color}">
-        <sp-icons-medium></sp-icons-medium>
-    </icons-demo>
+export const listMedium = ({}: Properties): TemplateResult => html`
+    <sp-icons-medium></sp-icons-medium>
 `;
 
 listMedium.storyName = 'UI Icons - Medium';
 
-export const listLarge = ({ color }: Properties): TemplateResult => html`
-    <icons-demo style="color: ${color}">
-        <sp-icons-large></sp-icons-large>
-    </icons-demo>
+export const listLarge = ({}: Properties): TemplateResult => html`
+    <sp-icons-large></sp-icons-large>
 `;
 
 listLarge.storyName = 'UI Icons - Large';

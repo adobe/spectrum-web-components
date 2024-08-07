@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/icon/sp-icon.js';
-import '../../iconset/stories/icons-demo.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { until } from '@spectrum-web-components/base/src/directives.js';
 
