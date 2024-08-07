@@ -1,8 +1,8 @@
-## Overview
+## Description
 
 For use within an `<sp-menu>` element, an `<sp-menu-item>` represents a single item in a menu.
 
-### Usage
+## Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/menu?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/menu)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/menu)
@@ -132,15 +132,8 @@ Note: While `sp-menu-item` can accommodate any custom content in the `submenu` s
 ```html
 <sp-menu style="width: 200px;">
     <sp-menu-item>
-        Item with arbitrary content in submenu
-        <div role="menuitem" slot="submenu" style="padding: 12px">
-            <img
-                src="https://placekitten.com/200/200"
-                alt="Kitten"
-                style="width: 100%; height: auto; border-radius: 4px"
-            />
-            <p>I am an arbitrary content in submenu</p>
-        </div>
+        Activity
+        <sp-link slot="value" href="#">More&nbsp;info</sp-link>
     </sp-menu-item>
 </sp-menu>
 ```
