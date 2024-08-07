@@ -130,28 +130,28 @@ governing permissions and limitations under the License.
 }
 
 :host([selected]) {
-    --mod-actionbutton-background-color-default: var(
+    --spectrum-actionbutton-background-color-default: var(
         --system-action-button-selected-background-color-default
     );
-    --mod-actionbutton-background-color-hover: var(
+    --spectrum-actionbutton-background-color-hover: var(
         --system-action-button-selected-background-color-hover
     );
-    --mod-actionbutton-background-color-down: var(
+    --spectrum-actionbutton-background-color-down: var(
         --system-action-button-selected-background-color-down
     );
-    --mod-actionbutton-background-color-focus: var(
+    --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-selected-background-color-focus
     );
-    --mod-actionbutton-content-color-default: var(
+    --spectrum-actionbutton-content-color-default: var(
         --system-action-button-selected-content-color-default
     );
-    --mod-actionbutton-content-color-hover: var(
+    --spectrum-actionbutton-content-color-hover: var(
         --system-action-button-selected-content-color-hover
     );
-    --mod-actionbutton-content-color-down: var(
+    --spectrum-actionbutton-content-color-down: var(
         --system-action-button-selected-content-color-down
     );
-    --mod-actionbutton-content-color-focus: var(
+    --spectrum-actionbutton-content-color-focus: var(
         --system-action-button-selected-content-color-focus
     );
     --spectrum-actionbutton-border-color-default: var(
@@ -175,28 +175,28 @@ governing permissions and limitations under the License.
 }
 
 :host([selected][emphasized]) {
-    --mod-actionbutton-background-color-default: var(
+    --spectrum-actionbutton-background-color-default: var(
         --system-action-button-selected-emphasized-background-color-default
     );
-    --mod-actionbutton-background-color-hover: var(
+    --spectrum-actionbutton-background-color-hover: var(
         --system-action-button-selected-emphasized-background-color-hover
     );
-    --mod-actionbutton-background-color-down: var(
+    --spectrum-actionbutton-background-color-down: var(
         --system-action-button-selected-emphasized-background-color-down
     );
-    --mod-actionbutton-background-color-focus: var(
+    --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-selected-emphasized-background-color-focus
     );
-    --mod-actionbutton-content-color-default: var(
+    --spectrum-actionbutton-content-color-default: var(
         --system-action-button-selected-emphasized-content-color-default
     );
-    --mod-actionbutton-content-color-hover: var(
+    --spectrum-actionbutton-content-color-hover: var(
         --system-action-button-selected-emphasized-content-color-hover
     );
-    --mod-actionbutton-content-color-down: var(
+    --spectrum-actionbutton-content-color-down: var(
         --system-action-button-selected-emphasized-content-color-down
     );
-    --mod-actionbutton-content-color-focus: var(
+    --spectrum-actionbutton-content-color-focus: var(
         --system-action-button-selected-emphasized-content-color-focus
     );
 }
@@ -429,34 +429,34 @@ governing permissions and limitations under the License.
 }
 
 :host([static='black'][selected]) {
-    --mod-actionbutton-background-color-default: var(
+    --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-black-selected-background-color-default
     );
-    --mod-actionbutton-background-color-hover: var(
+    --spectrum-actionbutton-background-color-hover: var(
         --system-action-button-static-black-selected-background-color-hover
     );
-    --mod-actionbutton-background-color-down: var(
+    --spectrum-actionbutton-background-color-down: var(
         --system-action-button-static-black-selected-background-color-down
     );
-    --mod-actionbutton-background-color-focus: var(
+    --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-static-black-selected-background-color-focus
     );
-    --mod-actionbutton-content-color-default-selected: var(
+    --spectrum-actionbutton-content-color-default-selected: var(
         --system-action-button-static-black-selected-content-color-default-selected
     );
-    --mod-actionbutton-content-color-hover: var(
+    --spectrum-actionbutton-content-color-hover: var(
         --system-action-button-static-black-selected-content-color-hover
     );
-    --mod-actionbutton-content-color-down: var(
+    --spectrum-actionbutton-content-color-down: var(
         --system-action-button-static-black-selected-content-color-down
     );
-    --mod-actionbutton-content-color-focus: var(
+    --spectrum-actionbutton-content-color-focus: var(
         --system-action-button-static-black-selected-content-color-focus
     );
-    --mod-actionbutton-background-color-disabled: var(
+    --spectrum-actionbutton-background-color-disabled: var(
         --system-action-button-static-black-selected-background-color-disabled
     );
-    --mod-actionbutton-border-color-disabled: var(
+    --spectrum-actionbutton-border-color-disabled: var(
         --system-action-button-static-black-selected-border-color-disabled
     );
 }
@@ -513,34 +513,34 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white'][selected]) {
-    --mod-actionbutton-background-color-default: var(
+    --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-white-selected-background-color-default
     );
-    --mod-actionbutton-background-color-hover: var(
+    --spectrum-actionbutton-background-color-hover: var(
         --system-action-button-static-white-selected-background-color-hover
     );
-    --mod-actionbutton-background-color-down: var(
+    --spectrum-actionbutton-background-color-down: var(
         --system-action-button-static-white-selected-background-color-down
     );
-    --mod-actionbutton-background-color-focus: var(
+    --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-static-white-selected-background-color-focus
     );
-    --mod-actionbutton-content-color-default: var(
+    --spectrum-actionbutton-content-color-default: var(
         --system-action-button-static-white-selected-content-color-default
     );
-    --mod-actionbutton-content-color-hover: var(
+    --spectrum-actionbutton-content-color-hover: var(
         --system-action-button-static-white-selected-content-color-hover
     );
-    --mod-actionbutton-content-color-down: var(
+    --spectrum-actionbutton-content-color-down: var(
         --system-action-button-static-white-selected-content-color-down
     );
-    --mod-actionbutton-content-color-focus: var(
+    --spectrum-actionbutton-content-color-focus: var(
         --system-action-button-static-white-selected-content-color-focus
     );
-    --mod-actionbutton-background-color-disabled: var(
+    --spectrum-actionbutton-background-color-disabled: var(
         --system-action-button-static-white-selected-background-color-disabled
     );
-    --mod-actionbutton-border-color-disabled: var(
+    --spectrum-actionbutton-border-color-disabled: var(
         --system-action-button-static-white-selected-border-color-disabled
     );
 }

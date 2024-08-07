@@ -256,8 +256,8 @@ governing permissions and limitations under the License.
     --spectrum-accordion-item-header-line-height-size-s: var(
         --system-accordion-spacious-item-header-line-height-size-s
     );
-    --spectrum-accordion-item-header-top-to-text-spac-size-se: var(
-        --system-accordion-spacious-item-header-top-to-text-spac-size-se
+    --spectrum-accordion-item-header-top-to-text-space-size-s: var(
+        --system-accordion-spacious-item-header-top-to-text-space-size-s
     );
     --spectrum-accordion-item-header-bottom-to-text-space-size-s: var(
         --system-accordion-spacious-item-header-bottom-to-text-space-size-s
