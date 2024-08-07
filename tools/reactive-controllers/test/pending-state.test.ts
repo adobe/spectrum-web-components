@@ -26,9 +26,9 @@ describe('PendingStateController', () => {
 
     beforeEach(async () => {
         host = await fixture<HostWithPendingState>(html`
-            <sp-picker pending></sp-picker>
+            <sp-picker aria-label="clickable" pending></sp-picker>
         `);
-        controller = new PendingStateController(host);
+        controller = host.pendingStateController;
     });
 
     afterEach(() => {
@@ -36,6 +36,22 @@ describe('PendingStateController', () => {
     });
 
     describe('renderPendingState', () => {
+        it('should change aria-label of host when pending and when not pending', async () => {
+            await host.updateComplete;
+            let ariaLabel = host.getAttribute('aria-label');
+            expect(ariaLabel).to.equal('Pending');
+
+            host.removeAttribute('pending');
+            await host.updateComplete;
+            ariaLabel = host.getAttribute('aria-label');
+            expect(ariaLabel).to.equal('clickable');
+
+            host.setAttribute('pending', 'true');
+            await host.updateComplete;
+            ariaLabel = host.getAttribute('aria-label');
+            expect(ariaLabel).to.equal('Pending');
+        });
+
         it('should render the pending state UI', async () => {
             const pendingLabel = 'Custom Pending Label';
             host.pendingLabel = pendingLabel;

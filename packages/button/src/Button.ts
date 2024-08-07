@@ -62,7 +62,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
 
-    protected pendingStateController: PendingStateController<this>;
+    public pendingStateController: PendingStateController<this>;
 
     /**
      * Initializes the `PendingStateController` for the Button component.

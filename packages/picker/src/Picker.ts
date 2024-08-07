@@ -155,18 +155,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return this._selectedItem;
     }
 
-    protected pendingStateController: PendingStateController<this>;
+    public pendingStateController: PendingStateController<this>;
 
     /**
      * Initializes the `PendingStateController` for the Picker component.
-     *
      * The `PendingStateController` manages the pending state of the Picker.
-     * It takes two parameters:
-     * - `pending`: A function that returns the current pending state.
-     * - `onPendingChange`: A callback function that is invoked when the pending state changes.
-     *
-     * When the pending state changes to `true`, the `open` property of the Picker is set to `false`.
-     *
      */
     constructor() {
         super();

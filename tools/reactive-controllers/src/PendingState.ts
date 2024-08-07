@@ -10,16 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, ReactiveController, ReactiveElement, TemplateResult } from 'lit';
-import('@spectrum-web-components/progress-circle/sp-progress-circle.js');
+import { html, LitElement, ReactiveController, TemplateResult } from 'lit';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 
 /**
  * Represents a host element with pending state.
  */
-export interface HostWithPendingState extends ReactiveElement {
+export interface HostWithPendingState extends LitElement {
     pendingLabel?: string;
     pending: boolean;
     disabled: boolean;
+    pendingStateController: PendingStateController<HostWithPendingState>;
 }
 
 /**
@@ -36,47 +37,23 @@ export class PendingStateController<T extends HostWithPendingState>
     public host: T;
 
     /**
-     * A function that returns a boolean indicating whether the host is in a pending state.
-     */
-
-    /**
-     * A callback function that is called when the pending state changes.
-     *
-     * @param pending - A boolean indicating the new pending state.
-     */
-
-    /**
      * Creates an instance of PendingStateController.
-     *
      * @param host - The host element that this controller is attached to.
-     * @param config - The configuration object containing the pending function and onPendingChange callback.
      */
     constructor(host: T) {
         this.host = host;
         this.host.addController(this);
     }
-
-    /**
-     * Checks if the host is in a pending state.
-     *
-     * @returns A boolean indicating whether the host is in a pending state.
-     */
-    // public isPending: boolean {
-    //     return this.host.pending;
-    // }
     /**
      * Getter for the current pending state.
-     *
      * @returns A boolean indicating whether the host is in a pending state.
      */
     get isPending(): boolean {
         return this.host.pending;
     }
-    private cachedAriaLabel: string | null = null;
+    public cachedAriaLabel: string | null = null;
     /**
      * Renders the pending state UI.
-     *
-     * @param pendingLabel - The label to display for the pending state. Defaults to 'pending label'.
      * @returns A TemplateResult representing the pending state UI.
      */
     public renderPendingState(): TemplateResult {
@@ -94,14 +71,14 @@ export class PendingStateController<T extends HostWithPendingState>
 
     /**
      * Updates the ARIA label of the host element based on the pending state.
-     * If the element is in a pending state and the current aria-label attribute
-     * is not equal to the pending label, the aria-label attribute is updated to
-     * the pending label. If the element is not in a pending state, the aria-label
-     * attribute is reset to its original value if it was cached, or removed if it
-     * was not cached.
+     * Manages Cached Aria Label
      */
     private updateAriaLabel(): void {
-        if (this.isPending && !this.host.disabled) {
+        if (
+            this.isPending &&
+            !this.host.disabled &&
+            this.host.getAttribute('aria-label') != this.host.pendingLabel
+        ) {
             this.cachedAriaLabel = this.host.getAttribute('aria-label');
             this.host.setAttribute(
                 'aria-label',
@@ -119,17 +96,13 @@ export class PendingStateController<T extends HostWithPendingState>
             }
         }
     }
-    /**
-     * Called when the host element is connected to the DOM.
-     */
+
     hostConnected(): void {
-        this.cachedAriaLabel = this.host.getAttribute('aria-label');
+        if (!this.cachedAriaLabel)
+            this.cachedAriaLabel = this.host.getAttribute('aria-label');
         this.updateAriaLabel();
     }
 
-    /**
-     * Called when the host element is updated.
-     */
     hostUpdated(): void {
         this.updateAriaLabel();
     }

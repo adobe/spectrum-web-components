@@ -84,7 +84,7 @@ export class Combobox extends Textfield {
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
-    protected pendingStateController: PendingStateController<this>;
+    public pendingStateController: PendingStateController<this>;
 
     /**
      * Initializes the `PendingStateController` for the Combobox component.
