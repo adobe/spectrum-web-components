@@ -127,7 +127,7 @@ Content assigned to the `value` slot will be placed at the end of the `<sp-menu-
 </sp-menu>
 ```
 
-Note: While `sp-menu-item` can accommodate any custom content in the `submenu` slot, it will not handle selection or keyboard navigation for such content. To ensure proper management of selection and keyboard navigation, it is recommended to use `sp-menu` within the `submenu` slot```
+Note: While `sp-menu-item` can accommodate any custom content in the `submenu` slot, it will not handle selection or keyboard navigation for such content. To ensure proper management of selection and keyboard navigation, it is recommended to use `sp-menu` within the `submenu` slot.
 
 ```html
 <sp-menu style="width: 200px;">
