@@ -66,10 +66,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
     /**
      * Initializes the `PendingStateController` for the Button component.
-     *
      * The `PendingStateController` manages the pending state of the Button.
-     * It takes two parameters:
-     * - `pending`: A function that returns the current pending state.
      */
     constructor() {
         super();
