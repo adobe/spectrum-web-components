@@ -323,7 +323,7 @@
         --spectrum-accordion-bottom-to-text-spacious-extra-large
     );
     --system-accordion-spacious-item-header-line-height-size-s: 1.25;
-    --system-accordion-spacious-item-header-top-to-text-spac-size-se: var(
+    --system-accordion-spacious-item-header-top-to-text-space-size-s: var(
         --spectrum-accordion-small-top-to-text-spacious
     );
     --system-accordion-spacious-item-header-bottom-to-text-space-size-s: var(
@@ -2124,9 +2124,6 @@
         --spectrum-focus-indicator-thickness
     );
     --system-checkbox-border-width: var(--spectrum-border-width-200);
-    --system-checkbox-selected-border-width: calc(
-        var(--system-checkbox-control-size) / 2
-    );
     --system-checkbox-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -2610,6 +2607,13 @@
     );
     --system-coach-mark-step-to-bottom: var(
         --spectrum-coach-mark-pagination-text-to-bottom-edge
+    );
+    --system-coach-mark-popover-border-width: var(--spectrum-border-width-100);
+    --system-coach-mark-popover-corner-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-coach-mark-buttongroup-spacing-horizontal: var(
+        --spectrum-spacing-100
     );
 }
 
