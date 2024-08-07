@@ -74,7 +74,6 @@ jobs:
                   uploadArtifacts: true
                   urls: |
                       https://opensource.adobe.com/spectrum-web-components/
-                      https://main--spectrum-web-components.netlify.app/
                       https://${{ steps.extract_branch.outputs.branch }}--spectrum-web-components.netlify.app/
 
             - name: Post Results
