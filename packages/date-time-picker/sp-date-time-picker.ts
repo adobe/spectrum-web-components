@@ -9,10 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/time-field/sp-time-field.js';
-import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import { DateTimePicker } from './src/DateTimePicker.js';
 
-measureFixtureCreation(html`
-    <sp-time-field></sp-time-field>
-`);
+customElements.define('sp-date-time-picker', DateTimePicker);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-date-time-picker': DateTimePicker;
+    }
+}

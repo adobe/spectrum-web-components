@@ -84,6 +84,7 @@
         "@spectrum-web-components/color-slider": "^0.41.2",
         "@spectrum-web-components/color-wheel": "^0.41.2",
         "@spectrum-web-components/combobox": "^0.41.2",
+        "@spectrum-web-components/date-time-picker": "^0.0.1",
         "@spectrum-web-components/dialog": "^0.41.2",
         "@spectrum-web-components/divider": "^0.41.2",
         "@spectrum-web-components/dropzone": "^0.41.2",

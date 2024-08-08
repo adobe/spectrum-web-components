@@ -9,25 +9,26 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-time-field.js';
-import { TimeField } from '..';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { DateTimePicker } from '@spectrum-web-components/date-time-picker';
 
-describe('TimeField', () => {
+describe('DateTimePicker', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<TimeField>(
+            await fixture<DateTimePicker>(
                 html`
-                    <sp-time-field></sp-time-field>
+                    <sp-date-time-picker></sp-date-time-picker>
                 `
             )
     );
-    it('loads default time-field accessibly', async () => {
-        const el = await fixture<TimeField>(
+
+    it('loads default sp-date-time-picker accessibly', async () => {
+        const el = await fixture<DateTimePicker>(
             html`
-                <sp-time-field></sp-time-field>
+                <sp-date-time-picker></sp-date-time-picker>
             `
         );
 
