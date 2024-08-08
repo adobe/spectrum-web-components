@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
-
-### Bug Fixes
-
--   **picker:** updated type for mobile and desktop ([#4666](https://github.com/adobe/spectrum-web-components/issues/4666)) ([d11da1f](https://github.com/adobe/spectrum-web-components/commit/d11da1ffb7faa7804a1383cffba90277cf401e45))
-
 # [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
 
 **Note:** Version bump only for package @spectrum-web-components/picker
