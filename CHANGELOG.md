@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+### Bug Fixes
+
+-   **contextual-help:** export typings ([#4655](https://github.com/adobe/spectrum-web-components/issues/4655)) ([8febc38](https://github.com/adobe/spectrum-web-components/commit/8febc383afa7fb67573c56ea4704d7397f07b661))
+-   docummentation demo controls should should have their changes reflected ([#4636](https://github.com/adobe/spectrum-web-components/issues/4636)) ([adc8af9](https://github.com/adobe/spectrum-web-components/commit/adc8af98e1a59c399551885506c9d68edb840fd0))
+-   **menu:** should not make a selection on right click ([#4642](https://github.com/adobe/spectrum-web-components/issues/4642)) ([d269629](https://github.com/adobe/spectrum-web-components/commit/d269629a64063515eddee9b178b6240b92b9bc76))
+-   rtl mobile layout view ([#4645](https://github.com/adobe/spectrum-web-components/issues/4645)) ([4b2d688](https://github.com/adobe/spectrum-web-components/commit/4b2d68826b064b6d36970793ae7fa54a7f83917e))
+
+### Features
+
+-   upgrade menu and dialog grid css ([#4638](https://github.com/adobe/spectrum-web-components/issues/4638)) ([ab9d468](https://github.com/adobe/spectrum-web-components/commit/ab9d468a5a1cf5721e169bd8dd8724be78c148a1))
+
 # [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
 
 ### Bug Fixes

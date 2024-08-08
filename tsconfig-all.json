@@ -40,6 +40,7 @@
         { "path": "packages/color-slider" },
         { "path": "packages/color-wheel" },
         { "path": "packages/combobox" },
+        { "path": "packages/contextual-help" },
         { "path": "packages/dialog" },
         { "path": "packages/divider" },
         { "path": "packages/dropzone" },

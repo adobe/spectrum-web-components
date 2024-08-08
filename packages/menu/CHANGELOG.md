@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+### Bug Fixes
+
+-   **menu:** should not make a selection on right click ([#4642](https://github.com/adobe/spectrum-web-components/issues/4642)) ([d269629](https://github.com/adobe/spectrum-web-components/commit/d269629a64063515eddee9b178b6240b92b9bc76))
+
+### Features
+
+-   upgrade menu and dialog grid css ([#4638](https://github.com/adobe/spectrum-web-components/issues/4638)) ([ab9d468](https://github.com/adobe/spectrum-web-components/commit/ab9d468a5a1cf5721e169bd8dd8724be78c148a1))
+
 # [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
 
 **Note:** Version bump only for package @spectrum-web-components/menu
