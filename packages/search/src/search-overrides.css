@@ -30,13 +30,9 @@ governing permissions and limitations under the License.
         --system-search-border-color-key-focus
     );
     --spectrum-search-inline-size: var(--system-search-inline-size);
-    --spectrum-search-block-size: var(--system-search-block-size);
-    --spectrum-search-button-inline-size: var(
-        --system-search-button-inline-size
+    --spectrum-search-min-inline-multiplier: var(
+        --system-search-min-inline-multiplier
     );
-    --spectrum-search-min-inline-size: var(--system-search-min-inline-size);
-    --spectrum-search-icon-size: var(--system-search-icon-size);
-    --spectrum-search-text-to-icon: var(--system-search-text-to-icon);
     --spectrum-search-to-help-text: var(--system-search-to-help-text);
     --spectrum-search-top-to-text: var(--system-search-top-to-text);
     --spectrum-search-bottom-to-text: var(--system-search-bottom-to-text);
@@ -67,89 +63,49 @@ governing permissions and limitations under the License.
     --spectrum-search-border-color-disabled: var(
         --system-search-border-color-disabled
     );
-    --mod-textfield-font-family: var(--system-search-textfield-font-family);
-    --mod-textfield-font-weight: var(--system-search-textfield-font-weight);
-    --mod-textfield-corner-radius: var(--system-search-textfield-corner-radius);
-    --mod-textfield-border-width: var(--system-search-textfield-border-width);
-    --mod-textfield-focus-indicator-gap: var(
-        --system-search-textfield-focus-indicator-gap
-    );
-    --mod-textfield-focus-indicator-width: var(
-        --system-search-textfield-focus-indicator-width
-    );
-    --mod-textfield-focus-indicator-color: var(
-        --system-search-textfield-focus-indicator-color
-    );
-    --mod-textfield-text-color-default: var(
-        --system-search-textfield-text-color-default
-    );
-    --mod-textfield-text-color-hover: var(
-        --system-search-textfield-text-color-hover
-    );
-    --mod-textfield-text-color-focus: var(
-        --system-search-textfield-text-color-focus
-    );
-    --mod-textfield-text-color-focus-hover: var(
-        --system-search-textfield-text-color-focus-hover
-    );
-    --mod-textfield-text-color-keyboard-focus: var(
-        --system-search-textfield-text-color-keyboard-focus
-    );
-    --mod-textfield-text-color-disabled: var(
-        --system-search-textfield-text-color-disabled
-    );
-    --mod-textfield-border-color: var(--system-search-textfield-border-color);
-    --mod-textfield-border-color-hover: var(
-        --system-search-textfield-border-color-hover
-    );
-    --mod-textfield-border-color-focus: var(
-        --system-search-textfield-border-color-focus
-    );
-    --mod-textfield-border-color-focus-hover: var(
-        --system-search-textfield-border-color-focus-hover
-    );
-    --mod-textfield-border-color-keyboard-focus: var(
-        --system-search-textfield-border-color-keyboard-focus
-    );
-    --mod-textfield-border-color-disabled: var(
-        --system-search-textfield-border-color-disabled
-    );
-    --mod-textfield-background-color: var(
-        --system-search-textfield-background-color
-    );
-    --mod-textfield-background-color-disabled: var(
-        --system-search-textfield-background-color-disabled
-    );
+    --spectrum-search-block-size: var(--system-search-block-size);
+    --spectrum-search-icon-size: var(--system-search-icon-size);
+    --spectrum-search-text-to-icon: var(--system-search-text-to-icon);
 }
 
-:host([size='s']) {
-    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
+:host([size='s']) #textfield {
     --spectrum-search-edge-to-visual: var(
         --system-search-size-s-edge-to-visual
     );
     --spectrum-search-block-size: var(--system-search-size-s-block-size);
     --spectrum-search-icon-size: var(--system-search-size-s-icon-size);
     --spectrum-search-text-to-icon: var(--system-search-size-s-text-to-icon);
+    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
 }
 
-:host([size='l']) {
-    --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
+:host([size='m']) #textfield {
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-m-edge-to-visual
+    );
+    --spectrum-search-block-size: var(--system-search-size-m-block-size);
+    --spectrum-search-icon-size: var(--system-search-size-m-icon-size);
+    --spectrum-search-text-to-icon: var(--system-search-size-m-text-to-icon);
+    --spectrum-search-border-radius: var(--system-search-size-m-border-radius);
+}
+
+:host([size='l']) #textfield {
     --spectrum-search-edge-to-visual: var(
         --system-search-size-l-edge-to-visual
     );
     --spectrum-search-block-size: var(--system-search-size-l-block-size);
     --spectrum-search-icon-size: var(--system-search-size-l-icon-size);
     --spectrum-search-text-to-icon: var(--system-search-size-l-text-to-icon);
+    --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
 }
 
-:host([size='xl']) {
-    --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
+:host([size='xl']) #textfield {
     --spectrum-search-edge-to-visual: var(
         --system-search-size-xl-edge-to-visual
     );
     --spectrum-search-block-size: var(--system-search-size-xl-block-size);
     --spectrum-search-icon-size: var(--system-search-size-xl-icon-size);
     --spectrum-search-text-to-icon: var(--system-search-size-xl-text-to-icon);
+    --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
 }
 
 :host([quiet]) {
@@ -170,11 +126,4 @@ governing permissions and limitations under the License.
 :host([quiet]) #textfield {
     --spectrum-search-border-radius: var(--system-search-quiet-border-radius);
     --spectrum-search-edge-to-visual: var(--system-search-quiet-edge-to-visual);
-}
-
-:host([size='m']) {
-    --spectrum-search-border-radius: var(--system-search-size-m-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-m-edge-to-visual
-    );
 }

@@ -289,6 +289,21 @@ governing permissions and limitations under the License.
     box-shadow: none;
 }
 
+:host([border='light']) .fill:before {
+    box-shadow: inset 0 0 0
+        var(
+            --mod-swatch-border-thickness,
+            var(--spectrum-swatch-border-thickness)
+        )
+        var(
+            --highcontrast-swatch-border-color-light,
+            var(
+                --mod-swatch-border-color-light,
+                var(--spectrum-swatch-border-color-light)
+            )
+        );
+}
+
 .mixedValueIcon {
     pointer-events: none;
     color: #0000;
