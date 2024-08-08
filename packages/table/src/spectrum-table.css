@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-table-header-top-to-text: var(
         --spectrum-table-column-header-row-top-to-text-medium
@@ -588,5 +587,8 @@ governing permissions and limitations under the License.
 :host:not(.spectrum-Table-scroller) {
     border-collapse: initial;
     border-spacing: 0;
+}
+
+:host:not(.spectrum-Table-scroller) {
     display: table;
 }

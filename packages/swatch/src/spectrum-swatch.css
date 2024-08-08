@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-swatch-focus-indicator-border-radius: 8px;
     --spectrum-swatch-icon-border-color: #00000082;
@@ -230,6 +229,7 @@ governing permissions and limitations under the License.
         var(--spectrum-swatch-slash-thickness)
     );
     content: '';
+    block-size: 200%;
     background: var(
         --highcontrast-swatch-fill-foreground-color,
         var(
@@ -237,7 +237,6 @@ governing permissions and limitations under the License.
             var(--spectrum-swatch-slash-icon-color)
         )
     );
-    block-size: 200%;
     position: absolute;
     transform: rotate(-45deg);
 }
@@ -310,11 +309,11 @@ governing permissions and limitations under the License.
 }
 
 .fill {
+    inline-size: 100%;
+    block-size: 100%;
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
-    inline-size: 100%;
     display: flex;
     position: relative;
     overflow: hidden;
@@ -433,6 +432,8 @@ governing permissions and limitations under the License.
 
 ::slotted([slot='image']) {
     object-fit: contain;
+    inline-size: 100%;
+    block-size: 100%;
     transition:
         width
             var(
@@ -446,6 +447,4 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-in-out;
-    block-size: 100%;
-    inline-size: 100%;
 }

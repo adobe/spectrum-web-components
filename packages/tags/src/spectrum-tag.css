@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-avatar-opacity-disabled: 0.3;
     --spectrum-tag-animation-duration: var(--spectrum-animation-duration-100);
@@ -283,6 +282,7 @@ governing permissions and limitations under the License.
     block-size: var(--mod-tag-height, var(--spectrum-tag-height));
     box-sizing: border-box;
     vertical-align: bottom;
+    max-inline-size: 100%;
     -webkit-user-select: none;
     user-select: none;
     transition:
@@ -313,7 +313,6 @@ governing permissions and limitations under the License.
     border-style: solid;
     outline: none;
     align-items: center;
-    max-inline-size: 100%;
     padding-inline-start: calc(
         var(
                 --mod-tag-spacing-inline-start,
@@ -417,6 +416,7 @@ governing permissions and limitations under the License.
 }
 
 .label {
+    block-size: 100%;
     box-sizing: border-box;
     line-height: var(
         --mod-tag-label-line-height,
@@ -431,7 +431,6 @@ governing permissions and limitations under the License.
     white-space: nowrap;
     text-overflow: ellipsis;
     flex: auto;
-    block-size: 100%;
     margin-inline-end: calc(
         var(
                 --mod-tag-label-spacing-inline-end,

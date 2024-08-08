@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
     --spectrum-texfield-animation-duration: var(
@@ -406,11 +405,11 @@ governing permissions and limitations under the License.
 
 :host([quiet]) #textfield:after {
     content: '';
+    inline-size: 100%;
     block-size: var(
         --mod-textfield-focus-indicator-width,
         var(--spectrum-textfield-focus-indicator-width)
     );
-    inline-size: 100%;
     position: absolute;
     inset-block-end: calc(
         (
@@ -579,6 +578,7 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Textfield-characterCount {
+    inline-size: auto;
     font-size: var(
         --mod-textfield-character-count-font-size,
         var(--spectrum-textfield-character-count-font-size)
@@ -594,7 +594,6 @@ governing permissions and limitations under the License.
     grid-area: 1 / 2 / auto / span 1;
     justify-content: flex-end;
     align-items: flex-end;
-    inline-size: auto;
     margin-block-end: var(
         --mod-textfield-character-count-spacing-block,
         var(--spectrum-textfield-character-count-spacing-block)
@@ -623,6 +622,7 @@ governing permissions and limitations under the License.
 .input {
     line-height: var(--spectrum-textfield-input-line-height);
     box-sizing: border-box;
+    inline-size: 100%;
     min-inline-size: var(
         --mod-textfield-min-width,
         var(--spectrum-textfield-min-width)
@@ -709,13 +709,12 @@ governing permissions and limitations under the License.
     appearance: textfield;
     outline: none;
     grid-area: 2 / 1 / auto / span 2;
-    inline-size: 100%;
     margin: 0;
 }
 
 .input::-ms-clear {
-    block-size: 0;
     inline-size: 0;
+    block-size: 0;
 }
 
 .input::-webkit-inner-spin-button,
