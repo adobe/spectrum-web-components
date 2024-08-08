@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
-
-### Bug Fixes
-
--   **number-field:** update IME change detection ([#4672](https://github.com/adobe/spectrum-web-components/issues/4672)) ([de05aee](https://github.com/adobe/spectrum-web-components/commit/de05aee7c414e6cfcd27a12f129b03886311d3bf))
--   **picker:** updated type for mobile and desktop ([#4666](https://github.com/adobe/spectrum-web-components/issues/4666)) ([d11da1f](https://github.com/adobe/spectrum-web-components/commit/d11da1ffb7faa7804a1383cffba90277cf401e45))
--   **tray:** removed nonNull operator and initialized resolveTransitionPromise with dummy func ([#4658](https://github.com/adobe/spectrum-web-components/issues/4658)) ([1a8a479](https://github.com/adobe/spectrum-web-components/commit/1a8a4794c8601decd204db19302a296ed75c4deb))
-
-### Features
-
--   **breadcrumbs:** add Breadcrumbs component ([#4578](https://github.com/adobe/spectrum-web-components/issues/4578)) ([acd4b5e](https://github.com/adobe/spectrum-web-components/commit/acd4b5e4401dad8cf26b50ee5dcda80a28b62999))
-
 # [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
 
 ### Bug Fixes
