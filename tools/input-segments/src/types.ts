@@ -9,14 +9,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const dateSegmentTypes: Intl.DateTimeFormatPartTypes[] = [
+export const dateSegmentTypes: ReadonlyArray<Intl.DateTimeFormatPartTypes> = [
     'day',
     'month',
     'year',
     'literal',
 ];
 
-export const timeSegmentTypes: Intl.DateTimeFormatPartTypes[] = [
+export const timeSegmentTypes: ReadonlyArray<Intl.DateTimeFormatPartTypes> = [
     'hour',
     'minute',
     'second',

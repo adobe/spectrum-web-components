@@ -162,6 +162,7 @@ export class Calendar extends SpectrumElement {
                     class="spectrum-Calendar-title"
                     aria-live="assertive"
                     aria-atomic="true"
+                    data-test-id="calendar-title"
                 >
                     ${monthAndYear}
                 </div>
@@ -176,6 +177,7 @@ export class Calendar extends SpectrumElement {
                     aria-label="Previous"
                     title="Previous"
                     class="spectrum-Calendar-prevMonth"
+                    data-test-id="prev-btn"
                     ?disabled=${this.disabled}
                     @click=${this.handlePreviousMonth}
                 >
@@ -196,6 +198,7 @@ export class Calendar extends SpectrumElement {
                     aria-label="Next"
                     title="Next"
                     class="spectrum-Calendar-nextMonth"
+                    data-test-id="next-btn"
                     ?disabled=${this.disabled}
                     @click=${this.handleNextMonth}
                 >
@@ -311,12 +314,13 @@ export class Calendar extends SpectrumElement {
                 class="spectrum-Calendar-tableCell"
                 title=${currentDayTitle}
                 tabindex=${ifDefined(!isOutsideMonth ? '-1' : undefined)}
-                aria-disabled=${isOutsideMonth || this.disabled}
+                aria-disabled=${isOutsideMonth || isDisabled}
                 aria-selected=${isSelected}
             >
                 <span
                     role="presentation"
                     class=${classMap(dayClasses)}
+                    data-test-id="calendar-day"
                     @click=${() => this.handleDayClick(calendarDate)}
                 >
                     ${this.formatNumber(calendarDate.day)}
@@ -361,8 +365,9 @@ export class Calendar extends SpectrumElement {
      * defined location (Sunday, Monday, etc.)
      */
     private setWeekdays(): void {
+        const weekStart = startOfWeek(this.currentDate, this.locale);
+
         this.weekdays = [...new Array(daysInWeek).keys()].map((dayIndex) => {
-            const weekStart = startOfWeek(this.currentDate, this.locale);
             const date = weekStart.add({ days: dayIndex });
 
             return {

@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { argTypes, StoryArgs, Template } from './index.js';
-import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
+import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
 export default {
     title: 'Picker Button',
@@ -40,7 +40,7 @@ export const invalid = (args: StoryArgs): TemplateResult => Template(args);
 invalid.args = { invalid: true };
 
 export const quiet = (args: StoryArgs): TemplateResult => Template(args);
-quiet.args = { label: true, quiet: true };
+quiet.args = { quiet: true };
 
 export const label = (args: StoryArgs): TemplateResult => Template(args);
 label.args = { label: true };

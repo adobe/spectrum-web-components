@@ -1,18 +1,18 @@
 {
-    "name": "@spectrum-web-components/time-field",
+    "name": "@spectrum-web-components/date-time-picker",
     "version": "0.0.1",
     "publishConfig": {
         "access": "public"
     },
-    "description": "Web component implementation of a Spectrum design TimeField",
+    "description": "Web component implementation of a Spectrum design DateTimePicker",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/time-field"
+        "directory": "packages/date-time-picker"
     },
     "author": "",
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/time-field",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/date-time-picker",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
@@ -25,18 +25,18 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
-        "./src/TimeField.js": {
-            "development": "./src/TimeField.dev.js",
-            "default": "./src/TimeField.js"
+        "./src/DateTimePicker.js": {
+            "development": "./src/DateTimePicker.dev.js",
+            "default": "./src/DateTimePicker.js"
         },
+        "./src/date-time-picker.css.js": "./src/date-time-picker.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/time-field.css.js": "./src/time-field.css.js",
-        "./sp-time-field.js": {
-            "development": "./sp-time-field.dev.js",
-            "default": "./sp-time-field.js"
+        "./sp-date-time-picker.js": {
+            "development": "./sp-date-time-picker.dev.js",
+            "default": "./sp-date-time-picker.js"
         }
     },
     "scripts": {
@@ -57,7 +57,16 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/input-segments": "^0.0.1"
+        "@spectrum-web-components/calendar": "^0.0.1",
+        "@spectrum-web-components/field-label": "^0.41.2",
+        "@spectrum-web-components/icons-workflow": "^0.41.2",
+        "@spectrum-web-components/input-segments": "^0.0.1",
+        "@spectrum-web-components/overlay": "^0.41.2",
+        "@spectrum-web-components/picker-button": "^0.41.2",
+        "@spectrum-web-components/popover": "^0.41.2"
+    },
+    "devDependencies": {
+        "@spectrum-web-components/story-decorator": "^0.41.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
