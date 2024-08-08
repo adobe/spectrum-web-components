@@ -13,3 +13,10 @@ governing permissions and limitations under the License.
 @import url('@spectrum-web-components/styles/theme-darkest.css');
 @import url('@spectrum-web-components/styles/tokens/darkest-vars.css');
 @import url('@spectrum-web-components/styles/tokens/spectrum/custom-darkest-vars.css');
+
+/* Temporary patch to support extdended gray boundaries after S2 migration */
+:host,
+:root {
+    --spectrum-gray-25: var(--spectrum-gray-50);
+    --spectrum-gray-1000: var(--spectrum-global-color-gray-900);
+}
