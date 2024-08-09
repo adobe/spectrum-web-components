@@ -60,7 +60,6 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/breadcrumbs": "^0.0.1",
         "@spectrum-web-components/accordion": "^0.46.0",
         "@spectrum-web-components/action-bar": "^0.46.0",
         "@spectrum-web-components/action-button": "^0.46.0",
@@ -72,6 +71,7 @@
         "@spectrum-web-components/badge": "^0.46.0",
         "@spectrum-web-components/banner": "^0.46.0",
         "@spectrum-web-components/base": "^0.46.0",
+        "@spectrum-web-components/breadcrumbs": "^0.0.1",
         "@spectrum-web-components/button": "^0.46.0",
         "@spectrum-web-components/button-group": "^0.46.0",
         "@spectrum-web-components/card": "^0.46.0",
