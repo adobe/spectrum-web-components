@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-sidenav-focus-ring-size: var(
         --spectrum-focus-indicator-thickness
@@ -98,15 +97,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
-}
-
-:host:lang(ja),
-:host:lang(zh),
-:host:lang(ko) {
-    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
-}
-
-:host {
     --spectrum-sidenav-top-level-font-family: var(
         --spectrum-sans-font-family-stack
     );
@@ -114,17 +104,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
-}
-
-:host:lang(ja),
-:host:lang(zh),
-:host:lang(ko) {
-    --spectrum-sidenav-top-level-line-height: var(
-        --spectrum-cjk-line-height-100
-    );
-}
-
-:host {
     --spectrum-sidenav-header-font-family: var(
         --spectrum-sans-font-family-stack
     );
@@ -135,8 +114,12 @@ governing permissions and limitations under the License.
 }
 
 :host:lang(ja),
-:host:lang(zh),
-:host:lang(ko) {
+:host:lang(ko),
+:host:lang(zh) {
+    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-sidenav-top-level-line-height: var(
+        --spectrum-cjk-line-height-100
+    );
     --spectrum-sidenav-header-line-height: var(--spectrum-cjk-line-height-100);
 }
 

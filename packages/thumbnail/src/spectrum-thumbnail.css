@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-500);
     --spectrum-thumbnail-border-radius: var(--spectrum-corner-radius-75);
@@ -103,15 +102,20 @@ governing permissions and limitations under the License.
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
+    vertical-align: top;
+    z-index: 0;
     margin: 0;
     padding: 0;
     display: block;
     position: relative;
+    overflow: hidden;
 }
 
 :host:before {
     content: '';
     z-index: 2;
+    inline-size: 100%;
+    block-size: 100%;
     border-radius: var(
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
@@ -128,8 +132,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-thumbnail-border-color-rgba)
             )
         );
-    block-size: 100%;
-    inline-size: 100%;
     position: absolute;
 }
 
@@ -218,12 +220,6 @@ governing permissions and limitations under the License.
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
-    overflow: hidden;
-}
-
-:host {
-    vertical-align: top;
-    z-index: 0;
     overflow: hidden;
 }
 
@@ -318,37 +314,37 @@ governing permissions and limitations under the License.
 }
 
 .image-wrapper {
+    inline-size: 100%;
+    block-size: 100%;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
-    inline-size: 100%;
     display: flex;
 }
 
 ::slotted(*) {
-    z-index: 1;
     max-block-size: 100%;
     max-inline-size: 100%;
+    z-index: 1;
     position: relative;
 }
 
 :host([cover]) ::slotted(*) {
-    object-fit: cover;
-    object-position: center;
     block-size: 100%;
     inline-size: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .background {
     z-index: 0;
+    block-size: 100%;
+    inline-size: 100%;
     border-radius: var(
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
-    background-position: center;
+    background-position: 50%;
     background-size: cover;
-    block-size: 100%;
-    inline-size: 100%;
     position: absolute;
     inset-block: 0;
     inset-inline: 0;

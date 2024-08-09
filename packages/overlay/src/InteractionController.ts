@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController } from 'lit';
+import type { ReactiveController } from '@spectrum-web-components/base';
 import { AbstractOverlay } from './AbstractOverlay.js';
 
 export enum InteractionTypes {
@@ -34,14 +34,19 @@ export class InteractionController implements ReactiveController {
 
     private handleOverlayReady?: (overlay: AbstractOverlay) => void;
 
+    // Holds optimistic open state when an Overlay is not yet present
+    private isLazilyOpen = false;
+
     public get open(): boolean {
-        return this.overlay?.open ?? false;
+        return this.overlay?.open ?? this.isLazilyOpen;
     }
 
     /**
      * Set `open` against the associated Overlay lazily.
      */
     public set open(open: boolean) {
+        if (open === this.open) return;
+        this.isLazilyOpen = open;
         if (this.overlay) {
             // If there already is an Overlay, apply the value of `open` directly.
             this.overlay.open = open;

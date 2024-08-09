@@ -46,7 +46,7 @@ export class Banner extends SpectrumElement {
         if (window.__swc.DEBUG) {
             window.__swc.warn(
                 this,
-                `<${this.localName}> is deprecated and it will be removed in the future release.`,
+                `<${this.localName}> is deprecated and will be removed in the SWC 1.0 release..`,
                 'https://opensource.adobe.com/spectrum-web-components/components/banner/#deprecation',
                 { level: 'deprecation' }
             );

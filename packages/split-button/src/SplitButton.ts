@@ -72,6 +72,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
 
+    // PickerBase has an interactionStrategy that needs the trigger button from the split button
+    @query('.trigger')
+    public override button!: HTMLButtonElement;
+
     public override get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
@@ -118,7 +122,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         if (window.__swc.DEBUG) {
             window.__swc.warn(
                 this,
-                `<${this.localName}> is deprecated. Use a Button Group to show any additional actions related to the most critical action.`,
+                `<${this.localName}> is deprecated and will be removed in the SWC 1.0 release. Use a Button Group to show any additional actions related to the most critical action.`,
                 'https://opensource.adobe.com/spectrum-web-components/components/split-button/#deprecation',
                 { level: 'deprecation' }
             );
@@ -154,8 +158,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                     class="button trigger ${this.variant}"
                     @blur=${this.handleButtonBlur}
-                    @click=${this.handleActivate}
-                    @pointerdown=${this.handleButtonPointerdown}
                     @focus=${this.handleButtonFocus}
                     @keydown=${{
                         handleEvent: this.handleEnterKeydown,

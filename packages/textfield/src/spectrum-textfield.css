@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
     --spectrum-texfield-animation-duration: var(
@@ -394,7 +393,7 @@ governing permissions and limitations under the License.
 #textfield {
     inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
     text-indent: 0;
-    -moz-appearance: textfield;
+    appearance: textfield;
     text-overflow: ellipsis;
     grid-template-rows: auto auto auto;
     grid-template-columns: auto auto;
@@ -406,11 +405,11 @@ governing permissions and limitations under the License.
 
 :host([quiet]) #textfield:after {
     content: '';
+    inline-size: 100%;
     block-size: var(
         --mod-textfield-focus-indicator-width,
         var(--spectrum-textfield-focus-indicator-width)
     );
-    inline-size: 100%;
     position: absolute;
     inset-block-end: calc(
         (
@@ -463,8 +462,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([valid]) #textfield .icon,
-:host([invalid]) #textfield .icon {
+:host([invalid]) #textfield .icon,
+:host([valid]) #textfield .icon {
     pointer-events: all;
     grid-area: 2 / 2;
     margin-inline-start: auto;
@@ -579,6 +578,7 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Textfield-characterCount {
+    inline-size: auto;
     font-size: var(
         --mod-textfield-character-count-font-size,
         var(--spectrum-textfield-character-count-font-size)
@@ -594,7 +594,6 @@ governing permissions and limitations under the License.
     grid-area: 1 / 2 / auto / span 1;
     justify-content: flex-end;
     align-items: flex-end;
-    inline-size: auto;
     margin-block-end: var(
         --mod-textfield-character-count-spacing-block,
         var(--spectrum-textfield-character-count-spacing-block)
@@ -623,6 +622,7 @@ governing permissions and limitations under the License.
 .input {
     line-height: var(--spectrum-textfield-input-line-height);
     box-sizing: border-box;
+    inline-size: 100%;
     min-inline-size: var(
         --mod-textfield-min-width,
         var(--spectrum-textfield-min-width)
@@ -706,22 +706,20 @@ governing permissions and limitations under the License.
         )
     );
     text-overflow: ellipsis;
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
+    appearance: textfield;
     outline: none;
     grid-area: 2 / 1 / auto / span 2;
-    inline-size: 100%;
     margin: 0;
 }
 
 .input::-ms-clear {
-    block-size: 0;
     inline-size: 0;
+    block-size: 0;
 }
 
 .input::-webkit-inner-spin-button,
 .input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 
@@ -759,14 +757,14 @@ governing permissions and limitations under the License.
 }
 
 .input:lang(ja)::placeholder,
-.input:lang(zh)::placeholder,
-.input:lang(ko)::placeholder {
+.input:lang(ko)::placeholder,
+.input:lang(zh)::placeholder {
     font-style: normal;
 }
 
 .input:lang(ja)::-moz-placeholder,
-.input:lang(zh)::-moz-placeholder,
-.input:lang(ko)::-moz-placeholder {
+.input:lang(ko)::-moz-placeholder,
+.input:lang(zh)::-moz-placeholder {
     font-style: normal;
 }
 
@@ -814,19 +812,6 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-keyboard-focus)
         )
     );
-}
-
-:host([focused]) .input::placeholder {
-    color: var(
-        --highcontrast-textfield-text-color-keyboard-focus,
-        var(
-            --mod-textfield-text-color-keyboard-focus,
-            var(--spectrum-textfield-text-color-keyboard-focus)
-        )
-    );
-}
-
-:host([focused]) .input {
     outline: var(
             --mod-textfield-focus-indicator-width,
             var(--spectrum-textfield-focus-indicator-width)
@@ -842,6 +827,16 @@ governing permissions and limitations under the License.
     outline-offset: var(
         --mod-textfield-focus-indicator-gap,
         var(--spectrum-textfield-focus-indicator-gap)
+    );
+}
+
+:host([focused]) .input::placeholder {
+    color: var(
+        --highcontrast-textfield-text-color-keyboard-focus,
+        var(
+            --mod-textfield-text-color-keyboard-focus,
+            var(--spectrum-textfield-text-color-keyboard-focus)
+        )
     );
 }
 
@@ -908,9 +903,9 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([invalid]) .input:focus,
 :host([invalid][focused]) .input,
-:host([invalid]:focus) .input,
-:host([invalid]) .input:focus {
+:host([invalid]:focus) .input {
     border-color: var(
         --highcontrast-textfield-border-color-invalid-focus,
         var(
@@ -920,8 +915,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid][focused]) .input,
-:host([invalid]) .input:focus-visible {
+:host([invalid]) .input:focus-visible,
+:host([invalid][focused]) .input {
     border-color: var(
         --highcontrast-textfield-border-color-invalid-keyboard-focus,
         var(
@@ -931,8 +926,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled]) #textfield .input,
-.input:disabled {
+.input:disabled,
+:host([disabled]) #textfield .input {
     background-color: var(
         --mod-textfield-background-color-disabled,
         var(--spectrum-textfield-background-color-disabled)
@@ -956,8 +951,8 @@ governing permissions and limitations under the License.
     border-color: #0000;
 }
 
-:host([disabled]) #textfield .input::placeholder,
-.input:disabled::placeholder {
+.input:disabled::placeholder,
+:host([disabled]) #textfield .input::placeholder {
     color: var(
         --highcontrast-textfield-text-color-disabled,
         var(
@@ -976,8 +971,8 @@ governing permissions and limitations under the License.
         --mod-textfield-spacing-inline-quiet,
         var(--spectrum-textfield-spacing-inline-quiet)
     );
+    background-color: initial;
     resize: none;
-    background-color: #0000;
     border-block-start-width: 0;
     border-inline-width: 0;
     border-radius: 0;
@@ -991,6 +986,7 @@ governing permissions and limitations under the License.
 
 :host([quiet][disabled]) .input,
 .input:disabled {
+    background-color: initial;
     border-color: var(
         --mod-textfield-border-color-disabled,
         var(--spectrum-textfield-border-color-disabled)
@@ -1002,7 +998,6 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-disabled)
         )
     );
-    background-color: #0000;
 }
 
 :host([quiet][disabled]) .input::placeholder,
@@ -1016,8 +1011,9 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([readonly]) #textfield .input,
-.input:read-only {
+.input:read-only,
+:host([readonly]) #textfield .input {
+    background-color: initial;
     color: var(
         --highcontrast-textfield-text-color-readonly,
         var(
@@ -1025,13 +1021,12 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-readonly)
         )
     );
-    background-color: #0000;
     border-color: #0000;
     outline: none;
 }
 
-:host([readonly]) #textfield .input::placeholder,
-.input:read-only::placeholder {
+.input:read-only::placeholder,
+:host([readonly]) #textfield .input::placeholder {
     color: var(
         --highcontrast-textfield-text-color-readonly,
         var(
@@ -1039,12 +1034,30 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-readonly)
         )
     );
-    background-color: #0000;
+    background-color: initial;
 }
 
 @media (hover: hover) {
-    #textfield:hover .input::placeholder,
-    .input:hover::placeholder {
+    .input:hover,
+    #textfield:hover .input {
+        border-color: var(
+            --highcontrast-textfield-border-color-hover,
+            var(
+                --mod-textfield-border-color-hover,
+                var(--spectrum-textfield-border-color-hover)
+            )
+        );
+        color: var(
+            --highcontrast-textfield-text-color-hover,
+            var(
+                --mod-textfield-text-color-hover,
+                var(--spectrum-textfield-text-color-hover)
+            )
+        );
+    }
+
+    .input:hover::placeholder,
+    #textfield:hover .input::placeholder {
         color: var(
             --highcontrast-textfield-text-color-hover,
             var(
@@ -1063,16 +1076,11 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-border-color-focus-hover)
             )
         );
-        color: var(
-            --highcontrast-textfield-text-color-focus-hover,
-            var(
-                --mod-textfield-text-color-focus-hover,
-                var(--spectrum-textfield-text-color-focus-hover)
-            )
-        );
     }
 
+    :host([focused]) .input:hover,
     :host([focused]) .input:hover::placeholder,
+    .input:focus:hover,
     .input:focus:hover::placeholder {
         color: var(
             --highcontrast-textfield-text-color-focus-hover,
@@ -1083,54 +1091,25 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([invalid][focused]) .input:hover,
-    :host([invalid]:focus) .input:hover,
-    :host([invalid]) .input:focus:hover {
-        border-color: var(
-            --highcontrast-textfield-border-color-invalid-focus-hover,
-            var(
-                --mod-textfield-border-color-invalid-focus-hover,
-                var(--spectrum-textfield-border-color-invalid-focus-hover)
-            )
-        );
-    }
-
-    :host([disabled]) #textfield:hover .input::placeholder,
-    :host([quiet][disabled]:hover) .input::placeholder {
-        color: var(
-            --highcontrast-textfield-text-color-disabled,
-            var(
-                --mod-textfield-text-color-disabled,
-                var(--spectrum-textfield-text-color-disabled)
-            )
-        );
-    }
-
-    #textfield:hover .input,
-    .input:hover {
-        border-color: var(
-            --highcontrast-textfield-border-color-hover,
-            var(
-                --mod-textfield-border-color-hover,
-                var(--spectrum-textfield-border-color-hover)
-            )
-        );
-        color: var(
-            --highcontrast-textfield-text-color-hover,
-            var(
-                --mod-textfield-text-color-hover,
-                var(--spectrum-textfield-text-color-hover)
-            )
-        );
-    }
-
-    :host([invalid]:hover) .input,
-    :host([invalid]) .input:hover {
+    :host([invalid]) .input:hover,
+    :host([invalid]:hover) .input {
         border-color: var(
             --highcontrast-textfield-border-color-invalid-hover,
             var(
                 --mod-textfield-border-color-invalid-hover,
                 var(--spectrum-textfield-border-color-invalid-hover)
+            )
+        );
+    }
+
+    :host([invalid]) .input:focus:hover,
+    :host([invalid][focused]) .input:hover,
+    :host([invalid]:focus) .input:hover {
+        border-color: var(
+            --highcontrast-textfield-border-color-invalid-focus-hover,
+            var(
+                --mod-textfield-border-color-invalid-focus-hover,
+                var(--spectrum-textfield-border-color-invalid-focus-hover)
             )
         );
     }
@@ -1159,7 +1138,18 @@ governing permissions and limitations under the License.
         border-color: #0000;
     }
 
+    :host([disabled]) #textfield:hover .input::placeholder {
+        color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
+    }
+
     :host([quiet][disabled]:hover) .input {
+        background-color: initial;
         border-color: var(
             --mod-textfield-border-color-disabled,
             var(--spectrum-textfield-border-color-disabled)
@@ -1171,10 +1161,20 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-text-color-disabled)
             )
         );
-        background-color: #0000;
+    }
+
+    :host([quiet][disabled]:hover) .input::placeholder {
+        color: var(
+            --highcontrast-textfield-text-color-disabled,
+            var(
+                --mod-textfield-text-color-disabled,
+                var(--spectrum-textfield-text-color-disabled)
+            )
+        );
     }
 
     :host([readonly]) #textfield:hover .input {
+        background-color: initial;
         color: var(
             --highcontrast-textfield-text-color-readonly,
             var(
@@ -1182,7 +1182,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-text-color-readonly)
             )
         );
-        background-color: #0000;
         border-color: #0000;
         outline: none;
     }
@@ -1195,7 +1194,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-text-color-readonly)
             )
         );
-        background-color: #0000;
+        background-color: initial;
     }
 }
 
@@ -1233,8 +1232,8 @@ governing permissions and limitations under the License.
     grid-area: 2 / 2 / auto / span 1;
 }
 
-.spectrum-Textfield--sideLabel .icon,
-.spectrum-Textfield--sideLabel .input {
+.spectrum-Textfield--sideLabel .input,
+.spectrum-Textfield--sideLabel .icon {
     grid-area: 1 / 2 / span 1 / span 1;
 }
 

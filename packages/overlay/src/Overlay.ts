@@ -394,7 +394,7 @@ export class Overlay extends OverlayFeatures {
         };
         if (
             this.receivesFocus !== 'false' &&
-            (this.triggerElement as HTMLElement)?.focus &&
+            !!(this.triggerElement as HTMLElement)?.focus &&
             (this.contains((this.getRootNode() as Document).activeElement) ||
                 getAncestors().includes(this) ||
                 // eslint-disable-next-line @spectrum-web-components/document-active-element

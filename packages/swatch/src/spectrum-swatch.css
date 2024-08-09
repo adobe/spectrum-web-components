@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-swatch-focus-indicator-border-radius: 8px;
     --spectrum-swatch-icon-border-color: #00000082;
@@ -207,7 +206,7 @@ governing permissions and limitations under the License.
 }
 
 :host .is-image .fill:before {
-    background-color: #0000;
+    background-color: initial;
 }
 
 :host([mixed-value]) .fill {
@@ -230,6 +229,7 @@ governing permissions and limitations under the License.
         var(--spectrum-swatch-slash-thickness)
     );
     content: '';
+    block-size: 200%;
     background: var(
         --highcontrast-swatch-fill-foreground-color,
         var(
@@ -237,7 +237,6 @@ governing permissions and limitations under the License.
             var(--spectrum-swatch-slash-icon-color)
         )
     );
-    block-size: 200%;
     position: absolute;
     transform: rotate(-45deg);
 }
@@ -310,18 +309,22 @@ governing permissions and limitations under the License.
 }
 
 .fill {
+    inline-size: 100%;
+    block-size: 100%;
     box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.fill,
+.fill:before {
     border-radius: var(
         --mod-swatch-border-radius,
         var(--spectrum-swatch-border-radius)
     );
-    justify-content: center;
-    align-items: center;
-    block-size: 100%;
-    inline-size: 100%;
-    display: flex;
-    position: relative;
-    overflow: hidden;
 }
 
 .fill:before {
@@ -337,10 +340,6 @@ governing permissions and limitations under the License.
             --highcontrast-swatch-border-color,
             var(--mod-swatch-border-color, var(--spectrum-swatch-border-color))
         );
-    border-radius: var(
-        --mod-swatch-border-radius,
-        var(--spectrum-swatch-border-radius)
-    );
     position: absolute;
     inset: 0;
 }
@@ -357,7 +356,7 @@ governing permissions and limitations under the License.
 }
 
 .disabledIcon {
-    z-index: 2;
+    z-index: 1;
     pointer-events: none;
     color: var(
         --highcontrast-swatch-disabled-icon-color,
@@ -399,26 +398,26 @@ governing permissions and limitations under the License.
 }
 
 :host([rounding='none']),
-:host([rounding='none']):before,
-:host([rounding='none']):after,
 :host([rounding='none']) .fill,
 :host([rounding='none']) .fill:before,
 :host([rounding='none'][selected]) .fill,
-:host([rounding='none'][selected]) .fill:before {
+:host([rounding='none'][selected]) .fill:before,
+:host([rounding='none']):after,
+:host([rounding='none']):before {
     border-radius: 0;
 }
 
+:host([rounding='full'][selected]:not([shape='rectangle'])) .fill,
+:host([rounding='full'][selected]:not([shape='rectangle'])) .fill:before,
 :host([rounding='full']:not([shape='rectangle'])),
-:host([rounding='full']:not([shape='rectangle'])):before,
-:host([rounding='full']:not([shape='rectangle'])):after,
 :host([rounding='full']:not([shape='rectangle'])) .fill,
 :host([rounding='full']:not([shape='rectangle'])) .fill:before,
-:host([rounding='full']:not([shape='rectangle'])[selected]) .fill,
-:host([rounding='full']:not([shape='rectangle'])[selected]) .fill:before {
+:host([rounding='full']:not([shape='rectangle'])):after,
+:host([rounding='full']:not([shape='rectangle'])):before {
     border-radius: 100%;
 }
 
-:host([rounding='full']:not([shape='rectangle'])[selected]) .fill {
+:host([rounding='full'][selected]:not([shape='rectangle'])) .fill {
     clip-path: circle(
         calc(
                 50% -
@@ -433,6 +432,8 @@ governing permissions and limitations under the License.
 
 ::slotted([slot='image']) {
     object-fit: contain;
+    inline-size: 100%;
+    block-size: 100%;
     transition:
         width
             var(
@@ -446,6 +447,4 @@ governing permissions and limitations under the License.
                 var(--spectrum-animation-duration-100)
             )
             ease-in-out;
-    block-size: 100%;
-    inline-size: 100%;
 }

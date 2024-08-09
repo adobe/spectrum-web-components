@@ -11,9 +11,8 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 .sortedIcon {
-    vertical-align: baseline;
+    vertical-align: initial;
     transition: transform
         var(
             --highcontrast-table-transition-duration,
@@ -100,8 +99,8 @@ governing permissions and limitations under the License.
     outline: 0;
 }
 
-.sortedIcon,
-.spectrum-Table-menuIcon {
+.spectrum-Table-menuIcon,
+.sortedIcon {
     color: var(--spectrum-table-icon-color);
 }
 
@@ -129,8 +128,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([sortable]:focus-visible),
-:host([sortable]) .is-keyboardFocused {
+:host([sortable]) .is-keyboardFocused,
+:host([sortable]:focus-visible) {
     --spectrum-table-icon-color: var(
         --highcontrast-table-icon-color-focus,
         var(
@@ -146,15 +145,15 @@ governing permissions and limitations under the License.
 }
 
 :host([sort-direction='asc']) .sortedIcon {
-    transform: rotateZ(-90deg);
+    transform: rotate(-90deg);
 }
 
 :host {
     position: relative;
 }
 
-:host(:focus-visible),
-:host([focused]) {
+:host([focused]),
+:host(:focus-visible) {
     outline-width: var(
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)

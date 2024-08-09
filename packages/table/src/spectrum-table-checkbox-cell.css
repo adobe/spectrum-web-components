@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host(:not([head-cell])) {
         forced-color-adjust: none;
@@ -97,6 +96,9 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
+}
+
+:host(:not([head-cell])) {
     box-sizing: border-box;
     font-size: var(
         --mod-table-row-font-size,
@@ -145,10 +147,10 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host(:not([head-cell]):focus-visible),
 :host(:not([head-cell])[focused]),
-:host([head-cell]:focus-visible),
-:host([head-cell][focused]) {
+:host(:not([head-cell]):focus-visible),
+:host([head-cell][focused]),
+:host([head-cell]:focus-visible) {
     outline-width: var(
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)
@@ -189,7 +191,7 @@ governing permissions and limitations under the License.
 
 :host(:host) sp-checkbox {
     --mod-checkbox-spacing: 0px;
-    min-block-size: initial;
+    min-block-size: 0;
 }
 
 :host(:host:not([head-cell])) sp-checkbox {

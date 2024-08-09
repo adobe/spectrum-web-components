@@ -46,11 +46,13 @@ governing permissions and limitations under the License.
 
 .grid {
     grid-template-areas:
-        'hero hero    hero    hero        hero        hero'
-        '.    .       .       .           .           .'
-        '.    heading heading heading     typeIcon    .'
-        '.    divider divider divider     divider     .'
-        '.    content content content     content     .'
-        '.    footer  footer  buttonGroup buttonGroup .'
-        '.    .       .       .           .           .';
+        'hero hero hero hero hero hero'
+        '. . . . . .'
+        '. heading header header typeIcon .'
+        '. divider divider divider divider .'
+        '. content content content content .'
+        '. footer footer buttonGroup buttonGroup .'
+        '. . . . . .';
+    inline-size: 100%;
+    display: grid;
 }

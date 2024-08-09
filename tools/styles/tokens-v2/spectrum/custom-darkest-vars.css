@@ -1,0 +1,109 @@
+:host,
+:root {
+    --spectrum-menu-item-background-color-default-rgb: 255, 255, 255;
+    --spectrum-menu-item-background-color-default-opacity: 0;
+    --spectrum-menu-item-background-color-default: rgba(
+        var(--spectrum-menu-item-background-color-default-rgb),
+        var(--spectrum-menu-item-background-color-default-opacity)
+    ); /* --spectrum-gray-900 */
+    --spectrum-menu-item-background-color-hover: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-menu-item-background-color-down: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-menu-item-background-color-key-focus: var(
+        --spectrum-transparent-white-200
+    );
+
+    /* Drop Zone background color rgb */
+    --spectrum-drop-zone-background-color-rgb: var(
+        --spectrum-blue-900-rgb
+    ); /* var(--spectrum-accent-color-900);*/
+
+    /* Drop Indicator color rgb */
+    --spectrum-dropindicator-color: var(--spectrum-blue-700);
+
+    --spectrum-calendar-day-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.2
+    );
+    --spectrum-calendar-day-background-color-hover: rgba(
+        var(--spectrum-white-rgb),
+        0.08
+    );
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.3
+    );
+    --spectrum-calendar-day-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.3
+    );
+    --spectrum-calendar-day-background-color-down: rgba(
+        var(--spectrum-white-rgb),
+        0.15
+    );
+    --spectrum-calendar-day-background-color-cap-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.3
+    );
+    --spectrum-calendar-day-background-color-key-focus: rgba(
+        var(--spectrum-white-rgb),
+        0.08
+    );
+    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
+
+    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
+    --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
+    --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
+
+    --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
+
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-700
+    );
+
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.08
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.2
+    );
+
+    --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
+    --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
+    --spectrum-logic-button-and-background-color-hover: var(
+        --spectrum-blue-1000
+    );
+    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1000);
+
+    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-700);
+    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-700);
+    --spectrum-logic-button-or-background-color-hover: var(
+        --spectrum-magenta-900
+    );
+    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
+
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-800
+    );
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
+
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.3
+    );
+    --spectrum-assetlist-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.2
+    );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
+}

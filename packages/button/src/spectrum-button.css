@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     cursor: pointer;
     -webkit-user-select: none;
@@ -70,13 +69,12 @@ governing permissions and limitations under the License.
             ease-out;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    border-style: solid;
     justify-content: center;
     align-items: center;
     margin: 0;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
-    position: relative;
     overflow: visible;
 }
 
@@ -84,13 +82,12 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
-:host([disabled]),
-:host .is-disabled {
+:host .is-disabled,
+:host([disabled]) {
     cursor: default;
 }
 
 :host:after {
-    content: '';
     margin: calc(
         var(
                 --mod-button-focus-indicator-gap,
@@ -126,7 +123,6 @@ governing permissions and limitations under the License.
             )
             ease-out;
     display: block;
-    position: absolute;
     inset-block: 0;
     inset-inline: 0;
 }
@@ -165,6 +161,7 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-color
     );
     --spectrum-button-intended-icon-size: var(--spectrum-workflow-icon-size-50);
+    --mod-progress-circle-position: absolute;
 }
 
 :host([size='s']) {
@@ -233,13 +230,6 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([pending]),
-:host([pending]) {
-    --mod-button-edge-to-visual-only: calc(
-        1px + var(--spectrum-button-edge-to-visual-only)
-    );
-}
-
 :host([size='l']) {
     --spectrum-button-min-width: calc(
         var(--spectrum-component-height-200) *
@@ -271,13 +261,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-intended-icon-size: var(
         --spectrum-workflow-icon-size-200
-    );
-}
-
-:host([size='l'][pending]),
-:host([size='l'][pending]) {
-    --mod-button-edge-to-visual-only: calc(
-        2px + var(--spectrum-button-edge-to-visual-only)
     );
 }
 
@@ -314,20 +297,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-intended-icon-size: var(
         --spectrum-workflow-icon-size-300
-    );
-}
-
-:host([size='xl'][pending]) .spectrum--medium,
-:host([size='xl'][pending]) .spectrum--medium {
-    --mod-button-edge-to-visual-only: calc(
-        3px + var(--spectrum-button-edge-to-visual-only)
-    );
-}
-
-:host([size='xl'][pending]) .spectrum--large,
-:host([size='xl'][pending]) .spectrum--large {
-    --mod-button-edge-to-visual-only: calc(
-        4px + var(--spectrum-button-edge-to-visual-only)
     );
 }
 
@@ -447,8 +416,8 @@ governing permissions and limitations under the License.
     text-align: var(--mod-button-text-align-with-icon, start);
 }
 
-:host(:focus-visible):after,
-:host([focused]):after {
+:host([focused]):after,
+:host(:focus-visible):after {
     box-shadow: 0 0 0
         var(
             --mod-button-focus-ring-thickness,
@@ -543,6 +512,25 @@ governing permissions and limitations under the License.
             var(--spectrum-button-content-color-default)
         )
     );
+    transition:
+        border
+            var(
+                --mod-button-animation-duration,
+                var(--spectrum-button-animation-duration, 0.13s)
+            )
+            linear,
+        color
+            var(
+                --mod-button-animation-duration,
+                var(--spectrum-button-animation-duration, 0.13s)
+            )
+            linear,
+        background-color
+            var(
+                --mod-button-animation-duration,
+                var(--spectrum-button-animation-duration, 0.13s)
+            )
+            linear;
 }
 
 @media (hover: hover) {
@@ -620,9 +608,9 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled]),
 :host .is-disabled,
 :host([pending]),
+:host([disabled]),
 :host([pending]) {
     background-color: var(
         --highcontrast-button-background-color-disabled,
@@ -647,13 +635,54 @@ governing permissions and limitations under the License.
     );
 }
 
+#label,
+::slotted([slot='icon']) {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity
+        var(
+            --mod-button-animation-duration,
+            var(--spectrum-button-animation-duration, 0.13s)
+        )
+        ease-in-out;
+}
+
+.spectrum-ProgressCircle {
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        opacity
+            var(
+                --mod-button-animation-duration,
+                var(--spectrum-button-animation-duration, 0.13s)
+            )
+            ease-in-out,
+        visibility 0s linear
+            var(
+                --mod-button-animation-duration,
+                var(--spectrum-button-animation-duration, 0.13s)
+            );
+}
+
 :host([pending]),
 :host([pending]) {
     cursor: default;
 }
 
-:host([static='white']),
-:host([static='black']) {
+:host([pending]) .spectrum-ProgressCircle,
+:host([pending]) .spectrum-ProgressCircle {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity
+        var(
+            --mod-button-animation-duration,
+            var(--spectrum-button-animation-duration, 0.13s)
+        )
+        ease-in-out;
+}
+
+:host([static='black']),
+:host([static='white']) {
     --spectrum-button-focus-indicator-color: var(
         --mod-static-black-focus-indicator-color,
         var(--spectrum-static-black-focus-indicator-color)

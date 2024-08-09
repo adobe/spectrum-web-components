@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-medium);
@@ -30,8 +29,8 @@ governing permissions and limitations under the License.
     --spectrum-slider-value-inline-size: 18px;
 }
 
-:host([dir='rtl']),
-:host:dir(rtl) {
+:host:dir(rtl),
+:host([dir='rtl']) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -223,8 +222,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.track,
-.fill {
+.fill,
+.track {
     block-size: var(
         --mod-slider-track-fill-thickness,
         var(--spectrum-slider-track-fill-thickness)
@@ -254,14 +253,14 @@ governing permissions and limitations under the License.
     inset-inline: 0 auto;
 }
 
-.track:before,
-.fill:before {
+.fill:before,
+.track:before {
     content: '';
+    block-size: 100%;
     border-start-start-radius: 0;
     border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: 0;
-    block-size: 100%;
     display: block;
 }
 
@@ -431,9 +430,9 @@ governing permissions and limitations under the License.
 }
 
 #ramp svg {
-    transform: var(--spectrum-logical-rotation);
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
+    transform: var(--spectrum-logical-rotation);
 }
 
 .handle {
@@ -480,18 +479,18 @@ governing permissions and limitations under the License.
     inset-inline-start: 0;
 }
 
-.handle:active,
-.handle.dragging {
+.handle.dragging,
+.handle:active {
     border-width: var(
         --mod-slider-handle-border-width-down,
         var(--spectrum-slider-handle-border-width-down)
     );
 }
 
-.handle:active,
-.handle.handle-highlight,
 .handle.dragging,
-.handle.is-tophandle {
+.handle.handle-highlight,
+.handle.is-tophandle,
+.handle:active {
     z-index: 3;
 }
 
@@ -532,6 +531,7 @@ governing permissions and limitations under the License.
     transform: translate(-50%, -50%);
 }
 
+.handle:dir(rtl):before,
 :host([dir='rtl']) .handle:before {
     transform: translate(50%, -50%);
 }
@@ -560,7 +560,7 @@ governing permissions and limitations under the License.
     );
     opacity: 0.000001;
     cursor: default;
-    -webkit-appearance: none;
+    appearance: none;
     pointer-events: none;
     border: 0;
     margin: 0;
@@ -582,10 +582,10 @@ governing permissions and limitations under the License.
 }
 
 #label-container {
+    inline-size: auto;
     font-size: var(--mod-slider-font-size, var(--spectrum-slider-font-size));
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     align-items: center;
-    inline-size: auto;
     margin-block-start: var(
         --mod-slider-label-top-to-text,
         var(--spectrum-slider-label-top-to-text)
@@ -595,8 +595,8 @@ governing permissions and limitations under the License.
 }
 
 #label-container:lang(ja),
-#label-container:lang(zh),
-#label-container:lang(ko) {
+#label-container:lang(ko),
+#label-container:lang(zh) {
     line-height: var(
         --mod-slider-cjk-line-height,
         var(--spectrum-slider-cjk-line-height)
@@ -672,10 +672,6 @@ governing permissions and limitations under the License.
 }
 
 .tick {
-    inline-size: var(
-        --mod-slider-tick-mark-width,
-        var(--spectrum-slider-tick-mark-width)
-    );
     position: relative;
     inset-block-start: calc(
         var(--mod-slider-track-thickness, var(--spectrum-slider-control-height)) /
@@ -687,12 +683,16 @@ governing permissions and limitations under the License.
     );
 }
 
+.tick,
 .tick:after {
-    content: '';
     inline-size: var(
         --mod-slider-tick-mark-width,
         var(--spectrum-slider-tick-mark-width)
     );
+}
+
+.tick:after {
+    content: '';
     block-size: var(
         --mod-slider-tick-mark-height,
         var(--spectrum-slider-tick-mark-height)
@@ -853,8 +853,8 @@ governing permissions and limitations under the License.
         );
 }
 
-.handle:active,
-.handle.dragging {
+.handle.dragging,
+.handle:active {
     border-color: var(
         --highcontrast-slider-handle-border-color-down,
         var(
@@ -913,7 +913,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
+:host([variant='range']) .track:not(:first-of-type):not(:last-of-type):before {
     background: var(
         --highcontrast-slider-filled-track-fill-color,
         var(
@@ -928,8 +928,8 @@ governing permissions and limitations under the License.
     cursor: default;
 }
 
-:host([disabled]) .tickLabel,
-:host([disabled]) #label-container {
+:host([disabled]) #label-container,
+:host([disabled]) .tickLabel {
     color: var(
         --highcontrast-slider-label-text-color-disabled,
         var(
@@ -1011,8 +1011,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled][variant='filled']) .track:first-child:before,
-:host([disabled]) .fill:before {
+:host([disabled]) .fill:before,
+:host([disabled][variant='filled']) .track:first-child:before {
     background: var(
         --highcontrast-slider-track-fill-color-disabled,
         var(
@@ -1043,7 +1043,7 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled][variant='range'])
-    .track:not(:first-of-type, :last-of-type):before {
+    .track:not(:first-of-type):not(:last-of-type):before {
     background: var(
         --highcontrast-slider-track-color-disabled,
         var(
@@ -1092,17 +1092,32 @@ governing permissions and limitations under the License.
         --spectrum-slider-ramp-handle-border-color-active: ButtonText;
     }
 
-    .handle.handle-highlight:before,
-    :host([variant='ramp']) .handle {
+    :host([variant='ramp']) .handle,
+    .handle.handle-highlight:before {
         forced-color-adjust: none;
     }
 
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+    :host([focus-within])
+        .js-focus-within:not(.is-disabled):not(.spectrum-Slider--filled):not(
+            .spectrum-Slider--range
+        )
+        #controls,
+    :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
+            .spectrum-Slider--range
+        )
+        #controls.handle-highlight,
+    :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
+            .spectrum-Slider--range
+        )
         #controls:active,
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+    :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
+            .spectrum-Slider--range
+        )
         #controls:focus-within,
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
-        #controls.handle-highlight {
+    :host([focus-within]):not(.is-disabled):not(.spectrum-Slider--filled):not(
+            .spectrum-Slider--range
+        ).js-focus-within
+        #controls {
         --highcontrast-slider-track-fill-color: Highlight;
         --highcontrast-slider-track-color: Highlight;
         --highcontrast-slider-handle-border-color: Highlight;
@@ -1111,9 +1126,7 @@ governing permissions and limitations under the License.
     }
 
     @media (hover: hover) {
-        :host:not(
-                .is-disabled,
-                .spectrum-Slider--filled,
+        :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
                 .spectrum-Slider--range
             )
             #controls:hover {
@@ -1126,8 +1139,8 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]) #ramp + .handle {
-        fill: buttonface;
-        background-color: buttonface;
+        fill: ButtonFace;
+        background-color: ButtonFace;
     }
 }
 

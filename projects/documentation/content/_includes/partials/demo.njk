@@ -11,6 +11,7 @@
         >{% for demoControl in demoControls %}
             <div class="control-container">
                 <sp-field-label for="{{ demoControl.name }}">{{ demoControl.name }}</sp-field-label>
+                {% if ['select','boolean','radio','inline-radio'].includes(demoControl.control.type) %}
                 <sp-picker class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}">
                     {% for option in demoControl.control.options %}
                     <sp-menu-item value="{{ option }}">{{ option }}</sp-menu-item>
@@ -23,6 +24,11 @@
                     <sp-menu-item>false</sp-menu-item>
                     {% endif %}
                 </sp-picker>
+                {% elif demoControl.control === 'text' %}
+                    <sp-textfield class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-textfield>
+                {% elif demoControl.control === 'number' %}
+                    <sp-number-field class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-number-field>
+                {% endif %}
             </div>
         {% endfor %}</sp-field-group>{% endif %}
     </div>

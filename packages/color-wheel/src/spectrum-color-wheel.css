@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-colorwheel-width: var(--spectrum-color-wheel-width);
     --spectrum-colorwheel-min-width: var(--spectrum-color-wheel-minimum-width);
@@ -51,15 +50,6 @@ governing permissions and limitations under the License.
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
-    display: block;
-    position: relative;
-}
-
-:host([focused]) {
-    z-index: 2;
-}
-
-:host {
     --track-width: var(
         --mod-colorwheel-track-width,
         var(--spectrum-colorwheel-track-width)
@@ -68,6 +58,12 @@ governing permissions and limitations under the License.
         --mod-colorwheel-border-width,
         var(--spectrum-colorwheel-border-width)
     );
+    display: block;
+    position: relative;
+}
+
+:host([focused]) {
+    z-index: 1;
 }
 
 :host([disabled]) {
@@ -75,7 +71,7 @@ governing permissions and limitations under the License.
 }
 
 :host([dragged]) {
-    z-index: 2;
+    z-index: 1;
 }
 
 .inner {
@@ -95,23 +91,23 @@ governing permissions and limitations under the License.
 }
 
 .colorarea-container {
+    block-size: auto;
+    inline-size: 100%;
     margin: var(
         --mod-colorwheel-colorarea-margin,
         var(--spectrum-colorwheel-colorarea-margin)
     );
     justify-content: center;
     align-items: center;
-    block-size: auto;
-    inline-size: 100%;
     display: flex;
 }
 
 .slider {
     opacity: 0;
+    inline-size: 100%;
+    block-size: 100%;
     z-index: 0;
     pointer-events: none;
-    block-size: 100%;
-    inline-size: 100%;
     margin: 0;
     position: absolute;
     inset-block-start: 0;
@@ -119,7 +115,7 @@ governing permissions and limitations under the License.
 }
 
 .handle {
-    transform: translate(var(--spectrum-colorwheel-colorhandle-position), 0);
+    transform: translate(var(--spectrum-colorwheel-colorhandle-position));
     inset-block-start: 50%;
     inset-inline: 50%;
 }

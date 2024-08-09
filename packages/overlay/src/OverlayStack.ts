@@ -51,7 +51,7 @@ class OverlayStack {
      */
     handlePointerdown = (event: Event): void => {
         this.pointerdownPath = event.composedPath();
-        this.lastOverlay = this.stack.at(-1);
+        this.lastOverlay = this.stack[this.stack.length - 1];
     };
 
     /**
@@ -60,13 +60,14 @@ class OverlayStack {
      * @param event {ClickEvent}
      */
     handlePointerup = (): void => {
-        if (!this.stack.length) return;
-        if (!this.pointerdownPath?.length) return;
-
         // Test against the composed path in `pointerdown` in case the visitor moved their
         // pointer during the course of the interaction.
+        // Ensure that this value is cleared even if the work in this method goes undone.
         const composedPath = this.pointerdownPath;
         this.pointerdownPath = undefined;
+        if (!this.stack.length) return;
+        if (!composedPath?.length) return;
+
         const lastIndex = this.stack.length - 1;
         const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
@@ -110,7 +111,7 @@ class OverlayStack {
     private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'Escape') return;
         if (!this.stack.length) return;
-        const last = this.stack.at(-1);
+        const last = this.stack[this.stack.length - 1];
         if (last?.type === 'page') {
             event.preventDefault();
             return;

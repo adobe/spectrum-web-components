@@ -53,12 +53,27 @@ export type Color =
     | 'light-express'
     | 'lightest-express'
     | 'dark-express'
-    | 'darkest-express';
-export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
-export type ThemeVariant = 'spectrum' | 'express';
-export type SystemVariant = 'spectrum' | 'express';
-const SystemVariantValues = ['spectrum', 'express'];
-const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
+    | 'darkest-express'
+    | 'light-spectrum-two'
+    | 'dark-spectrum-two';
+export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
+export type SystemVariant = 'spectrum' | 'express' | 'spectrum-two';
+const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
+export type Scale =
+    | 'medium'
+    | 'large'
+    | 'medium-express'
+    | 'large-express'
+    | 'medium-spectrum-two'
+    | 'large-spectrum-two';
+const ScaleValues = [
+    'medium',
+    'large',
+    'medium-express',
+    'large-express',
+    'medium-spectrum-two',
+    'large-spectrum-two',
+];
 const ColorValues = [
     'light',
     'lightest',
@@ -68,6 +83,8 @@ const ColorValues = [
     'lightest-express',
     'dark-express',
     'darkest-express',
+    'light-spectrum-two',
+    'dark-spectrum-two',
 ];
 type FragmentName =
     | Color
@@ -163,14 +180,34 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this._provideContext();
         } else if (attrName === 'theme') {
             this.theme = value as SystemVariant;
-            window.__swc.warn(
-                this,
-                'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
-                'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
-                { level: 'deprecation' }
-            );
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
+                    'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
+                    { level: 'deprecation' }
+                );
+                if (value === 'spectrum-two') {
+                    window.__swc.warn(
+                        this,
+                        'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+                        'https://s2.spectrum.adobe.com/',
+                        { level: 'high' }
+                    );
+                }
+            }
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
+            if (window.__swc.DEBUG) {
+                if (value === 'spectrum-two') {
+                    window.__swc.warn(
+                        this,
+                        'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+                        'https://s2.spectrum.adobe.com/',
+                        { level: 'high' }
+                    );
+                }
+            }
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
@@ -319,9 +356,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 kind &&
                 kind !== 'theme' &&
                 kind !== 'system' &&
-                this.theme === 'express' &&
-                this.system === 'express'
-                    ? fragments.get(`${name}-express`)
+                this.theme !== 'spectrum' &&
+                this.system !== 'spectrum'
+                    ? fragments.get(`${name}-${this.system}`)
                     : fragments.get(name);
             // theme="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
