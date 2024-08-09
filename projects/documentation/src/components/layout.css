@@ -298,6 +298,6 @@ sp-underlay:not([open]) + aside {
     right: auto;
 }
 
-:host([dir='rtl']) aside:not(.show) {
+:host([dir='rtl']) sp-underlay:not([open]) + aside {
     transform: translateX(-100%);
 }

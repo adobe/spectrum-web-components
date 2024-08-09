@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     cursor: pointer;
     -webkit-user-select: none;
@@ -90,8 +89,8 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
-    flex-shrink: 0;
     max-block-size: 100%;
+    flex-shrink: 0;
 }
 
 #label {

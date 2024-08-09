@@ -937,6 +937,10 @@ sp-link {
     border-radius: 6px;
 }
 
+.demo-control {
+    width: 100%;
+}
+
 .deprecation-container {
     margin: 2em 0;
 }
