@@ -62,7 +62,7 @@ body:
     - type: textarea
       id: code
       attributes:
-          label: Sample code that illustrates the problem
+          label: Sample code or abstract reproduction which illustrates the problem
     - type: dropdown
       id: severity
       attributes:
