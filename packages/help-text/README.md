@@ -23,6 +23,14 @@ When looking to leverage the `HelpText` base class as a type and/or for extensio
 import { HelpText } from '@spectrum-web-components/help-text';
 ```
 
+## Example
+
+Good descriptive help text includes 1-2 short sentences information such as:
+
+-   An overall description of an input field or controls
+-   Hints for what kind of information needs to be input or selected
+-   Specific formatting examples or requirements
+
 ## Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
@@ -82,7 +90,15 @@ import { HelpText } from '@spectrum-web-components/help-text';
 
 ## Negative
 
-The negative variant of `<sp-help-text>` is used to convey error messages. An error message should be different than the informative message otherwise delivers to the visitor and should show a solution for correcting the error that has been encountered.
+The negative variant of `<sp-help-text>` is used to convey error messages.
+
+Help text displays either a description (the neutral variant) or an error message (the negative variant) in the same space. When a description is present and an error is triggered, it is replaced with an error message. Once the error is resolved, the help text description reappears.
+
+Since one gets replaced by the other, the language of the help text description and the error need to work together to convey the same messaging. The description text explains the requirements or adds supplementary context for how to successfully interact with a component. The error message text tells a user how to fix the error by re-stating the interaction requirements. Make sure that the help text description and error message include the same essential information so that it isn’t lost if one replaces the other.
+
+Communicate error messages in a human-centered way by guiding a user and showing them a solution — don’t simply state what’s wrong and then leave them guessing as to how to resolve it. Ambiguous error messages can be frustrating and even shame-inducing for users. Also, keep in mind that something that a system may deem an error may not actually be perceived as an error to a user.
+
+For help text, usually the error is related to something that needs to be fixed for in-line validation, so a [helpful tone](https://spectrum.adobe.com/page/voice-and-tone/#Tone) is most appropriate. For example, if someone were to miss filling out a required field that asks for their email address, write the error text like you’re offering a hint or a tip to help guide them to understand what needs to go in the missing field: “Enter your email address.”
 
 ```html
 <sp-field-label for="negative">Password</sp-field-label>
@@ -101,26 +117,40 @@ The negative variant of `<sp-help-text>` is used to convey error messages. An er
 When associated with content that does not supply an icon outlining the presence of an error, use the `icon` attribute to display one as part of the `<sp-help-text>` element.
 
 ```html
-<sp-field-label for="icon">Password</sp-field-label>
-<sp-textfield id="icon" type="password" required invalid>
-    <sp-help-text slot="help-text">
-        Create a password with at least 8 characters.
+<sp-field-group horizontal id="fruit">
+    <sp-checkbox value="apple">Apple</sp-checkbox>
+    <sp-checkbox
+        value="not-a-fruit"
+        onchange="javascript:this.parentElement.invalid = this.checked"
+    >
+        Lettuce
+    </sp-checkbox>
+    <sp-checkbox value="strawberry" checked>Strawberry</sp-checkbox>
+    <sp-help-text slot="help-text">One of these is not a fruit.</sp-help-text>
+    <sp-help-text icon slot="negative-help-text" icon>
+        Choose actual fruit(s).
     </sp-help-text>
-    <sp-help-text icon variant="negative" slot="help-text-negative">
-        Passwords must be at least 8 characters
-    </sp-help-text>
-</sp-textfield>
+</sp-field-group>
 ```
 
 ## Disabled
 
 When associated to content the is disabled, use the `disabled` attribute to match the delivery of the `<sp-help-text>` element to that content.
 
-```html
-<sp-field-label for="disabled">Password</sp-field-label>
-<sp-textfield id="disabled" type="password" disabled required>
+```html demo
+<sp-field-label for="color" disabled>Color</sp-field-label>
+<sp-combobox id="color" disabled>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
     <sp-help-text slot="help-text" disabled>
-        Create a password with at least 8 characters.
+        Choose or add at least one color.
     </sp-help-text>
-</sp-textfield>
+</sp-combobox>
 ```
+
+## Accessibility
+
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots, so help text must be used in the `help-text` or `help-text-negative` `slot` of a `<sp-text-field>`, `<sp-field-group>`, `<sp-combobox>` or `<sp-picker>`.
+
+To add help text to your own custom element, see [Help Text Mixin](./help-text-mixin/).
