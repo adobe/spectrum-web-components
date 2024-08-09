@@ -51,7 +51,6 @@ Create an issue on the repository and provide the following information by filli
 -   Steps to reproduce -
     -   Please be specific!
     -   Please reproduce your issue in an isolated or abstract environment, preferrably [webcomponents.dev](https://studio.webcomponents.dev/workspace/adobe). Screenshots or videos from your local development environment are often not sufficient to help us determine if the issue originates from our library.
-    -   Reproduce your
 -   What you would expect to happen
 -   What actually happens
 -   Notes (for example why you think this might be happening, or stuff you tried that didn't work)
