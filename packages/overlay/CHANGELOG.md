@@ -9,7 +9,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+### Bug Fixes
+
+-   **overlay** replace at() polyfill ([#4628](https://github.com/adobe/spectrum-web-components/issues/4628)) ([8cef2c6](https://github.com/adobe/spectrum-web-components/commit/8cef2c639433248257a72bfc2c98d0663e265b09))
+    **Note:** Version bump only for package @spectrum-web-components/overlay
 
 # [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
 
