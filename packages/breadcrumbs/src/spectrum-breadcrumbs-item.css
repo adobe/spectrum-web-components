@@ -55,6 +55,7 @@ governing permissions and limitations under the License.
         --mod-breadcrumbs-line-height,
         var(--spectrum-breadcrumbs-line-height)
     );
+    align-items: center;
     display: inline-flex;
     position: relative;
 }
