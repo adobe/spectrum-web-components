@@ -81,7 +81,6 @@ governing permissions and limitations under the License.
     opacity: 0;
     opacity: var(--mod-actionbar-opacity, 0);
     inset-block-end: 0;
-    inset-inline: 0;
 }
 
 :host([open]) {
@@ -157,6 +156,7 @@ governing permissions and limitations under the License.
 
 :host([variant='sticky']) {
     --mod-actionbar-position: sticky;
+    inset-inline: 0;
 }
 
 :host([variant='fixed']) {
