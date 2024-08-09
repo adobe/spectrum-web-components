@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-alert-banner-min-height: var(
         --spectrum-alert-banner-minimum-height
@@ -113,6 +112,7 @@ governing permissions and limitations under the License.
 }
 
 .body {
+    inline-size: 100%;
     gap: max(
         calc(
             var(
@@ -128,7 +128,6 @@ governing permissions and limitations under the License.
     );
     flex-wrap: wrap;
     align-items: center;
-    inline-size: 100%;
     margin-inline-start: var(
         --mod-alert-banner-start-edge,
         var(--spectrum-alert-banner-start-edge)

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 #tooltip {
     pointer-events: none;
     visibility: hidden;
@@ -118,6 +117,7 @@ governing permissions and limitations under the License.
 #tooltip {
     box-sizing: border-box;
     vertical-align: top;
+    inline-size: auto;
     padding-inline: var(
         --mod-tooltip-spacing-inline,
         var(--spectrum-tooltip-spacing-inline)
@@ -126,6 +126,7 @@ governing permissions and limitations under the License.
         --mod-tooltip-border-radius,
         var(--spectrum-tooltip-border-radius)
     );
+    block-size: auto;
     min-block-size: var(--mod-tooltip-height, var(--spectrum-tooltip-height));
     max-inline-size: var(
         --mod-tooltip-max-inline-size,
@@ -158,8 +159,6 @@ governing permissions and limitations under the License.
     user-select: none;
     flex-direction: row;
     align-items: center;
-    block-size: auto;
-    inline-size: auto;
     display: inline-flex;
     position: relative;
 }
