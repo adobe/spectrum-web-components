@@ -25,7 +25,7 @@ import { Icon } from '@spectrum-web-components/icon';
 
 ## Example
 
-Names icons on this page are provided by the [`<sp-icons-medium>` icon set](components/icons). Learn how to create your own via [`sp-iconset`](components/iconset).
+Names icons on this page are provided by the [`<sp-icons-medium>` icon set](/components/icons).
 
 ```html
 <sp-icons-medium></sp-icons-medium>

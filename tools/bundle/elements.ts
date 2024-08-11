@@ -20,7 +20,6 @@ import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@spectrum-web-components/badge/sp-badge.js';
-import '@spectrum-web-components/banner/sp-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
