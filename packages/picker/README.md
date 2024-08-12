@@ -199,7 +199,8 @@ When using `icons="only"` and your `<sp-menu-item>` elements still have text con
 
 </sp-tab-panel>
 </sp-tabs>
-## Value
+
+### Value
 
 When the `value` of an `<sp-picker>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.
 
