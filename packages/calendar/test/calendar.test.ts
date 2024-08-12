@@ -605,6 +605,6 @@ describe('Calendar', () => {
     });
 
     it('should render localized dates', async () => {
-        // TODO: with the new value API PR
+        // TODO
     });
 });
