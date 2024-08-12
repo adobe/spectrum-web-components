@@ -1,0 +1,104 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+:host {
+    --status-icon-size: var(
+        --mod-textfield-icon-size-invalid,
+        var(--spectrum-textfield-icon-size-invalid)
+    );
+    --picker-button-size: var(
+        --mod-textfield-height,
+        var(--spectrum-textfield-height)
+    );
+    --input-spacing: var(
+        --mod-textfield-spacing-inline,
+        var(--spectrum-textfield-spacing-inline)
+    );
+    --input-border: var(
+        --mod-textfield-border-width,
+        var(--spectrum-textfield-border-width)
+    );
+
+    inline-size: auto;
+}
+
+:host([valid]) #textfield .icon,
+:host([invalid]) #textfield .icon {
+    position: relative;
+    inset: initial;
+}
+
+:host .input,
+:host([quiet]) .input,
+:host([valid]) .input,
+:host([invalid]) .input,
+:host([quiet][valid]) #textfield .input,
+:host([quiet][invalid]) #textfield .input {
+    padding-inline-end: calc(
+        var(--status-icon-size) + var(--picker-button-size) +
+            (var(--input-spacing) - var(--input-border)) * 2
+    );
+}
+
+.picker {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    gap: calc(var(--input-spacing) - var(--input-border));
+}
+
+.picker-button[invalid] {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-default
+    );
+}
+
+.picker-button[invalid]:focus {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-focus
+    );
+}
+
+.picker-button[invalid]:focus-visible {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-keyboard-focus
+    );
+}
+
+.picker-button[invalid]:hover {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-hover
+    );
+}
+
+.picker-button[invalid]:focus:hover {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-invalid-focus-hover
+    );
+}
+
+:host([invalid]:hover) .picker-button[invalid] {
+    --mod-picker-button-border-color: var(
+        --spectrum-textfield-border-color-hover
+    );
+}
+
+.popover {
+    overflow-y: auto;
+}
+
+.popover-content {
+    padding: var(--spectrum-spacing-300);
+}

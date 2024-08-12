@@ -106,7 +106,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.root.spectrum-PickerButton--quiet {
+:host([quiet]) .root {
     --mod-picker-button-background-color: var(
         --mod-picker-button-background-color-quiet,
         transparent
