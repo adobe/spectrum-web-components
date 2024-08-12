@@ -405,6 +405,11 @@ export class Calendar extends SpectrumElement {
     }
 
     private handleDaySelect(event: MouseEvent | KeyboardEvent): void {
+        if (this.disabled) {
+            event.preventDefault();
+            return;
+        }
+
         const dateCell = (event.target as Element).closest(
             'td.tableCell'
         ) as HTMLTableCellElement;
@@ -427,8 +432,10 @@ export class Calendar extends SpectrumElement {
             isAlreadySelected ||
             this.isMinLimitReached(calendarDateEngaged) ||
             this.isMaxLimitReached(calendarDateEngaged)
-        )
+        ) {
+            event.preventDefault();
             return;
+        }
 
         this.currentDate = calendarDateEngaged;
         this.selectedDate = calendarDateEngaged.toDate(this.timeZone);
