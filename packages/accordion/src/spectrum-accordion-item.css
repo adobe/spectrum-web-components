@@ -42,6 +42,10 @@ governing permissions and limitations under the License.
     );
 }
 
+:host:not(:first-of-type) {
+    border-block-start-width: 0;
+}
+
 :host([open]) > #heading > .iconContainer > .indicator,
 :host([open]) > .iconContainer > .indicator {
     transform: rotate(90deg);
