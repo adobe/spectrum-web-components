@@ -30,7 +30,7 @@ When looking to leverage the `Picker` base class as a type and/or for extension 
 import { Picker } from '@spectrum-web-components/picker';
 ```
 
-## Features
+## Anatomy
 
 ### Labels
 
@@ -248,7 +248,7 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-tab-panel>
 </sp-tabs>
 
-## Variants
+## Options
 
 ### Sizes
 
@@ -577,6 +577,8 @@ The help text’s message should not simply restate the same information in the 
 The help text area also displays an error message. When a picker already includes help text and an error is triggered, the help text is replaced with error text. Once the error is resolved, the help text description reappears below the picker.
 
 Since one gets replaced by the other, the language of the help text and error text need to work together to convey the same messaging. Help text explains the requirement or adds supplementary context for how to complete the interaction. Error text tells a user how to fix the error by re-stating the selection requirements or describing the necessary interaction. Make sure that the help text and the error text include the same essential information so that it isn’t lost if one replaces the other (e.g., minimum requirements).
+
+Use [`<sp-help-text>`](../help-text/) to add help text and error text:
 
 <sp-tabs selected="help-text-demo" auto label="Using help text">
 <sp-tab value="help-text-demo">Help text</sp-tab>

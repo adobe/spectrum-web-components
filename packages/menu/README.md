@@ -32,7 +32,7 @@ import {
 } from '@spectrum-web-components/menu';
 ```
 
-## Features
+## Anatomy
 
 <!-- prettier-ignore -->
 ```html
@@ -116,7 +116,7 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
 </sp-tab-panel>
 </sp-tabs>
 
-## Variants
+## Options
 
 ### Sizes
 

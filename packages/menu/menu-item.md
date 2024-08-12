@@ -24,7 +24,7 @@ When looking to leverage the `MenuItem` base class as a type and/or for extensio
 import { MenuItem } from '@spectrum-web-components/menu';
 ```
 
-## Features
+## Anatomy
 
 Menus are a collection of `<sp-menu-item>`s that can be modified via a `disabled` or `selected` attribute to represent an item in that state.
 

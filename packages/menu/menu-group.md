@@ -24,7 +24,7 @@ When looking to leverage the `MenuGroup` base class as a type and/or for extensi
 import { MenuGroup } from '@spectrum-web-components/menu';
 ```
 
-## Features
+## Anatomy
 
 An `<sp-menu-group>` can be used to organize `<sp-menu-item>` elements in an `<sp-memu>` in to collections with a shared header. Use an element addressed to the `slot="header` to pass the content of that header.
 
