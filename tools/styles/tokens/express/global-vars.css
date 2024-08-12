@@ -6980,6 +6980,12 @@
 
 :host,
 :root {
+    --system-tag-group-item-margin-block: var(--spectrum-spacing-75);
+    --system-tag-group-item-margin-inline: var(--spectrum-spacing-75);
+}
+
+:host,
+:root {
     --system-textfield-border-color: var(--spectrum-gray-400);
     --system-textfield-border-color-hover: var(--spectrum-gray-500);
     --system-textfield-border-color-focus: var(--spectrum-gray-800);

@@ -92,6 +92,7 @@ const tokenPackages = [
     'table',
     'tabs',
     'tag',
+    'taggroup',
     'textfield',
     'thumbnail',
     'toast',
