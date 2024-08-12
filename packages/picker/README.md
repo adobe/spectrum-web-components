@@ -30,9 +30,9 @@ When looking to leverage the `Picker` base class as a type and/or for extension 
 import { Picker } from '@spectrum-web-components/picker';
 ```
 
-## Anatomy
+### Anatomy
 
-### Labels
+#### Labels
 
 To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element.
 
@@ -91,7 +91,7 @@ For an accessible label that renders within the bounds of the picker itself, but
 </sp-tab-panel>
 </sp-tabs>
 
-### Icons
+#### Icons
 
 `<sp-menu-item>`s in an `<sp-picker>` that are provided content addressed to their `icon` slot will be passed to the `<sp-picker>` element when that item is chosen.
 
@@ -137,7 +137,7 @@ When you use `<sp-menu-item>` elements without text content, you will need to be
 </sp-picker>
 ```
 
-#### Advanced icon management
+##### Advanced icon management
 
 The `icons` attribute allows you to manage how the selected item will appear. Set `icons` to `only` display only the selected item's icon in the `<sp-picker>` element or `none` to display the selected item text without the icon `<sp-picker>`.
 
@@ -200,7 +200,7 @@ When using `icons="only"` and your `<sp-menu-item>` elements still have text con
 </sp-tab-panel>
 </sp-tabs>
 
-### Value
+#### Value
 
 When the `value` of an `<sp-picker>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.
 
@@ -249,9 +249,9 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-tab-panel>
 </sp-tabs>
 
-## Options
+### Options
 
-### Sizes
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
@@ -371,7 +371,7 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-tab-panel>
 </sp-tabs>
 
-### Side Label
+#### Side Label
 
 <sp-tabs selected="standard-side-label" auto label="Side-aligned option">
 <sp-tab value="standard-side-label">Side label, standard</sp-tab>
@@ -421,9 +421,9 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-tab-panel>
 </sp-tabs>
 
-## States
+### States
 
-### Invalid
+#### Invalid
 
 <sp-tabs selected="standard-invalid" auto label="Invalid states">
 <sp-tab value="standard-invalid">Invalid, standard</sp-tab>
@@ -471,7 +471,7 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-tab-panel>
 </sp-tabs>
 
-### Disabled
+#### Disabled
 
 <sp-tabs selected="standard-disabled" auto label="Disabled states">
 <sp-tab value="standard-disabled">Disabled, standard</sp-tab>
@@ -519,7 +519,7 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-tab-panel>
 </sp-tabs>
 
-### Pending
+#### Pending
 
 When in pending state, `<sp-picker>` elements will not respond to click events and will be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
 
@@ -559,13 +559,13 @@ When in pending state, `<sp-picker>` elements will not respond to click events a
 </sp-tab-panel>
 </sp-tabs>
 
-## Accessibility guidelines
+### Accessibility guidelines
 
-### Include a label
+#### Include a label
 
 In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert.
 
-### Use help text to show context
+#### Use help text to show context
 
 A picker’s description in the help text is can communicate what to select or how to select an option. This includes information such as:
 

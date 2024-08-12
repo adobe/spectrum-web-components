@@ -24,7 +24,7 @@ When looking to leverage the `MenuItem` base class as a type and/or for extensio
 import { MenuItem } from '@spectrum-web-components/menu';
 ```
 
-## Anatomy
+### Anatomy
 
 Menus are a collection of `<sp-menu-item>`s that can be modified via a `disabled` or `selected` attribute to represent an item in that state.
 
@@ -36,7 +36,7 @@ Menus are a collection of `<sp-menu-item>`s that can be modified via a `disabled
 </sp-menu>
 ```
 
-### Icon
+#### Icon
 
 Content assigned to the `icon` slot will be placed at the beginning of the `<sp-menu-item>`.
 
@@ -57,7 +57,7 @@ Content assigned to the `icon` slot will be placed at the beginning of the `<sp-
 </sp-menu>
 ```
 
-#### Icon management
+##### Icon management
 
 When you use `<sp-menu-item>` elements without text content, you will need to be sure to use the `value` attribute so that the `<sp-picker>` or `<sp-menu>` element can differentiate between the available options. Further, it is important that you apply accessible labeling to the `[slot="icon"]` content as follows:
 
@@ -83,7 +83,7 @@ When you use `<sp-menu-item>` elements without text content, you will need to be
 </sp-picker>
 ```
 
-### Overview
+#### Description
 
 Content assigned to the `description` slot will be placed below the `<sp-menu-item>`, like help text for users to understand the context of corresponding `<sp-menu-item>`.
 
@@ -104,9 +104,9 @@ Content assigned to the `description` slot will be placed below the `<sp-menu-it
 </sp-menu>
 ```
 
-### Value
+#### Value
 
-#### Value slot
+##### Value slot
 
 Content assigned to the `value` slot will be placed at the end of the `<sp-menu-item>`, like values, keyboard shortcuts, etc., based on the current text direction.
 
@@ -208,7 +208,7 @@ When the `value` attribute is leveraged, the selected `<sp-menu-item>` represent
 </sp-tab-panel>
 </sp-tabs>
 
-### Submenu
+#### Submenu
 
 An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Using the `<sp-menu>` element with this slot name the options will be surfaced in flyout menu that can be activated by hovering over the root menu item with your pointer or focusing the menu item and pressing the appropriate `ArrowRight` or `ArrowLeft` key based on text direction to move into the submenu.
 
@@ -224,9 +224,9 @@ An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Usi
 </sp-menu>
 ```
 
-## Accessibility guidelines
+### Accessibility guidelines
 
-### Include a label
+#### Include a label
 
 Use either visible slotted textContent or the `label` attribute to ensure menu items can be read by assistive technology.
 

@@ -22,7 +22,14 @@ layout: layout.njk
       {% for part in collections[componentName] %}
       {% if part.data.partType !== "examples" %}
         <sp-tab-panel class="section" value="{{ part.data.partType }}">
-            {{ part.templateContent | safe }}
+          {% if part.data.partType === "api" %}
+          <h2>API</h2>
+          {% elseif part.data.partType === "changelog" %}
+          <h2>Changelog</h2>
+          {% else  %}
+          <h2>{{ part.data.partType }}</h2>
+          {% endif %}
+          {{ part.templateContent | safe }}
         </sp-tab-panel>
       {% endif %}
       {% endfor %}

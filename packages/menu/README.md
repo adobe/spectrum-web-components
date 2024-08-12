@@ -32,7 +32,7 @@ import {
 } from '@spectrum-web-components/menu';
 ```
 
-## Anatomy
+### Anatomy
 
 <!-- prettier-ignore -->
 ```html
@@ -58,7 +58,7 @@ import {
 </sp-menu>
 ```
 
-### Popover menus
+#### Popover menus
 
 Often an `<sp-menu>` element will be delivered inside of an `<sp-popover>` element when displaying it above other content.
 
@@ -75,7 +75,7 @@ Often an `<sp-menu>` element will be delivered inside of an `<sp-popover>` eleme
 </sp-popover>
 ```
 
-### Labels
+#### Labels
 
 To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must have a label. For an accessible label that is visibly hidden, but read by assistive technology, use the `label` attribute.
 
@@ -116,9 +116,9 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
 </sp-tab-panel>
 </sp-tabs>
 
-## Options
+### Options
 
-### Sizes
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
@@ -231,7 +231,7 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
 </sp-tab-panel>
 </sp-tabs>
 
-### Selection
+#### Selection
 
 The `<sp-menu>` element can be instructed to maintain a selection via the `selects` attribute. Depending on the chosen algorithm, the `<sp-menu>` element will hold a `value` property and manage the `selected` state of its `<sp-menu-item>` descendants.
 
@@ -322,16 +322,16 @@ The `<sp-menu>` element can be instructed to maintain a selection via the `selec
 </sp-tab-panel>
 </sp-tabs>
 
-## Behaviors
+### Behaviors
 
-### "change" event
+#### "change" event
 
 Whether `<sp-menu>` carries a selection or not, when one of the `<sp-menu-item>` children that it manages is activated the `<sp-menu>` element will dispatch a `change` event. At dispatch time, even when a selection is not held due to the absence of the `selects` attribute, the `value` of the `<sp-menu>` will correspond to the `<sp-menu-item>` that was activated. When the `selects` attribute is present, this `value` will be persisted beyond the lifecycle of the `change` event. When `selects="multiple"` the values of multiple items will be comma separated unless otherwise set via the `value-separator` attribute.
 
 Note: The `change` event is only dispatched on a left mouse click or Enter/Space keypress. Right/Middle mouse clicks will not dispatch the `change` event.
 
-## Accessibility guidelines
+### Accessibility guidelines
 
-### Include a label
+#### Include a label
 
 In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert.

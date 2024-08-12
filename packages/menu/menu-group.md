@@ -24,7 +24,7 @@ When looking to leverage the `MenuGroup` base class as a type and/or for extensi
 import { MenuGroup } from '@spectrum-web-components/menu';
 ```
 
-## Anatomy
+### Anatomy
 
 An `<sp-menu-group>` can be used to organize `<sp-menu-item>` elements in an `<sp-memu>` in to collections with a shared header. Use an element addressed to the `slot="header` to pass the content of that header.
 
@@ -59,7 +59,9 @@ An `<sp-menu-group>` can be used to organize `<sp-menu-item>` elements in an `<s
 </sp-popover>
 ```
 
-### Selection
+### Behavior
+
+#### Selection
 
 The `<sp-menu-group>` element can be instructed to maintain a selection via the `selects` attribute. Depending on the chosen algorithm, the `<sp-menu-group>` element will hold a `value` property and manage the `selected` state of its `<sp-menu-item>` descendants.
 
