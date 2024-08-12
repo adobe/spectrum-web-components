@@ -30,6 +30,7 @@ import { Tabs } from './Tabs.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import tabSizes from './tabs-sizes.css.js';
 import styles from './tabs-overflow.css.js';
 
@@ -42,7 +43,7 @@ interface TabsOverflowState {
  */
 export class TabsOverflow extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [chevronIconStyles, styles, tabSizes];
+        return [styles, tabSizes, chevronIconStyles, chevronIconOverrides];
     }
 
     @property({ type: Boolean, reflect: true })
