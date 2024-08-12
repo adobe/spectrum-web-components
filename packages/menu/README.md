@@ -1,8 +1,8 @@
-## Description
+## Overview
 
 An `<sp-menu>` is used for creating a menu list. The various elements inside a menu are given as [`<sp-menu-group>`](../menu-group), [`<sp-menu-item>`](../menu-item), or `<sp-menu-divider>`. Often a `<sp-menu>` element will appear in a [`<sp-popover>`](../popover) element so that it displays as a toggling menu.
 
-## Usage
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/menu?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/menu)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/menu)

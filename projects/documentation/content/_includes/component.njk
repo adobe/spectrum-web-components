@@ -13,9 +13,18 @@ layout: layout.njk
       {% include "partials/demo.njk" %}
       {{ content | safe }}
       {% for part in collections[componentName] %}
+      {% if part.data.partType === "examples" %}
         <sp-tab-panel class="section" value="{{ part.data.partType }}">
             {{ part.templateContent | safe }}
         </sp-tab-panel>
+      {% endif %}
+      {% endfor %}
+      {% for part in collections[componentName] %}
+      {% if part.data.partType !== "examples" %}
+        <sp-tab-panel class="section" value="{{ part.data.partType }}">
+            {{ part.templateContent | safe }}
+        </sp-tab-panel>
+      {% endif %}
       {% endfor %}
       </sp-tabs>
     </main>

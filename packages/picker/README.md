@@ -1,8 +1,8 @@
-## Description
+## Overview
 
 An `<sp-picker>` is an alternative to HTML's `<select>` element. Use [`<sp-menu-item>`](../menu-item) elements to outline the options that will be made available to the user when interacting with the `<sp-picker>` element.
 
-## Usage
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/picker?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/picker)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/picker)
