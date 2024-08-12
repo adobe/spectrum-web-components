@@ -29,7 +29,7 @@ governing permissions and limitations under the License.
 }
 
 .type-icon {
-    grid-area: i;
+    grid-area: typeIcon;
     color: var(
         --mod-alert-dialog-error-icon-color,
         var(--swc-alert-dialog-error-icon-color)
@@ -43,4 +43,17 @@ governing permissions and limitations under the License.
 ::slotted(img[slot='hero']) {
     width: 100%;
     height: auto;
+}
+
+.grid {
+    grid-template-areas:
+        'hero hero hero hero hero hero'
+        '. . . . . .'
+        '. heading header header typeIcon .'
+        '. divider divider divider divider .'
+        '. content content content content .'
+        '. footer footer buttonGroup buttonGroup .'
+        '. . . . . .';
+    inline-size: 100%;
+    display: grid;
 }
