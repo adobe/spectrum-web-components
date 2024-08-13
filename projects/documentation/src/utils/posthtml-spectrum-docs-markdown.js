@@ -151,14 +151,57 @@ export default () =>
             {
                 selector: '.heading-wrapper',
                 fn: (node) => {
-                    const code = node.content[0];
-                    const tag = code.tag || 'none';
+                    const getSize = (node) => {
+                        const [heading, anchor] = node.content;
+                        const tag = code.tag || '';
+                        if (!tag) {
+                            return node;
+                        }
+                        return tag === 'h2'
+                            ? 'XL'
+                            : tag === 'h3'
+                              ? 'L'
+                              : tag === 'h4'
+                                ? 'M'
+                                : tag === 'h5'
+                                  ? 'S'
+                                  : tag === 'h6'
+                                    ? 'XS'
+                                    : '';
+                    };
+                    const size = getSize(node);
+                    const classes =
+                        size === ''
+                            ? node
+                            : `spectrum-Heading spectrum-Heading--size${size}`;
+
                     return {
                         tag: 'div',
                         attrs: {
-                            class: `heading-wrapper test ${tag}`,
+                            class: `headerContainer`,
                         },
-                        content: [node.content],
+                        content: [
+                            {
+                                tag: tag,
+                                content: heading.content,
+                                attrs: {
+                                    ...heading.attrs,
+                                    class: classes,
+                                },
+                            },
+                            {
+                                tag: 'sp-link',
+                                content: anchor.content,
+                                attrs: {
+                                    ...heading.attrs,
+                                    class: classes,
+                                },
+                            },
+                            {
+                                tag: 'sp-divider',
+                                attrs: { size: size.toLowerCase() },
+                            },
+                        ],
                     };
                 },
             },
