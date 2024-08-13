@@ -148,165 +148,19 @@ export default () =>
                     };
                 },
             },
-            /*
             {
-                // wrap `<h2>` tags with a `<div.headerContainer>` element
-                // and give it an `<sp-divider size="l">` sibling
-                selector: 'h2',
+                selector: '.heading-wrapper',
                 fn: (node) => {
-                    if (
-                        node.attrs &&
-                        (node.attrs.slot ||
-                            (node.attrs.class &&
-                                /spectrum-Heading/.test(node.attrs.class)))
-                    ) {
-                        return node;
-                    }
+                    const code = node.content[0];
+                    const tag = code.tag || 'none';
                     return {
-                        tag: 'h2',
+                        tag: 'div',
                         attrs: {
-                            ...node.attrs,
-                            class: 'spectrum-Heading spectrum-Heading--sizeXL',
+                            class: `heading-wrapper test ${tag}`,
                         },
                         content: [node.content],
                     };
                 },
             },
-            */
-            {
-                selector: '.heading-wrapper',
-                fn: (node) => {
-                    return {
-                        content: [
-                            node.content,
-                            {
-                                tag: 'sp-divider',
-                                attrs: { size: 'l' },
-                            },
-                        ],
-                    };
-                },
-            },
-            /*
-            {
-                selector: 'h3',
-                fn: (node) => {
-                    if (
-                        node.attrs &&
-                        (node.attrs.slot ||
-                            (node.attrs.class &&
-                                /spectrum-Heading/.test(node.attrs.class)))
-                    ) {
-                        return node;
-                    }
-                    return {
-                        tag: 'div',
-                        attrs: {
-                            class: 'headerContainer',
-                        },
-                        content: [
-                            {
-                                tag: 'h3',
-                                attrs: {
-                                    ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeL',
-                                },
-                                content: node.content,
-                            },
-                            {
-                                tag: 'sp-divider',
-                                attrs: { size: 'l' },
-                            },
-                        ],
-                    };
-                },
-            },
-            {
-                selector: 'h4',
-                fn: (node) => {
-                    if (
-                        node.attrs &&
-                        (node.attrs.slot ||
-                            (node.attrs.class &&
-                                /spectrum-Heading/.test(node.attrs.class)))
-                    ) {
-                        return node;
-                    }
-                    return {
-                        tag: 'div',
-                        attrs: {
-                            class: 'headerContainer',
-                        },
-                        content: [
-                            {
-                                tag: 'h4',
-                                attrs: {
-                                    ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeM',
-                                },
-                                content: node.content,
-                            },
-                        ],
-                    };
-                },
-            },
-            {
-                selector: 'h5',
-                fn: (node) => {
-                    if (
-                        node.attrs &&
-                        (node.attrs.slot ||
-                            (node.attrs.class &&
-                                /spectrum-Heading/.test(node.attrs.class)))
-                    ) {
-                        return node;
-                    }
-                    return {
-                        tag: 'div',
-                        attrs: {
-                            class: 'headerContainer',
-                        },
-                        content: [
-                            {
-                                tag: 'h5',
-                                attrs: {
-                                    ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeS',
-                                },
-                                content: node.content,
-                            },
-                        ],
-                    };
-                },
-            },
-            {
-                selector: 'h6',
-                fn: (node) => {
-                    if (
-                        node.attrs &&
-                        (node.attrs.slot ||
-                            (node.attrs.class &&
-                                /spectrum-Heading/.test(node.attrs.class)))
-                    ) {
-                        return node;
-                    }
-                    return {
-                        tag: 'div',
-                        attrs: {
-                            class: 'headerContainer',
-                        },
-                        content: [
-                            {
-                                tag: 'h6',
-                                attrs: {
-                                    ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeXS',
-                                },
-                                content: node.content,
-                            },
-                        ],
-                    };
-                },
-            },*/
         ],
     });
