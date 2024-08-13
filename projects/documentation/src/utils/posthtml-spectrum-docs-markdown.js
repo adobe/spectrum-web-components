@@ -148,6 +148,7 @@ export default () =>
                     };
                 },
             },
+            /*
             {
                 // wrap `<h2>` tags with a `<div.headerContainer>` element
                 // and give it an `<sp-divider size="l">` sibling
@@ -171,6 +172,22 @@ export default () =>
                     };
                 },
             },
+            */
+            {
+                selector: '.heading-wrapper',
+                fn: (node) => {
+                    return {
+                        content: [
+                            node.content,
+                            {
+                                tag: 'sp-divider',
+                                attrs: { size: 'l' },
+                            },
+                        ],
+                    };
+                },
+            },
+            /*
             {
                 selector: 'h3',
                 fn: (node) => {
@@ -290,6 +307,6 @@ export default () =>
                         ],
                     };
                 },
-            },
+            },*/
         ],
     });
