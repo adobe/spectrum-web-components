@@ -171,13 +171,13 @@ export default () =>
                                 tag: 'h2',
                                 attrs: {
                                     ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeM',
+                                    class: 'spectrum-Heading spectrum-Heading--sizeXL',
                                 },
                                 content: node.content,
                             },
                             {
                                 tag: 'sp-divider',
-                                attrs: { size: 'l' },
+                                attrs: { size: 'xl' },
                             },
                         ],
                     };
@@ -204,13 +204,13 @@ export default () =>
                                 tag: 'h3',
                                 attrs: {
                                     ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeS',
+                                    class: 'spectrum-Heading spectrum-Heading--sizeL',
                                 },
                                 content: node.content,
                             },
                             {
                                 tag: 'sp-divider',
-                                attrs: { size: 'm' },
+                                attrs: { size: 'l' },
                             },
                         ],
                     };
@@ -218,7 +218,11 @@ export default () =>
             },
             {
                 selector: 'h4',
-                classes: ['spectrum-Header', 'spectrum-Heading--sizeXS'],
+                classes: ['spectrum-Header', 'spectrum-Heading--sizeM'],
+            },
+            {
+                selector: 'h5',
+                classes: ['spectrum-Header', 'spectrum-Heading--sizeS'],
             },
         ],
     });
