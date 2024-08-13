@@ -148,6 +148,16 @@ body {
     }
 }
 
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
 #logo {
     outline: none;
     margin-bottom: -11px;
@@ -606,6 +616,25 @@ sp-divider[size='s']:not(:defined) {
 
 .spectrum-Article .spectrum-Heading1--display {
     margin-bottom: 28px;
+}
+
+.headerContainer {
+    display: grid;
+    grid-template-columns: minmax(auto, max-content) min-content;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+
+.header-anchor {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+.header-anchor:link,
+.header-anchor:visited {
+    padding: 0 0.25rem;
+    text-decoration: none !important;
 }
 
 .headerContainer sp-divider {
