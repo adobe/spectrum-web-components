@@ -218,11 +218,90 @@ export default () =>
             },
             {
                 selector: 'h4',
-                classes: ['spectrum-Header', 'spectrum-Heading--sizeM'],
+                fn: (node) => {
+                    if (
+                        node.attrs &&
+                        (node.attrs.slot ||
+                            (node.attrs.class &&
+                                /spectrum-Heading/.test(node.attrs.class)))
+                    ) {
+                        return node;
+                    }
+                    return {
+                        tag: 'div',
+                        attrs: {
+                            class: 'headerContainer',
+                        },
+                        content: [
+                            {
+                                tag: 'h4',
+                                attrs: {
+                                    ...node.attrs,
+                                    class: 'spectrum-Heading spectrum-Heading--sizeM',
+                                },
+                                content: node.content,
+                            },
+                        ],
+                    };
+                },
             },
             {
                 selector: 'h5',
-                classes: ['spectrum-Header', 'spectrum-Heading--sizeS'],
+                fn: (node) => {
+                    if (
+                        node.attrs &&
+                        (node.attrs.slot ||
+                            (node.attrs.class &&
+                                /spectrum-Heading/.test(node.attrs.class)))
+                    ) {
+                        return node;
+                    }
+                    return {
+                        tag: 'div',
+                        attrs: {
+                            class: 'headerContainer',
+                        },
+                        content: [
+                            {
+                                tag: 'h5',
+                                attrs: {
+                                    ...node.attrs,
+                                    class: 'spectrum-Heading spectrum-Heading--sizeS',
+                                },
+                                content: node.content,
+                            },
+                        ],
+                    };
+                },
+            },
+            {
+                selector: 'h6',
+                fn: (node) => {
+                    if (
+                        node.attrs &&
+                        (node.attrs.slot ||
+                            (node.attrs.class &&
+                                /spectrum-Heading/.test(node.attrs.class)))
+                    ) {
+                        return node;
+                    }
+                    return {
+                        tag: 'div',
+                        attrs: {
+                            class: 'headerContainer',
+                        },
+                        content: [
+                            {
+                                tag: 'h6',
+                                attrs: {
+                                    ...node.attrs,
+                                    class: 'spectrum-Heading spectrum-Heading--sizeXS',
+                                },
+                                content: node.content,
+                            },
+                        ],
+                    };
+                },
             },
         ],
     });
