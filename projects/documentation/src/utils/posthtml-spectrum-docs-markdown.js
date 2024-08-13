@@ -120,25 +120,6 @@ export default () =>
                 },
             },
             {
-                selector: '.heading-wrapper:has(h2,h2,h3)',
-                fn: (node) => {
-                    if (
-                        node.attrs &&
-                        node.attrs.class &&
-                        /spectrum-Body/.test(node.attrs.class)
-                    ) {
-                        return node;
-                    }
-                    return {
-                        ...node,
-                        attrs: {
-                            ...node.attrs,
-                            class: 'heading-stuff',
-                        },
-                    };
-                },
-            },
-            {
                 // Wrap h1's in a .spectrum-Article to get nice typography
                 selector: 'h1',
                 fn: (node) => {
@@ -184,7 +165,7 @@ export default () =>
                         tag: 'h2',
                         attrs: {
                             ...node.attrs,
-                            class: 'headerContainer spectrum-Heading spectrum-Heading--sizeXL',
+                            class: 'spectrum-Heading spectrum-Heading--sizeXL',
                         },
                         content: [node.content],
                     };
