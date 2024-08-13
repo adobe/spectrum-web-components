@@ -148,7 +148,8 @@ body {
     }
 }
 
-.visually-hidden {
+.visually-hidden,
+[value='examples'] > .headerContainer:first-child {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
@@ -899,6 +900,10 @@ sp-tab-panel:not(.section):focus code-example:after {
         var(--spectrum-blue-600);
 }
 
+sp-tab-panel.section {
+    padding-top: 2rem;
+}
+
 .for-github {
     display: none;
 }
@@ -1003,11 +1008,11 @@ sp-link {
     flex-wrap: wrap;
     gap: 16px;
     border-radius: 6px;
-    margin: 2rem 0 0 0;
+    margin: 2rem 0 2rem 0;
     container-type: inline-size;
 }
 
-.usage-links :is(h2, h3) {
+.usage-links :is([slot='heading']) {
     all: unset;
 }
 

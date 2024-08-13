@@ -23,11 +23,11 @@ layout: layout.njk
       {% if part.data.partType !== "examples" %}
         <sp-tab-panel class="section" value="{{ part.data.partType }}">
           {% if part.data.partType === "api" %}
-          <h2>API</h2>
+          <h2 class="visually-hidden">API</h2>
           {% elseif part.data.partType === "changelog" %}
-          <h2>Changelog</h2>
+          <h2 class="visually-hidden">Changelog</h2>
           {% else  %}
-          <h2>{{ part.data.partType }}</h2>
+          <h2 class="visually-hidden">{{ part.data.partType }}</h2>
           {% endif %}
           {{ part.templateContent | safe }}
         </sp-tab-panel>
