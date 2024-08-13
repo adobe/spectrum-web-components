@@ -618,27 +618,17 @@ sp-divider[size='s']:not(:defined) {
     margin-bottom: 28px;
 }
 
-.headerContainer {
-    display: grid;
-    grid-template-columns: minmax(auto, max-content) min-content;
-    align-items: stretch;
-    gap: 0.5rem;
+.header-heading {
+    display: inline !important;
 }
 
 .header-anchor {
-    display: grid;
-    justify-content: center;
-    align-content: center;
+    padding: 0 0.25rem;
 }
 
 .header-anchor:link,
 .header-anchor:visited {
-    padding: 0 0.25rem;
     text-decoration: none !important;
-}
-
-.headerContainer sp-divider {
-    margin-bottom: 33px;
 }
 
 article {
@@ -725,7 +715,7 @@ sp-table.events .description {
     margin-bottom: calc(var(--swc-scale-factor) * 12px);
 }
 
-[id] > .header-anchor {
+.headerContainer:has([id]) > .header-anchor {
     opacity: 0;
     transition: all 125ms ease-in-out;
 }
@@ -740,8 +730,8 @@ tr[id] {
 }
 
 /*! purgecss start ignore */
-[id]:hover > .header-anchor,
-[id] > .header-anchor.focus-visible {
+.headerContainer:has([id]):hover > .header-anchor,
+.headerContainer:has([id]) > .header-anchor.focus-visible {
     opacity: 1;
 }
 
