@@ -151,9 +151,9 @@ export default () =>
             {
                 selector: '.heading-wrapper',
                 fn: (node) => {
+                    const [heading, anchor] = node.content;
+                    const tag = heading.tag || '';
                     const getSize = (node) => {
-                        const [heading, anchor] = node.content;
-                        const tag = code.tag || '';
                         if (!tag) {
                             return node;
                         }
