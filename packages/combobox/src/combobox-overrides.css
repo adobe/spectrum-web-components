@@ -317,6 +317,9 @@
     --mod-picker-button-border-color-quiet: var(
         --system-combobox-quiet-picker-button-border-color-quiet
     );
+    --mod-picker-button-border-color: var(
+        --system-combobox-quiet-picker-button-border-color
+    );
 }
 
 :host([quiet][size='s']) {
