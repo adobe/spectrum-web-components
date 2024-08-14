@@ -138,7 +138,7 @@ governing permissions and limitations under the License.
         --mod-drop-zone-border-style-dragged,
         solid
     );
-    --spectrum-drop-zone-background-color: rgba(
+    --mod-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
         var(
             --mod-drop-zone-background-color-opacity,
@@ -159,7 +159,7 @@ governing permissions and limitations under the License.
 }
 
 :host .is-filled {
-    --spectrum-drop-zone-background-color: rgba(
+    --mod-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
         var(
             --mod-drop-zone-background-color-opacity-filled,
