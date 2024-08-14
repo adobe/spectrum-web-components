@@ -64,3 +64,7 @@ governing permissions and limitations under the License.
     flex: 0;
     align-self: flex-start;
 }
+
+#cover-photo {
+    display: contents;
+}
