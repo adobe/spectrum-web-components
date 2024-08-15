@@ -14,7 +14,7 @@ layout: layout.njk
       {{ content | safe }}
       {% for part in collections[componentName] %}
       {% if part.data.partType === "examples" %}
-        <sp-tab-panel class="section" value="{{ part.data.partType }}">
+        <sp-tab-panel class="section" value="overview">
             {{ part.templateContent | safe }}
         </sp-tab-panel>
       {% endif %}
@@ -23,9 +23,24 @@ layout: layout.njk
       {% if part.data.partType !== "examples" %}
         <sp-tab-panel class="section" value="{{ part.data.partType }}">
           {% if part.data.partType === "api" %}
+          <div class="headerContainer">
+            <h2 id="api" class="header-heading spectrum-Heading spectrum-Heading--sizeXL">API</h2>
+            <sp-link class="header-anchor spectrum-Heading spectrum-Heading--sizeXL" href="#api" focusable>
+              <span aria-hidden="true">#</span>
+              <span class="visually-hidden">Section titled API</span>
+            </sp-link>
+            <sp-divider class="header-divider" size="l"></sp-divider>
+          </div>
           <h2 class="visually-hidden">API</h2>
           {% elseif part.data.partType === "changelog" %}
-          <h2 class="visually-hidden">Changelog</h2>
+          <div class="headerContainer">
+            <h2 id="changelog" class="header-heading spectrum-Heading spectrum-Heading--sizeXL">Changelog</h2>
+            <sp-link class="header-anchor spectrum-Heading spectrum-Heading--sizeXL" href="#changelog" focusable>
+              <span aria-hidden="true">#</span>
+              <span class="visually-hidden">Section titled Changelog</span>
+            </sp-link>
+            <sp-divider class="header-divider" size="l"></sp-divider>
+          </div>
           {% else  %}
           <h2 class="visually-hidden">{{ part.data.partType }}</h2>
           {% endif %}
