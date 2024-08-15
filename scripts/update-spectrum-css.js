@@ -28,6 +28,7 @@ async function update() {
             const packageJSON = JSON.parse(
                 readFileSync(packageJSONPath, 'utf-8')
             );
+            console.log(packageJSONPath);
             async function updateDependency(packageName, depType) {
                 if (packageName.startsWith('@spectrum-css')) {
                     const currentVersion = packageJSON[depType][packageName];
@@ -35,9 +36,10 @@ async function update() {
                         version: useLatest ? 'latest' : currentVersion,
                     });
                     const targetRange = `^${targetVersion}`;
+                    //console.log(packageName, currentVersion, targetVersion);
                     if (currentVersion.replace('^', '') !== targetVersion) {
                         console.log(
-                            `updating ${packageName} from ${currentVersion} to ${targetRange}`
+                            `updating ${packageName} from ${currentVersion} to ${targetRange}: ${shouldUpdate}`
                         );
                         packageJSON[depType][packageName] = targetRange;
                         shouldUpdate = true;
@@ -45,10 +47,12 @@ async function update() {
                 }
             }
             for (const packageName in packageJSON.dependencies) {
+                //console.log(packageName, 'dependencies...');
                 await updateDependency(packageName, 'dependencies');
             }
             for (const packageName in packageJSON.devDependencies) {
                 await updateDependency(packageName, 'devDependencies');
+                //console.log(packageName, 'devDependencies...');
             }
             if (shouldUpdate) {
                 writeFileSync(packageJSONPath, JSON.stringify(packageJSON));
