@@ -441,8 +441,8 @@
     --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-static-black-selected-background-color-focus
     );
-    --spectrum-actionbutton-content-color-default-selected: var(
-        --system-action-button-static-black-selected-content-color-default-selected
+    --spectrum-actionbutton-content-color-default: var(
+        --system-action-button-static-black-selected-content-color-default
     );
     --spectrum-actionbutton-content-color-hover: var(
         --system-action-button-static-black-selected-content-color-hover

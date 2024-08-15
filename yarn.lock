@@ -5598,10 +5598,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-9.0.0-s2-foundations.13.tgz#31170448b7b7865472360a5a8cb110af394afcfa"
   integrity sha512-/jTqSEpqYuNlhplPSDSjGAjNjxGZK8Yp9fSSpdFMNTSdMNR8bHoPPo9exGiNkUsGdeTpS7jhid+XoZrjgqg8ZQ==
 
-"@spectrum-css/actionbutton@^7.0.0-s2-foundations.14":
-  version "7.0.0-s2-foundations.14"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-7.0.0-s2-foundations.14.tgz#a2fce842ce6758f48b1594ae6b4c5c42968f2ecc"
-  integrity sha512-qsdN7CMwBl0sYISgJPrWWOdQeo36rCzTGvg/V3IgJebtUe4BENAD7PFvbbb1ieGpttIuEbFCR1uVg80ZNjEpKw==
+"@spectrum-css/actionbutton@^7.0.0-s2-foundations.15":
+  version "7.0.0-s2-foundations.15"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-7.0.0-s2-foundations.15.tgz#b32fd3aae333cd9ed4e2bfef0537fdbcbf1d9705"
+  integrity sha512-R8cADoYWLBenTyP8i80Za8dy3qGmFp7VE6DO/vLvC2Xc2Cm1s5bhYc3L34dS+wlt/Y1BIAl1OlfKsPmUlV4lHQ==
 
 "@spectrum-css/actiongroup@^6.0.0-s2-foundations.12":
   version "6.0.0-s2-foundations.12"
@@ -5803,10 +5803,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-6.0.0-s2-foundations.12.tgz#f0fb39c3d4f97b3caadc1c7203b24e22bd1a1966"
   integrity sha512-cRreLcdNVwQN4UKdIpxj/hzQSNotGJe2Nluz4OJXGp7OPRkAa4Z5MVkAlSdnNEciM5mjI+Ylv+cAGtfXvSv4Ww==
 
-"@spectrum-css/popover@^8.0.0-s2-foundations.12":
-  version "8.0.0-s2-foundations.12"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-8.0.0-s2-foundations.12.tgz#e3965e72366027b26eef252e7c2bb8de5a11c093"
-  integrity sha512-LnWwAA0C7+/zDbEYhMGiHPXU0bAiFwIoaYDRG53kzdZcekDfFH8YaBqksuv4lyMXPjAhBU62NiKZA6VDjdarBg==
+"@spectrum-css/popover@^8.0.0-s2-foundations.13":
+  version "8.0.0-s2-foundations.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-8.0.0-s2-foundations.13.tgz#2954e9eb473c1e3dde941bfa64241c6a3af1c2a9"
+  integrity sha512-J8Nt8SoLb8fGHdRcPTJvhrM5GBuVgUVxgnTPCZKVZw856tMiWEsa7RJPpywyj39B6BqHmcDzBpw8Mcx1OkK1tQ==
 
 "@spectrum-css/progressbar@^5.0.0-s2-foundations.13":
   version "5.0.0-s2-foundations.13"
