@@ -155,6 +155,6 @@ Good, descriptive help text includes 1-2 short sentences of information such as:
 
 #### Ensure help text and field are share the same root
 
-It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots, so help text must be used in the `help-text` or `help-text-negative` `slot` of a `<sp-text-field>`, `<sp-field-group>`, `<sp-combobox>` or `<sp-picker>`.
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="help-text-negative"` in an `<sp-text-field>`, `<sp-field-group>`, `<sp-combobox>` or `<sp-picker>`.
 
 To add help text to your own custom element, see [Help Text Mixin](./help-text-mixin/).
