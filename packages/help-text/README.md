@@ -150,7 +150,7 @@ When associated to content the is disabled, use the `disabled` attribute to matc
 Good, descriptive help text includes 1-2 short sentences of information such as:
 
 -   An overall description of an input field or controls
--   Hints for what kind of information needs to be input or selected
+-   Hints for what kind of information needs to be inputted or selected
 -   Specific formatting examples or requirements
 
 #### Ensure help text and field are share the same root
