@@ -127,7 +127,7 @@ While our components are designed to be responsive and mobile-friendly, we do no
 
 ## Do you want to contribute to the Spectrum Web Components documentation?
 
-Please read [Contributing Guidelines for documentation](https://github.com/adobe/spectrum-web-components#documentation)
+Please read [Contributing Guidelines for documentation](https://github.com/adobe/spectrum-web-components#documentation) and [Documenting the component](http://localhost:8001/guides/adding-component/#documenting-the-component) for more information.
 
 Thanks! :heart: :heart: :heart:
 
