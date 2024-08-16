@@ -9,11 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-    html,
-    render,
-    type TemplateResult,
-} from '@spectrum-web-components/base';
+import { html, type TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import { CalendarValue } from '../src/types.js';
@@ -118,27 +114,11 @@ const Template = (args: StoryArgs = {}): TemplateResult => {
         ? timestampToValue(args.max as unknown as number)
         : undefined;
 
-    const story = html`
+    return html`
         <sp-calendar
             ...=${spreadProps(args as SpreadStoryArgs)}
             @change=${args.onChange}
         ></sp-calendar>
-    `;
-
-    const randomId = Math.floor(Math.random() * 99999);
-
-    requestAnimationFrame(() => {
-        const container = document.querySelector(
-            `.story-container-${randomId}`
-        );
-
-        if (container) {
-            render(story, container as HTMLElement);
-        }
-    });
-
-    return html`
-        <div class="story-container-${randomId}"></div>
     `;
 };
 
