@@ -132,6 +132,98 @@ describe('Calendar', () => {
         });
     });
 
+    describe('Correctly manages the focusable day when changing months', () => {
+        let focusableDay: HTMLElement;
+        let nextButton: Button;
+        let prevButton: Button;
+
+        beforeEach(async () => {
+            focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+            nextButton =
+                element.shadowRoot.querySelector(NEXT_BUTTON_SELECTOR)!;
+            prevButton =
+                element.shadowRoot.querySelector(PREV_BUTTON_SELECTOR)!;
+        });
+
+        it('after selecting a date', async () => {
+            focusableDay.focus();
+            await sendKeys({ press: 'ArrowRight' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            nextButton.focus();
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'Tab' });
+            await elementUpdated(element);
+
+            const focusedDay = element.shadowRoot.activeElement as HTMLElement;
+            const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
+
+            expect(isSameDay(focusedCalendarDate, element['currentDate'])).to.be
+                .true;
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth + 2);
+            expect(element['currentDate'].day).to.equal(1);
+        });
+
+        it('coming back to a selected date', async () => {
+            focusableDay.focus();
+            await sendKeys({ press: 'ArrowRight' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            nextButton.focus();
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            prevButton.focus();
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'Tab' });
+            await sendKeys({ press: 'Tab' });
+            await elementUpdated(element);
+
+            const focusedDay = element.shadowRoot.activeElement as HTMLElement;
+            const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
+            expect(isSameDay(focusedCalendarDate, element['_selectedDate']!)).to
+                .be.true;
+        });
+
+        it("coming back to today's date", async () => {
+            nextButton.focus();
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            prevButton.focus();
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'Tab' });
+            await sendKeys({ press: 'Tab' });
+            await elementUpdated(element);
+
+            const focusedDay = element.shadowRoot.activeElement as HTMLElement;
+            expect(focusedDay).to.equal(focusableDay);
+        });
+    });
+
     describe('Navigates', () => {
         let nextButton: Button;
         let prevButton: Button;

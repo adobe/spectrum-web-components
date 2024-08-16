@@ -207,7 +207,7 @@ export class Calendar extends SpectrumElement {
         });
 
         return html`
-            <div class="header">
+            <div class="header" @focusin=${this.resetDateFocusIntent}>
                 <!--
                  * TODO: Attribute 'role="heading"' removed, due to error 'The "heading" role requires the attribute
                  * "aria-level"'
@@ -465,14 +465,34 @@ export class Calendar extends SpectrumElement {
     }
 
     private handlePreviousMonth(): void {
-        this.currentDate = startOfMonth(this.currentDate).subtract({
-            months: 1,
-        });
+        const isSelectedInPreviousMonth =
+            this._selectedDate?.month === this.currentDate.month - 1;
+        const isTodayInPreviousMonth =
+            this.today.month === this.currentDate.month - 1;
+
+        if (isSelectedInPreviousMonth) this.currentDate = this._selectedDate!;
+        else if (isTodayInPreviousMonth) this.currentDate = this.today;
+        else
+            this.currentDate = startOfMonth(this.currentDate).subtract({
+                months: 1,
+            });
+
         this.setWeeksInCurrentMonth();
     }
 
     private handleNextMonth(): void {
-        this.currentDate = startOfMonth(this.currentDate).add({ months: 1 });
+        const isSelectedInNextMonth =
+            this._selectedDate?.month === this.currentDate.month + 1;
+        const isTodayInNextMonth =
+            this.today.month === this.currentDate.month + 1;
+
+        if (isSelectedInNextMonth) this.currentDate = this._selectedDate!;
+        else if (isTodayInNextMonth) this.currentDate = this.today;
+        else
+            this.currentDate = startOfMonth(this.currentDate).add({
+                months: 1,
+            });
+
         this.setWeeksInCurrentMonth();
     }
 
