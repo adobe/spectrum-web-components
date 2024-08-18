@@ -184,20 +184,25 @@ export class NumberField extends TextfieldBase {
     private _trackingValue = '';
     private lastCommitedValue?: number;
 
-    private setValue(value: number = this.value): void {
-        this.value = value;
+    private setValue(newValue: number = this.value): void {
+        // Capture previous value for accurate IME change detection
+        const previousValue = this.lastCommitedValue;
+
+        this.value = newValue;
+
         if (
-            typeof this.lastCommitedValue === 'undefined' ||
-            this.lastCommitedValue === this.value
+            typeof previousValue === 'undefined' ||
+            previousValue === this.value
         ) {
             // Do not announce when the value is unchanged.
             return;
         }
 
+        this.lastCommitedValue = this.value;
+
         this.dispatchEvent(
             new Event('change', { bubbles: true, composed: true })
         );
-        this.lastCommitedValue = this.value;
     }
 
     /**
