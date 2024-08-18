@@ -15,6 +15,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { ContextualHelp } from '../src/ContextualHelp.js';
 import { ContextualHelpMarkup } from '../stories';
+import { render, TemplateResult } from 'lit';
 
 describe('ContextualHelp', () => {
     testForLitDevWarnings(
@@ -68,5 +69,65 @@ describe('ContextualHelp', () => {
 
         popover = el.shadowRoot?.querySelector('sp-popover');
         expect(el.shadowRoot?.querySelector('sp-popover')).not.to.exist;
+    });
+    it('returns the label if set', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+        el.label = 'Custom Label';
+        expect(el.buttonAriaLabel).to.equal('Custom Label');
+    });
+
+    it('returns "Help" if variant is "help" and label is not set', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+        el.variant = 'help';
+        expect(el.buttonAriaLabel).to.equal('Help');
+    });
+
+    it('returns "Informations" if variant is not "help" and label is not set', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+        expect(el.buttonAriaLabel).to.equal('Informations');
+    });
+    it('renders correctly when actualPlacement is undefined', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
+        el.isMobile.matches = true;
+
+        await elementUpdated(el);
+
+        const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
+        expect(trigger).to.exist;
+        expect(trigger).to.have.attribute('aria-label', 'Informations');
+
+        const overlay = el.shadowRoot?.querySelector(
+            'sp-overlay'
+        ) as HTMLElement;
+        expect(overlay).to.exist;
+        expect(overlay).to.have.attribute('trigger', 'trigger@click');
+        expect(overlay).to.have.attribute('receives-focus', 'true');
+        expect(overlay).to.have.property('offset', el.offset);
+        expect(overlay).to.have.property('open', el.open);
+    });
+    it('renders dialog content when isMobile.matches is true', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
+        el.isMobile.matches = true;
+
+        await elementUpdated(el);
+
+        const template: TemplateResult = el['renderOverlayContent']();
+
+        const container = document.createElement('div');
+        render(template, container);
+
+        const dialogBase = container.querySelector('sp-dialog-base');
+        const dialog = container.querySelector('sp-dialog');
+        const headingSlot = container.querySelector('slot[name="heading"]');
+        const linkSlot = container.querySelector('slot[name="link"]');
+
+        expect(dialogBase).to.exist;
+        expect(dialog).to.exist;
+        expect(dialog).to.have.attribute('dismissable');
+        expect(dialog).to.have.attribute('size', 's');
+        expect(headingSlot).to.exist;
+        expect(linkSlot).to.exist;
     });
 });
