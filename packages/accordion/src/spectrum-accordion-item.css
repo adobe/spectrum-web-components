@@ -42,7 +42,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host:not(:first-of-type) {
+:host(:not(:first-of-type)) {
     border-block-start-width: 0;
 }
 

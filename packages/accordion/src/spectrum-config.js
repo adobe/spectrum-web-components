@@ -96,9 +96,30 @@ const config = {
                     hoist: true,
                 },
                 {
-                    find: builder.pseudoElement('not(:first-of-type)'),
-                    kind: 'not',
-                    replace: builder.pseudoElement('not(:first-of-type)'),
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'first-of-type',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'first-of-type',
+                                },
+                            ],
+                        ],
+                    },
                     hoist: true,
                 },
                 {
