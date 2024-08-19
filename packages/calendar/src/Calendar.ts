@@ -38,6 +38,7 @@ import {
     classMap,
     ifDefined,
 } from '@spectrum-web-components/base/src/directives.js';
+import { map } from 'lit/directives/map.js';
 import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
@@ -124,10 +125,10 @@ export class Calendar extends SpectrumElement {
     }
 
     @state()
-    private weeksInCurrentMonth: number[] = [];
+    private weekdays: CalendarWeekday[] = [];
 
     @state()
-    private weekdays: CalendarWeekday[] = [];
+    private currentMonthDates: CalendarDate[][] = [];
 
     @state()
     protected set isDateFocusIntent(value: boolean) {
@@ -164,14 +165,21 @@ export class Calendar extends SpectrumElement {
         super();
         this.setNumberFormatter();
         this.setWeekdays();
-        this.setWeeksInCurrentMonth();
+        this.setCurrentMonthDates();
     }
 
     override willUpdate(changedProperties: PropertyValues): void {
+        const previousMonth = changedProperties.get('currentDate')?.month;
+        const hasMonthChanged =
+            changedProperties.has('currentDate') &&
+            previousMonth !== this.currentDate.month;
+
+        if (hasMonthChanged) this.setCurrentMonthDates();
+
         if (changedProperties.has(languageResolverUpdatedSymbol)) {
             this.setNumberFormatter();
             this.setWeekdays();
-            this.setWeeksInCurrentMonth();
+            this.setCurrentMonthDates();
         }
 
         const changesMin = changedProperties.has('min');
@@ -317,9 +325,7 @@ export class Calendar extends SpectrumElement {
         return html`
             <thead role="presentation">
                 <tr role="row">
-                    ${this.weekdays.map((weekday) =>
-                        this.renderWeekdayColumn(weekday)
-                    )}
+                    ${map(this.weekdays, this.renderWeekdayColumn)}
                 </tr>
             </thead>
         `;
@@ -338,20 +344,17 @@ export class Calendar extends SpectrumElement {
     protected renderCalendarTableBody(): TemplateResult {
         return html`
             <tbody role="presentation">
-                ${this.weeksInCurrentMonth.map((weekIndex) =>
-                    this.renderCalendarTableRow(weekIndex)
+                ${map(
+                    this.currentMonthDates,
+                    (week) => html`
+                        <tr role="row">
+                            ${map(week, (date) =>
+                                this.renderCalendarTableCell(date)
+                            )}
+                        </tr>
+                    `
                 )}
             </tbody>
-        `;
-    }
-
-    protected renderCalendarTableRow(weekIndex: number): TemplateResult {
-        return html`
-            <tr role="row">
-                ${this.getDatesInWeek(weekIndex).map((calendarDate) =>
-                    this.renderCalendarTableCell(calendarDate)
-                )}
-            </tr>
         `;
     }
 
@@ -491,40 +494,40 @@ export class Calendar extends SpectrumElement {
 
     private handlePreviousMonth(): void {
         const isSelectedInPreviousMonth =
-            this._selectedDate?.month === this.currentDate.month - 1;
+            this.value?.month === this.currentDate.month - 1;
         const isTodayInPreviousMonth =
             this.today.month === this.currentDate.month - 1;
 
-        if (isSelectedInPreviousMonth) this.currentDate = this._selectedDate!;
+        if (isSelectedInPreviousMonth)
+            this.currentDate = this.value as CalendarDate;
         else if (isTodayInPreviousMonth) this.currentDate = this.today;
         else
             this.currentDate = startOfMonth(this.currentDate).subtract({
                 months: 1,
             });
-
-        this.setWeeksInCurrentMonth();
     }
 
     private handleNextMonth(): void {
         const isSelectedInNextMonth =
-            this._selectedDate?.month === this.currentDate.month + 1;
+            this.value?.month === this.currentDate.month + 1;
         const isTodayInNextMonth =
             this.today.month === this.currentDate.month + 1;
 
-        if (isSelectedInNextMonth) this.currentDate = this._selectedDate!;
+        if (isSelectedInNextMonth)
+            this.currentDate = this.value as CalendarDate;
         else if (isTodayInNextMonth) this.currentDate = this.today;
         else
             this.currentDate = startOfMonth(this.currentDate).add({
                 months: 1,
             });
 
-        this.setWeeksInCurrentMonth();
+        this.currentDate = startOfMonth(this.currentDate).subtract({
+            months: 1,
+        });
     }
 
     private handleKeydown(event: KeyboardEvent): void {
         this.setDateFocusIntent();
-
-        const initialMonth = this.currentDate.month;
 
         switch (event.code) {
             case 'ArrowLeft': {
@@ -549,9 +552,6 @@ export class Calendar extends SpectrumElement {
                 break;
             }
         }
-
-        if (this.currentDate.month !== initialMonth)
-            this.setWeeksInCurrentMonth();
     }
 
     private focusPreviousDay(): void {
@@ -596,15 +596,6 @@ export class Calendar extends SpectrumElement {
     }
 
     /**
-     * Defines the array with the indexes (starting at zero) of the weeks of the current month
-     */
-    private setWeeksInCurrentMonth(): void {
-        const numberOfWeeks = getWeeksInMonth(this.currentDate, this.locale);
-
-        this.weeksInCurrentMonth = [...new Array(numberOfWeeks).keys()];
-    }
-
-    /**
      * Defines the array with data for the days of the week, starting on the first day of the week according to the
      * defined location (Sunday, Monday, etc.)
      */
@@ -622,16 +613,32 @@ export class Calendar extends SpectrumElement {
     }
 
     /**
-     * Returns an array with all days of the week corresponding to the given index, starting with the first day of the
-     * week according to the locale
+     * Defines the 2D-array with the dates of the current month
+     */
+    private setCurrentMonthDates(): void {
+        const numberOfWeeks = getWeeksInMonth(this.currentDate, this.locale);
+
+        for (const weekIndex of new Array(numberOfWeeks).keys())
+            this.currentMonthDates[weekIndex] = this.getDatesInWeek(
+                this.currentDate,
+                weekIndex
+            );
+    }
+
+    /**
+     * Returns an array with all days of the week in a specific month, corresponding to the given index,
+     * starting with the first day of the week according to the locale
      *
      * @param weekIndex - The index of the week
      */
-    private getDatesInWeek(weekIndex: number): CalendarDate[] {
+    private getDatesInWeek(
+        monthDate: CalendarDate,
+        weekIndex: number
+    ): CalendarDate[] {
         const dates: CalendarDate[] = [];
 
         let date = startOfWeek(
-            startOfMonth(this.currentDate).add({
+            startOfMonth(monthDate).add({
                 weeks: weekIndex,
             }),
             this.locale
