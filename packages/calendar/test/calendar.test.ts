@@ -17,6 +17,7 @@ import {
     CalendarDate,
     endOfMonth,
     isSameDay,
+    parseDate,
     today,
 } from '@internationalized/date';
 import { Button } from '@spectrum-web-components/button';
@@ -178,8 +179,7 @@ describe('Calendar', () => {
 
             const focusedDay = element.shadowRoot.activeElement as HTMLElement;
             const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
-            expect(isSameDay(focusedCalendarDate, element['_selectedDate']!)).to
-                .be.true;
+            expect(isSameDay(focusedCalendarDate, element.value!)).to.be.true;
         });
 
         it("coming back to today's date", async () => {

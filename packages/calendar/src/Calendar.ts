@@ -520,10 +520,6 @@ export class Calendar extends SpectrumElement {
             this.currentDate = startOfMonth(this.currentDate).add({
                 months: 1,
             });
-
-        this.currentDate = startOfMonth(this.currentDate).subtract({
-            months: 1,
-        });
     }
 
     private handleKeydown(event: KeyboardEvent): void {
