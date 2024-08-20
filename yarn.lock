@@ -7591,18 +7591,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/progressbar@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@spectrum-css/progressbar@npm:4.1.0"
-  peerDependencies:
-    "@spectrum-css/fieldlabel": ">=8"
-    "@spectrum-css/tokens": ">=14"
-  peerDependenciesMeta:
-    "@spectrum-css/fieldlabel":
-      optional: true
-  checksum: 10c0/8b34ab1451ac5445a9f3f4735bd2f3239e042c64df7345a1d3c4c78d5a65a9dac469c2ba111f4a6119af893282d463ec825f8f40eba7874a18cd3777f77d2f56
-  languageName: node
-  linkType: hard
+"@spectrum-css/progressbar@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-4.1.5.tgz#e01bfbc5daf59f5ac054c8179da3236a4cc0cf2c"
+  integrity sha512-EM012emG6anGkm+dDBGv3z/32ABALLtXXVGoSoQtXiMAHAmjd1x51Dqh28MZsbX6tX7CccfzW3TdBaz+HC2WNg==
 
 "@spectrum-css/progresscircle@npm:^3.1.0":
   version: 3.1.0
@@ -7659,15 +7651,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/slider@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "@spectrum-css/slider@npm:5.1.0"
-  peerDependencies:
-    "@spectrum-css/stepper": ">=6"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/c8fbb29d4a96cafd0fb61f80fd8e14e5f2c824c6c0c7f984b738135e2c49c838ed33296e327910a9cdefe6c347066b28bd7dc091f3153ef841064fd1d08290ba
-  languageName: node
-  linkType: hard
+"@spectrum-css/slider@^5.2.4":
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-5.2.4.tgz#5906629ff05974901463c31f0b5ea7ef2ee4d577"
+  integrity sha512-5cgJYmHOWXOaCB5OsW6en/mx2CoV/m9FR+Sm9yz9zsY2uBAFf5YWGhG8ahNQeDRLUQMPVOEbSGGwKPSitd/ojw==
 
 "@spectrum-css/splitbutton@npm:^8.1.2":
   version: 8.1.2
@@ -7902,38 +7889,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/underlay@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@spectrum-css/underlay@npm:4.1.0"
-  peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/fddf0d23be8fa05b7a43983c49d4e69608b828308792c59f5c7af8751ecf6e1561ae30e34e412e6d34716a905ccf22f11e29c1823f8758a7b2a7bf4d021d6d3b
-  languageName: node
-  linkType: hard
+"@spectrum-css/underlay@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-4.1.0.tgz#eccd6ab9e0f16a707f08aab443596fe8c5f24812"
+  integrity sha512-mZ8JhK7bCjXG8GH7rvJOmVmcJYL744Dj8xMxgm3Wyr1JYaTElklonNKvblatleZ6gDApvowQ1PEtgj+1v03IrQ==
 
-"@spectrum-css/vars@npm:^9.0.8":
-  version: 9.0.8
-  resolution: "@spectrum-css/vars@npm:9.0.8"
-  checksum: 10c0/5947b6bd8234fd9ac41b2cccf964f9a16d3c27e6773760bc79f22c2b0053d4f9d82dfc50cb136477cc9962e113dd37098581c614f7867d705dee424c89d5ae69
-  languageName: node
-  linkType: hard
+"@spectrum-css/vars@^9.0.8":
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
+  integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
-"@spectrum-web-components/accordion@npm:^0.47.0, @spectrum-web-components/accordion@workspace:packages/accordion":
-  version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/accordion@workspace:packages/accordion"
-  dependencies:
-    "@spectrum-css/accordion": "npm:^5.1.2"
-    "@spectrum-web-components/base": "npm:^0.47.0"
-    "@spectrum-web-components/icon": "npm:^0.47.0"
-    "@spectrum-web-components/icons-ui": "npm:^0.47.0"
-    "@spectrum-web-components/reactive-controllers": "npm:^0.47.0"
-    "@spectrum-web-components/shared": "npm:^0.47.0"
-  languageName: unknown
-  linkType: soft
+"@spectrum-web-components/eslint-plugin@file:./linters/eslint":
+  version "0.47.0"
 
-"@spectrum-web-components/action-bar@npm:^0.47.0, @spectrum-web-components/action-bar@workspace:packages/action-bar":
-  version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/action-bar@workspace:packages/action-bar"
+"@storybook/addon-a11y@^7.5.0":
+  version "7.6.19"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-7.6.19.tgz#8b684edfb3a387d24398e81517dc734f0b76a1db"
+  integrity sha512-92SOapbXukkO0RlrA0+8qa61NlCGSUFM7n5DfAA6tobIfhBAhfsEi7I9Q/0F95SCAgJoVVQdeIGKdvHjxO8DAg==
   dependencies:
     "@spectrum-css/actionbar": "npm:^8.1.1"
     "@spectrum-web-components/action-group": "npm:^0.47.0"
@@ -33693,9 +33665,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string-width-cjs@npm:string-width@^4.2.0, string-width@npm:^1.0.2 || 2 || 3 || 4, string-width@npm:^4.1.0, string-width@npm:^4.2.0, string-width@npm:^4.2.3":
-  version: 4.2.3
-  resolution: "string-width@npm:4.2.3"
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+"string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
   dependencies:
     emoji-regex: "npm:^8.0.0"
     is-fullwidth-code-point: "npm:^3.0.0"
@@ -33852,9 +33834,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1, strip-ansi@npm:^6.0.0, strip-ansi@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "strip-ansi@npm:6.0.1"
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
   dependencies:
     ansi-regex: "npm:^5.0.1"
   checksum: 10c0/1ae5f212a126fe5b167707f716942490e3933085a5ff6c008ab97ab2f272c8025d3aa218b7bd6ab25729ca20cc81cddb252102f8751e13482a5199e873680952
@@ -33890,14 +33873,19 @@ __metadata:
   version: 5.2.0
   resolution: "strip-ansi@npm:5.2.0"
   dependencies:
-    ansi-regex: "npm:^4.1.0"
-  checksum: 10c0/de4658c8a097ce3b15955bc6008f67c0790f85748bdc025b7bc8c52c7aee94bc4f9e50624516150ed173c3db72d851826cd57e7a85fe4e4bb6dbbebd5d297fdf
-  languageName: node
-  linkType: hard
+    ansi-regex "^4.1.0"
 
-"strip-ansi@npm:^7.0.0, strip-ansi@npm:^7.0.1, strip-ansi@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "strip-ansi@npm:7.1.0"
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^7.0.0, strip-ansi@^7.0.1, strip-ansi@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-7.1.0.tgz#d5b6568ca689d8561370b0707685d22434faff45"
+  integrity sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==
   dependencies:
     ansi-regex: "npm:^6.0.1"
   checksum: 10c0/a198c3762e8832505328cbf9e8c8381de14a4fa50a4f9b2160138158ea88c0f5549fb50cb13c651c3088f47e63a108b34622ec18c0499b6c8c3a5ddf6b305ac4
@@ -37454,9 +37442,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0, wrap-ansi@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "wrap-ansi@npm:7.0.0"
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles: "npm:^4.0.0"
     string-width: "npm:^4.1.0"
@@ -37469,16 +37458,23 @@ __metadata:
   version: 6.2.0
   resolution: "wrap-ansi@npm:6.2.0"
   dependencies:
-    ansi-styles: "npm:^4.0.0"
-    string-width: "npm:^4.1.0"
-    strip-ansi: "npm:^6.0.0"
-  checksum: 10c0/baad244e6e33335ea24e86e51868fe6823626e3a3c88d9a6674642afff1d34d9a154c917e74af8d845fd25d170c4ea9cf69a47133c3f3656e1252b3d462d9f6c
-  languageName: node
-  linkType: hard
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
 
-"wrap-ansi@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "wrap-ansi@npm:8.1.0"
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-8.1.0.tgz#56dc22368ee570face1b49819975d9b9a5ead214"
+  integrity sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==
   dependencies:
     ansi-styles: "npm:^6.1.0"
     string-width: "npm:^5.0.1"
