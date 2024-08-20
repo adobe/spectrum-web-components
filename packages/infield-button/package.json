@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/infield-button",
-    "version": "0.45.0",
+    "version": "0.46.0",
     "publishConfig": {
         "access": "public"
     },
@@ -57,8 +57,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.45.0",
-        "@spectrum-web-components/button": "^0.45.0"
+        "@spectrum-web-components/base": "^0.46.0",
+        "@spectrum-web-components/button": "^0.46.0"
     },
     "devDependencies": {
         "@spectrum-css/infieldbutton": "^5.1.0"

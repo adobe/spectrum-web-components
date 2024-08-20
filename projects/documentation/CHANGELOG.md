@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+### Bug Fixes
+
+-   docummentation demo controls should should have their changes reflected ([#4636](https://github.com/adobe/spectrum-web-components/issues/4636)) ([adc8af9](https://github.com/adobe/spectrum-web-components/commit/adc8af98e1a59c399551885506c9d68edb840fd0))
+-   rtl mobile layout view ([#4645](https://github.com/adobe/spectrum-web-components/issues/4645)) ([4b2d688](https://github.com/adobe/spectrum-web-components/commit/4b2d68826b064b6d36970793ae7fa54a7f83917e))
+
 # [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
 
 **Note:** Version bump only for package documentation
