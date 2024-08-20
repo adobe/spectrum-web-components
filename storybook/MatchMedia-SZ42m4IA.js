@@ -1,0 +1,3 @@
+const DARK_MODE="(prefers-color-scheme: dark)",IS_MOBILE="(max-width: 743px) and (hover: none) and (pointer: coarse)";class MatchMediaController{constructor(e,t){this.key=Symbol("match-media-key");this.matches=!1;this.host=e,this.host.addController(this),this.media=window.matchMedia(t),this.matches=this.media.matches,this.onChange=this.onChange.bind(this),e.addController(this);}hostConnected(){var e;(e=this.media)==null||e.addEventListener("change",this.onChange);}hostDisconnected(){var e;(e=this.media)==null||e.removeEventListener("change",this.onChange);}onChange(e){this.matches!==e.matches&&(this.matches=e.matches,this.host.requestUpdate(this.key,!this.matches));}}
+
+export { DARK_MODE as D, IS_MOBILE as I, MatchMediaController as M };

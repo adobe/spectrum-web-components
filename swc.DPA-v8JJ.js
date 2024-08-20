@@ -1,2 +1,2 @@
 const e=e=>(t,i)=>{void 0!==i?i.addInitializer((()=>{customElements.define(e,t)})):customElements.define(e,t)};export{e as t};
-//# sourceMappingURL=swc.nYWnxakS.js.map
+//# sourceMappingURL=swc.oA68-L_K.js.map

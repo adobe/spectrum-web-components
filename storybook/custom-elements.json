@@ -184,6 +184,36 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/breadcrumbs/sp-breadcrumb-item.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-breadcrumb-item",
+          "declaration": {
+            "name": "BreadcrumbItem",
+            "module": "/packages/breadcrumbs/src/BreadcrumbItem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/sp-breadcrumbs.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-breadcrumbs",
+          "declaration": {
+            "name": "Breadcrumbs",
+            "module": "/packages/breadcrumbs/src/Breadcrumbs.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/button/sp-button.js",
       "declarations": [],
       "exports": [
@@ -7650,6 +7680,1083 @@
           "declaration": {
             "name": "Banner",
             "module": "packages/banner/src/Banner.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/src/BreadcrumbItem.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "BreadcrumbItem",
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "default": "undefined",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "isLastOfType",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "attribute": "isLastOfType"
+            },
+            {
+              "kind": "field",
+              "name": "focusElement",
+              "type": {
+                "text": "DisableableElement"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "announceSelected",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleClick",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "optional": true,
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderLink",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderSeparator",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "download",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "Causes the browser to treat the linked URL as a download.",
+              "attribute": "download",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "An accessible label that describes the component.\nIt will be applied to aria-label, but not visually rendered.",
+              "attribute": "label",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The URL that the hyperlink points to.",
+              "attribute": "href",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "privacy": "public",
+              "description": "Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).",
+              "attribute": "target",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "referrerpolicy",
+              "type": {
+                "text": "| 'no-referrer'\n            | 'no-referrer-when-downgrade'\n            | 'origin'\n            | 'origin-when-cross-origin'\n            | 'same-origin'\n            | 'strict-origin'\n            | 'strict-origin-when-cross-origin'\n            | 'unsafe-url' | undefined"
+              },
+              "privacy": "public",
+              "description": "How much of the referrer to send when following the link.",
+              "attribute": "referrerpolicy",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The relationship of the linked URL as space-separated link types.",
+              "attribute": "rel",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderAnchor",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "{\n            id,\n            className,\n            ariaHidden,\n            labelledby,\n            tabindex,\n            // prettier-ignore\n            anchorContent = html`<slot></slot>`,\n        }",
+                  "type": {
+                    "text": "RenderAnchorOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[$endPolyfillCoordination]",
+              "type": {
+                "text": "EndPolyfillCoordinationCallback | null"
+              },
+              "privacy": "private",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "FocusVisiblePolyfillMixin",
+                "module": "tools/shared/src/focus-visible.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "attribute": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "attribute": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onPointerdownManagementOfTabIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageFocusElementTabindex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tabIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manipulatingTabindex",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "click",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageAutoFocus",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleDisabledChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "disabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "oldDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getUpdateComplete",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Promise<boolean>"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autofocusReady",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "VERSION",
+              "static": true,
+              "default": "version",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "tools/base/src/Base.js"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "fieldName": "value"
+            },
+            {
+              "name": "isLastOfType",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "isLastOfType"
+            },
+            {
+              "name": "download",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Causes the browser to treat the linked URL as a download.",
+              "fieldName": "download",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "An accessible label that describes the component.\nIt will be applied to aria-label, but not visually rendered.",
+              "fieldName": "label",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The URL that the hyperlink points to.",
+              "fieldName": "href",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "description": "Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).",
+              "fieldName": "target",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "referrerpolicy",
+              "type": {
+                "text": "| 'no-referrer'\n            | 'no-referrer-when-downgrade'\n            | 'origin'\n            | 'origin-when-cross-origin'\n            | 'same-origin'\n            | 'strict-origin'\n            | 'strict-origin-when-cross-origin'\n            | 'unsafe-url' | undefined"
+              },
+              "description": "How much of the referrer to send when following the link.",
+              "fieldName": "referrerpolicy",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The relationship of the linked URL as space-separated link types.",
+              "fieldName": "rel",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "tools/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "fieldName": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "fieldName": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "LikeAnchor",
+              "package": "@spectrum-web-components/shared/src/like-anchor.js"
+            }
+          ],
+          "superclass": {
+            "name": "Focusable",
+            "package": "@spectrum-web-components/shared/src/focusable.js"
+          },
+          "tagName": "sp-breadcrumb-item",
+          "customElement": true,
+          "events": [
+            {
+              "name": "keydown",
+              "type": {
+                "text": "KeyboardEvent"
+              },
+              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "BreadcrumbItem",
+          "declaration": {
+            "name": "BreadcrumbItem",
+            "module": "packages/breadcrumbs/src/BreadcrumbItem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/src/Breadcrumbs.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Breadcrumbs",
+          "slots": [
+            {
+              "description": "change the default icon of the action menu",
+              "name": "icon"
+            },
+            {
+              "description": "Breadcrumb item to always display",
+              "name": "root"
+            },
+            {
+              "description": "Breadcrumb items",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "maxVisibleItems",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "4",
+              "description": "Override the maximum number of visible items",
+              "attribute": "max-visible-items"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "Accessible name for the Breadcrumbs component",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "menuLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'More items'",
+              "description": "Change the default label of the action menu",
+              "attribute": "menu-label"
+            },
+            {
+              "kind": "field",
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "compact option is useful for reducing the height of the breadcrumbs",
+              "attribute": "compact"
+            },
+            {
+              "kind": "field",
+              "name": "breadcrumbsElements",
+              "type": {
+                "text": "BreadcrumbElement[]"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "rootElement",
+              "type": {
+                "text": "BreadcrumbElement[]"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "list",
+              "type": {
+                "text": "HTMLUListElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "type": {
+                "text": "BreadcrumbItem[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "visibleItems",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "resizeObserver",
+              "type": {
+                "text": "ResizeObserver | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "firstRender",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "menuRef",
+              "type": {
+                "text": "Ref<ActionMenu>"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "hasMenu",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "calculateBreadcrumbItemsWidth",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "We need to understand how much space (px) each breadcrumb item occupies,\nin order to know if it fits the available horizontal space."
+            },
+            {
+              "kind": "method",
+              "name": "adjustOverflow",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Calculate which breadcrumbs fit in the viewport, and which should be hidden."
+            },
+            {
+              "kind": "method",
+              "name": "announceChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "CustomEvent<BreadcrumbSelectDetail> & { target: BreadcrumbItem }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleMenuChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: ActionMenu }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderMenu",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "description": "The truncation menu when there is not enough space to display all the breadcrumbs.\nIt displays all options within a breadcrumb.\nItems are listed with the hierarchy ordered from top (root) to bottom\nand include the currently selected item."
+            },
+            {
+              "kind": "method",
+              "name": "slotChangeHandler",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "description": "Breadcrumbs were added / removed, we need to recalculate the width of each item\nand adjust the overflow accordingly."
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "VERSION",
+              "static": true,
+              "default": "version",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "tools/base/src/Base.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "description": "Announces the selected breadcrumb item",
+              "name": "change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "max-visible-items",
+              "type": {
+                "text": "number"
+              },
+              "default": "4",
+              "description": "Override the maximum number of visible items",
+              "fieldName": "maxVisibleItems"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the Breadcrumbs component",
+              "fieldName": "label"
+            },
+            {
+              "name": "menu-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'More items'",
+              "description": "Change the default label of the action menu",
+              "fieldName": "menuLabel"
+            },
+            {
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "compact option is useful for reducing the height of the breadcrumbs",
+              "fieldName": "compact"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-breadcrumbs",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Breadcrumbs",
+          "declaration": {
+            "name": "Breadcrumbs",
+            "module": "packages/breadcrumbs/src/Breadcrumbs.js"
           }
         }
       ]
@@ -15236,7 +16343,7 @@
             {
               "kind": "method",
               "name": "handleBlur",
-              "privacy": "private",
+              "privacy": "public",
               "return": {
                 "type": {
                   "text": "void"
@@ -15339,7 +16446,7 @@
               "type": {
                 "text": "boolean"
               },
-              "privacy": "private",
+              "privacy": "public",
               "default": "false"
             },
             {
@@ -20643,7 +21750,7 @@
             {
               "kind": "field",
               "name": "isMobile",
-              "privacy": "protected",
+              "privacy": "public",
               "default": "new MatchMediaController(this, IS_MOBILE)"
             },
             {
@@ -20720,7 +21827,7 @@
               "type": {
                 "text": "string"
               },
-              "privacy": "private",
+              "privacy": "public",
               "readonly": true
             },
             {
@@ -30129,7 +31236,7 @@
           "type": {
             "text": "Record<string, string>"
           },
-          "default": "{\n    '１': '1',\n    '２': '2',\n    '３': '3',\n    '４': '4',\n    '５': '5',\n    '６': '6',\n    '７': '7',\n    '８': '8',\n    '９': '9',\n    '０': '0',\n    '、': ',',\n    '，': ',',\n    '。': '.',\n    '．': '.',\n    '％': '%',\n    '＋': '+',\n    ー: '-',\n}"
+          "default": "{\n    '１': '1',\n    '２': '2',\n    '３': '3',\n    '４': '4',\n    '５': '5',\n    '６': '6',\n    '７': '7',\n    '８': '8',\n    '９': '9',\n    '０': '0',\n    '、': ',',\n    '，': ',',\n    '。': '.',\n    '．': '.',\n    '％': '%',\n    '＋': '+',\n    ー: '-',\n    一: '1',\n    二: '2',\n    三: '3',\n    四: '4',\n    五: '5',\n    六: '6',\n    七: '7',\n    八: '8',\n    九: '9',\n    零: '0',\n}"
         },
         {
           "kind": "class",
@@ -30334,7 +31441,7 @@
               },
               "parameters": [
                 {
-                  "name": "value",
+                  "name": "newValue",
                   "default": "this.value",
                   "type": {
                     "text": "number"
@@ -30395,7 +31502,7 @@
               },
               "parameters": [
                 {
-                  "name": "value",
+                  "name": "inputValue",
                   "type": {
                     "text": "string"
                   }
@@ -60105,9 +61212,6 @@
             {
               "kind": "field",
               "name": "resolveTransitionPromise",
-              "type": {
-                "text": "() => void"
-              },
               "privacy": "private"
             },
             {
@@ -63517,7 +64621,7 @@
           "type": {
             "text": "string"
           },
-          "default": "'(max-width: 700px) and (hover: none) and (pointer: coarse), (max-height: 700px) and (hover: none) and (pointer: coarse)'"
+          "default": "'(max-width: 743px) and (hover: none) and (pointer: coarse)'"
         },
         {
           "kind": "class",
@@ -66783,6 +67887,113 @@
           "declaration": {
             "name": "styles",
             "module": "packages/banner/src/spectrum-banner.css.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/src/breadcrumb-item.css.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n    #separator{margin-block:var(--mod-breadcrumbs-icon-spacing-block,var(--spectrum-breadcrumbs-icon-spacing-block));margin-inline:var(--mod-breadcrumbs-separator-spacing-inline,var(--spectrum-breadcrumbs-separator-spacing-inline));opacity:1;color:var(--highcontrast-breadcrumbs-separator-color,var(--mod-breadcrumbs-separator-color,var(--spectrum-breadcrumbs-separator-color)));position:relative}#separator:dir(rtl),:host([dir=rtl]) #separator{transform:scaleX(-1)}:host{box-sizing:border-box;white-space:nowrap;font-family:var(--mod-breadcrumbs-font-family,var(--spectrum-breadcrumbs-font-family));font-size:var(--mod-breadcrumbs-font-size,var(--spectrum-breadcrumbs-font-size));font-weight:var(--mod-breadcrumbs-font-weight,var(--spectrum-breadcrumbs-font-weight));line-height:var(--mod-breadcrumbs-line-height,var(--spectrum-breadcrumbs-line-height));align-items:center;display:inline-flex;position:relative}:host(:not(.is-menu):last-of-type){font-family:var(--mod-breadcrumbs-font-family-current,var(--spectrum-breadcrumbs-font-family-current));font-size:var(--mod-breadcrumbs-font-size-current,var(--spectrum-breadcrumbs-font-size-current));font-weight:var(--mod-breadcrumbs-font-weight-current,var(--spectrum-breadcrumbs-font-weight-current))}:host(:not(.is-menu):last-of-type) #separator{display:none}::slotted(sp-action-menu){margin-inline:var(--mod-breadcrumbs-action-button-spacing-inline,var(--spectrum-breadcrumbs-action-button-spacing-inline));margin-block:var(--mod-breadcrumbs-action-button-spacing-block,var(--spectrum-breadcrumbs-action-button-spacing-block));color:var(--highcontrast-breadcrumbs-action-button-color,var(--mod-breadcrumbs-action-button-color,var(--spectrum-breadcrumbs-action-button-color)))}::slotted(sp-action-menu[disabled]){color:var(--highcontrast-breadcrumbs-action-button-color-disabled,var(--mod-breadcrumbs-action-button-color-disabled,var(--spectrum-breadcrumbs-action-button-color-disabled)))}:host(:first-of-type)>::slotted(sp-action-menu){margin-inline-start:var(--mod-breadcrumbs-action-button-spacing-inline-start,var(--spectrum-breadcrumbs-action-button-spacing-inline-start))}#item-link{cursor:default;box-sizing:border-box;border-radius:var(--mod-breadcrumbs-item-link-border-radius,var(--spectrum-breadcrumbs-item-link-border-radius));color:var(--highcontrast-breadcrumbs-text-color,var(--mod-breadcrumbs-text-color,var(--spectrum-breadcrumbs-text-color)));outline:none;margin-block-start:var(--mod-breadcrumbs-text-spacing-block-start,var(--spectrum-breadcrumbs-text-spacing-block-start));margin-block-end:var(--mod-breadcrumbs-text-spacing-block-end,var(--spectrum-breadcrumbs-text-spacing-block-end));-webkit-text-decoration:none;text-decoration:none;display:block;position:relative}#item-link.is-disabled,:host([aria-disabled=true]) #item-link{color:var(--highcontrast-breadcrumbs-text-color-disabled,var(--mod-breadcrumbs-text-color-disabled,var(--spectrum-breadcrumbs-text-color-disabled)))}:host(:not(.is-menu):last-of-type) #item-link{color:var(--highcontrast-breadcrumbs-text-color-current,var(--mod-breadcrumbs-text-color-current,var(--spectrum-breadcrumbs-text-color-current)))}#item-link[href],#item-link[tabindex]{cursor:pointer}#item-link[href]:focus-visible,#item-link[tabindex]:focus-visible{-webkit-text-decoration:underline;text-decoration:underline;text-decoration-thickness:var(--mod-breadcrumbs-text-decoration-thickness,var(--spectrum-breadcrumbs-text-decoration-thickness));text-underline-offset:var(--mod-breadcrumbs-text-decoration-gap,var(--spectrum-breadcrumbs-text-decoration-gap))}@media (hover:hover){#item-link[href]:hover,#item-link[tabindex]:hover{-webkit-text-decoration:underline;text-decoration:underline;text-decoration-thickness:var(--mod-breadcrumbs-text-decoration-thickness,var(--spectrum-breadcrumbs-text-decoration-thickness));text-underline-offset:var(--mod-breadcrumbs-text-decoration-gap,var(--spectrum-breadcrumbs-text-decoration-gap))}}:host .is-dragged #item-link:before,#item-link:focus-visible:before{box-sizing:border-box;inline-size:calc(100% + var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap))*2 + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness))*2);block-size:calc(100% + var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap))*2 + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness))*2);border-width:var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness));border-radius:var(--mod-breadcrumbs-item-link-border-radius,var(--spectrum-breadcrumbs-item-link-border-radius));content:\"\";pointer-events:none;border-style:solid;border-color:var(--highcontrast-breadcrumbs-focus-indicator-color,var(--mod-breadcrumbs-focus-indicator-color,var(--spectrum-breadcrumbs-focus-indicator-color)));margin-block-start:calc(( var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap)) + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness)))*-1);margin-inline-start:calc(( var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap)) + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness)))*-1);display:block;position:absolute}:host([hidden]){display:none}:host([disabled]){pointer-events:none}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/breadcrumbs/src/breadcrumb-item.css.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/src/breadcrumbs.css.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n    :host{--spectrum-breadcrumbs-block-size:var(--spectrum-breadcrumbs-height);--spectrum-breadcrumbs-block-size-compact:var(--spectrum-breadcrumbs-height-compact);--spectrum-breadcrumbs-block-size-multiline:var(--spectrum-breadcrumbs-height-multiline);--spectrum-breadcrumbs-line-height:var(--spectrum-line-height-100);--spectrum-breadcrumbs-font-size:var(--spectrum-font-size-200);--spectrum-breadcrumbs-font-family:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight:var(--spectrum-regular-font-weight);--spectrum-breadcrumbs-font-size-current:var(--spectrum-font-size-200);--spectrum-breadcrumbs-font-family-current:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-current:var(--spectrum-bold-font-weight);--spectrum-breadcrumbs-font-size-compact:var(--spectrum-font-size-100);--spectrum-breadcrumbs-font-family-compact:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-compact:var(--spectrum-regular-font-weight);--spectrum-breadcrumbs-font-size-compact-current:var(--spectrum-font-size-100);--spectrum-breadcrumbs-font-family-compact-current:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-compact-current:var(--spectrum-bold-font-weight);--spectrum-breadcrumbs-font-size-multiline:var(--spectrum-font-size-75);--spectrum-breadcrumbs-font-family-multiline:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-multiline:var(--spectrum-regular-font-weight);--spectrum-breadcrumbs-font-size-multiline-current:var(--spectrum-font-size-300);--spectrum-breadcrumbs-font-family-multiline-current:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-multiline-current:var(--spectrum-bold-font-weight);--spectrum-breadcrumbs-text-decoration-thickness:var(--spectrum-text-underline-thickness);--spectrum-breadcrumbs-text-decoration-gap:var(--spectrum-text-underline-gap);--spectrum-breadcrumbs-separator-spacing-inline:var(--spectrum-text-to-visual-100);--spectrum-breadcrumbs-text-spacing-block-start:var(--spectrum-breadcrumbs-top-to-text);--spectrum-breadcrumbs-text-spacing-block-end:var(--spectrum-breadcrumbs-bottom-to-text);--spectrum-breadcrumbs-icon-spacing-block:var(--spectrum-breadcrumbs-top-to-separator-icon);--spectrum-breadcrumbs-text-spacing-block-start-compact:var(--spectrum-breadcrumbs-top-to-text-compact);--spectrum-breadcrumbs-text-spacing-block-end-compact:var(--spectrum-breadcrumbs-bottom-to-text-compact);--spectrum-breadcrumbs-icon-spacing-block-compact:var(--spectrum-breadcrumbs-top-to-separator-icon-compact);--spectrum-breadcrumbs-text-spacing-block-start-multiline:var(--spectrum-breadcrumbs-top-to-text-multiline);--spectrum-breadcrumbs-text-spacing-block-end-multiline:var(--spectrum-breadcrumbs-bottom-to-text-multiline);--spectrum-breadcrumbs-text-spacing-block-between-multiline:var(--spectrum-breadcrumbs-top-text-to-bottom-text);--spectrum-breadcrumbs-icon-spacing-block-start-multiline:var(--spectrum-breadcrumbs-top-to-separator-icon-multiline);--spectrum-breadcrumbs-icon-spacing-block-between-multiline:var(--spectrum-breadcrumbs-separator-icon-to-bottom-text-multiline);--spectrum-breadcrumbs-inline-start:var(--spectrum-breadcrumbs-start-edge-to-text);--spectrum-breadcrumbs-inline-end:var(--spectrum-breadcrumbs-end-edge-to-text);--spectrum-breadcrumbs-action-button-spacing-inline:var(--spectrum-breadcrumbs-truncated-menu-to-separator-icon);--spectrum-breadcrumbs-action-button-spacing-block:var(--spectrum-breadcrumbs-top-to-truncated-menu);--spectrum-breadcrumbs-action-button-spacing-block-compact:var(--spectrum-breadcrumbs-top-to-truncated-menu-compact);--spectrum-breadcrumbs-action-button-spacing-inline-start:var(--spectrum-breadcrumbs-start-edge-to-truncated-menu);--spectrum-breadcrumbs-action-button-spacing-block-multiline:var(--spectrum-breadcrumbs-top-to-truncated-menu-compact);--spectrum-breadcrumbs-action-button-spacing-block-between-multiline:var(--spectrum-breadcrumbs-truncated-menu-to-bottom-text);--spectrum-breadcrumbs-focus-indicator-thickness:var(--spectrum-focus-indicator-thickness);--spectrum-breadcrumbs-focus-indicator-gap:var(--spectrum-focus-indicator-gap);--spectrum-breadcrumbs-item-link-border-radius:var(--spectrum-corner-radius-100);--spectrum-breadcrumbs-text-color:var(--spectrum-neutral-subdued-content-color-default);--spectrum-breadcrumbs-text-color-current:var(--spectrum-neutral-content-color-default);--spectrum-breadcrumbs-text-color-disabled:var(--spectrum-disabled-content-color);--spectrum-breadcrumbs-separator-color:var(--spectrum-neutral-content-color-default);--spectrum-breadcrumbs-action-button-color:var(--spectrum-neutral-subdued-content-color-default);--spectrum-breadcrumbs-action-button-color-disabled:var(--spectrum-disabled-content-color);--spectrum-breadcrumbs-focus-indicator-color:var(--spectrum-focus-indicator-color)}@media (forced-colors:active){:host{--highcontrast-breadcrumbs-text-color:LinkText;--highcontrast-breadcrumbs-text-color-current:CanvasText;--highcontrast-breadcrumbs-text-color-disabled:GrayText;--highcontrast-breadcrumbs-separator-color:CanvasText;--highcontrast-breadcrumbs-action-button-color:LinkText;--highcontrast-breadcrumbs-action-button-color-disabled:GrayText;--highcontrast-breadcrumbs-focus-indicator-color:CanvasText}}#list{block-size:var(--mod-breadcrumbs-block-size,var(--spectrum-breadcrumbs-block-size));flex-flow:row;flex:1 0;justify-content:flex-start;align-items:center;margin:0;padding-inline-start:var(--mod-breadcrumbs-inline-start,var(--spectrum-breadcrumbs-inline-start));padding-inline-end:var(--mod-breadcrumbs-inline-end,var(--spectrum-breadcrumbs-inline-end));list-style-type:none;display:flex}:host([compact]) #list{block-size:var(--mod-breadcrumbs-block-size-compact,var(--spectrum-breadcrumbs-block-size-compact))}.spectrum-Breadcrumbs--multiline{block-size:var(--mod-breadcrumbs-block-size-multiline,var(--spectrum-breadcrumbs-block-size-multiline));flex-wrap:wrap;align-content:center}:host([compact]) ::slotted(sp-breadcrumb-item){font-family:var(--mod-breadcrumbs-font-family-compact,var(--spectrum-breadcrumbs-font-family-compact));font-size:var(--mod-breadcrumbs-font-size-compact,var(--spectrum-breadcrumbs-font-size-compact));font-weight:var(--mod-breadcrumbs-font-weight-compact,var(--spectrum-breadcrumbs-font-weight-compact))}:host([compact]) ::slotted(:last-of-type){font-family:var(--mod-breadcrumbs-font-family-compact-current,var(--spectrum-breadcrumbs-font-family-compact-current));font-size:var(--mod-breadcrumbs-font-size-compact-current,var(--spectrum-breadcrumbs-font-size-compact-current));font-weight:var(--mod-breadcrumbs-font-weight-compact-current,var(--spectrum-breadcrumbs-font-weight-compact-current))}:host{display:block}:host([compact]){--mod-breadcrumbs-icon-spacing-block:var(--mod-breadcrumbs-icon-spacing-block-compact,var(--spectrum-breadcrumbs-icon-spacing-block-compact));--mod-breadcrumbs-text-spacing-block-start:var(--mod-breadcrumbs-text-spacing-block-start-compact,var(--spectrum-breadcrumbs-text-spacing-block-start-compact));--mod-breadcrumbs-text-spacing-block-end:var(--mod-breadcrumbs-text-spacing-block-end-compact,var(--spectrum-breadcrumbs-text-spacing-block-end-compact));--mod-breadcrumbs-action-button-spacing-block:var(--mod-breadcrumbs-action-button-spacing-block-compact,var(--spectrum-breadcrumbs-action-button-spacing-block-compact))}:host([dir]) slot[slot=icon]::slotted([slot=icon]),:host([dir]) slot[slot=icon] .icon{margin-inline:calc(( var(--custom-actionbutton-edge-to-text,var(--spectrum-actionbutton-edge-to-text)) - var(--custom-actionbutton-edge-to-visual-only,var(--spectrum-actionbutton-edge-to-visual-only)))*-1)calc(( var(--custom-actionbutton-edge-to-text,var(--spectrum-actionbutton-edge-to-text)) - var(--custom-actionbutton-edge-to-visual-only,var(--spectrum-actionbutton-edge-to-visual-only)))*-1)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/breadcrumbs/src/breadcrumbs.css.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/src/index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Breadcrumbs.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./BreadcrumbItem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/src/spectrum-breadcrumbs-item.css.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n    #separator{margin-block:var(--mod-breadcrumbs-icon-spacing-block,var(--spectrum-breadcrumbs-icon-spacing-block));margin-inline:var(--mod-breadcrumbs-separator-spacing-inline,var(--spectrum-breadcrumbs-separator-spacing-inline));opacity:1;color:var(--highcontrast-breadcrumbs-separator-color,var(--mod-breadcrumbs-separator-color,var(--spectrum-breadcrumbs-separator-color)));position:relative}#separator:dir(rtl),:host([dir=rtl]) #separator{transform:scaleX(-1)}:host{box-sizing:border-box;white-space:nowrap;font-family:var(--mod-breadcrumbs-font-family,var(--spectrum-breadcrumbs-font-family));font-size:var(--mod-breadcrumbs-font-size,var(--spectrum-breadcrumbs-font-size));font-weight:var(--mod-breadcrumbs-font-weight,var(--spectrum-breadcrumbs-font-weight));line-height:var(--mod-breadcrumbs-line-height,var(--spectrum-breadcrumbs-line-height));align-items:center;display:inline-flex;position:relative}:host(:not(.is-menu):last-of-type){font-family:var(--mod-breadcrumbs-font-family-current,var(--spectrum-breadcrumbs-font-family-current));font-size:var(--mod-breadcrumbs-font-size-current,var(--spectrum-breadcrumbs-font-size-current));font-weight:var(--mod-breadcrumbs-font-weight-current,var(--spectrum-breadcrumbs-font-weight-current))}:host(:not(.is-menu):last-of-type) #separator{display:none}::slotted(sp-action-menu){margin-inline:var(--mod-breadcrumbs-action-button-spacing-inline,var(--spectrum-breadcrumbs-action-button-spacing-inline));margin-block:var(--mod-breadcrumbs-action-button-spacing-block,var(--spectrum-breadcrumbs-action-button-spacing-block));color:var(--highcontrast-breadcrumbs-action-button-color,var(--mod-breadcrumbs-action-button-color,var(--spectrum-breadcrumbs-action-button-color)))}::slotted(sp-action-menu[disabled]){color:var(--highcontrast-breadcrumbs-action-button-color-disabled,var(--mod-breadcrumbs-action-button-color-disabled,var(--spectrum-breadcrumbs-action-button-color-disabled)))}:host(:first-of-type)>::slotted(sp-action-menu){margin-inline-start:var(--mod-breadcrumbs-action-button-spacing-inline-start,var(--spectrum-breadcrumbs-action-button-spacing-inline-start))}#item-link{cursor:default;box-sizing:border-box;border-radius:var(--mod-breadcrumbs-item-link-border-radius,var(--spectrum-breadcrumbs-item-link-border-radius));color:var(--highcontrast-breadcrumbs-text-color,var(--mod-breadcrumbs-text-color,var(--spectrum-breadcrumbs-text-color)));outline:none;margin-block-start:var(--mod-breadcrumbs-text-spacing-block-start,var(--spectrum-breadcrumbs-text-spacing-block-start));margin-block-end:var(--mod-breadcrumbs-text-spacing-block-end,var(--spectrum-breadcrumbs-text-spacing-block-end));-webkit-text-decoration:none;text-decoration:none;display:block;position:relative}#item-link.is-disabled,:host([aria-disabled=true]) #item-link{color:var(--highcontrast-breadcrumbs-text-color-disabled,var(--mod-breadcrumbs-text-color-disabled,var(--spectrum-breadcrumbs-text-color-disabled)))}:host(:not(.is-menu):last-of-type) #item-link{color:var(--highcontrast-breadcrumbs-text-color-current,var(--mod-breadcrumbs-text-color-current,var(--spectrum-breadcrumbs-text-color-current)))}#item-link[href],#item-link[tabindex]{cursor:pointer}#item-link[href]:focus-visible,#item-link[tabindex]:focus-visible{-webkit-text-decoration:underline;text-decoration:underline;text-decoration-thickness:var(--mod-breadcrumbs-text-decoration-thickness,var(--spectrum-breadcrumbs-text-decoration-thickness));text-underline-offset:var(--mod-breadcrumbs-text-decoration-gap,var(--spectrum-breadcrumbs-text-decoration-gap))}@media (hover:hover){#item-link[href]:hover,#item-link[tabindex]:hover{-webkit-text-decoration:underline;text-decoration:underline;text-decoration-thickness:var(--mod-breadcrumbs-text-decoration-thickness,var(--spectrum-breadcrumbs-text-decoration-thickness));text-underline-offset:var(--mod-breadcrumbs-text-decoration-gap,var(--spectrum-breadcrumbs-text-decoration-gap))}}:host .is-dragged #item-link:before,#item-link:focus-visible:before{box-sizing:border-box;inline-size:calc(100% + var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap))*2 + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness))*2);block-size:calc(100% + var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap))*2 + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness))*2);border-width:var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness));border-radius:var(--mod-breadcrumbs-item-link-border-radius,var(--spectrum-breadcrumbs-item-link-border-radius));content:\"\";pointer-events:none;border-style:solid;border-color:var(--highcontrast-breadcrumbs-focus-indicator-color,var(--mod-breadcrumbs-focus-indicator-color,var(--spectrum-breadcrumbs-focus-indicator-color)));margin-block-start:calc(( var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap)) + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness)))*-1);margin-inline-start:calc(( var(--mod-breadcrumbs-focus-indicator-gap,var(--spectrum-breadcrumbs-focus-indicator-gap)) + var(--mod-breadcrumbs-focus-indicator-thickness,var(--spectrum-breadcrumbs-focus-indicator-thickness)))*-1);display:block;position:absolute}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/breadcrumbs/src/spectrum-breadcrumbs-item.css.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/breadcrumbs/src/spectrum-breadcrumbs.css.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n    :host{--spectrum-breadcrumbs-block-size:var(--spectrum-breadcrumbs-height);--spectrum-breadcrumbs-block-size-compact:var(--spectrum-breadcrumbs-height-compact);--spectrum-breadcrumbs-block-size-multiline:var(--spectrum-breadcrumbs-height-multiline);--spectrum-breadcrumbs-line-height:var(--spectrum-line-height-100);--spectrum-breadcrumbs-font-size:var(--spectrum-font-size-200);--spectrum-breadcrumbs-font-family:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight:var(--spectrum-regular-font-weight);--spectrum-breadcrumbs-font-size-current:var(--spectrum-font-size-200);--spectrum-breadcrumbs-font-family-current:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-current:var(--spectrum-bold-font-weight);--spectrum-breadcrumbs-font-size-compact:var(--spectrum-font-size-100);--spectrum-breadcrumbs-font-family-compact:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-compact:var(--spectrum-regular-font-weight);--spectrum-breadcrumbs-font-size-compact-current:var(--spectrum-font-size-100);--spectrum-breadcrumbs-font-family-compact-current:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-compact-current:var(--spectrum-bold-font-weight);--spectrum-breadcrumbs-font-size-multiline:var(--spectrum-font-size-75);--spectrum-breadcrumbs-font-family-multiline:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-multiline:var(--spectrum-regular-font-weight);--spectrum-breadcrumbs-font-size-multiline-current:var(--spectrum-font-size-300);--spectrum-breadcrumbs-font-family-multiline-current:var(--spectrum-sans-font-family-stack);--spectrum-breadcrumbs-font-weight-multiline-current:var(--spectrum-bold-font-weight);--spectrum-breadcrumbs-text-decoration-thickness:var(--spectrum-text-underline-thickness);--spectrum-breadcrumbs-text-decoration-gap:var(--spectrum-text-underline-gap);--spectrum-breadcrumbs-separator-spacing-inline:var(--spectrum-text-to-visual-100);--spectrum-breadcrumbs-text-spacing-block-start:var(--spectrum-breadcrumbs-top-to-text);--spectrum-breadcrumbs-text-spacing-block-end:var(--spectrum-breadcrumbs-bottom-to-text);--spectrum-breadcrumbs-icon-spacing-block:var(--spectrum-breadcrumbs-top-to-separator-icon);--spectrum-breadcrumbs-text-spacing-block-start-compact:var(--spectrum-breadcrumbs-top-to-text-compact);--spectrum-breadcrumbs-text-spacing-block-end-compact:var(--spectrum-breadcrumbs-bottom-to-text-compact);--spectrum-breadcrumbs-icon-spacing-block-compact:var(--spectrum-breadcrumbs-top-to-separator-icon-compact);--spectrum-breadcrumbs-text-spacing-block-start-multiline:var(--spectrum-breadcrumbs-top-to-text-multiline);--spectrum-breadcrumbs-text-spacing-block-end-multiline:var(--spectrum-breadcrumbs-bottom-to-text-multiline);--spectrum-breadcrumbs-text-spacing-block-between-multiline:var(--spectrum-breadcrumbs-top-text-to-bottom-text);--spectrum-breadcrumbs-icon-spacing-block-start-multiline:var(--spectrum-breadcrumbs-top-to-separator-icon-multiline);--spectrum-breadcrumbs-icon-spacing-block-between-multiline:var(--spectrum-breadcrumbs-separator-icon-to-bottom-text-multiline);--spectrum-breadcrumbs-inline-start:var(--spectrum-breadcrumbs-start-edge-to-text);--spectrum-breadcrumbs-inline-end:var(--spectrum-breadcrumbs-end-edge-to-text);--spectrum-breadcrumbs-action-button-spacing-inline:var(--spectrum-breadcrumbs-truncated-menu-to-separator-icon);--spectrum-breadcrumbs-action-button-spacing-block:var(--spectrum-breadcrumbs-top-to-truncated-menu);--spectrum-breadcrumbs-action-button-spacing-block-compact:var(--spectrum-breadcrumbs-top-to-truncated-menu-compact);--spectrum-breadcrumbs-action-button-spacing-inline-start:var(--spectrum-breadcrumbs-start-edge-to-truncated-menu);--spectrum-breadcrumbs-action-button-spacing-block-multiline:var(--spectrum-breadcrumbs-top-to-truncated-menu-compact);--spectrum-breadcrumbs-action-button-spacing-block-between-multiline:var(--spectrum-breadcrumbs-truncated-menu-to-bottom-text);--spectrum-breadcrumbs-focus-indicator-thickness:var(--spectrum-focus-indicator-thickness);--spectrum-breadcrumbs-focus-indicator-gap:var(--spectrum-focus-indicator-gap);--spectrum-breadcrumbs-item-link-border-radius:var(--spectrum-corner-radius-100);--spectrum-breadcrumbs-text-color:var(--spectrum-neutral-subdued-content-color-default);--spectrum-breadcrumbs-text-color-current:var(--spectrum-neutral-content-color-default);--spectrum-breadcrumbs-text-color-disabled:var(--spectrum-disabled-content-color);--spectrum-breadcrumbs-separator-color:var(--spectrum-neutral-content-color-default);--spectrum-breadcrumbs-action-button-color:var(--spectrum-neutral-subdued-content-color-default);--spectrum-breadcrumbs-action-button-color-disabled:var(--spectrum-disabled-content-color);--spectrum-breadcrumbs-focus-indicator-color:var(--spectrum-focus-indicator-color)}@media (forced-colors:active){:host{--highcontrast-breadcrumbs-text-color:LinkText;--highcontrast-breadcrumbs-text-color-current:CanvasText;--highcontrast-breadcrumbs-text-color-disabled:GrayText;--highcontrast-breadcrumbs-separator-color:CanvasText;--highcontrast-breadcrumbs-action-button-color:LinkText;--highcontrast-breadcrumbs-action-button-color-disabled:GrayText;--highcontrast-breadcrumbs-focus-indicator-color:CanvasText}}#list{block-size:var(--mod-breadcrumbs-block-size,var(--spectrum-breadcrumbs-block-size));flex-flow:row;flex:1 0;justify-content:flex-start;align-items:center;margin:0;padding-inline-start:var(--mod-breadcrumbs-inline-start,var(--spectrum-breadcrumbs-inline-start));padding-inline-end:var(--mod-breadcrumbs-inline-end,var(--spectrum-breadcrumbs-inline-end));list-style-type:none;display:flex}:host([compact]) #list{block-size:var(--mod-breadcrumbs-block-size-compact,var(--spectrum-breadcrumbs-block-size-compact))}.spectrum-Breadcrumbs--multiline{block-size:var(--mod-breadcrumbs-block-size-multiline,var(--spectrum-breadcrumbs-block-size-multiline));flex-wrap:wrap;align-content:center}:host([compact]) ::slotted(sp-breadcrumb-item){font-family:var(--mod-breadcrumbs-font-family-compact,var(--spectrum-breadcrumbs-font-family-compact));font-size:var(--mod-breadcrumbs-font-size-compact,var(--spectrum-breadcrumbs-font-size-compact));font-weight:var(--mod-breadcrumbs-font-weight-compact,var(--spectrum-breadcrumbs-font-weight-compact))}:host([compact]) ::slotted(:last-of-type){font-family:var(--mod-breadcrumbs-font-family-compact-current,var(--spectrum-breadcrumbs-font-family-compact-current));font-size:var(--mod-breadcrumbs-font-size-compact-current,var(--spectrum-breadcrumbs-font-size-compact-current));font-weight:var(--mod-breadcrumbs-font-weight-compact-current,var(--spectrum-breadcrumbs-font-weight-compact-current))}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/breadcrumbs/src/spectrum-breadcrumbs.css.js"
           }
         }
       ]
