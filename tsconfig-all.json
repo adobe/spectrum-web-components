@@ -27,6 +27,7 @@
         { "path": "packages/avatar" },
         { "path": "packages/banner" },
         { "path": "packages/badge" },
+        { "path": "packages/breadcrumbs" },
         { "path": "packages/button" },
         { "path": "packages/button-group" },
         { "path": "packages/card" },
