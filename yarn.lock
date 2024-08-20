@@ -5043,10 +5043,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-7.1.1.tgz#452d5d38a09f3199a55c81e47c1a565a1199a64d"
   integrity sha512-yIG09dGoR9AqpJMsz0drHlvNJjPThZyZKvJtk8Et5+t4AecaNbUC7vJ9PWm18URTxg2fD3eg0R0tbAiFFnvp2w==
 
-"@spectrum-css/card@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-8.1.1.tgz#eaf8716ff96df94da211f6c45c7cff8df3a72bf1"
-  integrity sha512-aFfnyiQJ3KJCPPrahads1MH2GCgkHHUvi2UZdCsv+naUieYg3on2DZ6KXuvcZaklytCspK/tBe4tBlI5U6fqOQ==
+"@spectrum-css/card@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-9.0.0.tgz#bb6db99fa1f2b2e70432e1e94e9dc02b36d0a78e"
+  integrity sha512-CipvUenuqlfesCam4/jxXOYcl8bGCUyTT0sxWDxrCYP2MFCoI5HeMW8+Q1lYByvZYWYIWfjjwWk8JJUD7r5gpw==
 
 "@spectrum-css/checkbox@^9.1.1":
   version "9.1.1"
@@ -5344,7 +5344,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.45.0"
+  version "0.46.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"

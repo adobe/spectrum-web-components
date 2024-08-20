@@ -314,8 +314,8 @@ governing permissions and limitations under the License.
     background-position: 50%;
     background-size: cover;
     background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
+        --mod-card-preview-background-color,
+        var(--spectrum-card-preview-background-color)
     );
     border-block-end-color: var(
         --mod-card-border-color,
