@@ -206,7 +206,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             this.setAttribute('tabindex', '0');
         }
         if (changed.has('label')) {
-            this.setAttribute('aria-label', this.label || '');
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
