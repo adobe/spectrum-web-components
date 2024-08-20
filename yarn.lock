@@ -5033,6 +5033,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
+"@spectrum-css/breadcrumb@^9.1.3":
+  version "9.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/breadcrumb/-/breadcrumb-9.1.3.tgz#c1ea002a4e1f3f0b792b951b0768b1a35460da8a"
+  integrity sha512-BHzCr5Q5f2+CQxSlq8rDM03wzvn9EozoI/xDP4kw5WrWI7gXUmCJc2iHzu94pQuWprSxoEE+wfx+r63VQ9gsOQ==
+
 "@spectrum-css/button@^13.1.1":
   version "13.1.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-13.1.1.tgz#42be27e8f8d03a7af3eca17fb7566ca2b8cc5f24"
@@ -5344,7 +5349,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.45.0"
+  version "0.46.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
