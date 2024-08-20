@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 .checkmark {
     display: var(
         --mod-menu-checkmark-display,
@@ -63,7 +62,7 @@ governing permissions and limitations under the License.
         --mod-menu-item-checkmark-width,
         var(--spectrum-menu-item-checkmark-width)
     );
-    grid-area: e;
+    grid-area: checkmarkArea;
     align-self: start;
     margin-block-start: calc(
         var(

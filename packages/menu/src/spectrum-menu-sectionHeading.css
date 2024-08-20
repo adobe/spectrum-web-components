@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 .spectrum-Menu-back:focus-visible {
     box-shadow: inset
         calc(
@@ -73,7 +72,7 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
-    grid-area: c / 1 / c / -1;
+    grid-area: sectionHeadingArea / 1 / sectionHeadingArea / -1;
     display: block;
 }
 

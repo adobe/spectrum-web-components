@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     pointer-events: none;
     visibility: hidden;
@@ -57,10 +56,13 @@ governing permissions and limitations under the License.
         --spectrum-animation-ease-out
     );
     --spectrum-underlay-background-exit-animation-duration: var(
-        --spectrum-animation-duration-300
+        --spectrum-animation-duration-100
     );
     --spectrum-underlay-background-entry-animation-duration: var(
         --spectrum-animation-duration-600
+    );
+    --spectrum-underlay-background-exit-animation-duration: var(
+        --spectrum-animation-duration-300
     );
     --spectrum-underlay-background-exit-animation-delay: var(
         --spectrum-animation-duration-200

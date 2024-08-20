@@ -502,6 +502,18 @@ describe('NumberField', () => {
             el.value = 52;
             expect(changeSpy.callCount).to.equal(0);
         });
+        it('handles IME input correctly and dispatches change event', async () => {
+            el.focus();
+            el.dispatchEvent(new CompositionEvent('compositionstart'));
+            // input multibyte characters
+            await sendKeys({ type: '１２３' });
+            await elementUpdated(el);
+            el.dispatchEvent(new CompositionEvent('compositionend'));
+            await elementUpdated(el);
+            await sendKeys({ press: 'Enter' });
+            expect(el.value).to.equal(50123);
+            expect(changeSpy.callCount).to.equal(1);
+        });
         it('via scroll', async () => {
             el.focus();
             await elementUpdated(el);
