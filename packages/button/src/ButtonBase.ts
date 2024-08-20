@@ -227,7 +227,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     protected override update(changes: PropertyValues): void {
         super.update(changes);
         if (changes.has('label')) {
-            this.setAttribute('aria-label', this.label || '');
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
     }
 }
