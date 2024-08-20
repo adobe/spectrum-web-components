@@ -37,9 +37,10 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     @property()
     public value: string | undefined = undefined;
 
-    @property({ attribute: 'is-menu', type: Boolean })
-    public isMenu = false;
-
+    /**
+     * @private
+     * Marks this breadcrumb item as the current route.
+     */
     @property({ type: Boolean })
     public isLastOfType = false;
 
@@ -109,11 +110,8 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
 
     protected override render(): TemplateResult {
         return html`
-            ${this.isMenu
-                ? html`
-                      <slot></slot>
-                  `
-                : this.renderLink()}
+            ${this.renderLink()}
+            <slot name="menu"></slot>
             ${this.renderSeparator()}
         `;
     }

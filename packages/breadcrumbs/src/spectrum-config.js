@@ -136,12 +136,12 @@ const config = {
                 {
                     find: [builder.pseudoClass('last-of-type')],
                     replace: [
-                        // :host(:not[is-menu]:last-of-type)
+                        // :host(:not(.is-menu):last-of-type)
                         {
                             replace: {
                                 type: 'pseudo-class',
                                 kind: 'not',
-                                selectors: [[builder.attribute('is-menu')]],
+                                selectors: [[builder.class('is-menu')]],
                             },
                             hoist: true,
                         },

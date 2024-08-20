@@ -60,7 +60,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host(:not([is-menu]):last-of-type) {
+:host(:not(.is-menu):last-of-type) {
     font-family: var(
         --mod-breadcrumbs-font-family-current,
         var(--spectrum-breadcrumbs-font-family-current)
@@ -75,7 +75,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host(:not([is-menu]):last-of-type) #separator {
+:host(:not(.is-menu):last-of-type) #separator {
     display: none;
 }
 
@@ -154,7 +154,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host(:not([is-menu]):last-of-type) #item-link {
+:host(:not(.is-menu):last-of-type) #item-link {
     color: var(
         --highcontrast-breadcrumbs-text-color-current,
         var(

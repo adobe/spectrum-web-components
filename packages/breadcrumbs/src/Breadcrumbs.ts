@@ -271,7 +271,7 @@ export class Breadcrumbs extends SpectrumElement {
      */
     protected renderMenu(): TemplateResult {
         return html`
-            <sp-breadcrumb-item role="listitem" is-menu>
+            <sp-breadcrumb-item role="listitem" class="is-menu">
                 <sp-action-menu
                     ${ref(this.menuRef)}
                     quiet
@@ -279,6 +279,7 @@ export class Breadcrumbs extends SpectrumElement {
                     selects="single"
                     value=${this.items[this.items.length - 1].value}
                     @change=${this.handleMenuChange}
+                    slot="menu"
                 >
                     <slot slot="icon" name="icon">
                         <sp-icon-folder-open class="icon"></sp-icon-folder-open>
