@@ -5898,10 +5898,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-6.0.0-s2-foundations.9.tgz#12f545fe0b09311d1f8616db3e9ad1ed29636405"
   integrity sha512-+k7Htt4BwWQZVmtjf3UakR/uMBQ92fPO/KVWkqLd6LoA4nrvS1LAXTVR2Aws2FgtHE1iRdSW+fgku/O3XhFAPw==
 
-"@spectrum-css/textfield@^8.0.0-s2-foundations.12":
-  version "8.0.0-s2-foundations.12"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-8.0.0-s2-foundations.12.tgz#0099cea70e47b534a7caeabd74fc727d1128f78d"
-  integrity sha512-abMBkSBfDv4BiJPWGjAEtz8Y0bh0Zj2key/Rb9+sLZ0H6LV4+S+hl41dsb9j1Yj0cD3y4S6ZaXotF03bzx7r9w==
+"@spectrum-css/textfield@^8.0.0-s2-foundations.13":
+  version "8.0.0-s2-foundations.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-8.0.0-s2-foundations.13.tgz#107491bb9113d71573a1b06882ecfba8c42fa6f9"
+  integrity sha512-Io02XmVQEzUO/w8czlH5oAXZNcRRUDZj5TzHwcw3n3HcREPzOnkcWws4FCbQI6Tj7eIu73Ae0nGS8QPpq2T7Kw==
 
 "@spectrum-css/thumbnail@^7.0.0-s2-foundations.12":
   version "7.0.0-s2-foundations.12"
@@ -5913,10 +5913,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-11.0.0-s2-foundations.12.tgz#f9a2b6f1467700922d40906b37c1400b851f15b1"
   integrity sha512-ogZqjig1CuC23OPv5itxqQFuU6htXKVw5z6rPkpi76R4ekJQ/fj4/JxO5PxWgfQilEHpsvTBJ9oXcK4EXWXK/w==
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@^15.0.0-s2-foundations.15":
-  version "15.0.0-s2-foundations.15"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.15.tgz#ee312df86e010a652b946dcc8214984684beaf03"
-  integrity sha512-msMu9PIcvfIRFQLnVVYacytIZFgH9o7OrAd7QL6Esto131o0q48nrGkVZ9sBbKDS7ASdOV6x5wBVT/7brZ6Klg==
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.16":
+  version "15.0.0-s2-foundations.16"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.16.tgz#33b281739ec5c90937ff25262640d60e5dd88916"
+  integrity sha512-nBVolbra1j9hj0FOi0F+bEJq2MS1g6c9za/3unmi7X2M34Ch9Fw2/lQBW9ECnPmR+k2Uu2KEcxwQUmbDow56+w==
 
 "@spectrum-css/tokens@^@spectrum-css/tokens@14.3.1":
   version "14.3.1"

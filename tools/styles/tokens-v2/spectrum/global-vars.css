@@ -617,7 +617,7 @@
     --system-action-button-static-black-selected-background-color-focus: var(
         --spectrum-transparent-black-900
     );
-    --system-action-button-static-black-selected-content-color-default-selected: var(
+    --system-action-button-static-black-selected-content-color-default: var(
         --mod-actionbutton-static-content-color,
         var(--spectrum-white)
     );
@@ -2951,6 +2951,9 @@
     );
     --system-combobox-quiet-picker-button-background-color-quiet: transparent;
     --system-combobox-quiet-picker-button-border-color-quiet: transparent;
+    --system-combobox-quiet-picker-button-border-color: var(
+        --system-combobox-quiet-picker-button-border-color-quiet
+    );
     --system-combobox-quiet-size-s-spacing-label-to: var(
         --spectrum-field-label-to-component-quiet-small
     );
@@ -6966,6 +6969,7 @@
     );
     --system-textfield-font-family: var(--spectrum-sans-font-family-stack);
     --system-textfield-font-weight: var(--spectrum-regular-font-weight);
+    --system-textfield-input-line-height: var(--system-textfield-height);
     --system-textfield-character-count-font-family: var(
         --spectrum-sans-font-family-stack
     );

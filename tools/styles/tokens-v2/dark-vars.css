@@ -511,4 +511,7 @@
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
 
     --spectrum-swatch-border-color: rgba(255, 255, 255, 0.51);
+
+    --spectrum-blue-900-rgb: 86, 129, 255;
+    --spectrum-gray-800-rgb: 219, 219, 219;
 }
