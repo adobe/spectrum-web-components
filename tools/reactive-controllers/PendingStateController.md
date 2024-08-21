@@ -49,9 +49,7 @@ class Host extends LitElement{
         return html`
         <host-element></host-element>
         ${when(
-                this.pendingStateController.isPending &&
-                    !this.disabled &&
-                    !this.readonly,
+                this.pendingStateController.isPending,
                 () => {
                     return this.pendingStateController.renderPendingState();
                 }
