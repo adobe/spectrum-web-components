@@ -22,8 +22,7 @@ import {
     ifDefined,
     when,
 } from '@spectrum-web-components/base/src/directives.js';
-import { TimeGranularity } from '@spectrum-web-components/input-segments/src/types.js';
-import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
+import { TimeGranularity } from '@spectrum-web-components/date-time-picker';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
 
@@ -85,7 +84,6 @@ interface SpreadStoryArgs {
 }
 
 const renderDateTimePicker = (
-    title: string,
     args: StoryArgs = {},
     content: TemplateResult | typeof nothing = nothing,
     id: string | undefined = undefined,
@@ -101,8 +99,6 @@ const renderDateTimePicker = (
             `
         )}
 
-        <h1>${title}</h1>
-        <hr />
         <sp-date-time-picker
             id=${ifDefined(id)}
             ...=${spreadProps(args as SpreadStoryArgs)}
@@ -130,32 +126,20 @@ const renderDateTimePicker = (
 };
 
 export const Default = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker('Default', args);
+    return renderDateTimePicker(args);
 };
 
 export const selectedDateTime = (args: StoryArgs = {}): TemplateResult[] => {
-    const formatter = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-    });
-
     return [
         new Date(1995, 1, 28, 9, 31, 7),
         new Date(2021, 10, 2, 16, 1, 54),
     ].map((dateTime) => {
-        const formatted = formatter.format(dateTime);
-        const title = `Selected Date/Time: ${formatted}`;
-
         args = {
             ...args,
             selectedDateTime: dateTime,
         };
 
-        return renderDateTimePicker(title, args);
+        return renderDateTimePicker(args);
     });
 };
 
@@ -166,10 +150,7 @@ export const timeGranularity = (args: StoryArgs = {}): TemplateResult => {
         selectedDateTime: new Date(2021, 10, 2, 16, 1, 54),
     };
 
-    return renderDateTimePicker(
-        `Time Granularity: ${args.timeGranularity}`,
-        args
-    );
+    return renderDateTimePicker(args);
 };
 
 timeGranularity.argTypes = {
@@ -191,7 +172,7 @@ timeGranularity.args = {
 };
 
 export const disabled = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Disabled? ${args.disabled}`, args);
+    return renderDateTimePicker(args);
 };
 
 disabled.argTypes = {
@@ -210,7 +191,7 @@ disabled.args = {
 };
 
 export const quiet = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Quiet? ${args.quiet}`, args);
+    return renderDateTimePicker(args);
 };
 
 quiet.argTypes = {
@@ -229,7 +210,7 @@ quiet.args = {
 };
 
 export const readonly = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Read only? ${args.readonly}`, args);
+    return renderDateTimePicker(args);
 };
 
 readonly.argTypes = {
@@ -253,11 +234,11 @@ export const autoFocus = (args: StoryArgs = {}): TemplateResult => {
         autofocus: true,
     };
 
-    return renderDateTimePicker('Auto focus', args);
+    return renderDateTimePicker(args);
 };
 
 export const valid = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Is valid? ${args.valid}`, args);
+    return renderDateTimePicker(args);
 };
 
 valid.argTypes = {
@@ -273,7 +254,14 @@ valid.args = {
 };
 
 export const invalid = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Is invalid? ${args.invalid}`, args);
+    return renderDateTimePicker(
+        args,
+        html`
+            <sp-help-text slot="negative-help-text">
+                This field is required!
+            </sp-help-text>
+        `
+    );
 };
 
 invalid.argTypes = {
@@ -293,7 +281,7 @@ export const helpText = (args: StoryArgs = {}): TemplateResult => {
         <sp-help-text slot="help-text">My default help text</sp-help-text>
     `;
 
-    return renderDateTimePicker(`With help text`, args, content);
+    return renderDateTimePicker(args, content);
 };
 
 export const negativeHelpText = (args: StoryArgs = {}): TemplateResult => {
@@ -306,7 +294,7 @@ export const negativeHelpText = (args: StoryArgs = {}): TemplateResult => {
         </sp-help-text>
     `;
 
-    return renderDateTimePicker('With negative help text', args, content);
+    return renderDateTimePicker(args, content);
 };
 
 negativeHelpText.argTypes = {
@@ -329,7 +317,7 @@ export const customIcon = (args: StoryArgs = {}): TemplateResult => {
         <sp-icon-alert slot="calendar-icon"></sp-icon-alert>
     `;
 
-    return renderDateTimePicker('Custom icon', args, content);
+    return renderDateTimePicker(args, content);
 };
 
 export const customWidth = (args: StoryArgs = {}): TemplateResult[] => {
@@ -341,12 +329,6 @@ export const customWidth = (args: StoryArgs = {}): TemplateResult[] => {
             }
         `;
 
-        return renderDateTimePicker(
-            `Custom width: ${width}`,
-            args,
-            undefined,
-            id,
-            styles
-        );
+        return renderDateTimePicker(args, undefined, id, styles);
     });
 };
