@@ -573,7 +573,7 @@ A picker’s description in the help text is can communicate what to select or h
 -   Hints for what kind of information to choose
 -   More context for why a user needs to make a selection
 
-The help text’s message should not simply restate the same information in the label in order to prompt someone to interact with a picker. Don’t add help text if it isn’t actually relevant or meaningful to a user in order to try to maintain layout continuity with other inputs that require help text.
+The help text’s message should not simply restate the same information in the label in order to prompt someone to interact with a picker. Don’t add help text to maintain layout continuity with other inputs that require help text if it isn’t actually relevant or meaningful to a user.
 
 The help text area also displays an error message. When a picker already includes help text and an error is triggered, the help text is replaced with error text. Once the error is resolved, the help text description reappears below the picker.
 
