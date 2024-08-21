@@ -79,7 +79,7 @@ export class MyElement extends ManageHelpText(SpectrumElement, {
 }
 ```
 
-This functionality is powered by the `HelpTextManager` class which is also exported from this package and can be leveraged directly. It accepts the root element on which it will manage help text and an options object that accepts the `mode` by which that help text will be managed at construction time. Leveraged at render time, it surfaces an `id` property and a `render(invalid?: boolean)` method for use in your template.
+This functionality is powered by the `HelpTextManager` class, which is also exported from this package and can be leveraged directly. It accepts the root element, on which it will manage help text, and an options object that accepts the `mode`, by which that help text will be managed at construction time. Leveraged at render time, it surfaces an `id` property and a `render(invalid?: boolean)` method for use in your template.
 
 #### Usage with self-managed validity
 
