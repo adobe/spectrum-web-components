@@ -48,9 +48,9 @@ const urlParams = new URLSearchParams(queryString);
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
 export let theme: SystemVariant =
-    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum-two';
+    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
 export let system: SystemVariant =
-    (urlParams.get('sp_system') as SystemVariant) || 'spectrum-two';
+    (urlParams.get('sp_system') as SystemVariant) || 'spectrum';
 export let color: Color =
     (urlParams.get('sp_color') as Color) ||
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
