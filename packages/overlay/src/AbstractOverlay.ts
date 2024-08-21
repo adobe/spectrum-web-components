@@ -304,8 +304,8 @@ export class AbstractOverlay extends SpectrumElement {
                     interaction === 'modal'
                         ? 'modal'
                         : interaction === 'hover'
-                        ? 'hint'
-                        : 'auto',
+                          ? 'hint'
+                          : 'auto',
             });
             trigger.insertAdjacentElement('afterend', overlay);
             await overlay.updateComplete;
