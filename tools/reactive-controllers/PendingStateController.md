@@ -1,7 +1,7 @@
 ## Description
 
 The `PendingStateController` is a class that helps manage the pending state of a reactive element. It provides a standardized way to indicate when an element is in a pending state, such as during an asynchronous operation.
-When the components is in a pending state it supplies the pending state UI(<sp-progress-circle>) which gets rendered in the component.
+When the components is in a pending state it supplies the pending state UI `sp-progress-circle` which gets rendered in the component.
 It also updates the value of ARIA label of the host element to its pending-label based on the pending state.
 
 The `HostWithPendingState` interface defines the properties that a host element must implement to work with the `PendingStateController`.
@@ -26,7 +26,7 @@ import { PendingStateController } from '@spectrum-web-components/reactive-contro
 ```js
 import { LitElement } from 'lit';
 import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
-class Component extends LitElement{
+class Host extends LitElement{
 
     /** Whether the items are currently loading. */
     @property({ type: Boolean, reflect: true })
@@ -44,6 +44,19 @@ class Component extends LitElement{
     constructor() {
         super();
         this.pendingStateController = new PendingStateController(this);
+    }
+    render(){
+        return html`
+        <host-element></host-element>
+        ${when(
+                this.pendingStateController.isPending &&
+                    !this.disabled &&
+                    !this.readonly,
+                () => {
+                    return this.pendingStateController.renderPendingState();
+                }
+            )}
+        `
     }
 
 }
