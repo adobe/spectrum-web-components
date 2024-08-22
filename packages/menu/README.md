@@ -77,7 +77,7 @@ Often an `<sp-menu>` element will be delivered inside of an `<sp-popover>` eleme
 
 #### Labels
 
-To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must have a label. For an accessible label that is visibly hidden, but read by assistive technology, use the `label` attribute.
+To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must have a label. For an accessible label that is visibly hidden, but can still be read by assistive technology, use the `label` attribute.
 
 <sp-tabs selected="sp-field-label" auto label="Label options">
 <sp-tab value="sp-field-label">Menu with label</sp-tab>
