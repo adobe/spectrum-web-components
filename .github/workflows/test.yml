@@ -89,7 +89,6 @@ jobs:
     base_branch_cov:
         name: Code Coverage Report
         runs-on: ubuntu-latest
-        uses: romeovs/lcov-reporter-action@v0.4.0
     compare-firefox:
         name: Compare performance to latest release on Firefox
 
