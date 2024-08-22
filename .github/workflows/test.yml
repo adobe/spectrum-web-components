@@ -39,9 +39,38 @@ jobs:
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
                       
-    code coverage report:
+    base_branch_cov:
         name: Code Coverage Report
+        runs-on: ubuntu-latest
         uses: romeovs/lcov-reporter-action@v0.4.0
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.base_ref }}
+
+            - uses: actions/checkout@v4
+
+            - name: Setup Node 18
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '18'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Install dependencies
+              run: yarn
+
+            - name: Run test coverage
+              run: yarn coverage
+
+            - name: Upload code coverage for ref branch
+              uses: actions/upload-artifact@v2
+              with:
+                name: ref-lcov.info
+                path: ./coverage/lcov.info
             
     lighthouse:
         name: Lighthouse CI
