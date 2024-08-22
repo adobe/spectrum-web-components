@@ -572,7 +572,7 @@ In rare cases where context is sufficient and a label could be absent, make sure
 
 #### Use help text to show context
 
-A picker’s description in the help text is can communicate what to select or how to select an option. This includes information such as:
+A picker’s description in the help text can communicate what to select or how to select an option. This includes information such as:
 
 -   An overall description of the picker options
 -   Hints for what kind of information to choose
