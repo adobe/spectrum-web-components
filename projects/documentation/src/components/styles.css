@@ -717,7 +717,7 @@ sp-table.events .description {
 }
 
 .headerContainer:has([id]) > .header-anchor {
-    opacity: 0;
+    text-decoration: underline;
     transition: all 125ms ease-in-out;
 }
 
@@ -733,7 +733,7 @@ tr[id] {
 /*! purgecss start ignore */
 .headerContainer:has([id]):hover > .header-anchor,
 .headerContainer:has([id]) > .header-anchor.focus-visible {
-    opacity: 1;
+    text-decoration: none;
 }
 
 sp-link img {
