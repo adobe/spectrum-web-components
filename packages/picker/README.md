@@ -113,7 +113,7 @@ For an accessible label that renders within the bounds of the picker itself, but
 </sp-picker>
 ```
 
-When you use `<sp-menu-item>` elements without text content, you will need to be sure to use the `value` attribute so that the `<sp-picker>` element can differentiate between the available options. Further, it is important that you apply accessible labeling to the `[slot="icon"]` content as follows:
+When using `<sp-menu-item>` elements without text content, be sure to use the `value` attribute so that the `<sp-picker>` element can differentiate between the available options. Furthermore, it is important to apply accessible labeling to the `[slot="icon"]` content as follows:
 
 ```html
 <sp-field-label for="picker-icons-only">Choose an action...</sp-field-label>
