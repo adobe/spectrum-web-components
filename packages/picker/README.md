@@ -139,7 +139,7 @@ When using `<sp-menu-item>` elements without text content, be sure to use the `v
 
 ##### Advanced icon management
 
-The `icons` attribute allows you to manage how the selected item will appear. Set `icons` to `only` display only the selected item's icon in the `<sp-picker>` element or `none` to display the selected item text without the icon `<sp-picker>`.
+The `icons` attribute manages how the selected item will appear. Set `icons="only"` to display only the selected item's icon in the `<sp-picker>` element, or `icons="none"` to display the selected item text without the icon `<sp-picker>`.
 
 When using `icons="only"` and your `<sp-menu-item>` elements still have text content, that content will be applied to `<sp-picker>` element in a non-visible way.
 
