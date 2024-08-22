@@ -25,7 +25,6 @@ governing permissions and limitations under the License.
 :host([size='xs']) {
     /* Work around non-square icon only Action Buttons in Spectrum CSS */
     min-width: var(--spectrum-actionbutton-height, 0);
-    background-color: red;
 }
 
 @media (forced-colors: active) {
