@@ -521,7 +521,7 @@ When the `value` of an `<sp-picker>` matches either the `value` attribute or the
 
 #### Pending
 
-When in pending state, `<sp-picker>` elements will not respond to click events and will be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed. Use the `pending-label` attribute to customize the pending text for assoistive technology, which is set to `Pending` by default.
+While in pending state, `<sp-picker>` elements will not respond to click events and will be delivered with `<sp-progress-circle>` to visually denote that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed. Use the `pending-label` attribute to customize the pending text for assoistive technology, which is set to `Pending` by default.
 
 <sp-tabs selected="standard-pending" auto label="Pending states">
 <sp-tab value="standard-pending">Pending, standard</sp-tab>
