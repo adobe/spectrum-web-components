@@ -230,7 +230,7 @@ Review the guidelines for the parent [menu](../menu#accessibility-guidelines) an
 
 #### Include a label
 
-Use either visible slotted textContent or the `label` attribute to ensure menu items can be read by assistive technology.
+Either place visible text in the component's slot or use `label` attribute to ensure menu items can be read by assistive technology.
 
 <sp-tabs selected="text" auto label="Labelling menuitems">
 <sp-tab value="text">Using slotted text</sp-tab>
