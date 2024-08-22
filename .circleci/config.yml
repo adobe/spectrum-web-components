@@ -95,7 +95,7 @@ commands:
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
                       echo hash
-                      yarn netlify deploy --alias=$hash --cwd test/visual
+                      yarn netlify deploy --alias=$hash --dir=test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
@@ -217,7 +217,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --cwd projects/documentation
+                  yarn netlify deploy --alias=$branch
 
     hcm-visual:
         executor: node
@@ -269,7 +269,7 @@ jobs:
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
                       echo hash
-                      yarn netlify deploy --alias=$hash --cwd test/visual
+                      yarn netlify deploy --alias=$hash --dir=test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
