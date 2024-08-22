@@ -521,7 +521,7 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 
 #### Pending
 
-When in pending state, `<sp-picker>` elements will not respond to click events and will be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
+When in pending state, `<sp-picker>` elements will not respond to click events and will be delivered with a `<sp-progress-circle>` to visually outline that it is pending. It will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed. Use the `pending-label` attribute to customize the pending text for assoistive technology, which is set to `Pending` by default.
 
 <sp-tabs selected="standard-pending" auto label="Pending states">
 <sp-tab value="standard-pending">Pending, standard</sp-tab>
@@ -529,7 +529,12 @@ When in pending state, `<sp-picker>` elements will not respond to click events a
 
 ```html demo
 <sp-field-label for="picker-loading">Standard:</sp-field-label>
-<sp-picker id="picker-loading" label="Loading blending modes..." pending>
+<sp-picker
+    id="picker-loading"
+    label="Loading blending modes..."
+    pending
+    pending-label="loading options"
+>
     <sp-menu-item>Pass through</sp-menu-item>
     <sp-menu-item>Normal</sp-menu-item>
     <sp-menu-item>Multiply</sp-menu-item>
