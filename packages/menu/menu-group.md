@@ -140,7 +140,7 @@ The `<sp-menu-group>` element can be instructed to maintain a selection via the 
         onchange="this.parentElement
                     .previousElementSibling
                     .querySelector(`#${arguments[0].target.id}-value`)
-                    .textContent = arguments[0].target.value">
+                    .textContent = arguments[0].target.value.replace(/,/,', ')">
         <sp-menu-group
             id="multiple-group-1"
             selects="multiple"
