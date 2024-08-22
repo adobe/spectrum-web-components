@@ -172,7 +172,7 @@ In the following example, the selected `<sp-menu-item>` represents a `value` of 
 </sp-tab-panel>
 </sp-tabs>
 
-When the `value` attribute is leveraged, the selected `<sp-menu-item>` represents a `value` of `short-key` for the `<sp-action-menu>` element.
+When the `value` attribute is leveraged, the selected `<sp-menu-item>` represents a `value` of `"short-key"` for the `<sp-action-menu>` element.
 
 <sp-tabs selected="picker-short-key" auto label="Using short-key">
 <sp-tab value="picker-short-key">Picker</sp-tab>
