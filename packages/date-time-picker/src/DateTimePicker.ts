@@ -176,6 +176,9 @@ export class DateTimePicker extends ManageHelpText(
     @state()
     private pickerDate?: Date;
 
+    @query('.input')
+    private input!: HTMLElement;
+
     /**
      * The `TextfieldBase` class requires this getter to return an element of type `HTMLInputElement` or
      * `HTMLTextAreaElement`, but since the segments are DIVs with the `contenteditable` attribute, we need to cast as
@@ -184,8 +187,8 @@ export class DateTimePicker extends ManageHelpText(
      * Note that `focusElement` is only used for that, so converting as an input will have no side effect as all
      * functions and attributes used exist in both types, `HTMLInputElement` and `HTMLDivElement`.
      */
-    public override get focusElement(): HTMLInputElement {
-        return this.firstEditableSegment as HTMLInputElement;
+    public override get focusElement() {
+        return this.firstEditableSegment;
     }
 
     public get is12HourClock(): boolean {
@@ -258,45 +261,43 @@ export class DateTimePicker extends ManageHelpText(
             <div id="textfield">
                 ${this.renderStateIcons()} ${this.renderInputContent()}
             </div>
-            ${this.renderPicker()} ${this.renderHelpText(this.invalid)}
+            ${this.renderHelpText(this.invalid)}${this.renderPicker()}
         `;
     }
 
-    public renderPicker(): TemplateResult {
-        const isDisabled = this.disabled || this.readonly;
+    public renderPicker(): TemplateResult | typeof nothing {
+        if (this.readonly) return nothing;
 
         return html`
-            <div class="picker">
-                <sp-picker-button
-                    ?open=${this.open}
-                    ?quiet=${this.quiet || this.readonly}
-                    ?invalid=${this.invalid}
-                    ?disabled=${isDisabled}
-                    @click=${this.showPicker}
-                >
-                    <slot name="calendar-icon" slot="icon">
-                        <sp-icon-calendar></sp-icon-calendar>
-                    </slot>
-                </sp-picker-button>
+            <sp-picker-button
+                ?open=${this.open}
+                ?quiet=${this.quiet}
+                ?invalid=${this.invalid}
+                ?disabled=${this.disabled}
+                @click=${this.showPicker}
+            >
+                <slot name="calendar-icon" slot="icon">
+                    <sp-icon-calendar></sp-icon-calendar>
+                </slot>
+            </sp-picker-button>
 
-                <!-- TODO: Enable "receives-focus" when calendar is navigable via keyboard -->
-                <sp-overlay
-                    placement="bottom-start"
-                    receives-focus="false"
-                    .triggerElement=${this as HTMLElement}
-                    ?open=${this.open}
-                    @sp-closed=${this.hidePicker}
-                >
-                    <sp-popover>
-                        <div class="popover-content">
-                            <sp-calendar
-                                .selectedDate=${this.pickerDate as Date}
-                                @change=${this.handleDate}
-                            ></sp-calendar>
-                        </div>
-                    </sp-popover>
-                </sp-overlay>
-            </div>
+            <sp-overlay
+                .triggerElement=${this.input}
+                placement="top"
+                offset="0"
+                receives-focus="true"
+                ?open=${this.open}
+                @sp-closed=${this.hidePicker}
+            >
+                <sp-popover>
+                    <div class="popover-content">
+                        <sp-calendar
+                            .selectedDate=${this.pickerDate as Date}
+                            @change=${this.handleDate}
+                        ></sp-calendar>
+                    </div>
+                </sp-popover>
+            </sp-overlay>
         `;
     }
 

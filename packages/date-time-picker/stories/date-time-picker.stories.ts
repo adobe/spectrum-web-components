@@ -209,6 +209,15 @@ quiet.args = {
     quiet: true,
 };
 
+export const quietInvalid = (args: StoryArgs = {}): TemplateResult => {
+    return renderDateTimePicker(args);
+};
+
+quietInvalid.args = {
+    quiet: true,
+    invalid: true,
+};
+
 export const readonly = (args: StoryArgs = {}): TemplateResult => {
     return renderDateTimePicker(args);
 };
@@ -237,31 +246,8 @@ export const autoFocus = (args: StoryArgs = {}): TemplateResult => {
     return renderDateTimePicker(args);
 };
 
-export const valid = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(args);
-};
-
-valid.argTypes = {
-    invalid: {
-        table: {
-            disable: true,
-        },
-    },
-};
-
-valid.args = {
-    valid: true,
-};
-
 export const invalid = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(
-        args,
-        html`
-            <sp-help-text slot="negative-help-text">
-                This field is required!
-            </sp-help-text>
-        `
-    );
+    return renderDateTimePicker(args);
 };
 
 invalid.argTypes = {

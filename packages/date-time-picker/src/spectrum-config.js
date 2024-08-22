@@ -65,10 +65,8 @@ const config = {
                             replace: {
                                 type: 'pseudo-class',
                                 kind: 'host',
+                                selectors: [builder.pseudoClass('hover')],
                             },
-                        },
-                        {
-                            replace: builder.pseudoClass('hover'),
                         },
                         {
                             replace: {
@@ -101,15 +99,15 @@ const config = {
                             replace: {
                                 type: 'pseudo-class',
                                 kind: 'host',
-                            },
-                        },
-                        {
-                            replace: {
-                                type: 'pseudo-class',
-                                kind: 'not',
                                 selectors: [
-                                    [builder.attribute('quiet')],
-                                    [builder.attribute('disabled')],
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'not',
+                                        selectors: [
+                                            [builder.attribute('quiet')],
+                                            [builder.attribute('disabled')],
+                                        ],
+                                    },
                                 ],
                             },
                         },
@@ -139,16 +137,14 @@ const config = {
                                         type: 'attribute',
                                         name: 'invalid',
                                     },
-                                ],
-                            },
-                        },
-                        {
-                            replace: {
-                                type: 'pseudo-class',
-                                kind: 'not',
-                                selectors: [
-                                    [builder.attribute('quiet')],
-                                    [builder.attribute('disabled')],
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'not',
+                                        selectors: [
+                                            [builder.attribute('quiet')],
+                                            [builder.attribute('disabled')],
+                                        ],
+                                    },
                                 ],
                             },
                         },

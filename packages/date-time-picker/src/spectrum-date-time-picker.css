@@ -162,7 +162,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host:not([quiet], [disabled]) {
+:host(:not([quiet], [disabled])) {
     --mod-picker-button-border-color: var(
         --highcontrast-datepicker-pickerbutton-border-color,
         var(
@@ -172,7 +172,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([invalid]):not([quiet], [disabled]) {
+:host([invalid]:not([quiet], [disabled])) {
     --mod-picker-button-border-color: var(
         --highcontrast-datepicker-pickerbutton-border-color,
         var(
