@@ -235,7 +235,7 @@ To render accessibly, an `<sp-menu>` element or its parent `<sp-popover>` must h
 
 The `<sp-menu>` element can be instructed to maintain a selection via the `selects` attribute. Depending on the chosen algorithm, the `<sp-menu>` element will hold a `value` property and manage the `selected` state of its `<sp-menu-item>` descendants.
 
--   When `selects` is set to `single`, the `<sp-menu>` element will maintain one selected item after an initial selection is made.
+-   When `selects="single"`, the `<sp-menu>` element will maintain one selected item after an initial selection is made.
 -   When `selects` is set to `multiple`, the `<sp-menu>` element will maintain zero or more selected items.
 -   When `selects` is set to `inherit`, the `<sp-menu>` element will allow its `<sp-menu-item>` children to participate in the selection of its nearest `<sp-menu>` ancestor.
 
