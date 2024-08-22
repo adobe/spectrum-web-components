@@ -24,8 +24,6 @@ governing permissions and limitations under the License.
         --spectrum-tag-deletable-icon-color-error-down,
         var(--spectrum-red-700)
     );
-
-    background-color: red;
 }
 
 :host([invalid]):hover .clear-button {
