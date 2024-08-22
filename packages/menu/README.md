@@ -336,4 +336,4 @@ Review the guidelines for the [menu-item](../menu-item#accessibility-guidelines)
 
 #### Include a label
 
-In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert.
+A menu is required to have an accessible label.
