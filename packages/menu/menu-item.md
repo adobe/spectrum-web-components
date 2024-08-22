@@ -85,7 +85,7 @@ When you use `<sp-menu-item>` elements without text content, you will need to be
 
 #### Description
 
-Content assigned to the `description` slot will be placed below the `<sp-menu-item>`, like help text for users to understand the context of corresponding `<sp-menu-item>`.
+Content assigned to the `"description"` slot, eg help text, will be placed below the `<sp-menu-item>` to help users understand the context of corresponding `<sp-menu-item>`.
 
 ```html
 <sp-menu style="width: 200px;">
