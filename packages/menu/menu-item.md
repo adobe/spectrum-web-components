@@ -226,6 +226,8 @@ An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Usi
 
 ### Accessibility guidelines
 
+Review the guidelines for the parent [menu](../menu#accessibility-guidelines) and [menu-group](../menu-group#accessibility-guidelines).
+
 #### Include a label
 
 Use either visible slotted textContent or the `label` attribute to ensure menu items can be read by assistive technology.

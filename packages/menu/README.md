@@ -332,6 +332,8 @@ Note: The `change` event is only dispatched on a left mouse click or Enter/Space
 
 ### Accessibility guidelines
 
+Review the guidelines for the [menu-item](../menu-item#accessibility-guidelines) and [menu-group](../menu-group#accessibility-guidelines) descendants.
+
 #### Include a label
 
 In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert.
