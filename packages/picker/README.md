@@ -568,7 +568,7 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 
 #### Include a visible label
 
-In rare cases where context is sufficient and a label could be absent, make sure to have the design reviewed and approved by an accessibility expert.
+Do not omit a visible label unless an accessibility expert determines that sufficient context is already provided.
 
 #### Use help text to show context
 
