@@ -174,7 +174,7 @@ Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>`
 
 #### Usage with validity managed from above
 
-When the parent element does not manage its own validity, or you would prefer to leverage the parent application in deciding what content and when to deliver within your `<sp-help-text>` element, place your content in the `help-text` slot to ensure that it is available for receiving stateful content/properties across the lifecycle of the parent element in question.
+When the parent element does not manage its own validity, or you would prefer to leverage the parent application in deciding what content and when to deliver within your `<sp-help-text>` element, place your content in the `"help-text"` slot to ensure that it is available for receiving stateful content/properties across the lifecycle of the parent element in question.
 
 <sp-tabs selected="textfield" auto label="Help text usage in form elements">
 <sp-tab value="field">Field group</sp-tab>
