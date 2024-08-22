@@ -202,7 +202,7 @@ When using `icons="only"` on `<sp-menu-item>` elements that have text content, t
 
 #### Value
 
-When the `value` of an `<sp-picker>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.
+When the `value` of an `<sp-picker>` matches either the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>`, it will mark that element as `selected`.
 
 <sp-tabs selected="matching-value" auto label="Selected">
 <sp-tab value="matching-value">Matching value</sp-tab>
