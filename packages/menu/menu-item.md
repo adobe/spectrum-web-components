@@ -210,7 +210,7 @@ When the `value` attribute is leveraged, the selected `<sp-menu-item>` represent
 
 #### Submenu
 
-An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Using the `<sp-menu>` element with this slot name the options will be surfaced in flyout menu that can be activated by hovering over the root menu item with your pointer or focusing the menu item and pressing the appropriate `ArrowRight` or `ArrowLeft` key based on text direction to move into the submenu.
+An `<sp-menu-item>` can also accept content addressed to its `"submenu"` slot. An `<sp-menu>` element with this slot name surfaces the options in an adjacent popover, which can be activated by hovering over the parent menu item with your pointer or focusing the menu item and pressing the appropriate `ArrowRight` or `ArrowLeft` key based on text direction to move into the submenu.
 
 ```html
 <sp-menu style="width: 200px;">
