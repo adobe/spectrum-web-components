@@ -36,7 +36,7 @@ import { HelpTextManager } from '@spectrum-web-components/help-text/HelpTextMana
 `ManageHelpText` mixes two properties into your class:
 
 -   `helpTextId`: the `id` attribute of the associated `<sp-help-text>`
--   `renderHelpText(negative?: boolean)`: a method that returns a `TemplateResult` with the `help-text` and `negative-help-text` slots
+-   `renderHelpText(negative?: boolean)`: a method that returns a `TemplateResult` with the slots `"help-text"` and `"negative-help-text"`
 
 ### Internal
 
