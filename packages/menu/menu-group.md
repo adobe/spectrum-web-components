@@ -26,7 +26,7 @@ import { MenuGroup } from '@spectrum-web-components/menu';
 
 ### Anatomy
 
-An `<sp-menu-group>` can be used to organize `<sp-menu-item>` elements in an `<sp-memu>` in to collections with a shared header. Use an element addressed to the `slot="header` to pass the content of that header.
+An `<sp-menu-group>` can be used to organize `<sp-menu-item>` elements in an `<sp-memu>` into collections with a shared header. Use an element addressed to the `slot="header"` to pass in the content of that header.
 
 <!-- prettier-ignore -->
 ```html demo
