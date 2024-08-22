@@ -38,6 +38,11 @@ jobs:
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
+                      
+    code coverage report:
+        name: Code Coverage Report
+        uses: romeovs/lcov-reporter-action@v0.4.0
+            
     lighthouse:
         name: Lighthouse CI
         runs-on: ubuntu-22.04
