@@ -154,7 +154,8 @@ jobs:
             - store_artifacts:
                   path: coverage
             - coveralls/upload:
-                coverage_file: coverage/lcov.info
+                  coverage_file: coverage/lcov.info
+                  coverage_format: lcov 
 
 
     test-chromium-memory:
