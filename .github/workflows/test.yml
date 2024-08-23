@@ -218,7 +218,7 @@ jobs:
         steps:
             - uses: actions/checkout@v4
               with:
-                  ref: main
+                  ref: ${{ github.base_ref }}
 
             - uses: actions/checkout@v4
 
@@ -235,7 +235,18 @@ jobs:
             - name: Install dependencies
               run: yarn
 
+            - name: Run test coverage
+              run: yarn test --coverage
+
+            - name: Upload code coverage for ref branch
+              uses: actions/upload-artifact@v2
+              with:
+                name: ref-lcov.info
+                path: ./coverage/lcov.info
+
             - name: Base Coverage
               uses: romeovs/lcov-reporter-action@v0.4.0
               with:
                 lcov-file: ./coverage/lcov.info
+                minimum-ratio: 0 # Fails Github action once code coverage is decreasing
+                send-summary-comment: true
