@@ -232,8 +232,8 @@ jobs:
             - name: Install dependencies
               run: yarn --frozen-lockfile
 
-            - name: Install dependencies
-              run: yarn
+            - name: Install playwright
+              run: yarn playwright install
 
             - name: Run unit tests
               run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
