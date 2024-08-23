@@ -235,9 +235,8 @@ jobs:
             - name: Install dependencies
               run: yarn
 
-            - run:
-                name: Run unit tests
-                command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
+            - name: Run unit tests
+              run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
 
 
             - name: Upload code coverage for ref branch
