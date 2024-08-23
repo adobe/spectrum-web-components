@@ -613,12 +613,13 @@ export class Calendar extends SpectrumElement {
      */
     private setCurrentMonthDates(): void {
         const numberOfWeeks = getWeeksInMonth(this.currentDate, this.locale);
-
+        const newCurrentMonthDates = new Array(numberOfWeeks);
         for (const weekIndex of new Array(numberOfWeeks).keys())
-            this.currentMonthDates[weekIndex] = this.getDatesInWeek(
+            newCurrentMonthDates[weekIndex] = this.getDatesInWeek(
                 this.currentDate,
                 weekIndex
             );
+        this.currentMonthDates = newCurrentMonthDates;
     }
 
     /**
