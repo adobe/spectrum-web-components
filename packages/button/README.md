@@ -381,7 +381,7 @@ popover or dialog opens.
 <sp-button autofocus>Confirm</sp-button>
 ```
 
-### Accessibility
+### Accessibility guidelines
 
 #### Include a label
 
@@ -392,7 +392,7 @@ or on an `<sp-icon*>` element child.
 
 Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
 
-#### When to use static black and static white
+#### Use static black or static white to contrast with backgrounds and images
 
 To ensure maximum contrast with the background, use static black for light backgrounds and images, and use static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
 
