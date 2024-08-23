@@ -235,8 +235,7 @@ jobs:
             - name: Install dependencies
               run: yarn
 
-            - name: Run test coverage
-              run:
+            - run:
                 name: Run tests
                 command: |
                     TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
