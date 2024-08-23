@@ -235,8 +235,7 @@ jobs:
             - name: Install dependencies
               run: yarn
 
-            - name: Run test coverage
-              run: yarn coverage
-
             - name: Base Coverage
               uses: romeovs/lcov-reporter-action@v0.4.0
+              with:
+                lcov-file: ./coverage/lcov.info
