@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-button>` represents an action a user can take. sp-buttons can be clicked
 or tapped to perform an action or to navigate to another page. sp-buttons in
@@ -29,7 +29,76 @@ When looking to leverage the `Button`, `ClearButton`, or `CloseButton` base clas
 import { Button, ClearButton, CloseButton } from '@spectrum-web-components/button';
 ```
 
-## Sizes
+### Anatomy
+
+#### Content
+
+`<sp-button>` elements can be provided a visible label,
+a label with an icon, or just an icon.
+
+An icon is provided by placing an icon element to the `icon` slot.
+
+If the button is an icon only, a non-visible label
+can be provided via the `label` attribute on an `<sp-button>`
+or on an `<sp-icon*>` element child to appropriately
+fulfill the accessibility contract of the button.
+
+<sp-tabs selected="label" auto label="Labelling a button">
+<sp-tab value="label">Label only</sp-tab>
+<sp-tab-panel value="label">
+
+```html demo
+<sp-button variant="primary">Label only</sp-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="icon-label">Icon + label</sp-tab>
+<sp-tab-panel value="icon-label">
+
+```html demo
+<sp-button variant="primary">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+</sp-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="svg-label">SVG Icon + label</sp-tab>
+<sp-tab-panel value="svg-label">
+
+```html demo
+<sp-button variant="primary">
+    <svg
+        slot="icon"
+        viewBox="0 0 36 36"
+        focusable="false"
+        aria-hidden="true"
+        role="img"
+    >
+        <path
+            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+        ></path>
+    </svg>
+    SVG Icon + Label
+</sp-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="icon-only">Icon only</sp-tab>
+<sp-tab-panel value="icon-only">
+
+```html demo
+<sp-button variant="primary" label="Icon only">
+    <sp-icon-help slot="icon"></sp-icon-help>
+</sp-button>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+### Options
+
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -66,39 +135,7 @@ import { Button, ClearButton, CloseButton } from '@spectrum-web-components/butto
 </sp-tab-panel>
 </sp-tabs>
 
-## Content
-
-`<sp-button>` elements can be provided a visible label, a label with an icon, or just an icon (a non-visible label can be prived via the `label` attribute on an `<sp-button>` or on an `<sp-icon*>` element child to appropriately fulfill the accessibility contract of the button). An icon is provided by
-placing an icon element to the `icon` slot.
-
-```html
-<sp-button-group>
-    <sp-button variant="primary">Label only</sp-button>
-    <sp-button variant="primary">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button variant="primary">
-        <svg
-            slot="icon"
-            viewBox="0 0 36 36"
-            focusable="false"
-            aria-hidden="true"
-            role="img"
-        >
-            <path
-                d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
-            ></path>
-        </svg>
-        SVG Icon + Label
-    </sp-button>
-    <sp-button variant="primary" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
-```
-
-## Variants
+#### Variants
 
 There are many button variants to choose from in Spectrum. The `variant`
 attribute defaults to `accent` but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
@@ -208,7 +245,7 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 </sp-tab-panel>
 </sp-tabs>
 
-### Treatment
+#### Treatment
 
 The `treatment` attribute accepts `fill` and `outline` as values, and defaults to `fill`. These display as follows:
 
@@ -283,7 +320,7 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 </sp-tab-panel>
 </sp-tabs>
 
-## States
+### States
 
 In addition to the variant, `<sp-button>` elements support two different visual states, disabled and pending, which can be applied by adding the attribute `disabled` or `pending` respectively. All `<sp-button>` variants support these states.
 
@@ -300,11 +337,10 @@ While disabled, `<sp-button>` elements will not respond to click events and will
 
 ### Pending
 
-While in pending state, `<sp-button>` elements will not respond to click events and will appear faded with an indeterminent `<sp-progress-circle>`.
+While in pending state, `<sp-button>` elements will not respond to click events and will appear faded with an indeterminate `<sp-progress-circle>`.
 `<sp-button>` elements label and icon will be hidden while in pending state.
 
-Note: `pending` state of the `<sp-button>` element is applied after 1s delay to avoid flashing the pending state for quick actions.
-You can override the delay by adding custom css var `--pending-delay` to your css.
+Note: `pending` state of the `<sp-button>` element is applied after 1s delay to avoid flashing the pending state for quick actions. You can override the delay by adding custom css var `--pending-delay` to your css.
 
 ```html
 <sp-button-group>
@@ -313,7 +349,9 @@ You can override the delay by adding custom css var `--pending-delay` to your cs
 </sp-button-group>
 ```
 
-## Handling events
+### Behaviors
+
+#### Handling events
 
 Events handlers for clicks and other user actions can be registered on a
 `<sp-button>` as on a standard HTML `<button>` element.
@@ -333,7 +371,7 @@ In addition to handling events like a native `<button>` HTML element, one can al
 </sp-button>
 ```
 
-### Autofocus
+#### Autofocus
 
 The `autofocus` attribute sets focus to the `<sp-button>` when the component
 mounts. This is useful for setting focus to a specific sp-button when a
@@ -342,3 +380,22 @@ popover or dialog opens.
 ```html
 <sp-button autofocus>Confirm</sp-button>
 ```
+
+### Accessibility
+
+#### Include a label
+
+A button is required to have either a visible text label or `label` attribute on an `<sp-button>`
+or on an `<sp-icon*>` element child.
+
+#### Don't override color
+
+Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
+
+#### When to use static black and static white
+
+To ensure maximum contrast with the background, use static black for light backgrounds and images, and use static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
+
+#### Clearly state the action
+
+Make sure that a button’s label clearly states the outcome of the action. Use the same word or phrase as found elsewhere in the experience.
