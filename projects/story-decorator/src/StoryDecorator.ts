@@ -41,6 +41,7 @@ import {
     Theme,
 } from '@spectrum-web-components/theme';
 import './types.js';
+import { type Locale, locales } from './locales.js';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -57,6 +58,7 @@ export let color: Color =
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
 export let screenshot = urlParams.get('sp_screenshot') === 'true';
+export let locale = urlParams.get('sp_locale') || 'en-US';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultSystemVariant: system,
@@ -64,6 +66,7 @@ window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultScale: scale,
     defaultDirection: dir,
     defaultReduceMotion: reduceMotion,
+    defaultLocale: locale,
 };
 
 const reduceMotionProperties = css`
@@ -182,6 +185,9 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, attribute: 'reduce-motion', reflect: true })
     public reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion;
 
+    @property({ type: String })
+    public override lang: Locale = window.__swc_hack_knobs__.defaultLocale;
+
     @property({ type: Boolean, reflect: true })
     public screenshot = screenshot;
 
@@ -233,6 +239,9 @@ export class StoryDecorator extends SpectrumElement {
                     reduceMotion =
                     window.__swc_hack_knobs__.defaultReduceMotion =
                         checked as boolean;
+            case 'locale':
+                this.lang = window.__swc_hack_knobs__.defaultLocale =
+                    value as Locale;
                 break;
         }
     }
@@ -257,6 +266,7 @@ export class StoryDecorator extends SpectrumElement {
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
+                lang=${this.lang}
                 part="container"
                 @keydown=${this.handleKeydown}
             >
@@ -301,7 +311,8 @@ export class StoryDecorator extends SpectrumElement {
         return html`
             <div class="manage-theme" part="controls">
                 ${this.systemControl} ${this.colorControl} ${this.scaleControl}
-                ${this.dirControl} ${this.reduceMotionControl}
+                ${this.localeControl} ${this.dirControl}
+                ${this.reduceMotionControl}
             </div>
         `;
     }
@@ -358,6 +369,28 @@ export class StoryDecorator extends SpectrumElement {
             >
                 <sp-menu-item value="medium">Medium</sp-menu-item>
                 <sp-menu-item value="large">Large</sp-menu-item>
+            </sp-picker>
+        `;
+    }
+
+    private get localeControl(): TemplateResult {
+        const renderLocaleOption = (locale: Locale): TemplateResult => html`
+            <sp-menu-item value=${locale}>${locale}</sp-menu-item>
+        `;
+
+        return html`
+            <sp-field-label side-aligned="start" for="locale">
+                Locale
+            </sp-field-label>
+            <sp-picker
+                id="locale"
+                label="Locale"
+                placement="top"
+                quiet
+                .value=${this.lang}
+                @change=${this.updateTheme}
+            >
+                ${locales.map(renderLocaleOption)}
             </sp-picker>
         `;
     }
