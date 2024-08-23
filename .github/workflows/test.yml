@@ -235,11 +235,12 @@ jobs:
             - name: Install dependencies
               run: yarn
 
-            - name: Install playwright
-              run: yarn install playwright
-
             - name: Run test coverage
-              run: yarn test --coverage
+              run:
+                name: Run tests
+                command: |
+                    TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                    yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
 
             - name: Upload code coverage for ref branch
               uses: actions/upload-artifact@v2
@@ -247,7 +248,7 @@ jobs:
                 name: ref-lcov.info
                 path: ./coverage/lcov.info
 
-            - name: Base Coverage
+            - name: Print Coverage
               uses: romeovs/lcov-reporter-action@v0.4.0
               with:
                 lcov-file: ./coverage/lcov.info
