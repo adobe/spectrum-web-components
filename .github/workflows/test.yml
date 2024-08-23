@@ -214,8 +214,6 @@ jobs:
 
     code-coverage-report:
         name: Code Coverage Report
-        uses: romeovs/lcov-reporter-action@v0.4.0
-        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -240,8 +238,5 @@ jobs:
             - name: Run test coverage
               run: yarn coverage
 
-            - name: Upload code coverage for ref branch
-              uses: actions/upload-artifact@v2
-              with:
-                  name: ref-lcov.info
-                  path: ./coverage/lcov.info
+            - name: Base Coverage
+              uses: romeovs/lcov-reporter-action@v0.4.0
