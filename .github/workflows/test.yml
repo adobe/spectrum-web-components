@@ -214,8 +214,9 @@ jobs:
 
     code-coverage-report:
         name: Code Coverage Report
-        runs-on: ubuntu-latest
         uses: romeovs/lcov-reporter-action@v0.4.0
+        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
               with:
