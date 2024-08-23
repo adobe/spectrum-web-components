@@ -236,7 +236,7 @@ jobs:
               run: yarn
 
             - name: Run test coverage
-              run: yarn test --coverage
+              run: yarn test:ci --coverage
 
             - name: Upload code coverage for ref branch
               uses: actions/upload-artifact@v2
