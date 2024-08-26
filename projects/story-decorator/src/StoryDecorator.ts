@@ -146,7 +146,6 @@ export class StoryDecorator extends SpectrumElement {
                     align-items: flex-start;
                     justify-content: flex-end;
                     box-sizing: border-box;
-                    background-color: var(--spectrum-background-base-color);
                     padding-bottom: calc(
                         2 * var(--spectrum-alias-focus-ring-size)
                     );
@@ -237,6 +236,13 @@ export class StoryDecorator extends SpectrumElement {
         }
     }
 
+    public get backgroundStyle() {
+        if (system === 'spectrum-two') {
+            return `background-color: var(--spectrum-background-base-color);`;
+        }
+        return `background-color: var(--spectrum-gray-100);`;
+    }
+
     protected handleKeydown(event: KeyboardEvent): void {
         const path = event.composedPath();
         const hasInput = path.some(
@@ -257,6 +263,7 @@ export class StoryDecorator extends SpectrumElement {
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
+                style=${this.backgroundStyle}
                 part="container"
                 @keydown=${this.handleKeydown}
             >
