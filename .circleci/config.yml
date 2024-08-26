@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  coveralls: coveralls/coveralls@2.2.1
+    coveralls: coveralls/coveralls@2.2.1
 executors:
     node:
         docker:
@@ -154,9 +154,7 @@ jobs:
             - store_artifacts:
                   path: coverage
             - coveralls/upload:
-                  coverage_file: coverage/lcov.info
-                  coverage_format: lcov 
-
+                  verbose: true
 
     test-chromium-memory:
         executor: node
