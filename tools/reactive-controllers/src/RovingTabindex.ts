@@ -65,11 +65,9 @@ export class RovingTabindexController<
             if (!removeTabIndex) {
                 if (this.focused) {
                     if (el !== this.elements[this.currentIndex]) {
-                        el.setAttribute('tabindex', tabIndex.toString());
                         el.tabIndex = tabIndex;
                     }
                 } else {
-                    el.setAttribute('tabindex', tabIndex.toString());
                     el.tabIndex = tabIndex;
                 }
                 return;
