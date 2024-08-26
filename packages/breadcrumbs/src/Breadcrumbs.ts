@@ -31,7 +31,11 @@ import {
     BreadcrumbItem as BreadcrumbElement,
     BreadcrumbSelectDetail,
 } from './BreadcrumbItem.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import {
+    createRef,
+    Ref,
+    ref,
+} from '@spectrum-web-components/base/src/directives.js';
 
 import styles from './breadcrumbs.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
