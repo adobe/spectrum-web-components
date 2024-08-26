@@ -190,7 +190,6 @@ export class FocusGroupController<T extends HTMLElement>
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
             elements[this.prevIndex]?.setAttribute('tabindex', '-1');
-            focusElement.setAttribute('tabindex', '0');
             focusElement.tabIndex = 0;
             focusElement.focus(options);
         }
@@ -271,6 +270,10 @@ export class FocusGroupController<T extends HTMLElement>
         }
     };
 
+    /**
+     * handleClick - Finds the element that was clicked and sets the tabindex to 0
+     * @returns void
+     */
     handleClick = (): void => {
         // Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
         const elements = this.elements;
