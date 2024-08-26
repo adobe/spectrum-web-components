@@ -38,7 +38,7 @@ jobs:
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
-            
+
     lighthouse:
         name: Lighthouse CI
         runs-on: ubuntu-22.04
@@ -238,16 +238,11 @@ jobs:
             - name: Run unit tests
               run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
 
-
             - name: Upload code coverage for ref branch
               uses: actions/upload-artifact@v2
               with:
-                name: ref-lcov.info
-                path: ./coverage/lcov.info
+                  name: ref-lcov.info
+                  path: ./coverage/lcov.info
 
-            - name: Print Coverage
-              uses: romeovs/lcov-reporter-action@v0.4.0
-              with:
-                lcov-file: ./coverage/lcov.info
-                minimum-ratio: 0 # Fails Github action once code coverage is decreasing
-                send-summary-comment: true
+            - name: Upload coverage to Coveralls
+              uses: coverallsapp/github-action@v2
