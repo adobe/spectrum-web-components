@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-meter>` is a visual representation of a quantity or achievement. The meter's progress is determined by user actions, rather than system actions.
 
@@ -24,9 +24,11 @@ When looking to leverage the `Meter` base class as a type and/or for extension p
 import { Meter } from '@spectrum-web-components/meter';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

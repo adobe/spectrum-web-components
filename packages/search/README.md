@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `<sp-search>` element delivers a single input field with a "reset" button as well as a mangifying glass icon with which to power search interactions.
 
@@ -24,9 +24,11 @@ When looking to leverage the `Search` base class as a type and/or for extension 
 import { Search } from '@spectrum-web-components/search';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

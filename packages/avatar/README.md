@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-avatar>` is a great way to feature a visual representation of a user.
 
@@ -24,9 +24,11 @@ When looking to leverage the `Avatar` base class as a type and/or for extension 
 import { Avatar } from '@spectrum-web-components/avatar';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="100" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="100" auto label="Size attribute options">
 <sp-tab value="50">50</sp-tab>
 <sp-tab-panel value="50">
 

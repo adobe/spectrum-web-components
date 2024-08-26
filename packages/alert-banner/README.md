@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `<sp-alert-banner>` shows pressing and high-signal messages, such as system alerts. It is meant to be noticed and prompt users to take action.
 

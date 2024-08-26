@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-field-group>` element is used to layout a group of fields, usually `<sp-checkbox>` elements. It can be leveraged for `vertical` or `horizontal` organization of the fields that are supplied as its children.
 

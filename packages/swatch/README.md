@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-swatch>` shows a small sample of a fill — such as a color, gradient, texture, or material — that is intended to be applied to an object.
 
@@ -23,9 +23,11 @@ When looking to leverage the `Swatch` base class as a type and/or for extension 
 import { Swatch } from '@spectrum-web-components/swatch';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="xs">Extra Small</sp-tab>
 <sp-tab-panel value="xs">
 

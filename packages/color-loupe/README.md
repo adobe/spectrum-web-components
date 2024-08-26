@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-color-loupe>` shows the output color that would otherwise be covered by a cursor, stylus, or finger during color selection.
 

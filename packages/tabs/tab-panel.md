@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-tab-panel>` contains the content that will be displayed when an `<sp-tab>` becomes `selected`. An `<sp-tab-panel>` can be associated with an `<sp-tab>` by sharing the same `value` attribute.
 
@@ -54,14 +54,18 @@ The state of the `<sp-tab-panel>` is reflected to the boolean `selected` attribu
     }
     sp-tab-panel {
         grid-area: 1/2/1/2;
-        transition: opacity 0.5s ease-in-out 0s, transform 0.5s ease-in-out 0s;
+        transition:
+            opacity 0.5s ease-in-out 0s,
+            transform 0.5s ease-in-out 0s;
         opacity: 1;
         height: 100%;
         position: relative;
         z-index: 2;
     }
     sp-tab-panel:not([selected]) {
-        transition: opacity 0.5s ease-in-out 0s, height 0s ease-in-out 0.5s,
+        transition:
+            opacity 0.5s ease-in-out 0s,
+            height 0s ease-in-out 0.5s,
             transform 0.5s ease-in-out 0s;
         display: block;
         opacity: 0;

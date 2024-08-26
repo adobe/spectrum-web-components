@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-link>` allow users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
 

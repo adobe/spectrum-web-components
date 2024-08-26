@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-checkbox>` allow users to select multiple items from a list of independent
 options, or to mark an individual option as selected.
@@ -28,9 +28,11 @@ When looking to leverage the `Checkbox` base class as a type and/or for extensio
 import { Checkbox } from '@spectrum-web-components/checkbox';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

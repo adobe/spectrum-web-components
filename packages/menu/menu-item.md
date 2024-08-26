@@ -59,7 +59,7 @@ Content assigned to the `icon` slot will be placed at the beginning of the `<sp-
 
 ##### Icon management
 
-When using `<sp-menu-item>` elements without text content, be sure to use the `value` attribute so that the `<sp-picker>` or `<sp-menu>` element can differentiate between the available options. Further, it is important to apply accessible labeling to the `[slot="icon"]` content as follows:
+When you use `<sp-menu-item>` elements without text content, you will need to be sure to use the `value` attribute so that the `<sp-picker>` or `<sp-menu>` element can differentiate between the available options. Further, it is important that you apply accessible labeling to the `[slot="icon"]` content as follows:
 
 ```html
 <sp-field-label for="picker-icons-only">Choose an action...</sp-field-label>
@@ -83,9 +83,9 @@ When using `<sp-menu-item>` elements without text content, be sure to use the `v
 </sp-picker>
 ```
 
-#### Description
+#### Overview
 
-Content assigned to the `"description"` slot, eg help text, will be placed below the `<sp-menu-item>` to help users understand the context of corresponding `<sp-menu-item>`.
+Content assigned to the `description` slot will be placed below the `<sp-menu-item>`, like help text for users to understand the context of corresponding `<sp-menu-item>`.
 
 ```html
 <sp-menu style="width: 200px;">

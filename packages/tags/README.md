@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-tags>` elements contain a collection of `<sp-tag>` elements and allow users to categorize content. They can represent keywords or people, and are grouped to describe an item or a search request.
 

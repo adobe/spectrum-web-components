@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 To support consumers that leverage `lit-html`, Spectrum Web Components also vends a [directive](https://lit.dev/docs/api/directives/) to further simplify the management of content conditional to whether or not the Overlay is currently visible.
 

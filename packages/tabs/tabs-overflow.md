@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `<sp-tabs-overflow>` is a decorative component that works in conjunction with the `<sp-tabs>` component. It enables horizontal tab scrolling in cases where the available width is insufficient to display all tabs.
 

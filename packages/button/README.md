@@ -100,7 +100,7 @@ fulfill the accessibility contract of the button.
 
 #### Sizes
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -362,7 +362,7 @@ Events handlers for clicks and other user actions can be registered on a
 
 In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-button>` in place of the `<a>` element by using the `href` and optional `target` attribute.
 
-```html
+```html demo
 <sp-button
     href="https://github.com/adobe/spectrum-web-components"
     target="_blank"
@@ -395,6 +395,31 @@ Do not use custom colors for buttons. The colors of different button variations 
 #### Use static black or static white to contrast with backgrounds and images
 
 To ensure maximum contrast with the background, use static black for light backgrounds and images, and use static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
+
+<sp-tabs selected="black" auto label="Static variants for contrast">
+<sp-tab value="black">Static black on light background</sp-tab>
+<sp-tab-panel value="black">
+
+```html demo
+<div style="background-color: #ccffee; padding: 20px">
+    <sp-button static="black">Click me</sp-button>
+    <sp-button static="black" treatment="outline">Click me</sp-button>
+</div>
+```
+
+</sp-tab-panel>
+<sp-tab value="white">Static white on dark background</sp-tab>
+<sp-tab-panel value="white">
+
+```html demo
+<div style="background-color: #220033; padding: 20px">
+    <sp-button static="white">Click me</sp-button>
+    <sp-button static="white" treatment="outline">Click me</sp-button>
+</div>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 #### Clearly state the action
 

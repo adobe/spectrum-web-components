@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-dialog` displays important information that users need to acknowledge. They appear over the interface and block further interactions. When used directly the `sp-dialog` element surfaces a `slot` based API for deep customization of the content to be included in the overlay.
 
@@ -24,9 +24,11 @@ When looking to leverage the `Dialog` base class as a type and/or for extension 
 import { Dialog } from '@spectrum-web-components/dialog';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

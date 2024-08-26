@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 While an `<sp-overlay>` element is the recommended entry point to the Spectrum Web Components Overlay API, you can also interact with this set of features via an imperative API, `Overlay.open`.
 

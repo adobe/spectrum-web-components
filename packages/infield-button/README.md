@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 When composing complex form fields, an `<sp-infield-button>` can visually associate button functionality with other form fields to delivery enhanced capabilities to your visitors.
 
@@ -23,9 +23,11 @@ When looking to leverage the `InfieldButton` base class as a type and/or for ext
 import { InfieldButton } from '@spectrum-web-components/infield-button';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

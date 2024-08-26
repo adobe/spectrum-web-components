@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-divider` brings clarity to a layout by grouping and dividing content that exists in close proximity. It can also be used to establish rhythm and hierarchy.
 
@@ -26,7 +26,7 @@ import { Divider } from '@spectrum-web-components/divider';
 
 ## Horizontal
 
-<sp-tabs selected="m" auto label="Horizontal Size Attribute Options">
+<sp-tabs selected="m" auto label="Horizontal Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -68,7 +68,7 @@ import { Divider } from '@spectrum-web-components/divider';
 
 When a vertical Divider is used inside of a flex container, use `align-self: stretch; height: auto;` on the Divider.
 
-<sp-tabs selected="m" auto label="Vertical Size Attribute Options">
+<sp-tabs selected="m" auto label="Vertical Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

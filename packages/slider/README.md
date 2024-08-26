@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-slider>` allows users to quickly select a value within a range. They should be used when the upper and lower bounds of the range are invariable.
 
@@ -30,9 +30,11 @@ When looking to leverage the `Slider` base class as a type and/or for extension 
 import { Slider } from '@spectrum-web-components/slider';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

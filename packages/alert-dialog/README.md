@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-alert-dialog` displays important information that users need to acknowledge. When used directly the `sp-alert-dialog` element surfaces a `slot` based API for deep customization of the content to be included in the overlay.
 

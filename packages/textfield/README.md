@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-textfield` components are text boxes that allow users to input custom text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.
 
@@ -24,9 +24,11 @@ When looking to leverage the `Textfield` base class as a type and/or for extensi
 import { Textfield } from '@spectrum-web-components/textfield';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-coach-indicator>` show the connection between an object and its explanation in a touring mode — for example, the source of <sp-coachmark> in an onboarding tour.
 

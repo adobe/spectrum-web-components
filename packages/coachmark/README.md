@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-coachmark>` is a temporary message that educates users through new or unfamiliar product experiences. They can be chained into a sequence to form a tour.
 

@@ -27,7 +27,7 @@ import { HelpText } from '@spectrum-web-components/help-text';
 
 #### Sizes
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-dialog-wrapper` supplies an attribute based interface for the managed customization of an `sp-dialog` element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an `sp-underlay` element between your page content and the `sp-dialog` that opens over it.
 

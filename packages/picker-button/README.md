@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-picker-button>` is used as a sub-component of patterns like the `<sp-combobox>` (release pending) to pair a button interface with a text input. With its many custom states and alterations, it isn't likely to be leveraged directly outside of more complex UIs.
 
@@ -23,9 +23,11 @@ When looking to leverage the `PickerButton` base class as a type and/or for exte
 import { PickerButton } from '@spectrum-web-components/picker-button';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

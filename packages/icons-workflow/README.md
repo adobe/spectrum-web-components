@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 Deliver [Spectrum Workflow Icons](https://spectrum.adobe.com/page/icons/) as either:
 

@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-tooltip` allow users to get contextual help or information about specific components when hovering or focusing on them.
 
