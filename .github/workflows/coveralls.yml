@@ -1,0 +1,37 @@
+name: Code coverage
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    code-coverage-report:
+        name: Generate and upload coverage report
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node 18
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '18'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Install Playwright
+              run: yarn playwright install
+
+            - name: Run unit tests with coverage
+              run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
+              continue-on-error: true
+
+            - name: Upload coverage to Coveralls
+              uses: coverallsapp/github-action@v2
