@@ -154,6 +154,7 @@ jobs:
             - store_artifacts:
                   path: coverage
             - coveralls/upload:
+                  when: always
                   verbose: true
 
     test-chromium-memory:
