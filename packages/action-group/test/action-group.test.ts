@@ -53,6 +53,7 @@ import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -120,10 +121,6 @@ async function multipleSelectedActionGroup(
 }
 
 describe('ActionGroup', () => {
-    const isWebKit =
-        /AppleWebKit/.test(window.navigator.userAgent) &&
-        !/Chrome/.test(window.navigator.userAgent);
-
     it('loads empty action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group></sp-action-group>
@@ -308,11 +305,11 @@ describe('ActionGroup', () => {
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
         await closed;
 
-        if (!isWebKit) {
+        if (!isWebKit()) {
             sendMouse({
                 steps: [
                     {
-                        position: [110, 110],
+                        position: [0, 0],
                         type: 'click',
                     },
                 ],

@@ -22,12 +22,9 @@ import { Grid } from '@spectrum-web-components/grid';
 import { Default } from '../stories/grid.stories.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 describe('Grid', () => {
-    const isWebKit =
-        /AppleWebKit/.test(window.navigator.userAgent) &&
-        !/Chrome/.test(window.navigator.userAgent);
-
     testForLitDevWarnings(
         async () =>
             await fixture<HTMLDivElement>(html`
@@ -59,10 +56,10 @@ describe('Grid', () => {
         await nextFrame();
         await nextFrame();
 
-        if (!isWebKit) {
+        if (!isWebKit()) {
             sendMouse({
                 type: 'click',
-                position: [10, 10],
+                position: [0, 0],
             });
         }
 
