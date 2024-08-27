@@ -41,7 +41,7 @@ import {
     Theme,
 } from '@spectrum-web-components/theme';
 import './types.js';
-import { type Locale, locales } from './locales.js';
+import { type Locale, Locales } from './locales.js';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -239,6 +239,7 @@ export class StoryDecorator extends SpectrumElement {
                     reduceMotion =
                     window.__swc_hack_knobs__.defaultReduceMotion =
                         checked as boolean;
+                break;
             case 'locale':
                 this.lang = window.__swc_hack_knobs__.defaultLocale =
                     value as Locale;
@@ -375,7 +376,7 @@ export class StoryDecorator extends SpectrumElement {
 
     private get localeControl(): TemplateResult {
         const renderLocaleOption = (locale: Locale): TemplateResult => html`
-            <sp-menu-item value=${locale}>${locale}</sp-menu-item>
+            <sp-menu-item value=${locale}>${Locales[locale]}</sp-menu-item>
         `;
 
         return html`
@@ -390,7 +391,7 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.lang}
                 @change=${this.updateTheme}
             >
-                ${locales.map(renderLocaleOption)}
+                ${(Object.keys(Locales) as Locale[]).map(renderLocaleOption)}
             </sp-picker>
         `;
     }
