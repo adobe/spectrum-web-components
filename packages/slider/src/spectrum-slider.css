@@ -63,37 +63,69 @@ governing permissions and limitations under the License.
 }
 
 :host {
-  --spectrum-slider-cjk-line-height: var(--spectrum-cjk-line-height-100);
-  --spectrum-slider-min-size: var(--spectrum-spacing-900);
-  --spectrum-slider-track-corner-radius: var(--spectrum-corner-radius-75);
-  --spectrum-slider-label-margin-start: var(--spectrum-spacing-300);
-  --spectrum-slider-handle-border-width: var(--spectrum-border-width-200);
-  --spectrum-slider-handle-margin-left: calc(var(--spectrum-slider-handle-size) / -2);
-  --spectrum-slider-controls-margin: calc(var(--spectrum-slider-handle-size) / 2);
-  --spectrum-slider-track-margin-offset: calc(var(--spectrum-slider-controls-margin) * -1);
-  --spectrum-slider-track-middle-handleoffset: calc(var(--spectrum-slider-handle-gap)  + var(--spectrum-slider-handle-size) / 2);
-  --spectrum-slider-input-top-size: calc(var(--spectrum-slider-handle-size) / -2 / 4);
-  --spectrum-slider-track-fill-thickness: var(--spectrum-slider-track-thickness);
-  --spectrum-slider-tick-mark-width: var(--spectrum-border-width-200);
-  --spectrum-slider-tick-mark-border-radius: 2px;
-  --spectrum-slider-tick-handle-background-color: var(--spectrum-gray-100);
-  --spectrum-slider-track-color-disabled: var(--spectrum-disabled-background-color);
-  --spectrum-slider-track-fill-color-disabled: var(--spectrum-disabled-background-color);
-  --spectrum-slider-handle-border-color-disabled: var(--spectrum-disabled-border-color);
-  --spectrum-slider-label-text-color: var(--spectrum-neutral-content-color-default);
-  --spectrum-slider-tick-label-color: var(--spectrum-neutral-content-color-default);
-  --spectrum-slider-label-text-color-disabled: var(--spectrum-disabled-content-color);
-  --spectrum-slider-tick-mark-color-disabled: var(--spectrum-disabled-background-color);
-  --spectrum-slider-ramp-handle-border-color-active: var(--spectrum-gray-100);
-  --spectrum-slider-input-left: calc(var(--spectrum-slider-handle-margin-left) / 4);
-  --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
-  --spectrum-slider-range-track-reset: 0;
-  z-index: 0;
-  min-inline-size: var(--mod-slider-min-size, var(--spectrum-slider-min-size));
-  -webkit-user-select: none;
-  user-select: none;
-  display: block;
-  position: relative;
+    --spectrum-slider-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-slider-min-size: var(--spectrum-spacing-900);
+    --spectrum-slider-track-corner-radius: var(--spectrum-corner-radius-75);
+    --spectrum-slider-label-margin-start: var(--spectrum-spacing-300);
+    --spectrum-slider-handle-border-width: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-margin-left: calc(
+        var(--spectrum-slider-handle-size) / -2
+    );
+    --spectrum-slider-controls-margin: calc(
+        var(--spectrum-slider-handle-size) / 2
+    );
+    --spectrum-slider-track-margin-offset: calc(
+        var(--spectrum-slider-controls-margin) * -1
+    );
+    --spectrum-slider-track-middle-handleoffset: calc(
+        var(--spectrum-slider-handle-gap) + var(--spectrum-slider-handle-size) /
+            2
+    );
+    --spectrum-slider-input-top-size: calc(
+        var(--spectrum-slider-handle-size) / -2 / 4
+    );
+    --spectrum-slider-track-fill-thickness: var(
+        --spectrum-slider-track-thickness
+    );
+    --spectrum-slider-tick-mark-width: var(--spectrum-border-width-200);
+    --spectrum-slider-tick-mark-border-radius: 2px;
+    --spectrum-slider-tick-handle-background-color: var(--spectrum-gray-100);
+    --spectrum-slider-track-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-slider-track-fill-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-slider-handle-border-color-disabled: var(
+        --spectrum-disabled-border-color
+    );
+    --spectrum-slider-label-text-color: var(
+        --spectrum-neutral-content-color-default
+    );
+    --spectrum-slider-tick-label-color: var(
+        --spectrum-neutral-content-color-default
+    );
+    --spectrum-slider-label-text-color-disabled: var(
+        --spectrum-disabled-content-color
+    );
+    --spectrum-slider-tick-mark-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-slider-ramp-handle-border-color-active: var(--spectrum-gray-100);
+    --spectrum-slider-input-left: calc(
+        var(--spectrum-slider-handle-margin-left) / 4
+    );
+    --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
+    --spectrum-slider-range-track-reset: 0;
+    z-index: 0;
+    min-inline-size: var(
+        --mod-slider-min-size,
+        var(--spectrum-slider-min-size)
+    );
+    -webkit-user-select: none;
+    user-select: none;
+    display: block;
+    position: relative;
 }
 
 .spectrum-Slider--sideLabel {
@@ -270,20 +302,45 @@ governing permissions and limitations under the License.
 }
 
 .handle:before {
-  content: "";
-  transition: box-shadow var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-out, inline-size var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-out, block-size var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-out;
-  inline-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
-  block-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
-  border-radius: 100%;
-  display: block;
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-start: 50%;
-  transform: translate(-50%, -50%);
+    content: '';
+    transition:
+        box-shadow
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out,
+        inline-size
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out,
+        block-size
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out;
+    inline-size: var(
+        --mod-slider-handle-size,
+        var(--spectrum-slider-handle-size)
+    );
+    block-size: var(
+        --mod-slider-handle-size,
+        var(--spectrum-slider-handle-size)
+    );
+    border-radius: 100%;
+    display: block;
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
 }
 
-:host:dir(rtl) .handle:before, :host([dir="rtl"]) .handle:before {
-  transform: translate(50%, -50%);
+:host:dir(rtl) .handle:before,
+:host([dir='rtl']) .handle:before {
+    transform: translate(50%, -50%);
 }
 
 .handle.handle-highlight:before {
@@ -383,12 +440,18 @@ governing permissions and limitations under the License.
 }
 
 .tick .tickLabel {
-  font-size: var(--mod-font-size-75, var(--spectrum-font-size-75));
-  line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
-  color: var(--highcontrast-slider-label-text-color, var(--mod-slider-tick-label-color, var(--spectrum-slider-tick-label-color)));
-  justify-content: center;
-  align-items: center;
-  display: flex;
+    font-size: var(--mod-font-size-75, var(--spectrum-font-size-75));
+    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
+    color: var(
+        --highcontrast-slider-label-text-color,
+        var(
+            --mod-slider-tick-label-color,
+            var(--spectrum-slider-tick-label-color)
+        )
+    );
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .tick:first-of-type .tickLabel, .tick:last-of-type .tickLabel {
@@ -476,20 +539,46 @@ governing permissions and limitations under the License.
 }
 
 .handle.dragging {
-  border-color: var(--highcontrast-slider-handle-border-color-down, var(--mod-slider-handle-border-color-down, var(--spectrum-slider-handle-border-color-down)));
-  background: var(--highcontrast-slider-handle-background-color, var(--mod-slider-handle-background-color, var(--spectrum-slider-handle-background-color)));
+    border-color: var(
+        --highcontrast-slider-handle-border-color-down,
+        var(
+            --mod-slider-handle-border-color-down,
+            var(--spectrum-slider-handle-border-color-down)
+        )
+    );
+    background: var(
+        --highcontrast-slider-handle-background-color,
+        var(
+            --mod-slider-handle-background-color,
+            var(--spectrum-slider-handle-background-color)
+        )
+    );
 }
 
-:host([variant="range"]) .track:not(:first-of-type, :last-of-type):before {
-  background: var(--highcontrast-slider-filled-track-fill-color, var(--mod-slider-track-fill-color, var(--spectrum-slider-track-fill-color)));
+:host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
+    background: var(
+        --highcontrast-slider-filled-track-fill-color,
+        var(
+            --mod-slider-track-fill-color,
+            var(--spectrum-slider-track-fill-color)
+        )
+    );
 }
 
-:host([disabled]), :host([disabled]) #controls {
-  cursor: default;
+:host([disabled]),
+:host([disabled]) #controls {
+    cursor: default;
 }
 
-:host([disabled]) #label-container, :host([disabled]) .tickLabel {
-  color: var(--highcontrast-slider-label-text-color-disabled, var(--mod-slider-label-text-color-disabled, var(--spectrum-slider-label-text-color-disabled)));
+:host([disabled]) #label-container,
+:host([disabled]) .tickLabel {
+    color: var(
+        --highcontrast-slider-label-text-color-disabled,
+        var(
+            --mod-slider-label-text-color-disabled,
+            var(--spectrum-slider-label-text-color-disabled)
+        )
+    );
 }
 
 :host([disabled]) .handle {
@@ -528,59 +617,97 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled]) .tick:after {
-  background-color: var(--highcontrast-slider-tick-mark-color-disabled, var(--mod-slider-tick-mark-color-disabled, var(--spectrum-slider-tick-mark-color-disabled)));
+    background-color: var(
+        --highcontrast-slider-tick-mark-color-disabled,
+        var(
+            --mod-slider-tick-mark-color-disabled,
+            var(--spectrum-slider-tick-mark-color-disabled)
+        )
+    );
 }
 
-:host([disabled][variant="range"]) .track:not(:first-of-type, :last-of-type):before {
-  background: var(--highcontrast-slider-track-color-disabled, var(--mod-slider-track-color-disabled, var(--spectrum-slider-track-color-disabled)));
+:host([disabled][variant='range'])
+    .track:not(:first-of-type, :last-of-type):before {
+    background: var(
+        --highcontrast-slider-track-color-disabled,
+        var(
+            --mod-slider-track-color-disabled,
+            var(--spectrum-slider-track-color-disabled)
+        )
+    );
 }
 
 @media (forced-colors: active) {
-  :host {
-    --highcontrast-slider-track-color: ButtonText;
-    --highcontrast-slider-track-color-disabled: GrayText;
-    --highcontrast-slider-track-color-static: ButtonText;
-    --highcontrast-slider-track-fill-color: ButtonText;
-    --highcontrast-slider-track-fill-color-disabled: GrayText;
-    --highcontrast-slider-filled-track-fill-color: Highlight;
-    --highcontrast-slider-ramp-track-color: ButtonText;
-    --highcontrast-slider-ramp-track-color-disabled: GrayText;
-    --highcontrast-slider-tick-mark-color: ButtonText;
-    --highcontrast-slider-tick-mark-color-disabled: GrayText;
-    --highcontrast-slider-handle-border-color: ButtonText;
-    --highcontrast-slider-handle-border-color-hover: Highlight;
-    --highcontrast-slider-handle-border-color-down: Highlight;
-    --highcontrast-slider-handle-border-color-key-focus: Highlight;
-    --highcontrast-slider-handle-border-color-disabled: GrayText;
-    --highcontrast-slider-handle-focus-ring-color-key-focus: CanvasText;
-    --highcontrast-slider-handle-background-color: ButtonFace;
-    --highcontrast-slider-handle-background-color-disabled: GrayText;
-    --highcontrast-slider-handle-disabled-background-color: GrayText;
-    --highcontrast-slider-ramp-handle-border-color-active: ButtonFace;
-    --highcontrast-slider-ramp-handle-background-color: ButtonFace;
-    --highcontrast-slider-label-text-color: CanvasText;
-    --highcontrast-slider-label-text-color-disabled: GrayText;
-  }
+    :host {
+        --highcontrast-slider-track-color: ButtonText;
+        --highcontrast-slider-track-color-disabled: GrayText;
+        --highcontrast-slider-track-color-static: ButtonText;
+        --highcontrast-slider-track-fill-color: ButtonText;
+        --highcontrast-slider-track-fill-color-disabled: GrayText;
+        --highcontrast-slider-filled-track-fill-color: Highlight;
+        --highcontrast-slider-ramp-track-color: ButtonText;
+        --highcontrast-slider-ramp-track-color-disabled: GrayText;
+        --highcontrast-slider-tick-mark-color: ButtonText;
+        --highcontrast-slider-tick-mark-color-disabled: GrayText;
+        --highcontrast-slider-handle-border-color: ButtonText;
+        --highcontrast-slider-handle-border-color-hover: Highlight;
+        --highcontrast-slider-handle-border-color-down: Highlight;
+        --highcontrast-slider-handle-border-color-key-focus: Highlight;
+        --highcontrast-slider-handle-border-color-disabled: GrayText;
+        --highcontrast-slider-handle-focus-ring-color-key-focus: CanvasText;
+        --highcontrast-slider-handle-background-color: ButtonFace;
+        --highcontrast-slider-handle-background-color-disabled: GrayText;
+        --highcontrast-slider-handle-disabled-background-color: GrayText;
+        --highcontrast-slider-ramp-handle-border-color-active: ButtonFace;
+        --highcontrast-slider-ramp-handle-background-color: ButtonFace;
+        --highcontrast-slider-label-text-color: CanvasText;
+        --highcontrast-slider-label-text-color-disabled: GrayText;
+    }
 
-  .handle.handle-highlight:before, :host([variant="ramp"]) .handle {
-    forced-color-adjust: none;
-  }
+    .handle.handle-highlight:before,
+    :host([variant='ramp']) .handle {
+        forced-color-adjust: none;
+    }
 
-  :host([focus-within]) .js-focus-within:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls, :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls.handle-highlight, :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:active, :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:focus-within, :host([focus-within]):not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range).js-focus-within #controls {
-    --highcontrast-slider-track-fill-color: Highlight;
-    --highcontrast-slider-track-color: Highlight;
-    --highcontrast-slider-handle-border-color: Highlight;
-    --highcontrast-slider-ramp-track-color: Highlight;
-    --highcontrast-slider-tick-mark-color: Highlight;
-  }
+    :host([focus-within])
+        .js-focus-within:not(
+            .is-disabled,
+            .spectrum-Slider--filled,
+            .spectrum-Slider--range
+        )
+        #controls,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        #controls.handle-highlight,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        #controls:active,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
+        #controls:focus-within,
+    :host([focus-within]):not(
+            .is-disabled,
+            .spectrum-Slider--filled,
+            .spectrum-Slider--range
+        ).js-focus-within
+        #controls {
+        --highcontrast-slider-track-fill-color: Highlight;
+        --highcontrast-slider-track-color: Highlight;
+        --highcontrast-slider-handle-border-color: Highlight;
+        --highcontrast-slider-ramp-track-color: Highlight;
+        --highcontrast-slider-tick-mark-color: Highlight;
+    }
 
-  @media (hover: hover) {
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:hover {
-      --highcontrast-slider-track-fill-color: Highlight;
-      --highcontrast-slider-track-color: Highlight;
-      --highcontrast-slider-handle-border-color: Highlight;
-      --highcontrast-slider-ramp-track-color: Highlight;
-      --highcontrast-slider-tick-mark-color: Highlight;
+    @media (hover: hover) {
+        :host:not(
+                .is-disabled,
+                .spectrum-Slider--filled,
+                .spectrum-Slider--range
+            )
+            #controls:hover {
+            --highcontrast-slider-track-fill-color: Highlight;
+            --highcontrast-slider-track-color: Highlight;
+            --highcontrast-slider-handle-border-color: Highlight;
+            --highcontrast-slider-ramp-track-color: Highlight;
+            --highcontrast-slider-tick-mark-color: Highlight;
+        }
     }
   }
 
