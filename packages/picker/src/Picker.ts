@@ -314,7 +314,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly || this.pendingStateController.isPending) {
+        if (this.readonly || this.pending) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -427,14 +427,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid && !this.pendingStateController.isPending
+                ${this.invalid && !this.pending
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pendingStateController.isPending, () => {
+                ${when(this.pending, () => {
                     return this.pendingStateController.renderPendingState();
                 })}
                 <sp-icon-chevron100
@@ -831,11 +831,7 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-        if (
-            !code.startsWith('Arrow') ||
-            this.readonly ||
-            this.pendingStateController.isPending
-        ) {
+        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
             return;
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {
