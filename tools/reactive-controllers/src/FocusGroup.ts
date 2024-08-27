@@ -375,6 +375,7 @@ export class FocusGroupController<T extends HTMLElement>
         this.host.removeEventListener('focusin', this.handleFocusin);
         this.host.removeEventListener('focusout', this.handleFocusout);
         this.host.removeEventListener('keydown', this.handleKeydown);
+        this.host.removeEventListener('click', this.handleClick);
     }
 
     hostConnected(): void {
