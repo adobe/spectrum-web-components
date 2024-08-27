@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -156,11 +156,9 @@ describe('Dialog', () => {
 
         customElements.define('hero-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <hero-dialog></hero-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <hero-dialog></hero-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#hero-container');
         expect(container).to.not.be.null;
@@ -176,11 +174,9 @@ describe('Dialog', () => {
 
         customElements.define('heading-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <heading-dialog></heading-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <heading-dialog></heading-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#heading-container');
         expect(container).to.not.be.null;
@@ -196,11 +192,9 @@ describe('Dialog', () => {
 
         customElements.define('content-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <content-dialog></content-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <content-dialog></content-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#content-container');
         expect(container).to.not.be.null;
@@ -219,11 +213,9 @@ describe('Dialog', () => {
 
         customElements.define('footer-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <footer-dialog></footer-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <footer-dialog></footer-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#footer-container');
         expect(container).to.not.be.null;
@@ -242,11 +234,9 @@ describe('Dialog', () => {
 
         customElements.define('button-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <button-dialog></button-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <button-dialog></button-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#button-container');
         expect(container).to.not.be.null;
@@ -262,11 +252,9 @@ describe('Dialog', () => {
 
         customElements.define('dismiss-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <dismiss-dialog dismissable></dismiss-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <dismiss-dialog dismissable></dismiss-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#dismiss-container');
         expect(container).to.not.be.null;

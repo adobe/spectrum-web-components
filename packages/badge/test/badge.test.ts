@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -21,23 +21,19 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Badge', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Badge>(
-                html`
-                    <sp-badge>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            )
+            await fixture<Badge>(html`
+                <sp-badge>
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `)
     );
     it('manages `fixed` attribute', async () => {
-        const el = await fixture<Badge>(
-            html`
-                <sp-badge>Label only</sp-badge>
-            `
-        );
+        const el = await fixture<Badge>(html`
+            <sp-badge>Label only</sp-badge>
+        `);
 
         expect(el.fixed).to.be.undefined;
 
@@ -76,16 +72,14 @@ describe('Badge', () => {
         });
 
         it('loads default badge accessibly', async () => {
-            const el = await fixture<Badge>(
-                html`
-                    <sp-badge>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            );
+            const el = await fixture<Badge>(html`
+                <sp-badge>
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `);
 
             await elementUpdated(el);
 
@@ -93,16 +87,14 @@ describe('Badge', () => {
             expect(consoleWarnStub.called).to.be.false;
         });
         it('warns in Dev Mode when sent an incorrect `variant`', async () => {
-            const el = await fixture<Badge>(
-                html`
-                    <sp-badge variant="other">
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            );
+            const el = await fixture<Badge>(html`
+                <sp-badge variant="other">
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `);
 
             await elementUpdated(el);
 
@@ -121,16 +113,14 @@ describe('Badge', () => {
             });
         });
         it('warns in Dev Mode when sent a deprecated value for `fixed`', async () => {
-            const el = await fixture<Badge>(
-                html`
-                    <sp-badge fixed="top">
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            );
+            const el = await fixture<Badge>(html`
+                <sp-badge fixed="top">
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `);
 
             await elementUpdated(el);
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,19 +17,17 @@ describe('popover', () => {
     let popover!: Popover;
 
     beforeEach(async () => {
-        popover = await fixture<Popover>(
-            html`
-                <sp-popover variant="dialog" placement="top" open>
-                    <div id="title">Popover Title</div>
-                    <div id="content">
-                        Cupcake ipsum dolor sit amet jelly beans. Chocolate
-                        jelly caramels. Icing soufflé chupa chups donut
-                        cheesecake. Jelly-o chocolate cake sweet roll cake
-                        danish candy biscuit halvah
-                    </div>
-                </sp-popover>
-            `
-        );
+        popover = await fixture<Popover>(html`
+            <sp-popover variant="dialog" placement="top" open>
+                <div id="title">Popover Title</div>
+                <div id="content">
+                    Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly
+                    caramels. Icing soufflé chupa chups donut cheesecake.
+                    Jelly-o chocolate cake sweet roll cake danish candy biscuit
+                    halvah
+                </div>
+            </sp-popover>
+        `);
         await elementUpdated(popover);
     });
 
@@ -53,19 +51,17 @@ describe('popover', () => {
     });
 
     it('surfaces tip element', async () => {
-        const el = await fixture<Popover>(
-            html`
-                <sp-popover variant="dialog" placement="top" tip open>
-                    <div id="title">Popover Title</div>
-                    <div id="content">
-                        Cupcake ipsum dolor sit amet jelly beans. Chocolate
-                        jelly caramels. Icing soufflé chupa chups donut
-                        cheesecake. Jelly-o chocolate cake sweet roll cake
-                        danish candy biscuit halvah
-                    </div>
-                </sp-popover>
-            `
-        );
+        const el = await fixture<Popover>(html`
+            <sp-popover variant="dialog" placement="top" tip open>
+                <div id="title">Popover Title</div>
+                <div id="content">
+                    Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly
+                    caramels. Icing soufflé chupa chups donut cheesecake.
+                    Jelly-o chocolate cake sweet roll cake danish candy biscuit
+                    halvah
+                </div>
+            </sp-popover>
+        `);
 
         await elementUpdated(el);
 

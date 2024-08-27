@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -28,33 +28,27 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Tray', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Tray>(
-                html`
-                    <sp-tray></sp-tray>
-                `
-            )
+            await fixture<Tray>(html`
+                <sp-tray></sp-tray>
+            `)
     );
     it('loads default tray accessibly', async () => {
-        const el = await fixture<Tray>(
-            html`
-                <sp-tray></sp-tray>
-            `
-        );
+        const el = await fixture<Tray>(html`
+            <sp-tray></sp-tray>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('focuses focusable light DOM element', async () => {
-        const el = await fixture<Tray>(
-            html`
-                <sp-tray open>
-                    <div>
-                        <a href="#">Test element</a>
-                    </div>
-                </sp-tray>
-            `
-        );
+        const el = await fixture<Tray>(html`
+            <sp-tray open>
+                <div>
+                    <a href="#">Test element</a>
+                </div>
+            </sp-tray>
+        `);
         const anchor = el.querySelector('a');
         await elementUpdated(el);
 
@@ -64,13 +58,11 @@ describe('Tray', () => {
         expect(document.activeElement).to.equal(anchor);
     });
     it('focuses "tray"', async () => {
-        const el = await fixture<Tray>(
-            html`
-                <sp-tray open>
-                    <div></div>
-                </sp-tray>
-            `
-        );
+        const el = await fixture<Tray>(html`
+            <sp-tray open>
+                <div></div>
+            </sp-tray>
+        `);
         await elementUpdated(el);
 
         el.focus();
@@ -82,13 +74,11 @@ describe('Tray', () => {
         );
     });
     it('closes', async () => {
-        const test = await fixture<HTMLElement>(
-            html`
-                <sp-theme theme="classic" scale="medium" color="dark">
-                    <sp-tray></sp-tray>
-                </sp-theme>
-            `
-        );
+        const test = await fixture<HTMLElement>(html`
+            <sp-theme theme="classic" scale="medium" color="dark">
+                <sp-tray></sp-tray>
+            </sp-theme>
+        `);
 
         const el = test.querySelector('sp-tray') as Tray;
         // Ensure closed styles are set before opening so that

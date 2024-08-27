@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,32 +16,30 @@ describe('banner', () => {
     let testDiv!: HTMLDivElement;
 
     beforeEach(async () => {
-        testDiv = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-banner type="info">
-                        <div slot="header">Info Text</div>
-                        <div slot="content">Info Content</div>
-                    </sp-banner>
-                    <sp-banner type="warning">
-                        <div slot="header">Warning Text</div>
-                        <div slot="content">Warning Content</div>
-                    </sp-banner>
-                    <sp-banner type="error">
-                        <div slot="header">Error Text</div>
-                        <div slot="content">Error Content</div>
-                    </sp-banner>
-                    <sp-banner id="default-info">
-                        <div slot="header">Header Text</div>
-                        <div slot="content">Content</div>
-                    </sp-banner>
-                    <sp-banner corner>
-                        <div slot="header">Corner Text</div>
-                        <div slot="content">Corner Content</div>
-                    </sp-banner>
-                </div>
-            `
-        );
+        testDiv = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-banner type="info">
+                    <div slot="header">Info Text</div>
+                    <div slot="content">Info Content</div>
+                </sp-banner>
+                <sp-banner type="warning">
+                    <div slot="header">Warning Text</div>
+                    <div slot="content">Warning Content</div>
+                </sp-banner>
+                <sp-banner type="error">
+                    <div slot="header">Error Text</div>
+                    <div slot="content">Error Content</div>
+                </sp-banner>
+                <sp-banner id="default-info">
+                    <div slot="header">Header Text</div>
+                    <div slot="content">Content</div>
+                </sp-banner>
+                <sp-banner corner>
+                    <div slot="header">Corner Text</div>
+                    <div slot="content">Corner Content</div>
+                </sp-banner>
+            </div>
+        `);
     });
 
     it('loads accessibly', async () => {

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -36,11 +36,9 @@ describe('ActionButton', () => {
             )
     );
     it('loads default', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button>Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -48,11 +46,9 @@ describe('ActionButton', () => {
         await expect(el).to.be.accessible();
     });
     it('gardens "value" as a property', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button>Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         expect(el.hasAttribute('value')).to.be.false;
@@ -64,11 +60,9 @@ describe('ActionButton', () => {
         expect(el.hasAttribute('value')).to.be.false;
     });
     it('loads [hold-affordance]', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button hold-affordance>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button hold-affordance>Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -76,11 +70,9 @@ describe('ActionButton', () => {
         await expect(el).to.be.accessible();
     });
     it('manages a `tabindex`', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button>Button</sp-action-button>
+        `);
 
         expect(el.tabIndex).to.equal(0);
         expect(el.disabled).to.be.false;
@@ -104,11 +96,9 @@ describe('ActionButton', () => {
         expect(el.disabled).to.be.false;
     });
     it('manages a `size` attribute', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button size="xl">Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button size="xl">Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         expect(el.size).to.equal('xl');
@@ -119,11 +109,9 @@ describe('ActionButton', () => {
         expect(el.hasAttribute('size')).to.be.false;
     });
     it('does not apply a default `size` attribute', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button>Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         expect(el.size).to.equal('m');
@@ -131,16 +119,14 @@ describe('ActionButton', () => {
     });
     it('dispatches `longpress` events when [hold-affordance]', async () => {
         const longpressSpy = spy();
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button
-                    hold-affordance
-                    @longpress=${() => longpressSpy()}
-                >
-                    Button
-                </sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button
+                hold-affordance
+                @longpress=${() => longpressSpy()}
+            >
+                Button
+            </sp-action-button>
+        `);
 
         await elementUpdated(el);
 
@@ -162,16 +148,14 @@ describe('ActionButton', () => {
     });
     it('does not dispatch `longpress` events when "right click"ed', async () => {
         const longpressSpy = spy();
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button
-                    hold-affordance
-                    @longpress=${() => longpressSpy()}
-                >
-                    Button
-                </sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button
+                hold-affordance
+                @longpress=${() => longpressSpy()}
+            >
+                Button
+            </sp-action-button>
+        `);
 
         await elementUpdated(el);
         expect(longpressSpy.callCount).to.equal(0);
@@ -182,11 +166,9 @@ describe('ActionButton', () => {
         expect(longpressSpy.callCount).to.equal(0);
     });
     it(':not([toggles])', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button>Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         const button = el.focusElement;
@@ -203,11 +185,9 @@ describe('ActionButton', () => {
         expect(button.hasAttribute('aria-pressed')).to.be.false;
     });
     it('responds to [selected]', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button>Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         const button = el.focusElement;
@@ -231,11 +211,9 @@ describe('ActionButton', () => {
         expect(button.hasAttribute('aria-pressed')).to.be.false;
     });
     it('toggles', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button toggles>Button</sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button toggles>Button</sp-action-button>
+        `);
 
         await elementUpdated(el);
         const button = el.focusElement;
@@ -263,17 +241,15 @@ describe('ActionButton', () => {
         expect(button.getAttribute('aria-pressed')).to.equal('true');
     });
     it('toggles [aria-haspopup][aria-expanded]', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-button
-                    toggles
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                >
-                    Button
-                </sp-action-button>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button
+                toggles
+                aria-haspopup="true"
+                aria-expanded="false"
+            >
+                Button
+            </sp-action-button>
+        `);
 
         await elementUpdated(el);
         const button = el.focusElement;
@@ -321,11 +297,9 @@ describe('ActionButton', () => {
         });
 
         it('warns that `variant` is deprecated', async () => {
-            const el = await fixture<ActionButton>(
-                html`
-                    <sp-action-button variant="white">Button</sp-action-button>
-                `
-            );
+            const el = await fixture<ActionButton>(html`
+                <sp-action-button variant="white">Button</sp-action-button>
+            `);
 
             await elementUpdated(el);
 

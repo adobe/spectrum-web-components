@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -46,7 +46,7 @@ export const BADGE_VARIANTS = [
     'cyan',
     'blue',
 ] as const;
-export type BadgeVariant = typeof BADGE_VARIANTS[number];
+export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 export const FIXED_VALUES_DEPRECATED = ['top', 'bottom', 'left', 'right'];
 export const FIXED_VALUES = [
     'inline-start',
@@ -55,8 +55,8 @@ export const FIXED_VALUES = [
     'block-end',
 ] as const;
 export type FixedValues =
-    | typeof FIXED_VALUES[number]
-    | typeof FIXED_VALUES_DEPRECATED[number];
+    | (typeof FIXED_VALUES)[number]
+    | (typeof FIXED_VALUES_DEPRECATED)[number];
 
 /**
  * @element sp-badge
