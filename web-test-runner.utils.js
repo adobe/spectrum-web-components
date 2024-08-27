@@ -193,7 +193,7 @@ themeVariants.forEach((themeVariant) => {
                     name: `vrt-${themeVariant}-${color}-${scale}-${dir}`,
                     files: '(packages|tools)/*/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
-                    browsers: [chromium],
+                    browsers: [chromium, webkitMobile],
                 });
             });
         });
@@ -211,7 +211,7 @@ vrtGroups = [
                 testRunnerHtml: vrtHTML({
                     reduceMotion: true,
                 }),
-                browsers: [chromium],
+                browsers: [chromium, webkitMobile],
             });
             acc.push({
                 name: `vrt-${pkg}-single`,
@@ -223,7 +223,7 @@ vrtGroups = [
                     dir: 'ltr',
                     reduceMotion: true,
                 }),
-                browsers: [chromium],
+                browsers: [chromium, webkitMobile],
             });
         }
         return acc;
@@ -239,7 +239,7 @@ vrtGroups = [
             hcm: true,
             reduceMotion: true,
         }),
-        browsers: [chromium],
+        browsers: [chromium, webkitMobile],
     },
 ];
 
