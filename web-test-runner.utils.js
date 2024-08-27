@@ -110,6 +110,15 @@ export const webkit = playwrightLauncher({
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
+        }),
+});
+
+export const webkitMobile = playwrightLauncher({
+    product: 'webkit',
+    concurrency: 4,
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
             ...devices['iPhone X'],
         }),
 });
