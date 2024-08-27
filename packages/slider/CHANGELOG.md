@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+### Bug Fixes
+
+-   **slider:** bump css version to increase slider z-index ([#4682](https://github.com/adobe/spectrum-web-components/issues/4682)) ([04bba95](https://github.com/adobe/spectrum-web-components/commit/04bba95bcc0946bf8f7172830f2127ed41a89d8c))
+
 # [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
 
 **Note:** Version bump only for package @spectrum-web-components/slider
