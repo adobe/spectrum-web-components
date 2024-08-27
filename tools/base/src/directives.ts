@@ -20,3 +20,5 @@ export { live } from 'lit/directives/live.js';
 export { when } from 'lit/directives/when.js';
 export { join } from 'lit/directives/join.js';
 export { unsafeHTML } from 'lit/directives/unsafe-html.js';
+export type { Ref } from 'lit/directives/ref.js';
+export { createRef, ref } from 'lit/directives/ref.js';
