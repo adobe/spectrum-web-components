@@ -113,6 +113,16 @@ export const webkit = playwrightLauncher({
         }),
 });
 
+export const webkitMobile = playwrightLauncher({
+    product: 'webkit',
+    concurrency: 4,
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            ...devices['iPhone X'],
+        }),
+});
+
 const tools = fs
     .readdirSync('tools')
     .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
