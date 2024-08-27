@@ -47,47 +47,19 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    box-sizing: border-box;
-    min-block-size: var(
-        --mod-toast-block-size,
-        var(--spectrum-toast-block-size)
-    );
-    max-inline-size: var(
-        --mod-toast-max-inline-size,
-        var(--spectrum-toast-max-inline-size)
-    );
-    border-radius: var(
-        --mod-toast-corner-radius,
-        var(--spectrum-toast-corner-radius)
-    );
-    font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
-    font-weight: var(
-        --mod-toast-font-weight,
-        var(--spectrum-toast-font-weight)
-    );
-    -webkit-font-smoothing: antialiased;
-    background-color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
-    );
-    color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
-    );
-    overflow-wrap: anywhere;
-    flex-direction: row;
-    align-items: stretch;
-    padding-inline-start: var(
-        --mod-toast-spacing-start-edge-to-text-and-icon,
-        var(--spectrum-toast-spacing-start-edge-to-text-and-icon)
-    );
-    display: inline-flex;
+  box-sizing: border-box;
+  min-block-size: var(--mod-toast-block-size, var(--spectrum-toast-block-size));
+  max-inline-size: var(--mod-toast-max-inline-size, var(--spectrum-toast-max-inline-size));
+  border-radius: var(--mod-toast-corner-radius, var(--spectrum-toast-corner-radius));
+  font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
+  font-weight: var(--mod-toast-font-weight, var(--spectrum-toast-font-weight));
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--highcontrast-toast-background-color-default, var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default)));
+  color: var(--highcontrast-toast-background-color-default, var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default)));
+  flex-direction: row;
+  align-items: stretch;
+  padding-inline-start: var(--mod-toast-spacing-start-edge-to-text-and-icon, var(--spectrum-toast-spacing-start-edge-to-text-and-icon));
+  display: inline-flex;
 }
 
 :host([variant="negative"]) {
