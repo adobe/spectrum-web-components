@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CalendarDate,
     CalendarDateTime,
     DateFormatter,
     endOfMonth,
@@ -19,6 +20,8 @@ import {
     getMinimumMonthInYear,
     now,
     toCalendarDateTime,
+    toZoned,
+    ZonedDateTime,
 } from '@internationalized/date';
 import { NumberParser } from '@internationalized/number';
 import {
@@ -48,21 +51,23 @@ import {
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { Calendar, type DateValue } from '@spectrum-web-components/calendar';
 
 import styles from './date-time-picker.css.js';
 import {
     AM,
     dateSegmentTypes,
+    DateTimePickerValue,
     EditableSegmentType,
     maxHourAM,
     maxHourPM,
     minHourAM,
     minHourPM,
     PM,
+    Precision,
     Segment,
     SegmentDetails,
     SegmentValueAndLimits,
-    TimeGranularity,
     timeSegmentTypes,
 } from './types.js';
 
@@ -103,22 +108,35 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Defines whether a date/time should be displayed in the field
+     * The selected date of the component. If defined, this also indicates where the calendar opens.
+     * If not, the calendar opens at the current month, and placeholder values are shown.
      */
     @property({ attribute: false })
-    selectedDateTime?: Date;
+    value?: DateTimePickerValue;
+
+    /**
+     * The minimum valid date a user can select
+     */
+    @property({ attribute: false })
+    min?: DateValue;
+
+    /**
+     * The maximum valid date a user can select
+     */
+    @property({ attribute: false })
+    max?: DateValue;
+
+    /**
+     * The granularity used to display the segments of the component's value
+     */
+    @property()
+    precision: Precision = 'minute';
 
     /**
      * Whether the `value` held by the form control is invalid.
      */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
-
-    /**
-     * Whether the `value` held by the form control is valid.
-     */
-    @property({ type: Boolean, reflect: true })
-    public valid = false;
 
     /**
      * Whether a user can interact with the value of the form control
@@ -138,65 +156,33 @@ export class DateTimePicker extends ManageHelpText(
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    protected languageResolver = new LanguageResolutionController(this);
-    protected timeZone = getLocalTimeZone();
-    protected formatter!: DateFormatter;
-    protected numberParser!: NumberParser;
+    private languageResolver = new LanguageResolutionController(this);
+    private get locale(): string {
+        return this.languageResolver.language;
+    }
 
-    @query('.editable-segment')
-    firstEditableSegment!: HTMLDivElement;
-
-    /**
-     * Indicates which segments that are part of time should be used
-     */
-    @property()
-    timeGranularity: TimeGranularity = 'minute';
-
-    @state()
-    protected currentDateTime = toCalendarDateTime(now(this.timeZone));
-
-    @state()
-    protected newDateTime?: CalendarDateTime;
+    private timeZone = getLocalTimeZone();
+    private formatter!: DateFormatter;
+    private numberParser!: NumberParser;
 
     @state()
     protected segments: Segment[] = [];
 
-    /**
-     * Indicates whether the picker should be displayed or not
-     */
-    @property({ type: Boolean, reflect: true })
+    @state()
     public open = false;
 
-    @state()
-    includeDate = true;
-
-    @state()
-    includeTime = true;
-
-    @state()
-    private pickerDate?: Date;
+    @query('.editable-segment')
+    firstEditableSegment!: HTMLDivElement;
 
     @query('.input')
     private input!: HTMLElement;
 
-    /**
-     * The `TextfieldBase` class requires this getter to return an element of type `HTMLInputElement` or
-     * `HTMLTextAreaElement`, but since the segments are DIVs with the `contenteditable` attribute, we need to cast as
-     * an input only to be able to use autofocus.
-     *
-     * Note that `focusElement` is only used for that, so converting as an input will have no side effect as all
-     * functions and attributes used exist in both types, `HTMLInputElement` and `HTMLDivElement`.
-     */
-    public override get focusElement() {
+    public override get focusElement(): HTMLElement {
         return this.firstEditableSegment;
     }
 
     public get is12HourClock(): boolean {
         return Boolean(this.formatter.resolvedOptions().hour12);
-    }
-
-    protected get locale(): string {
-        return this.languageResolver.language;
     }
 
     protected get daySegment(): Segment | undefined {
@@ -227,31 +213,78 @@ export class DateTimePicker extends ManageHelpText(
         return this.segment('dayPeriod');
     }
 
-    protected override willUpdate(changedProperties: PropertyValues): void {
-        /**
-         * Segments should be created only when some properties are changed, so we control when this should happen and
-         * not every time the `willUpdate()` method is executed
-         */
-        let createSegments = false;
+    private get includesTime(): boolean {
+        const timePrecisions = ['hour', 'minute', 'second'] as Precision[];
+        return Boolean(
+            this.precision && timePrecisions.includes(this.precision)
+        );
+    }
 
+    private isZonedDateTime(date: DateValue): date is ZonedDateTime {
+        return date instanceof ZonedDateTime;
+    }
+
+    private isCalendarDateTime(date: DateValue): date is CalendarDateTime {
+        return date instanceof CalendarDateTime;
+    }
+
+    private isCalendarDate(date: DateValue): date is CalendarDate {
+        return date instanceof CalendarDate;
+    }
+
+    private get mostSpecificDateValue(): DateValue {
+        const dateValuesDefined = [this.value, this.min, this.max].filter(
+            (date) => date !== undefined
+        ) as DateValue[];
+
+        const zonedDateTimes = dateValuesDefined.filter(this.isZonedDateTime);
+        if (zonedDateTimes.length > 0) return zonedDateTimes[0];
+
+        const dateTimes = dateValuesDefined.filter(this.isCalendarDateTime);
+        if (dateTimes.length > 0) return dateTimes[0];
+
+        const dates = dateValuesDefined.filter(this.isCalendarDate);
+        return dates[0];
+    }
+
+    private currentZonedDateTime: ZonedDateTime = now(this.timeZone);
+
+    private convertToMostSpecificDateValue(): void {
+        const dateValue = this.mostSpecificDateValue;
+        if (this.isZonedDateTime(dateValue)) {
+            const timeZone = dateValue.timeZone;
+            this.value = this.value && toZoned(this.value, timeZone);
+            this.min = this.min && toZoned(this.min, timeZone);
+            this.max = this.max && toZoned(this.max, timeZone);
+            // TODO: check if they comply
+        } else if (this.isCalendarDateTime(dateValue)) {
+            this.value = this.value && toCalendarDateTime(this.value);
+            this.min = this.min && toCalendarDateTime(this.min);
+            this.max = this.max && toCalendarDateTime(this.max);
+            // TODO: check if they comply
+        }
+    }
+
+    constructor() {
+        super();
+        this.setNumberParser();
+        this.setFormatter();
+        this.setSegments();
+    }
+
+    protected override willUpdate(changedProperties: PropertyValues): void {
         if (changedProperties.has(languageResolverUpdatedSymbol)) {
             this.setNumberParser();
+            this.setFormatter();
+            this.setSegments();
         }
 
         if (
-            changedProperties.has(languageResolverUpdatedSymbol) ||
-            changedProperties.has('timeGranularity')
+            changedProperties.has('value') ||
+            changedProperties.has('min') ||
+            changedProperties.has('max')
         ) {
-            createSegments = true;
-            this.setFormatter();
-        }
-
-        if (changedProperties.has('selectedDateTime')) {
-            createSegments = true;
-            this.setCurrentDateTime();
-        }
-
-        if (createSegments) {
+            this.convertToMostSpecificDateValue();
             this.setSegments();
         }
     }
@@ -274,7 +307,7 @@ export class DateTimePicker extends ManageHelpText(
                 ?quiet=${this.quiet}
                 ?invalid=${this.invalid}
                 ?disabled=${this.disabled}
-                @click=${this.showPicker}
+                @click=${() => (this.open = true)}
             >
                 <slot name="calendar-icon" slot="icon">
                     <sp-icon-calendar></sp-icon-calendar>
@@ -287,13 +320,13 @@ export class DateTimePicker extends ManageHelpText(
                 offset="0"
                 receives-focus="true"
                 ?open=${this.open}
-                @sp-closed=${this.hidePicker}
+                @sp-closed=${() => (this.open = false)}
             >
                 <sp-popover>
                     <div class="popover-content">
                         <sp-calendar
-                            .selectedDate=${this.pickerDate as Date}
-                            @change=${this.handleDate}
+                            .value=${this.value}
+                            @change=${this.handleChange}
                         ></sp-calendar>
                     </div>
                 </sp-popover>
@@ -301,41 +334,14 @@ export class DateTimePicker extends ManageHelpText(
         `;
     }
 
-    public showPicker(): void {
-        this.pickerDate = this.getDateFromSegments();
-        this.open = true;
-    }
-
-    public hidePicker(): void {
-        this.setNewDateTime();
-        this.emitNewDateTime();
-
-        this.pickerDate = undefined;
-        this.open = false;
-    }
-
-    /**
-     * Updates the value of the internal property used to define the date used by the calendar with the value received
-     *
-     * @param event - Event with the value emitted by the calendar
-     */
-    private handleDate(event: CustomEvent<Date | undefined>): void {
+    private handleChange(event: Event): void {
         event.stopPropagation();
+        this.open = false;
+        const calendar = event.target as Calendar;
+        this.value = calendar.value!;
 
-        const dateTime = event.detail;
-
-        if (dateTime) {
-            this.updateCurrentDate(dateTime);
-        }
-    }
-
-    /**
-     * Updates the segments using the `Date` object emitted by the calendar inside the picker
-     */
-    private updateCurrentDate(dateTime: Date): void {
-        this.pickerDate = dateTime;
-
-        const { year, month, day } = this.dateToCalendarDateTime(dateTime);
+        // TODO: move this to willUpdate based on value changes
+        const { year, month, day } = this.value;
 
         if (!this.yearSegment || !this.monthSegment || !this.daySegment) {
             return;
@@ -354,18 +360,11 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     protected renderStateIcons(): TemplateResult | typeof nothing {
-        if (this.invalid) {
+        if (this.invalid)
             return html`
                 <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
             `;
-        } else if (this.valid) {
-            return html`
-                <sp-icon-checkmark100
-                    id="valid"
-                    class="icon spectrum-UIIcon-Checkmark100"
-                ></sp-icon-checkmark100>
-            `;
-        }
+
         return nothing;
     }
 
@@ -398,8 +397,7 @@ export class DateTimePicker extends ManageHelpText(
         return html`
             <span
                 class="literal-segment"
-                aria-hidden="true"
-                data-testid=${segment.type}
+                data-test-id=${segment.type}
             >${segment.formatted ?? ''}</span>
         `;
     }
@@ -577,13 +575,11 @@ export class DateTimePicker extends ManageHelpText(
         const min = segment.minValue;
         const max = segment.maxValue;
 
-        if (min === undefined || max === undefined) {
-            return;
-        }
+        if (min === undefined || max === undefined) return;
 
         if (segment.value === undefined) {
             segment.value =
-                segment.type === 'year' ? this.currentDateTime.year : min;
+                segment.type === 'year' ? this.currentZonedDateTime.year : min;
         } else if (segment.type === 'dayPeriod') {
             segment.value = this.toggleAmPm(segment.value);
         } else {
@@ -613,7 +609,7 @@ export class DateTimePicker extends ManageHelpText(
 
         if (segment.value === undefined) {
             segment.value =
-                segment.type === 'year' ? this.currentDateTime.year : max;
+                segment.type === 'year' ? this.currentZonedDateTime.year : max;
         } else if (segment.type === 'dayPeriod') {
             segment.value = this.toggleAmPm(segment.value);
         } else {
@@ -707,7 +703,7 @@ export class DateTimePicker extends ManageHelpText(
 
         this.formatValue(segment);
         this.updateContent(segment, event);
-        this.setNewDateTime();
+        this.setValue();
         this.emitNewDateTime();
     }
 
@@ -715,55 +711,38 @@ export class DateTimePicker extends ManageHelpText(
      * Sets the new date/time object according to the configuration parameters and if the minimum required values for
      * each type (date only, time only or date and time together) were defined
      */
-    protected setNewDateTime(): void {
-        this.newDateTime = undefined;
-
-        // If none of the date/time segments are being used, there is nothing to do here
-        if (!this.includeDate && !this.includeTime) {
-            return;
-        }
+    protected setValue(): void {
+        let value: DateTimePickerValue;
 
         const date = this.getDateFromSegments();
-        const time = this.getTimeFromSegments();
-
-        // When only date segments are being used
-        if (this.includeDate && !this.includeTime) {
-            if (date !== undefined) {
-                this.newDateTime = this.dateToCalendarDateTime(date);
-            }
-
+        if (date && this.precision === 'day') {
+            value = this.dateToCalendarDateTime(date);
             return;
         }
 
-        if (time !== undefined) {
-            this.newDateTime = this.dateToCalendarDateTime(time);
-        }
+        const time = this.getTimeFromSegments();
+        if (time) value = this.dateToCalendarDateTime(time);
 
-        // If date segments are being used, we need to change the date part to use the value of these segments
-        if (this.includeDate && date !== undefined) {
+        if (date) {
             const dateCalendar = this.dateToCalendarDateTime(date);
-
-            this.newDateTime = this.newDateTime?.set({
+            value = value!.set({
                 year: dateCalendar.year,
                 month: dateCalendar.month,
                 day: dateCalendar.day,
             });
         }
+
+        this.value = value!;
     }
 
     /**
      * Emits the new value for date/time if it is already defined
      */
     protected emitNewDateTime(): void {
-        const dateTime = this.newDateTime
-            ? this.newDateTime.toDate(this.timeZone)
-            : undefined;
-
         this.dispatchEvent(
             new CustomEvent('change', {
                 bubbles: true,
                 composed: true,
-                detail: dateTime,
             })
         );
     }
@@ -922,17 +901,19 @@ export class DateTimePicker extends ManageHelpText(
         // We always use the first day of the month unless a specific day is specified
         let day =
             this.daySegment?.value ??
-            getMinimumDayInMonth(this.currentDateTime);
+            getMinimumDayInMonth(this.currentZonedDateTime);
 
         // We always use the first month of the year unless a specific month is specified
         let month =
             this.monthSegment?.value ??
-            getMinimumMonthInYear(this.currentDateTime);
+            getMinimumMonthInYear(this.currentZonedDateTime);
 
-        let year = this.yearSegment?.value ?? this.currentDateTime.year;
-        let hour = this.hourSegment?.value ?? this.currentDateTime.hour;
-        let minute = this.minuteSegment?.value ?? this.currentDateTime.minute;
-        let second = this.secondSegment?.value ?? this.currentDateTime.second;
+        let year = this.yearSegment?.value ?? this.currentZonedDateTime.year;
+        let hour = this.hourSegment?.value ?? this.currentZonedDateTime.hour;
+        let minute =
+            this.minuteSegment?.value ?? this.currentZonedDateTime.minute;
+        let second =
+            this.secondSegment?.value ?? this.currentZonedDateTime.second;
 
         let padMaxLength = 2;
 
@@ -1058,9 +1039,9 @@ export class DateTimePicker extends ManageHelpText(
         const minute = this.minuteSegment?.value;
         const second = this.secondSegment?.value;
 
-        const isHour = this.timeGranularity === 'hour';
-        const isMinute = this.timeGranularity === 'minute';
-        const isSecond = this.timeGranularity === 'second';
+        const isHour = this.precision === 'hour';
+        const isMinute = this.precision === 'minute';
+        const isSecond = this.precision === 'second';
 
         return (
             (isHour && isNumber(hour)) ||
@@ -1130,7 +1111,7 @@ export class DateTimePicker extends ManageHelpText(
         const minute = this.minuteSegment?.value;
         const second = this.secondSegment?.value;
 
-        const dateTime = this.currentDateTime.toDate(this.timeZone);
+        const dateTime = this.currentZonedDateTime.toDate();
 
         if (isNumber(hour)) {
             dateTime.setHours(hour);
@@ -1151,22 +1132,17 @@ export class DateTimePicker extends ManageHelpText(
      * Defines the formatter that will be used in the creation of segments
      */
     private setFormatter(): void {
-        let dateOptions: Intl.DateTimeFormatOptions = {};
+        const dateOptions: Intl.DateTimeFormatOptions = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        };
         let timeOptions: Intl.DateTimeFormatOptions = {};
 
-        if (this.includeDate) {
-            dateOptions = {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-            };
-        }
-
-        if (this.includeTime) {
-            const useMinutes: TimeGranularity[] = ['minute', 'second'];
-
-            const includeMinutes = useMinutes.includes(this.timeGranularity);
-            const includeSeconds = this.timeGranularity === 'second';
+        if (this.includesTime) {
+            const minPrecisions: Precision[] = ['minute', 'second'];
+            const includeMinutes = minPrecisions.includes(this.precision!);
+            const includeSeconds = this.precision === 'second';
 
             timeOptions = {
                 hour: '2-digit',
@@ -1191,35 +1167,14 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * If a datetime is received by the component via property, it will use it as the current datetime to render the
-     * input
-     */
-    private setCurrentDateTime(): void {
-        if (!this.selectedDateTime) {
-            return;
-        }
-
-        this.selectedDateTime = new Date(this.selectedDateTime);
-
-        if (!this.isValidTime(this.selectedDateTime)) {
-            this.selectedDateTime = undefined;
-            return;
-        }
-
-        this.currentDateTime = this.dateToCalendarDateTime(
-            this.selectedDateTime
-        );
-    }
-
-    /**
      * Creates the segments that will be used by the input
      */
     private setSegments(): void {
-        const dateTime = this.currentDateTime.toDate(this.timeZone);
+        const dateTime = this.currentZonedDateTime.toDate();
 
         const segmentTypes = [
-            ...(this.includeDate ? dateSegmentTypes : []),
-            ...(this.includeTime ? timeSegmentTypes : []),
+            ...dateSegmentTypes,
+            ...(this.includesTime ? timeSegmentTypes : []),
         ];
 
         this.segments = this.formatter
@@ -1277,11 +1232,7 @@ export class DateTimePicker extends ManageHelpText(
         previousValue: number | undefined,
         currentValue: number
     ): number | undefined {
-        return (
-            previousValue ??
-            (this.selectedDateTime && currentValue) ??
-            undefined
-        );
+        return previousValue ?? (this.value && currentValue) ?? undefined;
     }
 
     /**
@@ -1299,18 +1250,31 @@ export class DateTimePicker extends ManageHelpText(
             case 'year':
             case 'month':
             case 'day':
+                previousValue = this.segment(type)?.value;
+                currentValue = this.value
+                    ? this.value[type]
+                    : this.currentZonedDateTime[type];
+                break;
             case 'hour':
             case 'minute':
             case 'second':
                 previousValue = this.segment(type)?.value;
-                currentValue = this.currentDateTime[type];
+                const hasTime =
+                    this.value &&
+                    (this.isZonedDateTime(this.value) ||
+                        this.isCalendarDateTime(this.value));
+                currentValue = hasTime
+                    ? (this.value as CalendarDateTime | ZonedDateTime)[type]
+                    : this.currentZonedDateTime[type];
                 break;
             case 'dayPeriod':
                 // To identify the current value of “AM/PM”, we use the value of the hour, not the day period itself
                 previousValue =
                     this.hourSegment?.value &&
                     this.getAmPmModifier(this.hourSegment.value);
-                currentValue = this.getAmPmModifier(this.currentDateTime.hour);
+                currentValue = this.getAmPmModifier(
+                    this.currentZonedDateTime.hour
+                );
                 break;
             default:
                 return undefined;
@@ -1335,22 +1299,23 @@ export class DateTimePicker extends ManageHelpText(
             case 'year':
                 return {
                     minValue: 1,
-                    maxValue: this.currentDateTime.calendar.getYearsInEra(
-                        this.currentDateTime
+                    maxValue: this.currentZonedDateTime.calendar.getYearsInEra(
+                        this.currentZonedDateTime
                     ),
                     value,
                 };
             case 'month':
                 return {
-                    minValue: getMinimumMonthInYear(this.currentDateTime),
-                    maxValue: this.currentDateTime.calendar.getMonthsInYear(
-                        this.currentDateTime
-                    ),
+                    minValue: getMinimumMonthInYear(this.currentZonedDateTime),
+                    maxValue:
+                        this.currentZonedDateTime.calendar.getMonthsInYear(
+                            this.currentZonedDateTime
+                        ),
                     value,
                 };
             case 'day': {
-                let max = this.currentDateTime.calendar.getDaysInMonth(
-                    this.currentDateTime
+                let max = this.currentZonedDateTime.calendar.getDaysInMonth(
+                    this.currentZonedDateTime
                 );
 
                 /**
@@ -1370,22 +1335,21 @@ export class DateTimePicker extends ManageHelpText(
                 }
 
                 return {
-                    minValue: getMinimumDayInMonth(this.currentDateTime),
+                    minValue: getMinimumDayInMonth(this.currentZonedDateTime),
                     maxValue: max,
                     value,
                 };
             }
             case 'hour': {
-                let min = 0;
-                let max = 23;
+                const min = 0;
+                const max = 23;
 
                 if (this.is12HourClock) {
-                    const isPM = this.isPM(
-                        this.newDateTime?.hour ?? this.currentDateTime.hour
-                    );
-
-                    min = isPM ? minHourPM : minHourAM;
-                    max = isPM ? maxHourPM : maxHourAM;
+                    // const isPM = this.isPM(
+                    // this.newDateTime?.hour ?? this.currentZonedDateTime.hour
+                    // );
+                    // min = isPM ? minHourPM : minHourAM;
+                    // max = isPM ? maxHourPM : maxHourAM;
                 }
 
                 return {
@@ -1505,7 +1469,7 @@ export class DateTimePicker extends ManageHelpText(
 
             if (isNumber(this.hourSegment.value)) {
                 this.hourSegment.value += this.getAmPmModifier(
-                    this.currentDateTime.hour
+                    this.currentZonedDateTime.hour
                 );
             } else {
                 this.hourSegment.value = hour.value;
@@ -1526,8 +1490,8 @@ export class DateTimePicker extends ManageHelpText(
         }
 
         const useThisDate = isNumber(this.yearSegment?.value)
-            ? this.currentDateTime.set({ year: this.yearSegment?.value })
-            : this.currentDateTime.copy();
+            ? this.currentZonedDateTime.set({ year: this.yearSegment?.value })
+            : this.currentZonedDateTime.copy();
 
         const lastDayOfMonth = endOfMonth(
             useThisDate.set({ month: this.monthSegment.value })

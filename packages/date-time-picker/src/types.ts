@@ -68,7 +68,7 @@ export interface SegmentDetails
     maxValue: number;
 }
 
-export type TimeGranularity = 'hour' | 'minute' | 'second';
+export type Precision = 'day' | 'hour' | 'minute' | 'second';
 
 /** AM modifier: `0` hours */
 export const AM = 0;

@@ -89,10 +89,6 @@ const dateControlsDisabledArgTypes = {
     },
 };
 
-interface SpreadStoryArgs {
-    [prop: string]: unknown;
-}
-
 const timestampToValue = (timestamp: number): CalendarValue => {
     const date = new Date();
     date.setTime(timestamp);
@@ -116,13 +112,14 @@ const Template = (args: StoryArgs = {}): TemplateResult => {
 
     return html`
         <sp-calendar
-            ...=${spreadProps(args as SpreadStoryArgs)}
+            ...=${spreadProps(args)}
             @change=${args.onChange}
         ></sp-calendar>
     `;
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
+
 export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
