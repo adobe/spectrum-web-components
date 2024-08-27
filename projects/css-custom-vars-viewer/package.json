@@ -66,5 +66,6 @@
         "tslib": "^2.3.1",
         "typescript": "^5.3.3"
     },
-    "customElements": "custom-elements.json"
+    "customElements": "custom-elements.json",
+    "gitHead": "151a3e21c39150dbc3f3a884b660be0bd352bda1"
 }
