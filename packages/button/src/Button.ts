@@ -78,8 +78,11 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         return this._variant;
     }
     public set variant(variant: ButtonVariants) {
+        const something = false;
         if (variant === this.variant) return;
-
+        if (something) {
+            this.requestUpdate('variant', this.variant);
+        }
         this.requestUpdate('variant', this.variant);
         switch (variant) {
             case 'cta':
