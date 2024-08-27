@@ -63,7 +63,13 @@ export class RovingTabindexController<
         this.elements.forEach((el) => {
             const { tabIndex, removeTabIndex } = getTabIndex(el);
             if (!removeTabIndex) {
-                el.tabIndex = tabIndex;
+                if (this.focused) {
+                    if (el !== this.elements[this.currentIndex]) {
+                        el.tabIndex = tabIndex;
+                    }
+                } else {
+                    el.tabIndex = tabIndex;
+                }
                 return;
             }
             el.removeAttribute('tabindex');
