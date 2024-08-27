@@ -169,13 +169,6 @@ export class Calendar extends SpectrumElement {
     }
 
     override willUpdate(changedProperties: PropertyValues): void {
-        const previousMonth = changedProperties.get('currentDate')?.month;
-        const hasMonthChanged =
-            changedProperties.has('currentDate') &&
-            previousMonth !== this.currentDate.month;
-
-        if (hasMonthChanged) this.setCurrentMonthDates();
-
         if (changedProperties.has(languageResolverUpdatedSymbol)) {
             this.setNumberFormatter();
             this.setWeekdays();
@@ -214,6 +207,13 @@ export class Calendar extends SpectrumElement {
                 this.value = undefined;
             } else this.currentDate = this.value;
         }
+
+        const previousMonth = changedProperties.get('currentDate')?.month;
+        const hasMonthChanged =
+            changedProperties.has('currentDate') &&
+            previousMonth !== this.currentDate.month;
+
+        if (hasMonthChanged) this.setCurrentMonthDates();
     }
 
     override updated(changedProperties: PropertyValues): void {
