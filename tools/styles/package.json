@@ -123,5 +123,6 @@
     "sideEffects": [
         "./**/*.css"
     ],
-    "style": "all-medium-lightest.css"
+    "style": "all-medium-lightest.css",
+    "gitHead": "151a3e21c39150dbc3f3a884b660be0bd352bda1"
 }
