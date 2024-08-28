@@ -22,33 +22,28 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 import { setViewport } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Picker, responsive', () => {
     let el: Picker;
     const pickerFixture = async (): Promise<Picker> => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-field-label for="picker">
-                        Where do you live?
-                    </sp-field-label>
-                    <sp-picker
-                        id="picker"
-                        style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
-                    >
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item value="option-2">
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-picker>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-field-label for="picker">Where do you live?</sp-field-label>
+                <sp-picker
+                    id="picker"
+                    style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
+                >
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-picker>
+            </div>
+        `);
 
         return test.querySelector('sp-picker') as Picker;
     };
@@ -59,7 +54,13 @@ describe('Picker, responsive', () => {
             await elementUpdated(el);
         });
 
-        xit('is a Tray in mobile', async () => {
+        it('is a Tray in mobile', async () => {
+            /**
+             * This is a hack to set the `isMobile` property to true so that we can test the MobileController
+             */
+            el.isMobile.matches = true;
+            el.bindEvents();
+
             /**
              * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
              * which prevents us from testing this at unit time. Hopefully there will be
@@ -71,7 +72,20 @@ describe('Picker, responsive', () => {
             await nextFrame();
 
             const opened = oneEvent(el, 'sp-opened');
-            el.open = true;
+
+            const boundingRect = el.button.getBoundingClientRect();
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+
             await opened;
 
             const tray = el.shadowRoot.querySelector('sp-tray');
