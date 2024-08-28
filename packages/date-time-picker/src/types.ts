@@ -39,7 +39,7 @@ export interface Segment extends Omit<Intl.DateTimeFormatPart, 'value'> {
     placeholder?: string;
 
     /** The formatted text for the segment */
-    formatted?: string;
+    formatted: string;
 
     /** The numeric value for the segment, if applicable */
     value?: number;
@@ -70,20 +70,16 @@ export interface SegmentDetails
 
 export type Precision = 'day' | 'hour' | 'minute' | 'second';
 
+export const MAX_DAYS_PER_MONTH = 31;
+
 /** AM modifier: `0` hours */
 export const AM = 0;
 
 /** PM modifier: `12` hours */
 export const PM = 12;
 
-/** Minimum hour value if AM */
-export const minHourAM = AM;
+export const MIN_HOUR_AM = AM;
+export const MAX_HOUR_AM = 11;
 
-/** Maximum hour value if AM */
-export const maxHourAM = 11;
-
-/** Minimum hour value if PM */
-export const minHourPM = PM;
-
-/** Maximum hour value if PM */
-export const maxHourPM = 23;
+export const MIN_HOUR_PM = PM;
+export const MAX_HOUR_PM = 23;

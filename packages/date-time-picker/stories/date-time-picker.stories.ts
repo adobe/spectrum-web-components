@@ -196,7 +196,7 @@ export const preselectedValue = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
             ...=${spreadProps(args)}
-            .value=${new CalendarDate(2020, 2, 16)}
+            .value=${new CalendarDateTime(2020, 2, 16, 8, 20)}
         ></sp-date-time-picker>
     `;
 };
@@ -207,7 +207,7 @@ export const minDate = (args: StoryArgs): TemplateResult => {
         <sp-date-time-picker
             ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
-            .min=${new CalendarDate(2020, 2, 12)}
+            .min=${new CalendarDate(2022, 4, 12)}
         ></sp-date-time-picker>
     `;
 };
@@ -218,7 +218,7 @@ export const maxDate = (args: StoryArgs): TemplateResult => {
         <sp-date-time-picker
             ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
-            .max=${new CalendarDateTime(2020, 2, 19, 20, 30)}
+            .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
         ></sp-date-time-picker>
     `;
 };
@@ -231,8 +231,8 @@ export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
             .value=${new CalendarDate(2022, 4, 16)}
             .min=${new ZonedDateTime(
                 // Date
-                2020,
-                2,
+                2022,
+                4,
                 12,
                 // Time zone and UTC offset
                 'America/Los_Angeles',
@@ -241,7 +241,7 @@ export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
                 9,
                 15
             )}
-            .max=${new CalendarDateTime(2020, 2, 19, 20, 30)}
+            .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
         ></sp-date-time-picker>
     `;
 };

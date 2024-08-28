@@ -59,10 +59,11 @@ import {
     dateSegmentTypes,
     DateTimePickerValue,
     EditableSegmentType,
-    maxHourAM,
-    maxHourPM,
-    minHourAM,
-    minHourPM,
+    MAX_DAYS_PER_MONTH,
+    MAX_HOUR_AM,
+    MAX_HOUR_PM,
+    MIN_HOUR_AM,
+    MIN_HOUR_PM,
     PM,
     Precision,
     Segment,
@@ -247,12 +248,13 @@ export class DateTimePicker extends ManageHelpText(
         return dates[0];
     }
 
-    private currentZonedDateTime: ZonedDateTime = now(this.timeZone);
+    private currentDate: ZonedDateTime = now(this.timeZone);
 
     private convertToMostSpecificDateValue(): void {
         const dateValue = this.mostSpecificDateValue;
+        let timeZone = this.timeZone;
         if (this.isZonedDateTime(dateValue)) {
-            const timeZone = dateValue.timeZone;
+            timeZone = dateValue.timeZone;
             this.value = this.value && toZoned(this.value, timeZone);
             this.min = this.min && toZoned(this.min, timeZone);
             this.max = this.max && toZoned(this.max, timeZone);
@@ -262,7 +264,10 @@ export class DateTimePicker extends ManageHelpText(
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
             // TODO: check if they comply
-        }
+            this.precision = 'minute';
+        } else if (this.value) this.precision = 'day';
+
+        if (this.value) this.currentDate = toZoned(this.value, timeZone);
     }
 
     constructor() {
@@ -273,20 +278,20 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     protected override willUpdate(changedProperties: PropertyValues): void {
-        if (changedProperties.has(languageResolverUpdatedSymbol)) {
-            this.setNumberParser();
-            this.setFormatter();
-            this.setSegments();
-        }
-
-        if (
+        const haveDatesChanged =
             changedProperties.has('value') ||
             changedProperties.has('min') ||
-            changedProperties.has('max')
-        ) {
-            this.convertToMostSpecificDateValue();
+            changedProperties.has('max');
+        const hasLocaleChanged = changedProperties.has(
+            languageResolverUpdatedSymbol
+        );
+        const hasPrecisionChanged = changedProperties.has('precision');
+
+        if (hasLocaleChanged) this.setNumberParser();
+        if (haveDatesChanged) this.convertToMostSpecificDateValue();
+        if (hasLocaleChanged || hasPrecisionChanged) this.setFormatter();
+        if (haveDatesChanged || hasLocaleChanged || hasPrecisionChanged)
             this.setSegments();
-        }
     }
 
     protected override render(): TemplateResult {
@@ -326,6 +331,8 @@ export class DateTimePicker extends ManageHelpText(
                     <div class="popover-content">
                         <sp-calendar
                             .value=${this.value}
+                            .min=${this.min}
+                            .max=${this.max}
                             @change=${this.handleChange}
                         ></sp-calendar>
                     </div>
@@ -348,13 +355,13 @@ export class DateTimePicker extends ManageHelpText(
         }
 
         this.yearSegment.value = year;
-        this.formatValue(this.yearSegment);
+        this.formatSegmentValue(this.yearSegment);
 
         this.monthSegment.value = month;
-        this.formatValue(this.monthSegment);
+        this.formatSegmentValue(this.monthSegment);
 
         this.daySegment.value = day;
-        this.formatValue(this.daySegment);
+        this.formatSegmentValue(this.daySegment);
 
         this.requestUpdate();
     }
@@ -579,7 +586,7 @@ export class DateTimePicker extends ManageHelpText(
 
         if (segment.value === undefined) {
             segment.value =
-                segment.type === 'year' ? this.currentZonedDateTime.year : min;
+                segment.type === 'year' ? this.currentDate.year : min;
         } else if (segment.type === 'dayPeriod') {
             segment.value = this.toggleAmPm(segment.value);
         } else {
@@ -609,7 +616,7 @@ export class DateTimePicker extends ManageHelpText(
 
         if (segment.value === undefined) {
             segment.value =
-                segment.type === 'year' ? this.currentZonedDateTime.year : max;
+                segment.type === 'year' ? this.currentDate.year : max;
         } else if (segment.type === 'dayPeriod') {
             segment.value = this.toggleAmPm(segment.value);
         } else {
@@ -650,8 +657,8 @@ export class DateTimePicker extends ManageHelpText(
             }
 
             newValue =
-                previousValue === minHourAM
-                    ? String(minHourAM + 1)
+                previousValue === MIN_HOUR_AM
+                    ? String(MIN_HOUR_AM + 1)
                     : String(previousValue).slice(0, -1);
 
             if (isPM && newValue !== '') {
@@ -701,10 +708,15 @@ export class DateTimePicker extends ManageHelpText(
             this.updateDay();
         }
 
-        this.formatValue(segment);
+        this.formatSegmentValue(segment);
         this.updateContent(segment, event);
         this.setValue();
-        this.emitNewDateTime();
+        this.dispatchEvent(
+            new CustomEvent('change', {
+                bubbles: true,
+                composed: true,
+            })
+        );
     }
 
     /**
@@ -733,49 +745,6 @@ export class DateTimePicker extends ManageHelpText(
         }
 
         this.value = value!;
-    }
-
-    /**
-     * Emits the new value for date/time if it is already defined
-     */
-    protected emitNewDateTime(): void {
-        this.dispatchEvent(
-            new CustomEvent('change', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-    }
-
-    /**
-     * The parts returned by the `formatToParts()` function of `Intl.DateTimeFormat` have only two properties, `type`
-     * and `value`, but we need more information for each segment, so we convert it to the type we need
-     *
-     * @param part - Part/segment to be “translated” (mapped)
-     */
-    protected mapToSegment(part: Intl.DateTimeFormatPart): Segment {
-        const type = part.type;
-        const formatted = part.value;
-
-        if (type === 'literal') {
-            return {
-                type,
-                formatted,
-            };
-        }
-
-        const placeholder = this.getPlaceholder(type, part.value);
-
-        const segment: Segment = {
-            type,
-            formatted,
-            ...(placeholder !== undefined && { placeholder }),
-            ...this.getValueAndLimits(type),
-        };
-
-        this.formatValue(segment);
-
-        return segment;
     }
 
     /**
@@ -826,13 +795,13 @@ export class DateTimePicker extends ManageHelpText(
         const max = details.maxValue;
         const isPM = this.isPM(min);
 
-        if (isPM && newValue !== min && newValue > maxHourAM) {
+        if (isPM && newValue !== min && newValue > MAX_HOUR_AM) {
             newValue = this.numberParser.parse(String(newValue).slice(1));
         } else if (newValue > max) {
-            const useMinHourAM = !isPM && newValue === PM;
+            const useMIN_HOUR_AM = !isPM && newValue === PM;
 
-            newValue = useMinHourAM
-                ? minHourAM
+            newValue = useMIN_HOUR_AM
+                ? MIN_HOUR_AM
                 : this.useTypedValueOrMax(typedValue, max);
         }
 
@@ -879,120 +848,6 @@ export class DateTimePicker extends ManageHelpText(
         }
 
         return newValue;
-    }
-
-    /**
-     * If the segment has a `value`, it defines the text used in the UI formatted according to the locale. At this
-     * moment we are formatting the value of a specific segment, but it is not possible to generate a valid Date object
-     * with just one piece of information (day, month, year, etc.), so we need to define a "base date" to be used
-     * together with the value of the segment.
-     *
-     * For example, if the current segment is the day segment, but the month and year segment have not yet been defined,
-     * we need to choose a month and a year to be used in composing the date that will be used in formatting, after all,
-     * there is no day without a month and a year.
-     *
-     * @param segment - Segment to format the value
-     */
-    protected formatValue(segment: Segment): void {
-        if (segment.value === undefined) {
-            return;
-        }
-
-        // We always use the first day of the month unless a specific day is specified
-        let day =
-            this.daySegment?.value ??
-            getMinimumDayInMonth(this.currentZonedDateTime);
-
-        // We always use the first month of the year unless a specific month is specified
-        let month =
-            this.monthSegment?.value ??
-            getMinimumMonthInYear(this.currentZonedDateTime);
-
-        let year = this.yearSegment?.value ?? this.currentZonedDateTime.year;
-        let hour = this.hourSegment?.value ?? this.currentZonedDateTime.hour;
-        let minute =
-            this.minuteSegment?.value ?? this.currentZonedDateTime.minute;
-        let second =
-            this.secondSegment?.value ?? this.currentZonedDateTime.second;
-
-        let padMaxLength = 2;
-
-        switch (segment.type) {
-            case 'day': {
-                day = segment.value;
-                break;
-            }
-            case 'month': {
-                month = segment.value;
-                break;
-            }
-            case 'year': {
-                year = segment.value;
-                break;
-            }
-            case 'hour': {
-                hour = segment.value;
-
-                if (this.is12HourClock) {
-                    padMaxLength = 1;
-                }
-
-                break;
-            }
-            case 'minute': {
-                minute = segment.value;
-                break;
-            }
-            case 'second': {
-                second = segment.value;
-                break;
-            }
-            case 'dayPeriod': {
-                hour = (segment.value ?? 0) + 1;
-                padMaxLength = 0;
-                break;
-            }
-        }
-
-        /**
-         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
-         * an unexpected way. For example, when typing “2”, the year would be formatted as “1902”, but we keep it as it
-         * is being displayed on the screen. If the user wants to enter the year “1902”, he will enter number by number
-         */
-        if (segment.type === 'year') {
-            segment.formatted = String(year);
-            return;
-        }
-
-        /**
-         * If the day being formatted is February 29th but the year segment has not yet been filled, we need to use a
-         * leap year to allow the 29th to remain, otherwise, if we use the current year and it is not a leap year, the
-         * day that would be displayed would be March 1st, as February 29th would not exist and JavaScript “moves” the
-         * day to the next day. As this year is only used to format the day and month, we use the year 2000 as the "base
-         * year" for formatting
-         */
-        if (
-            !this.yearSegment?.value &&
-            (['day', 'month'] as typeof dateSegmentTypes).includes(segment.type)
-        ) {
-            year = 2000;
-        }
-
-        const date = this.getDate(year, month, day);
-
-        if (!date) {
-            return;
-        }
-
-        date.setHours(hour);
-        date.setMinutes(minute);
-        date.setSeconds(second);
-
-        const formatted = this.formatter
-            .formatToParts(date)
-            .find((part) => part.type === segment.type)?.value;
-
-        segment.formatted = formatted?.padStart(padMaxLength, '0');
     }
 
     /**
@@ -1111,7 +966,7 @@ export class DateTimePicker extends ManageHelpText(
         const minute = this.minuteSegment?.value;
         const second = this.secondSegment?.value;
 
-        const dateTime = this.currentZonedDateTime.toDate();
+        const dateTime = this.currentDate.toDate();
 
         if (isNumber(hour)) {
             dateTime.setHours(hour);
@@ -1170,7 +1025,7 @@ export class DateTimePicker extends ManageHelpText(
      * Creates the segments that will be used by the input
      */
     private setSegments(): void {
-        const dateTime = this.currentZonedDateTime.toDate();
+        const dateTime = this.currentDate.toDate();
 
         const segmentTypes = [
             ...dateSegmentTypes,
@@ -1180,7 +1035,249 @@ export class DateTimePicker extends ManageHelpText(
         this.segments = this.formatter
             .formatToParts(dateTime)
             .filter((part) => segmentTypes.includes(part.type))
-            .map((part) => this.mapToSegment(part));
+            .map(this.partToSegment.bind(this));
+    }
+
+    /**
+     * Converts the part returned by the `formatToParts()` function of `Intl.DateTimeFormat` to the `Segment` type
+     * that has more information about the segment.
+     *
+     * @param part - Part to be converted to `Segment`
+     */
+    private partToSegment(part: Intl.DateTimeFormatPart): Segment {
+        const type = part.type;
+        const formatted = part.value;
+
+        if (type === 'literal')
+            return {
+                type,
+                formatted,
+            };
+
+        const placeholder = this.getPlaceholder(type, part.value);
+
+        const segment: Segment = {
+            type,
+            formatted,
+            ...(placeholder !== undefined && { placeholder }),
+            ...this.getValueAndLimits(type),
+        };
+
+        this.formatSegmentValue(segment);
+
+        return segment;
+    }
+
+    /**
+     * Returns the minimum and maximum values for each segment that will be used, in addition to defining if there is a
+     * current value to be used. If segments are being recreated, we try to recover the value that was previously set
+     * for each segment, if possible
+     *
+     * @param type - Type of segment
+     */
+    private getValueAndLimits(
+        type: Intl.DateTimeFormatPartTypes
+    ): SegmentValueAndLimits {
+        const value = this.parseSegmentValue(type);
+
+        switch (type) {
+            case 'year':
+                return {
+                    minValue: 1,
+                    maxValue: this.currentDate.calendar.getYearsInEra(
+                        this.currentDate
+                    ),
+                    value,
+                };
+            case 'month':
+                return {
+                    minValue: getMinimumMonthInYear(this.currentDate),
+                    maxValue: this.currentDate.calendar.getMonthsInYear(
+                        this.currentDate
+                    ),
+                    value,
+                };
+            case 'day': {
+                let max = this.currentDate.calendar.getDaysInMonth(
+                    this.currentDate
+                );
+
+                if (!this.monthSegment?.value) max = MAX_DAYS_PER_MONTH;
+                else {
+                    const febMaxValue = this.getFebruaryMaxValue();
+                    if (isNumber(febMaxValue)) max = febMaxValue;
+                }
+
+                return {
+                    minValue: getMinimumDayInMonth(this.currentDate),
+                    maxValue: max,
+                    value,
+                };
+            }
+            case 'hour': {
+                let min = 0;
+                let max = 23;
+
+                if (this.is12HourClock) {
+                    const isPM = this.isPM(this.currentDate.hour);
+                    min = isPM ? MIN_HOUR_PM : MIN_HOUR_AM;
+                    max = isPM ? MAX_HOUR_PM : MAX_HOUR_AM;
+                }
+
+                return {
+                    minValue: min,
+                    maxValue: max,
+                    value,
+                };
+            }
+            case 'minute':
+            case 'second':
+                return {
+                    minValue: 0,
+                    maxValue: 59,
+                    value,
+                };
+            case 'dayPeriod':
+                return {
+                    minValue: AM,
+                    maxValue: PM,
+                    value,
+                };
+            default:
+                return {};
+        }
+    }
+
+    private parseSegmentValue(
+        type: Intl.DateTimeFormatPartTypes
+    ): number | undefined {
+        let previousValue: number | undefined;
+        let currentValue: number;
+
+        switch (type) {
+            case 'year':
+            case 'month':
+            case 'day':
+            case 'hour':
+            case 'minute':
+            case 'second':
+                previousValue = this.segment(type)?.value;
+                currentValue = this.currentDate[type];
+                break;
+            case 'dayPeriod':
+                previousValue =
+                    this.hourSegment?.value &&
+                    this.getAmPmModifier(this.hourSegment.value);
+                currentValue = this.getAmPmModifier(this.currentDate.hour);
+                break;
+            default:
+                return undefined;
+        }
+
+        if (this.value && isNumber(currentValue)) return currentValue;
+        if (previousValue) return previousValue;
+
+        return;
+    }
+
+    /**
+     * If the segment has a `value`, it defines the text used in the UI formatted according to the locale. At this
+     * moment we are formatting the value of a specific segment, but it is not possible to generate a valid Date object
+     * with just one piece of information (day, month, year, etc.), so we need to define a "base date" to be used
+     * together with the value of the segment.
+     *
+     * For example, if the current segment is the day segment, but the month and year segment have not yet been defined,
+     * we need to choose a month and a year to be used in composing the date that will be used in formatting, after all,
+     * there is no day without a month and a year.
+     *
+     * @param segment - Segment to format the value
+     */
+    protected formatSegmentValue(segment: Segment): void {
+        if (segment.value === undefined) return;
+
+        let day =
+            this.daySegment?.value ?? getMinimumDayInMonth(this.currentDate);
+
+        let month =
+            this.monthSegment?.value ?? getMinimumMonthInYear(this.currentDate);
+
+        let year = this.yearSegment?.value ?? this.currentDate.year;
+        let hour = this.hourSegment?.value ?? this.currentDate.hour;
+        let minute = this.minuteSegment?.value ?? this.currentDate.minute;
+        let second = this.secondSegment?.value ?? this.currentDate.second;
+
+        let padMaxLength = 2;
+
+        switch (segment.type) {
+            case 'day': {
+                day = segment.value;
+                break;
+            }
+            case 'month': {
+                month = segment.value;
+                break;
+            }
+            case 'year': {
+                year = segment.value;
+                break;
+            }
+            case 'hour': {
+                hour = segment.value;
+                if (this.is12HourClock) padMaxLength = 1;
+                break;
+            }
+            case 'minute': {
+                minute = segment.value;
+                break;
+            }
+            case 'second': {
+                second = segment.value;
+                break;
+            }
+            case 'dayPeriod': {
+                hour = (segment.value ?? 0) + 1;
+                padMaxLength = 0;
+                break;
+            }
+        }
+
+        /**
+         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
+         * an unexpected way. For example, when typing “2”, the year would be formatted as “1902”, but we keep it as it
+         * is being displayed on the screen. If the user wants to enter the year “1902”, he will enter number by number
+         */
+        if (segment.type === 'year') {
+            segment.formatted = String(year);
+            return;
+        }
+
+        /**
+         * If the day being formatted is February 29th but the year segment has not yet been filled, we need to use a
+         * leap year to allow the 29th to remain, otherwise, if we use the current year and it is not a leap year, the
+         * day that would be displayed would be March 1st, as February 29th would not exist and JavaScript “moves” the
+         * day to the next day. As this year is only used to format the day and month, we use the year 2000 as the "base
+         * year" for formatting
+         */
+        if (
+            !this.yearSegment?.value &&
+            (['day', 'month'] as typeof dateSegmentTypes).includes(segment.type)
+        ) {
+            year = 2000;
+        }
+
+        const date = this.getDate(year, month, day);
+
+        if (!date) return;
+
+        date.setHours(hour);
+        date.setMinutes(minute);
+        date.setSeconds(second);
+
+        const formatted = this.formatter
+            .formatToParts(date)
+            .find((part) => part.type === segment.type)!.value;
+
+        segment.formatted = formatted?.padStart(padMaxLength, '0');
     }
 
     /**
@@ -1213,167 +1310,6 @@ export class DateTimePicker extends ManageHelpText(
         return this.monthSegment?.value === 2 && !this.yearSegment?.value
             ? 29
             : undefined;
-    }
-
-    /**
-     * Checks whether the segment being created or updated will have a value or not by checking the following order:
-     *
-     * 1. Did the segment already have a previously defined value? If yes, use it
-     *
-     * 2. Since the segment doesn't have a previous value to keep, was the component given a specific date/time when it
-     *    was created? If yes, then use that information
-     *
-     * 3. There is no value to use at this point, so it will remain as `undefined`
-     *
-     * @param previousValue - Previous segment value, if there is one
-     * @param currentValue - Current segment value
-     */
-    private usePreviousOrCurrentValue(
-        previousValue: number | undefined,
-        currentValue: number
-    ): number | undefined {
-        return previousValue ?? (this.value && currentValue) ?? undefined;
-    }
-
-    /**
-     * Gets the current value of the segment according to the type
-     *
-     * @param type - Type of segment
-     */
-    private getCurrentValue(
-        type: Intl.DateTimeFormatPartTypes
-    ): number | undefined {
-        let previousValue: number | undefined;
-        let currentValue: number;
-
-        switch (type) {
-            case 'year':
-            case 'month':
-            case 'day':
-                previousValue = this.segment(type)?.value;
-                currentValue = this.value
-                    ? this.value[type]
-                    : this.currentZonedDateTime[type];
-                break;
-            case 'hour':
-            case 'minute':
-            case 'second':
-                previousValue = this.segment(type)?.value;
-                const hasTime =
-                    this.value &&
-                    (this.isZonedDateTime(this.value) ||
-                        this.isCalendarDateTime(this.value));
-                currentValue = hasTime
-                    ? (this.value as CalendarDateTime | ZonedDateTime)[type]
-                    : this.currentZonedDateTime[type];
-                break;
-            case 'dayPeriod':
-                // To identify the current value of “AM/PM”, we use the value of the hour, not the day period itself
-                previousValue =
-                    this.hourSegment?.value &&
-                    this.getAmPmModifier(this.hourSegment.value);
-                currentValue = this.getAmPmModifier(
-                    this.currentZonedDateTime.hour
-                );
-                break;
-            default:
-                return undefined;
-        }
-
-        return this.usePreviousOrCurrentValue(previousValue, currentValue);
-    }
-
-    /**
-     * Returns the minimum and maximum values for each segment that will be used, in addition to defining if there is a
-     * current value to be used. If segments are being recreated, we try to recover the value that was previously set
-     * for each segment, if possible
-     *
-     * @param type - Type of segment
-     */
-    private getValueAndLimits(
-        type: Intl.DateTimeFormatPartTypes
-    ): SegmentValueAndLimits {
-        const value = this.getCurrentValue(type);
-
-        switch (type) {
-            case 'year':
-                return {
-                    minValue: 1,
-                    maxValue: this.currentZonedDateTime.calendar.getYearsInEra(
-                        this.currentZonedDateTime
-                    ),
-                    value,
-                };
-            case 'month':
-                return {
-                    minValue: getMinimumMonthInYear(this.currentZonedDateTime),
-                    maxValue:
-                        this.currentZonedDateTime.calendar.getMonthsInYear(
-                            this.currentZonedDateTime
-                        ),
-                    value,
-                };
-            case 'day': {
-                let max = this.currentZonedDateTime.calendar.getDaysInMonth(
-                    this.currentZonedDateTime
-                );
-
-                /**
-                 * If we do not yet have a month defined by the user, we use the highest possible number as a maximum
-                 * limit. When the month is set, if the day is outside the allowed range, it will be corrected
-                 * automatically
-                 */
-                if (!this.monthSegment?.value) {
-                    max = 31;
-                }
-
-                // Check whether the maximum possible limit for the month of February should be used
-                const febMaxValue = this.getFebruaryMaxValue();
-
-                if (isNumber(febMaxValue)) {
-                    max = febMaxValue;
-                }
-
-                return {
-                    minValue: getMinimumDayInMonth(this.currentZonedDateTime),
-                    maxValue: max,
-                    value,
-                };
-            }
-            case 'hour': {
-                const min = 0;
-                const max = 23;
-
-                if (this.is12HourClock) {
-                    // const isPM = this.isPM(
-                    // this.newDateTime?.hour ?? this.currentZonedDateTime.hour
-                    // );
-                    // min = isPM ? minHourPM : minHourAM;
-                    // max = isPM ? maxHourPM : maxHourAM;
-                }
-
-                return {
-                    minValue: min,
-                    maxValue: max,
-                    value,
-                };
-            }
-            case 'minute':
-            case 'second':
-                return {
-                    minValue: 0,
-                    maxValue: 59,
-                    value,
-                };
-            case 'dayPeriod':
-                return {
-                    minValue: AM,
-                    maxValue: PM,
-                    value,
-                };
-            default:
-                return {};
-        }
     }
 
     /**
@@ -1430,8 +1366,8 @@ export class DateTimePicker extends ManageHelpText(
         const isAM = this.amPmSegment.value === AM;
         const isPM = this.amPmSegment.value === PM;
 
-        this.hourSegment.minValue = isPM ? minHourPM : minHourAM;
-        this.hourSegment.maxValue = isPM ? maxHourPM : maxHourAM;
+        this.hourSegment.minValue = isPM ? MIN_HOUR_PM : MIN_HOUR_AM;
+        this.hourSegment.maxValue = isPM ? MAX_HOUR_PM : MAX_HOUR_AM;
 
         if (this.hourSegment.value === undefined) {
             return;
@@ -1457,7 +1393,8 @@ export class DateTimePicker extends ManageHelpText(
             this.amPmSegment.maxValue = amPm.maxValue;
 
             if (this.amPmSegment.value === undefined) {
-                this.amPmSegment.formatted = this.amPmSegment.placeholder;
+                this.amPmSegment.formatted =
+                    this.amPmSegment.placeholder || 'AM';
             }
         }
 
@@ -1469,7 +1406,7 @@ export class DateTimePicker extends ManageHelpText(
 
             if (isNumber(this.hourSegment.value)) {
                 this.hourSegment.value += this.getAmPmModifier(
-                    this.currentZonedDateTime.hour
+                    this.currentDate.hour
                 );
             } else {
                 this.hourSegment.value = hour.value;
@@ -1490,8 +1427,8 @@ export class DateTimePicker extends ManageHelpText(
         }
 
         const useThisDate = isNumber(this.yearSegment?.value)
-            ? this.currentZonedDateTime.set({ year: this.yearSegment?.value })
-            : this.currentZonedDateTime.copy();
+            ? this.currentDate.set({ year: this.yearSegment?.value })
+            : this.currentDate.copy();
 
         const lastDayOfMonth = endOfMonth(
             useThisDate.set({ month: this.monthSegment.value })
@@ -1511,7 +1448,7 @@ export class DateTimePicker extends ManageHelpText(
             this.daySegment.value > this.daySegment.maxValue
         ) {
             this.daySegment.value = this.daySegment.maxValue;
-            this.formatValue(this.daySegment);
+            this.formatSegmentValue(this.daySegment);
         }
     }
 
