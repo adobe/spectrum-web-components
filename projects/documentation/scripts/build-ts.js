@@ -45,6 +45,7 @@ async function main() {
                         filename: filePath,
                         code: css,
                         minify: true,
+                        errorRecovery: true,
                         resolver: {
                             read(readPath) {
                                 const file = fs.readFileSync(readPath, 'utf8');

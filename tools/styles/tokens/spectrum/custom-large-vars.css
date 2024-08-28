@@ -58,8 +58,6 @@
     --spectrum-well-margin-top: 5px;
     --spectrum-well-min-width: 300px;
     --spectrum-well-border-radius: 5px;
-
-    /* XXL and XXS icon sizes are not within the design spec and are planned to be deprecated in Spectrum 2. */
     --spectrum-workflow-icon-size-xxl: 40px;
     --spectrum-workflow-icon-size-xxs: 15px;
 

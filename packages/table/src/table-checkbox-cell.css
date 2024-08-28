@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-table-checkbox-cell.css');
+@import url('./table-checkbox-cell-overrides.css');
 
 :host {
     display: flex;

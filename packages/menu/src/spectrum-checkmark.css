@@ -16,13 +16,6 @@ governing permissions and limitations under the License.
         --mod-menu-checkmark-display,
         var(--spectrum-menu-checkmark-display)
     );
-    fill: var(
-        --highcontrast-menu-checkmark-icon-color-default,
-        var(
-            --mod-menu-checkmark-icon-color-default,
-            var(--spectrum-menu-checkmark-icon-color-default)
-        )
-    );
     color: var(
         --highcontrast-menu-checkmark-icon-color-default,
         var(
@@ -31,10 +24,32 @@ governing permissions and limitations under the License.
         )
     );
     opacity: 1;
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
     align-self: center;
 }
 
 .spectrum-Menu-back:focus-visible {
+    box-shadow: inset
+        calc(
+            var(
+                    --mod-menu-item-focus-indicator-width,
+                    var(--spectrum-menu-item-focus-indicator-width)
+                ) * 1
+        )
+        0 0 0
+        var(
+            --highcontrast-menu-item-focus-indicator-color,
+            var(
+                --mod-menu-item-focus-indicator-color,
+                var(--spectrum-menu-item-focus-indicator-color)
+            )
+        );
     box-shadow: inset
         calc(
             var(
@@ -54,13 +69,13 @@ governing permissions and limitations under the License.
 }
 
 .checkmark {
-    block-size: var(
-        --mod-menu-item-checkmark-height,
-        var(--spectrum-menu-item-checkmark-height)
-    );
     inline-size: var(
         --mod-menu-item-checkmark-width,
         var(--spectrum-menu-item-checkmark-width)
+    );
+    block-size: var(
+        --mod-menu-item-checkmark-height,
+        var(--spectrum-menu-item-checkmark-height)
     );
     grid-area: checkmarkArea;
     align-self: start;
@@ -81,13 +96,19 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-back {
+    padding-block: 0;
+    padding-block: var(--mod-menu-back-padding-block-start, 0)
+        var(--mod-menu-back-padding-block-end, 0);
+    padding-inline: 0
+        var(
+            --mod-menu-back-padding-inline-end,
+            var(--spectrum-menu-item-label-inline-edge-to-content)
+        );
     padding-inline: var(--mod-menu-back-padding-inline-start, 0)
         var(
             --mod-menu-back-padding-inline-end,
             var(--spectrum-menu-item-label-inline-edge-to-content)
         );
-    padding-block: var(--mod-menu-back-padding-block-start, 0)
-        var(--mod-menu-back-padding-block-end, 0);
     flex-flow: wrap;
     align-items: center;
     display: flex;
@@ -111,13 +132,6 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-backHeading {
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-back-heading-color,
-            var(--spectrum-menu-section-header-color)
-        )
-    );
     font-size: var(
         --mod-menu-section-header-font-size,
         var(--spectrum-menu-section-header-font-size)
@@ -129,6 +143,13 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-back-heading-color,
+            var(--spectrum-menu-section-header-color)
+        )
     );
     display: block;
 }
@@ -142,11 +163,11 @@ governing permissions and limitations under the License.
         --mod-menu-back-icon-margin-inline,
         var(--spectrum-menu-back-icon-margin)
     );
-    fill: var(
+    color: var(
         --highcontrast-menu-item-color-default,
         var(--mod-menu-back-icon-color-default)
     );
-    color: var(
+    fill: var(
         --highcontrast-menu-item-color-default,
         var(--mod-menu-back-icon-color-default)
     );

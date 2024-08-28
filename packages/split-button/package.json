@@ -33,6 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/split-button-overrides.css.js": "./src/split-button-overrides.css.js",
         "./src/split-button.css.js": "./src/split-button.css.js",
         "./sp-split-button.js": {
             "development": "./sp-split-button.dev.js",
