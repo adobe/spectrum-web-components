@@ -11,7 +11,10 @@ governing permissions and limitations under the License.
 */
 // @ts-check
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-Calendar');
 
@@ -27,6 +30,48 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Calendar--padded'),
+                {
+                    find: [
+                        builder.class('spectrum-Calendar-date'),
+                        builder.class('is-focused'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('tableCell'),
+                        },
+                        {
+                            replace: builder.pseudoClass('focus-within'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.class('date'),
+                        },
+                    ],
+                    collapseSelector: true,
+                },
+                converter.classToClass('spectrum-Calendar-header', 'header'),
+                converter.classToClass('spectrum-Calendar-title', 'title'),
+                converter.classToClass(
+                    'spectrum-Calendar-prevMonth',
+                    'prevMonth'
+                ),
+                converter.classToClass(
+                    'spectrum-Calendar-nextMonth',
+                    'nextMonth'
+                ),
+                converter.classToClass(
+                    'spectrum-Calendar-dayOfWeek',
+                    'dayOfWeek'
+                ),
+                converter.classToClass('spectrum-Calendar-body', 'body'),
+                converter.classToClass('spectrum-Calendar-table', 'table'),
+                converter.classToClass(
+                    'spectrum-Calendar-tableCell',
+                    'tableCell'
+                ),
+                converter.classToClass('spectrum-Calendar-date', 'date'),
             ],
         },
     ],
