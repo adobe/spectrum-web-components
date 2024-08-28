@@ -58,8 +58,17 @@ export class Dropzone extends SpectrumElement {
     }
     private _dropEffect: DropEffects = 'copy';
 
+    /**
+     * Indicates that files are currently being dragged over the dropzone.
+     */
     @property({ type: Boolean, reflect: true, attribute: 'dragged' })
     public isDragged = false;
+
+    /**
+     * Set this property to indicate that the component is in a filled state.
+     */
+    @property({ type: Boolean, attribute: 'filled' })
+    public isFilled = false;
 
     private debouncedDragLeave: number | null = null;
 

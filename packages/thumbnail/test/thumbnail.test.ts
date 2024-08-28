@@ -59,6 +59,24 @@ describe('Thumbnail', () => {
         const background = el.shadowRoot.querySelector('.background');
         expect(background).to.not.be.null;
     });
+    it('renders the opacity checkerboard and slot', async () => {
+        const el = await fixture<Thumbnail>(html`
+            <sp-thumbnail>
+                <img src=${thumbnail} alt="Woman crouching" />
+            </sp-thumbnail>
+        `);
+
+        await elementUpdated(el);
+        el.setAttribute('layer', 'true');
+        await elementUpdated(el);
+        const checkerboard = el.shadowRoot.querySelector(
+            '.opacity-checkerboard.layer-inner'
+        );
+        expect(checkerboard).to.not.be.null;
+
+        const slot = checkerboard?.querySelector('slot');
+        expect(slot).to.not.be.null;
+    });
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
         before(() => {

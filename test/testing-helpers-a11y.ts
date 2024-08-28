@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { expect, nextFrame } from '@open-wc/testing';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 export type DescribedNode = {
     name: string;
@@ -24,10 +25,6 @@ export const findDescribedNode = async (
     debug?: boolean
 ): Promise<void> => {
     await nextFrame();
-
-    const isWebKit =
-        /AppleWebKit/.test(window.navigator.userAgent) &&
-        !/Chrome/.test(window.navigator.userAgent);
 
     const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
         children: DescribedNode[];
@@ -43,12 +40,13 @@ export const findDescribedNode = async (
     const node = findAccessibilityNode(
         snapshot,
         (node) =>
-            node.name === name && (node.description === description || isWebKit)
+            node.name === name &&
+            (node.description === description || isWebKit())
     );
 
     expect(node).to.not.be.null;
 
-    if (isWebKit) {
+    if (isWebKit()) {
         // Retest WebKit without the escape hatch, expecting it to fail.
         // This way we get notified when the results are as expected, again.
         const iOSNode = findAccessibilityNode(

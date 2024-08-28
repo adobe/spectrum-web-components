@@ -442,7 +442,8 @@ sp-sidenav-item:not(:defined) span {
     );
     position: relative;
     text-decoration: none;
-    transition: background-color var(--spectrum-animation-duration-100) ease-out,
+    transition:
+        background-color var(--spectrum-animation-duration-100) ease-out,
         color var(--spectrum-animation-duration-100) ease-out;
     word-break: break-word;
 }
@@ -794,7 +795,8 @@ docs-page:defined .section {
     overflow: hidden;
     opacity: 1;
     height: 100%;
-    transition: opacity var(--spectrum-animation-duration-300) ease-in-out,
+    transition:
+        opacity var(--spectrum-animation-duration-300) ease-in-out,
         transform var(--spectrum-animation-duration-300) ease-in-out;
 }
 
@@ -809,7 +811,8 @@ docs-page:defined .section:not([selected]) {
             calc(var(--swc-scale-factor) * 6px)
         )
     );
-    transition: opacity var(--spectrum-animation-duration-300) ease-in-out,
+    transition:
+        opacity var(--spectrum-animation-duration-300) ease-in-out,
         transform var(--spectrum-animation-duration-300) ease-in-out,
         height 0s ease var(--spectrum-animation-duration-300);
 }
@@ -932,6 +935,10 @@ sp-link {
     gap: 16px;
     border: 1px solid rgb(63, 63, 63);
     border-radius: 6px;
+}
+
+.demo-control {
+    width: 100%;
 }
 
 .deprecation-container {

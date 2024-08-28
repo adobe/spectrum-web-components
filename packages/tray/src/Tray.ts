@@ -50,7 +50,7 @@ export class Tray extends SpectrumElement {
 
     private transitionPromise = Promise.resolve();
 
-    private resolveTransitionPromise!: () => void;
+    private resolveTransitionPromise = () => {};
 
     @query('.tray')
     private tray!: HTMLDivElement;

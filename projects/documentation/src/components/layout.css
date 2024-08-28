@@ -244,7 +244,8 @@ aside {
     right: 0;
     background-color: var(--spectrum-gray-75);
     width: calc(var(--swc-scale-factor) * 192px);
-    transition: transform
+    transition:
+        transform
             var(
                 --spectrum-dialog-confirm-background-entry-animation-duration,
                 var(--spectrum-animation-duration-600)
@@ -297,6 +298,6 @@ sp-underlay:not([open]) + aside {
     right: auto;
 }
 
-:host([dir='rtl']) aside:not(.show) {
+:host([dir='rtl']) sp-underlay:not([open]) + aside {
     transform: translateX(-100%);
 }

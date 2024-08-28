@@ -19,18 +19,14 @@ import { spy } from 'sinon';
 describe('Link', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Link>(
-                html`
-                    <sp-link href="test_url">Default Link</sp-link>
-                `
-            )
+            await fixture<Link>(html`
+                <sp-link href="test_url">Default Link</sp-link>
+            `)
     );
     it('loads', async () => {
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="test_url">Default Link</sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="test_url">Default Link</sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -40,13 +36,11 @@ describe('Link', () => {
     });
 
     it('loads[download]', async () => {
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="test_url" download="somefile.txt">
-                    Default Link
-                </sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="test_url" download="somefile.txt">
+                Default Link
+            </sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -56,11 +50,9 @@ describe('Link', () => {
     });
 
     it('loads[rel]', async () => {
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="test_url" rel="external">Default Link</sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="test_url" rel="external">Default Link</sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -71,13 +63,11 @@ describe('Link', () => {
 
     it('no click triggers for disabled link', async () => {
         const clickSpy = spy();
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="#" disabled @click=${() => clickSpy()}>
-                    Disabled Link
-                </sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="#" disabled @click=${() => clickSpy()}>
+                Disabled Link
+            </sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;

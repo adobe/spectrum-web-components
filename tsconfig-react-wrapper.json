@@ -18,6 +18,7 @@
         { "path": "react/avatar" },
         { "path": "react/banner" },
         { "path": "react/badge" },
+        { "path": "react/breadcrumbs" },
         { "path": "react/button" },
         { "path": "react/button-group" },
         { "path": "react/card" },

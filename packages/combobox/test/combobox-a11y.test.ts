@@ -28,7 +28,8 @@ import {
     sendKeys,
 } from '@web/test-runner-commands';
 import type { AccessibleNamedNode } from './helpers.js';
-import { comboboxFixture, isWebKit } from './helpers.js';
+import { comboboxFixture } from './helpers.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import {
     withFieldLabel,
     withHelpText,
@@ -73,7 +74,7 @@ describe('Combobox accessibility', () => {
         const el = test.querySelector('sp-combobox') as unknown as Combobox;
         const name = 'Pick something';
         const webkitName = 'Pick something Banana';
-        const isWebKitMacOS = isWebKit && detectOS() === 'Mac OS';
+        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
 
         await elementUpdated(el);
         await nextFrame();
@@ -148,7 +149,7 @@ describe('Combobox accessibility', () => {
 
         const name = 'Combobox';
         const webkitName = 'Combobox Banana';
-        const isWebKitMacOS = isWebKit && detectOS() === 'Mac OS';
+        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
 
         await elementUpdated(el);
         await nextFrame();

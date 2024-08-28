@@ -43,26 +43,9 @@ import { sendKeys } from '@web/test-runner-commands';
 ignoreResizeObserverLoopError(before, after);
 
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
-    await fixture<ActionMenu>(
-        html`
-            <sp-action-menu label="More Actions">
-                <sp-menu>
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item>Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-menu>
-            </sp-action-menu>
-        `
-    );
-
-const actionMenuFixture = async (): Promise<ActionMenu> =>
-    await fixture<ActionMenu>(
-        html`
-            <sp-action-menu label="More Actions">
+    await fixture<ActionMenu>(html`
+        <sp-action-menu label="More Actions">
+            <sp-menu>
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
@@ -70,31 +53,40 @@ const actionMenuFixture = async (): Promise<ActionMenu> =>
                 <sp-menu-divider></sp-menu-divider>
                 <sp-menu-item>Save Selection</sp-menu-item>
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
-            </sp-action-menu>
-        `
-    );
+            </sp-menu>
+        </sp-action-menu>
+    `);
+
+const actionMenuFixture = async (): Promise<ActionMenu> =>
+    await fixture<ActionMenu>(html`
+        <sp-action-menu label="More Actions">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-action-menu>
+    `);
 
 const actionSubmenuFixture = async (): Promise<ActionMenu> =>
-    await fixture<ActionMenu>(
-        html`
-            <sp-action-menu label="More Actions">
-                <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item selected id="root-selected-item">
-                    Two
-                </sp-menu-item>
-                <sp-menu-item id="item-with-submenu">
-                    B should be selected
-                    <sp-menu slot="submenu">
-                        <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected id="sub-selected-item">
-                            B
-                        </sp-menu-item>
-                        <sp-menu-item>C</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-            </sp-action-menu>
-        `
-    );
+    await fixture<ActionMenu>(html`
+        <sp-action-menu label="More Actions">
+            <sp-menu-item>One</sp-menu-item>
+            <sp-menu-item selected id="root-selected-item">Two</sp-menu-item>
+            <sp-menu-item id="item-with-submenu">
+                B should be selected
+                <sp-menu slot="submenu">
+                    <sp-menu-item>A</sp-menu-item>
+                    <sp-menu-item selected id="sub-selected-item">
+                        B
+                    </sp-menu-item>
+                    <sp-menu-item>C</sp-menu-item>
+                </sp-menu>
+            </sp-menu-item>
+        </sp-action-menu>
+    `);
 
 export const testActionMenu = (mode: 'sync' | 'async'): void => {
     describe(`Action menu: ${mode}`, () => {
@@ -108,20 +100,18 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await expect(el).to.be.accessible();
         });
         it('loads - [slot="label"]', async () => {
-            const el = await fixture<ActionMenu>(
-                html`
-                    <sp-action-menu>
-                        <span slot="label">More Actions</span>
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item>Select Inverse</sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-action-menu>
-                `
-            );
+            const el = await fixture<ActionMenu>(html`
+                <sp-action-menu>
+                    <span slot="label">More Actions</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-action-menu>
+            `);
 
             await elementUpdated(el);
             await nextFrame();
@@ -130,20 +120,18 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await expect(el).to.be.accessible();
         });
         it('loads - [custom icon]', async () => {
-            const el = await fixture<ActionMenu>(
-                html`
-                    <sp-action-menu label="More Actions">
-                        <sp-icon-settings slot="icon"></sp-icon-settings>
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item>Select Inverse</sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-action-menu>
-                `
-            );
+            const el = await fixture<ActionMenu>(html`
+                <sp-action-menu label="More Actions">
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-action-menu>
+            `);
 
             await elementUpdated(el);
             await nextFrame();
@@ -154,27 +142,25 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('dispatches change events, no [href]', async () => {
             const changeSpy = spy();
 
-            const el = await fixture<ActionMenu>(
-                html`
-                    <sp-action-menu
-                        label="More Actions"
-                        @change=${({
-                            target: { value },
-                        }: Event & { target: ActionMenu }) => {
-                            changeSpy(value);
-                        }}
-                    >
-                        <sp-icon-settings slot="icon"></sp-icon-settings>
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item>Select Inverse</sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-action-menu>
-                `
-            );
+            const el = await fixture<ActionMenu>(html`
+                <sp-action-menu
+                    label="More Actions"
+                    @change=${({
+                        target: { value },
+                    }: Event & { target: ActionMenu }) => {
+                        changeSpy(value);
+                    }}
+                >
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-action-menu>
+            `);
 
             expect(changeSpy.callCount).to.equal(0);
             expect(el.open).to.be.false;
@@ -200,27 +186,25 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('closes when Menu Item has [href]', async () => {
             const changeSpy = spy();
 
-            const el = await fixture<ActionMenu>(
-                html`
-                    <sp-action-menu
-                        label="More Actions"
-                        @change=${() => {
-                            changeSpy();
-                        }}
-                    >
-                        <sp-icon-settings slot="icon"></sp-icon-settings>
-                        <sp-menu-item href="#">Deselect</sp-menu-item>
-                        <sp-menu-item href="#">Select Inverse</sp-menu-item>
-                        <sp-menu-item href="#">Feather...</sp-menu-item>
-                        <sp-menu-item href="#">Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item href="#">Save Selection</sp-menu-item>
-                        <sp-menu-item href="#" disabled>
-                            Make Work Path
-                        </sp-menu-item>
-                    </sp-action-menu>
-                `
-            );
+            const el = await fixture<ActionMenu>(html`
+                <sp-action-menu
+                    label="More Actions"
+                    @change=${() => {
+                        changeSpy();
+                    }}
+                >
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                    <sp-menu-item href="#">Deselect</sp-menu-item>
+                    <sp-menu-item href="#">Select Inverse</sp-menu-item>
+                    <sp-menu-item href="#">Feather...</sp-menu-item>
+                    <sp-menu-item href="#">Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item href="#">Save Selection</sp-menu-item>
+                    <sp-menu-item href="#" disabled>
+                        Make Work Path
+                    </sp-menu-item>
+                </sp-action-menu>
+            `);
 
             expect(changeSpy.callCount).to.equal(0);
             expect(el.open).to.be.false;

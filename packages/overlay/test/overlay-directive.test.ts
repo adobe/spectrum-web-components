@@ -20,27 +20,30 @@ import {
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import { Overlay } from '@spectrum-web-components/overlay';
-import { Default, insertionOptions } from '../stories/overlay-directive.stories.js';
+import {
+    Default,
+    insertionOptions,
+} from '../stories/overlay-directive.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture } from '../../../test/testing-helpers.js';
 
 describe('Overlay Directive', () => {
-    it('opens declaratively', async function() {
+    it('opens declaratively', async function () {
         const test = await fixture<Button>(Default({ open: true }));
         await oneEvent(test, 'sp-opened');
 
         const el = test.nextElementSibling as Overlay;
-        
+
         expect(el.open).to.be.true;
     });
-    it('opens without options', async function() {
+    it('opens without options', async function () {
         const test = await fixture<Button>(Default());
         const opened = oneEvent(test, 'sp-opened');
         test.click();
         await opened;
 
         const el = test.nextElementSibling as Overlay;
-        
+
         expect(el.open).to.be.true;
     });
     it('opens an Overlay after the trigger', async function () {

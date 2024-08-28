@@ -23,11 +23,9 @@ type TestableThemeConstructor = {
 
 describe('Systems', () => {
     it('loads - light', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme system="spectrum" color="light"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme system="spectrum" color="light"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -35,11 +33,9 @@ describe('Systems', () => {
         expect(el).shadowDom.to.exist;
     });
     it('loads - dark', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="dark"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="dark"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -47,11 +43,9 @@ describe('Systems', () => {
         expect(el).shadowDom.to.exist;
     });
     it('loads - unkown', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="unknown" scale="unknown"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="unknown" scale="unknown"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -59,11 +53,9 @@ describe('Systems', () => {
         expect(el).shadowDom.to.exist;
     });
     it('adds an instance only once', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme system="express"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme system="express"></sp-theme>
+        `);
 
         await elementUpdated(el);
         const testableTheme = Theme as unknown as TestableThemeConstructor;
@@ -82,11 +74,9 @@ describe('Systems', () => {
 
 describe('Lightest', () => {
     it('loads', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="lightest"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="lightest"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -97,11 +87,9 @@ describe('Lightest', () => {
 
 describe('Medium', () => {
     it('loads', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme scale="medium"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme scale="medium"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -112,18 +100,16 @@ describe('Medium', () => {
 
 describe('App styles', () => {
     it('applies app fragments', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="light">
-                    <style>
-                        div {
-                            padding: var(--app-padding);
-                        }
-                    </style>
-                    <div></div>
-                </sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="light">
+                <style>
+                    div {
+                        padding: var(--app-padding);
+                    }
+                </style>
+                <div></div>
+            </sp-theme>
+        `);
         const div = el.querySelector('div') as HTMLDivElement;
 
         await elementUpdated(el);
@@ -153,11 +139,9 @@ describe('App styles', () => {
 
 describe('Setting attributes', () => {
     it('loads', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="light"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="light"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -217,11 +201,9 @@ describe('Setting attributes', () => {
     });
 
     it('prefers system over theme', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme system="express"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme system="express"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -237,11 +219,9 @@ describe('Setting attributes', () => {
 
 describe('Themes', () => {
     it('updates system value even if only theme is added to sp-theme', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme theme="express"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme theme="express"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -254,11 +234,9 @@ describe('Themes', () => {
         expect(el.system).to.equal('spectrum');
     });
     it('updates system and theme value iif both are added to sp-theme', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme system="spectrum" theme="spectrum"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme system="spectrum" theme="spectrum"></sp-theme>
+        `);
 
         await elementUpdated(el);
 

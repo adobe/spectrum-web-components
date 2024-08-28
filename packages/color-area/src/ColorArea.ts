@@ -121,12 +121,11 @@ export class ColorArea extends SpectrumElement {
             return;
         }
         const oldValue = this.x;
+        this._x = x;
         if (this.inputX) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputX.value = x.toString();
             this._x = this.inputX.valueAsNumber;
-        } else {
-            this._x = x;
         }
         this.requestUpdate('x', oldValue);
         this.colorController.applyColorFromState();
@@ -144,12 +143,11 @@ export class ColorArea extends SpectrumElement {
             return;
         }
         const oldValue = this.y;
+        this._y = y;
         if (this.inputY) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputY.value = y.toString();
             this._y = this.inputY.valueAsNumber;
-        } else {
-            this._y = y;
         }
         this.requestUpdate('y', oldValue);
         this.colorController.applyColorFromState();
@@ -191,7 +189,7 @@ export class ColorArea extends SpectrumElement {
         this._valueChanged = false;
     }
 
-    private handleBlur(): void {
+    public handleBlur(): void {
         if (this._pointerDown) {
             return;
         }
@@ -312,7 +310,7 @@ export class ColorArea extends SpectrumElement {
     }
 
     private boundingClientRect!: DOMRect;
-    private _pointerDown = false;
+    public _pointerDown = false;
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {

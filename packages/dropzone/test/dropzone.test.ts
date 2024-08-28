@@ -17,38 +17,33 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Dropzone', () => {
     it('loads', async () => {
-        const el = await fixture<Dropzone>(
-            html`
-                <sp-dropzone id="dropzone">
-                    <sp-illustrated-message heading="Drag and Drop Your File">
-                        ${illustration}
-                    </sp-illustrated-message>
+        const el = await fixture<Dropzone>(html`
+            <sp-dropzone id="dropzone">
+                <sp-illustrated-message heading="Drag and Drop Your File">
+                    ${illustration}
+                </sp-illustrated-message>
 
-                    <div style="color: grey">
-                        <div>
-                            <label for="file-input">
-                                <sp-link>Select a File</sp-link>
-                                from your computer
-                            </label>
-                            <input
-                                type="file"
-                                id="file-input"
-                                style="display: none"
-                            />
-                        </div>
-                        <div>
-                            or
-                            <sp-link
-                                href="http://stock.adobe.com"
-                                target="blank"
-                            >
-                                Search Adobe Stock
-                            </sp-link>
-                        </div>
+                <div style="color: grey">
+                    <div>
+                        <label for="file-input">
+                            <sp-link>Select a File</sp-link>
+                            from your computer
+                        </label>
+                        <input
+                            type="file"
+                            id="file-input"
+                            style="display: none"
+                        />
                     </div>
-                </sp-dropzone>
-            `
-        );
+                    <div>
+                        or
+                        <sp-link href="http://stock.adobe.com" target="blank">
+                            Search Adobe Stock
+                        </sp-link>
+                    </div>
+                </div>
+            </sp-dropzone>
+        `);
         expect(el).to.not.equal(undefined);
         if (!el.shadowRoot) throw new Error('No shadowRoot');
         const slot = el.shadowRoot.querySelector('slot') as HTMLSlotElement;
@@ -56,11 +51,9 @@ describe('Dropzone', () => {
         return true;
     });
     it('manages `dropEffects`', async () => {
-        const el = await fixture<Dropzone>(
-            html`
-                <sp-dropzone id="dropzone"></sp-dropzone>
-            `
-        );
+        const el = await fixture<Dropzone>(html`
+            <sp-dropzone id="dropzone"></sp-dropzone>
+        `);
 
         await elementUpdated(el);
 
@@ -73,11 +66,9 @@ describe('Dropzone', () => {
         expect(el.dropEffect).to.equal('move');
     });
     it('manages `dragover` events', async () => {
-        const el = await fixture<Dropzone>(
-            html`
-                <sp-dropzone id="dropzone"></sp-dropzone>
-            `
-        );
+        const el = await fixture<Dropzone>(html`
+            <sp-dropzone id="dropzone"></sp-dropzone>
+        `);
 
         await elementUpdated(el);
 
@@ -109,14 +100,12 @@ describe('Dropzone', () => {
         const canceledDrag = (event: DragEvent): void => {
             event.preventDefault();
         };
-        const el = await fixture<Dropzone>(
-            html`
-                <sp-dropzone
-                    id="dropzone"
-                    @sp-dropzone-should-accept=${canceledDrag}
-                ></sp-dropzone>
-            `
-        );
+        const el = await fixture<Dropzone>(html`
+            <sp-dropzone
+                id="dropzone"
+                @sp-dropzone-should-accept=${canceledDrag}
+            ></sp-dropzone>
+        `);
 
         await elementUpdated(el);
 
@@ -144,14 +133,12 @@ describe('Dropzone', () => {
         const onDragLeave = (): void => {
             dragLeftCount += 1;
         };
-        const el = await fixture<Dropzone>(
-            html`
-                <sp-dropzone
-                    id="dropzone"
-                    @sp-dropzone-dragleave=${onDragLeave}
-                ></sp-dropzone>
-            `
-        );
+        const el = await fixture<Dropzone>(html`
+            <sp-dropzone
+                id="dropzone"
+                @sp-dropzone-dragleave=${onDragLeave}
+            ></sp-dropzone>
+        `);
 
         await elementUpdated(el);
 
@@ -170,14 +157,12 @@ describe('Dropzone', () => {
         const onDrop = (): void => {
             dropped = true;
         };
-        const el = await fixture<Dropzone>(
-            html`
-                <sp-dropzone
-                    id="dropzone"
-                    @sp-dropzone-drop=${onDrop}
-                ></sp-dropzone>
-            `
-        );
+        const el = await fixture<Dropzone>(html`
+            <sp-dropzone
+                id="dropzone"
+                @sp-dropzone-drop=${onDrop}
+            ></sp-dropzone>
+        `);
 
         await elementUpdated(el);
 
@@ -186,5 +171,16 @@ describe('Dropzone', () => {
         el.dispatchEvent(new DragEvent('drop'));
 
         expect(dropped).to.be.true;
+    });
+
+    it('sets `filled` attribute', async () => {
+        const el = await fixture<Dropzone>(html`
+            <sp-dropzone id="dropzone" filled></sp-dropzone>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.isFilled).to.be.true;
+        expect(el.hasAttribute('filled')).to.be.true;
     });
 });

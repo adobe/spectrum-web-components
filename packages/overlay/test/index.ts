@@ -36,76 +36,74 @@ export const runOverlayTriggerTests = (type: string): void => {
     describe(`Overlay Trigger - ${type}`, () => {
         describe('open/close', () => {
             beforeEach(async function () {
-                this.testDiv = await fixture<HTMLDivElement>(
-                    html`
-                        <div>
-                            <style>
-                                body {
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                }
-                            </style>
-                            <input type="text" />
-                            <overlay-trigger id="trigger" placement="top">
-                                <sp-button
-                                    id="outer-button"
-                                    variant="primary"
-                                    slot="trigger"
+                this.testDiv = await fixture<HTMLDivElement>(html`
+                    <div>
+                        <style>
+                            body {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                        </style>
+                        <input type="text" />
+                        <overlay-trigger id="trigger" placement="top">
+                            <sp-button
+                                id="outer-button"
+                                variant="primary"
+                                slot="trigger"
+                            >
+                                Show Popover
+                            </sp-button>
+                            <sp-popover
+                                id="outer-popover"
+                                slot="click-content"
+                                direction="bottom"
+                                tip
+                            >
+                                <sp-dialog
+                                    no-divider
+                                    class="options-popover-content"
                                 >
-                                    Show Popover
-                                </sp-button>
-                                <sp-popover
-                                    id="outer-popover"
-                                    slot="click-content"
-                                    direction="bottom"
-                                    tip
-                                >
-                                    <sp-dialog
-                                        no-divider
-                                        class="options-popover-content"
+                                    <overlay-trigger
+                                        id="inner-trigger"
+                                        placement="bottom"
                                     >
-                                        <overlay-trigger
-                                            id="inner-trigger"
-                                            placement="bottom"
+                                        <sp-button
+                                            id="inner-button"
+                                            slot="trigger"
                                         >
-                                            <sp-button
-                                                id="inner-button"
-                                                slot="trigger"
+                                            Press Me
+                                        </sp-button>
+                                        <sp-popover
+                                            id="inner-popover"
+                                            slot="click-content"
+                                            direction="bottom"
+                                            tip
+                                        >
+                                            <sp-dialog
+                                                no-divider
+                                                class="options-popover-content"
                                             >
-                                                Press Me
-                                            </sp-button>
-                                            <sp-popover
-                                                id="inner-popover"
-                                                slot="click-content"
-                                                direction="bottom"
-                                                tip
-                                            >
-                                                <sp-dialog
-                                                    no-divider
-                                                    class="options-popover-content"
-                                                >
-                                                    Another Popover
-                                                    <sp-button>
-                                                        Does nothing
-                                                    </sp-button>
-                                                </sp-dialog>
-                                            </sp-popover>
-                                        </overlay-trigger>
-                                    </sp-dialog>
-                                </sp-popover>
-                                <div
-                                    id="hover-content"
-                                    slot="hover-content"
-                                    class="tooltip"
-                                    delay="100"
-                                >
-                                    Tooltip
-                                </div>
-                            </overlay-trigger>
-                        </div>
-                    `
-                );
+                                                Another Popover
+                                                <sp-button>
+                                                    Does nothing
+                                                </sp-button>
+                                            </sp-dialog>
+                                        </sp-popover>
+                                    </overlay-trigger>
+                                </sp-dialog>
+                            </sp-popover>
+                            <div
+                                id="hover-content"
+                                slot="hover-content"
+                                class="tooltip"
+                                delay="100"
+                            >
+                                Tooltip
+                            </div>
+                        </overlay-trigger>
+                    </div>
+                `);
 
                 this.innerTrigger = this.testDiv.querySelector(
                     '#inner-trigger'

@@ -21,6 +21,8 @@ import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@spectrum-web-components/badge/sp-badge.js';
 import '@spectrum-web-components/banner/sp-banner.js';
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
+import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';

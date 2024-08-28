@@ -160,3 +160,5 @@ When `selects` is set to `inherit`, the `<sp-menu>` element will allow its `<sp-
 ## "change" event
 
 Whether `<sp-menu>` carries a selection or not, when one of the `<sp-menu-item>` children that it manages is activated the `<sp-menu>` element will dispatch a `change` event. At dispatch time, even when a selection is not held due to the absence of the `selects` attribute, the `value` of the `<sp-menu>` will correspond to the `<sp-menu-item>` that was activated. When the `selects` attribute is present, this `value` will be persisted beyond the lifecycle of the `change` event. When `selects="multiple"` the values of multiple items will be comma separated unless otherwise set via the `value-separator` attribute.
+
+Note: The `change` event is only dispatched on a left mouse click or Enter/Space keypress. Right/Middle mouse clicks will not dispatch the `change` event.

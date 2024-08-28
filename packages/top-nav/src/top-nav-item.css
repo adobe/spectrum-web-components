@@ -45,11 +45,11 @@ a:focus-visible {
         var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
     );
     inset-inline: calc(
-            var(
-                    --mod-tabs-focus-indicator-gap,
-                    var(--spectrum-tabs-focus-indicator-gap)
-                ) * -1
-        );
+        var(
+                --mod-tabs-focus-indicator-gap,
+                var(--spectrum-tabs-focus-indicator-gap)
+            ) * -1
+    );
     pointer-events: none;
     position: absolute;
 }

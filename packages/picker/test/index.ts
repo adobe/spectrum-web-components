@@ -316,6 +316,7 @@ export function runPickerTests(): void {
             option2.innerHTML = 'Invert Selection';
             await itemUpdated;
             await elementUpdated(el);
+            await aTimeout(150);
             expect(el.value).to.equal('option-2');
             expect((el.button.textContent || '').trim()).to.include(
                 'Invert Selection'
@@ -619,6 +620,8 @@ export function runPickerTests(): void {
             expect(el.value).to.equal(thirdItem.value);
         });
         it('opens/closes multiple times', async () => {
+            await nextFrame();
+            await nextFrame();
             expect(el.open).to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
             let opened = oneEvent(el, 'sp-opened');

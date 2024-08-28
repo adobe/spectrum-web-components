@@ -51,7 +51,7 @@ class OverlayStack {
      */
     handlePointerdown = (event: Event): void => {
         this.pointerdownPath = event.composedPath();
-        this.lastOverlay = this.stack.at(-1);
+        this.lastOverlay = this.stack[this.stack.length - 1];
     };
 
     /**
@@ -111,7 +111,7 @@ class OverlayStack {
     private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'Escape') return;
         if (!this.stack.length) return;
-        const last = this.stack.at(-1);
+        const last = this.stack[this.stack.length - 1];
         if (last?.type === 'page') {
             event.preventDefault();
             return;

@@ -19,6 +19,7 @@ export * from '@spectrum-web-components/avatar';
 export * from '@spectrum-web-components/asset';
 export * from '@spectrum-web-components/badge';
 export * from '@spectrum-web-components/banner';
+export * from '@spectrum-web-components/breadcrumbs';
 export * from '@spectrum-web-components/button';
 export * from '@spectrum-web-components/button-group';
 export * from '@spectrum-web-components/card';
