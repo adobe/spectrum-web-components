@@ -238,6 +238,11 @@ jobs:
                   name: VRT Run
                   command: |
                       yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+            - run:
+                  when: always
+                  name: VRT Mobile Run
+                  command: |
+                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-mobile
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/

@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { playwrightLauncher } from '@web/test-runner-playwright';
+import { devices, playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import fs from 'fs';
 import path from 'path';
@@ -240,6 +240,27 @@ vrtGroups = [
             reduceMotion: true,
         }),
         browsers: [chromium, webkitMobile],
+    },
+    {
+        name: `vrt-mobile`,
+        files: '(packages|tools)/*/test/*.test-vrt.js',
+        testRunnerHtml: vrtHTML({
+            themeVariant: 'spectrum',
+            color: 'dark',
+            scale: 'medium',
+            dir: 'ltr',
+            hcm: true,
+            reduceMotion: true,
+        }),
+        browsers: [
+            playwrightLauncher({
+                product: 'webkit',
+                createBrowserContext: ({ browser }) =>
+                    browser.newContext({
+                        ...devices['iPhone X'],
+                    }),
+            }),
+        ],
     },
 ];
 
