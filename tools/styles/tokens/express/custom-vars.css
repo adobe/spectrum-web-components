@@ -1,6 +1,4 @@
-
-
 :host,
 :root {
-  --system:express;
+    --system: express;
 }
