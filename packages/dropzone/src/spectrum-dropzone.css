@@ -169,7 +169,7 @@ governing permissions and limitations under the License.
     --mod-illustrated-message-display: none;
 }
 
-:host([dragged]) .is-filled {
+:host([filled][dragged]) {
     --spectrum-drop-zone-content-display: flex;
 }
 

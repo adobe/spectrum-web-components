@@ -141,7 +141,6 @@ governing permissions and limitations under the License.
     only screen and (device-width <= 400px) {
     :host([responsive]) .modal {
         inline-size: 100%;
-        block-size: 100%;
         max-inline-size: 100%;
         block-size: 100%;
         max-block-size: 100%;
@@ -172,8 +171,6 @@ governing permissions and limitations under the License.
 }
 
 .fullscreenTakeover {
-    max-inline-size: none;
-    max-block-size: none;
     box-sizing: border-box;
     max-inline-size: none;
     max-block-size: none;

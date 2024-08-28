@@ -103,7 +103,7 @@ governing permissions and limitations under the License.
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
-    background: var(
+    background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color,
@@ -161,7 +161,7 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white']) .fill {
-    background: var(
+    background-color: var(
         --mod-progressbar-fill-color-white,
         var(--spectrum-progressbar-fill-color-white)
     );
@@ -177,7 +177,7 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white']) .track {
-    background: var(--spectrum-progressbar-track-color-white);
+    background-color: var(--spectrum-progressbar-track-color-white);
 }
 
 :host([indeterminate]) .fill {
