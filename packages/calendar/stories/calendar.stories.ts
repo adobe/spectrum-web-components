@@ -9,22 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, render, TemplateResult } from '@spectrum-web-components/base';
-import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
-
+import {
+    html,
+    render,
+    type TemplateResult,
+} from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
-
 import '@spectrum-web-components/calendar/sp-calendar.js';
-
-export default {
-    title: 'Calendar',
-    component: 'sp-calendar',
-    parameters: {
-        actions: {
-            handles: ['onChange'],
-        },
-    },
-};
 
 type ComponentArgs = {
     selectedDate?: Date;
@@ -38,17 +29,62 @@ type StoryArgs = ComponentArgs & {
     onChange?: (dateTime: Date) => void;
 };
 
+export default {
+    title: 'Calendar',
+    component: 'sp-calendar',
+    args: {
+        disabled: false,
+        padded: false,
+        min: undefined,
+        max: undefined,
+        selectedDate: undefined,
+    },
+    argTypes: {
+        disabled: {
+            description: "Component's disabled state",
+            type: { required: false },
+            control: 'boolean',
+        },
+        padded: {
+            description: "Component's padded variant",
+            type: { required: false },
+            control: 'boolean',
+        },
+        min: {
+            description: 'Minimum date allowed',
+            type: { required: false },
+            control: 'date',
+        },
+        max: {
+            description: 'Maximum date allowed',
+            type: { required: false },
+            control: 'date',
+        },
+        selectedDate: {
+            description: 'The pre-selected date of the component',
+            type: { required: false },
+            control: 'date',
+        },
+    },
+    parameters: {
+        actions: {
+            handles: ['onChange'],
+        },
+    },
+};
+
 interface SpreadStoryArgs {
     [prop: string]: unknown;
 }
 
-const renderCalendar = (
-    title: string,
-    args: StoryArgs = {}
-): TemplateResult => {
+const Template = (args: StoryArgs = {}): TemplateResult => {
+    args.min = args.min ? new Date(args.min) : undefined;
+    args.max = args.max ? new Date(args.max) : undefined;
+    args.selectedDate = args.selectedDate
+        ? new Date(args.selectedDate)
+        : undefined;
+
     const story = html`
-        <h1>${title}</h1>
-        <hr />
         <sp-calendar
             ...=${spreadProps(args as SpreadStoryArgs)}
             @change=${args.onChange}
@@ -62,9 +98,7 @@ const renderCalendar = (
             `.story-container-${randomId}`
         );
 
-        if (container) {
-            render(story, container as HTMLElement);
-        }
+        if (container) render(story, container as HTMLElement);
     });
 
     return html`
@@ -72,104 +106,33 @@ const renderCalendar = (
     `;
 };
 
-export const Default = (args: StoryArgs = {}): TemplateResult => {
-    return renderCalendar('Default', args);
-};
-
-export const selectedDate = (args: StoryArgs = {}): TemplateResult => {
-    const date = new Date(2019, 0, 30);
-    const formatted = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    }).format(date);
-
-    args = {
-        ...args,
-        selectedDate: date,
-    };
-
-    return renderCalendar(`Selected Date: ${formatted}`, args);
-};
-
-export const minimumDate = (args: StoryArgs = {}): TemplateResult => {
-    const today = new Date();
-    const lastMonth = new Date(
-        today.getFullYear(),
-        today.getMonth() - 1,
-        today.getDate()
-    );
-
-    const formatted = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    }).format(lastMonth);
-
-    args = {
-        ...args,
-        min: lastMonth,
-    };
-
-    return renderCalendar(`Minimum Date: ${formatted}`, args);
-};
-
-export const maximumDate = (args: StoryArgs = {}): TemplateResult => {
-    const today = new Date();
-    const nextMonth = new Date(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        today.getDate()
-    );
-
-    const formatted = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    }).format(nextMonth);
-
-    args = {
-        ...args,
-        max: nextMonth,
-    };
-
-    return renderCalendar(`Maximum Date: ${formatted}`, args);
-};
-
-export const disabled = (args: StoryArgs = {}): TemplateResult => {
-    return renderCalendar(`Disabled? ${args.disabled}`, args);
-};
-
-disabled.argTypes = {
-    disabled: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: true,
-            },
-        },
-    },
-};
-
+export const Default = (args: StoryArgs): TemplateResult => Template(args);
+export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
 };
 
-export const padded = (args: StoryArgs = {}): TemplateResult => {
-    return renderCalendar(`Padded? ${args.padded}`, args);
+export const selectedDate = (args: StoryArgs): TemplateResult => Template(args);
+selectedDate.args = {
+    selectedDate: new Date(2022, 4, 16),
 };
 
-padded.argTypes = {
-    padded: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: true,
-            },
-        },
-    },
+export const minDate = (args: StoryArgs): TemplateResult => Template(args);
+minDate.args = {
+    min: new Date(2022, 4, 8),
+    selectedDate: new Date(2022, 4, 16),
 };
 
-padded.args = {
-    padded: true,
+export const maxDate = (args: StoryArgs): TemplateResult => Template(args);
+maxDate.args = {
+    max: new Date(2022, 4, 22),
+    selectedDate: new Date(2022, 4, 16),
+};
+
+export const minAndMaxDates = (args: StoryArgs): TemplateResult =>
+    Template(args);
+minAndMaxDates.args = {
+    min: new Date(2022, 4, 8),
+    max: new Date(2022, 4, 22),
+    selectedDate: new Date(2022, 4, 16),
 };

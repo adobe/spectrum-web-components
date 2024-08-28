@@ -9,9 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export const daysInWeek = 7;
 
 export interface CalendarWeekday {
     narrow: string;
     long: string;
+}
+
+export interface DateCellProperties {
+    isOutsideMonth: boolean;
+    isToday: boolean;
+    isSelected: boolean;
+    isDisabled: boolean;
+    isTabbable: boolean;
 }

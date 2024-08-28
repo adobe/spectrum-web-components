@@ -95,7 +95,7 @@ export class DateTimePicker extends InputSegments {
                     <sp-popover class="popover">
                         <div class="popover-content">
                             <sp-calendar
-                                .selectedDate=${this.pickerDate}
+                                .selectedDate=${this.pickerDate as Date}
                                 @change=${this.handleDate}
                             ></sp-calendar>
                         </div>
