@@ -344,8 +344,10 @@ export class DateTimePicker extends ManageHelpText(
     private handleChange(event: Event): void {
         event.stopPropagation();
         this.open = false;
-        const calendar = event.target as Calendar;
-        this.value = calendar.value!;
+        const calendarValue = (event.target as Calendar).value as CalendarDate;
+
+        if (this.includesTime) this.value = toCalendarDateTime(calendarValue);
+        else this.value = calendarValue;
 
         // TODO: move this to willUpdate based on value changes
         const { year, month, day } = this.value;
@@ -710,7 +712,7 @@ export class DateTimePicker extends ManageHelpText(
 
         this.formatSegmentValue(segment);
         this.updateContent(segment, event);
-        this.setValue();
+        this.updateValue();
         this.dispatchEvent(
             new CustomEvent('change', {
                 bubbles: true,
@@ -723,7 +725,7 @@ export class DateTimePicker extends ManageHelpText(
      * Sets the new date/time object according to the configuration parameters and if the minimum required values for
      * each type (date only, time only or date and time together) were defined
      */
-    protected setValue(): void {
+    protected updateValue(): void {
         let value: DateTimePickerValue;
 
         const date = this.getDateFromSegments();
@@ -920,6 +922,14 @@ export class DateTimePicker extends ManageHelpText(
             date.getHours(),
             date.getMinutes(),
             date.getSeconds()
+        );
+    }
+
+    protected dateToCalendarDate(date: Date): CalendarDate {
+        return new CalendarDate(
+            date.getFullYear(),
+            date.getMonth() + 1,
+            date.getDate()
         );
     }
 
