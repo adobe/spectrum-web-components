@@ -53,6 +53,7 @@ import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -165,8 +166,8 @@ describe('ActionGroup', () => {
         // expect the first button to be focused
         expect(document.activeElement?.id).to.equal('first');
 
-        // expect all the elements of the focus group to have a tabIndex of -1
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using Tab
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
@@ -252,8 +253,8 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
         await aTimeout(500);
 
-        // expect all the elements of the focus group to have a tabIndex of -1
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using mouse
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
@@ -303,6 +304,17 @@ describe('ActionGroup', () => {
 
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
         await closed;
+
+        if (!isWebKit()) {
+            sendMouse({
+                steps: [
+                    {
+                        position: [0, 0],
+                        type: 'click',
+                    },
+                ],
+            });
+        }
 
         await aTimeout(500);
 

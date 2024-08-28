@@ -15,6 +15,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
+    aTimeout,
     elementUpdated,
     expect,
     html,
@@ -29,6 +30,7 @@ import {
     testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
 import { isWebKit } from '@spectrum-web-components/shared';
@@ -499,6 +501,72 @@ describe('Menu', () => {
         expect(firstItem.getAttribute('aria-checked')).to.equal('false');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
         expect(el.value).to.equal('Second');
+    });
+    it('does not make a selection on a right/middle mouse click', async () => {
+        const changeSpy = spy();
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                @change=${() => {
+                    changeSpy();
+                }}
+            >
+                <sp-menu-item>First</sp-menu-item>
+                <sp-menu-item>Second</sp-menu-item>
+                <sp-menu-item>Third</sp-menu-item>
+            </sp-menu>
+        `);
+
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items'
+        );
+        await elementUpdated(el);
+
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        // send right mouse click to the secondItem
+        const rect = secondItem.getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                    options: {
+                        button: 'right',
+                    },
+                },
+            ],
+        });
+        await elementUpdated(el);
+        await elementUpdated(secondItem);
+        await aTimeout(150);
+        expect(changeSpy.callCount, 'no change').to.equal(0);
+
+        // send middle mouse click to the secondItem
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                    options: {
+                        button: 'middle',
+                    },
+                },
+            ],
+        });
+        await elementUpdated(el);
+        await elementUpdated(secondItem);
+        await aTimeout(150);
+        expect(changeSpy.callCount, 'no change').to.equal(0);
     });
     it('handles multiple selection', async () => {
         const changeSpy = spy();

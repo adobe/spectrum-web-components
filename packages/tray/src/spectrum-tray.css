@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .tray {
+    inline-size: 100%;
     --mod-modal-max-width: 100%;
     box-sizing: border-box;
     inline-size: 100%;

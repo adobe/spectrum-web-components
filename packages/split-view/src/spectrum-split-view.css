@@ -285,11 +285,11 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) ::slotted(*) {
+    block-size: auto;
     inline-size: var(
         --mod-splitview-vertical-width,
         var(--spectrum-splitview-vertical-width)
     );
-    block-size: auto;
 }
 
 :host([vertical]) #gripper {
