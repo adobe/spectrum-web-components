@@ -457,7 +457,7 @@ describe('Calendar', () => {
             max = new CalendarDate(fixedYear, fixedMonth, fixedDay + dayOffset);
         });
 
-        it('with min > max date', async () => {
+        it('when min > max date', async () => {
             const min = max.set({ day: max.day + 1 });
             element = await fixtureElement({
                 props: { min, max },
@@ -754,6 +754,12 @@ describe('Calendar', () => {
                 )
             ).to.be.true;
         });
+    });
+
+    describe('Manages the disabled state', () => {
+        it('by disabling the next and previous month buttons', async () => {});
+        it("by not accepting focus on the calendar's days", async () => {});
+        it("by not selecting a day when it's clicked", async () => {});
     });
 
     it('should render localized dates', async () => {

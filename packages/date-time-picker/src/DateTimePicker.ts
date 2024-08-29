@@ -170,7 +170,7 @@ export class DateTimePicker extends ManageHelpText(
     protected segments: Segment[] = [];
 
     @state()
-    public open = false;
+    public isCalendarOpen = false;
 
     @query('.editable-segment')
     firstEditableSegment!: HTMLDivElement;
@@ -308,11 +308,11 @@ export class DateTimePicker extends ManageHelpText(
 
         return html`
             <sp-picker-button
-                ?open=${this.open}
+                ?open=${this.isCalendarOpen}
                 ?quiet=${this.quiet}
                 ?invalid=${this.invalid}
                 ?disabled=${this.disabled}
-                @click=${() => (this.open = true)}
+                @click=${() => (this.isCalendarOpen = true)}
             >
                 <slot name="calendar-icon" slot="icon">
                     <sp-icon-calendar></sp-icon-calendar>
@@ -324,8 +324,8 @@ export class DateTimePicker extends ManageHelpText(
                 placement="top"
                 offset="0"
                 receives-focus="true"
-                ?open=${this.open}
-                @sp-closed=${() => (this.open = false)}
+                ?open=${this.isCalendarOpen}
+                @sp-closed=${() => (this.isCalendarOpen = false)}
             >
                 <sp-popover>
                     <div class="popover-content">
@@ -343,7 +343,7 @@ export class DateTimePicker extends ManageHelpText(
 
     private handleChange(event: Event): void {
         event.stopPropagation();
-        this.open = false;
+        this.isCalendarOpen = false;
         const calendarValue = (event.target as Calendar).value as CalendarDate;
 
         if (this.includesTime) this.value = toCalendarDateTime(calendarValue);
