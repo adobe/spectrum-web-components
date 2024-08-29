@@ -22,6 +22,7 @@ import { Grid } from '@spectrum-web-components/grid';
 import { Default } from '../stories/grid.stories.js';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 describe('Grid', () => {
     testForLitDevWarnings(
@@ -55,6 +56,13 @@ describe('Grid', () => {
 
         await nextFrame();
         await nextFrame();
+
+        if (!isWebKit()) {
+            sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+        }
 
         expect(
             el.querySelector(el.focusableSelector) === document.activeElement

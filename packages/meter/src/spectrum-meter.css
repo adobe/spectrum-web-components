@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-progressbar-animation-ease-in-out-indeterminate: var(
         --spectrum-animation-ease-in-out
@@ -126,7 +125,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='positive']) .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-positive,
@@ -136,7 +135,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='notice']) .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-notice,
@@ -146,7 +145,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='negative']) .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-negative,
@@ -226,19 +225,19 @@ governing permissions and limitations under the License.
 }
 
 .track {
+    inline-size: 100%;
     block-size: var(
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
     border-radius: var(--spectrum-progressbar-corner-radius);
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-track-color,
         var(
             --mod-progressbar-track-color,
             var(--spectrum-progressbar-track-color)
         )
     );
-    inline-size: 100%;
     overflow: hidden;
 }
 
@@ -247,7 +246,7 @@ governing permissions and limitations under the License.
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color,
@@ -305,7 +304,7 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white']) .fill {
-    background-color: var(
+    background: var(
         --mod-progressbar-fill-color-white,
         var(--spectrum-progressbar-fill-color-white)
     );
@@ -321,11 +320,11 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white']) .track {
-    background-color: var(--spectrum-progressbar-track-color-white);
+    background: var(--spectrum-progressbar-track-color-white);
 }
 
 :host([indeterminate]) .fill {
-    animation: a
+    animation: indeterminate-loop-ltr
         var(
             --mod-progressbar-animation-duration-indeterminate,
             var(--spectrum-progressbar-animation-duration-indeterminate)
@@ -335,7 +334,7 @@ governing permissions and limitations under the License.
 
 :host([indeterminate]) .fill:dir(rtl),
 :host([dir='rtl'][indeterminate]) .fill {
-    animation: b
+    animation: indeterminate-loop-rtl
         var(
             --mod-progressbar-animation-duration-indeterminate,
             var(--spectrum-progressbar-animation-duration-indeterminate)
@@ -343,7 +342,7 @@ governing permissions and limitations under the License.
         infinite;
 }
 
-@keyframes a {
+@keyframes indeterminate-loop-ltr {
     0% {
         transform: translate(
             calc(
@@ -365,7 +364,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes b {
+@keyframes indeterminate-loop-rtl {
     0% {
         transform: translate(
             var(
@@ -392,6 +391,6 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
         --highcontrast-progressbar-fill-color: ButtonText;
         --highcontrast-progressbar-track-color: ButtonFace;
-        border: 1px solid buttontext;
+        border: 1px solid ButtonText;
     }
 }

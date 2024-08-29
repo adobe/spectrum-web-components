@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-link-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-link-text-color-primary-default: var(
@@ -98,6 +97,7 @@ a:focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
+    -webkit-text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
 }

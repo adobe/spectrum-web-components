@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-alert-dialog-min-width: var(
         --spectrum-alert-dialog-minimum-width
@@ -61,6 +60,8 @@ governing permissions and limitations under the License.
     --spectrum-alert-dialog-title-to-icon: var(--spectrum-spacing-300);
     --mod-buttongroup-justify-content: flex-end;
     box-sizing: border-box;
+    inline-size: -moz-fit-content;
+    inline-size: fit-content;
     min-inline-size: var(
         --mod-alert-dialog-min-width,
         var(--spectrum-alert-dialog-min-width)
@@ -75,7 +76,6 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-dialog-padding)
     );
     outline: none;
-    inline-size: fit-content;
     display: flex;
 }
 

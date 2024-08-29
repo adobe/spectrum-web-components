@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-medium);
@@ -134,6 +133,9 @@ governing permissions and limitations under the License.
     --spectrum-slider-label-text-color: var(
         --spectrum-neutral-content-color-default
     );
+    --spectrum-slider-tick-label-color: var(
+        --spectrum-neutral-content-color-default
+    );
     --spectrum-slider-label-text-color-disabled: var(
         --spectrum-disabled-content-color
     );
@@ -146,7 +148,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
     --spectrum-slider-range-track-reset: 0;
-    z-index: 1;
+    z-index: 0;
     min-inline-size: var(
         --mod-slider-min-size,
         var(--spectrum-slider-min-size)
@@ -257,11 +259,11 @@ governing permissions and limitations under the License.
 .fill:before,
 .track:before {
     content: '';
+    block-size: 100%;
     border-start-start-radius: 0;
     border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: 0;
-    block-size: 100%;
     display: block;
 }
 
@@ -431,9 +433,9 @@ governing permissions and limitations under the License.
 }
 
 #ramp svg {
-    transform: var(--spectrum-logical-rotation);
-    block-size: 100%;
     inline-size: 100%;
+    block-size: 100%;
+    transform: var(--spectrum-logical-rotation);
 }
 
 .handle {
@@ -532,7 +534,7 @@ governing permissions and limitations under the License.
     transform: translate(-50%, -50%);
 }
 
-.handle:dir(rtl):before,
+:host:dir(rtl) .handle:before,
 :host([dir='rtl']) .handle:before {
     transform: translate(50%, -50%);
 }
@@ -583,10 +585,10 @@ governing permissions and limitations under the License.
 }
 
 #label-container {
+    inline-size: auto;
     font-size: var(--mod-slider-font-size, var(--spectrum-slider-font-size));
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     align-items: center;
-    inline-size: auto;
     margin-block-start: var(
         --mod-slider-label-top-to-text,
         var(--spectrum-slider-label-top-to-text)
@@ -717,6 +719,13 @@ governing permissions and limitations under the License.
 .tick .tickLabel {
     font-size: var(--mod-font-size-75, var(--spectrum-font-size-75));
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
+    color: var(
+        --highcontrast-slider-label-text-color,
+        var(
+            --mod-slider-tick-label-color,
+            var(--spectrum-slider-tick-label-color)
+        )
+    );
     justify-content: center;
     align-items: center;
     display: flex;
@@ -914,7 +923,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([variant='range']) .track:not(:first-of-type):not(:last-of-type):before {
+:host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
     background: var(
         --highcontrast-slider-filled-track-fill-color,
         var(
@@ -1044,7 +1053,7 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled][variant='range'])
-    .track:not(:first-of-type):not(:last-of-type):before {
+    .track:not(:first-of-type, :last-of-type):before {
     background: var(
         --highcontrast-slider-track-color-disabled,
         var(
@@ -1057,65 +1066,51 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     :host {
         --highcontrast-slider-track-color: ButtonText;
+        --highcontrast-slider-track-color-disabled: GrayText;
         --highcontrast-slider-track-color-static: ButtonText;
         --highcontrast-slider-track-fill-color: ButtonText;
+        --highcontrast-slider-track-fill-color-disabled: GrayText;
         --highcontrast-slider-filled-track-fill-color: Highlight;
         --highcontrast-slider-ramp-track-color: ButtonText;
         --highcontrast-slider-ramp-track-color-disabled: GrayText;
         --highcontrast-slider-tick-mark-color: ButtonText;
+        --highcontrast-slider-tick-mark-color-disabled: GrayText;
         --highcontrast-slider-handle-border-color: ButtonText;
         --highcontrast-slider-handle-border-color-hover: Highlight;
         --highcontrast-slider-handle-border-color-down: Highlight;
         --highcontrast-slider-handle-border-color-key-focus: Highlight;
+        --highcontrast-slider-handle-border-color-disabled: GrayText;
         --highcontrast-slider-handle-focus-ring-color-key-focus: CanvasText;
         --highcontrast-slider-handle-background-color: ButtonFace;
+        --highcontrast-slider-handle-background-color-disabled: GrayText;
+        --highcontrast-slider-handle-disabled-background-color: GrayText;
         --highcontrast-slider-ramp-handle-border-color-active: ButtonFace;
         --highcontrast-slider-ramp-handle-background-color: ButtonFace;
-        --spectrum-slider-track-color: ButtonText;
-        --spectrum-slider-track-fill-color: ButtonText;
-        --spectrum-slider-ramp-track-color: ButtonText;
-        --spectrum-slider-ramp-track-color-disabled: GrayText;
-        --spectrum-slider-handle-background-color: ButtonFace;
-        --spectrum-slider-handle-background-color-disabled: GrayText;
-        --spectrum-slider-handle-border-color: ButtonText;
-        --spectrum-slider-handle-disabled-background-color: GrayText;
-        --spectrum-slider-tick-mark-color: ButtonText;
-        --spectrum-slider-tick-mark-color-disabled: GrayText;
-        --spectrum-slider-handle-border-color-hover: Highlight;
-        --spectrum-slider-handle-border-color-down: Highlight;
-        --spectrum-slider-handle-border-color-key-focus: Highlight;
-        --spectrum-slider-handle-focus-ring-color-key-focus: Highlight;
-        --spectrum-slider-track-color-disabled: GrayText;
-        --spectrum-slider-track-fill-color-disabled: GrayText;
-        --spectrum-slider-handle-border-color-disabled: GrayText;
-        --spectrum-slider-label-text-color: CanvasText;
-        --spectrum-slider-label-text-color-disabled: GrayText;
-        --spectrum-slider-ramp-handle-border-color-active: ButtonText;
+        --highcontrast-slider-label-text-color: CanvasText;
+        --highcontrast-slider-label-text-color-disabled: GrayText;
     }
 
-    :host([variant='ramp']) .handle,
-    .handle.handle-highlight:before {
+    .handle.handle-highlight:before,
+    :host([variant='ramp']) .handle {
         forced-color-adjust: none;
     }
 
     :host([focus-within])
-        .js-focus-within:not(.is-disabled):not(.spectrum-Slider--filled):not(
+        .js-focus-within:not(
+            .is-disabled,
+            .spectrum-Slider--filled,
             .spectrum-Slider--range
         )
         #controls,
-    :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
-            .spectrum-Slider--range
-        )
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
         #controls.handle-highlight,
-    :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
-            .spectrum-Slider--range
-        )
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
         #controls:active,
-    :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
-            .spectrum-Slider--range
-        )
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
         #controls:focus-within,
-    :host([focus-within]):not(.is-disabled):not(.spectrum-Slider--filled):not(
+    :host([focus-within]):not(
+            .is-disabled,
+            .spectrum-Slider--filled,
             .spectrum-Slider--range
         ).js-focus-within
         #controls {
@@ -1127,7 +1122,9 @@ governing permissions and limitations under the License.
     }
 
     @media (hover: hover) {
-        :host:not(.is-disabled):not(.spectrum-Slider--filled):not(
+        :host:not(
+                .is-disabled,
+                .spectrum-Slider--filled,
                 .spectrum-Slider--range
             )
             #controls:hover {
@@ -1140,8 +1137,8 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]) #ramp + .handle {
-        fill: buttonface;
-        background-color: buttonface;
+        fill: ButtonFace;
+        background-color: ButtonFace;
     }
 }
 

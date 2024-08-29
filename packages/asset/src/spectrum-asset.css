@@ -11,20 +11,19 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
+    inline-size: 100%;
+    block-size: 100%;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
-    inline-size: 100%;
     display: flex;
 }
 
 ::slotted(*) {
+    max-inline-size: 100%;
+    max-block-size: 100%;
     object-fit: contain;
     transition: opacity var(--spectrum-animation-duration-100);
-    max-block-size: 100%;
-    max-inline-size: 100%;
 }
 
 .file,
@@ -33,8 +32,8 @@ governing permissions and limitations under the License.
         var(--mod-asset-icon-min-width, 48px),
         min(100%, var(--mod-asset-icon-max-width, 80px))
     );
-    margin: var(--mod-asset-icon-margin, 20px);
     block-size: 100%;
+    margin: var(--mod-asset-icon-margin, 20px);
 }
 
 .folderBackground {
